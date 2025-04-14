@@ -1,12 +1,8 @@
-# Summary​
+# Summary
 
-## AI Service
+- [Introduction](intro.md)
+- [AI Tutorial](ai-tutorial.md)
 
-* [AI Tutorial](ai/ai-tutorial.md)
-* [AI API Reference](ai/api.yml)
+## API Reference
 
-## APPROVAL Service​
-
-* [Approval Service](approval-tutorial.md)
-    * [Some child page](page2/page2-1.md)
-    * [Some other child page](part2/page2-2.md)
+- [OpenAPI Specification (YAML)](api/openapi.yml)
