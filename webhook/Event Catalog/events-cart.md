@@ -1,12 +1,7 @@
 ---
 seo:
-  title: Cart Service events
+  title: Cart Service Events
   description: Webhooks, cart events
-toc:
-  enable: true
-tocMaxDepth: 2
-editPage:
-  disable: true
 ---
 
 # Cart Service events

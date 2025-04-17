@@ -1,12 +1,7 @@
 ---
 seo:
-  title: Availability Service events
+  title: Availability Service Events
   description: Webhooks, availability events
-toc:
-  enable: true
-tocMaxDepth: 2
-editPage:
-  disable: true
 ---
 
 # Availability Service events

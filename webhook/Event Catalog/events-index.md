@@ -4,7 +4,11 @@ seo:
   description: Webhooks, indexing service events
 ---
 
+<<<<<<< Updated upstream
 # events-index
+=======
+# Index Events
+>>>>>>> Stashed changes
 
 ## Index events
 
