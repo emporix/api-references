@@ -93,6 +93,16 @@
           kind: openapi
           spec: oauth-api
     ```
+  * ```yaml
+    props:
+      models: true
+    type: builtin:openapi
+    dependencies:
+      spec:
+        ref:
+          kind: openapi
+          spec: oauth-api
+    ```
 * [Artificial Intelligence](api-guides-and-references/ai/README.md)
   * [AI Tutorials](api-guides-and-references/ai/ai-tutorial.md)
   * ```yaml
@@ -105,24 +115,18 @@
           kind: openapi
           spec: ai-api
     ```
-
-## Configuration
-
-* [Configuration](configuration/configuration/README.md)
-  * [API Reference](configuration/configuration/api-reference/README.md)
-    * ```yaml
-      type: builtin:openapi
-      props:
-        models: true
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: configuration-api
-      ```
-* [country-v2](configuration/country-v2/README.md)
-  * [Country Service Tutorial](configuration/country-v2/country.md)
-  * [API Reference](configuration/country-v2/api-reference/README.md)
+  * ```yaml
+    props:
+      models: true
+    type: builtin:openapi
+    dependencies:
+      spec:
+        ref:
+          kind: openapi
+          spec: ai-api
+    ```
+* [Configuration](api-guides-and-references/configuration/README.md)
+  * [API Reference](api-guides-and-references/configuration/api-reference/README.md)
     * ```yaml
       type: builtin:openapi
       props:
@@ -133,7 +137,46 @@
             kind: openapi
             spec: country-api
       ```
-* [site-settings](configuration/site-settings/README.md)
-  * [site-settings](configuration/site-settings/site-settings.md)
-* [indexing](configuration/indexing/README.md)
-  * [indexing](configuration/indexing/indexing.md)
+    * ```yaml
+      props:
+        models: true
+      type: builtin:openapi
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: configuration-api
+      ```
+  * [Configuration Service](api-guides-and-references/configuration/configuration-service/README.md)
+    * [API Reference](api-guides-and-references/configuration/configuration-service/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: configuration-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: country-api
+        ```
+  * [Country Service](api-guides-and-references/configuration/country-v2/README.md)
+    * [Country Tutorial](api-guides-and-references/configuration/country-v2/country.md)
+  * [Currency Service](api-guides-and-references/configuration/currency-service.md)
+  * [Tax Service](api-guides-and-references/configuration/tax-service.md)
+  * [Unit Handling Service](api-guides-and-references/configuration/unit-handling-service.md)
+  * [Site Settings Service](api-guides-and-references/configuration/site-settings/README.md)
+    * [Site Settings Tutorial](api-guides-and-references/configuration/site-settings/site-settings.md)
+  * [Indexing Service](api-guides-and-references/configuration/indexing/README.md)
+    * [Indexing Tutorial](api-guides-and-references/configuration/indexing/indexing.md)
+
+## Configuration

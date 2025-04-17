@@ -4,98 +4,114 @@ seo:
   description: Webhooks, indexing service events
 ---
 
-<<<<<<< Updated upstream
 # events-index
-=======
-# Index Events
->>>>>>> Stashed changes
 
-## Index events
+<<<<<<< Updated upstream
 
-### Overview
+## events-index
+
+\=======
+
+## Index Events
+
+> > > > > > > Stashed changes
+
+### Index events
+
+#### Overview
 
 Webhook events related to indexing data.
 
-### Available events
+#### Available events
 
-| Event type         | Event schema                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| index-item.updated | <pre class="language-json"><code class="lang-json">{
-  "availability": "Object",
-  "available": "Boolean",
-  "categoryAssignments": ["Object"],
-  "code": "String",
-  "id": "String",
-  "medias": [
-    {"Object"}
-  ],
-  "mixins": "Object",
-  "popularity": "Number",
-  "prices": [
-    {
-      "currency": "String",
-      "effectiveAmount": "Number",
-      "id": "String",
-      "itemId": {
-        "id": "String",
-        "itemType": "String",
-        "name": {"Object"}
-      },
-      "location": {
-        "countryCode": "String"
-      }
-      "originalAmount": "Number",
-      "priceModel": {
-        "description": {"Map"},
-        "id": "String",
-        "includesTax": "Boolean",
-        "measurementUnit": {
-          "quantity": "Integer",
-          "unitCode": "String"
-        },
-        "name": {"Object"},
-        "tierDefinition":{
-          "tierType": "String",
-          "tiers": [
-            {
-              "id": "String",
-              "minQuantity": {
-                "quantity": "Integer",
-                "unitCode": "String"
-              }
-            }
-          ]
-        }
-      },
-      "priceModelId": "String",
-      "restrictions": {
-        "siteCodes": ["String"]
-      },
-      "siteCode": "String",
-      "tierValues": [
-        {
-          "id": "String",
-          priceValue": "Number"
-        }
-      ]
-    }
-  ],
-  "published": "Boolean",
-  "siteCode": "String",
-  "tags": ["String"]
-}
+| Event type                          | Event schema                                                       |
+| ----------------------------------- | ------------------------------------------------------------------ |
+| index-item.updated                  | <pre class="language-json"><code class="lang-json">{
 </code></pre> |
-| index-item.deleted | <pre class="language-json"><code class="lang-json">{
-  "id": "String",
-  "siteCode": "String"
+| "availability": "Object",           |                                                                    |
+| "available": "Boolean",             |                                                                    |
+| "categoryAssignments": \["Object"], |                                                                    |
+| "code": "String",                   |                                                                    |
+| "id": "String",                     |                                                                    |
+| "medias": \[                        |                                                                    |
+
+```
+{"Object"}
+```
+
+],\
+"mixins": "Object",\
+"popularity": "Number",\
+"prices": \[\
+{\
+"currency": "String",\
+"effectiveAmount": "Number",\
+"id": "String",\
+"itemId": {\
+"id": "String",\
+"itemType": "String",\
+"name": {"Object"}\
+},\
+"location": {\
+"countryCode": "String"\
+}\
+"originalAmount": "Number",\
+"priceModel": {\
+"description": {"Map"},\
+"id": "String",\
+"includesTax": "Boolean",\
+"measurementUnit": {\
+"quantity": "Integer",\
+"unitCode": "String"\
+},\
+"name": {"Object"},\
+"tierDefinition":{\
+"tierType": "String",\
+"tiers": \[\
+{\
+"id": "String",\
+"minQuantity": {\
+"quantity": "Integer",\
+"unitCode": "String"\
+}\
+}\
+]\
+}\
+},\
+"priceModelId": "String",\
+"restrictions": {\
+"siteCodes": \["String"]\
+},\
+"siteCode": "String",\
+"tierValues": \[\
+{\
+"id": "String",\
+priceValue": "Number"\
+}\
+]\
+}\
+],\
+"published": "Boolean",\
+"siteCode": "String",\
+"tags": \["String"]\
+}\
+|\
+\| index-item.deleted |
+
+```json
+{
+"id": "String",
+"siteCode": "String"
 }
-</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+```
+
+|
 
 :::note
 
 **Learn about the `index.item-updated` event's specific behavior**
 
-##
+###
 
 The `index.item-updated` webhook event is emitted whenever there is a change on an item in the system - the index is updated with the new information.\
 For the event to be triggered, a product must have at least one defined **price**, as it is the price that determines products indexing on a specific site.\
