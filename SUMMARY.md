@@ -4,6 +4,9 @@
 * [openapi-generator](openapi-generator.md)
 * [Summary](summary.md)
 
+
+## Standard Practices
+
 ## Approval Service
 
 * [Approval Tutorials](approval-service/approval.md)

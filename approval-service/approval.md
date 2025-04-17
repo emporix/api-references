@@ -2,12 +2,6 @@
 seo:
   title: Approval Service Tutorials
   description: Approvals Management
-toc:
-  enable: true
-tocMaxDepth: 3
-editPage:
-  disable: true
-label: Tutorials
 ---
 
 # Approval Tutorials
