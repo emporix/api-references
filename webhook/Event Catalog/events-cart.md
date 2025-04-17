@@ -17,17 +17,9 @@ Webhook events related to the creation, update, and deletion of a cart.
 
 ## Available events
 
-<table>
-  <tr>
-    <td><b>Event type</b></td>
-    <td><b>Event schema</b></td>
-  </tr>
-  <tr>
-    <td>cart.created</td>
-<td>
-
-```json
-{
+| Event type        | Event schema                                                                                                                                                                                                                                                         |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| cart.created      | <pre class="language-json"><code class="lang-json">{
   "currency": "String",
   "customerId": "String",
   "id": "String",
@@ -38,16 +30,8 @@ Webhook events related to the creation, update, and deletion of a cart.
   },
   "siteCode": "String",
 }
-```
-</td>
-</tr>
-
-<tr>
-    <td>cart.merged</td>
-<td>
-
-```json
-{
+</code></pre> |
+| cart.merged       | <pre class="language-json"><code class="lang-json">{
   "currency": "String",
   "customerId": "String",
   "id": "String",
@@ -58,15 +42,8 @@ Webhook events related to the creation, update, and deletion of a cart.
   },
   "siteCode": "String",
 }
-```
-</td>
-</tr>
-  <tr>
-    <td>cart.closed</td>
-<td>
-
-```json
-{
+</code></pre> |
+| cart.closed       | <pre class="language-json"><code class="lang-json">{
   "currency": "String",
   "customerId": "String",
   "id": "String",
@@ -77,50 +54,26 @@ Webhook events related to the creation, update, and deletion of a cart.
   },
   "siteCode": "String",
 }
-```
-</td>
-</tr>
-<tr>
-    <td>cart.item-added</td>
-<td>
-
-```json
-{
+</code></pre> |
+| cart.item-added   | <pre class="language-json"><code class="lang-json">{
   "tenant": "String",
   "cartId": "String",
   "itemId":  "String",
   "quantity": "Number",
   "priceId": "String"
 }
-```
-</td>
-</tr>
-<tr>
-    <td>cart.item-updated</td>
-<td>
-
-```json
-{
+</code></pre>                                                                                |
+| cart.item-updated | <pre class="language-json"><code class="lang-json">{
   "tenant": "String",
   "cartId": "String",
   "itemId":  "String",
   "quantity": "Number",
   "priceId": "String"
 }
-```
-</td>
-</tr>
-<tr>
-    <td>cart.item-deleted</td>
-<td>
-
-```json
-{
+</code></pre>                                                                                |
+| cart.item-deleted | <pre class="language-json"><code class="lang-json">{
   "tenant": "String",
   "cartId": "String",
   "itemId":  "String"
 }
-```
-</td>
-</tr>
-</table>
+</code></pre>                                                                                                                               |

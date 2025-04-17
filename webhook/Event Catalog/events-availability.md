@@ -17,17 +17,9 @@ Webhook events related to the creation, update, and deletion of an availability.
 
 ## Available events
 
-<table>
-  <tr>
-    <td><b>Event type</b></td>
-    <td><b>Event schema</b></td>
-  </tr>
-  <tr>
-    <td>availability.created</td>
-<td>
-
-```json
-{
+| Event type           | Event schema                                                                                                                                                                                                                                                                                                                                                                   |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| availability.created | <pre class="language-json"><code class="lang-json">{
   "available": "Boolean",
   "distributionChannel": "String",
   "id": "String",
@@ -42,15 +34,8 @@ Webhook events related to the creation, update, and deletion of an availability.
   "site": "String",
   "stockLevel": "Number"
 }
-```
-</td>
-  </tr>
-  <tr>
-    <td>availability.updated</td>
-<td>
-
-```json
-{
+</code></pre>   |
+| availability.updated | <pre class="language-json"><code class="lang-json">{
   "available": "Boolean",
   "distributionChannel": "String",
   "id": "String",
@@ -65,19 +50,8 @@ Webhook events related to the creation, update, and deletion of an availability.
   "site": "String",
   "stockLevel": "Number"  
 }
-```
-</td>
-  </tr>
-  <tr>
-    <td>availability.deleted</td>
-  <td>
-
-  ```json
-  {
-    "id": "String"
-  }
-  ```
-  </td>
-  </tr>
-</table>
-
+</code></pre> |
+| availability.deleted | <pre class="language-json"><code class="lang-json">{
+  "id": "String"
+}
+</code></pre>                                                                                                                                                                                                                                                                                          |

@@ -2,28 +2,21 @@
 seo:
   title: Indexing Service events
   description: Webhooks, indexing service events
-
 ---
 
-# Index events
+# events-index
 
-## Overview
+## Index events
+
+### Overview
 
 Webhook events related to indexing data.
 
-## Available events
+### Available events
 
-<table>
-  <tr>
-    <td><b>Event type</b></td>
-    <td><b>Event schema</b></td>
-  </tr>
-  <tr>
-    <td>index-item.updated</td>
-<td>
-
-```json
-{
+| Event type         | Event schema                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| index-item.updated | <pre class="language-json"><code class="lang-json">{
   "availability": "Object",
   "available": "Boolean",
   "categoryAssignments": ["Object"],
@@ -87,65 +80,34 @@ Webhook events related to indexing data.
   "siteCode": "String",
   "tags": ["String"]
 }
-```
-</td>
-</tr>
-
-<tr>
-    <td>index-item.deleted</td>
-<td>
-
-```json
-{
+</code></pre> |
+| index-item.deleted | <pre class="language-json"><code class="lang-json">{
   "id": "String",
   "siteCode": "String"
 }
-```
-</td>
-</tr>
-</table>
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 
 :::note
 
-**Learn about the `index.item-updated` event's specific behavior** 
-#
-The `index.item-updated` webhook event is emitted whenever there is a change on an item in the system - the index is updated with the new information. 
-For the event to be triggered, a product must have at least one defined **price**, as it is the price that determines products indexing on a specific site.
-Bear in mind all the events are site-specific, which means that they are linked to activities happening on particular sites. 
-The prices are also site-specific, and a single price can be associated with multiple sites. 
-The number of events triggered in the system depends on **the number of sites** assigned to a specific product’s prices, with one event emitted per each site. 
+**Learn about the `index.item-updated` event's specific behavior**
+
+##
+
+The `index.item-updated` webhook event is emitted whenever there is a change on an item in the system - the index is updated with the new information.\
+For the event to be triggered, a product must have at least one defined **price**, as it is the price that determines products indexing on a specific site.\
+Bear in mind all the events are site-specific, which means that they are linked to activities happening on particular sites.\
+The prices are also site-specific, and a single price can be associated with multiple sites.\
+The number of events triggered in the system depends on **the number of sites** assigned to a specific product’s prices, with one event emitted per each site.
 
 Example:
-<table>
-  <tr>
-    <td><b>productid</b></td>
-    <td><b>price with associated sites</b></td>
-    <td><b>number of emitted events</b></td>
-    <td><b>sites the event was emitted to</b></td>
-  </tr>
-  <tr>
-    <td>123</td>
-    <td>$10 - sites A, B</td>
-    <td>2</td>
-    <td>A, B</td>
-  </tr>
-  <tr>
-    <td>234</td>
-    <td>$10 - site A, $15 - sites A, B, C</td>
-    <td>3</td>
-    <td>A, B, C</td>
-  </tr>
-  <tr>
-    <td>345</td>
-    <td>no price</td>
-    <td>0</td>
-    <td>none</td>
-  </tr>
-</table>
 
-* A product *123* has one assigned price of *$10*, associated with two sites *A* and *B*. When you update the product *123*, the number of emitted `index.item-updated` events is **2** as there are two sites associated with the product price.
+| productid | price with associated sites       | number of emitted events | sites the event was emitted to |
+| --------- | --------------------------------- | ------------------------ | ------------------------------ |
+| 123       | $10 - sites A, B                  | 2                        | A, B                           |
+| 234       | $10 - site A, $15 - sites A, B, C | 3                        | A, B, C                        |
+| 345       | no price                          | 0                        | none                           |
 
-* A product *234* has two assigned prices: *$10* associated with site *A* and *$15* associated with site *A*, *B*, and *C*. So when you update the product *234*, the `index.item-updated` event runs **3** times, as there are three sites affected.
-
-* A product *345* has no defined price. So when you update the *345* product, the `index.item-updated` is not emitted as no site is associated with the product.
-:::
+* A product _123_ has one assigned price of _$10_, associated with two sites _A_ and _B_. When you update the product _123_, the number of emitted `index.item-updated` events is **2** as there are two sites associated with the product price.
+* A product _234_ has two assigned prices: _$10_ associated with site _A_ and _$15_ associated with site _A_, _B_, and _C_. So when you update the product _234_, the `index.item-updated` event runs **3** times, as there are three sites affected.
+* A product _345_ has no defined price. So when you update the _345_ product, the `index.item-updated` is not emitted as no site is associated with the product.\
+  :::

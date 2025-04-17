@@ -2,7 +2,6 @@
 seo:
   title: Client Management Service events
   description: Webhooks, client management events
-
 ---
 
 # Client Management Service events
@@ -13,17 +12,9 @@ Webhook events related to the creation, update and deletion of legal entity and 
 
 ## Available events
 
-<table>
-  <tr>
-    <td><b>Event type</b></td>
-    <td><b>Event schema</b></td>
-  </tr>
-<tr>
-    <td>client-management.legalentity-created</td>
-<td>
-
-```json
-{
+| Event type                                     | Event schema                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| client-management.legalentity-created          | <pre class="language-json"><code class="lang-json">{
   "legalEntityId": "String",
   "name": "String",
   "type": "String",
@@ -39,15 +30,8 @@ Webhook events related to the creation, update and deletion of legal entity and 
   "metadata": "Object",
   "tenant": "String"
 }
-```
-</td>
-  </tr>
-<tr>
-    <td>client-management.legalentity-updated</td>
-<td>
-
-```json
-{
+</code></pre> |
+| client-management.legalentity-updated          | <pre class="language-json"><code class="lang-json">{
   "legalEntityId": "String",
   "name": "String",
   "type": "String",
@@ -63,28 +47,14 @@ Webhook events related to the creation, update and deletion of legal entity and 
   "metadata": "Object",
   "tenant": "String"
 }
-```
-</td>
-  </tr>
-  <tr>
-      <td>client-management.legalentity-deleted</td>
-  <td>
-
-```json
-{
+</code></pre> |
+| client-management.legalentity-deleted          | <pre class="language-json"><code class="lang-json">{
   "tenant": "String",
   "legalEntityId": "String",
   "legalEntityParentId": "String"
 }
-```
-</td>
-  </tr>
-<tr>
-    <td>client-management.user-assigned-to-legalentity</td>
-<td>
-
-```json
-{
+</code></pre>                                                                                                                                                                                                                                                                                  |
+| client-management.user-assigned-to-legalentity | <pre class="language-json"><code class="lang-json">{
   "tenant": "String",
   "userId": "String",
   "email": "String",
@@ -93,7 +63,4 @@ Webhook events related to the creation, update and deletion of legal entity and 
   "primary": "Boolean",
   "assignmentId": "String"
 }
-```
-  </td>
-    </tr>
-</table>
+</code></pre>                                                                                                                                                                                                  |

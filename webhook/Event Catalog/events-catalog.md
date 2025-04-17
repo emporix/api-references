@@ -2,7 +2,6 @@
 seo:
   title: Catalog Service events
   description: Webhooks, catalog events
-
 ---
 
 # Catalog Service events
@@ -13,17 +12,9 @@ Webhook events related to the creation, update, and deletion of a catalog.
 
 ## Available events
 
-<table>
-  <tr>
-    <td><b>Event type</b></td>
-    <td><b>Event schema</b></td>
-  </tr>
-  <tr>
-    <td>catalog.created</td>
-<td>
-
-```json
-{
+| Event type      | Event schema                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| catalog.created | <pre class="language-json"><code class="lang-json">{
   "categoryIds": [
     "String"
   ],
@@ -45,15 +36,8 @@ Webhook events related to the creation, update, and deletion of a catalog.
     "visible": "Boolean"
   }  
 }
-```
-</td>
-  </tr>
-  <tr>
-    <td>catalog.updated</td>
-<td>
-
-```json
-{
+</code></pre> |
+| catalog.updated | <pre class="language-json"><code class="lang-json">{
   "categoryIds": [
     "String"
   ],
@@ -75,19 +59,8 @@ Webhook events related to the creation, update, and deletion of a catalog.
     "visible": "Boolean"
   }  
 }
-```
-</td>
-  </tr>
-  <tr>
-    <td>catalog.deleted</td>
-  <td>
-
-  ```json
-  {
-    "id": "String"
-  }
-  ```
-  </td>
-  </tr>
-</table>
-
+</code></pre> |
+| catalog.deleted | <pre class="language-json"><code class="lang-json">{
+  "id": "String"
+}
+</code></pre>                                                                                                                                                                                                                                                                                                                                             |

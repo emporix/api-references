@@ -2,7 +2,6 @@
 seo:
   title: Customer Service events
   description: Webhooks, customer events
-
 ---
 
 # Customer Service events
@@ -13,17 +12,9 @@ Webhook events related to the creation, update and deletion of customer, sending
 
 ## Available events
 
-<table>
-  <tr>
-    <td><b>Event type</b></td>
-    <td><b>Event schema</b></td>
-  </tr>
-<tr>
-    <td>customer.created</td>
-<td>
-
-```json
-{
+| Event type                    | Event schema                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| customer.created              | <pre class="language-json"><code class="lang-json">{
   "customerNumber": "String",
   "id": "String",
   "title": "String",
@@ -47,15 +38,8 @@ Webhook events related to the creation, update and deletion of customer, sending
   "mixins": "Map",
   "tenant": "String"
 }
-```
-</td>
-  </tr>
-<tr>
-    <td>customer.updated</td>
-<td>
-
-```json
-{
+</code></pre>                                                                                   |
+| customer.updated              | <pre class="language-json"><code class="lang-json">{
   "updatedBy": "String",
   "customerNumber": "String",
   "id": "String",
@@ -82,102 +66,50 @@ Webhook events related to the creation, update and deletion of customer, sending
   "mixins": "Map",
   "tenant": "String"
 }
-```
-</td>
-  </tr>
-  <tr>
-      <td>customer.deleted</td>
-  <td>
-
-```json
-{
+</code></pre> |
+| customer.deleted              | <pre class="language-json"><code class="lang-json">{
   "customerNumber": "String",
   "email": "String",
   "triggeredBy": "String",
   "tenant": "String"
 }
-```
-</td>
-  </tr>
-  <tr>
-    <td>customer.password-reset</td>
-<td>
-
-```json
-{
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| customer.password-reset       | <pre class="language-json"><code class="lang-json">{
   "email": "String",
   "token": "String",
   "site": "String"
 }
-```
-  </td>
-    </tr>
-<tr>
-    <td>customer.refresh-token</td>
-<td>
-
-```json
-{
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| customer.refresh-token        | <pre class="language-json"><code class="lang-json">{
   "email": "String",
   "tenant": "String"
 }
-```
-  </td>
-    </tr>
-<tr>
-    <td>customer.opt-in</td>
-<td>
-
-```json
-{
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| customer.opt-in               | <pre class="language-json"><code class="lang-json">{
   "customerNumber": "String",
   "activateAccountUrl": "String",
   "token": "String"
 }
-```
-  </td>
-    </tr>
-<tr>
-    <td>customer.logged.in</td>
-<td>
-
-```json
-{
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| customer.logged.in            | <pre class="language-json"><code class="lang-json">{
   "tenant": "String",
   "sessionId": "String",
   "customerId": "String"
 }
-```
-  </td>
-   </tr>
-<tr>
-  <td>customer.email-change</td>
-<td>
-
-```json
-{
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| customer.email-change         | <pre class="language-json"><code class="lang-json">{
   "tenant": "String",
   "customerId": "String",
   "token": "String",
   "email": "String",
   "newEmail": "String"
 }
-```
-  </td>
-   </tr>
- <tr>
-   <td>customer.email-change-request</td>
- <td>
-
- ```json
- {
-   "tenant": "String",
-   "customerId": "String",
-   "token": "String",
-   "email": "String",
-   "newEmail": "String"
- }
- ```
-   </td>
-    </tr>
-</table>
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| customer.email-change-request | <pre class="language-json"><code class="lang-json">{
+  "tenant": "String",
+  "customerId": "String",
+  "token": "String",
+  "email": "String",
+  "newEmail": "String"
+}
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |

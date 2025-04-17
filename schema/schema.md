@@ -10,46 +10,37 @@ editPage:
 label: Tutorials
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+# schema
 
-# Schema Service Tutorials
+import {\
+Alert,\
+Button,\
+OpenApiTryIt,\
+ExplainStep\
+} from '@redocly/developer-portal/ui';
+
+## Schema Service Tutorials
 
 With the Schema Service you can easily create and manage customized/industry-specific fields for different types in Management Dashboard. The new fields appear in a separate tab when you create an instance of the extended type.
 
 :::info
 
-It is possible to create mixin schemas through API for the following entities: `category`, `company`, `coupon`, `customer`, `customer.address`, `order`, `price list`, `product`, `quote` and `return`.
+It is possible to create mixin schemas through API for the following entities: `category`, `company`, `coupon`, `customer`, `customer.address`, `order`, `price list`, `product`, `quote` and `return`.\
 :::
 
-## How to add custom fields for an entity
+### How to add custom fields for an entity
 
 This tutorial explains how to add custom fields for a product entity.
 
-### Create a schema
+#### Create a schema
 
-To extend the product entity in Management Dashboard with some industry-specific fields, create a schema that defines the required fields and generates JSON file representation by sending a request to the <nobr><Button to="/openapi/schema/#operation/POST-schema-create-schema" size="small">Creating a schema</Button></nobr> endpoint.
+To extend the product entity in Management Dashboard with some industry-specific fields, create a schema that defines the required fields and generates JSON file representation by sending a request to the Creating a schema endpoint.
 
-<OpenApiTryIt
-  definitionId="schema"
-  operationId="POST-schema-create-schema"
-  defaultExample="Schema"
-/>
+#### Retrieve a schema
 
-### Retrieve a schema
+Retrieve the created schema to get the schema URL by calling the Retrieving a schema endpoint.
 
-Retrieve the created schema to get the schema URL by calling the <nobr><Button to="/openapi/schema/#operation/GET-schema-retrieve-schema" size="small">Retrieving a schema</Button></nobr> endpoint.
-
-<OpenApiTryIt
-  definitionId="schema"
-  operationId="GET-schema-retrieve-schema"
-/>
-
-In the response, you can see the URL link to cloudinary repository, where the schema for the product type has been uploaded. 
+In the response, you can see the URL link to cloudinary repository, where the schema for the product type has been uploaded.
 
 :::info
 
@@ -57,10 +48,13 @@ When you create a product, the validation mechanism runs against the schema stor
 
 :::
 
-### Create a product
+#### Create a product
 
-Now, create a product that contains additional fields by sending a request to <nobr><Button to="/openapi/product/#operation/POST-product-create-product" size="small">Creating a new product</Button></nobr> endpoint. <br></br>
-The product should contain "metadata.mixins.{{id}}: {{cloudinaryUrl}}", where `id` is the schema URL you retrieved with `GET` operation in the previous step. <br></br>
+Now, create a product that contains additional fields by sending a request to Creating a new product endpoint.\
+\
+The product should contain "metadata.mixins.\{{id\}}: \{{cloudinaryUrl\}}", where `id` is the schema URL you retrieved with `GET` operation in the previous step.\
+\
+
 
 For example, you created a schema with **size** attribute and it got assigned an id: `652d12399ffeb27c5a3b6d02`. When creating or editing a product, provide the schema `id` and `URL` details in the payload of the `POST` request:
 
@@ -79,24 +73,16 @@ For example, you created a schema with **size** attribute and it got assigned an
 }
 ```
 
-<OpenApiTryIt
-  definitionId="product"
-  operationId="POST-product-create-product"
-  defaultExample="BASIC Product Creation"
-/>
-
 The product you created has already the custom fields added in the separate "Product Custom Attributes" tab.
 
-
-## How to create a more complex schema  
+### How to create a more complex schema
 
 In case you need to add a schema for more complex attribute types than those supported by default, instead of creating a schema, you can create a reference. This tutorial shows you how to upload more complex schemas.
 
-### Prepare a JSON schema definition
+#### Prepare a JSON schema definition
 
 See the example JSON file that defines fields of different types:
 
-  
 ```json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
@@ -252,15 +238,9 @@ See the example JSON file that defines fields of different types:
 
 ```
 
-### Create a reference
+#### Create a reference
 
-To use the schema in Emporix Commerce Engine, send a request to the <nobr><Button to="/openapi/schema/#operation/POST-schema-create-reference" size="small">Creating a reference</Button></nobr> endpoint. This action creates a reference to your schema so that you use the extended type.
-
-<OpenApiTryIt
-  definitionId="schema"
-  operationId="POST-schema-create-reference"
-  defaultExample="Reference"
-/>
+To use the schema in Emporix Commerce Engine, send a request to the Creating a reference endpoint. This action creates a reference to your schema so that you use the extended type.
 
 Result: The schema reference is used to create or edit product objects.
 
@@ -270,9 +250,9 @@ Note that the fields of types that are not supported by default are not displaye
 
 :::
 
-### Create a product
+#### Create a product
 
-Now, create a product and provide values for the customized fields by sending a request to <nobr><Button to="/openapi/product/#operation/POST-product-create-product" size="small">Creating a new product</Button></nobr> endpoint.
+Now, create a product and provide values for the customized fields by sending a request to Creating a new product endpoint.
 
 See the example payload for creating a product basing on the schema from the previous step:
 
