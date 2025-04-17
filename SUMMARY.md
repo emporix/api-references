@@ -15,70 +15,6 @@
 * [q-param](q-param.md)
 * [translations](translations.md)
 * [upsert](upsert.md)
-* [Integrations](integrations/README.md)
-  * [Emporix-make](Integrations/Emporix-make.md)
-  * [identity-providers](Integrations/identity-providers.md)
-  * [workflow-automation](Integrations/workflow-automation.md)
-* [approval-service](approval-service/README.md)
-  * [Approval Tutorials](approval-service/approval.md)
-  * [Approval API Reference](approval-service/approval-api-reference/README.md)
-* [availability](availability/README.md)
-  * [availability](availability/availability.md)
-* [cart](cart/README.md)
-  * [cart](cart/cart.md)
-* [catalog](catalog/README.md)
-  * [catalog](catalog/catalog.md)
-* [category-tree](category-tree/README.md)
-  * [category](category-tree/category.md)
-* [checkout](checkout/README.md)
-  * [checkout](checkout/checkout.md)
-* [coupon](coupon/README.md)
-  * [coupon](coupon/coupon.md)
-* [fee](fee/README.md)
-  * [fee](fee/fee.md)
-* [iam](iam/README.md)
-  * [iam](iam/iam.md)
-* [invoice](invoice/README.md)
-  * [invoice](invoice/invoice.md)
-* [media](media/README.md)
-  * [media](media/media.md)
-* [order](order/README.md)
-  * [order](order/order.md)
-* [payment-gateway](payment-gateway/README.md)
-  * [payment-gateway](payment-gateway/payment-gateway.md)
-* [price-v2](price-v2/README.md)
-  * [price](price-v2/price.md)
-* [product-v2](product-v2/README.md)
-  * [product](product-v2/product.md)
-* [quote](quote/README.md)
-  * [quote](quote/quote.md)
-* [returns](returns/README.md)
-  * [returns](returns/returns.md)
-* [reward-points](reward-points/README.md)
-  * [reward-points](reward-points/reward-points.md)
-* [schema](schema/README.md)
-  * [schema](schema/schema.md)
-* [sequential-id](sequential-id/README.md)
-  * [sequentialid](sequential-id/sequentialid.md)
-* [session-context](session-context/README.md)
-  * [session-context](session-context/session-context.md)
-* [shipping](shipping/README.md)
-  * [shipping](shipping/shipping.md)
-* [webhook](webhook/README.md)
-  * [webhook](webhook/webhook.md)
-  * [Event Catalog](webhook/event-catalog/README.md)
-    * [Availability Service events](<webhook/Event Catalog/events-availability.md>)
-    * [Cart Service events](<webhook/Event Catalog/events-cart.md>)
-    * [Catalog Service events](<webhook/Event Catalog/events-catalog.md>)
-    * [Category Service events](<webhook/Event Catalog/events-category.md>)
-    * [Client Management Service events](<webhook/Event Catalog/events-client-management.md>)
-    * [Customer Service events](<webhook/Event Catalog/events-customer.md>)
-    * [events-index](<webhook/Event Catalog/events-index.md>)
-    * [Order Service events](<webhook/Event Catalog/events-order.md>)
-    * [Price Service events](<webhook/Event Catalog/events-price.md>)
-    * [Product Service events](<webhook/Event Catalog/events-product.md>)
-    * [Quote Service events](<webhook/Event Catalog/events-quote.md>)
-    * [Return events](<webhook/Event Catalog/events-return.md>)
 
 ## API Guides and References
 
@@ -126,27 +62,6 @@
           spec: ai-api
     ```
 * [Configuration](api-guides-and-references/configuration/README.md)
-  * [API Reference](api-guides-and-references/configuration/api-reference/README.md)
-    * ```yaml
-      type: builtin:openapi
-      props:
-        models: true
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: country-api
-      ```
-    * ```yaml
-      props:
-        models: true
-      type: builtin:openapi
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: configuration-api
-      ```
   * [Configuration Service](api-guides-and-references/configuration/configuration-service/README.md)
     * [API Reference](api-guides-and-references/configuration/configuration-service/api-reference/README.md)
       * ```yaml
@@ -179,4 +94,101 @@
   * [Indexing Service](api-guides-and-references/configuration/indexing/README.md)
     * [Indexing Tutorial](api-guides-and-references/configuration/indexing/indexing.md)
 
-## Configuration
+***
+
+* [Catalogs and Categories](catalogs-and-categories/README.md)
+  * [Catalog Service](catalogs-and-categories/catalog/README.md)
+    * [Catalog Tutorials](catalogs-and-categories/catalog/catalog.md)
+    * [API Reference](catalogs-and-categories/catalog/api-reference.md)
+  * [Category Service](catalogs-and-categories/category-tree/README.md)
+    * [Category Tutorials](catalogs-and-categories/category-tree/category.md)
+    * [API Reference](catalogs-and-categories/category-tree/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: category-api
+        ```
+* [Products, Labels and Brands](products-labels-and-brands/README.md)
+  * [Product Service](products-labels-and-brands/product-service.md)
+  * [product-v2](products-labels-and-brands/product-v2/README.md)
+    * [product](products-labels-and-brands/product-v2/product.md)
+  * [Label Service](products-labels-and-brands/label-service.md)
+  * [Brand Service](products-labels-and-brands/brand-service.md)
+* [Prices, Currencies and Taxes](price-v2/README.md)
+  * [Price Service](price-v2/price-service/README.md)
+    * [Price Tutorials](price-v2/price-service/price.md)
+    * [API Reference](price-v2/price-service/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: price-api
+        ```
+  * [Currency Service](price-v2/currency-service.md)
+  * [Tax Service](price-v2/tax-service.md)
+* [Users and Permissions](users-and-permissions/README.md)
+  * [iam](users-and-permissions/iam/README.md)
+    * [iam](users-and-permissions/iam/iam.md)
+  * [session-context](users-and-permissions/session-context/README.md)
+    * [session-context](users-and-permissions/session-context/session-context.md)
+* [Companies and Customers](companies-and-customers/README.md)
+  * [Customer Management](companies-and-customers/customer-management.md)
+  * [Customer Segments](companies-and-customers/customer-segments.md)
+  * [approval-service](companies-and-customers/approval-service/README.md)
+    * [Approval Tutorials](companies-and-customers/approval-service/approval.md)
+    * [Approval API Reference](companies-and-customers/approval-service/approval-api-reference.md)
+* [Delivery and Shipping](delivery-and-shipping/README.md)
+  * [shipping](delivery-and-shipping/shipping/README.md)
+    * [shipping](delivery-and-shipping/shipping/shipping.md)
+  * [Delivery Providers Service](delivery-and-shipping/delivery-providers-service.md)
+* [Rewards and Promotions](rewards-and-promotions/README.md)
+  * [coupon](rewards-and-promotions/coupon/README.md)
+    * [coupon](rewards-and-promotions/coupon/coupon.md)
+  * [reward-points](rewards-and-promotions/reward-points/README.md)
+    * [reward-points](rewards-and-promotions/reward-points/reward-points.md)
+* [Quotes](quotes/README.md)
+  * [quote](quotes/quote/README.md)
+    * [quote](quotes/quote/quote.md)
+* [Checkout](checkout/README.md)
+  * [cart](checkout/cart/README.md)
+    * [cart](checkout/cart/cart.md)
+  * [payment-gateway](checkout/payment-gateway/README.md)
+    * [payment-gateway](checkout/payment-gateway/payment-gateway.md)
+  * [checkout](checkout/checkout/README.md)
+    * [checkout](checkout/checkout/checkout.md)
+  * [fee](checkout/fee/README.md)
+    * [fee](checkout/fee/fee.md)
+  * [Shopping List](checkout/shopping-list.md)
+* [Orders](orders/README.md)
+  * [availability](orders/availability/README.md)
+    * [availability](orders/availability/availability.md)
+  * [order](orders/order/README.md)
+    * [order](orders/order/order.md)
+  * [Pick Pack](orders/pick-pack.md)
+  * [invoice](orders/invoice/README.md)
+    * [invoice](orders/invoice/invoice.md)
+  * [returns](orders/returns/README.md)
+    * [returns](orders/returns/returns.md)
+  * [SEPA Export](orders/sepa-export.md)
+* [Utilities](utilities/README.md)
+  * [schema](utilities/schema/README.md)
+    * [schema](utilities/schema/schema.md)
+  * [sequential-id](utilities/sequential-id/README.md)
+    * [sequentialid](utilities/sequential-id/sequentialid.md)
+* [Media](media/README.md)
+  * [media](media/media/README.md)
+    * [media](media/media/media.md)
+* [Webhooks](webhooks.md)
+* [Integrations](integrations/README.md)
+  * [Emporix-make](Integrations/Emporix-make.md)
+  * [identity-providers](Integrations/identity-providers.md)
+  * [workflow-automation](Integrations/workflow-automation.md)
