@@ -32,16 +32,12 @@
   * [category](category-tree/category.md)
 * [checkout](checkout/README.md)
   * [checkout](checkout/checkout.md)
-* [country-v2](country-v2/README.md)
-  * [country](country-v2/country.md)
 * [coupon](coupon/README.md)
   * [coupon](coupon/coupon.md)
 * [fee](fee/README.md)
   * [fee](fee/fee.md)
 * [iam](iam/README.md)
   * [iam](iam/iam.md)
-* [indexing](indexing/README.md)
-  * [indexing](indexing/indexing.md)
 * [invoice](invoice/README.md)
   * [invoice](invoice/invoice.md)
 * [media](media/README.md)
@@ -68,8 +64,6 @@
   * [session-context](session-context/session-context.md)
 * [shipping](shipping/README.md)
   * [shipping](shipping/shipping.md)
-* [site-settings](site-settings/README.md)
-  * [site-settings](site-settings/site-settings.md)
 * [webhook](webhook/README.md)
   * [webhook](webhook/webhook.md)
   * [Event Catalog](webhook/event-catalog/README.md)
@@ -112,6 +106,34 @@
           spec: ai-api
     ```
 
-***
+## Configuration
 
-* [Configuration](configuration.md)
+* [Configuration](configuration/configuration/README.md)
+  * [API Reference](configuration/configuration/api-reference/README.md)
+    * ```yaml
+      type: builtin:openapi
+      props:
+        models: true
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: configuration-api
+      ```
+* [country-v2](configuration/country-v2/README.md)
+  * [Country Service Tutorial](configuration/country-v2/country.md)
+  * [API Reference](configuration/country-v2/api-reference/README.md)
+    * ```yaml
+      type: builtin:openapi
+      props:
+        models: true
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: country-api
+      ```
+* [site-settings](configuration/site-settings/README.md)
+  * [site-settings](configuration/site-settings/site-settings.md)
+* [indexing](configuration/indexing/README.md)
+  * [indexing](configuration/indexing/indexing.md)
