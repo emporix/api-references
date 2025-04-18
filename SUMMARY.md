@@ -262,11 +262,67 @@
               spec: session-context-api
         ```
 * [Companies and Customers](companies-and-customers/README.md)
-  * [Customer Management](companies-and-customers/customer-management.md)
-  * [Customer Segments](companies-and-customers/customer-segments.md)
+  * [Customer Management](companies-and-customers/customer-management/README.md)
+    * [API Reference](companies-and-customers/customer-management/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: customer-client-management-api
+        ```
+  * [Customer Service](companies-and-customers/customer-management-1/README.md)
+    * [API Reference](companies-and-customers/customer-management-1/api-reference.md)
+    * ```yaml
+      type: builtin:openapi
+      props:
+        models: true
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: customer-managed
+      ```
+  * [Customer Service](companies-and-customers/customer-service/README.md)
+    * [API Reference](companies-and-customers/customer-service/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: customer-tenant-api
+        ```
+  * [Customer Segments](companies-and-customers/customer-segments/README.md)
+    * [API Reference](companies-and-customers/customer-segments/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: segments-api
+        ```
   * [approval-service](companies-and-customers/approval-service/README.md)
     * [Approval Tutorials](companies-and-customers/approval-service/approval.md)
-    * [Approval API Reference](companies-and-customers/approval-service/approval-api-reference.md)
+    * [Approval API Reference](companies-and-customers/approval-service/approval-api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: approval-api
+        ```
 * [Delivery and Shipping](delivery-and-shipping/README.md)
   * [shipping](delivery-and-shipping/shipping/README.md)
     * [shipping](delivery-and-shipping/shipping/shipping.md)
