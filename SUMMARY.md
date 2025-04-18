@@ -609,27 +609,27 @@
 * [Quotes](quotes/README.md)
   * [Quote Service](quotes/quote/README.md)
     * [Quote Tutorial](quotes/quote/quote.md)
-  * [API Reference](quotes/api-reference/README.md)
-    * ```yaml
-      props:
-        models: true
-      type: builtin:openapi
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: quote-api
-      ```
-    * ```yaml
-      props:
-        models: true
-      type: builtin:openapi
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: quote-api
-      ```
+    * [API Reference](quotes/quote/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: quote-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: quote-api
+        ```
 * [Checkout](checkout/README.md)
   * [Cart Service](checkout/cart/README.md)
     * [Cart Tutorial](checkout/cart/cart.md)
@@ -955,7 +955,7 @@
         ```
 * [Webhooks](webhooks/README.md)
   * [Webhook Service](webhooks/webhook-service/README.md)
-    * [Webhooks Tutorial](webhooks/webhook-service/webhook.md)
+    * [Webhooks Tutorial](webhooks/webhook-service/webhooks-tutorial.md)
     * [API Reference](webhooks/webhook-service/api-reference/README.md)
       * ```yaml
         props:
