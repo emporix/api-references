@@ -574,18 +574,18 @@
               spec: media-api
         ```
 * [Webhooks](webhooks/README.md)
-  * [Events - Availability](webhooks/events-availability.md)
-  * [Events - Cart](webhooks/events-cart.md)
-  * [Events - Catalog](webhooks/events-catalog.md)
-  * [Events - Category](webhooks/events-category.md)
-  * [Events - Client Management](webhooks/events-client-management.md)
-  * [Events - Customer](webhooks/events-customer.md)
-  * [Events - Index](webhooks/events-index.md)
-  * [Events - Order](webhooks/events-order.md)
-  * [Events - Price](webhooks/events-price.md)
-  * [Events - Product](webhooks/events-product.md)
-  * [Events - Quote](webhooks/events-quote.md)
-  * [Events - Product](webhooks/events-return.md)
+  * [Events-Availability](webhooks/events-availability.md)
+  * [Events-Cart](webhooks/events-cart.md)
+  * [Events-Catalog](webhooks/events-catalog.md)
+  * [Events-Category](webhooks/events-category.md)
+  * [Events-Client Management](webhooks/events-client-management.md)
+  * [Events-Customer](webhooks/events-customer.md)
+  * [Events-Index](webhooks/events-index.md)
+  * [Events-Order](webhooks/events-order.md)
+  * [Events-Price](webhooks/events-price.md)
+  * [Events-Product](webhooks/events-product.md)
+  * [Events-Quote](webhooks/events-quote.md)
+  * [Events-Product](webhooks/events-return.md)
   * [API Reference](webhooks/api-reference/README.md)
     * ```yaml
       type: builtin:openapi
@@ -598,6 +598,6 @@
             spec: webhook-api
       ```
 * [Integrations](integrations/README.md)
-  * [Emporix-make](Integrations/Emporix-make.md)
-  * [identity-providers](Integrations/identity-providers.md)
-  * [workflow-automation](Integrations/workflow-automation.md)
+  * [Emporix and Make](Integrations/Emporix-make.md)
+  * [Identity Providers](Integrations/identity-providers.md)
+  * [Workflow Automation](Integrations/workflow-automation.md)
