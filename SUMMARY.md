@@ -134,7 +134,17 @@
 * [Catalogs and Categories](catalogs-and-categories/README.md)
   * [Catalog Service](catalogs-and-categories/catalog/README.md)
     * [Catalog Tutorials](catalogs-and-categories/catalog/catalog.md)
-    * [API Reference](catalogs-and-categories/catalog/api-reference.md)
+    * [API Reference](catalogs-and-categories/catalog/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: catalog-api
+        ```
   * [Category Service](catalogs-and-categories/category-tree/README.md)
     * [Category Tutorials](catalogs-and-categories/category-tree/category.md)
     * [API Reference](catalogs-and-categories/category-tree/api-reference/README.md)
@@ -149,11 +159,43 @@
               spec: category-api
         ```
 * [Products, Labels and Brands](products-labels-and-brands/README.md)
-  * [Product Service](products-labels-and-brands/product-service.md)
   * [product-v2](products-labels-and-brands/product-v2/README.md)
     * [product](products-labels-and-brands/product-v2/product.md)
-  * [Label Service](products-labels-and-brands/label-service.md)
-  * [Brand Service](products-labels-and-brands/brand-service.md)
+    * [API Reference](products-labels-and-brands/product-v2/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: product-api
+        ```
+  * [Label Service](products-labels-and-brands/label-service/README.md)
+    * [API Reference](products-labels-and-brands/label-service/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: label-api
+        ```
+  * [Brand Service](products-labels-and-brands/brand-service/README.md)
+    * [API Reference](products-labels-and-brands/brand-service/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: brand-api
+        ```
 * [Prices, Currencies and Taxes](price-v2/README.md)
   * [Price Service](price-v2/price-service/README.md)
     * [Price Tutorials](price-v2/price-service/price.md)
@@ -195,8 +237,30 @@
 * [Users and Permissions](users-and-permissions/README.md)
   * [iam](users-and-permissions/iam/README.md)
     * [iam](users-and-permissions/iam/iam.md)
+    * [API Reference](users-and-permissions/iam/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: iam-api
+        ```
   * [session-context](users-and-permissions/session-context/README.md)
     * [session-context](users-and-permissions/session-context/session-context.md)
+    * [API Reference](users-and-permissions/session-context/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: session-context-api
+        ```
 * [Companies and Customers](companies-and-customers/README.md)
   * [Customer Management](companies-and-customers/customer-management.md)
   * [Customer Segments](companies-and-customers/customer-segments.md)
