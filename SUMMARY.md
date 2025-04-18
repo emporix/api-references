@@ -574,7 +574,18 @@
               spec: media-api
         ```
 * [Webhooks](webhooks/README.md)
-  * [Events Availability](webhooks/events-availability.md)
+  * [Events - Availability](webhooks/events-availability.md)
+  * [Events - Cart](webhooks/events-cart.md)
+  * [Events - Catalog](webhooks/events-catalog.md)
+  * [Events - Category](webhooks/events-category.md)
+  * [Events - Client Management](webhooks/events-client-management.md)
+  * [Events - Customer](webhooks/events-customer.md)
+  * [Events - Index](webhooks/events-index.md)
+  * [Events - Order](webhooks/events-order.md)
+  * [Events - Price](webhooks/events-price.md)
+  * [Events - Product](webhooks/events-product.md)
+  * [Events - Quote](webhooks/events-quote.md)
+  * [Events - Product](webhooks/events-return.md)
   * [API Reference](webhooks/api-reference/README.md)
     * ```yaml
       type: builtin:openapi
