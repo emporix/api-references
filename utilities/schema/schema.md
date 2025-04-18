@@ -2,15 +2,7 @@
 seo:
   title: Schema Service Tutorials
   description: Schema Management
-toc:
-  enable: true
-tocMaxDepth: 3
-editPage:
-  disable: true
-label: Tutorials
 ---
-
-# schema
 
 import {\
 Alert,\
