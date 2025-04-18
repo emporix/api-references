@@ -4,7 +4,7 @@ seo:
   description: Webhooks, category events
 ---
 
-# Category Service events
+# Events-Category
 
 ## Overview
 
@@ -12,17 +12,9 @@ Webhook events related to the creation, update, and deletion of a category tree 
 
 ## Available events
 
-<table>
-  <tr>
-    <td><b>Event type</b></td>
-    <td><b>Event schema</b></td>
-  </tr>
-  <tr>
-    <td>category.created</td>
-<td>
-
-```json
-{
+| Event type         | Event schema                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| category.created   | <pre class="language-json"><code class="lang-json">{
   "id": "String",
   "parentId": "String",
   "name": {
@@ -56,16 +48,8 @@ Webhook events related to the creation, update, and deletion of a category tree 
     "modifiedAt": "String"
   }
 }
-```
-</td>
-</tr>
-
-<tr>
-    <td>category.updated</td>
-<td>
-
-```json
-{
+</code></pre> |
+| category.updated   | <pre class="language-json"><code class="lang-json">{
   "id": "String",
   "parentId": "String",
   "name": {
@@ -99,27 +83,13 @@ Webhook events related to the creation, update, and deletion of a category tree 
     "modifiedAt": "String"
   }
 }
-```
-</td>
-</tr>
-  <tr>
-    <td>category.deleted</td>
-<td>
-
-```json
-{
+</code></pre> |
+| category.deleted   | <pre class="language-json"><code class="lang-json">{
   "id": "String",
   "parentId": "String"
 }
-```
-</td>
-</tr>
-  <tr>
-    <td>assignment.created</td>
-<td>
-
-```json
-{
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| assignment.created | <pre class="language-json"><code class="lang-json">{
   "categoryId": "String",
   "assignment": {
     "id": "String",
@@ -134,15 +104,8 @@ Webhook events related to the creation, update, and deletion of a category tree 
     "createdAt": "String"
   }
 }
-```
-</td>
-</tr>
-  <tr>
-    <td>assignment.deleted</td>
-<td>
-
-```json
-{
+</code></pre>                                                                                                                                                                                                                                                                                |
+| assignment.deleted | <pre class="language-json"><code class="lang-json">{
   "categoryId": "String",
   "assignments": [
     {
@@ -156,8 +119,4 @@ Webhook events related to the creation, update, and deletion of a category tree 
     }
   ]
 }
-```
-</td>
-</tr>
-
-</table>
+</code></pre>                                                                                                                                                                                                                                                                                                    |

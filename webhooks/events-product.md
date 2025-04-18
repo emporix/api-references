@@ -4,7 +4,7 @@ seo:
   description: Webhooks, product events
 ---
 
-# Product Service events
+# Events-Product
 
 ## Overview
 
@@ -12,17 +12,9 @@ Webhook events related to the creation, update, and deletion of a product.
 
 ## Available events
 
-<table>
-  <tr>
-    <td><b>Event type</b></td>
-    <td><b>Event schema</b></td>
-  </tr>
-  <tr>
-    <td>product.created</td>
-<td>
-
-```json
-{
+| Event type      | Event schema                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| product.created | <pre class="language-json"><code class="lang-json">{
   "id": "String",
   "code": "String",
   "name": "Map",
@@ -70,15 +62,8 @@ Webhook events related to the creation, update, and deletion of a product.
     "modifiedAt": "String"
   }
 }
-```
-</td>
-  </tr>
-  <tr>
-    <td>product.updated</td>
-<td>
-
-```json
-{
+</code></pre> |
+| product.updated | <pre class="language-json"><code class="lang-json">{
   "id": "String",
   "code": "String",
   "name": "Map",
@@ -126,19 +111,8 @@ Webhook events related to the creation, update, and deletion of a product.
     "modifiedAt": "String"
   }
 }
-```
-</td>
-  </tr>
-  <tr>
-    <td>product.deleted</td>
-  <td>
-
-  ```json
-  {
-    "id": "String"
-  }
-  ```
-  </td>
-  </tr>
-</table>
-
+</code></pre> |
+| product.deleted | <pre class="language-json"><code class="lang-json">{
+  "id": "String"
+}
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |

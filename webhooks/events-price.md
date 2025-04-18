@@ -3,26 +3,19 @@ seo:
   title: Price Service events
   description: Webhooks, price events
 ---
-# Price Service events
+
+# Events-Price
 
 ## Overview
 
-Webhook events related to the creation, update, and deletion of a price, price model, price list
+Webhook events related to the creation, update, and deletion of a price, price model, price list\
 and a price list price.
 
 ## Available events
 
-<table>
-  <tr>
-    <td><b>Event type</b></td>
-    <td><b>Event schema</b></td>
-  </tr>
-  <tr>
-    <td>price.created</td>
-<td>
-
-```json
-{
+| Event type               | Event schema                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| price.created            | <pre class="language-json"><code class="lang-json">{
   "id": "String",
   "itemId": {
     "id": "String",
@@ -67,15 +60,8 @@ and a price list price.
     "mixins": "Map"
   }
 }
-```
-</td>
-  </tr>
-  <tr>
-    <td>price.updated</td>
-<td>
-
-```json
-{
+</code></pre> |
+| price.updated            | <pre class="language-json"><code class="lang-json">{
   "id": "String",
   "itemId": {
     "id": "String",
@@ -120,26 +106,12 @@ and a price list price.
     "mixins": "Map"
   }
 }
-```
-</td>
-  </tr>
-  <tr>
-    <td>price.deleted</td>
-  <td>
-
-  ```json
-  {
-    "id": "String"
-  }
-  ```
-  </td>
-  </tr>
-  <tr>
-    <td>price-model.created</td>
-<td>
-
-```json
-{
+</code></pre> |
+| price.deleted            | <pre class="language-json"><code class="lang-json">{
+  "id": "String"
+}
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| price-model.created      | <pre class="language-json"><code class="lang-json">{
   "id": "String",
   "name": "Map",
   "description": "Map",
@@ -167,15 +139,8 @@ and a price list price.
     "modifiedAt": "String"
   }
 }
-```
-</td>
-  </tr>
-  <tr>
-    <td>price-model.updated</td>
-<td>
-
-```json
-{
+</code></pre>                                                                                                                                                                                                                                                                                             |
+| price-model.updated      | <pre class="language-json"><code class="lang-json">{
   "id": "String",
   "name": "Map",
   "description": "Map",
@@ -203,26 +168,12 @@ and a price list price.
     "modifiedAt": "String"
   }
 }
-```
-</td>
-  </tr>
-  <tr>
-    <td>price-model.deleted</td>
-  <td>
-
-  ```json
-  {
-    "id": "String"
-  }
-  ```
-  </td>
-  </tr>
-  <tr>
-    <td>price-list.created</td>
-<td>
-
-```json
-{
+</code></pre>                                                                                                                                                                                                                                                                                             |
+| price-model.deleted      | <pre class="language-json"><code class="lang-json">{
+  "id": "String"
+}
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| price-list.created       | <pre class="language-json"><code class="lang-json">{
   "id": "String",
   "name": "Map",
   "currency": "String",
@@ -242,15 +193,8 @@ and a price list price.
     "mixins": "Map"
   }
 }
-```
-</td>
-  </tr>
-  <tr>
-    <td>price-list.updated</td>
-<td>
-
-```json
-{
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| price-list.updated       | <pre class="language-json"><code class="lang-json">{
   "id": "String",
   "name": "Map",
   "currency": "String",
@@ -270,26 +214,12 @@ and a price list price.
     "mixins": "Map"
   }
 }
-```
-</td>
-  </tr>
-  <tr>
-    <td>price-list.deleted</td>
-  <td>
-
-  ```json
-  {
-    "id": "String"
-  }
-  ```
-  </td>
-  </tr>
-  <tr>
-    <td>price-list-price.created</td>
-<td>
-
-```json
-{
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| price-list.deleted       | <pre class="language-json"><code class="lang-json">{
+  "id": "String"
+}
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| price-list-price.created | <pre class="language-json"><code class="lang-json">{
   "id": "String",
   "itemId": {
     "itemType": "String",
@@ -309,15 +239,8 @@ and a price list price.
     "version": "Number"
   }
 }
-```
-</td>
-  </tr>
-  <tr>
-    <td>price-list-price.updated</td>
-<td>
-
-```json
-{
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| price-list-price.updated | <pre class="language-json"><code class="lang-json">{
   "id": "String",
   "itemId": {
     "itemType": "String",
@@ -337,19 +260,8 @@ and a price list price.
     "version": "Number"
   }
 }
-```
-</td>
-  </tr>
-  <tr>
-    <td>price-list-price.deleted</td>
-  <td>
-
-  ```json
-  {
-    "id": "String"
-  }
-  ```
-  </td>
-  </tr>
-</table>
-
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| price-list-price.deleted | <pre class="language-json"><code class="lang-json">{
+  "id": "String"
+}
+</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |

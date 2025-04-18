@@ -28,18 +28,19 @@
             spec: oauth-api
       ```
 * [Artificial Intelligence](api-guides-and-references/artificial-intelligence/README.md)
-  * [AI Service Tutorials](api-guides-and-references/artificial-intelligence/ai-tutorial.md)
-  * [API Reference](api-guides-and-references/artificial-intelligence/api-reference/README.md)
-    * ```yaml
-      props:
-        models: true
-      type: builtin:openapi
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: ai-api
-      ```
+  * [AI Service](api-guides-and-references/artificial-intelligence/ai-service/README.md)
+    * [AI Tutorials](api-guides-and-references/artificial-intelligence/ai-service/ai-tutorial.md)
+    * [API Reference](api-guides-and-references/artificial-intelligence/ai-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: ai-api
+        ```
 * [Configuration](api-guides-and-references/configuration/README.md)
   * [Configuration Service](api-guides-and-references/configuration/configuration-service/README.md)
     * [Language Tutorials](api-guides-and-references/configuration/configuration-service/language.md)
@@ -253,8 +254,8 @@
               spec: category-api
         ```
 * [Products, Labels and Brands](products-labels-and-brands/README.md)
-  * [product-v2](products-labels-and-brands/product-v2/README.md)
-    * [product](products-labels-and-brands/product-v2/product.md)
+  * [Product Service](products-labels-and-brands/product-v2/README.md)
+    * [Product Tutorial](products-labels-and-brands/product-v2/product.md)
     * [API Reference](products-labels-and-brands/product-v2/api-reference/README.md)
       * ```yaml
         props:
@@ -393,8 +394,8 @@
               spec: tax-api
         ```
 * [Users and Permissions](users-and-permissions/README.md)
-  * [iam](users-and-permissions/iam/README.md)
-    * [iam](users-and-permissions/iam/iam.md)
+  * [IAM Service](users-and-permissions/iam/README.md)
+    * [IAM Tutorial](users-and-permissions/iam/iam.md)
     * [API Reference](users-and-permissions/iam/api-reference/README.md)
       * ```yaml
         props:
@@ -416,8 +417,8 @@
               kind: openapi
               spec: iam-api
         ```
-  * [session-context](users-and-permissions/session-context/README.md)
-    * [session-context](users-and-permissions/session-context/session-context.md)
+  * [Session-context Service](users-and-permissions/session-context/README.md)
+    * [Session-context Tutorial](users-and-permissions/session-context/session-context.md)
     * [API Reference](users-and-permissions/session-context/api-reference/README.md)
       * ```yaml
         props:
@@ -489,7 +490,7 @@
               kind: openapi
               spec: segments-api
         ```
-  * [approval-service](companies-and-customers/approval-service/README.md)
+  * [Approval Service](companies-and-customers/approval-service/README.md)
     * [Approval Tutorials](companies-and-customers/approval-service/approval.md)
     * [Approval API Reference](companies-and-customers/approval-service/approval-api-reference/README.md)
       * ```yaml
@@ -513,8 +514,8 @@
               spec: approval-api
         ```
 * [Delivery and Shipping](delivery-and-shipping/README.md)
-  * [shipping](delivery-and-shipping/shipping/README.md)
-    * [shipping](delivery-and-shipping/shipping/shipping.md)
+  * [Shipping Service](delivery-and-shipping/shipping/README.md)
+    * [Shipping Tutorial](delivery-and-shipping/shipping/shipping.md)
     * [API Reference](delivery-and-shipping/shipping/api-reference/README.md)
       * ```yaml
         props:
@@ -559,8 +560,8 @@
               spec: delivery-api
         ```
 * [Rewards and Promotions](rewards-and-promotions/README.md)
-  * [coupon](rewards-and-promotions/coupon/README.md)
-    * [coupon](rewards-and-promotions/coupon/coupon.md)
+  * [Coupon Service](rewards-and-promotions/coupon/README.md)
+    * [Coupon Tutorial](rewards-and-promotions/coupon/coupon.md)
     * [API Reference](rewards-and-promotions/coupon/api-reference/README.md)
       * ```yaml
         props:
@@ -582,8 +583,8 @@
               kind: openapi
               spec: coupon-api
         ```
-  * [reward-points](rewards-and-promotions/reward-points/README.md)
-    * [reward-points](rewards-and-promotions/reward-points/reward-points.md)
+  * [Reward-points Service](rewards-and-promotions/reward-points/README.md)
+    * [Reward-points Tutorial](rewards-and-promotions/reward-points/reward-points.md)
     * [API Reference](rewards-and-promotions/reward-points/api-reference/README.md)
       * ```yaml
         props:
@@ -606,8 +607,8 @@
               spec: reward-points-api
         ```
 * [Quotes](quotes/README.md)
-  * [quote](quotes/quote/README.md)
-    * [quote](quotes/quote/quote.md)
+  * [Quote Service](quotes/quote/README.md)
+    * [Quote Tutorial](quotes/quote/quote.md)
   * [API Reference](quotes/api-reference/README.md)
     * ```yaml
       props:
@@ -630,8 +631,8 @@
             spec: quote-api
       ```
 * [Checkout](checkout/README.md)
-  * [cart](checkout/cart/README.md)
-    * [cart](checkout/cart/cart.md)
+  * [Cart Service](checkout/cart/README.md)
+    * [Cart Tutorial](checkout/cart/cart.md)
     * [API Reference](checkout/cart/api-reference/README.md)
       * ```yaml
         props:
@@ -653,8 +654,8 @@
               kind: openapi
               spec: cart-api
         ```
-  * [payment-gateway](checkout/payment-gateway/README.md)
-    * [payment-gateway](checkout/payment-gateway/payment-gateway.md)
+  * [Payment-gateway Service](checkout/payment-gateway/README.md)
+    * [Payment-gateway Tutorial](checkout/payment-gateway/payment-gateway.md)
     * [API Reference](checkout/payment-gateway/api-reference/README.md)
       * ```yaml
         props:
@@ -676,8 +677,8 @@
               kind: openapi
               spec: payment-gateway-api
         ```
-  * [checkout](checkout/checkout/README.md)
-    * [checkout](checkout/checkout/checkout.md)
+  * [Checkout Service](checkout/checkout/README.md)
+    * [Checkout Tutorial](checkout/checkout/checkout.md)
     * [API Reference](checkout/checkout/api-reference/README.md)
       * ```yaml
         props:
@@ -699,8 +700,8 @@
               kind: openapi
               spec: checkout-api
         ```
-  * [fee](checkout/fee/README.md)
-    * [fee](checkout/fee/fee.md)
+  * [Fee Service](checkout/fee/README.md)
+    * [Fee Tutorial](checkout/fee/fee.md)
     * [API Reference](checkout/fee/api-reference/README.md)
       * ```yaml
         props:
@@ -745,8 +746,8 @@
               spec: shopping-list-api
         ```
 * [Orders](orders/README.md)
-  * [availability](orders/availability/README.md)
-    * [availability](orders/availability/availability.md)
+  * [Availability Service](orders/availability/README.md)
+    * [Availability Tutorial](orders/availability/availability.md)
     * [API Reference](orders/availability/api-reference/README.md)
       * ```yaml
         props:
@@ -768,8 +769,8 @@
               kind: openapi
               spec: availability-api
         ```
-  * [order](orders/order/README.md)
-    * [order](orders/order/order.md)
+  * [Order Service](orders/order/README.md)
+    * [Order Tutorial](orders/order/order.md)
     * [API Reference](orders/order/api-reference/README.md)
       * ```yaml
         props:
@@ -791,7 +792,7 @@
               kind: openapi
               spec: order-api
         ```
-  * [Pick Pack](orders/pick-pack/README.md)
+  * [Pick-pack Service](orders/pick-pack/README.md)
     * [API Reference](orders/pick-pack/api-reference/README.md)
       * ```yaml
         props:
@@ -813,8 +814,8 @@
               kind: openapi
               spec: pick-pack-api
         ```
-  * [invoice](orders/invoice/README.md)
-    * [invoice](orders/invoice/invoice.md)
+  * [Invoice Service](orders/invoice/README.md)
+    * [Invoice Tutorial](orders/invoice/invoice.md)
     * [API Reference](orders/invoice/api-reference/README.md)
       * ```yaml
         props:
@@ -836,8 +837,8 @@
               kind: openapi
               spec: invoice-api
         ```
-  * [returns](orders/returns/README.md)
-    * [returns](orders/returns/returns.md)
+  * [Returns Service](orders/returns/README.md)
+    * [Returns Tutorial](orders/returns/returns.md)
     * [API Reference](orders/returns/api-reference/README.md)
       * ```yaml
         props:
@@ -859,7 +860,7 @@
               kind: openapi
               spec: returns-api
         ```
-  * [SEPA Export](orders/sepa-export/README.md)
+  * [SEPA Export Service](orders/sepa-export/README.md)
     * [API Reference](orders/sepa-export/api-reference/README.md)
       * ```yaml
         props:
@@ -882,8 +883,8 @@
               spec: sepa-export-api
         ```
 * [Utilities](utilities/README.md)
-  * [schema](utilities/schema/README.md)
-    * [schema](utilities/schema/schema.md)
+  * [Schema Service](utilities/schema/README.md)
+    * [Schema Tutorial](utilities/schema/schema.md)
     * [API Reference](utilities/schema/api-reference/README.md)
       * ```yaml
         props:
@@ -905,8 +906,8 @@
               kind: openapi
               spec: schema-api
         ```
-  * [sequential-id](utilities/sequential-id/README.md)
-    * [sequentialid](utilities/sequential-id/sequentialid.md)
+  * [Sequential-id Service](utilities/sequential-id/README.md)
+    * [Sequential-id Tutorial](utilities/sequential-id/sequentialid.md)
     * [API Reference](utilities/sequential-id/api-reference/README.md)
       * ```yaml
         props:
@@ -929,8 +930,8 @@
               spec: sequential-id
         ```
 * [Media](media/README.md)
-  * [media](media/media/README.md)
-    * [media](media/media/media.md)
+  * [Media Service](media/media/README.md)
+    * [Media Tutorial](media/media/media.md)
     * [API Reference](media/media/api-reference/README.md)
       * ```yaml
         props:
@@ -953,6 +954,28 @@
               spec: media-api
         ```
 * [Webhooks](webhooks/README.md)
+  * [Webhook Service](webhooks/webhook-service/README.md)
+    * [API Reference](webhooks/webhook-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: webhook-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: webhook-api
+        ```
   * [Events-Availability](webhooks/events-availability.md)
   * [Events-Cart](webhooks/events-cart.md)
   * [Events-Catalog](webhooks/events-catalog.md)
@@ -965,27 +988,6 @@
   * [Events-Product](webhooks/events-product.md)
   * [Events-Quote](webhooks/events-quote.md)
   * [Events-Product](webhooks/events-return.md)
-  * [API Reference](webhooks/api-reference/README.md)
-    * ```yaml
-      props:
-        models: true
-      type: builtin:openapi
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: webhook-api
-      ```
-    * ```yaml
-      props:
-        models: true
-      type: builtin:openapi
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: webhook-api
-      ```
 * [Integrations](integrations/README.md)
   * [Emporix and Make](Integrations/Emporix-make.md)
   * [Identity Providers](Integrations/identity-providers.md)
