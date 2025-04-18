@@ -458,24 +458,122 @@
 * [Orders](orders/README.md)
   * [availability](orders/availability/README.md)
     * [availability](orders/availability/availability.md)
+    * [API Reference](orders/availability/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: availability-api
+        ```
   * [order](orders/order/README.md)
     * [order](orders/order/order.md)
-  * [Pick Pack](orders/pick-pack.md)
+    * [API Reference](orders/order/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: order-api
+        ```
+  * [Pick Pack](orders/pick-pack/README.md)
+    * [API Reference](orders/pick-pack/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: pick-pack-api
+        ```
   * [invoice](orders/invoice/README.md)
     * [invoice](orders/invoice/invoice.md)
+    * [API Reference](orders/invoice/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: invoice-api
+        ```
   * [returns](orders/returns/README.md)
     * [returns](orders/returns/returns.md)
-  * [SEPA Export](orders/sepa-export.md)
+    * [API Reference](orders/returns/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: returns-api
+        ```
+  * [SEPA Export](orders/sepa-export/README.md)
+    * [API Reference](orders/sepa-export/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: sepa-export-api
+        ```
 * [Utilities](utilities/README.md)
   * [schema](utilities/schema/README.md)
     * [schema](utilities/schema/schema.md)
+    * [API Reference](utilities/schema/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: schema-api
+        ```
   * [sequential-id](utilities/sequential-id/README.md)
     * [sequentialid](utilities/sequential-id/sequentialid.md)
+    * [API Reference](utilities/sequential-id/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: sequential-id
+        ```
 * [Media](media/README.md)
   * [media](media/media/README.md)
     * [media](media/media/media.md)
-* [Webhooks\
-  \*](webhooks.md)
+    * [API Reference](media/media/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: media-api
+        ```
+* [Webhooks](webhooks.md)
 * [Integrations](integrations/README.md)
   * [Emporix-make](Integrations/Emporix-make.md)
   * [identity-providers](Integrations/identity-providers.md)
