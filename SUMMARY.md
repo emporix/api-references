@@ -27,9 +27,29 @@
             kind: openapi
             spec: oauth-api
       ```
+    * ```yaml
+      props:
+        models: true
+      type: builtin:openapi
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: oauth-api
+      ```
 * [Artificial Intelligence](api-guides-and-references/artificial-intelligence/README.md)
   * [AI Tutorials](api-guides-and-references/artificial-intelligence/ai-tutorial.md)
   * [API Reference](api-guides-and-references/artificial-intelligence/api-reference/README.md)
+    * ```yaml
+      props:
+        models: true
+      type: builtin:openapi
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: ai-api
+      ```
     * ```yaml
       props:
         models: true
@@ -54,9 +74,29 @@
               kind: openapi
               spec: configuration-api
         ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: configuration-api
+        ```
   * [Country Service](api-guides-and-references/configuration/country-service/README.md)
     * [Country Tutorial](api-guides-and-references/configuration/country-service/country.md)
     * [API Reference](api-guides-and-references/configuration/country-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: country-api
+        ```
       * ```yaml
         props:
           models: true
@@ -71,9 +111,19 @@
     * [Currency Tutorial](api-guides-and-references/configuration/currency-service/currency.md)
     * [API Reference](api-guides-and-references/configuration/currency-service/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: currency-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -84,9 +134,19 @@
     * [Tax Tutorial](api-guides-and-references/configuration/tax-service/tax.md)
     * [API Reference](api-guides-and-references/configuration/tax-service/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: tax-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -97,9 +157,19 @@
     * [Unit Handling Tutorial](api-guides-and-references/configuration/unit-handling-service/unit-handling.md)
     * [API Reference](api-guides-and-references/configuration/unit-handling-service/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: unit-handling-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -110,9 +180,19 @@
     * [Site Settings Tutorial](api-guides-and-references/configuration/site-settings-service/site-settings.md)
     * [API Reference](api-guides-and-references/configuration/site-settings-service/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: site-settings-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -123,9 +203,19 @@
     * [Indexing Tutorial](api-guides-and-references/configuration/indexing-service/indexing.md)
     * [API Reference](api-guides-and-references/configuration/indexing-service/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: indexing-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -140,9 +230,19 @@
     * [Catalog Tutorials](catalogs-and-categories/catalog/catalog.md)
     * [API Reference](catalogs-and-categories/catalog/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: catalog-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -162,14 +262,34 @@
               kind: openapi
               spec: category-api
         ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: category-api
+        ```
 * [Products, Labels and Brands](products-labels-and-brands/README.md)
   * [product-v2](products-labels-and-brands/product-v2/README.md)
     * [product](products-labels-and-brands/product-v2/product.md)
     * [API Reference](products-labels-and-brands/product-v2/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: product-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -180,9 +300,19 @@
     * [Label Tutorial](products-labels-and-brands/label-service/label.md)
     * [API Reference](products-labels-and-brands/label-service/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: label-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -193,9 +323,19 @@
     * [Brand Tutorial](products-labels-and-brands/brand-service/brand.md)
     * [API Reference](products-labels-and-brands/brand-service/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: brand-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -216,9 +356,29 @@
               kind: openapi
               spec: price-api
         ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: price-api
+        ```
   * [Currency Service](price-v2/currency-service/README.md)
-    * [Currency Tutorials](price-v2/currenct-service/currency.md)
+    * [Currency Tutorials](price-v2/currency-service/currency-tutorials.md)
     * [API Reference](price-v2/currency-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: currency
+        ```
       * ```yaml
         props:
           models: true
@@ -242,14 +402,34 @@
               kind: openapi
               spec: tax-api
         ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: tax-api
+        ```
 * [Users and Permissions](users-and-permissions/README.md)
   * [iam](users-and-permissions/iam/README.md)
     * [iam](users-and-permissions/iam/iam.md)
     * [API Reference](users-and-permissions/iam/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: iam-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -260,9 +440,19 @@
     * [session-context](users-and-permissions/session-context/session-context.md)
     * [API Reference](users-and-permissions/session-context/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: session-context-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -273,33 +463,33 @@
   * [Customer Management](companies-and-customers/customer-management/README.md)
     * [API Reference](companies-and-customers/customer-management/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
               kind: openapi
               spec: customer-client-management-api
         ```
-  * [Customer Service](companies-and-customers/customer-management-1/README.md)
+  * [Customer Service (Customer Managed)](companies-and-customers/customer-management-1/README.md)
     * [API Reference](companies-and-customers/customer-management-1/api-reference.md)
     * ```yaml
-      type: builtin:openapi
       props:
         models: true
+      type: builtin:openapi
       dependencies:
         spec:
           ref:
             kind: openapi
             spec: customer-managed
       ```
-  * [Customer Service](companies-and-customers/customer-service/README.md)
+  * [Customer Service (Tenant Managed)](companies-and-customers/customer-service/README.md)
     * [API Reference](companies-and-customers/customer-service/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -310,9 +500,9 @@
     * [Segments Tutorial](companies-and-customers/customer-segments/segments.md)
     * [API Reference](companies-and-customers/customer-segments/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -323,9 +513,19 @@
     * [Approval Tutorials](companies-and-customers/approval-service/approval.md)
     * [Approval API Reference](companies-and-customers/approval-service/approval-api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: approval-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -337,9 +537,19 @@
     * [shipping](delivery-and-shipping/shipping/shipping.md)
     * [API Reference](delivery-and-shipping/shipping/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: shipping-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -349,9 +559,19 @@
   * [Delivery Providers Service](delivery-and-shipping/delivery-providers-service/README.md)
     * [API Reference](delivery-and-shipping/delivery-providers-service/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: delivery-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -363,9 +583,19 @@
     * [coupon](rewards-and-promotions/coupon/coupon.md)
     * [API Reference](rewards-and-promotions/coupon/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: coupon-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -376,9 +606,19 @@
     * [reward-points](rewards-and-promotions/reward-points/reward-points.md)
     * [API Reference](rewards-and-promotions/reward-points/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: reward-points-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -390,9 +630,19 @@
     * [quote](quotes/quote/quote.md)
   * [API Reference](quotes/api-reference/README.md)
     * ```yaml
-      type: builtin:openapi
       props:
         models: true
+      type: builtin:openapi
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: quote-api
+      ```
+    * ```yaml
+      props:
+        models: true
+      type: builtin:openapi
       dependencies:
         spec:
           ref:
@@ -404,9 +654,19 @@
     * [cart](checkout/cart/cart.md)
     * [API Reference](checkout/cart/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: cart-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -417,9 +677,19 @@
     * [payment-gateway](checkout/payment-gateway/payment-gateway.md)
     * [API Reference](checkout/payment-gateway/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: payment-gateway-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -430,9 +700,19 @@
     * [checkout](checkout/checkout/checkout.md)
     * [API Reference](checkout/checkout/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: checkout-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -443,9 +723,19 @@
     * [fee](checkout/fee/fee.md)
     * [API Reference](checkout/fee/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: fee-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -455,9 +745,19 @@
   * [Shopping List](checkout/shopping-list/README.md)
     * [API Reference](checkout/shopping-list/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: shopping-list-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -469,9 +769,19 @@
     * [availability](orders/availability/availability.md)
     * [API Reference](orders/availability/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: availability-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -482,9 +792,19 @@
     * [order](orders/order/order.md)
     * [API Reference](orders/order/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: order-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -494,9 +814,19 @@
   * [Pick Pack](orders/pick-pack/README.md)
     * [API Reference](orders/pick-pack/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: pick-pack-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -507,9 +837,19 @@
     * [invoice](orders/invoice/invoice.md)
     * [API Reference](orders/invoice/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: invoice-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -520,9 +860,19 @@
     * [returns](orders/returns/returns.md)
     * [API Reference](orders/returns/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: returns-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -532,9 +882,19 @@
   * [SEPA Export](orders/sepa-export/README.md)
     * [API Reference](orders/sepa-export/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: sepa-export-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -546,9 +906,19 @@
     * [schema](utilities/schema/schema.md)
     * [API Reference](utilities/schema/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: schema-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -559,9 +929,19 @@
     * [sequentialid](utilities/sequential-id/sequentialid.md)
     * [API Reference](utilities/sequential-id/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: sequential-id
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -573,9 +953,19 @@
     * [media](media/media/media.md)
     * [API Reference](media/media/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: media-api
+        ```
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -597,9 +987,19 @@
   * [Events-Product](webhooks/events-return.md)
   * [API Reference](webhooks/api-reference/README.md)
     * ```yaml
-      type: builtin:openapi
       props:
         models: true
+      type: builtin:openapi
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: webhook-api
+      ```
+    * ```yaml
+      props:
+        models: true
+      type: builtin:openapi
       dependencies:
         spec:
           ref:
