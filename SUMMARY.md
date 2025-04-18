@@ -574,6 +574,7 @@
               spec: media-api
         ```
 * [Webhooks](webhooks/README.md)
+  * [Events Availability](webhooks/events-availability.md)
   * [API Reference](webhooks/api-reference/README.md)
     * ```yaml
       type: builtin:openapi
