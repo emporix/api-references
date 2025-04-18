@@ -1,4 +1,4 @@
-# Approval Service
+# Approval
 
 The Emporix API Approval Service allows you to manage approval requests related to orders. The orders are referred to as resources.
 ***

@@ -1,4 +1,4 @@
-# Configuration Service
+# Configuration
 
 General store for tenant-specific information.
 
