@@ -326,25 +326,135 @@
 * [Delivery and Shipping](delivery-and-shipping/README.md)
   * [shipping](delivery-and-shipping/shipping/README.md)
     * [shipping](delivery-and-shipping/shipping/shipping.md)
-  * [Delivery Providers Service](delivery-and-shipping/delivery-providers-service.md)
+    * [API Reference](delivery-and-shipping/shipping/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: shipping-api
+        ```
+  * [Delivery Providers Service](delivery-and-shipping/delivery-providers-service/README.md)
+    * [API Reference](delivery-and-shipping/delivery-providers-service/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: delivery-api
+        ```
 * [Rewards and Promotions](rewards-and-promotions/README.md)
   * [coupon](rewards-and-promotions/coupon/README.md)
     * [coupon](rewards-and-promotions/coupon/coupon.md)
+    * [API Reference](rewards-and-promotions/coupon/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: coupon-api
+        ```
   * [reward-points](rewards-and-promotions/reward-points/README.md)
     * [reward-points](rewards-and-promotions/reward-points/reward-points.md)
+    * [API Reference](rewards-and-promotions/reward-points/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: reward-points-api
+        ```
 * [Quotes](quotes/README.md)
   * [quote](quotes/quote/README.md)
     * [quote](quotes/quote/quote.md)
+  * [API Reference](quotes/api-reference/README.md)
+    * ```yaml
+      type: builtin:openapi
+      props:
+        models: true
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: quote-api
+      ```
 * [Checkout](checkout/README.md)
   * [cart](checkout/cart/README.md)
     * [cart](checkout/cart/cart.md)
+    * [API Reference](checkout/cart/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: cart-api
+        ```
   * [payment-gateway](checkout/payment-gateway/README.md)
     * [payment-gateway](checkout/payment-gateway/payment-gateway.md)
+    * [API Reference](checkout/payment-gateway/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: payment-gateway-api
+        ```
   * [checkout](checkout/checkout/README.md)
     * [checkout](checkout/checkout/checkout.md)
+    * [API Reference](checkout/checkout/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: checkout-api
+        ```
   * [fee](checkout/fee/README.md)
     * [fee](checkout/fee/fee.md)
-  * [Shopping List](checkout/shopping-list.md)
+    * [API Reference](checkout/fee/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: fee-api
+        ```
+  * [Shopping List](checkout/shopping-list/README.md)
+    * [API Reference](checkout/shopping-list/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: shopping-list-api
+        ```
 * [Orders](orders/README.md)
   * [availability](orders/availability/README.md)
     * [availability](orders/availability/availability.md)
