@@ -131,7 +131,18 @@
               spec: price-api
         ```
   * [Currency Service](price-v2/currency-service.md)
-  * [Tax Service](price-v2/tax-service.md)
+  * [Tax Service](price-v2/tax-service/README.md)
+    * [API Reference](price-v2/tax-service/api-reference/README.md)
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: tax-api
+        ```
 * [Users and Permissions](users-and-permissions/README.md)
   * [iam](users-and-permissions/iam/README.md)
     * [iam](users-and-permissions/iam/iam.md)
@@ -184,8 +195,8 @@
 * [Media](media/README.md)
   * [media](media/media/README.md)
     * [media](media/media/media.md)
-* [Webhooks](webhooks.md)
-  * 
+* [Webhooks\
+  \*](webhooks.md)
 * [Integrations](integrations/README.md)
   * [Emporix-make](Integrations/Emporix-make.md)
   * [identity-providers](Integrations/identity-providers.md)
