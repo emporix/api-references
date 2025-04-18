@@ -1,4 +1,4 @@
-# AI Tutorials
+# AI Tutorial
 
  With Emporix support for AI, you can enhance text for product descriptions and generate AI completions.
 
