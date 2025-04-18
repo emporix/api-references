@@ -28,7 +28,7 @@
             spec: oauth-api
       ```
 * [Artificial Intelligence](api-guides-and-references/artificial-intelligence/README.md)
-  * [AI Tutorials](api-guides-and-references/artificial-intelligence/ai-tutorials.md)
+  * [AI Tutorials](api-guides-and-references/artificial-intelligence/ai-tutorial.md)
   * [API Reference](api-guides-and-references/artificial-intelligence/api-reference/README.md)
     * ```yaml
       props:
@@ -42,6 +42,7 @@
       ```
 * [Configuration](api-guides-and-references/configuration/README.md)
   * [Configuration Service](api-guides-and-references/configuration/configuration-service/README.md)
+    * [Language Tutorials](api-guides-and-references/configuration/configuration-service/language.md)
     * [API Reference](api-guides-and-references/configuration/configuration-service/api-reference/README.md)
       * ```yaml
         props:
@@ -54,7 +55,7 @@
               spec: configuration-api
         ```
   * [Country Service](api-guides-and-references/configuration/country-service/README.md)
-    * [Country Tutorial](api-guides-and-references/configuration/country-service/country-tutorial.md)
+    * [Country Tutorial](api-guides-and-references/configuration/country-service/country.md)
     * [API Reference](api-guides-and-references/configuration/country-service/api-reference/README.md)
       * ```yaml
         props:
@@ -67,6 +68,7 @@
               spec: country-api
         ```
   * [Currency Service](api-guides-and-references/configuration/currency-service/README.md)
+    * [Currency Tutorial](api-guides-and-references/configuration/currency-service/currency.md)
     * [API Reference](api-guides-and-references/configuration/currency-service/api-reference/README.md)
       * ```yaml
         type: builtin:openapi
@@ -79,6 +81,7 @@
               spec: currency-api
         ```
   * [Tax Service](api-guides-and-references/configuration/tax-service/README.md)
+    * [Tax Tutorial](api-guides-and-references/configuration/tax-service/tax.md)
     * [API Reference](api-guides-and-references/configuration/tax-service/api-reference/README.md)
       * ```yaml
         type: builtin:openapi
@@ -91,6 +94,7 @@
               spec: tax-api
         ```
   * [Unit Handling Service](api-guides-and-references/configuration/unit-handling-service/README.md)
+    * [Unit Handling Tutorial](api-guides-and-references/configuration/unit-handling-service/unit-handling.md)
     * [API Reference](api-guides-and-references/configuration/unit-handling-service/api-reference/README.md)
       * ```yaml
         type: builtin:openapi
@@ -103,7 +107,7 @@
               spec: unit-handling-api
         ```
   * [Site Settings Service](api-guides-and-references/configuration/site-settings-service/README.md)
-    * [Site Settings Tutorial](api-guides-and-references/configuration/site-settings-service/site-settings-tutorial.md)
+    * [Site Settings Tutorial](api-guides-and-references/configuration/site-settings-service/site-settings.md)
     * [API Reference](api-guides-and-references/configuration/site-settings-service/api-reference/README.md)
       * ```yaml
         type: builtin:openapi
@@ -116,7 +120,7 @@
               spec: site-settings-api
         ```
   * [Indexing Service](api-guides-and-references/configuration/indexing-service/README.md)
-    * [Indexing Tutorial](api-guides-and-references/configuration/indexing-service/indexing-tutorial.md)
+    * [Indexing Tutorial](api-guides-and-references/configuration/indexing-service/indexing.md)
     * [API Reference](api-guides-and-references/configuration/indexing-service/api-reference/README.md)
       * ```yaml
         type: builtin:openapi
@@ -173,6 +177,7 @@
               spec: product-api
         ```
   * [Label Service](products-labels-and-brands/label-service/README.md)
+    * [Label Tutorial](products-labels-and-brands/label-service/label.md)
     * [API Reference](products-labels-and-brands/label-service/api-reference/README.md)
       * ```yaml
         type: builtin:openapi
@@ -185,6 +190,7 @@
               spec: label-api
         ```
   * [Brand Service](products-labels-and-brands/brand-service/README.md)
+    * [Brand Tutorial](products-labels-and-brands/brand-service/brand.md)
     * [API Reference](products-labels-and-brands/brand-service/api-reference/README.md)
       * ```yaml
         type: builtin:openapi
@@ -211,6 +217,7 @@
               spec: price-api
         ```
   * [Currency Service](price-v2/currency-service/README.md)
+    * [Currency Tutorials](price-v2/currenct-service/currency.md)
     * [API Reference](price-v2/currency-service/api-reference/README.md)
       * ```yaml
         props:
@@ -223,6 +230,7 @@
               spec: currency
         ```
   * [Tax Service](price-v2/tax-service/README.md)
+    * [Tax Tutorials](price-v2/tax-service/tax.md)
     * [API Reference](price-v2/tax-service/api-reference/README.md)
       * ```yaml
         props:
@@ -299,6 +307,7 @@
               spec: customer-tenant-api
         ```
   * [Customer Segments](companies-and-customers/customer-segments/README.md)
+    * [Segments Tutorial](companies-and-customers/customer-segments/segments.md)
     * [API Reference](companies-and-customers/customer-segments/api-reference/README.md)
       * ```yaml
         type: builtin:openapi
