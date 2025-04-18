@@ -1,28 +1,25 @@
 # Table of contents
 
 * [Getting started with Emporix API](README.md)
-* [openapi-generator](openapi-generator.md)
+* [OpenAPI Generator](openapi-generator.md)
 
 ## Standard Practices
 
-* [Table of contents](<Standard Practices/SUMMARY.MD>)
-
-***
-
-* [b2btoken](b2btoken.md)
-* [mixins](mixins.md)
-* [custom-id](custom-id.md)
-* [q-param](q-param.md)
-* [translations](translations.md)
-* [upsert](upsert.md)
+* [Mixins](standard-practices/mixins.md)
+* [Query Parameter](standard-practices/q-param.md)
+* [Translations](standard-practices/translations.md)
+* [Custom ID](standard-practices/custom-id.md)
+* [Upsert](standard-practices/upsert.md)
+* [B2B Token](standard-practices/b2btoken.md)
+* [Page 1](standard-practices/page-1.md)
 
 ## API Guides and References
 
 * [Authorization](api-guides-and-references/authorization/README.md)
   * ```yaml
-    type: builtin:openapi
     props:
       models: true
+    type: builtin:openapi
     dependencies:
       spec:
         ref:
@@ -42,9 +39,9 @@
 * [Artificial Intelligence](api-guides-and-references/ai/README.md)
   * [AI Tutorials](api-guides-and-references/ai/ai-tutorial.md)
   * ```yaml
-    type: builtin:openapi
     props:
       models: true
+    type: builtin:openapi
     dependencies:
       spec:
         ref:
@@ -65,9 +62,9 @@
   * [Configuration Service](api-guides-and-references/configuration/configuration-service/README.md)
     * [API Reference](api-guides-and-references/configuration/configuration-service/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -104,9 +101,9 @@
     * [Category Tutorials](catalogs-and-categories/category-tree/category.md)
     * [API Reference](catalogs-and-categories/category-tree/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -124,9 +121,9 @@
     * [Price Tutorials](price-v2/price-service/price.md)
     * [API Reference](price-v2/price-service/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:

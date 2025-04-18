@@ -1,6 +1,4 @@
-# openapi-generator
-
-## OpenAPI Generator
+# OpenAPI Generator
 
 To facilitate customizations of Emporix Commerce Engine, so that it is tailored to your needs, you can use the OpenAPI generator.\
 The tool allows you to generate code out of the API reference specifications.\
