@@ -1,15 +1,3 @@
----
-seo:
-  title: Artificial Intelligence Tutorials
-  description: ai, text for descriptions
-toc:
-  enable: true
-tocMaxDepth: 3
-editPage:
-  disable: true
-label: Tutorials
----
-
 # AI Tutorials
 
  With Emporix support for AI, you can enhance text for product descriptions and generate AI completions.
