@@ -36,8 +36,8 @@
           kind: openapi
           spec: oauth-api
     ```
-* [Artificial Intelligence](api-guides-and-references/ai/README.md)
-  * [AI Tutorials](api-guides-and-references/ai/ai-tutorial.md)
+* [Artificial Intelligence](api-guides-and-references/artificial-intelligence/README.md)
+  * [AI Tutorials](api-guides-and-references/artificial-intelligence/ai-tutorials.md)
   * ```yaml
     props:
       models: true
@@ -81,15 +81,15 @@
               kind: openapi
               spec: country-api
         ```
-  * [Country Service](api-guides-and-references/configuration/country-v2/README.md)
-    * [Country Tutorial](api-guides-and-references/configuration/country-v2/country.md)
+  * [Country Service](api-guides-and-references/configuration/country-service/README.md)
+    * [Country Tutorial](api-guides-and-references/configuration/country-service/country-tutorial.md)
   * [Currency Service](api-guides-and-references/configuration/currency-service.md)
   * [Tax Service](api-guides-and-references/configuration/tax-service.md)
   * [Unit Handling Service](api-guides-and-references/configuration/unit-handling-service.md)
-  * [Site Settings Service](api-guides-and-references/configuration/site-settings/README.md)
-    * [Site Settings Tutorial](api-guides-and-references/configuration/site-settings/site-settings.md)
-  * [Indexing Service](api-guides-and-references/configuration/indexing/README.md)
-    * [Indexing Tutorial](api-guides-and-references/configuration/indexing/indexing.md)
+  * [Site Settings Service](api-guides-and-references/configuration/site-settings-service/README.md)
+    * [Site Settings Tutorial](api-guides-and-references/configuration/site-settings-service/site-settings-tutorial.md)
+  * [Indexing Service](api-guides-and-references/configuration/indexing-service/README.md)
+    * [Indexing Tutorial](api-guides-and-references/configuration/indexing-service/indexing-tutorial.md)
 
 ***
 
@@ -130,13 +130,24 @@
               kind: openapi
               spec: price-api
         ```
-  * [Currency Service](price-v2/currency-service.md)
-  * [Tax Service](price-v2/tax-service/README.md)
-    * [API Reference](price-v2/tax-service/api-reference/README.md)
+  * [Currency Service](price-v2/currency-service/README.md)
+    * [API Reference](price-v2/currency-service/api-reference/README.md)
       * ```yaml
         type: builtin:openapi
         props:
           models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: currency
+        ```
+  * [Tax Service](price-v2/tax-service/README.md)
+    * [API Reference](price-v2/tax-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
