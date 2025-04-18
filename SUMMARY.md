@@ -27,29 +27,9 @@
             kind: openapi
             spec: oauth-api
       ```
-    * ```yaml
-      props:
-        models: true
-      type: builtin:openapi
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: oauth-api
-      ```
 * [Artificial Intelligence](api-guides-and-references/artificial-intelligence/README.md)
-  * [AI Tutorials](api-guides-and-references/artificial-intelligence/ai-tutorial.md)
+  * [AI Service Tutorials](api-guides-and-references/artificial-intelligence/ai-tutorial.md)
   * [API Reference](api-guides-and-references/artificial-intelligence/api-reference/README.md)
-    * ```yaml
-      props:
-        models: true
-      type: builtin:openapi
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: ai-api
-      ```
     * ```yaml
       props:
         models: true
