@@ -573,7 +573,18 @@
               kind: openapi
               spec: media-api
         ```
-* [Webhooks](webhooks.md)
+* [Webhooks](webhooks/README.md)
+  * [API Reference](webhooks/api-reference/README.md)
+    * ```yaml
+      type: builtin:openapi
+      props:
+        models: true
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: webhook-api
+      ```
 * [Integrations](integrations/README.md)
   * [Emporix-make](Integrations/Emporix-make.md)
   * [identity-providers](Integrations/identity-providers.md)
