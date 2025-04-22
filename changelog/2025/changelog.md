@@ -131,7 +131,7 @@ There are no known problems.
     date="2025-04-03"
 />
 
-# Schema Service - endpoints for managing custom entities and instances
+# 2025-04-03: Schema Service - endpoints for managing custom entities and instances
 
 ## Overview
 
@@ -168,7 +168,7 @@ There are no known problems.
     date="2025-04-03"
 />
 
-# OAuth Service - new endpoint
+# 2025-04-03: OAuth Service - new endpoint
 
 ## Overview
 
