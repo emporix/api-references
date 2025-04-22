@@ -1,4 +1,16 @@
 ---
+icon: wand-sparkles
+layout:
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: false
+  pagination:
+    visible: true
 ---
 
 # 2025-02-19: Customer Segments Service - expanded response for retrieving category trees for a customer segments endpoint

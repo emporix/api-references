@@ -1,4 +1,16 @@
 ---
+icon: sliders
+layout:
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: false
+  pagination:
+    visible: true
 ---
 # 2025-03-21: Sequential ID Service - `siteCode` query param
 
