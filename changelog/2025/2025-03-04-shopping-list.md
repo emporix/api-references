@@ -1,0 +1,19 @@
+---
+---
+# 2025-03-04: Shopping List Service - `metadata` field changes
+
+## Overview
+
+The `metadata` field at root level is now deprecated in GET responses, as each shopping list now maintains its own independent `metadata` field. This field will be fully removed on September 1st, 2025. Additionally we have added version validation for update operation where you can provide `version` in the update payload to validate it against the current entity version, preventing unintentional overriding when multiple updates occur simultaneously.
+
+## Updated endpoints
+
+| Endpoint                                                                                                                     | Description                                                                                 |
+|------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| [Retrieving a shopping list](/openapi/shopping-list/#operation/GET-shopping-list-retrieve-shopping-list)                     | Deprecated `metadata` field on root level and added `metadata` field to each shopping list. |
+| [Retrieving a customer shopping list](/openapi/shopping-list/#operation/GET-shopping-list-retrieve-customer-shopping-list)   | Deprecated `metadata` field on root level and added `metadata` field to each shopping list. |
+| [Updating a customer shopping list](/openapi/shopping-list/#operation/PUT-shopping-list-update-customer-shopping-list)       | Added `metadata.version` to request payload which allows for version validation             |
+
+## Known problems
+
+There are no known problems.
