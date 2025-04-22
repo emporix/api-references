@@ -14,6 +14,6 @@
 
 ## Archive
 
-* [Changelog 2024](2024/changelog-2024.md)
-* [Changelog 2023](2023/changelog-2023.md)
-* [Changelog 2022](archive/changelog-2022.md)
+* [Changelog 2024](archive/2024/changelog-2024.md)
+* [Changelog 2023](archive/2023/changelog-2023.md)
+* [Changelog 2022](archive/2022/changelog-2022.md)
