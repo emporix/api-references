@@ -11,11 +11,11 @@ editPage:
   label: Changelog
 
 ---
-<!-- import { Badge } from '../components/Badge.tsx'
+import { Badge } from '../components/Badge.tsx'
 
 # Changelog
 
-Learn more about any recent changes in the Emporix API. -->
+Learn more about any recent changes in the Emporix API.
 
 <!-- BEFORE YOU START CREATING A NEW ENTRY, SEE HOW TO KEEP THE CHANGELOG CONSISTENT:
 
@@ -100,66 +100,14 @@ Learn more about any recent changes in the Emporix API. -->
     NEED A TEMPLATE? See [Template](/content/changelogTEMPLATE).
 -->
 
-<!-- <Badge
-    tag="deprecated"
-    date=""
-/> -->
 
 
-# 2025-04-04: Sequential-ID Service - deprecations
 
-## Overview
 
-All deprecations will be removed on 2025-10-01.
 
-## Deprecated endpoints
 
-| Endpoint                                                                                        | Description                                                                                                                                                                               |
-|-------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Retrieving all schemas](/openapi/sequential-id/#operation/GET-sequential-id-retrieve-schemas)  | Endpoint will be removed. Please use [/sequential-id/{tenant}/schemas](/openapi/sequential-id/#operation/GET-sequential-id-retrieve-tenant-schemas) instead.                              |
-| [Creating a schema](/openapi/sequential-id/#operation/POST-sequential-id-create-schema)         | Endpoint will be removed. Please use [/sequential-id/{tenant}/schemas](/openapi/sequential-id/#operation/POST-sequential-id-create-tenant-schema) instead.                                |
-| [Creating a nextId](/openapi/sequential-id/#operation/POST-sequential-id-create-nextId)         | Endpoint will be removed. Please use [/sequential-id/{tenant}/schemas/types/{schemaType}/nextId](/openapi/sequential-id/#operation/POST-sequential-id-create-schema-type-nextId) instead. |
 
-## Known problems
 
-There are no known problems.
-
----
-
-<Badge
-    tag="newFeature"
-    date="2025-04-03"
-/>
-
-# 2025-04-03: Schema Service - endpoints for managing custom entities and instances
-
-## Overview
-
-We added new API for managing custom schema types and custom instances. Custom schema types are custom entitities on which you can build custom instances.
-
-## Added endpoints
-
-| Endpoint                                                                                                   | Description                             |
-|------------------------------------------------------------------------------------------------------------|-----------------------------------------|
-| [Creating a custom schema type](/openapi/schema/#operation/POST-schema-create-custom-schema-type)          | It creates a new schema type.           |
-| [Retrieving all custom schema types](/openapi/schema/#operation/GET-schema-retrieve-custom-schema-types)   | It retrieves all custom schema types.   |
-| [Retrieving a custom schema type](/openapi/schema/#operation/GET-schema-retrieve-custom-schema-type)       | It retrieves a custom schema type.      |
-| [Deleting a custom schema type](/openapi/schema/#operation/DELETE-schema-remove-custom-schema-type)        | It deletes a custom schema type.        |
-| [Upserting a custom schema type](/openapi/schema/#operation/PUT-schema-upsert-custom-schema-type)          | It upserts custom schema type.          |
-| [Creating a custom instance](/openapi/schema/#operation/POST-schema-create-custom-instance)                | It creates a custom instance.           |
-| [Retrieving all custom instances](/openapi/schema/#operation/GET-schema-retrieve-custom-instances)         | It retrieves all custom instances.      |
-| [Retrieving a custom instance](/openapi/schema/#operation/GET-schema-retrieve-custom-instance)             | It retrieves a custom instance.         |
-| [Deleting a custom instance](/openapi/schema/#operation/DELETE-schema-remove-custom-instance)              | It deletes a custom instance.           |
-| [Upserting a custom instance](/openapi/schema/#operation/PUT-schema-upsert-custom-instance)                | It upserts a custom instance.           |
-| [Patching a custom instance](/openapi/schema/#operation/PATCH-schema-patch-custom-instance)                | It partially updates a custom instance. |
-| [Searching for custom instances](/openapi/schema/#operation/POST-schema-search-custom-instances)           | It searches for custom instances.       |
-| [Creating custom instances in bulk](/openapi/schema/#operation/POST-schema-create-custom-instances-bulk)   | It creates custom instances in bulk.    |
-| [Upserting custom instances in bulk](/openapi/schema/#operation/PUT-schema-create-custom-instances-bulk)   | It upserts custom instances in bulk.    |
-| [Deleting custom instances in bulk](/openapi/schema/#operation/DELETE-schema-create-custom-instances-bulk) | It deletes custom instances in bulk.    |
-
-## Known problems
-
-There are no known problems.
 
 ---
 
@@ -168,7 +116,7 @@ There are no known problems.
     date="2025-04-03"
 />
 
-# 2025-04-03: OAuth Service - new endpoint
+# OAuth Service - new endpoint
 
 ## Overview
 
