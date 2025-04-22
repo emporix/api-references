@@ -11,11 +11,11 @@ editPage:
   label: Changelog
 
 ---
-import { Badge } from '../components/Badge.tsx'
+<!-- import { Badge } from '../components/Badge.tsx'
 
 # Changelog
 
-Learn more about any recent changes in the Emporix API.
+Learn more about any recent changes in the Emporix API. -->
 
 <!-- BEFORE YOU START CREATING A NEW ENTRY, SEE HOW TO KEEP THE CHANGELOG CONSISTENT:
 
@@ -100,12 +100,13 @@ Learn more about any recent changes in the Emporix API.
     NEED A TEMPLATE? See [Template](/content/changelogTEMPLATE).
 -->
 
-<Badge
+<!-- <Badge
     tag="deprecated"
-    date="2025-04-04"
-/>
+    date=""
+/> -->
 
-# Sequential-ID Service - deprecations
+
+# 2025-04-04: Sequential-ID Service - deprecations
 
 ## Overview
 
