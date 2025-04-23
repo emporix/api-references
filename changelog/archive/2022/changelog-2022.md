@@ -23,7 +23,7 @@ date="2022-12-15"
 
 # 2022-12-15: Media Service - public and private assets
 
-## Overview
+**Overview**
 
 The media assets functionality makes it possible to manage public and private assets.
 
@@ -56,7 +56,7 @@ date="2022-12-13"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Order Service API has been enhanced with the possibility of recalculating all entries from the order. Users are now able to recalculate prices and coupons of entries.
 
@@ -85,7 +85,7 @@ date="2022-12-12"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Price Service API has been enhanced with the possibility of specifying custom IDs for prices. Users are now able to specify price IDs during price creation. In this case, the IDs are no longer generated automatically.
 
@@ -118,7 +118,7 @@ date="2022-11-30"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Session Context Service provides the ability to manage a customer's browser session context, enabling the application of contextual pricing based on the user's session.
 
@@ -145,7 +145,7 @@ date="2022-11-17"
 
 # 2022-11-17: Returns Service - returns lifecycle
 
-## Overview
+**Overview**
 
 The order return functionality makes it possible to manage a lifecycle of an order return. A return can be managed by a customer or by an employee (on behalf of a customer).
 
@@ -177,7 +177,7 @@ date="2022-11-09"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The names and descriptions of brands present in the system can now be localized.
 
@@ -213,7 +213,7 @@ date="2022-11-08"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The product variants functionality makes it possible to create many variants of a product based on variant attributes.
 
@@ -255,7 +255,7 @@ date="2022-10-04"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The webhooks functionality makes it possible to subscribe to events that are broadcast by the Emporix e-commerce system.
 
@@ -282,7 +282,7 @@ date="2022-09-23"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The product accessories / consumables functionality makes it possible to define information about related items, like accessories.
 
@@ -324,7 +324,7 @@ date="2022-09-19"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The product bundles functionality makes it possible to create products that consist of other products.
 
@@ -360,7 +360,7 @@ date="2022-09-19"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The `pdf-mashup` service allows you to define product bundles in a new way. When the `product` is of the BUNDLE type (`productType: BUNDLE`)
 and contains products' ids in the `bundledProducts` fields, the `pdf-mashup` service generates the packlist.pdf and picklist.pdf files that
@@ -398,7 +398,7 @@ date="2022-09-15"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The product template functionality makes it possible to define a set of attributes that are common for all product instances based on a particular product template.
 
@@ -431,7 +431,7 @@ date="2022-09-13"
 
 # 2022-09-13: Product Service - product accessories / consumables
 
-## Overview
+**Overview**
 
 The product accessories / consumables functionality makes it possible to define information about related items, like accessories.
 
@@ -471,7 +471,7 @@ date="2022-09-06"
 
 # 2022-09-06: Customer Management Service - business customers
 
-## Overview
+**Overview**
 
 The customer management functionality makes it possible to manage information about your business customers.
 
@@ -517,7 +517,7 @@ date="2022-08-05"
 
 # 2022-08-05: Webhooks Service - subscription to events
 
-## Overview
+**Overview**
 
 The webhooks functionality makes it possible to subscribe to events that are broadcast by the Emporix e-commerce system.
 
@@ -558,7 +558,7 @@ Deprecated endpoint for deleting all products assigned to the tenant has been re
 This functionality is in preview mode — some of the features may not be fully operational yet.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The product bundles functionality makes it possible to create products that consist of other products.
 
@@ -596,7 +596,7 @@ The product bundles functionality is in preview mode, which means the new endpoi
 This functionality is in preview mode — some of the features may not be fully operational yet.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The product template functionality makes it possible to define a set of attributes that are common for all product instances based on a particular product template.
 
