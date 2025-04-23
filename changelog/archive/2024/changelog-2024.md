@@ -75,12 +75,12 @@ There are no known problems.
 date="2024-12-19"
 />
 
-# Customer Segment Service - endpoints for retrieving items assignments
+# 2024-12-19: Customer Segment Service - endpoints for retrieving items assignments
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is in preview mode — some of the features may not be fully operational yet.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -104,7 +104,7 @@ There are no known problems.
     date="2024-12-19"
 />
 
-# Category Service - new query parameter
+# 2024-12-19: Category Service - new query parameter
 
 ## Overview
 
@@ -127,7 +127,7 @@ There are no known problems.
     date="2024-12-17"
 />
 
-# AI Service - Completion functionality
+# 2024-12-17: AI Service - Completion functionality
 
 ## Overview
 
@@ -151,7 +151,7 @@ There are no known problems.
     date="2024-12-16"
 />
 
-# Order Service - Q-param behaviour
+# 2024-12-16: Order Service - Q-param behaviour
 
 ## Overview
 
@@ -175,7 +175,7 @@ There are no known problems.
     date="2024-12-11"
 />
 
-# Availability Service - upsert operation support
+# 2024-12-11: Availability Service - upsert operation support
 
 ## Overview
 
@@ -198,7 +198,7 @@ There are no known problems.
     date="2024-12-11"
 />
 
-# Price Service - upsert operation support
+# 2024-12-11: Price Service - upsert operation support
 
 ## Overview
 
@@ -226,7 +226,7 @@ There are no known problems.
     date="2024-12-11"
 />
 
-# Product Service - upsert operation support
+# 2024-12-11: Product Service - upsert operation support
 
 ## Overview
 
@@ -256,7 +256,7 @@ There are no known problems.
     date="2024-12-11"
 />
 
-# Customer Management Service - upsert operation support
+# 2024-12-11: Customer Management Service - upsert operation support
 
 ## Overview
 
@@ -281,7 +281,7 @@ There are no known problems.
     date="2024-12-10"
 />
 
-# Coupon Service - new segment-related fields
+# 2024-12-10: Coupon Service - new segment-related fields
 
 ## Overview
 
@@ -308,7 +308,7 @@ There are no known problems.
     date="2024-12-10"
 />
 
-# Coupon Service - added information about legalEntity to redemption endpoints
+# 2024-12-10: Coupon Service - added information about legalEntity to redemption endpoints
 
 ## Overview
 
@@ -336,7 +336,7 @@ There are no known problems.
     date="2024-12-10"
 />
 
-# Customer Service - added information about legalEntities and businessModel
+# 2024-12-10: Customer Service - added information about legalEntities and businessModel
 
 ## Overview
 
@@ -362,7 +362,7 @@ There are no known problems.
     date="2024-12-10"
 />
 
-# IAM Service Service - upsert operation support for groups and assignments
+# 2024-12-10: IAM Service Service - upsert operation support for groups and assignments
 
 ## Overview
 
@@ -395,7 +395,7 @@ There are no known problems.
     date="2024-12-09"
 />
 
-# Catalog Service - upsert operation support
+# 2024-12-09: Catalog Service - upsert operation support
 
 ## Overview
 
@@ -424,7 +424,7 @@ There are no known problems.
     date="2024-12-09"
 />
 
-# Customer Service - upsert operation support
+# 2024-12-09: Customer Service - upsert operation support
 
 ## Overview
 
@@ -460,7 +460,7 @@ There are no known problems.
     date="2024-12-09"
 />
 
-# Category Service - upsert improvements
+# 2024-12-09: Category Service - upsert improvements
 
 ## Overview
 
@@ -500,12 +500,12 @@ tag="minor"
 date="2024-12-02"
 />
 
-# Webhook Service - new events
+# 2024-11-21: Webhook Service - new events
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -541,12 +541,12 @@ There are no known problems.
 date="2024-12-02"
 />
 
-# Customer Segment Service - endpoints for managing B2C customer assignments
+# 2024-12-02: Customer Segment Service - endpoints for managing B2C customer assignments
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is in preview mode — some of the features may not be fully operational yet.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -571,7 +571,7 @@ There are no known problems.
     date="2024-11-22"
 />
 
-# Category Service - mixins validation
+# 2024-11-22: Category Service - mixins validation
 
 ## Overview
 
@@ -600,7 +600,7 @@ There are no known problems.
     date="2024-11-21"
 />
 
-# IAM Service - custom ID support for groups
+# 2024-11-21: IAM Service - custom ID support for groups
 
 ## Overview
 
@@ -625,7 +625,7 @@ There are no known problems.
     date="2024-11-19"
 />
 
-# Customer Service - custom ID support for addresses
+# 2024-11-19: Customer Service - custom ID support for addresses
 
 ## Overview
 
@@ -649,7 +649,7 @@ There are no known problems.
     date="2024-11-15"
 />
 
-# Customer Management Service - custom ID support
+# 2024-11-15: Customer Management Service - custom ID support
 
 ## Overview
 
@@ -674,7 +674,7 @@ There are no known problems.
 date="2024-11-15"
 />
 
-# Customer-Management Service - search legal entities endpoint
+# 2024-11-15: Customer-Management Service - search legal entities endpoint
 
 ## Overview
 
@@ -692,12 +692,12 @@ The Customer-Management Service has been enhanced with the new endpoint which al
 date="2024-11-13"
 />
 
-# Customer Segment Service - endpoints for managing segments
+# 2024-11-13: Customer Segment Service - endpoints for managing segments
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is in preview mode — some of the features may not be fully operational yet.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -742,7 +742,7 @@ There are no known problems.
     date="2024-11-13"
 />
 
-# Customer Service - custom ID support
+# 2024-11-13: Customer Service - custom ID support
 
 ## Overview
 
@@ -766,7 +766,7 @@ There are no known problems.
     date="2024-11-13"
 />
 
-# Category Service - custom ID support
+# 2024-11-13: Category Service - custom ID support
 
 ## Overview
 
@@ -795,7 +795,7 @@ There are no known problems.
     date="2024-11-04"
 />
 
-# Catalog Service - custom ID support
+# 2024-11-04: Catalog Service - custom ID support
 
 ## Overview
 
@@ -820,7 +820,7 @@ tag="minor"
 date="2024-10-09"
 />
 
-# Order Service - discount calculation type
+# 2024-10-09: Order Service - discount calculation type
 
 ## Overview
 
@@ -848,7 +848,7 @@ tag="minor"
 date="2024-10-09"
 />
 
-# Cart Service - discount calculation type
+# 2024-10-09: Cart Service - discount calculation type
 
 ## Overview
 
@@ -876,7 +876,7 @@ tag="minor"
 date="2024-10-09"
 />
 
-# Coupon Service - discount calculation type
+# 2024-10-09: Coupon Service - discount calculation type
 
 ## Overview
 
@@ -903,12 +903,12 @@ tag="minor"
 date="2024-10-03"
 />
 
-# Webhook Service - new event `customer.email-change-request` type
+# 2024-10-03: Webhook Service - new event `customer.email-change-request` type
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -925,7 +925,7 @@ tag="minor"
 date="2024-09-26"
 />
 
-# Order Service - introduction of `feeYrnAggregate` and `fees` fields
+# 2024-09-26: Order Service - introduction of `feeYrnAggregate` and `fees` fields
 
 ## Overview
 
@@ -955,7 +955,7 @@ tag="minor"
 date="2024-09-26"
 />
 
-# Cart Service - introduction of `externalFees` field
+# 2024-09-26: Cart Service - introduction of `externalFees` field
 
 ## Overview
 
@@ -984,7 +984,7 @@ tag="minor"
 date="2024-09-11"
 />
 
-# Site Settings Service - `taxDeterminationBasedOn` property added
+# 2024-09-11: Site Settings Service - `taxDeterminationBasedOn` property added
 
 ## Overview
 
@@ -1029,12 +1029,12 @@ tag="minor"
 date="2024-09-10"
 />
 
-# Webhook Service - new event `customer.email-change` type
+# 2024-09-10: Webhook Service - new event `customer.email-change` type
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -1051,7 +1051,7 @@ tag="minor"
 date="2024-09-03"
 />
 
-# Product Service - introduction of `brandId` and `labelIds` field
+# 2024-09-03: Product Service - introduction of `brandId` and `labelIds` field
 
 ## Overview
 
@@ -1080,7 +1080,7 @@ tag="minor"
 date="2024-08-22"
 />
 
-# Customer Management Service - `name` field not mandatory
+# 2024-08-22: Customer Management Service - `name` field not mandatory
 
 ## Overview
 
@@ -1104,7 +1104,7 @@ tag="minor"
 date="2024-08-21"
 />
 
-# Customer Service - `metadataCreatedAt` field in response
+# 2024-08-21: Customer Service - `metadataCreatedAt` field in response
 
 ## Overview
 
@@ -1128,7 +1128,7 @@ tag="minor"
 date="2024-08-12"
 />
 
-# Cart Service - support for external prices
+# 2024-08-12: Cart Service - support for external prices
 
 ## Overview
 
@@ -1153,7 +1153,7 @@ tag="minor"
 date="2024-08-08"
 />
 
-# Order Service - introduction of add entries endpoint
+# 2024-08-08: Order Service - introduction of add entries endpoint
 
 ## Overview
 
@@ -1176,7 +1176,7 @@ tag="minor"
 date="2024-07-23"
 />
 
-# Configuration Service - introduction of clients endpoint
+# 2024-07-23: Configuration Service - introduction of clients endpoint
 
 ## Overview
 
@@ -1199,7 +1199,7 @@ tag="minor"
 date="2024-07-11"
 />
 
-# Customer Service (customer-managed) - `site` field for password reset requests
+# 2024-07-11: Customer Service (customer-managed) - `site` field for password reset requests
 
 ## Overview
 
@@ -1222,7 +1222,7 @@ tag="minor"
 date="2024-07-09"
 />
 
-# Cart Service - introduction of refresh endpoint
+# 2024-07-09: Cart Service - introduction of refresh endpoint
 
 ## Overview
 
@@ -1245,7 +1245,7 @@ tag="removed"
 date="2024-07-02"
 />
 
-# Shopping-list Service - removal of deprecated endpoints
+# 2024-07-02: Shopping-list Service - removal of deprecated endpoints
 
 All previously deprecated endpoints are now removed.
 
@@ -1267,7 +1267,7 @@ tag="minor"
 date="2024-06-13"
 />
 
-# Shipping Service - support for slot delivery method quote
+# 2024-06-13: Shipping Service - support for slot delivery method quote
 
 ## Overview
 
@@ -1290,7 +1290,7 @@ tag="minor"
 date="2024-05-17"
 />
 
-# Shopping List Service - support for shopping lists mixins
+# 2024-05-17: Shopping List Service - support for shopping lists mixins
 
 ## Overview
 
@@ -1317,7 +1317,7 @@ tag="minor"
 date="2024-05-15"
 />
 
-# Webhook Service - new HTTP header for HTTP Webhook Strategy
+# 2024-05-15: Webhook Service - new HTTP header for HTTP Webhook Strategy
 
 ## Overview
 
@@ -1335,7 +1335,7 @@ tag="minor"
 date="2024-05-06"
 />
 
-# Schema Service - `PRICE_LIST` type support
+# 2024-05-06: Schema Service - `PRICE_LIST` type support
 
 ## Overview
 
@@ -1362,7 +1362,7 @@ tag="minor"
 date="2024-04-24"
 />
 
-# Schema Service - support for object attributes
+# 2024-04-24: Schema Service - support for object attributes
 
 ## Overview
 
@@ -1386,7 +1386,7 @@ tag="minor"
 date="2024-04-19"
 />
 
-# Schema Service - support for array attributes
+# 2024-04-19: Schema Service - support for array attributes
 
 ## Overview
 
@@ -1410,7 +1410,7 @@ tag="minor"
 date="2024-04-15"
 />
 
-# Cart Service - support for discount deletion by code
+# 2024-04-15: Cart Service - support for discount deletion by code
 
 ## Overview
 
@@ -1437,7 +1437,7 @@ tag="minor"
 date="2024-04-15"
 />
 
-# Price Service (v2) - support for price lists mixins
+# 2024-04-15: Price Service (v2) - support for price lists mixins
 
 ## Overview
 
@@ -1464,7 +1464,7 @@ tag="minor"
 date="2024-04-15"
 />
 
-# Schema Service - support for nullable attributes
+# 2024-04-15: Schema Service - support for nullable attributes
 
 ## Overview
 
@@ -1486,7 +1486,7 @@ tag="minor"
 date="2024-04-10"
 />
 
-# Schema Service - support for `DECIMAL` type
+# 2024-04-10: Schema Service - support for `DECIMAL` type
 
 ## Overview
 
@@ -1510,7 +1510,7 @@ tag="newFeature"
 date="2024-03-29"
 />
 
-# Category Service - new endpoint for creating category assignments in bulk
+# 2024-03-29: Category Service - new endpoint for creating category assignments in bulk
 
 ## Overview
 
@@ -1533,7 +1533,7 @@ tag="minor"
 date="2024-03-28"
 />
 
-# Category Service - `supercategoriesIds` in response
+# 2024-03-28: Category Service - `supercategoriesIds` in response
 
 ## Overview
 
@@ -1556,12 +1556,12 @@ tag="minor"
 date="2024-03-22"
 />
 
-# Webhook Service - new event `customer.opt-in` type
+# 2024-03-22: Webhook Service - new event `customer.opt-in` type
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -1578,7 +1578,7 @@ tag="newFeature"
 date="2024-03-15"
 />
 
-# Checkout Service - guest checkout
+# 2024-03-15: Checkout Service - guest checkout
 
 ## Overview
 
@@ -1600,7 +1600,7 @@ tag="minor"
 date="2024-03-15"
 />
 
-# Returns Service - returns for anonymous orders
+# 2024-03-15: Returns Service - returns for anonymous orders
 
 ## Overview
 
@@ -1623,7 +1623,7 @@ tag="minor"
 date="2024-03-15"
 />
 
-# Cart Service - `couponDiscounts` field in response
+# 2024-03-15: Cart Service - `couponDiscounts` field in response
 
 ## Overview
 
@@ -1647,7 +1647,7 @@ tag="minor"
 date="2024-03-07"
 />
 
-# OAuth Service - deprecation of `anonymous_token` parameter
+# 2024-03-07: OAuth Service - deprecation of `anonymous_token` parameter
 
 ## Overview
 
@@ -1670,7 +1670,7 @@ tag="minor"
 date="2024-03-07"
 />
 
-# Quote Service - generation of quotes using the customer's email and usage of service tokens possibility
+# 2024-03-07: Quote Service - generation of quotes using the customer's email and usage of service tokens possibility
 
 ## Overview
 
@@ -1697,7 +1697,7 @@ tag="minor"
 date="2024-02-26"
 />
 
-# Coupon Service - coupon code in both upper and lower cases
+# 2024-02-26: Coupon Service - coupon code in both upper and lower cases
 
 ## Overview
 
@@ -1720,7 +1720,7 @@ tag="minor"
 date="2024-02-26"
 />
 
-# Webhook Service - custom headers
+# 2024-02-26: Webhook Service - custom headers
 
 ## Overview
 
@@ -1745,7 +1745,7 @@ tag="minor"
 date="2024-02-22"
 />
 
-# Invoice Service - invoice API
+# 2024-02-22: Invoice Service - invoice API
 
 ## Overview
 
@@ -1769,7 +1769,7 @@ tag="minor"
 date="2024-02-09"
 />
 
-# Category Service - `published` field for assignments
+# 2024-02-09: Category Service - `published` field for assignments
 
 ## Overview
 
@@ -1792,7 +1792,7 @@ tag="minor"
 date="2024-02-06"
 />
 
-# Customer Management Service - contact to customer transformation
+# 2024-02-06: Customer Management Service - contact to customer transformation
 
 ## Overview
 
@@ -1819,7 +1819,7 @@ tag="minor"
 date="2024-02-05"
 />
 
-# Customer Management Service - `contactDetails.tags` field
+# 2024-02-05: Customer Management Service - `contactDetails.tags` field
 
 ## Overview
 
@@ -1845,7 +1845,7 @@ tag="minor"
 date="2024-02-05"
 />
 
-# Cart Service - making cart item properties optional
+# 2024-02-05: Cart Service - making cart item properties optional
 
 ## Overview
 
@@ -1869,12 +1869,12 @@ There are no known problems.
 date="2024-01-23"
 />
 
-# Webhook Service - configuration API update
+# 2024-01-23: Webhook Service - configuration API update
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is in preview mode — some of the features may not be fully operational yet.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -1903,7 +1903,7 @@ tag="minor"
 date="2024-01-22"
 />
 
-# Availability Service - support for mixins
+# 2024-01-22: Availability Service - support for mixins
 
 ## Overview
 
@@ -1930,7 +1930,7 @@ There are no known problems.
 date="2024-01-22"
 />
 
-# Indexing Service - configuration API
+# 2024-01-22: Indexing Service - configuration API
 
 ## Overview
 
@@ -1960,12 +1960,12 @@ There are no known problems.
 date="2024-01-11"
 />
 
-# Webhook Service - configuration API
+# 2024-01-11: Webhook Service - configuration API
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is in preview mode — some of the features may not be fully operational yet.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -1992,7 +1992,7 @@ tag="minor"
 date="2024-01-02"
 />
 
-# Schema Service - `CUSTOMER.ADDRESS` type support
+# 2024-01-02: Schema Service - `CUSTOMER.ADDRESS` type support
 
 ## Overview
 
