@@ -2,7 +2,7 @@
 
 Converts a cart into a sales order by executing a number of checkout steps in sequence.
 
-### Key features**:
+### Key features
 * Validates product availability, product prices.
 * Automatically applies coupons and promotions.
 * Captures payment and eventually creates a sales order.
