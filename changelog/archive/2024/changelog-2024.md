@@ -511,7 +511,7 @@ This functionality is now fully operational.
 
 The new events were added to webhook-service.
 
-## Added events
+**Added events**
 
 | Event                                           | Description                                                                       |
 | ----------------------------------------------- | --------------------------------------------------------------------------------- |

@@ -69,7 +69,7 @@ date="2023-12-14"
 
 All deprecated endpoints will be removed on 2024/07/01.
 
-## Deprecated endpoints
+**Deprecated endpoints**
 
 | Endpoint                                                                            |
 | ----------------------------------------------------------------------------------- |
