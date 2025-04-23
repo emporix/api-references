@@ -1,17 +1,17 @@
 ---
-seo:
-  title: 2024 Changelog
-  description: Changelog
-toc:
-  enable: true
-tocMaxDepth: 1
-disableLastModified: true
-editPage:
-  disable: true
-  label: Changelog
-
+icon: hourglass-half
+layout:
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: false
+  pagination:
+    visible: true
 ---
-import { Badge } from '../components/Badge.tsx'
 
 # 2024 Changelog
 
@@ -19,12 +19,12 @@ import { Badge } from '../components/Badge.tsx'
 date="2024-12-19"
 />
 
-# Customer Segment Service - new endpoint for checking match criteria
+# 2024-12-19: Customer Segment Service - new endpoint for checking match criteria
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is in preview mode — some of the features may not be fully operational yet.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -48,7 +48,7 @@ There are no known problems.
     date="2024-12-19"
 />
 
-# Cart Service - added information about legalEntity
+# 2024-12-19: Cart Service - added information about legalEntity
 
 ## Overview
 
