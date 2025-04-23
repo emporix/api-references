@@ -1,5 +1,5 @@
 ---
-icon: hourglass-half
+icon: folder-open
 layout:
   title:
     visible: true
