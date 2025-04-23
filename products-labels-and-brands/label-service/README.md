@@ -2,7 +2,7 @@
 
 Labels allow to mark details related to a product, for example highlighting that a product has a worldwide shipment possibility.
 
-### Key Features and Benefits
+### Key features and benefits
 * Highlights important product information that you can display on the storefront.
 * Allows you to use your own icons and media files for proper indication of labels.
 * Facilitates marking items with the information that makes them easier to sell.
