@@ -1,17 +1,17 @@
 ---
-seo:
-  title: 2022 Changelog
-  description: Changelog
-toc:
-  enable: true
-tocMaxDepth: 1
-disableLastModified: true
-editPage:
-  disable: true
-  label: Changelog
-
+icon: hourglass-half
+layout:
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
 ---
-import { Badge } from '../components/Badge.tsx'
 
 # 2022 Changelog
 
@@ -21,7 +21,7 @@ label="In progress"
 date="2022-12-15"
 />
 
-# Media Service - public and private assets
+# 2022-12-15: Media Service - public and private assets
 
 ## Overview
 
@@ -49,12 +49,12 @@ tag="minor"
 date="2022-12-13"
 />
 
-# Order Service - new recalculate parameter
+# 2022-12-13: Order Service - new recalculate parameter
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -78,12 +78,12 @@ tag="major"
 date="2022-12-12"
 />
 
-# Price Service - custom ID support
+# 2022-12-12: Price Service - custom ID support
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -111,12 +111,12 @@ tag="newFeature"
 date="2022-11-30"
 />
 
-# Session Context Service - session context
+# 2022-11-30: Session Context Service - session context
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -143,7 +143,7 @@ label="In progress"
 date="2022-11-17"
 />
 
-# Returns Service - returns lifecycle
+# 2022-11-17: Returns Service - returns lifecycle
 
 ## Overview
 
@@ -170,12 +170,12 @@ tag="major"
 date="2022-11-09"
 />
 
-# Brands Service - localization and filtering
+# 2022-11-09: Brands Service - localization and filtering
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -183,12 +183,12 @@ The names and descriptions of brands present in the system can now be localized.
 
 The `q` param notation was introduced to the `Retrieving all brands` endpoint, so it is now possible to filter the results by every field.
 
-:::info
+{% hint style="info" %}
 
 For more detailed information, check out the API Reference documentation for the
 [Retrieving all brands](/openapi/brand/#operation/GET-brand-list-brands) endpoint.
 
-:::
+{% endhint %}
 
 ## Updated endpoints
 
@@ -206,12 +206,12 @@ tag="major"
 date="2022-11-08"
 />
 
-# Product Service - product bundles
+# 2022-11-08: Product Service - product bundles
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -248,12 +248,12 @@ tag="major"
 date="2022-10-04"
 />
 
-# Webhooks Service - subscription to events
+# 2022-10-04: Webhooks Service - subscription to events
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -275,12 +275,12 @@ tag="major"
 date="2022-09-23"
 />
 
-# Product Service - product accessories / consumables
+# 2022-09-23: Product Service - product accessories / consumables
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -317,12 +317,12 @@ tag="major"
 date="2022-09-19"
 />
 
-# Product Service - product bundles
+# 2022-09-19: Product Service - product bundles
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -353,12 +353,12 @@ tag="major"
 date="2022-09-19"
 />
 
-# Order Service - PDF-mashup for product bundles
+# 2022-09-19: Order Service - PDF-mashup for product bundles
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -391,12 +391,12 @@ tag="major"
 date="2022-09-15"
 />
 
-# Product Service - product templates
+# 2022-09-15: Product Service - product templates
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -429,7 +429,7 @@ label="In progress"
 date="2022-09-13"
 />
 
-# Product Service - product accessories / consumables
+# 2022-09-13: Product Service - product accessories / consumables
 
 ## Overview
 
@@ -469,7 +469,7 @@ label="In progress"
 date="2022-09-06"
 />
 
-# Customer Management Service - business customers
+# 2022-09-06: Customer Management Service - business customers
 
 ## Overview
 
@@ -497,7 +497,7 @@ tag="minor"
 date="2022-08-26"
 />
 
-# Product Service - improvements
+# 2022-08-26: Product Service - improvements
 
 The following changes have been introduced to the Emporix Product Service:
 
@@ -515,7 +515,7 @@ label="In progress"
 date="2022-08-05"
 />
 
-# Webhooks Service - subscription to events
+# 2022-08-05: Webhooks Service - subscription to events
 
 ## Overview
 
@@ -537,7 +537,7 @@ When particular endpoints become available, they will be announced in [Release N
 
 <Badge tag="deprecated" date="2022-08-02" />
 
-# Product Service - removal of a deprecated endpoint
+# 2022-08-02: Product Service - removal of a deprecated endpoint
 
 Deprecated endpoint for deleting all products assigned to the tenant has been removed from the Emporix API Product Service Reference.
 
@@ -551,12 +551,12 @@ Deprecated endpoint for deleting all products assigned to the tenant has been re
 
 <Badge tag="newFeature" date="2022-07-28" />
 
-# Product Service - product bundles
+# 2022-07-28: Product Service - product bundles
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is in preview mode — some of the features may not be fully operational yet.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -589,12 +589,12 @@ The product bundles functionality is in preview mode, which means the new endpoi
 <Badge tag="newFeature" label="In progress" date="2022-07-27" />
 
 
-# Product Service - product templates
+# 2022-07-27: Product Service - product templates
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is in preview mode — some of the features may not be fully operational yet.
-:::
+{% endhint %}
 
 ## Overview
 
