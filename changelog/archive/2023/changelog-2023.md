@@ -1,17 +1,17 @@
 ---
-seo:
-  title: 2023 Changelog
-  description: Changelog
-toc:
-  enable: true
-tocMaxDepth: 1
-disableLastModified: true
-editPage:
-  disable: true
-  label: Changelog
-
+icon: hourglass-half
+layout:
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
 ---
-import { Badge } from '../components/Badge.tsx'
 
 # 2023 Changelog
 
@@ -20,7 +20,7 @@ tag="minor"
 date="2023-12-14"
 />
 
-# Availability Service - removal of scopes from `GET` endpoint
+# 2023-12-14: Availability Service - removal of scopes from `GET` endpoint
 
 ## Overview
 
@@ -43,7 +43,7 @@ tag="minor"
 date="2023-12-14"
 />
 
-# Shopping-list Service - new endpoints
+# 2023-12-14: Shopping-list Service - new endpoints
 
 We introduced new endpoints for shopping-list. They allow for managing a shopping-list either by an employee or by a customer (so far, only a customer was able to manage it).
 
@@ -65,7 +65,7 @@ tag="deprecated"
 date="2023-12-14"
 />
 
-# Shopping-list Service - deprecation of endpoints
+# 2023-12-14: Shopping-list Service - deprecation of endpoints
 
 All deprecated endpoints will be removed on 2024/07/01.
 
@@ -87,7 +87,7 @@ tag="minor"
 date="2023-12-07"
 />
 
-# Coupon Service - creation of coupons after hard deletion
+# 2023-12-07: Coupon Service - creation of coupons after hard deletion
 
 ## Overview
 
@@ -104,7 +104,7 @@ tag="minor"
 date="2023-12-01"
 />
 
-# Coupon Service - support for mixins
+# 2023-12-01: Coupon Service - support for mixins
 
 ## Overview
 
@@ -131,7 +131,7 @@ tag="minor"
 date="2023-11-23"
 />
 
-# Cart Service - making cart item properties optional
+# 2023-11-23: Cart Service - making cart item properties optional
 
 ## Overview
 
@@ -156,7 +156,7 @@ tag="minor"
 date="2023-11-23"
 />
 
-# Returns Service - `metadata.mixins` field
+# 2023-11-23: Returns Service - `metadata.mixins` field
 
 ## Overview
 
@@ -183,7 +183,7 @@ tag="minor"
 date="2023-11-17"
 />
 
-# Coupon Service - permanent deletion of coupons
+# 2023-11-17: Coupon Service - permanent deletion of coupons
 
 ## Overview
 
@@ -208,7 +208,7 @@ tag="minor"
 date="2023-11-14"
 />
 
-# Webhook Service - new event types for Client Management Service
+# 2023-11-14: Webhook Service - new event types for Client Management Service
 
 ## Overview
 
@@ -226,12 +226,12 @@ tag="newFeature"
 date="2023-11-08"
 />
 
-# Schema Service - new service
+# 2023-11-08: Schema Service - new service
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -266,7 +266,7 @@ tag="minor"
 date="2023-11-08"
 />
 
-# Product Service - update of multiple products
+# 2023-11-08: Product Service - update of multiple products
 
 ## Overview
 
@@ -290,7 +290,7 @@ tag="newFeature"
 date="2023-11-07"
 />
 
-# Customer Service (customer-managed) - `type` property
+# 2023-11-07: Customer Service (customer-managed) - `type` property
 
 ## Overview
 
@@ -317,7 +317,7 @@ tag="newFeature"
 date="2023-11-07"
 />
 
-# Customer Service (customer-managed) - company registration ID property
+# 2023-11-07: Customer Service (customer-managed) - company registration ID property
 
 ## Overview
 
@@ -344,7 +344,7 @@ tag="newFeature"
 date="2023-11-07"
 />
 
-# Customer Service (tenant-managed) - company registration ID property and new scopes
+# 2023-11-07: Customer Service (tenant-managed) - company registration ID property and new scopes
 
 ## Overview
 
@@ -374,7 +374,7 @@ tag="newFeature"
 date="2023-11-07"
 />
 
-# IAM service - new endpoint and scopes
+# 2023-11-07: IAM service - new endpoint and scopes
 
 ## Overview
 
@@ -407,7 +407,7 @@ tag="newFeature"
 date="2023-11-07"
 />
 
-# Approval Service - new service
+# 2023-11-07: Approval Service - new service
 
 ## Overview
 
@@ -436,7 +436,7 @@ tag="newFeature"
 date="2023-10-30"
 />
 
-# Returns Service - assisted buying property
+# 2023-10-30: Returns Service - assisted buying property
 
 ## Overview
 
@@ -460,7 +460,7 @@ tag="newFeature"
 date="2023-10-26"
 />
 
-# Order Service - assisted buying property
+# 2023-10-26: Order Service - assisted buying property
 
 ## Overview
 
@@ -484,7 +484,7 @@ tag="newFeature"
 date="2023-10-26"
 />
 
-# Site Setting Service - assisted buying property
+# 2023-10-26: Site Setting Service - assisted buying property
 
 ## Overview
 
@@ -537,12 +537,12 @@ tag="minor"
 date="2023-10-27"
 />
 
-# Webhook Service - new event types for customer service
+# 2023-10-27: Webhook Service - new event types for customer service
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -560,12 +560,12 @@ tag="newFeature"
 date="2023-09-06"
 />
 
-# AI Service - new service
+# 2023-09-06: AI Service - new service
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -593,12 +593,12 @@ tag="minor"
 date="2023-08-07"
 />
 
-# Reward Points Service - redeem option
+# 2023-08-07: Reward Points Service - redeem option
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -628,12 +628,12 @@ tag="minor"
 date="2023-08-07"
 />
 
-# Reward Points Service - deleting redeem option
+# 2023-08-07: Reward Points Service - deleting redeem option
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -656,12 +656,12 @@ tag="minor"
 date="2023-08-02"
 />
 
-# Shipping Service - delivery day shift and time zones support
+# 2023-08-02: Shipping Service - delivery day shift and time zones support
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -690,12 +690,12 @@ tag="newFeature"
 date="2023-07-11"
 />
 
-# Shipping Service - delivery cycle management
+# 2023-07-11: Shipping Service - delivery cycle management
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -753,12 +753,12 @@ tag="newFeature"
 date="2023-07-11"
 />
 
-# Payment Gateway Service - new service
+# 2023-07-11: Payment Gateway Service - new service
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -793,12 +793,12 @@ tag="minor"
 date="2023-06-01"
 />
 
-# Webhook Service - new event `order.deleted` type
+# 2023-06-01: Webhook Service - new event `order.deleted` type
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -815,12 +815,12 @@ tag="minor"
 date="2023-05-30"
 />
 
-# Category Service - new `code` property
+# 2023-05-30: Category Service - new `code` property
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -847,12 +847,12 @@ tag="minor"
 date="2023-05-26"
 />
 
-# Product Service - creation of multiple products
+# 2023-05-26: Product Service - creation of multiple products
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -877,12 +877,11 @@ tag="minor"
 date="2023-05-25"
 />
 
-# IAM Service - new `b2b` property
+# 2023-05-25: IAM Service - new `b2b` property
 
-:::attention
-
+{% hint style="warning" %}
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -907,12 +906,12 @@ tag="minor"
 date="2023-05-25"
 />
 
-# Customer-Management Service - new `customermanagement.legalentity_read_own` scope
+# 2023-05-25: Customer-Management Service - new `customermanagement.legalentity_read_own` scope
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -936,12 +935,12 @@ tag="newFeature"
 date="2023-05-24"
 />
 
-# Quote Service - quote reasons
+# 2023-05-24: Quote Service - quote reasons
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -977,12 +976,12 @@ tag="minor"
 date="2023-05-23"
 />
 
-# Quote Service - shipping information in a quote
+# 2023-05-23: Quote Service - shipping information in a quote
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -1009,12 +1008,12 @@ tag="major"
 date="2023-05-23"
 />
 
-# Order Service - tax of the shipping cost
+# 2023-05-23: Order Service - tax of the shipping cost
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -1043,12 +1042,12 @@ tag="minor"
 date="2023-05-23"
 />
 
-# Checkout Service - quote checkout process
+# 2023-05-23: Checkout Service - quote checkout process
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -1071,12 +1070,12 @@ tag="major"
 date="2023-05-23"
 />
 
-# Quote Service - new `orderId` property
+# 2023-05-23: Quote Service - new `orderId` property
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -1100,12 +1099,12 @@ tag="major"
 date="2023-05-17"
 />
 
-# Quote Service - mixins feature
+# 2023-05-17: Quote Service - mixins feature
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -1132,12 +1131,12 @@ tag="minor"
 date="2023-05-12"
 />
 
-# Order Service - new `quoteId` property
+# 2023-05-12: Order Service - new `quoteId` property
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -1162,12 +1161,12 @@ tag="major"
 date="2023-04-04"
 />
 
-# Reward Points Service - order status changes
+# 2023-04-04: Reward Points Service - order status changes
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -1188,12 +1187,12 @@ tag="newFeature"
 date="2023-03-31"
 />
 
-# Quote Service - management of quotations
+# 2023-03-31:Quote Service - management of quotations
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
@@ -1222,12 +1221,12 @@ tag="major"
 date="2023-03-03"
 />
 
-# Price Service (v2) - validation of mixins
+# 2023-03-03: Price Service (v2) - validation of mixins
 
-:::attention
+{% hint style="warning" %}
 
 This functionality is now fully operational.
-:::
+{% endhint %}
 
 ## Overview
 
