@@ -27,7 +27,7 @@ date="2022-12-15"
 
 The media assets functionality makes it possible to manage public and private assets.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint                                                               | Description                      |
 | ---------------------------------------------------------------------- | -------------------------------- |
@@ -38,7 +38,7 @@ The media assets functionality makes it possible to manage public and private as
 | [Getting single asset entity](/openapi/media/#operation/GET-media-retrieve-asset)         | It gets a single media asset.       |
 | [Downloading an asset](/openapi/media/#operation/GET-media-download-asset)          | It downloads a single media asset.  |
 
-## Known problems
+**Known problems**
 
 When particular endpoints become available, they will be announced in the [Release Notes](https://developer.emporix.io/releases?tag=all).
 
@@ -60,14 +60,14 @@ This functionality is now fully operational.
 
 The Order Service API has been enhanced with the possibility of recalculating all entries from the order. Users are now able to recalculate prices and coupons of entries.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                                 | Description                                                                                                                                                                                          |
 | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Updating an order](/openapi/order/#operation/PUT-order-update-order)            | This parameter allows for recalculation of all entries from the order. If set to `true`, the prices and coupons of the entries are recalculated. By default, the `recalculate` parameter is set to `false`. |
 | [Partially updating an order](/openapi/order/#operation/PATCH-order-partial-update-order) | This parameter allows for recalculation of all entries from the order. If set to `true`, the prices and coupons of the entries are recalculated. By default, the `recalculate` parameter is set to `false`. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -89,7 +89,7 @@ This functionality is now fully operational.
 
 The Price Service API has been enhanced with the possibility of specifying custom IDs for prices. Users are now able to specify price IDs during price creation. In this case, the IDs are no longer generated automatically.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint | Description |
 | --- | --- |
@@ -100,7 +100,7 @@ The Price Service API has been enhanced with the possibility of specifying custo
 |[Creating a new price list price](/openapi/price/#operation/POST-price-create-price-in-price-list)| It creates a new price list price.|
 |[Creating new price list prices in bulk](/openapi/price/#operation/POST-price-create-multiple-prices-for-price-list)| It creates new price list prices in bulk.|
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -122,7 +122,7 @@ This functionality is now fully operational.
 
 The Session Context Service provides the ability to manage a customer's browser session context, enabling the application of contextual pricing based on the user's session.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint | Description |
 | --- | --- |
@@ -149,7 +149,7 @@ date="2022-11-17"
 
 The order return functionality makes it possible to manage a lifecycle of an order return. A return can be managed by a customer or by an employee (on behalf of a customer).
 
-## New endpoints
+**New endpoints**
 
 | Endpoint | Description |
 | --- | --- |
@@ -159,7 +159,7 @@ The order return functionality makes it possible to manage a lifecycle of an ord
 | [Getting list of return entities](/openapi/returns/#operation/GET-returns-list-returns) | It gets a list of order returns. |
 | [Getting single return entities](/openapi/returns/#operation/GET-returns-retrieve-return) | It gets a single order return. |
 
-## Known problems
+**Known problems**
 
 When particular endpoints become available, they will be announced in the [*Release Notes*](https://developer.emporix.io/releases?tag=all).
 
@@ -190,7 +190,7 @@ For more detailed information, check out the API Reference documentation for the
 
 {% endhint %}
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                                             | Description                                                                                                                                                    |
 |------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -227,11 +227,11 @@ The `productType` field can be set to the following new values:
 * `productType` — can be set to either `BASIC`, `BUNDLE`, `PARENT_VARIANT` or`VARIANT`. The productType value is immutable - once set, it
   cannot be changed during the product update.
 
-## New endpoints
+**New endpoints**
 
 No new endpoints have been introduced.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                                              | Description |
 |-------------------------------------------------------------------------------------------------------| --- |
@@ -259,7 +259,7 @@ This functionality is now fully operational.
 
 The webhooks functionality makes it possible to subscribe to events that are broadcast by the Emporix e-commerce system.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint                                                                                                  | Description                                                                                                                                              |
 | --------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -297,11 +297,11 @@ The `relatedItem` object consists of the following mandatory fields:
 * `refId` — identifier of a product that is related to the main product. The product identifier has to exist.
 * `type` — relation type. The type has to exist in the system. All relation types are defined in configuration service under the `relation_types` key. There are two relation types available out of the box: `ACCESSORY` and `CONSUMABLE`.
 
-## New endpoints
+**New endpoints**
 
 No new endpoints have been introduced.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint | Description |
 |---| --- |
@@ -333,11 +333,11 @@ The original product model is now extended with two optional fields:
 * `productType` — can be set to either `BASIC` or `BUNDLE`. The productType value is immutable - once set, it cannot be changed during product update.
 * `bundledProducts` — a list containing IDs of products that are included in the bundle.
 
-## New endpoints
+**New endpoints**
 
 No new endpoints have been introduced.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint | Description |
 |---| --- |
@@ -371,11 +371,11 @@ To support this feature, the `Order Service` has been extended with the `order.e
 * `productType` — provides information about the product's type. Possible values: `BASIC`, `BUNDLE`, `PARENT_VARIANT`, `VARIANT`.
 * `bundledProducts` — lists the `productId` and `amount` pairs that contain information about products assigned to a given bundle.
 
-## New endpoints
+**New endpoints**
 
 No new endpoints have been introduced.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                                                 | Description                                                                                                                                   |
 | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -402,7 +402,7 @@ This functionality is now fully operational.
 
 The product template functionality makes it possible to define a set of attributes that are common for all product instances based on a particular product template.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint                                                                                 | Description                                                                                                                                                                                                                                                                                                                                                                           |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -412,7 +412,7 @@ The product template functionality makes it possible to define a set of attribut
 | [Updating a product template](/openapi/product/#operation/PUT-product-update-template)       | It updates an existing product template. Each update creates a new version of the template. Products based on earlier versions of the template are not updated automatically. In order to see the changes (such as new attributes) on the product level, you need to update the product template's `version` in a relevant `Product` object.|
 | [Deleting a product template](/openapi/product/#operation/DELETE-product-remove-template)       | It deletes a product template. All products based on a deleted template will be unassigned from the template, but not deleted in a cascade way.                                                                                                                                                                                             |
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                                 | Description                                                                                                                                                                                                                                                                                                                                                                           |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -444,11 +444,11 @@ The `relatedItem` object consists of the following mandatory fields:
 * `refId` — identifier of a product that is related to the main product. The product identifier has to exist.
 * `type` — relation type. The type has to exist in the system. All relation types are defined in configuration service under the `relation_types` key. There are two relation types available out of the box: `ACCESSORY` and `CONSUMABLE`.
 
-## New endpoints
+**New endpoints**
 
 No new endpoints have been introduced.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                                    | Description                                                                         |
 | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
@@ -457,7 +457,7 @@ No new endpoints have been introduced.
 | [Retrieving a list of products](/openapi/product/#operation/GET-product-list-products)            | The request body schema contains a new optional field `relatedItems`. |
 | [Upserting a product](/openapi/product/#operation/PUT-product-update-product)   | The request body schema contains a new optional field `relatedItems`. |
 
-## Known problems
+**Known problems**
 
 When particular endpoints become available, they will be announced in [Release Notes](/releases?tag=all).
 
@@ -475,7 +475,7 @@ date="2022-09-06"
 
 The customer management functionality makes it possible to manage information about your business customers.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint| Description |
 | --- | --- |
@@ -486,7 +486,7 @@ The customer management functionality makes it possible to manage information ab
 
 [^1]: CRUD — create, read, update, delete.
 
-## Known problems
+**Known problems**
 
 When particular endpoints become available, they will be announced in [Release Notes](https://developer.emporix.io/releases?tag=all).
 
@@ -521,7 +521,7 @@ date="2022-08-05"
 
 The webhooks functionality makes it possible to subscribe to events that are broadcast by the Emporix e-commerce system.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint                                                                                                  | Description                                                                                                                                              |
 | --------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -529,7 +529,7 @@ The webhooks functionality makes it possible to subscribe to events that are bro
 | [Subscribing and unsubscribing from events](/openapi/webhook/#operation/PATCH-webhook-manage-event-subscriptions) | It updates the subscriptions list by either subscribing or unsubscribing from specified events.                                                             |
 | [Retrieving a dashboard access URL](/openapi/webhook/#operation/GET-webhook-access-tenant-svix)              | It retrieves a Svix magic login link (authentication embedded) and an authentication token needed to connect a tenant to their consumer application portal. |
 
-## Known problems
+**Known problems**
 
 When particular endpoints become available, they will be announced in [Release Notes](https://developer.emporix.io/releases?tag=all).
 
@@ -541,7 +541,7 @@ When particular endpoints become available, they will be announced in [Release N
 
 Deprecated endpoint for deleting all products assigned to the tenant has been removed from the Emporix API Product Service Reference.
 
-## Removed endpoints
+**Removed endpoints**
 
 | Endpoint                                                                    | Description                                  |
 | --------------------------------------------------------------------------- | -------------------------------------------- |
@@ -567,11 +567,11 @@ The original product model is now extended with two optional fields:
 * `productType` — can be set to either `BASIC` or `BUNDLE`. The productType value is immutable - once set, it cannot be changed during product update.
 * `bundledProducts` — a list containing IDs of products that are included in the bundle.
 
-## New endpoints
+**New endpoints**
 
 No new endpoints have been introduced.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                                    | Description                                                                                             |
 | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
@@ -580,7 +580,7 @@ No new endpoints have been introduced.
 | [Retrieving a list of products](/openapi/product/#operation/GET-product-list-products)            | The request body schema contains two optional fields `productType` and `bundledProducts`. |
 | [Upserting a product](/openapi/product/#operation/PUT-product-update-product)   | The request body schema contains one optional field `bundledProducts`.                     |
 
-## Known problems
+**Known problems**
 
 The product bundles functionality is in preview mode, which means the new endpoints may not be fully operational yet. When particular endpoints become available, they will be announced in [Release Notes](https://developer.emporix.io/releases?tag=all).
 
@@ -600,7 +600,7 @@ This functionality is in preview mode — some of the features may not be fully 
 
 The product template functionality makes it possible to define a set of attributes that are common for all product instances based on a particular product template.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint                                                                                 | Description                                                                                                                                                                                                                                                                                                                                                                           |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -610,7 +610,7 @@ The product template functionality makes it possible to define a set of attribut
 | [Updating a product template](/openapi/product/#operation/PUT-product-update-template)       | It updates an existing product template. Each update creates a new version of the template. Products based on earlier versions of the template are not updated automatically. In order to see the changes (such as new attributes) on the product level, you need to update the product template's `version` in a relevant `Product` object.|
 | [Deleting a product template](/openapi/product/#operation/DELETE-product-remove-template)       | It deletes a product template. All products based on a deleted template will be unassigned from the template, but not deleted in a cascade way.                                                                                                                                                                                             |
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                                 | Description                                                                                                                                                                                                                                                                                                                                                                           |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -620,6 +620,6 @@ The product template functionality makes it possible to define a set of attribut
 | [Upserting a product](/openapi/product/#operation/PUT-product-update-product) | The request body schema contains a new optional field called `template`. The `template` field consists of two fields: `id` and `version`.|
 
 
-## Known problems
+**Known problems**
 
 The product templates functionality is in preview mode, which means the new endpoints may not be fully operational yet. When particular endpoints become available, they will be announced in [Release Notes](https://developer.emporix.io/releases?tag=all).
