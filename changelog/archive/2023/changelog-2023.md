@@ -22,17 +22,17 @@ date="2023-12-14"
 
 # 2023-12-14: Availability Service - removal of scopes from `GET` endpoint
 
-## Overview
+**Overview**
 
 The endpoint for getting product availability does not require any scopes anymore.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                                            | Description                    |
 | --------------------------------------------------------------------------------------------------- | ------------------------------ |
 | [Retrieving product availability](/openapi/availability/#operation/GET-availability-retrieve-product) | The endpoint doesn't require scopes.   |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -89,11 +89,11 @@ date="2023-12-07"
 
 # 2023-12-07: Coupon Service - creation of coupons after hard deletion
 
-## Overview
+**Overview**
 
 After a hard deletion of a coupon, it is now possible to create a new coupon with the same code and to reset redemptions count.
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -106,11 +106,11 @@ date="2023-12-01"
 
 # 2023-12-01: Coupon Service - support for mixins
 
-## Overview
+**Overview**
 
 Coupon Service from now on supports the mixins feature. There are two new properties available - `mixins` and `metadata.mixins`, which allow you to work with custom fields.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                            | Description                                     |
 | ----------------------------------------------------------------------------------- | ----------------------------------------------- |
@@ -120,7 +120,7 @@ Coupon Service from now on supports the mixins feature. There are two new proper
 | [Updating a coupon](/openapi/coupon/#operation/PUT-coupon-update-coupon)               | We added `mixins` and `metadata.mixins` properties. |
 | [Partially updating a coupon](/openapi/coupon/#operation/PATCH-coupon-update-coupon)   | We added `mixins` and `metadata.mixins` properties. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -133,11 +133,11 @@ date="2023-11-23"
 
 # 2023-11-23: Cart Service - making cart item properties optional
 
-## Overview
+**Overview**
 
 Properties `price.originalAmount` and `price.effectiveAmount` for a cart item can be optional. There are new system preferences that allow you to disable validation of these properties.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                                          | Description                                                                                                                          |
 | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
@@ -145,7 +145,7 @@ Properties `price.originalAmount` and `price.effectiveAmount` for a cart item ca
 | [Adding a product to cart](/openapi/cart/#operation/POST-cart-add-item-to-cart)               | Properties `price.originalAmount` and `price.effectiveAmount` can be optional. Validation is configurable by the system preferences. |
 | [Updating a cart item](/openapi/cart/#operation/PUT-cart-update-item-details)             | Properties `price.originalAmount` and `price.effectiveAmount` can be optional. Validation is configurable by the system preferences. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -158,11 +158,11 @@ date="2023-11-23"
 
 # 2023-11-23: Returns Service - `metadata.mixins` field
 
-## Overview
+**Overview**
 
 There is a new property added to return model - `metadata.mixins`. It allows for validation of mixins against a provided schema.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                | Description                      |
 | ----------------------------------------------------------------------- | -------------------------------- |
@@ -172,7 +172,7 @@ There is a new property added to return model - `metadata.mixins`. It allows for
 | [Updating a return](/openapi/returns/#operation/PUT-returns-update-return)               | We added `metadata.mixins` property. |
 | [Partially updating a return](/openapi/returns/#operation/PATCH-returns-update-return)   | We added `metadata.mixins` property. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -185,19 +185,19 @@ date="2023-11-17"
 
 # 2023-11-17: Coupon Service - permanent deletion of coupons
 
-## Overview
+**Overview**
 
 There is new property in system preferences, which allows you to permanently delete coupons.
 If the property is not set or is set to `false`, the delete coupon endpoint just flags the coupon as deleted.
 If set to true, the endpoint permanently removes the coupon from the database.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                           | Description                                                                                             |
 | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------|
 | [Deleting a coupon](/openapi/coupon/#operation/DELETE-coupon-remove-coupon)         | Depending on the configuration, it flags coupon as deleted or performs permanent deletion from database. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -210,12 +210,12 @@ date="2023-11-14"
 
 # 2023-11-14: Webhook Service - new event types for Client Management Service
 
-## Overview
+**Overview**
 
 There are four new events which are emitted during: legal entity creation, legal entity update, legal entity deletion and when user is assigned to a legal entity.
 For more information, check out [Client Management Service events](/content/events-client-management).
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -233,11 +233,11 @@ date="2023-11-08"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 We released the Schema Service that provides validation of custom mixin fields.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint                                                                  | Description                                                                                                     |
 | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
@@ -255,7 +255,7 @@ We released the Schema Service that provides validation of custom mixin fields.
 |[Deleting a reference](/openapi/schema/#operation/DELETE-schema-remove-reference)         | It deletes a reference. The endpoint requires `schema.schema_manage` scope.                          |
 |[Updating a reference](/openapi/schema/#operation/PUT-schema-update-reference)         | It updates a reference. The endpoint requires `schema.schema_manage` scope.                          |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -268,18 +268,18 @@ date="2023-11-08"
 
 # 2023-11-08: Product Service - update of multiple products
 
-## Overview
+**Overview**
 
 The Product Service API has a new endpoint to update multiple products in bulk.
 Response for a particular product is returned at the same position (index) at which that product is located in the request body.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint                                                                           | Description               |
 | ---------------------------------------------------------------------------------- | --------------------------|
 | [Upserting multiple products](/openapi/product/#operation/PUT-product-update-bulk-products) | It updates products in bulk. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -292,13 +292,13 @@ date="2023-11-07"
 
 # 2023-11-07: Customer Service (customer-managed) - `type` property
 
-## Overview
+**Overview**
 
 There is a new property in the Customer object. The property is related to the Customer and Contact functionality.
 It indicates that a particular customer is a standard customer that has access to a storefront, or that the customer is a contact person.
 If the `type` field is not provided, the customer is recognized as a standard customer with a storefront access.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint | Description |
 | --- | --- |
@@ -306,7 +306,7 @@ If the `type` field is not provided, the customer is recognized as a standard cu
 | [Retrieving a customer profile](/openapi/customer-customer/#operation/GET-customer-retrieve-customer-profile)| We added `type` property. |
 | [Creating a new customer](/openapi/customer-customer/#operation/POST-customer-create-customer-account)| We added `type` property. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -319,13 +319,13 @@ date="2023-11-07"
 
 # 2023-11-07: Customer Service (customer-managed) - company registration ID property
 
-## Overview
+**Overview**
 
 A new property is available in the Customer object. The property is related to the Customer Rights and Roles functionality.
 It indicates if a particular customer is assigned to a particular company. If you provide the company registration ID during the customer sign up,
 such customer is assigned to existing company straight away. If the company does not exist, it will be created.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint | Description |
 | --- | --- |
@@ -333,7 +333,7 @@ such customer is assigned to existing company straight away. If the company does
 | [Get a customer profile](/openapi/customer-customer/#operation/GET-customer-retrieve-customer-profile)|  Company registration ID property has been added. |
 | [Post a new customer](/openapi/customer-customer/#operation/POST-customer-create-customer-account)| Company registration ID property has been added. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -346,14 +346,14 @@ date="2023-11-07"
 
 # 2023-11-07: Customer Service (tenant-managed) - company registration ID property and new scopes
 
-## Overview
+**Overview**
 
 The Customer object has a new property. The property is related to the Customer Rights and Roles functionality.
 
 We added a new scope `customer.customer_read_own` to the GET customers endpoints. The scope allows users to read customers, who are assigned to the same company.
 We added a new scope `customer.customer_manage_own` to the endpoints. The scope allows users to manage customers who are assigned to the same company.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint | Description |
 | --- | --- |
@@ -363,7 +363,7 @@ We added a new scope `customer.customer_manage_own` to the endpoints. The scope 
 | [Getting a single customer](/openapi/customer-tenant/#operation/GET-customer-tenant-retrieve-customer)| We added the company registration ID property and the `customer.customer_read_own` scope. |
 | [Deleting a customer](/openapi/customer-tenant/#operation/DELETE-customer-tenant-remove-customer)| We added the `customer.customer_read_own` scope. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -376,18 +376,18 @@ date="2023-11-07"
 
 # 2023-11-07: IAM service - new endpoint and scopes
 
-## Overview
+**Overview**
 
 IAM service is enhanced with new scopes to give customers more access rights.
 A new endpoint was added for retrieving customer scopes.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint | Description |
 | --- | --- |
 | [Retrieving own scopes](/openapi/iam/#operation/GET-iam-retrieve-own-user-scopes)| It allows the customer to get their own scopes. |
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint | Description |
 | --- | --- |
@@ -396,7 +396,7 @@ A new endpoint was added for retrieving customer scopes.
 | [Adding a user to a group](/openapi/iam/#operation/POST-iam-add-user-to-group)| The added `iam.assignment_create_own` scope allows customers to assign other users to the group. The users have to be from the same company. |
 | [Removing a user from a group](/openapi/iam/#operation/DELETE-iam-remove-user-from-group)| The added `iam.assignment_delete_own` scope allows customers to unassign users from the group. The users have to be from the same company. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -409,11 +409,11 @@ date="2023-11-07"
 
 # 2023-11-07: Approval Service - new service
 
-## Overview
+**Overview**
 
 We released the Approval Service.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint | Description |
 | --- | --- |
@@ -425,7 +425,7 @@ We released the Approval Service.
 | [Checking the resource approval](/openapi/approval/#operation/POST-approval-check-approval)| It checks if the user has permission to perform given action on the resource. The endpoint requires the `approval.approval_read_own` scope. |
 | [Searching for approver users](/openapi/approval/#operation/POST-approval-search-users)| It retrieves all the users who can approve the approval for a given action on the resource. The endpoint requires the `approval.approval_read_own` scope. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -438,18 +438,18 @@ date="2023-10-30"
 
 # 2023-10-30: Returns Service - assisted buying property
 
-## Overview
+**Overview**
 
 The Return object was expanded with a new property. The property is related to Assisted Buying functionality and it indicates that a particular action has been performed by an employee on behalf of a customer.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint | Description |
 | --- | --- |
 | [Retrieving a list of returns](/openapi/returns/#operation/GET-returns-list-returns)| We added assisted buying property. |
 | [Retrieving a single return](/openapi/returns/#operation/GET-returns-retrieve-return)| We added assisted buying property. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -462,18 +462,18 @@ date="2023-10-26"
 
 # 2023-10-26: Order Service - assisted buying property
 
-## Overview
+**Overview**
 
 Order object was expanded with a new property. The property is related to Assisted Buying functionality and it indicates that a particular action has been performed by an employee on behalf of a customer.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint | Description |
 | --- | --- |
 | [Retrieving orders](/openapi/order/#operation/GET-order-retrieve-tenant-orders)| We added assisted buying property. |
 | [Retrieving a specific order](/openapi/order/#operation/GET-order-retrieve-order-employee)| We added assisted buying property. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -486,11 +486,11 @@ date="2023-10-26"
 
 # 2023-10-26: Site Setting Service - assisted buying property
 
-## Overview
+**Overview**
 
 The Site object was expanded with a new property. The property is related to Assisted Buying functionality and it provides an information about the storefront URL that should be opened when the action is triggered.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint | Description |
 | --- | --- |
@@ -500,7 +500,7 @@ The Site object was expanded with a new property. The property is related to Ass
 | [Updating a site](/openapi/site-settings/#operation/PUT-site-settings-update-site-config)| We added assisted buying property. |
 | [Partially updating a site](/openapi/site-settings/#operation/PATCH-site-settings-update-site)| We added assisted buying property. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -514,18 +514,18 @@ date="2023-10-26"
 # Customer Service (tenant-managed) - assisted buying login endpoint
 
 
-## Overview
+**Overview**
 
 The functionality provides a possibility to generate an auth token by an employee on behalf of a customer.
 Only the employees that belong to the support group, meaning they have `customer.assistedBuying_manage` scope assigned, can perform the action.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint | Description |
 | --- | --- |
 | [Generating a customer token](/openapi/customer-tenant/#operation/POST-customer-tenant-assisted-buying-login)| It generates an auth token on behalf of a customer. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -544,12 +544,12 @@ date="2023-10-27"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 There are five new events which are emitted during: customer creation, customer update, customer deletion, sending a request to reset a customer's password and resending an account activation link to a customer.
 For more information, check out [Customer Service events](/content/events-customer).
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -567,22 +567,22 @@ date="2023-09-06"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The service facilitates and streamlines e-commerce processes of product marketing.
 
-#### Key Features
+**Key Features**
 
 * Integration with https://platform.openai.com/ platform
 * Possibility to generate product descriptions
 
-## New endpoints
+**New endpoints**
 
 | Endpoint                                                                 | Description                                    |
 | ------------------------------------------------------------------------ | ---------------------------------------------- |
 | [Generating text for an object description](/openapi/ai/#operation/POST-ai-generate-description)       | It generates a text based on a prompt. Currently supported AI engines for text generation: https://platform.openai.com/.  |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -600,24 +600,24 @@ date="2023-08-07"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Reward Points Service is enhanced with the new endpoint, which allows employees to update redeem options. We also added metadata to redeem options and from now on when you create a redeem option, metadata is added to it. When retrieving redeem options, the ones without metadata are decorated with metadata version 1.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint                                                                 | Description                                    |
 | ------------------------------------------------------------------------ | ---------------------------------------------- |
 | [Updating redemption option](/openapi/reward-points/#operation/PUT-reward-points-update-redeem-option)       | It updates redeem option with given information. |
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                          | Description                               |
 | ------------------------------------------------- | ----------------------------------------- |
 | [Creating redemption option](/openapi/reward-points/#operation/POST-reward-points-create-redeem-options) | It creates a redeem option for a given tenant.  |
 | [Retrieving redemption options](/openapi/reward-points/#operation/GET-reward-points-list-redeem-options) | It gets a redeem option for a given tenant.     |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -635,17 +635,17 @@ date="2023-08-07"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Reward Points Service was enhanced with the new endpoint, which allows employees to delete redeem options by id.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint                                                                 | Description                                    |
 | ------------------------------------------------------------------------ | ---------------------------------------------- |
 | [Deleting redemption options](/openapi/reward-points/#operation/DELETE-reward-points-remove-redeem-option) | It deletes redeem option by id for a given tenant. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -663,12 +663,12 @@ date="2023-08-02"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Delivery Cycle Management functionality was updated with several new features to enhance user experience and efficiency. It now includes the `Delivery Day Shift` attribute, which offers users control over the delay period between the cut-off day and the delivery day. To make delivery timings more comprehensible, the functionality now supports timezone specifications, making it clear for which timezone the delivery time is defined.
 
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                                                                        | Description                                                                                                                                                                                                  |
 | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -679,7 +679,7 @@ The Delivery Cycle Management functionality was updated with several new feature
 | [Updating a delivery time](/openapi/shipping/#operation/PUT-shipping-update-delivery-time)                                 | It updates a single delivery time with a given information.              |
 | [Partial updating of a delivery time](/openapi/shipping/#operation/PATCH-shipping-update-delivery-time)                    | It partially updates a single delivery time with a given information.    |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -697,11 +697,11 @@ date="2023-07-11"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Delivery Cycle Management functionality allows for more detailed way of controlling delivery process. It includes creating multiple slots for a single delivery time each with different cut-off times.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint                                                                                                                          | Description                                                           |
 | -------------------------------------------------------------------------------------------------------------------------------   | --------------------------------------------------------------------- |
@@ -721,7 +721,7 @@ The Delivery Cycle Management functionality allows for more detailed way of cont
 | [Deleting a delivery time slot](/openapi/shipping/#operation/DELETE-shipping-remove-delivery-times-slot)            | It deletes a single delivery time slot.                                  |
 | [Generating a delivery cycle](/openapi/shipping/#operation/POST-shipping-generate-delivery-cycle)                                  | It generates a delivery cycle.                                           |
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                                                                        | Description                                                                                                                                                                                                  |
 | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -742,7 +742,7 @@ The Delivery Cycle Management functionality allows for more detailed way of cont
 | [Retrieving a cart's details by ID](/openapi/cart/#operation/GET-cart-retrieve-cart-by-cartId)                                           | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
 | [Updating a cart](/openapi/cart/#operation/PUT-cart-update-cart)                                                             | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -760,11 +760,11 @@ date="2023-07-11"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 We released the Payment Gateway Service.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint                                                                     | Description                                                                        |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
@@ -782,7 +782,7 @@ We released the Payment Gateway Service.
 |[Fetching transactions](/openapi/payment-gateway/#operation/GET-payment-gateway-list-transactions)| It fetches a list of payment transactions. The endpoint requires `payment-gateway.paymenttransactions_read` scope.|
 |[Fetching transaction](/openapi/payment-gateway/#operation/GET-payment-gateway-retrieve-transaction-by-transactionId)| It fetches a single payment transaction. The endpoint requires `payment-gateway.paymenttransactions_read` scope.|
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -800,11 +800,11 @@ date="2023-06-01"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The event is emitted when an order is being deleted. For more information, check out [Order Service events](/content/events-order).
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -822,21 +822,21 @@ date="2023-05-30"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Category Service API has been enhanced with the new property - `code`.
 
-## New endpoints
+**New endpoints**
 
 No new endpoints have been introduced.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                     | Description                                                                        |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 |[Creating a new category](/openapi/category/#operation/create)| The category resource now contains the `code` property. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -854,19 +854,19 @@ date="2023-05-26"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Product Service API has been enhanced with the new endpoint to create multiple products in bulk.
 The endpoint accepts a list of products. Recommended size of a particular batch is up to 500 products.
 Response for a particular product is returned at the same position (index) at which that product is located in the request body.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint                                                                     | Description                                                                        |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 | [Creating multiple products](/openapi/product/#operation/POST-product-create-bulk-products)| It creates products in bulk. Recommended size of a particular batch is up to 500 products. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -883,11 +883,11 @@ date="2023-05-25"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The IAM Service API contains a new property - `b2b`. Users are now able to link the identifier of legal entity with the tenant group.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                     | Description                                                                        |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
@@ -895,7 +895,7 @@ The IAM Service API contains a new property - `b2b`. Users are now able to link 
 | [Retrieving a group](/openapi/iam/#operation/GET-iam-retrieve-user-group)| The `b2b.legalEntityId` property indicates the legal entity for which the group has been created. |
 | [Creating a new group](/openapi/iam/#operation/POST-iam-create-user-group) | The `b2b.legalEntityId` property indicates the legal entity for which the group has been created.|
 | [Upserting a group](/openapi/iam/#operation/PUT-iam-update-user-group) | The `b2b.legalEntityId` property indicates the legal entity for which the group has been created.|
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -913,18 +913,18 @@ date="2023-05-25"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Customer-Management Service API has been enhanced with the new scope - `customermanagement.legalentity_read_own`.
 Customers are now able to retrieve all their legal entities with the `customermanagement.legalentity_read_own` scope.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                                        | Description                                                                                                                |
 | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | [Retrieving all legal entities](/openapi/customer-management/#operation/GET-customer-mgmt-list-legal-entities) | There is a possibility to retrieve legal entities of the customer using new `customermanagement.legalentity_read_own` scope.|
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -942,11 +942,11 @@ date="2023-05-24"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The quote reason functionality enables the creation and management of quote reasons. Quote reasons contain information why a given quote was declined or a change was requested. They are defined as separate entities through dedicated API and can be used as a reference during status change of the quote.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint                                                                                              | Description                         |
 | ----------------------------------------------------------------------------------------------------- | ----------------------------------- |
@@ -956,7 +956,7 @@ The quote reason functionality enables the creation and management of quote reas
 | [Retrieving quote reasons](/openapi/quote/#operation/GET-quote-list-reasons)                               | It gets a list of quote reasons.       |
 | [Retrieving a single quote reason](/openapi/quote/#operation/GET-quote-retrieve-reason)  | It gets a single quote reason.         |
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                                 | Description                                                                                                                                                                              |
 | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -965,7 +965,7 @@ The quote reason functionality enables the creation and management of quote reas
 | [Retrieving quotes](/openapi/quote/#operation/GET-quote-list-quotes)                         | The quote can contain `quoteReason` object as part of the `status` field.                                                                                                                |
 | [Retrieving quote history](/openapi/quote/#operation/GET-quote-retrieve-quote-history) | Changelogs contain changes of the quotes containing quote reasons reference.                                                                                                             |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -983,11 +983,11 @@ date="2023-05-23"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Quote Service API has been enhanced with `shipping` object. Users are now able to specify shipping of the quote.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                                 | Description                                                                 |
 | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
@@ -997,7 +997,7 @@ The Quote Service API has been enhanced with `shipping` object. Users are now ab
 | [Creating a quote](/openapi/quote/#operation/POST-quote-create-quote)                          | A new optional field `shipping` was added for quote creation.        |
 | [Retrieving quote history](/openapi/quote/#operation/GET-quote-retrieve-quote-history) | Changelogs contain changes of the shipping.                                 |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -1015,11 +1015,11 @@ date="2023-05-23"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Order Service now contains the tax of the shipping costs. Previously, the order did not store the information about the tax or the tax rate of the shipping costs.
 
-## Updated endpoints
+**Updated endpoints**
 
 
 | Endpoint                                                                                    | Description                                                                         |
@@ -1031,7 +1031,7 @@ The Order Service now contains the tax of the shipping costs. Previously, the or
 | [Retrieving a single order](/openapi/order/#operation/GET-order-retrieve-order-storefront)            | The shipping line of the response body contains the `tax` object.          |
 | [Retrieving orders](/openapi/order/#operation/GET-order-list-orders)                            | The shipping line of the response body contains the `tax` object.          |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -1049,17 +1049,17 @@ date="2023-05-23"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Checkout Service API has been enhanced with the checkout process of the quote. When the request contains `quoteId` field, the checkout is triggered for the given quote.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                          | Description                                                                                                                                                                                                                    |
 | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | [Triggering a checkout](/openapi/checkout/#operation/POST-checkout-trigger-checkout) | The `triggering a checkout` request contains the optional `quoteId` field. In case of triggering a checkout of the quote, the `shipping`, `addresses`, and `customer` information is fetched directly from the quote. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -1077,18 +1077,18 @@ date="2023-05-23"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Quote Service API has been enhanced with the new property - `orderId`. Users are now able to see the order id from an order created based on the quote.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                          | Description                                                           |
 | --------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
 | [Retrieving quotes](/openapi/quote/#operation/GET-quote-list-quotes)                  | It gets the order id from an order that was created basing on the quote. |
 | [Retrieving a single quote](/openapi/quote/#operation/GET-quote-retrieve-quote) | It gets the order id from an order that was created basing on the quote. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -1106,11 +1106,11 @@ date="2023-05-17"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Quote Service API has been enhanced with mixins feature. Users are now able to add, manage and read the mixins custom properties.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                                 | Description                                                             |
 | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
@@ -1120,7 +1120,7 @@ The Quote Service API has been enhanced with mixins feature. Users are now able 
 | [Creating a quote](/openapi/quote/#operation/POST-quote-create-quote)                          | New properties provide support for mixins and mixins metadata.     |
 | [Retrieving quote history](/openapi/quote/#operation/GET-quote-retrieve-quote-history) | Changelogs contain changes in the mixins and mixins metadata.           |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -1138,11 +1138,11 @@ date="2023-05-12"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Order Service API has been enhanced with the new property - `quoteId`. Merchants are now able to see the id of the quote from which the order has been created.
 
-## Updated endpoints
+**Updated endpoints**
 
 | Endpoint                                                                         | Description                                                          |
 | -------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
@@ -1150,7 +1150,7 @@ The Order Service API has been enhanced with the new property - `quoteId`. Merch
 | [Getting a list of the orders](/openapi/order/#operation/GET-order-retrieve-tenant-orders) | This property indicates from which quote the order has been created. |
 | [Getting an order](/openapi/order/#operation/GET-order-retrieve-order-employee)     | This property indicates from which quote the order has been created. |
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -1168,15 +1168,15 @@ date="2023-04-04"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Reward Points Service reacts now on the order status changes. When the order status is changed to `COMPLETED`, the reward points are added to the customer account.
 
-## New endpoints
+**New endpoints**
 
 No new endpoints have been introduced.
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -1194,11 +1194,11 @@ date="2023-03-31"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The quote management functionality enables the creation and management of quotations. Both the customer flow (accessible from the storefront) and the merchant flow (accessible from the Management Dashboard) are supported.
 
-## New endpoints
+**New endpoints**
 
 | Endpoint | Description |
 | --- | --- |
@@ -1210,7 +1210,7 @@ The quote management functionality enables the creation and management of quotat
 | [Retrieving quote history](/openapi/quote/#operation/GET-quote-retrieve-quote-history) | It gets a single quote changelog. |
 | [Creating a quote PDF](/openapi/quote/#operation/POST-quote-generate-quote-pdf) | It generates a quote PDF.|
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
@@ -1228,15 +1228,15 @@ date="2023-03-03"
 This functionality is now fully operational.
 {% endhint %}
 
-## Overview
+**Overview**
 
 The Price Service (v2) API has been enhanced with the validation of mixins. Before that, price mixins were not validated against any schema.
 
-## New endpoints
+**New endpoints**
 
 No new endpoints have been introduced.
 
-## Known problems
+**Known problems**
 
 There are no known problems.
 
