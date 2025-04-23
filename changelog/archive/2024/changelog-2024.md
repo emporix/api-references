@@ -13,8 +13,6 @@ layout:
     visible: true
 ---
 
-# 2024 Changelog
-
 <Badge tag="newFeature"
 date="2024-12-19"
 />

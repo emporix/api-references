@@ -13,8 +13,6 @@ layout:
     visible: true
 ---
 
-# 2023 Changelog
-
 <Badge
 tag="minor"
 date="2023-12-14"

@@ -13,8 +13,6 @@ layout:
     visible: true
 ---
 
-# 2022 Changelog
-
 <Badge
 tag="newFeature"
 label="In progress"
