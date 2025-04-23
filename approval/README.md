@@ -2,7 +2,7 @@
 
 The Emporix API Approval Service allows you to manage approval requests related to orders. The orders are referred to as resources.
 
-### Key Features and Benefits
+### Key features and benefits
 * Creating new approvals for orders
 * Managing existing approvals
 * Optimised and digitalised ordering process for the entire organisation
