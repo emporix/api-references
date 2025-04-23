@@ -47,7 +47,7 @@ date="2023-12-14"
 
 We introduced new endpoints for shopping-list. They allow for managing a shopping-list either by an employee or by a customer (so far, only a customer was able to manage it).
 
-## Added endpoints
+**Added endpoints**
 
 | Endpoint                                                                                              | Description                                                                                     |
 | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
