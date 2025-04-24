@@ -1,4 +1,4 @@
-# OAuth Service
+# Authorization
 
 The OAuth Service allows you to generate various token types.
 
