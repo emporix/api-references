@@ -1,2 +1,20 @@
-# Customer Management
+---
+description: Customer-managed
+---
 
+# Customer Service
+
+Create, manage, and delete customer profiles.
+
+{% hint style="info" %}
+This part of the Customer Service is managed by the customers on the storefront.
+{% endhint %}
+
+### Key features and benefits
+* Rich customer profiles that are extensible with custom fields
+* Multiple addresses for payment and delivery
+* Social login with Twitter, Facebook, and others
+* Self-service for customers to manage profile information
+* Convenient login and removal of login barriers with SSO for social logins
+* Capture data that is important for your business to serve your customers better
+* Secure login for your customers to their profile

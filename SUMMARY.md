@@ -16,17 +16,18 @@
 ## API Guides and References
 
 * [Authorization](api-guides-and-references/authorization/README.md)
-  * [API Reference](api-guides-and-references/authorization/api-reference/README.md)
-    * ```yaml
-      props:
-        models: true
-      type: builtin:openapi
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: oauth-api
-      ```
+  * [OAuth Service](api-guides-and-references/authorization/oauth-service/README.md)
+    * [API Reference](api-guides-and-references/authorization/oauth-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: oauth-api
+        ```
 * [Artificial Intelligence](api-guides-and-references/artificial-intelligence/README.md)
   * [AI Service](api-guides-and-references/artificial-intelligence/ai-service/README.md)
     * [AI Tutorials](api-guides-and-references/artificial-intelligence/ai-service/ai-tutorial.md)
@@ -323,7 +324,7 @@
               kind: openapi
               spec: brand-api
         ```
-* [Prices, Currencies and Taxes](price-v2/README.md)
+* [Prices and Taxes](price-v2/README.md)
   * [Price Service](price-v2/price-service/README.md)
     * [Price Tutorials](price-v2/price-service/price.md)
     * [API Reference](price-v2/price-service/api-reference/README.md)
@@ -346,29 +347,6 @@
             ref:
               kind: openapi
               spec: price-api
-        ```
-  * [Currency Service](price-v2/currency-service/README.md)
-    * [Currency Tutorials](price-v2/currency-service/currency-tutorials.md)
-    * [API Reference](price-v2/currency-service/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: currency
-        ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: currency
         ```
   * [Tax Service](price-v2/tax-service/README.md)
     * [Tax Tutorials](price-v2/tax-service/tax.md)
@@ -441,8 +419,8 @@
               spec: session-context-api
         ```
 * [Companies and Customers](companies-and-customers/README.md)
-  * [Customer Management](companies-and-customers/customer-management/README.md)
-    * [API Reference](companies-and-customers/customer-management/api-reference/README.md)
+  * [Customer Management](companies-and-customers/client-management/README.md)
+    * [API Reference](companies-and-customers/client-management/api-reference/README.md)
       * ```yaml
         props:
           models: true
@@ -453,8 +431,8 @@
               kind: openapi
               spec: customer-client-management-api
         ```
-  * [Customer Service (Customer Managed)](companies-and-customers/customer-management-1/README.md)
-    * [API Reference](companies-and-customers/customer-management-1/api-reference.md)
+  * [Customer Service (Customer Managed)](companies-and-customers/customer-management/README.md)
+    * [API Reference](companies-and-customers/customer-management/api-reference.md)
     * ```yaml
       props:
         models: true
