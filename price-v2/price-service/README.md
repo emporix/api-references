@@ -3,11 +3,11 @@
 Manage price information for products.
 
 ### Key features and benefits
-* Net / gross prices.
-* Customer-specific prices.
-* Tiered / volume prices.
-* Price based on measurement units (such as weight or length).
-* Indicative prices, e.g. £5 per kg.
-* Depending on customers, show prices either with tax included or excluded.
-* Add an extra service level by selling products not only by the piece, but also in exactly the required quantity - by weight, length, or other measurement units.
-* Sell products with approximate prices / indicative prices.
+* Supports net and gross prices  
+* Provides customer-specific prices  
+* Offers tiered/volume prices  
+* Sets prices based on measurement units (such as weight or length)  
+* Displays indicative prices, e.g. £5 per kg  
+* Displays prices either with tax included or excluded, depending on the customer  
+* Adds an extra service level by selling products not only by the piece, but also in exactly the required quantity — by weight, length, or other measurement units  
+* Sells products with approximate prices/indicative prices  

@@ -3,15 +3,15 @@
 Generate secure and highly performant promotional coupons.
 
 ### Key features and benefits
-* Absolute (value) based coupons in a particular currency (such as £10 off).
-* Relative (percentage) based coupons (such as 10% off).
-* Free shipping coupon.
-* Restrict coupons to be redeemed against specific product categories.
-* Restrict the number of times a coupon can be redeemed by one user or in total all together.
-* Restrict by date (from / to).
-* Define a minimum order value required before the coupon can be redeemed.
-* Built for high-throughput and scale..
-* Run promotion campaigns.
-* Use in marketing material to drive traffic to your website.
-* Increase customer loyalty.
-* Drive sales for last season's stock or overstock items.
+* Supports absolute (value) based coupons in a particular currency (such as £10 off)  
+* Supports relative (percentage) based coupons (such as 10% off)  
+* Offers free shipping coupons  
+* Restricts coupons to be redeemed against specific product categories  
+* Limits the number of times a coupon can be redeemed by one user or in total  
+* Restricts coupon usage by date (from/to)  
+* Defines a minimum order value required before a coupon can be redeemed  
+* Built for high-throughput and scalability  
+* Runs promotion campaigns  
+* Uses in marketing materials to drive traffic to the website  
+* Increases customer loyalty  
+* Drives sales for last season's stock or overstock items  
