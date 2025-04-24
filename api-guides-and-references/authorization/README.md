@@ -1,6 +1,8 @@
 # Authorization
 
-The OAuth Service allows you to generate the following token types:
+The OAuth Service allows you to generate various token types.
+
+### Key features and benefits
 
 * Anonymous token
     * Used by the storefront to access public resources with a reading scope. 
