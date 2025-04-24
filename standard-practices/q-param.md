@@ -21,10 +21,10 @@ You can use a standard `q` parameter to search for specific values.
 
 * By localized field value: `q=name.en:apple_logo`, where `name` is the field name, `en` is the language code, and `apple_logo` is the value expressed in the specified language.
 
-  :::note
+  {% hint style="info" %}
   This query works only for localized fields, which are stored in a Map format where the `key` is the language code and the `value` is the translation in the specified language.
 
-  :::
+  {% endhint %}
 
 
 #### Searching for items by number-based property

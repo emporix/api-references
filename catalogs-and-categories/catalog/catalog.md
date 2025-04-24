@@ -27,13 +27,13 @@ You can assign categories to a catalog when creating or updating the catalog. Th
 
 ### Create a catalog
 
-:::info
+{% endhint %}info
 
 Catalog names and descriptions are localized. When creating a new catalog, you can specify the catalog name and description in two different ways — in one language or in multiple languages.
 
 Looking for more info on localization? Check out [*Standard practices*](/content/standard-practices).
 
-:::
+{% endhint %}
 
 To create a new catalog, you need to send a request to the <nobr><Button to="/openapi/catalog/#operation/POST-catalog-create-catalog" size="small">Creating a new catalog</Button></nobr> endpoint.
 
@@ -63,11 +63,11 @@ To create a new catalog, you need to send a request to the <nobr><Button to="/op
 
 ### Create a category
 
-:::info
+{% endhint %}info
 
 For more information, check out [*How to create a category*](/content/category/#how-to-create-a-category).
 
-:::
+{% endhint %}
 
 <OpenApiTryIt
   definitionId="category"
@@ -145,8 +145,8 @@ In the request body, insert the ID of the category into the `categoryIds` array.
 />
 
 
-:::attention 
+{% hint style="warning" %} 
 
 The Catalog Service automatically checks for any category-deleted events. Every time a root category is deleted, it is automatically removed from all catalogs it belonged to.
 
-:::
+{% endhint %}

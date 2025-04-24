@@ -23,7 +23,7 @@ When creating a tenant on the Emporix Developer Portal, you can choose one of th
 * NOK — Norwegian krone
 * USD — United States dollar
 
-:::info
+{% endhint %}info
 
 *What if my business operates in a currency that's not on the list?*
 
@@ -32,18 +32,18 @@ If your business operates in a currency that's not listed on the Emporix Develop
 1. Choose one of the available currencies and finish creating your tenant.
 2. Get your Emporix API keys from the Emporix Developer Portal.
 3. Change your tenant's currency configuration.
-:::
+{% endhint %}
 
 ## Currency configurations
 
 Currencies are configured both tenant-wide and independently for particular sites.
 
-:::info
+{% endhint %}info
 
 *What's the difference between a tenant's currency configuration and a site's currency configuration?*
 
 Currency configured for a particular site needs to be one of the currencies configured for the whole tenant. In other words, your tenant's currency configuration must include all currencies configured for all of the sites.
-:::
+{% endhint %}
 
 Currency codes defined in currency configurations must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
 
@@ -64,9 +64,9 @@ Site-specific currency configuration is stored in the `currency` field, inside t
 }
 ```
 
-:::info
+{% endhint %}info
 For more information on the `Site` object, check out the [*Site Settings Service guide*](/content/site-settings).
-:::
+{% endhint %}
 
 ## Managing currency configurations through Emporix API
 
@@ -90,9 +90,9 @@ To retrieve your tenant's currency configuration, you need to send a request to 
 
 To change your tenant's currency configuration, you need to send a request to the <nobr><Button to="/openapi/configuration/#operation/PUT-configuration-update-config" size="small">Updating a configuration</Button></nobr> endpoint with updated currency information in the request body.
 
-:::attention
+{% hint style="warning" %}
 The id in the request body must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
-:::
+{% endhint %}
 
 <OpenApiTryIt
   definitionId="configuration"
@@ -136,10 +136,10 @@ To retrieve a particular site's currency configuration, you need to call the <no
 
 To change a particular site's currency configuration, you need to call the <nobr><Button to="/openapi/site-settings/#operation/PATCH-site-settings-update-site" size="small">Partially updating a site</Button></nobr> endpoint with the currency code of your choice in the request body.
 
-:::attention
+{% hint style="warning" %}
 
 The currency code must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
-:::
+{% endhint %}
 
 <OpenApiTryIt
   definitionId="site-settings"

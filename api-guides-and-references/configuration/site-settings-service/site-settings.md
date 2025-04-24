@@ -170,7 +170,7 @@ If your site's `merchantInfo` has never been configured before or has been delet
 
 If your site's `merchantInfo` has already been configured, you will receive it in the response body. 
 
-:::attention
+{% hint style="warning" %}
     
 Check if all of the following fields are filled out with correct information:
 
@@ -178,7 +178,7 @@ Check if all of the following fields are filled out with correct information:
 * `merchantId`
 * `merchantFinanceInfo`
 
-:::
+{% endhint %}
 
 If you need to update your `merchantInfo`, you need to send a request to the <nobr><Button to="/openapi/site-settings/#operation/PATCH-site-settings-update-site-mixin" size="small">Partially updating a site mixin</Button></nobr> endpoint.
 
@@ -254,11 +254,11 @@ Your business's SEPA Creditor ID is stored in your tenant's `sepaCreditor` confi
 
 Custom site attributes are stored in a site's `mixins`.
 
-:::info
+{% endhint %}info
 
 To learn more about mixins in the Emporix Commerce Engine, check out the [Standard Practices in the Emporix API](/content/standard-practices.mdx).
 
-:::
+{% endhint %}
 
 ### Define a JSON schema
 

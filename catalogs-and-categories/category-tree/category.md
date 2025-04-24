@@ -16,13 +16,13 @@ ExplainStep\
 
 ### How to create a category
 
-:::info
+{% endhint %}info
 
 Category names and descriptions are localized. When creating a new category, you can specify the category name and descriptions in multiple languages.
 
 Looking for more info on localization? Check out [_Standard practices_](../../content/standard-practices/).
 
-:::
+{% endhint %}
 
 **Root categories vs. subcategories**
 
@@ -36,11 +36,11 @@ If you want to create a subcategory, include the `parentId` of the root category
 
 To create a new category, you need to send a request to the Creating a new category endpoint.
 
-:::warning
+{% hint style="danger" %}
 
 The `localizedSlug` field must not contain any diacritics.
 
-:::
+{% endhint %}
 
 \<OpenApiTryIt\
 definitionId="category"\
@@ -129,11 +129,11 @@ query: {\
 
 You can delete all resources assigned to a particular category, or just one specific assignment.
 
-:::attention
+{% hint style="warning" %}
 
 As a result of this procedure, only category assignments are deleted; the categories and resources themselves remain in the database.
 
-:::
+{% endhint %}
 
 #### Option one: Delete all product assignments
 
@@ -182,10 +182,10 @@ Category trees are built every time you create or update a category. The `parent
 
 **Option one: Retrieve a specific category tree**
 
-:::warning
+{% hint style="danger" %}
 
-It is only possible to retrieve a category tree for a root category. It is not possible to get it for a category that lies lower in a hierarchy.\
-:::
+It is only possible to retrieve a category tree for a root category. It is not possible to get it for a category that lies lower in a hierarchy.
+{% endhint %}
 
 To retrieve a specific category tree, you need to send a request to the Retrieving the category tree endpoint and provide the category ID in the `categoryId` path parameter.
 
@@ -217,14 +217,14 @@ query: {\
 
 To retrieve a list of subcategories for a specific category, you need to send a request to the Retrieving subcategories for a category endpoint.
 
-:::attention
+{% hint style="warning" %}
 
 You can limit the depth of retrieved subcategories with the `depth` parameter.
 
 * If set to `1`, only direct children of the specified category are retrieved.
 * If not specified, all descendants of the specified category are retrieved.
 
-:::
+{% endhint %}
 
 \<OpenApiTryIt\
 definitionId="category"\
@@ -247,11 +247,11 @@ query: {\
 
 You can move a category by modifying its `parentId` value.
 
-:::attention
+{% hint style="warning" %}
 
 When you move a category, all its subcategories and assigned references move along with it.
 
-:::
+{% endhint %}
 
 To move a category to be a child of another category, you need to send a request to the Partially updating a category endpoint and provide the desired parent category ID in the `parentId` field.
 

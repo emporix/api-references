@@ -20,22 +20,22 @@ import { Preview } from '../components/Preview.tsx'
 
 ### How to add your first products
 
-:::attention
+{% hint style="warning" %}
 
 This tutorial presents how to create a basic product. To learn more about types of products available in the Emporix Commerce Engine, check out the [Products guide](https://developer.emporix.io/user-guides/core-commerce/products/product-user-guide#overview).
 
-:::
+{% endhint %}
 
 Take a look at the relationships between prices and other resources in the Emporix Commerce Engine:
 
-:::attention
+{% hint style="warning" %}
 
 Countries and regions are predefined in the Emporix API Country Service. You can check which countries and regions are available by sending requests to the following endpoints:
 
 * Retrieving all countries
 * Retrieving all regions
 
-:::
+{% endhint %}
 
 Adding your first product is a process made up of two main steps:
 
@@ -49,11 +49,11 @@ Sales tax rates are stored in tax configurations. Each configuration indicates a
 
 You can manage your tax configurations through the Emporix API [Tax Service](../../openapi/tax/).
 
-:::info
+{% endhint %}info
 
 For more information, check out the [Tax classes guide](https://developer.emporix.io/user-guides/core-commerce/taxes/taxes-v2).
 
-:::
+{% endhint %}
 
 To define sales tax rates for a country, you need to send a request to the Creating a new tax configuration endpoint.
 
@@ -65,15 +65,15 @@ You can also add multiple basic products at the same time. To achieve that, you 
 
 #### Add media for a product
 
-To add media files, for example images or videos, for a particular product, you can upload them directly to the Emporix database, or link to their location on an external website.\
+To add media files, for example images or videos, for a particular product, you can upload them directly to the Emporix database, or link to their location on an external website.
 In the following example, we are creating a `public` type of an asset that is linked to the product of our choice by sending a request to the Creating an asset endpoint with the `media.asset_manage` scope.
 
-:::info
+{% endhint %}info
 
-Sending a json/application request to the Creating an asset endpoint does **not** mean that the asset is uploaded to the database. It is only linked to the resource (category or product).\
-If you want to upload the asset to the database, you need to send a multipart request to the Creating an asset endpoint.\
-For more information, check out the [_Media Management Tutorials_](../../content/media/).\
-:::
+Sending a json/application request to the Creating an asset endpoint does **not** mean that the asset is uploaded to the database. It is only linked to the resource (category or product).
+If you want to upload the asset to the database, you need to send a multipart request to the Creating an asset endpoint.
+For more information, check out the [_Media Management Tutorials_](../../content/media/).
+{% endhint %}
 
 ### How to create a bundle of personalized products
 
@@ -81,11 +81,11 @@ With Emporix API, you can group together two or more products that already exist
 
 You can also personalize your products by using the Emporix-provided templates, or by creating your own ones. The values of the template's attributes are specified in the product's `mixins.productTemplateAttributes` field.
 
-:::info
+{% endhint %}info
 
 To learn more about product bundles and templates, check out the [Products guide](https://developer.emporix.io/user-guides/core-commerce/products/product-user-guide).
 
-:::
+{% endhint %}
 
 To create personalized products and then group them in a bundle, perform the following steps:
 
@@ -95,9 +95,9 @@ To create personalized products and then group them in a bundle, perform the fol
 
 #### Before you start
 
-:::attention\
-The `product.product_publish` scope is only required if you want to publish the product on its creation.\
-:::
+{% hint style="warning" %}
+The `product.product_publish` scope is only required if you want to publish the product on its creation.
+{% endhint %}
 
 [Ensure that you have defined sales tax rates.](product.md#define-sales-tax-rates)
 
@@ -203,14 +203,14 @@ By applying a product template, you can create a product that contains additiona
 
 To create a new product by applying a product template to it, you need to call the Creating a new product endpoint and provide the template's ID in the request body.
 
-:::info\
-In this example, we assign a template to a product on its creation. The created product can be a standalone one, or contain variants. Here, the product does not contain any variants. For creating a parent variant product with variants, check out the [How to create a parent product with variants](product.md#how-to-create-a-parent-product-with-variants) tutorial.\
-:::
+{% endhint %}info\
+In this example, we assign a template to a product on its creation. The created product can be a standalone one, or contain variants. Here, the product does not contain any variants. For creating a parent variant product with variants, check out the [How to create a parent product with variants](product.md#how-to-create-a-parent-product-with-variants) tutorial.
+{% endhint %}
 
-:::info
+{% endhint %}info
 
-When creating or updating a product of the `PARENT_VARIANT` type, by default, product variants are generated. If you do **not** want to create product variants for the product, set the `skipVariantGeneration` parameter to `true`.\
-:::
+When creating or updating a product of the `PARENT_VARIANT` type, by default, product variants are generated. If you do **not** want to create product variants for the product, set the `skipVariantGeneration` parameter to `true`.
+{% endhint %}
 
 \<OpenApiTryIt\
 definitionId="product"\
@@ -328,9 +328,9 @@ The value of the `productId` from the response is the \{{bundle\_Id\}}.
 
 Variants are derivatives of the parent variant product. They contain the same attributes as their parent variant, but assume different attribute values.
 
-:::attention\
-The `product.product_publish` scope is only required if you want to publish the product on its creation.\
-:::
+{% hint style="warning" %}
+The `product.product_publish` scope is only required if you want to publish the product on its creation.
+{% endhint %}
 
 #### Create a parent variant product
 
@@ -344,15 +344,15 @@ Variants are created automatically whenever their parent variant product is crea
 
 Before you start, ensure that the `skipVariantGeneration` parameter is set to `false`.
 
-:::info
+{% endhint %}info
 
-When creating or updating a product of the `PARENT_VARIANT` type, by default, product variants are generated. If you do **not** want to create product variants for the product, set the `skipVariantGeneration` parameter to `true`.\
-:::
+When creating or updating a product of the `PARENT_VARIANT` type, by default, product variants are generated. If you do **not** want to create product variants for the product, set the `skipVariantGeneration` parameter to `true`.
+{% endhint %}
 
-:::info
+{% endhint %}info
 
-The product template can contain more attributes and values than are needed to create a parent variant. In the `variantAttributes` field, you need to specify the attributes and values from the product template that are relevant to the particular parent variant product and its variants.\
-:::
+The product template can contain more attributes and values than are needed to create a parent variant. In the `variantAttributes` field, you need to specify the attributes and values from the product template that are relevant to the particular parent variant product and its variants.
+{% endhint %}
 
 To create a single `parent_variant` type of product with variants, you need to send a request to the Creating a new product endpoint.
 
@@ -738,21 +738,21 @@ If you want to create variants by adding new variant attributes and/or values fo
 1. [Update the product template with new variant attributes and values.](product.md#update-a-product-template-with-new-attributes-and-values)
 2. [Update the parent variant product with the newly updated product template.](product.md#update-the-existing-parent-variant-product-with-the-new-product-template)
 
-:::info\
-You can add new attribute values either by adding them to the product template and then updating the product, or by updating the product with new values under `variantAttributes`, if they already exist in the product template.\
-:::
+{% endhint %}info\
+You can add new attribute values either by adding them to the product template and then updating the product, or by updating the product with new values under `variantAttributes`, if they already exist in the product template.
+{% endhint %}
 
-:::attention\
-The `product.product_publish` scope is only required if you want to publish the product on its creation.\
-:::
+{% hint style="warning" %}
+The `product.product_publish` scope is only required if you want to publish the product on its creation.
+{% endhint %}
 
 #### Update a product template with new attributes and values
 
 To specify new attributes for your product's variants, you need to add them in the attributes field by calling the Updating a product template endpoint. Here, we've added a new key `size` to the list of available attributes.
 
-:::info\
-Each of the attributes has its own metadata element, where you can specify whether the attribute is mandatory, if it can be used as a variant attribute, and what its default value is.\
-:::
+{% endhint %}info\
+Each of the attributes has its own metadata element, where you can specify whether the attribute is mandatory, if it can be used as a variant attribute, and what its default value is.
+{% endhint %}
 
 To specify new values for your product's attributes, you need to add them in the `values` field. Here, we've added `PURPLE` to the list of available attribute values.
 
@@ -865,14 +865,14 @@ properties= \{{\
 
 Since updating the product template results in it being assigned a new version, you need to update the parent variant by sending a request to the Partially updating a product endpoint and providing the new `template.version` value.
 
-:::info\
-In the `variantAttributes` field, you need to specify the attributes and attribute values that the variant products will assume. Based on the specified attributes, variant product combinations will be created automatically.\
-:::
+{% endhint %}info\
+In the `variantAttributes` field, you need to specify the attributes and attribute values that the variant products will assume. Based on the specified attributes, variant product combinations will be created automatically.
+{% endhint %}
 
-:::info
+{% endhint %}info
 
-When creating or updating a product of the `PARENT_VARIANT` type, by default, product variants are generated. If you do **not** want to create product variants for the product, set the `skipVariantGeneration` parameter to `true`.\
-:::
+When creating or updating a product of the `PARENT_VARIANT` type, by default, product variants are generated. If you do **not** want to create product variants for the product, set the `skipVariantGeneration` parameter to `true`.
+{% endhint %}
 
 \<OpenApiTryIt\
 definitionId="product"\
@@ -929,17 +929,17 @@ As a result, new product variants are created automatically, in combinations tha
 
 You may choose to update the basic fields of a particular variant, for example `name`, `description`, or `relatedItems`.
 
-:::info\
-The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the product on its update.\
-:::
+{% endhint %}info\
+The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the product on its update.
+{% endhint %}
 
 #### Updating a variant with new attribute values
 
 By default, all variant products inherit their attributes from the parent variant. You need to include the name of the attribute in the `metadata.overriden` field to be able to replace the attribute values.
 
-:::attention\
-You cannot override the following attributes: `id`, `code`, `template`, `variantAttributes`.\
-:::
+{% hint style="warning" %}
+You cannot override the following attributes: `id`, `code`, `template`, `variantAttributes`.
+{% endhint %}
 
 Update a specific variant product by sending a request to the Upserting a product endpoint.
 
@@ -991,10 +991,10 @@ properties=\{{\
 
 If you want to update multiple products, use the bulk update feature to update several products in one operation. Send a request to the Upserting multiple products endpoint.
 
-:::info\
-The `product.product_update` scope is required.\
-The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the products on the update.\
-:::
+{% endhint %}info\
+The `product.product_update` scope is required.
+The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the products on the update.
+{% endhint %}
 
 \<OpenApiTryIt\
 definitionId="product"\
@@ -1068,7 +1068,7 @@ metadata: {\
 ]}\
 />
 
-When the update request is sent successfully, the response for a particular product is returned at the same position (index) at which it is located in the request body.\
+When the update request is sent successfully, the response for a particular product is returned at the same position (index) at which it is located in the request body.
 The expected response is as follows:
 
 ```xml

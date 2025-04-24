@@ -73,11 +73,11 @@ To add custom attributes to a cart, you need to send a request to the <nobr><But
 
 ## How to merge carts
 
-:::info
+{% endhint %}info
 
 To learn more about merging carts, check out [Cart merging](https://developer.emporix.io/user-guides/core-commerce/carts/carts#cart-merging) in the Carts guide.
 
-:::
+{% endhint %}
 
 To merge an anonymous cart with a customer cart, you need to send a request to the <nobr><Button to="/openapi/cart/#operation/POST-cart-merge-carts" size="small">Merging carts</Button></nobr> endpoint. Provide the customer cart's ID in the `cartId` path parameter and the anonymous cart's ID in the request body.
 
@@ -96,12 +96,12 @@ To merge an anonymous cart with a customer cart, you need to send a request to t
 For B2B scenarios, you might want to integrate an external application for price calculation for your products. Usually, the systems, such as ERPs, store all the relevant customer-specific pricing information needed for customer-specific pricing.
 The external system then can communicate with the Cart Service directly to overwrite the price of the product added to the cart.
 
-:::info
+{% endhint %}info
 
 To achieve the communication between Commerce Engine and the external pricing tool, you have to configure both systems accordingly.
 The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
-:::
+{% endhint %}
 
 After enabling the external application to update carts with calculated prices, to add a product that is available within Commerce Engine, but with an external price,
 you need to send the request to the <nobr><Button to="/openapi/cart/#operation/POST-cart-add-item-to-cart" size="small">Adding a product to cart</Button></nobr> endpoint.
@@ -130,18 +130,18 @@ Provide the customer cart's ID in the `cartId` path parameter.
 
 Notice the `"itemType": "EXTERNAL"` definition which allows the Cart Service to overwrite the pricing from Commerce Engine. The payload must include the price and tax information.
 
-:::warning
+{% hint style="danger" %}
 When you have enabled external pricing, it's essential to ensure the accuracy of the prices, as CE does not perform price validation in these instances.
-:::
+{% endhint %}
 
 ## How to add a product from an external source to a cart
 
 For some cases, you might want to allow adding products from an external system to cart, and not only from your online store. The products from external product management sources can be added directly to the customer's cart, bypassing the standard product catalog.
 
-:::info
+{% endhint %}info
 To achieve the communication between Commerce Engine and the external product management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
-:::
+{% endhint %}
 
 To add a product outside Commerce Engine, you need to send the request to the <nobr><Button to="/openapi/cart/#operation/POST-cart-add-item-to-cart" size="small">Adding a product to cart</Button></nobr> endpoint.
 Provide the customer cart's ID in the `cartId` path parameter. The payload has to include the `"itemType" : "EXTERNAL"` parameter, as well as the price and tax information.
@@ -182,10 +182,10 @@ Provide the customer cart's ID in the `cartId` path parameter. The payload has t
 
 For some cases, you might need to calculate and charge additional fees, for example for packaging, freight, or any additional reasons. The fees calculated externally can be added directly to the customer's cart.
 
-:::info
+{% endhint %}info
 To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
-:::
+{% endhint %}
 
 To add a custom fee to the cart, you need to send the request to the <nobr><Button to="/openapi/cart/#operation/POST-cart-add-item-to-cart" size="small">Adding a product to cart</Button></nobr> endpoint.
 Provide the customer cart's ID in the `cartId` path parameter. The payload has to include the `"itemType" : "EXTERNAL"` parameter.
@@ -216,7 +216,7 @@ To ensure that both net and gross prices are available, along with clear details
 
 At the item level, there's a `calculatedPrice` attribute, which contains detailed price calculations for a specific item. Additionally, a `calculatedPrice` is also available at the cart level, summarizing the price calculations for all items in the cart.
 
-:::info
+{% endhint %}info
 <details>
 <summary>See the <b>item</b> level calculation payload example</summary>
 
@@ -392,11 +392,11 @@ At the item level, there's a `calculatedPrice` attribute, which contains detaile
   }
 ```
 </details>
-:::
+{% endhint %}
 
 This calculation method provides a comprehensive breakdown of prices, including net values, gross values, tax details, fees, and discounts, both at the cart level and for individual line items.
 
-:::info
+{% endhint %}info
 <details>
 <summary>See the <b>full payload</b> example</summary>
 
@@ -762,7 +762,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
 }
 ```
 </details>
-:::
+{% endhint %}
 
 ## Pricing calculations glossary
 
@@ -1178,9 +1178,9 @@ The shipping calculation depends on the stage at which it is done.
 * In the checkout, where information about the delivery window and zone is already available, the calculation uses the following endpoints: [Calculating the final shipping cost](https://developer.emporix.io/docs/openapi/shipping/#operation/POST-shipping-calculate-shipping-cost), or [Calculating the shipping cost for a given slot](https://developer.emporix.io/docs/openapi/shipping/#operation/POST-shipping-calculate-slot-shipping-cost) accordingly.
 
 
-:::warning
+{% hint style="danger" %}
 Always make sure that your site’s `homeBase.address` has the `country` and `zip-code` information included. It's mandatory for shipping calculations.
-:::
+{% endhint %}
 
 ## How to calculate a payment fee at cart level
 
@@ -1243,9 +1243,9 @@ Since the system can be configured to allow more than one discount to a cart, it
 
 * Every ABSOLUTE discount uses the not discounted values for the discount value spread. It means that if the given applicable item is already fully discounted, the remaining amount of the discount is spread proportionally on the discounts that still have some value left.
 
-:::info
+{% endhint %}info
 Check the [System Preferences](https://developer.emporix.io/user-guides/management-dashboard/settings/system-preferences/) documentation for coupons settings related to the number of discounts.
-:::
+{% endhint %}
 
 For some cases, you might need to calculate and charge additional fees, for example for packaging, freight, or any additional reasons. The fees calculated externally can be added directly to the customer's cart.
 

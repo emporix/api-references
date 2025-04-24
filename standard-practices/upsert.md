@@ -29,9 +29,9 @@ However, at Emporix, where the PUT request supports upsert operation and custom 
 
 The API response returns an HTTP status of 201 when an entity is created and 204 when it is updated, eliminating the need for the integration layer to check for an entity's existence beforehand.
 
-:::info
+{% endhint %}info
 
 Upsert is available for some services only. 
 When a service supports the upsert operation, its endpoints are named to reflect this functionality, for example, "Upserting a product".
 
-:::
+{% endhint %}

@@ -989,7 +989,7 @@ date="2024-09-11"
 The Site object was expanded with the `taxDeterminationBasedOn` property, which specifies whether tax calculation is based on a customer's billing or shipping address.
 Default value is `BILLING_ADDRESS`.
 
-:::info
+{% endhint %}info
 To determine the relevant location to calculate proper taxes, the cart and checkout services read the **Tax determination based on** setting for the site. This setting determines the proper location by the `countryCode` from the relevant address.
 The default setting for a site is the **billing address**.
 
@@ -1004,7 +1004,7 @@ If you set the tax determination as **shipping address**, the country for calcul
 2. For the checkout service: <br />
   a. a shipping address `countryCode`, provided during checkout <br />
   b. if a shipping address is not provided, a customer's billing address `countryCode` is taken as a fallback
-:::
+{% endhint %}
 
 **Updated endpoints**
 

@@ -17,15 +17,15 @@ import {
 
 By default, an anonymous user session expires after one hour. You can refresh the anonymous session by sending a request to the <nobr><Button to="/openapi/oauth/#operation/GET-oauth-refresh-anonymous-access-token" size="small">Refreshing an anonymous token</Button></nobr> endpoint.
 
-:::info
+{% endhint %}info
 
 There is no timeout for logged customer sessions.
-:::
+{% endhint %}
 
-:::info
+{% endhint %}info
 
 You can use the price matching mechanism based on a session context file values. For more information on how the price matching functionality works, check out *How to use the price matching functionality* in the [Price Service Tutorials](/content/price#how-to-use-the-price-matching-functionality).
-:::
+{% endhint %}
 
 ## How to manage user sessions and session context files
 
@@ -39,10 +39,10 @@ In the following scenario, we are going to perform the following actions from th
 2. [Retrieve the session context attributes and values of a particular user session.](#retrieve-a-session-context-by-using-a-session-id)
 3. [Add or remove custom attributes from the session context.](#add-new-attributes-to-the-session-context)
 
-:::info
+{% endhint %}info
 
 To be able to manage a user session and its corresponding session context file, make sure that the session with its session ID is present in the system. 
-:::
+{% endhint %}
 
 ### Create an anonymous user session
 
@@ -54,10 +54,10 @@ An anonymous user session is created every time a non-logged user enters the sto
   />
   
 
-:::info
+{% endhint %}info
 
 The session ID is automatically generated. It should be preserved on the storefront, for example in user cookies.
-:::
+{% endhint %}
 
 
 As a result of the anonymous session being established, a session context is created. It contains the following information:
@@ -78,10 +78,10 @@ An anonymous customer's session is terminated if one of those two requirements i
 
 The session is created when a customer logs in to the storefront. This means that the anonymous session that was established when the user entered the site is migrated into a customer session when a request is sent to the <nobr><Button to="/openapi/oauth/#operation/POST-oauth-authorize-customer" size="small">Requesting a customer token</Button></nobr> endpoint. 
 
-:::info
+{% endhint %}info
 
 The session Id and session context remain the same.
-:::
+{% endhint %}
 
 
 <OpenApiTryIt
@@ -97,10 +97,10 @@ The session context contains the following information:
 * `targetLocation` — fetched from the customer's profile. Either default shipping address, or default billing address. Empty if none of those exist.
 * `siteCode` — fetched from the `customerprefferedSite` entry in the customer's profile.
 
-:::info
+{% endhint %}info
 
 If any of these values are not present in the customer's profile, they are retrieved from the configuration on your main site.
-:::
+{% endhint %}
 
 The customer's session is terminated when the customer has logged out.
 
@@ -120,18 +120,18 @@ Retrieve the session context values by sending a request to the <nobr><Button to
 
 If you want to personalize user experience on your website, you can add custom attributes to selected session contexts. Your attributes are not validated, as they are only stored in the Emporix Commerce Engine and can be deleted at any time. However, you can make the data actionable by incorporating a solution of your choice.
 
-:::success Example
+{% endhint %}success Example
 If we want to suggest products on the storefront that are relevant to the weather conditions near our user's location, we can add two new attributes: `latitude` and `longitude` to the session context. 
 The data can be collected on the storefront every time a user enters your website, and it will be kept in the Emporix Commerce Engine.
 You can then implement a mechanism that uses the collected data, for example to display relevant products first, according to the weather. 
 
 For example, it's raining in the user's location, so the list of suggested products on the storefront prioritizes umbrellas and other rain equipment.
-:::
+{% endhint %}
 
-:::info
+{% endhint %}info
 
 You can also implement a mechanism allowing users to manage and modify their own sessions and session contexts by calling the <nobr><Button to="/openapi/session-context/#operation/POST-session-context-add-attribute-sessionId" size="small">Adding a new attribute to a session context</Button></nobr> endpoint on the storefront. 
-:::
+{% endhint %}
 
 In the following example, we add an attribute by sending a request to the  <nobr><Button to="/openapi/session-context/#operation/POST-session-context-add-attribute-sessionId" size="small">Adding a new attribute to a session context</Button></nobr> endpoint with the `session_context.context_manage` scope.
 
@@ -142,7 +142,7 @@ In the following example, we add an attribute by sending a request to the  <nobr
   />
 
 
-:::info
+{% endhint %}info
 
 The changes introduced to the session context are automatically applied to the user session to which the session context belongs.
-:::
+{% endhint %}

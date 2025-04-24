@@ -25,11 +25,11 @@ To create a brand with media files and add it to a product created beforehand, f
 
 Ensure that you have created a product. 
 
-:::info
+{% endhint %}info
 
 For instructions, check out [*How to add your first product*](/content/product/#how-to-add-your-first-product).
 
-:::
+{% endhint %}
 
 ### Upload an image
 
@@ -43,24 +43,24 @@ To include an image for a brand, first you need to upload the image to the datab
   }}
 />
 
-:::attention
+{% hint style="warning" %}
 
 Note down the values of the `link` and `id` attributes from the response. You will need this information to create a brand.
 
-:::
+{% endhint %}
 
 ### Create a brand
 
 To create a brand and add media files to it, you need to send a request to the <nobr><Button to="/openapi/brand/#operation/POST-brand-create-brand" size="small">Adding a new brand</Button></nobr> endpoint. 
 
-:::attention
+{% hint style="warning" %}
 
 In the following request, you will use the `link` and `id` elements received in the response in the [Upload an image](#upload-an-image) step:
 
 * The `image` element in the request below must have the same value as the `link` attribute in the response in the previous step.
 * The `cloudinaryUrl` element in the request below must have the same value as the `id` attribute in the response in the previous step.
 
-:::
+{% endhint %}
 
 <OpenApiTryIt
   definitionId="brand"

@@ -13,13 +13,13 @@ import {
 
 # IAM Service Tutorials
 
-:::info
+{% endhint %}info
 
 Names and descriptions of groups, permissions, resources, access control templates, and role resources are localized.
 
 Looking for more info on localization? Check out [*Standard practices*](/content/standard-practices).
 
-:::
+{% endhint %}
 
 ## How to create a group of employees with a specific set of access controls
 
@@ -30,19 +30,19 @@ For the purposes of this tutorial, you will create an employee group with manage
 
 Ensure you have a tenant and users created.
 
-:::info
+{% endhint %}info
 
 To create users, check out the **Manage Users** tab in the [Emporix Developer Portal](https://app.emporix.io/users). 
 
-:::
+{% endhint %}
 
 ### Retrieve a list of available access controls
 
-:::attention
+{% hint style="warning" %}
 
 Access controls are predefined and designed to cover all necessary scenarios. It is not possible to create your own access controls.
 
-:::
+{% endhint %}
 
 To assign specific access control level to a group, first you need to retrieve a list of predefined access controls available for your tenant by sending a request to the <nobr><Button to="/openapi/iam/#operation/GET-iam-list-tenant-access-controls" size="small">Retrieving all access controls</Button></nobr> endpoint.
 
@@ -61,11 +61,11 @@ To assign specific access control level to a group, first you need to retrieve a
 
 Employee groups aggregate users that share the same access control within a particular service and resource. Create an employee group and assign access controls to it by sending a request to the <nobr><Button to="/openapi/iam/#operation/POST-iam-create-user-group" size="small">Creating a new group</Button></nobr> endpoint.
 
-:::info
+{% endhint %}info
 
 The user type in the `userType` parameter can be specified as `CUSTOMER` or `EMPLOYEE`. For the purposes of this tutorial, set the `userType` parameter as `EMPLOYEE`.
 
-:::
+{% endhint %}
 
 <OpenApiTryIt
   definitionId="iam"
@@ -96,11 +96,11 @@ The user type in the `userType` parameter can be specified as `CUSTOMER` or `EMP
 
 By assigning a user to a particular employee group, you grant them a specific access control level. Create assignments by calling the <nobr><Button to="/openapi/iam/#operation/POST-iam-add-user-to-group" size="small">Adding a user to a group</Button></nobr>
 
-:::info
+{% endhint %}info
 
 The user type in the `userType` parameter can be specified as `customer` or `employee`. For the purposes of this tutorial, set the `userType` parameter as `employee`.
 
-:::
+{% endhint %}
 
 <OpenApiTryIt
   definitionId="iam"

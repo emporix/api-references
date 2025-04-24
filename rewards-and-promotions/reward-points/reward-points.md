@@ -39,11 +39,11 @@ site.site_manage
 
 The reward points settings are stored in a site's `mixins`, within the coupon settings.
 
-:::info
+{% endhint %}info
 
 To learn more about mixins in the Emporix Commerce Engine, check out the [Standard Practices in the Emporix API](/content/standard-practices.mdx).
 
-:::
+{% endhint %}
 
 The parameters that need to be configured for the reward points are as follows:
 
@@ -75,10 +75,10 @@ As a merchant employee, you can manage your customers' reward points and redempt
 
 If the reward points functionality is enabled, the reward points entry is created or updated for a customer automatically every time an order is completed.
 
-:::info
+{% endhint %}info
 
 The communication between reward points and site settings is cached. The cache is invalidated every 15 minutes. It has to be considered after modifying the configuration of reward points in site's mixins.
-:::
+{% endhint %}
 
 You can also manually add reward points for a customer by sending a request to the <nobr><Button to="/openapi/reward-points/#operation/POST-reward-points-add-customer-reward-points" size="small">Adding reward points for a customer</Button></nobr> endpoint.
 
@@ -121,10 +121,10 @@ If the customer wants to redeem reward points in exchange for a coupon, first th
 
 To create a coupon based on a certain amount of reward points, the customer sends a request to the <nobr><Button to="/openapi/reward-points/#operation/POST-reward-points-redeem-logged-customer-reward-points-coupon" size="small">Redeeming a logged-in customer's reward points for a coupon code</Button></nobr> endpoint on the storefront.
 
-:::info
+{% endhint %}info
 
 Reward points can only be exchanged for percentage and absolute coupons.
-:::
+{% endhint %}
 
 <OpenApiTryIt
   definitionId="reward-points"
@@ -132,9 +132,9 @@ Reward points can only be exchanged for percentage and absolute coupons.
 />
 
 
-:::info
+{% endhint %}info
 For more information on applying coupons to cart, check out [*How to apply coupons to a cart*](/content/coupon/#how-to-apply-coupons-to-a-cart) in the Coupon Service guide.
-:::
+{% endhint %}
 
 ### Check the reward points balance and history
 

@@ -24,23 +24,23 @@ While the Emporix e-commerce system is designed in English, you can specify lang
 
 The Emporix e-commerce system supports all existing languages, including regional language variants such as American English or Swiss German. By default, both your Emporix tenant and its main site have their language set to English.
 
-:::info
+{% endhint %}info
 
 Currently, the Emporix e-commerce system does not offer translation services.
 
 To learn how to localize and translate your business's resources, check out the developer guides for particular services.
-:::
+{% endhint %}
 
 ## Language configurations
 
 Languages are configured both tenant-wide and independently for particular sites.
 
-:::info
+{% endhint %}info
 
 *What's the difference between a tenant's language configuration and a site's language configuration?*
 
 Languages configured for a particular site need to be a subset of languages configured for the whole tenant. In other words, your tenant's language configuration must include all languages configured for all of the sites.
-:::
+{% endhint %}
 
 Language codes defined in language configurations must be compliant with the [IETF BCP-47 standard](https://en.wikipedia.org/wiki/IETF_language_tag).
 
@@ -66,9 +66,9 @@ Site-specific language configuration is stored in the `defaultLanguage` and `lan
 }
 ```
 
-:::info
+{% endhint %}info
 For more information on the `Site` object, check out the [*Site Settings Service guide*](/content/site-settings).
-:::
+{% endhint %}
 
 
 ## Managing language configurations through Emporix API
@@ -93,9 +93,9 @@ To retrieve your tenant's language configuration, you need to send a request to 
 
 To change your tenant's language configuration, you need to send a request to the <nobr><Button to="/openapi/configuration/#operation/PUT-configuration-update-config" size="small">Updating a configuration</Button></nobr> endpoint with updated language information in the request body.
 
-:::attention
+{% hint style="warning" %}
 The id in the request body must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
-:::
+{% endhint %}
 
 <OpenApiTryIt
   definitionId="configuration"
@@ -135,10 +135,10 @@ To retrieve a particular site's language configuration, you need to send a reque
 
 To change a particular site's language configuration, you need to call the <nobr><Button to="/openapi/site-settings/#operation/PATCH-site-settings-update-site" size="small">Partially updating a site</Button></nobr> endpoint with language configuration of your choice in the request body.
 
-:::attention
+{% hint style="warning" %}
 
 The currency code must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
-:::
+{% endhint %}
 
 <OpenApiTryIt
   definitionId="site-settings"

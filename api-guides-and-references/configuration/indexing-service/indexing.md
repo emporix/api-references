@@ -16,9 +16,9 @@ import {
 The Indexing service is designed to manage indexing configuration. Currently, the index provider supported in Commerce Engine is [Algolia](https://www.algolia.com/). 
 Proper indexing allows you to enhance your search mechanism within Emporix system. By connecting your Algolia instance to Commerce Engine, you get an improved search functionality.
 
-:::note
+{% hint style="info" %}
 To learn more about the Indexing Service, see the [Indexing Service](https://developer.emporix.io/user-guides/system-management/search/indexing).
-:::
+{% endhint %}
 
 For every tenant, new Algolia credentials are created and kept as `AlgoliaClient`.
 
@@ -102,8 +102,8 @@ To choose the right mode for your index, send the request to the <nobr><Button t
 
 In the request parameters, for the `propertyKey` choose `indexing_siteAwareFieldsStrategy`. In the request body, pass the chosen strategy value.
 
-:::warning
+{% hint style="danger" %}
 Please remain patient as propagating changes to the index strategy may take up to 1 hour, so you might not be able to see the changes instantly.
-:::
+{% endhint %}
 
 

@@ -38,11 +38,11 @@ Once an order is placed, the order information simply reflects the calculated pr
 <Preview src="/docs/order/diagram1.svg"></Preview>
 
 
-:::note
+{% hint style="info" %}
 
 To learn how pricing is calculated at Emporix, see the [Cart Service Tutorials](https://developer.emporix.io/docs/content/cart/#pricing-calculations).
 
-:::
+{% endhint %}
 
 
 ## Synchronous calculation
@@ -56,11 +56,11 @@ Communication with the ERP system occurs using the BFF (Backend-for-Frontend) la
 <Preview src="/docs/order/diagram2.svg"></Preview>
 
 
-:::note
+{% hint style="info" %}
 
 For more information, see the [External Pricing](https://developer.emporix.io/user-guides/extensibility-and-integrations/extensibility/external-pricing-and-products) guides.
 
-:::
+{% endhint %}
 
 ## ERP calculated order
 

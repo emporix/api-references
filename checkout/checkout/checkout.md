@@ -36,9 +36,9 @@ You need details about the customer's access and session tokens as these details
 
 2. Log the customer in and send an authorization request to the <nobr><Button to="/openapi/oauth/#operation/POST-oauth-authorize-customer" size="small">Requesting a customer token</Button></nobr> endpoint.
 
-:::attention
+{% hint style="warning" %}
 You can skip this step and continue with the checkout process as a guest customer without the need to log in.
-:::
+{% endhint %}
 
 <OpenApiTryIt
   definitionId="oauth"
@@ -121,10 +121,10 @@ Price model defines your pricing strategy. You can specify how you want to go ab
 
 3. Match the price by session context to allow your customers find the best price based on information retrieved from the session context.
 
-:::warning
+{% hint style="danger" %}
 
 The following request requires using the customer's access token for authorization, either anonymous or logged in, as the response contains the bearer's information. 
-:::
+{% endhint %}
 
 Send the request to the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices-by-context" size="small">Matching prices for session context</Button></nobr> endpoint.
 
@@ -136,10 +136,10 @@ Send the request to the <nobr><Button to="/openapi/price/#operation/POST-price-m
 
 ### Create a cart
 
-:::warning
+{% hint style="danger" %}
 
 The following requests require using the customer's access token for authorization, either anonymous or logged in, as the response contains the bearer's information. 
-:::
+{% endhint %}
 
 1. You have to enable an option to create a cart on your site while a customer is browsing through your products. Creating a cart takes care of things like gathering customer's session details, even anonymous, or setting up a proper cart's currency for final calculations at checkout.
 There are two options to create carts using API:
@@ -173,12 +173,12 @@ You can configure payment methods in the Payment Gateway Service. Check the avai
 
 ### Trigger the checkout 
 
-:::attention
+{% hint style="warning" %}
 To complete the checkout, there are two options:
 * The customer has to be logged in to the storefront and then the following request requires using the customer's access token for authorization - see [Gather information about a customer's session on the storefront
 ](#Gather-information-about-a-customer's-session-on-the-storefront).
 * The customer continues as a guest without logging in - the `customer:guest` field has to be set to `true`.
-:::
+{% endhint %}
 
 Once a customer places the product in a cart, they can proceed with the checkout process.
 

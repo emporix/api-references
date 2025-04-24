@@ -16,10 +16,10 @@ import {
 You can upload or link to media files and other documents by using the Emporix Media Service. The files can be associated with specific resources within the Emporix database, 
 or remain unassigned.
 
-:::warning
+{% hint style="danger" %}
 
 Currently, it is possible to assign assets to categories and products only.
-:::
+{% endhint %}
 
 ## How to manage public and internal assets
 
@@ -29,21 +29,21 @@ You can also specify the access types of the uploaded files - the public assets 
 In the following scenario, we are going to create public and private assets for an already existing category.
 
 
-:::info
+{% endhint %}info
 
 Before you begin, ensure that a category with a category ID already exists. For more information, check out the [*Category Service Tutorials*](/content/category).
-:::
+{% endhint %}
 
 ### Create private assets by link
 
 To add an asset for a category, you need to send a request to the <nobr><Button to="/openapi/media/#operation/POST-media-create-asset" size="small">Creating an asset</Button></nobr> endpoint with the `media.asset_manage` scope. 
 In the following example, we are creating a `private` type of an asset.
 
-:::info
+{% endhint %}info
 
 Sending a json/application request to the <nobr><Button to="/openapi/media/#operation/POST-media-create-asset" size="small">Creating an asset</Button></nobr> endpoint does **not** mean that the asset is uploaded to the database. It is only linked to the resource (category or product). 
 If you want to upload the asset to the database, you need to send a multipart request to the <nobr><Button to="/openapi/media/#operation/POST-media-create-asset" size="small">Creating an asset</Button></nobr> endpoint.
-:::
+{% endhint %}
 
 <OpenApiTryIt
   definitionId="media"

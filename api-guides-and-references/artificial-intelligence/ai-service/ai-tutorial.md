@@ -29,8 +29,8 @@ To generate the AI completion, send the request using the [ AI Completion](/open
   defaultExample="Completion request"
 />
 
-:::note
+{% hint style="info" %}
 
 To see some more examples of using AI at Emporix, check our guides for Management Dashboard - [Powered by AI](https://developer.emporix.io/user-guides/extensibility-and-integrations/ai/ai-intro).
 
-:::
+{% endhint %}

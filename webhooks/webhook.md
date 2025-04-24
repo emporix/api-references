@@ -20,11 +20,11 @@ The Emporix Webhook Event Publishing works in the following way:
 2. The Webhook Service forwards the message to the Event Gateway.
 3. The Event Gateway passes the event to your earlier configured endpoint for this particular event.
 
-:::info
+{% endhint %}info
     
 For example, if you create a catalog in the Emporix environment, a notification is sent to the Webhook service. The service passes the message to the Event Gateway. If you configured the "Create a new catalog" endpoint beforehand, you will receive the notification that a new catalog has been created.
 
-:::
+{% endhint %}
 
 ## How to configure webhook notifications
 
@@ -38,23 +38,23 @@ To receive notifications from Emporix API services, you need to subscribe to spe
     - [Connect to the Event Gateway](#connect-to-the-event-gateway)
     - [Configure your endpoints](#configure-your-endpoints)
 
-:::attention
+{% hint style="warning" %}
 
 By default, the maximum number of events per tenant is limited to 5000/month. The limit resets on the first day of each month. If you want to publish more events, contact Emporix Support.
 
-:::
+{% endhint %}
 
 ### Retrieve all subscriptions
 
 Before you subscribe to events, you need to check for any active subscriptions by sending a request to the <nobr><Button to="/openapi/webhook/#operation/GET-webhook-list-all-event-subscriptions" size="small">Retrieving all subscriptions</Button></nobr> endpoint.
 
-:::attention
+{% hint style="warning" %}
 
 If the subscription to the event of your choice already exists and you want to update it, note down the `metadata.version` value. You will need it to call the `Subscribing and unsubscribing from events` endpoint further in the tutorial.
 
 If there is no prior subscription to the event of your choice, the `metadata.version` is empty. It is automatically set to `1` when you send a request to the <nobr><Button to="/openapi/webhook/#operation/PATCH-webhook-manage-event-subscriptions" size="small">Subscribing and unsubscribing from events</Button></nobr> endpoint.
 
-:::
+{% endhint %}
 
 
 <OpenApiTryIt
@@ -93,7 +93,7 @@ In this example, you will subscribe to the following events: `catalog.created` a
   }
 />
 
-:::note
+{% hint style="info" %}
 
 **Learn about the `index.item-updated` event's specific behavior** 
 #
@@ -136,7 +136,7 @@ Example:
 * A product *234* has two assigned prices: *$10* associated with site *A* and *$15* associated with site *A*, *B*, and *C*. So when you update the product *234*, the `index.item-updated` event runs **3** times, as there are three sites affected.
 
 * A product *345* has no defined price. So when you update the *345* product, the `index.item-updated` is not emitted as no site is associated with the product.
-:::
+{% endhint %}
 
 ### Connect to the Event Gateway
 
@@ -154,10 +154,10 @@ To generate the login link with the authentication token needed to connect a ten
   operationId="GET-webhook-access-tenant-svix"
 />
 
-:::info
+{% endhint %}info
 
 You can use your Emporix tenant ID as application ID in Svix.
-:::
+{% endhint %}
 
 ### Configure your endpoints
 

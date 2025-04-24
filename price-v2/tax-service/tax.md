@@ -21,11 +21,11 @@ You can calculate net and gross values for prices through the <nobr><Button to="
 
 Make sure you configured sales tax rates through the Emporix API Tax Service.
 
-:::info
+{% endhint %}info
 
 For instructions, check out [*How to add your first product*](/content/product/#how-to-add-your-first-product).
 
-:::
+{% endhint %}
 
 ### Convert a gross price to a net price
 
@@ -106,23 +106,23 @@ The calculated gross value is returned in the `output.grossPrice` field.
 
 You can calculate a gross price in one country to a gross price in another country through the  <nobr><Button to="/openapi/tax/#operation/PUT-tax-calculate-commands" size="small">Calculating net and gross values for prices</Button></nobr> endpoint.
 
-:::attention
+{% hint style="warning" %}
 
 This tutorial presents how to calculate gross prices between countries based on specific values.
 
 To learn how to calculate gross prices between countries based on `Price` objects, check out [*How to calculate gross prices between countries*](/content/price/#how-to-calculate-gross-prices-between-countries).
 
-:::
+{% endhint %}
 
 ### Before you start
 
 Make sure you configured sales tax rates through the Emporix API Tax Service.
 
-:::info
+{% endhint %}info
 
 For instructions, check out [*How to add your first product*](/content/product/#how-to-add-your-first-product).
 
-:::
+{% endhint %}
 
 ### Calculate the price
 
