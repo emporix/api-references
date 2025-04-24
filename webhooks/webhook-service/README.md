@@ -3,8 +3,8 @@
 Manage the webhook configuration to allow users to choose which events they want to receive via the Svix webhook provider.
 
 ### Key features and benefits
-* Views catalog  
-* Views configuration  
+* Gives possibility to view catalog  
+* Gives possibility to view configuration  
 * Updates configuration  
 * Views events catalog to select those of interest  
 * Subscribes and unsubscribes from events without having to provide the full configuration  
