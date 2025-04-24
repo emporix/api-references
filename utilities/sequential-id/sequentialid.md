@@ -71,13 +71,13 @@ To create a schema for sequential IDs creation, send the request to the <nobr><B
   }}
   />
 
-:::info
+{% hint style="warning" %}
 
 The values of the placeholder properties are resolved dynamically from the defined site settings: 
 * All the placeholder values connected to date and time are based on the `site.homeBase.timezone` property. If no timezone is defined, the default GMT (UTC-0) timezone is used. 
 * The `__country__` placeholder comes from the `site.homeBase.address.country` property. The default system value is `DE` for Germany.
 
-:::
+{% endhint %}
 
 ### Retrieve the created schema
 

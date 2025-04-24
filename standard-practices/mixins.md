@@ -76,11 +76,11 @@ Here's an example of custom delivery options applied inside a `Customer` object 
 
 ## How to add mixins to an object
 
-:::info
+{% hint style="warning" %}
 
 The procedure below presents applying mixins to a `Customer` object.
 
-:::
+{% endhint %}
 
 1. Define your mixin schema.
 

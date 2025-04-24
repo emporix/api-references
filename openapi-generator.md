@@ -1,7 +1,7 @@
 # OpenAPI Generator
 
-To facilitate customizations of Emporix Commerce Engine, so that it is tailored to your needs, you can use the OpenAPI generator.\
-The tool allows you to generate code out of the API reference specifications.\
+To facilitate customizations of Emporix Commerce Engine, so that it is tailored to your needs, you can use the OpenAPI generator
+The tool allows you to generate code out of the API reference specifications.
 You can create a Software Development Kit (SDK) based on the OpenAPI-generated code using Emporix services,\
 which you can then integrate into your codebase to seamlessly build your platform with the Commerce Engine.
 
@@ -21,10 +21,10 @@ Download the Maven project [OpenAPI Generator](docs/openapi/apireference-client-
 1. Download Emporix OpenAPI reference documentation for all Commerce Engine services from the [Getting Started](content/introduction/).
 2. For the service of your interest, copy its API reference yml file to the `src/main/resources/apis` directory.
 
-:::attention\
-The file has to be named as `api.yml`.\
-If you want to choose a different name for the file, adjust the `pom.xml` by pointing to the right file name in the `<inputSpec></inputSpec>` property.\
-:::
+{% hint style="warning" %}
+The file has to be named as `api.yml`.
+If you want to choose a different name for the file, adjust the `pom.xml` by pointing to the right file name in the `<inputSpec></inputSpec>` property.
+{% endhint %}
 
 3. In the command-line tool, open `apireference-client-generator` and run
 

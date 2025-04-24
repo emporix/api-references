@@ -49,10 +49,10 @@ To create a fee in the system, send the request to the <nobr><Button to="/openap
 }}
 />
 
-:::warning
+{% hint style="danger" %}
 
 Make sure you provide the relevant `siteCode` of a site that you want to apply the fee to. 
-:::
+{% endhint %}
 
 
 2. Copy the `feeId` of the created fee. To add the fee to the specific product, send the request to the <nobr><Button to="/openapi/fee/#operation/PUT-fee-add-product-fees" size="small">Adding a list of fees to a product</Button></nobr> endpoint.
@@ -142,12 +142,12 @@ You need to specify the `itemYrn` of the chosen payment type in the request path
   operationId="PUT-fee-add-item-fees-itemYRN"
 />
 
-:::warning
+{% hint style="danger" %}
 
 This operation overwrites the item's fees. 
 For each payment mode you can create and connect one fee only.
 
-:::
+{% endhint %}
 
 4. To make sure the fee has been applied to the payment, send the request to the <nobr><Button to="/openapi/fee/#operation/POST-fee-check-item-fee" size="small">Checking of a fee has been applied</Button></nobr> endpoint.
 

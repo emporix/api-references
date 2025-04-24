@@ -27,13 +27,13 @@ This tutorial will walk you through the following steps:
 3. [Retrieving a tier ID](#retrieve-a-tier-id).
 4. [Defining a price](#define-the-price).
 
-:::info
+{% hint style="warning" %}
 
 The tutorial skips the step of creating a new measurement unit as your Emporix tenant is configured with the most commonly used measurement units out-of-the-box. 
 
 To learn more about measurement units in the Emporix Commerce Engine, check out the [Measurement units guide](https://developer.emporix.io/user-guides/core-commerce/unit-handling/unit-handling).
 
-:::
+{% endhint %}
 
 ### Specify accepted currencies
 
@@ -63,11 +63,11 @@ To add a new entry to your configuration of currencies, you need to send a reque
 
 A price model defines a repeatable way to sell products. You can create separate price models depending on measurement units for which prices are expressed or depending on products' pricing strategies.
 
-:::info
+{% hint style="warning" %}
 
 To learn more about price models in the Emporix Commerce Engine, check out the [Pricing guide](https://developer.emporix.io/user-guides/core-commerce/pricing/pricing-v2#price-models).
 
-:::
+{% endhint %}
 
 To create a new price model, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-model" size="small">Creating a new price model</Button></nobr> endpoint.
 
@@ -149,11 +149,11 @@ To define a new price for a product, you need to send a request to the <nobr><Bu
 
 ## How to implement different pricing strategies
 
-:::info
+{% hint style="warning" %}
 
 To learn more about pricing strategies available in the Emporix Commerce Engine, check out the [Pricing guide](https://developer.emporix.io/user-guides/core-commerce/pricing/pricing-v2#price-models).
 
-:::
+{% endhint %}
 
 Implementing any pricing strategy is a process made up of three steps:
 
@@ -243,7 +243,7 @@ To create a price model for tiered or volume pricing, you need to perform the fo
 * Set the `tierDefinition.tierType` field to `"TIERED"` or `"VOLUME"`, respectively.
 * Define quantities for pricing tiers in the `tiers` array.
 
-:::warning
+{% hint style="danger" %}
 
 When defining pricing tiers, be aware of the following restrictions to the `PriceModel` object:
 
@@ -252,7 +252,7 @@ When defining pricing tiers, be aware of the following restrictions to the `Pric
 * The `quantity` field in the first tier must be set to `0`.
 * All `unitCode` fields must contain the same value.
 
-:::
+{% endhint %}
 
 Here are examples of request bodies for tiered and volume price model:
 
@@ -382,11 +382,11 @@ Take a look at the relationship between prices and customers in the Emporix Comm
 
 To make a price valid only for specific customers, you need to add their IDs to the `principals` array inside an applicable `Price` object.
 
-:::info
+{% hint style="warning" %}
 
 `Customer` objects are managed through the Emporix API [Customer Service](/openapi/customer-tenant/).
 
-:::
+{% endhint %}
 
 Here's an example of a customer-restricted price:
 
@@ -431,14 +431,14 @@ Take a look at the relationships between price lists and other resources in the 
 
 <Preview src="/docs/price/price_list_dependencies.svg"></Preview>
 
-:::attention
+{% hint style="warning" %}
 
 Countries and regions are predefined in the Emporix API Country Service. You can check which countries and regions are available by sending requests to the following endpoints:
 
 * <nobr><Button to="/openapi/country/#operation/GET-country-list-all-countries" size="small">Retrieving all countries</Button></nobr> 
 * <nobr><Button to="/openapi/country/#operation/GET-country-list-all-regions" size="small">Retrieving all regions</Button></nobr>
 
-:::
+{% endhint %}
 
 ### Before you start
 
@@ -454,11 +454,11 @@ Prices in a list can be expressed in a different currency than originally define
 
 To create a new price list, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-list" size="small">Creating a new price list</Button></nobr> endpoint.
 
-:::warning
+{% hint style="danger" %}
 
 Make sure to set a value for the `currency` field in the request body. Otherwise, the endpoint will respond with a `400` error.
 
-:::
+{% endhint %}
 
 <OpenApiTryIt
   definitionId="price"
@@ -486,11 +486,11 @@ Make sure to set a value for the `currency` field in the request body. Otherwise
 
 Prices in lists are structured differently from catalog prices. Catalog prices are the ones defined for products in `Price` objects, as opposed to `PriceListPrice` objects. While each catalog price can be personalized on its own, the validity of all prices in a list is determined by the list's restrictions. A price in a price list needs to reference a relevant product, price model, and pricing tiers.
 
-:::warning
+{% hint style="danger" %}
 
 A single price list can be associated with multiple regions or countries. For this reason, all prices within a list are treated as net values, regardless of the `includesTax` value in their indicated price models.
 
-:::
+{% endhint %}
 
 To create a new list-specific price, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-in-price-list" size="small">Adding a new price to a price list</Button></nobr> endpoint.
 
@@ -520,11 +520,11 @@ To create a new list-specific price, you need to send a request to the <nobr><Bu
   }}
 />
 
-:::attention Bulk price creation
+{% hint style="warning" %} Bulk price creation
 
 You can add multiple prices to a list at once by sending a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-multiple-prices-for-price-list" size="small">Creating multiple prices for a price list</Button></nobr> endpoint.
 
-:::
+{% endhint %}
 
 ---
 
@@ -534,11 +534,11 @@ The price matching functionality compares all prices defined for specified produ
 
 * `targetCurrency` — Currency in which the prices should be returned.
   
-  :::warning
+  {% hint style="danger" %}
   
   If you want the price matching functionality to compare prices expressed in multiple currencies, you need to define exchange rates between these currencies and the `targetCurrency` through the <nobr><Button to="/openapi/currency/#operation/POST-currency-create-exchange-rate" size="small">Creating a new exchange rate</Button></nobr> endpoint.
 
-  :::
+  {% endhint %}
 
 * `siteCode` — Site for which the prices will be matched. The price matching functionality will only compare prices assigned to this site.
 * `targetLocation` — Country for which the prices should be returned.
@@ -556,21 +556,21 @@ The `includesTax` setting, defined at the site or price model level, determines 
 
 To find out how the price matching functionality works in detail, check out the flowchart. 
 
-:::attention
+{% hint style="warning" %}
 
 The process shown in the flowchart is repeated for each product indicated in the request. 
 
-:::
+{% endhint %}
 
 To find out how the price matching functionality works in detail, check out the flowchart.
 
 <Preview src="/docs/price/price_matching2.svg"></Preview>
 
-:::info
+{% hint style="warning" %}
 
 To check out the flowchart for the *Look for the best price in price lists* subprocess, check out the [Influence of price lists on price matching](#influence-of-price-lists-on-price-matching) section.
 
-:::
+{% endhint %}
 
 ### Influence of price lists on price matching
 
@@ -831,13 +831,13 @@ The lowest prices are returned in the `priceId` fields. The total price for defi
 
 You can calculate gross prices between countries through the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes</Button></nobr> endpoint.
 
-:::info
+{% hint style="warning" %}
 
 This tutorial presents how to calculate gross prices between countries based on `Price` objects.
 
 To learn how to calculate gross prices between countries based on specific values, check out [*How to calculate gross values between countries*](/content/tax#how-to-calculate-gross-values-between-countries) tutorial in the Tax classes — Developer Guide.
 
-:::
+{% endhint %}
 
 ### Before you start
 
@@ -988,11 +988,11 @@ Add the currency in which the price will be retrieved to your configuration of c
 
 When calculating a price in another currency, the price matching functionality checks the defined exchange rate between the desired currency and the one in which price is originally expressed.
 
-:::warning Important
+{% hint style="danger" %} Important
 
 Currently, the exchange rates are defined statically and are not influenced by actual currency exchange rates. If you want the statically defined exchange rates to reflect the actual rates more closely, you will need to manually update these on a regular basis.
 
-:::
+{% endhint %}
 
 To define a new exchange rate, send a request to the <nobr><Button to="/openapi/currency/#operation/POST-currency-create-exchange-rate" size="small">Creating a new exchange rate</Button></nobr> endpoint:
 
@@ -1047,11 +1047,11 @@ To retrieve prices as gross or net based on their sites' settings, you need to r
 
 To always retrieve prices for a particular site as net values, you need to set that site's `includesTax` field to `false`.
 
-:::attention
+{% hint style="warning" %}
 
 If you don't specify a site's `includesTax` value, the price matching functionality will return a price as gross or net based on the `includesTax` value specified in the price's model.
 
-:::
+{% endhint %}
 
 You can manage your sites through the Emporix API [Site Settings Service](/openapi/site-settings/).
 

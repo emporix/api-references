@@ -19,13 +19,13 @@ import {
 
 To add a new measurement unit to your configuration, you need to send a request to the <nobr><Button to="/openapi/unit-handling/#operation/POST-unit-handling-create-unit" size="small">Adding a new unit</Button></nobr> endpoint.
 
-:::attention
+{% hint style="warning" %}
 
 Unit names are localized. When creating a new unit, you can specify the unit name in two different ways — in one language or in multiple languages.
 
 Looking for more info on localization? Check out [*Standard practices*](/content/standard-practices).
 
-:::
+{% endhint %}
 
 <OpenApiTryIt
   definitionId="unit-handling"

@@ -18,11 +18,11 @@ You can check the current status of Emporix API services on the [Emporix Status 
 https://api.emporix.io
 ```
 
-:::info
+{% hint style="warning" %}
 
 To start working with our API, make sure to allowlist [api.emporix.io](http://api.emporix.io/) IP: 34.128.182.253.
 
-:::
+{% endhint %}
 
 ## Authorization and scopes
 
@@ -103,10 +103,10 @@ You can now use your Emporix API keys to authorize requests. Try it out by calli
 
 You should receive your main site's settings in the response body.
 
-:::warning
+{% hint style="danger" %}
 
 If you want to send a request to an endpoint that requires a different set of scopes, you need to generate a new access token.
-:::
+{% endhint %}
 
 ### Explore the Emporix API
 

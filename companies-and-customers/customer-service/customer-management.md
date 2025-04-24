@@ -58,11 +58,11 @@ A location is a physical address where a company operates, such as its headquart
   }}
 />
 
-:::attention
+{% hint style="warning" %}
 
 The `id` from the response is further referred to as `locationId`.
 
-:::
+{% endhint %}
 
 ### Add a legal entity
 
@@ -114,11 +114,11 @@ To find out what a company's ID is, you need to send a request to the <nobr><But
   }}
 />
 
-:::attention
+{% hint style="warning" %}
 
 The `id` from the response is further referred to as `parentId`.
 
-:::
+{% endhint %}
 
 ### Add a subsidiary
 
@@ -148,11 +148,11 @@ Subsidiaries are added similarly to their parent companies. To add a new subsidi
 
 You can offer personalized pricing to your business customers' employees by adding them to company customer groups. A company customer group is automatically created when that company's data is added to the system.
 
-:::info
+{% hint style="warning" %}
 
 When added to a subsidiary’s customer group, the employee is also automatically assigned to customer groups of all the subsidiary’s parent companies.
 
-:::
+{% endhint %}
 
 ### Before you start
 
@@ -161,14 +161,14 @@ Make sure the following requirements are fulfilled:
 * You have already finished the [How to set up business customer information](#how-to-set-up-business-customer-information) tutorial.
 * The employee has their customer account set up.
 
-:::attention
+{% hint style="warning" %}
 
 A customer account can be created by the employee themselves or from your Emporix tenant's side. For more information, check out the following endpoints in the  Emporix API Reference:
 
 * <nobr><Button to="/openapi/customer-customer/#operation/POST-customer-create-customer-account" size="small">Creating a new customer (customer-managed)</Button></nobr>
 * <nobr><Button to="/openapi/customer-tenant/#operation/POST-customer-tenant-create-customer" size="small">Creating a new customer (tenant-managed)</Button></nobr>
 
-:::
+{% endhint %}
 
 ### Retrieve the ID of the company
 
@@ -185,11 +185,11 @@ To find out what a company's ID is, you need to send a request to the <nobr><But
   }}
 />
 
-:::attention
+{% hint style="warning" %}
 
 The `id` from the response is further referred to as `legalEntityId`.
 
-:::
+{% endhint %}
 
 ### Retrieve the employee's customer ID
 
@@ -205,11 +205,11 @@ To retrieve an employee's customer ID, you need to send a request to the <nobr><
   }}
 />
 
-:::attention
+{% hint style="warning" %}
 
 The `id` from the response is further referred to as `customerId`.
 
-:::
+{% endhint %}
 
 ### Assign the contact to the company
 

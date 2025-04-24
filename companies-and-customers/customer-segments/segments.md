@@ -19,10 +19,10 @@ The flexible service's API facilitates configuring and managing customer segment
 
 ## How to add a customer segment
 
-:::info
+{% hint style="warning" %}
 
 To create and configure a segment, you need the `customersegment.segment_manage` scope.
-:::
+{% endhint %}
 
 ### Create a customer segment
 
@@ -56,9 +56,9 @@ endpoint.
   defaultExample="Item Assignment Update"
 />
 
-:::attention
+{% hint style="warning" %}
 Note that this operation performs an `UPSERT` operation. The `UPSERT` means that if an item is already assigned to a segment, the assignment gets updated. If not, the new one is created in the system.
-:::
+{% endhint %}
 
 ### Add segment members
 
@@ -88,16 +88,16 @@ Now, add customers to the segment. Depending on your setup and purpose, you can 
   defaultExample="Customer Assignment Update"
 />
 
-:::attention
+{% hint style="warning" %}
 Note that this operation performs an `UPSERT` operation. The `UPSERT` means that if a customer is already assigned to a segment, the assignment gets updated. If not, the customer assignment is created in the system.
-:::
+{% endhint %}
 
 ## How to find a specific segment using search parameters
 
-:::info
+{% hint style="warning" %}
 
 To search for a segment, you need the `customersegment.segment_read` scope to retrieve all customer segments.
-:::
+{% endhint %}
 
 You can use the search API to find a segment of your interest that match a specific criteria. Send the request to the <nobr><Button to="/openapi/customer-segment/#operation/POST-customer-segment-search-segments" size="small">Searching with parameters for customer segments</Button></nobr> endpoint.
 

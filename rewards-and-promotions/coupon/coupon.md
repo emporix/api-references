@@ -25,11 +25,11 @@ To create a new coupon, you need to send a request to the <nobr><Button to="/ope
 
 ### Creating a free shipping coupon with minimum order value and 1 usage per customer
 
-:::attention
+{% hint style="warning" %}
 
 When creating a free shipping coupon, ensure that the `categoryRestricted` parameter is set to `false`.
 
-:::
+{% endhint %}
 
 <OpenApiTryIt
   definitionId="coupon"
@@ -124,11 +124,11 @@ To limit a coupon to a specific category, you need to set the `categoryRestricte
 
 To update an existing coupon, you need to send a request to the <nobr><Button to="/openapi/coupon/#operation/PATCH-coupon-update-coupon" size="small">Partially updating a coupon</Button></nobr> endpoint.
 
-:::info
+{% hint style="warning" %}
 
 For more information on managing carts, check out the [*Carts guide*](https://developer.emporix.io/user-guides/core-commerce/carts/carts).
 
-:::
+{% endhint %}
 
 <OpenApiTryIt
   definitionId="coupon"
@@ -186,10 +186,10 @@ In the following example, we are changing the maximum number of coupons that can
 
 To apply a coupon to a cart, you need to send a request to the <nobr><Button to="/openapi/cart/#operation/POST-cart-apply-discount" size="small">Applying a discount to cart</Button></nobr> endpoint.
 
-:::info
+{% hint style="warning" %}
 
 If you want to apply more than one coupon to a cart, you need to send a separate request for each discount coupon.
-:::
+{% endhint %}
 
 <OpenApiTryIt
   definitionId="cart"
@@ -198,9 +198,9 @@ If you want to apply more than one coupon to a cart, you need to send a separate
 />
 
 
-:::attention
+{% hint style="warning" %}
 Applying the coupon to cart does not mean that the coupon is automatically redeemed. For more information, check out [How to redeem a coupon](#how-to-redeem-a-coupon).
-:::
+{% endhint %}
 
 ## How to redeem a coupon
 
@@ -230,10 +230,10 @@ coupon.coupon_redeem_on_behalf
     }}
 />
 
-:::info
+{% hint style="warning" %}
 
 The redeemed coupon cannot be used used again during checkout.
-:::
+{% endhint %}
 
 ## How to enable referral coupons
 
