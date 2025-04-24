@@ -23,7 +23,7 @@ Download the Maven project [OpenAPI Generator](docs/openapi/apireference-client-
 
 {% hint style="warning" %}
 The file has to be named as `api.yml`.
-If you want to choose a different name for the file, adjust the `pom.xml` by pointing to the right file name in the `<inputSpec></inputSpec>` property.\
+If you want to choose a different name for the file, adjust the `pom.xml` by pointing to the right file name in the `<inputSpec></inputSpec>` property.
 {% endhint %}
 
 3. In the command-line tool, open `apireference-client-generator` and run
