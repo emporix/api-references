@@ -72,7 +72,7 @@ Passing the `legalEntityId` parameter in the authorization token is the recommen
 The token approach ensures a consistent user experience, and centralized security enforcement while enabling the required legal entity-based access control.
 {% endhint %}
 
-{% endhint %}info
+{% hint style="warning" %}
 Find out more about the OAuth Service and token generation in the API reference [OAuth Service](https://developer.emporix.io/docs/openapi/oauth/) documentation.
 
 {% endhint %}

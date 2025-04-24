@@ -63,7 +63,7 @@ Based on your tenant's configuration settings and customer's oauth token, the re
 
 When a customer sends a return request, the <nobr><Button to="/openapi/returns/#operation/POST-returns-create-return" size="small">Creating a single return entity</Button></nobr> endpoint is called.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The following set of scopes is granted to a customer group:
 
@@ -88,7 +88,7 @@ The `returns.returns_read` and `returns.returns_manage` scopes are only required
  To create a return on behalf of a customer, you need to send a request to the <nobr><Button to="/openapi/returns/#operation/POST-returns-create-return" size="small">Creating a single return entity</Button></nobr> endpoint.
 
  
-{% endhint %}info
+{% hint style="warning" %}
 
 The following set of scopes is required for an employee group:
 
@@ -106,7 +106,7 @@ The `returns.returns_read_own` and `returns.returns_manage_own` scopes are only 
   defaultExample="A return requested on behalf of a customer"
   />
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The `approvalStatus` field is automatically populated during the creation of a return and is always set to `PENDING`.
 {% endhint %}
@@ -116,7 +116,7 @@ The `approvalStatus` field is automatically populated during the creation of a r
 
 Customers can update their return request only when the approval status of the request is `PENDING`. When a customer updates a return, the <nobr><Button to="/openapi/returns/#operation/PUT-returns-update-return" size="small">Updating a single return</Button></nobr> endpoint is called.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The following set of scopes is granted to a customer group:
 
@@ -147,7 +147,7 @@ In this scenario, the customer updates the reason for the return.
 
  As an employee, you can update all the fields available during the return creation, as well as the `approvalStatus` and `received` fields, by sending a request to the <nobr><Button to="/openapi/returns/#operation/PUT-returns-update-return" size="small">Updating a single return</Button></nobr> endpoint.
  
-{% endhint %}info
+{% hint style="warning" %}
 
 The following set of scopes is required for an employee group:
 

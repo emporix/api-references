@@ -16,7 +16,7 @@ ExplainStep\
 
 ### How to create a category
 
-{% endhint %}info
+{% hint style="warning" %}
 
 Category names and descriptions are localized. When creating a new category, you can specify the category name and descriptions in multiple languages.
 

@@ -27,7 +27,7 @@ This tutorial will walk you through the following steps:
 3. [Retrieving a tier ID](#retrieve-a-tier-id).
 4. [Defining a price](#define-the-price).
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The tutorial skips the step of creating a new measurement unit as your Emporix tenant is configured with the most commonly used measurement units out-of-the-box. 
 
@@ -63,7 +63,7 @@ To add a new entry to your configuration of currencies, you need to send a reque
 
 A price model defines a repeatable way to sell products. You can create separate price models depending on measurement units for which prices are expressed or depending on products' pricing strategies.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 To learn more about price models in the Emporix Commerce Engine, check out the [Pricing guide](https://developer.emporix.io/user-guides/core-commerce/pricing/pricing-v2#price-models).
 
@@ -149,7 +149,7 @@ To define a new price for a product, you need to send a request to the <nobr><Bu
 
 ## How to implement different pricing strategies
 
-{% endhint %}info
+{% hint style="warning" %}
 
 To learn more about pricing strategies available in the Emporix Commerce Engine, check out the [Pricing guide](https://developer.emporix.io/user-guides/core-commerce/pricing/pricing-v2#price-models).
 
@@ -382,7 +382,7 @@ Take a look at the relationship between prices and customers in the Emporix Comm
 
 To make a price valid only for specific customers, you need to add their IDs to the `principals` array inside an applicable `Price` object.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 `Customer` objects are managed through the Emporix API [Customer Service](/openapi/customer-tenant/).
 
@@ -566,7 +566,7 @@ To find out how the price matching functionality works in detail, check out the 
 
 <Preview src="/docs/price/price_matching2.svg"></Preview>
 
-{% endhint %}info
+{% hint style="warning" %}
 
 To check out the flowchart for the *Look for the best price in price lists* subprocess, check out the [Influence of price lists on price matching](#influence-of-price-lists-on-price-matching) section.
 
@@ -831,7 +831,7 @@ The lowest prices are returned in the `priceId` fields. The total price for defi
 
 You can calculate gross prices between countries through the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes</Button></nobr> endpoint.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 This tutorial presents how to calculate gross prices between countries based on `Price` objects.
 

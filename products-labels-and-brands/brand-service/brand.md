@@ -25,7 +25,7 @@ To create a brand with media files and add it to a product created beforehand, f
 
 Ensure that you have created a product. 
 
-{% endhint %}info
+{% hint style="warning" %}
 
 For instructions, check out [*How to add your first product*](/content/product/#how-to-add-your-first-product).
 

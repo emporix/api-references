@@ -254,7 +254,7 @@ Your business's SEPA Creditor ID is stored in your tenant's `sepaCreditor` confi
 
 Custom site attributes are stored in a site's `mixins`.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 To learn more about mixins in the Emporix Commerce Engine, check out the [Standard Practices in the Emporix API](/content/standard-practices.mdx).
 

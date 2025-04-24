@@ -24,7 +24,7 @@ Descriptive fields — such as names or descriptions — can be localized and tr
 
 In the Emporix Commerce Engine, localized fields are stored in the form of String-String maps, where the keys are language codes and the values are the translations.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 Language codes must match the ones defined in your language configurations.
 
@@ -42,7 +42,7 @@ When you set the `Content-Language` header to a specific language, you need to p
 
 {% endhint %}
 
-{% endhint %}info
+{% hint style="warning" %}
 
 ***What if I don't specify the fields' language?***
 

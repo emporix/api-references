@@ -30,7 +30,7 @@ The following merchant information is necessary for the pdf file with quote to b
     * `merchantStreetNo`
     * `merchantZipCode`
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The pdf with quote will be sent to the customer in the notification email upon the quote's creation or change. It will also be available for the customer on the storefront.
 {% endhint %}
@@ -39,7 +39,7 @@ The pdf with quote will be sent to the customer in the notification email upon t
 
 First, you need to check the current site mixin configuration for the `merchantInfo` parameter by sending a request to the <nobr><Button to="/openapi/site-settings/#operation/GET-site-settings-list-site-mixins" size="small">Retrieving site mixins</Button></nobr> endpoint.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The following scope is required:
 
@@ -56,7 +56,7 @@ The following scope is required:
 
 Update the merchant information for your tenant's site by sending a request to the <nobr><Button to="/openapi/site-settings/#operation/PATCH-site-settings-update-site-mixin" size="small">Partially updating a site mixin</Button></nobr> endpoint.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The following scope is required:
 
@@ -82,7 +82,7 @@ There are four default reasons that your customers and employees can select for 
 |**CHANGE**|<ul><li>WRONG_MATERIAL</li><li>PROVIDED_PRICE_TO_HIGH</li><li>DELIVERY_TIME_LATE</li><li>OTHER</li></ul>|
 
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The quote reason of the `DECLINE` type can only be used for the `DECLINED` or `DECLINED_BY_MERCHANT` actions, while the `CHANGE` type can only be used for the `IN_PROGRESS` change of status.
 {% endhint %}
@@ -113,7 +113,7 @@ A quote request can be created both by a customer directly on your business' sto
 On the storefront, a customer adds selected products to cart. At checkout, they can proceed to purchasing the items, or requesting a quote. 
 If a customer places a quote request, the <nobr><Button to="/openapi/quote/#operation/POST-quote-create-quote" size="small">Creating a quote</Button></nobr> endpoint is called.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The following scope is granted to a customer group:
 
@@ -129,7 +129,7 @@ The customer can place a quote request on the storefront only if they have creat
   defaultExample="Create quote from cart"
   />
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The initial status of a quote request created by a customer is always set to `AWAITING`.
 {% endhint %}
@@ -138,7 +138,7 @@ The initial status of a quote request created by a customer is always set to `AW
 
 To create a quote request on behalf of a customer, you need to call the <nobr><Button to="/openapi/quote/#operation/POST-quote-create-quote" size="small">Creating a quote</Button></nobr> endpoint.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The following scope is required:
 
@@ -152,7 +152,7 @@ The following scope is required:
   defaultExample="Full quote creation definition."
   />
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The initial status of a quote request being created by an employee is always set to `CREATING`, and, subsequently, `OPEN` when the quote is created.
 {% endhint %}
@@ -165,7 +165,7 @@ There are two scenarios when an employee may need to update a quote:
 
 To achieve that, the employee needs to send a request to the <nobr><Button to="/openapi/quote/#operation/PATCH-quote-update-quote" size="small">Partially updating a quote</Button></nobr> endpoint.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The following scope is required:
 
@@ -193,7 +193,7 @@ In the following example, an employee updates only the price of requested items:
 
 When a customer accepts a quote on the storefront, the following endpoint is called: <nobr><Button to="/openapi/quote/#operation/PATCH-quote-update-quote" size="small">Partially updating a quote</Button></nobr>.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The following scope is granted to the customer group:
 
@@ -221,7 +221,7 @@ The following scope is granted to the customer group:
 When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action.  
 On the storefront, when a customer declines the quote, a request to the following endpoint is sent: <nobr><Button to="/openapi/quote/#operation/PATCH-quote-update-quote" size="small">Partially updating a quote</Button></nobr>.  
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The following scope is granted to the customer group:
 

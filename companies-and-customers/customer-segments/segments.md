@@ -19,7 +19,7 @@ The flexible service's API facilitates configuring and managing customer segment
 
 ## How to add a customer segment
 
-{% endhint %}info
+{% hint style="warning" %}
 
 To create and configure a segment, you need the `customersegment.segment_manage` scope.
 {% endhint %}
@@ -94,7 +94,7 @@ Note that this operation performs an `UPSERT` operation. The `UPSERT` means that
 
 ## How to find a specific segment using search parameters
 
-{% endhint %}info
+{% hint style="warning" %}
 
 To search for a segment, you need the `customersegment.segment_read` scope to retrieve all customer segments.
 {% endhint %}

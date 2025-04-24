@@ -39,7 +39,7 @@ site.site_manage
 
 The reward points settings are stored in a site's `mixins`, within the coupon settings.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 To learn more about mixins in the Emporix Commerce Engine, check out the [Standard Practices in the Emporix API](/content/standard-practices.mdx).
 
@@ -75,7 +75,7 @@ As a merchant employee, you can manage your customers' reward points and redempt
 
 If the reward points functionality is enabled, the reward points entry is created or updated for a customer automatically every time an order is completed.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The communication between reward points and site settings is cached. The cache is invalidated every 15 minutes. It has to be considered after modifying the configuration of reward points in site's mixins.
 {% endhint %}
@@ -121,7 +121,7 @@ If the customer wants to redeem reward points in exchange for a coupon, first th
 
 To create a coupon based on a certain amount of reward points, the customer sends a request to the <nobr><Button to="/openapi/reward-points/#operation/POST-reward-points-redeem-logged-customer-reward-points-coupon" size="small">Redeeming a logged-in customer's reward points for a coupon code</Button></nobr> endpoint on the storefront.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 Reward points can only be exchanged for percentage and absolute coupons.
 {% endhint %}
@@ -132,7 +132,7 @@ Reward points can only be exchanged for percentage and absolute coupons.
 />
 
 
-{% endhint %}info
+{% hint style="warning" %}
 For more information on applying coupons to cart, check out [*How to apply coupons to a cart*](/content/coupon/#how-to-apply-coupons-to-a-cart) in the Coupon Service guide.
 {% endhint %}
 

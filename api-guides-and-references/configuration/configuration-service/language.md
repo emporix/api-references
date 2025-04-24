@@ -24,7 +24,7 @@ While the Emporix e-commerce system is designed in English, you can specify lang
 
 The Emporix e-commerce system supports all existing languages, including regional language variants such as American English or Swiss German. By default, both your Emporix tenant and its main site have their language set to English.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 Currently, the Emporix e-commerce system does not offer translation services.
 
@@ -35,7 +35,7 @@ To learn how to localize and translate your business's resources, check out the 
 
 Languages are configured both tenant-wide and independently for particular sites.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 *What's the difference between a tenant's language configuration and a site's language configuration?*
 
@@ -66,7 +66,7 @@ Site-specific language configuration is stored in the `defaultLanguage` and `lan
 }
 ```
 
-{% endhint %}info
+{% hint style="warning" %}
 For more information on the `Site` object, check out the [*Site Settings Service guide*](/content/site-settings).
 {% endhint %}
 

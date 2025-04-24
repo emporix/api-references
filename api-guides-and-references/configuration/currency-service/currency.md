@@ -23,7 +23,7 @@ When creating a tenant on the Emporix Developer Portal, you can choose one of th
 * NOK — Norwegian krone
 * USD — United States dollar
 
-{% endhint %}info
+{% hint style="warning" %}
 
 *What if my business operates in a currency that's not on the list?*
 
@@ -38,7 +38,7 @@ If your business operates in a currency that's not listed on the Emporix Develop
 
 Currencies are configured both tenant-wide and independently for particular sites.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 *What's the difference between a tenant's currency configuration and a site's currency configuration?*
 
@@ -64,7 +64,7 @@ Site-specific currency configuration is stored in the `currency` field, inside t
 }
 ```
 
-{% endhint %}info
+{% hint style="warning" %}
 For more information on the `Site` object, check out the [*Site Settings Service guide*](/content/site-settings).
 {% endhint %}
 

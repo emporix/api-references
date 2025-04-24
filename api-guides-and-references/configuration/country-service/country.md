@@ -20,7 +20,7 @@ The Emporix e-commerce system does not impose any restrictions as to which count
 
 The countries where your business is located are specified both tenant-wide and independently for particular sites.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 ***What's the difference between a tenant's country configuration and a site's country configuration?***
 
@@ -52,7 +52,7 @@ Site-specific country configuration is stored in the `homeBase` field, inside th
 }
 ```
 
-{% endhint %}info
+{% hint style="warning" %}
 
 For more information on the Site object, check out the [*Site Settings Service guide*](/content/site-settings).
 {% endhint %}

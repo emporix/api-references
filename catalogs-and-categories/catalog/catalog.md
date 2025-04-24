@@ -27,7 +27,7 @@ You can assign categories to a catalog when creating or updating the catalog. Th
 
 ### Create a catalog
 
-{% endhint %}info
+{% hint style="warning" %}
 
 Catalog names and descriptions are localized. When creating a new catalog, you can specify the catalog name and description in two different ways — in one language or in multiple languages.
 
@@ -63,7 +63,7 @@ To create a new catalog, you need to send a request to the <nobr><Button to="/op
 
 ### Create a category
 
-{% endhint %}info
+{% hint style="warning" %}
 
 For more information, check out [*How to create a category*](/content/category/#how-to-create-a-category).
 

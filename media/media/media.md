@@ -29,7 +29,7 @@ You can also specify the access types of the uploaded files - the public assets 
 In the following scenario, we are going to create public and private assets for an already existing category.
 
 
-{% endhint %}info
+{% hint style="warning" %}
 
 Before you begin, ensure that a category with a category ID already exists. For more information, check out the [*Category Service Tutorials*](/content/category).
 {% endhint %}
@@ -39,7 +39,7 @@ Before you begin, ensure that a category with a category ID already exists. For 
 To add an asset for a category, you need to send a request to the <nobr><Button to="/openapi/media/#operation/POST-media-create-asset" size="small">Creating an asset</Button></nobr> endpoint with the `media.asset_manage` scope. 
 In the following example, we are creating a `private` type of an asset.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 Sending a json/application request to the <nobr><Button to="/openapi/media/#operation/POST-media-create-asset" size="small">Creating an asset</Button></nobr> endpoint does **not** mean that the asset is uploaded to the database. It is only linked to the resource (category or product). 
 If you want to upload the asset to the database, you need to send a multipart request to the <nobr><Button to="/openapi/media/#operation/POST-media-create-asset" size="small">Creating an asset</Button></nobr> endpoint.

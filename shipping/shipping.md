@@ -13,7 +13,7 @@ import {
 # Shipping Service Tutorials
 
 
-{% endhint %}info
+{% hint style="warning" %}
 
 Names and/or descriptions of shipping zones, methods, and groups are localized. When creating a new shipping zone, method, or group, you can specify its name and/or description in one or multiple languages.
 
@@ -36,7 +36,7 @@ To allow customers to place orders, you need to configure delivery and shipping 
 
 Ensure that you have created at least one customer.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 A customer account can be created by the employee themselves or from your Emporix tenant's side. For more information, check out the following endpoints in the  Emporix API Reference:
 

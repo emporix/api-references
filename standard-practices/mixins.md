@@ -76,7 +76,7 @@ Here's an example of custom delivery options applied inside a `Customer` object 
 
 ## How to add mixins to an object
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The procedure below presents applying mixins to a `Customer` object.
 

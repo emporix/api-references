@@ -96,21 +96,21 @@ Make sure the following requirements are fulfilled:
 
 * You have already created all products that make up the bundle.
 
-{% endhint %}info
+{% hint style="warning" %}
 For instructions, check out [*How to add your first product*](/content/product/#how-to-add-your-first-product).
 
 {% endhint %}
 
 * You have already specified stock levels for all products that make up the bundle.
 
-{% endhint %}info 
+{% hint style="warning" %} 
   For instructions, check out [*How to specify availability, popularity, or stock level for a product*](/content/product/#how-to-create-a-bundle-of-personalized-products).
 
 {% endhint %}
 
 * You have already created a product bundle.
 
-{% endhint %}info
+{% hint style="warning" %}
 For instructions, check out [How to create a bundle of personalized products](/content/product/#how-to-create-a-bundle-of-personalized-products).
 
 {% endhint %}

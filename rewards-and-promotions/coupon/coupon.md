@@ -124,7 +124,7 @@ To limit a coupon to a specific category, you need to set the `categoryRestricte
 
 To update an existing coupon, you need to send a request to the <nobr><Button to="/openapi/coupon/#operation/PATCH-coupon-update-coupon" size="small">Partially updating a coupon</Button></nobr> endpoint.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 For more information on managing carts, check out the [*Carts guide*](https://developer.emporix.io/user-guides/core-commerce/carts/carts).
 
@@ -186,7 +186,7 @@ In the following example, we are changing the maximum number of coupons that can
 
 To apply a coupon to a cart, you need to send a request to the <nobr><Button to="/openapi/cart/#operation/POST-cart-apply-discount" size="small">Applying a discount to cart</Button></nobr> endpoint.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 If you want to apply more than one coupon to a cart, you need to send a separate request for each discount coupon.
 {% endhint %}
@@ -230,7 +230,7 @@ coupon.coupon_redeem_on_behalf
     }}
 />
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The redeemed coupon cannot be used used again during checkout.
 {% endhint %}

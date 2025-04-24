@@ -21,7 +21,7 @@ You can calculate net and gross values for prices through the <nobr><Button to="
 
 Make sure you configured sales tax rates through the Emporix API Tax Service.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 For instructions, check out [*How to add your first product*](/content/product/#how-to-add-your-first-product).
 
@@ -118,7 +118,7 @@ To learn how to calculate gross prices between countries based on `Price` object
 
 Make sure you configured sales tax rates through the Emporix API Tax Service.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 For instructions, check out [*How to add your first product*](/content/product/#how-to-add-your-first-product).
 

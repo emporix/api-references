@@ -15,7 +15,7 @@ import {
 
 With the Schema Service you can easily create and manage customized/industry-specific fields for different types in Management Dashboard. The new fields appear in a separate tab when you create an instance of the extended type.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 It is possible to create mixin schemas through API for the following entities: `category`, `company`, `coupon`, `customer`, `customer.address`, `order`, `price list`, `product`, `quote` and `return`.
 {% endhint %}
@@ -45,7 +45,7 @@ Retrieve the created schema to get the schema URL by calling the <nobr><Button t
 
 In the response, you can see the URL link to cloudinary repository, where the schema for the product type has been uploaded. 
 
-{% endhint %}info
+{% hint style="warning" %}
 
 When you create a product, the validation mechanism runs against the schema stored under the mentioned cloudinary URL.
 
@@ -258,7 +258,7 @@ To use the schema in Emporix Commerce Engine, send a request to the <nobr><Butto
 
 Result: The schema reference is used to create or edit product objects.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 Note that the fields of types that are not supported by default are not displayed in the Management Dashboard. You can edit them by API requests.
 

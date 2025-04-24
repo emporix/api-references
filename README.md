@@ -18,7 +18,7 @@ You can check the current status of Emporix API services on the [Emporix Status 
 https://api.emporix.io
 ```
 
-{% endhint %}info
+{% hint style="warning" %}
 
 To start working with our API, make sure to allowlist [api.emporix.io](http://api.emporix.io/) IP: 34.128.182.253.
 

@@ -20,7 +20,7 @@ The Emporix Webhook Event Publishing works in the following way:
 2. The Webhook Service forwards the message to the Event Gateway.
 3. The Event Gateway passes the event to your earlier configured endpoint for this particular event.
 
-{% endhint %}info
+{% hint style="warning" %}
     
 For example, if you create a catalog in the Emporix environment, a notification is sent to the Webhook service. The service passes the message to the Event Gateway. If you configured the "Create a new catalog" endpoint beforehand, you will receive the notification that a new catalog has been created.
 
@@ -154,7 +154,7 @@ To generate the login link with the authentication token needed to connect a ten
   operationId="GET-webhook-access-tenant-svix"
 />
 
-{% endhint %}info
+{% hint style="warning" %}
 
 You can use your Emporix tenant ID as application ID in Svix.
 {% endhint %}

@@ -148,7 +148,7 @@ Subsidiaries are added similarly to their parent companies. To add a new subsidi
 
 You can offer personalized pricing to your business customers' employees by adding them to company customer groups. A company customer group is automatically created when that company's data is added to the system.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 When added to a subsidiary’s customer group, the employee is also automatically assigned to customer groups of all the subsidiary’s parent companies.
 

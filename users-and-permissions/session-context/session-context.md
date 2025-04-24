@@ -17,12 +17,12 @@ import {
 
 By default, an anonymous user session expires after one hour. You can refresh the anonymous session by sending a request to the <nobr><Button to="/openapi/oauth/#operation/GET-oauth-refresh-anonymous-access-token" size="small">Refreshing an anonymous token</Button></nobr> endpoint.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 There is no timeout for logged customer sessions.
 {% endhint %}
 
-{% endhint %}info
+{% hint style="warning" %}
 
 You can use the price matching mechanism based on a session context file values. For more information on how the price matching functionality works, check out *How to use the price matching functionality* in the [Price Service Tutorials](/content/price#how-to-use-the-price-matching-functionality).
 {% endhint %}
@@ -39,7 +39,7 @@ In the following scenario, we are going to perform the following actions from th
 2. [Retrieve the session context attributes and values of a particular user session.](#retrieve-a-session-context-by-using-a-session-id)
 3. [Add or remove custom attributes from the session context.](#add-new-attributes-to-the-session-context)
 
-{% endhint %}info
+{% hint style="warning" %}
 
 To be able to manage a user session and its corresponding session context file, make sure that the session with its session ID is present in the system. 
 {% endhint %}
@@ -54,7 +54,7 @@ An anonymous user session is created every time a non-logged user enters the sto
   />
   
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The session ID is automatically generated. It should be preserved on the storefront, for example in user cookies.
 {% endhint %}
@@ -78,7 +78,7 @@ An anonymous customer's session is terminated if one of those two requirements i
 
 The session is created when a customer logs in to the storefront. This means that the anonymous session that was established when the user entered the site is migrated into a customer session when a request is sent to the <nobr><Button to="/openapi/oauth/#operation/POST-oauth-authorize-customer" size="small">Requesting a customer token</Button></nobr> endpoint. 
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The session Id and session context remain the same.
 {% endhint %}
@@ -97,7 +97,7 @@ The session context contains the following information:
 * `targetLocation` — fetched from the customer's profile. Either default shipping address, or default billing address. Empty if none of those exist.
 * `siteCode` — fetched from the `customerprefferedSite` entry in the customer's profile.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 If any of these values are not present in the customer's profile, they are retrieved from the configuration on your main site.
 {% endhint %}
@@ -128,7 +128,7 @@ You can then implement a mechanism that uses the collected data, for example to 
 For example, it's raining in the user's location, so the list of suggested products on the storefront prioritizes umbrellas and other rain equipment.
 {% endhint %}
 
-{% endhint %}info
+{% hint style="warning" %}
 
 You can also implement a mechanism allowing users to manage and modify their own sessions and session contexts by calling the <nobr><Button to="/openapi/session-context/#operation/POST-session-context-add-attribute-sessionId" size="small">Adding a new attribute to a session context</Button></nobr> endpoint on the storefront. 
 {% endhint %}
@@ -142,7 +142,7 @@ In the following example, we add an attribute by sending a request to the  <nobr
   />
 
 
-{% endhint %}info
+{% hint style="warning" %}
 
 The changes introduced to the session context are automatically applied to the user session to which the session context belongs.
 {% endhint %}

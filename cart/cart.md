@@ -73,7 +73,7 @@ To add custom attributes to a cart, you need to send a request to the <nobr><But
 
 ## How to merge carts
 
-{% endhint %}info
+{% hint style="warning" %}
 
 To learn more about merging carts, check out [Cart merging](https://developer.emporix.io/user-guides/core-commerce/carts/carts#cart-merging) in the Carts guide.
 
@@ -96,7 +96,7 @@ To merge an anonymous cart with a customer cart, you need to send a request to t
 For B2B scenarios, you might want to integrate an external application for price calculation for your products. Usually, the systems, such as ERPs, store all the relevant customer-specific pricing information needed for customer-specific pricing.
 The external system then can communicate with the Cart Service directly to overwrite the price of the product added to the cart.
 
-{% endhint %}info
+{% hint style="warning" %}
 
 To achieve the communication between Commerce Engine and the external pricing tool, you have to configure both systems accordingly.
 The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.
@@ -138,7 +138,7 @@ When you have enabled external pricing, it's essential to ensure the accuracy of
 
 For some cases, you might want to allow adding products from an external system to cart, and not only from your online store. The products from external product management sources can be added directly to the customer's cart, bypassing the standard product catalog.
 
-{% endhint %}info
+{% hint style="warning" %}
 To achieve the communication between Commerce Engine and the external product management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
@@ -182,7 +182,7 @@ Provide the customer cart's ID in the `cartId` path parameter. The payload has t
 
 For some cases, you might need to calculate and charge additional fees, for example for packaging, freight, or any additional reasons. The fees calculated externally can be added directly to the customer's cart.
 
-{% endhint %}info
+{% hint style="warning" %}
 To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
@@ -216,7 +216,7 @@ To ensure that both net and gross prices are available, along with clear details
 
 At the item level, there's a `calculatedPrice` attribute, which contains detailed price calculations for a specific item. Additionally, a `calculatedPrice` is also available at the cart level, summarizing the price calculations for all items in the cart.
 
-{% endhint %}info
+{% hint style="warning" %}
 <details>
 <summary>See the <b>item</b> level calculation payload example</summary>
 
@@ -396,7 +396,7 @@ At the item level, there's a `calculatedPrice` attribute, which contains detaile
 
 This calculation method provides a comprehensive breakdown of prices, including net values, gross values, tax details, fees, and discounts, both at the cart level and for individual line items.
 
-{% endhint %}info
+{% hint style="warning" %}
 <details>
 <summary>See the <b>full payload</b> example</summary>
 
@@ -1243,7 +1243,7 @@ Since the system can be configured to allow more than one discount to a cart, it
 
 * Every ABSOLUTE discount uses the not discounted values for the discount value spread. It means that if the given applicable item is already fully discounted, the remaining amount of the discount is spread proportionally on the discounts that still have some value left.
 
-{% endhint %}info
+{% hint style="warning" %}
 Check the [System Preferences](https://developer.emporix.io/user-guides/management-dashboard/settings/system-preferences/) documentation for coupons settings related to the number of discounts.
 {% endhint %}
 
