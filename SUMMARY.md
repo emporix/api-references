@@ -17,17 +17,17 @@
 
 * [Authorization](api-guides-and-references/authorization/README.md)
   * [OAuth Service](api-guides-and-references/authorization/oauth-service/README.md)
-  * [API Reference](api-guides-and-references/authorization/oauth-service/api-reference/README.md)
-    * ```yaml
-      props:
-        models: true
-      type: builtin:openapi
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: oauth-api
-      ```
+    * [API Reference](api-guides-and-references/authorization/oauth-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: oauth-api
+        ```
 * [Artificial Intelligence](api-guides-and-references/artificial-intelligence/README.md)
   * [AI Service](api-guides-and-references/artificial-intelligence/ai-service/README.md)
     * [AI Tutorials](api-guides-and-references/artificial-intelligence/ai-service/ai-tutorial.md)
