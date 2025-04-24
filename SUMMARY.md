@@ -16,7 +16,8 @@
 ## API Guides and References
 
 * [Authorization](api-guides-and-references/authorization/README.md)
-  * [API Reference](api-guides-and-references/authorization/api-reference/README.md)
+  * [OAuth Service](api-guides-and-references/authorization/oauth-service/README.md)
+  * [API Reference](api-guides-and-references/authorization/oauth-service/api-reference/README.md)
     * ```yaml
       props:
         models: true
