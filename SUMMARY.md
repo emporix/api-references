@@ -409,7 +409,7 @@
               spec: customer-client-management-api
         ```
   * [Customer Service (Customer Managed)](companies-and-customers/customer-management/README.md)
-    * [API Reference](companies-and-customers/customer-management/api-reference.md)
+    * [API Reference](companies-and-customers/customer-management/api-reference/README.md)
     * ```yaml
       props:
         models: true
