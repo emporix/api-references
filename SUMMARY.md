@@ -42,10 +42,10 @@
               kind: openapi
               spec: ai-api
         ```
-* [Configuration](api-guides-and-references/configuration/README.md)
-  * [Configuration Service](api-guides-and-references/configuration/configuration-service/README.md)
-    * [Language Tutorials](api-guides-and-references/configuration/configuration-service/language.md)
-    * [API Reference](api-guides-and-references/configuration/configuration-service/api-reference/README.md)
+* [Configuration](configuration/README.md)
+  * [Configuration Service](configuration/configuration-service/README.md)
+    * [Language Tutorials](configuration/configuration-service/language.md)
+    * [API Reference](configuration/configuration-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
@@ -66,9 +66,9 @@
               kind: openapi
               spec: configuration-api
         ```
-  * [Country Service](api-guides-and-references/configuration/country-service/README.md)
-    * [Country Tutorial](api-guides-and-references/configuration/country-service/country.md)
-    * [API Reference](api-guides-and-references/configuration/country-service/api-reference/README.md)
+  * [Country Service](configuration/country-service/README.md)
+    * [Country Tutorial](configuration/country-service/country.md)
+    * [API Reference](configuration/country-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
@@ -89,9 +89,9 @@
               kind: openapi
               spec: country-api
         ```
-  * [Currency Service](api-guides-and-references/configuration/currency-service/README.md)
-    * [Currency Tutorial](api-guides-and-references/configuration/currency-service/currency.md)
-    * [API Reference](api-guides-and-references/configuration/currency-service/api-reference/README.md)
+  * [Currency Service](configuration/currency-service/README.md)
+    * [Currency Tutorial](configuration/currency-service/currency.md)
+    * [API Reference](configuration/currency-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
@@ -112,32 +112,9 @@
               kind: openapi
               spec: currency-api
         ```
-  * [Tax Service](api-guides-and-references/configuration/tax-service/README.md)
-    * [Tax Tutorial](api-guides-and-references/configuration/tax-service/tax.md)
-    * [API Reference](api-guides-and-references/configuration/tax-service/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: tax-api
-        ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: tax-api
-        ```
-  * [Unit Handling Service](api-guides-and-references/configuration/unit-handling-service/README.md)
-    * [Unit Handling Tutorial](api-guides-and-references/configuration/unit-handling-service/unit-handling.md)
-    * [API Reference](api-guides-and-references/configuration/unit-handling-service/api-reference/README.md)
+  * [Unit Handling Service](configuration/unit-handling-service/README.md)
+    * [Unit Handling Tutorial](configuration/unit-handling-service/unit-handling.md)
+    * [API Reference](configuration/unit-handling-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
@@ -158,9 +135,9 @@
               kind: openapi
               spec: unit-handling-api
         ```
-  * [Site Settings Service](api-guides-and-references/configuration/site-settings-service/README.md)
-    * [Site Settings Tutorial](api-guides-and-references/configuration/site-settings-service/site-settings.md)
-    * [API Reference](api-guides-and-references/configuration/site-settings-service/api-reference/README.md)
+  * [Site Settings Service](configuration/site-settings-service/README.md)
+    * [Site Settings Tutorial](configuration/site-settings-service/site-settings.md)
+    * [API Reference](configuration/site-settings-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
@@ -181,9 +158,9 @@
               kind: openapi
               spec: site-settings-api
         ```
-  * [Indexing Service](api-guides-and-references/configuration/indexing-service/README.md)
-    * [Indexing Tutorial](api-guides-and-references/configuration/indexing-service/indexing.md)
-    * [API Reference](api-guides-and-references/configuration/indexing-service/api-reference/README.md)
+  * [Indexing Service](configuration/indexing-service/README.md)
+    * [Indexing Tutorial](configuration/indexing-service/indexing.md)
+    * [API Reference](configuration/indexing-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
