@@ -15,9 +15,9 @@
 
 ## API Guides and References
 
-* [Authorization](/authorization/README.md)
-  * [OAuth Service](/authorization/oauth-service/README.md)
-    * [API Reference](/authorization/oauth-service/api-reference/README.md)
+* [Authorization](api-guides-and-references/authorization/README.md)
+  * [OAuth Service](authorization/oauth-service/README.md)
+    * [API Reference](authorization/oauth-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
@@ -28,10 +28,10 @@
               kind: openapi
               spec: oauth-api
         ```
-* [Artificial Intelligence](/artificial-intelligence/README.md)
-  * [AI Service](/artificial-intelligence/ai-service/README.md)
-    * [AI Tutorials](/artificial-intelligence/ai-service/ai-tutorial.md)
-    * [API Reference](/artificial-intelligence/ai-service/api-reference/README.md)
+* [Artificial Intelligence](artificial-intelligence/README.md)
+  * [AI Service](artificial-intelligence/ai-service/README.md)
+    * [AI Tutorials](artificial-intelligence/ai-service/ai-tutorial.md)
+    * [API Reference](artificial-intelligence/ai-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
@@ -56,29 +56,9 @@
               kind: openapi
               spec: configuration-api
         ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: configuration-api
-        ```
   * [Country Service](configuration/country-service/README.md)
     * [Country Tutorial](configuration/country-service/country.md)
     * [API Reference](configuration/country-service/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: country-api
-        ```
       * ```yaml
         props:
           models: true
