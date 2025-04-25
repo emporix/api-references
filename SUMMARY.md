@@ -324,10 +324,10 @@
               kind: openapi
               spec: brand-api
         ```
-* [Prices and Taxes](price-v2/README.md)
-  * [Price Service](price-v2/price-service/README.md)
-    * [Price Tutorials](price-v2/price-service/price.md)
-    * [API Reference](price-v2/price-service/api-reference/README.md)
+* [Prices and Taxes](prices-and-taxes/README.md)
+  * [Price Service](prices-and-taxes/price-service/README.md)
+    * [Price Tutorials](prices-and-taxes/price-service/price.md)
+    * [API Reference](prices-and-taxes/price-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
@@ -348,9 +348,9 @@
               kind: openapi
               spec: price-api
         ```
-  * [Tax Service](price-v2/tax-service/README.md)
-    * [Tax Tutorials](price-v2/tax-service/tax.md)
-    * [API Reference](price-v2/tax-service/api-reference/README.md)
+  * [Tax Service](prices-and-taxes/tax-service/README.md)
+    * [Tax Tutorials](prices-and-taxes/tax-service/tax.md)
+    * [API Reference](prices-and-taxes/tax-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
