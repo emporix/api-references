@@ -1,4 +1,7 @@
 # Indexing Service
 
-The indexing service allows you to manage indexing configuration. Currently supported index providers:
- * Algolia (https://www.algolia.com/)
+Allows management of indexing configuration.
+
+### Key features and benefits
+* Supports the following index provider:  
+  * Algolia ([https://www.algolia.com/](https://www.algolia.com/))  

@@ -1,16 +1,16 @@
 # order
 
-Create an order from cart.
+Createa an order from cart.
 
 ### Key features and benefits
-* Create orders with products that have indicative prices (e.g. price is only known after an item has been weighed).
-* Create and retrieve own orders, and update order statuses by customers (on the storefront).
-* Create, retrieve, delete, and update orders by tenant's employees (through Emporix Management Dashboard or by using a third-party application).
-* Show order history.
-* Convert historic orders into current order.
-* Creates missing address for customer model (can be disabled in system preferences).
-* Built for high volume / throughput.
-* Never let a customer not place an order.
-* Make it easy for your customers to order from last order.
-* Make order queues, virtual waiting queues a thing of the past.
-* Benefit from automatic / elastic scaling to cope easily with peak order volume.
+* Creates orders with products that have indicative prices (e.g. price is only known after an item has been weighed)  
+* Creates and retrieves own orders, and updates order statuses by customers (on the storefront)  
+* Creates, retrieves, deletes, and updates orders by tenant's employees (through the Emporix Management Dashboard or by using a third-party application)  
+* Displays order history  
+* Converts historic orders into current orders  
+* Creates missing addresses for customer models (can be disabled in system preferences)  
+* Built for high volume/throughput  
+* Ensures customers can always place an order  
+* Makes it easy for customers to reorder from their last order  
+* Eliminates order queues and virtual waiting queues  
+* Benefits from automatic/elastic scaling to cope easily with peak order volumes  

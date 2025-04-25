@@ -3,9 +3,10 @@
 Labels allow to mark details related to a product, for example highlighting that a product has a worldwide shipment possibility.
 
 ### Key features and benefits
-* Highlights important product information that you can display on the storefront.
-* Allows you to use your own icons and media files for proper indication of labels.
-* Facilitates marking items with the information that makes them easier to sell.
-* Enhance product visibility by highlighting key details directly on your storefront. This includes features such as "organic" or "eco-friendly," which help customers identify important features and make informed purchasing decisions. 
-* Ensures compliance with relevant regulations.
-* Customizable labels improve engagement by utilizing your own icons and media to create visually impactful labels, such as "Gluten-Free", "A+++ energy class" or "Worldwide Shipping".
+* Highlights important product information that can be displayed on the storefront  
+* Allows the use of custom icons and media files for proper indication of labels  
+* Facilitates marking items with information that makes them easier to sell  
+* Enhances product visibility by highlighting key details directly on the storefront, such as "organic" or "eco-friendly," helping customers identify important features and make informed purchasing decisions  
+* Ensures compliance with relevant regulations  
+* Customizes labels to improve engagement by utilizing custom icons and media to create visually impactful labels, such as "Gluten-Free," "A+++ energy class," or "Worldwide Shipping"  
+
