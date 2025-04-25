@@ -15,9 +15,9 @@
 
 ## API Guides and References
 
-* [Authorization](api-guides-and-references/authorization/README.md)
-  * [OAuth Service](api-guides-and-references/authorization/oauth-service/README.md)
-    * [API Reference](api-guides-and-references/authorization/oauth-service/api-reference/README.md)
+* [Authorization](/authorization/README.md)
+  * [OAuth Service](/authorization/oauth-service/README.md)
+    * [API Reference](/authorization/oauth-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
@@ -28,10 +28,10 @@
               kind: openapi
               spec: oauth-api
         ```
-* [Artificial Intelligence](api-guides-and-references/artificial-intelligence/README.md)
-  * [AI Service](api-guides-and-references/artificial-intelligence/ai-service/README.md)
-    * [AI Tutorials](api-guides-and-references/artificial-intelligence/ai-service/ai-tutorial.md)
-    * [API Reference](api-guides-and-references/artificial-intelligence/ai-service/api-reference/README.md)
+* [Artificial Intelligence](/artificial-intelligence/README.md)
+  * [AI Service](/artificial-intelligence/ai-service/README.md)
+    * [AI Tutorials](/artificial-intelligence/ai-service/ai-tutorial.md)
+    * [API Reference](/artificial-intelligence/ai-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
