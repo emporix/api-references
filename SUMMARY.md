@@ -255,9 +255,9 @@
               spec: category-api
         ```
 * [Products, Labels and Brands](products-labels-and-brands/README.md)
-  * [Product Service](products-labels-and-brands/product-v2/README.md)
-    * [Product Tutorial](products-labels-and-brands/product-v2/product.md)
-    * [API Reference](products-labels-and-brands/product-v2/api-reference/README.md)
+  * [Product Service](products-labels-and-brands/product-service/README.md)
+    * [Product Tutorial](products-labels-and-brands/product-service/product.md)
+    * [API Reference](products-labels-and-brands/product-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
