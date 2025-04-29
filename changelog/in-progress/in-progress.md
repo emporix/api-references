@@ -1,5 +1,5 @@
 ---
-icon: arrow-progress
+icon: spinner-scale
 description: See what we are currently working on.
 title: Current work in progress
 layout:
