@@ -63,6 +63,32 @@ Content-Length: 86
 }
 ```
 
+<mark style="color:red;">EXAMPLE OPTION 4:</mark>
+
+<details>
+
+<summary>Try it out! <a data-mention href="broken-reference">Broken link</a></summary>
+
+```
+{
+  "code": "kg",
+  "name": {
+    "en": "kilogram",
+    "de": "Kilogramm",
+    "pl": "kilogram",
+    "fr": "kilogramme"
+  },
+  "type": "mass",
+  "baseUnit": true,
+  "symbol": "kg",
+  "factor": 1
+}
+```
+
+</details>
+
+
+
 \<OpenApiTryIt\
 definitionId="unit-handling"\
 operationId="POST-unit-handling-create-unit"\
