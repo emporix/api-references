@@ -2,6 +2,10 @@
 
 * [Changelog](README.md)
 
+## In progress
+
+* [Current work in progress](in-progress/in-progress.md)
+
 ## 2025
 
 * [2025-04-17: Product Service - deprecations](2025/2025-04-17-product.md)
