@@ -13,7 +13,7 @@ layout:
     visible: false
   pagination:
     visible: true
-hidden: true
+
 ---
 
 # Current work in progress
