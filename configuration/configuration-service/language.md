@@ -77,68 +77,67 @@ Check out the following tutorials to learn more about language configuration wit
 
 #### How to check which languages are configured for your tenant
 
-To retrieve your tenant's language configuration, you need to send a request to the Retrieving a configuration endpoint.
+To retrieve your tenant's language configuration, you need to send a request to the [Retrieving a configuration](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey) endpoint.
 
-Try it out: Retrieve Configuration
+{% include "../../.gitbook/includes/example-hint.md" %}
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
+  --header 'Accept: */*'
+```
 
 #### How to change your tenant's language configuration
 
-To change your tenant's language configuration, you need to send a request to the Updating a configuration endpoint with updated language information in the request body.
+To change your tenant's language configuration, you need to send a request to the [Updating a configuration](broken-reference) endpoint with updated language information in the request body.
 
 {% hint style="warning" %}
 The id in the request body must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
 {% endhint %}
 
-\<OpenApiTryIt\
-definitionId="configuration"\
-operationId="PUT-configuration-update-config"\
-parameters=\{{\
-path:{\
-"propertyKey": "project\_lang"\
-}\
-\}}\
-properties=\{{\
-key: "project\_lang",\
-value: \[\
-{ id: "pl",\
-label: "Polish",\
-default: "true",\
-required: "true"\
-}\
-]\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint.md" %}
+
+```bash
+curl -L \
+  --request PUT \
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "key": "project_country",
+    "secured": false,
+    "value": "AT",
+    "version": 1
+  }'
+```
 
 #### How to check which languages are configured for a particular site
 
-To retrieve a particular site's language configuration, you need to send a request to the Retrieving a site endpoint. The language configuration will be returned in the the `defaultLanguage` and `language` fields in the response body.
+To retrieve a particular site's language configuration, you need to send a request to the [Retrieving a site](broken-reference) endpoint. The language configuration will be returned in the the `defaultLanguage` and `language` fields in the response body.
 
-\<OpenApiTryIt\
-definitionId="site-settings"\
-operationId="PATCH-site-settings-update-site"\
-parameters=\{{\
-query: {\
-expand: "payment:all,shipping:active,tax:none"\
-}\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint.md" %}
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
+  --header 'Accept: */*'
+```
 
 #### How to change a particular site's language configuration
 
-To change a particular site's language configuration, you need to call the Partially updating a site endpoint with language configuration of your choice in the request body.
+To change a particular site's language configuration, you need to call the [Partially updating a site](broken-reference) endpoint with language configuration of your choice in the request body.
 
 {% hint style="warning" %}
 The currency code must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
 {% endhint %}
 
-\<OpenApiTryIt\
-definitionId="site-settings"\
-operationId="PATCH-site-settings-update-site"\
-properties=\{{\
-defaultLanguage: "de",\
-languages: \[\
-"de",\
-"en"\
-]\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint.md" %}
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "defaultLanguage": "en"
+  }'
+```
