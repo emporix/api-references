@@ -4,12 +4,7 @@ seo:
   description: indexer, search connector
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 # Indexing Service Tutorials
 

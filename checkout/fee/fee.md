@@ -4,12 +4,7 @@ seo:
   description: fee management
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 # Fee Service Tutorials
 

@@ -4,12 +4,7 @@ seo:
   description: Sequential Ids Schema Management
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 # Sequential ID Service Tutorials
 

@@ -10,12 +10,7 @@ editPage:
 label: Tutorials
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 import { Preview } from '../components/Preview.tsx'
 
 # Availability Service Tutorials

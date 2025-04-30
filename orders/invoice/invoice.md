@@ -4,12 +4,7 @@ seo:
   description: Invoices Generation
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 # Invoice Service Tutorials
 

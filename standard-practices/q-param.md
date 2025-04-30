@@ -4,12 +4,7 @@ seo:
   description: standard practices
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 # Query parameter
 

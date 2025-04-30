@@ -4,12 +4,7 @@ seo:
   description: site settings, site, sites
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 # Site Settings Service Tutorials
 

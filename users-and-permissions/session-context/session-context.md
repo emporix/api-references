@@ -4,12 +4,7 @@ seo:
   description: session context
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 # Session Context Service Tutorials
 

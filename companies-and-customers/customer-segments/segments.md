@@ -4,12 +4,7 @@ seo:
   description: customer segments
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 # Customer Segment Service Tutorials
 

@@ -4,12 +4,7 @@ seo:
   description: Standard practices
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 # Custom ID
 

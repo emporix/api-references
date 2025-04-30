@@ -4,12 +4,7 @@ seo:
   description: identity access management, access control groups, users
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 # IAM Service Tutorials
 

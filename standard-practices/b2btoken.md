@@ -10,12 +10,7 @@ editPage:
 label: B2B Customers - Legal Entity
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 
 # B2B Customers - Legal Entity 

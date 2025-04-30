@@ -4,12 +4,7 @@ seo:
   description: Reward Points Management
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 
 # Reward Points Service Tutorials

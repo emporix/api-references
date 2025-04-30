@@ -10,12 +10,7 @@ editPage:
 label: Tutorials
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 # Coupon Service Tutorials
 

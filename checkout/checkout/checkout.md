@@ -4,12 +4,7 @@ seo:
   description: checkout setup
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
  # Checkout Service Tutorials
 

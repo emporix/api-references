@@ -3,12 +3,7 @@ seo:
   title: Label Service Tutorials
   description: Label Management
 ---
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 # Label Service Tutorials
 

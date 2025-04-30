@@ -4,12 +4,7 @@ seo:
   description: media and documents management
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 # Media Service Tutorials
 

@@ -4,12 +4,7 @@ seo:
   description: brands, brands, logo, logos
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 # Brand Service Tutorials
 

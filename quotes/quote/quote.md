@@ -3,12 +3,7 @@ seo:
   title: Quote Service Tutorials
   description: Quote Management
 ---
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 # Quote Service Tutorials
 

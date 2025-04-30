@@ -10,12 +10,7 @@ editPage:
 label: Mixins
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 # Mixins
 

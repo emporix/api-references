@@ -10,12 +10,7 @@ editPage:
 label: Translations
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 
 # Translations

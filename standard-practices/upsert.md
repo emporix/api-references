@@ -4,12 +4,7 @@ seo:
   description: upsert general setup
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
  # Introduction
 

@@ -4,12 +4,7 @@ seo:
   description: webhooks, webhook, events, event
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 
 # Webhook Service Tutorials
