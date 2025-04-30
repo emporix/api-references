@@ -4,9 +4,6 @@ seo:
   description: Quote Management
 ---
 
-
-# Quote Service Tutorials
-
 {% hint style="danger" %}
 
 The Emporix API Quote Service is only available to tenants that use the Price v2 API Service.
@@ -42,10 +39,13 @@ The following scope is required:
 
 {% endhint %}
 
-<OpenApiTryIt
-  definitionId="site-settings"
-  operationId="GET-site-settings-list-site-mixins"
-  />
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
 
 ### Update merchant information
 
@@ -59,11 +59,17 @@ The following scope is required:
 
 {% endhint %}
 
-<OpenApiTryIt
-  definitionId="site-settings"
-  operationId="PATCH-site-settings-update-site-mixin"
-  defaultExample="Merchant info update"
-  />
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "active": true
+  }'
+  ```
 
 ### Update available quote status change reasons
 
@@ -85,19 +91,23 @@ The quote reason of the `DECLINE` type can only be used for the `DECLINED` or `D
 
 By sending a request to the <nobr><Button to="/openapi/site-settings/#operation/POST-quote-create-quote-reason" size="small">Creating a reason for changing the quote status</Button></nobr> endpoint, you can create new quote status change reasons.
 
-<OpenApiTryIt
-  definitionId="quote"
-  operationId="POST-quote-create-quote-reason"
-  properties={
-  {
-    code: "WRONG_COLOR",
-    type: "CHANGE",
-    message: {
-      en: "The color is wrong",
-      de: "Die Farbe ist falsch"
-      }
-      }}
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/quote/{tenant}/quote-reasons' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: de' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "code": "PRICE_TOO_HIGH",
+    "type": "CHANGE",
+    "message": {
+      "en": "The price is too high",
+      "de": "Der Preis ist zu hoch"
+    }
+  }'
+```
 
 ## How to manage quote requests
 
@@ -118,11 +128,63 @@ The following scope is granted to a customer group:
 
 The customer can place a quote request on the storefront only if they have created a cart with the requested items beforehand.
 
-<OpenApiTryIt
-  definitionId="quote"
-  operationId="POST-quote-create-quote"
-  defaultExample="Create quote from cart"
-  />
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/quote/{tenant}/quotes' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "customerId": "9tt954309b06d46d3cf19fe",
+    "employeeId": "9tt954309b06d46d3cf19fa",
+    "billingAddressId": "64672a8f9939d331699cbe6e",
+    "shippingAddressId": "64672a8f9939d331699cbe6e",
+    "companyName": "ABC",
+    "siteCode": "main",
+    "currency": "USD",
+    "validTo": "2022-04-01T04:37:04.301Z",
+    "shipping": {
+      "value": 10,
+      "methodId": "fedex-2dayground",
+      "zoneId": "63440460ceeaa26d794fcbbb",
+      "shippingTaxCode": "STANDARD"
+    },
+    "items": [
+      {
+        "quantity": {
+          "quantity": 1,
+          "unitCode": "piece"
+        },
+        "price": {
+          "priceId": "6245aa0a78a8576e338fa9c4",
+          "unitPrice": 13,
+          "totalNetValue": 13,
+          "tax": {
+            "taxClass": "STANDARD",
+            "taxRate": 20
+          }
+        },
+        "product": {
+          "productId": "7i98542309b06d46d3cf19fe"
+        }
+      }
+    ],
+    "mixins": {
+      "customAttributes": {
+        "attribute": {
+          "value": 1,
+          "unit": "kg"
+        }
+      }
+    },
+    "metadata": {
+      "mixins": {
+        "customAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json"
+      }
+    }
+  }'
+  ```
 
 {% hint style="warning" %}
 
@@ -141,11 +203,63 @@ The following scope is required:
 
 {% endhint %}
 
-<OpenApiTryIt
-  definitionId="quote"
-  operationId="POST-quote-create-quote"
-  defaultExample="Full quote creation definition."
-  />
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/quote/{tenant}/quotes' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "customerId": "9tt954309b06d46d3cf19fe",
+    "employeeId": "9tt954309b06d46d3cf19fa",
+    "billingAddressId": "64672a8f9939d331699cbe6e",
+    "shippingAddressId": "64672a8f9939d331699cbe6e",
+    "companyName": "ABC",
+    "siteCode": "main",
+    "currency": "USD",
+    "validTo": "2022-04-01T04:37:04.301Z",
+    "shipping": {
+      "value": 10,
+      "methodId": "fedex-2dayground",
+      "zoneId": "63440460ceeaa26d794fcbbb",
+      "shippingTaxCode": "STANDARD"
+    },
+    "items": [
+      {
+        "quantity": {
+          "quantity": 1,
+          "unitCode": "piece"
+        },
+        "price": {
+          "priceId": "6245aa0a78a8576e338fa9c4",
+          "unitPrice": 13,
+          "totalNetValue": 13,
+          "tax": {
+            "taxClass": "STANDARD",
+            "taxRate": 20
+          }
+        },
+        "product": {
+          "productId": "7i98542309b06d46d3cf19fe"
+        }
+      }
+    ],
+    "mixins": {
+      "customAttributes": {
+        "attribute": {
+          "value": 1,
+          "unit": "kg"
+        }
+      }
+    },
+    "metadata": {
+      "mixins": {
+        "customAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json"
+      }
+    }
+  }'
+  ```
 
 {% hint style="warning" %}
 
@@ -170,19 +284,27 @@ The following scope is required:
 
 In this example, an employee updates multiple fields:
 
-<OpenApiTryIt
-  definitionId="quote"
-  operationId="PATCH-quote-update-quote"
-  defaultExample="Multiple update list"
-  />
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{}'
+```
 
 In the following example, an employee updates only the price of requested items:
 
-<OpenApiTryIt
-  definitionId="quote"
-  operationId="PATCH-quote-update-quote"
-  defaultExample="Change price of the item"
-  />
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{}'
+```
 
 ### Accept a quote by a customer
 
@@ -196,19 +318,23 @@ The following scope is granted to the customer group:
 
 {% endhint %}
 
-<OpenApiTryIt
-  definitionId="quote"
-  operationId="PATCH-quote-update-quote"
-  defaultExample="Accept quote"
-  properties={[
-  {
-    op: "replace",
-    value: {
-      value: "ACCEPTED"
-      }
-  }
-  ]}
-  />
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+
+curl -i -X PATCH \
+  'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "op": "replace",
+    "path": "/status",
+    "value": {
+      "value": "ACCEPTED",
+      "comment": "new comment"
+    }
+  }'
+```
 
 
 ### Decline a quote by a customer
@@ -228,22 +354,23 @@ If the customer wants to provide a reason for declining a quote, they can choose
 
 In this example, a customer receives a quote and decides to decline it because the proposed price is too high. They also add a comment to negotiate the price.
 
-<OpenApiTryIt
-  definitionId="quote"
-  operationId="PATCH-quote-update-quote"
-  defaultExample="Change quote status"
-  properties={[
-  {
-    op: "replace",
-    path: "/status",
-    value: {
-      value: "DECLINED",
-      comment: "Can you make the price 50$ cheaper?",
-      quoteReasonId: "6437ed5dc0dc2925289a5bbd"
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "op": "replace",
+    "path": "/status",
+    "value": {
+      "value": "DECLINED",
+      "comment": "Can you make the price 50$ cheaper?",
+      "quoteReasonId": "6437ed5dc0dc2925289a5bbd"
     }
-  }
-]}
-  />
+  }'
+```
 
 
 
