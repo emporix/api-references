@@ -4,15 +4,11 @@ seo:
   description: country, countries
 ---
 
-# Country Tutorial
-
-## Country Service Tutorials
-
-### Supported countries
+## Supported countries
 
 The Emporix e-commerce system does not impose any restrictions as to which countries can be configured as your business's locations.
 
-### Country configurations
+## Country configurations
 
 The countries where your business is located are specified both tenant-wide and independently for particular sites.
 
@@ -52,11 +48,11 @@ Site-specific country configuration is stored in the `homeBase` field, inside th
 For more information on the Site object, check out the [_Site Settings Service guide_](../../content/site-settings/).
 {% endhint %}
 
-### Managing country configurations through Emporix API
+## Managing country configurations through Emporix API
 
 Check out the following tutorials to learn more about country configuration with Emporix API.
 
-#### How to check which country is configured for your tenant
+### How to check which country is configured for your tenant
 
 To retrieve your tenant's country configuration, you need to send a request to the [Retrieving a configuration ](broken-reference)endpoint.
 
@@ -70,7 +66,7 @@ curl -L \
   --header 'Accept: */*'
 ```
 
-#### How to change your tenant's country configuration
+### How to change your tenant's country configuration
 
 To change your tenant's country configuration, you need to send a request to the [Updating a configuration](broken-reference) endpoint with updated country information in the request body.
 
@@ -95,7 +91,7 @@ curl -L \
   }'
 ```
 
-#### How to check which country is configured for a particular site
+### How to check which country is configured for a particular site
 
 To retrieve a particular site's country configuration, you need to send a request to the [Retrieving a site ](broken-reference)endpoint. The country configuration will be returned under the `homeBase` field in the response body.
 
@@ -109,7 +105,7 @@ curl -L \
   --header 'Accept: */*'
 ```
 
-#### How to change a particular site's country configuration
+### How to change a particular site's country configuration
 
 To change a particular site's country configuration, you need to send a request to the [Partially updating a site](broken-reference) endpoint with the address of your choice in the request body.
 

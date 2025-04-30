@@ -4,16 +4,6 @@ seo:
   description: order 
 ---
 
-import {
-  Button,
-  OpenApiTryIt,
-  OpenApiRequestBody,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
-import { Preview } from '../components/Preview.tsx'
-
-# Order Service Tutorials
-
 The Order Service is divided into two categories based on who manages the orders:  
 
 - **Tenant-Managed Orders** – This refers to the management of customer orders. Customers create the orders, which are then accessible to your employees for processing, status updates, and data modifications.
@@ -35,7 +25,7 @@ During checkout, the final price is calculated based on customer-specific detail
 
 Once an order is placed, the order information simply reflects the calculated prices without further modifications, ensuring accuracy and transparency in the final transaction.
 
-<Preview src="/docs/order/diagram1.svg"></Preview>
+<figure><img src="../../../../static/order/diagram1.svg" alt=""><figcaption></figcaption></figure>
 
 
 {% hint style="info" %}
@@ -53,8 +43,7 @@ Commerce Orchestration Platform (COP) enables this functionality with external p
 
 Communication with the ERP system occurs using the BFF (Backend-for-Frontend) layer and with a [POST](https://developer.emporix.io/docs/openapi/order/#operation/POST-order-create-order-employee) request the order is send to an ERP system. This architecture ensures a secure, real-time pricing model while leveraging external systems for order calculations.
 
-<Preview src="/docs/order/diagram2.svg"></Preview>
-
+<figure><img src="../../../../static/order/diagram2.svg" alt=""><figcaption></figcaption></figure>
 
 {% hint style="info" %}
 
@@ -68,7 +57,8 @@ With this use case, the Commerce Orchestration Platform cart is used to collect 
 
 Once the order is validated and priced by the ERP, the BFF layer creates the order in COP using the [Sales Order API](https://developer.emporix.io/docs/openapi/order/#operation/POST-order-create-order-employee). This allows for seamless integration between Emporix and the external ERP system while maintaining flexibility in how orders are processed.
 
-<Preview src="/docs/order/diagram3.svg"></Preview>
+
+<figure><img src="../../../../static/order/diagram3.svg" alt=""><figcaption></figcaption></figure>
 
 
 ## Order calculation approaches comparison
