@@ -4,11 +4,9 @@ seo:
   description: indexer, search connector
 ---
 
+# Indexing Tutorial
 
-
-# Indexing Service Tutorials
-
-The Indexing service is designed to manage indexing configuration. Currently, the index provider supported in Commerce Engine is [Algolia](https://www.algolia.com/). 
+The Indexing service is designed to manage indexing configuration. Currently, the index provider supported in Commerce Engine is [Algolia](https://www.algolia.com/).\
 Proper indexing allows you to enhance your search mechanism within Emporix system. By connecting your Algolia instance to Commerce Engine, you get an improved search functionality.
 
 {% hint style="info" %}
@@ -21,84 +19,75 @@ The Indexing service uses separate API keys for every tenant, so that you get mo
 
 ## How to configure search indexing
 
-To create indexing configuration, send a request to the <nobr><Button to="/openapi/indexing/#operation/POST-indexing-create-config" size="small">Creating new configuration</Button></nobr> endpoint.
-
-<OpenApiTryIt
-  definitionId="indexing"
-  operationId="POST-indexing-create-config"
-  defaultExample="Create a new configuration"
-/>
+To create indexing configuration, send a request to the Creating new configuration endpoint.
 
 ## How to update the index configuration
 
-1. To update the index configuration you need to retrieve the `writeKey` first.
-Send the request to the <nobr><Button to="/openapi/indexing/#operation/GET-indexing-retrieve-config" size="small">Get configuration by provider name</Button></nobr> endpoint.
+1. To update the index configuration you need to retrieve the `writeKey` first.\
+   Send the request to the Get configuration by provider name endpoint.
+2. To change configuration, make a call to the Update configuration by provider name endpoint, providing the `writeKey` from the previous step.
+3. To apply your configuration changes to existing data, run the reindexing process. See the [How to reindex existing products](../../content/indexing/##How_to_reindex_existing_products) section.
 
-<OpenApiTryIt
-  definitionId="indexing"
-  operationId="GET-indexing-retrieve-config"
-  defaultExample="Get configuration"
-/>
+## How to reindex existing products <a href="#how_to_reindex_existing_products" id="how_to_reindex_existing_products"></a>
 
-2. To change configuration, make a call to the <nobr><Button to="/openapi/indexing/#operation/PUT-indexing-update-config" size="small">Update configuration by provider name</Button></nobr> endpoint, providing the `writeKey` from the previous step.
+Usually, reindexing runs upon the update of a product or its dependant entity, such as category, price, or media. The scheduler job discovers what has been changed and pushes the changes to index frequently.\
+But, if you change your index configuration, you need to trigger the reindexing process to apply your configuration changes.\
+You can run the reindex without the need to update all your resource data by sending the request to the [Reindex ](broken-reference)endpoint.
 
-<OpenApiTryIt
-  definitionId="indexing"
-  operationId="PUT-indexing-update-config"
-  defaultExample="Configuration update"
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-3. To apply your configuration changes to existing data, run the reindexing process. See the [How to reindex existing products](/content/indexing/##How_to_reindex_existing_products) section.
+[Broken link](broken-reference "mention")
 
-## How to reindex existing products <a id="How_to_reindex_existing_products" />
-
-Usually, reindexing runs upon the update of a product or its dependant entity, such as category, price, or media. The scheduler job discovers what has been changed and pushes the changes to index frequently. 
-But, if you change your index configuration, you need to trigger the reindexing process to apply your configuration changes. 
-You can run the reindex without the need to update all your resource data by sending the request to the <nobr><Button to="/openapi/indexing/#operation/POST-indexing-reindex" size="small">Reindex</Button></nobr> endpoint.
-
-<OpenApiTryIt
-  definitionId="indexing"
-  operationId="POST-indexing-reindex"
-  defaultExample="Reindex request"
-/>
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/indexing/{tenant}/reindex' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "mode": "FULL"
+  }'
+```
 
 This operation starts the full reindexing mode.
 
-## How to retrieve public search configuration
+### How to retrieve public search configuration
 
-If you want to get your storefront index configuration without the need to update, you can call the public endpoint to get the `searchKey`. 
+How to retrieve public search configuration
 
+If you want to get your storefront index configuration without the need to update, you can call the public endpoint to get the `searchKey`. Send the request to the [Get all public](broken-reference) configurations endpoint.
 
-Send the request to the <nobr><Button to="/openapi/indexing/#operation/GET-indexing-list-public-configs" size="small">Get all public configurations</Button></nobr> endpoint.
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-<OpenApiTryIt
-  definitionId="indexing"
-  operationId="GET-indexing-list-public-configs"
-  defaultExample="Public configurations"
-/>
+[Broken link](broken-reference "mention")
 
-## How to choose indexing strategy
+```bash
+curl -L \
+  --url 'https://api.emporix.io/indexing/{tenant}/public/configurations' \
+  --header 'Accept: */*'
+```
 
-You can choose between two indexing strategies for your search index configuration: `MERGE` and `SPLIT`. `MERGE` strategy creates a single index for all sites declared in the system, while `SPLIT` creates a separate index for each site.
-To choose the right mode for your index, send the request to the <nobr><Button to="/openapi/configuration/#operation/PUT-configuration-update-config" size="small">Updating a configuration</Button></nobr> endpoint.
+### How to choose indexing strategy
 
-<OpenApiTryIt
-  definitionId="configuration"
-  operationId="PUT-configuration-update-config"
-  properties={
-  {
-    key: "indexing_siteAwareFieldsStrategy",
-    value: {
-        strategy: "SPLIT"
-    }
-  }
-  }
-/>
+You can choose between two indexing strategies for your search index configuration: `MERGE` and `SPLIT`. `MERGE` strategy creates a single index for all sites declared in the system, while `SPLIT` creates a separate index for each site.\
+To choose the right mode for your index, send the request to the [Updating a configuration](broken-reference) endpoint.
 
-In the request parameters, for the `propertyKey` choose `indexing_siteAwareFieldsStrategy`. In the request body, pass the chosen strategy value.
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% hint style="danger" %}
-Please remain patient as propagating changes to the index strategy may take up to 1 hour, so you might not be able to see the changes instantly.
-{% endhint %}
+[Broken link](broken-reference "mention")
 
+```
+curl -L \
+  --request PUT \
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "key": "indexing_siteAwareFieldsStrategy",
+    "secured": false,
+    "value": {
+    "strategy": "SPLIT"
+  },
+    "version": 1
+}
+```
 
+In the request parameters, for the `propertyKey` choose `indexing_siteAwareFieldsStrategy`. In the request body, pass the chosen strategy value.Please remain patient as propagating changes to the index strategy may take up to 1 hour, so you might not be able to see the changes instantly.
