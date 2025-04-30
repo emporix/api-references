@@ -3,11 +3,6 @@ seo:
   title: Make
   description: Make, Make app, Maker app, Emporix Maker app
 ---
-import {
-  Button,
-  OpenApiTryIt,
-  ExplainStep
-} from '@redocly/developer-portal/ui';
 
 # Emporix Maker App
 
