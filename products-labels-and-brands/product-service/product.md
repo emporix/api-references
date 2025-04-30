@@ -20,6 +20,8 @@ This tutorial presents how to create a basic product. To learn more about types 
 
 Take a look at the relationships between prices and other resources in the Emporix Commerce Engine:
 
+<figure><img src="../../../../static/product/product_diagram.svg" alt=""><figcaption></figcaption></figure>
+
 {% hint style="warning" %}
 
 Countries and regions are predefined in the Emporix API Country Service. You can check which countries and regions are available by sending requests to the following endpoints:
