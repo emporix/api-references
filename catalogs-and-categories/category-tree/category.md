@@ -6,15 +6,7 @@ seo:
 
 # Category Tutorials
 
-import {\
-Button,\
-OpenApiTryIt,\
-ExplainStep\
-} from '@redocly/developer-portal/ui';
-
-## Category Service Tutorials
-
-### How to create a category
+## How to create a category
 
 {% hint style="warning" %}
 
@@ -42,90 +34,92 @@ The `localizedSlug` field must not contain any diacritics.
 
 {% endhint %}
 
-\<OpenApiTryIt\
-definitionId="category"\
-operationId="POST-category-tree-create-category"\
-defaultExample="Root category create 1"\
-parameters=\{{\
-header:{\
-"Content-Language": "\*"\
-}\
-\}}\
-properties=\{{\
-"parentId": "null",\
-"localizedName": {\
-"en": "Non-alcoholic drinks",\
-"de": "Alkoholfreie Getränke"\
-},\
-"localizedDescription": {\
-"en": "Non-alcoholic drinks",\
-"de": "Alkoholfreie Getränke"\
-},\
-"localizedSlug": {\
-"en": "NAD",\
-"de": "AG"\
-},\
-"ecn": \[\
-"123A",\
-"234B",\
-"345C"\
-],\
-"validity": {\
-"from": "2022-01-05T12:44:51.871Z",\
-"to": "2025-12-05T23:59:59.000Z"\
-},\
-"position": 2,\
-"published": true,\
-"mixins": {}\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-### How to assign a product to a category
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/category/{tenant}/categories' \
+  --header 'X-Version: v2' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "parentId": "056bcaf6-66b8-4ddd-9489-65c5f6449e74",
+    "localizedName": {
+      "en": "Floor Care",
+      "de": "Bodenpflege"
+    },
+    "localizedDescription": {
+      "en": "Floor Care",
+      "de": "Bodenpflege"
+    },
+    "localizedSlug": {
+      "en": "Floor-Care",
+      "de": "Bodenpflege"
+    },
+    "ecn": [
+      "AX6784",
+      "123078",
+      "SJUIOKM"
+    ],
+    "validity": {
+      "from": "2022-01-05T12:44:51.871Z",
+      "to": "2022-12-05T23:59:59.000Z"
+    },
+    "position": 5,
+    "published": true,
+    "mixins": {}
+  }'
+  ```
+
+
+## How to assign a product to a category
 
 You can assign resources, such as products, to particular categories.
 
-#### Before you start
+### Before you start
 
 Make sure you have already finished the following tutorials:
 
 * [_How to create a category_](category.md#how-to-create-a-category)
 * [_How to add your first product_](../../content/product/#how-to-add-your-first-product)
 
-#### Assign a product to a category
+### Assign a product to a category
 
 To assign a product to a category, you need to send a request to the Assigning a resource to a category endpoint and do the following:
 
 * Set the `ref.type` field to `"PRODUCT"`.
 * Provide the product ID in the `ref.id` field.
 
-\<OpenApiTryIt\
-definitionId="category"\
-operationId="POST-category-tree-assign-resource"\
-properties=\{{\
-"ref": {\
-"id": "5ad5e52e-6e27-4ac5-9471-2467d3fb7517",\
-"type": "PRODUCT" }\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-#### Retrieve the category assignments
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' \
+  --header 'X-Version: v2' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "ref": {
+      "id": "1639265",
+      "type": "PRODUCT"
+    }
+  }'
+```
+
+### Retrieve the category assignments
 
 To check whether the resource was properly assigned to the category, you can send a request to the Retrieving resources assigned to a category endpoint.
 
-\<OpenApiTryIt\
-definitionId="category"\
-operationId="GET-category-tree-retrieve-category-assignments"\
-parameters=\{{\
-header: {\
-"Accept-Language": "\*"\
-},\
-query: {\
-"assignmentType": "PRODUCT"\
-}\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-### How to delete resource assignments
+```bash
+curl -L \
+  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' \
+  --header 'X-Version: v2' \
+  --header 'Accept: */*'
+```
+
+## How to delete resource assignments
 
 You can delete all resources assigned to a particular category, or just one specific assignment.
 
@@ -139,40 +133,56 @@ As a result of this procedure, only category assignments are deleted; the catego
 
 To delete all assignments for a specific category, you need to send a request to the Deleting all category assignments endpoint and set the `assignmentType` query parameter to `PRODUCT`.
 
-\<OpenApiTryIt\
-definitionId="category"\
-operationId="DELETE-category-tree-remove-all-assignments"\
-parameters=\{{\
-query: {\
-"assignmentType": "PRODUCT"\
-}\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-#### Option two: Delete a specific product assignment
+```bash
+curl -L \
+  --request DELETE \
+  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' \
+  --header 'X-Version: v2' \
+  --header 'Accept: */*'
+```
+
+### Option two: Delete a specific product assignment
 
 To delete only a specific assignment, you need to send a request to the Deleting a category assignment by reference ID and enter the ID of the resource in the `referenceId` path parameter.
 
-### How to publish/unpublish a category
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L \
+  --request DELETE \
+  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments/{assignmentId}' \
+  --header 'X-Version: v2' \
+  --header 'Accept: */*'
+```
+
+## How to publish/unpublish a category
 
 To publish or unpublish a category, you need to send a request to the  Partially updating a category endpoint and set the `published` property to `true` or `false`.
 
-\<OpenApiTryIt\
-definitionId="category"\
-operationId="PATCH-category-tree-update-category"\
-defaultExample="Category partial update"\
-parameters=\{{\
-query: {\
-"publish": true\
-}\
-\}}\
-properties=\{{\
-"published":true,\
-"metadata": {\
-"version": 1\
-}\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}' \
+  --header 'X-Version: v2' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "localizedName": {
+      "en": "Floor Care Liquids"
+    },
+    "localizedSlug": {
+      "en": "Floor-Care-Liquids"
+    },
+    "position": 3,
+    "published": true,
+    "metadata": {
+      "version": 1
+    }
+  }'
+```
 
 ### How to build and manage category trees
 
@@ -189,29 +199,27 @@ It is only possible to retrieve a category tree for a root category. It is not p
 
 To retrieve a specific category tree, you need to send a request to the Retrieving the category tree endpoint and provide the category ID in the `categoryId` path parameter.
 
-\<OpenApiTryIt\
-definitionId="category"\
-operationId="GET-category-tree-retrieve-category-tree-by-id"\
-parameters=\{{\
-query: {\
-"showUnpublished": false\
-}\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/category/{tenant}/category-trees/{categoryId}' \
+  --header 'X-Version: v2' \
+  --header 'Accept: */*'
+```
 
 **Option two: Retrieve all category trees belonging to the tenant**
 
 To retrieve all category trees, you need to send a request to the Retrieving the category trees endpoint.
 
-\<OpenApiTryIt\
-definitionId="category"\
-operationId="GET-category-tree-retrieve-category-tree"\
-parameters=\{{\
-query: {\
-"showUnpublished": true\
-}\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/category/{tenant}/category-trees' \
+  --header 'X-Version: v2' \
+  --header 'Accept: */*'
+```
 
 **Option three: Retrieve a list of subcategories of a category**
 
@@ -226,22 +234,14 @@ You can limit the depth of retrieved subcategories with the `depth` parameter.
 
 {% endhint %}
 
-\<OpenApiTryIt\
-definitionId="category"\
-operationId="GET-category-tree-list-subcategories"\
-parameters=\{{\
-header: {\
-"Accept-Language": "\*"\
-},\
-query: {\
-"showUnpublished": false,\
-"depth" : "1",\
-"pageNumber": "1",\
-"pageSize": "60",\
-"sort": "localizedName.en:DESC"\
-}\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/subcategories' \
+  --header 'X-Version: v2' \
+  --header 'Accept: */*'
+```
 
 **Moving a category**
 
@@ -255,19 +255,25 @@ When you move a category, all its subcategories and assigned references move alo
 
 To move a category to be a child of another category, you need to send a request to the Partially updating a category endpoint and provide the desired parent category ID in the `parentId` field.
 
-\<OpenApiTryIt\
-definitionId="category"\
-operationId="PATCH-category-tree-update-category"\
-defaultExample="Category change parent"\
-parameters=\{{\
-query: {\
-"publish": true\
-}\
-\}}\
-properties=\{{\
-"parentId": " ",\
-"metadata": {\
-"version": 2\
-}\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}' \
+  --header 'X-Version: v2' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "localizedName": {
+      "en": "Floor Care Liquids"
+    },
+    "localizedSlug": {
+      "en": "Floor-Care-Liquids"
+    },
+    "position": 3,
+    "published": true,
+    "metadata": {
+      "version": 1
+    }
+  }'
+```

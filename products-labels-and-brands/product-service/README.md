@@ -1,6 +1,6 @@
 # product-v2
 
-Manage structured product information.
+Manages structured product information.
 
 ### Key features and benefits
 * Supports different product types — physical, digital, or services  

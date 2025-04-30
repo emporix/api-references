@@ -100,7 +100,7 @@ To choose the right mode for your index, send the request to the [Updating a con
 
 [Broken link](broken-reference "mention")
 
-```
+```bash
 curl -L \
   --request PUT \
   --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \

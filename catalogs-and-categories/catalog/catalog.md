@@ -4,12 +4,6 @@ seo:
   description: catalog, catalogs
 ---
 
-import {
-  Button,
-  OpenApiTryIt,
-  ExplainStep
-} from '@redocly/developer-portal/ui';
-
 # Catalog Service Tutorials
 
 ## How to localize your catalog
@@ -37,6 +31,7 @@ Looking for more info on localization? Check out [*Standard practices*](/content
 
 To create a new catalog, you need to send a request to the <nobr><Button to="/openapi/catalog/#operation/POST-catalog-create-catalog" size="small">Creating a new catalog</Button></nobr> endpoint.
 
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
 <OpenApiTryIt
   definitionId="catalog"
@@ -68,6 +63,8 @@ To create a new catalog, you need to send a request to the <nobr><Button to="/op
 For more information, check out [*How to create a category*](/content/category/#how-to-create-a-category).
 
 {% endhint %}
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
 <OpenApiTryIt
   definitionId="category"
@@ -116,6 +113,8 @@ For more information, check out [*How to create a category*](/content/category/#
 To assign the newly created category to a catalog, you need to send a request to the <nobr><Button to="/openapi/catalog/#operation/PATCH-catalog-update-catalog-properties" size="small">Partially updating a catalog</Button></nobr> endpoint.
 
 In the request body, insert the ID of the category into the `categoryIds` array. In this example, we also present how to set the visibility timeframe of the catalog with the `visibility` field.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
 <OpenApiTryIt
   definitionId="catalog"
