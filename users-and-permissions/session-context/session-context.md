@@ -4,11 +4,7 @@ seo:
   description: session context
 ---
 
-
-
-# Session Context Service Tutorials
-
-## How to configure the Session Context Service
+# How to configure the Session Context Service
 
 By default, an anonymous user session expires after one hour. You can refresh the anonymous session by sending a request to the <nobr><Button to="/openapi/oauth/#operation/GET-oauth-refresh-anonymous-access-token" size="small">Refreshing an anonymous token</Button></nobr> endpoint.
 
@@ -22,7 +18,7 @@ There is no timeout for logged customer sessions.
 You can use the price matching mechanism based on a session context file values. For more information on how the price matching functionality works, check out *How to use the price matching functionality* in the [Price Service Tutorials](/content/price#how-to-use-the-price-matching-functionality).
 {% endhint %}
 
-## How to manage user sessions and session context files
+# How to manage user sessions and session context files
 
 Sessions and session context files can be managed both by your customers and employees. 
 
@@ -39,15 +35,16 @@ In the following scenario, we are going to perform the following actions from th
 To be able to manage a user session and its corresponding session context file, make sure that the session with its session ID is present in the system. 
 {% endhint %}
 
-### Create an anonymous user session
+## Create an anonymous user session
 
 An anonymous user session is created every time a non-logged user enters the storefront and sends a request to the <nobr><Button to="/openapi/oauth/#operation/GET-oauth-generate-anonymous-access-token" size="small">Requesting an anonymous token</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="oauth"
-  operationId="GET-oauth-generate-anonymous-access-token"
-  />
-  
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id={client_id}'
+```
 
 {% hint style="warning" %}
 
@@ -69,7 +66,7 @@ An anonymous customer's session is terminated if one of those two requirements i
 * The session has reached its lifetime.
 
 
-### Create a customer session
+## Create a customer session
 
 The session is created when a customer logs in to the storefront. This means that the anonymous session that was established when the user entered the site is migrated into a customer session when a request is sent to the <nobr><Button to="/openapi/oauth/#operation/POST-oauth-authorize-customer" size="small">Requesting a customer token</Button></nobr> endpoint. 
 
@@ -79,10 +76,18 @@ The session Id and session context remain the same.
 {% endhint %}
 
 
-<OpenApiTryIt
-  definitionId="oauth"
-  operationId="POST-oauth-authorize-customer"
-  />
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/customer/{tenant}/login' \
+  -H 'Authorization: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "email": "customer@emporix.com",
+    "password": "Qwurmdch673;'\''"
+  }'
+```
 
 The session context contains the following information:
 
@@ -99,19 +104,22 @@ If any of these values are not present in the customer's profile, they are retri
 
 The customer's session is terminated when the customer has logged out.
 
-### Retrieve a session context by using a session Id
+## Retrieve a session context by using a session Id
 
 To view the existing session context file, you need to have a session Id of a particular user session.
 
 Retrieve the session context values by sending a request to the <nobr><Button to="/openapi/session-context/#operation/GET-session-context-retrieve-session-context" size="small">Retrieving a session context</Button></nobr> endpoint with the `session_context.context_manage` scope.
 
 
-<OpenApiTryIt
-  definitionId="session-context"
-  operationId="GET-session-context-retrieve-session-context"
-  />
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-### Add new attributes to the session context
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/session-context/{tenant}/context/{sessionId}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
+
+## Add new attributes to the session context
 
 If you want to personalize user experience on your website, you can add custom attributes to selected session contexts. Your attributes are not validated, as they are only stored in the Emporix Commerce Engine and can be deleted at any time. However, you can make the data actionable by incorporating a solution of your choice.
 
@@ -131,10 +139,18 @@ You can also implement a mechanism allowing users to manage and modify their own
 In the following example, we add an attribute by sending a request to the  <nobr><Button to="/openapi/session-context/#operation/POST-session-context-add-attribute-sessionId" size="small">Adding a new attribute to a session context</Button></nobr> endpoint with the `session_context.context_manage` scope.
 
 
-<OpenApiTryIt
-  definitionId="session-context"
-  operationId="POST-session-context-add-attribute-sessionId"
-  />
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/session-context/{tenant}/context/{sessionId}/attributes' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "key": "additional attribute name",
+    "value": "61079711ce0eb90861357045"
+  }'
+```
 
 
 {% hint style="warning" %}
