@@ -172,6 +172,7 @@ For each payment mode you can create and connect one fee only.
 4. To make sure the fee has been applied to the payment, send the request to the <nobr><Button to="/openapi/fee/#operation/POST-fee-check-item-fee" size="small">Checking of a fee has been applied</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/fee/{tenant}/itemFees/search?siteCode=main' \
