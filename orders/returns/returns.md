@@ -4,36 +4,33 @@ seo:
   description: returns
 ---
 
-
-
- # Returns Service Tutorials
-
- ## How to configure the Returns Service
+ # How to configure the Returns Service
 
  By default, the expiration date offset for a return request is set to 30 days.
 
- ### Update the expiration date settings
+ ## Update the expiration date settings
 
  You can update the expiration date offset for a tenant by sending a request to the <nobr><Button to="/openapi/configuration/#operation/PUT-configuration-update-config" size="small">Updating a configuration</Button></nobr> endpoint in the Configuration Service.
 
  In the following example, we are changing the expiration date offset to 14 days.
 
-<OpenApiTryIt
-  definitionId="configuration"
-  operationId="PUT-configuration-update-config"
-    parameters={{
-    path:{
-         "propertyKey": "return.defaultExpiryDate"
-    }
-  }}
-    properties={{
-      key: "return.defaultExpiryDate",
-      value: "14"
-  }}
-  />
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "key": "return.defaultExpiryDate",
+    "secured": false,
+    "value": "14",
+    "version": 1
+  }'
+  
+  ```
 
  
- ## How to manage return requests
+ # How to manage return requests
 
  A return can be created both by a customer directly on your business' website, or by an employee on behalf of a customer.
 
@@ -46,7 +43,7 @@ If you want the return-service-specific events to trigger any actions of your ch
  First, ensure that the orders that you want to return (along with their `order_Id` values) exist in the system.
 
 
- ### Create a return by a customer
+ ## Create a return by a customer
 
  On the storefront, a customer fills in the applicable fields in the return request:
  
@@ -70,14 +67,53 @@ The `returns.returns_read` and `returns.returns_manage` scopes are only required
 {% endhint %}
 
  
-<OpenApiTryIt
-  definitionId="returns"
-  operationId="POST-returns-create-return"
-  defaultExample="A return requested by a customer"
-  />
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/return/{tenant}/returns' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -H 'saas-token: string' \
+  -d '{
+    "orders": [
+      {
+        "id": "B1LMYY52",
+        "items": [
+          {
+            "id": "32090",
+            "quantity": 2,
+            "reason": {
+              "code": "001"
+            }
+          },
+          {
+            "id": "32102",
+            "quantity": 15,
+            "reason": {
+              "details": "It'\''s too small."
+            }
+          }
+        ]
+      }
+    ],
+    "reason": {
+      "code": "001",
+      "details": "The items do not work."
+    },
+    "mixins": {
+      "customAttributes": {
+        "attr1": "value1"
+      }
+    },
+    "metadata": {
+      "mixins": {
+        "customAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
+      }
+    }
+  }'
+  ```
  
-
- ### Create a return on behalf of a customer
+ ## Create a return on behalf of a customer
 
 
  To create a return on behalf of a customer, you need to send a request to the <nobr><Button to="/openapi/returns/#operation/POST-returns-create-return" size="small">Creating a single return entity</Button></nobr> endpoint.
@@ -95,11 +131,51 @@ returns.returns_read returns.returns_manage
 The `returns.returns_read_own` and `returns.returns_manage_own` scopes are only required for customer groups.
 {% endhint %}
 
-<OpenApiTryIt
-  definitionId="returns"
-  operationId="POST-returns-create-return"
-  defaultExample="A return requested on behalf of a customer"
-  />
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/return/{tenant}/returns' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -H 'saas-token: string' \
+  -d '{
+    "orders": [
+      {
+        "id": "B1LMYY52",
+        "items": [
+          {
+            "id": "32090",
+            "quantity": 2,
+            "reason": {
+              "code": "001"
+            }
+          },
+          {
+            "id": "32102",
+            "quantity": 15,
+            "reason": {
+              "details": "It'\''s too small."
+            }
+          }
+        ]
+      }
+    ],
+    "reason": {
+      "code": "001",
+      "details": "The items do not work."
+    },
+    "mixins": {
+      "customAttributes": {
+        "attr1": "value1"
+      }
+    },
+    "metadata": {
+      "mixins": {
+        "customAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
+      }
+    }
+  }'
+```
 
 {% hint style="warning" %}
 
@@ -107,7 +183,7 @@ The `approvalStatus` field is automatically populated during the creation of a r
 {% endhint %}
 
 
-### Update the return request by a customer
+## Update the return request by a customer
 
 Customers can update their return request only when the approval status of the request is `PENDING`. When a customer updates a return, the <nobr><Button to="/openapi/returns/#operation/PUT-returns-update-return" size="small">Updating a single return</Button></nobr> endpoint is called.
 
@@ -124,21 +200,51 @@ The `returns.returns_read` and `returns.returns_manage` scopes are only required
 
 In this scenario, the customer updates the reason for the return. 
 
-<OpenApiTryIt
-  definitionId="returns"
-  operationId="PUT-returns-update-return"
-  defaultExample="A return being updated by a customer"
-  properties={{
-    reason: {
-      code: "003",
-      details: "The items are too small"
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/return/{tenant}/returns/{returnId}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -H 'saas-token: string' \
+  -d '{
+    "id": "6369140c5c6de75d9e84c97f",
+    "orders": [
+      {
+        "id": "B1LMYY52",
+        "items": [
+          {
+            "id": "32090",
+            "quantity": 2,
+            "reason": {
+              "code": "001"
+            }
+          },
+          {
+            "id": "32102",
+            "quantity": 15
+          }
+        ]
       }
-  }}
-  />
+    ],
+    "reason": {
+      "code": "001",
+      "details": "The items do not work."
+    },
+    "mixins": {
+      "customAttributes": {
+        "attr1": "value1"
+      }
+    },
+    "metadata": {
+      "version": 1
+    }
+  }'
+  ```
 
 
 
- ### Update the return status
+ ## Update the return status
 
  As an employee, you can update all the fields available during the return creation, as well as the `approvalStatus` and `received` fields, by sending a request to the <nobr><Button to="/openapi/returns/#operation/PUT-returns-update-return" size="small">Updating a single return</Button></nobr> endpoint.
  
@@ -156,18 +262,47 @@ The `returns.returns_read_own` and `returns.returns_manage_own` scopes are only 
 
 In this scenario, the employee updates the approval status of the return request.
 
-<OpenApiTryIt
-  definitionId="returns"
-  operationId="PUT-returns-update-return"
-  defaultExample="A return being updated on behalf of a customer"
-  properties={{
-    reason: {
-      code: "003",
-      details: "The items are too small"
-      },
-    approvalStatus: "APPROVED"
-  }}
-  />
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/return/{tenant}/returns/{returnId}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -H 'saas-token: string' \
+  -d '{
+    "id": "6369140c5c6de75d9e84c97f",
+    "orders": [
+      {
+        "id": "B1LMYY52",
+        "items": [
+          {
+            "id": "32090",
+            "quantity": 2,
+            "reason": {
+              "code": "001"
+            }
+          },
+          {
+            "id": "32102",
+            "quantity": 15
+          }
+        ]
+      }
+    ],
+    "reason": {
+      "code": "001",
+      "details": "The items do not work."
+    },
+    "mixins": {
+      "customAttributes": {
+        "attr1": "value1"
+      }
+    },
+    "metadata": {
+      "version": 1
+    }
+  }'
+  ```
 
 
 
