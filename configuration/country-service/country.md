@@ -3,26 +3,27 @@ seo:
   title: Country Service Tutorials
   description: country, countries
 ---
-import {
-  Button,
-  OpenApiTryIt,
-  ExplainStep
+
+# Country Tutorial
+
+import {\
+Button,\
+OpenApiTryIt,\
+ExplainStep\
 } from '@redocly/developer-portal/ui';
 
-# Country Service Tutorials
+## Country Service Tutorials
 
-
-## Supported countries
+### Supported countries
 
 The Emporix e-commerce system does not impose any restrictions as to which countries can be configured as your business's locations.
 
-## Country configurations
+### Country configurations
 
 The countries where your business is located are specified both tenant-wide and independently for particular sites.
 
 {% hint style="warning" %}
-
-***What's the difference between a tenant's country configuration and a site's country configuration?***
+_**What's the difference between a tenant's country configuration and a site's country configuration?**_
 
 A tenant's country configuration specifies where your business's headquarters are located.
 
@@ -31,7 +32,7 @@ A particular site's country configuration specifies where that site is located.
 
 Country codes defined in country configurations must be compliant with the [ISO 3166-1 alpha-2 standard](https://www.iso.org/obp/ui/#iso:pub:PUB500001:en).
 
-Your tenant's country configuration is stored under the project_country key in the [Emporix API Configuration Service](/openapi/configuration).
+Your tenant's country configuration is stored under the project\_country key in the [Emporix API Configuration Service](../../openapi/configuration/).
 
 ```json
 {
@@ -39,6 +40,7 @@ Your tenant's country configuration is stored under the project_country key in t
   "value": "DE"
 }
 ```
+
 Site-specific country configuration is stored in the `homeBase` field, inside the `Site` object.
 
 ```json
@@ -53,94 +55,84 @@ Site-specific country configuration is stored in the `homeBase` field, inside th
 ```
 
 {% hint style="warning" %}
-
-For more information on the Site object, check out the [*Site Settings Service guide*](/content/site-settings).
+For more information on the Site object, check out the [_Site Settings Service guide_](../../content/site-settings/).
 {% endhint %}
 
-## Managing country configurations through Emporix API
+### Managing country configurations through Emporix API
 
 Check out the following tutorials to learn more about country configuration with Emporix API.
 
-### How to check which country is configured for your tenant
+#### How to check which country is configured for your tenant
 
-To retrieve your tenant's country configuration, you need to send a request to the <nobr><Button to="/openapi/configuration/#operation/GET-configuration-retrieve-config" size="small">Retrieving a configuration</Button></nobr> endpoint.
+To retrieve your tenant's country configuration, you need to send a request to the [Retrieving a configuration ](broken-reference)endpoint.
 
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
+[Broken link](broken-reference "mention")
 
-<OpenApiTryIt
-  definitionId="configuration"
-  operationId="GET-configuration-retrieve-config"
-  parameters={{
-    "path":{
-         "propertyKey": "project_country"
-    }
-  }}
-/>
+```bash
+curl -L \
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
+  --header 'Accept: */*'
+```
 
-### How to change your tenant's country configuration
+#### How to change your tenant's country configuration
 
-To change your tenant's country configuration, you need to send a request to the <nobr><Button to="/openapi/configuration/#operation/PUT-configuration-update-config" size="small">Updating a configuration</Button></nobr> endpoint with updated country information in the request body.
+To change your tenant's country configuration, you need to send a request to the [Updating a configuration](broken-reference) endpoint with updated country information in the request body.
 
 {% hint style="warning" %}
-
 The value in the request body must be compliant with the [ISO 3166-1 alpha-2 standard](https://www.iso.org/obp/ui/#iso:pub:PUB500001:en).
 {% endhint %}
 
-<OpenApiTryIt
-  definitionId="configuration"
-  operationId="PUT-configuration-update-config"
-  parameters={{
-    "path":{
-         "propertyKey": "project_country"
-    }
-  }}
-  properties={{
-      "key": "project_country",
-      "value": "DE"
-  }}
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-### How to check which country is configured for a particular site
+[Broken link](broken-reference "mention")
 
-To retrieve a particular site's country configuration, you need to send a request to the <nobr><Button to="/openapi/site-settings/#operation/GET-site-settings-retrieve-site-config" size="small">Retrieving a site</Button></nobr> endpoint. The country configuration will be returned under the `homeBase` field in the response body.
+```bash
+curl -L \
+  --request PUT \
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "key": "project_country",
+    "secured": false,
+    "value": "AT",
+    "version": 1
+  }'
+```
 
-<OpenApiTryIt
-  definitionId="site-settings"
-  operationId="GET-site-settings-retrieve-site-config"
-  parameters={{
-    query: {
-      expand: {
-          "payment": "all",
-          "shipping": "active",
-          "tax": "none"
-            }
-    } 
-  }}
-/>
+#### How to check which country is configured for a particular site
 
+To retrieve a particular site's country configuration, you need to send a request to the [Retrieving a site ](broken-reference)endpoint. The country configuration will be returned under the `homeBase` field in the response body.
 
-### How to change a particular site's country configuration
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-To change a particular site's country configuration, you need to send a request to the <nobr><Button to="/openapi/site-settings/#operation/PATCH-site-settings-update-site" size="small">Partially updating a site</Button></nobr> endpoint with the address of your choice in the request body.
+[Broken link](broken-reference "mention")
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
+  --header 'Accept: */*'
+```
+
+#### How to change a particular site's country configuration
+
+To change a particular site's country configuration, you need to send a request to the [Partially updating a site](broken-reference) endpoint with the address of your choice in the request body.
 
 {% hint style="warning" %}
-
 The country code must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
 {% endhint %}
 
-<OpenApiTryIt
-  definitionId="site-settings"
-  operationId="PATCH-site-settings-update-site"
-  properties={{
-        homeBase: {
-            address: {
-                street: "Platz der Republik",
-                streetNumber: "1",
-                zipCode: "11011",
-                city: "Berlin",
-                country: "DE",
-                state: "Berlin"
-            }
-    }
-  }}
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+[Broken link](broken-reference "mention")
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "defaultLanguage": "en"
+  }'
+```
