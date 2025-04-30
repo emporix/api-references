@@ -6,8 +6,6 @@ seo:
     variants, product bundle, product bundles, variant attributes
 ---
 
-# product
-
 # How to add your first products
 
 {% hint style="warning" %}
