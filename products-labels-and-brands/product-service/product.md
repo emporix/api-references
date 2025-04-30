@@ -8,9 +8,7 @@ seo:
 
 # product
 
-## Product Service Tutorials
-
-### How to add your first products
+# How to add your first products
 
 {% hint style="warning" %}
 
@@ -37,7 +35,7 @@ Adding your first product is a process made up of two main steps:
 2. [Adding products](product.md#add-products).
 3. [Adding media files for a product](product.md#add-media-for-a-product).
 
-#### Define sales tax rates
+## Define sales tax rates
 
 Sales tax rates are stored in tax configurations. Each configuration indicates a country and defines tax classes applicable to it.
 
@@ -93,7 +91,7 @@ curl -i -X POST \
   }'
 ```
 
-#### Add products
+## Add products
 
 To add a single basic product, you need to send a request to the Creating a new product endpoint.
 
@@ -194,7 +192,7 @@ curl -i -X POST \
 }'
 ```
 
-#### Add media for a product
+## Add media for a product
 
 To add media files, for example images or videos, for a particular product, you can upload them directly to the Emporix database, or link to their location on an external website.
 In the following example, we are creating a `public` type of an asset that is linked to the product of our choice by sending a request to the Creating an asset endpoint with the `media.asset_manage` scope.
@@ -217,7 +215,7 @@ curl -i -X POST \
   -F 'body=[object Object]'
 ```
 
-### How to create a bundle of personalized products
+# How to create a bundle of personalized products
 
 With Emporix API, you can group together two or more products that already exist in the system so that they can be sold at one collective price.
 
@@ -235,7 +233,7 @@ To create personalized products and then group them in a bundle, perform the fol
 2. [Create a product by using a product template.](product.md#create-a-product-by-using-a-product-template)
 3. [Create a bundle of products.](product.md#create-a-bundle-of-products)
 
-#### Before you start
+## Before you start
 
 {% hint style="warning" %}
 The `product.product_publish` scope is only required if you want to publish the product on its creation.
@@ -243,7 +241,7 @@ The `product.product_publish` scope is only required if you want to publish the 
 
 [Ensure that you have defined sales tax rates.](product.md#define-sales-tax-rates)
 
-#### Create a product template
+## Create a product template
 
 You can create a product template that contains additional attributes describing your product. To create a new product template, you need to call the Creating a new product template endpoint.
 
@@ -295,7 +293,7 @@ curl -i -X POST \
 
 The `id` from the response is further referred to as \{{product\_template\_Id\}}.
 
-#### Create a product by using a product template
+## Create a product by using a product template
 
 By applying a product template, you can create a product that contains additional attributes, which are included in the product's `mixins.productTemplateAttributes` field.
 
@@ -383,7 +381,7 @@ curl -i -X POST \
 }
 ```
 
-#### Create a bundle of products
+## Create a bundle of products
 
 You can group together two or more products that already exist in the system so that they can be sold at one collective price. To achieve that, you need to call the Creating a new product endpoint.
 
@@ -457,7 +455,7 @@ curl -i -X POST \
 
 The value of the `productId` from the response is the \{{bundle\_Id\}}.
 
-### How to create a parent variant product with variants
+# How to create a parent variant product with variants
 
 Variants are derivatives of the parent variant product. They contain the same attributes as their parent variant, but assume different attribute values.
 
@@ -465,7 +463,7 @@ Variants are derivatives of the parent variant product. They contain the same at
 The `product.product_publish` scope is only required if you want to publish the product on its creation.
 {% endhint %}
 
-#### Create a parent variant product
+## Create a parent variant product
 
 Variants are created automatically whenever their parent variant product is created or updated. The combinations of variants are created based on the attributes defined in the product template applied to the parent variant, and the attributes and values specified in the `variantAttributes` field of the parent variant.
 
@@ -869,7 +867,7 @@ curl -i -X POST \
 
 
 
-### How to create variants with new attributes and values
+# How to create variants with new attributes and values
 
 If you want to create variants by adding new variant attributes and/or values for a parent variant, you need to perform the following actions:
 
@@ -884,7 +882,7 @@ You can add new attribute values either by adding them to the product template a
 The `product.product_publish` scope is only required if you want to publish the product on its creation.
 {% endhint %}
 
-#### Update a product template with new attributes and values
+## Update a product template with new attributes and values
 
 To specify new attributes for your product's variants, you need to add them in the attributes field by calling the Updating a product template endpoint. Here, we've added a new key `size` to the list of available attributes.
 
@@ -999,7 +997,7 @@ curl -i -X PUT \
 }'
 ```
 
-#### Update the existing parent variant product with the new product template
+## Update the existing parent variant product with the new product template
 
 Since updating the product template results in it being assigned a new version, you need to update the parent variant by sending a request to the Partially updating a product endpoint and providing the new `template.version` value.
 
@@ -1064,7 +1062,7 @@ curl -i -X PATCH \
 
 As a result, new product variants are created automatically, in combinations that include the newly specified attributes and values.
 
-### How to override variant attribute values
+# How to override variant attribute values
 
 You may choose to update the basic fields of a particular variant, for example `name`, `description`, or `relatedItems`.
 
@@ -1072,7 +1070,7 @@ You may choose to update the basic fields of a particular variant, for example `
 The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the product on its update.
 {% endhint %}
 
-#### Updating a variant with new attribute values
+## Updating a variant with new attribute values
 
 By default, all variant products inherit their attributes from the parent variant. You need to include the name of the attribute in the `metadata.overriden` field to be able to replace the attribute values.
 
@@ -1127,7 +1125,7 @@ curl -i -X PUT \
     }
 }'
 ```
-### How to update multiple products in one operation
+# How to update multiple products in one operation
 
 If you want to update multiple products, use the bulk update feature to update several products in one operation. Send a request to the Upserting multiple products endpoint.
 

@@ -4,11 +4,7 @@ seo:
   description: brands, brands, logo, logos
 ---
 
-
-
-# Brand Service Tutorials
-
-## How to create a brand with media files
+# How to create a brand with media files
 
 To create a brand with media files and add it to a product created beforehand, follow the process below:
 
@@ -16,7 +12,7 @@ To create a brand with media files and add it to a product created beforehand, f
 2. [Create a brand with media files](#create-a-brand).
 3. [Update an existing product with brand information](#update-an-existing-product-with-brand-information).
 
-### Before you start
+# Before you start
 
 Ensure that you have created a product. 
 
@@ -26,7 +22,7 @@ For instructions, check out [*How to add your first product*](/content/product/#
 
 {% endhint %}
 
-### Upload an image
+# Upload an image
 
 To include an image for a brand, first you need to upload the image to the database by sending a multipart request to the <nobr><Button to="/openapi/brand/#operation/POST-brand-add-media" size="small">Adding an image for a brand</Button></nobr> endpoint.
 
@@ -47,7 +43,7 @@ Note down the values of the `link` and `id` attributes from the response. You wi
 
 {% endhint %}
 
-### Create a brand
+# Create a brand
 
 To create a brand and add media files to it, you need to send a request to the <nobr><Button to="/openapi/brand/#operation/POST-brand-create-brand" size="small">Adding a new brand</Button></nobr> endpoint. 
 
@@ -85,7 +81,7 @@ curl -i -X POST \
   }'
 ```
 
-### Update an existing product with brand information
+# Update an existing product with brand information
 
 To specify a brand for a product, you need to provide the `id` of the brand in the `mixins` element of a chosen product. You can add brands either during the creation of the product, or by updating a product that already exists in the system. For the purposes of this tutorial, we are going to update an existing product with the brand object created above.
 
