@@ -79,7 +79,9 @@ Check out the following tutorials to learn more about language configuration wit
 
 To retrieve your tenant's language configuration, you need to send a request to the [Retrieving a configuration](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey) endpoint.
 
-{% include "../../.gitbook/includes/example-hint.md" %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+[Broken link](broken-reference "mention")
 
 ```bash
 curl -L \
@@ -95,7 +97,9 @@ To change your tenant's language configuration, you need to send a request to th
 The id in the request body must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
 {% endhint %}
 
-{% include "../../.gitbook/includes/example-hint.md" %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+[Broken link](broken-reference "mention")
 
 ```bash
 curl -L \
@@ -114,7 +118,9 @@ curl -L \
 
 To retrieve a particular site's language configuration, you need to send a request to the [Retrieving a site](broken-reference) endpoint. The language configuration will be returned in the the `defaultLanguage` and `language` fields in the response body.
 
-{% include "../../.gitbook/includes/example-hint.md" %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+[Broken link](broken-reference "mention")
 
 ```bash
 curl -L \
@@ -130,7 +136,9 @@ To change a particular site's language configuration, you need to call the [Part
 The currency code must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
 {% endhint %}
 
-{% include "../../.gitbook/includes/example-hint.md" %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+[Broken link](broken-reference "mention")
 
 ```bash
 curl -L \
