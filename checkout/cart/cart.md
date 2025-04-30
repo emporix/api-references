@@ -10,21 +10,36 @@ editPage:
 label: Tutorials
 ---
 
-# Cart Tutorial
-
-
-
-## Cart Service Tutorials
-
-### How to create a new cart
+## How to create a new cart
 
 To create a new cart, you need to send a request to the Creating a new cart endpoint.
 
-### How to add custom attributes to a cart
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/cart/{tenant}/carts' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -H 'saas-token: string' \
+  -H 'session-id: string' \
+  -d '{
+    "siteCode": "main",
+    "currency": "EUR",
+    "type": "shopping",
+    "channel": {
+      "name": "storefront",
+      "source": "https://your-storefront.com/"
+    },
+    "sessionValidated": true
+  }'
+```
+
+## How to add custom attributes to a cart
 
 You can define custom attributes for a cart through `mixins`.
 
-### Define your custom attributes schema
+## Define your custom attributes schema
 
 First, define your custom attributes schema in the form of a JSON schema.
 
@@ -47,28 +62,54 @@ First, define your custom attributes schema in the form of a JSON schema.
 
 Upload your schema to a hosting service and save its URL
 
-### Update a cart with custom attributes
+## Update a cart with custom attributes
 
 To add custom attributes to a cart, you need to send a request to the Updating a cart endpoint.
 
-\<OpenApiTryIt\
-definitionId="cart"\
-operationId="PUT-cart-update-cart"\
-properties=\{{\
-"metadata": {\
-"mixins": {\
-"cartInstructions": "https://res.cloudinary.com/saas-ag/raw/upload/v1635253083/schemata/CAAS/cartInstructions\_schema.json"\
-}\
-},\
-"mixins": {\
-"cartInstructions": {\
-"instruction": "It would be nice if you could deliver the order after 5 PM."\
-}\
-}\
-\}}\
-/>
+\{% include "../../.gitbook/includes/example-hint-text.md" %}\
 
-### How to merge carts
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "customerId": "87413250",
+  "currency": "EUR",
+  "deliveryWindowId": "60006da77ec20a807cd6f065",
+  "type": "wishlist",
+  "zipCode": "10115",
+  "countryCode": "DE",
+  "status": "OPEN",
+  "deliveryWindow": {
+    "id": "5b5572a61cf31a000f31eee4",
+    "deliveryDate": "2023-06-06T12:00:00.000Z",
+    "slotId": "5678-8756-3321-1234"
+  },
+  "channel": {
+    "name": "storefront",
+    "source": "https://your-storefront.com/"
+  },
+  "metadata": {
+    "mixins": {
+      "generalAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/orderGeneralAttributesMixIn.v9.json",
+      "deliveryTime": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryTimeMixIn.v2.json",
+      "cartInstructions": "https://res.cloudinary.com/saas-ag/raw/upload/v1635253083/schemata/CAAS/cartInstructions_schema.json"
+    }
+  },
+  "mixins": {
+    "deliveryTime": {
+      "deliveryDate": "2021-06-08T12:00:00.000Z",
+      "deliveryTimeId": "5f5a3da02d48b9000d39798c"
+    },
+    "cartInstructions": {
+      "instruction": "It would be nice if you could deliver the order after 5 PM."
+    }
+  }
+}'
+  ```
+
+## How to merge carts
 
 {% hint style="warning" %}
 To learn more about merging carts, check out [Cart merging](https://developer.emporix.io/user-guides/core-commerce/carts/carts#cart-merging) in the Carts guide.
@@ -76,138 +117,163 @@ To learn more about merging carts, check out [Cart merging](https://developer.em
 
 To merge an anonymous cart with a customer cart, you need to send a request to the Merging carts endpoint. Provide the customer cart's ID in the `cartId` path parameter and the anonymous cart's ID in the request body.
 
-\<OpenApiTryIt\
-definitionId="cart"\
-operationId="POST-cart-merge-carts"\
-properties=\{{\
-"carts": \[\
-" "\
-]\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-### How to source pricing information from an external price calculation tool
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/merge' \
+  -H 'Accept-Language: string' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -H 'languages: string' \
+  -d '{
+  "carts": [
+    " "
+  ]
+}'
+```
 
-For B2B scenarios, you might want to integrate an external application for price calculation for your products. Usually, the systems, such as ERPs, store all the relevant customer-specific pricing information needed for customer-specific pricing.\
+## How to source pricing information from an external price calculation tool
+
+For B2B scenarios, you might want to integrate an external application for price calculation for your products. Usually, the systems, such as ERPs, store all the relevant customer-specific pricing information needed for customer-specific pricing.
 The external system then can communicate with the Cart Service directly to overwrite the price of the product added to the cart.
 
 {% hint style="warning" %}
-To achieve the communication between Commerce Engine and the external pricing tool, you have to configure both systems accordingly.\
-The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.\
+To achieve the communication between Commerce Engine and the external pricing tool, you have to configure both systems accordingly.
+The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
-After enabling the external application to update carts with calculated prices, to add a product that is available within Commerce Engine, but with an external price,\
-you need to send the request to the Adding a product to cart endpoint.\
+After enabling the external application to update carts with calculated prices, to add a product that is available within Commerce Engine, but with an external price, you need to send the request to the Adding a product to cart endpoint.
 Provide the customer cart's ID in the `cartId` path parameter.
 
-\<OpenApiTryIt\
-definitionId="cart"\
-operationId="POST-cart-add-item-to-cart"\
-properties=\{{\
-"itemYrn": "urn:yaas:saasag:caasproduct:product:mytenant;1600A016BF",\
-"itemType": "EXTERNAL",\
-"price": {\
-"effectiveAmount": 2.0,\
-"originalAmount": 2.0,\
-"currency": "EUR"\
-},\
-"tax": {\
-"name": "STANDARD",\
-"rate": 10,\
-"grossValue": 2.0,\
-"netValue": 1.82\
-},\
-"quantity": 1\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "itemYrn": "urn:yaas:saasag:caasproduct:product:mytenant;1600A016BF",
+    "price": {
+      "priceId": "{priceId}",
+      "effectiveAmount": 2,
+      "originalAmount": 2,
+      "currency": "EUR"
+    },
+    "quantity": 1,
+    "itemType": "EXTERNAL",
+    "tax": {
+      "name": "STANDARD",
+      "rate": 10,
+      "grossValue": 2,
+      "netValue": 1.82
+    }
+  }'
+```
 
 Notice the `"itemType": "EXTERNAL"` definition which allows the Cart Service to overwrite the pricing from Commerce Engine. The payload must include the price and tax information.
 
 {% hint style="danger" %}
-\
+
 When you have enabled external pricing, it's essential to ensure the accuracy of the prices, as CE does not perform price validation in these instances.
 {% endhint %}
 
-### How to add a product from an external source to a cart
+## How to add a product from an external source to a cart
 
 For some cases, you might want to allow adding products from an external system to cart, and not only from your online store. The products from external product management sources can be added directly to the customer's cart, bypassing the standard product catalog.
 
 {% hint style="warning" %}
-\
-To achieve the communication between Commerce Engine and the external product management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.\
+
+To achieve the communication between Commerce Engine and the external product management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
-To add a product outside Commerce Engine, you need to send the request to the Adding a product to cart endpoint.\
+To add a product outside Commerce Engine, you need to send the request to the Adding a product to cart endpoint.
 Provide the customer cart's ID in the `cartId` path parameter. The payload has to include the `"itemType" : "EXTERNAL"` parameter, as well as the price and tax information.
 
-\<OpenApiTryIt\
-definitionId="cart"\
-operationId="POST-cart-add-item-to-cart"\
-properties=\{{\
-"itemType" : "EXTERNAL",\
-"product" : {\
-"id" : "ip15p",\
-"name" : "iPhone 15 pro",\
-"description" : "Apple iPhone 15 pro 128gb natural titanium",\
-"sku": "testSku",\
-"images": \[\
-{\
-"id": "firstImage",\
-"url": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBw8REhUSEhIVEBUVFRUVFxUSFRcVEhAXFRcWGBUVFRcYHSggGBolGxUYITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGBAPFysdHR0tKy0rLS0tKy0rLS0tKy0tKy0tLSsrKy0rKy0rLTcrKy0rKy0tKy0rLS03LSsrKy0rK//AABEIAOEA4QMBIgACEQEDEQH/xAAcAAEAAgMBAQEAAAAAAAAAAAAABQYDBAcCAQj/xABLEAACAQMABQYGDQoGAwEAAAAAAQIDBBEFBhIhMQdBUWFxkRNScoGxsxciIyQyM1ODkqGywdIUFRY0VGJzk9HhCEJDgrTwY6LDJf/EABcBAQEBAQAAAAAAAAAAAAAAAAABAgP/xAAeEQEBAQACAgMBAAAAAAAAAAAAARECMSFBElFhA//aAAwDAQACEQMRAD8A7iAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAadxpGEf3u5Lvf3DRuAiHpyPi/W/wnl6fh4v1v8JNi5UyCFesMOhfS/se46di+CX0v7D5QypcEV+eV4q+l/YgNNcpWj7SWzVmtrxYNzl9GMcjYYugOdLli0a+Eaz7KVT8J79lzR/ydx/JqfhLqY6EDnvst2HyVx/IqfhPvstWPyVz/ACKv4SaY6CDn3stWHyVx/Iq/gHss2PyVz/Iq/gGmOggpejOU/RdaoqTqSoTfBVoSpp9jklkucZJpNPKe9NcGulFH0AAAAAAAAAAAAAAAAAAaOlrjYjjpz50ub60VHW3Weho6k5zeZvduSlOU2s7FNPcsLi3uRYNYZYnS6PbfapnE+WelUlVpVN7gpVU+hSlJNZ7dl/RM91r02rXlbcp+6U6lODfwlPacetxUVu7M9jL5baV8IlKNSTT/AHj87qKwsLfw7Tqmp/hI04U3nKhFNdDS4eZYXmHKSJK6NSt6lSDak31N5K9VrSpPai8xzvXR1kXc6+WtvJ0ldLPCThCU4xfB+3UWsm5bXNKpTzCSnFxeGnlNYe/PORWXXDTTt7OpVh8LZxHte5fW13nN6OiVTxtvaqS31Jv4Unz7+ZdCLZrj7axgnv8Ab0M/zqRC635p1o9cc/WRUlZzpQSSS3dR90xe1FQquis1Nl7HO89S53jLx0lXp6S6zbp6Q6xjfyVL896Vz8bcd0v6D8+aW+VuO6X9C70799Js0rx9LLv4xn68amXl1UoN3G1nbag5rE5RwsNrtzvLHCZEU7o3aNcxXSNu9saNzB06sFOMljet664vmfWic5INI1ti4sa03Ula1NmEpPMpU5JOOfM19ZDUq3WbnJg//wBPSPk0PVwLw7Z/p06iADq5AAAAAAAAAAAAAAAAIHWX4VL/AHfaplT01ZQrKUJRU05SWGsp73xT4lr1neJUv932qZyHlX09VpKNvTbh4R1JTlF4coqSShnmTby+wx7a9Ma1Yo05t04wTXOm5OP0pNR7jNp2M7ayryp52nBRyuMVKUVNp9Oy2cvtPCU2qlN7DW9Thu2Xxxn0o6zoa8VzQjtpPbgtqOPavKxJY6M58xbMRyOnDOd6jhZ38GuhdZcNR7upGnVjv2VJNdTkntY+iv8ArMl9qXSjUSjUlFPhB7Mm+qLbT+p9rJ3RWiFCDjFYST/q23zvgW0kbutL95Q8u39fSPvKNoeVSlGvBZdPKkl4r512feedaXizgv37f19Iuk0nFp70000+DRytxuTX588K0zYpXJa9bNTJQcqtutqO9un/AJo9nSijyytz3HSWVmzE1Sujco3RXIVTapXBLDVmo3JIW9x1lXoXBKW1wZrUqy0K/WTnJPLOkNIeTQ9XAqltVLPyQP3/AKQ7KH2IDj2cr4dZAB1cwAAAAAAAAAAAAAAAFe1rWdjyanppnJ9dtDK6SWVCrBtxcvgyUsZi8b8PC4b9y3PedY1omtqC59ib/wDamVm7s4VFiSyYvbU6cZoat3GdibUYZy9l7Tl2Jffgvmg7NwSSWEkkl0JLCJaWrVHOcG1T0XsrCnJdjFumOc6zao31e8dSnhwm44qOSTobKSxjOdzTa2c8Tos6ChDD3zktmK50nxlLo/uZFo9/KS7zYt7SMeHHpe9ktXFc13pqNrFdFS39fSLLKtuK3ygP3v8AOUPX0jerXDWTNWVsVqxXNO6t29z7ZLwdTxorj2rnN2rdmB3ZJsa3XOtL6AuLZ5lHajzTjvj5+jzkbCZ1f8sTTTw118O4gdL6r0KuZUWqUuj/ACPzcxuc/tm8fpUKNUkLesR15ZVaEtmpHZfN0PrT5zJb1TVjCzWdyXfkZlm9v31UfsROaW9U6HyH1E7u961S+qMSSeVrsgANsgAAAAAAAAAAAAAAAKzrT8bD+HL7cCFyTOtnxkP4c+z4UCCyc721GTJ8yeNoZIr3k+5MeTxTrJtpc3PzAV3lA/V/nKHr6Zlu1gwa9v3BL/yUPX0v6klf0OJRWriZp1K7N2+pkPXYw1n/ACo9xvWucip1DH4YmLqcuJwrR2Ki2l9a7H0lP0nYSoTxxi98ZdK6+smaVxgz3EI1YOEufg+dPmLPBfKv21c6ZyFPN3d9kPso5ZGm4yafFHUeQXP5TddkPN7VGmHbgAaQAAAAAAAAAAAAAAABWtcHvp9lT00yubRYdc3vpdlT00ys7Ri9tRl2htGLI2iDVndSzueBRqzbSTx5t3cY6kcPB8pt5WOJRoa7v3FfxaHr6RYtI0uJW9cn7jH+LQ/5FEtelXxApuk4leuiwaUlxK3dSA0arNeUzJWmadSYGwqhnpV2RyqHqnUGKy3kczyuo6TyBfrF75NL0I53JZ7jonIH+sXvk0vQixK7SADTIAAAAAAAAAAAAAAACr66/wCl2T9NMq2Sz67/AOl2T9MCq5M3tqPeRk8ZGSD2weMjIEHri/cV/Eof8ikWTStfiVfXN+4fOUPX0jc0recQIvSdQrd5M3r+6IO5r5CMFaoalSZ6qzNWcjQybZmob2aSZOav2DqSy/gre2Sq2fBYiuwv3IL+s3vk0vQin36XBFx5CP1q98ml6IiFdnABpkAAAAAAAAAAAAAAABVNen8V2T9MCp5LVr4/iuyp6YFQ2jNVlyMmLaPu0RWTIyY9obQEDrtL3u/Ko+vpGhpK8zk2teZe9pdtL11Iq19dBGG9uSNqVT5Wq5MDZoJyMUiT0ToO5upYo05T342uEI9snuL3ojUGhQSncy8LLjsL4C7XxYtMUvV/VytcvKWzBcZvh5ullzqUaVvTUKe7HF88utkppC+hGOzBKMVuSW5LBVdIXuXxM9tdNa7qou/IO83V75NL0ROZ3Nxk6P8A4fpZuLzyaf3FjNdsABpAAAAAAAAAAAAAAAAFQ1/fxXznpgU7JcOUHhS+c9MCmZM1XvIyeMjIVkyMmPIyBAa9P3rPtp+uplDua2WXnXp+9anzfraZWtVtASva/g8uEF7ac/FXQut8wRpaH0PcXc/B0abm+fmjFdMm9yOlaB5OraglO6l4ea37C3U49vPIsNKrb2lNUqEFTiuhb5dcnzt9JD32mW87+rBLWsS9e/p0o7FOKhFcFHcl5kVrSWlW87zQu9IvPEh7q7yTDX2/vXvIK5uMmW6rZIyvUNMvNWqdV/w7v3a88mH3HIZPJ13/AA6/HXfkw+4o7iACoAAAAAAAAAAAAAAAAp3KH/o/Of8AzKWdI1w0XKvQ9oszpvbS55rGJRXXjf2pHN/+7+bqZmq+g+AK+g+ACva8/qs/9nraZ61YrxtqEn/mnLz4XDtXE39O2Ph6M6fjRa7+f7/MU+tftUlTqe5VobmpPEav71Nvc0+jimQWS60q3z/3Iu4vSu/nLr+tHn8uT513lw1J1bpmnVuDSqXS6V3owuuuld5UZq9U06jPbmuld55eOlAeKccnXv8AD1DFe88mC9ByWEllKPt5PhGO+TfYj9DcjOq1WytZVa62atxJTcXxhHG5dXZ1LpA6GACoAAAAAAAAAAAAAAAAEfe6Ftqz2p005c8lmLfa44z5yQAEJ+i1p4j7x+i1p4j7ybAwQn6LWniPvH6LWniPvJsDBCfotaeI+81LrUTRtT4dHbXQ5PZfauDLMBgp75MdC/sdPuHsY6F/ZKfcXAAU/wBjHQv7JT7h7GOhf2Sn3FwAwU/2MdC/slPuHsY6F/Y6fcXAAQWiNTtG2r2qFrSpy45UcvPTv4PrJ0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP/2Q=="\
-}\
-]\
-},\
-"price": {\
-"effectiveAmount": 1239.00,\
-"originalAmount": 1239.00,\
-"currency": "EUR"\
-},\
-" tax": {\
-"name": "STANDARD",\
-"rate": 19,\
-"grossValue": 1239.00,\
-"netValue": 1041.18\
-},\
-"quantity": 1\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-### How to add an external fee
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "itemYrn": "{productYrn}",
+    "price": {
+      "priceId": "{priceId}",
+      "effectiveAmount": 1239,
+      "originalAmount": 1239,
+      "currency": "EUR"
+    },
+    "quantity": 1,
+    "itemType": "EXTERNAL",
+    "product": {
+      "id": "ip15p",
+      "name": "iPhone 15 pro",
+      "description": "Apple iPhone 15 pro 128gb natural titanium",
+      "sku": "testSku",
+    },
+    " tax": {
+      "name": "STANDARD",
+      "rate": 19,
+      "grossValue": 1239,
+      "netValue": 1041.18
+    }
+  }'
+```
+
+
+## How to add an external fee
 
 For some cases, you might need to calculate and charge additional fees, for example for packaging, freight, or any additional reasons. The fees calculated externally can be added directly to the customer's cart.
 
 {% hint style="warning" %}
-\
-To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.\
+
+To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
 To add a custom fee to the cart, you need to send the request to the Adding a product to cart endpoint.\
 Provide the customer cart's ID in the `cartId` path parameter. The payload has to include the `"itemType" : "EXTERNAL"` parameter.
 
-\<OpenApiTryIt\
-definitionId="cart"\
-operationId="POST-cart-add-item-to-cart"\
-properties=\{{\
-"itemType": "EXTERNAL",\
-"externalFees": \[\
-{\
-"name": {\
-"en": "Freight Fee"\
-},\
-"feeType": "ABSOLUTE",\
-"feeAbsolute": {\
-"amount": 2.13,\
-"currency": "EUR"\
-}\
-}\
-]\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-### Pricing calculations
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "itemYrn": "{productYrn}",
+    "price": {
+      "priceId": "{priceId}",
+      "effectiveAmount": 0.3582,
+      "originalAmount": 0.3582,
+      "currency": "EUR"
+    },
+    "quantity": 6,
+    "itemType": "EXTERNAL",
+    "externalFees": [
+      {
+        "name": {
+          "en": "Freight Fee"
+        },
+        "feeType": "ABSOLUTE",
+        "feeAbsolute": {
+          "amount": 2.13,
+          "currency": "EUR"
+        }
+      }
+    ]
+  }'
+```
+
+
+## Pricing calculations
 
 To ensure that both net and gross prices are available, along with clear details on how these values are derived, the Cart Service includes the calculatedPrice field.
 
@@ -766,9 +832,10 @@ This calculation method provides a comprehensive breakdown of prices, including 
 </details>
 {% endhint %}
 
-### Pricing calculations glossary
+## Pricing calculations glossary
 
-#### Calculated price on item level
+
+## Calculated price on item level
 
 | Term                 | Definition                                                                                                                |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -878,7 +945,7 @@ The final price is the sum of the `discountedPrice` or the original price, depen
 
 |
 
-#### Calculated price on cart level
+## Calculated price on cart level
 
 | Term                 | Definition                                                                                    |
 | -------------------- | --------------------------------------------------------------------------------------------- |
@@ -956,7 +1023,7 @@ A list of tax values grouped by `taxCode` and `taxRate`. It includes the sum of 
 
 See the sections below for shipping, payment fee, tax and discounts calculations.
 
-### How is shipping calculated
+## How is shipping calculated
 
 The shipping calculation depends on the stage at which it is done.
 
@@ -969,7 +1036,7 @@ The shipping calculation depends on the stage at which it is done.
 Always make sure that your site’s `homeBase.address` has the `country` and `zip-code` information included. It's mandatory for shipping calculations.
 {% endhint %}
 
-### How to calculate a payment fee at cart level
+## How to calculate a payment fee at cart level
 
 At the cart level, only one additional fee is calculated, apart from the fees applied at the item level. The `paymentFees` is an additional, non-discountable amount that the customer must pay for using a given payment method.
 
@@ -980,7 +1047,7 @@ The fee has a specific format, and there are two options for calculating it:
 
 If the fee is taxable and has a tax code, the gross value is calculated. Otherwise, the `grossValue` is equal to `netValue`.
 
-### How to determine a tax country at cart level
+## How to determine a tax country at cart level
 
 Since the shipping address is not set in the cart, you need to determine the country to find the `taxRate` for a fee that has a `taxCode` only.\
 Ways to find the country data:
@@ -992,16 +1059,16 @@ Ways to find the country data:
     If the matching address is not found, return an error.
 * Get country code from site’s `homeBase.address.country`.
 
-### How to apply discounts at cart level
+## How to apply discounts at cart level
 
 Discounts are known as coupons and, with the relevant settings that influence `calculatedPrice`, they can be applied to a cart.
 
-##
+#
 
 Depending on the site configuration and the `includesTax=true/false`, the discount is applied to either the gross value - `includesTax=true`, or the net value - `includesTax=false`.\
 Based on this setting, the corresponding `netValue` or `grossValue` is recalculated using the tax rate.
 
-##
+#
 
 The information about which calculation method was used is available in `totalDiscount.calculationType=ApplyDiscountAfterTax/ApplyDiscountBeforeTax`:
 
@@ -1009,7 +1076,7 @@ The information about which calculation method was used is available in `totalDi
   * SUBTOTAL - the discounts are applied on `items[].calculatedPrice.price`. The line item fees and shipping cost are **NOT** discounted.
   * TOTAL - the discounts are applied on `items[].calculatedPrice.price`, the line item fees and shipping cost.
 
-##
+#
 
 *   `discountType`:
 
@@ -1021,11 +1088,11 @@ The information about which calculation method was used is available in `totalDi
     * PERCENT - it takes the value of discount’s `discountPercentage` attribute and calculates the percentage discount to the price.
     * FREE\_SHIPPING - this type of a discount fully discounts the price of the `calculatedPrice.totalShipping`. It's applied before any other discount is applied.
 
-##
+#
 
 * `categoryRestricted` - the discount applies only to the line items that belong to a specific category. If the `discountCalculationType=TOTAL`, a fee of an item that fulfills the restriction is discounted. However, any other fees, or shipping are not part of the discounting.
 
-##
+#
 
 * `segmentRestricted` - the discount is applied only to the line items that belong to the given customer segment.
 
