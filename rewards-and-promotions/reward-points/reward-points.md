@@ -25,10 +25,13 @@ The following scope is required:
 site.site_manage
 ```
 
-<OpenApiTryIt
-  definitionId="site-settings"
-  operationId="GET-site-settings-list-site-mixins"
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
 
 ### Update the reward points settings for a site
 
@@ -55,12 +58,17 @@ The following scope is required:
 site.site_manage
 ```
 
-<OpenApiTryIt
-  definitionId="site-settings"
-  operationId="PATCH-site-settings-update-site-mixin"
-  defaultExample="Reward points update"
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "active": true
+  }'
+```
 
 ## How to manage reward points by an employee
 
@@ -83,20 +91,59 @@ The following scope is required:
 rewardspoints.rewardpoints_manage
 ```
 
-<OpenApiTryIt
-  definitionId="reward-points"
-  operationId="POST-reward-points-add-customer-reward-points"
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/reward-points/customer/{customerId}/addPoints?siteCode=main' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "id": "12345fee-0b83-48aa-95dc-11e3dcf84aaa",
+    "reference-id": "123456",
+    "description": "points added",
+    "points": 123,
+    "createdAt": "2023-10-24T14:15:22Z",
+    "allPointsAfterCreation": 56778,
+    "usedPoints": 5,
+    "validUntil": "2029-08-24T14:15:22Z",
+    "usedWith": [
+      "5237bcac-c548-4e49-8626-03dab65376d6"
+    ]
+  }'
+```
 
 ### Create reward points redemption options
 
 As a merchant's employee, you can create a list of options for the customers to choose from when redeeming the collected reward points. For example, different types of coupons can be specified.
 To achieve that, you must send a request to the <nobr><Button to="/openapi/reward-points/#operation/POST-reward-points-create-redeem-options" size="small">Creating redemption options</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="reward-points"
-  operationId="POST-reward-points-create-redeem-options"
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/reward-points/{tenant}/redeemOptions' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "type": "coupon",
+    "name": "10 Euro Gutschein",
+    "description": "Für 90 Punkte können Sie sich einen Gutschein über 10 Euro generieren lassen. Diesen Gutschein können Sie auch an Freunde und Bekannte weitergeben.",
+    "points": 90,
+    "coupon": {
+      "name": "Gutschein über 10 Euro (eingelöste Bonuspunkte)",
+      "description": "Gutschein über 10 Euro aus 1000 Bonuspunkte",
+      "discountType": "ABSOLUTE",
+      "discountAbsolute": {
+        "amount": 10,
+        "currency": "EUR"
+      },
+      "allowAnonymous": true,
+      "maxRedemptions": 1,
+      "status": "VALID"
+    }
+  }'
+```
 
 
 ## How to manage the reward points by a logged-in customer
@@ -107,10 +154,13 @@ Your customers can redeem the collected reward points by paying with coupons tha
 
 If the customer wants to redeem reward points in exchange for a coupon, first they need to check the available coupon options offered by the merchant. To achieve that, they need to send a request to the <nobr><Button to="/openapi/reward-points/#operation/GET-reward-points-list-redeem-options" size="small">Retrieving redemption options</Button></nobr> endpoint on the storefront.
 
-<OpenApiTryIt
-  definitionId="reward-points"
-  operationId="GET-reward-points-list-redeem-options"
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/reward-points/{tenant}/redeemOptions' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
 
 ### Redeem reward points for a coupon code 
 
@@ -121,11 +171,17 @@ To create a coupon based on a certain amount of reward points, the customer send
 Reward points can only be exchanged for percentage and absolute coupons.
 {% endhint %}
 
-<OpenApiTryIt
-  definitionId="reward-points"
-  operationId="POST-reward-points-redeem-logged-customer-reward-points-coupon"
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/reward-points/public/customer/redeem?siteCode=main' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "id": "575937654bf757001d8496c9"
+  }'
+```
 
 {% hint style="warning" %}
 For more information on applying coupons to cart, check out [*How to apply coupons to a cart*](/content/coupon/#how-to-apply-coupons-to-a-cart) in the Coupon Service guide.
@@ -137,7 +193,10 @@ Customers can view how many points they have left, and see the history of redeem
 
 To check the reward points balance and history, the customer sends a request to the <nobr><Button to="/openapi/reward-points/#operation/GET-reward-points-retrieve-logged-customer-reward-summary" size="small">Retrieving a reward points summary of a signed-in customer</Button></nobr> endpoint on the storefront.
 
-<OpenApiTryIt
-  definitionId="reward-points"
-  operationId="GET-reward-points-retrieve-logged-customer-reward-summary"
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X GET \
+  https://api.emporix.io/reward-points/public/customer/summary \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
