@@ -4,12 +4,7 @@ seo:
   description: Schema Management
 ---
 
-import {\
-Alert,\
-Button,\
-OpenApiTryIt,\
-ExplainStep\
-} from '@redocly/developer-portal/ui';
+
 
 ## Schema Service Tutorials
 

@@ -4,12 +4,7 @@ seo:
   description: tax, taxes, tax classes, tax class, tax configuration
 ---
 
-import {
-  Alert,
-  Button,
-  OpenApiTryIt,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
+
 
 # Tax Service Tutorials
 

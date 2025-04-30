@@ -12,12 +12,7 @@ label: Tutorials
 
 # Cart Tutorial
 
-import {\
-Alert,\
-Button,\
-OpenApiTryIt,\
-ExplainStep\
-} from '@redocly/developer-portal/ui';
+
 
 ## Cart Service Tutorials
 

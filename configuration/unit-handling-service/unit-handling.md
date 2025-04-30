@@ -7,15 +7,6 @@ label: Tutorials
 
 # Unit Handling Tutorial
 
-import {\
-Alert,\
-Button,\
-OpenApiTryIt,\
-ExplainStep\
-} from '@redocly/developer-portal/ui';
-
-## Unit Handling Service Tutorials
-
 ### How to add a new unit
 
 To add a new measurement unit to your configuration, you need to send a request to the [Adding a new unit](broken-reference) endpoint.
