@@ -33,28 +33,33 @@ To create a new catalog, you need to send a request to the <nobr><Button to="/op
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-<OpenApiTryIt
-  definitionId="catalog"
-  operationId="POST-catalog-create-catalog"
-  parameters={{
-    header: {
-        "Content-Language": "*"
-    }
-  }}
-  properties={{
-    "name": {
-        "en": "Grocery catalog",
-        "de": "Lebensmittelkatalog"
-    },
-    "description": {
-        "en": "Catalog of grocery products.",
-        "de": "Katalog von Lebensmittelprodukten."
-    },
-    "visibility": {
-        "visible": false
-    }
-  }}
-/>
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/catalog/{tenant}/catalogs' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": {
+    "en": "Grocery catalog",
+    "de": "Lebensmittelkatalog"
+  },
+  "description": {
+    "en": "Catalog of grocery products.",
+    "de": "Katalog von Lebensmittelprodukten."
+  },
+  "visibility": {
+    "visible": false,
+    "from": "2022-02-24T20:44:43.169Z",
+    "to": "2023-07-24T20:44:43.169Z"
+  },
+  "publishedSites": [
+    "Main"
+  ],
+  "categoryIds": [
+    "3249485"
+  ]
+}
+```
 
 ### Create a category
 
@@ -66,47 +71,41 @@ For more information, check out [*How to create a category*](/content/category/#
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-<OpenApiTryIt
-  definitionId="category"
-  operationId="POST-category-tree-create-category"
-  defaultExample="Root category create 1"
-  parameters={{
-    header: {
-        "Content-Language": "*",
-        "X-Version": "v2"
-    },
-    query: {
-        "publish": true
-    }
-  }}
-  properties={{
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/category/{tenant}/categories?publish=true' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: `*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`' \
+  -H 'Content-Type: application/json' \
+  -H 'X-Version: v2' \
+  -d '{
+    "parentId": "056bcaf6-66b8-4ddd-9489-65c5f6449e74",
     "localizedName": {
-        "en": "Non-alcoholic drinks",
-        "de": "Alkoholfreie Getränke"
+      "en": "Floor Care",
+      "de": "Bodenpflege"
     },
     "localizedDescription": {
-        "en": "Non-alcoholic drinks",
-        "de": "Alkoholfreie Getränke"
+      "en": "Floor Care",
+      "de": "Bodenpflege"
     },
     "localizedSlug": {
-        "en": "NAD",
-        "de": "AG"
+      "en": "Floor-Care",
+      "de": "Bodenpflege"
     },
     "ecn": [
-        "123A",
-        "234B",
-        "345C"
+      "AX6784",
+      "123078",
+      "SJUIOKM"
     ],
     "validity": {
-        "from": "2022-05-05T12:44:51.871Z",
-        "to": "2025-12-05T23:59:59.000Z"
+      "from": "2022-01-05T12:44:51.871Z",
+      "to": "2022-12-05T23:59:59.000Z"
     },
-    "position": 1,
+    "position": 5,
     "published": true,
     "mixins": {}
-  }}
-/>
-
+  }'
+  ```
 
 ### Assign the category to the catalog
 
@@ -116,32 +115,34 @@ In the request body, insert the ID of the category into the `categoryIds` array.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-<OpenApiTryIt
-  definitionId="catalog"
-  operationId="PATCH-catalog-update-catalog-properties"
-  parameters={{
-    header: {
-        "Content-Language": "*",
-        "X-Version": "v2"
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/catalog/{tenant}/catalogs/{catalogId}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": {
+      "en": "This is the same catalog"
     },
-    query: {
-        "publish": true
-    }
-  }}
-  properties={{
-    "categoryIds": [
-        "084bcaf6-66b8-4ddd-9489-65c5f6449e94"
-    ],
+    "description": {
+      "en": "This catalog has been updated"
+    },
     "visibility": {
-    "visible": true,
-    "from": "2022-05-05T12:44:51.871Z",
-    "to": "2025-12-05T23:59:59.000Z"
+      "visible": true,
+      "from": "2022-02-24T20:44:43.169Z",
+      "to": "2023-07-24T20:44:43.169Z"
     },
+    "publishedSites": [
+      "Main"
+    ],
+    "categoryIds": [
+      "3249485"
+    ],
     "metadata": {
-        "version": 1
+      "version": 1
     }
-  }}
-/>
+  }'
+  ```
 
 
 {% hint style="warning" %} 
