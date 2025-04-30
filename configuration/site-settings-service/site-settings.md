@@ -53,7 +53,7 @@ To update the `shipToCountries` list, you need to send a request to the [Partial
 
 [Broken link](broken-reference "mention")
 
-```
+```bash
 curl -L \
   --request PATCH \
   --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \

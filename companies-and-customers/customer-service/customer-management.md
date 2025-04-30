@@ -4,6 +4,8 @@ seo:
   description: client management, customer management, client, clients, contact, contacts, subsidiary, subsidiaries
 ---
 
+# Customer Management
+
 Take a look at the relationships between objects in the Customer Management Service and other resources in the Emporix Commerce Engine. Click the diagram to enlarge it:
 
 <figure><img src="../../../../static/customer-management/customer-service.svg" alt=""><figcaption></figcaption></figure>

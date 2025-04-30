@@ -1133,14 +1133,14 @@ The `product.product_publish` and `product.product_unpublish` scopes are only re
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
   -H 'Content-Language: string' \
   -H 'Content-Type: application/json' \
-  -d '{[
-  {
+  -d '{
     "id": "65492420e492d916983c8431",
     "code": "pa-1",
     "name": {
@@ -1204,11 +1204,8 @@ curl -i -X PUT \
       }
     },
     "published": true
-  }
-]
 }'
 ```
-
 
 When the update request is sent successfully, the response for a particular product is returned at the same position (index) at which it is located in the request body.
 The expected response is as follows:
