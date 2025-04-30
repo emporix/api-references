@@ -4,17 +4,11 @@ seo:
   description: Invoices Generation
 ---
 
-
-
-# Invoice Service Tutorials
-
-
-
-## How to configure your tenant for invoice creation
+# How to configure your tenant for invoice creation
 
 To prepare your tenant for invoice generation, you have to set up the Configuration, Sequential ID and Site Settings services.
 
-### Set up invoice configuration in the Configuration service
+## Set up invoice configuration in the Configuration service
 
 
 Use the parameters for an order query in case of an automatic job type:
@@ -25,32 +19,36 @@ Use the parameters for an order query in case of an automatic job type:
 
 To set up the invoice configuration, call the <nobr><Button to="/openapi/configuration/#operation/POST-configuration-create-config" size="small">Creating new configurations</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="configuration"
-  operationId="POST-configuration-create-config"
-  defaultExample="Create invoice settings example"
-  properties={[
-  {
-    "key" : "invoiceSettings",
-    "value" : {
-        "threshold" : "24",
-        "status" : "CREATED,CONFIRMED",
-        "extendedOrderStatus" : "70,75,76"
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/configuration/{tenant}/configurations' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "key": "invoiceSettings",
+    "secured": false,
+    "value": {
+      "threshold": "24",
+      "status": "CREATED,CONFIRMED",
+      "extendedOrderStatus": "70,75,76"
     },
-    "version" : 1
-  }
-]}
-/>
+    "version": 1
+  }'
+```
 
-### Set up the Sequential ID service
+## Set up the Sequential ID service
 
 This configuration is used to set up the format of invoice numbers. Set up the numbers by invoking the sequential id service with the <nobr><Button to="/openapi/sequential-id/#operation/POST-sequential-id-create-schema" size="small">Creating a new schema</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="sequential-id"
-  operationId="POST-sequential-id-create-schema"
-  properties={
-  {
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  https://api.emporix.io/sequential-id/sequenceSchemas \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
     "name": "invoiceNoSequence",
     "schemaType": "invoiceNoSequence",
     "preText": "INV__num__",
@@ -62,27 +60,31 @@ This configuration is used to set up the format of invoice numbers. Set up the n
         "required": true
       }
     }
-  }
-}
-/>
+  }'
+```
 
-### Set up the Site Settings service
+## Set up the Site Settings service
 
 The logo URL configuration allows to upload a custom logo that should be visible on the invoice header. 
 Add your company logo to the invoice with the <nobr><Button to="/openapi/site-settings/#operation/POST-site-settings-create-site-mixin" size="small">Creating a site mixin</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="site-settings"
-  operationId="POST-site-settings-create-site-mixin"
-  defaultExample="Create general shop settings mixin"
-  properties={{
-  "generalShopSettings": {
-    "logoUrl" : "https://sample_logo_url.png"
-  }
-}}
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "testMixin": {
+      "active": true,
+      "metadata": {
+        "schema": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/testMixin.json"
+      }
+    }
+  }'
+```
 
-## How to trigger the invoice creation process
+# How to trigger the invoice creation process
 
 To trigger the invoice creation process, initiate a job by making a call to the <nobr><Button to="/openapi/invoice/#operation/POST-invoice-create-job" size="small">Creating a job</Button></nobr> endpoint of the Invoice Service. Two types of jobs can be started:
 
