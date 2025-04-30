@@ -3,16 +3,12 @@ seo:
   title: Currency Service Tutorials
   description: currency, currencies
 ---
-import {
-  Button,
-  OpenApiTryIt,
-  ExplainStep
-} from '@redocly/developer-portal/ui';
 
-# Currency Service Tutorials
+# Currency Tutorial
 
+## Currency Service Tutorials
 
-## Supported currencies
+### Supported currencies
 
 The Emporix e-commerce system supports all existing currencies.
 
@@ -24,8 +20,7 @@ When creating a tenant on the Emporix Developer Portal, you can choose one of th
 * USD — United States dollar
 
 {% hint style="warning" %}
-
-*What if my business operates in a currency that's not on the list?*
+_What if my business operates in a currency that's not on the list?_
 
 If your business operates in a currency that's not listed on the Emporix Developer Portal, you need to perform the following steps:
 
@@ -34,20 +29,19 @@ If your business operates in a currency that's not listed on the Emporix Develop
 3. Change your tenant's currency configuration.
 {% endhint %}
 
-## Currency configurations
+### Currency configurations
 
 Currencies are configured both tenant-wide and independently for particular sites.
 
 {% hint style="warning" %}
-
-*What's the difference between a tenant's currency configuration and a site's currency configuration?*
+_What's the difference between a tenant's currency configuration and a site's currency configuration?_
 
 Currency configured for a particular site needs to be one of the currencies configured for the whole tenant. In other words, your tenant's currency configuration must include all currencies configured for all of the sites.
 {% endhint %}
 
 Currency codes defined in currency configurations must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
 
-Your tenant's currency configuration is stored under the `project_curr` key in the Emporix API [Configuration Service](/openapi/configuration). Check out the following example:
+Your tenant's currency configuration is stored under the `project_curr` key in the Emporix API [Configuration Service](../../openapi/configuration/). Check out the following example:
 
 ```json
 {
@@ -65,89 +59,91 @@ Site-specific currency configuration is stored in the `currency` field, inside t
 ```
 
 {% hint style="warning" %}
-For more information on the `Site` object, check out the [*Site Settings Service guide*](/content/site-settings).
+For more information on the `Site` object, check out the [_Site Settings Service guide_](../../content/site-settings/).
 {% endhint %}
 
-## Managing currency configurations through Emporix API
+### Managing currency configurations through Emporix API
 
 Check out the following tutorials to learn more about currency configuration with Emporix API.
 
-### How to check which currencies are configured for your tenant
+#### How to check which currencies are configured for your tenant
 
-To retrieve your tenant's currency configuration, you need to send a request to the <nobr><Button to="/openapi/configuration/#operation/GET-configuration-retrieve-config" size="small">Retrieving a configuration</Button></nobr> endpoint.
+To retrieve your tenant's currency configuration, you need to send a request to the [Retrieving a configuration](broken-reference) endpoint.
 
-<OpenApiTryIt
-  definitionId="configuration"
-  operationId="GET-configuration-retrieve-config"
-  parameters={{
-    path:{
-         "propertyKey": "project_curr"
-    }
-  }}
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-### How to change your tenant's currency configuration
+[Broken link](broken-reference "mention")
 
-To change your tenant's currency configuration, you need to send a request to the <nobr><Button to="/openapi/configuration/#operation/PUT-configuration-update-config" size="small">Updating a configuration</Button></nobr> endpoint with updated currency information in the request body.
+```bash
+curl -L \
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
+  --header 'Accept: */*'
+```
+
+#### How to change your tenant's currency configuration
+
+To change your tenant's currency configuration, you need to send a request to the [Updating a configuration](broken-reference) endpoint with updated currency information in the request body.
 
 {% hint style="warning" %}
 The id in the request body must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
 {% endhint %}
 
-<OpenApiTryIt
-  definitionId="configuration"
-  operationId="PUT-configuration-update-config"
-  parameters={{
-    path:{
-         "propertyKey": "project_curr"
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+[Broken link](broken-reference "mention")
+
+```
+curl -L \
+  --request PUT \
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "key": "project_curr",
+    "secured": false,
+    "value": [
+    {
+      "id": "PLN",
+      "label": "Polish zloty",
+      "default": "true",
+      "required": "true"
     }
-  }}
-  properties={{
-      key: "project_curr",
-      value: [
-        {   id: "PLN",
-            label: "Polish zloty",
-            default: "true",
-            required: "true"
-        }
-          ]
-  }}
-/>
+    "version": 1
+  }'
+```
 
-### How to check which currency is configured for a particular site
+#### How to check which currency is configured for a particular site
 
-To retrieve a particular site's currency configuration, you need to call the <nobr><Button to="/openapi/site-settings/#operation/GET-site-settings-retrieve-site-config" size="small">Retrieving a site</Button></nobr> endpoint. The currency configuration will be returned under the `currency` field in the response body.
+To retrieve a particular site's currency configuration, you need to call the Retrieving a site endpoint. The currency configuration will be returned under the `currency` field in the response body.
 
-<OpenApiTryIt
-  definitionId="site-settings"
-  operationId="GET-site-settings-retrieve-site-config"
-  parameters={{
-    query: {
-      expand: {
-          "payment": "all",
-          "shipping": "active",
-          "tax": "none"
-            }
-    } 
-  }}
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-### How to change a particular site's currency configuration
+[Broken link](broken-reference "mention")
 
-To change a particular site's currency configuration, you need to call the <nobr><Button to="/openapi/site-settings/#operation/PATCH-site-settings-update-site" size="small">Partially updating a site</Button></nobr> endpoint with the currency code of your choice in the request body.
+```bash
+curl -L \
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
+  --header 'Accept: */*'
+```
+
+#### How to change a particular site's currency configuration
+
+To change a particular site's currency configuration, you need to call the [Partially updating a site ](broken-reference)endpoint with the currency code of your choice in the request body.
 
 {% hint style="warning" %}
-
 The currency code must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
 {% endhint %}
 
-<OpenApiTryIt
-  definitionId="site-settings"
-  operationId="PATCH-site-settings-update-site"
-  properties={{
-        currency: "PLN"
-  }}
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
+[Broken link](broken-reference "mention")
 
-
+```
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "defaultLanguage": "en"
+    "currency": "PLN"
+  }'
+```

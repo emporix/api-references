@@ -6,12 +6,6 @@ seo:
 
 # Country Tutorial
 
-import {\
-Button,\
-OpenApiTryIt,\
-ExplainStep\
-} from '@redocly/developer-portal/ui';
-
 ## Country Service Tutorials
 
 ### Supported countries
@@ -96,7 +90,7 @@ curl -L \
   --data '{
     "key": "project_country",
     "secured": false,
-    "value": "AT",
+    "value": "DE",
     "version": 1
   }'
 ```
@@ -134,5 +128,13 @@ curl -L \
   --header 'Content-Type: application/json' \
   --data '{
     "defaultLanguage": "en"
+    "homeBase": {
+    "address": {
+      "street": "Platz der Republik",
+      "streetNumber": "1",
+      "zipCode": "11011",
+      "city": "Berlin",
+      "country": "DE",
+      "state": "Berlin"
   }'
 ```
