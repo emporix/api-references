@@ -4,21 +4,11 @@ seo:
   description: price, prices, price list, price lists, price personalization, 
 ---
 
-import {
-  Button,
-  OpenApiTryIt,
-  OpenApiRequestBody,
-  ExplainStep
- } from '@redocly/developer-portal/ui';
-import { Preview } from '../components/Preview.tsx'
-
-# Price Service Tutorials
-
-## How to set up your first price
+# How to set up your first price
 
 Take a look at the relationships between prices and other resources in the Emporix Commerce Engine. 
 
-<Preview src="/docs/price/pricing_class_diagram.svg"></Preview>
+<figure><img src="../../../../static/price/pricing_class_diagram.svg" alt=""><figcaption></figcaption></figure>
 
 This tutorial will walk you through the following steps:
 
@@ -35,31 +25,30 @@ To learn more about measurement units in the Emporix Commerce Engine, check out 
 
 {% endhint %}
 
-### Specify accepted currencies
+## Specify accepted currencies
 
 Each currency accepted by your business is stored as a separate object that can be managed through the Emporix API [Currency Service](/openapi/currency/).
 
 To add a new entry to your configuration of currencies, you need to send a request to the <nobr><Button to="/openapi/currency/#operation/POST-currency-create-currency" size="small">Creating a new currency</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="currency"
-  operationId="POST-currency-create-currency"
-  defaultExample="Currency with name as a map"
-  parameters={{
-    header: {
-      "Content-Language": "*"
-    }
-  }}
-  properties={{
-    code: "EUR", 
-    name: {
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/currency/{tenant}/currencies' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: de' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "code": "EUR",
+  "name": {
     "en": "Euro",
     "pl": "Euro"
-    }
-    }}
-/>
+  }
+}'
+```
 
-### Create a price model
+## Create a price model
 
 A price model defines a repeatable way to sell products. You can create separate price models depending on measurement units for which prices are expressed or depending on products' pricing strategies.
 
@@ -71,32 +60,44 @@ To learn more about price models in the Emporix Commerce Engine, check out the [
 
 To create a new price model, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-model" size="small">Creating a new price model</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="price"
-  operationId="POST-price-create-price-model"
-  defaultExample="Basic price model with a map of localized attributes"
-  parameters={{
-    header: {
-        "Content-Language": "*"
-    }
-  }}
-  properties={{
-    includesMarkup: false,
-    name: {
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/price/{tenant}/priceModels' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+      "includesTax": true,
+      "includesMarkup": false,
+      "name": {
         "en": "Price model - per piece",
         "de": "Preismodell - pro Stück"
-    },
-    description: {
+      },
+      "description": {
         "en": "Price model for goods sold by the piece.",
         "de": "Preismodell für stückweise verkaufte Ware."
-    },
-    measurementUnit: {
-        "quantity": 1
-    }
-  }}
-/>
+      },
+      "tierDefinition": {
+        "tierType": "BASIC",
+        "tiers": [
+          {
+            "minQuantity": {
+              "quantity": 0,
+              "unitCode": "pc"
+            }
+          }
+        ]
+      },
+      "measurementUnit": {
+        "quantity": 1,
+        "unitCode": "pc"
+      }
+    }'
+```
 
-### Retrieve a tier ID
+## Retrieve a tier ID
 
 When specifying a price for a product, you need to reference two values from a corresponding price model:
 
@@ -106,48 +107,57 @@ When specifying a price for a product, you need to reference two values from a c
 Price models that use the basic pricing strategy have one tier. To retrieve its ID, you need to send a request to the <nobr><Button to="/openapi/price/#operation/GET-price-retrieve-price-model" size="small">Retrieving a price model</Button></nobr> endpoint.
 
 
-<OpenApiTryIt
-  definitionId="price"
-  operationId="GET-price-retrieve-price-model"
-  parameters={{
-    header: {
-        "Accept-Language": "*"
-    }
-  }}
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/price/{tenant}/priceModels/{priceModelId}' \
+  -H 'Accept-Language: string' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
 
 The ID can be found in the `tierDefinition.tiers.id` field. 
 
-### Define the price
+## Define the price
 
 To define a new price for a product, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price" size="small">Creating a new price</Button></nobr> endpoint.
 
 
-<OpenApiTryIt
-  definitionId="price"
-  operationId="POST-price-create-price"
-  defaultExample="Basic price (v2)"
-  parameters={{
-    header:{
-        "Content-Language": "*"
-    }
-  }}
-  properties={{
-    itemId: {
-        "id": " "
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/price/{tenant}/prices' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "id": "6245aa0a78a8576e338fa9c4",
+    "itemId": {
+      "itemType": "PRODUCT",
+      "id": " "
     },
-    priceModelId: " ",
-    restrictions: {
-        siteCodes: [
-            "main"
-        ]
-    }
-  }}
-/>
+    "currency": "EUR",
+    "location": {
+      "countryCode": "DE"
+    },
+    "priceModelId": " ",
+    "restrictions": {
+      "siteCodes": [
+        "main"
+      ]
+    },
+    "tierValues": [
+      {
+        "priceValue": 15.99
+      }
+    ]
+  }'
+  ```
 
 ---
 
-## How to implement different pricing strategies
+# How to implement different pricing strategies
 
 {% hint style="warning" %}
 
@@ -161,12 +171,11 @@ Implementing any pricing strategy is a process made up of three steps:
 2. Retrieving IDs of the model's pricing tiers through the <nobr><Button to="/openapi/price/#operation/GET-price-retrieve-price-model" size="small">Retrieving a price model</Button></nobr> endpoint.
 3. Creating a `Price` object through the <nobr><Button to="/openapi/price/#operation/POST-price-create-price" size="small">Creating a price</Button></nobr> endpoint.
 
-
-### Before you start
+## Before you start
 
 Make sure you have already finished the [How to set up your first price](#how-to-set-up-your-first-price) tutorial.
 
-### Basic pricing
+## Basic pricing
 
 To define basic pricing in a `PriceModel` object, you need to perform the following actions:
 
@@ -236,7 +245,7 @@ Here's an example of a request body for a basic price:
 ```
 
 
-### Tiered and volume pricing
+## Tiered and volume pricing
 
 To create a price model for tiered or volume pricing, you need to perform the following actions:
 
@@ -374,11 +383,11 @@ Here's an example of a request body for a tiered and volume-based price:
 
 ---
 
-## How to personalize prices
+# How to personalize prices
 
 Take a look at the relationship between prices and customers in the Emporix Commerce Engine:
 
-<Preview src="/docs/price/price_customer.svg"></Preview>
+<figure><img src="../../../../static/price/price_customer.svg" alt=""><figcaption></figcaption></figure>
 
 To make a price valid only for specific customers, you need to add their IDs to the `principals` array inside an applicable `Price` object.
 
@@ -423,13 +432,13 @@ Here's an example of a customer-restricted price:
 
 ---
 
-## How to configure a price list
+# How to configure a price list
 
 Price lists allow you to create personalized sets of prices for selected products. You can manage price lists and their prices through the Emporix API Price Service.
 
 Take a look at the relationships between price lists and other resources in the Emporix Commerce Engine. 
 
-<Preview src="/docs/price/price_list_dependencies.svg"></Preview>
+<figure><img src="../../../../static/price/price_list_dependencies.svg" alt=""><figcaption></figcaption></figure>
 
 {% hint style="warning" %}
 
@@ -440,11 +449,11 @@ Countries and regions are predefined in the Emporix API Country Service. You can
 
 {% endhint %}
 
-### Before you start
+## Before you start
 
 Make sure you have already finished the [How to set up your first price](#how-to-set-up-your-first-price) tutorial.
 
-### Create a price list
+## Create a price list
 
 Price lists are site-specific. You can restrict a price list to particular groups of customers with the `countries`, `regions`, and `customerGroups` fields, and make the list time-limited with the `validity` field.
 
@@ -460,29 +469,34 @@ Make sure to set a value for the `currency` field in the request body. Otherwise
 
 {% endhint %}
 
-<OpenApiTryIt
-  definitionId="price"
-  operationId="POST-price-create-price-list"
-  parameters={{
-    header: {
-        "Content-Language": "*"
-    }
-  }}
-  properties={{
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/price/{tenant}/price-lists' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
     "name": {
-        "en": "Germany price list"
+      "en": "Germany price list"
     },
+    "currency": "EUR",
     "countries": [
-        "DE"
+      "DE"
     ],
     "customerGroups": [
-        " "
+      " "
     ],
-    "siteCode": "main"
-  }}
-/>
+    "siteCode": "main",
+    "validity": {
+      "from": "2022-05-01T00:00:00.000Z",
+      "to": "2025-05-01T00:00:00.000Z"
+    }
+  }'
+```
 
-### Create a price in the list
+## Create a price in the list
 
 Prices in lists are structured differently from catalog prices. Catalog prices are the ones defined for products in `Price` objects, as opposed to `PriceListPrice` objects. While each catalog price can be personalized on its own, the validity of all prices in a list is determined by the list's restrictions. A price in a price list needs to reference a relevant product, price model, and pricing tiers.
 
@@ -494,31 +508,35 @@ A single price list can be associated with multiple regions or countries. For th
 
 To create a new list-specific price, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-in-price-list" size="small">Adding a new price to a price list</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="price"
-  operationId="POST-price-create-price-in-price-list"
-   properties={{
-    "itemId": {
-        "itemType": "PRODUCT",
-        "id": " "
-    },
-    "priceModelId" : " ",
-    "tierValues": [
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/price/{tenant}/price-lists/{priceListId}/prices' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "itemId": {
+    "itemType": "PRODUCT",
+    "id": " "
+  },
+  "priceModelId": " ",
+  "tierValues": [
     {
-        "id": " ",
-        "priceValue": "16.99"
+      "priceValue": "16.99",
+      "id": " "
     },
     {
-        "id": " ",
-        "priceValue": "15.99"
+      "priceValue": "15.99",
+      "id": " "
     },
     {
-        "id": " ",
-        "priceValue": "14.99"
+      "priceValue": "14.99",
+      "id": " "
     }
-    ]
-  }}
-/>
+  ]
+}'
+```
 
 {% hint style="warning" %} Bulk price creation
 
@@ -528,7 +546,7 @@ You can add multiple prices to a list at once by sending a request to the <nobr>
 
 ---
 
-## How to use the price matching functionality
+# How to use the price matching functionality
 
 The price matching functionality compares all prices defined for specified products and retrieves the best ones based on a set of criteria. The criteria include:
 
@@ -564,7 +582,7 @@ The process shown in the flowchart is repeated for each product indicated in the
 
 To find out how the price matching functionality works in detail, check out the flowchart.
 
-<Preview src="/docs/price/price_matching2.svg"></Preview>
+<figure><img src="../../../../static/price/price_matching2.svg" alt=""><figcaption></figcaption></figure>
 
 {% hint style="warning" %}
 
@@ -572,262 +590,337 @@ To check out the flowchart for the *Look for the best price in price lists* subp
 
 {% endhint %}
 
-### Influence of price lists on price matching
+## Influence of price lists on price matching
 
 Price lists take precedence over catalog prices. Catalog prices are the ones defined for products in `Price` objects, as opposed to `PriceListPrice` objects. If there are price lists that match the request criteria, the price matching algorithm checks whether these lists contain prices for requested products before searching through catalog prices.
 
 
 To find out how the price matching functionality handles price lists, check out the flowchart.
 
-<Preview src="/docs/price/pricelist_matching.svg"></Preview>
+<figure><img src="../../../../static/price/pricelist_matching.svg.svg" alt=""><figcaption></figcaption></figure>
 
-### Before you start
+## Before you start
 
 Make sure you have already finished the [How to set up your first price](#how-to-set-up-your-first-price) tutorial.
 
-### Create a product
+## Create a product
 
 Create a sample product through the <nobr><Button to="/openapi/product/#operation/POST-product-create-product" size="small">Creating a new product</Button></nobr> endpoint. For this tutorial, we've chosen bananas as an example:
 
-<OpenApiTryIt
-  definitionId="product"
-  operationId="POST-product-create-product"
-  defaultExample="BASIC Product Creation"
-  properties={{
-    "name" : {
-        "en" : "Bananas"
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": {
+      "en": "Bananas"
     },
     "code": "BANANAS_KG",
     "description": {
-        "en" : "Fresh bananas. Yum!"
+      "en": "Fresh bananas. Yum!"
     },
     "published": true,
-    "taxClasses":{
-        "DE" : "STANDARD"
+    "taxClasses": {
+      "EN": "STANDARD",
+      "DE": "STANDARD"
+    },
+    "productType": "BASIC",
+    "template": {
+      "id": "634cea2740033d7c2e7b03a8",
+      "version": 1
+    },
+    "relatedItems": [
+      {
+        "refId": "634cea2740033d7c2e7b03a9",
+        "type": "CONSUMABLE"
+      }
+    ],
+    "mixins": {
+      "salePricesData": [
+        {
+          "salePriceStart": "2021-07-20T22:00:00.000+0000",
+          "salePriceAmount": 6.7,
+          "salePriceEnd": "2021-07-25T21:59:59.000+0000",
+          "enabled": false
+        }
+      ],
+      "productCustomAttributes": {
+        "pricingMeasurePrice": 13,
+        "unitPricingMeasure": {
+          "value": 133,
+          "unitCode": "GRM"
+        },
+        "unitPricingBaseMeasure": {
+          "value": 100,
+          "unitCode": "GRM"
+        },
+        "pricingMeasure": {
+          "value": 100,
+          "unitCode": "GRM"
+        },
+        "orderUnit": "H87",
+        "minOrderQuantity": 2,
+        "maxOrderQuantity": 10,
+        "defaultOrderQuantity": 5
+      }
     },
     "metadata": {
-        "mixins": {
-            "productCustomAttributes" : "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
-        }
+      "mixins": {
+        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json",
+        "salePricesData": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/salePriceData.json"
+      }
     }
-  }}
-/>
+  }'
+```
 
-### Define multiple prices
+## Define multiple prices
 
 Now, define a couple of prices that the price matching functionality will be able to compare.
 
-Start with defining a price model where the bananas' price per kilogram is constant regardless of the ordered quantity:
+Start with defining a price model with Creating a price model endpoint where the bananas' price per kilogram is constant regardless of the ordered quantity:
 
-<OpenApiTryIt
-  definitionId="price"
-  operationId="POST-price-create-price-model"
-  defaultExample="Basic price model with a map of localized attributes"
-  parameters={{
-    header: {
-        "Content-Language": "*"
-    }
-  }}
-  properties={{
-    "name" : {
-        "en": "Bananas - basic pricing",
-        "de": " "
-    },
-    "description": {
-        "en": "Basic price model for bananas.",
-        "de": " "
-    },
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/price/{tenant}/priceModels' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
     "includesTax": true,
     "includesMarkup": false,
-    "measurementUnit": {
-        "quantity": 1.0,
-        "unitCode": "kg"
+    "name": {
+      "en": "Bananas - basic pricing",
+      "de": " "
     },
-    "tierDefinition" : {
-        "tierType": "BASIC",
-        "tiers" : [
+    "description": {
+      "en": "Basic price model for bananas.",
+      "de": " "
+    },
+    "tierDefinition": {
+      "tierType": "BASIC",
+      "tiers": [
         {
-            "minQuantity": {
-                "quantity": 0.0,
-                "unitCode" : "kg"
-            }
+          "minQuantity": {
+            "quantity": 0,
+            "unitCode": "kg"
+          }
         }
-        ]
+      ]
+    },
+    "measurementUnit": {
+      "quantity": 1,
+      "unitCode": "kg"
     }
-  }}
-/>
+  }'
+  ```
 
 
-Now, retrieve the automatically-generated ID of the pricing tier:
+Now, retrieve the automatically-generated ID of the pricing tier, use the Retrieve a price model endpoint
 
-<OpenApiTryIt
-  definitionId="price"
-  operationId="GET-price-retrieve-price-model"
-  parameters={{
-    header: {
-        "Accept-Language": "*"
-    }
-  }}
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-Once you know the tier ID, define a price for the bananas:
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/price/{tenant}/priceModels/{priceModelId}' \
+  -H 'Accept-Language: string' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
 
-<OpenApiTryIt
-  definitionId="price"
-  operationId="POST-price-create-price"
-  defaultExample="Basic price (v2)"
-  properties={{
+Once you know the tier ID, define a price for the bananas, use the Creating a new price endpoint:
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/price/{tenant}/prices' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "id": "6245aa0a78a8576e338fa9c4",
     "itemId": {
-        "id": " "
+      "itemType": "PRODUCT",
+      "id": " "
+    },
+    "currency": "EUR",
+    "location": {
+      "countryCode": "DE"
     },
     "priceModelId": " ",
-    "restrictions":{
-        "siteCodes" :[
-            "main"
-        ]
+    "restrictions": {
+      "siteCodes": [
+        "main"
+      ]
     },
     "tierValues": [
-    {
-        "id": " ",
-        "priceValue": "1.50"
-    }
+      {
+        "priceValue": "1.50",
+        "id": " "
+      }
     ]
-  }}
-/>
-
+  }'
+```
 
 Then, define a price model where the price per kilogram changes based on the ordered quantity:
 
-<OpenApiTryIt
-  definitionId="price"
-  operationId="POST-price-create-price-model"
-  defaultExample="Volume price model with a map of localized attributes"
-  properties={{
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/price/{tenant}/priceModels' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
     "name": {
-        "en": "Bananas - volume pricing"
+      "en": "Bananas - volume pricing"
     },
     "description": {
-        "en": "Volume price model for bananas."
+      "en": "Volume price model for bananas."
     },
     "includesTax": true,
     "includesMarkup": false,
     "measurementUnit": {
-        "quantity": 1,
-        "unitCode": "kg"
+      "quantity": 1,
+      "unitCode": "kg"
     },
     "tierDefinition": {
-        "tierType": "VOLUME",
-        "tiers": [
+      "tierType": "VOLUME",
+      "tiers": [
         {
-            "minQuantity": {
-                "quantity": 0.0,
-                "unitCode": "kg"
-            }
+          "minQuantity": {
+            "quantity": 0,
+            "unitCode": "kg"
+          }
         },
         {
-            "minQuantity": {
-                "quantity": 5.0,
-                "unitCode": "kg"
-            }
+          "minQuantity": {
+            "quantity": 5,
+            "unitCode": "kg"
+          }
         },
         {
-            "minQuantity": {
-                "quantity": 10.0,
-                "unitCode": "kg"
-            }
-        },
-        ]
+          "minQuantity": {
+            "quantity": 10,
+            "unitCode": "kg"
+          }
+        }
+      ]
     }
-  }}
-/>
+  }'
+```
 
-Now, retrieve the automatically-generated IDs of the pricing tiers:
+Now, retrieve the automatically-generated IDs of the pricing tiers, use the Retrieve a price model endpoint
 
-<OpenApiTryIt
-  definitionId="price"
-  operationId="GET-price-retrieve-price-model"
-  parameters={{
-    header: {
-        "Accept-Language": "*"
-    }
-  }}
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-Once you know the tier IDs, define another price for the bananas.
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/price/{tenant}/priceModels/{priceModelId}' \
+  -H 'Accept-Language: string' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
+
+Once you know the tier IDs, define another price for the bananas, use the Creating a new price endpoint
 
 
-<OpenApiTryIt
-  definitionId="price"
-  operationId="POST-price-create-price"
-  defaultExample="Tiered/volume price (v2)"
-  properties={{
-    "itemId":{
-        "id": " "
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/price/{tenant}/prices' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "id": "6245aa0a78a8576e338fa9c4",
+    "itemId": {
+      "itemType": "PRODUCT",
+      "id": " "
     },
+    "currency": "EUR",
+    "location": {
+      "countryCode": "DE"
+    },
+    "priceModelId": "6245a8f578a8576e338fa9c3",
     "restrictions": {
-        "siteCodes": [
-            "main"
-        ]
+      "siteCodes": [
+        "main"
+      ]
     },
     "tierValues": [
-    {
-        "id": " ",
-        "priceValue": "1.50"
-    },
-    {
-        "id": " ",
-        "priceValue": "1.25"
-    },
-    {
-        "id": " ",
-        "priceValue": "1.00"
-    }
+      {
+        "priceValue": "1.50",
+        "id": " "
+      },
+      {
+        "priceValue": "1.25",
+        "id": " "
+      },
+      {
+        "priceValue": "1.00",
+        "id": " "
+      }
     ]
-  }}
-/>
+  }'
+```
 
-### Find the best price
+## Find the best price
 
 Now that you have defined multiple prices for the bananas, you can send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes</Button></nobr> endpoint to find which price is the lowest.
 
 Check the best price for both one kilogram and ten kilograms of bananas:
 
-<OpenApiTryIt
-  definitionId="price"
-  operationId="POST-price-match-prices"
-  properties={{
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/price/{tenant}/match-prices' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "targetCurrency": "EUR",
     "siteCode": "main",
-    "items": [
-    {
-        "itemId": {
-            "itemType": "PRODUCT",
-            "id": " "
-        },
-        "quantity": {
-            "quantity": 1,
-            "unitCode": "kg"
-        }
+    "targetLocation": {
+      "countryCode": "DE"
     },
-    {
+    "items": [
+      {
         "itemId": {
-            "itemType": "PRODUCT",
-            "id": " "
+          "itemType": "PRODUCT",
+          "id": " "
         },
         "quantity": {
-            "quantity": 10,
-            "unitCode": "kg"
+          "quantity": 1,
+          "unitCode": "kg"
         }
-    }
+      },
+      {
+        "itemId": {
+          "itemType": "PRODUCT",
+          "id": " "
+        },
+        "quantity": {
+          "quantity": 10,
+          "unitCode": "kg"
+        }
+      }
     ]
-  }}
-/>
+  }'
+  ```
 
 
 The lowest prices are returned in the `priceId` fields. The total price for defined quantities is returned in the `totalValue` fields.
 
 ---
 
-## How to calculate gross prices between countries
+# How to calculate gross prices between countries
 
 You can calculate gross prices between countries through the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes</Button></nobr> endpoint.
 
@@ -839,152 +932,158 @@ To learn how to calculate gross prices between countries based on specific value
 
 {% endhint %}
 
-### Before you start
+## Before you start
 
 Make sure you have already finished the [How to set up your first price](#how-to-set-up-your-first-price) tutorial.
 
-### Define sales tax rates for the desired country
+## Define sales tax rates for the desired country
 
 Gross prices between countries are calculated based on these countries' sales tax rates.
 
 Define sales tax rates for the desired country by sending a request to the <nobr><Button to="/openapi/tax/#operation/POST-tax-create-configuration" size="small">Creating a new tax configuration</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="tax"
-  operationId="POST-tax-create-configuration"
-  parameters={{
-    header: {
-      "Content-Language": "*"
-    }
-  }}
-  defaultExample="Tax configuration with a map of localized attributes"
-  properties={{
-    "location":{
-        "countryCode": "AT"
-    },
-    "taxClasses": [
-    {
-        "code": "STANDARD",
-        "name" : {
-            "en": "Standard"
-        },
-        "order": 0,
-        "rate": 20
-    },
-    {
-        "code": "REDUCED_13",
-        "name" : {
-            "en": "Reduced - 13%"
-        },
-        "order": 0,
-        "rate": 13
-    },
-    {
-        "code": "REDUCED_10",
-        "name" : {
-            "en": "Reduced - 10%"
-        },
-        "order": 0,
-        "rate": 10
-    },
-    {
-        "code": "ZERO",
-        "name" : {
-            "en": "Zero"
-        },
-        "order": 0,
-        "rate": 0
-    },
-    ]
-  }}
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-### Update the product's tax classes
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/tax/{tenant}/taxes' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "location": {
+    "countryCode": "AT"
+  },
+  "taxClasses": [
+    {
+      "code": "STANDARD",
+      "name": {
+        "en": "Standard"
+      },
+      "order": 0,
+      "rate": 20,
+      "isDefault": true
+    },
+    {
+      "code": "REDUCED_13",
+      "name": {
+        "en": "Reduced - 13%"
+      },
+      "order": 0,
+      "rate": 13
+    },
+    {
+      "code": "REDUCED_10",
+      "name": {
+        "en": "Reduced - 10%"
+      },
+      "order": 0,
+      "rate": 10
+    },
+    {
+      "code": "ZERO",
+      "name": {
+        "en": "Zero"
+      },
+      "order": 0,
+      "rate": 0
+    }
+  ]
+}'
+```
+
+## Update the product's tax classes
 
 When calculating a gross price for another country, the price matching functionality checks tax classes assigned to the product that the original price is defined for.
 
 To update a product with applicable tax classes, send a request to the <nobr><Button to="/openapi/product/#operation/PATCH-product-update-product" size="small">Partially updating a product</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="product"
-  operationId="PATCH-product-update-product"
-  parameters={{
-    header: {
-      "Content-Language": "*"
-    }
-  }}
-  properties={{
-    "taxClasses": {
-        "DE": "STANDARD",
-        "AT": "STANDARD"
-    },
-    "metadata" : {}
-  }}
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-### Calculate the price for the desired country
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+   "published": true,
+   "taxClasses": {
+    "DE": "STANDARD",
+    "AT": "STANDARD"
+  },
+  "metadata": {}
+}'
+```
+
+## Calculate the price for the desired country
 
 To calculate a gross price between countries, send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="price"
-  operationId="POST-price-match-prices"
-  properties={{
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/price/{tenant}/match-prices' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "targetCurrency": "EUR",
     "siteCode": "main",
-    "targetLocation" : {
-        "countryCode": "AT"
+    "targetLocation": {
+      "countryCode": "AT"
     },
-    "items" : [
-    {
-        "itemId" : {
-            "itemType": "PRICE",
-            "id": " "
+    "items": [
+      {
+        "itemId": {
+          "itemType": "PRICE",
+          "id": " "
         },
         "quantity": {
-            "quantity": 1,
-            "unitCode" : "pc"
+          "quantity": 1,
+          "unitCode": "pc"
         }
-    }
+      }
     ]
-  }}
-/>
+}'
+```
 
 The gross price calculated for the specified country is returned in the `totalValue` field.
 
 ---
 
-## How to retrieve a price in another currency
+# How to retrieve a price in another currency
 
 You can calculate a price's value in another currency through the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes</Button></nobr> endpoint.
 
-### Before you start 
+## Before you start 
 
 Make sure you have already finished the [How to set up your first price](#how-to-set-up-your-first-price) tutorial.
 
-### Add a new currency
+## Add a new currency
 
 Add the currency in which the price will be retrieved to your configuration of currencies by sending a request to the <nobr><Button to="/openapi/currency/#operation/POST-currency-create-currency" size="small">Creating a new currency</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="currency"
-  operationId="POST-currency-create-currency"
-  defaultExample="Currency with name as a map"
-  parameters={{
-    header: {
-      "Content-Language": "*"
-    }
-  }}
-  properties={{
-    "name": {
-        "en": "United States Dollar",
-        "pl": "Dolar amerykański",
-        "de": "US-Dollar"
-    }
-  }}
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/currency/{tenant}/currencies' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: de' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "code": "USD",
+  "name": {
+    "en": "United States Dollar",
+    "pl": "Dolar amerykański",
+    "de": "US-Dollar"
+  }
+}'
+```
 
 
-### Define a currency exchange rate
+## Define a currency exchange rate
 
 When calculating a price in another currency, the price matching functionality checks the defined exchange rate between the desired currency and the one in which price is originally expressed.
 
@@ -996,50 +1095,58 @@ Currently, the exchange rates are defined statically and are not influenced by a
 
 To define a new exchange rate, send a request to the <nobr><Button to="/openapi/currency/#operation/POST-currency-create-exchange-rate" size="small">Creating a new exchange rate</Button></nobr> endpoint:
 
-<OpenApiTryIt
-  definitionId="currency"
-  operationId="POST-currency-create-exchange-rate"
-  properties={{
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/currency/{tenant}/exchanges' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
     "sourceCurrency": "EUR",
     "targetCurrency": "USD",
     "rate": "1.00"
-  }}
-/>
+  }'
+  ```
 
-### Retrieve a price in the desired currency
+## Retrieve a price in the desired currency
 
 To retrieve a price in the desired currency, send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="price"
-  operationId="POST-price-match-prices"
-  properties={{
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/price/{tenant}/match-prices' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
     "targetCurrency": "USD",
     "siteCode": "main",
     "targetLocation": {
-        "countryCode": "DE"
+      "countryCode": "DE"
     },
     "items": [
-    {
+      {
         "itemId": {
-            "itemType" : "PRICE",
-            "id": " "
+          "itemType": "PRICE",
+          "id": " "
         },
-        "quantity" :{
-            "quantity": 1,
-            "unitCode": "pc"
+        "quantity": {
+          "quantity": 1,
+          "unitCode": "pc"
         }
-    }
+      }
     ]
-  }}
-/>
+  }'
+```
 
 
 The price calculated in the specified currency is returned in the `totalValue` field.
 
 ---
 
-## How to configure a site to express all prices as net values
+# How to configure a site to express all prices as net values
 
 When you retrieve prices through the <nobr><Button to="/openapi/price/#operation/GET-price-list-all-prices" size="small">Retrieving all prices</Button></nobr> endpoint, their values will be gross or net based on the `includesTax` value specified in these prices' models.
 
@@ -1055,16 +1162,21 @@ If you don't specify a site's `includesTax` value, the price matching functional
 
 You can manage your sites through the Emporix API [Site Settings Service](/openapi/site-settings/).
 
-### Update your site's `includesTax` field
+## Update your site's `includesTax` field
 
 To add or update the `includesTax` field in your site's settings, you need to send a request to the <nobr><Button to="/openapi/site-settings/#operation/PATCH-site-settings-update-site" size="small">Partially updating a site</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="site-settings"
-  operationId="PATCH-site-settings-update-site"
-    properties={{
-    "includesTax": true
-  }}
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "defaultLanguage": "en",
+  "includesTax": true
+}'
+```
 
 ---
