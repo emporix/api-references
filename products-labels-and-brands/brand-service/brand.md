@@ -30,13 +30,16 @@ For instructions, check out [*How to add your first product*](/content/product/#
 
 To include an image for a brand, first you need to upload the image to the database by sending a multipart request to the <nobr><Button to="/openapi/brand/#operation/POST-brand-add-media" size="small">Adding an image for a brand</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="brand"
-  operationId="POST-brand-add-media"
-  properties={{
-    "metaData": "{\"domain\": \"brand\"}"
-  }}
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  https://api.emporix.io/media \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: multipart/form-data' \
+  -F file=string \
+  -F 'metadata=Image metadata json'
+```
 
 {% hint style="warning" %}
 
@@ -57,17 +60,30 @@ In the following request, you will use the `link` and `id` elements received in 
 
 {% endhint %}
 
-<OpenApiTryIt
-  definitionId="brand"
-  operationId="POST-brand-create-brand"
-  properties={{
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  https://api.emporix.io/brands \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: en' \
+  -H 'Content-Type: application/json' \
+  -d '{
     "id": " ",
     "name": "Sample brand",
     "description": "Description of the sample brand.",
+    "localizedName": {
+      "en": "Brand one",
+      "de": "Marke einz"
+    },
+    "localizedDescription": {
+      "en": "Description of <strong>Brand one</strong> in HTML.",
+      "de": "Beschreibung der <strong>Marke einz</strong> in HTML."
+    },
     "image": " ",
-    "cloudinaryUrl": " ",
-  }}
-/>
+    "cloudinaryUrl": " "
+  }'
+```
 
 ### Update an existing product with brand information
 
@@ -75,14 +91,20 @@ To specify a brand for a product, you need to provide the `id` of the brand in t
 
 To update the existing product with brand information, you need to send a request to the <nobr><Button to="/openapi/product/#operation/PATCH-product-update-product" size="small">Partially updating a product</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="product"
-  operationId="PATCH-product-update-product"
-  properties={{
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "published": true,
     "mixins": {
-        "productCustomAttributes": {
-            "brand": " "
-        }
+      "productCustomAttributes": {
+        "brand": " "
+      }
     }
-  }}
-/>
+  }'
+```
