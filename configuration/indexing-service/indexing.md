@@ -21,12 +21,37 @@ The Indexing service uses separate API keys for every tenant, so that you get mo
 
 To create indexing configuration, send a request to the Creating new configuration endpoint.
 
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/indexing/{tenant}/configurations' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "active": true,
+    "searchKey": "84dc4886f81f805c42bdd89d64de751a",
+    "applicationId": "8AP2HABA2I",
+    "indexName": "exampleTenant",
+    "writeKey": "51ebe89215dddcf85e5dacd5643d17e7",
+    "provider": "ALGOLIA"
+  }'
+```
+
 ## How to update the index configuration
 
 1. To update the index configuration you need to retrieve the `writeKey` first.\
    Send the request to the Get configuration by provider name endpoint.
 2. To change configuration, make a call to the Update configuration by provider name endpoint, providing the `writeKey` from the previous step.
 3. To apply your configuration changes to existing data, run the reindexing process. See the [How to reindex existing products](../../content/indexing/##How_to_reindex_existing_products) section.
+   
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/indexing/{tenant}/configurations/{provider}' \
+  --header 'Accept: */*'
+```
 
 ## How to reindex existing products <a href="#how_to_reindex_existing_products" id="how_to_reindex_existing_products"></a>
 
