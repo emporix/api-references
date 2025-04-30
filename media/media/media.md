@@ -4,10 +4,6 @@ seo:
   description: media and documents management
 ---
 
-
-
-# Media Service Tutorials
-
 You can upload or link to media files and other documents by using the Emporix Media Service. The files can be associated with specific resources within the Emporix database, 
 or remain unassigned.
 
@@ -16,7 +12,7 @@ or remain unassigned.
 Currently, it is possible to assign assets to categories and products only.
 {% endhint %}
 
-## How to manage public and internal assets
+# How to manage public and internal assets
 
 The assets can either be linked to an external website where they are stored, or uploaded in the form of blob data by using a multipart/form-data request.
 You can also specify the access types of the uploaded files - the public assets are files that will be visible on your business' storefront, and the private access files will be accessible only to your tenant's employees.
@@ -29,7 +25,7 @@ In the following scenario, we are going to create public and private assets for 
 Before you begin, ensure that a category with a category ID already exists. For more information, check out the [*Category Service Tutorials*](/content/category).
 {% endhint %}
 
-### Create private assets by link
+## Create private assets by link
 
 To add an asset for a category, you need to send a request to the <nobr><Button to="/openapi/media/#operation/POST-media-create-asset" size="small">Creating an asset</Button></nobr> endpoint with the `media.asset_manage` scope. 
 In the following example, we are creating a `private` type of an asset.
@@ -40,30 +36,35 @@ Sending a json/application request to the <nobr><Button to="/openapi/media/#oper
 If you want to upload the asset to the database, you need to send a multipart request to the <nobr><Button to="/openapi/media/#operation/POST-media-create-asset" size="small">Creating an asset</Button></nobr> endpoint.
 {% endhint %}
 
-<OpenApiTryIt
-  definitionId="media"
-  operationId="POST-media-create-asset"
-  defaultExample="Asset of the LINK type added for a category"
-  properties={{
-      access: "PRIVATE"
-      }} 
-  />
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/media/{tenant}/assets' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'file=[object Object]' \
+  -F 'body=[object Object]'
+  ```
 
 
-### Create public assets with a blob upload 
+## Create public assets with a blob upload 
 
 You can create a public asset for a category, for example an image, by uploading the file and its metadata. Send a multipart request to the <nobr><Button to="/openapi/media/#operation/POST-media-create-asset" size="small">Creating an asset</Button></nobr> endpoint with the `media.asset_manage` scope. 
 
 Check out the "Asset of the BLOB type added for a CATEGORY" example:
 
 
-<OpenApiTryIt
-  definitionId="media"
-  operationId="POST-media-create-asset"
-  defaultExample="Asset of the BLOB type added for a CATEGORY"
-  />
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/media/{tenant}/assets' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'file=[object Object]' \
+  -F 'body=[object Object]'
+  ```
 
-### Retrieve assets for a given category
+## Retrieve assets for a given category
 
 By providing query values, you can retrieve assets that fulfil specific criteria. 
 
@@ -72,17 +73,13 @@ In this example, we are going to retrieve all assets that belong to a particular
 Provide the q parameter in the following format: `q=refIds.id:z7235vn6-5b70-4b3d-7852-7f332736a45g`, where `z7235vn6-5b70-4b3d-7852-7f332736a45g` is the category ID.
 
 
-<OpenApiTryIt
-  definitionId="media"
-  operationId="GET-media-list-assets"
-  parameters={{
-      query:{
-      q: "refIds.id:{categoryId}"
-      }
-        }} 
-  />
-
-
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/media/{tenant}/assets?pageNumber=1&pageSize=60&sort=name%2Cmetadata.createdAt%3Adesc&q=name%3A{name}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'X-Total-Count: false'
+  ```
 
 
 
