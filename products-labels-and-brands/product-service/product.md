@@ -8,9 +8,6 @@ seo:
 
 # product
 
-\
-import { Preview } from '../components/Preview.tsx'
-
 ## Product Service Tutorials
 
 ### How to add your first products
@@ -52,11 +49,148 @@ For more information, check out the [Tax classes guide](https://developer.empori
 
 To define sales tax rates for a country, you need to send a request to the Creating a new tax configuration endpoint.
 
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/tax/{tenant}/taxes' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "location": {
+      "countryCode": "DE"
+    },
+    "taxClasses": [
+      {
+        "code": "STANDARD",
+        "name": {
+          "en": "Standard"
+        },
+        "order": 0,
+        "rate": 19,
+        "isDefault": true
+      },
+      {
+        "code": "REDUCED",
+        "name": {
+          "en": "Reduced"
+        },
+        "order": 1,
+        "rate": 7
+      },
+      {
+        "code": "ZERO",
+        "name": {
+          "en": "Zero"
+        },
+        "order": 2,
+        "rate": 0
+      }
+    ]
+  }'
+```
+
 #### Add products
 
 To add a single basic product, you need to send a request to the Creating a new product endpoint.
 
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Smartphone Zony Yperia X2",
+    "code": "BASIC001",
+    "description": "The world'\''s best camera and camcorder in a waterproof smartphone.",
+    "published": false,
+    "taxClasses": {
+      "EN": "STANDARD"
+    },
+    "productType": "BASIC",
+    "template": {
+      "id": "634cea2740033d7c2e7b03a8",
+      "version": 1
+    },
+    "relatedItems": [
+      {
+        "refId": "634cea2740033d7c2e7b03a9",
+        "type": "CONSUMABLE"
+      }
+    ],
+    "mixins": {
+      "salePricesData": [
+        {
+          "salePriceStart": "2021-07-20T22:00:00.000+0000",
+          "salePriceAmount": 6.7,
+          "salePriceEnd": "2021-07-25T21:59:59.000+0000",
+          "enabled": false
+        }
+      ],
+      "productCustomAttributes": {
+        "pricingMeasurePrice": 13,
+        "unitPricingMeasure": {
+          "value": 133,
+          "unitCode": "GRM"
+        },
+        "unitPricingBaseMeasure": {
+          "value": 100,
+          "unitCode": "GRM"
+        },
+        "pricingMeasure": {
+          "value": 100,
+          "unitCode": "GRM"
+        },
+        "orderUnit": "H87",
+        "minOrderQuantity": 2,
+        "maxOrderQuantity": 10,
+        "defaultOrderQuantity": 5
+      }
+    },
+    "metadata": {
+      "mixins": {
+        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json",
+        "salePricesData": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/salePriceData.json"
+      }
+    }
+  }'
+  ```
 You can also add multiple basic products at the same time. To achieve that, you need to send a request to the Creating multiple products endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{ [
+    {
+        "id": "abc-123",
+        "code": "532432412331",
+        "name": "Product 1",
+        "productType": "BASIC"
+    },
+    {
+        "id": "abc-124",
+        "code": "532432412332",
+        "name": "Product 2",
+        "productType": "BASIC"
+    },
+    {
+        "id": "abc-125",
+        "code": "532432412333",
+        "name": "Product 3",
+        "productType": "BASIC"
+    }
+ ]
+}'
+```
 
 #### Add media for a product
 
@@ -69,6 +203,17 @@ Sending a json/application request to the Creating an asset endpoint does **not*
 If you want to upload the asset to the database, you need to send a multipart request to the Creating an asset endpoint.
 For more information, check out the [_Media Management Tutorials_](../../content/media/).
 {% endhint %}
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/media/{tenant}/assets' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: multipart/form-data' \
+  -F 'file=[object Object]' \
+  -F 'body=[object Object]'
+```
 
 ### How to create a bundle of personalized products
 
@@ -100,95 +245,51 @@ The `product.product_publish` scope is only required if you want to publish the 
 
 You can create a product template that contains additional attributes describing your product. To create a new product template, you need to call the Creating a new product template endpoint.
 
-\<OpenApiTryIt\
-definitionId="product"\
-operationId="POST-product-create-template"\
-properties=\{{\
-name: {\
-en: "T-shirt"\
-},\
-attributes: \[\
-{\
-key: "size",\
-name: {\
-en: "Size",\
-pl: "Rozmiar"\
-},\
-type: "BOOLEAN",\
-metadata: {\
-mandatory: false,\
-defaultValue: true\
-},\
-values: \[\
-{\
-key: "XS"\
-},\
-{\
-key: "S"\
-},\
-{\
-key: "M"\
-},\
-{\
-key: "L"\
-},\
-{\
-key: "XL"\
-}\
-]\
-},\
-{\
-key: "color",\
-name: {\
-en: "Color",\
-pl: "Kolor"\
-},\
-type: "TEXT",\
-metadata: {\
-mandatory: false,\
-defaultValue: null\
-},\
-values: \[\
-{\
-key: "GREEN"\
-},\
-{\
-key: "RED"\
-},\
-{\
-key: "BLUE"\
-}\
-]\
-},\
-{\
-key: "discount",\
-name: {\
-en: "Discount",\
-pl: "Rabat"\
-},\
-type: "NUMBER",\
-metadata: {\
-mandatory: false,\
-defaultValue: "0",\
-},\
-values: \[\
-{\
-key: "0"\
-},\
-{\
-key: "30"\
-},\
-{\
-key: "40"\
-},\
-{\
-key: "50"\
-}\
-]\
-}\
-]\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/product/{tenant}/product-templates' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "id": "545b4e3dfaee4c10def3db24",
+    "name": {
+      "en": "T-shirt"
+    },
+    "attributes": [
+    {
+      "key": "size",
+      "name": {
+        "en": "Size",
+        "pl": "Rozmiar"
+      },
+      "type": "BOOLEAN",
+      "metadata": {
+        "mandatory": false,
+        "variantAttribute": true,
+        "defaultValue": true
+      },
+      "values": [
+        {
+          "key": "XS"
+        },
+        {
+          "key": "S"
+        },
+        {
+          "key": "M"
+        },
+        {
+          "key": "L"
+        },
+        {
+          "key": "XL"
+        }
+      ]
+  }'
+  ```
 
 The `id` from the response is further referred to as \{{product\_template\_Id\}}.
 
@@ -207,57 +308,78 @@ In this example, we assign a template to a product on its creation. The created 
 When creating or updating a product of the `PARENT_VARIANT` type, by default, product variants are generated. If you do **not** want to create product variants for the product, set the `skipVariantGeneration` parameter to `true`.
 {% endhint %}
 
-\<OpenApiTryIt\
-definitionId="product"\
-operationId="POST-product-create-product"\
-properties=\{{\
-name: {\
-en: "T-shirt",\
-de: "T-shirt"\
-},\
-code: "tshirt01",\
-description: "Cotton T-shirt",\
-published: false,\
-taxClasses: {\
-DE: "STANDARD"\
-},\
-template: {\
-id: "\{{product\_template\_Id\}}",\
-version: "1"\
-},\
-mixins: {\
-productTemplateAttributes: {\
-color: "GREEN",\
-size: "L",\
-discount: 30\
-},\
-productCustomAttributes: {\
-pricingMeasurePrice: 13,\
-unitPricingMeasure: {\
-value: 133,\
-unitCode: "GRM"\
-},\
-unitPricingBaseMeasure: {\
-value: 100,\
-unitCode: "GRM"\
-},\
-pricingMeasure: {\
-value: 100,\
-unitCode: "GRM"\
-},\
-orderUnit: "H87",\
-minOrderQuantity: 2,\
-maxOrderQuantity: 10,\
-defaultOrderQuantity: 5\
-}\
-},\
-metadata: {\
-mixins: {\
-productCustomAttributes: "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"\
-}\
-}\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": {
+    "en": "T-shirt",
+    "de": "T-shirt"
+  },
+  "code": "tshirt01",
+  "description": "Cotton T-shirt",
+  "published": false,
+  "taxClasses": {
+    "EN": "STANDARD",
+    "DE": "STANDARD"
+  },
+  "productType": "BASIC",
+  "template": {
+    "id": "{{product_template_Id}}",
+    "version": "1"
+  },
+  "relatedItems": [
+    {
+      "refId": "634cea2740033d7c2e7b03a9",
+      "type": "CONSUMABLE"
+    }
+  ],
+  "mixins": {
+    "salePricesData": [
+      {
+        "salePriceStart": "2021-07-20T22:00:00.000+0000",
+        "salePriceAmount": 6.7,
+        "salePriceEnd": "2021-07-25T21:59:59.000+0000",
+        "enabled": false
+      }
+    ],
+    "productCustomAttributes": {
+      "pricingMeasurePrice": 13,
+      "unitPricingMeasure": {
+        "value": 133,
+        "unitCode": "GRM"
+      },
+      "unitPricingBaseMeasure": {
+        "value": 100,
+        "unitCode": "GRM"
+      },
+      "pricingMeasure": {
+        "value": 100,
+        "unitCode": "GRM"
+      },
+      "orderUnit": "H87",
+      "minOrderQuantity": 2,
+      "maxOrderQuantity": 10,
+      "defaultOrderQuantity": 5
+    },
+    "productTemplateAttributes": {
+      "color": "GREEN",
+      "size": "L",
+      "discount": 30
+    }
+  },
+  "metadata": {
+    "mixins": {
+      "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json",
+      "salePricesData": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/salePriceData.json"
+    }
+  }
+}
+```
 
 #### Create a bundle of products
 
@@ -265,57 +387,71 @@ You can group together two or more products that already exist in the system so 
 
 In this example, we will create a bundle of the T-shirt product we created above, and join it with the socks product that already exists.
 
-\<OpenApiTryIt\
-definitionId="product"\
-operationId="POST-product-create-product"\
-defaultExample="BUNDLE Product Creation"\
-properties= \{{\
-name: "T-shirt and socks bundle",\
-code: "tshirt\_socks\_bundle",\
-description: "A bundle of t-shirt and socks.",\
-published: false,\
-taxClasses: {\
-DE: "STANDARD"\
-},\
-bundledProducts: \[\
-{\
-id: "\{{bundled\_product\_1\_Id\}}",\
-amount: 1\
-},\
-{\
-id: "\{{bundled\_product\_2\_Id\}}",\
-amount: 2\
-}\
-],\
-productType: "BUNDLE",\
-mixins: {\
-productCustomAttributes: {\
-pricingMeasurePrice: 1,\
-unitPricingMeasure: {\
-value: 1350,\
-unitCode: "H87"\
-},\
-unitPricingBaseMeasure: {\
-value: 1,\
-unitCode: "H87"\
-},\
-pricingMeasure: {\
-value: 1,\
-unitCode: "H87"\
-},\
-orderUnit: "H87",\
-minOrderQuantity: 1,\
-maxOrderQuantity: 10,\
-defaultOrderQuantity: 1\
-}\
-},\
-metadata: {\
-mixins: {\
-productCustomAttributes: "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"\
-}\
-}\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "T-shirt and socks bundle",
+  "code": "tshirt_socks_bundle",
+  "description": "A bundle of t-shirt and socks.",
+  "published": false,
+  "taxClasses": {
+    "EN": "STANDARD",
+    "DE": "STANDARD"
+  },
+  "bundledProducts": [
+    {
+      "id": "{{bundled_product_1_Id}}",
+      "amount": 1
+    },
+    {
+      "id": "{{bundled_product_2_Id}}",
+      "amount": 2
+    }
+  ],
+  "productType": "BUNDLE",
+  "template": {
+    "id": "634cea2740033d7c2e7b03a8",
+    "version": 1
+  },
+  "relatedItems": [
+    {
+      "refId": "634cea2740033d7c2e7b03a9",
+      "type": "CONSUMABLE"
+    }
+  ],
+  "mixins": {
+    "productCustomAttributes": {
+      "pricingMeasurePrice": 1,
+      "unitPricingMeasure": {
+        "value": 1350,
+        "unitCode": "H87"
+      },
+      "unitPricingBaseMeasure": {
+        "value": 1,
+        "unitCode": "H87"
+      },
+      "pricingMeasure": {
+        "value": 1,
+        "unitCode": "H87"
+      },
+      "orderUnit": "H87",
+      "minOrderQuantity": 1,
+      "maxOrderQuantity": 10,
+      "defaultOrderQuantity": 1
+    }
+  },
+  "metadata": {
+    "mixins": {
+      "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
+    }
+  }
+}
+```
 
 The value of the `productId` from the response is the \{{bundle\_Id\}}.
 
@@ -331,12 +467,6 @@ The `product.product_publish` scope is only required if you want to publish the 
 
 Variants are created automatically whenever their parent variant product is created or updated. The combinations of variants are created based on the attributes defined in the product template applied to the parent variant, and the attributes and values specified in the `variantAttributes` field of the parent variant.
 
-\
-\
-\
-\
-
-
 Before you start, ensure that the `skipVariantGeneration` parameter is set to `false`.
 
 {% hint style="warning" %}
@@ -351,380 +481,391 @@ The product template can contain more attributes and values than are needed to c
 
 To create a single `parent_variant` type of product with variants, you need to send a request to the Creating a new product endpoint.
 
-\<OpenApiTryIt\
-definitionId="product"\
-operationId="POST-product-create-product"\
-defaultExample="PARENT VARIANT Product Creation"\
-properties= \{{\
-"name": "T-shirt with variants",\
-"code": "PARENT001",\
-"description": "Plain cotton T-shirt.",\
-"published": false,\
-"taxClasses": {\
-"EN": "STANDARD"\
-},\
-"productType": "PARENT\_VARIANT",\
-"template": {\
-"id": "634cea2740033d7c2e7b03a8",\
-"version": 1\
-},\
-"relatedItems": \[\
-{\
-"refId": "634cea2740033d7c2e7b03a9",\
-"type": "CONSUMABLE"\
-}\
-],\
-"variantAttributes": {\
-"color": \[\
-{\
-"key": "RED"\
-},\
-{\
-"key": "GREEN"\
-},\
-{\
-"key": "BLUE"\
-}\
-],\
-"size": \[\
-{\
-"key": "XS"\
-},\
-{\
-"key": "S"\
-},\
-{\
-"key": "M"\
-},\
-{\
-"key": "L"\
-},\
-{\
-"key": "XL"\
-}\
-]\
-},\
-"mixins": {\
-"productCustomAttributes": {\
-"pricingMeasurePrice": 13,\
-"unitPricingMeasure": {\
-"value": 133,\
-"unitCode": "GRM"\
-},\
-"unitPricingBaseMeasure": {\
-"value": 100,\
-"unitCode": "GRM"\
-},\
-"pricingMeasure": {\
-"value": 100,\
-"unitCode": "GRM"\
-},\
-"orderUnit": "H87",\
-"minOrderQuantity": 2,\
-"maxOrderQuantity": 10,\
-"defaultOrderQuantity": 5\
-},\
-"productTemplateAttributes": {\
-"color": \[\
-{\
-"key": "RED"\
-},\
-{\
-"key": "GREEN"\
-},\
-{\
-"key": "BLUE"\
-}\
-]\
-}\
-},\
-"metadata": {\
-"mixins": {\
-"productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"\
-}\
-}\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "T-shirt with variants",
+  "code": "PARENT001",
+  "description": "Plain cotton T-shirt.",
+  "published": false,
+  "taxClasses": {
+    "EN": "STANDARD"
+  },
+  "productType": "PARENT_VARIANT",
+  "template": {
+    "id": "634cea2740033d7c2e7b03a8",
+    "version": 1
+  },
+  "relatedItems": [
+    {
+      "refId": "634cea2740033d7c2e7b03a9",
+      "type": "CONSUMABLE"
+    }
+  ],
+  "variantAttributes": {
+    "color": [
+      {
+        "key": "RED"
+      },
+      {
+        "key": "GREEN"
+      },
+      {
+        "key": "BLUE"
+      }
+    ],
+    "size": [
+      {
+        "key": "XS"
+      },
+      {
+        "key": "S"
+      },
+      {
+        "key": "M"
+      },
+      {
+        "key": "L"
+      },
+      {
+        "key": "XL"
+      }
+    ]
+  },
+  "mixins": {
+    "productCustomAttributes": {
+      "pricingMeasurePrice": 13,
+      "unitPricingMeasure": {
+        "value": 133,
+        "unitCode": "GRM"
+      },
+      "unitPricingBaseMeasure": {
+        "value": 100,
+        "unitCode": "GRM"
+      },
+      "pricingMeasure": {
+        "value": 100,
+        "unitCode": "GRM"
+      },
+      "orderUnit": "H87",
+      "minOrderQuantity": 2,
+      "maxOrderQuantity": 10,
+      "defaultOrderQuantity": 5
+    },
+    "productTemplateAttributes": {
+      "color": [
+        {
+          "key": "RED"
+        },
+        {
+          "key": "GREEN"
+        },
+        {
+          "key": "BLUE"
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "mixins": {
+      "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
+    }
+  }
+}'
+```
 
 If you want to create multiple `parent_variant` products at the same time, send a request to the Creating multiple products endpoint.
 
-\<OpenApiTryIt\
-definitionId="product"\
-operationId="POST-product-create-bulk-products"\
-defaultExample="Create multiple products in bulk"\
-properties={\[\
-{\
-id: "abc-123",\
-name: "Dress 1 with variants",\
-code: "532432412331",\
-description: "Plain cotton dress",\
-published: "false",\
-taxClasses: {\
-EN: "STANDARD"\
-},\
-productType: "PARENT\_VARIANT",\
-template: {\
-id: "908cdv2740033d7c2e7b03b9",\
-version: 1\
-},\
-relatedItems: \[\
-{\
-refId: "908cea2740033d7c2e7b03a9",\
-type: "CONSUMABLE"\
-}\
-],\
-variantAttributes: {\
-color: \[\
-{\
-key: "RED"\
-},\
-{\
-key: "BLUE"\
-},\
-{\
-key: "YELLOW"\
-}\
-],\
-size: \[\
-{\
-key: "XS"\
-},\
-{\
-key: "S"\
-},\
-{\
-key: "M"\
-},\
-{\
-key: "L"\
-},\
-{\
-key: "XL"\
-}\
-]\
-},\
-mixins: {\
-productCustomAttributes: {\
-pricingMeasurePrice: 13,\
-unitPricingMeasure: {\
-value: 133,\
-unitCode: "GRM"\
-},\
-unitPricingBaseMeasure: {\
-value: 100,\
-unitCode: "GRM"\
-},\
-pricingMeasure: {\
-value: 100,\
-unitCode: "GRM"\
-},\
-orderUnit: "H87",\
-minOrderQuantity: 2,\
-maxOrderQuantity: 10,\
-defaultOrderQuantity: 5\
-},\
-productTemplateAttributes: {\
-color: \[\
-{\
-key: "RED"\
-},\
-{\
-key: "BLUE"\
-},\
-{\
-key: "YELLOW"\
-}\
-]\
-}\
-},\
-metadata: {\
-mixins: {\
-productCustomAttributes: "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"\
-}\
-}\
-},\
-{\
-id: "abc-124",\
-name: "Dress 2 with variants",\
-code: "532432412332",\
-description: "Pleaded cotton dress",\
-published: "false",\
-taxClasses: {\
-EN: "STANDARD"\
-},\
-productType: "PARENT\_VARIANT",\
-template: {\
-id: "908cdv2740033d7c2e7b03b9",\
-version: 1\
-},\
-relatedItems: \[\
-{\
-refId: "908cea2740033d7c2e7b03a9",\
-type: "CONSUMABLE"\
-}\
-],\
-variantAttributes: {\
-color: \[\
-{\
-key: "RED"\
-},\
-{\
-key: "BLUE"\
-},\
-{\
-key: "YELLOW"\
-}\
-],\
-size: \[\
-{\
-key: "XS"\
-},\
-{\
-key: "S"\
-},\
-{\
-key: "M"\
-},\
-{\
-key: "L"\
-},\
-{\
-key: "XL"\
-}\
-]\
-},\
-mixins: {\
-productCustomAttributes: {\
-pricingMeasurePrice: 13,\
-unitPricingMeasure: {\
-value: 133,\
-unitCode: "GRM"\
-},\
-unitPricingBaseMeasure: {\
-value: 100,\
-unitCode: "GRM"\
-},\
-pricingMeasure: {\
-value: 100,\
-unitCode: "GRM"\
-},\
-orderUnit: "H87",\
-minOrderQuantity: 2,\
-maxOrderQuantity: 10,\
-defaultOrderQuantity: 5\
-},\
-productTemplateAttributes: {\
-color: \[\
-{\
-key: "RED"\
-},\
-{\
-key: "BLUE"\
-},\
-{\
-key: "YELLOW"\
-}\
-]\
-}\
-},\
-metadata: {\
-mixins: {\
-productCustomAttributes: "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"\
-}\
-}\
-},\
-{\
-id: "abc-125",\
-name: "Dress 3 with variants",\
-code: "532432412336",\
-description: "Cotton dress with lace",\
-published: "false",\
-taxClasses: {\
-EN: "STANDARD"\
-},\
-productType: "PARENT\_VARIANT",\
-template: {\
-id: "908cdv2740033d7c2e7b03c7",\
-version: 1\
-},\
-relatedItems: \[\
-{\
-refId: "908cea2740033d7c2e7b03a9",\
-type: "CONSUMABLE"\
-}\
-],\
-variantAttributes: {\
-color: \[\
-{\
-key: "RED"\
-},\
-{\
-key: "BLUE"\
-},\
-{\
-key: "YELLOW"\
-}\
-],\
-size: \[\
-{\
-key: "XS"\
-},\
-{\
-key: "S"\
-},\
-{\
-key: "M"\
-},\
-{\
-key: "L"\
-},\
-{\
-key: "XL"\
-}\
-]\
-},\
-mixins: {\
-productCustomAttributes: {\
-pricingMeasurePrice: 13,\
-unitPricingMeasure: {\
-value: 133,\
-unitCode: "GRM"\
-},\
-unitPricingBaseMeasure: {\
-value: 100,\
-unitCode: "GRM"\
-},\
-pricingMeasure: {\
-value: 100,\
-unitCode: "GRM"\
-},\
-orderUnit: "H87",\
-minOrderQuantity: 2,\
-maxOrderQuantity: 10,\
-defaultOrderQuantity: 5\
-},\
-productTemplateAttributes: {\
-color: \[\
-{\
-key: "RED"\
-},\
-{\
-key: "BLUE"\
-},\
-{\
-key: "YELLOW"\
-}\
-]\
-}\
-},\
-metadata: {\
-mixins: {\
-productCustomAttributes: "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"\
-}\
-}\
-}\
-]}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{[
+  {
+    "id": "abc-123",
+    "code": "532432412331",
+    "name": "Dress 1 with variants",
+    "productType": "PARENT_VARIANT",
+    "description": "Plain cotton dress",
+    "published": "false",
+    "taxClasses": {
+      "EN": "STANDARD"
+    },
+    "template": {
+      "id": "908cdv2740033d7c2e7b03b9",
+      "version": 1
+    },
+    "relatedItems": [
+      {
+        "refId": "908cea2740033d7c2e7b03a9",
+        "type": "CONSUMABLE"
+      }
+    ],
+    "variantAttributes": {
+      "color": [
+        {
+          "key": "RED"
+        },
+        {
+          "key": "BLUE"
+        },
+        {
+          "key": "YELLOW"
+        }
+      ],
+      "size": [
+        {
+          "key": "XS"
+        },
+        {
+          "key": "S"
+        },
+        {
+          "key": "M"
+        },
+        {
+          "key": "L"
+        },
+        {
+          "key": "XL"
+        }
+      ]
+    },
+    "mixins": {
+      "productCustomAttributes": {
+        "pricingMeasurePrice": 13,
+        "unitPricingMeasure": {
+          "value": 133,
+          "unitCode": "GRM"
+        },
+        "unitPricingBaseMeasure": {
+          "value": 100,
+          "unitCode": "GRM"
+        },
+        "pricingMeasure": {
+          "value": 100,
+          "unitCode": "GRM"
+        },
+        "orderUnit": "H87",
+        "minOrderQuantity": 2,
+        "maxOrderQuantity": 10,
+        "defaultOrderQuantity": 5
+      },
+      "productTemplateAttributes": {
+        "color": [
+          {
+            "key": "RED"
+          },
+          {
+            "key": "BLUE"
+          },
+          {
+            "key": "YELLOW"
+          }
+        ]
+      }
+    },
+    "metadata": {
+      "mixins": {
+        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
+      }
+    }
+  },
+  {
+    "id": "abc-124",
+    "code": "532432412332",
+    "name": "Dress 2 with variants",
+    "productType": "PARENT_VARIANT",
+    "description": "Pleaded cotton dress",
+    "published": "false",
+    "taxClasses": {
+      "EN": "STANDARD"
+    },
+    "template": {
+      "id": "908cdv2740033d7c2e7b03b9",
+      "version": 1
+    },
+    "relatedItems": [
+      {
+        "refId": "908cea2740033d7c2e7b03a9",
+        "type": "CONSUMABLE"
+      }
+    ],
+    "variantAttributes": {
+      "color": [
+        {
+          "key": "RED"
+        },
+        {
+          "key": "BLUE"
+        },
+        {
+          "key": "YELLOW"
+        }
+      ],
+      "size": [
+        {
+          "key": "XS"
+        },
+        {
+          "key": "S"
+        },
+        {
+          "key": "M"
+        },
+        {
+          "key": "L"
+        },
+        {
+          "key": "XL"
+        }
+      ]
+    },
+    "mixins": {
+      "productCustomAttributes": {
+        "pricingMeasurePrice": 13,
+        "unitPricingMeasure": {
+          "value": 133,
+          "unitCode": "GRM"
+        },
+        "unitPricingBaseMeasure": {
+          "value": 100,
+          "unitCode": "GRM"
+        },
+        "pricingMeasure": {
+          "value": 100,
+          "unitCode": "GRM"
+        },
+        "orderUnit": "H87",
+        "minOrderQuantity": 2,
+        "maxOrderQuantity": 10,
+        "defaultOrderQuantity": 5
+      },
+      "productTemplateAttributes": {
+        "color": [
+          {
+            "key": "RED"
+          },
+          {
+            "key": "BLUE"
+          },
+          {
+            "key": "YELLOW"
+          }
+        ]
+      }
+    },
+    "metadata": {
+      "mixins": {
+        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
+      }
+    }
+  },
+  {
+    "id": "abc-125",
+    "code": "532432412336",
+    "name": "Dress 3 with variants",
+    "productType": "PARENT_VARIANT",
+    "description": "Cotton dress with lace",
+    "published": "false",
+    "taxClasses": {
+      "EN": "STANDARD"
+    },
+    "template": {
+      "id": "908cdv2740033d7c2e7b03c7",
+      "version": 1
+    },
+    "relatedItems": [
+      {
+        "refId": "908cea2740033d7c2e7b03a9",
+        "type": "CONSUMABLE"
+      }
+    ],
+    "variantAttributes": {
+      "color": [
+        {
+          "key": "RED"
+        },
+        {
+          "key": "BLUE"
+        },
+        {
+          "key": "YELLOW"
+        }
+      ],
+      "size": [
+        {
+          "key": "XS"
+        },
+        {
+          "key": "S"
+        },
+        {
+          "key": "M"
+        },
+        {
+          "key": "L"
+        },
+        {
+          "key": "XL"
+        }
+      ]
+    },
+    "mixins": {
+      "productCustomAttributes": {
+        "pricingMeasurePrice": 13,
+        "unitPricingMeasure": {
+          "value": 133,
+          "unitCode": "GRM"
+        },
+        "unitPricingBaseMeasure": {
+          "value": 100,
+          "unitCode": "GRM"
+        },
+        "pricingMeasure": {
+          "value": 100,
+          "unitCode": "GRM"
+        },
+        "orderUnit": "H87",
+        "minOrderQuantity": 2,
+        "maxOrderQuantity": 10,
+        "defaultOrderQuantity": 5
+      },
+      "productTemplateAttributes": {
+        "color": [
+          {
+            "key": "RED"
+          },
+          {
+            "key": "BLUE"
+          },
+          {
+            "key": "YELLOW"
+          }
+        ]
+      }
+    },
+    "metadata": {
+      "mixins": {
+        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
+      }
+    }
+  }
+]
+}'
+```
+
+
 
 ### How to create variants with new attributes and values
 
@@ -751,110 +892,110 @@ Each of the attributes has its own metadata element, where you can specify wheth
 
 To specify new values for your product's attributes, you need to add them in the `values` field. Here, we've added `PURPLE` to the list of available attribute values.
 
-\<OpenApiTryIt\
-definitionId="product"\
-operationId="PUT-product-update-template"\
-parameters=\{{\
-path:{\
-"product-template-id": "{product\_template\_Id}"\
-}\
-\}}\
-properties= \{{\
-"name": {\
-"en": "T-shirt"\
-},\
-"metadata": {\
-"version": 1\
-},\
-"attributes": \[\
-{\
-"key": "color",\
-"name": {\
-"en": "Color",\
-"pl": "Kolor"\
-},\
-"type": "TEXT",\
-"metadata": {\
-"mandatory": false,\
-"variantAttribute": true,\
-"defaultValue": null\
-},\
-"values": \[\
-{\
-"key": "GREEN"\
-},\
-{\
-"key": "RED"\
-},\
-{\
-"key": "BLUE"\
-},\
-{\
-"key": "PURPLE"\
-}\
-]\
-},\
-{\
-"key": "discount",\
-"name": {\
-"en": "Discount"\
-},\
-"type": "NUMBER",\
-"metadata": {\
-"mandatory": false,\
-"defaultValue": 0\
-},\
-"values": \[\
-{\
-"key": 0\
-},\
-{\
-"key": 30\
-},\
-{\
-"key": 40\
-}\
-,{\
-"key": 50\
-}\
-,{\
-"key": 60\
-}\
-]\
-},\
-{\
-"key": "size",\
-"name": {\
-"en": "Size",\
-"pl": "Rozmiar"\
-},\
-"type": "TEXT",\
-"metadata": {\
-"mandatory": false,\
-"variantAttribute": true,\
-"defaultValue": null\
-},\
-"values": \[\
-{\
-"key": "XS"\
-},\
-{\
-"key": "S"\
-},\
-{\
-"key": "M"\
-},\
-{\
-"key": "L"\
-},\
-{\
-"key": "XL"\
-}\
-]\
-}\
-]\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/product/{tenant}/product-templates/{product-template-id}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": {
+    "en": "T-shirt"
+  },
+  "attributes": [
+    {
+      "key": "color",
+      "name": {
+        "en": "Color",
+        "pl": "Kolor"
+      },
+      "type": "TEXT",
+      "metadata": {
+        "mandatory": false,
+        "variantAttribute": true,
+        "defaultValue": null
+      },
+      "values": [
+        {
+          "key": "GREEN"
+        },
+        {
+          "key": "RED"
+        },
+        {
+          "key": "BLUE"
+        },
+        {
+          "key": "PURPLE"
+        }
+      ]
+    },
+    {
+      "key": "discount",
+      "name": {
+        "en": "Discount"
+      },
+      "type": "NUMBER",
+      "metadata": {
+        "mandatory": false,
+        "defaultValue": 0
+      },
+      "values": [
+        {
+          "key": 0
+        },
+        {
+          "key": 30
+        },
+        {
+          "key": 40
+        },
+        {
+          "key": 50
+        },
+        {
+          "key": 60
+        }
+      ]
+    },
+    {
+      "key": "size",
+      "name": {
+        "en": "Size",
+        "pl": "Rozmiar"
+      },
+      "type": "TEXT",
+      "metadata": {
+        "mandatory": false,
+        "variantAttribute": true,
+        "defaultValue": null
+      },
+      "values": [
+        {
+          "key": "XS"
+        },
+        {
+          "key": "S"
+        },
+        {
+          "key": "M"
+        },
+        {
+          "key": "L"
+        },
+        {
+          "key": "XL"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "version": 1
+  }
+}'
+```
 
 #### Update the existing parent variant product with the new product template
 
@@ -869,54 +1010,55 @@ In the `variantAttributes` field, you need to specify the attributes and attribu
 When creating or updating a product of the `PARENT_VARIANT` type, by default, product variants are generated. If you do **not** want to create product variants for the product, set the `skipVariantGeneration` parameter to `true`.
 {% endhint %}
 
-\<OpenApiTryIt\
-definitionId="product"\
-operationId="PATCH-product-update-product"\
-parameters=\{{\
-path:{\
-"productId": "{parent\_variant\_Id}"\
-}\
-\}}\
-properties=\{{\
-"template": {\
-"id": "634cea2740033d7c2e7b03a8",\
-"version": 2\
-},\
-"variantAttributes": {\
-"color": \[\
-{\
-"key": "GREEN"\
-},\
-{\
-"key": "RED"\
-},\
-{\
-"key": "BLUE"\
-},\
-{\
-"key": "PURPLE"\
-}\
-],\
-"size": \[\
-{\
-"key": "XS"\
-},\
-{\
-"key": "S"\
-},\
-{\
-"key": "M"\
-},\
-{\
-"key": "L"\
-},\
-{\
-"key": "XL"\
-}\
-]\
-}\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "published": true
+    "template": {
+    "id": "634cea2740033d7c2e7b03a8",
+    "version": 2
+  },
+  "variantAttributes": {
+    "color": [
+      {
+        "key": "GREEN"
+      },
+      {
+        "key": "RED"
+      },
+      {
+        "key": "BLUE"
+      },
+      {
+        "key": "PURPLE"
+      }
+    ],
+    "size": [
+      {
+        "key": "XS"
+      },
+      {
+        "key": "S"
+      },
+      {
+        "key": "M"
+      },
+      {
+        "key": "L"
+      },
+      {
+        "key": "XL"
+      }
+    ]
+  }
+}'
+```
 
 As a result, new product variants are created automatically, in combinations that include the newly specified attributes and values.
 
@@ -943,45 +1085,46 @@ In the following example, we override the following fields:
 * `published`
 * `taxClasses`
 
-\<OpenApiTryIt\
-definitionId="product"\
-operationId="PUT-product-update-product"\
-defaultExample="VARIANT Product Update"\
-parameters=\{{\
-path:{\
-"productId": "{variant\_Id}"\
-}\
-\}}\
-properties=\{{\
-"name": "Blue T-shirt M",\
-"code": "VARIANT001",\
-"description": "The best T-shirt ever.",\
-"published": true,\
-"taxClasses": {\
-"PL": "STANDARD"\
-},\
-"relatedItems": \[\
-{\
-"refId": "634cea2740033d7c2e7b03a9",\
-"type": "CONSUMABLE"\
-}\
-],\
-"metadata": {\
-"version": 1,\
-"overridden": \[\
-"published",\
-"taxClasses"\
-]\
-},\
-"mixins": {\
-"productVariantAttributes": {\
-"color": "Blue",\
-"size": "M"\
-}\
-}\
-\}}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/product/{tenant}/products/{productId}?partial=false&skipVariantGeneration=false&doIndex=true' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Blue T-shirt M",
+    "code": "VARIANT001",
+    "description": "The best T-shirt ever.",
+    "published": true,
+    "taxClasses": {
+        "EN": "STANDARD",
+        "PL": "STANDARD"
+    },
+    "productType": "VARIANT",
+    "parentVariantId": "214cah2245033d9d2a2b17f1",
+    "relatedItems": [
+        {
+        "refId": "634cea2740033d7c2e7b03a9",
+        "type": "CONSUMABLE"
+        }
+    ],
+    "metadata": {
+        "version": 1,
+        "overridden": [
+        "published",
+        "taxClasses"
+        ]
+    },
+    "mixins": {
+        "productVariantAttributes": {
+        "color": "Blue",
+        "size": "M"
+        }
+    }
+}'
+```
 ### How to update multiple products in one operation
 
 If you want to update multiple products, use the bulk update feature to update several products in one operation. Send a request to the Upserting multiple products endpoint.
@@ -991,77 +1134,83 @@ The `product.product_update` scope is required.
 The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the products on the update.
 {% endhint %}
 
-\<OpenApiTryIt\
-definitionId="product"\
-operationId="PUT-product-update-bulk-products"\
-properties={\[\
-{\
-id: "65492420e492d916983c8431",\
-code: "pa-1",\
-name: {\
-"en": "Product\_A"\
-},\
-description: {\
-"en": "Some product"\
-},\
-productType: "BASIC",\
-published: false,\
-metadata: {\
-"mixins": {\
-"productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"\
-},\
-"version": 1,\
-"schema": "https://res.cloudinary.com/saas-ag/raw/upload/v1544786405/schemata/CAAS/product.v2"\
-}\
-},\
-{\
-id: "6549262ce492d916983c8432",\
-code: "pb-2",\
-name: {\
-"en": "Product\_B"\
-},\
-description: {\
-"de": "",\
-"ar": "",\
-"en": "",\
-"fr": ""\
-},\
-productType: "BASIC",\
-published: false,\
-metadata: {\
-"mixins": {\
-"productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"\
-},\
-"version": 2,\
-"schema": "https://res.cloudinary.com/saas-ag/raw/upload/v1544786405/schemata/CAAS/product.v2"\
-}\
-},\
-{\
-id: "654926f4e492d916983c8433",\
-code: "pc-3",\
-name: {\
-"en": "Product\_C"\
-},\
-description: {\
-"en": "Another product"\
-},\
-productType: "BASIC",\
-mixins: {\
-"productCustomAttributes": {\
-"brand": "63e9570adee051597612e36c"\
-}\
-},\
-published: true,\
-metadata: {\
-"mixins": {\
-"productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"\
-},\
-"version": 1,\
-"schema": "https://res.cloudinary.com/saas-ag/raw/upload/v1544786405/schemata/CAAS/product.v2"\
-}\
-}\
-]}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '{[
+  {
+    "id": "65492420e492d916983c8431",
+    "code": "pa-1",
+    "name": {
+      "en": "Product_A"
+    },
+    "metadata": {
+      "version": 1,
+      "mixins": {
+        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
+      },
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/v1544786405/schemata/CAAS/product.v2"
+    },
+    "description": {
+      "en": "Some product"
+    },
+    "productType": "BASIC",
+    "published": false
+  },
+  {
+    "id": "6549262ce492d916983c8432",
+    "code": "pb-2",
+    "name": {
+      "en": "Product_B"
+    },
+    "metadata": {
+      "version": 2,
+      "mixins": {
+        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
+      },
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/v1544786405/schemata/CAAS/product.v2"
+    },
+    "description": {
+      "de": "",
+      "ar": "",
+      "en": "",
+      "fr": ""
+    },
+    "productType": "BASIC",
+    "published": false
+  },
+  {
+    "id": "654926f4e492d916983c8433",
+    "code": "pc-3",
+    "name": {
+      "en": "Product_C"
+    },
+    "metadata": {
+      "version": 1,
+      "mixins": {
+        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
+      },
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/v1544786405/schemata/CAAS/product.v2"
+    },
+    "description": {
+      "en": "Another product"
+    },
+    "productType": "BASIC",
+    "mixins": {
+      "productCustomAttributes": {
+        "brand": "63e9570adee051597612e36c"
+      }
+    },
+    "published": true
+  }
+]
+}'
+```
+
 
 When the update request is sent successfully, the response for a particular product is returned at the same position (index) at which it is located in the request body.
 The expected response is as follows:
