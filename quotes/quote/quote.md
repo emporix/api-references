@@ -4,6 +4,15 @@ seo:
   description: Quote Management
 ---
 
+## first
+
+<a href="(https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/quotes/quote/api-reference/api.yaml)" download>Click to Download</a>
+
+
+## second
+
+[Download](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/quotes/quote/api-reference/api.yaml)
+
 
 # Quote Service Tutorials
 
