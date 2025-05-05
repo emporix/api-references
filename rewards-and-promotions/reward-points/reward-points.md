@@ -27,6 +27,10 @@ site.site_manage
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' \
@@ -59,6 +63,10 @@ site.site_manage
 ```
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X PATCH \
@@ -93,6 +101,10 @@ rewardspoints.rewardpoints_manage
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/reward-points/customer/{customerId}/addPoints?siteCode=main' \
@@ -119,6 +131,10 @@ As a merchant's employee, you can create a list of options for the customers to 
 To achieve that, you must send a request to the <nobr><Button to="/openapi/reward-points/#operation/POST-reward-points-create-redeem-options" size="small">Creating redemption options</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -156,6 +172,10 @@ If the customer wants to redeem reward points in exchange for a coupon, first th
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/reward-points/{tenant}/redeemOptions' \
@@ -172,6 +192,10 @@ Reward points can only be exchanged for percentage and absolute coupons.
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -194,6 +218,10 @@ Customers can view how many points they have left, and see the history of redeem
 To check the reward points balance and history, the customer sends a request to the <nobr><Button to="/openapi/reward-points/#operation/GET-reward-points-retrieve-logged-customer-reward-summary" size="small">Retrieving a reward points summary of a signed-in customer</Button></nobr> endpoint on the storefront.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X GET \

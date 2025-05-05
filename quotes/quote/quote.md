@@ -41,6 +41,10 @@ The following scope is required:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' \
@@ -60,6 +64,10 @@ The following scope is required:
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X PATCH \
@@ -92,6 +100,10 @@ The quote reason of the `DECLINE` type can only be used for the `DECLINED` or `D
 By sending a request to the <nobr><Button to="/openapi/site-settings/#operation/POST-quote-create-quote-reason" size="small">Creating a reason for changing the quote status</Button></nobr> endpoint, you can create new quote status change reasons.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -129,6 +141,10 @@ The following scope is granted to a customer group:
 The customer can place a quote request on the storefront only if they have created a cart with the requested items beforehand.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -204,6 +220,10 @@ The following scope is required:
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -286,6 +306,10 @@ In this example, an employee updates multiple fields:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X PATCH \
   'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' \
@@ -297,6 +321,10 @@ curl -i -X PATCH \
 In the following example, an employee updates only the price of requested items:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X PATCH \
@@ -319,6 +347,10 @@ The following scope is granted to the customer group:
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 
@@ -355,6 +387,10 @@ If the customer wants to provide a reason for declining a quote, they can choose
 In this example, a customer receives a quote and decides to decline it because the proposed price is too high. They also add a comment to negotiate the price.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X PATCH \

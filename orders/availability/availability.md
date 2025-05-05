@@ -25,6 +25,10 @@ Make sure you created a product. For more information, check out [*How to add yo
 To add availability-related information for a specific product, you need to send a request to the <Button to="/openapi/availability/#operation/POST-availability-add-product" size="small">Creating a new availability for a product</Button> endpoint. 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/availability/{tenant}/availability/{productId}/{site}' \
@@ -57,6 +61,10 @@ You can also retrieve availability information for multiple products at once by 
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/availability/{tenant}/availability/{productId}/{site}' \
@@ -103,6 +111,10 @@ For instructions, check out [How to create a bundle of personalized products](/c
 To find out what the stock level of a product bundle is, you need to send a request to the <Button to="/openapi/availability/#operation/GET-availability-retrieve-product" size="small">Retrieving a product's availability</Button> endpoint with the product bundle's ID in the path.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/availability/{tenant}/availability/{productId}/{site}' \

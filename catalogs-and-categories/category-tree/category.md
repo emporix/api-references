@@ -36,6 +36,10 @@ The `localizedSlug` field must not contain any diacritics.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -L \
   --request POST \
@@ -92,6 +96,10 @@ To assign a product to a category, you need to send a request to the Assigning a
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -L \
   --request POST \
@@ -111,6 +119,10 @@ curl -L \
 To check whether the resource was properly assigned to the category, you can send a request to the Retrieving resources assigned to a category endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -L \
@@ -135,6 +147,10 @@ To delete all assignments for a specific category, you need to send a request to
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -L \
   --request DELETE \
@@ -149,6 +165,10 @@ To delete only a specific assignment, you need to send a request to the Deleting
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -L \
   --request DELETE \
@@ -162,6 +182,10 @@ curl -L \
 To publish or unpublish a category, you need to send a request to the  Partially updating a category endpoint and set the `published` property to `true` or `false`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -L \
@@ -201,6 +225,10 @@ To retrieve a specific category tree, you need to send a request to the Retrievi
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -L \
   --url 'https://api.emporix.io/category/{tenant}/category-trees/{categoryId}' \
@@ -213,6 +241,10 @@ curl -L \
 To retrieve all category trees, you need to send a request to the Retrieving the category trees endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -L \
@@ -236,6 +268,10 @@ You can limit the depth of retrieved subcategories with the `depth` parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -L \
   --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/subcategories' \
@@ -256,6 +292,10 @@ When you move a category, all its subcategories and assigned references move alo
 To move a category to be a child of another category, you need to send a request to the Partially updating a category endpoint and provide the desired parent category ID in the `parentId` field.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -L \

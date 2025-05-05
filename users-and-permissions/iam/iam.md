@@ -39,6 +39,10 @@ To assign specific access control level to a group, first you need to retrieve a
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/iam/{tenant}/access-controls?pageNumber=1&pageSize=60&metadataModifiedAt=2022-01-01&roleId=1rl5e52e-6e27-4ac5-9471-2467d3fb7503&resourceId=string&expand=role%2Cresource' \
@@ -59,6 +63,10 @@ The user type in the `userType` parameter can be specified as `CUSTOMER` or `EMP
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -100,6 +108,10 @@ The user type in the `userType` parameter can be specified as `customer` or `emp
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \

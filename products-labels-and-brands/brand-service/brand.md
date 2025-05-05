@@ -28,6 +28,10 @@ To include an image for a brand, first you need to upload the image to the datab
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   https://api.emporix.io/media \
@@ -57,6 +61,10 @@ In the following request, you will use the `link` and `id` elements received in 
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -88,6 +96,10 @@ To specify a brand for a product, you need to provide the `id` of the brand in t
 To update the existing product with brand information, you need to send a request to the <nobr><Button to="/openapi/product/#operation/PATCH-product-update-product" size="small">Partially updating a product</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X PATCH \

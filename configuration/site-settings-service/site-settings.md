@@ -12,6 +12,10 @@ To create a new site, you need to send a request to the [Creating a site](broken
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 [Broken link](broken-reference "mention")
 
 ```bash
@@ -51,6 +55,10 @@ To update the `shipToCountries` list, you need to send a request to the [Partial
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 [Broken link](broken-reference "mention")
 
 ```bash
@@ -83,6 +91,10 @@ First, check if the `orderProcessSettings` mixin has already been configured by 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 [Broken link](broken-reference "mention")
 
 ```bash
@@ -96,6 +108,10 @@ If your site's `orderProcessSettings` have never been configured before or have 
 In this case, to enable specific payment methods, you need to send a request to the [Creating a site mixin](broken-reference) endpoint and set desired flags to `true`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 [Broken link](broken-reference "mention")
 
@@ -129,6 +145,10 @@ In this case, to enable specific payment methods, you need to send a request to 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 [Broken link](broken-reference "mention")
 
 ```bash
@@ -161,6 +181,10 @@ First, check if the `merchantInfo` mixin has already been configured by sending 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 [Broken link](broken-reference "mention")
 
 ```bash
@@ -172,6 +196,10 @@ curl -L \
 If your site's `merchantInfo` has never been configured before or has been deleted, you will receive a `404` error in the response body. In this case, to set up your business's bank account information, you need to send a request to the [Creating a site mixin](broken-reference) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 [Broken link](broken-reference "mention")
 
@@ -217,6 +245,10 @@ If you need to update your `merchantInfo`, you need to send a request to the [Pa
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 [Broken link](broken-reference "mention")
 
 ```bash
@@ -242,6 +274,10 @@ curl -L \
 Settings for direct debit payments are stored in the `debitSettings` mixin. To configure them, you need to send a request to the [Creating a site mixin](broken-reference) endpoint with a set of standard values in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 [Broken link](broken-reference "mention")
 
@@ -287,6 +323,10 @@ curl -L \
 Your business's SEPA Creditor ID is stored in your tenant's `sepaCreditor` configuration. To set up a `sepaCreditor` configuration, you need to send a request to the [Creating configurations](broken-reference) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 [Broken link](broken-reference "mention")
 
@@ -356,6 +396,10 @@ Next, upload your schema to a hosting service and save its URL.
 Once your schema is ready, send a request to the [Creating a site mixin](broken-reference) endpoint with the site's custom attributes in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 [Broken link](broken-reference "mention")
 

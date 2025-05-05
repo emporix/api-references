@@ -23,6 +23,10 @@ To create indexing configuration, send a request to the Creating new configurati
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -L \
   --request POST \
@@ -47,6 +51,10 @@ curl -L \
    
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -L \
   --url 'https://api.emporix.io/indexing/{tenant}/configurations/{provider}' \
@@ -60,6 +68,10 @@ But, if you change your index configuration, you need to trigger the reindexing 
 You can run the reindex without the need to update all your resource data by sending the request to the [Reindex ](broken-reference)endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 [Broken link](broken-reference "mention")
 
@@ -83,6 +95,10 @@ If you want to get your storefront index configuration without the need to updat
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 [Broken link](broken-reference "mention")
 
 ```bash
@@ -97,6 +113,10 @@ You can choose between two indexing strategies for your search index configurati
 To choose the right mode for your index, send the request to the [Updating a configuration](broken-reference) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 [Broken link](broken-reference "mention")
 

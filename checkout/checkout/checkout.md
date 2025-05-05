@@ -20,6 +20,10 @@ You need details about the customer's access and session tokens as these details
   Get an anonymous access token by sending a request to the <nobr><Button to="/openapi/oauth/#operation/GET-oauth-generate-anonymous-access-token" size="small">Requesting an anonymous token</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id={client_id}'
@@ -31,6 +35,10 @@ You can skip this step and continue with the checkout process as a guest custome
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -52,6 +60,10 @@ Each country that you operate in may have different tax rules for different prod
 Add tax configuration by sending a request to the <nobr><Button to="/openapi/tax/#operation/POST-tax-create-configuration" size="small">Creating a new tax configuration</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -102,6 +114,10 @@ Delivery method is dependant on a specific site and delivery zone.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/shipping/{tenant}/{site}/zones' \
@@ -124,6 +140,10 @@ curl -i -X POST \
 2. Specify how the goods can be shipped to a customer by sending a request to the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-shipping-method" size="small">Creating a shipping method</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/shipping/{tenant}/{site}/zones/{zoneId}/methods' \
@@ -178,6 +198,10 @@ curl -i -X POST \
 3. Define delivery time that will be matched with the delivery method and zone by sending the request to the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-delivery-time" size="small">Creating a delivery time</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/shipping/{tenant}/delivery-times?validateOverlap=true' \
@@ -217,6 +241,10 @@ To create and add multiple products to your store, send the request to the <nobr
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' \
@@ -233,6 +261,10 @@ Price model defines your pricing strategy. You can specify how you want to go ab
 1. To define a price model send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-model" size="small">Creating a new price model</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -266,6 +298,10 @@ curl -i -X POST \
 2. Create a price for a specific product by sending a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price" size="small">Creating a new price</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 url -i -X POST \
   'https://api.emporix.io/price/{tenant}/prices' \
@@ -312,6 +348,10 @@ The following request requires using the customer's access token for authorizati
 Send the request to the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices-by-context" size="small">Matching prices for session context</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash 
 curl -i -X POST \
   'https://api.emporix.io/price/{tenant}/match-prices-by-context' \
@@ -345,6 +385,10 @@ There are two options to create carts using API:
 * Create a cart by sending a request to the <nobr><Button to="/openapi/cart/#operation/POST-cart-create-cart" size="small">Creating a new cart</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
   definitionId="cart"
   operationId="POST-cart-create-cart"
   defaultExample="Logged in customer's cart"
@@ -353,6 +397,10 @@ There are two options to create carts using API:
 * Create a cart by sending a `GET` request with `create=true` parameter to the <nobr><Button to="/openapi/cart/#operation/GET-cart-retrieve-cart-by-criteria" size="small">Retrieving a cart's details by criteria</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/cart/{tenant}/carts' \
@@ -375,6 +423,10 @@ curl -i -X POST \
 2. Add items to the cart by sending the request to the <nobr><Button to="/openapi/cart/#operation/POST-cart-add-item-to-cart" size="small">Creating a new cart</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/cart/{tenant}/carts?sessionId=string&customerId=string&siteCode=string&legalEntityId=string&create=true&type=string&zipCode=string&countryCode=st' \
@@ -402,6 +454,10 @@ Then, it handles the payment and creates an order in the system, closing the car
 You can trigger a checkout process through API as well by sending a request to the <nobr><Button to="/openapi/checkout/#operation/POST-checkout-trigger-checkout" size="small">Triggering a checkout</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \

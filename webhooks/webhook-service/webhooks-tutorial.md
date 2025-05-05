@@ -40,6 +40,10 @@ If there is no prior subscription to the event of your choice, the `metadata.ver
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/webhook/{tenant}/event-subscriptions' \
@@ -56,6 +60,10 @@ To subscribe to an event, you need to send a request to the Subscribing and unsu
 In this example, you will subscribe to the following events: `catalog.created` and `catalog.updated`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X PATCH \
   'https://api.emporix.io/webhook/{tenant}/event-subscriptions' \
@@ -114,6 +122,10 @@ When you subscribe to events, you will receive an email with an automatically ge
 To generate the login link with the authentication token needed to connect a tenant to their consumer application portal, you need to send a request to the Retrieving a dashboard access URL endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X GET \

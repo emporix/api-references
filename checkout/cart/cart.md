@@ -16,6 +16,10 @@ To create a new cart, you need to send a request to the Creating a new cart endp
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/cart/{tenant}/carts' \
@@ -68,6 +72,10 @@ To add custom attributes to a cart, you need to send a request to the Updating a
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/cart/{tenant}/carts/{cartId}' \
@@ -119,6 +127,10 @@ To merge an anonymous cart with a customer cart, you need to send a request to t
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/cart/{tenant}/carts/{cartId}/merge' \
@@ -149,6 +161,10 @@ After enabling the external application to update carts with calculated prices, 
 Provide the customer cart's ID in the `cartId` path parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -196,6 +212,10 @@ Provide the customer cart's ID in the `cartId` path parameter. The payload has t
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' \
@@ -241,6 +261,10 @@ To add a custom fee to the cart, you need to send the request to the Adding a pr
 Provide the customer cart's ID in the `cartId` path parameter. The payload has to include the `"itemType" : "EXTERNAL"` parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \

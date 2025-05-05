@@ -16,6 +16,10 @@ You can generate the text by sending a request based on a provided prompt. To se
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'http://api.emporix.io/ai-service/{tenant}/texts' \
@@ -42,6 +46,10 @@ To generate the AI completion, send the request using the
 endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)

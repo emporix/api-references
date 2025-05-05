@@ -33,6 +33,10 @@ To add a new entry to your configuration of currencies, you need to send a reque
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/currency/{tenant}/currencies' \
@@ -61,6 +65,10 @@ To learn more about price models in the Emporix Commerce Engine, check out the [
 To create a new price model, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-model" size="small">Creating a new price model</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -109,6 +117,10 @@ Price models that use the basic pricing strategy have one tier. To retrieve its 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/price/{tenant}/priceModels/{priceModelId}' \
@@ -124,6 +136,10 @@ To define a new price for a product, you need to send a request to the <nobr><Bu
 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -471,6 +487,10 @@ Make sure to set a value for the `currency` field in the request body. Otherwise
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/price/{tenant}/price-lists' \
@@ -509,6 +529,10 @@ A single price list can be associated with multiple regions or countries. For th
 To create a new list-specific price, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-in-price-list" size="small">Adding a new price to a price list</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -609,6 +633,10 @@ Create a sample product through the <nobr><Button to="/openapi/product/#operatio
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' \
@@ -685,6 +713,10 @@ Start with defining a price model with Creating a price model endpoint where the
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/price/{tenant}/priceModels' \
@@ -725,6 +757,10 @@ Now, retrieve the automatically-generated ID of the pricing tier, use the Retrie
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/price/{tenant}/priceModels/{priceModelId}' \
@@ -735,6 +771,10 @@ curl -i -X GET \
 Once you know the tier ID, define a price for the bananas, use the Creating a new price endpoint:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -770,6 +810,10 @@ curl -i -X POST \
 Then, define a price model where the price per kilogram changes based on the ordered quantity:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -820,6 +864,10 @@ Now, retrieve the automatically-generated IDs of the pricing tiers, use the Retr
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/price/{tenant}/priceModels/{priceModelId}' \
@@ -831,6 +879,10 @@ Once you know the tier IDs, define another price for the bananas, use the Creati
 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -878,6 +930,10 @@ Now that you have defined multiple prices for the bananas, you can send a reques
 Check the best price for both one kilogram and ten kilograms of bananas:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -944,6 +1000,10 @@ Define sales tax rates for the desired country by sending a request to the <nobr
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/tax/{tenant}/taxes' \
@@ -1000,6 +1060,10 @@ To update a product with applicable tax classes, send a request to the <nobr><Bu
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X PATCH \
   'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' \
@@ -1021,6 +1085,10 @@ curl -i -X PATCH \
 To calculate a gross price between countries, send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -1066,6 +1134,10 @@ Add the currency in which the price will be retrieved to your configuration of c
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/currency/{tenant}/currencies' \
@@ -1097,6 +1169,10 @@ To define a new exchange rate, send a request to the <nobr><Button to="/openapi/
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/currency/{tenant}/exchanges' \
@@ -1114,6 +1190,10 @@ curl -i -X POST \
 To retrieve a price in the desired currency, send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -1167,6 +1247,10 @@ You can manage your sites through the Emporix API [Site Settings Service](/opena
 To add or update the `includesTax` field in your site's settings, you need to send a request to the <nobr><Button to="/openapi/site-settings/#operation/PATCH-site-settings-update-site" size="small">Partially updating a site</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X PATCH \

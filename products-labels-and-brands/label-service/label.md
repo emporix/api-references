@@ -20,6 +20,10 @@ Firstly, create and add an image for a new label. Design the image and upload it
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/media/{tenant}/assets' \
@@ -34,6 +38,10 @@ curl -i -X POST \
 To create a new label, send the request to the <nobr><Button to="/openapi/label/#operation/POST-label-create-label" size="small">Creating a label</Button></nobr> endpoint using the image you created.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -60,6 +68,10 @@ Copy the label id from the response to provide it in the next step.
 You can now update a product with a newly created label to indicate that shipping is available worldwide for this product. Send the request to the <nobr><Button to="/openapi/product/#operation/PUT-product-update-product" size="small">Upserting a product</Button></nobr> endpoint and provide the label id in the request.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X PUT \

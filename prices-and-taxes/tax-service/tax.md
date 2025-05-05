@@ -39,6 +39,10 @@ Then, send a request to the  <nobr><Button to="/openapi/tax/#operation/PUT-tax-c
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/tax/{tenant}/taxes/calculation-commands' \
@@ -78,6 +82,10 @@ To calculate a price's gross value based on its net value, put the following dat
 Then, send a request to the  <nobr><Button to="/openapi/tax/#operation/PUT-tax-calculate-commands" size="small">Calculating net and gross values for prices</Button></nobr> endpoint:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X PUT \
@@ -145,6 +153,10 @@ To calculate a gross price between countries based on its applicable tax classes
 Then, send a request to the <nobr><Button to="/openapi/tax/#operation/PUT-tax-calculate-commands" size="small">Calculating net and gross values for prices</Button></nobr> endpoint:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X PUT \

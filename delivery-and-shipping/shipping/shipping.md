@@ -48,6 +48,10 @@ Shipping zones are countries that your business delivers products to. You can cr
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/shipping/{tenant}/{site}/zones' \
@@ -73,6 +77,10 @@ You can set up shipping groups for customers and define different shipping metho
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/shipping/{tenant}/{site}/groups' \
@@ -96,6 +104,10 @@ Assign customers to shipping groups by calling the <nobr><Button to="/openapi/sh
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/shipping/{tenant}/{site}/cgrelations' \
@@ -112,6 +124,10 @@ curl -i -X POST \
 Add shipping methods and configure shipping fees by calling the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-shipping-method" size="small">Creating a shipping method</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -172,6 +188,10 @@ Add delivery times by calling the <nobr><Button to="/openapi/shipping/#operation
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/shipping/{tenant}/{site}/zones/{zoneId}/methods' \
@@ -231,6 +251,10 @@ Add delivery time slots by calling the <nobr><Button to="/openapi/shipping/#oper
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/shipping/{tenant}/delivery-times/{deliveryTimeId}/slots?validateOverlap=true' \
@@ -273,6 +297,10 @@ Retrieve delivery windows by calling the <nobr><Button to="/openapi/shipping/#op
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/shipping/{tenant}/{site}/cgrelations/{customerId}' \
@@ -285,6 +313,10 @@ Add the delivery information to the cart by calling the <nobr><Button to="/opena
 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X PUT \

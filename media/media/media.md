@@ -37,6 +37,10 @@ If you want to upload the asset to the database, you need to send a multipart re
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/media/{tenant}/assets' \
@@ -55,6 +59,10 @@ Check out the "Asset of the BLOB type added for a CATEGORY" example:
 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/media/{tenant}/assets' \
@@ -74,6 +82,10 @@ Provide the q parameter in the following format: `q=refIds.id:z7235vn6-5b70-4b3d
 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/media/{tenant}/assets?pageNumber=1&pageSize=60&sort=name%2Cmetadata.createdAt%3Adesc&q=name%3A{name}' \

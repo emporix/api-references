@@ -19,6 +19,10 @@ When creating a free shipping coupon, ensure that the `categoryRestricted` param
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/coupon/{tenant}/coupons' \
@@ -56,6 +60,10 @@ curl -i -X POST \
 To limit a coupon to a specific customer, you need to provide the customer ID in the `restrictions.validFor` array and `issuedTo` field.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
  ```bash
 curl -i -X POST \
@@ -96,6 +104,10 @@ curl -i -X POST \
 To limit a coupon to a specific category, you need to set the `categoryRestricted` parameter to `true` and provide the category ID in the `restrictions.includedCategories` array.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
  ```bash
 curl -i -X POST \
@@ -146,6 +158,10 @@ For more information on managing carts, check out the [*Carts guide*](https://de
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X PATCH \
   'https://api.emporix.io/coupon/{tenant}/coupons/{code}' \
@@ -192,6 +208,10 @@ In the following example, we are changing the maximum number of coupons that can
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
@@ -215,6 +235,10 @@ If you want to apply more than one coupon to a cart, you need to send a separate
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -246,6 +270,10 @@ coupon.coupon_redeem_on_behalf
 ```
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -281,6 +309,10 @@ First, check if your `couponSettings` mixin has already been configured by sendi
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' \
@@ -293,6 +325,10 @@ In this case, to configure referral coupons, you need to send a request to the <
 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -328,6 +364,10 @@ In this case, to configure referral coupons, you need to send a request to the <
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X PATCH \
   'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' \
@@ -346,6 +386,10 @@ First,  check if your `emailTemplates` have already been configured by sending a
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
@@ -357,6 +401,10 @@ If your `emailTemplates` have never been configured before or have been deleted,
 In this case, to configure referral email templates, you need to send a request to the <nobr><Button to="/openapi/configuration/#operation/POST-configuration-create-config" size="small">Creating configurations</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -419,6 +467,10 @@ To add referral email templates to an existing `emailTemplates` configuration, y
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
@@ -462,6 +514,10 @@ To manually generate a referral coupon for a specific customer, you need to send
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/coupon/{tenant}/referral-coupons/{customerNumber}' \
@@ -473,6 +529,10 @@ curl -i -X POST \
 To retrieve referral coupon information for a specific customer, you need to send a request to the <nobr><Button to="/openapi/coupon/#operation/GET-coupon-retrieve-referral-coupon" size="small">Retrieving customer's referral coupon code</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X GET \

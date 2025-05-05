@@ -26,6 +26,10 @@ This tutorial demonstrates creating and using sequential IDs for order numbers.
 To create a schema for sequential IDs creation, send the request to the <nobr><Button to="/openapi/sequential-id/#operation/POST-sequential-id-create-tenant-schema" size="small">Creating a schema</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/sequential-id/{tenant}/schemas' \
@@ -63,6 +67,10 @@ The values of the placeholder properties are resolved dynamically from the defin
 To get the created schema details, make a call to the <nobr><Button to="/openapi/sequential-id/#operation/GET-sequential-id-retrieve-schema" size="small">Retrieving a schema</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/sequential-id/{tenant}/schemas/{schemaId}' \
@@ -76,6 +84,10 @@ Copy the schema ID.
 Activate the schema to apply it in the system so that the order numbers follow the new pattern. Send the request to the <nobr><Button to="/openapi/sequential-id/#operation/POST-sequential-id-activate-schema" size="small">Activating a schema</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/sequential-id/{tenant}/schemas/{schemaId}/setActive' \
@@ -89,6 +101,10 @@ Provide the `sequenceSchemaID` in the request.
 Now, you can generate the order IDs that follow the new schema. To create a sequence ID, make a call to the <nobr><Button to="/openapi/sequential-id/#operation/POST-sequential-id-create-schema-type-nextId" size="small">Creating a nextId for schema type</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/sequential-id/{tenant}/schemas/types/{schemaType}/nextId?siteCode=string' \

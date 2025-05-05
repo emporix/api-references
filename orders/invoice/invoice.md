@@ -20,6 +20,10 @@ Use the parameters for an order query in case of an automatic job type:
 To set up the invoice configuration, call the <nobr><Button to="/openapi/configuration/#operation/POST-configuration-create-config" size="small">Creating new configurations</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/configuration/{tenant}/configurations' \
@@ -42,6 +46,10 @@ curl -i -X POST \
 This configuration is used to set up the format of invoice numbers. Set up the numbers by invoking the sequential id service with the <nobr><Button to="/openapi/sequential-id/#operation/POST-sequential-id-create-schema" size="small">Creating a new schema</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -69,6 +77,10 @@ The logo URL configuration allows to upload a custom logo that should be visible
 Add your company logo to the invoice with the <nobr><Button to="/openapi/site-settings/#operation/POST-site-settings-create-site-mixin" size="small">Creating a site mixin</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' \

@@ -47,6 +47,10 @@ Customers from the `B2B_BUYER` group can create approval only when the cost of t
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 **POST /approval/create-approval**
 
 ```bash

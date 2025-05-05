@@ -25,6 +25,10 @@ Create a customer segment by sending a request to the the <nobr><Button to="/ope
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/customer-segment/{tenant}/segments' \
@@ -56,6 +60,10 @@ Connect the segment with specific products and/or categories for more customized
 endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/items/{type}/{itemId}' \
@@ -79,6 +87,10 @@ curl -i -X PUT \
 endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/items/{type}/bulk' \
@@ -98,6 +110,10 @@ Now, add customers to the segment. Depending on your setup and purpose, you can 
 * To add a B2B customer, send the request to the <nobr><Button to="/openapi/customer-segment/#operation/PUT-customer-segment-update-customer" size="small">[B2B] Updating a customer assignment</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/customers/{customerId}/{legalEntityId}' \
@@ -120,6 +136,10 @@ curl -i -X PUT \
 * To add a B2C customer, send the request to the <nobr><Button to="/openapi/customer-segment/#operation/PUT-customer-segment-update-customer-by-customerId" size="small">[B2C] Updating a customer assignment</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/customers/{customerId}/{legalEntityId}' \
@@ -142,6 +162,10 @@ curl -i -X PUT \
 * To add multiple customers at once, send the request to the <nobr><Button to="/openapi/customer-segment/#operation/PUT-customer-segment-update-customers-bulk" size="small">Updating multiple customer assignments</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/customers/bulk' \
@@ -183,6 +207,10 @@ Optionally, you can offer a discount coupon to a customer segment. The coupon th
 To create a coupon that is valid only for a specific segment, send the request to the <nobr><Button to="/openapi/coupon/#operation/POST-coupon-create-coupon" size="small">Creating a new coupon</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/coupon/{tenant}/coupons' \
@@ -233,6 +261,10 @@ To display the content you want, first retrieve all the products/categories assi
 Send the request to the <nobr><Button to="/openapi/customer-segment/#operation/GET-customer-segment-retrieve-segments-items" size="small">Retrieving all items assignments for all customer segments</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/customer-segment/{tenant}/segments/items?q=string&pageSize=string&pageNumber=string&sort=string&fields=string&legalEntityId=string&siteCode=string&onlyActive=false' \
@@ -249,6 +281,10 @@ If you want to use segments to restrict the content on your storefront, to displ
 Send the request to the <nobr><Button to="/openapi/customer-segment/#operation/GET-customer-segment-retrieve-category-trees" size="small">Retrieving category trees for a customer segments</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/customer-segment/{tenant}/segments/items/category-trees?legalEntityId=string&siteCode=string' \
@@ -261,6 +297,10 @@ The request generates a category tree with categories assigned to a segment and 
 To filter products that belong to a category that is assigned to a particular segment, send the request to the <nobr><Button to="/openapi/customer-segment/#operation/GET-category-tree-retrieve-category-assignments" size="small">Retrieving resources assigned to a category</Button></nobr> endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments?assignmentType=PRODUCT&ref.localizedName=Twix&ref.id=5c3348bda9812100098ffaa3&showUnpublished=true&withSubcategories=true&segmentsIds=segmentId1%2CsegmentId2&pageNumber=1&pageSize=60&sort={fieldName}%3AASC%2C{fieldName2}%3ADESC&hideUnpublishedProducts=false' \

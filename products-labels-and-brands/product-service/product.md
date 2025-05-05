@@ -49,6 +49,10 @@ To define sales tax rates for a country, you need to send a request to the Creat
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/tax/{tenant}/taxes' \
@@ -94,6 +98,10 @@ curl -i -X POST \
 To add a single basic product, you need to send a request to the Creating a new product endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -161,6 +169,10 @@ You can also add multiple basic products at the same time. To achieve that, you 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' \
@@ -204,6 +216,10 @@ For more information, check out the [_Media Management Tutorials_](../../content
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/media/{tenant}/assets' \
@@ -244,6 +260,10 @@ The `product.product_publish` scope is only required if you want to publish the 
 You can create a product template that contains additional attributes describing your product. To create a new product template, you need to call the Creating a new product template endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -307,6 +327,10 @@ When creating or updating a product of the `PARENT_VARIANT` type, by default, pr
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' \
@@ -386,6 +410,10 @@ You can group together two or more products that already exist in the system so 
 In this example, we will create a bundle of the T-shirt product we created above, and join it with the socks product that already exists.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' \
@@ -480,6 +508,10 @@ The product template can contain more attributes and values than are needed to c
 To create a single `parent_variant` type of product with variants, you need to send a request to the Creating a new product endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -581,6 +613,10 @@ curl -i -X POST \
 If you want to create multiple `parent_variant` products at the same time, send a request to the Creating multiple products endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -892,6 +928,10 @@ To specify new values for your product's attributes, you need to add them in the
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/product/{tenant}/product-templates/{product-template-id}' \
@@ -1010,6 +1050,10 @@ When creating or updating a product of the `PARENT_VARIANT` type, by default, pr
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X PATCH \
   'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' \
@@ -1085,6 +1129,10 @@ In the following example, we override the following fields:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/product/{tenant}/products/{productId}?partial=false&skipVariantGeneration=false&doIndex=true' \
@@ -1133,6 +1181,10 @@ The `product.product_publish` and `product.product_unpublish` scopes are only re
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X PUT \

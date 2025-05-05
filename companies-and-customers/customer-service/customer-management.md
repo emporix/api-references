@@ -27,6 +27,10 @@ A location is a physical address where a company operates, such as its headquart
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/customer-management/{tenant}/locations' \
@@ -68,6 +72,10 @@ The `id` from the response is further referred to as `locationId`.
 A legal entity is a representation of a company. To add a new legal entity, you need to send a request to the <nobr><Button to="/openapi/customer-management/#operation/POST-customer-mgmt-create-legal-entity" size="small">Creating a new legal entity</Button></nobr> endpoint and provide the `locationId` in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -131,6 +139,10 @@ To find out what a company's ID is, you need to send a request to the <nobr><But
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/customer-management/{tenant}/legal-entities?pageNumber=1&pageSize=16&sort=name%2Cmetadata.createdAt%3Adesc&q=name%3A~john&fields=name%2Ctype&id=string&name=string&type=COMPANY&parentId=string&legalInfo.legalName=string&legalInfo.registrationDate=string&legalInfo.taxRegistrationNumber=string&legalInfo.registrationAgency=string&legalInfo.countryOfRegistration=string&legalInfo.registrationId=string' \
@@ -149,6 +161,10 @@ The `id` from the response is further referred to as `parentId`.
 Subsidiaries are added similarly to their parent companies. To add a new subsidiary, send a request to the <nobr><Button to="/openapi/customer-management/#operation/POST-customer-mgmt-create-legal-entity" size="small">Creating a new legal entity</Button></nobr> endpoint. In the request body, set the `type` field to `SUBSIDIARY` and provide the `parentId`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -230,6 +246,10 @@ To find out what a company's ID is, you need to send a request to the <nobr><But
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/customer-management/{tenant}/legal-entities?pageNumber=1&pageSize=16&sort=name%2Cmetadata.createdAt%3Adesc&q=name%3A~john&fields=name%2Ctype&id=string&name=string&type=COMPANY&parentId=string&legalInfo.legalName=string&legalInfo.registrationDate=string&legalInfo.taxRegistrationNumber=string&legalInfo.registrationAgency=string&legalInfo.countryOfRegistration=string&legalInfo.registrationId=string' \
@@ -249,6 +269,10 @@ To retrieve an employee's customer ID, you need to send a request to the <nobr><
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/customer/{tenant}/customers?q=contactEmail%3A{email}&sort=string&pageNumber=1&pageSize=60&expand=string' \
@@ -267,6 +291,10 @@ A contact represents an employee of one or more business customers.
 To assign a contact to a legal entity (in this case, the desired company), you need to send a request to the <nobr><Button to="/openapi/customer-management/#operation/POST-customer-mgmt-create-contact-assignment" size="small">Creating a new contact assignment</Button></nobr> endpoint and provide `legalEntityId` and `customerId` in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \

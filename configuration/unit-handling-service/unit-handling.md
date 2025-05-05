@@ -19,6 +19,10 @@ Looking for more info on localization? Check out [_Standard practices_](../../co
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 [Broken link](broken-reference "mention")
 
 ```bash
@@ -44,6 +48,10 @@ You can convert between any measurement units that share the same base unit, suc
 To convert between units, you need to send a request to the [Converting units ](broken-reference)endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 [Broken link](broken-reference "mention")
 

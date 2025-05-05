@@ -71,6 +71,10 @@ To retrieve your tenant's language configuration, you need to send a request to 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 [Broken link](broken-reference "mention")
 
 ```bash
@@ -88,6 +92,10 @@ The id in the request body must be compliant with the [ISO 4217 standard](https:
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 [Broken link](broken-reference "mention")
 
@@ -110,6 +118,10 @@ To retrieve a particular site's language configuration, you need to send a reque
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 [Broken link](broken-reference "mention")
 
 ```bash
@@ -127,6 +139,10 @@ The currency code must be compliant with the [ISO 4217 standard](https://en.wiki
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 [Broken link](broken-reference "mention")
 

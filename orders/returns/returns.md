@@ -15,6 +15,10 @@ seo:
  In the following example, we are changing the expiration date offset to 14 days.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
@@ -68,6 +72,10 @@ The `returns.returns_read` and `returns.returns_manage` scopes are only required
 
  
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/return/{tenant}/returns' \
@@ -132,6 +140,10 @@ The `returns.returns_read_own` and `returns.returns_manage_own` scopes are only 
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/return/{tenant}/returns' \
@@ -201,6 +213,10 @@ The `returns.returns_read` and `returns.returns_manage` scopes are only required
 In this scenario, the customer updates the reason for the return. 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/return/{tenant}/returns/{returnId}' \
@@ -263,6 +279,10 @@ The `returns.returns_read_own` and `returns.returns_manage_own` scopes are only 
 In this scenario, the employee updates the approval status of the return request.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/return/{tenant}/returns/{returnId}' \
