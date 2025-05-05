@@ -4,16 +4,6 @@ seo:
   description: language, languages
 ---
 
-# Language Tutorials
-
-import {\
-Button,\
-OpenApiTryIt,\
-ExplainStep\
-} from '@redocly/developer-portal/ui';
-
-## Language Configuration Tutorials
-
 While the Emporix e-commerce system is designed in English, you can specify languages in which your business communicates with suppliers and customers. Languages are used when generating the following resources:
 
 * Business reports
@@ -23,7 +13,7 @@ While the Emporix e-commerce system is designed in English, you can specify lang
 * Picklists
 * Shipping notes
 
-### Supported languages
+## Supported languages
 
 The Emporix e-commerce system supports all existing languages, including regional language variants such as American English or Swiss German. By default, both your Emporix tenant and its main site have their language set to English.
 
@@ -33,7 +23,7 @@ Currently, the Emporix e-commerce system does not offer translation services.
 To learn how to localize and translate your business's resources, check out the developer guides for particular services.
 {% endhint %}
 
-### Language configurations
+## Language configurations
 
 Languages are configured both tenant-wide and independently for particular sites.
 
@@ -71,11 +61,11 @@ Site-specific language configuration is stored in the `defaultLanguage` and `lan
 For more information on the `Site` object, check out the [_Site Settings Service guide_](../../content/site-settings/).
 {% endhint %}
 
-### Managing language configurations through Emporix API
+## Managing language configurations through Emporix API
 
 Check out the following tutorials to learn more about language configuration with Emporix API.
 
-#### How to check which languages are configured for your tenant
+## How to check which languages are configured for your tenant
 
 To retrieve your tenant's language configuration, you need to send a request to the [Retrieving a configuration](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey) endpoint.
 
@@ -89,7 +79,7 @@ curl -L \
   --header 'Accept: */*'
 ```
 
-#### How to change your tenant's language configuration
+## How to change your tenant's language configuration
 
 To change your tenant's language configuration, you need to send a request to the [Updating a configuration](broken-reference) endpoint with updated language information in the request body.
 
@@ -114,7 +104,7 @@ curl -L \
   }'
 ```
 
-#### How to check which languages are configured for a particular site
+## How to check which languages are configured for a particular site
 
 To retrieve a particular site's language configuration, you need to send a request to the [Retrieving a site](broken-reference) endpoint. The language configuration will be returned in the the `defaultLanguage` and `language` fields in the response body.
 
@@ -128,7 +118,7 @@ curl -L \
   --header 'Accept: */*'
 ```
 
-#### How to change a particular site's language configuration
+## How to change a particular site's language configuration
 
 To change a particular site's language configuration, you need to call the [Partially updating a site](broken-reference) endpoint with language configuration of your choice in the request body.
 

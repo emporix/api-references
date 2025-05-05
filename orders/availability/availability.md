@@ -2,20 +2,9 @@
 seo:
   title: Availability Service Tutorials
   description: availability, location, stock level,
-toc:
-  enable: true
-tocMaxDepth: 2
-editPage:
-  disable: true
-label: Tutorials
 ---
 
-
-import { Preview } from '../components/Preview.tsx'
-
-# Availability Service Tutorials
-
-## How to specify availability, popularity, or stock level for a product
+# How to specify availability, popularity, or stock level for a product
 
 {% hint style="warning" %} This tutorial describes how to specify availability, popularity, and stock level for a single product.
 {% endhint %}
@@ -24,34 +13,42 @@ Information about a specific product's availability, popularity, and stock level
 
 Take a look at the relationships between the `Availability` object and other resources in the Emporix Commerce Engine:
 
-<Preview src="/docs/availability/availability.svg"></Preview>
+<figure><img src="../../../../static/availability/availability.svg" alt=""><figcaption></figcaption></figure>
 
-### Before you start
+
+## Before you start
 
 Make sure you created a product. For more information, check out [*How to add your first product*](/content/product/#how-to-add-your-first-product).
 
-### Create the `Availability` object
+## Create the `Availability` object
 
 To add availability-related information for a specific product, you need to send a request to the <Button to="/openapi/availability/#operation/POST-availability-add-product" size="small">Creating a new availability for a product</Button> endpoint. 
 
-<OpenApiTryIt
-  definitionId="availability"
-  operationId="POST-availability-add-product"
-  id="step1"
-  parameters={{
-    path: {
-      tenant: "{tenant}",
-      productId: "{productId}"
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/availability/{tenant}/availability/{productId}/{site}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "stockLevel": 10,
+    "available": true,
+    "popularity": 5,
+    "distributionChannel": "ASSORTMENT",
+    "metadata": {
+      "mixins": {
+        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
+      }
+    },
+    "mixins": {
+      "productCustomAttributes": {
+        "minOrderQuantity": 2
+      }
     }
-    }}
-  properties={{ 
-    id: "{siteCode}:{productId}", 
-    site: "{siteCode}", 
-    productId: "{productId}" 
-    }}
-/>
+  }'
+  ```
 
-### Retrieve the availability information of a product
+## Retrieve the availability information of a product
 
 To check if a product's availability was added successfully, you need to send a request to the <Button to="/openapi/availability/#operation/GET-availability-retrieve-product" size="small">Retrieving a product's availability</Button> endpoint with the product's ID in the request body.
 
@@ -59,23 +56,14 @@ To check if a product's availability was added successfully, you need to send a 
 You can also retrieve availability information for multiple products at once by sending a request to the <Button to="/openapi/availability/#operation/POST-availability-search-products-site" size="small">Retrieving product availabilities for a site</Button> endpoint. 
 {% endhint %}
 
-<OpenApiTryIt
-  definitionId="availability"
-  operationId="GET-availability-retrieve-product"
-  id="step2"
-  needs={['step1']}
-  parameters={{
-    path: {
-      tenant: "{tenant}",
-      productId: "{productId}"
-    },
-    query: {
-      site: "{siteCode}"
-    }
-  }}
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/availability/{tenant}/availability/{productId}/{site}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
 
-## How to calculate a product bundle's stock level
+# How to calculate a product bundle's stock level
 
 The Availability Service makes it possible to automatically calculate the stock level of a product bundle. The value is always equal to the lowest stock level of the bundled products.
 
@@ -85,7 +73,7 @@ For a product bundle's availability to be calculated, all products in the bundle
 
 {% endhint %}
 
-### Before you start
+## Before you start
 
 Make sure the following requirements are fulfilled:
 
@@ -110,23 +98,16 @@ For instructions, check out [How to create a bundle of personalized products](/c
 
 {% endhint %}
 
-### Retrieve the product bundle's availability information
+## Retrieve the product bundle's availability information
 
 To find out what the stock level of a product bundle is, you need to send a request to the <Button to="/openapi/availability/#operation/GET-availability-retrieve-product" size="small">Retrieving a product's availability</Button> endpoint with the product bundle's ID in the path.
 
-<OpenApiTryIt
-  definitionId="availability"
-  operationId="GET-availability-retrieve-product"
-  parameters={{
-    path: {
-      tenant: "{tenant}",
-      productId: "{productBundleId}"
-    },
-    query: {
-      site: "{siteCode}"
-    }
-  }}
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/availability/{tenant}/availability/{productId}/{site}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
 
 The response includes both the availability information of the bundle as a whole, as well as the bundled products.
 

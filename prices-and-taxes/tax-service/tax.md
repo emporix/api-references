@@ -4,15 +4,11 @@ seo:
   description: tax, taxes, tax classes, tax class, tax configuration
 ---
 
-
-
-# Tax Service Tutorials
-
-## How to calculate net and gross values for prices
+# How to calculate net and gross values for prices
 
 You can calculate net and gross values for prices through the <nobr><Button to="/openapi/tax/#operation/PUT-tax-calculate-commands" size="small">Calculating net and gross values for prices</Button></nobr> endpoint.
 
-### Before you start
+## Before you start
 
 Make sure you configured sales tax rates through the Emporix API Tax Service.
 
@@ -22,7 +18,7 @@ For instructions, check out [*How to add your first product*](/content/product/#
 
 {% endhint %}
 
-### Convert a gross price to a net price
+## Convert a gross price to a net price
 
 To calculate a price's net value based on its gross value, put the following data in the request body:
 
@@ -41,25 +37,28 @@ To calculate a price's net value based on its gross value, put the following dat
 
 Then, send a request to the  <nobr><Button to="/openapi/tax/#operation/PUT-tax-calculate-commands" size="small">Calculating net and gross values for prices</Button></nobr> endpoint:
 
-<OpenApiTryIt
-  definitionId="tax"
-  operationId="PUT-tax-calculate-commands"
-  defaultExample="Gross to net"
-  properties={{
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/tax/{tenant}/taxes/calculation-commands' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
     "input": {
-    "targetLocation": {
-      "countryCode": "DE"
-    },
-    "targetTaxClass": "STANDARD",
-    "includesTax": true,
-    "price": "1.99"
-  }
-  }}
-/>
+      "targetLocation": {
+        "countryCode": "DE"
+      },
+      "targetTaxClass": "STANDARD",
+      "includesTax": true,
+      "price": 1.59
+    }
+  }'
+```
 
 The calculated net value is returned in the `output.netPrice` field.
 
-### Convert a net price to a gross price
+## Convert a net price to a gross price
 
 To calculate a price's gross value based on its net value, put the following data in the request body:
 
@@ -78,26 +77,29 @@ To calculate a price's gross value based on its net value, put the following dat
 
 Then, send a request to the  <nobr><Button to="/openapi/tax/#operation/PUT-tax-calculate-commands" size="small">Calculating net and gross values for prices</Button></nobr> endpoint:
 
-<OpenApiTryIt
-  definitionId="tax"
-  operationId="PUT-tax-calculate-commands"
-  defaultExample="Net to gross"
-  properties={{
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/tax/{tenant}/taxes/calculation-commands' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
     "input": {
-    "targetLocation": {
-      "countryCode": "DE"
-    },
-    "targetTaxClass": "STANDARD",
-    "includesTax": false,
-    "price": "1.99"
-  }
-  }}
-/>
+      "targetLocation": {
+        "countryCode": "DE"
+      },
+      "targetTaxClass": "STANDARD",
+      "includesTax": false,
+      "price": "1.99"
+    }
+  }'
+```
 
 
 The calculated gross value is returned in the `output.grossPrice` field.
 
-## How to calculate gross values between countries
+# How to calculate gross values between countries
 
 You can calculate a gross price in one country to a gross price in another country through the  <nobr><Button to="/openapi/tax/#operation/PUT-tax-calculate-commands" size="small">Calculating net and gross values for prices</Button></nobr> endpoint.
 
@@ -109,7 +111,7 @@ To learn how to calculate gross prices between countries based on `Price` object
 
 {% endhint %}
 
-### Before you start
+## Before you start
 
 Make sure you configured sales tax rates through the Emporix API Tax Service.
 
@@ -119,7 +121,7 @@ For instructions, check out [*How to add your first product*](/content/product/#
 
 {% endhint %}
 
-### Calculate the price
+## Calculate the price
 
 To calculate a gross price between countries based on its applicable tax classes, put the following data in the request body:
 
@@ -142,24 +144,27 @@ To calculate a gross price between countries based on its applicable tax classes
 
 Then, send a request to the <nobr><Button to="/openapi/tax/#operation/PUT-tax-calculate-commands" size="small">Calculating net and gross values for prices</Button></nobr> endpoint:
 
-<OpenApiTryIt
-  definitionId="tax"
-  operationId="PUT-tax-calculate-commands"
-  defaultExample="Gross in one country to gross in another country"
-  properties={{
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/tax/{tenant}/taxes/calculation-commands' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
     "input": {
-        "sourceLocation": {
-            "countryCode": "DE"
-        },
-        "sourceTaxClass": "STANDARD",
-        "targetLocation": {
-            "countryCode": "AT"
-        },
-        "targetTaxClass": "STANDARD",
-        "includesTax": true,
-        "price": "1.99"
+      "sourceLocation": {
+        "countryCode": "DE"
+      },
+      "sourceTaxClass": "STANDARD",
+      "targetLocation": {
+        "countryCode": "AT"
+      },
+      "targetTaxClass": "STANDARD",
+      "includesTax": true,
+      "price": "1.99"
     }
-  }}
-/>
+  }'
+```
 
 The calculated gross price is returned in the `output.grossPrice` field.

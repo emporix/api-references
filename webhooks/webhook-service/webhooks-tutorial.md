@@ -1,20 +1,5 @@
 # Webhooks Tutorial
 
-## Webhooks Tutorial
-
-***
-
-### seo: title: Webhook Service Tutorials description: webhooks, webhook, events, event
-
-import {\
-Alert,\
-Button,\
-OpenApiTryIt,\
-ExplainStep\
-} from '@redocly/developer-portal/ui';
-
-## Webhook Service Tutorials
-
 The Emporix Webhook Event Publishing works in the following way:
 
 1. When an event takes place and you subscribed to receiving notifications about this event, a message is sent to the Webhook Service.
@@ -25,7 +10,7 @@ The Emporix Webhook Event Publishing works in the following way:
 For example, if you create a catalog in the Emporix environment, a notification is sent to the Webhook service. The service passes the message to the Event Gateway. If you configured the "Create a new catalog" endpoint beforehand, you will receive the notification that a new catalog has been created.
 {% endhint %}
 
-### How to configure webhook notifications
+## How to configure webhook notifications
 
 To receive notifications from Emporix API services, you need to subscribe to specific events by following the process below:
 
@@ -43,7 +28,7 @@ To receive notifications from Emporix API services, you need to subscribe to spe
 By default, the maximum number of events per tenant is limited to 5000/month. The limit resets on the first day of each month. If you want to publish more events, contact Emporix Support.
 {% endhint %}
 
-#### Retrieve all subscriptions
+### Retrieve all subscriptions
 
 Before you subscribe to events, you need to check for any active subscriptions by sending a request to the Retrieving all subscriptions endpoint.
 
@@ -53,7 +38,16 @@ If the subscription to the event of your choice already exists and you want to u
 If there is no prior subscription to the event of your choice, the `metadata.version` is empty. It is automatically set to `1` when you send a request to the Subscribing and unsubscribing from events endpoint.
 {% endhint %}
 
-#### Subscribe to events
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/webhook/{tenant}/event-subscriptions' \
+  -H 'Accept-Language: fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
+
+### Subscribe to events
 
 To receive notifications about events, for example creating or updating a catalog in the **Catalog Service**, you need to subscribe to them by using the Webhook Service.
 
@@ -61,41 +55,43 @@ To subscribe to an event, you need to send a request to the Subscribing and unsu
 
 In this example, you will subscribe to the following events: `catalog.created` and `catalog.updated`.
 
-\<OpenApiTryIt\
-definitionId="webhook"\
-operationId="PATCH-webhook-manage-event-subscriptions"\
-properties={\[\
-{\
-eventType: "catalog.created",\
-action: "SUBSCRIBE",\
-metadata: {\
-version: 1\
-}\
-},\
-{\
-"eventType": "catalog.updated",\
-"action": "SUBSCRIBE",\
-"metadata": {\
-"version": 1\
-}\
-}\
-]\
-}\
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/webhook/{tenant}/event-subscriptions' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "eventType": "catalog.created",
+    "action": "SUBSCRIBE",
+    "fieldsToSubscribe": [
+      "name"
+    ],
+    "fieldsToUnsubscribe": [
+      "description"
+    ],
+    "metadata": {
+      "version": 1
+    }
+  },
+  {
+    "eventType": "catalog.updated",
+    "action": "SUBSCRIBE",
+    "metadata": {
+      "version": 1
+    }
+  }'
+  ```
 
-{% hint style="info" %}
-**Learn about the `index.item-updated` event's specific behavior**
+**Learn about the `index.item-updated` event's specific behavior:**
 
-##
-
-The `index.item-updated` webhook event is emitted whenever there is a change on an item in the system - the index is updated with the new information.\
-For the event to be triggered, a product must have at least one defined **price**, as it is the price that determines products indexing on a specific site.\
+The `index.item-updated` webhook event is emitted whenever there is a change on an item in the system - the index is updated with the new information.
+For the event to be triggered, a product must have at least one defined **price**, as it is the price that determines products indexing on a specific site.
 Bear in mind all the events are site-specific, which means that they are linked to activities happening on particular sites.\
 The prices are also site-specific, and a single price can be associated with multiple sites.\
 The number of events triggered in the system depends on **the number of sites** assigned to a specific product’s prices, with one event emitted per each site.
 
 Example:
-{% endhint %}
 
 | productid | price with associated sites       | number of emitted events | sites the event was emitted to |
 | --------- | --------------------------------- | ------------------------ | ------------------------------ |
@@ -103,26 +99,33 @@ Example:
 | 234       | $10 - site A, $15 - sites A, B, C | 3                        | A, B, C                        |
 | 345       | no price                          | 0                        | none                           |
 
-{% hint style="info" %}
+
 * A product _123_ has one assigned price of _$10_, associated with two sites _A_ and _B_. When you update the product _123_, the number of emitted `index.item-updated` events is **2** as there are two sites associated with the product price.
 * A product _234_ has two assigned prices: _$10_ associated with site _A_ and _$15_ associated with site _A_, _B_, and _C_. So when you update the product _234_, the `index.item-updated` event runs **3** times, as there are three sites affected.
 * A product _345_ has no defined price. So when you update the _345_ product, the `index.item-updated` is not emitted as no site is associated with the product.
-{% endhint %}
 
-#### Connect to the Event Gateway
+
+### Connect to the Event Gateway
 
 You need to have access to the Event Gateway to connect the tenant with their consumer application.
 
 When you subscribe to events, you will receive an email with an automatically generated link to the application portal.
 
-To generate the login link with the authentication token needed to connect a tenant to their consumer application portal, you need to send a request to the Retrieving a dashboard access URL\
-endpoint.
+To generate the login link with the authentication token needed to connect a tenant to their consumer application portal, you need to send a request to the Retrieving a dashboard access URL endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/webhook/{tenant}/dashboard-access' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
 
 {% hint style="warning" %}
 You can use your Emporix tenant ID as application ID in Svix.
 {% endhint %}
 
-#### Configure your endpoints
+### Configure your endpoints
 
 To receive notifications about the events you subscribed to in [_Subscribe to events_](webhooks-tutorial.md#subscribe-to-events), on the Event Gateway, you need to configure endpoints that relate to those events.
 

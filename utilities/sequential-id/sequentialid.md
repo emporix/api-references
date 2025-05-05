@@ -4,10 +4,6 @@ seo:
   description: Sequential Ids Schema Management
 ---
 
-
-
-# Sequential ID Service Tutorials
-
 The Sequential ID Service serves for generating subsequential unique IDs for such objects as orders, invoices, quotes, pick-packs, or similar. 
 Define a pattern how such IDs should look like in a schema for specific objects, use placeholders for computing certain values dynamically, and the Sequential ID Service takes care of following the defined sequence.
 
@@ -25,46 +21,34 @@ To add your custom sequence ID schema, make sure you provide the correct `schema
 
 This tutorial demonstrates creating and using sequential IDs for order numbers.
 
-### Create a sequence schema
+## Create a sequence schema
 
 To create a schema for sequential IDs creation, send the request to the <nobr><Button to="/openapi/sequential-id/#operation/POST-sequential-id-create-tenant-schema" size="small">Creating a schema</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="sequential-id"
-  operationId="POST-sequential-id-create-tenant-schema"
-  properties={{
-    "name": "OrderNumberSchema",
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/sequential-id/{tenant}/schemas' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "testSchema",
     "schemaType": "orderNoSequence",
-    "preText": "ORDER-__year__-__month__-__day__-__hour__-__minute__-__second__-__country__",
-    "postText": "-N",
+    "preText": "C-__year__-__month__-",
+    "postText": "-D",
     "maxValue": 999999999,
-    "numberOfDigits": 4,
-    "startValue": 1,
+    "numberOfDigits": 9,
+    "startValue": 3,
     "placeholders": {
-        "__year__": {
-            "required": true
-        },
-        "__month__": {
-            "required": true
-        },
-        "__day__": {
-            "required": true
-        },
-        "__hour__": {
-            "required": true
-        },
-        "__minute__": {
-            "required": true
-        },
-        "__second__": {
-            "required": true
-        },
-        "__country__": {
-            "required": true
-        }
+      "__year__": {
+        "required": true
+      },
+      "__month__": {
+        "required": true
+      }
     }
-  }}
-  />
+  }'
+```
 
 {% hint style="warning" %}
 
@@ -74,43 +58,50 @@ The values of the placeholder properties are resolved dynamically from the defin
 
 {% endhint %}
 
-### Retrieve the created schema
+## Retrieve the created schema
 
 To get the created schema details, make a call to the <nobr><Button to="/openapi/sequential-id/#operation/GET-sequential-id-retrieve-schema" size="small">Retrieving a schema</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="sequential-id"
-  operationId="GET-sequential-id-retrieve-schema"
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/sequential-id/{tenant}/schemas/{schemaId}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
 
 Copy the schema ID.
 
-### Activate the schema
+## Activate the schema
 
 Activate the schema to apply it in the system so that the order numbers follow the new pattern. Send the request to the <nobr><Button to="/openapi/sequential-id/#operation/POST-sequential-id-activate-schema" size="small">Activating a schema</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="sequential-id"
-  operationId="POST-sequential-id-activate-schema"
-/>
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/sequential-id/{tenant}/schemas/{schemaId}/setActive' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
 
 Provide the `sequenceSchemaID` in the request.
 
-### Generate a sequence ID based on the schema
+## Generate a sequence ID based on the schema
 
 Now, you can generate the order IDs that follow the new schema. To create a sequence ID, make a call to the <nobr><Button to="/openapi/sequential-id/#operation/POST-sequential-id-create-schema-type-nextId" size="small">Creating a nextId for schema type</Button></nobr> endpoint.
 
-<OpenApiTryIt
-  definitionId="sequential-id"
-  operationId="POST-sequential-id-create-schema-type-nextId"
-  properties={{
-    "sequenceKey": "2025-03",
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/sequential-id/{tenant}/schemas/types/{schemaType}/nextId?siteCode=string' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "sequenceKey": "2016-05",
     "placeholders": {
-      "__year__": "2025",
-      "__month__": "03"
-  }
-  }}
-/>
+      "__year__": "2016",
+      "__month__": "05"
+    }
+  }'
+  ```
 
 In the query parameter, pass the `siteCode` of a site where you want to use the schema to ensure the placeholder values are replaced in a fly.
 
