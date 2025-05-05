@@ -72,50 +72,10 @@
               kind: openapi
               spec: ai-api
         ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: ai-api
-        ```
 * [Configuration](configuration/README.md)
   * [Configuration Service](configuration/configuration-service/README.md)
     * [Language Tutorials](configuration/configuration-service/language.md)
     * [API Reference](configuration/configuration-service/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: configuration-api
-        ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: configuration-api
-        ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: configuration-api
-        ```
       * ```yaml
         props:
           models: true
@@ -139,69 +99,9 @@
               kind: openapi
               spec: country-api
         ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: country-api
-        ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: country-api
-        ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: country-api
-        ```
   * [Currency Service](configuration/currency-service/README.md)
     * [Currency Tutorial](configuration/currency-service/currency.md)
     * [API Reference](configuration/currency-service/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: currency-api
-        ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: currency-api
-        ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: currency-api
-        ```
       * ```yaml
         props:
           models: true
@@ -225,36 +125,6 @@
               kind: openapi
               spec: unit-handling-api
         ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: unit-handling-api
-        ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: unit-handling-api
-        ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: unit-handling-api
-        ```
   * [Site Settings Service](configuration/site-settings-service/README.md)
     * [Site Settings Tutorial](configuration/site-settings-service/site-settings.md)
     * [API Reference](configuration/site-settings-service/api-reference/README.md)
@@ -268,69 +138,9 @@
               kind: openapi
               spec: site-settings-api
         ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: site-settings-api
-        ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: site-settings-api
-        ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: site-settings-api
-        ```
   * [Indexing Service](configuration/indexing-service/README.md)
     * [Indexing Tutorial](configuration/indexing-service/indexing.md)
     * [API Reference](configuration/indexing-service/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: indexing-api
-        ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: indexing-api
-        ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: indexing-api
-        ```
       * ```yaml
         props:
           models: true
