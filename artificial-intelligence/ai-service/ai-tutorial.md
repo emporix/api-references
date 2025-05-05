@@ -8,7 +8,7 @@
 
  ## How to generate an AI supported text for a product
 
-You can generate the text by sending a request based on a provided prompt. To send the request, use the {% content-ref url="./artificial-intelligence/ai-service/api-reference/text-generation" %} . {% endcontent-ref %} endpoint.
+You can generate the text by sending a request based on a provided prompt. To send the request, use the {% content-ref url="./artificial-intelligence/ai-service/api-reference" %} . {% endcontent-ref %} endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
