@@ -8,7 +8,7 @@ Make sure to configure your API token. To do that, you can use the [Configuratio
 
 ## How to generate an AI supported text for a product
 
-You can generate the text by sending a request based on a provided prompt. To send the request, use the [Text Generation](broken-reference/) endpoint.
+You can generate the text by sending a request based on a provided prompt. To send the request, use the [Text Generation](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/artificial-intelligence/ai-service/api-reference/text-generation) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -33,13 +33,7 @@ curl -i -X POST \
 Completion is generated based on chat history. It's a generated response or continuation of a conversation, crafted by the AI to address the given input in context.\
 It can include answering questions, providing suggestions, or completing a sentence or thought.\
 The currently supported AI engine for the completion is [OpenAI](https://platform.openai.com/).\
-To generate the AI completion, send the request using the
-
-{% content-ref url="artificial-intelligence/ai-service/api-reference/ai-completions/" %}
-[ai-completions](artificial-intelligence/ai-service/api-reference/ai-completions/)
-{% endcontent-ref %}
-
-endpoint.
+To generate the AI completion, send the request using the [AI Completions](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/artificial-intelligence/ai-service/api-reference/ai-completions) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

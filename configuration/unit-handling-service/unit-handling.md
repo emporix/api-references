@@ -9,7 +9,7 @@ label: Tutorials
 
 ### How to add a new unit
 
-To add a new measurement unit to your configuration, you need to send a request to the [Adding a new unit](broken-reference/) endpoint.
+To add a new measurement unit to your configuration, you need to send a request to the [Adding a new unit](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/unit-handling-service/api-reference/unit-conversion#put-unit-handling-tenant-units-convert-unit-commands) endpoint.
 
 {% hint style="warning" %}
 Unit names are localized. When creating a new unit, you can specify the unit name in two different ways — in one language or in multiple languages.
@@ -22,8 +22,6 @@ Looking for more info on localization? Check out [_Standard practices_](../../co
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
-
-[Broken link](broken-reference "mention")
 
 ```bash
 curl -L \
@@ -45,20 +43,15 @@ curl -L \
 
 You can convert between any measurement units that share the same base unit, such as kilograms to grams, or centimeters to meters.
 
-To convert between units, you need to send a request to the [Converting units ](broken-reference)endpoint.
+To convert between units, you need to send a request to the [Converting units ](broken-reference/)endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
+[broken-reference](broken-reference/ "mention")
 
-[Broken link](broken-reference "mention")
-
-```bash
-curl -L \
-  --request PUT \
-  --url 'https://api.emporix.io/unit-handling/{tenant}/units/convert-unit-commands' \
+<pre class="language-bash"><code class="lang-bash">curl -L \
+<strong>  --request PUT \
+</strong>  --url 'https://api.emporix.io/unit-handling/{tenant}/units/convert-unit-commands' \
   --header 'Content-Type: application/json' \
   --data '{
     "commandUuid": "text",
@@ -68,4 +61,4 @@ curl -L \
       "targetUnit": "kg"
     }
   }'
-```
+</code></pre>

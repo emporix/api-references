@@ -4,11 +4,13 @@ seo:
   description: country, countries
 ---
 
-## Supported countries
+# Country Tutorial
+
+### Supported countries
 
 The Emporix e-commerce system does not impose any restrictions as to which countries can be configured as your business's locations.
 
-## Country configurations
+### Country configurations
 
 The countries where your business is located are specified both tenant-wide and independently for particular sites.
 
@@ -48,13 +50,13 @@ Site-specific country configuration is stored in the `homeBase` field, inside th
 For more information on the Site object, check out the [_Site Settings Service guide_](../../content/site-settings/).
 {% endhint %}
 
-## Managing country configurations through Emporix API
+### Managing country configurations through Emporix API
 
 Check out the following tutorials to learn more about country configuration with Emporix API.
 
-### How to check which country is configured for your tenant
+#### How to check which country is configured for your tenant
 
-To retrieve your tenant's country configuration, you need to send a request to the [Retrieving a configuration ](broken-reference)endpoint.
+To retrieve your tenant's country configuration, you need to send a request to the [Retrieving a configuration ](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey)endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -62,17 +64,15 @@ To retrieve your tenant's country configuration, you need to send a request to t
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
-[Broken link](broken-reference "mention")
-
 ```bash
 curl -L \
   --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
   --header 'Accept: */*'
 ```
 
-### How to change your tenant's country configuration
+#### How to change your tenant's country configuration
 
-To change your tenant's country configuration, you need to send a request to the [Updating a configuration](broken-reference) endpoint with updated country information in the request body.
+To change your tenant's country configuration, you need to send a request to the [Updating a configuration](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint with updated country information in the request body.
 
 {% hint style="warning" %}
 The value in the request body must be compliant with the [ISO 3166-1 alpha-2 standard](https://www.iso.org/obp/ui/#iso:pub:PUB500001:en).
@@ -83,8 +83,6 @@ The value in the request body must be compliant with the [ISO 3166-1 alpha-2 sta
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
-
-[Broken link](broken-reference "mention")
 
 ```bash
 curl -L \
@@ -99,9 +97,9 @@ curl -L \
   }'
 ```
 
-### How to check which country is configured for a particular site
+#### How to check which country is configured for a particular site
 
-To retrieve a particular site's country configuration, you need to send a request to the [Retrieving a site ](broken-reference)endpoint. The country configuration will be returned under the `homeBase` field in the response body.
+To retrieve a particular site's country configuration, you need to send a request to the [Retrieving a site ](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode)endpoint. The country configuration will be returned under the `homeBase` field in the response body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -109,17 +107,15 @@ To retrieve a particular site's country configuration, you need to send a reques
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
-[Broken link](broken-reference "mention")
-
 ```bash
 curl -L \
   --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
   --header 'Accept: */*'
 ```
 
-### How to change a particular site's country configuration
+#### How to change a particular site's country configuration
 
-To change a particular site's country configuration, you need to send a request to the [Partially updating a site](broken-reference) endpoint with the address of your choice in the request body.
+To change a particular site's country configuration, you need to send a request to the [Partially updating a site](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode) endpoint with the address of your choice in the request body.
 
 {% hint style="warning" %}
 The country code must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
@@ -130,8 +126,6 @@ The country code must be compliant with the [ISO 4217 standard](https://en.wikip
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
-
-[Broken link](broken-reference "mention")
 
 ```bash
 curl -L \
