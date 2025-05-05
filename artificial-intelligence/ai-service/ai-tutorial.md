@@ -14,8 +14,6 @@ You can generate the text by sending a request based on a provided prompt. To se
 
 [Broken link](broken-reference "mention")
 
-[Broken link](broken-reference "mention")
-
 ```bash
 curl -i -X POST \
   'http://api.emporix.io/ai-service/{tenant}/texts' \
