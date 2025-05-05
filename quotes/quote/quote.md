@@ -13,6 +13,9 @@ seo:
 
 [Download](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/quotes/quote/api-reference/api.yaml)
 
+## third
+
+[Download API YAML](api-reference/api.yaml)
 
 # Quote Service Tutorials
 
