@@ -13,7 +13,7 @@ You can generate the text by sending a request based on a provided prompt. To se
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
-[api-reference](api-reference/text-generation)
+[text-generation](api-reference/text-generation)
 {% endcontent-ref %}
 
 ```bash
