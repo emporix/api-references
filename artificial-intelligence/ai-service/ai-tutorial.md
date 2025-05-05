@@ -8,23 +8,13 @@ Make sure to configure your API token. To do that, you can use the [Configuratio
 
 ## How to generate an AI supported text for a product
 
-You can generate the text by sending a request based on a provided prompt. To send the request, use the [Text Generation](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/artificial-intelligence/ai-service/api-reference/text-generation) endpoint.
+You can generate the text by sending a request based on a provided prompt. To send the request, use the [Text Generation](broken-reference) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-[Broken link](broken-reference "mention")
-
-```bash
-curl -i -X POST \
-  'http://api.emporix.io/ai-service/{tenant}/texts' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "id": "en",
-    "prompt": "Generate a long description for product '\''pipe cutter'\'' in language EN ",
-    "maxTokens": 2048
-  }'
-```
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ## How to generate an AI completion
 
