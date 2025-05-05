@@ -1,14 +1,24 @@
-# AI Tutorial
+# AI Tutorials
 
- With Emporix support for AI, you can enhance text for product descriptions and generate AI completions.
+With Emporix support for AI, you can enhance text for product descriptions and generate AI completions.
 
- ## Before you start
+## Before you start
 
- Make sure to configure your API token. To do that, you can use the [Configuration Service](https://developer.emporix.io/docs/openapi/configuration/) and store the token under `openAiApiToken` key.
+Make sure to configure your API token. To do that, you can use the [Configuration Service](https://developer.emporix.io/docs/openapi/configuration/) and store the token under `openAiApiToken` key.
 
- ## How to generate an AI supported text for a product
+## How to generate an AI supported text for a product
 
-You can generate the text by sending a request based on a provided prompt. To send the request, use the {% content-ref url="./artificial-intelligence/ai-service/api-reference" %} . {% endcontent-ref %} endpoint.
+You can generate the text by sending a request based on a provided prompt. To send the request, use the
+
+[api-reference](api-reference/ "mention")
+
+[Broken link](broken-reference "mention")
+
+{% content-ref url="artificial-intelligence/ai-service/api-reference/" %}
+[api-reference](artificial-intelligence/ai-service/api-reference/)
+{% endcontent-ref %}
+
+endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -26,10 +36,16 @@ curl -i -X POST \
 
 ## How to generate an AI completion
 
-Completion is generated based on chat history. It's a generated response or continuation of a conversation, crafted by the AI to address the given input in context. 
-It can include answering questions, providing suggestions, or completing a sentence or thought. 
-The currently supported AI engine for the completion is [OpenAI](https://platform.openai.com/). 
-To generate the AI completion, send the request using the {% content-ref url="./artificial-intelligence/ai-service/api-reference/ai-completions" %} . {% endcontent-ref %} endpoint.
+Completion is generated based on chat history. It's a generated response or continuation of a conversation, crafted by the AI to address the given input in context.\
+It can include answering questions, providing suggestions, or completing a sentence or thought.\
+The currently supported AI engine for the completion is [OpenAI](https://platform.openai.com/).\
+To generate the AI completion, send the request using the
+
+{% content-ref url="artificial-intelligence/ai-service/api-reference/ai-completions/" %}
+[ai-completions](artificial-intelligence/ai-service/api-reference/ai-completions/)
+{% endcontent-ref %}
+
+endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -50,7 +66,5 @@ curl -i -X POST \
 ```
 
 {% hint style="info" %}
-
 To see some more examples of using AI at Emporix, check our guides for Management Dashboard - [Powered by AI](https://developer.emporix.io/user-guides/extensibility-and-integrations/ai/ai-intro).
-
 {% endhint %}
