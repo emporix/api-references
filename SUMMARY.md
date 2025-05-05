@@ -52,16 +52,6 @@
               kind: openapi
               spec: ai-api
         ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: ai-api
-        ```
 * [Configuration](configuration/README.md)
   * [Configuration Service](configuration/configuration-service/README.md)
     * [Language Tutorials](configuration/configuration-service/language.md)
