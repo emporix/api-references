@@ -10,7 +10,7 @@ Make sure to configure your API token. To do that, you can use the [Configuratio
 
 You can generate the text by sending a request based on a provided prompt. To send the request, use the
 
-[api-reference](api-reference/text-generation "mention")
+[api-reference](api-reference/ "mention")
 
 [Broken link](broken-reference "mention")
 
