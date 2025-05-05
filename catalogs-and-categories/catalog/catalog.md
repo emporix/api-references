@@ -33,6 +33,10 @@ To create a new catalog, you need to send a request to the <nobr><Button to="/op
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/catalog/{tenant}/catalogs' \
