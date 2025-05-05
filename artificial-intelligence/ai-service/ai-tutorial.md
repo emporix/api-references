@@ -8,19 +8,13 @@ Make sure to configure your API token. To do that, you can use the [Configuratio
 
 ## How to generate an AI supported text for a product
 
-You can generate the text by sending a request based on a provided prompt. To send the request, use the
-
-[api-reference](api-reference/ "mention")
-
-[Broken link](broken-reference "mention")
-
-{% content-ref url="artificial-intelligence/ai-service/api-reference/" %}
-[api-reference](artificial-intelligence/ai-service/api-reference/)
-{% endcontent-ref %}
-
-endpoint.
+You can generate the text by sending a request based on a provided prompt. To send the request, use the [Text Generation](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/artificial-intelligence/ai-service/api-reference/text-generation) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
