@@ -16,6 +16,18 @@ You can generate the text by sending a request based on a provided prompt. To se
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
+```bash
+curl -i -X POST \
+  'http://api.emporix.io/ai-service/{tenant}/texts' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "id": "en",
+    "prompt": "Generate a long description for product '\''pipe cutter'\'' in language EN ",
+    "maxTokens": 2048
+  }'
+```
+
 ## How to generate an AI completion
 
 Completion is generated based on chat history. It's a generated response or continuation of a conversation, crafted by the AI to address the given input in context.\
