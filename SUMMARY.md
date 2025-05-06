@@ -375,6 +375,8 @@
               kind: openapi
               spec: quote-api
         ```
+    * [Download API Spec](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/quotes/quote/api-reference/api.yaml)
+    * [Download API Spec 2](https://github.com/emporix/api-references/blob/main/quotes/quote/api-reference/api.yaml)
 * [Checkout](checkout/README.md)
   * [Cart Service](checkout/cart/README.md)
     * [Cart Tutorial](checkout/cart/cart.md)
