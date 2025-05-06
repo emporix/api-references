@@ -10,6 +10,7 @@ Make sure to configure your API token. To do that, you can use the [Configuratio
 
 You can generate the text by sending a request based on a provided prompt. To send the request, use the [Text Generation](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/artificial-intelligence/ai-service/api-reference/text-generation) endpoint.
 
+
 [Broken link](broken-reference "mention")
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
