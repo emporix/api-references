@@ -1,22 +1,7 @@
 openapi: 3.0.1
 info:
   title: Catalog Management
-  description: "The Catalog Management API gives you the tools required to structure\
-    \ your product offering the way it suites you best.  \nIt provides the following\
-    \ capabilities and operations:\n\n__Structuring your products:__\n* Create a new\
-    \ catalog\n* Modify an existing catalog\n* Remove a catalog you no longer need\n\
-    \n__List your catalogs:__\n* Filtered, sorted and paged list of catalogs\n* List\
-    \ of catalogs holding a particular category\n* View catalog details\n\n__Localization__\
-    \  \n   \nThe name and the description attribute of a catalog support localization.\
-    \ This means that you can provide values in a specific locale and also retrieve\
-    \ those values either localized, or all together, as you choose.  \nLocalization\
-    \ is controlled via two headers:\n* ___Accept-Language___ - this is used to specify\
-    \ how to retrieve catalogs. If a value is provided, then the resources will be\
-    \ returned in that locale. If '*' is provided as a value, or the header is missing,\
-    \ all locales saved on a resource will be returned for that resource.\n* ___Content-Language___\
-    \ - this header is used to specify if the data that will be stored for this request\
-    \ has a particular locale or you are providing all the desired locales.  \n \n\
-    You can see detailed examples for the requests affected by this bellow.\n"
+  description: "The Catalog Management API gives you the tools required to structure your product offering the way it suites you best. 
   contact:
     name: Emporix
     url: https://emporix.com
