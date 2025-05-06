@@ -21,6 +21,10 @@ seo:
 
 <a href="../../static/test/emporix-api.zip" download>Download API ZIP</a>
 
+## fifth ZIP
+
+{% file src="../.gitbook/assets/emporix-api.zip" %}
+
 # Quote Service Tutorials
 
 {% hint style="danger" %}
