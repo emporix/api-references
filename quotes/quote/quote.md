@@ -17,7 +17,7 @@ seo:
 
 [Download API YAML](api-reference/api.yaml)
 
-## forth - ZIP
+## fourth - ZIP
 
 <a href="../../static/test/emporix-api.zip" download>Download API ZIP</a>
 
