@@ -4,12 +4,11 @@ seo:
   description: Invoices Generation
 ---
 
-# How to configure your tenant for invoice creation
+# Invoice Tutorial
 
 To prepare your tenant for invoice generation, you have to set up the Configuration, Sequential ID and Site Settings services.
 
 ## Set up invoice configuration in the Configuration service
-
 
 Use the parameters for an order query in case of an automatic job type:
 
@@ -17,13 +16,14 @@ Use the parameters for an order query in case of an automatic job type:
 * `status` - the order status for which the order should be found (CREATED)
 * `extendedOrderStatus` - the extended order status for which the order should be found (70)
 
-To set up the invoice configuration, call the <nobr><Button to="/openapi/configuration/#operation/POST-configuration-create-config" size="small">Creating new configurations</Button></nobr> endpoint.
+To set up the invoice configuration, call the Creating new configurations endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/configuration/{tenant}/configurations' \
@@ -43,7 +43,7 @@ curl -i -X POST \
 
 ## Set up the Sequential ID service
 
-This configuration is used to set up the format of invoice numbers. Set up the numbers by invoking the sequential id service with the <nobr><Button to="/openapi/sequential-id/#operation/POST-sequential-id-create-schema" size="small">Creating a new schema</Button></nobr> endpoint.
+This configuration is used to set up the format of invoice numbers. Set up the numbers by invoking the sequential id service with the Creating a new schema endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -73,46 +73,41 @@ curl -i -X POST \
 
 ## Set up the Site Settings service
 
-The logo URL configuration allows to upload a custom logo that should be visible on the invoice header. 
-Add your company logo to the invoice with the <nobr><Button to="/openapi/site-settings/#operation/POST-site-settings-create-site-mixin" size="small">Creating a site mixin</Button></nobr> endpoint.
+The logo URL configuration allows to upload a custom logo that should be visible on the invoice header.\
+Add your company logo to the invoice with the Creating a site mixin endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "testMixin": {
-      "active": true,
-      "metadata": {
-        "schema": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/testMixin.json"
-      }
-    }
-  }'
+'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' \
+-H 'Authorization: Bearer ' \
+-H 'Content-Type: application/json' \
+-d '{
+"testMixin": {
+"active": true,
+"metadata": {
+"schema": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/testMixin.json"
+}
+}
+}'
 ```
 
-# How to trigger the invoice creation process
+## How to trigger the invoice creation process
 
-To trigger the invoice creation process, initiate a job by making a call to the <nobr><Button to="/openapi/invoice/#operation/POST-invoice-create-job" size="small">Creating a job</Button></nobr> endpoint of the Invoice Service. Two types of jobs can be started:
+To trigger the invoice creation process, initiate a job by making a call to the Creating a job endpoint of the Invoice Service. Two types of jobs can be started:
 
 * **Manual**: Requires providing a list of `orderIds` in the job creation request.
-
 * **Automatic**: The list of `orderIds` is generated using a parameterized query. The query parameters, including order status, order extended status, and time after the delivery date (in hours), can be configured in the configuration service. The Invoice Service then sends a request to the Order Service to retrieve orders that match the specified query criteria.
 
 The standard invoice service flow is:
 
-  1. Validation - checks if there's an existing invoice for the specific order.
-  
-  2. Recalculation - checks what is ordered and at what cost.
-  
-  3. Payment capture - charges the credit card.
-  
-  4. Creation of a PDF file with invoice.
-  
-  5. Sending email to the customer with the invoice file.
-
+1. Validation - checks if there's an existing invoice for the specific order.
+2. Recalculation - checks what is ordered and at what cost.
+3. Payment capture - charges the credit card.
+4. Creation of a PDF file with invoice.
+5. Sending email to the customer with the invoice file.
