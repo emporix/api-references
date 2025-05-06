@@ -25,6 +25,10 @@ seo:
 
 {% file src="../.gitbook/assets/emporix-api.zip" %}
 
+## sixth
+
+<a href="https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/quotes/quote/api-reference/api.yaml" download>Download PDF</a>
+
 # Quote Service Tutorials
 
 {% hint style="danger" %}
