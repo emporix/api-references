@@ -6,7 +6,7 @@ seo:
 
 ## first
 
-<a href="(https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/quotes/quote/api-reference/api.yaml)">Click to Download</a>
+<a id="raw-url" href="https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/quotes/quote/api-reference/api.yaml">Click to Download</a>
 
 
 ## second
