@@ -1590,8 +1590,7 @@ components:
                         The `calculatedPrice.finalPrice` field provides the same value with updated functionality."
         totalAuthorizedAmount:
           type: number
-          description: "The amount that should be authorized with payment provider. 
-          It's a sum of `calculatedPrice.finalPrice.grossValue` and `calculatedPrice.upliftValue.grossValue`."
+          description: "The amount that should be authorized with payment provider. It's a sum of `calculatedPrice.finalPrice.grossValue` and `calculatedPrice.upliftValue.grossValue`."
         currency:
           description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
           type: string
