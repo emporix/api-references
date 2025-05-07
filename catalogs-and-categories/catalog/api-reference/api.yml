@@ -130,8 +130,7 @@ paths:
             * `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5` - each internationalized field is returned as a map containing translation specified by a header value. If translation is not available exception is thrown. This list must contains any possible extension for internationalized fields included in sort param.
           schema:
             type: string
-            example: "*, 'en', 'en,de,fr', 'en-EN', 'fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7,\
-            \ *;q=0.5'"
+            example: "*, 'en', 'en,de,fr', 'en-EN', 'fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5'"
             default: '*'
       responses:
         "200":
@@ -348,8 +347,7 @@ paths:
             * `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5` - each internationalized field is returned as a map containing translation specified by a header value. If translation is not available exception is thrown. This list must contains any possible extension for internationalized fields included in sort param.
           schema:
             type: string
-            example: "*, 'en', 'en,de,fr', 'en-EN', 'fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7,\
-            \ *;q=0.5'"
+            example: "*, 'en', 'en,de,fr', 'en-EN', 'fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5'"
             default: '*'
       responses:
         "200":
@@ -751,8 +749,7 @@ components:
         name:
           allOf:
             - $ref: '#/components/schemas/Object'
-            - description: "Name of the catalog. Depending on the use of the Accept-Language\
-              \ header, it can be either a String or a Map<Locale, String>"
+            - description: "Name of the catalog. Depending on the use of the Accept-Language header, it can be either a String or a Map<Locale, String>"
         description:
           allOf:
             - $ref: '#/components/schemas/Object'
