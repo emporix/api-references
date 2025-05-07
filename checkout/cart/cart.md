@@ -10,7 +10,9 @@ editPage:
 label: Tutorials
 ---
 
-## How to create a new cart
+# Cart Tutorial
+
+### How to create a new cart
 
 To create a new cart, you need to send a request to the Creating a new cart endpoint.
 
@@ -39,11 +41,11 @@ curl -i -X POST \
   }'
 ```
 
-## How to add custom attributes to a cart
+### How to add custom attributes to a cart
 
 You can define custom attributes for a cart through `mixins`.
 
-## Define your custom attributes schema
+### Define your custom attributes schema
 
 First, define your custom attributes schema in the form of a JSON schema.
 
@@ -66,7 +68,7 @@ First, define your custom attributes schema in the form of a JSON schema.
 
 Upload your schema to a hosting service and save its URL
 
-## Update a cart with custom attributes
+### Update a cart with custom attributes
 
 To add custom attributes to a cart, you need to send a request to the Updating a cart endpoint.
 
@@ -115,9 +117,9 @@ curl -i -X PUT \
     }
   }
 }'
-  ```
+```
 
-## How to merge carts
+### How to merge carts
 
 {% hint style="warning" %}
 To learn more about merging carts, check out [Cart merging](https://developer.emporix.io/user-guides/core-commerce/carts/carts#cart-merging) in the Carts guide.
@@ -146,18 +148,18 @@ curl -i -X POST \
 }'
 ```
 
-## How to source pricing information from an external price calculation tool
+### How to source pricing information from an external price calculation tool
 
-For B2B scenarios, you might want to integrate an external application for price calculation for your products. Usually, the systems, such as ERPs, store all the relevant customer-specific pricing information needed for customer-specific pricing.
+For B2B scenarios, you might want to integrate an external application for price calculation for your products. Usually, the systems, such as ERPs, store all the relevant customer-specific pricing information needed for customer-specific pricing.\
 The external system then can communicate with the Cart Service directly to overwrite the price of the product added to the cart.
 
 {% hint style="warning" %}
-To achieve the communication between Commerce Engine and the external pricing tool, you have to configure both systems accordingly.
-The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.
+To achieve the communication between Commerce Engine and the external pricing tool, you have to configure both systems accordingly.\
+The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.\
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
-After enabling the external application to update carts with calculated prices, to add a product that is available within Commerce Engine, but with an external price, you need to send the request to the Adding a product to cart endpoint.
+After enabling the external application to update carts with calculated prices, to add a product that is available within Commerce Engine, but with an external price, you need to send the request to the Adding a product to cart endpoint.\
 Provide the customer cart's ID in the `cartId` path parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -193,21 +195,19 @@ curl -i -X POST \
 Notice the `"itemType": "EXTERNAL"` definition which allows the Cart Service to overwrite the pricing from Commerce Engine. The payload must include the price and tax information.
 
 {% hint style="danger" %}
-
 When you have enabled external pricing, it's essential to ensure the accuracy of the prices, as CE does not perform price validation in these instances.
 {% endhint %}
 
-## How to add a product from an external source to a cart
+### How to add a product from an external source to a cart
 
 For some cases, you might want to allow adding products from an external system to cart, and not only from your online store. The products from external product management sources can be added directly to the customer's cart, bypassing the standard product catalog.
 
 {% hint style="warning" %}
-
-To achieve the communication between Commerce Engine and the external product management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.
+To achieve the communication between Commerce Engine and the external product management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.\
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
-To add a product outside Commerce Engine, you need to send the request to the Adding a product to cart endpoint.
+To add a product outside Commerce Engine, you need to send the request to the Adding a product to cart endpoint.\
 Provide the customer cart's ID in the `cartId` path parameter. The payload has to include the `"itemType" : "EXTERNAL"` parameter, as well as the price and tax information.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -246,14 +246,12 @@ curl -i -X POST \
   }'
 ```
 
-
-## How to add an external fee
+### How to add an external fee
 
 For some cases, you might need to calculate and charge additional fees, for example for packaging, freight, or any additional reasons. The fees calculated externally can be added directly to the customer's cart.
 
 {% hint style="warning" %}
-
-To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.
+To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.\
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
@@ -296,8 +294,7 @@ curl -i -X POST \
   }'
 ```
 
-
-## Pricing calculations
+### Pricing calculations
 
 To ensure that both net and gross prices are available, along with clear details on how these values are derived, the Cart Service includes the calculatedPrice field.
 
@@ -856,211 +853,249 @@ This calculation method provides a comprehensive breakdown of prices, including 
 </details>
 {% endhint %}
 
-## Pricing calculations glossary
+### Pricing calculations glossary
 
+### Calculated price on item level
 
-## Calculated price on item level
-
-| Term                 | Definition                                                                                                                |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `price`              | <p>A unit price from <code>priceMatch</code>, it's multiplied by item quantity.</p><pre><code>          {`{
-</code></pre> |
-| "calculatedPrice": { |                                                                                                                           |
-
-```
-"price": {
-  "netValue": 100.0,
-  "grossValue": 110.0,
-  "taxValue": 10.0,
-  "taxCode": "STANDARD",
-  "taxRate": 10.0
+<table data-full-width="false"><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A unit price from <code>priceMatch</code>, it's multiplied by item quantity.</p><pre><code>{
+  "calculatedPrice": {
+    "price": {
+      "netValue": 100.0,
+      "grossValue": 110.0,
+      "taxValue": 10.0,
+      "taxCode": "STANDARD",
+      "taxRate": 10.0
+    }
+    //...
+  }
 }
-//...
-```
+</code></pre></td></tr><tr><td><code>upliftValue</code></td><td><p>An additional amount authorized for payment to cover potential price adjustments during packing of weight-based products. There are two conditions to have this value for an item line:</p><ul><li>The item has to be added to the cart with the <code>"weightDependent":true</code> attribute. It means that the quantity may vary during packaging, as some items, for example a case of bananas, cannot be divided to precisely match a given weight.</li><li>The tenant has to have the percentage uplift defined - <code>authorizedAmountUplift</code>, for example 0,1=10%. If the item <code>price.netValue=12</code>, the <code>upliftValue.netValue=1,2</code> with the 10% uplift configured. If the upliftValue is not configured for an item, it's not returned in the response.</li></ul><pre><code>{
+  "calculatedPrice": {
+    //...
+    "upliftValue" : {
+        "netValue" : 30.0,
+        "grossValue" : 33.0,
+        "taxValue" : 3.0,
+        "taxCode" : "STANDARD",
+        "taxRate" : 10.0
+      },
+    //...
+  }
+}
+</code></pre></td></tr><tr><td><code>discountedPrice</code></td><td><p>The price of the line item is calculated as unit price × quantity, with any applied discounts. If no discounts are applied to a given line item, this attribute is not included in the response. Depending on the site configuration, the <code>includesTax</code> attribute can be <code>true</code> or <code>false</code>. The discount is applied to <code>price.grossValue</code> when <code>includesTax=true</code> or <code>price.netValue</code> when <code>includesTax=false</code>. Based on this, the corresponding <code>netValue</code> or <code>grossValue</code> is recalculated using the <code>taxRate</code>. The calculation method that was used is indicated in <code>totalDiscount.calculationType</code>, which can be either <code>ApplyDiscountAfterTax</code> or <code>ApplyDiscountBeforeTax</code>.</p><pre><code>{
+  "calculatedPrice": {
+    //...
+    "discountedPrice" : {
+          "netValue" : 4.5,
+          "grossValue" : 4.5,
+          "taxValue" : 0.0,
+          "appliedDiscounts" : [ {
+            "id" : "LS10PTOTAL",
+            "value" : 0.5,
+            "discountType" : "PERCENT"
+          } ]
+        },
+    //...
+  }
+}
+</code></pre></td></tr><tr><td><code>totalDiscount</code></td><td><p>A summary of all discounts applied to the line, including discounts on both the line item's price and its fees. If there are no discounts applied on the line item, it's not returned in the response.</p><pre><code>{
+  "calculatedPrice": {
+    //...
+    "totalDiscount" : {
+        "calculationType" : "ApplyDiscountBeforeTax",
+        "value" : 10.5,
+        "appliedDiscounts" : [ {
+          "id" : "LS10PTOTAL",
+          "value" : 10.5,
+          "discountType" : "PERCENT"
+        } ]
+      },
+    //...
+  }
+}
+</code></pre></td></tr><tr><td><code>fees</code></td><td><p>A list of fees applied to the line item. If there are no fees on the line item, it's not returned in the response.</p><ul><li><p>Types of fees:</p><ul><li>PERCENT - The fee percentage of the line item <code>price.netValue</code> - unit price x quantity.</li><li>ABSOLUTE - The absolute amount assigned to the item line.</li><li>ABSOLUTE_MULTIPLY_ITEMQUANTITY - Monetary amount multiplied by the item quantity and assigned to the item line.</li></ul></li><li><p>Fees origin:</p><ul><li><code>INTERNAL</code> - Defined in commerce engine</li><li><code>EXTERNAL</code> - Specified when an item is added to the cart.</li></ul></li><li><p><code>netValue</code> - Monetary amount of the fee. Depends on the fee type:</p><ul><li>ABSOLUTE - The value of the defined fee's <code>feeAbsolute.amount</code> attribute.</li><li>ABSOLUTE_MULTIPLY_ITEMQUANTITY - The value of the defined fee's <code>feeAbsolute.amount</code> attribute multiplied by the quantity of the line item.</li><li>PERCENT - The defined fee level percentage (<code>feePercentage</code> attribute) of the line item <code>price.netValue</code>.</li></ul></li><li><code>grossValue</code> - Value calculated based on the <code>taxCode</code> and the <code>taxRate</code> if <code>taxable=true</code>. For a fee that is <code>taxable=true</code> and has a correct <code>taxCode</code>, the <code>taxRate</code> defined for that <code>taxCode</code> is used to calculate the <code>grossValue</code>. If the fee is not taxable, the <code>netValue</code> is equal to <code>grossValue</code>.</li><li><code>taxRate</code> - If a fee is defined with the attribute <code>taxable=true</code>, the tax rate is calculated based on the provided <code>taxCode</code> at the fee level. A taxable fee must have a defined <code>taxCode</code>.</li><li><code>taxCode</code> - Tax code defined on the fee level, for example STANDARD. The value should match the available tax codes in the system configuration.</li></ul><pre><code>{
+  "calculatedPrice": {
+    //...
+    "fees" : [ {
+        "id" : "6793753e7d4bba47e2a99801",
+        "type" : "ABSOLUTE",
+        "origin": "EXTERNAL",
+        "name" : {
+          "en" : "Freight Fee"
+        },
+        "price" : {
+          "netValue" : 5.0,
+          "grossValue" : 5.0,
+          "taxValue" : 0
+        },
+        "discountedPrice" : {
+          "netValue" : 4.5,
+          "grossValue" : 4.5,
+          "taxValue" : 0.0,
+          "appliedDiscounts" : [ {
+            "id" : "LS10PTOTAL",
+            "value" : 0.5,
+            "discountType" : "PERCENT"
+          } ]
+        }
+      } ],
+    //...
+  }
+}
+</code></pre></td></tr><tr><td><code>totalFee</code></td><td><p>Sum of all fees applied to the line item. It's calculated by summarizing <code>fees[].discountedPrice</code> if any discounts were applied to the fee, or <code>fees[].price</code> for a a not discounted fee.</p><pre><code>{
+  "calculatedPrice": {
+    //...
+    "totalFee" : {
+        "netValue" : 4.5,
+        "grossValue" : 4.5,
+        "taxValue" : 0.0,
+        "appliedDiscounts" : [ {
+          "id" : "LS10PTOTAL",
+          "value" : 0.5,
+          "discountType" : "PERCENT"
+        } ]
+      },
+    //...
+  }
+}
+</code></pre></td></tr><tr><td><code>calculationType</code></td><td><p>Indicates whether discounts were applied to net or gross values.</p><ul><li>The discount is applied to either <code>price.grossValue</code>, when <code>includesTax=true</code>, or <code>price.netValue</code>, when <code>includesTax=false</code>. Based on this, the corresponding net or gross value is recalculated using the tax rate.</li><li>The calculation method used is indicated in <code>totalDiscount.calculationType</code>>, which can be either <code>ApplyDiscountAfterTax</code> or <code>ApplyDiscountBeforeTax</code>.</li></ul><pre><code>{
+  "calculatedPrice": {
+    //...
+    "totalDiscount" : {
+        "calculationType" : "ApplyDiscountBeforeTax",
+    //...
+  }
+}
+</code></pre></td></tr><tr><td><code>finalPrice</code></td><td><p>The final price is the sum of the <code>discountedPrice</code> or the original price, depending on whether any discounts were applied to the line item, and the <code>totalFee</code>, which includes all fees applied to the line item.</p><pre><code>{
+  "calculatedPrice": {
+    //...
+    "finalPrice" : {
+        "netValue" : 94.5,
+        "grossValue" : 103.5,
+        "taxValue" : 9.0
+      }
+  }
+}
+</code></pre></td></tr></tbody></table>
 
-}\
-}\`}
+### Calculated price on cart level
 
-|\
-\| `upliftValue` |
-
-An additional amount authorized for payment to cover potential price adjustments during packing of weight-based products. There are two conditions to have this value for an item line:
-
-* The item has to be added to the cart with the `"weightDependent":true` attribute. It means that the quantity may vary during packaging, as some items, for example a case of bananas, cannot be divided to precisely match a given weight.
-* The tenant has to have the percentage uplift defined - `authorizedAmountUplift`, for example 0,1=10%. If the item `price.netValue=12`, the `upliftValue.netValue=1,2` with the 10% uplift configured. If the upliftValue is not configured for an item, it's not returned in the response.
-
-```
-          {{   "calculatedPrice": {     //...     "upliftValue" : {         "netValue" : 30.0,         "grossValue" : 33.0,         "taxValue" : 3.0,         "taxCode" : "STANDARD",         "taxRate" : 10.0       },     //...   } }}
-```
-
-|\
-\| `discountedPrice` |
-
-The price of the line item is calculated as unit price × quantity, with any applied discounts. If no discounts are applied to a given line item, this attribute is not included in the response.\
-Depending on the site configuration, the `includesTax` attribute can be `true` or `false`. The discount is applied to `price.grossValue` when `includesTax=true` or `price.netValue` when `includesTax=false`. Based on this, the corresponding `netValue` or `grossValue` is recalculated using the `taxRate`.\
-The calculation method that was used is indicated in `totalDiscount.calculationType`, which can be either `ApplyDiscountAfterTax` or `ApplyDiscountBeforeTax`.
-
-```
-          {{   "calculatedPrice": {     //...     "discountedPrice" : {           "netValue" : 4.5,           "grossValue" : 4.5,           "taxValue" : 0.0,           "appliedDiscounts" : [ {             "id" : "LS10PTOTAL",             "value" : 0.5,             "discountType" : "PERCENT"           } ]         },     //...   } }}
-```
-
-|\
-\| `totalDiscount` |
-
-A summary of all discounts applied to the line, including discounts on both the line item's price and its fees. If there are no discounts applied on the line item, it's not returned in the response.
-
-```
-          {{   "calculatedPrice": {     //...     "totalDiscount" : {         "calculationType" : "ApplyDiscountBeforeTax",         "value" : 10.5,         "appliedDiscounts" : [ {           "id" : "LS10PTOTAL",           "value" : 10.5,           "discountType" : "PERCENT"         } ]       },     //...   } }}
-```
-
-|\
-\| `fees` |
-
-A list of fees applied to the line item. If there are no fees on the line item, it's not returned in the response.
-
-* Types of fees:
-  * PERCENT - The fee percentage of the line item `price.netValue` - unit price x quantity.
-  * ABSOLUTE - The absolute amount assigned to the item line.
-  * ABSOLUTE\_MULTIPLY\_ITEMQUANTITY - Monetary amount multiplied by the item quantity and assigned to the item line.
-* Fees origin:
-  * `INTERNAL` - Defined in commerce engine
-  * `EXTERNAL` - Specified when an item is added to the cart.
-* `netValue` - Monetary amount of the fee. Depends on the fee type:
-  * ABSOLUTE - The value of the defined fee's `feeAbsolute.amount` attribute.
-  * ABSOLUTE\_MULTIPLY\_ITEMQUANTITY - The value of the defined fee's `feeAbsolute.amount` attribute multiplied by the quantity of the line item.
-  * PERCENT - The defined fee level percentage (`feePercentage` attribute) of the line item `price.netValue`.
-* `grossValue` - Value calculated based on the `taxCode` and the `taxRate` if `taxable=true`. For a fee that is `taxable=true` and has a correct `taxCode`, the `taxRate` defined for that `taxCode` is used to calculate the `grossValue`. If the fee is not taxable, the `netValue` is equal to `grossValue`.
-* `taxRate` - If a fee is defined with the attribute `taxable=true`, the tax rate is calculated based on the provided `taxCode` at the fee level. A taxable fee must have a defined `taxCode`.
-* `taxCode` - Tax code defined on the fee level, for example STANDARD. The value should match the available tax codes in the system configuration.
-
-```
-          {{   "calculatedPrice": {     //...     "fees" : [ {         "id" : "6793753e7d4bba47e2a99801",         "type" : "ABSOLUTE",         "origin": "EXTERNAL",         "name" : {           "en" : "Freight Fee"         },         "price" : {           "netValue" : 5.0,           "grossValue" : 5.0,           "taxValue" : 0         },         "discountedPrice" : {           "netValue" : 4.5,           "grossValue" : 4.5,           "taxValue" : 0.0,           "appliedDiscounts" : [ {             "id" : "LS10PTOTAL",             "value" : 0.5,             "discountType" : "PERCENT"           } ]         }       } ],     //...   } }}
-```
-
-|\
-\| `totalFee` |
-
-Sum of all fees applied to the line item. It's calculated by summarizing `fees[].discountedPrice` if any discounts were applied to the fee, or `fees[].price` for a a not discounted fee.
-
-```
-          {{   "calculatedPrice": {     //...     "totalFee" : {         "netValue" : 4.5,         "grossValue" : 4.5,         "taxValue" : 0.0,         "appliedDiscounts" : [ {           "id" : "LS10PTOTAL",           "value" : 0.5,           "discountType" : "PERCENT"         } ]       },     //...   } }}
-```
-
-|\
-\| `calculationType` |
-
-Indicates whether discounts were applied to net or gross values.
-
-* The discount is applied to either `price.grossValue`, when `includesTax=true`, or `price.netValue`, when `includesTax=false`. Based on this, the corresponding net or gross value is recalculated using the tax rate.
-* The calculation method used is indicated in `totalDiscount.calculationType`>, which can be either `ApplyDiscountAfterTax` or `ApplyDiscountBeforeTax`.
-
-```
-          {{   "calculatedPrice": {     //...     "totalDiscount" : {         "calculationType" : "ApplyDiscountBeforeTax",     //...   } }}
-```
-
-|\
-\| `finalPrice` |
-
-The final price is the sum of the `discountedPrice` or the original price, depending on whether any discounts were applied to the line item, and the `totalFee`, which includes all fees applied to the line item.
-
-```
-          {{   "calculatedPrice": {     //...     "finalPrice" : {         "netValue" : 94.5,         "grossValue" : 103.5,         "taxValue" : 9.0       }   } }}
-```
-
-|
-
-## Calculated price on cart level
-
-| Term                 | Definition                                                                                    |
-| -------------------- | --------------------------------------------------------------------------------------------- |
-| `price`              | <p>A sum of all line item prices without discounts.</p><pre><code>          {`{
-</code></pre> |
-| "calculatedPrice": { |                                                                                               |
-
-```
-"price" : {
-  "netValue" : 100.0,
-  "grossValue" : 110.0,
-  "taxValue" : 10.0,
-  "taxCode" : "STANDARD",
-  "taxRate" : 10.0
-},
-//...
-```
-
-}\
-}\`}
-
-|\
-\| `discountedPrice` |
-
-The sum of all line item prices after discounts. This attribute is included in the response if at least one line item has a discounted price.\
-It represents the total of discounted prices for line items with discounts applied, or the regular prices for line items without discounts. Ultimately, it reflects the total cost of all line items after discounts.
-
-```
-          {{   "calculatedPrice": {     //...     "discountedPrice" : {       "netValue" : 90.0,       "grossValue" : 99.0,       "taxValue" : 9.0,       "taxCode" : "STANDARD",       "taxRate" : 10.0,       "appliedDiscounts" : [ {         "id" : "LS10PTOTAL",         "value" : 10.0,         "discountType" : "PERCENT"       } ]     },     //...   } }}
-```
-
-|\
-\| `totalShipping` |
-
-The calculated shipping cost. It takes the sum of `items[].calculatedPrice.price.grossValue` for shipping estimation.
-
-```
-          {{   "calculatedPrice": {     //...     "totalShipping" : {       "netValue" : 6.5,       "grossValue" : 6.955,       "taxValue" : 0.455,       "taxCode" : "REDUCED",       "taxRate" : 7.0,       "appliedDiscounts" : [ {         "id" : "LS10PTOTAL",         "value" : 0.72,         "discountType" : "PERCENT"       } ]     },     //...   } }}
-```
-
-|\
-\| `paymentFees` |
-
-A list of payment fees applied to an order. This field is only available after checkout, as payment is not processed in the shopping cart.\
-Payment fees are not discounted even if discount/coupon is set to TOTAL.
-
-|\
-\| `totalDiscount` |
-
-A summary of all discounts. It's the sum of all `lines[].totalDiscount` and shipping discounts.
-
-```
-          {{   "calculatedPrice": {     //...      "totalDiscount" : {       "calculationType" : "ApplyDiscountBeforeTax",       "value" : 11.22,       "appliedDiscounts" : [ {         "id" : "LS10PTOTAL",         "value" : 11.22,         "discountType" : "PERCENT"       } ]     },     //...   } }}
-```
-
-|\
-\| `finalPrice` |
-
-The final price is the sum of `items[].finalPrice`, `totalShipping` and `paymentFee`.
-
-```
-          {{   "calculatedPrice": {     //...     "finalPrice" : {       "netValue" : 101.0,       "grossValue" : 110.455,       "taxValue" : 9.455     //...     }   } }}
-```
-
-|\
-\| `taxAggregate` - `lines` |
-
-A list of tax values grouped by `taxCode` and `taxRate`. It includes the sum of `item[].calculatedPrice.discountedPrice` or `item[].calculatedPrice.price`, `item[].calculatedPrice.fees[].discountedPrice` or `item[].calculatedPrice.fees[].price`, `calculatedPrice.totalShipping` and `calculatedPrice.paymentFees`. If any of these values have the same `taxRate` but different `taxCode`, they are listed separately. The aggregation also includes items that do not have a `taxRate` or `taxCode` defined.
-
-```
-          {{   "finalPrice": {     //...     "taxAggregate" : {         "lines" : [ {           "netValue" : 96.5,           "grossValue" : 103.26,           "taxValue" : 6.76,           "taxCode" : "REDUCED",           "taxRate" : 7.0         }, {           "netValue" : 263.19,           "grossValue" : 313.2,           "taxValue" : 50.01,           "taxCode" : "STANDARD",           "taxRate" : 19.0         }, {           "netValue" : 9.0,           "grossValue" : 9.0,           "taxValue" : 0.0         } ]       }     //...   } }}
-```
-
-|
+<table data-full-width="false"><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A sum of all line item prices without discounts.</p><pre><code>{
+  "calculatedPrice": {
+    "price" : {
+      "netValue" : 100.0,
+      "grossValue" : 110.0,
+      "taxValue" : 10.0,
+      "taxCode" : "STANDARD",
+      "taxRate" : 10.0
+    },
+    //...
+  }
+}
+</code></pre></td></tr><tr><td><code>discountedPrice</code></td><td><p>The sum of all line item prices after discounts. This attribute is included in the response if at least one line item has a discounted price. It represents the total of discounted prices for line items with discounts applied, or the regular prices for line items without discounts. Ultimately, it reflects the total cost of all line items after discounts.</p><pre><code>{
+  "calculatedPrice": {
+    //...
+    "discountedPrice" : {
+      "netValue" : 90.0,
+      "grossValue" : 99.0,
+      "taxValue" : 9.0,
+      "taxCode" : "STANDARD",
+      "taxRate" : 10.0,
+      "appliedDiscounts" : [ {
+        "id" : "LS10PTOTAL",
+        "value" : 10.0,
+        "discountType" : "PERCENT"
+      } ]
+    },
+    //...
+  }
+}
+</code></pre></td></tr><tr><td><code>totalShipping</code></td><td><p>The calculated shipping cost. It takes the sum of <code>items[].calculatedPrice.price.grossValue</code> for shipping estimation.</p><pre><code>{
+  "calculatedPrice": {
+    //...
+    "totalShipping" : {
+      "netValue" : 6.5,
+      "grossValue" : 6.955,
+      "taxValue" : 0.455,
+      "taxCode" : "REDUCED",
+      "taxRate" : 7.0,
+      "appliedDiscounts" : [ {
+        "id" : "LS10PTOTAL",
+        "value" : 0.72,
+        "discountType" : "PERCENT"
+      } ]
+    },
+    //...
+  }
+}
+</code></pre></td></tr><tr><td><code>paymentFees</code></td><td>A list of payment fees applied to an order. This field is only available after checkout, as payment is not processed in the shopping cart. Payment fees are not discounted even if discount/coupon is set to TOTAL.</td></tr><tr><td><code>totalDiscount</code></td><td><p>A summary of all discounts. It's the sum of all <code>lines[].totalDiscount</code> and shipping discounts.</p><pre><code>{
+  "calculatedPrice": {
+    //...
+     "totalDiscount" : {
+      "calculationType" : "ApplyDiscountBeforeTax",
+      "value" : 11.22,
+      "appliedDiscounts" : [ {
+        "id" : "LS10PTOTAL",
+        "value" : 11.22,
+        "discountType" : "PERCENT"
+      } ]
+    },
+    //...
+  }
+}
+</code></pre></td></tr><tr><td><code>finalPrice</code></td><td><p>The final price is the sum of <code>items[].finalPrice</code>, <code>totalShipping</code> and <code>paymentFee</code>.</p><pre><code>{
+  "calculatedPrice": {
+    //...
+    "finalPrice" : {
+      "netValue" : 101.0,
+      "grossValue" : 110.455,
+      "taxValue" : 9.455
+    //...
+    }
+  }
+}
+</code></pre></td></tr><tr><td><code>taxAggregate</code> - <code>lines</code></td><td><p>A list of tax values grouped by <code>taxCode</code> and <code>taxRate</code>. It includes the sum of <code>item[].calculatedPrice.discountedPrice</code> or <code>item[].calculatedPrice.price</code>, <code>item[].calculatedPrice.fees[].discountedPrice</code> or <code>item[].calculatedPrice.fees[].price</code>, <code>calculatedPrice.totalShipping</code> and <code>calculatedPrice.paymentFees</code>. If any of these values have the same <code>taxRate</code> but different <code>taxCode</code>, they are listed separately. The aggregation also includes items that do not have a <code>taxRate</code> or <code>taxCode</code> defined.</p><pre><code>{
+  "finalPrice": {
+    //...
+    "taxAggregate" : {
+        "lines" : [ {
+          "netValue" : 96.5,
+          "grossValue" : 103.26,
+          "taxValue" : 6.76,
+          "taxCode" : "REDUCED",
+          "taxRate" : 7.0
+        }, {
+          "netValue" : 263.19,
+          "grossValue" : 313.2,
+          "taxValue" : 50.01,
+          "taxCode" : "STANDARD",
+          "taxRate" : 19.0
+        }, {
+          "netValue" : 9.0,
+          "grossValue" : 9.0,
+          "taxValue" : 0.0
+        } ]
+      }
+    //...
+  }
+}
+</code></pre></td></tr></tbody></table>
 
 See the sections below for shipping, payment fee, tax and discounts calculations.
 
-## How is shipping calculated
+### How is shipping calculated
 
 The shipping calculation depends on the stage at which it is done.
 
-* In the cart, where the address, delivery method, and zone are not available yet, the calculation uses the minimum shipping estimation. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`, and the `shipToAddress` is created based on the cart’s `countryCode` and `zipCode`.
+* In the cart, where the address, delivery method, and zone are not available yet, the calculation uses the minimum shipping estimation. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`, and the `shipToAddress` is created based on the cart’s `countryCode` and `zipCode`.\
   See the [Calculating the minimum shipping costs](https://developer.emporix.io/docs/openapi/shipping/#operation/POST-shipping-calculate-min-shipping-cost) endpoint.
 * In the checkout, where information about the delivery window and zone is already available, the calculation uses the following endpoints: [Calculating the final shipping cost](https://developer.emporix.io/docs/openapi/shipping/#operation/POST-shipping-calculate-shipping-cost), or [Calculating the shipping cost for a given slot](https://developer.emporix.io/docs/openapi/shipping/#operation/POST-shipping-calculate-slot-shipping-cost) accordingly.
 
 {% hint style="danger" %}
-
 Always make sure that your site’s `homeBase.address` has the `country` and `zip-code` information included. It's mandatory for shipping calculations.
 {% endhint %}
 
-## How to calculate a payment fee at cart level
+### How to calculate a payment fee at cart level
 
 At the cart level, only one additional fee is calculated, apart from the fees applied at the item level. The `paymentFees` is an additional, non-discountable amount that the customer must pay for using a given payment method.
 
@@ -1071,7 +1106,7 @@ The fee has a specific format, and there are two options for calculating it:
 
 If the fee is taxable and has a tax code, the gross value is calculated. Otherwise, the `grossValue` is equal to `netValue`.
 
-## How to determine a tax country at cart level
+### How to determine a tax country at cart level
 
 Since the shipping address is not set in the cart, you need to determine the country to find the `taxRate` for a fee that has a `taxCode` only.\
 Ways to find the country data:
@@ -1083,16 +1118,16 @@ Ways to find the country data:
     If the matching address is not found, return an error.
 * Get country code from site’s `homeBase.address.country`.
 
-## How to apply discounts at cart level
+### How to apply discounts at cart level
 
 Discounts are known as coupons and, with the relevant settings that influence `calculatedPrice`, they can be applied to a cart.
 
-#
+##
 
 Depending on the site configuration and the `includesTax=true/false`, the discount is applied to either the gross value - `includesTax=true`, or the net value - `includesTax=false`.\
 Based on this setting, the corresponding `netValue` or `grossValue` is recalculated using the tax rate.
 
-#
+##
 
 The information about which calculation method was used is available in `totalDiscount.calculationType=ApplyDiscountAfterTax/ApplyDiscountBeforeTax`:
 
@@ -1100,7 +1135,7 @@ The information about which calculation method was used is available in `totalDi
   * SUBTOTAL - the discounts are applied on `items[].calculatedPrice.price`. The line item fees and shipping cost are **NOT** discounted.
   * TOTAL - the discounts are applied on `items[].calculatedPrice.price`, the line item fees and shipping cost.
 
-#
+##
 
 *   `discountType`:
 
@@ -1112,11 +1147,11 @@ The information about which calculation method was used is available in `totalDi
     * PERCENT - it takes the value of discount’s `discountPercentage` attribute and calculates the percentage discount to the price.
     * FREE\_SHIPPING - this type of a discount fully discounts the price of the `calculatedPrice.totalShipping`. It's applied before any other discount is applied.
 
-#
+##
 
 * `categoryRestricted` - the discount applies only to the line items that belong to a specific category. If the `discountCalculationType=TOTAL`, a fee of an item that fulfills the restriction is discounted. However, any other fees, or shipping are not part of the discounting.
 
-#
+##
 
 * `segmentRestricted` - the discount is applied only to the line items that belong to the given customer segment.
 
