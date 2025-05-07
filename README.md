@@ -19,9 +19,7 @@ https://api.emporix.io
 ```
 
 {% hint style="warning" %}
-
 To start working with our API, make sure to allowlist [api.emporix.io](http://api.emporix.io/) IP: 34.128.182.253.
-
 {% endhint %}
 
 ## Authorization and scopes
@@ -39,35 +37,29 @@ The Emporix Developer Portal provides you with two types of credentials:
 
 When using our API, you will come across four types of access tokens:
 
-| Token type | Description | Emporix API endpoint |
-|---|---|---|
-| Anonymous token | Used by the storefront to access public resources with a reading scope. It allows customers to browse products, view prices, or add products to a cart. The anonymous token is not associated with any specific customer. | [Requesting an anonymous token](/openapi/oauth/#operation/GET-oauth-generate-anonymous-access-token) |
-| Customer token | A JSON Web Token (JWT) which contains encrypted customer data. The customer token works similarly to the anonymous token, but it is associated with a specific customer. | [Requesting a customer token](/openapi/oauth/#operation/POST-oauth-authorize-customer) |
-| Refresh token | Used to refresh the customer token. | [Requesting a refresh token](/openapi/oauth/#operation/GET-oauth-refresh-token) |
-| <nobr>Service access token</nobr> | Needed to access and manage the Emporix services such as adding new products, managing categories, or modifying prices. | [Requesting a <nobr>service access token</nobr>](/openapi/oauth/#operation/POST-oauth-request-client-credentials) |
+| Token type           | Description                                                                                                                                                                                                               | Emporix API endpoint                                                                                |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| Anonymous token      | Used by the storefront to access public resources with a reading scope. It allows customers to browse products, view prices, or add products to a cart. The anonymous token is not associated with any specific customer. | [Requesting an anonymous token](openapi/oauth/#operation/GET-oauth-generate-anonymous-access-token) |
+| Customer token       | A JSON Web Token (JWT) which contains encrypted customer data. The customer token works similarly to the anonymous token, but it is associated with a specific customer.                                                  | [Requesting a customer token](openapi/oauth/#operation/POST-oauth-authorize-customer)               |
+| Refresh token        | Used to refresh the customer token.                                                                                                                                                                                       | [Requesting a refresh token](openapi/oauth/#operation/GET-oauth-refresh-token)                      |
+| Service access token | Needed to access and manage the Emporix services such as adding new products, managing categories, or modifying prices.                                                                                                   | [Requesting a service access token](openapi/oauth/#operation/POST-oauth-request-client-credentials) |
 
 ### Scopes
 
 When you request an access token, you can see a `scope` field in the response. Scopes define which operations you are allowed to perform and which resources you can access.
 
-<Alert variant="attention">
-The overall naming convention for scopes is <code>[service_name].[resource_name]_[action_name]</code>.
+The overall naming convention for scopes is `[service_name].[resource_name]_[action_name]`.
 
 The action names `read` and `view` are used interchangeably and both mean that the scope grants read-only access to a particular resource.
 
-</Alert>
-
 Anonymous, customer, and refresh tokens have a pre-defined set of scopes. You can request specific scopes only when requesting a service access token. To find out which scopes are needed to access a particular endpoint, check its description in the Emporix API Reference.
 
-<Alert variant="attention">
 Some endpoints do not require any scopes as they are implicitly readable.
-</Alert>
 
 ## Customer audit logs
 
-You can request customer audit logs from Emporix by reaching out to our [Support Team](mailto:support@emporix.com) and sending the email request. 
-The logs are kept for the last 2 years. You can retrieve information about create, update or delete operations. The records contain information about the tenant, timestamp and the person who performed the actions. 
-
+You can request customer audit logs from Emporix by reaching out to our [Support Team](mailto:support@emporix.com) and sending the email request.\
+The logs are kept for the last 2 years. You can retrieve information about create, update or delete operations. The records contain information about the tenant, timestamp and the person who performed the actions.
 
 ## Quick Start Guide for developers
 
@@ -85,26 +77,17 @@ To access the Emporix API, you first need to retrieve your API keys. Perform the
 
 ### Send a sample request
 
-You can now use your Emporix API keys to authorize requests. Try it out by calling the <Button to="/openapi/site-settings/#operation/GET-site-settings-list-site-configurations" size="small">Retrieving sites</Button> endpoint:
+You can now use your Emporix API keys to authorize requests. Try it out by calling the Retrieving sites endpoint:
 
-<OpenApiTryIt
-  definitionId="site-settings"
-  operationId="GET-site-settings-list-site-configurations"
-  parameters={{
-    query: {
-        pageNumber: 1,
-        pageSize: 100,
-        q: " ",
-        expand: " "
-    }
-  }}
-/>
-
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/site/{tenant}/sites?totalCount=false&includeInactive=false&sort=string&pageNumber=1&pageSize=16&q=name%3A{productName}&expand=payment%3Aall%2Cshipping%3Aactive%2Ctax%3Anone%2Cmixin%3A*' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
 
 You should receive your main site's settings in the response body.
 
 {% hint style="danger" %}
-
 If you want to send a request to an endpoint that requires a different set of scopes, you need to generate a new access token.
 {% endhint %}
 
