@@ -18,16 +18,6 @@
 * [Authorization](api-guides-and-references/authorization/README.md)
   * [OAuth Service](authorization/oauth-service/README.md)
     * [API Reference](authorization/oauth-service/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: oauth-api
-        ```
     * [Anonymous Token](authorization/oauth-service/api-reference/README.md#anonymous-token)
     * [Refresh Token](authorization/oauth-service/api-reference/README.md#refresh-token)
     * [Revoke Token](authorization/oauth-service/api-reference/README.md#revoke-token)
