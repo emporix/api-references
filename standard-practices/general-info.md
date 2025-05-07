@@ -6,13 +6,6 @@ seo:
 
 # General Info
 
-import {\
-Alert,\
-Button,\
-OpenApiTryIt,\
-ExplainStep\
-} from '@redocly/developer-portal/ui';
-
 ## Standard practices in the Emporix API
 
 Here you can find descriptions of practices, concepts, and data formats that are commonly used across the Emporix API services.

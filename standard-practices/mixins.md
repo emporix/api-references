@@ -10,11 +10,9 @@ editPage:
 label: Mixins
 ---
 
-
-
 # Mixins
 
-Mixins are custom properties that you can use to describe your business resources in more details. Mixins can be applied to most objects in the Emporix API.
+Mixins are custom properties that you can use to describe your business resources in more details. Mixins can be applied to most objects in the Emporix API.\
 Learn more about mixin schemas in [Schema Service](https://developer.emporix.io/docs/openapi/schema/).
 
 ## Schemas
@@ -72,9 +70,7 @@ Here's an example of custom delivery options applied inside a `Customer` object 
 ## How to add mixins to an object
 
 {% hint style="warning" %}
-
 The procedure below presents applying mixins to a `Customer` object.
-
 {% endhint %}
 
 1. Define your mixin schema.
@@ -103,29 +99,27 @@ The procedure below presents applying mixins to a `Customer` object.
 ```
 
 2. Upload your schema to a hosting service and save its URL.
-
 3. Update an object with mixins and the mixin schema.
 
-<OpenApiTryIt
-  definitionId="customer-tenant"
-  operationId="PATCH-customer-tenant-update-customer"
-  parameters={{
-    path: {
-      tenant: "{tenant}"
-      }
-    }}
-  properties={{
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/customer/{tenant}/customers/{customerNumber}' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "contactEmail": "example@customer.com",
+    "active": true,
     "mixins": {
-        "deliveryOptions": {
-            "packaging": "Paper",
-            "hint": "If we are not home, the package can be left in front of the door.",
-            "substituteProduct": true
-        }
+      "deliveryOptions": {
+        "packaging": "Paper",
+        "hint": "If we are not home, the package can be left in front of the door.",
+        "substituteProduct": true
+      }
     },
     "metadata": {
-        "mixins": {
-            "deliveryOptions": "{{schemaURL}}"
-        }
+      "mixins": {
+        "deliveryOptions": "{{schemaURL}}"
+      }
     }
-  }}
-/>
+  }
+```
