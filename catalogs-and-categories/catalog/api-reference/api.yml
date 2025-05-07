@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Catalog Management
-  description: "The Catalog Management API gives you the tools required to structure your product offering the way it suites you best. 
+  description: The Catalog Management API gives you the tools required to structure your product offering the way it suites you best. 
   contact:
     name: Emporix
     url: https://emporix.com
