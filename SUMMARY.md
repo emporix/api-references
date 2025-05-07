@@ -18,6 +18,7 @@
 * [Authorization](api-guides-and-references/authorization/README.md)
   * [OAuth Service](authorization/oauth-service/README.md)
     * [API Reference](authorization/oauth-service/api-reference/README.md)
+      * [Anonymous Token](authorization/oauth-service/api-reference/anonymous-token/README.md)
       * ```yaml
         props:
           models: true
