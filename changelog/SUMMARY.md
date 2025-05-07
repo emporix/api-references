@@ -8,6 +8,7 @@
 
 ## 2025
 
+* [2025-04-29: Customer Segments Service - fully operational](2025/2025-04-29-segments.md)
 * [2025-04-17: Product Service - deprecations](2025/2025-04-17-product.md)
 * [2025-04-16: Cart Service - introduction of search endpoint](2025/2025-04-16-cart.md)
 * [2025-04-14: Cart Service - support external discounts](2025/2025-04-14-cart.md)
