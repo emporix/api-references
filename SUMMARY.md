@@ -28,9 +28,9 @@
               kind: openapi
               spec: oauth-api
         ```
-      * [Anonymous Token](authorization/oauth-service/api-reference/README.md#anonymous-token)
-      * [Refresh Token](authorization/oauth-service/api-reference/README.md#refresh-token)
-      * [Revoke Token](authorization/oauth-service/api-reference/README.md#revoke-token)
+    * [Anonymous Token](authorization/oauth-service/api-reference/README.md#anonymous-token)
+    * [Refresh Token](authorization/oauth-service/api-reference/README.md#refresh-token)
+    * [Revoke Token](authorization/oauth-service/api-reference/README.md#revoke-token)
 * [Artificial Intelligence](artificial-intelligence/README.md)
   * [AI Service](artificial-intelligence/ai-service/README.md)
     * [AI Tutorials](artificial-intelligence/ai-service/ai-tutorial.md)
