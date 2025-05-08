@@ -24,7 +24,7 @@ A particular site's country configuration specifies where that site is located.
 
 Country codes defined in country configurations must be compliant with the [ISO 3166-1 alpha-2 standard](https://www.iso.org/obp/ui/#iso:pub:PUB500001:en).
 
-Your tenant's country configuration is stored under the project\_country key in the [Emporix API Configuration Service](../../openapi/configuration/).
+Your tenant's country configuration is stored under the project\_country key in the [Emporix API Configuration Service](../configuration-service/).
 
 ```json
 {
@@ -47,7 +47,7 @@ Site-specific country configuration is stored in the `homeBase` field, inside th
 ```
 
 {% hint style="warning" %}
-For more information on the Site object, check out the [_Site Settings Service guide_](../../content/site-settings/).
+For more information on the Site object, check out the [_Site Settings Service guide_](../site-settings-service/).
 {% endhint %}
 
 ### Managing country configurations through Emporix API
@@ -60,8 +60,8 @@ To retrieve your tenant's country configuration, you need to send a request to t
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../currency-service/api-reference/" %}
+[api-reference](../currency-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -80,8 +80,8 @@ The value in the request body must be compliant with the [ISO 3166-1 alpha-2 sta
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../currency-service/api-reference/" %}
+[api-reference](../currency-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -103,8 +103,8 @@ To retrieve a particular site's country configuration, you need to send a reques
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../currency-service/api-reference/" %}
+[api-reference](../currency-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -123,8 +123,8 @@ The country code must be compliant with the [ISO 4217 standard](https://en.wikip
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../currency-service/api-reference/" %}
+[api-reference](../currency-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash

@@ -37,7 +37,7 @@ Languages configured for a particular site need to be a subset of languages conf
 
 Language codes defined in language configurations must be compliant with the [IETF BCP-47 standard](https://en.wikipedia.org/wiki/IETF_language_tag).
 
-Your tenant's language configuration is stored under the `project_lang` key in the [Emporix API Configuration Service](../../openapi/configuration/). Check out the following language configuration example:
+Your tenant's language configuration is stored under the `project_lang` key in the [Emporix API Configuration Service](../). Check out the following language configuration example:
 
 ```json
 {
@@ -60,7 +60,7 @@ Site-specific language configuration is stored in the `defaultLanguage` and `lan
 ```
 
 {% hint style="warning" %}
-For more information on the `Site` object, check out the [_Site Settings Service guide_](../../content/site-settings/).
+For more information on the `Site` object, check out the [_Site Settings Service guide_](../site-settings-service/).
 {% endhint %}
 
 ### Managing language configurations through Emporix API
@@ -73,8 +73,8 @@ To retrieve your tenant's language configuration, you need to send a request to 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../country-service/api-reference/" %}
+[api-reference](../country-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -93,8 +93,8 @@ The id in the request body must be compliant with the [ISO 4217 standard](https:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../country-service/api-reference/" %}
+[api-reference](../country-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -116,8 +116,8 @@ To retrieve a particular site's language configuration, you need to send a reque
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../country-service/api-reference/" %}
+[api-reference](../country-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -136,8 +136,8 @@ The currency code must be compliant with the [ISO 4217 standard](https://en.wiki
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../country-service/api-reference/" %}
+[api-reference](../country-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash

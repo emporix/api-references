@@ -39,7 +39,7 @@ Currency configured for a particular site needs to be one of the currencies conf
 
 Currency codes defined in currency configurations must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
 
-Your tenant's currency configuration is stored under the `project_curr` key in the Emporix API [Configuration Service](../../openapi/configuration/). Check out the following example:
+Your tenant's currency configuration is stored under the `project_curr` key in the Emporix API [Configuration Service](../configuration-service/). Check out the following example:
 
 ```json
 {
@@ -57,7 +57,7 @@ Site-specific currency configuration is stored in the `currency` field, inside t
 ```
 
 {% hint style="warning" %}
-For more information on the `Site` object, check out the [_Site Settings Service guide_](../../content/site-settings/).
+For more information on the `Site` object, check out the [_Site Settings Service guide_](../site-settings-service/).
 {% endhint %}
 
 ### Managing currency configurations through Emporix API
@@ -70,8 +70,8 @@ To retrieve your tenant's currency configuration, you need to send a request to 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../unit-handling-service/api-reference/" %}
+[api-reference](../unit-handling-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -90,8 +90,8 @@ The id in the request body must be compliant with the [ISO 4217 standard](https:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../unit-handling-service/api-reference/" %}
+[api-reference](../unit-handling-service/api-reference/)
 {% endcontent-ref %}
 
 ```
@@ -119,8 +119,8 @@ To retrieve a particular site's currency configuration, you need to call the [Re
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../unit-handling-service/api-reference/" %}
+[api-reference](../unit-handling-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -139,8 +139,8 @@ The currency code must be compliant with the [ISO 4217 standard](https://en.wiki
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../unit-handling-service/api-reference/" %}
+[api-reference](../unit-handling-service/api-reference/)
 {% endcontent-ref %}
 
 ```
