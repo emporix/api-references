@@ -14,12 +14,12 @@ label: Tutorials
 
 ### How to create a new cart
 
-To create a new cart, you need to send a request to the Creating a new cart endpoint.
+To create a new cart, you need to send a request to the [Creating a new cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="..cart/api-reference/" %}
+[api-reference](../cart/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -70,12 +70,12 @@ Upload your schema to a hosting service and save its URL
 
 ### Update a cart with custom attributes
 
-To add custom attributes to a cart, you need to send a request to the Updating a cart endpoint.
+To add custom attributes to a cart, you need to send a request to the [Updating a cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="..cart/api-reference/" %}
+[api-reference](../cart/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -122,15 +122,15 @@ curl -i -X PUT \
 ### How to merge carts
 
 {% hint style="warning" %}
-To learn more about merging carts, check out [Cart merging](https://developer.emporix.io/user-guides/core-commerce/carts/carts#cart-merging) in the Carts guide.
+To learn more about merging carts, check out [Cart merging](ce/core-commerce/carts#cart-merging) in the Carts guide.
 {% endhint %}
 
-To merge an anonymous cart with a customer cart, you need to send a request to the Merging carts endpoint. Provide the customer cart's ID in the `cartId` path parameter and the anonymous cart's ID in the request body.
+To merge an anonymous cart with a customer cart, you need to send a request to the [Merging carts](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-merge) endpoint. Provide the customer cart's ID in the `cartId` path parameter and the anonymous cart's ID in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="..cart/api-reference/" %}
+[api-reference](../cart/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -150,22 +150,22 @@ curl -i -X POST \
 
 ### How to source pricing information from an external price calculation tool
 
-For B2B scenarios, you might want to integrate an external application for price calculation for your products. Usually, the systems, such as ERPs, store all the relevant customer-specific pricing information needed for customer-specific pricing.\
+For B2B scenarios, you might want to integrate an external application for price calculation for your products. Usually, the systems, such as ERPs, store all the relevant customer-specific pricing information needed for customer-specific pricing.
 The external system then can communicate with the Cart Service directly to overwrite the price of the product added to the cart.
 
 {% hint style="warning" %}
-To achieve the communication between Commerce Engine and the external pricing tool, you have to configure both systems accordingly.\
-The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.\
+To achieve the communication between Commerce Engine and the external pricing tool, you have to configure both systems accordingly.
+The steps required for such a case are described in the [External Products, Pricing and Fees](ce/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation.
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
-After enabling the external application to update carts with calculated prices, to add a product that is available within Commerce Engine, but with an external price, you need to send the request to the Adding a product to cart endpoint.\
+After enabling the external application to update carts with calculated prices, to add a product that is available within Commerce Engine, but with an external price, you need to send the request to the [Adding a product to cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
 Provide the customer cart's ID in the `cartId` path parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="..cart/api-reference/" %}
+[api-reference](../cart/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -203,7 +203,7 @@ When you have enabled external pricing, it's essential to ensure the accuracy of
 For some cases, you might want to allow adding products from an external system to cart, and not only from your online store. The products from external product management sources can be added directly to the customer's cart, bypassing the standard product catalog.
 
 {% hint style="warning" %}
-To achieve the communication between Commerce Engine and the external product management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.\
+To achieve the communication between Commerce Engine and the external product management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](ce/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation.
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
@@ -212,8 +212,8 @@ Provide the customer cart's ID in the `cartId` path parameter. The payload has t
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="..cart/api-reference/" %}
+[api-reference](../cart/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -251,17 +251,17 @@ curl -i -X POST \
 For some cases, you might need to calculate and charge additional fees, for example for packaging, freight, or any additional reasons. The fees calculated externally can be added directly to the customer's cart.
 
 {% hint style="warning" %}
-To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation.\
+To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](ce/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation.
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
-To add a custom fee to the cart, you need to send the request to the Adding a product to cart endpoint.\
+To add a custom fee to the cart, you need to send the request to the [Adding a product to cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
 Provide the customer cart's ID in the `cartId` path parameter. The payload has to include the `"itemType" : "EXTERNAL"` parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="..cart/api-reference/" %}
+[api-reference](../cart/api-reference/)
 {% endcontent-ref %}
 
 ```bash

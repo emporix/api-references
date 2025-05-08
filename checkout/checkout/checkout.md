@@ -17,18 +17,19 @@ You need details about the customer's access and session tokens as these details
 
 1. When a user enters your storefront, before they choose to log in, an anonymous user session is created.
 
-  Get an anonymous access token by sending a request to the <nobr><Button to="/openapi/oauth/#operation/GET-oauth-generate-anonymous-access-token" size="small">Requesting an anonymous token] endpoint.
+  Get an anonymous access token by sending a request to the [Requesting an anonymous token](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/authorization/oauth-service/api-reference/anonymous-token) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../authorization/oauth-service/api-reference/" %}
+[api-reference](../../authorization/oauth-service/api-reference/)
 {% endcontent-ref %}
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id={client_id}'
   ```
-2. Log the customer in and send an authorization request to the <nobr><Button to="/openapi/oauth/#operation/POST-oauth-authorize-customer" size="small">Requesting a customer token] endpoint.
+
+2. Log the customer in and send an authorization request to the [Requesting a customer token](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/authorization/oauth-service/api-reference/customer-token) endpoint.
 
 {% hint style="warning" %}
 You can skip this step and continue with the checkout process as a guest customer without the need to log in.
@@ -36,8 +37,8 @@ You can skip this step and continue with the checkout process as a guest custome
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../authorization/oauth-service/api-reference/" %}
+[api-reference](../../authorization/oauth-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -57,12 +58,12 @@ This operation returns the customer's access token and Saas token, which convey 
 
 Each country that you operate in may have different tax rules for different products and services. Add relevant configuration to calculate taxes accordingly.
 
-Add tax configuration by sending a request to the <nobr><Button to="/openapi/tax/#operation/POST-tax-create-configuration" size="small">Creating a new tax configuration] endpoint.
+Add tax configuration by sending a request to the [Creating a new tax configuration](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/tax-service/api-reference/taxes#post-tax-tenant-taxes) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../prices-and-taxes/tax-service/api-reference/" %}
+[api-reference](../../prices-and-taxes/tax-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -110,12 +111,12 @@ curl -i -X POST \
 Delivery zone is the area where you ship your goods to. You can define a country, or a zip code that you operate within.
 Delivery method is dependant on a specific site and delivery zone. 
 
-1. Define the delivery zone by sending a request to the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-shipping-zone" size="small">Creating a shipping zone] endpoint.
+1. Define the delivery zone by sending a request to the [Creating a shipping zone](https://emporix.gitbook.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-zones#post-shipping-tenant-site-zones) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -137,12 +138,12 @@ curl -i -X POST \
   }'
 ```
 
-2. Specify how the goods can be shipped to a customer by sending a request to the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-shipping-method" size="small">Creating a shipping method] endpoint.
+1. Specify how the goods can be shipped to a customer by sending a request to the [Creating a shipping method](https://emporix.gitbook.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-methods#post-shipping-tenant-site-zones-zoneid-methods) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 ```bash
 curl -i -X POST \
@@ -195,12 +196,12 @@ curl -i -X POST \
   }'
 ``` 
 
-3. Define delivery time that will be matched with the delivery method and zone by sending the request to the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-delivery-time" size="small">Creating a delivery time] endpoint.
+1. Define delivery time that will be matched with the delivery method and zone by sending the request to the [Creating a delivery time](https://emporix.gitbook.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/delivery-times-management#post-shipping-tenant-delivery-times) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 ```bash
 curl -i -X POST \
@@ -237,12 +238,12 @@ curl -i -X POST \
 
 ## Add products to your store
 
-To create and add multiple products to your store, send the request to the <nobr><Button to="/openapi/product/#operation/POST-product-create-bulk-products" size="small">Creating multiple products] endpoint.
+To create and add multiple products to your store, send the request to the [Creating multiple products](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
+[api-reference](../../products-labels-and-brands/product-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -258,12 +259,12 @@ curl -i -X POST \
  
 Price model defines your pricing strategy. You can specify how you want to go about price tiers and selling volumes.
 
-1. To define a price model send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-model" size="small">Creating a new price model] endpoint.
+1. To define a price model send a request to the [Creating a new price model](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-models#post-price-tenant-pricemodels) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../prices-and-taxes/price-service/api-reference/" %}
+[api-reference](../../prices-and-taxes/price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -295,12 +296,12 @@ curl -i -X POST \
   }'
 ```
 
-2. Create a price for a specific product by sending a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price" size="small">Creating a new price] endpoint.
+1. Create a price for a specific product by sending a request to the [Creating a new price](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../prices-and-taxes/price-service/api-reference/" %}
+[api-reference](../../prices-and-taxes/price-service/api-reference/)
 {% endcontent-ref %}
 ```bash
 url -i -X POST \
@@ -345,12 +346,12 @@ url -i -X POST \
 The following request requires using the customer's access token for authorization, either anonymous or logged in, as the response contains the bearer's information. 
 {% endhint %}
 
-Send the request to the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices-by-context" size="small">Matching prices for session context] endpoint.
+Send the request to the [Matching prices for session context](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices-by-context) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../prices-and-taxes/price-service/api-reference/" %}
+[api-reference](../../prices-and-taxes/price-service/api-reference/)
 {% endcontent-ref %}
 ```bash 
 curl -i -X POST \
@@ -382,25 +383,46 @@ The following requests require using the customer's access token for authorizati
 1. You have to enable an option to create a cart on your site while a customer is browsing through your products. Creating a cart takes care of things like gathering customer's session details, even anonymous, or setting up a proper cart's currency for final calculations at checkout.
 There are two options to create carts using API:
 
-* Create a cart by sending a request to the <nobr><Button to="/openapi/cart/#operation/POST-cart-create-cart" size="small">Creating a new cart] endpoint.
+* Create a cart by sending a request to the [Creating a new cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../cart/api-reference/" %}
+[api-reference](../cart/api-reference/)
 {% endcontent-ref %}
-  definitionId="cart"
-  operationId="POST-cart-create-cart"
-  defaultExample="Logged in customer's cart"
-  /> 
 
-* Create a cart by sending a `GET` request with `create=true` parameter to the <nobr><Button to="/openapi/cart/#operation/GET-cart-retrieve-cart-by-criteria" size="small">Retrieving a cart's details by criteria] endpoint.
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/cart/{tenant}/carts' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -H 'saas-token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MTQ0MzU2MyIsImV4cCI6MTY5Nzk3MDUyOH0.F0b5jr6KeSoBCj-suTLuasmydaJEudc1ZrESkQXSCGk' \
+  -H 'session-id: string' \
+  -d '{
+    "customerId": "87413250",
+    "siteCode": "main",
+    "type": "shopping",
+    "deliveryWindow": {
+      "id": "5b5572a61cf31a000f31eee4",
+      "deliveryDate": "2023-06-06T12:00:00.000Z",
+      "slotId": "5678-8756-3321-1234"
+    },
+    "channel": {
+      "name": "storefront",
+      "source": "https://your-storefront.com/"
+    },
+    "currency": "EUR"
+  }'
+```
+
+* Create a cart by sending a `GET` request with `create=true` parameter to the [Retrieving a cart's details by criteria](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="..cart/api-reference/" %}
+[api-reference](../cart/api-reference/)
 {% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/cart/{tenant}/carts' \
@@ -420,17 +442,29 @@ curl -i -X POST \
   }'
   ```
 
-2. Add items to the cart by sending the request to the <nobr><Button to="/openapi/cart/#operation/POST-cart-add-item-to-cart" size="small">Creating a new cart] endpoint.
+2. Add items to the cart by sending the request to the [Creating a new cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="..cart/api-reference/" %}
+[api-reference](../cart/api-reference/)
 {% endcontent-ref %}
+
 ```bash
-curl -i -X GET \
-  'https://api.emporix.io/cart/{tenant}/carts?sessionId=string&customerId=string&siteCode=string&legalEntityId=string&create=true&type=string&zipCode=string&countryCode=st' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+curl -i -X POST \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "itemYrn": "{productYrn}",
+    "price": {
+      "priceId": "{priceId}",
+      "effectiveAmount": 0.3582,
+      "originalAmount": 0.3582,
+      "currency": "EUR"
+    },
+    "quantity": 6
+  }'
 ```
 
 ## Define payment methods
@@ -451,27 +485,90 @@ Once a customer places the product in a cart, they can proceed with the checkout
 The checkout service validates the data that come from customer's session token, the cart, and tiered prices, and then proceeds with the delivery and payment details. 
 Then, it handles the payment and creates an order in the system, closing the cart. 
 
-You can trigger a checkout process through API as well by sending a request to the <nobr><Button to="/openapi/checkout/#operation/POST-checkout-trigger-checkout" size="small">Triggering a checkout] endpoint.
+You can trigger a checkout process through API as well by sending a request to the [Triggering a checkout](https://emporix.gitbook.io/documentation-portal/api-references/checkout/checkout/api-reference/checkouts) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../checkout/api-reference/" %}
+[api-reference](../checkout/api-reference/)
 {% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' \
+  'https://api.emporix.io/checkout/{tenant}/checkouts/order' \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
   -H 'Content-Type: application/json' \
+  -H 'saas-token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MTQ0MzU2MyIsImV4cCI6MTY5Nzk3MDUyOH0.F0b5jr6KeSoBCj-suTLuasmydaJEudc1ZrESkQXSCGk' \
   -d '{
-    "itemYrn": "{productYrn}",
-    "price": {
-      "priceId": "{priceId}",
-      "effectiveAmount": 0.3582,
-      "originalAmount": 0.3582,
-      "currency": "EUR"
+    "cartId": "9b36757a-5ea1-4689-9ed3-fb630eb5048c",
+    "paymentMethods": [
+      {
+        "provider": "payment-gateway",
+        "customAttributes": {
+          "customer": "635544345",
+          "modeId": "9a33c7a5-9535-42af-a936-2fa6ece27579"
+        },
+        "method": "invoice"
+      }
+    ],
+    "currency": "EUR",
+    "shipping": {
+      "methodId": "4-more_hours_timeframe",
+      "zoneId": "deliveryarea",
+      "methodName": "Delivery method name",
+      "amount": 10,
+      "shippingTaxCode": "STANDARD"
     },
-    "quantity": 6
+    "deliveryWindowId": "cbda2a28-f0cc-11ed-a05b-0242ac120003",
+    "addresses": [
+      {
+        "contactName": "John Doe",
+        "companyName": "Emporix",
+        "street": "Fritz-Elsaas",
+        "streetNumber": "20",
+        "streetAppendix": "",
+        "zipCode": "70173",
+        "city": "Stuttgart",
+        "country": "DE",
+        "state": "",
+        "contactPhone": "123456789",
+        "type": "SHIPPING",
+        "metadata": {
+          "mixins": {}
+        },
+        "mixins": {}
+      },
+      {
+        "contactName": "John Doe",
+        "companyName": "Emporix",
+        "street": "Fritz-Elsaas",
+        "streetNumber": "20",
+        "streetAppendix": "",
+        "zipCode": "70173",
+        "city": "Stuttgart",
+        "country": "DE",
+        "state": "",
+        "contactPhone": "123456789",
+        "type": "BILLING",
+        "metadata": {
+          "mixins": {}
+        },
+        "mixins": {}
+      }
+    ],
+    "customer": {
+      "id": "8765472",
+      "title": "MR",
+      "firstName": "John",
+      "middleName": "",
+      "lastName": "Doe",
+      "contactPhone": "56432245",
+      "email": "test@doc.com",
+      "company": "Emporix",
+      "metadata": {
+        "mixins": {}
+      },
+      "mixins": {}
+    }
   }'
 ```
