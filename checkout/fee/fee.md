@@ -14,12 +14,12 @@ Follow these steps to create a fee and connect it to a product.
 
 1. Create a fee
 
-To create a fee in the system, send the request to the <nobr><Button to="/openapi/fee/#operation/POST-fee-create-fee" size="small">Creating fee] endpoint.
+To create a fee in the system, send the request to the [Creating a fee](https://emporix.gitbook.io/documentation-portal/api-references/checkout/fee/api-reference/fee-management#post-fee-tenant-fees) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../fee/api-reference/" %}
+[api-reference](../fee/api-reference/)
 {% endcontent-ref %}
 ```bash
 curl -i -X POST \
@@ -50,12 +50,12 @@ Make sure you provide the relevant `siteCode` of a site that you want to apply t
 {% endhint %}
 
 
-2. Copy the `feeId` of the created fee. To add the fee to the specific product, send the request to the <nobr><Button to="/openapi/fee/#operation/PUT-fee-add-product-fees" size="small">Adding a list of fees to a product] endpoint.
+1. Copy the `feeId` of the created fee. To add the fee to the specific product, send the request to the [Adding a list of fees to a product](https://emporix.gitbook.io/documentation-portal/api-references/checkout/fee/api-reference/product-fees-management#put-fee-tenant-productfees-productid-fees) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../fee/api-reference/" %}
+[api-reference](../fee/api-reference/)
 {% endcontent-ref %}
 ```bash
 curl -i -X PUT \
@@ -74,12 +74,12 @@ In the request path parameter, provide the `productId` to add the fee to.
 The `siteCode` in the query parameter must correspond to the site you've created the fee for.
 
 
-3. To make sure the fee has been added properly, you can send the request to the <nobr><Button to="/openapi/fee/#operation/GET-fee-list-product-fees" size="small">Retrieving all fees with the given productId] endpoint.
+1. To make sure the fee has been added properly, you can send the request to the [Retrieving all fees with the given productId(](https://emporix.gitbook.io/documentation-portal/api-references/checkout/fee/api-reference/product-fees-management#get-fee-tenant-productfees-productid-fees)) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../fee/api-reference/" %}
+[api-reference](../fee/api-reference/)
 {% endcontent-ref %}
 ```bash
 curl -i -X GET \
@@ -89,12 +89,12 @@ curl -i -X GET \
   ```
 
 In the query parameter, provide the `siteCode` of the specific site the fee was applied to, for example `?siteCode=DE`.  
-Or, you can check if the fee was applied by sending the request to the <nobr><Button to="/openapi/fee/#operation/POST-fee-search-item-fee-by-ProductId" size="small">Searching itemFees by productId] endpoint.
+Or, you can check if the fee was applied by sending the request to the [Searching itemFees by productId](https://emporix.gitbook.io/documentation-portal/api-references/checkout/fee/api-reference/item-fee-search#post-fee-tenant-itemfees-searchbyproductid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../fee/api-reference/" %}
+[api-reference](../fee/api-reference/)
 {% endcontent-ref %}
 ````bash
 curl -i -X POST \
@@ -114,12 +114,12 @@ curl -i -X POST \
 
 The Fee Service supports adding fees to payments methods. See the example of creating a fee for a payment type.
 
-1. First, create a fee by sending the request to the <nobr><Button to="/openapi/fee/#operation/POST-fee-create-fee" size="small">Creating fee] endpoint.
+1. First, create a fee by sending the request to the [Creating a fee](https://emporix.gitbook.io/documentation-portal/api-references/checkout/fee/api-reference/fee-management#post-fee-tenant-fees) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../fee/api-reference/" %}
+[api-reference](../fee/api-reference/)
 {% endcontent-ref %}
 ```bash
 curl -i -X POST \
@@ -148,14 +148,14 @@ When creating a payment fee, the fee `code` has to be identical with the payment
 Notice the `code` in the above payload corresponds to the payment mode `code` we want ta apply the fee to.
 
 
-2. Copy the `feeId`. To connect the fee to the specific payment type, create the item fee by sending the request to the <nobr><Button to="/openapi/fee/#operation/POST-fee-create-item-fee" size="small">Creating itemFee] endpoint 
+1. Copy the `feeId`. To connect the fee to the specific payment type, create the item fee by sending the request to the [Creating itemFee](https://emporix.gitbook.io/documentation-portal/api-references/checkout/fee/api-reference/item-fee-management#post-fee-tenant-itemfees) endpoint 
 and specify the `itemYrn` of the chosen payment type in the request body.
 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../fee/api-reference/" %}
+[api-reference](../fee/api-reference/)
 {% endcontent-ref %}
 ```bash
 curl -i -X POST \
@@ -168,14 +168,13 @@ curl -i -X POST \
 
 Notice the part of `itemYrn` contains the payment mode `code` which is identical with the fee `code`.
 
-3. Apply the fee to the payment mode. Make a call to the <nobr><Button to="/openapi/fee/#operation/PUT-fee-add-item-fees-itemYRN" size="small">Adding a list of fees to an item] endpoint. 
+1. Apply the fee to the payment mode. Make a call to the [Adding a list of fees to an item](https://emporix.gitbook.io/documentation-portal/api-references/checkout/fee/api-reference/item-fee-management#put-fee-tenant-itemfees-itemyrn-fees) endpoint. 
 You need to specify the `itemYrn` of the chosen payment type in the request path and pass the `feeId` in the body.
-
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../fee/api-reference/" %}
+[api-reference](../fee/api-reference/)
 {% endcontent-ref %}
 ```bash
 curl -i -X PUT \
@@ -197,12 +196,12 @@ For each payment mode you can create and connect one fee only.
 
 {% endhint %}
 
-4. To make sure the fee has been applied to the payment, send the request to the <nobr><Button to="/openapi/fee/#operation/POST-fee-check-item-fee" size="small">Checking of a fee has been applied] endpoint.
+1. To make sure the fee has been applied to the payment, send the request to the [Checking of a fee has been applied](https://emporix.gitbook.io/documentation-portal/api-references/checkout/fee/api-reference/item-fee-search#post-fee-tenant-itemfees-search) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../fee/api-reference/" %}
+[api-reference](../fee/api-reference/)
 {% endcontent-ref %}
 
 ```bash
