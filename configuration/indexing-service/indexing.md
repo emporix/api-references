@@ -6,11 +6,11 @@ seo:
 
 # Indexing Tutorial
 
-The Indexing service is designed to manage indexing configuration. Currently, the index provider supported in Commerce Engine is [Algolia](https://www.algolia.com/).\
+The Indexing service is designed to manage indexing configuration. Currently, the index provider supported in Commerce Engine is [Algolia](https://www.algolia.com/).
 Proper indexing allows you to enhance your search mechanism within Emporix system. By connecting your Algolia instance to Commerce Engine, you get an improved search functionality.
 
 {% hint style="info" %}
-To learn more about the Indexing Service, see the [Indexing Service](./).
+To learn more about the Indexing Service, see the [Indexing Service](../indexing-service/README.md).
 {% endhint %}
 
 For every tenant, new Algolia credentials are created and kept as `AlgoliaClient`.
@@ -88,7 +88,7 @@ To apply your configuration changes to existing data, run the reindexing process
 
 Usually, reindexing runs upon the update of a product or its dependant entity, such as category, price, or media. The scheduler job discovers what has been changed and pushes the changes to index frequently.\
 But, if you change your index configuration, you need to trigger the reindexing process to apply your configuration changes.\
-You can run the reindex without the need to update all your resource data by sending the request to the Reindex endpoint.
+You can run the reindex without the need to update all your resource data by sending the request to the [Reindex](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/indexing-service/api-reference/reindex) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

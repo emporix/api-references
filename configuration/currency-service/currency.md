@@ -19,6 +19,7 @@ When creating a tenant on the Emporix Developer Portal, you can choose one of th
 
 {% hint style="warning" %}
 _What if my business operates in a currency that's not on the list?_
+{% endhint %}
 
 If your business operates in a currency that's not listed on the Emporix Developer Portal, you need to perform the following steps:
 
@@ -57,7 +58,7 @@ Site-specific currency configuration is stored in the `currency` field, inside t
 ```
 
 {% hint style="warning" %}
-For more information on the `Site` object, check out the [_Site Settings Service guide_](../site-settings-service/).
+For more information on the `Site` object, check out the [_Site Settings Service guide_](../site-settings-service/README.md)
 {% endhint %}
 
 ### Managing currency configurations through Emporix API
