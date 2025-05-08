@@ -144,7 +144,7 @@ The currency code must be compliant with the [ISO 4217 standard](https://en.wiki
 [api-reference](../unit-handling-service/api-reference/)
 {% endcontent-ref %}
 
-```
+```bash
 curl -L \
   --request PATCH \
   --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \

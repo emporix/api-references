@@ -25,16 +25,16 @@ You can assign categories to a catalog when creating or updating the catalog. Th
 
 Catalog names and descriptions are localized. When creating a new catalog, you can specify the catalog name and description in two different ways — in one language or in multiple languages.
 
-Looking for more info on localization? Check out [*Standard practices*](/content/standard-practices).
+Looking for more info on localization? Check out [*Standard practices*](../standard-practices/translations.md).
 
 {% endhint %}
 
-To create a new catalog, you need to send a request to the <nobr><Button to="/openapi/catalog/#operation/POST-catalog-create-catalog" size="small">Creating a new catalog</Button></nobr> endpoint.
+To create a new catalog, you need to send a request to the [Creating a new catalog](https://emporix.gitbook.io/documentation-portal/api-references/catalogs-and-categories/catalog/api-reference/catalog-management#post-catalog-tenant-catalogs) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../catalog/api-reference/" %}
+[api-reference](../catalog/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -69,14 +69,14 @@ curl -i -X POST \
 
 {% hint style="warning" %}
 
-For more information, check out [*How to create a category*](/content/category/#how-to-create-a-category).
+For more information, check out [*How to create a category*](../category/#how-to-create-a-category).
 
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../category-tree/api-reference/" %}
+[api-reference](..category-tree/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -117,14 +117,14 @@ curl -i -X POST \
 
 ### Assign the category to the catalog
 
-To assign the newly created category to a catalog, you need to send a request to the <nobr><Button to="/openapi/catalog/#operation/PATCH-catalog-update-catalog-properties" size="small">Partially updating a catalog</Button></nobr> endpoint.
+To assign the newly created category to a catalog, you need to send a request to the [Partially updating a catalog](https://emporix.gitbook.io/documentation-portal/api-references/catalogs-and-categories/catalog/api-reference/catalog-management#patch-catalog-tenant-catalogs-catalogid) endpoint.
 
 In the request body, insert the ID of the category into the `categoryIds` array. In this example, we also present how to set the visibility timeframe of the catalog with the `visibility` field.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../category-tree/api-reference/" %}
+[api-reference](../category-tree/api-reference/)
 {% endcontent-ref %}
 
 ```bash
