@@ -262,7 +262,7 @@ curl -i -X PUT \
 
  ## Update the return status
 
- As an employee, you can update all the fields available during the return creation, as well as the `approvalStatus` and `received` fields, by sending a request to the <nobr><Button to="/openapi/returns/#operation/PUT-returns-update-return" size="small">Updating a single return] endpoint.
+ As an employee, you can update all the fields available during the return creation, as well as the `approvalStatus` and `received` fields, by sending a request to the [Updating a single return](https://emporix.gitbook.io/documentation-portal/api-references/orders/returns/api-reference/returns#put-return-tenant-returns-returnid) endpoint.
  
 {% hint style="warning" %}
 
@@ -280,8 +280,8 @@ In this scenario, the employee updates the approval status of the return request
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../returns/api-reference/" %}
+[api-reference](../returns/api-reference/)
 {% endcontent-ref %}
 ```bash
 curl -i -X PUT \

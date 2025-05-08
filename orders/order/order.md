@@ -30,7 +30,7 @@ Once an order is placed, the order information simply reflects the calculated pr
 
 {% hint style="info" %}
 
-To learn how pricing is calculated at Emporix, see the [Cart Service Tutorials](https://developer.emporix.io/docs/content/cart/#pricing-calculations).
+To learn how pricing is calculated at Emporix, see the [Cart Service Tutorials](../../checkout/cart/cart.md#pricing-calculations).
 
 {% endhint %}
 
@@ -41,13 +41,13 @@ In this approach, the Emporix cart interacts with an ERP system to retrieve real
 
 Commerce Orchestration Platform (COP) enables this functionality with external pricing, ensuring real-time accuracy.
 
-Communication with the ERP system occurs using the BFF (Backend-for-Frontend) layer and with a [POST](https://developer.emporix.io/docs/openapi/order/#operation/POST-order-create-order-employee) request the order is send to an ERP system. This architecture ensures a secure, real-time pricing model while leveraging external systems for order calculations.
+Communication with the ERP system occurs using the BFF (Backend-for-Frontend) layer and with a [POST](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) request the order is send to an ERP system. This architecture ensures a secure, real-time pricing model while leveraging external systems for order calculations.
 
 <figure><img src="../../../../static/order/diagram2.svg" alt=""><figcaption></figcaption></figure>
 
 {% hint style="info" %}
 
-For more information, see the [External Pricing](https://developer.emporix.io/user-guides/extensibility-and-integrations/extensibility/external-pricing-and-products) guides.
+For more information, see the [External Pricing](ce/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) guides.
 
 {% endhint %}
 
@@ -55,7 +55,7 @@ For more information, see the [External Pricing](https://developer.emporix.io/us
 
 With this use case, the Commerce Orchestration Platform cart is used to collect products and customer details, such as addresses. However, instead of using COP for final price calculations at checkout, the BFF (Backend-for-Frontend) layer communicates with the ERP to simulate the order, ensuring that all pricing, discounts, and rules from the ERP are applied before order creation.
 
-Once the order is validated and priced by the ERP, the BFF layer creates the order in COP using the [Sales Order API](https://developer.emporix.io/docs/openapi/order/#operation/POST-order-create-order-employee). This allows for seamless integration between Emporix and the external ERP system while maintaining flexibility in how orders are processed.
+Once the order is validated and priced by the ERP, the BFF layer creates the order in COP using the [Sales Order API](../order/api-reference/README.md). This allows for seamless integration between Emporix and the external ERP system while maintaining flexibility in how orders are processed.
 
 
 <figure><img src="../../../../static/order/diagram3.svg" alt=""><figcaption></figcaption></figure>

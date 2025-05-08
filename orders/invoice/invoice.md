@@ -73,13 +73,13 @@ curl -i -X POST \
 
 ## Set up the Site Settings service
 
-The logo URL configuration allows to upload a custom logo that should be visible on the invoice header.\
-Add your company logo to the invoice with the Creating a site mixin endpoint.
+The logo URL configuration allows to upload a custom logo that should be visible on the invoice header.
+Add your company logo to the invoice with the [Creating a site mixin](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#post-site-tenant-sites-sitecode-mixins) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../configuration/site-settings-service/api-reference/" %}
+[api-reference](../../configuration/site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
