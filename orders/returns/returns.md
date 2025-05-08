@@ -10,14 +10,14 @@ seo:
 
  ## Update the expiration date settings
 
- You can update the expiration date offset for a tenant by sending a request to the <nobr><Button to="/openapi/configuration/#operation/PUT-configuration-update-config" size="small">Updating a configuration] endpoint in the Configuration Service.
+ You can update the expiration date offset for a tenant by sending a request to the [Updating a configuration](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint in the Configuration Service.
 
  In the following example, we are changing the expiration date offset to 14 days.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../configuration/configuration-service/api-reference/" %}
+[api-reference](../../configuration/configuration-service/api-reference/)
 {% endcontent-ref %}
 ```bash
 curl -i -X PUT \
@@ -41,7 +41,7 @@ curl -i -X PUT \
 
 {% hint style="warning" %}
 
-If you want the return-service-specific events to trigger any actions of your choice, configure webhook subscriptions. See the [*Webhook Service Tutorials*](/content/webhook) for more information.
+If you want the return-service-specific events to trigger any actions of your choice, configure webhook subscriptions. See the [*Webhook Service Tutorials*](../../webhooks/webhook-service/webhooks-tutorial.md) for more information.
 {% endhint %}
 
  First, ensure that the orders that you want to return (along with their `order_Id` values) exist in the system.
@@ -57,7 +57,7 @@ If you want the return-service-specific events to trigger any actions of your ch
 
 Based on your tenant's configuration settings and customer's oauth token, the remaining fields are populated automatically.
 
-When a customer sends a return request, the <nobr><Button to="/openapi/returns/#operation/POST-returns-create-return" size="small">Creating a single return entity] endpoint is called.
+When a customer sends a return request, the [Creating a single return entity](https://emporix.gitbook.io/documentation-portal/api-references/orders/returns/api-reference/returns#post-return-tenant-returns) endpoint is called.
 
 {% hint style="warning" %}
 
@@ -73,8 +73,8 @@ The `returns.returns_read` and `returns.returns_manage` scopes are only required
  
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../return/api-reference/" %}
+[api-reference](../returns/api-reference/)
 {% endcontent-ref %}
 ```bash
 curl -i -X POST \
@@ -124,7 +124,7 @@ curl -i -X POST \
  ## Create a return on behalf of a customer
 
 
- To create a return on behalf of a customer, you need to send a request to the <nobr><Button to="/openapi/returns/#operation/POST-returns-create-return" size="small">Creating a single return entity] endpoint.
+ To create a return on behalf of a customer, you need to send a request to the [Creating a single return entity](https://emporix.gitbook.io/documentation-portal/api-references/orders/returns/api-reference/returns#post-return-tenant-returns) endpoint.
 
  
 {% hint style="warning" %}
@@ -141,8 +141,8 @@ The `returns.returns_read_own` and `returns.returns_manage_own` scopes are only 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../returns/api-reference/" %}
+[api-reference](../returns//api-reference/)
 {% endcontent-ref %}
 ```bash
 curl -i -X POST \
@@ -197,7 +197,7 @@ The `approvalStatus` field is automatically populated during the creation of a r
 
 ## Update the return request by a customer
 
-Customers can update their return request only when the approval status of the request is `PENDING`. When a customer updates a return, the <nobr><Button to="/openapi/returns/#operation/PUT-returns-update-return" size="small">Updating a single return] endpoint is called.
+Customers can update their return request only when the approval status of the request is `PENDING`. When a customer updates a return, the [Updating a single return](https://emporix.gitbook.io/documentation-portal/api-references/orders/returns/api-reference/returns#post-return-tenant-returns) endpoint is called.
 
 {% hint style="warning" %}
 
@@ -214,8 +214,8 @@ In this scenario, the customer updates the reason for the return.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../returns/api-reference/" %}
+[api-reference](../returns/api-reference/)
 {% endcontent-ref %}
 ```bash
 curl -i -X PUT \

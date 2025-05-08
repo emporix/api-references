@@ -6,8 +6,7 @@ seo:
 
 # Media Tutorial
 
-You can upload or link to media files and other documents by using the Emporix Media Service. The files can be associated with specific resources within the Emporix database,\
-or remain unassigned.
+You can upload or link to media files and other documents by using the Emporix Media Service. The files can be associated with specific resources within the Emporix database, or remain unassigned.
 
 {% hint style="danger" %}
 Currently, it is possible to assign assets to categories and products only.
@@ -15,13 +14,13 @@ Currently, it is possible to assign assets to categories and products only.
 
 ## How to manage public and internal assets
 
-The assets can either be linked to an external website where they are stored, or uploaded in the form of blob data by using a multipart/form-data request.\
+The assets can either be linked to an external website where they are stored, or uploaded in the form of blob data by using a multipart/form-data request.
 You can also specify the access types of the uploaded files - the public assets are files that will be visible on your business' storefront, and the private access files will be accessible only to your tenant's employees.
 
 In the following scenario, we are going to create public and private assets for an already existing category.
 
 {% hint style="warning" %}
-Before you begin, ensure that a category with a category ID already exists. For more information, check out the [_Category Service Tutorials_](../../content/category/).
+Before you begin, ensure that a category with a category ID already exists. For more information, check out the [_Category Service Tutorials_](../../catalogs-and-categories/category-tree/category.md).
 {% endhint %}
 
 ### Create private assets by link
@@ -30,7 +29,7 @@ To add an asset for a category, you need to send a request to the Creating an as
 In the following example, we are creating a `private` type of an asset.
 
 {% hint style="warning" %}
-Sending a json/application request to the Creating an asset endpoint does **not** mean that the asset is uploaded to the database. It is only linked to the resource (category or product).\
+Sending a json/application request to the Creating an asset endpoint does **not** mean that the asset is uploaded to the database. It is only linked to the resource (category or product).
 If you want to upload the asset to the database, you need to send a multipart request to the [Creating an asset](https://emporix.gitbook.io/documentation-portal/api-references/media/media/api-reference/assets#post-media-tenant-assets) endpoint.
 {% endhint %}
 

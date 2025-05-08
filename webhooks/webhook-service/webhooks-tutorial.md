@@ -20,7 +20,6 @@ To receive notifications from Emporix API services, you need to subscribe to spe
   * [How to configure webhook notifications](../webhook-service/webhooks-tutorial.md#how-to-configure-webhook-notifications)
     * [Retrieve all subscriptions](../webhook-service/webhooks-tutorial.md#retrieve-all-subscriptions)
     * [Subscribe to events](../webhook-service/webhooks-tutorial.md#subscribe-to-events)
-*
   * [Connect to the Event Gateway](../webhook-service/webhooks-tutorial.md#connect-to-the-event-gateway)
   * [Configure your endpoints](../webhook-service/webhooks-tutorial.md#configure-your-endpoints)
 
@@ -64,6 +63,7 @@ In this example, you will subscribe to the following events: `catalog.created` a
 {% content-ref url="../webhook-service/api-reference/" %}
 [api-reference](../webhook-service/api-reference/)
 {% endcontent-ref %}
+
 ```bash
 curl -i -X PATCH \
   'https://api.emporix.io/webhook/{tenant}/event-subscriptions' \
