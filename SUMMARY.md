@@ -16,9 +16,18 @@
 ## API Guides and References
 
 * [Demo](api-guides-and-references/demo/README.md)
-  * [Demo Service](demo/demo-service/README.md)
-    * [API Reference](demo/demo-service/api-reference/README.md)
-
+  * [Demo Service](api-guides-and-references/demo/demo-service/README.md)
+    * [API Reference](api-guides-and-references/demo/demo-service/api-reference.md)
+    * ```yaml
+      type: builtin:openapi
+      props:
+        models: true
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: demo-api
+      ```
 * [Authorization](api-guides-and-references/authorization/README.md)
   * [OAuth Service](authorization/oauth-service/README.md)
     * [API Reference](authorization/oauth-service/api-reference/README.md)
