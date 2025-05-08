@@ -14,7 +14,7 @@ To add a new measurement unit to your configuration, you need to send a request 
 {% hint style="warning" %}
 Unit names are localized. When creating a new unit, you can specify the unit name in two different ways — in one language or in multiple languages.
 
-Looking for more info on localization? Check out [_Standard practices_](broken-reference).
+Looking for more info on localization? Check out [_Standard practices_](../../standard-practices/translations.md).
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}

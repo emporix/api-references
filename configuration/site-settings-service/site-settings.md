@@ -330,7 +330,7 @@ curl -L \
 Custom site attributes are stored in a site's `mixins`.
 
 {% hint style="warning" %}
-To learn more about mixins in the Emporix Commerce Engine, check out the [Standard Practices in the Emporix API](broken-reference).
+To learn more about mixins in the Emporix Commerce Engine, check out the [Standard Practices in the Emporix API](../../standard-practices/mixins.md).
 {% endhint %}
 
 ### Define a JSON schema
