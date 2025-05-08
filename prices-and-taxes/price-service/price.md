@@ -27,14 +27,14 @@ To learn more about measurement units in the Emporix Commerce Engine, check out 
 
 ## Specify accepted currencies
 
-Each currency accepted by your business is stored as a separate object that can be managed through the Emporix API [Currency Service](/openapi/currency/).
+Each currency accepted by your business is stored as a separate object that can be managed through the Emporix API [Currency Service](../../configuration/currency-service/README.md).
 
-To add a new entry to your configuration of currencies, you need to send a request to the <nobr><Button to="/openapi/currency/#operation/POST-currency-create-currency" size="small">Creating a new currency] endpoint.
+To add a new entry to your configuration of currencies, you need to send a request to the [Creating a new currency](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/currency-service/api-reference/currencies#post-currency-tenant-currencies) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../configuration/currency-service/api-reference/" %}
+[api-reference](../../configuration/currency-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -58,16 +58,16 @@ A price model defines a repeatable way to sell products. You can create separate
 
 {% hint style="warning" %}
 
-To learn more about price models in the Emporix Commerce Engine, check out the [Pricing guide](https://developer.emporix.io/user-guides/core-commerce/pricing/pricing-v2#price-models).
+To learn more about price models in the Emporix Commerce Engine, check out the [Pricing guide](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/pricing/pricing-v2#price-models).
 
 {% endhint %}
 
-To create a new price model, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-model" size="small">Creating a new price model] endpoint.
+To create a new price model, you need to send a request to the [Creating a new price model](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-models#post-price-tenant-pricemodels) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -112,13 +112,13 @@ When specifying a price for a product, you need to reference two values from a c
 * ID of the price model
 * ID of the model's relevant pricing tier
 
-Price models that use the basic pricing strategy have one tier. To retrieve its ID, you need to send a request to the <nobr><Button to="/openapi/price/#operation/GET-price-retrieve-price-model" size="small">Retrieving a price model] endpoint.
+Price models that use the basic pricing strategy have one tier. To retrieve its ID, you need to send a request to the [Retrieving a price model](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-models#get-price-tenant-pricemodels-pricemodelid) endpoint.
 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -132,13 +132,13 @@ The ID can be found in the `tierDefinition.tiers.id` field.
 
 ## Define the price
 
-To define a new price for a product, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price" size="small">Creating a new price] endpoint.
+To define a new price for a product, you need to send a request to the [Creating a new price](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint.
 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -177,19 +177,19 @@ curl -i -X POST \
 
 {% hint style="warning" %}
 
-To learn more about pricing strategies available in the Emporix Commerce Engine, check out the [Pricing guide](https://developer.emporix.io/user-guides/core-commerce/pricing/pricing-v2#price-models).
+To learn more about pricing strategies available in the Emporix Commerce Engine, check out the [Pricing guide]((https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/pricing/pricing-v2#price-models).
 
 {% endhint %}
 
 Implementing any pricing strategy is a process made up of three steps:
 
-1. Creating a `PriceModel` object through the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-model" size="small">Creating a price model] endpoint.
-2. Retrieving IDs of the model's pricing tiers through the <nobr><Button to="/openapi/price/#operation/GET-price-retrieve-price-model" size="small">Retrieving a price model] endpoint.
-3. Creating a `Price` object through the <nobr><Button to="/openapi/price/#operation/POST-price-create-price" size="small">Creating a price] endpoint.
+1. Creating a `PriceModel` object through the [Creating a price model](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-models#post-price-tenant-pricemodels) endpoint.
+2. Retrieving IDs of the model's pricing tiers through the [Retrieving a price model](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-models#get-price-tenant-pricemodels-pricemodelid) endpoint.
+3. Creating a `Price` object through the [Creating a price](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint.
 
 ## Before you start
 
-Make sure you have already finished the [How to set up your first price](#how-to-set-up-your-first-price) tutorial.
+Make sure you have already finished the [How to set up your first price](../price-service/price.md#how-to-set-up-your-first-price) tutorial.
 
 ## Basic pricing
 
@@ -409,7 +409,7 @@ To make a price valid only for specific customers, you need to add their IDs to 
 
 {% hint style="warning" %}
 
-`Customer` objects are managed through the Emporix API [Customer Service](/openapi/customer-tenant/).
+`Customer` objects are managed through the Emporix API [Customer Service](../../companies-and-customers/client-management/).
 
 {% endhint %}
 
@@ -460,14 +460,14 @@ Take a look at the relationships between price lists and other resources in the 
 
 Countries and regions are predefined in the Emporix API Country Service. You can check which countries and regions are available by sending requests to the following endpoints:
 
-* <nobr><Button to="/openapi/country/#operation/GET-country-list-all-countries" size="small">Retrieving all countries] 
-* <nobr><Button to="/openapi/country/#operation/GET-country-list-all-regions" size="small">Retrieving all regions]
+* [Retrieving all countries](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/country-service/api-reference/countries#get-country-tenant-countries)
+* [Retrieving all regions](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/country-service/api-reference/regions)
 
 {% endhint %}
 
 ## Before you start
 
-Make sure you have already finished the [How to set up your first price](#how-to-set-up-your-first-price) tutorial.
+Make sure you have already finished the [How to set up your first price](./price.md#how-to-set-up-your-first-price) tutorial.
 
 ## Create a price list
 
@@ -477,7 +477,7 @@ Price lists are site-specific. You can restrict a price list to particular group
 
 Prices in a list can be expressed in a different currency than originally defined for the list's products.
 
-To create a new price list, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-list" size="small">Creating a new price list] endpoint.
+To create a new price list, you need to send a request to the [Creating a new price list](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-lists#post-price-tenant-price-lists) endpoint.
 
 {% hint style="danger" %}
 
@@ -487,8 +487,8 @@ Make sure to set a value for the `currency` field in the request body. Otherwise
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../price=service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -526,12 +526,12 @@ A single price list can be associated with multiple regions or countries. For th
 
 {% endhint %}
 
-To create a new list-specific price, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-in-price-list" size="small">Adding a new price to a price list] endpoint.
+To create a new list-specific price, you need to send a request to the [Adding a new price to a price list](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/prices-assigned-to-price-lists#post-price-tenant-price-lists-pricelistid-prices) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../price=service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -564,7 +564,7 @@ curl -i -X POST \
 
 {% hint style="warning" %} Bulk price creation
 
-You can add multiple prices to a list at once by sending a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-multiple-prices-for-price-list" size="small">Creating multiple prices for a price list] endpoint.
+You can add multiple prices to a list at once by sending a request to the [Creating multiple prices for a price list](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/prices-assigned-to-price-lists#post-price-tenant-price-lists-pricelistid-prices-bulk) endpoint.
 
 {% endhint %}
 
@@ -578,7 +578,7 @@ The price matching functionality compares all prices defined for specified produ
   
   {% hint style="danger" %}
   
-  If you want the price matching functionality to compare prices expressed in multiple currencies, you need to define exchange rates between these currencies and the `targetCurrency` through the [Creating a new exchange rate] endpoint.
+  If you want the price matching functionality to compare prices expressed in multiple currencies, you need to define exchange rates between these currencies and the `targetCurrency` through the [Creating a new exchange rate](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/currency-service/api-reference/currency-exchange#post-currency-tenant-exchanges) endpoint.
 
   {% endhint %}
 
@@ -610,7 +610,7 @@ To find out how the price matching functionality works in detail, check out the 
 
 {% hint style="warning" %}
 
-To check out the flowchart for the *Look for the best price in price lists* subprocess, check out the [Influence of price lists on price matching](#influence-of-price-lists-on-price-matching) section.
+To check out the flowchart for the *Look for the best price in price lists* subprocess, check out the [Influence of price lists on price matching](./price.md#influence-of-price-lists-on-price-matching) section.
 
 {% endhint %}
 
@@ -625,16 +625,16 @@ To find out how the price matching functionality handles price lists, check out 
 
 ## Before you start
 
-Make sure you have already finished the [How to set up your first price](#how-to-set-up-your-first-price) tutorial.
+Make sure you have already finished the [How to set up your first price](./price.md#how-to-set-up-your-first-price) tutorial.
 
 ## Create a product
 
-Create a sample product through the <nobr><Button to="/openapi/product/#operation/POST-product-create-product" size="small">Creating a new product] endpoint. For this tutorial, we've chosen bananas as an example:
+Create a sample product through the [Creating a new product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint. For this tutorial, we've chosen bananas as an example:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
+[api-reference](../../products-labels-and-brands/product-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -709,12 +709,12 @@ curl -i -X POST \
 
 Now, define a couple of prices that the price matching functionality will be able to compare.
 
-Start with defining a price model with Creating a price model endpoint where the bananas' price per kilogram is constant regardless of the ordered quantity:
+Start with defining a price model with [Creating a price model](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-models#post-price-tenant-pricemodels) endpoint where the bananas' price per kilogram is constant regardless of the ordered quantity:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url=".../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -753,12 +753,12 @@ curl -i -X POST \
   ```
 
 
-Now, retrieve the automatically-generated ID of the pricing tier, use the Retrieve a price model endpoint
+Now, retrieve the automatically-generated ID of the pricing tier, use the [Retrieve a price model](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-models#get-price-tenant-pricemodels-pricemodelid) endpoint
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -768,12 +768,12 @@ curl -i -X GET \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
-Once you know the tier ID, define a price for the bananas, use the Creating a new price endpoint:
+Once you know the tier ID, define a price for the bananas, use the [Creating a new price](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -811,8 +811,8 @@ Then, define a price model where the price per kilogram changes based on the ord
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -860,12 +860,12 @@ curl -i -X POST \
   }'
 ```
 
-Now, retrieve the automatically-generated IDs of the pricing tiers, use the Retrieve a price model endpoint
+Now, retrieve the automatically-generated IDs of the pricing tiers, use the [Retrieve a price model](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-models#get-price-tenant-pricemodels-pricemodelid) endpoint
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -875,13 +875,13 @@ curl -i -X GET \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
-Once you know the tier IDs, define another price for the bananas, use the Creating a new price endpoint
+Once you know the tier IDs, define another price for the bananas, use the [Creating a new price](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint.
 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -925,14 +925,14 @@ curl -i -X POST \
 
 ## Find the best price
 
-Now that you have defined multiple prices for the bananas, you can send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes] endpoint to find which price is the lowest.
+Now that you have defined multiple prices for the bananas, you can send a request to the [Matching prices for specific attributes](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices) endpoint to find which price is the lowest.
 
 Check the best price for both one kilogram and ten kilograms of bananas:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -978,7 +978,7 @@ The lowest prices are returned in the `priceId` fields. The total price for defi
 
 # How to calculate gross prices between countries
 
-You can calculate gross prices between countries through the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes] endpoint.
+You can calculate gross prices between countries through the [Matching prices for specific attributes](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices) endpoint.
 
 {% hint style="warning" %}
 
@@ -990,18 +990,18 @@ To learn how to calculate gross prices between countries based on specific value
 
 ## Before you start
 
-Make sure you have already finished the [How to set up your first price](#how-to-set-up-your-first-price) tutorial.
+Make sure you have already finished the [How to set up your first price](./price.md#how-to-set-up-your-first-price) tutorial.
 
 ## Define sales tax rates for the desired country
 
 Gross prices between countries are calculated based on these countries' sales tax rates.
 
-Define sales tax rates for the desired country by sending a request to the <nobr><Button to="/openapi/tax/#operation/POST-tax-create-configuration" size="small">Creating a new tax configuration] endpoint.
+Define sales tax rates for the desired country by sending a request to the [Creating a new tax configuration](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/tax-service/api-reference/taxes#post-tax-tenant-taxes) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1056,12 +1056,12 @@ curl -i -X POST \
 
 When calculating a gross price for another country, the price matching functionality checks tax classes assigned to the product that the original price is defined for.
 
-To update a product with applicable tax classes, send a request to the <nobr><Button to="/openapi/product/#operation/PATCH-product-update-product" size="small">Partially updating a product] endpoint.
+To update a product with applicable tax classes, send a request to the [Partially updating a product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
+[api-reference](../../products-labels-and-brands/product-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1082,12 +1082,12 @@ curl -i -X PATCH \
 
 ## Calculate the price for the desired country
 
-To calculate a gross price between countries, send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes] endpoint.
+To calculate a gross price between countries, send a request to the [Matching prices for specific attributes](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-matching) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1122,20 +1122,20 @@ The gross price calculated for the specified country is returned in the `totalVa
 
 # How to retrieve a price in another currency
 
-You can calculate a price's value in another currency through the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes] endpoint.
+You can calculate a price's value in another currency through the [Matching prices for specific attributes](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-matching) endpoint.
 
 ## Before you start 
 
-Make sure you have already finished the [How to set up your first price](#how-to-set-up-your-first-price) tutorial.
+Make sure you have already finished the [How to set up your first price](./price.md#how-to-set-up-your-first-price) tutorial.
 
 ## Add a new currency
 
-Add the currency in which the price will be retrieved to your configuration of currencies by sending a request to the <nobr><Button to="/openapi/currency/#operation/POST-currency-create-currency" size="small">Creating a new currency] endpoint.
+Add the currency in which the price will be retrieved to your configuration of currencies by sending a request to the [Creating a new currency](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/currency-service/api-reference/currencies#post-currency-tenant-currencies) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../configuration/currency-service/api-reference/" %}
+[api-reference](../../configuration/currency-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
