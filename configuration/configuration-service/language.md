@@ -37,7 +37,7 @@ Languages configured for a particular site need to be a subset of languages conf
 
 Language codes defined in language configurations must be compliant with the [IETF BCP-47 standard](https://en.wikipedia.org/wiki/IETF_language_tag).
 
-Your tenant's language configuration is stored under the `project_lang` key in the [Emporix API Configuration Service](./). Check out the following language configuration example:
+Your tenant's language configuration is stored under the `project_lang` key in the [Emporix API Configuration Service](../configuration-service/README.md). Check out the following language configuration example:
 
 ```json
 {
