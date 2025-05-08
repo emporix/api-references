@@ -47,6 +47,10 @@ To convert between units, you need to send a request to the [Converting units ](
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 <pre class="language-bash"><code class="lang-bash">curl -L \
 <strong>  --request PUT \
 </strong>  --url 'https://api.emporix.io/unit-handling/{tenant}/units/convert-unit-commands' \
