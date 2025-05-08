@@ -313,5 +313,5 @@ curl -i -X POST \
   }'
 ```
 
-Once desired employees are added to appropriate customer groups, you can — for example — create personalized price lists for them. For instructions, check out [*How to configure a price list*](/content/price#how-to-configure-a-price-list) in the *Price Service guide*.
+Once desired employees are added to appropriate customer groups, you can — for example — create personalized price lists for them. For instructions, check out [*How to configure a price list*](../../prices-and-taxes/price-service/price.md#how-to-configure-a-price-list) in the *Price Service guide*.
 
