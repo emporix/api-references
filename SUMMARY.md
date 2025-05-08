@@ -18,9 +18,16 @@
 * [Authorization](api-guides-and-references/authorization/README.md)
   * [OAuth Service](authorization/oauth-service/README.md)
     * [API Reference](authorization/oauth-service/api-reference/README.md)
-    * [Anonymous Token](authorization/oauth-service/api-reference/README.md#anonymous-token)
-    * [Refresh Token](authorization/oauth-service/api-reference/README.md#refresh-token)
-    * [Revoke Token](authorization/oauth-service/api-reference/README.md#revoke-token)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: oauth-api
+        ```
 * [Artificial Intelligence](artificial-intelligence/README.md)
   * [AI Service](artificial-intelligence/ai-service/README.md)
     * [AI Tutorials](artificial-intelligence/ai-service/ai-tutorial.md)
@@ -240,6 +247,7 @@
         ```
 * [Companies and Customers](companies-and-customers/README.md)
   * [Customer Management](companies-and-customers/client-management/README.md)
+    * [Customer Management Tutorial](companies-and-customers/customer-service/customer-management.md)
     * [API Reference](companies-and-customers/client-management/api-reference/README.md)
       * ```yaml
         props:
