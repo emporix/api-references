@@ -23,12 +23,12 @@ Make sure you have marked the country in which the company operates as **active*
 
 ## Add a location
 
-A location is a physical address where a company operates, such as its headquarters, office, or warehouse. To add a new location, you need to send a request to the <nobr><Button to="/openapi/customer-management/#operation/POST-customer-mgmt-create-location" size="small">Creating a new location] endpoint.
+A location is a physical address where a company operates, such as its headquarters, office, or warehouse. To add a new location, you need to send a request to the [Creating a new location](https://emporix.gitbook.io/documentation-portal/api-references/companies-and-customers/client-management/api-reference/locations#post-tenant-locations) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../customer-service/api-reference/" %}
+[api-reference](../customer-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -69,12 +69,12 @@ The `id` from the response is further referred to as `locationId`.
 
 ## Add a legal entity
 
-A legal entity is a representation of a company. To add a new legal entity, you need to send a request to the <nobr><Button to="/openapi/customer-management/#operation/POST-customer-mgmt-create-legal-entity" size="small">Creating a new legal entity] endpoint and provide the `locationId` in the request body.
+A legal entity is a representation of a company. To add a new legal entity, you need to send a request to the [Creating a new legal entity](https://emporix.gitbook.io/documentation-portal/api-references/companies-and-customers/client-management/api-reference/legal-entities#post-tenant-legal-entities) endpoint and provide the `locationId` in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../customer-service/api-reference/" %}
+[api-reference](../customer-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -135,12 +135,12 @@ Make sure you have already finished the [How to set up business customer informa
 
 ## Retrieve the ID of the parent company
 
-To find out what a company's ID is, you need to send a request to the <nobr><Button to="/openapi/customer-management/#operation/GET-customer-mgmt-list-legal-entities" size="small">Retrieving all legal entities] endpoint and use the `q` query parameter to find the desired company.
+To find out what a company's ID is, you need to send a request to the [Retrieving all legal entities](https://emporix.gitbook.io/documentation-portal/api-references/companies-and-customers/client-management/api-reference/legal-entities#get-tenant-legal-entities) endpoint and use the `q` query parameter to find the desired company.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../customer-service/api-reference/" %}
+[api-reference](../customer-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -158,12 +158,12 @@ The `id` from the response is further referred to as `parentId`.
 
 ## Add a subsidiary
 
-Subsidiaries are added similarly to their parent companies. To add a new subsidiary, send a request to the <nobr><Button to="/openapi/customer-management/#operation/POST-customer-mgmt-create-legal-entity" size="small">Creating a new legal entity] endpoint. In the request body, set the `type` field to `SUBSIDIARY` and provide the `parentId`.
+Subsidiaries are added similarly to their parent companies. To add a new subsidiary, send a request to the [Creating a new legal entity](https://emporix.gitbook.io/documentation-portal/api-references/companies-and-customers/client-management/api-reference/legal-entities#post-tenant-legal-entities) endpoint. In the request body, set the `type` field to `SUBSIDIARY` and provide the `parentId`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../customer-service/api-reference/" %}
+[api-reference](../customer-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -228,26 +228,26 @@ When added to a subsidiary’s customer group, the employee is also automaticall
 
 Make sure the following requirements are fulfilled:
 
-* You have already finished the [How to set up business customer information](#how-to-set-up-business-customer-information) tutorial.
+* You have already finished the [How to set up business customer information](../customer-service/#how-to-set-up-business-customer-information) tutorial.
 * The employee has their customer account set up.
 
 {% hint style="warning" %}
 
 A customer account can be created by the employee themselves or from your Emporix tenant's side. For more information, check out the following endpoints in the  Emporix API Reference:
 
-* <nobr><Button to="/openapi/customer-customer/#operation/POST-customer-create-customer-account" size="small">Creating a new customer (customer-managed)]
-* <nobr><Button to="/openapi/customer-tenant/#operation/POST-customer-tenant-create-customer" size="small">Creating a new customer (tenant-managed)]
+* [Creating a new customer (customer-managed)](https://emporix.gitbook.io/documentation-portal/api-references/companies-and-customers/customer-management/authentication-and-authorization#post-customer-tenant-signup)
+* [Creating a new customer (tenant-managed)](https://emporix.gitbook.io/documentation-portal/api-references/companies-and-customers/customer-service/api-reference/account-and-profile#post-customer-tenant-customers)
 
 {% endhint %}
 
 ## Retrieve the ID of the company
 
-To find out what a company's ID is, you need to send a request to the <nobr><Button to="/openapi/customer-management/#operation/GET-customer-mgmt-list-legal-entities" size="small">Retrieving all legal entities] endpoint and use the `q` query parameter to find the desired company.
+To find out what a company's ID is, you need to send a request to the [Retrieving all legal entities](https://emporix.gitbook.io/documentation-portal/api-references/companies-and-customers/client-management/api-reference/legal-entities) endpoint and use the `q` query parameter to find the desired company.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../customer-service/api-reference/" %}
+[api-reference](../customer-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -265,12 +265,12 @@ The `id` from the response is further referred to as `legalEntityId`.
 
 ## Retrieve the employee's customer ID
 
-To retrieve an employee's customer ID, you need to send a request to the <nobr><Button to="/openapi/customer-tenant/#operation/GET-customer-tenant-list-customers" size="small">Retrieving a list of customers] endpoint and use the `q` query parameter. For example, you can search for a customer with a specific email address with  `q=contactEmail:employeeEmail`.
+To retrieve an employee's customer ID, you need to send a request to the [Retrieving a list of customers](https://emporix.gitbook.io/documentation-portal/api-references/companies-and-customers/customer-service/api-reference/account-and-profile) endpoint and use the `q` query parameter. For example, you can search for a customer with a specific email address with  `q=contactEmail:employeeEmail`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../customer-management/api-reference/" %}
+[api-reference](../customer-management/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -288,12 +288,12 @@ The `id` from the response is further referred to as `customerId`.
 ## Assign the contact to the company
 
 A contact represents an employee of one or more business customers.
-To assign a contact to a legal entity (in this case, the desired company), you need to send a request to the <nobr><Button to="/openapi/customer-management/#operation/POST-customer-mgmt-create-contact-assignment" size="small">Creating a new contact assignment] endpoint and provide `legalEntityId` and `customerId` in the request body.
+To assign a contact to a legal entity (in this case, the desired company), you need to send a request to the [Creating a new contact assignment](https://emporix.gitbook.io/documentation-portal/api-references/companies-and-customers/client-management/api-reference/contact-assignments#post-tenant-contact-assignments) endpoint and provide `legalEntityId` and `customerId` in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../customer-service/api-reference/" %}
+[api-reference](../customer-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash

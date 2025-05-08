@@ -8,7 +8,7 @@ seo:
 
 Names and descriptions of groups, permissions, resources, access control templates, and role resources are localized.
 
-Looking for more info on localization? Check out [*Standard practices*](/content/standard-practices).
+Looking for more info on localization? Check out [*Standard practices*](../../standard-practices/translations.md).
 
 {% endhint %}
 
@@ -35,12 +35,12 @@ Access controls are predefined and designed to cover all necessary scenarios. It
 
 {% endhint %}
 
-To assign specific access control level to a group, first you need to retrieve a list of predefined access controls available for your tenant by sending a request to the <nobr><Button to="/openapi/iam/#operation/GET-iam-list-tenant-access-controls" size="small">Retrieving all access controls] endpoint.
+To assign specific access control level to a group, first you need to retrieve a list of predefined access controls available for your tenant by sending a request to the [Retrieving all access controls](https://emporix.gitbook.io/documentation-portal/api-references/users-and-permissions/iam/api-reference/access-controls) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../iam/api-reference/" %}
+[api-reference](../iam/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -54,7 +54,7 @@ curl -i -X GET \
 
 ## Create an employee group
 
-Employee groups aggregate users that share the same access control within a particular service and resource. Create an employee group and assign access controls to it by sending a request to the <nobr><Button to="/openapi/iam/#operation/POST-iam-create-user-group" size="small">Creating a new group] endpoint.
+Employee groups aggregate users that share the same access control within a particular service and resource. Create an employee group and assign access controls to it by sending a request to the [Creating a new group](https://emporix.gitbook.io/documentation-portal/api-references/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups) endpoint.
 
 {% hint style="warning" %}
 
@@ -64,8 +64,8 @@ The user type in the `userType` parameter can be specified as `CUSTOMER` or `EMP
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../iam/api-reference/" %}
+[api-reference](../iam/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -99,7 +99,7 @@ curl -i -X POST \
 
 ## Assign users to an employee group
 
-By assigning a user to a particular employee group, you grant them a specific access control level. Create assignments by calling the <nobr><Button to="/openapi/iam/#operation/POST-iam-add-user-to-group" size="small">Adding a user to a group]
+By assigning a user to a particular employee group, you grant them a specific access control level. Create assignments by calling the [Adding a user to a group](https://emporix.gitbook.io/documentation-portal/api-references/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups-groupid-users) endpoint.
 
 {% hint style="warning" %}
 
@@ -109,8 +109,8 @@ The user type in the `userType` parameter can be specified as `customer` or `emp
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../iam/api-reference/" %}
+[api-reference](../iam/api-reference/)
 {% endcontent-ref %}
 
 ```bash
