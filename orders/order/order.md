@@ -47,7 +47,7 @@ Communication with the ERP system occurs using the BFF (Backend-for-Frontend) la
 
 {% hint style="info" %}
 
-For more information, see the [External Pricing](ce/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) guides.
+For more information, see the [External Pricing](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) guides.
 
 {% endhint %}
 

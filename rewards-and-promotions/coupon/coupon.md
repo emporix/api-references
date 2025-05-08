@@ -152,7 +152,7 @@ To update an existing coupon, you need to send a request to the <nobr><Button to
 
 {% hint style="warning" %}
 
-For more information on managing carts, check out the [*Carts guide*](ce/core-commerce/carts).
+For more information on managing carts, check out the [*Carts guide*](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/carts).
 
 {% endhint %}
 

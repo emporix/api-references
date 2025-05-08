@@ -237,7 +237,7 @@ You can also personalize your products by using the Emporix-provided templates, 
 
 {% hint style="warning" %}
 
-To learn more about product bundles and templates, check out the [Products guide](ce/core-commerce/product-user-guide).
+To learn more about product bundles and templates, check out the [Products guide](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/product-user-guide).
 
 {% endhint %}
 

@@ -122,7 +122,7 @@ curl -i -X PUT \
 ### How to merge carts
 
 {% hint style="warning" %}
-To learn more about merging carts, check out [Cart merging](ce/core-commerce/carts#cart-merging) in the Carts guide.
+To learn more about merging carts, check out [Cart merging](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/carts#cart-merging) in the Carts guide.
 {% endhint %}
 
 To merge an anonymous cart with a customer cart, you need to send a request to the [Merging carts](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-merge) endpoint. Provide the customer cart's ID in the `cartId` path parameter and the anonymous cart's ID in the request body.
@@ -155,7 +155,7 @@ The external system then can communicate with the Cart Service directly to overw
 
 {% hint style="warning" %}
 To achieve the communication between Commerce Engine and the external pricing tool, you have to configure both systems accordingly.
-The steps required for such a case are described in the [External Products, Pricing and Fees](ce/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation.
+The steps required for such a case are described in the [External Products, Pricing and Fees](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation.
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
@@ -203,7 +203,7 @@ When you have enabled external pricing, it's essential to ensure the accuracy of
 For some cases, you might want to allow adding products from an external system to cart, and not only from your online store. The products from external product management sources can be added directly to the customer's cart, bypassing the standard product catalog.
 
 {% hint style="warning" %}
-To achieve the communication between Commerce Engine and the external product management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](ce/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation.
+To achieve the communication between Commerce Engine and the external product management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation.
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
@@ -251,7 +251,7 @@ curl -i -X POST \
 For some cases, you might need to calculate and charge additional fees, for example for packaging, freight, or any additional reasons. The fees calculated externally can be added directly to the customer's cart.
 
 {% hint style="warning" %}
-To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](ce/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation.
+To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation.
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
