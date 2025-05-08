@@ -14,7 +14,7 @@ To add a new measurement unit to your configuration, you need to send a request 
 {% hint style="warning" %}
 Unit names are localized. When creating a new unit, you can specify the unit name in two different ways — in one language or in multiple languages.
 
-Looking for more info on localization? Check out [_Standard practices_](../../content/standard-practices/).
+Looking for more info on localization? Check out [_Standard practices_](broken-reference).
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -43,7 +43,7 @@ curl -L \
 
 You can convert between any measurement units that share the same base unit, such as kilograms to grams, or centimeters to meters.
 
-To convert between units, you need to send a request to the [Converting units ](broken-reference/)endpoint.
+To convert between units, you need to send a request to the [Converting units ](https://emporix.gitbook.io/documentation-portal/api-references/~/changes/115/api-guides-and-references/configuration/unit-handling-service/api-reference/unit-conversion)endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

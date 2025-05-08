@@ -10,7 +10,7 @@ The Indexing service is designed to manage indexing configuration. Currently, th
 Proper indexing allows you to enhance your search mechanism within Emporix system. By connecting your Algolia instance to Commerce Engine, you get an improved search functionality.
 
 {% hint style="info" %}
-To learn more about the Indexing Service, see the [Indexing Service](https://developer.emporix.io/user-guides/system-management/search/indexing).
+To learn more about the Indexing Service, see the [Indexing Service](./).
 {% endhint %}
 
 For every tenant, new Algolia credentials are created and kept as `AlgoliaClient`.
@@ -82,7 +82,7 @@ curl -L \
   }'
 ```
 
-To apply your configuration changes to existing data, run the reindexing process. See the [How to reindex existing products](../../content/indexing/##How_to_reindex_existing_products) section.
+To apply your configuration changes to existing data, run the reindexing process. See the [How to reindex existing products](indexing.md#how_to_reindex_existing_products) section.
 
 ## How to reindex existing products <a href="#how_to_reindex_existing_products" id="how_to_reindex_existing_products"></a>
 

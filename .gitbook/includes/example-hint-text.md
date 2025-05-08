@@ -1,5 +1,5 @@
 ---
-title: example hint text
+title: API - example hint text
 ---
 
 {% hint style="success" %}
