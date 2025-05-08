@@ -19,6 +19,10 @@ Looking for more info on localization? Check out [_Standard practices_](../../co
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -L \
   --request POST \

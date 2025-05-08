@@ -49,6 +49,10 @@ Send the request to the [Get configuration by provider name](https://emporix.git
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ```bash
 curl -L \
   --url 'https://api.emporix.io/indexing/{tenant}/configurations' \
@@ -58,6 +62,10 @@ curl -L \
 To change configuration, make a call to the [Update configuration by provider name](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) endpoint, providing the `writeKey` from the previous step.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -L \
