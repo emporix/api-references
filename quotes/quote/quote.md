@@ -29,7 +29,7 @@ The pdf with quote will be sent to the customer in the notification email upon t
 
 ### Retrieve your site's mixins
 
-First, you need to check the current site mixin configuration for the `merchantInfo` parameter by sending a request to the <nobr><Button to="/openapi/site-settings/#operation/GET-site-settings-list-site-mixins" size="small">Retrieving site mixins] endpoint.
+First, you need to check the current site mixin configuration for the `merchantInfo` parameter by sending a request to the [Retrieving site mixins](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
 
 {% hint style="warning" %}
 
@@ -41,8 +41,8 @@ The following scope is required:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../configuration/site-settings-service/api-reference/" %}
+[api-reference](../../configuration/site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -53,7 +53,7 @@ curl -i -X GET \
 
 ### Update merchant information
 
-Update the merchant information for your tenant's site by sending a request to the <nobr><Button to="/openapi/site-settings/#operation/PATCH-site-settings-update-site-mixin" size="small">Partially updating a site mixin] endpoint.
+Update the merchant information for your tenant's site by sending a request to the [Partially updating a site mixin](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#patch-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
 
 {% hint style="warning" %}
 
@@ -65,8 +65,8 @@ The following scope is required:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../configuration/site-settings-service/api-reference/" %}
+[api-reference](../../configuration/site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -97,12 +97,12 @@ The quote reason of the `DECLINE` type can only be used for the `DECLINED` or `D
 {% endhint %}
 
 
-By sending a request to the <nobr><Button to="/openapi/site-settings/#operation/POST-quote-create-quote-reason" size="small">Creating a reason for changing the quote status] endpoint, you can create new quote status change reasons.
+By sending a request to the [Creating a reason for changing the quote status](https://emporix.gitbook.io/documentation-portal/api-references/quotes/quote/api-reference/quote-reason#post-quote-tenant-quote-reasons) endpoint, you can create new quote status change reasons.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../quote/api-reference/" %}
+[api-reference](../quote/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -128,7 +128,7 @@ A quote request can be created both by a customer directly on your business' sto
 ### Create a quote by a customer
 
 On the storefront, a customer adds selected products to cart. At checkout, they can proceed to purchasing the items, or requesting a quote. 
-If a customer places a quote request, the <nobr><Button to="/openapi/quote/#operation/POST-quote-create-quote" size="small">Creating a quote] endpoint is called.
+If a customer places a quote request, the [Creating a quote](https://emporix.gitbook.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) endpoint is called.
 
 {% hint style="warning" %}
 
@@ -142,8 +142,8 @@ The customer can place a quote request on the storefront only if they have creat
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../quote/api-reference/" %}
+[api-reference](../quote/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -209,7 +209,7 @@ The initial status of a quote request created by a customer is always set to `AW
 
 ### Create a quote on behalf of a customer
 
-To create a quote request on behalf of a customer, you need to call the <nobr><Button to="/openapi/quote/#operation/POST-quote-create-quote" size="small">Creating a quote] endpoint.
+To create a quote request on behalf of a customer, you need to call the [Creating a quote](https://emporix.gitbook.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) endpoint.
 
 {% hint style="warning" %}
 
@@ -221,8 +221,8 @@ The following scope is required:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../quote/api-reference/" %}
+[api-reference](../quote/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -292,7 +292,7 @@ There are two scenarios when an employee may need to update a quote:
 * A customer can contact your Customer Service so that an employee updates the quote request on their behalf
 * Employee updates the quote request with new information for the customer to review, such as price or status change
 
-To achieve that, the employee needs to send a request to the <nobr><Button to="/openapi/quote/#operation/PATCH-quote-update-quote" size="small">Partially updating a quote] endpoint.
+To achieve that, the employee needs to send a request to the [Partially updating a quote](https://emporix.gitbook.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid) endpoint.
 
 {% hint style="warning" %}
 
@@ -306,8 +306,8 @@ In this example, an employee updates multiple fields:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../quote/api-reference/" %}
+[api-reference](../quote/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -322,8 +322,8 @@ In the following example, an employee updates only the price of requested items:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../quote/api-reference/" %}
+[api-reference](../quote/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -336,7 +336,7 @@ curl -i -X PATCH \
 
 ### Accept a quote by a customer
 
-When a customer accepts a quote on the storefront, the following endpoint is called: <nobr><Button to="/openapi/quote/#operation/PATCH-quote-update-quote" size="small">Partially updating a quote].
+When a customer accepts a quote on the storefront, the following endpoint is called: [Partially updating a quote](https://emporix.gitbook.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
 
 {% hint style="warning" %}
 
@@ -348,8 +348,8 @@ The following scope is granted to the customer group:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../quote/api-reference/" %}
+[api-reference](../quote/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -372,7 +372,7 @@ curl -i -X PATCH \
 ### Decline a quote by a customer
 
 When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action.  
-On the storefront, when a customer declines the quote, a request to the following endpoint is sent: <nobr><Button to="/openapi/quote/#operation/PATCH-quote-update-quote" size="small">Partially updating a quote].  
+On the storefront, when a customer declines the quote, a request to the following endpoint is sent: [Partially updating a quote](https://emporix.gitbook.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).  
 
 {% hint style="warning" %}
 
@@ -388,8 +388,8 @@ In this example, a customer receives a quote and decides to decline it because t
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../quote/api-reference/" %}
+[api-reference](../quote/api-reference/)
 {% endcontent-ref %}
 
 ```bash
