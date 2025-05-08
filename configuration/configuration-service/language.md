@@ -60,7 +60,7 @@ Site-specific language configuration is stored in the `defaultLanguage` and `lan
 ```
 
 {% hint style="warning" %}
-For more information on the `Site` object, check out the [_Site Settings Service guide_](../site-settings-service/).
+For more information on the `Site` object, check out the [_Site Settings Service guide_](../site-settings-service/README.md).
 {% endhint %}
 
 ### Managing language configurations through Emporix API
