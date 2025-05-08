@@ -14,7 +14,7 @@ Follow these steps to create a fee and connect it to a product.
 
 1. Create a fee
 
-To create a fee in the system, send the request to the <nobr><Button to="/openapi/fee/#operation/POST-fee-create-fee" size="small">Creating fee</Button></nobr> endpoint.
+To create a fee in the system, send the request to the <nobr><Button to="/openapi/fee/#operation/POST-fee-create-fee" size="small">Creating fee] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -50,7 +50,7 @@ Make sure you provide the relevant `siteCode` of a site that you want to apply t
 {% endhint %}
 
 
-2. Copy the `feeId` of the created fee. To add the fee to the specific product, send the request to the <nobr><Button to="/openapi/fee/#operation/PUT-fee-add-product-fees" size="small">Adding a list of fees to a product</Button></nobr> endpoint.
+2. Copy the `feeId` of the created fee. To add the fee to the specific product, send the request to the <nobr><Button to="/openapi/fee/#operation/PUT-fee-add-product-fees" size="small">Adding a list of fees to a product] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -74,7 +74,7 @@ In the request path parameter, provide the `productId` to add the fee to.
 The `siteCode` in the query parameter must correspond to the site you've created the fee for.
 
 
-3. To make sure the fee has been added properly, you can send the request to the <nobr><Button to="/openapi/fee/#operation/GET-fee-list-product-fees" size="small">Retrieving all fees with the given productId</Button></nobr> endpoint.
+3. To make sure the fee has been added properly, you can send the request to the <nobr><Button to="/openapi/fee/#operation/GET-fee-list-product-fees" size="small">Retrieving all fees with the given productId] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -89,7 +89,7 @@ curl -i -X GET \
   ```
 
 In the query parameter, provide the `siteCode` of the specific site the fee was applied to, for example `?siteCode=DE`.  
-Or, you can check if the fee was applied by sending the request to the <nobr><Button to="/openapi/fee/#operation/POST-fee-search-item-fee-by-ProductId" size="small">Searching itemFees by productId</Button></nobr> endpoint.
+Or, you can check if the fee was applied by sending the request to the <nobr><Button to="/openapi/fee/#operation/POST-fee-search-item-fee-by-ProductId" size="small">Searching itemFees by productId] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -114,7 +114,7 @@ curl -i -X POST \
 
 The Fee Service supports adding fees to payments methods. See the example of creating a fee for a payment type.
 
-1. First, create a fee by sending the request to the <nobr><Button to="/openapi/fee/#operation/POST-fee-create-fee" size="small">Creating fee</Button></nobr> endpoint.
+1. First, create a fee by sending the request to the <nobr><Button to="/openapi/fee/#operation/POST-fee-create-fee" size="small">Creating fee] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -144,11 +144,11 @@ curl -i -X POST \
   }'
   ```
 
-When creating a payment fee, the fee `code` has to be identical with the payment mode `code`. To check the available payment modes for a given site, make a call to the <nobr><Button to="/openapi/payment-gateway/#operation/GET-payment-gateway-list-payment-modes-frontend" size="small">Retrieving all the payment modes</Button></nobr> endpoint first.
+When creating a payment fee, the fee `code` has to be identical with the payment mode `code`. To check the available payment modes for a given site, make a call to the <nobr><Button to="/openapi/payment-gateway/#operation/GET-payment-gateway-list-payment-modes-frontend" size="small">Retrieving all the payment modes] endpoint first.
 Notice the `code` in the above payload corresponds to the payment mode `code` we want ta apply the fee to.
 
 
-2. Copy the `feeId`. To connect the fee to the specific payment type, create the item fee by sending the request to the <nobr><Button to="/openapi/fee/#operation/POST-fee-create-item-fee" size="small">Creating itemFee</Button></nobr> endpoint 
+2. Copy the `feeId`. To connect the fee to the specific payment type, create the item fee by sending the request to the <nobr><Button to="/openapi/fee/#operation/POST-fee-create-item-fee" size="small">Creating itemFee] endpoint 
 and specify the `itemYrn` of the chosen payment type in the request body.
 
 
@@ -168,7 +168,7 @@ curl -i -X POST \
 
 Notice the part of `itemYrn` contains the payment mode `code` which is identical with the fee `code`.
 
-3. Apply the fee to the payment mode. Make a call to the <nobr><Button to="/openapi/fee/#operation/PUT-fee-add-item-fees-itemYRN" size="small">Adding a list of fees to an item</Button></nobr> endpoint. 
+3. Apply the fee to the payment mode. Make a call to the <nobr><Button to="/openapi/fee/#operation/PUT-fee-add-item-fees-itemYRN" size="small">Adding a list of fees to an item] endpoint. 
 You need to specify the `itemYrn` of the chosen payment type in the request path and pass the `feeId` in the body.
 
 
@@ -197,7 +197,7 @@ For each payment mode you can create and connect one fee only.
 
 {% endhint %}
 
-4. To make sure the fee has been applied to the payment, send the request to the <nobr><Button to="/openapi/fee/#operation/POST-fee-check-item-fee" size="small">Checking of a fee has been applied</Button></nobr> endpoint.
+4. To make sure the fee has been applied to the payment, send the request to the <nobr><Button to="/openapi/fee/#operation/POST-fee-check-item-fee" size="small">Checking of a fee has been applied] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

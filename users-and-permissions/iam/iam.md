@@ -35,7 +35,7 @@ Access controls are predefined and designed to cover all necessary scenarios. It
 
 {% endhint %}
 
-To assign specific access control level to a group, first you need to retrieve a list of predefined access controls available for your tenant by sending a request to the <nobr><Button to="/openapi/iam/#operation/GET-iam-list-tenant-access-controls" size="small">Retrieving all access controls</Button></nobr> endpoint.
+To assign specific access control level to a group, first you need to retrieve a list of predefined access controls available for your tenant by sending a request to the <nobr><Button to="/openapi/iam/#operation/GET-iam-list-tenant-access-controls" size="small">Retrieving all access controls] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -54,7 +54,7 @@ curl -i -X GET \
 
 ## Create an employee group
 
-Employee groups aggregate users that share the same access control within a particular service and resource. Create an employee group and assign access controls to it by sending a request to the <nobr><Button to="/openapi/iam/#operation/POST-iam-create-user-group" size="small">Creating a new group</Button></nobr> endpoint.
+Employee groups aggregate users that share the same access control within a particular service and resource. Create an employee group and assign access controls to it by sending a request to the <nobr><Button to="/openapi/iam/#operation/POST-iam-create-user-group" size="small">Creating a new group] endpoint.
 
 {% hint style="warning" %}
 
@@ -99,7 +99,7 @@ curl -i -X POST \
 
 ## Assign users to an employee group
 
-By assigning a user to a particular employee group, you grant them a specific access control level. Create assignments by calling the <nobr><Button to="/openapi/iam/#operation/POST-iam-add-user-to-group" size="small">Adding a user to a group</Button></nobr>
+By assigning a user to a particular employee group, you grant them a specific access control level. Create assignments by calling the <nobr><Button to="/openapi/iam/#operation/POST-iam-add-user-to-group" size="small">Adding a user to a group]
 
 {% hint style="warning" %}
 

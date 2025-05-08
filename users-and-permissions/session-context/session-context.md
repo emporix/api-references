@@ -6,7 +6,7 @@ seo:
 
 # How to configure the Session Context Service
 
-By default, an anonymous user session expires after one hour. You can refresh the anonymous session by sending a request to the <nobr><Button to="/openapi/oauth/#operation/GET-oauth-refresh-anonymous-access-token" size="small">Refreshing an anonymous token</Button></nobr> endpoint.
+By default, an anonymous user session expires after one hour. You can refresh the anonymous session by sending a request to the <nobr><Button to="/openapi/oauth/#operation/GET-oauth-refresh-anonymous-access-token" size="small">Refreshing an anonymous token] endpoint.
 
 {% hint style="warning" %}
 
@@ -37,7 +37,7 @@ To be able to manage a user session and its corresponding session context file, 
 
 ## Create an anonymous user session
 
-An anonymous user session is created every time a non-logged user enters the storefront and sends a request to the <nobr><Button to="/openapi/oauth/#operation/GET-oauth-generate-anonymous-access-token" size="small">Requesting an anonymous token</Button></nobr> endpoint.
+An anonymous user session is created every time a non-logged user enters the storefront and sends a request to the <nobr><Button to="/openapi/oauth/#operation/GET-oauth-generate-anonymous-access-token" size="small">Requesting an anonymous token] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -72,7 +72,7 @@ An anonymous customer's session is terminated if one of those two requirements i
 
 ## Create a customer session
 
-The session is created when a customer logs in to the storefront. This means that the anonymous session that was established when the user entered the site is migrated into a customer session when a request is sent to the <nobr><Button to="/openapi/oauth/#operation/POST-oauth-authorize-customer" size="small">Requesting a customer token</Button></nobr> endpoint. 
+The session is created when a customer logs in to the storefront. This means that the anonymous session that was established when the user entered the site is migrated into a customer session when a request is sent to the <nobr><Button to="/openapi/oauth/#operation/POST-oauth-authorize-customer" size="small">Requesting a customer token] endpoint. 
 
 {% hint style="warning" %}
 
@@ -116,7 +116,7 @@ The customer's session is terminated when the customer has logged out.
 
 To view the existing session context file, you need to have a session Id of a particular user session.
 
-Retrieve the session context values by sending a request to the <nobr><Button to="/openapi/session-context/#operation/GET-session-context-retrieve-session-context" size="small">Retrieving a session context</Button></nobr> endpoint with the `session_context.context_manage` scope.
+Retrieve the session context values by sending a request to the <nobr><Button to="/openapi/session-context/#operation/GET-session-context-retrieve-session-context" size="small">Retrieving a session context] endpoint with the `session_context.context_manage` scope.
 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -145,10 +145,10 @@ For example, it's raining in the user's location, so the list of suggested produ
 
 {% hint style="warning" %}
 
-You can also implement a mechanism allowing users to manage and modify their own sessions and session contexts by calling the <nobr><Button to="/openapi/session-context/#operation/POST-session-context-add-attribute-sessionId" size="small">Adding a new attribute to a session context</Button></nobr> endpoint on the storefront. 
+You can also implement a mechanism allowing users to manage and modify their own sessions and session contexts by calling the <nobr><Button to="/openapi/session-context/#operation/POST-session-context-add-attribute-sessionId" size="small">Adding a new attribute to a session context] endpoint on the storefront. 
 {% endhint %}
 
-In the following example, we add an attribute by sending a request to the  <nobr><Button to="/openapi/session-context/#operation/POST-session-context-add-attribute-sessionId" size="small">Adding a new attribute to a session context</Button></nobr> endpoint with the `session_context.context_manage` scope.
+In the following example, we add an attribute by sending a request to the  <nobr><Button to="/openapi/session-context/#operation/POST-session-context-add-attribute-sessionId" size="small">Adding a new attribute to a session context] endpoint with the `session_context.context_manage` scope.
 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}

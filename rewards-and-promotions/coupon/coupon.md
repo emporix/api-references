@@ -7,7 +7,7 @@ seo:
 
 # How to create a new coupon
 
-To create a new coupon, you need to send a request to the <nobr><Button to="/openapi/coupon/#operation/POST-coupon-create-coupon" size="small">Creating a new coupon</Button></nobr> endpoint.
+To create a new coupon, you need to send a request to the <nobr><Button to="/openapi/coupon/#operation/POST-coupon-create-coupon" size="small">Creating a new coupon] endpoint.
 
 ## Creating a free shipping coupon with minimum order value and 1 usage per customer
 
@@ -148,7 +148,7 @@ curl -i -X POST \
 
 # How to update an existing coupon
 
-To update an existing coupon, you need to send a request to the <nobr><Button to="/openapi/coupon/#operation/PATCH-coupon-update-coupon" size="small">Partially updating a coupon</Button></nobr> endpoint.
+To update an existing coupon, you need to send a request to the <nobr><Button to="/openapi/coupon/#operation/PATCH-coupon-update-coupon" size="small">Partially updating a coupon] endpoint.
 
 {% hint style="warning" %}
 
@@ -202,7 +202,7 @@ You can apply one or more coupons to a cart. Coupons of different types can be a
 
 ## Specify the number of coupons per cart
 
-If you want to specify how many coupons can be added to a cart, first you need to send a request to the <nobr><Button to="/openapi/configuration/#operation/PUT-configuration-update-config" size="small">Updating a configuration</Button></nobr> endpoint in the Configuration Service.
+If you want to specify how many coupons can be added to a cart, first you need to send a request to the <nobr><Button to="/openapi/configuration/#operation/PUT-configuration-update-config" size="small">Updating a configuration] endpoint in the Configuration Service.
 
 In the following example, we are changing the maximum number of coupons that can be applied to a single cart to 3.
 
@@ -227,7 +227,7 @@ curl -i -X PUT \
 
 ## Apply a coupon to a cart
 
-To apply a coupon to a cart, you need to send a request to the <nobr><Button to="/openapi/cart/#operation/POST-cart-apply-discount" size="small">Applying a discount to cart</Button></nobr> endpoint.
+To apply a coupon to a cart, you need to send a request to the <nobr><Button to="/openapi/cart/#operation/POST-cart-apply-discount" size="small">Applying a discount to cart] endpoint.
 
 {% hint style="warning" %}
 
@@ -259,11 +259,11 @@ Applying the coupon to cart does not mean that the coupon is automatically redee
 A coupon can be redeemed in the following ways:
 
 * When a coupon is added to a cart and the order is completed at checkout, the coupon is automatically redeemed by the Checkout Service.
-* When you send a request to the <nobr><Button to="/openapi/coupon/#operation/POST-coupon-invalidate-coupon" size="small">Redeeming the coupon by creating a redemption</Button></nobr> endpoint. This process is independent of the checkout, so a coupon can be used even after an order is created and processed at checkout. This can be done by a merchant on behalf of a customer.
+* When you send a request to the <nobr><Button to="/openapi/coupon/#operation/POST-coupon-invalidate-coupon" size="small">Redeeming the coupon by creating a redemption] endpoint. This process is independent of the checkout, so a coupon can be used even after an order is created and processed at checkout. This can be done by a merchant on behalf of a customer.
 
 In the following example, we are redeeming a coupon on behalf of a customer.
 
-Redeem a coupon on behalf of a customer by sending a request to the <nobr><Button to="/openapi/coupon/#operation/POST-coupon-invalidate-coupon" size="small">Redeeming the coupon by creating a redemption</Button></nobr> endpoint. The following scope is required:
+Redeem a coupon on behalf of a customer by sending a request to the <nobr><Button to="/openapi/coupon/#operation/POST-coupon-invalidate-coupon" size="small">Redeeming the coupon by creating a redemption] endpoint. The following scope is required:
 
 ```
 coupon.coupon_redeem_on_behalf
@@ -305,7 +305,7 @@ The redeemed coupon cannot be used used again during checkout.
 Referral coupon settings are stored in your main site's `couponSettings` mixin.
 
 
-First, check if your `couponSettings` mixin has already been configured by sending a request to the <nobr><Button to="/openapi/site-settings/#operation/GET-site-settings-retrieve-site-mixin" size="small">Retrieving a site mixin</Button></nobr> endpoint.
+First, check if your `couponSettings` mixin has already been configured by sending a request to the <nobr><Button to="/openapi/site-settings/#operation/GET-site-settings-retrieve-site-mixin" size="small">Retrieving a site mixin] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -321,7 +321,7 @@ curl -i -X GET \
 
 If your site's `couponSettings` have never been configured before or have been deleted, you will receive a `404` error in the response body.
 
-In this case, to configure referral coupons, you need to send a request to the <nobr><Button to="/openapi/site-settings/#operation/POST-site-settings-create-site-mixin" size="small">Creating a site mixin</Button></nobr> endpoint.
+In this case, to configure referral coupons, you need to send a request to the <nobr><Button to="/openapi/site-settings/#operation/POST-site-settings-create-site-mixin" size="small">Creating a site mixin] endpoint.
 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -360,7 +360,7 @@ curl -i -X POST \
 
 If your site's `couponSettings` have already been configured, you will receive them in the response body.
 
-In this case, to configure referral coupons, you need to send a request to the <nobr><Button to="/openapi/site-settings/#operation/PATCH-site-settings-update-site-mixin" size="small">Partially updating a site mixin</Button></nobr> endpoint.
+In this case, to configure referral coupons, you need to send a request to the <nobr><Button to="/openapi/site-settings/#operation/PATCH-site-settings-update-site-mixin" size="small">Partially updating a site mixin] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -382,7 +382,7 @@ curl -i -X PATCH \
 
 Referral email templates are referenced in the `emailTemplates` configuration in the [Configuration Service](/openapi/configuration/).
 
-First,  check if your `emailTemplates` have already been configured by sending a request to the <nobr><Button to="/openapi/configuration/#operation/GET-configuration-retrieve-config" size="small">Retrieving a configuration</Button></nobr> endpoint.
+First,  check if your `emailTemplates` have already been configured by sending a request to the <nobr><Button to="/openapi/configuration/#operation/GET-configuration-retrieve-config" size="small">Retrieving a configuration] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -398,7 +398,7 @@ curl -i -X GET \
 
 If your `emailTemplates` have never been configured before or have been deleted, you will receive a `404` error in the response body.
 
-In this case, to configure referral email templates, you need to send a request to the <nobr><Button to="/openapi/configuration/#operation/POST-configuration-create-config" size="small">Creating configurations</Button></nobr> endpoint.
+In this case, to configure referral email templates, you need to send a request to the <nobr><Button to="/openapi/configuration/#operation/POST-configuration-create-config" size="small">Creating configurations] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -463,7 +463,7 @@ In this case, you need to copy the response body and add the following objects t
 }
 ```
 
-To add referral email templates to an existing `emailTemplates` configuration, you need to send a request to the <nobr><Button to="/openapi/configuration/#operation/PUT-configuration-update-config" size="small">Updating a configuration</Button></nobr> endpoint.
+To add referral email templates to an existing `emailTemplates` configuration, you need to send a request to the <nobr><Button to="/openapi/configuration/#operation/PUT-configuration-update-config" size="small">Updating a configuration] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -510,7 +510,7 @@ curl -i -X PUT \
 
 # How to generate a referral coupon for a specific customer
 
-To manually generate a referral coupon for a specific customer, you need to send a request to the <nobr><Button to="/openapi/coupon/#operation/POST-coupon-create-referral-coupon-code" size="small">Creating a referral coupon code for a specific customer</Button></nobr> endpoint.
+To manually generate a referral coupon for a specific customer, you need to send a request to the <nobr><Button to="/openapi/coupon/#operation/POST-coupon-create-referral-coupon-code" size="small">Creating a referral coupon code for a specific customer] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -526,7 +526,7 @@ curl -i -X POST \
 
 # How to retrieve a specific customer's referral coupon
 
-To retrieve referral coupon information for a specific customer, you need to send a request to the <nobr><Button to="/openapi/coupon/#operation/GET-coupon-retrieve-referral-coupon" size="small">Retrieving customer's referral coupon code</Button></nobr> endpoint.
+To retrieve referral coupon information for a specific customer, you need to send a request to the <nobr><Button to="/openapi/coupon/#operation/GET-coupon-retrieve-referral-coupon" size="small">Retrieving customer's referral coupon code] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

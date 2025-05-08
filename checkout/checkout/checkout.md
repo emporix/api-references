@@ -17,7 +17,7 @@ You need details about the customer's access and session tokens as these details
 
 1. When a user enters your storefront, before they choose to log in, an anonymous user session is created.
 
-  Get an anonymous access token by sending a request to the <nobr><Button to="/openapi/oauth/#operation/GET-oauth-generate-anonymous-access-token" size="small">Requesting an anonymous token</Button></nobr> endpoint.
+  Get an anonymous access token by sending a request to the <nobr><Button to="/openapi/oauth/#operation/GET-oauth-generate-anonymous-access-token" size="small">Requesting an anonymous token] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -28,7 +28,7 @@ You need details about the customer's access and session tokens as these details
 curl -i -X GET \
   'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id={client_id}'
   ```
-2. Log the customer in and send an authorization request to the <nobr><Button to="/openapi/oauth/#operation/POST-oauth-authorize-customer" size="small">Requesting a customer token</Button></nobr> endpoint.
+2. Log the customer in and send an authorization request to the <nobr><Button to="/openapi/oauth/#operation/POST-oauth-authorize-customer" size="small">Requesting a customer token] endpoint.
 
 {% hint style="warning" %}
 You can skip this step and continue with the checkout process as a guest customer without the need to log in.
@@ -57,7 +57,7 @@ This operation returns the customer's access token and Saas token, which convey 
 
 Each country that you operate in may have different tax rules for different products and services. Add relevant configuration to calculate taxes accordingly.
 
-Add tax configuration by sending a request to the <nobr><Button to="/openapi/tax/#operation/POST-tax-create-configuration" size="small">Creating a new tax configuration</Button></nobr> endpoint.
+Add tax configuration by sending a request to the <nobr><Button to="/openapi/tax/#operation/POST-tax-create-configuration" size="small">Creating a new tax configuration] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -110,7 +110,7 @@ curl -i -X POST \
 Delivery zone is the area where you ship your goods to. You can define a country, or a zip code that you operate within.
 Delivery method is dependant on a specific site and delivery zone. 
 
-1. Define the delivery zone by sending a request to the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-shipping-zone" size="small">Creating a shipping zone</Button></nobr> endpoint.
+1. Define the delivery zone by sending a request to the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-shipping-zone" size="small">Creating a shipping zone] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -137,7 +137,7 @@ curl -i -X POST \
   }'
 ```
 
-2. Specify how the goods can be shipped to a customer by sending a request to the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-shipping-method" size="small">Creating a shipping method</Button></nobr> endpoint.
+2. Specify how the goods can be shipped to a customer by sending a request to the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-shipping-method" size="small">Creating a shipping method] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -195,7 +195,7 @@ curl -i -X POST \
   }'
 ``` 
 
-3. Define delivery time that will be matched with the delivery method and zone by sending the request to the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-delivery-time" size="small">Creating a delivery time</Button></nobr> endpoint.
+3. Define delivery time that will be matched with the delivery method and zone by sending the request to the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-delivery-time" size="small">Creating a delivery time] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -237,7 +237,7 @@ curl -i -X POST \
 
 ## Add products to your store
 
-To create and add multiple products to your store, send the request to the <nobr><Button to="/openapi/product/#operation/POST-product-create-bulk-products" size="small">Creating multiple products</Button></nobr> endpoint.
+To create and add multiple products to your store, send the request to the <nobr><Button to="/openapi/product/#operation/POST-product-create-bulk-products" size="small">Creating multiple products] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -258,7 +258,7 @@ curl -i -X POST \
  
 Price model defines your pricing strategy. You can specify how you want to go about price tiers and selling volumes.
 
-1. To define a price model send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-model" size="small">Creating a new price model</Button></nobr> endpoint.
+1. To define a price model send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-model" size="small">Creating a new price model] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -295,7 +295,7 @@ curl -i -X POST \
   }'
 ```
 
-2. Create a price for a specific product by sending a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price" size="small">Creating a new price</Button></nobr> endpoint.
+2. Create a price for a specific product by sending a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price" size="small">Creating a new price] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -345,7 +345,7 @@ url -i -X POST \
 The following request requires using the customer's access token for authorization, either anonymous or logged in, as the response contains the bearer's information. 
 {% endhint %}
 
-Send the request to the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices-by-context" size="small">Matching prices for session context</Button></nobr> endpoint.
+Send the request to the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices-by-context" size="small">Matching prices for session context] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -382,7 +382,7 @@ The following requests require using the customer's access token for authorizati
 1. You have to enable an option to create a cart on your site while a customer is browsing through your products. Creating a cart takes care of things like gathering customer's session details, even anonymous, or setting up a proper cart's currency for final calculations at checkout.
 There are two options to create carts using API:
 
-* Create a cart by sending a request to the <nobr><Button to="/openapi/cart/#operation/POST-cart-create-cart" size="small">Creating a new cart</Button></nobr> endpoint.
+* Create a cart by sending a request to the <nobr><Button to="/openapi/cart/#operation/POST-cart-create-cart" size="small">Creating a new cart] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -394,7 +394,7 @@ There are two options to create carts using API:
   defaultExample="Logged in customer's cart"
   /> 
 
-* Create a cart by sending a `GET` request with `create=true` parameter to the <nobr><Button to="/openapi/cart/#operation/GET-cart-retrieve-cart-by-criteria" size="small">Retrieving a cart's details by criteria</Button></nobr> endpoint.
+* Create a cart by sending a `GET` request with `create=true` parameter to the <nobr><Button to="/openapi/cart/#operation/GET-cart-retrieve-cart-by-criteria" size="small">Retrieving a cart's details by criteria] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -420,7 +420,7 @@ curl -i -X POST \
   }'
   ```
 
-2. Add items to the cart by sending the request to the <nobr><Button to="/openapi/cart/#operation/POST-cart-add-item-to-cart" size="small">Creating a new cart</Button></nobr> endpoint.
+2. Add items to the cart by sending the request to the <nobr><Button to="/openapi/cart/#operation/POST-cart-add-item-to-cart" size="small">Creating a new cart] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -451,7 +451,7 @@ Once a customer places the product in a cart, they can proceed with the checkout
 The checkout service validates the data that come from customer's session token, the cart, and tiered prices, and then proceeds with the delivery and payment details. 
 Then, it handles the payment and creates an order in the system, closing the cart. 
 
-You can trigger a checkout process through API as well by sending a request to the <nobr><Button to="/openapi/checkout/#operation/POST-checkout-trigger-checkout" size="small">Triggering a checkout</Button></nobr> endpoint.
+You can trigger a checkout process through API as well by sending a request to the <nobr><Button to="/openapi/checkout/#operation/POST-checkout-trigger-checkout" size="small">Triggering a checkout] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

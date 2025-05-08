@@ -12,7 +12,7 @@ seo:
 
 Category names and descriptions are localized. When creating a new category, you can specify the category name and descriptions in multiple languages.
 
-Looking for more info on localization? Check out [_Standard practices_](../standard-practices/translations.md).
+Looking for more info on localization? Check out [_Standard practices_](../../standard-practices/translations.md).
 
 {% endhint %}
 

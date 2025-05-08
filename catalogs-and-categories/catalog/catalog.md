@@ -25,7 +25,7 @@ You can assign categories to a catalog when creating or updating the catalog. Th
 
 Catalog names and descriptions are localized. When creating a new catalog, you can specify the catalog name and description in two different ways — in one language or in multiple languages.
 
-Looking for more info on localization? Check out [*Standard practices*](../standard-practices/translations.md).
+Looking for more info on localization? Check out [*Standard practices*](../../standard-practices/translations.md).
 
 {% endhint %}
 

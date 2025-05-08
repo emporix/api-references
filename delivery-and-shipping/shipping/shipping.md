@@ -37,14 +37,14 @@ Ensure that you have created at least one customer.
 
 A customer account can be created by the employee themselves or from your Emporix tenant's side. For more information, check out the following endpoints in the  Emporix API Reference:
 
-* <nobr><Button to="/openapi/customer-customer/#operation/POST-customer-create-customer-account" size="small">Creating a new customer (customer-managed)</Button></nobr>
-* <nobr><Button to="/openapi/customer-tenant/#operation/POST-customer-tenant-create-customer" size="small">Creating a new customer (tenant-managed)</Button></nobr>
+* <nobr><Button to="/openapi/customer-customer/#operation/POST-customer-create-customer-account" size="small">Creating a new customer (customer-managed)]
+* <nobr><Button to="/openapi/customer-tenant/#operation/POST-customer-tenant-create-customer" size="small">Creating a new customer (tenant-managed)]
 
 {% endhint %}
 
 ## Create a shipping zone
 
-Shipping zones are countries that your business delivers products to. You can create a shipping zone by calling the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-shipping-zone" size="small">Creating a shipping zone</Button></nobr> endpoint.
+Shipping zones are countries that your business delivers products to. You can create a shipping zone by calling the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-shipping-zone" size="small">Creating a shipping zone] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -73,7 +73,7 @@ curl -i -X POST \
 
 ## Create a shipping group
 
-You can set up shipping groups for customers and define different shipping methods and costs for these groups. To create a shipping group, you need to call the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-shipping-group" size="small">Creating a shipping group</Button></nobr> endpoint.
+You can set up shipping groups for customers and define different shipping methods and costs for these groups. To create a shipping group, you need to call the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-shipping-group" size="small">Creating a shipping group] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -100,7 +100,7 @@ curl -i -X POST \
 ## Assign customers to shipping groups
 
 By adding customers to shipping groups, you can offer them different shipping methods and costs.
-Assign customers to shipping groups by calling the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-customer-group-relation" size="small">Creating a customer-group relation</Button></nobr> endpoint.
+Assign customers to shipping groups by calling the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-customer-group-relation" size="small">Creating a customer-group relation] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -121,7 +121,7 @@ curl -i -X POST \
 
 ## Add shipping methods and define fees
 
-Add shipping methods and configure shipping fees by calling the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-shipping-method" size="small">Creating a shipping method</Button></nobr> endpoint.
+Add shipping methods and configure shipping fees by calling the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-shipping-method" size="small">Creating a shipping method] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -184,7 +184,7 @@ curl -i -X POST \
 
 Delivery times specify days of the week and hours of the day on which orders can be delivered. They are defined for particular shipping zones.
 
-Add delivery times by calling the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-delivery-time" size="small">Creating a delivery time</Button></nobr> endpoint.
+Add delivery times by calling the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-delivery-time" size="small">Creating a delivery time] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -247,7 +247,7 @@ curl -i -X POST \
 
 Delivery slots specify periods during the day, when the delivery can take place. You can create multiple slots for every day.
 
-Add delivery time slots by calling the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-delivery-time-slot" size="small">Creating a delivery time slot</Button></nobr> endpoint.
+Add delivery time slots by calling the <nobr><Button to="/openapi/shipping/#operation/POST-shipping-create-delivery-time-slot" size="small">Creating a delivery time slot] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -293,7 +293,7 @@ You need to retrieve available delivery windows to be able to estimate the deliv
 ## Retrieve available delivery windows for a particular postal code and cart
 
 Shipping times for particular postal codes are automatically calculated based on the business' shipping configuration, for example shipping capacity, or cut-off time.
-Retrieve delivery windows by calling the <nobr><Button to="/openapi/shipping/#operation/GET-shipping-retrieve-customer-group-relations" size="small">Retrieving delivery windows by cart</Button></nobr> endpoint.
+Retrieve delivery windows by calling the <nobr><Button to="/openapi/shipping/#operation/GET-shipping-retrieve-customer-group-relations" size="small">Retrieving delivery windows by cart] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -309,7 +309,7 @@ curl -i -X GET \
 
 ## Update the cart with delivery information
 
-Add the delivery information to the cart by calling the <nobr><Button to="/openapi/cart/#operation/PUT-cart-update-cart" size="small">Updating a cart</Button></nobr> endpoint.
+Add the delivery information to the cart by calling the <nobr><Button to="/openapi/cart/#operation/PUT-cart-update-cart" size="small">Updating a cart] endpoint.
 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}

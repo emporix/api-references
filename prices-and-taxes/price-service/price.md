@@ -29,7 +29,7 @@ To learn more about measurement units in the Emporix Commerce Engine, check out 
 
 Each currency accepted by your business is stored as a separate object that can be managed through the Emporix API [Currency Service](/openapi/currency/).
 
-To add a new entry to your configuration of currencies, you need to send a request to the <nobr><Button to="/openapi/currency/#operation/POST-currency-create-currency" size="small">Creating a new currency</Button></nobr> endpoint.
+To add a new entry to your configuration of currencies, you need to send a request to the <nobr><Button to="/openapi/currency/#operation/POST-currency-create-currency" size="small">Creating a new currency] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -62,7 +62,7 @@ To learn more about price models in the Emporix Commerce Engine, check out the [
 
 {% endhint %}
 
-To create a new price model, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-model" size="small">Creating a new price model</Button></nobr> endpoint.
+To create a new price model, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-model" size="small">Creating a new price model] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -112,7 +112,7 @@ When specifying a price for a product, you need to reference two values from a c
 * ID of the price model
 * ID of the model's relevant pricing tier
 
-Price models that use the basic pricing strategy have one tier. To retrieve its ID, you need to send a request to the <nobr><Button to="/openapi/price/#operation/GET-price-retrieve-price-model" size="small">Retrieving a price model</Button></nobr> endpoint.
+Price models that use the basic pricing strategy have one tier. To retrieve its ID, you need to send a request to the <nobr><Button to="/openapi/price/#operation/GET-price-retrieve-price-model" size="small">Retrieving a price model] endpoint.
 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -132,7 +132,7 @@ The ID can be found in the `tierDefinition.tiers.id` field.
 
 ## Define the price
 
-To define a new price for a product, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price" size="small">Creating a new price</Button></nobr> endpoint.
+To define a new price for a product, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price" size="small">Creating a new price] endpoint.
 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -183,9 +183,9 @@ To learn more about pricing strategies available in the Emporix Commerce Engine,
 
 Implementing any pricing strategy is a process made up of three steps:
 
-1. Creating a `PriceModel` object through the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-model" size="small">Creating a price model</Button></nobr> endpoint.
-2. Retrieving IDs of the model's pricing tiers through the <nobr><Button to="/openapi/price/#operation/GET-price-retrieve-price-model" size="small">Retrieving a price model</Button></nobr> endpoint.
-3. Creating a `Price` object through the <nobr><Button to="/openapi/price/#operation/POST-price-create-price" size="small">Creating a price</Button></nobr> endpoint.
+1. Creating a `PriceModel` object through the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-model" size="small">Creating a price model] endpoint.
+2. Retrieving IDs of the model's pricing tiers through the <nobr><Button to="/openapi/price/#operation/GET-price-retrieve-price-model" size="small">Retrieving a price model] endpoint.
+3. Creating a `Price` object through the <nobr><Button to="/openapi/price/#operation/POST-price-create-price" size="small">Creating a price] endpoint.
 
 ## Before you start
 
@@ -460,8 +460,8 @@ Take a look at the relationships between price lists and other resources in the 
 
 Countries and regions are predefined in the Emporix API Country Service. You can check which countries and regions are available by sending requests to the following endpoints:
 
-* <nobr><Button to="/openapi/country/#operation/GET-country-list-all-countries" size="small">Retrieving all countries</Button></nobr> 
-* <nobr><Button to="/openapi/country/#operation/GET-country-list-all-regions" size="small">Retrieving all regions</Button></nobr>
+* <nobr><Button to="/openapi/country/#operation/GET-country-list-all-countries" size="small">Retrieving all countries] 
+* <nobr><Button to="/openapi/country/#operation/GET-country-list-all-regions" size="small">Retrieving all regions]
 
 {% endhint %}
 
@@ -477,7 +477,7 @@ Price lists are site-specific. You can restrict a price list to particular group
 
 Prices in a list can be expressed in a different currency than originally defined for the list's products.
 
-To create a new price list, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-list" size="small">Creating a new price list</Button></nobr> endpoint.
+To create a new price list, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-list" size="small">Creating a new price list] endpoint.
 
 {% hint style="danger" %}
 
@@ -526,7 +526,7 @@ A single price list can be associated with multiple regions or countries. For th
 
 {% endhint %}
 
-To create a new list-specific price, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-in-price-list" size="small">Adding a new price to a price list</Button></nobr> endpoint.
+To create a new list-specific price, you need to send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-price-in-price-list" size="small">Adding a new price to a price list] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -564,7 +564,7 @@ curl -i -X POST \
 
 {% hint style="warning" %} Bulk price creation
 
-You can add multiple prices to a list at once by sending a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-multiple-prices-for-price-list" size="small">Creating multiple prices for a price list</Button></nobr> endpoint.
+You can add multiple prices to a list at once by sending a request to the <nobr><Button to="/openapi/price/#operation/POST-price-create-multiple-prices-for-price-list" size="small">Creating multiple prices for a price list] endpoint.
 
 {% endhint %}
 
@@ -578,7 +578,7 @@ The price matching functionality compares all prices defined for specified produ
   
   {% hint style="danger" %}
   
-  If you want the price matching functionality to compare prices expressed in multiple currencies, you need to define exchange rates between these currencies and the `targetCurrency` through the <nobr><Button to="/openapi/currency/#operation/POST-currency-create-exchange-rate" size="small">Creating a new exchange rate</Button></nobr> endpoint.
+  If you want the price matching functionality to compare prices expressed in multiple currencies, you need to define exchange rates between these currencies and the `targetCurrency` through the [Creating a new exchange rate] endpoint.
 
   {% endhint %}
 
@@ -629,7 +629,7 @@ Make sure you have already finished the [How to set up your first price](#how-to
 
 ## Create a product
 
-Create a sample product through the <nobr><Button to="/openapi/product/#operation/POST-product-create-product" size="small">Creating a new product</Button></nobr> endpoint. For this tutorial, we've chosen bananas as an example:
+Create a sample product through the <nobr><Button to="/openapi/product/#operation/POST-product-create-product" size="small">Creating a new product] endpoint. For this tutorial, we've chosen bananas as an example:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -925,7 +925,7 @@ curl -i -X POST \
 
 ## Find the best price
 
-Now that you have defined multiple prices for the bananas, you can send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes</Button></nobr> endpoint to find which price is the lowest.
+Now that you have defined multiple prices for the bananas, you can send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes] endpoint to find which price is the lowest.
 
 Check the best price for both one kilogram and ten kilograms of bananas:
 
@@ -978,7 +978,7 @@ The lowest prices are returned in the `priceId` fields. The total price for defi
 
 # How to calculate gross prices between countries
 
-You can calculate gross prices between countries through the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes</Button></nobr> endpoint.
+You can calculate gross prices between countries through the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes] endpoint.
 
 {% hint style="warning" %}
 
@@ -996,7 +996,7 @@ Make sure you have already finished the [How to set up your first price](#how-to
 
 Gross prices between countries are calculated based on these countries' sales tax rates.
 
-Define sales tax rates for the desired country by sending a request to the <nobr><Button to="/openapi/tax/#operation/POST-tax-create-configuration" size="small">Creating a new tax configuration</Button></nobr> endpoint.
+Define sales tax rates for the desired country by sending a request to the <nobr><Button to="/openapi/tax/#operation/POST-tax-create-configuration" size="small">Creating a new tax configuration] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -1056,7 +1056,7 @@ curl -i -X POST \
 
 When calculating a gross price for another country, the price matching functionality checks tax classes assigned to the product that the original price is defined for.
 
-To update a product with applicable tax classes, send a request to the <nobr><Button to="/openapi/product/#operation/PATCH-product-update-product" size="small">Partially updating a product</Button></nobr> endpoint.
+To update a product with applicable tax classes, send a request to the <nobr><Button to="/openapi/product/#operation/PATCH-product-update-product" size="small">Partially updating a product] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -1082,7 +1082,7 @@ curl -i -X PATCH \
 
 ## Calculate the price for the desired country
 
-To calculate a gross price between countries, send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes</Button></nobr> endpoint.
+To calculate a gross price between countries, send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -1122,7 +1122,7 @@ The gross price calculated for the specified country is returned in the `totalVa
 
 # How to retrieve a price in another currency
 
-You can calculate a price's value in another currency through the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes</Button></nobr> endpoint.
+You can calculate a price's value in another currency through the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes] endpoint.
 
 ## Before you start 
 
@@ -1130,7 +1130,7 @@ Make sure you have already finished the [How to set up your first price](#how-to
 
 ## Add a new currency
 
-Add the currency in which the price will be retrieved to your configuration of currencies by sending a request to the <nobr><Button to="/openapi/currency/#operation/POST-currency-create-currency" size="small">Creating a new currency</Button></nobr> endpoint.
+Add the currency in which the price will be retrieved to your configuration of currencies by sending a request to the <nobr><Button to="/openapi/currency/#operation/POST-currency-create-currency" size="small">Creating a new currency] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -1165,12 +1165,12 @@ Currently, the exchange rates are defined statically and are not influenced by a
 
 {% endhint %}
 
-To define a new exchange rate, send a request to the <nobr><Button to="/openapi/currency/#operation/POST-currency-create-exchange-rate" size="small">Creating a new exchange rate</Button></nobr> endpoint:
+To define a new exchange rate, send a request to the [Creating a new exchange rate](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/currency-service/api-reference/currency-exchange#post-currency-tenant-exchanges) endpoint:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../configuration/currency-service/api-reference/" %}
+[api-reference](../../configuration/currency-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1187,12 +1187,12 @@ curl -i -X POST \
 
 ## Retrieve a price in the desired currency
 
-To retrieve a price in the desired currency, send a request to the <nobr><Button to="/openapi/price/#operation/POST-price-match-prices" size="small">Matching prices for specific attributes</Button></nobr> endpoint.
+To retrieve a price in the desired currency, send a request to the [Matching prices for specific attributes](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-matching) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1228,9 +1228,9 @@ The price calculated in the specified currency is returned in the `totalValue` f
 
 # How to configure a site to express all prices as net values
 
-When you retrieve prices through the <nobr><Button to="/openapi/price/#operation/GET-price-list-all-prices" size="small">Retrieving all prices</Button></nobr> endpoint, their values will be gross or net based on the `includesTax` value specified in these prices' models.
+When you retrieve prices through the [Retrieving all prices](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/prices) endpoint, their values will be gross or net based on the `includesTax` value specified in these prices' models.
 
-To retrieve prices as gross or net based on their sites' settings, you need to retrieve them with the [price matching functionality](#how-to-use-the-price-matching-functionality).
+To retrieve prices as gross or net based on their sites' settings, you need to retrieve them with the [price matching functionality](./price.md#how-to-use-the-price-matching-functionality).
 
 To always retrieve prices for a particular site as net values, you need to set that site's `includesTax` field to `false`.
 
@@ -1240,16 +1240,16 @@ If you don't specify a site's `includesTax` value, the price matching functional
 
 {% endhint %}
 
-You can manage your sites through the Emporix API [Site Settings Service](/openapi/site-settings/).
+You can manage your sites through the Emporix API [Site Settings Service](../../configuration/site-settings-service/README.md).
 
 ## Update your site's `includesTax` field
 
-To add or update the `includesTax` field in your site's settings, you need to send a request to the <nobr><Button to="/openapi/site-settings/#operation/PATCH-site-settings-update-site" size="small">Partially updating a site</Button></nobr> endpoint.
+To add or update the `includesTax` field in your site's settings, you need to send a request to the [Partially updating a site](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../configuration/site-settings-service/api-reference/" %}
+[api-reference](../../configuration/site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash

@@ -34,7 +34,7 @@ The token-based approach to pass the `legalEntityId` parameter guarantees that t
 1. The B2B customer logs in and chooses the legal entity they represent.
 2. The Customer Service verifies the user's assignment to the selected legal entity.
 3. A new `refreshToken` is issued to a customer by the [OAuth Service](https://developer.emporix.io/docs/openapi/oauth/), embedding the selected legal entity.
-4. In the case the customer changes the legal entity, the storefront triggers the <nobr><Button to="/openapi/oauth/#operation/GET-oauth-refresh-token" size="small">Refreshing a token</Button></nobr> endpoint to generate a new token based on the previous one but with the changed `legalEntityId` information. 
+4. In the case the customer changes the legal entity, the storefront triggers the <nobr><Button to="/openapi/oauth/#operation/GET-oauth-refresh-token" size="small">Refreshing a token] endpoint to generate a new token based on the previous one but with the changed `legalEntityId` information. 
     Thanks to that the customer isn't forced to log in again.
 5. The token with the selected legal entity is passed to other services to determine the right scopes for the user.
 

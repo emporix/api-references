@@ -16,12 +16,12 @@ To label a product with a specific information, follow these steps:
 
 ### Add a label image
 
-Firstly, create and add an image for a new label. Design the image and upload it to your media repository. Send a request to the <nobr><Button to="/openapi/media/#operation/POST-media-create-asset" size="small">Creating an asset</Button></nobr> endpoint.
+Firstly, create and add an image for a new label. Design the image and upload it to your media repository. Send a request to the [Creating an asset](https://emporix.gitbook.io/documentation-portal/api-references/media/media/api-reference/assets#post-media-tenant-assets) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../media/media/api-reference/" %}
+[api-reference](../../media/media/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -35,12 +35,12 @@ curl -i -X POST \
 
 ### Create a label
 
-To create a new label, send the request to the <nobr><Button to="/openapi/label/#operation/POST-label-create-label" size="small">Creating a label</Button></nobr> endpoint using the image you created.
+To create a new label, send the request to the [Creating a label](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/label-service/api-reference/label#post-labels) endpoint using the image you created.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../label-service/api-reference/" %}
+[api-reference](../label-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -65,12 +65,12 @@ Copy the label id from the response to provide it in the next step.
 
 ### Update a product with a new label
 
-You can now update a product with a newly created label to indicate that shipping is available worldwide for this product. Send the request to the <nobr><Button to="/openapi/product/#operation/PUT-product-update-product" size="small">Upserting a product</Button></nobr> endpoint and provide the label id in the request.
+You can now update a product with a newly created label to indicate that shipping is available worldwide for this product. Send the request to the [Upserting a product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint and provide the label id in the request.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../product-service/api-reference/" %}
+[api-reference](../product-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash

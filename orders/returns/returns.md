@@ -10,7 +10,7 @@ seo:
 
  ## Update the expiration date settings
 
- You can update the expiration date offset for a tenant by sending a request to the <nobr><Button to="/openapi/configuration/#operation/PUT-configuration-update-config" size="small">Updating a configuration</Button></nobr> endpoint in the Configuration Service.
+ You can update the expiration date offset for a tenant by sending a request to the <nobr><Button to="/openapi/configuration/#operation/PUT-configuration-update-config" size="small">Updating a configuration] endpoint in the Configuration Service.
 
  In the following example, we are changing the expiration date offset to 14 days.
 
@@ -57,7 +57,7 @@ If you want the return-service-specific events to trigger any actions of your ch
 
 Based on your tenant's configuration settings and customer's oauth token, the remaining fields are populated automatically.
 
-When a customer sends a return request, the <nobr><Button to="/openapi/returns/#operation/POST-returns-create-return" size="small">Creating a single return entity</Button></nobr> endpoint is called.
+When a customer sends a return request, the <nobr><Button to="/openapi/returns/#operation/POST-returns-create-return" size="small">Creating a single return entity] endpoint is called.
 
 {% hint style="warning" %}
 
@@ -124,7 +124,7 @@ curl -i -X POST \
  ## Create a return on behalf of a customer
 
 
- To create a return on behalf of a customer, you need to send a request to the <nobr><Button to="/openapi/returns/#operation/POST-returns-create-return" size="small">Creating a single return entity</Button></nobr> endpoint.
+ To create a return on behalf of a customer, you need to send a request to the <nobr><Button to="/openapi/returns/#operation/POST-returns-create-return" size="small">Creating a single return entity] endpoint.
 
  
 {% hint style="warning" %}
@@ -197,7 +197,7 @@ The `approvalStatus` field is automatically populated during the creation of a r
 
 ## Update the return request by a customer
 
-Customers can update their return request only when the approval status of the request is `PENDING`. When a customer updates a return, the <nobr><Button to="/openapi/returns/#operation/PUT-returns-update-return" size="small">Updating a single return</Button></nobr> endpoint is called.
+Customers can update their return request only when the approval status of the request is `PENDING`. When a customer updates a return, the <nobr><Button to="/openapi/returns/#operation/PUT-returns-update-return" size="small">Updating a single return] endpoint is called.
 
 {% hint style="warning" %}
 
@@ -262,7 +262,7 @@ curl -i -X PUT \
 
  ## Update the return status
 
- As an employee, you can update all the fields available during the return creation, as well as the `approvalStatus` and `received` fields, by sending a request to the <nobr><Button to="/openapi/returns/#operation/PUT-returns-update-return" size="small">Updating a single return</Button></nobr> endpoint.
+ As an employee, you can update all the fields available during the return creation, as well as the `approvalStatus` and `received` fields, by sending a request to the <nobr><Button to="/openapi/returns/#operation/PUT-returns-update-return" size="small">Updating a single return] endpoint.
  
 {% hint style="warning" %}
 

@@ -21,7 +21,7 @@ To create and configure a segment, you need the `customersegment.segment_manage`
 
 ### Create a customer segment
 
-Create a customer segment by sending a request to the the <nobr><Button to="/openapi/customer-segment/#operation/POST-customer-segment-create-segment" size="small">Creating a customer segment</Button></nobr> endpoint.
+Create a customer segment by sending a request to the the <nobr><Button to="/openapi/customer-segment/#operation/POST-customer-segment-create-segment" size="small">Creating a customer segment] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -56,7 +56,7 @@ curl -i -X POST \
 
 Connect the segment with specific products and/or categories for more customized content. 
 
-* To add an individual product or a category, call the <nobr><Button to="/openapi/customer-segment/#operation/PUT-customer-segment-update-item" size="small">Updating an item assignment</Button></nobr> 
+* To add an individual product or a category, call the <nobr><Button to="/openapi/customer-segment/#operation/PUT-customer-segment-update-item" size="small">Updating an item assignment] 
 endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -83,7 +83,7 @@ curl -i -X PUT \
   }'
   ```
 
-* To assign multiple products or categories to the segment, call the <nobr><Button to="/openapi/customer-segment/#operation/PUT-customer-segment-update-items-bulk" size="small">Updating multiple item assignments</Button></nobr> 
+* To assign multiple products or categories to the segment, call the <nobr><Button to="/openapi/customer-segment/#operation/PUT-customer-segment-update-items-bulk" size="small">Updating multiple item assignments] 
 endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -107,7 +107,7 @@ Note that this operation performs an `UPSERT` operation. The `UPSERT` means that
 
 Now, add customers to the segment. Depending on your setup and purpose, you can add B2B or B2C customers.
 
-* To add a B2B customer, send the request to the <nobr><Button to="/openapi/customer-segment/#operation/PUT-customer-segment-update-customer" size="small">[B2B] Updating a customer assignment</Button></nobr> endpoint.
+* To add a B2B customer, send the request to the <nobr><Button to="/openapi/customer-segment/#operation/PUT-customer-segment-update-customer" size="small">[B2B] Updating a customer assignment] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -133,7 +133,7 @@ curl -i -X PUT \
   }'
   ```
 
-* To add a B2C customer, send the request to the <nobr><Button to="/openapi/customer-segment/#operation/PUT-customer-segment-update-customer-by-customerId" size="small">[B2C] Updating a customer assignment</Button></nobr> endpoint.
+* To add a B2C customer, send the request to the <nobr><Button to="/openapi/customer-segment/#operation/PUT-customer-segment-update-customer-by-customerId" size="small">[B2C] Updating a customer assignment] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -159,7 +159,7 @@ curl -i -X PUT \
   }'
 ```
 
-* To add multiple customers at once, send the request to the <nobr><Button to="/openapi/customer-segment/#operation/PUT-customer-segment-update-customers-bulk" size="small">Updating multiple customer assignments</Button></nobr> endpoint.
+* To add multiple customers at once, send the request to the <nobr><Button to="/openapi/customer-segment/#operation/PUT-customer-segment-update-customers-bulk" size="small">Updating multiple customer assignments] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -185,7 +185,7 @@ Note that this operation performs an `UPSERT` operation. The `UPSERT` means that
 To search for a segment, you need the `customersegment.segment_read` scope to retrieve all customer segments.
 {% endhint %}
 
-You can use the search API to find a segment of your interest that match a specific criteria. Send the request to the <nobr><Button to="/openapi/customer-segment/#operation/POST-customer-segment-search-segments" size="small">Searching with parameters for customer segments</Button></nobr> endpoint.
+You can use the search API to find a segment of your interest that match a specific criteria. Send the request to the <nobr><Button to="/openapi/customer-segment/#operation/POST-customer-segment-search-segments" size="small">Searching with parameters for customer segments] endpoint.
 
 ```bash
 curl -i -X POST \
@@ -204,7 +204,7 @@ In the request body, pass the criteria you're looking for in the `q` parameter.
 ## How to apply a coupon to a segment
 
 Optionally, you can offer a discount coupon to a customer segment. The coupon then applies only to the assigned products/categories and is valid only for the customers that are the segment members.
-To create a coupon that is valid only for a specific segment, send the request to the <nobr><Button to="/openapi/coupon/#operation/POST-coupon-create-coupon" size="small">Creating a new coupon</Button></nobr> endpoint.
+To create a coupon that is valid only for a specific segment, send the request to the <nobr><Button to="/openapi/coupon/#operation/POST-coupon-create-coupon" size="small">Creating a new coupon] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -258,7 +258,7 @@ Or, you'd rather limit products/categories visibility to only those that a segme
 ### Retrieve all products and/or categories 
 
 To display the content you want, first retrieve all the products/categories assigned to all segments that a customer is a member of.
-Send the request to the <nobr><Button to="/openapi/customer-segment/#operation/GET-customer-segment-retrieve-segments-items" size="small">Retrieving all items assignments for all customer segments</Button></nobr> endpoint.
+Send the request to the <nobr><Button to="/openapi/customer-segment/#operation/GET-customer-segment-retrieve-segments-items" size="small">Retrieving all items assignments for all customer segments] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -278,7 +278,7 @@ Depending on your needs, you can limit the search using the `q` parameter, for e
 ### Use the segment information
 
 If you want to use segments to restrict the content on your storefront, to display only the product and categories assigned to a segment for segment customers, use the endpoint to build a segment-based category tree. 
-Send the request to the <nobr><Button to="/openapi/customer-segment/#operation/GET-customer-segment-retrieve-category-trees" size="small">Retrieving category trees for a customer segments</Button></nobr> endpoint.
+Send the request to the <nobr><Button to="/openapi/customer-segment/#operation/GET-customer-segment-retrieve-category-trees" size="small">Retrieving category trees for a customer segments] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -294,7 +294,7 @@ curl -i -X GET \
 
 The request generates a category tree with categories assigned to a segment and their parent categories, if applicable. If a segment specifies a subcategory only, the customer of that segment is able to see the parent category label, but content-wise, only the products from the subcategory are available.
 
-To filter products that belong to a category that is assigned to a particular segment, send the request to the <nobr><Button to="/openapi/customer-segment/#operation/GET-category-tree-retrieve-category-assignments" size="small">Retrieving resources assigned to a category</Button></nobr> endpoint.
+To filter products that belong to a category that is assigned to a particular segment, send the request to the <nobr><Button to="/openapi/customer-segment/#operation/GET-category-tree-retrieve-category-assignments" size="small">Retrieving resources assigned to a category] endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
