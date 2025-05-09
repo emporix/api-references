@@ -1087,7 +1087,8 @@ See the sections below for shipping, payment fee, tax and discounts calculations
 
 The shipping calculation depends on the stage at which it is done.
 
-* In the cart, where the address, delivery method, and zone are not available yet, the calculation uses the minimum shipping estimation. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`, and the `shipToAddress` is created based on the cart’s `countryCode` and `zipCode`.\
+* In the cart, where the address, delivery method, and zone are not available yet, the calculation uses the minimum shipping estimation. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`, and the `shipToAddress` is created based on the cart’s `countryCode` and `zipCode`.
+  
   See the [Calculating the minimum shipping costs](https://developer.emporix.io/docs/openapi/shipping/#operation/POST-shipping-calculate-min-shipping-cost) endpoint.
 * In the checkout, where information about the delivery window and zone is already available, the calculation uses the following endpoints: [Calculating the final shipping cost](https://developer.emporix.io/docs/openapi/shipping/#operation/POST-shipping-calculate-shipping-cost), or [Calculating the shipping cost for a given slot](https://developer.emporix.io/docs/openapi/shipping/#operation/POST-shipping-calculate-slot-shipping-cost) accordingly.
 
@@ -1122,20 +1123,14 @@ Ways to find the country data:
 
 Discounts are known as coupons and, with the relevant settings that influence `calculatedPrice`, they can be applied to a cart.
 
-##
-
 Depending on the site configuration and the `includesTax=true/false`, the discount is applied to either the gross value - `includesTax=true`, or the net value - `includesTax=false`.\
 Based on this setting, the corresponding `netValue` or `grossValue` is recalculated using the tax rate.
-
-##
 
 The information about which calculation method was used is available in `totalDiscount.calculationType=ApplyDiscountAfterTax/ApplyDiscountBeforeTax`:
 
 * `discountCalculationType`:
   * SUBTOTAL - the discounts are applied on `items[].calculatedPrice.price`. The line item fees and shipping cost are **NOT** discounted.
   * TOTAL - the discounts are applied on `items[].calculatedPrice.price`, the line item fees and shipping cost.
-
-##
 
 *   `discountType`:
 
@@ -1147,11 +1142,7 @@ The information about which calculation method was used is available in `totalDi
     * PERCENT - it takes the value of discount’s `discountPercentage` attribute and calculates the percentage discount to the price.
     * FREE\_SHIPPING - this type of a discount fully discounts the price of the `calculatedPrice.totalShipping`. It's applied before any other discount is applied.
 
-##
-
 * `categoryRestricted` - the discount applies only to the line items that belong to a specific category. If the `discountCalculationType=TOTAL`, a fee of an item that fulfills the restriction is discounted. However, any other fees, or shipping are not part of the discounting.
-
-##
 
 * `segmentRestricted` - the discount is applied only to the line items that belong to the given customer segment.
 
@@ -1163,7 +1154,7 @@ Since the system can be configured to allow more than one discount to a cart, it
 * Every ABSOLUTE discount uses the not discounted values for the discount value spread. It means that if the given applicable item is already fully discounted, the remaining amount of the discount is spread proportionally on the discounts that still have some value left.
 
 {% hint style="warning" %}
-\
+
 Check the [System Preferences](https://developer.emporix.io/user-guides/management-dashboard/settings/system-preferences/) documentation for coupons settings related to the number of discounts.
 {% endhint %}
 
