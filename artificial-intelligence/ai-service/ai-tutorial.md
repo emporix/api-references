@@ -6,6 +6,8 @@ With Emporix support for AI, you can enhance text for product descriptions and g
 
 Make sure to configure your API token. To do that, you can use the [Configuration Service](https://developer.emporix.io/docs/openapi/configuration/) and store the token under `openAiApiToken` key.
 
+[Broken link](broken-reference "mention")
+
 ## How to generate an AI supported text for a product
 
 You can generate the text by sending a request based on a provided prompt. To send the request, use the [Text Generation](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/artificial-intelligence/ai-service/api-reference/text-generation) endpoint.
