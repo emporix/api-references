@@ -18,7 +18,7 @@ To create a new cart, you need to send a request to the [Creating a new cart](ht
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="..cart/api-reference/" %}
+{% content-ref url="../cart/api-reference/" %}
 [api-reference](../cart/api-reference/)
 {% endcontent-ref %}
 
@@ -74,7 +74,7 @@ To add custom attributes to a cart, you need to send a request to the [Updating 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="..cart/api-reference/" %}
+{% content-ref url="../cart/api-reference/" %}
 [api-reference](../cart/api-reference/)
 {% endcontent-ref %}
 
@@ -129,7 +129,7 @@ To merge an anonymous cart with a customer cart, you need to send a request to t
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="..cart/api-reference/" %}
+{% content-ref url="../cart/api-reference/" %}
 [api-reference](../cart/api-reference/)
 {% endcontent-ref %}
 
@@ -164,7 +164,7 @@ Provide the customer cart's ID in the `cartId` path parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="..cart/api-reference/" %}
+{% content-ref url="../cart/api-reference/" %}
 [api-reference](../cart/api-reference/)
 {% endcontent-ref %}
 
@@ -212,7 +212,7 @@ Provide the customer cart's ID in the `cartId` path parameter. The payload has t
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="..cart/api-reference/" %}
+{% content-ref url="../cart/api-reference/" %}
 [api-reference](../cart/api-reference/)
 {% endcontent-ref %}
 
@@ -260,7 +260,7 @@ Provide the customer cart's ID in the `cartId` path parameter. The payload has t
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="..cart/api-reference/" %}
+{% content-ref url="../cart/api-reference/" %}
 [api-reference](../cart/api-reference/)
 {% endcontent-ref %}
 

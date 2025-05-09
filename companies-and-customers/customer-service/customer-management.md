@@ -131,7 +131,7 @@ Subsidiaries are companies legally owned or controlled by other companies. In th
 
 ## Before you start
 
-Make sure you have already finished the [How to set up business customer information](#how-to-set-up-business-customer-information) tutorial.
+Make sure you have already finished the [How to set up business customer information](./customer-management.md#how-to-set-up-business-customer-information) tutorial.
 
 ## Retrieve the ID of the parent company
 

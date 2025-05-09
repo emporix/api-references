@@ -32,7 +32,7 @@ By default, the maximum number of events per tenant is limited to 5000/month. Th
 Before you subscribe to events, you need to check for any active subscriptions by sending a request to the Retrieving all subscriptions endpoint.
 
 {% hint style="warning" %}
-If the subscription to the event of your choice already exists and you want to update it, note down the `metadata.version` value. You will need it to call the [Subscribing and unsubscribing](https://emporix.gitbook.io/documentation-portal/api-references/webhooks/webhook-service/api-reference/events#patch-webhook-tenant-event-subscriptions) from events endpoint further in the tutorial.
+If the subscription to the event of your choice already exists and you want to update it, note down the `metadata.version` value. You will need it to call the [Subscribing and unsubscribing from events](https://emporix.gitbook.io/documentation-portal/api-references/webhooks/webhook-service/api-reference/events#patch-webhook-tenant-event-subscriptions) endpoint further in the tutorial.
 
 If there is no prior subscription to the event of your choice, the `metadata.version` is empty. It is automatically set to `1` when you send a request to the [Subscribing and unsubscribing from events](https://emporix.gitbook.io/documentation-portal/api-references/webhooks/webhook-service/api-reference/events#patch-webhook-tenant-event-subscriptions) endpoint.
 {% endhint %}

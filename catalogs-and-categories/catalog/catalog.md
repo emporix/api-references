@@ -69,7 +69,7 @@ curl -i -X POST \
 
 {% hint style="warning" %}
 
-For more information, check out [*How to create a category*](../category/#how-to-create-a-category).
+For more information, check out [*How to create a category*](../category-tree/#how-to-create-a-category).
 
 {% endhint %}
 

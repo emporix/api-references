@@ -12,8 +12,7 @@ With the Schema Service you can easily create and manage customized/industry-spe
 
 {% hint style="warning" %}
 
-It is possible to create mixin schemas through API for the following entities: `category`, `company`, `coupon`, `customer`, `customer.address`, `order`, `price list`, `product`, `quote` and `return`.\
-{% endhint %}
+It is possible to create mixin schemas through API for the following entities: `category`, `company`, `coupon`, `customer`, `customer.address`, `order`, `price list`, `product`, `quote` and `return`.
 
 ### How to add custom fields for an entity
 
@@ -37,11 +36,9 @@ When you create a product, the validation mechanism runs against the schema stor
 
 #### Create a product
 
-Now, create a product that contains additional fields by sending a request to Creating a new product endpoint.\
-\
-The product should contain "metadata.mixins.\{{id\}}: \{{cloudinaryUrl\}}", where `id` is the schema URL you retrieved with `GET` operation in the previous step.\
-\
+Now, create a product that contains additional fields by sending a request to Creating a new product endpoint.
 
+The product should contain "metadata.mixins.\{{id\}}: \{{cloudinaryUrl\}}", where `id` is the schema URL you retrieved with `GET` operation in the previous step.
 
 For example, you created a schema with **size** attribute and it got assigned an id: `652d12399ffeb27c5a3b6d02`. When creating or editing a product, provide the schema `id` and `URL` details in the payload of the `POST` request:
 

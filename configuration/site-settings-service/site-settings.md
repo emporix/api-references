@@ -12,8 +12,8 @@ To create a new site, you need to send a request to the [Creating a site](https:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -53,8 +53,8 @@ To update the `shipToCountries` list, you need to send a request to the [Partial
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -87,8 +87,8 @@ First, check if the `orderProcessSettings` mixin has already been configured by 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -103,8 +103,8 @@ In this case, to enable specific payment methods, you need to send a request to 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -137,8 +137,8 @@ In this case, to enable specific payment methods, you need to send a request to 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -171,8 +171,8 @@ First, check if the `merchantInfo` mixin has already been configured by sending 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -185,8 +185,8 @@ If your site's `merchantInfo` has never been configured before or has been delet
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -231,8 +231,8 @@ If you need to update your `merchantInfo`, you need to send a request to the [Pa
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -306,8 +306,8 @@ Your business's SEPA Creditor ID is stored in your tenant's `sepaCreditor` confi
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../configuration-service/api-reference/" %}
+[api-reference](../configuration-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -377,8 +377,8 @@ Once your schema is ready, send a request to the [Creating a site mixin](https:/
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash

@@ -283,6 +283,7 @@ In this scenario, the employee updates the approval status of the return request
 {% content-ref url="../returns/api-reference/" %}
 [api-reference](../returns/api-reference/)
 {% endcontent-ref %}
+
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/return/{tenant}/returns/{returnId}' \

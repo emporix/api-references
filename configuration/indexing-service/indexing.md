@@ -23,8 +23,8 @@ To create indexing configuration, send a request to the [Creating new configurat
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../indexing-service/api-reference/" %}
+[api-reference](../indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -49,8 +49,8 @@ Send the request to the [Get configuration by provider name](https://emporix.git
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../indexing-service/api-reference/" %}
+[api-reference](../indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -63,8 +63,8 @@ To change configuration, make a call to the [Update configuration by provider na
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../indexing-service/api-reference/" %}
+[api-reference](../indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -92,8 +92,8 @@ You can run the reindex without the need to update all your resource data by sen
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../indexing-service/api-reference/" %}
+[api-reference](../indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -116,8 +116,8 @@ If you want to get your storefront index configuration without the need to updat
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../indexing-service/api-reference/" %}
+[api-reference](../indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -133,8 +133,8 @@ To choose the right mode for your index, send the request to the [Updating a con
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../configuration-service/api-reference/" %}
+[api-reference](../configuration-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash

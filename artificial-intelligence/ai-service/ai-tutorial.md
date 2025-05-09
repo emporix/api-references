@@ -58,5 +58,5 @@ curl -i -X POST \
 ```
 
 {% hint style="info" %}
-To see some more examples of using AI at Emporix, check our guides for Management Dashboard - [Powered by AI](https://developer.emporix.io/user-guides/extensibility-and-integrations/ai/ai-intro).
+To see some more examples of using AI at Emporix, check our guides for Management Dashboard - [Powered by AI](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/ai/ai-intro).
 {% endhint %}

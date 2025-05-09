@@ -21,7 +21,7 @@ This tutorial will walk you through the following steps:
 
 The tutorial skips the step of creating a new measurement unit as your Emporix tenant is configured with the most commonly used measurement units out-of-the-box. 
 
-To learn more about measurement units in the Emporix Commerce Engine, check out the [Measurement units guide](https://developer.emporix.io/user-guides/core-commerce/unit-handling/unit-handling).
+To learn more about measurement units in the Emporix Commerce Engine, check out the [Measurement units guide](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/unit-handling/unit-handling).
 
 {% endhint %}
 

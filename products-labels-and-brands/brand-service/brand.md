@@ -18,7 +18,7 @@ Ensure that you have created a product.
 
 {% hint style="warning" %}
 
-For instructions, check out [*How to add your first product*](../product-service/product.md/#how-to-add-your-first-product).
+For instructions, check out [*How to add your first product*](../product-service/product.md#how-to-add-your-first-product).
 
 {% endhint %}
 
@@ -49,7 +49,7 @@ Note down the values of the `link` and `id` attributes from the response. You wi
 
 # Create a brand
 
-To create a brand and add media files to it, you need to send a request to the <nobr><Button to="/openapi/brand/#operation/POST-brand-create-brand" size="small">Adding a new brand] endpoint. 
+To create a brand and add media files to it, you need to send a request to the [Adding a new brand](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/brand-service/api-reference/brands#post-brands) endpoint. 
 
 {% hint style="warning" %}
 

@@ -148,7 +148,7 @@ curl -i -X POST \
 
 # How to update an existing coupon
 
-To update an existing coupon, you need to send a request to the <nobr><Button to="/openapi/coupon/#operation/PATCH-coupon-update-coupon" size="small">Partially updating a coupon] endpoint.
+To update an existing coupon, you need to send a request to the [Partially updating a coupon](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#patch-coupon-tenant-coupons-code) endpoint.
 
 {% hint style="warning" %}
 
@@ -380,7 +380,7 @@ curl -i -X PATCH \
 
 ## Configure referral email templates
 
-Referral email templates are referenced in the `emailTemplates` configuration in the [Configuration Service](/openapi/configuration/).
+Referral email templates are referenced in the `emailTemplates` configuration in the [Configuration Service](../../configuration/configuration-service/api-reference/README.md/).
 
 First,  check if your `emailTemplates` have already been configured by sending a request to the [Retrieving a configuration](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey) endpoint.
 

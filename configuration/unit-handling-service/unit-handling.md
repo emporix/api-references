@@ -9,7 +9,7 @@ label: Tutorials
 
 ### How to add a new unit
 
-To add a new measurement unit to your configuration, you need to send a request to the [Adding a new unit](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/unit-handling-service/api-reference/unit-conversion#put-unit-handling-tenant-units-convert-unit-commands) endpoint.
+To add a new measurement unit to your configuration, you need to send a request to the [Adding a new unit](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/unit-handling-service/api-reference/unit-management#post-unit-handling-tenant-units) endpoint.
 
 {% hint style="warning" %}
 Unit names are localized. When creating a new unit, you can specify the unit name in two different ways — in one language or in multiple languages.
@@ -19,8 +19,8 @@ Looking for more info on localization? Check out [_Standard practices_](../../st
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../unit-handling-service/api-reference/" %}
+[api-reference](../unit-handling-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -47,8 +47,8 @@ To convert between units, you need to send a request to the [Converting units ](
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../unit-handling-service/api-reference/" %}
+[api-reference](../unit-handling-service/api-reference/)
 {% endcontent-ref %}
 
 <pre class="language-bash"><code class="lang-bash">curl -L \

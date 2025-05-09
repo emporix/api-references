@@ -138,7 +138,7 @@ curl -i -X POST \
   }'
 ```
 
-1. Specify how the goods can be shipped to a customer by sending a request to the [Creating a shipping method](https://emporix.gitbook.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-methods#post-shipping-tenant-site-zones-zoneid-methods) endpoint.
+2. Specify how the goods can be shipped to a customer by sending a request to the [Creating a shipping method](https://emporix.gitbook.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-methods#post-shipping-tenant-site-zones-zoneid-methods) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -196,7 +196,7 @@ curl -i -X POST \
   }'
 ``` 
 
-1. Define delivery time that will be matched with the delivery method and zone by sending the request to the [Creating a delivery time](https://emporix.gitbook.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/delivery-times-management#post-shipping-tenant-delivery-times) endpoint.
+3. Define delivery time that will be matched with the delivery method and zone by sending the request to the [Creating a delivery time](https://emporix.gitbook.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/delivery-times-management#post-shipping-tenant-delivery-times) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

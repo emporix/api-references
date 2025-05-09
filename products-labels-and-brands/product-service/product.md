@@ -10,7 +10,7 @@ seo:
 
 {% hint style="warning" %}
 
-This tutorial presents how to create a basic product. To learn more about types of products available in the Emporix Commerce Engine, check out the [Products guide](/ce/core-commerce/product-user-guide).
+This tutorial presents how to create a basic product. To learn more about types of products available in the Emporix Commerce Engine, check out the [Products guide](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTjcore-commerce/product-user-guide).
 
 {% endhint %}
 
@@ -37,11 +37,11 @@ Adding your first product is a process made up of two main steps:
 
 Sales tax rates are stored in tax configurations. Each configuration indicates a country and defines tax classes applicable to it.
 
-You can manage your tax configurations through the Emporix API [Tax Service](../../openapi/tax/).
+You can manage your tax configurations through the Emporix API [Tax Service](../../prices-and-taxes/tax-service/tax.md).
 
 {% hint style="warning" %}
 
-For more information, check out the [Tax classes guide](https://developer.emporix.io/user-guides/core-commerce/taxes/taxes-v2).
+For more information, check out the [Tax classes guide](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/taxes/taxes-v2).
 
 {% endhint %}
 
