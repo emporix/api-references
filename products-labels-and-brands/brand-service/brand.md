@@ -53,7 +53,7 @@ To create a brand and add media files to it, you need to send a request to the [
 
 {% hint style="warning" %}
 
-In the following request, you will use the `link` and `id` elements received in the response in the [Upload an image](../brand-service/brand.md#upload-an-image) step:
+In the following request, use the `link` and `id` elements received in the response in the [Upload an image](../brand-service/brand.md#upload-an-image) step:
 
 * The `image` element in the request below must have the same value as the `link` attribute in the response in the previous step.
 * The `cloudinaryUrl` element in the request below must have the same value as the `id` attribute in the response in the previous step.
@@ -62,7 +62,7 @@ In the following request, you will use the `link` and `id` elements received in 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="..brand-service/api-reference/" %}
+{% content-ref url="../brand-service/api-reference/" %}
 [api-reference](../brand-service/api-reference/)
 {% endcontent-ref %}
 
