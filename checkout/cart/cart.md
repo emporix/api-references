@@ -1154,11 +1154,11 @@ Since the system can be configured to allow more than one discount to a cart, it
 
 {% hint style="warning" %}
 
-Check the [System Preferences](https://developer.emporix.io/user-guides/management-dashboard/settings/system-preferences/) documentation for coupons settings related to the number of discounts.
+Check the [System Preferences](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/settings/system-preferences/) documentation for coupons settings related to the number of discounts.
 {% endhint %}
 
 For some cases, you might need to calculate and charge additional fees, for example for packaging, freight, or any additional reasons. The fees calculated externally can be added directly to the customer's cart.
 
-To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://developer.emporix.io/user-guides/extensibility/extensibility-cases/external-pricing-and-products) documentation. You need to generate a dedicated scope that serves as the authorization token for the API calls.
+To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation. You need to generate a dedicated scope that serves as the authorization token for the API calls.
 
-To add a custom fee to the cart, you need to send the request to the endpoint. Provide the customer cart's ID in the cartId path parameter. The payload has to include the "itemType" : "EXTERNAL" parameter - see the [Adding a product to a cart](https://developer.emporix.io/docshttps://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) documentation.
+To add a custom fee to the cart, you need to send the request to the endpoint. Provide the customer cart's ID in the cartId path parameter. The payload has to include the "itemType" : "EXTERNAL" parameter - see the [Adding a product to a cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) documentation.
