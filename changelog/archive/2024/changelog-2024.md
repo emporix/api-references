@@ -1912,7 +1912,7 @@ Availability Service from now on supports the mixins feature. Two new properties
 | Endpoint                                                                                                 | Description                                     |
 | -------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
 | [Retrieving all availabilities for a site](/openapi/availability/#operation/GET-availability-retrieve-availability-site)       | We added the `mixins` and `metadata.mixins` properties. |
-| [Retrieving an availability](/openapi/availability/#operation/GET-availability-retrieve-product)           | We added the `mixins` and `metadata.mixins` properties. |
+| [Retrieving an availability](https://emporix.gitbook.io/documentation-portal/api-references/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search)           | We added the `mixins` and `metadata.mixins` properties. |
 | [Creating an availability](/openapi/availability/#operation/POST-availability-add-product)            | We added the `mixins` and `metadata.mixins` properties. |
 | [Upserting availability information of a product](/openapi/availability/#operation/PUT-availability-update-product) | We added the `mixins` and `metadata.mixins` properties. |
 | [Retrieving product availabilities for a site](/openapi/availability/#operation/POST-availability-search-products-site)  | We added the `mixins` and `metadata.mixins` properties. |

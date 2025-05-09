@@ -54,7 +54,7 @@ curl -i -X POST \
 
 ## Retrieve the availability information of a product
 
-To check if a product's availability was added successfully, you need to send a request to the <Button to="/openapi/availability/#operation/GET-availability-retrieve-product" size="small">Retrieving a product's availability</Button> endpoint with the product's ID in the request body.
+To check if a product's availability was added successfully, you need to send a request to the [Retrieving a product's availability](https://emporix.gitbook.io/documentation-portal/api-references/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) endpoint with the product's ID in the request body.
 
 {% hint style="warning" %} 
 You can also retrieve availability information for multiple products at once by sending a request to the [Retrieving product availabilities for a site](https://emporix.gitbook.io/documentation-portal/api-references/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) endpoint. 

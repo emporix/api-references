@@ -28,7 +28,7 @@ The endpoint for getting product availability does not require any scopes anymor
 
 | Endpoint                                                                                            | Description                    |
 | --------------------------------------------------------------------------------------------------- | ------------------------------ |
-| [Retrieving product availability](/openapi/availability/#operation/GET-availability-retrieve-product) | The endpoint doesn't require scopes.   |
+| [Retrieving product availability](https://emporix.gitbook.io/documentation-portal/api-references/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) | The endpoint doesn't require scopes.   |
 
 **Known problems**
 

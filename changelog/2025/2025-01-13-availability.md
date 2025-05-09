@@ -23,7 +23,7 @@ The availability endpoints that accept `site` as a query parameter, are now depr
 
 | Endpoint                                                                                                                           | Description                                                                   |
 | ---------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [Retrieving a products availability](/openapi/availability/#operation/GET-availability-retrieve-product)                           | New endpoint that takes `site` as a path parameter is now available.           |
+| [Retrieving a products availability](https://emporix.gitbook.io/documentation-portal/api-references/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search)                           | New endpoint that takes `site` as a path parameter is now available.           |
 | [Creating a new availability for a product](/openapi/availability/#operation/POST-availability-add-product)                        | New endpoint that takes `site` as a path parameter is now available.           |
 | [Upserting availability information of a product](/openapi/availability/#operation/PUT-availability-update-product)                | New endpoint that takes `site` as a path parameter is now available.           |
 | [Deleting availability information of a product](/openapi/availability/#operation/DELETE-availability-remove-product)              | New endpoint that takes `site` as a path parameter is now available.          |
@@ -34,7 +34,7 @@ The availability endpoints that accept `site` as a query parameter, are now depr
 
 | Endpoint                                                                                                                           | Description                                                                  |
 | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [Retrieving a products availability](/openapi/availability/#operation/GET-availability-retrieve-product)                           | Endpoint that takes `site` as a query parameter is now deprecated.            |
+| [Retrieving a products availability](https://emporix.gitbook.io/documentation-portal/api-references/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search)                           | Endpoint that takes `site` as a query parameter is now deprecated.            |
 | [Creating a new availability for a product](/openapi/availability/#operation/POST-availability-add-product)                        | Endpoint that takes `site` as a query parameter is now deprecated.            |
 | [Upserting availability information of a product](/openapi/availability/#operation/PUT-availability-update-product)                | Endpoint that takes `site` as a query parameter is now deprecated.            |
 | [Deleting availability information of a product](/openapi/availability/#operation/DELETE-availability-remove-product)              | Endpoint that takes `site` as a query parameter is now deprecated.           |
