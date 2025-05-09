@@ -63,7 +63,7 @@ The Order Service API has been enhanced with the possibility of recalculating al
 | Endpoint                                                                                 | Description                                                                                                                                                                                          |
 | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Updating an order](/openapi/order/#operation/PUT-order-update-order)            | This parameter allows for recalculation of all entries from the order. If set to `true`, the prices and coupons of the entries are recalculated. By default, the `recalculate` parameter is set to `false`. |
-| [Partially updating an order](/openapi/order/#operation/PATCH-order-partial-update-order) | This parameter allows for recalculation of all entries from the order. If set to `true`, the prices and coupons of the entries are recalculated. By default, the `recalculate` parameter is set to `false`. |
+| [Partially updating an order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid) | This parameter allows for recalculation of all entries from the order. If set to `true`, the prices and coupons of the entries are recalculated. By default, the `recalculate` parameter is set to `false`. |
 
 **Known problems**
 
@@ -193,9 +193,9 @@ For more detailed information, check out the API Reference documentation for the
 | Endpoint                                                                                             | Description                                                                                                                                                    |
 |------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [Retrieving all brands](/openapi/brand/#operation/GET-brand-list-brands)                                        | The response body contains two new fields `localizedName` and `localizedDescription`. Filtering is now supported using the `q` query parameter. |
-| [Adding a new brand](/openapi/brand/#operation/POST-brand-create-brand)                                          | The response body contains two new optional fields — `localizedName` and `localizedDescription`.                                                        |
+| [Adding a new brand](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/brand-service/api-reference/brands#post-brands)                                          | The response body contains two new optional fields — `localizedName` and `localizedDescription`.                                                        |
 | [Retrieving a brand](/openapi/brand/#operation/GET-brand-retrieve-brand)                                   | The response body contains two new fields `localizedName` and `localizedDescription`.                                                                |
-| [Updating a brand](/openapi/brand/#operation/PUT-brand-update-brand)                                     | The response body contains two new optional fields `localizedName` and `localizedDescription`.                                                        |
+| [Updating a brand](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/brand-service/api-reference/brands#put-brands-brandid)                                     | The response body contains two new optional fields `localizedName` and `localizedDescription`.                                                        |
 
 ---
 
@@ -233,11 +233,11 @@ No new endpoints have been introduced.
 
 | Endpoint                                                                                              | Description |
 |-------------------------------------------------------------------------------------------------------| --- |
-| [Creating a new product](/openapi/product/#operation/POST-product-create-product)                            | The request body schema contains two new fields `variantAttributes` and `parentVariantId`. |
-| [Retrieving a product's details](/openapi/product/#operation/GET-product-retrieve-product)           | The request body schema contains two new fields `variantAttributes` and `parentVariantId`. |
-| [Retrieving a list of products](/openapi/product/#operation/GET-product-list-products)                      | The request body schema contains two new fields `variantAttributes` and `parentVariantId`. |
-| [Upserting a product](/openapi/product/#operation/PUT-product-update-product)             | The request body schema contains one new field `variantAttributes`. |
-| [Partially updating a product's details](/openapi/product/#operation/PATCH-product-update-product) | The request body schema contains one new optional field `variantAttributes`. |
+| [Creating a new product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products)                            | The request body schema contains two new fields `variantAttributes` and `parentVariantId`. |
+| [Retrieving a product's details](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid)           | The request body schema contains two new fields `variantAttributes` and `parentVariantId`. |
+| [Retrieving a list of products](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products)                      | The request body schema contains two new fields `variantAttributes` and `parentVariantId`. |
+| [Upserting a product](/https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid)             | The request body schema contains one new field `variantAttributes`. |
+| [Partially updating a product's details](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) | The request body schema contains one new optional field `variantAttributes`. |
 
 ---
 
@@ -303,10 +303,10 @@ No new endpoints have been introduced.
 
 | Endpoint | Description |
 |---| --- |
-| [Creating a new product](/openapi/product/#operation/POST-product-create-product) | The request body schema contains a new optional field `relatedItems`. |
-| [Retrieving a product's details](/openapi/product/#operation/GET-product-retrieve-product) | The request body schema contains a new optional field `relatedItems`. |
-| [Retrieving a list of products](/openapi/product/#operation/GET-product-list-products) | The request body schema contains a new optional field `relatedItems`. |
-| [Upserting a product](/openapi/product/#operation/PUT-product-update-product) | The request body schema contains a new optional field `relatedItems`. |
+| [Creating a new product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products) | The request body schema contains a new optional field `relatedItems`. |
+| [Retrieving a product's details](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) | The request body schema contains a new optional field `relatedItems`. |
+| [Retrieving a list of products](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products) | The request body schema contains a new optional field `relatedItems`. |
+| [Upserting a product](/https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) | The request body schema contains a new optional field `relatedItems`. |
 
 ---
 
@@ -339,10 +339,10 @@ No new endpoints have been introduced.
 
 | Endpoint | Description |
 |---| --- |
-| [Creating a new product](/openapi/product/#operation/POST-product-create-product) | The request body schema contains two optional fields `productType` and `bundledProducts`. |
-| [Retrieving a product's details](/openapi/product/#operation/GET-product-retrieve-product) | The request body schema contains two optional fields `productType` and `bundledProducts`.  |
-| [Retrieving a list of products](/openapi/product/#operation/GET-product-list-products) | The request body schema contains two optional fields `productType` and `bundledProducts`. |
-| [Upserting a product](/openapi/product/#operation/PUT-product-update-product) | The request body schema contains one optional field `bundledProducts`. |
+| [Creating a new product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products) | The request body schema contains two optional fields `productType` and `bundledProducts`. |
+| [Retrieving a product's details](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) | The request body schema contains two optional fields `productType` and `bundledProducts`.  |
+| [Retrieving a list of products](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products) | The request body schema contains two optional fields `productType` and `bundledProducts`. |
+| [Upserting a product](/https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) | The request body schema contains one optional field `bundledProducts`. |
 
 ---
 
@@ -414,10 +414,10 @@ The product template functionality makes it possible to define a set of attribut
 
 | Endpoint                                                                                 | Description                                                                                                                                                                                                                                                                                                                                                                           |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Creating a new product](/openapi/product/#operation/POST-product-create-product) | The request body schema contains a new optional field called `template`. The `template` field consists of two fields: `id` and `version`.|
-| [Retrieving a product's details](/openapi/product/#operation/GET-product-retrieve-product) | The request body schema contains a new optional field called `template`. The `template` field consists of two fields: `id` and `version`.|
-| [Retrieving a list of products](/openapi/product/#operation/GET-product-list-products) | The request body schema contains a new optional field called `template`. The `template` field consists of two fields: `id` and `version`.|
-| [Upserting a product](/openapi/product/#operation/PUT-product-update-product) | The request body schema contains a new optional field called `template`. The `template` field consists of two fields: `id` and `version`.|
+| [Creating a new product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products) | The request body schema contains a new optional field called `template`. The `template` field consists of two fields: `id` and `version`.|
+| [Retrieving a product's details](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) | The request body schema contains a new optional field called `template`. The `template` field consists of two fields: `id` and `version`.|
+| [Retrieving a list of products](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products) | The request body schema contains a new optional field called `template`. The `template` field consists of two fields: `id` and `version`.|
+| [Upserting a product](/https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) | The request body schema contains a new optional field called `template`. The `template` field consists of two fields: `id` and `version`.|
 
 ---
 
@@ -450,10 +450,10 @@ No new endpoints have been introduced.
 
 | Endpoint                                                                                    | Description                                                                         |
 | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| [Creating a new product](/openapi/product/#operation/POST-product-create-product)                  | The request body schema contains a new optional field `relatedItems`. |
-| [Retrieving a product's details](/openapi/product/#operation/GET-product-retrieve-product) | The request body schema contains a new optional field `relatedItems`. |
-| [Retrieving a list of products](/openapi/product/#operation/GET-product-list-products)            | The request body schema contains a new optional field `relatedItems`. |
-| [Upserting a product](/openapi/product/#operation/PUT-product-update-product)   | The request body schema contains a new optional field `relatedItems`. |
+| [Creating a new product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products)                  | The request body schema contains a new optional field `relatedItems`. |
+| [Retrieving a product's details](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) | The request body schema contains a new optional field `relatedItems`. |
+| [Retrieving a list of products](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products)            | The request body schema contains a new optional field `relatedItems`. |
+| [Upserting a product](/https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid)   | The request body schema contains a new optional field `relatedItems`. |
 
 **Known problems**
 
@@ -501,8 +501,8 @@ The following changes have been introduced to the Emporix Product Service:
 
 | Endpoint | Description |
 | --- | --- |
-| [Creating a new product](/openapi/product/#operation/POST-product-create-product) | <ul> <li>Localized fields have been introduced.</li><li> The `Content-Language` header has been introduced. It can be set to one of the following values:</li><ul><li>`*` — localized fields should provided in the form of a map, where each key is a language code (compliant with the ISO 639-1 standard) and each value represents a translation in the specified language.</li><li>`en` — localized fields should be provided in the form of strings, where values represent translations in the specified language.</li> <li>` ` — when the value is empty or the header is not specified, localized fields should be provided in the form of strings, where values represent translations in the tenant's default language.</li> </ul></ul> |
-| [Upserting a product](/openapi/product/#operation/PUT-product-update-product) | <ul><li>In case of a successful product update, a `204` status code is now returned. Before the changes, the status code was `200`.</li><li>Optimistic locking has been introduced. The `metadata.version` field is required during update.</li></ul> |
+| [Creating a new product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products) | <ul> <li>Localized fields have been introduced.</li><li> The `Content-Language` header has been introduced. It can be set to one of the following values:</li><ul><li>`*` — localized fields should provided in the form of a map, where each key is a language code (compliant with the ISO 639-1 standard) and each value represents a translation in the specified language.</li><li>`en` — localized fields should be provided in the form of strings, where values represent translations in the specified language.</li> <li>` ` — when the value is empty or the header is not specified, localized fields should be provided in the form of strings, where values represent translations in the tenant's default language.</li> </ul></ul> |
+| [Upserting a product](/https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) | <ul><li>In case of a successful product update, a `204` status code is now returned. Before the changes, the status code was `200`.</li><li>Optimistic locking has been introduced. The `metadata.version` field is required during update.</li></ul> |
 | [Deleting a product](/openapi/product/#operation/DELETE-product-remove-product) | The `204` status code is now returned in two cases: <ul><li>A successful product removal.</li> <li>Removal of a product that does not exist.</li></ul> |
 
 ---
@@ -573,10 +573,10 @@ No new endpoints have been introduced.
 
 | Endpoint                                                                                    | Description                                                                                             |
 | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| [Creating a new product](/openapi/product/#operation/POST-product-create-product)                  | The request body schema contains two optional fields `productType` and `bundledProducts`. |
-| [Retrieving a product's details](/openapi/product/#operation/GET-product-retrieve-product) | The request body schema contains two optional fields `productType` and `bundledProducts`. |
-| [Retrieving a list of products](/openapi/product/#operation/GET-product-list-products)            | The request body schema contains two optional fields `productType` and `bundledProducts`. |
-| [Upserting a product](/openapi/product/#operation/PUT-product-update-product)   | The request body schema contains one optional field `bundledProducts`.                     |
+| [Creating a new product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products)                  | The request body schema contains two optional fields `productType` and `bundledProducts`. |
+| [Retrieving a product's details](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) | The request body schema contains two optional fields `productType` and `bundledProducts`. |
+| [Retrieving a list of products](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products)            | The request body schema contains two optional fields `productType` and `bundledProducts`. |
+| [Upserting a product](/https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid)   | The request body schema contains one optional field `bundledProducts`.                     |
 
 **Known problems**
 
@@ -612,10 +612,10 @@ The product template functionality makes it possible to define a set of attribut
 
 | Endpoint                                                                                 | Description                                                                                                                                                                                                                                                                                                                                                                           |
 | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Creating a new product](/openapi/product/#operation/POST-product-create-product) | The request body schema contains a new optional field called `template`. The `template` field consists of two fields: `id` and `version`.|
-| [Retrieving a product's details](/openapi/product/#operation/GET-product-retrieve-product) | The request body schema contains a new optional field called `template`. The `template` field consists of two fields: `id` and `version`.|
-| [Retrieving a list of products](/openapi/product/#operation/GET-product-list-products) | The request body schema contains a new optional field called `template`. The `template` field consists of two fields: `id` and `version`.|
-| [Upserting a product](/openapi/product/#operation/PUT-product-update-product) | The request body schema contains a new optional field called `template`. The `template` field consists of two fields: `id` and `version`.|
+| [Creating a new product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products) | The request body schema contains a new optional field called `template`. The `template` field consists of two fields: `id` and `version`.|
+| [Retrieving a product's details](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) | The request body schema contains a new optional field called `template`. The `template` field consists of two fields: `id` and `version`.|
+| [Retrieving a list of products](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products) | The request body schema contains a new optional field called `template`. The `template` field consists of two fields: `id` and `version`.|
+| [Upserting a product](/https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) | The request body schema contains a new optional field called `template`. The `template` field consists of two fields: `id` and `version`.|
 
 
 **Known problems**

@@ -23,8 +23,8 @@ All deprecations will be removed on 2025-10-01. From now, use the new [referral 
 
 | Endpoint                                                                                                                      | Description                                                                                   |
 |-------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
-| [Retrieving customer's referral coupon code](/openapi/coupon/#operation/GET-coupon-retrieve-referral-coupon)                  | Endpoint will be removed and moved under <code>/coupon/{tenant}/referral-coupons/{customerNumber}</code>. |
-| [Creating a referral coupon code for a specific customer](/openapi/coupon/#operation/POST-coupon-create-referral-coupon-code) | Endpoint will be removed and moved under <code>/coupon/{tenant}/referral-coupons/{customerNumber}</code>. |
+| [Retrieving customer's referral coupon code](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/referral-coupon-management)                  | Endpoint will be removed and moved under <code>/coupon/{tenant}/referral-coupons/{customerNumber}</code>. |
+| [Creating a referral coupon code for a specific customer](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/referral-coupon-management#post-coupon-tenant-referral-coupons-customernumber) | Endpoint will be removed and moved under <code>/coupon/{tenant}/referral-coupons/{customerNumber}</code>. |
 
 
 ## Known problems

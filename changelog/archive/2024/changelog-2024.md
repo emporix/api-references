@@ -159,7 +159,7 @@ The q-param accepts string values both with and without quotes, while number val
 
 | Endpoint                                                                                   | Description                                                                                                       |
 | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
-| [Retrieving orders](/openapi/order/#operation/GET-order-retrieve-tenant-orders)            | Q-param accepts `string` values both with and without quotes. `Number` values should be provided without quotes.  |
+| [Retrieving orders](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders)            | Q-param accepts `string` values both with and without quotes. `Number` values should be provided without quotes.  |
 | [Retrieving a list of orders](/openapi/order/#operation/GET-order-list-orders)             | Q-param accepts `string` values both with and without quotes. `Number` values should be provided without quotes.  |
 
 **Known problems**
@@ -236,11 +236,11 @@ The scopes `product.product_update`, `product.product_create` and `product.produ
 
 | Endpoint                                                                                           | Description                                                                  |
 | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [Creating a new product](/openapi/product/#operation/POST-product-create-product)                  | The endpoint requires a new `product.product_manage` scope, as the `product.product_create` scope is deprecated.|
-| [Creating multiple products](/openapi/product/#operation/POST-product-create-bulk-products)        | The endpoint requires a new `product.product_manage` scope, as the `product.product_create` scope is deprecated.|
-| [Upserting a product](/openapi/product/#operation/PUT-product-update-product)                      | The endpoint requires a new `product.product_manage` scope, as the `product.product_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing product id creates a new product with the given id.|
-| [Upserting multiple products](/openapi/product/#operation/PUT-product-update-bulk-products)        | The endpoint requires a new `product.product_manage` scope, as the `product.product_update` scope is deprecated.  Sending a request to the upsert endpoint with a non-existing product id creates a new product with the given id.|
-| [Partially updating a product](/openapi/product/#operation/PATCH-product-update-product)           | The endpoint requires a new `product.product_manage` scope, as the `product.product_update` scope is deprecated.|
+| [Creating a new product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products)                  | The endpoint requires a new `product.product_manage` scope, as the `product.product_create` scope is deprecated.|
+| [Creating multiple products](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk)        | The endpoint requires a new `product.product_manage` scope, as the `product.product_create` scope is deprecated.|
+| [Upserting a product](/https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid)                      | The endpoint requires a new `product.product_manage` scope, as the `product.product_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing product id creates a new product with the given id.|
+| [Upserting multiple products](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk)        | The endpoint requires a new `product.product_manage` scope, as the `product.product_update` scope is deprecated.  Sending a request to the upsert endpoint with a non-existing product id creates a new product with the given id.|
+| [Partially updating a product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid)           | The endpoint requires a new `product.product_manage` scope, as the `product.product_update` scope is deprecated.|
 | [Deleting a product](/openapi/product/#operation/DELETE-product-remove-product)                    | The endpoint requires a new `product.product_manage` scope, as the `product.product_delete` scope is deprecated.|
 
 
@@ -289,11 +289,11 @@ Fields `segmentRestricted` and `restrictions.segments` were added to coupon's mo
 
 | Endpoint                                                                                                        | Description                                                                         |
 | -------------------------------------------------------------------------------------------------------------   | ----------------------------------------------------------------------------------  |
-| [Creating a new coupon](/openapi/coupon/#operation/POST-coupon-create-coupon)                                   | The request body has new fields - `segmentRestricted` and `restrictions.segments`.  |
-| [Updating the coupon by code](/openapi/coupon/#operation/PUT-coupon-update-coupon)                              | The request body has new fields - `segmentRestricted` and `restrictions.segments`.  |
-| [Partially updating the coupon by code](/openapi/coupon/#operation/PATCH-coupon-update-coupon)                  | The request body has new fields - `segmentRestricted` and `restrictions.segments`.  |
-| [Retrieving information about particular coupon by code](/openapi/coupon/#operation/GET-coupon-retrieve-coupon) | The response body has new fields - `segmentRestricted` and `restrictions.segments`. |
-| [Retrieving list of coupons by criteria](/openapi/coupon/#operation/GET-coupon-list-specified-coupons)          | The response body has new fields - `segmentRestricted` and `restrictions.segments`. |
+| [Creating a new coupon](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#post-coupon-tenant-coupons)                                   | The request body has new fields - `segmentRestricted` and `restrictions.segments`.  |
+| [Updating the coupon by code](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#put-coupon-tenant-coupons-code)                              | The request body has new fields - `segmentRestricted` and `restrictions.segments`.  |
+| [Partially updating the coupon by code](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#patch-coupon-tenant-coupons-code)                  | The request body has new fields - `segmentRestricted` and `restrictions.segments`.  |
+| [Retrieving information about particular coupon by code](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#get-coupon-tenant-coupons-code) | The response body has new fields - `segmentRestricted` and `restrictions.segments`. |
+| [Retrieving list of coupons by criteria](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management          | The response body has new fields - `segmentRestricted` and `restrictions.segments`. |
 
 **Known problems**
 
@@ -316,10 +316,10 @@ The request and response bodies of endpoints for redeeming coupons were extended
 
 | Endpoint                                                                                                      | Description                                          |
 | ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
-| [Validating redeemability of a coupon](/openapi/coupon/#operation/POST-coupon-validate-coupon)                | The request body has a new field - `legalEntityId`.  |
-| [Redeeming the coupon by creating a redemption](/openapi/coupon/#operation/POST-coupon-invalidate-coupon)     | The request body has a new field - `legalEntityId`.  |
-| [Retrieving a coupon redemption](/openapi/coupon/#operation/GET-coupon-retrieve-coupon-redemption)            | The response body has a new field - `legalEntityId`. |
-| [Retrieving a list of redemptions by criteria](/openapi/coupon/#operation/GET-coupon-list-coupon-redemptions) | The response body has a new field - `legalEntityId`. |
+| [Validating redeemability of a coupon](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-validation)                | The request body has a new field - `legalEntityId`.  |
+| [Redeeming the coupon by creating a redemption](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-redemption#post-coupon-tenant-coupons-code-redemptions)     | The request body has a new field - `legalEntityId`.  |
+| [Retrieving a coupon redemption](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#get-coupon-tenant-coupons-code-redemption)            | The response body has a new field - `legalEntityId`. |
+| [Retrieving a list of redemptions by criteria](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-redemption) | The response body has a new field - `legalEntityId`. |
 
 
 
@@ -828,11 +828,11 @@ The discount model was expanded with a new field to include the coupon `discount
 
 | Endpoint                                                                                   | Description                                    |
 | ------------------------------------------------------------------------------------------ | ---------------------------------------------- |
-| [Retrieving all orders](/openapi/order/#operation/GET-order-retrieve-tenant-orders)                  | The `discount.discountCalculationType` field added. |
+| [Retrieving all orders](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders)                  | The `discount.discountCalculationType` field added. |
 | [Creating an order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)                     | The `discount.discountCalculationType` field added. |
 | [Retrieving an order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid)            | The `discount.discountCalculationType` field added. |
 | [Updating an order](/openapi/order/#operation/PUT-order-update-order)              | The `discount.discountCalculationType` field added. |
-| [Partially updating an order](/openapi/order/#operation/PATCH-order-partial-update-order)  | The `discount.discountCalculationType` field added. |
+| [Partially updating an order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid)  | The `discount.discountCalculationType` field added. |
 
 
 **Known problems**
@@ -884,11 +884,11 @@ The coupon model was expanded with a `discountCalculationType` field, which dete
 
 | Endpoint                                                                            | Description                           |
 | ----------------------------------------------------------------------------------- | ------------------------------------- |
-| [Retrieving all coupons](/openapi/coupon/#operation/GET-coupon-list-specified-coupons)             | The `discountCalculationType` field added. |
-| [Creating a coupon](/openapi/coupon/#operation/POST-coupon-create-coupon)                 | The `discountCalculationType` field added. |
-| [Retrieving a coupon](/openapi/coupon/#operation/GET-coupon-retrieve-coupon)           | The `discountCalculationType` field added. |
-| [Updating a coupon](/openapi/coupon/#operation/PUT-coupon-update-coupon)             | The `discountCalculationType` field added. |
-| [Partially updating a coupon](/openapi/coupon/#operation/PATCH-coupon-update-coupon) | The `discountCalculationType` field added. |
+| [Retrieving all coupons](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management             | The `discountCalculationType` field added. |
+| [Creating a coupon](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#post-coupon-tenant-coupons)                 | The `discountCalculationType` field added. |
+| [Retrieving a coupon](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#get-coupon-tenant-coupons-code)           | The `discountCalculationType` field added. |
+| [Updating a coupon](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#put-coupon-tenant-coupons-code)             | The `discountCalculationType` field added. |
+| [Partially updating a coupon](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#patch-coupon-tenant-coupons-code) | The `discountCalculationType` field added. |
 
 **Known problems**
 
@@ -933,11 +933,11 @@ New fields `feeYrnAggregate` and `fees` were introduced. The `feeYrnAggregate` f
 
 | Endpoint                                                                                      | Description                                                           |
 |-----------------------------------------------------------------------------------------------| --------------------------------------------------------------------- |
-| [Retrieving orders](/openapi/order/#operation/GET-order-retrieve-tenant-orders)                         | The response body schema contains `feeYrnAggregate` and `fees` fields.|
+| [Retrieving orders](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders)                         | The response body schema contains `feeYrnAggregate` and `fees` fields.|
 | [Creating a new order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)                     | The request body schema contains `feeYrnAggregate` and `fees` fields. |
 | [Retrieving a specific order by ID](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) | The response body schema contains `feeYrnAggregate` and `fees` fields.|
 | [Updating an order](/openapi/order/#operation/PUT-order-update-orde)                 | The request body schema contains `feeYrnAggregate` and `fees` fields. |
-| [Partially updating an order](/openapi/order/#operation/PATCH-order-partial-update-order)     | The request body schema contains `feeYrnAggregate` and `fees` fields. |
+| [Partially updating an order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid)     | The request body schema contains `feeYrnAggregate` and `fees` fields. |
 | [Retrieving a list of orders](/openapi/order/#operation/GET-order-list-orders)                    | The response body schema contains `feeYrnAggregate` and `fees` fields.|
 | [Creating a new order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders)                          | The request body schema contains `feeYrnAggregate` and `fees` fields. |
 | [Retrieving order details](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid)               | The response body schema contains `feeYrnAggregate` and `fees` fields.|
@@ -965,9 +965,9 @@ New field `externalFees` was added to the cart item model. This change allows to
 |---------------------------------------------------------------------------------------------------| --------------------------------------------------------------------------- |
 | [Retrieving a cart's details by criteria](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts)              | The response body schema of `items` field contains new field `externalFees`.|
 | [Retrieving a cart's details by ID](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid)             | The response body schema of `items` field contains new field `externalFees`.|
-| [Adding multiple products to cart](/openapi/cart/#operation/POST-cart-add-multiple-items-to-cart)  | The request body schema contains new field `externalFees`.                  |
-| [Retrieving all products added to a cart](/openapi/cart/#operation/POST-cart-add-item-to-cart) | The response body schema contains new field `externalFees`.                 |
-| [Adding a product to cart](/openapi/cart/#operation/POST-cart-add-item-to-cart)               | The request body schema contains new field `externalFees`.                  |
+| [Adding multiple products to cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-itemsbatch)  | The request body schema contains new field `externalFees`.                  |
+| [Retrieving all products added to a cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) | The response body schema contains new field `externalFees`.                 |
+| [Adding a product to cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items)               | The request body schema contains new field `externalFees`.                  |
 | [Retrieving a cart item](/openapi/cart/#operation/GET-cart-retrieve-item-details)           | The response body schema contains new field `externalFees`.                 |
 | [Updating a cart item](/openapi/cart/#operation/PUT-cart-update-item-details)             | The request body schema contains new field `externalFees`.                  |
 
@@ -1059,13 +1059,13 @@ New fields `brandId` and `labelIds` were added to the product model. Use these f
 
 | Endpoint                                                                                              | Description                                                                |
 |-------------------------------------------------------------------------------------------------------| -------------------------------------------------------------------------- |
-| [Creating a new product](/openapi/product/#operation/POST-product-create-product)                            | The request body schema contains two new fields `brandId` and `labelIds`.  |
-| [Retrieving a product's details](/openapi/product/#operation/GET-product-retrieve-product)           | The response body schema contains two new fields `brandId` and `labelIds`. |
-| [Retrieving a list of products](/openapi/product/#operation/GET-product-list-products)                      | The response body schema contains two new fields `brandId` and `labelIds`. |
-| [Upserting a product](/openapi/product/#operation/PUT-product-update-product)             | The request body schema contains two new fields `brandId` and `labelIds`.  |
-| [Partially updating a product's details](/openapi/product/#operation/PATCH-product-update-product) | The request body schema contains two new fields `brandId` and `labelIds`.  |
-| [Creating multiple products](/openapi/product/#operation/POST-product-create-bulk-products)                   | The request body schema contains two new fields `brandId` and `labelIds`.  |
-| [Upserting multiple products](/openapi/product/#operation/PUT-product-update-bulk-products)                     | The request body schema contains two new fields `brandId` and `labelIds`.  |
+| [Creating a new product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products)                            | The request body schema contains two new fields `brandId` and `labelIds`.  |
+| [Retrieving a product's details](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid)           | The response body schema contains two new fields `brandId` and `labelIds`. |
+| [Retrieving a list of products](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products)                      | The response body schema contains two new fields `brandId` and `labelIds`. |
+| [Upserting a product](/https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid)             | The request body schema contains two new fields `brandId` and `labelIds`.  |
+| [Partially updating a product's details](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) | The request body schema contains two new fields `brandId` and `labelIds`.  |
+| [Creating multiple products](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk)                   | The request body schema contains two new fields `brandId` and `labelIds`.  |
+| [Upserting multiple products](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk)                     | The request body schema contains two new fields `brandId` and `labelIds`.  |
 
 **Known problems**
 
@@ -1136,8 +1136,8 @@ To handle external prices, the request payload now includes the `itemType` and `
 
 | Endpoint                                                                                      | Description                           |
 | --------------------------------------------------------------------------------------------- | ------------------------------------- |
-| [Adding item to cart](/openapi/cart/#operation/POST-cart-add-item-to-cart)                | The request includes the `itemType` and `tax` properties. |
-| [Adding item to cart in batch](/openapi/cart/#operation/POST-cart-add-multiple-items-to-cart)  | The request includes the `itemType` and `tax` properties. |
+| [Adding item to cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items)                | The request includes the `itemType` and `tax` properties. |
+| [Adding item to cart in batch](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-itemsbatch)  | The request includes the `itemType` and `tax` properties. |
 | [Updating item in cart](/openapi/cart/#operation/PUT-cart-update-item-details)        | The request includes the `itemType` and `tax` properties. |
 
 **Known problems**
@@ -1298,10 +1298,10 @@ Shopping List Service from now on supports the mixins feature. Two new propertie
 
 | Endpoint                                                                                              | Description                                             |
 | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| [Fetching all shopping lists](/openapi/shopping-list/#operation/GET-shopping-list-retrieve-shopping-list)             | We added the `mixins` and `metadata.mixins` properties. |
+| [Fetching all shopping lists](https://emporix.gitbook.io/documentation-portal/api-references/checkout/shopping-list/api-reference/shopping-lists)             | We added the `mixins` and `metadata.mixins` properties. |
 | [Creating a shopping list](/openapi/shopping-list/#operation/POST-shopping-list-create-shopping-list)               | We added the `mixins` and `metadata.mixins` properties. |
-| [Updating a shopping list](/openapi/shopping-list/#operation/PUT-shopping-list-update-customer-shopping-list)     | We added the `mixins` and `metadata.mixins` properties. |
-| [Fetching a shopping list](/openapi/shopping-list/#operation/GET-shopping-list-retrieve-customer-shopping-list)    | We added the `mixins` and `metadata.mixins` properties. |
+| [Updating a shopping list](https://emporix.gitbook.io/documentation-portal/api-references/checkout/shopping-list/api-reference/shopping-lists#put-shoppinglist-tenant-shopping-lists-customerid)     | We added the `mixins` and `metadata.mixins` properties. |
+| [Fetching a shopping list](https://emporix.gitbook.io/documentation-portal/api-references/checkout/shopping-list/api-reference/shopping-lists#get-shoppinglist-tenant-shopping-lists-customerid)    | We added the `mixins` and `metadata.mixins` properties. |
 
 
 **Known problems**
@@ -1705,7 +1705,7 @@ A new system preference `enableCouponCodeCaseSensitivity` is available. It allow
 
 | Endpoint                                                                  | Description                                                     |
 | ------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| [Creating a new coupon](/openapi/coupon/#operation/POST-coupon-create-coupon)     | You can save the `code` property in both upper and lower case.  |
+| [Creating a new coupon](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#post-coupon-tenant-coupons)     | You can save the `code` property in both upper and lower case.  |
 
 **Known problems**
 
@@ -1853,8 +1853,8 @@ Property `price.currency` for a cart item can be set as optional. There are new 
 
 | Endpoint                                                                                          | Description                                                                                      |
 | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| [Adding multiple products to cart](/openapi/cart/#operation/POST-cart-add-multiple-items-to-cart)  | Property `price.currency` can be optional. Validation is configurable by the system preferences. |
-| [Adding a product to cart](/openapi/cart/#operation/POST-cart-add-item-to-cart)               | Property `price.currency` can be optional. Validation is configurable by the system preferences. |
+| [Adding multiple products to cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-itemsbatch)  | Property `price.currency` can be optional. Validation is configurable by the system preferences. |
+| [Adding a product to cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items)               | Property `price.currency` can be optional. Validation is configurable by the system preferences. |
 | [Updating a cart item](/openapi/cart/#operation/PUT-cart-update-item-details)             | Property `price.currency` can be optional. Validation is configurable by the system preferences. |
 
 **Known problems**

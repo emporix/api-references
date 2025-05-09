@@ -22,9 +22,9 @@ The `metadata` field at root level is now deprecated in GET responses, as each s
 
 | Endpoint                                                                                                                     | Description                                                                                 |
 |------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
-| [Retrieving a shopping list](/openapi/shopping-list/#operation/GET-shopping-list-retrieve-shopping-list)                     | Deprecated `metadata` field on root level and added `metadata` field to each shopping list. |
-| [Retrieving a customer shopping list](/openapi/shopping-list/#operation/GET-shopping-list-retrieve-customer-shopping-list)   | Deprecated `metadata` field on root level and added `metadata` field to each shopping list. |
-| [Updating a customer shopping list](/openapi/shopping-list/#operation/PUT-shopping-list-update-customer-shopping-list)       | Added `metadata.version` to request payload which allows for version validation             |
+| [Retrieving a shopping list](https://emporix.gitbook.io/documentation-portal/api-references/checkout/shopping-list/api-reference/shopping-lists)                     | Deprecated `metadata` field on root level and added `metadata` field to each shopping list. |
+| [Retrieving a customer shopping list](https://emporix.gitbook.io/documentation-portal/api-references/checkout/shopping-list/api-reference/shopping-lists#get-shoppinglist-tenant-shopping-lists-customerid)   | Deprecated `metadata` field on root level and added `metadata` field to each shopping list. |
+| [Updating a customer shopping list](https://emporix.gitbook.io/documentation-portal/api-references/checkout/shopping-list/api-reference/shopping-lists#put-shoppinglist-tenant-shopping-lists-customerid)       | Added `metadata.version` to request payload which allows for version validation             |
 
 ## Known problems
 
