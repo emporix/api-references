@@ -10,28 +10,10 @@ seo:
 ## How to add a label to a product
 
 To label a product with a specific information, follow these steps:
-1. Add a label image
-2. Create a label
+
+1. Create a label
+2. Add a label image
 3. Update a product with the label information
-
-### Add a label image
-
-Firstly, create and add an image for a new label. Design the image and upload it to your media repository. Send a request to the [Creating an asset](https://emporix.gitbook.io/documentation-portal/api-references/media/media/api-reference/assets#post-media-tenant-assets) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../media/media/api-reference/" %}
-[api-reference](../../media/media/api-reference/)
-{% endcontent-ref %}
-
-```bash
-curl -i -X POST \
-  'https://api.emporix.io/media/{tenant}/assets' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: multipart/form-data' \
-  -F 'file=[object Object]' \
-  -F 'body=[object Object]'
-```
 
 ### Create a label
 
@@ -62,6 +44,42 @@ curl -i -X POST \
 ```
 
 Copy the label id from the response to provide it in the next step.
+
+### Add a label image
+
+Firstly, create and add an image for a new label. Design the image and upload it to your media repository. Send a request to the [Creating an asset](https://emporix.gitbook.io/documentation-portal/api-references/media/media/api-reference/assets#post-media-tenant-assets) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../media/media/api-reference/" %}
+[api-reference](../../media/media/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/media/{tenant}/assets' \
+  --header 'Content-Type: multipart/form-data' \
+  --data '{
+    "file": {
+      "externalValue": "https://res.cloudinary.com/saas-ag/image/upload/v1695804155/emporix-logo-white-2f5e621206edefea6015fb4793959376_nswfbz.png"
+    },
+    "body": {
+      "type": "BLOB",
+      "access": "PUBLIC",
+      "refIds": [
+        {
+          "id": "66fe65e83132e30001e6be29",
+          "type": "LABEL"
+        }
+      ],
+      "details": {
+        "filename": "theBestImage",
+        "mimeType": "image/jpg"
+      }
+    }
+  }'
+```
 
 ### Update a product with a new label
 
