@@ -29,8 +29,8 @@ The media assets functionality makes it possible to manage public and private as
 
 | Endpoint                                                               | Description                      |
 | ---------------------------------------------------------------------- | -------------------------------- |
-| [Creating a new asset](/openapi/media/#operation/POST-media-create-asset)         | It creates a new media asset.       |
-| [Updating an existing asset](/openapi/media/#operation/PUT-media-update-asset)        | It updates an existing media asset. |
+| [Creating a new asset](https://emporix.gitbook.io/documentation-portal/api-references/media/media/api-reference/assets)         | It creates a new media asset.       |
+| [Updating an existing asset](https://emporix.gitbook.io/documentation-portal/api-references/media/media/api-reference/assets#put-media-tenant-assets-assetid)        | It updates an existing media asset. |
 | [Deleting an existing asset](/openapi/media/#operation/DELETE-media-remove-asset)     | It deletes an existing media asset. |
 | [Getting list of asset entities](/openapi/media/#operation/GET-media-list-assets) | It gets a list of media assets.     |
 | [Getting single asset entity](/openapi/media/#operation/GET-media-retrieve-asset)         | It gets a single media asset.       |
@@ -377,9 +377,9 @@ No new endpoints have been introduced.
 
 | Endpoint                                                                                                 | Description                                                                                                                                   |
 | -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Retrieving details about an order (by a customer)](/openapi/order/#operation/GET-order-retrieve-order-storefront) | The response body schema of the `order.entries.product` model contains two optional fields `productType` and `bundledProducts`. |
+| [Retrieving details about an order (by a customer)](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid) | The response body schema of the `order.entries.product` model contains two optional fields `productType` and `bundledProducts`. |
 | [Retrieving a list of orders (for customer)](/openapi/order/#operation/GET-order-list-orders)                | The response body schema of the `order.entries.product` model contains two optional fields `productType` and `bundledProducts`. |
-| [Creating new order (by a merchant)](/openapi/order/#operation/POST-order-create-order-employee)                  | The request body schema of the `order.entries.product` model contains two optional fields `productType` and `bundledProducts`.  |
+| [Creating new order (by a merchant)](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)                  | The request body schema of the `order.entries.product` model contains two optional fields `productType` and `bundledProducts`.  |
 | [Updating order (by a merchant)](/openapi/order/#operation/PUT-order-update-order)               | The request body schema of the `order.entries.product` model contains two optional fields `productType` and `bundledProducts`.  |
 
 ---

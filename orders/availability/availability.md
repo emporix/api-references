@@ -115,6 +115,7 @@ To find out what the stock level of a product bundle is, you need to send a requ
 {% content-ref url="../availability/api-reference/" %}
 [api-reference](../availability/api-reference/)
 {% endcontent-ref %}
+
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/availability/{tenant}/availability/{productId}/{site}' \

@@ -58,8 +58,8 @@ The request and response bodies of endpoints for managing carts were extended wi
 | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------- |
 | [Creating a new cart](/openapi/cart/#operation/POST-cart-create-cart)                                  | The request body has a new field - `legalEntityId`.  |
 | [Updating a cart](/openapi/cart/#operation/PUT-cart-update-cart)                                       | The request body has a new field - `legalEntityId`.  |
-| [Retrieving a cart's details by criteria](/openapi/cart/#operation/GET-cart-retrieve-cart-by-criteria) | The response body has a new field - `legalEntityId`. |
-| [Retrieving a cart's details by ID](/openapi/cart/#operation/GET-cart-retrieve-cart-by-cartId)         | The response body has a new field - `legalEntityId`. |
+| [Retrieving a cart's details by criteria](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts) | The response body has a new field - `legalEntityId`. |
+| [Retrieving a cart's details by ID](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid)         | The response body has a new field - `legalEntityId`. |
 
 
 
@@ -88,7 +88,7 @@ We added new API for retrieving items assignments and category trees of category
 
 | Endpoint                                                                                                                                      | Description                                                   |
 | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| [Retrieving category trees for a customer segments](/openapi/customer-segment/#operation/GET-customer-segment-retrieve-category-trees)        | It retrieves category trees for the customer segments.        |
+| [Retrieving category trees for a customer segments](https://emporix.gitbook.io/documentation-portal/api-references/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items-category-trees)        | It retrieves category trees for the customer segments.        |
 | [Retrieving all items assignments for a customer segments](/openapi/customer-segment/#operation/GET-customer-segment-retrieve-segments-items) | It retrieves all items assignments for the customer segments. |
 
 **Known problems**
@@ -183,7 +183,7 @@ The Availability Service supports `UPSERT` operation. The `PUT` method updates t
 
 | Endpoint                                                                                                            | Description                                                                  |
 | ------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [Upserting availability information of a product](/openapi/availability/#operation/PUT-availability-update-product) | Sending a request to the upsert endpoint with a non-existing product availability creates a new availability for the given product and site.|
+| [Upserting availability information of a product](https://emporix.gitbook.io/documentation-portal/api-references/orders/availability/api-reference/availabilities#put-availability-tenant-availability-productid-site) | Sending a request to the upsert endpoint with a non-existing product availability creates a new availability for the given product and site.|
 
 
 **Known problems**
@@ -344,9 +344,9 @@ Fields `legalEntities` and `businessModel` were added to customer's model. The n
 
 | Endpoint                                                                                                            | Description                                                                |
 | ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| [Retrieving a customer's own profile](/openapi/customer-customer/#operation/GET-customer-retrieve-customer-profile) | The response has two new fields - `b2b.legalEntities` and `businessModel`. |
-| [Retrieving a customer's profile](/openapi/customer-tenant/#operation/GET-customer-tenant-retrieve-customer)        | The response has two new fields - `b2b.legalEntities` and `businessModel`. |
-| [Retrieving a list of customers](/openapi/customer-tenant/#operation/GET-customer-tenant-list-customers)            | The response has two new fields - `b2b.legalEntities` and `businessModel`. |
+| [Retrieving a customer's own profile](https://emporix.gitbook.io/documentation-portal/api-references/companies-and-customers/customer-management/account-and-profile) | The response has two new fields - `b2b.legalEntities` and `businessModel`. |
+| [Retrieving a customer's profile](https://emporix.gitbook.io/documentation-portal/api-references/companies-and-customers/customer-service/api-reference/account-and-profile#get-customer-tenant-customers-customernumber)        | The response has two new fields - `b2b.legalEntities` and `businessModel`. |
+| [Retrieving a list of customers](https://emporix.gitbook.io/documentation-portal/api-references/companies-and-customers/customer-service/api-reference/account-and-profile#get-customer-tenant-customers)            | The response has two new fields - `b2b.legalEntities` and `businessModel`. |
 
 
 **Known problems**
@@ -829,8 +829,8 @@ The discount model was expanded with a new field to include the coupon `discount
 | Endpoint                                                                                   | Description                                    |
 | ------------------------------------------------------------------------------------------ | ---------------------------------------------- |
 | [Retrieving all orders](/openapi/order/#operation/GET-order-retrieve-tenant-orders)                  | The `discount.discountCalculationType` field added. |
-| [Creating an order](/openapi/order/#operation/POST-order-create-order-employee)                     | The `discount.discountCalculationType` field added. |
-| [Retrieving an order](/openapi/order/#operation/GET-order-retrieve-order-employee)            | The `discount.discountCalculationType` field added. |
+| [Creating an order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)                     | The `discount.discountCalculationType` field added. |
+| [Retrieving an order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid)            | The `discount.discountCalculationType` field added. |
 | [Updating an order](/openapi/order/#operation/PUT-order-update-order)              | The `discount.discountCalculationType` field added. |
 | [Partially updating an order](/openapi/order/#operation/PATCH-order-partial-update-order)  | The `discount.discountCalculationType` field added. |
 
@@ -857,9 +857,9 @@ Also `total` object was expanded with `discount` property, which holds discount 
 
 | Endpoint                                                                                | Description                                                          |
 | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| [Retrieving all carts](/openapi/cart/#operation/GET-cart-retrieve-cart-by-criteria)                       | The `discount.discountCalculationType` and `total.discount` fields added. |
-| [Retrieving a cart](/openapi/cart/#operation/GET-cart-retrieve-cart-by-cartId)                   | The `discount.discountCalculationType` and `total.discount` fields added. |
-| [Applying a discount](/openapi/cart/#operation/POST-cart-apply-discount)      | The `discountCalculationType` field added.                                |
+| [Retrieving all carts](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts)                       | The `discount.discountCalculationType` and `total.discount` fields added. |
+| [Retrieving a cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid)                   | The `discount.discountCalculationType` and `total.discount` fields added. |
+| [Applying a discount](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/discounts#post-cart-tenant-carts-cartid-discounts)      | The `discountCalculationType` field added.                                |
 | [Retrieving all discounts](/openapi/cart/#operation/GET-cart-list-all-discounts)  | The `discountCalculationType` field added.                              |
 
 
@@ -934,13 +934,13 @@ New fields `feeYrnAggregate` and `fees` were introduced. The `feeYrnAggregate` f
 | Endpoint                                                                                      | Description                                                           |
 |-----------------------------------------------------------------------------------------------| --------------------------------------------------------------------- |
 | [Retrieving orders](/openapi/order/#operation/GET-order-retrieve-tenant-orders)                         | The response body schema contains `feeYrnAggregate` and `fees` fields.|
-| [Creating a new order](/openapi/order/#operation/POST-order-create-order-employee)                     | The request body schema contains `feeYrnAggregate` and `fees` fields. |
-| [Retrieving a specific order by ID](/openapi/order/#operation/GET-order-retrieve-order-employee) | The response body schema contains `feeYrnAggregate` and `fees` fields.|
+| [Creating a new order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)                     | The request body schema contains `feeYrnAggregate` and `fees` fields. |
+| [Retrieving a specific order by ID](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) | The response body schema contains `feeYrnAggregate` and `fees` fields.|
 | [Updating an order](/openapi/order/#operation/PUT-order-update-orde)                 | The request body schema contains `feeYrnAggregate` and `fees` fields. |
 | [Partially updating an order](/openapi/order/#operation/PATCH-order-partial-update-order)     | The request body schema contains `feeYrnAggregate` and `fees` fields. |
 | [Retrieving a list of orders](/openapi/order/#operation/GET-order-list-orders)                    | The response body schema contains `feeYrnAggregate` and `fees` fields.|
-| [Creating a new order](/openapi/order/#operation/POST-order-create-order)                          | The request body schema contains `feeYrnAggregate` and `fees` fields. |
-| [Retrieving order details](/openapi/order/#operation/GET-order-retrieve-order-storefront)               | The response body schema contains `feeYrnAggregate` and `fees` fields.|
+| [Creating a new order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders)                          | The request body schema contains `feeYrnAggregate` and `fees` fields. |
+| [Retrieving order details](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid)               | The response body schema contains `feeYrnAggregate` and `fees` fields.|
 
 **Known problems**
 
@@ -963,8 +963,8 @@ New field `externalFees` was added to the cart item model. This change allows to
 
 | Endpoint                                                                                          | Description                                                                 |
 |---------------------------------------------------------------------------------------------------| --------------------------------------------------------------------------- |
-| [Retrieving a cart's details by criteria](/openapi/cart/#operation/GET-cart-retrieve-cart-by-criteria)              | The response body schema of `items` field contains new field `externalFees`.|
-| [Retrieving a cart's details by ID](/openapi/cart/#operation/GET-cart-retrieve-cart-by-cartId)             | The response body schema of `items` field contains new field `externalFees`.|
+| [Retrieving a cart's details by criteria](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts)              | The response body schema of `items` field contains new field `externalFees`.|
+| [Retrieving a cart's details by ID](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid)             | The response body schema of `items` field contains new field `externalFees`.|
 | [Adding multiple products to cart](/openapi/cart/#operation/POST-cart-add-multiple-items-to-cart)  | The request body schema contains new field `externalFees`.                  |
 | [Retrieving all products added to a cart](/openapi/cart/#operation/POST-cart-add-item-to-cart) | The response body schema contains new field `externalFees`.                 |
 | [Adding a product to cart](/openapi/cart/#operation/POST-cart-add-item-to-cart)               | The request body schema contains new field `externalFees`.                  |
@@ -1631,8 +1631,8 @@ Responses from endpoints for retrieving cart details were enriched with the `cou
 
 | Endpoint                                                          | Description                                      |
 | ----------------------------------------------------------------- | ------------------------------------------------ |
-| [Getting Carts](/openapi/cart/#operation/GET-cart-retrieve-cart-by-criteria)        | Response contains the `couponDiscounts` field.   |
-| [Getting Cart](/openapi/cart/#operation/GET-cart-retrieve-cart-by-cartId)  | Response contains the `couponDiscounts` field.   |
+| [Getting Carts](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts)        | Response contains the `couponDiscounts` field.   |
+| [Getting Cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid)  | Response contains the `couponDiscounts` field.   |
 
 **Known problems**
 
@@ -1911,11 +1911,11 @@ Availability Service from now on supports the mixins feature. Two new properties
 
 | Endpoint                                                                                                 | Description                                     |
 | -------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| [Retrieving all availabilities for a site](/openapi/availability/#operation/GET-availability-retrieve-availability-site)       | We added the `mixins` and `metadata.mixins` properties. |
+| [Retrieving all availabilities for a site](https://emporix.gitbook.io/documentation-portal/api-references/orders/availability/api-reference/availabilities#get-availability-tenant-availability-site-site)       | We added the `mixins` and `metadata.mixins` properties. |
 | [Retrieving an availability](https://emporix.gitbook.io/documentation-portal/api-references/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search)           | We added the `mixins` and `metadata.mixins` properties. |
-| [Creating an availability](/openapi/availability/#operation/POST-availability-add-product)            | We added the `mixins` and `metadata.mixins` properties. |
-| [Upserting availability information of a product](/openapi/availability/#operation/PUT-availability-update-product) | We added the `mixins` and `metadata.mixins` properties. |
-| [Retrieving product availabilities for a site](/openapi/availability/#operation/POST-availability-search-products-site)  | We added the `mixins` and `metadata.mixins` properties. |
+| [Creating an availability](https://emporix.gitbook.io/documentation-portal/api-references/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site)            | We added the `mixins` and `metadata.mixins` properties. |
+| [Upserting availability information of a product](https://emporix.gitbook.io/documentation-portal/api-references/orders/availability/api-reference/availabilities#put-availability-tenant-availability-productid-site) | We added the `mixins` and `metadata.mixins` properties. |
+| [Retrieving product availabilities for a site](https://emporix.gitbook.io/documentation-portal/api-references/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search)  | We added the `mixins` and `metadata.mixins` properties. |
 
 
 **Known problems**

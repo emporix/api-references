@@ -301,7 +301,7 @@ If the `type` field is not provided, the customer is recognized as a standard cu
 | Endpoint | Description |
 | --- | --- |
 | [Updating a customer profile](/openapi/customer-customer/#operation/PATCH-customer-update-customer)| We added `type` property. |
-| [Retrieving a customer profile](/openapi/customer-customer/#operation/GET-customer-retrieve-customer-profile)| We added `type` property. |
+| [Retrieving a customer profile](https://emporix.gitbook.io/documentation-portal/api-references/companies-and-customers/customer-management/account-and-profile)| We added `type` property. |
 | [Creating a new customer](/openapi/customer-customer/#operation/POST-customer-create-customer-account)| We added `type` property. |
 
 **Known problems**
@@ -328,7 +328,7 @@ such customer is assigned to existing company straight away. If the company does
 | Endpoint | Description |
 | --- | --- |
 | [Patch a customer profile](/openapi/customer-customer/#operation/PATCH-customer-update-customer)| Company registration ID property has been added. |
-| [Get a customer profile](/openapi/customer-customer/#operation/GET-customer-retrieve-customer-profile)|  Company registration ID property has been added. |
+| [Get a customer profile](https://emporix.gitbook.io/documentation-portal/api-references/companies-and-customers/customer-management/account-and-profile)|  Company registration ID property has been added. |
 | [Post a new customer](/openapi/customer-customer/#operation/POST-customer-create-customer-account)| Company registration ID property has been added. |
 
 **Known problems**
@@ -355,10 +355,10 @@ We added a new scope `customer.customer_manage_own` to the endpoints. The scope 
 
 | Endpoint | Description |
 | --- | --- |
-| [Getting customers](/openapi/customer-tenant/#operation/GET-customer-tenant-list-customers)| We added the company registration ID property and the `customer.customer_read_own` scope. |
+| [Getting customers](https://emporix.gitbook.io/documentation-portal/api-references/companies-and-customers/customer-service/api-reference/account-and-profile#get-customer-tenant-customers)| We added the company registration ID property and the `customer.customer_read_own` scope. |
 | [Creating a customer](/openapi/customer-tenant/#operation/POST-customer-tenant-create-customer)| We added the company registration ID property and the `customer.customer_manage_own` scope. |
 | [Patching a customer](/openapi/customer-tenant/#operation/PATCH-customer-tenant-update-customer)| We added the company registration ID property and the `customer.customer_manage_own` scope. |
-| [Getting a single customer](/openapi/customer-tenant/#operation/GET-customer-tenant-retrieve-customer)| We added the company registration ID property and the `customer.customer_read_own` scope. |
+| [Getting a single customer](https://emporix.gitbook.io/documentation-portal/api-references/companies-and-customers/customer-service/api-reference/account-and-profile#get-customer-tenant-customers-customernumber)| We added the company registration ID property and the `customer.customer_read_own` scope. |
 | [Deleting a customer](/openapi/customer-tenant/#operation/DELETE-customer-tenant-remove-customer)| We added the `customer.customer_read_own` scope. |
 
 **Known problems**
@@ -469,7 +469,7 @@ Order object was expanded with a new property. The property is related to Assist
 | Endpoint | Description |
 | --- | --- |
 | [Retrieving orders](/openapi/order/#operation/GET-order-retrieve-tenant-orders)| We added assisted buying property. |
-| [Retrieving a specific order](/openapi/order/#operation/GET-order-retrieve-order-employee)| We added assisted buying property. |
+| [Retrieving a specific order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid)| We added assisted buying property. |
 
 **Known problems**
 
@@ -493,10 +493,10 @@ The Site object was expanded with a new property. The property is related to Ass
 | Endpoint | Description |
 | --- | --- |
 | [Retrieving sites](/openapi/site-settings/#operation/GET-site-settings-list-site-configurations)| We added assisted buying property. |
-| [Retrieving a site](/openapi/site-settings/#operation/GET-site-settings-retrieve-site-config)| We added assisted buying property. |
-| [Creating a site](/openapi/site-settings/#operation/POST-site-settings-create-site)| We added assisted buying property. |
-| [Updating a site](/openapi/site-settings/#operation/PUT-site-settings-update-site-config)| We added assisted buying property. |
-| [Partially updating a site](/openapi/site-settings/#operation/PATCH-site-settings-update-site)| We added assisted buying property. |
+| [Retrieving a site](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode)| We added assisted buying property. |
+| [Creating a site](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites)| We added assisted buying property. |
+| [Updating a site](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#put-site-tenant-sites-sitecode)| We added assisted buying property. |
+| [Partially updating a site](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode)| We added assisted buying property. |
 
 **Known problems**
 
@@ -728,16 +728,16 @@ The Delivery Cycle Management functionality allows for more detailed way of cont
 | [Retrieving delivery windows by delivery area](/openapi/shipping/#operation/GET-shipping-retrieve-delivery-times-for-delivery-area) | Endpoint was deprecated.                                                                                                                                                                                      |
 | [Finding sites by postal code](/openapi/shipping/#operation/POST-shipping-find-sites)                                               | Response contains new properties - `zones.actualDeliveryWindows.deliveryCycle`, `zones.actualDeliveryWindows.deliveryMethod`, `zones.actualDeliveryWindows.cutOffTime`, `zones.actualDeliveryWindows.slotId`. |
 | [Retrieving orders](/openapi/order/#operation/GET_tenant-salesorders)                                                           | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
-| [Creating a new order](/openapi/order/#operation/POST-order-create-order-employee)                                                       | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
-| [Retrieving a specific order by ID](/openapi/order/#operation/GET-order-retrieve-order-employee)                                   | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
+| [Creating a new order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)                                                       | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
+| [Retrieving a specific order by ID](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid)                                   | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
 | [Updating an order](/openapi/order/#operation/PUT-order-update-order)                                                   | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
 | [Partially updating an order](/openapi/order/#operation/PATCH-order-partial-update-order)                                       | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
 | [Retrieving a list of orders](/openapi/order/#operation/GET-order-list-orders)                                                      | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
-| [Creating a new order](/openapi/order/#operation/POST-order-create-order)                                                            | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
-| [Retrieving order details](/openapi/order/#operation/GET-order-retrieve-order-storefront)                                                 | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
+| [Creating a new order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders)                                                            | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
+| [Retrieving order details](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid)                                                 | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
 | [Creating a new cart](/openapi/cart/#operation/POST-cart-create-cart)                                                               | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
-| [Retrieving a cart's details by criteria](/openapi/cart/#operation/GET-cart-retrieve-cart-by-criteria)                                            | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
-| [Retrieving a cart's details by ID](/openapi/cart/#operation/GET-cart-retrieve-cart-by-cartId)                                           | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
+| [Retrieving a cart's details by criteria](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts)                                            | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
+| [Retrieving a cart's details by ID](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid)                                           | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
 | [Updating a cart](/openapi/cart/#operation/PUT-cart-update-cart)                                                             | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
 
 **Known problems**
@@ -1022,11 +1022,11 @@ The Order Service now contains the tax of the shipping costs. Previously, the or
 
 | Endpoint                                                                                    | Description                                                                         |
 | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| [Creating a sales order](/openapi/order/#operation/POST-order-create-order-employee)                 | The shipping line of the response body contains the optional `tax` object. |
-| [Retrieving a single sales order](/openapi/order/#operation/GET-order-retrieve-order-employee) | The shipping line of the response body contains the `tax` object.          |
+| [Creating a sales order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)                 | The shipping line of the response body contains the optional `tax` object. |
+| [Retrieving a single sales order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) | The shipping line of the response body contains the `tax` object.          |
 | [Retrieving sales order](/openapi/order/#operation/GET-order-retrieve-tenant-orders)                  | The shipping line of the response body contains the `tax` object.          |
-| [Creating an order](/openapi/order/#operation/POST-order-create-order)                           | The shipping line of the response body contains the optional `tax` object. |
-| [Retrieving a single order](/openapi/order/#operation/GET-order-retrieve-order-storefront)            | The shipping line of the response body contains the `tax` object.          |
+| [Creating an order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders)                           | The shipping line of the response body contains the optional `tax` object. |
+| [Retrieving a single order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid)            | The shipping line of the response body contains the `tax` object.          |
 | [Retrieving orders](/openapi/order/#operation/GET-order-list-orders)                            | The shipping line of the response body contains the `tax` object.          |
 
 **Known problems**
@@ -1144,9 +1144,9 @@ The Order Service API has been enhanced with the new property - `quoteId`. Merch
 
 | Endpoint                                                                         | Description                                                          |
 | -------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| [Creating an order](/openapi/order/#operation/POST-order-create-order-employee)           | This property indicates from which quote the order has been created. |
+| [Creating an order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)           | This property indicates from which quote the order has been created. |
 | [Getting a list of the orders](/openapi/order/#operation/GET-order-retrieve-tenant-orders) | This property indicates from which quote the order has been created. |
-| [Getting an order](/openapi/order/#operation/GET-order-retrieve-order-employee)     | This property indicates from which quote the order has been created. |
+| [Getting an order](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid)     | This property indicates from which quote the order has been created. |
 
 **Known problems**
 
