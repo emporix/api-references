@@ -16,7 +16,7 @@ layout:
 
 ## Overview
 
-All deprecations will be removed on 2025-10-01. From now, use the new [referral coupons endpoints](/openapi/coupon/#tag/Referral-Coupon-Management) to referral coupons.
+All deprecations will be removed on 2025-10-01. From now, use the new [referral coupons endpoints](https://emporix.gitbook.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/referral-coupon-management) to referral coupons.
 
 
 ## Deprecated endpoints
