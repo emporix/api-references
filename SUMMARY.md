@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Start with Emporix API](README.md)
+* [Starting with Emporix API](README.md)
 * [OpenAPI Generator](openapi-generator.md)
 
 ## Standard Practices
