@@ -20,7 +20,7 @@ Firstly, create and add an image for a new label. Design the image and upload it
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../media/media/api-reference/" %}
+{% content-ref url="../../media/media/api-reference/" %}
 [api-reference](../../media/media/api-reference/)
 {% endcontent-ref %}
 

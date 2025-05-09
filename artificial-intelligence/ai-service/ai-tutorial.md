@@ -4,7 +4,7 @@ With Emporix support for AI, you can enhance text for product descriptions and g
 
 ## Before you start
 
-Make sure to configure your API token. To do that, you can use the [Configuration Service](https://developer.emporix.io/docs/openapi/configuration/) and store the token under `openAiApiToken` key.
+Make sure to configure your API token. To do that, you can use the [Configuration Service](../../configuration/configuration-service/api-reference/) and store the token under `openAiApiToken` key.
 
 [Broken link](broken-reference "mention")
 

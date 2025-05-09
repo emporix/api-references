@@ -530,7 +530,7 @@ To create a new list-specific price, you need to send a request to the [Adding a
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../price=service/api-reference/" %}
+{% content-ref url="../price-service/api-reference/" %}
 [api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
@@ -713,7 +713,7 @@ Start with defining a price model with [Creating a price model](https://emporix.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url=".../price-service/api-reference/" %}
+{% content-ref url="../price-service/api-reference/" %}
 [api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
