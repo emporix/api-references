@@ -1163,7 +1163,7 @@ Since the system can be configured to allow more than one discount to a cart, it
 * Every ABSOLUTE discount uses the not discounted values for the discount value spread. It means that if the given applicable item is already fully discounted, the remaining amount of the discount is spread proportionally on the discounts that still have some value left.
 
 {% hint style="warning" %}
-\
+
 Check the [System Preferences](https://developer.emporix.io/user-guides/management-dashboard/settings/system-preferences/) documentation for coupons settings related to the number of discounts.
 {% endhint %}
 

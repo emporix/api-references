@@ -112,5 +112,6 @@ curl -i -X PATCH \
   -H 'Content-Type: application/json' \
   -d '{
     "published": true
+    "brandId":""
   }'
 ```
