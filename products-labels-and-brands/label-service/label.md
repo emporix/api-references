@@ -83,7 +83,9 @@ curl -L \
 
 ### Update a product with a new label
 
-You can now update a product with a newly created label to indicate that shipping is available worldwide for this product. Send the request to the [Upserting a product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint and provide the label id in the request.
+You can now update a product with a newly created label to indicate that shipping is available worldwide for this product. Send the request to the [Partially updating a product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint.
+
+To specify a brand for a product, you need to provide the `labelId` field on product level which should be used. You can add brands either during the creation of the product, or by updating a product that already exists in the system. 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -92,65 +94,13 @@ You can now update a product with a newly created label to indicate that shippin
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/product/{tenant}/products/{productId}?partial=false&skipVariantGeneration=false&doIndex=true' \
+curl -i -X PATCH \
+  'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
   -H 'Content-Language: string' \
   -H 'Content-Type: application/json' \
   -d '{
-    "name": "Smartphone Zony Yperia X2",
-    "code": "TESTDOC000",
-    "description": "The world'\''s best camera and camcorder in a waterproof smartphone.",
-    "published": false,
-    "taxClasses": {
-      "EN": "STANDARD"
-    },
-    "template": {
-      "id": "634cea2740033d7c2e7b03a8",
-      "version": 1
-    },
-    "relatedItems": [
-      {
-        "refId": "634cea2740033d7c2e7b03a9",
-        "type": "CONSUMABLE"
-      }
-    ],
-    "mixins": {
-      "salePricesData": [
-        {
-          "salePriceStart": "2021-07-20T22:00:00.000+0000",
-          "salePriceAmount": 6.7,
-          "salePriceEnd": "2021-07-25T21:59:59.000+0000",
-          "enabled": false
-        }
-      ],
-      "productCustomAttributes": {
-        "pricingMeasurePrice": 13,
-        "unitPricingMeasure": {
-          "value": 133,
-          "unitCode": "GRM"
-        },
-        "unitPricingBaseMeasure": {
-          "value": 100,
-          "unitCode": "GRM"
-        },
-        "pricingMeasure": {
-          "value": 100,
-          "unitCode": "GRM"
-        },
-        "orderUnit": "H87",
-        "minOrderQuantity": 2,
-        "maxOrderQuantity": 10,
-        "defaultOrderQuantity": 5
-      }
-    },
-    "metadata": {
-      "version": 1,
-      "mixins": {
-        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json",
-        "salePricesData": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/salePriceData.json"
-      }
-    }
+    "published": true
   }'
 ```
 

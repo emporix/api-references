@@ -26,15 +26,6 @@ For instructions, check out [*How to add your first product*](../product-service
 
 To create a brand and add media files to it, you need to send a request to the [Adding a new brand](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/brand-service/api-reference/brands#post-brands) endpoint. 
 
-{% hint style="warning" %}
-
-In the following request, use the `link` and `id` elements received in the response in the [Upload an image](../brand-service/brand.md#upload-an-image) step:
-
-* The `image` element in the request below must have the same value as the `link` attribute in the response in the previous step.
-* The `cloudinaryUrl` element in the request below must have the same value as the `id` attribute in the response in the previous step.
-
-{% endhint %}
-
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="../brand-service/api-reference/" %}
@@ -59,10 +50,11 @@ curl -i -X POST \
       "en": "Description of <strong>Brand one</strong> in HTML.",
       "de": "Beschreibung der <strong>Marke einz</strong> in HTML."
     },
-    "image": " ",
-    "cloudinaryUrl": " "
   }'
 ```
+
+Executing a request to create a brand returns a response that includes an "id" field, which should then be used when uploading an image.
+
 # Upload an image
 
 To include an image for a brand, you need to upload the image to the database by sending a multipart request to the [Creating an asset](https://emporix.gitbook.io/documentation-portal/api-references/media/media/api-reference/assets#post-media-tenant-assets) endpoint.
@@ -100,15 +92,9 @@ curl -L \
   }'
 ```
 
-{% hint style="warning" %}
-
-Note down the values of the `link` and `id` attributes from the response. You will need this information to create a brand.
-
-{% endhint %}
-
 # Update an existing product with brand information
 
-To specify a brand for a product, you need to provide the `id` of the brand in the `mixins` element of a chosen product. You can add brands either during the creation of the product, or by updating a product that already exists in the system. For the purposes of this tutorial, we are going to update an existing product with the brand object created above.
+To specify a brand for a product, you need to provide the `brandId` field on product level which should be used. You can add brands either during the creation of the product, or by updating a product that already exists in the system. 
 
 To update the existing product with brand information, you need to send a request to the [Partially updating a product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint.
 
@@ -125,11 +111,6 @@ curl -i -X PATCH \
   -H 'Content-Language: string' \
   -H 'Content-Type: application/json' \
   -d '{
-    "published": true,
-    "mixins": {
-      "productCustomAttributes": {
-        "brand": " "
-      }
-    }
+    "published": true
   }'
 ```
