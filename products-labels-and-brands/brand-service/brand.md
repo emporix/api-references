@@ -8,8 +8,8 @@ seo:
 
 To create a brand with media files and add it to a product created beforehand, follow the process below:
 
-1. [Upload brand images](./brand.md#upload-an-image).
-2. [Create a brand with media files](./brand.md#create-a-brand).
+1. [Create a brand with media files](./brand.md#create-a-brand).
+2. [Upload brand images](./brand.md#upload-an-image).
 3. [Update an existing product with brand information](./brand.md#update-an-existing-product-with-brand-information).
 
 # Before you start
@@ -19,31 +19,6 @@ Ensure that you have created a product.
 {% hint style="warning" %}
 
 For instructions, check out [*How to add your first product*](../product-service/product.md#how-to-add-your-first-product).
-
-{% endhint %}
-
-# Upload an image
-
-To include an image for a brand, first you need to upload the image to the database by sending a multipart request to the [Adding an image for a brand](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/brand-service/api-reference/media#post-media) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../brand-service/api-reference/" %}
-[api-reference](../brand-service/api-reference/)
-{% endcontent-ref %}
-
-```bash
-curl -i -X POST \
-  https://api.emporix.io/media \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: multipart/form-data' \
-  -F file=string \
-  -F 'metadata=Image metadata json'
-```
-
-{% hint style="warning" %}
-
-Note down the values of the `link` and `id` attributes from the response. You will need this information to create a brand.
 
 {% endhint %}
 
@@ -88,6 +63,48 @@ curl -i -X POST \
     "cloudinaryUrl": " "
   }'
 ```
+# Upload an image
+
+To include an image for a brand, you need to upload the image to the database by sending a multipart request to the [Creating an asset](https://emporix.gitbook.io/documentation-portal/api-references/media/media/api-reference/assets#post-media-tenant-assets) endpoint.
+The `brandId` is necessary to provide.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../media/media/api-reference/" %}
+[api-reference](../../media/media/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/media/{tenant}/assets' \
+  --header 'Content-Type: multipart/form-data' \
+  --data '{
+    "file": {
+      "externalValue": "https://res.cloudinary.com/saas-ag/image/upload/v1695804155/emporix-logo-white-2f5e621206edefea6015fb4793959376_nswfbz.png"
+    },
+    "body": {
+      "type": "BLOB",
+      "access": "PUBLIC",
+      "refIds": [
+        {
+          "id": "123e06ecf0452c2d6c0b81392",
+          "type": "BRAND"
+        }
+      ],
+      "details": {
+        "filename": "theBestImage",
+        "mimeType": "image/jpg"
+      }
+    }
+  }'
+```
+
+{% hint style="warning" %}
+
+Note down the values of the `link` and `id` attributes from the response. You will need this information to create a brand.
+
+{% endhint %}
 
 # Update an existing product with brand information
 
