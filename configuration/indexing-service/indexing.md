@@ -108,7 +108,7 @@ curl -L \
 
 This operation starts the full reindexing mode.
 
-### How to retrieve public search configuration
+## How to retrieve public search configuration
 
 How to retrieve public search configuration
 
@@ -126,7 +126,7 @@ curl -L \
   --header 'Accept: */*'
 ```
 
-### How to choose indexing strategy
+## How to choose indexing strategy
 
 You can choose between two indexing strategies for your search index configuration: `MERGE` and `SPLIT`. `MERGE` strategy creates a single index for all sites declared in the system, while `SPLIT` creates a separate index for each site.\
 To choose the right mode for your index, send the request to the [Updating a configuration](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint.
