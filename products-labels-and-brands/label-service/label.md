@@ -17,7 +17,7 @@ To label a product with a specific information, follow these steps:
 
 ### Create a label
 
-To create a new label, send the request to the [Creating a label](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/label-service/api-reference/label#post-labels) endpoint using the image you created.
+To create a new label, send the request to the [Creating a label](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/label-service/api-reference/label#post-labels) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -31,19 +31,12 @@ curl -i -X POST \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "id": "66fe65e83132e30001e6be29",
     "name": "Worldwide Shipment",
-    "description": "<p>Worldwide Shipment</p>",
-    "image": "https://res.cloudinary.com/saas-ag/image/upload/v1727903960/tenant/labels/54fd0a26-fa47-45b7-ae22-8e54e0bb98d2.jpg",
-    "cloudinaryUrl": "tenant/labels/54fd0a26-fa47-45b7-ae22-8e54e0bb98d2",
-    "overlay": {
-      "position": 0,
-      "isTrue": true
-    }
+    "description": "<p>Worldwide Shipment</p>"
   }'
 ```
 
-Copy the label id from the response to provide it in the next step.
+Executing a request to create a label returns a response that includes an "id" field, which should then be used in the next steps.
 
 ### Add a label image
 
@@ -101,7 +94,7 @@ curl -i -X PATCH \
   -H 'Content-Type: application/json' \
   -d '{
     "published": true
-    "labelId":""
+    "labelId":"66fe65e83132e30001e6be29"
   }'
 ```
 
