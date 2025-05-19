@@ -8,4 +8,4 @@ seo:
 
 Workflow automation allows you to improve your everyday work by replacing manually performed actions with automated tasks.
 
-Emporix supports integration with workflow automation tools, such as [_Make_](https://github.com/emporix/api-references/blob/master/integrations/workflow-automation/emporix-make/README.md).
+Emporix supports integration with workflow automation tools, such as [_Make_](../Integrations/Emporix-make.md).

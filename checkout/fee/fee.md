@@ -144,7 +144,7 @@ curl -i -X POST \
   }'
   ```
 
-When creating a payment fee, the fee `code` has to be identical with the payment mode `code`. To check the available payment modes for a given site, make a call to the <nobr><Button to="/openapi/payment-gateway/#operation/GET-payment-gateway-list-payment-modes-frontend" size="small">Retrieving all the payment modes] endpoint first.
+When creating a payment fee, the fee `code` has to be identical with the payment mode `code`. To check the available payment modes for a given site, make a call to the [Retrieving all the payment modes](https://emporix.gitbook.io/documentation-portal/api-references/checkout/payment-gateway/api-reference/payment-mode-frontend#get-payment-gateway-tenant-paymentmodes-frontend) endpoint first.
 Notice the `code` in the above payload corresponds to the payment mode `code` we want ta apply the fee to.
 
 
@@ -168,7 +168,7 @@ curl -i -X POST \
 
 Notice the part of `itemYrn` contains the payment mode `code` which is identical with the fee `code`.
 
-1. Apply the fee to the payment mode. Make a call to the [Adding a list of fees to an item](https://emporix.gitbook.io/documentation-portal/api-references/checkout/fee/api-reference/item-fee-management#put-fee-tenant-itemfees-itemyrn-fees) endpoint. 
+2. Apply the fee to the payment mode. Make a call to the [Adding a list of fees to an item](https://emporix.gitbook.io/documentation-portal/api-references/checkout/fee/api-reference/item-fee-management#put-fee-tenant-itemfees-itemyrn-fees) endpoint. 
 You need to specify the `itemYrn` of the chosen payment type in the request path and pass the `feeId` in the body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -196,7 +196,7 @@ For each payment mode you can create and connect one fee only.
 
 {% endhint %}
 
-1. To make sure the fee has been applied to the payment, send the request to the [Checking of a fee has been applied](https://emporix.gitbook.io/documentation-portal/api-references/checkout/fee/api-reference/item-fee-search#post-fee-tenant-itemfees-search) endpoint.
+3. To make sure the fee has been applied to the payment, send the request to the [Checking of a fee has been applied](https://emporix.gitbook.io/documentation-portal/api-references/checkout/fee/api-reference/item-fee-search#post-fee-tenant-itemfees-search) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

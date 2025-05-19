@@ -73,7 +73,7 @@ The `returns.returns_read` and `returns.returns_manage` scopes are only required
  
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../return/api-reference/" %}
+{% content-ref url="../returns/api-reference/" %}
 [api-reference](../returns/api-reference/)
 {% endcontent-ref %}
 ```bash

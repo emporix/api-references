@@ -10,7 +10,7 @@ seo:
 
 {% hint style="warning" %}
 
-This tutorial presents how to create a basic product. To learn more about types of products available in the Emporix Commerce Engine, check out the [Products guide](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTjcore-commerce/product-user-guide).
+This tutorial presents how to create a basic product. To learn more about types of products available in the Emporix Commerce Engine, check out the [Products guide](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/product-user-guide).
 
 {% endhint %}
 
@@ -41,7 +41,7 @@ You can manage your tax configurations through the Emporix API [Tax Service](../
 
 {% hint style="warning" %}
 
-For more information, check out the [Tax classes guide](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/taxes/taxes-v2).
+For more information, check out the [Tax classes guide](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/taxes-v2).
 
 {% endhint %}
 
@@ -211,7 +211,7 @@ In the following example, we are creating a `public` type of an asset that is li
 
 Sending a json/application request to the Creating an asset endpoint does **not** mean that the asset is uploaded to the database. It is only linked to the resource (category or product).
 If you want to upload the asset to the database, you need to send a multipart request to the [Creating an asset](https://emporix.gitbook.io/documentation-portal/api-references/media/media/api-reference/assets#post-media-tenant-assets) endpoint.
-For more information, check out the [_Media Management Tutorials_](../../media/media.md).
+For more information, check out the [_Media Management Tutorials_](../../media/media/media.md).
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -317,7 +317,7 @@ By applying a product template, you can create a product that contains additiona
 
 To create a new product by applying a product template to it, you need to call the Creating a new product endpoint and provide the template's ID in the request body.
 
-{% hint style="warning" %}\
+{% hint style="warning" %}
 In this example, we assign a template to a product on its creation. The created product can be a standalone one, or contain variants. Here, the product does not contain any variants. For creating a parent variant product with variants, check out the [How to create a parent product with variants](../product-service/product.md#how-to-create-a-parent-product-with-variants) tutorial.
 {% endhint %}
 

@@ -85,7 +85,7 @@ You can assign resources, such as products, to particular categories.
 Make sure you have already finished the following tutorials:
 
 * [_How to create a category_](../category-tree/category.md#how-to-create-a-category)
-* [_How to add your first product_](../product-service/product.md#how-to-add-your-first-product)
+* [_How to add your first product_](../../products-labels-and-brands/product-service/product.md#how-to-add-your-first-product)
 
 ### Assign a product to a category
 

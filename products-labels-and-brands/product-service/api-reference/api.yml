@@ -34,6 +34,43 @@ tags:
   - name: Product Templates
     description: Manage Product Templates
 paths:
+  /product/{tenant}/products/search:
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    post:
+      responses:
+        '200':
+          $ref: '#/components/responses/products_get_response_OK_200'
+        '401':
+          $ref: '#/components/responses/common_response_Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/common_response_Forbidden_403'
+        '500':
+          $ref: '#/components/responses/common_response_InternalServerError_500'
+      description: |
+        Search a list of products.
+        ***
+
+        **Required scopes**
+
+        * `product.product_read_unpublished` **Note:** Only required if the response should contain unpublished products.
+      operationId: POST-product-search-products
+      requestBody:
+        $ref: '#/components/requestBodies/productsSearchBody'
+      security:
+        - OAuth2: []
+      parameters:
+        - $ref: '#/components/parameters/header_x_total_count'
+        - $ref: '#/components/parameters/query_page_number'
+        - $ref: '#/components/parameters/query_page_size'
+        - $ref: '#/components/parameters/query_sort_product'
+        - $ref: '#/components/parameters/query_product_fields'
+        - $ref: '#/components/parameters/header_accept_language'
+        - $ref: '#/components/parameters/query_expand_product'
+        - $ref: '#/components/parameters/query_raw_value_product'
+      summary: Searching for products
+      tags:
+        - Products
   /product/{tenant}/products:
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -568,6 +605,7 @@ paths:
       - $ref: '#/components/parameters/query_expand_search'
       - $ref: '#/components/parameters/query_product_fields'
     post:
+      deprecated: true
       parameters:
         - $ref: '#/components/parameters/header_accept_language'
       responses:
@@ -603,6 +641,8 @@ paths:
           $ref: '#/components/responses/common_response_InternalServerError_500'
       description: |
         Searches for specified products by their YRNs.
+        
+        This endpoint is `deprecated`. Please use the [/product/{tenant}/products/search](/openapi/product/#operation/POST-product-search-products) instead.
         ***
 
         **Required scopes**
@@ -1260,6 +1300,15 @@ components:
                   code: 204
                   status: NO_CONTENT
   requestBodies:
+    productsSearchBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/searchProducts'
+          examples:
+            search for products:
+              value:
+                q: "code:(A705197727 OR A705197726)"
     productCreateBody:
       content:
         application/json:
@@ -2482,6 +2531,15 @@ components:
               $ref: '#/components/schemas/variantAttributes'
             metadata:
               $ref: '#/components/schemas/productMetadataWithVersion'
+    searchProducts:
+      type: object
+      properties:
+        q:
+          type: string
+          description:  |
+            A standard query parameter is used to search for specific values. 
+            
+            See: [Standard practises - Query parameter](https://developer.emporix.io/docs/content/q-param)
     searchQuery:
       type: object
       additionalProperties: false
@@ -2630,29 +2688,10 @@ components:
     query_q_product:
       name: q
       in: query
-      description: |
-        A standard query parameter is used to search for specific values.
-
-        * Searching for items by string-based properties:
-          * By field value: `q=name:apple_lobo`, where `name` is the field name and `apple_logo` is its desired value.
-          * By localized field value: `q=name.en:apple_lobo`, where `name` is the field name, `en` is a language code and `apple_lobo` is the field value expressed in the specified language. **Note**: This query works only for localized fields, which are stored in a Map format where `key` is a language code and `value` is translation to particular language.
-        * Searching for items by number-based property:
-          * With a specific value: `q=mixins.productCustomAttributes.maxOrderQuantity:20`
-          * With a value greater than: `q=mixins.productCustomAttributes.maxOrderQuantity:>20`
-          * With a value lower than: `q=mixins.productCustomAttributes.maxOrderQuantity:<20`
-          * With a value greater than or equal to: `q=mixins.productCustomAttributes.maxOrderQuantity:>=20`
-          * With a value lower than or equal to: `q=mixins.productCustomAttributes.maxOrderQuantity:<=20`
-          * With a value within a range of values: `q=mixins.productCustomAttributes.maxOrderQuantity:(>=10 AND <=20)`\
-           where `mixins.price.value` is name of number-based field and `20` is it's querying value.
-        * Searching for items by date-based property: All number-based property queries are valid also for dates. In that case the date should be placed within double quotes: `q=metadataCreatedAt:(>="2021-05-18T07:27:27.455Z" AND <"2021-05-20T07:27:27.455Z")`
-        * Searching for items by boolean-based property: `q=description.multiLanguage:true`, where `description.multiLanguage` is the boolean field name and `true` is its desired value.
-        * Searching for items with a nonexistent or null property: `q=description.en:null`, where `description.en` is the field that has its value set to `null` or when it does not exist in the database.
-        * Searching for items with an existing property: `q=mixin:exists`, where `mixin` is the field that exists in the database.
-        * Searching for items with an nonexistent property: `q=mixin:missing`, where `mixin` is the field that does not exist in the database.
-        * Searching for items by multiple specific values: `q=id:(5c3325baa9812100098ff48f,5c3325d1a9812100098ff494)`, where `id` is the field name, and strings within the bracket are the desired values.
-        * Searching for items by multiple fields: `q=id:5c3325baa9812100098ff48f code:A705121667` where `id` and `code` are field names. All objects that contain the specified values are returned. Multiple fields (separated by space) can be specified. Multiple values for each field can also be specified in a format presented earlier.
-        * Searching for items with string-based properties conforming to a regex: `q=code:~ABCD12` or `q=code:(~AB CD)` - in case of searching for strings with space, where `code` is the name of field and `ABCD12` or `AB CD` is its querying regex.
-        * Searching for items with a localized string-based property conforming to a regex: `name.localizedMap.en:~(Yoghurt im)` - where `name` is the field name, `localizedMap` is a keyword which indicates that the field is a localized one, `en` is a desired language, and `Joghurt im` is a search term.
+      description:  |
+        A standard query parameter is used to search for specific values. 
+        
+        See: [Standard practises - Query parameter](https://developer.emporix.io/docs/content/q-param)
       schema:
         type: string
         example: 'name:{productName}'

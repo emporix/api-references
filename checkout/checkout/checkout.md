@@ -296,7 +296,7 @@ curl -i -X POST \
   }'
 ```
 
-1. Create a price for a specific product by sending a request to the [Creating a new price](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint.
+2. Create a price for a specific product by sending a request to the [Creating a new price](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -419,7 +419,7 @@ curl -i -X POST \
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="..cart/api-reference/" %}
+{% content-ref url="../cart/api-reference/" %}
 [api-reference](../cart/api-reference/)
 {% endcontent-ref %}
 
@@ -446,7 +446,7 @@ curl -i -X POST \
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="..cart/api-reference/" %}
+{% content-ref url="../cart/api-reference/" %}
 [api-reference](../cart/api-reference/)
 {% endcontent-ref %}
 

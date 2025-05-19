@@ -4,7 +4,7 @@ With Emporix support for AI, you can enhance text for product descriptions and g
 
 ## Before you start
 
-Make sure to configure your API token. To do that, you can use the [Configuration Service](https://developer.emporix.io/docs/openapi/configuration/) and store the token under `openAiApiToken` key.
+Make sure to configure your API token. To do that, you can use the [Configuration Service](../../configuration/configuration-service/api-reference/) and store the token under `openAiApiToken` key.
 
 [Broken link](broken-reference "mention")
 
@@ -60,5 +60,6 @@ curl -i -X POST \
 ```
 
 {% hint style="info" %}
-To see some more examples of using AI at Emporix, check our guides for Management Dashboard - [Powered by AI](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/ai/ai-intro).
+To see some more examples of using AI at Emporix, check our guides for Management Dashboard - [Powered by AI](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/ai-intro/ai-config).
 {% endhint %}
+

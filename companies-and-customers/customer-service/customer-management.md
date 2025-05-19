@@ -19,7 +19,7 @@ Setting up a business customer's information is a process made up of two steps:
 
 ## Before you start
 
-Make sure you have marked the country in which the company operates as **active**. You can do it by sending a request to the <nobr><Button to="/openapi/country/#operation/PATCH-country-update-country" size="small">Updating a country] endpoint in the Emporix API Country Service.
+Make sure you have marked the country in which the company operates as **active**. You can do it by sending a request to the [Updating a country](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/country-service/api-reference/countries#patch-country-tenant-countries-countrycode) endpoint in the Emporix API Country Service.
 
 ## Add a location
 

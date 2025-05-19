@@ -239,6 +239,7 @@ paths:
                               - id: LS10PTOTAL
                                 value: 10
                                 discountType: PERCENT
+                                origin: INTERNAL
                           fees:
                             - id: 6793753e7d4bba47e2a99801
                               type: ABSOLUTE
@@ -256,6 +257,7 @@ paths:
                                   - id: LS10PTOTAL
                                     value: 0.5
                                     discountType: PERCENT
+                                    origin: INTERNAL
                           totalFee:
                             netValue: 4.5
                             grossValue: 4.5
@@ -264,6 +266,7 @@ paths:
                               - id: LS10PTOTAL
                                 value: 0.5
                                 discountType: PERCENT
+                                origin: INTERNAL
                           totalDiscount:
                             calculationType: ApplyDiscountBeforeTax
                             value: 10.5
@@ -271,6 +274,7 @@ paths:
                               - id: LS10PTOTAL
                                 value: 10.5
                                 discountType: PERCENT
+                                origin: INTERNAL
                           finalPrice:
                             netValue: 94.5
                             grossValue: 103.5
@@ -329,6 +333,7 @@ paths:
                     metadata:
                       createdAt: '2025-01-24T11:11:15.394438Z'
                       modifiedAt: '2025-01-24T11:11:15.394459Z'
+                      calculatedAt: '2025-01-24T11:11:15.394459Z'
                       version: 1
                     totalTax:
                       amount: 0
@@ -384,6 +389,7 @@ paths:
                           - id: LS10PTOTAL
                             value: 10
                             discountType: PERCENT
+                            origin: INTERNAL
                       totalFee:
                         netValue: 4.5
                         grossValue: 4.5
@@ -392,6 +398,7 @@ paths:
                           - id: LS10PTOTAL
                             value: 0.5
                             discountType: PERCENT
+                            origin: INTERNAL
                       totalDiscount:
                         calculationType: ApplyDiscountBeforeTax
                         value: 11.22
@@ -399,6 +406,7 @@ paths:
                           - id: LS10PTOTAL
                             value: 11.22
                             discountType: PERCENT
+                            origin: INTERNAL
                       totalShipping:
                         netValue: 6.5
                         grossValue: 6.955
@@ -409,6 +417,7 @@ paths:
                           - id: LS10PTOTAL
                             value: 0.72
                             discountType: PERCENT
+                            origin: INTERNAL
                       finalPrice:
                         netValue: 101
                         grossValue: 110.455
@@ -424,6 +433,7 @@ paths:
                     metadata:
                       createdAt: '2021-08-30T08:46:30.780Z'
                       modifiedAt: '2021-08-30T08:46:30.786Z'
+                      calculatedAt: '2025-01-24T11:11:15.394459Z'
                       version: 1
                     leadTime: 0
                     nonDelivery:
@@ -439,6 +449,7 @@ paths:
                     metadata:
                       createdAt: '2021-08-27T11:42:15.709Z'
                       modifiedAt: '2021-08-27T11:42:15.711Z'
+                      calculatedAt: '2025-01-24T11:11:15.394459Z'
                       version: 1
                     leadTime: 0
                     nonDelivery:
@@ -455,7 +466,9 @@ paths:
         '500':
           $ref: '#/components/responses/trait_500'
       description: |-
-        Retrieves cart details based on the store's site code and criteria such as session ID or customer ID.
+        Retrieves cart details based on the store's site code and criteria such as session ID or customer ID. 
+        
+        As a response only one cart is returned, so all required criteria needs to be provided to fetch the unique cart. Uniqueness of the cart is defined by combination of `siteCode`, `type`, `legalEntityId` and  (`sessionId` or `customerId`)
         ***
         ### Required scopes
 
@@ -499,7 +512,9 @@ paths:
           name: legalEntityId
           required: false
           description: |
-            Id of the legal entity to which customer is assigned. Should not be provided for B2C business model.
+            Id of the legal entity to which customer is assigned. Should not be provided for B2C business model. 
+            
+            **Note**: The query param is optional, but if not provided, the cart without legalEntity assigned is returned.
         - schema:
             type: boolean
           in: query
@@ -510,7 +525,10 @@ paths:
           name: type
           in: query
           required: false
-          description: Type of the cart
+          description: |
+            Type of the cart. 
+            
+            **Note**: The query param is optional, but if not provided then only cart without `type` is returned.
         - name: zipCode
           in: query
           description: Zip code for cart filtering
@@ -532,6 +550,221 @@ paths:
         - Carts
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
+  '/cart/{tenant}/carts/search':
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/search'
+            examples:
+              Search Carts:
+                value:
+                  q: "status:OPEN"
+      responses:
+        '200':
+          description: The request was successful. Carts are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/cartGetAll'
+              examples:
+                Carts:
+                  value:
+                    - id: 6793753b7d4bba47e2a99800
+                      status: OPEN
+                      customerId: '45620894'
+                      siteCode: GrossSite
+                      items:
+                        - id: '0'
+                          type: EXTERNAL
+                          itemYrn: 'urn:yaas:saasag:caasproduct:product:test;samsung-galaxy-s24-gross'
+                          quantity: 1
+                          effectiveQuantity: 1
+                          unitPrice:
+                            netValue: 100
+                            grossValue: 110
+                            taxValue: 10
+                            taxCode: STANDARD
+                            taxRate: 10
+                          couponDiscounts:
+                            - couponId: LS10PTOTAL
+                              value: 11.5
+                          calculatedPrice:
+                            price:
+                              netValue: 100
+                              grossValue: 110
+                              taxValue: 10
+                              taxCode: STANDARD
+                              taxRate: 10
+                            upliftValue:
+                              netValue: 30
+                              grossValue: 33
+                              taxValue: 3
+                              taxCode: STANDARD
+                              taxRate: 10
+                            discountedPrice:
+                              netValue: 90
+                              grossValue: 99
+                              taxValue: 9
+                              taxCode: STANDARD
+                              taxRate: 10
+                              appliedDiscounts:
+                                - id: LS10PTOTAL
+                                  value: 10
+                                  discountType: PERCENT
+                            fees:
+                              - id: 6793753e7d4bba47e2a99801
+                                type: ABSOLUTE
+                                name:
+                                  en: Freight Fee
+                                price:
+                                  netValue: 5
+                                  grossValue: 5
+                                  taxValue: 0
+                                discountedPrice:
+                                  netValue: 4.5
+                                  grossValue: 4.5
+                                  taxValue: 0
+                                  appliedDiscounts:
+                                    - id: LS10PTOTAL
+                                      value: 0.5
+                                      discountType: PERCENT
+                            totalFee:
+                              netValue: 4.5
+                              grossValue: 4.5
+                              taxValue: 0
+                              appliedDiscounts:
+                                - id: LS10PTOTAL
+                                  value: 0.5
+                                  discountType: PERCENT
+                            totalDiscount:
+                              calculationType: ApplyDiscountBeforeTax
+                              value: 10.5
+                              appliedDiscounts:
+                                - id: LS10PTOTAL
+                                  value: 10.5
+                                  discountType: PERCENT
+                            finalPrice:
+                              netValue: 94.5
+                              grossValue: 103.5
+                              taxValue: 9
+                      discounts:
+                        - id: '0'
+                          code: LS10PTOTAL
+                          currency: EUR
+                          discountRate: 10
+                          name: LS10PTOTAL
+                          calculationType: ApplyDiscountBeforeTax
+                          valid: true
+                          links:
+                            - rel: validate
+                              title: Coupon Validation
+                              href: 'https://api.emporix.io/caas-coupon/test/coupons/LS10PTOTAL/validation'
+                              type: application/json
+                            - rel: redeem
+                              title: Coupon Redemption
+                              href: 'https://api.emporix.io/caas-coupon/test/coupons/LS10PTOTAL/redemptions'
+                              type: application/json
+                          discountType: PERCENT
+                          discountCalculationType: TOTAL
+                          categoryRestricted: false
+                      totalUnitsCount: 1
+                      metadata:
+                        createdAt: '2025-01-24T11:11:15.394438Z'
+                        modifiedAt: '2025-01-24T11:11:15.394459Z'
+                        calculatedAt: '2025-01-24T11:11:15.394459Z'
+                        version: 1
+                      totalTax:
+                        amount: 0
+                        currency: EUR
+                      leadTime: 0
+                      calculatedPrice:
+                        price:
+                          netValue: 100
+                          grossValue: 110
+                          taxValue: 10
+                          taxCode: STANDARD
+                          taxRate: 10
+                        upliftValue:
+                          netValue: 30
+                          grossValue: 33
+                          taxValue: 3
+                          taxCode: STANDARD
+                          taxRate: 10
+                        discountedPrice:
+                          netValue: 90
+                          grossValue: 99
+                          taxValue: 9
+                          taxCode: STANDARD
+                          taxRate: 10
+                          appliedDiscounts:
+                            - id: LS10PTOTAL
+                              value: 10
+                              discountType: PERCENT
+                        totalFee:
+                          netValue: 4.5
+                          grossValue: 4.5
+                          taxValue: 0
+                          appliedDiscounts:
+                            - id: LS10PTOTAL
+                              value: 0.5
+                              discountType: PERCENT
+                        totalDiscount:
+                          calculationType: ApplyDiscountBeforeTax
+                          value: 11.22
+                          appliedDiscounts:
+                            - id: LS10PTOTAL
+                              value: 11.22
+                              discountType: PERCENT
+                        totalShipping:
+                          netValue: 6.5
+                          grossValue: 6.955
+                          taxValue: 0.455
+                          taxCode: REDUCED
+                          taxRate: 7
+                          appliedDiscounts:
+                            - id: LS10PTOTAL
+                              value: 0.72
+                              discountType: PERCENT
+                        finalPrice:
+                          netValue: 101
+                          grossValue: 110.455
+                          taxValue: 9.455
+        '400':
+          $ref: '#/components/responses/trait_400'
+        '401':
+          $ref: '#/components/responses/trait_401'
+        '403':
+          $ref: '#/components/responses/trait_403'
+        '500':
+          $ref: '#/components/responses/trait_500'
+      description: |-
+        Returns all carts that match provided criteria.
+        ***
+        ### Required scopes
+
+        *  `cart.cart_manage`
+
+            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
+      operationId: POST-cart-retrieve-carts-by-search
+      security:
+        - CustomerAccessToken: []
+        - OAuth2: []
+      parameters:
+        - $ref: '#/components/parameters/trait_tenant'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/xTotalCount'
+      summary: Searching for carts
+      tags:
+        - Carts
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
   '/cart/{tenant}/carts/{cartId}':
     get:
       responses:
@@ -544,278 +777,428 @@ paths:
               examples:
                 Detailed cart with calculated prices:
                   value:
-                    id: 6793753b7d4bba47e2a99800
-                    customerId: '45620894'
-                    currency: EUR
-                    siteCode: GrossSite
-                    type: shopping
+                    id: "67f51d6c7bffa31e0f7a36ec"
+                    yrn: "urn:yaas:hybris:cart:cart:b2b2cstage;67f51d6c7bffa31e0f7a36ec"
+                    customerId: "45620894"
+                    currency: "EUR"
+                    siteCode: "GrossSite"
+                    type: "shopping"
                     channel:
-                      name: storefront
-                      source: 'https://your-storefront.com/'
+                      name: "storefront"
+                      source: "https://your-storefront.com/"
                     items:
-                      - id: '0'
-                        type: EXTERNAL
-                        itemYrn: 'urn:yaas:saasag:caasproduct:product:test;samsung-galaxy-s24-gross'
-                        quantity: 1
-                        effectiveQuantity: 1
+                      - id: "0"
+                        type: "INTERNAL"
+                        itemYrn: "urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross"
+                        quantity: 1.0
+                        effectiveQuantity: 1.0
                         price:
-                          originalAmount: 110
-                          effectiveAmount: 110
-                          currency: EUR
+                          priceId: "679ca63dbcdefe5b380c98bc"
+                          priceListId: "abc123"
+                          originalAmount: 350.0
+                          effectiveAmount: 350.0
+                          currency: "EUR"
+                        unitPrice:
+                          netValue: 294.118
+                          grossValue: 350.0
+                          taxValue: 55.882
+                          taxCode: "STANDARD"
+                          taxRate: 19.0
                         itemPrice:
-                          amount: 110
-                          currency: EUR
+                          amount: 350.0
+                          currency: "EUR"
                         itemTaxInfo:
-                          - name: STANDARD
+                          - name: "STANDARD"
                             value:
-                              amount: 10
-                            rate: 10
-                            grossValue: 110
-                            netValue: 100
+                              amount: 55.88
+                            rate: 19.0
+                            grossValue: 350.00
+                            netValue: 294.12
                         fees:
                           elements:
-                            - yrn: 'urn:yaas:saasag:fee:fee:test;6793753e7d4bba47e2a99801'
+                            - yrn: "urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2"
+                              taxCode: "REDUCED"
                               total:
-                                subTotal: 5
-                                totalTax: 0
+                                subTotal: 3.5
+                                totalTax: 0.0
+                                total: 3.15
+                                discount: 0.35
+                              name:
+                                de: "Apple Picking Fee"
+                                en: "Apple Picking Fee"
+                          total:
+                            subTotal: 3.5
+                            totalTax: 0.0
+                            total: 3.15
+                            discount: 0.35
+                        authorizedAmount:
+                          amount: 350.0
+                          currency: "EUR"
+                        totalDiscount:
+                          amount: 35.35
+                          currency: "EUR"
+                        couponDiscounts:
+                          - couponId: "LS10PTOTAL"
+                            value: 35.35
+                        externalDiscounts:
+                          - id: "ext-discount-001"
+                            discountType: "PERCENT"
+                            value: 15.00
+                            sequence: 1
+                        calculatedPrice:
+                          price:
+                            netValue: 294.118
+                            grossValue: 350.0
+                            taxValue: 55.882
+                          discountedPrice:
+                            netValue: 220.588
+                            grossValue: 262.5
+                            taxValue: 41.912
+                            taxCode: "STANDARD"
+                            taxRate: 19.0
+                            appliedDiscounts:
+                              - id: "LS10PTOTAL"
+                                value: 35.0
+                                discountType: "PERCENT"
+                              - id: "ext-discount-001"
+                                value: 52.5
+                                discountType: "PERCENT"
+                          fees:
+                            - id: "677d49ca3a421b451eab23f2"
+                              type: "ABSOLUTE"
+                              origin: "INTERNAL"
+                              name:
+                                de: "Apple Picking Fee"
+                                en: "Apple Picking Fee"
+                              price:
+                                netValue: 3.5
+                                grossValue: 3.745
+                                taxValue: 0.245
+                                taxCode: "REDUCED"
+                                taxRate: 7.0
+                              discountedPrice:
+                                netValue: 3.15
+                                grossValue: 3.37
+                                taxValue: 0.22
+                                taxCode: "REDUCED"
+                                taxRate: 7.0
+                                appliedDiscounts:
+                                  - id: "LS10PTOTAL"
+                                    value: 0.375
+                                    discountType: "PERCENT"
+                          totalFee:
+                            netValue: 3.15
+                            grossValue: 3.37
+                            taxValue: 0.22
+                            taxCode: "REDUCED"
+                            taxRate: 7.0
+                            appliedDiscounts:
+                              - id: "LS10PTOTAL"
+                                value: 0.375
+                                discountType: "PERCENT"
+                          totalDiscount:
+                            calculationType: "ApplyDiscountAfterTax"
+                            value: 87.875
+                            appliedDiscounts:
+                              - id: "LS10PTOTAL"
+                                value: 35.375
+                                discountType: "PERCENT"
+                                origin: "INTERNAL"
+                              - id: "ext-discount-001"
+                                value: 52.5
+                                discountType: "PERCENT"
+                                origin: "EXTERNAL"
+                          finalPrice:
+                            netValue: 223.738
+                            grossValue: 265.87
+                            taxValue: 42.132
+                      - id: "1"
+                        type: "EXTERNAL"
+                        product:
+                          id: "myTestId"
+                          sku: "sku"
+                          name: "myExternalProduct"
+                          description: "testExternalProduct"
+                          images:
+                            - id: "imageid"
+                              url: "imageURL"
+                        quantity: 2.0
+                        effectiveQuantity: 2.0
+                        price:
+                          originalAmount: 119.0
+                          effectiveAmount: 119.0
+                          currency: "EUR"
+                        unitPrice:
+                          netValue: 100.0
+                          grossValue: 119.0
+                          taxValue: 19.0
+                          taxCode: "STANDARD"
+                          taxRate: 19.0
+                        itemPrice:
+                          amount: 238.0
+                          currency: "EUR"
+                        itemTaxInfo:
+                          - name: "STANDARD"
+                            value:
+                              amount: 38.0
+                            rate: 19.0
+                            grossValue: 238.00
+                            netValue: 200.00
+                        fees:
+                          elements:
+                            - yrn: "urn:yaas:saasag:fee:fee:b2b2cstage;67f51da37bffa31e0f7a36ed"
+                              total:
+                                subTotal: 5.0
+                                totalTax: 0.0
                                 total: 4.5
                                 discount: 0.5
                               name:
-                                en: Freight Fee
+                                en: "Freight Fee"
                           total:
-                            subTotal: 5
-                            totalTax: 0
+                            subTotal: 5.0
+                            totalTax: 0.0
                             total: 4.5
                             discount: 0.5
                         authorizedAmount:
-                          amount: 143
-                          currency: EUR
+                          amount: 238.0
+                          currency: "EUR"
                         totalDiscount:
-                          amount: 11.5
-                          currency: EUR
+                          amount: 24.3
+                          currency: "EUR"
                         couponDiscounts:
-                          - couponId: LS10PTOTAL
-                            value: 11.5
+                          - couponId: "LS10PTOTAL"
+                            value: 24.3
                         externalFees:
-                          - id: 6793753e7d4bba47e2a99801
-                            yrn: 'urn:yaas:saasag:fee:fee:test;6793753e7d4bba47e2a99801'
+                          - id: "67f51da37bffa31e0f7a36ed"
+                            yrn: "urn:yaas:saasag:fee:fee:b2b2cstage;67f51da37bffa31e0f7a36ed"
                             name:
-                              en: Freight Fee
-                            feeType: ABSOLUTE
+                              en: "Freight Fee"
+                            feeType: "ABSOLUTE"
                             feeAbsolute:
-                              currency: EUR
-                              amount: 5
+                              currency: "EUR"
+                              amount: 5.0
                             taxable: false
                         calculatedPrice:
                           price:
-                            netValue: 100
-                            grossValue: 110
-                            taxValue: 10
-                            taxCode: STANDARD
-                            taxRate: 10
-                          upliftValue:
-                            netValue: 30
-                            grossValue: 33
-                            taxValue: 3
-                            taxCode: STANDARD
-                            taxRate: 10
+                            netValue: 200.0
+                            grossValue: 238.0
+                            taxValue: 38.0
+                            taxCode: "STANDARD"
+                            taxRate: 19.0
                           discountedPrice:
-                            netValue: 90
-                            grossValue: 99
-                            taxValue: 9
-                            taxCode: STANDARD
-                            taxRate: 10
+                            netValue: 180.0
+                            grossValue: 214.2
+                            taxValue: 34.2
+                            taxCode: "STANDARD"
+                            taxRate: 19.0
                             appliedDiscounts:
-                              - id: LS10PTOTAL
-                                value: 10
-                                discountType: PERCENT
+                              - id: "LS10PTOTAL"
+                                value: 23.8
+                                discountType: "PERCENT"
                           fees:
-                            - id: 6793753e7d4bba47e2a99801
-                              type: ABSOLUTE
+                            - id: "67f51da37bffa31e0f7a36ed"
+                              type: "ABSOLUTE"
+                              origin: "EXTERNAL"
                               name:
-                                en: Freight Fee
+                                en: "Freight Fee"
                               price:
-                                netValue: 5
-                                grossValue: 5
-                                taxValue: 0
+                                netValue: 5.0
+                                grossValue: 5.0
+                                taxValue: 0.0
                               discountedPrice:
                                 netValue: 4.5
                                 grossValue: 4.5
-                                taxValue: 0
+                                taxValue: 0.0
                                 appliedDiscounts:
-                                  - id: LS10PTOTAL
+                                  - id: "LS10PTOTAL"
                                     value: 0.5
-                                    discountType: PERCENT
+                                    discountType: "PERCENT"
                           totalFee:
                             netValue: 4.5
                             grossValue: 4.5
-                            taxValue: 0
+                            taxValue: 0.0
                             appliedDiscounts:
-                              - id: LS10PTOTAL
+                              - id: "LS10PTOTAL"
                                 value: 0.5
-                                discountType: PERCENT
+                                discountType: "PERCENT"
                           totalDiscount:
-                            calculationType: ApplyDiscountBeforeTax
-                            value: 10.5
+                            calculationType: "ApplyDiscountAfterTax"
+                            value: 24.3
                             appliedDiscounts:
-                              - id: LS10PTOTAL
-                                value: 10.5
-                                discountType: PERCENT
+                              - id: "LS10PTOTAL"
+                                value: 24.3
+                                discountType: "PERCENT"
+                                origin: "INTERNAL"
                           finalPrice:
-                            netValue: 94.5
-                            grossValue: 103.5
-                            taxValue: 9
+                            netValue: 184.5
+                            grossValue: 218.7
+                            taxValue: 34.2
                     discounts:
-                      - id: '0'
-                        code: LS10PTOTAL
-                        currency: EUR
-                        discountRate: 10
-                        name: LS10PTOTAL
-                        calculationType: ApplyDiscountBeforeTax
+                      - id: "0"
+                        code: "LS10PTOTAL"
+                        currency: "EUR"
+                        discountRate: 10.0
+                        name: "LS10PTOTAL"
+                        calculationType: "ApplyDiscountBeforeTax"
                         valid: true
                         links:
-                          - rel: validate
-                            title: Coupon Validation
-                            href: 'https://api.emporix.io/caas-coupon/test/coupons/LS10PTOTAL/validation'
-                            type: application/json
-                          - rel: redeem
-                            title: Coupon Redemption
-                            href: 'https://api.emporix.io/caas-coupon/test/coupons/LS10PTOTAL/redemptions'
-                            type: application/json
-                        discountType: PERCENT
-                        discountCalculationType: TOTAL
+                          - rel: "validate"
+                            title: "Coupon Validation"
+                            href: "https://api-stage.emporix.io/coupon/b2b2cstage/coupons/LS10PTOTAL/validation"
+                            type: "application/json"
+                          - rel: "redeem"
+                            title: "Coupon Redemption"
+                            href: "https://api-stage.emporix.io/coupon/b2b2cstage/coupons/LS10PTOTAL/redemptions"
+                            type: "application/json"
+                        discountType: "PERCENT"
+                        discountCalculationType: "TOTAL"
                         categoryRestricted: false
                     feeYrnAggregate:
                       elements:
-                        - yrn: 'urn:yaas:saasag:fee:fee:test;6793753e7d4bba47e2a99801'
+                        - yrn: "urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2"
+                          taxCode: "REDUCED"
                           total:
-                            subTotal: 5
-                            totalTax: 0
+                            subTotal: 3.5
+                            totalTax: 0.0
+                            total: 3.15
+                            discount: 0.35
+                          name:
+                            de: "Apple Picking Fee"
+                            en: "Apple Picking Fee"
+                        - yrn: "urn:yaas:saasag:fee:fee:b2b2cstage;67f51da37bffa31e0f7a36ed"
+                          total:
+                            subTotal: 5.0
+                            totalTax: 0.0
                             total: 4.5
                             discount: 0.5
                           name:
-                            en: Freight Fee
+                            en: "Freight Fee"
                       total:
-                        subTotal: 5
-                        totalTax: 0
-                        total: 4.5
-                        discount: 0.5
+                        subTotal: 8.5
+                        totalTax: 0.0
+                        total: 7.65
+                        discount: 0.85
                     totalPrice:
-                      amount: 110
-                      currency: EUR
+                      amount: 543.35
+                      currency: "EUR"
                     subTotalPrice:
-                      amount: 110
-                      currency: EUR
+                      amount: 588.0
+                      currency: "EUR"
                     shipping:
                       fee:
                         amount: 7.22
-                        currency: EUR
+                        currency: "EUR"
                       total:
                         subTotal: 7.22
-                        totalTax: 0
+                        totalTax: 0.0
                         total: 6.5
                         discount: 0.72
-                    totalUnitsCount: 1
+                    totalUnitsCount: 3.0
                     metadata:
                       createdAt: '2025-01-24T11:11:15.394438Z'
                       modifiedAt: '2025-01-24T11:11:15.394459Z'
+                      calculatedAt: '2025-01-24T11:11:15.394459Z'
                       version: 1
                     totalTax:
-                      amount: 0
-                      currency: EUR
+                      amount: 0.0
+                      currency: "EUR"
                     taxAggregate:
                       lines:
-                        - name: STANDARD
-                          amount: 10
-                          rate: 10
-                          taxable: 110
+                        - name: "STANDARD"
+                          amount: 93.88
+                          rate: 19.0
+                          taxable: 588.0
                     subtotalAggregate:
-                      currency: EUR
-                      netValue: 100
-                      grossValue: 110
-                      taxValue: 10
+                      currency: "EUR"
+                      netValue: 494.12
+                      grossValue: 588.00
+                      taxValue: 93.88
                     totalDiscount:
-                      amount: 12.22
-                      currency: EUR
+                      amount: 60.37
+                      currency: "EUR"
                     itemFeesTotal:
-                      subTotal: 5
-                      totalTax: 0
-                      total: 4.5
-                      discount: 0.5
+                      subTotal: 8.5
+                      totalTax: 0.0
+                      total: 7.65
+                      discount: 0.85
                     paymentFeesTotal:
-                      subTotal: 0
-                      totalTax: 0
-                      total: 0
-                      discount: 0
+                      subTotal: 0.0
+                      totalTax: 0.0
+                      total: 0.0
+                      discount: 0.0
                     leadTime: 0
                     totalAuthorizedAmount:
-                      amount: 143
-                      currency: EUR
+                      amount: 543.35
+                      currency: "EUR"
                     calculatedPrice:
                       price:
-                        netValue: 100
-                        grossValue: 110
-                        taxValue: 10
-                        taxCode: STANDARD
-                        taxRate: 10
-                      upliftValue:
-                        netValue: 30
-                        grossValue: 33
-                        taxValue: 3
-                        taxCode: STANDARD
-                        taxRate: 10
+                        netValue: 494.118
+                        grossValue: 588.0
+                        taxValue: 93.882
+                        taxCode: "STANDARD"
+                        taxRate: 19.0
                       discountedPrice:
-                        netValue: 90
-                        grossValue: 99
-                        taxValue: 9
-                        taxCode: STANDARD
-                        taxRate: 10
+                        netValue: 400.588
+                        grossValue: 476.7
+                        taxValue: 76.112
+                        taxCode: "STANDARD"
+                        taxRate: 19.0
                         appliedDiscounts:
-                          - id: LS10PTOTAL
-                            value: 10
-                            discountType: PERCENT
+                          - id: "LS10PTOTAL"
+                            value: 58.8
+                            discountType: "PERCENT"
+                          - id: "ext-discount-001"
+                            value: 52.5
+                            discountType: "PERCENT"
                       totalFee:
-                        netValue: 4.5
-                        grossValue: 4.5
-                        taxValue: 0
+                        netValue: 7.65
+                        grossValue: 7.87
+                        taxValue: 0.22
                         appliedDiscounts:
-                          - id: LS10PTOTAL
-                            value: 0.5
-                            discountType: PERCENT
+                          - id: "LS10PTOTAL"
+                            value: 0.875
+                            discountType: "PERCENT"
                       totalDiscount:
-                        calculationType: ApplyDiscountBeforeTax
-                        value: 11.22
+                        calculationType: "ApplyDiscountAfterTax"
+                        value: 112.948
                         appliedDiscounts:
-                          - id: LS10PTOTAL
-                            value: 11.22
-                            discountType: PERCENT
+                          - id: "LS10PTOTAL"
+                            value: 60.448
+                            discountType: "PERCENT"
+                            origin: "INTERNAL"
+                          - id: "ext-discount-001"
+                            value: 52.5
+                            discountType: "PERCENT"
+                            origin: "EXTERNAL"
                       totalShipping:
-                        netValue: 6.5
-                        grossValue: 6.955
+                        netValue: 6.497
+                        grossValue: 6.952
                         taxValue: 0.455
-                        taxCode: REDUCED
-                        taxRate: 7
+                        taxCode: "REDUCED"
+                        taxRate: 7.0
                         appliedDiscounts:
-                          - id: LS10PTOTAL
-                            value: 0.72
-                            discountType: PERCENT
+                          - id: "LS10PTOTAL"
+                            value: 0.773
+                            discountType: "PERCENT"
                       finalPrice:
-                        netValue: 101
-                        grossValue: 110.455
-                        taxValue: 9.455
+                        netValue: 414.735
+                        grossValue: 491.522
+                        taxValue: 76.787
                         taxAggregate:
                           lines:
-                            - netValue: 7.22
-                              grossValue: 7.7254
-                              taxValue: 0.5054
-                              taxCode: REDUCED
+                            - netValue: 9.647
+                              grossValue: 10.322
+                              taxValue: 0.675
+                              taxCode: "REDUCED"
                               taxRate: 7.0
-                            - netValue: 90.0
-                              grossValue: 99.0
-                              taxValue: 9.0
-                              taxCode: STANDARD
-                              taxRate: 10.0
-
+                            - netValue: 400.588
+                              grossValue: 476.7
+                              taxValue: 76.112
+                              taxCode: "STANDARD"
+                              taxRate: 19.0
+                            - netValue: 4.5
+                              grossValue: 4.5
+                              taxValue: 0.0
         '400':
           $ref: '#/components/responses/trait_400'
         '403':
@@ -1348,6 +1731,7 @@ paths:
                             - id: LS10PTOTAL
                               value: 10
                               discountType: PERCENT
+                              origin: INTERNAL
                         fees:
                           - id: 6793753e7d4bba47e2a99801
                             type: ABSOLUTE
@@ -1365,6 +1749,7 @@ paths:
                                 - id: LS10PTOTAL
                                   value: 0.5
                                   discountType: PERCENT
+                                  origin: INTERNAL
                         totalFee:
                           netValue: 4.5
                           grossValue: 4.5
@@ -1373,6 +1758,7 @@ paths:
                             - id: LS10PTOTAL
                               value: 0.5
                               discountType: PERCENT
+                              origin: INTERNAL
                         totalDiscount:
                           calculationType: ApplyDiscountBeforeTax
                           value: 10.5
@@ -1380,6 +1766,7 @@ paths:
                             - id: LS10PTOTAL
                               value: 10.5
                               discountType: PERCENT
+                              origin: INTERNAL
                         finalPrice:
                           netValue: 94.5
                           grossValue: 103.5
@@ -1452,7 +1839,7 @@ paths:
 
         *  `cart.cart_manage_external_prices` 
 
-            **Note**: This scope is used  to manage external prices, products and fees. It's required only when an external price, product or fee is provided.
+            **Note**: This scope is used  to manage external prices, products, fees and discounts. It's required only when an external price, product, fee or discount is provided.
       operationId: POST-cart-add-item-to-cart
       requestBody:
         content:
@@ -1502,6 +1889,31 @@ paths:
                     grossValue: 2
                     netValue: 1.82
                   quantity: 5
+              External product with discount example:
+                value:
+                  itemType: EXTERNAL
+                  product:
+                    id: productId
+                    name: Product Name
+                    description: Product Description
+                    sku: productSku
+                    images:
+                      - id: imageId
+                        url: imageUrl
+                  price:
+                    effectiveAmount: 2
+                    originalAmount: 2
+                    currency: EUR
+                  tax:
+                    rate: 10
+                    grossValue: 2
+                    netValue: 1.82
+                  quantity: 5
+                  externalDiscounts:
+                    - id: ext-discount-001
+                      discountType: PERCENT
+                      value: 15.00
+                      sequence: 1
         required: false
         description: ''
       security:
@@ -1644,6 +2056,7 @@ paths:
                           - id: LS10PTOTAL
                             value: 10
                             discountType: PERCENT
+                            origin: INTERNAL
                       fees:
                         - id: 6793753e7d4bba47e2a99801
                           type: ABSOLUTE
@@ -1661,6 +2074,7 @@ paths:
                               - id: LS10PTOTAL
                                 value: 0.5
                                 discountType: PERCENT
+                                origin: INTERNAL
                       totalFee:
                         netValue: 4.5
                         grossValue: 4.5
@@ -1669,6 +2083,7 @@ paths:
                           - id: LS10PTOTAL
                             value: 0.5
                             discountType: PERCENT
+                            origin: INTERNAL
                       totalDiscount:
                         calculationType: ApplyDiscountBeforeTax
                         value: 10.5
@@ -1676,6 +2091,7 @@ paths:
                           - id: LS10PTOTAL
                             value: 10.5
                             discountType: PERCENT
+                            origin: INTERNAL
                       finalPrice:
                         netValue: 94.5
                         grossValue: 103.5
@@ -2169,9 +2585,17 @@ components:
         - yrn
         - discountId
         - discountIndex
-    cart:
+    search:
       type: object
-      description: Cart details.
+      properties:
+        q:
+          type: string
+          description: |
+            A standard query parameter is used to search for specific values. 
+            
+            See: [Standard practises - Query parameter](https://developer.emporix.io/docs/content/q-param/)
+    baseCart:
+      type: object
       properties:
         id:
           type: string
@@ -2209,11 +2633,6 @@ components:
           pattern: '[A-Z]{2}'
         channel:
           $ref: '#/components/schemas/channel'
-        items:
-          type: array
-          description: Items added to the cart.
-          items:
-            $ref: '#/components/schemas/cartItemResponse'
         calculatedPrice:
           $ref: '#/components/schemas/cartCalculatedPrice'
         discounts:
@@ -2240,91 +2659,116 @@ components:
           additionalProperties: true
         leadTime:
           type: integer
-          description: 'Time needed to prepare products for delivery, expressed in hours.'
+          description: 'Time needed to prepare the products for the delivery, expressed in hours. Time is calculated based on the products added to the cart. It is equal to the maximum lead time of all the products - `mixins.productCustomAttributes.leadTime`.'
         nonDelivery:
           type: array
-          description: List of days on which the products cannot be delivered.
+          description: List of days on which the products cannot be delivered. Days are presented by numbers where Monday is `0`, Tuesday is `1` etc. `nonDelivery` list is the union of all `mixins.productCustomAttributes.nonDelivery` products values.
           items:
             type: string
-        deliveryWindowId:
-          type: string
-          deprecated: true
-          description: |-
-            Delivery window's unique identifier, as defined in the Shipping Service.
-
-            ***NOTE***
-            This attribute is deprecated. Please use the `deliveryWindow` attribute.
-        feeYrnAggregate:
-          allOf:
-            - $ref: '#/components/schemas/feeAggregate'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.totalFees` and `items[].calculatedPrice.fees` instead.
-                        These fields provide the same values with updated functionality."
-        totalPrice:
-          allOf:
-            - $ref: '#/components/schemas/price'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.finalPrice` instead.
-                        The `calculatedPrice.finalPrice` field provides the same value with updated functionality."
-        subTotalPrice:
-          allOf:
-            - $ref: '#/components/schemas/price'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.price` or `calculatedPrice.discountedPrice` instead.
-                        These fields provide the same value with updated functionality."
-        shipping:
-          allOf:
-            - $ref: '#/components/schemas/shipping'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.totalShipping` instead.
-                        The `unitPrice` field provides the same value with updated functionality."
-        taxAggregate:
-          allOf:
-            - $ref: '#/components/schemas/taxAggregate'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.finalPrice.taxAggregate` instead.
-                        The `calculatedPrice.finalPrice.taxAggregate` field provides the same value with updated functionality."
-        subtotalAggregate:
-          allOf:
-            - $ref: '#/components/schemas/subtotalAggregate'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.price` instead.
-                        The `calculatedPrice.price` field provides the same value with updated functionality."
-        totalDiscount:
-          allOf:
-            - $ref: '#/components/schemas/price'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.totalDiscount` instead.
-                        The `calculatedPrice.totalDiscount` field provides the same value with updated functionality."
-        itemFeesTotal:
-          allOf:
-            - $ref: '#/components/schemas/total'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.totalFee` instead.
-                        The `unitPrice` field provides the same value with updated functionality."
-        paymentFeesTotal:
-          allOf:
-            - $ref: '#/components/schemas/total'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.paymentFees` instead.
-                        The `calculatedPrice.paymentFees` field provides the same value with updated functionality."
-        totalAuthorizedAmount:
-          allOf:
-            - $ref: '#/components/schemas/price'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.upliftValue` instead.
-                        The `calculatedPrice.upliftValue` field provides an information how much final price should be increased for card authorization."
       required:
         - siteCode
+    cartGetAll:
+      allOf:
+        - $ref: "#/components/schemas/baseCart"
+        - type: object
+          properties:
+            items:
+              type: array
+              description: Items added to the cart.
+              items:
+                $ref: '#/components/schemas/baseCartItemResponse'
+            status:
+              type: string
+              enum: [OPEN, CLOSED]
+              description: Informs whether cart is still open or it is already closed.
+    cart:
+      description: Cart details.
+      allOf:
+        - $ref: "#/components/schemas/baseCart"
+        - type: object
+          properties:
+            items:
+              type: array
+              description: Items added to the cart.
+              items:
+                $ref: '#/components/schemas/cartItemResponse'
+            deliveryWindowId:
+              type: string
+              deprecated: true
+              description: |-
+                Delivery window's unique identifier, as defined in the Shipping Service.
+                
+                ***NOTE***
+                This attribute is deprecated. Please use the `deliveryWindow` attribute.
+            feeYrnAggregate:
+              allOf:
+                - $ref: '#/components/schemas/feeAggregate'
+              deprecated: true
+              description: "**This field is deprecated**. Please use `calculatedPrice.totalFees` and `items[].calculatedPrice.fees` instead.
+                            These fields provide the same values with updated functionality."
+            totalPrice:
+              allOf:
+                - $ref: '#/components/schemas/price'
+              deprecated: true
+              description: "**This field is deprecated**. Please use `calculatedPrice.finalPrice` instead.
+                            The `calculatedPrice.finalPrice` field provides the same value with updated functionality."
+            subTotalPrice:
+              allOf:
+                - $ref: '#/components/schemas/price'
+              deprecated: true
+              description: "**This field is deprecated**. Please use `calculatedPrice.price` or `calculatedPrice.discountedPrice` instead.
+                            These fields provide the same value with updated functionality."
+            shipping:
+              allOf:
+                - $ref: '#/components/schemas/shipping'
+              deprecated: true
+              description: "**This field is deprecated**. Please use `calculatedPrice.totalShipping` instead.
+                            The `unitPrice` field provides the same value with updated functionality."
+            taxAggregate:
+              allOf:
+                - $ref: '#/components/schemas/taxAggregate'
+              deprecated: true
+              description: "**This field is deprecated**. Please use `calculatedPrice.finalPrice.taxAggregate` instead.
+                            The `calculatedPrice.finalPrice.taxAggregate` field provides the same value with updated functionality."
+            subtotalAggregate:
+              allOf:
+                - $ref: '#/components/schemas/subtotalAggregate'
+              deprecated: true
+              description: "**This field is deprecated**. Please use `calculatedPrice.price` instead.
+                            The `calculatedPrice.price` field provides the same value with updated functionality."
+            totalDiscount:
+              allOf:
+                - $ref: '#/components/schemas/price'
+              deprecated: true
+              description: "**This field is deprecated**. Please use `calculatedPrice.totalDiscount` instead.
+                            The `calculatedPrice.totalDiscount` field provides the same value with updated functionality."
+            itemFeesTotal:
+              allOf:
+                - $ref: '#/components/schemas/total'
+              deprecated: true
+              description: "**This field is deprecated**. Please use `calculatedPrice.totalFee` instead.
+                            The `unitPrice` field provides the same value with updated functionality."
+            paymentFeesTotal:
+              allOf:
+                - $ref: '#/components/schemas/total'
+              deprecated: true
+              description: "**This field is deprecated**. Please use `calculatedPrice.paymentFees` instead.
+                            The `calculatedPrice.paymentFees` field provides the same value with updated functionality."
+            totalAuthorizedAmount:
+              allOf:
+                - $ref: '#/components/schemas/price'
+              deprecated: true
+              description: "**This field is deprecated**. Please use `calculatedPrice.upliftValue` instead.
+                            The `calculatedPrice.upliftValue` field provides an information how much final price should be increased for card authorization."
     cartDTRestrictions:
       type: object
       properties:
         leadTime:
           type: integer
-          description: 'Time needed to prepare products for delivery, expressed in hours.'
+          description: 'Time needed to prepare the products for the delivery, expressed in hours. Time is calculated based on the products added to the cart. It is equal to the maximum lead time of all the products - `mixins.productCustomAttributes.leadTime`.'
         nonDelivery:
           type: array
-          description: List of days on which the products cannot be delivered.
+          description: List of days on which the products cannot be delivered. Days are presented by numbers where Monday is `0`, Tuesday is `1` etc. `nonDelivery` list is the union of all `mixins.productCustomAttributes.nonDelivery` products values.
           items:
             type: string
       description: Cart delivery time restrictions.
@@ -2347,6 +2791,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/externalFee'
+        externalDiscounts:
+          type: array
+          description: External discounts that should be applied to this cart item. Requires `cart.cart_manage_external_prices` scope
+          items:
+            $ref: '#/components/schemas/externalDiscount'
         itemType:
           allOf:
             - $ref: '#/components/schemas/itemType'
@@ -2376,8 +2825,8 @@ components:
           type: boolean
           deprecated: true
           description: |
-                      Deprecated, use product's `weightDependent` attribute that is stored in the database. 
-                      If set to `true`, the storefront displays a hint that the total price of the product may vary depending on the product’s actual weight.
+            Deprecated, use product's `weightDependent` attribute that is stored in the database. 
+            If set to `true`, the storefront displays a hint that the total price of the product may vary depending on the product’s actual weight.
       required:
         - quantity
         - price
@@ -2472,7 +2921,38 @@ components:
                   value:
                     type: number
                     description: Value of the tax.
-    cartItemResponse:
+    externalDiscountType:
+      type: string
+      description: Type of the external discount.
+      enum:
+        - PERCENT
+        - ABSOLUTE
+    externalDiscount:
+      type: object
+      description: External discount that can be applied to cart items.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the external discount.
+        discountType:
+          $ref: '#/components/schemas/externalDiscountType'
+        value:
+          type: number
+          format: double
+          minimum: 0.0
+          maximum: 100.0
+          description: Value of the discount (percentage e.g 15.00 -> 15% or absolute amount e.g 10.00 -> 10 EUR depending on the discountType).
+        includeFees:
+          type: boolean
+          description: Flag indicating whether the discount should be also applied to fees.
+        sequence:
+          type: integer
+          description: Sequence number determining the order in which discounts are applied. The lowest sequence number is applied first.
+      required:
+        - id
+        - discountType
+        - value
+    baseCartItemResponse:
       type: object
       properties:
         id:
@@ -2515,59 +2995,73 @@ components:
         mixins:
           type: object
           additionalProperties: true
-        price:
-          allOf:
-            - $ref: '#/components/schemas/priceRow'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `unitPrice` instead.
-                        The `unitPrice` field provides the same value with updated functionality."
-        couponDiscounts:
-          allOf:
-            - $ref: '#/components/schemas/couponDiscounts'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.totalDiscounts.appliedDiscounts` instead.
-                        The `calculatedPrice.totalDiscount.appliedDiscounts` field provides the same value with updated functionality."
-        itemPrice:
-          allOf:
-            - $ref: '#/components/schemas/price'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `unitPrice` instead.
-                        The `unitPrice` field provides the same value with updated functionality."
-        itemTaxInfo:
+        externalDiscounts:
           type: array
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.price` instead."
+          description: External discounts applied to this cart item.
           items:
-            $ref: '#/components/schemas/taxValue'
-        fees:
-          allOf:
-            - $ref: '#/components/schemas/feeAggregate'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.fees` instead.
-                        The `calculatedPrice.fees` field provides the same value with updated functionality."
-        authorizedAmount:
-          allOf:
-            - $ref: '#/components/schemas/price'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.upliftValue` instead.
-                        The `calculatedPrice.upliftValue` field how much should be payment authorization increased for given item."
-        totalDiscount:
-          allOf:
-            - $ref: '#/components/schemas/price'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.totalDiscount` instead.
-                        The `calculatedPrice.totalDiscount` field provides the same value with updated functionality."
-        externalFees:
-          type: array
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.fees` instead. 
-                        A fee has an enum value that allows to distinguish external prices"
-          items:
-            $ref: '#/components/schemas/externalFee'
+            $ref: '#/components/schemas/externalDiscount'
       required:
         - quantity
         - effectiveQuantity
       description: Cart item details.
+    cartItemResponse:
+      description: Cart item details.
+      allOf:
+        - $ref: "#/components/schemas/baseCartItemResponse"
+        - type: object
+          properties:
+            price:
+              allOf:
+                - $ref: '#/components/schemas/priceRow'
+              deprecated: true
+              description: "**This field is deprecated**. Please use `unitPrice` instead.
+                            The `unitPrice` field provides the same value with updated functionality."
+            couponDiscounts:
+              allOf:
+                - $ref: '#/components/schemas/couponDiscounts'
+              deprecated: true
+              description: "**This field is deprecated**. Please use `calculatedPrice.totalDiscounts.appliedDiscounts` instead.
+                            The `calculatedPrice.totalDiscount.appliedDiscounts` field provides the same value with updated functionality."
+            itemPrice:
+              allOf:
+                - $ref: '#/components/schemas/price'
+              deprecated: true
+              description: "**This field is deprecated**. Please use `unitPrice` instead.
+                            The `unitPrice` field provides the same value with updated functionality."
+            itemTaxInfo:
+              type: array
+              deprecated: true
+              description: "**This field is deprecated**. Please use `calculatedPrice.price` instead."
+              items:
+                $ref: '#/components/schemas/taxValue'
+            fees:
+              allOf:
+                - $ref: '#/components/schemas/feeAggregate'
+              deprecated: true
+              description: "**This field is deprecated**. Please use `calculatedPrice.fees` instead.
+                            The `calculatedPrice.fees` field provides the same value with updated functionality."
+            authorizedAmount:
+              allOf:
+                - $ref: '#/components/schemas/price'
+              deprecated: true
+              description: "**This field is deprecated**. Please use `calculatedPrice.upliftValue` instead.
+                            The `calculatedPrice.upliftValue` field how much should be payment authorization increased for given item."
+            totalDiscount:
+              allOf:
+                - $ref: '#/components/schemas/price'
+              deprecated: true
+              description: "**This field is deprecated**. Please use `calculatedPrice.totalDiscount` instead.
+                            The `calculatedPrice.totalDiscount` field provides the same value with updated functionality."
+            externalFees:
+              type: array
+              deprecated: true
+              description: "**This field is deprecated**. Please use `calculatedPrice.fees` instead. 
+                            A fee has an enum value that allows to distinguish external prices"
+              items:
+                $ref: '#/components/schemas/externalFee'
+          required:
+            - quantity
+            - effectiveQuantity
     changeSite:
       type: object
       properties:
@@ -2970,6 +3464,10 @@ components:
           type: string
           description: 'Date and time when the object was last modified, compliant with the ISO 8601 format.'
           pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?$'
+        calculatedAt:
+          type: string
+          description: 'Date and time when the object was last calculated, compliant with the ISO 8601 format.'
+          pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?$'
         version:
           minimum: 1
           type: integer
@@ -3268,6 +3766,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/externalFee'
+        externalDiscounts:
+          type: array
+          description: External discounts applied to this cart item.
+          items:
+            $ref: '#/components/schemas/externalDiscount'
         product:
           $ref: '#/components/schemas/updateProduct'
         itemYrn:
@@ -3479,7 +3982,7 @@ components:
         totalFee:
           allOf:
             - $ref: '#/components/schemas/calculatedPriceWithDiscounts'
-          description: The sum of all fees applied on the line items plus the payment fee. It's calculated by summing `items[].calculatedPrice.totalFee` with `paymentFee`. The `totalFee` is the value after all the discounts, if any discounts were applied. 
+          description: The sum of all fees applied on the line items plus the payment fee. It's calculated by summing `items[].calculatedPrice.totalFee` with `paymentFee`. The `totalFee` is the value after all the discounts, if any discounts were applied.
           properties:
             netValue:
               description: Net value of the total fee, value without tax.
@@ -3492,11 +3995,13 @@ components:
             taxCode:
               description: If all fees have the same `taxCode` defined, the value is present. Otherwise, the field is not returned in the response.
             appliedDiscounts:
+              allOf:
+                - $ref: '#/components/schemas/calculatedAppliedDiscount'
               description: A list of discounts applied to on the line item fees. The payment fee itself is not discountable.
               items:
                 properties:
                   id:
-                   description: Discount identifier.
+                    description: Discount identifier.
                   value:
                     description: The sum of all `lines[].calculatedPrice.totalFee[].appliedDiscounts[].value` grouped by `discount.id`.
                   discountType:
@@ -3517,6 +4022,8 @@ components:
             taxRate:
               description: Tax rate applied to the shipping cost, it's the percentage at which an individual or business is taxed.
             appliedDiscounts:
+              allOf:
+                - $ref: '#/components/schemas/calculatedAppliedDiscount'
               description: A list of discounts applied to shipping.
               items:
                 properties:
@@ -3526,6 +4033,29 @@ components:
                     description: Value of the discount that was applied.
                   discountType:
                     description: PERCENT for percentage discounts and ABSOLUTE for amount applied to the line item.
+        totalDiscount:
+          allOf:
+            - $ref: '#/components/schemas/calculatedTotalDiscount'
+          description: A summary of all discounts applied at a cart level - sum of `lines[].totalDiscount` and shipping discounts. If there are no discounts applied, it's not returned in the response.
+          properties:
+            calculationType:
+              description: Indicates whether discounts were applied to net or gross values.
+            value:
+              description: Aggregated sum of `lines[].calculatedPrice.totalDiscount.value` plus the sum of shipping discounts `totalShipping.appliedDiscounts[].value`.
+            appliedDiscounts:
+              allOf:
+                - $ref: '#/components/schemas/calculatedAppliedDiscount'
+              description: A list of the applied discounts.
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/calculatedAppliedDiscount'
+                properties:
+                  id:
+                    description: Discount identifier.
+                  value:
+                    description: The sum of all `lines[].calculatedPrice.totalDiscount.value` plus `totalShipping.appliedDiscounts[].value` grouped by the discount ID.
+                  discountType:
+                    description: PERCENT for percentage discounts, ABSOLUTE for monetary amount and FREE_SHIPPING is shipping is fully discounted.
         finalPrice:
           allOf:
             - $ref: '#/components/schemas/calculatedPriceWithTaxAggregate'
@@ -3652,6 +4182,8 @@ components:
             taxCode:
               description: Tax code applied to the discounted price, a tax code is a country's set of tax rules.
             appliedDiscounts:
+              allOf:
+                - $ref: '#/components/schemas/calculatedAppliedDiscount'
               description: A list of discounts applied to the line item.
               items:
                 properties:
@@ -3703,6 +4235,8 @@ components:
                   taxCode:
                     description: Refers to `fees[].price.taxCode`.
                   appliedDiscounts:
+                    allOf:
+                      - $ref: '#/components/schemas/calculatedAppliedDiscount'
                     description: A list of discounts applied to the line item.
                     items:
                       properties:
@@ -3728,6 +4262,8 @@ components:
             taxCode:
               description: If all fees have the same `taxCode`, then the value is present. Otherwise, the field is not returned.
             appliedDiscounts:
+              allOf:
+                - $ref: '#/components/schemas/calculatedAppliedDiscount'
               description: A list of discounts applied to the line item.
               items:
                 properties:
@@ -3747,15 +4283,17 @@ components:
             value:
               description: Aggregated sum of `lines[].calculatedPrice.totalDiscount.value` plus the sum of shipping discounts `totalShipping.appliedDiscounts[].value`.
             appliedDiscounts:
+              allOf:
+                - $ref: '#/components/schemas/calculatedAppliedDiscount'
               description: A list of the applied discounts.
               items:
                 properties:
                   id:
                     description: Discount identifier.
                   value:
-                    description: The sum of all `lines[].calculatedPrice.totalDiscount.value` plus `totalShipping.appliedDiscounts[].value` grouped by the discount ID.
+                    description: The sum of `discountedPrice.appliedDiscounts[].value` and `fees[].discountedPrice.appliedDiscounts[].value`.
                   discountType:
-                    description: PERCENT for percentage discounts, ABSOLUTE for monetary amount and FREE_SHIPPING is shipping is fully discounted.
+                    description: PERCENT for percentage discounts and ABSOLUTE for monetary amount.
         finalPrice:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'
@@ -3795,6 +4333,12 @@ components:
             - ABSOLUTE
             - FREE_SHIPPING
           description: The discount type which shows how the discount was calculated. PERCENT refers to a percentage discount for example 10%. ABSOLUTE is a monetary amount.
+        origin:
+          type: string
+          enum:
+            - INTERNAL
+            - EXTERNAL
+          description: Indicates whether the discount is from internal coupon (INTERNAL) or external discount (EXTERNAL).
     calculatedTotalDiscount:
       title: calculatedTotalDiscount
       type: object
@@ -3827,7 +4371,7 @@ components:
           description: Detailed list of validation errors for specific cart items.
           items:
             $ref: '#/components/schemas/itemValidationDetails'
-    
+
     itemValidationDetails:
       type: object
       description: Validation details for a specific cart item.
@@ -3840,15 +4384,19 @@ components:
           description: List of validation errors for this cart item.
           items:
             $ref: '#/components/schemas/validationError'
-            
+
     validationError:
       type: object
       description: Details of a specific validation error.
       properties:
         errorCode:
           type: string
-          description: Unique code identifying the type of error.
-          example: "CART-ITEM-UNIT-PRICE-100001"
+          description: >
+            Error code for the validation issue. Common codes include:
+            - CART-ITEM-UNIT-PRICE-100001: Item's price was not found in the price match
+            - CART-ITEM-UNIT-PRICE-100002: Duplicated prices found for the same product
+            - CART-ITEM-EXTERNAL-DISCOUNT-100001: Invalid external discount configuration
+            - CART-ITEM-EXTERNAL-DISCOUNT-100002: External discount amount exceeds item price
         message:
           type: string
           description: Human-readable message describing the error.
@@ -3970,6 +4518,36 @@ components:
         minLength: 3
         maxLength: 16
         type: string
+    pageSize:
+      schema:
+        type: string
+      in: query
+      name: pageSize
+      description: The number of documents to be retrieved per page.
+    pageNumber:
+      schema:
+        type: string
+      in: query
+      name: pageNumber
+      description: The page number to be retrieved. The size of the pages should be specified by the pageSize parameter.
+    sort:
+      schema:
+        type: string
+      in: query
+      name: sort
+      description: List of properties used to sort the results, separated by colons.
+    fields:
+      schema:
+        type: string
+      in: query
+      name: fields
+      description: Fields to be returned in the response.
+    xTotalCount:
+      schema:
+        type: boolean
+      in: header
+      name: X-Total-Count
+      description: Flag indicating whether the total number of retrieved results should be returned.
     cartId:
       name: cartId
       in: path
