@@ -8,7 +8,7 @@ seo:
 
 To create a brand with media files and add it to a product created beforehand, follow the process below:
 
-1. [Create a brand with media files](./brand.md#create-a-brand).
+1. [Create a brand](./brand.md#create-a-brand).
 2. [Upload brand images](./brand.md#upload-an-image).
 3. [Update an existing product with brand information](./brand.md#update-an-existing-product-with-brand-information).
 
