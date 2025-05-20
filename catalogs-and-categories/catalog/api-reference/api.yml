@@ -13,7 +13,9 @@ security:
   - OAuth2: []
 tags:
   - name: List catalogs
+    descritpion: Retrieve lists of catalogs
   - name: Catalog management
+    description: Manage catalogs
 paths:
   '/catalog/{tenant}/catalogs':
     get:
