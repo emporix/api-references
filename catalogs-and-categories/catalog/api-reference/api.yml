@@ -232,6 +232,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreateCatalogResponse'
+              example: 
+                id: "4239475"
         "400":
           description: Request was syntactically incorrect. Details will be provided
             in the response payload.
@@ -845,8 +847,6 @@ components:
         id:
           type: string
       description: Response for create catalog requests
-      example:
-        id: "4239475"
     ErrorResponse:
       required:
         - code
