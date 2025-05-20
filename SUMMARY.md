@@ -245,6 +245,16 @@
               kind: openapi
               spec: session-context-api
         ```
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: session-context-api
+        ```
 * [Companies and Customers](companies-and-customers/README.md)
   * [Customer Management](companies-and-customers/client-management/README.md)
     * [Customer Management Tutorial](companies-and-customers/customer-service/customer-management.md)
