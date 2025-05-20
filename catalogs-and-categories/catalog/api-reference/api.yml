@@ -6,7 +6,7 @@ info:
     name: Emporix
     url: https://emporix.com
     email: documentation@emporix.com
-  version: 1.0.0
+  version: ''
 servers:
   - url: https://api.emporix.io
 security:
