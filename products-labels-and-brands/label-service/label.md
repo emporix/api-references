@@ -10,32 +10,14 @@ seo:
 ## How to add a label to a product
 
 To label a product with a specific information, follow these steps:
-1. Add a label image
-2. Create a label
+
+1. Create a label
+2. Add a label image
 3. Update a product with the label information
 
-### Add a label image
+## Create a label
 
-Firstly, create and add an image for a new label. Design the image and upload it to your media repository. Send a request to the [Creating an asset](https://emporix.gitbook.io/documentation-portal/api-references/media/media/api-reference/assets#post-media-tenant-assets) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../../media/media/api-reference/" %}
-[api-reference](../../media/media/api-reference/)
-{% endcontent-ref %}
-
-```bash
-curl -i -X POST \
-  'https://api.emporix.io/media/{tenant}/assets' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: multipart/form-data' \
-  -F 'file=[object Object]' \
-  -F 'body=[object Object]'
-```
-
-### Create a label
-
-To create a new label, send the request to the [Creating a label](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/label-service/api-reference/label#post-labels) endpoint using the image you created.
+To create a new label, send the request to the [Creating a label](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/label-service/api-reference/label#post-labels) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -49,23 +31,55 @@ curl -i -X POST \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "id": "66fe65e83132e30001e6be29",
     "name": "Worldwide Shipment",
-    "description": "<p>Worldwide Shipment</p>",
-    "image": "https://res.cloudinary.com/saas-ag/image/upload/v1727903960/tenant/labels/54fd0a26-fa47-45b7-ae22-8e54e0bb98d2.jpg",
-    "cloudinaryUrl": "tenant/labels/54fd0a26-fa47-45b7-ae22-8e54e0bb98d2",
-    "overlay": {
-      "position": 0,
-      "isTrue": true
+    "description": "<p>Worldwide Shipment</p>"
+  }'
+```
+
+Executing a request to create a label returns a response that includes an "id" field, which should then be used in the next steps.
+
+## Add a label image
+
+Firstly, create and add an image for a new label. Design the image and upload it to your media repository. Send a request to the [Creating an asset](https://emporix.gitbook.io/documentation-portal/api-references/media/media/api-reference/assets#post-media-tenant-assets) endpoint.
+The `labelId` is necessary to provide.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../media/media/api-reference/" %}
+[api-reference](../../media/media/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/media/{tenant}/assets' \
+  --header 'Content-Type: multipart/form-data' \
+  --data '{
+    "file": {
+      "externalValue": "https://res.cloudinary.com/saas-ag/image/upload/v1695804155/emporix-logo-white-2f5e621206edefea6015fb4793959376_nswfbz.png"
+    },
+    "body": {
+      "type": "BLOB",
+      "access": "PUBLIC",
+      "refIds": [
+        {
+          "id": "66fe65e83132e30001e6be29",
+          "type": "LABEL"
+        }
+      ],
+      "details": {
+        "filename": "theBestImage",
+        "mimeType": "image/jpg"
+      }
     }
   }'
 ```
 
-Copy the label id from the response to provide it in the next step.
+## Update a product with a new label
 
-### Update a product with a new label
+You can now update a product with a newly created label to indicate that shipping is available worldwide for this product. Send the request to the [Partially updating a product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint.
 
-You can now update a product with a newly created label to indicate that shipping is available worldwide for this product. Send the request to the [Upserting a product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint and provide the label id in the request.
+To specify a brand for a product, you need to provide the `labelId` field on product level which should be used. You can add brands either during the creation of the product, or by updating a product that already exists in the system. 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -74,65 +88,14 @@ You can now update a product with a newly created label to indicate that shippin
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/product/{tenant}/products/{productId}?partial=false&skipVariantGeneration=false&doIndex=true' \
+curl -i -X PATCH \
+  'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
   -H 'Content-Language: string' \
   -H 'Content-Type: application/json' \
   -d '{
-    "name": "Smartphone Zony Yperia X2",
-    "code": "TESTDOC000",
-    "description": "The world'\''s best camera and camcorder in a waterproof smartphone.",
-    "published": false,
-    "taxClasses": {
-      "EN": "STANDARD"
-    },
-    "template": {
-      "id": "634cea2740033d7c2e7b03a8",
-      "version": 1
-    },
-    "relatedItems": [
-      {
-        "refId": "634cea2740033d7c2e7b03a9",
-        "type": "CONSUMABLE"
-      }
-    ],
-    "mixins": {
-      "salePricesData": [
-        {
-          "salePriceStart": "2021-07-20T22:00:00.000+0000",
-          "salePriceAmount": 6.7,
-          "salePriceEnd": "2021-07-25T21:59:59.000+0000",
-          "enabled": false
-        }
-      ],
-      "productCustomAttributes": {
-        "pricingMeasurePrice": 13,
-        "unitPricingMeasure": {
-          "value": 133,
-          "unitCode": "GRM"
-        },
-        "unitPricingBaseMeasure": {
-          "value": 100,
-          "unitCode": "GRM"
-        },
-        "pricingMeasure": {
-          "value": 100,
-          "unitCode": "GRM"
-        },
-        "orderUnit": "H87",
-        "minOrderQuantity": 2,
-        "maxOrderQuantity": 10,
-        "defaultOrderQuantity": 5
-      }
-    },
-    "metadata": {
-      "version": 1,
-      "mixins": {
-        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json",
-        "salePricesData": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/salePriceData.json"
-      }
-    }
+    "published": true
+    "labelIds": ["66fe65e83132e30001e6be29"]
   }'
 ```
 
