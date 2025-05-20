@@ -573,6 +573,16 @@
               kind: openapi
               spec: webhook-api
         ```
+      * ```yaml
+        type: builtin:openapi
+        props:
+          models: true
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: webhook-api
+        ```
   * [Events-Availability](webhooks/events-availability.md)
   * [Events-Cart](webhooks/events-cart.md)
   * [Events-Catalog](webhooks/events-catalog.md)
