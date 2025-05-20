@@ -39,18 +39,15 @@ curl -i -X POST \
   -H 'Content-Language: en' \
   -H 'Content-Type: application/json' \
   -d '{
-    "id": " ",
     "name": "Sample brand",
     "description": "Description of the sample brand.",
     "localizedName": {
-      "en": "Brand one",
-      "de": "Marke einz"
+        "en": "Brand one"
     },
     "localizedDescription": {
-      "en": "Description of <strong>Brand one</strong> in HTML.",
-      "de": "Beschreibung der <strong>Marke einz</strong> in HTML."
-    },
-  }'
+        "en": "Description of <strong>Brand one</strong> in HTML."
+    }
+}'
 ```
 
 Executing a request to create a brand returns a response that includes an "id" field, which should then be used when uploading an image.

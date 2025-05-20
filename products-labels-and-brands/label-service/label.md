@@ -95,7 +95,7 @@ curl -i -X PATCH \
   -H 'Content-Type: application/json' \
   -d '{
     "published": true
-    "labelId":"66fe65e83132e30001e6be29"
+    "labelIds": ["66fe65e83132e30001e6be29"]
   }'
 ```
 
