@@ -29,7 +29,6 @@ paths:
           in: path
           description: |
             Your Emporix tenant's name.
-            
             **Note**: The tenant should always be written in lowercase.
           required: true
           schema:
@@ -215,7 +214,6 @@ paths:
           in: path
           description: |
             Your Emporix tenant's name.
-            
             **Note**: The tenant should always be written in lowercase.
           required: true
           schema:
@@ -301,7 +299,6 @@ paths:
           in: path
           description: |
             Your Emporix tenant's name.
-            
             **Note**: The tenant should always be written in lowercase.
           required: true
           schema:
@@ -428,7 +425,6 @@ paths:
           in: path
           description: |
             Your Emporix tenant's name.
-            
             **Note**: The tenant should always be written in lowercase.
           required: true
           schema:
@@ -502,7 +498,6 @@ paths:
           in: path
           description: |
             Your Emporix tenant's name.
-            
             **Note**: The tenant should always be written in lowercase.
           required: true
           schema:
@@ -601,7 +596,6 @@ paths:
           in: path
           description: |
             Your Emporix tenant's name.
-            
             **Note**: The tenant should always be written in lowercase.
           required: true
           schema:
@@ -683,7 +677,6 @@ paths:
           in: path
           description: |
             Your Emporix tenant's name.
-            
             **Note**: The tenant should always be written in lowercase.
           required: true
           schema:
