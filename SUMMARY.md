@@ -236,16 +236,6 @@
     * [Session-context Tutorial](users-and-permissions/session-context/session-context.md)
     * [API Reference](users-and-permissions/session-context/api-reference/README.md)
       * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: session-context-api
-        ```
-      * ```yaml
         type: builtin:openapi
         props:
           models: true
@@ -573,16 +563,6 @@
   * [Webhook Service](webhooks/webhook-service/README.md)
     * [Webhooks Tutorial](webhooks/webhook-service/webhooks-tutorial.md)
     * [API Reference](webhooks/webhook-service/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: webhook-api
-        ```
       * ```yaml
         type: builtin:openapi
         props:
