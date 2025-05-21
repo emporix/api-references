@@ -13,9 +13,101 @@ security:
   - OAuth2: []
 tags:
   - name: List catalogs
+    description: Retrieve lists of catalogs
   - name: Catalog management
+    description: Manage catalogs
 paths:
   '/catalog/{tenant}/catalogs':
+    post:
+      tags:
+        - Catalog management
+      summary: Creating a catalog
+      description: |
+        Creates a new catalog based on the provided request payload, for the specified tenant.
+        ***
+
+        ### Required scopes
+
+        `catalog.catalog_manage`
+      operationId: POST-catalog-create-catalog
+      parameters:
+        - name: tenant
+          in: path
+          description: |
+            Your Emporix tenant's name.
+            
+            **Note**: The tenant should always be written in lowercase.
+          required: true
+          schema:
+            type: string
+            example: saasdev2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCatalog'
+        required: true
+      responses:
+        "201":
+          description: The catalog has been successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCatalogResponse'
+        "400":
+          description: Request was syntactically incorrect. Details will be provided
+            in the response payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    code: 400
+                    status: Bad Request
+                    message: "Unsupported locale format. Please provide one of: 'fr-CH,\
+                      \ fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5 or en-EN or en'"
+        "403":
+          description: Permission denied due to insufficient rights.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    code: 403
+                    status: Forbidden
+                    message: Permission denied due to insufficient rights
+        "409":
+          description: Given resource already exists.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: Given resource already exists.
+        "500":
+          description: An unexpected error prevented the server from fulfilling the
+            request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    code: 500
+                    status: Internal Server Error
+                    message: An unexpected error prevented the server from fulfilling
+                      the request.
+      security:
+        - OAuth2: []
     get:
       tags:
         - List catalogs
@@ -196,98 +288,7 @@ paths:
                     message: An unexpected error prevented the server from fulfilling
                       the request.
       security:
-        - OAuth2: []
-    post:
-      tags:
-        - Catalog management
-      summary: Creating a catalog
-      description: |
-        Creates a new catalog based on the provided request payload, for the specified tenant.
-        ***
-
-        ### Required scopes
-
-        `catalog.catalog_manage`
-      operationId: POST-catalog-create-catalog
-      parameters:
-        - name: tenant
-          in: path
-          description: |
-            Your Emporix tenant's name.
-            **Note**: The tenant should always be written in lowercase.
-          required: true
-          schema:
-            type: string
-            example: saasdev2
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateCatalog'
-        required: true
-      responses:
-        "201":
-          description: The catalog has been successfully created.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateCatalogResponse'
-              example: 
-                id: "4239475"
-        "400":
-          description: Request was syntactically incorrect. Details will be provided
-            in the response payload.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                example:
-                  value:
-                    code: 400
-                    status: Bad Request
-                    message: "Unsupported locale format. Please provide one of: 'fr-CH,\
-                      \ fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5 or en-EN or en'"
-        "403":
-          description: Permission denied due to insufficient rights.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                example:
-                  value:
-                    code: 403
-                    status: Forbidden
-                    message: Permission denied due to insufficient rights
-        "409":
-          description: Given resource already exists.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                example:
-                  value:
-                    code: 409
-                    status: Conflict
-                    message: Given resource already exists.
-        "500":
-          description: An unexpected error prevented the server from fulfilling the
-            request.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-              examples:
-                example:
-                  value:
-                    code: 500
-                    status: Internal Server Error
-                    message: An unexpected error prevented the server from fulfilling
-                      the request.
-      security:
-        - OAuth2: []
+        - OAuth2: [] 
   '/catalog/{tenant}/catalogs/categories/{categoryId}':
     get:
       tags:
