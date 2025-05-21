@@ -9,7 +9,7 @@ on:
         default: 'main'
   push:
     branches:
-      - test
+      - main
 
 jobs:
   zip-and-release:
