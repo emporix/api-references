@@ -536,14 +536,14 @@
     * [Sequential-id Tutorial](utilities/sequential-id/sequentialid.md)
     * [API Reference](utilities/sequential-id/api-reference/README.md)
       * ```yaml
+        type: builtin:openapi
         props:
           models: true
-        type: builtin:openapi
         dependencies:
           spec:
             ref:
               kind: openapi
-              spec: sequential-id
+              spec: sequential-id-api
         ```
 * [Media](media/README.md)
   * [Media Service](media/media/README.md)
