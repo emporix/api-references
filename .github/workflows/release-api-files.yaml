@@ -2,6 +2,11 @@ name: Release API Files
 
 on:
   workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to run the workflow on'
+        required: true
+        default: 'main'
   push:
     branches:
       - test
@@ -17,7 +22,7 @@ jobs:
       - name: Set release tag
         id: set_tag
         run: |
-          TIMESTAMP=$(date +'%y%m%d%H')
+          TIMESTAMP=$(TZ=Europe/Paris date +'%Y%m%d%H')
           echo "TAG=doc-$TIMESTAMP" >> $GITHUB_OUTPUT
 
       - name: Create zip of api.* files
@@ -64,7 +69,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.set_tag.outputs.TAG }}
-          name: Release ${{ steps.set_tag.outputs.TAG }}
+          name: ${{ steps.set_tag.outputs.TAG }}
           files: api-references.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
