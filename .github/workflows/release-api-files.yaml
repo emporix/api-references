@@ -1,0 +1,75 @@
+name: Release API Files
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to run the workflow on'
+        required: true
+        default: 'main'
+  push:
+    branches:
+      - main
+
+jobs:
+  zip-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set release tag
+        id: set_tag
+        run: |
+          TIMESTAMP=$(TZ=Europe/Paris date +'%Y%m%d%H')
+          echo "TAG=doc-$TIMESTAMP" >> $GITHUB_OUTPUT
+
+      - name: Create zip of api.* files
+        run: |
+          zip -r api-references.zip $(find . -type f -name 'api.*')
+
+      - name: Check if release exists
+        id: check_release
+        run: |
+          TAG=${{ steps.set_tag.outputs.TAG }}
+          RESPONSE=$(curl -s -o release.json -w "%{http_code}" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/${{ github.repository }}/releases/tags/$TAG)
+
+          echo "HTTP_STATUS=$RESPONSE" >> $GITHUB_OUTPUT
+          if [ "$RESPONSE" -eq 200 ]; then
+            echo "Release with $TAG exists."
+            RELEASE_ID=$(jq -r .id release.json)
+            echo "RELEASE_ID=$RELEASE_ID" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Delete existing asset if release exists
+        if: steps.check_release.outputs.HTTP_STATUS == '200'
+        run: |
+          ASSET_ID=$(jq -r '.assets[] | select(.name=="api-references.zip") | .id' release.json)
+          if [ -n "$ASSET_ID" ]; then
+            curl -X DELETE \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              https://api.github.com/repos/${{ github.repository }}/releases/assets/$ASSET_ID
+          fi
+
+      - name: Upload asset to existing release
+        if: steps.check_release.outputs.HTTP_STATUS == '200'
+        run: |
+          RELEASE_ID=${{ steps.check_release.outputs.RELEASE_ID }}
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Content-Type: application/zip" \
+            --data-binary @api-references.zip \
+            "https://uploads.github.com/repos/${{ github.repository }}/releases/$RELEASE_ID/assets?name=api-references.zip"
+
+      - name: Create release and upload asset
+        if: steps.check_release.outputs.HTTP_STATUS != '200'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.set_tag.outputs.TAG }}
+          name: ${{ steps.set_tag.outputs.TAG }}
+          files: api-references.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
