@@ -28,16 +28,6 @@
               kind: openapi
               spec: oauth-api
         ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: oauth-api
-        ```
 * [Artificial Intelligence](artificial-intelligence/README.md)
   * [AI Service](artificial-intelligence/ai-service/README.md)
     * [AI Tutorials](artificial-intelligence/ai-service/ai-tutorial.md)
@@ -246,9 +236,9 @@
     * [Session-context Tutorial](users-and-permissions/session-context/session-context.md)
     * [API Reference](users-and-permissions/session-context/api-reference/README.md)
       * ```yaml
+        type: builtin:openapi
         props:
           models: true
-        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -546,14 +536,14 @@
     * [Sequential-id Tutorial](utilities/sequential-id/sequentialid.md)
     * [API Reference](utilities/sequential-id/api-reference/README.md)
       * ```yaml
+        type: builtin:openapi
         props:
           models: true
-        type: builtin:openapi
         dependencies:
           spec:
             ref:
               kind: openapi
-              spec: sequential-id
+              spec: sequential-id-api
         ```
 * [Media](media/README.md)
   * [Media Service](media/media/README.md)
@@ -574,9 +564,9 @@
     * [Webhooks Tutorial](webhooks/webhook-service/webhooks-tutorial.md)
     * [API Reference](webhooks/webhook-service/api-reference/README.md)
       * ```yaml
+        type: builtin:openapi
         props:
           models: true
-        type: builtin:openapi
         dependencies:
           spec:
             ref:
