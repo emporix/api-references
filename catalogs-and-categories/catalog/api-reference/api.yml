@@ -12,9 +12,12 @@ servers:
 security:
   - OAuth2: []
 tags:
+  - name: Catalogs
   - name: List catalogs
+    x-parent: Catalogs
     description: Retrieve lists of catalogs
   - name: Catalog management
+    x-parent: Catalogs
     description: Manage catalogs
 paths:
   '/catalog/{tenant}/catalogs':
