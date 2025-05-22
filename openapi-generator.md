@@ -9,7 +9,7 @@ which you can then integrate into your codebase to seamlessly build your platfor
 
 Make sure you have the following tools installed:
 
-* maven - version 3.5.4\_1 or higher
+* maven - version 3.5.4_1 or higher
 * Java - version 17.0 or higher
 
 ### Installing
