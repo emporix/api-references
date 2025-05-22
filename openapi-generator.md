@@ -2,7 +2,7 @@
 
 To facilitate customizations of Emporix Commerce Engine, so that it is tailored to your needs, you can use the OpenAPI generator
 The tool allows you to generate code out of the API reference specifications.
-You can create a Software Development Kit (SDK) based on the OpenAPI-generated code using Emporix services,\
+You can create a Software Development Kit (SDK) based on the OpenAPI-generated code using Emporix services,
 which you can then integrate into your codebase to seamlessly build your platform with the Commerce Engine.
 
 ### Prerequisites
@@ -14,7 +14,9 @@ Make sure you have the following tools installed:
 
 ### Installing
 
-Download the Maven project [OpenAPI Generator](../static/openapi/apireference-client-generator.zip) and unpack it in a relevant destination.
+Download the Maven project [OpenAPI Generator](static/openapi/apireference-client-generator.zip) and unpack it in a relevant destination.
+
+{% file src="../../.gitbook/assets/apireference-client-generator.zip" %}
 
 ### Using OpenAPI Generator
 
