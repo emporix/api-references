@@ -176,7 +176,7 @@
               kind: openapi
               spec: product-api
         ```
-    * [Download OpenAPI Reference](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/products-labels-and-brands/product-service/api-reference/api.yml)
+    * [Download API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/products-labels-and-brands/product-service/api-reference/api.yml)
   * [Label Service](products-labels-and-brands/label-service/README.md)
     * [Label Tutorial](products-labels-and-brands/label-service/label.md)
     * [API Reference](products-labels-and-brands/label-service/api-reference/README.md)
