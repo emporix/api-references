@@ -10,7 +10,7 @@ info:
     * Create and modify Employee Groups, in name & structure.
     * Easily transfer members from one Employee Group to another.
     * Works seamlessly across both Emporix APIs and the Management Dashboard.
-    * Integrates widely used protocols, both LDAP and Microsoft’s Active Directory service are supported.
+    * Integrates widely used protocols, both LDAP and Microsoft Active Directory service are supported.
     ***
     **Key Benefits**
     * Simple administration: save time by applying permissions across a whole group in a single click.
@@ -763,6 +763,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GroupsQueryDocument'
+              example:
+                id: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                name:
+                  en: Example name
+                  de: Beispielname
+                description:
+                  en: Example group description
+                  de: Beispiel Berechtigungsbeschreibung
+                accessControls:
+                  - f543dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                  - r243dc9e-a3f6-4573-zz01-a8ae21d2d4ae
+                b2b:
+                  legalEntityId: 0149b1314144a01491314z128
+                mixins: {}
+                metadata:
+                  version: 1
+                  createdAt: '2022-01-04 10:44:51.871Z'
+                  modifiedAt: '2022-01-05 12:44:51.456Z'
         '400':
           $ref: '#/components/responses/Bad_request_400'
         '401':
@@ -1414,6 +1432,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AssignmentIdResponse'
+              example:
+                  id: e243dc9e-a3f6-4573-bb01-a8ae21d2d4ae
         '400':
           description: Request was syntactically incorrect.
           content:
@@ -1668,6 +1688,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PermissionQueryDocument'
+              examples: 
+                example:
+                  value: 
+                    id: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                    name:
+                      en: Example name
+                      de: Beispielname
+                    description:
+                      en: Example permission description
+                      de: Beispiel Berechtigungsbeschreibung
+                    applicableResources:
+                      - SQ43dc9e-a3f6-4573-bb01-a8ae21d2d4ca
+                      - RE43dc9e-a3f6-4573-bb01-a8ae21d2d4g1
+                    code: read
+                    metadata:
+                      version: 1
+                      createdAt: '2022-01-04 10:44:51.871Z'
+                      modifiedAt: '2022-01-05 12:44:51.456Z'
         '400':
           $ref: '#/components/responses/Bad_request_400'
         '401':
@@ -1733,6 +1771,21 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ResourceQueryDocument'
+              examples:
+                example:
+                  value:
+                  - id: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4af
+                    name:
+                      en: Example name
+                      de: Beispielname
+                    description:
+                      en: Example resource description
+                      de: Beispiel Berechtigungsbeschreibung
+                    code: serviceName.resource
+                    metadata:
+                      version: 1
+                      createdAt: '2022-01-04 10:44:51.871Z'
+                      modifiedAt: '2022-01-05 12:44:51.456Z'
         '400':
           description: Request was syntactically incorrect. Details will be provided in the response payload
           content:
@@ -1780,6 +1833,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResourceQueryDocument'
+              example:
+                id: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4af
+                name:
+                  en: Example name
+                  de: Beispielname
+                description:
+                  en: Example resource description
+                  de: Beispiel Berechtigungsbeschreibung
+                code: serviceName.resource
+                metadata:
+                  version: 1
+                  createdAt: '2022-01-04 10:44:51.871Z'
+                  modifiedAt: '2022-01-05 12:44:51.456Z'
         '400':
           $ref: '#/components/responses/Bad_request_400'
         '401':
@@ -3388,17 +3454,17 @@ components:
           items:
             $ref: '#/components/schemas/AccessControlQueryDocument'
       description: Definition of role template
-      example:
-        id: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4aa
-        name:
-          en: Example name
-          de: Beispielname
-        description:
-          en: Example role template description
-          de: Beispiel Accessnbeschreibung
-        accessControls:
-          - f543dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-          - Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+      # example:
+      #   id: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4aa
+      #   name:
+      #     en: Example name
+      #     de: Beispielname
+      #   description:
+      #     en: Example role template description
+      #     de: Beispiel Accessnbeschreibung
+      #   accessControls:
+      #     - f543dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+      #     - Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
     AssignmentCreateRequest:
       type: object
       example:
@@ -3424,8 +3490,8 @@ components:
         id:
           type: string
           description: ID of generated document.
-      example:
-        id: e243dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+      # example:
+      #   id: e243dc9e-a3f6-4573-bb01-a8ae21d2d4ae
     AssignmentQueryDocument:
       type: object
       properties:
@@ -3442,9 +3508,9 @@ components:
           type: string
           description: 'User type that may be one of: ''CUSTOMER'', ''EMPLOYEE'''
       description: Definition of assignments
-      example:
-        userId: f543dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-        type: customer
+      # example:
+      #   userId: f543dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+      #   type: customer
     ErrorResponse:
       required:
         - code
@@ -3532,23 +3598,23 @@ components:
         - name
     GroupUpdateRequest:
       type: object
-      example:
-        name:
-          en: Example name
-          de: Beispielname
-        description:
-          en: Example group description
-          de: Beispiel Gruppenbeschreibung
-        accessControls:
-          - f543dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-          - r243dc9e-a3f6-4573-zz01-a8ae21d2d4ae
-        mixins: {}
-        templates:
-          - g443dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-        b2b:
-          legalEntityId: 0149b1314144a01491314z128
-        metadata:
-          version: 1
+      # example:
+      #   name:
+      #     en: Example name
+      #     de: Beispielname
+      #   description:
+      #     en: Example group description
+      #     de: Beispiel Gruppenbeschreibung
+      #   accessControls:
+      #     - f543dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+      #     - r243dc9e-a3f6-4573-zz01-a8ae21d2d4ae
+      #   mixins: {}
+      #   templates:
+      #     - g443dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+      #   b2b:
+      #     legalEntityId: 0149b1314144a01491314z128
+      #   metadata:
+      #     version: 1
       properties:
         name:
           minItems: 1
@@ -3609,11 +3675,11 @@ components:
         id:
           type: string
           description: ID of the generated document.
-      example:
-        id: e243dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+      # example:
+      #   id: e243dc9e-a3f6-4573-bb01-a8ae21d2d4ae
     UserIdResponse:
       type: object
-      example:
+      example: 
         id: e243dc9e-a3f6-4573-bb01-a8ae21d2d4ae
       properties:
         id:
@@ -3688,24 +3754,24 @@ components:
         metadata:
           $ref: '#/components/schemas/GroupsMetadataQueryDocument'
       description: Definition of groups
-      example:
-        id: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-        name:
-          en: Example name
-          de: Beispielname
-        description:
-          en: Example group description
-          de: Beispiel Berechtigungsbeschreibung
-        accessControls:
-          - f543dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-          - r243dc9e-a3f6-4573-zz01-a8ae21d2d4ae
-        b2b:
-          legalEntityId: 0149b1314144a01491314z128
-        mixins: {}
-        metadata:
-          version: 1
-          createdAt: '2022-01-04 10:44:51.871Z'
-          modifiedAt: '2022-01-05 12:44:51.456Z'
+      # example:
+      #   id: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+      #   name:
+      #     en: Example name
+      #     de: Beispielname
+      #   description:
+      #     en: Example group description
+      #     de: Beispiel Berechtigungsbeschreibung
+      #   accessControls:
+      #     - f543dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+      #     - r243dc9e-a3f6-4573-zz01-a8ae21d2d4ae
+      #   b2b:
+      #     legalEntityId: 0149b1314144a01491314z128
+      #   mixins: {}
+      #   metadata:
+      #     version: 1
+      #     createdAt: '2022-01-04 10:44:51.871Z'
+      #     modifiedAt: '2022-01-05 12:44:51.456Z'
     PermissionQueryDocument:
       type: object
       properties:
@@ -3733,22 +3799,22 @@ components:
         metadata:
           $ref: '#/components/schemas/PermissionsMetadataQueryDocument'
       description: Definition of permissions
-      example:
-        id: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-        name:
-          en: Example name
-          de: Beispielname
-        description:
-          en: Example permission description
-          de: Beispiel Berechtigungsbeschreibung
-        applicableResources:
-          - SQ43dc9e-a3f6-4573-bb01-a8ae21d2d4ca
-          - RE43dc9e-a3f6-4573-bb01-a8ae21d2d4g1
-        code: read
-        metadata:
-          version: 1
-          createdAt: '2022-01-04 10:44:51.871Z'
-          modifiedAt: '2022-01-05 12:44:51.456Z'
+      # example:
+      #   id: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+      #   name:
+      #     en: Example name
+      #     de: Beispielname
+      #   description:
+      #     en: Example permission description
+      #     de: Beispiel Berechtigungsbeschreibung
+      #   applicableResources:
+      #     - SQ43dc9e-a3f6-4573-bb01-a8ae21d2d4ca
+      #     - RE43dc9e-a3f6-4573-bb01-a8ae21d2d4g1
+      #   code: read
+      #   metadata:
+      #     version: 1
+      #     createdAt: '2022-01-04 10:44:51.871Z'
+      #     modifiedAt: '2022-01-05 12:44:51.456Z'
     PermissionsMetadataQueryDocument:
       required:
         - createdAt
@@ -3794,19 +3860,19 @@ components:
         metadata:
           $ref: '#/components/schemas/ResourcesMetadataQueryDocument'
       description: Resource definition associated with this access control.
-      example:
-        id: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4af
-        name:
-          en: Example name
-          de: Beispielname
-        description:
-          en: Example resource description
-          de: Beispiel Berechtigungsbeschreibung
-        code: serviceName.resource
-        metadata:
-          version: 1
-          createdAt: '2022-01-04 10:44:51.871Z'
-          modifiedAt: '2022-01-05 12:44:51.456Z'
+      # example:
+      #   id: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4af
+      #   name:
+      #     en: Example name
+      #     de: Beispielname
+      #   description:
+      #     en: Example resource description
+      #     de: Beispiel Berechtigungsbeschreibung
+      #   code: serviceName.resource
+      #   metadata:
+      #     version: 1
+      #     createdAt: '2022-01-04 10:44:51.871Z'
+      #     modifiedAt: '2022-01-05 12:44:51.456Z'
     ResourcesMetadataQueryDocument:
       required:
         - createdAt
