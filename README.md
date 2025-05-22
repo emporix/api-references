@@ -4,7 +4,11 @@
 Download API Specification for all Emporix Services - ZIP
 {% endembed %}
 
+{% hint style="success" %}
+
 [Download API Specification for all Emporix Services - ZIP](https://github.com/emporix/api-references/releases/latest/download/api-references.zip)
+
+{% endhint %}
 
 ## Introduction
 
