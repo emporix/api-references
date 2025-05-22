@@ -1432,8 +1432,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AssignmentIdResponse'
-              examples: 
-                example:
+              example:
                   id: e243dc9e-a3f6-4573-bb01-a8ae21d2d4ae
         '400':
           description: Request was syntactically incorrect.
