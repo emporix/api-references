@@ -121,7 +121,6 @@ paths:
           in: path
           description: |
             Your Emporix tenant's name.
-            
             **Note**: The tenant should always be written in lowercase.
           required: true
           schema:
@@ -239,6 +238,27 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Catalog'
+              examples:
+                Catalog example:
+                  value: 
+                    - id: "3456454"
+                      name:
+                        en: This is a catalog
+                      description:
+                        en: This catalog is used as an example
+                      status: VISIBLE
+                      visibility:
+                        visible: true
+                        from: 2022-02-24T20:44:43.169Z
+                        to: 2023-07-24T20:44:43.169Z
+                      publishedSites:
+                        - Main
+                      categoryIds:
+                        - "3249485"
+                      metadata:
+                        version: 1
+                        updatedAt: 2022-02-24T20:44:43.169Z
+                        createdAt: 2022-02-24T20:44:43.169Z
         "400":
           description: Request was syntactically incorrect. Details will be provided
             in the response payload.
@@ -282,7 +302,6 @@ paths:
           in: path
           description: |
             Your Emporix tenant's name.
-            
             **Note**: The tenant should always be written in lowercase.
           required: true
           schema:
@@ -409,7 +428,6 @@ paths:
           in: path
           description: |
             Your Emporix tenant's name.
-            
             **Note**: The tenant should always be written in lowercase.
           required: true
           schema:
@@ -483,7 +501,6 @@ paths:
           in: path
           description: |
             Your Emporix tenant's name.
-            
             **Note**: The tenant should always be written in lowercase.
           required: true
           schema:
@@ -582,7 +599,6 @@ paths:
           in: path
           description: |
             Your Emporix tenant's name.
-            
             **Note**: The tenant should always be written in lowercase.
           required: true
           schema:
@@ -664,7 +680,6 @@ paths:
           in: path
           description: |
             Your Emporix tenant's name.
-            
             **Note**: The tenant should always be written in lowercase.
           required: true
           schema:
@@ -746,8 +761,7 @@ components:
       properties:
         id:
           type: string
-          description: "Catalog's unique identifier, generated when the catalog is\
-            \ created."
+          description: "Catalog's unique identifier, generated when the catalog is created."
         name:
           allOf:
             - $ref: '#/components/schemas/Object'
@@ -778,25 +792,6 @@ components:
           items:
             type: string
       description: Definition of a catalog
-      example:
-        id: "3456454"
-        name:
-          en: This is a catalog
-        description:
-          en: This catalog is used as an example
-        status: VISIBLE
-        visibility:
-          visible: true
-          from: 2022-02-24T20:44:43.169Z
-          to: 2023-07-24T20:44:43.169Z
-        publishedSites:
-          - Main
-        categoryIds:
-          - "3249485"
-        metadata:
-          version: 1
-          updatedAt: 2022-02-24T20:44:43.169Z
-          createdAt: 2022-02-24T20:44:43.169Z
     CreateCatalog:
       required:
         - name
@@ -853,8 +848,6 @@ components:
         id:
           type: string
       description: Response for create catalog requests
-      example:
-        id: "4239475"
     ErrorResponse:
       required:
         - code
