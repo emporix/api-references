@@ -14,11 +14,11 @@ Make sure you have the following tools installed:
 
 ### Installing
 
-Download the Maven project [OpenAPI Generator](docs/openapi/apireference-client-generator.zip) and unpack it in a relevant destination.
+Download the Maven project [OpenAPI Generator](../static/openapi/apireference-client-generator.zip) and unpack it in a relevant destination.
 
 ### Using OpenAPI Generator
 
-1. Download Emporix OpenAPI reference documentation for all Commerce Engine services from the [Getting Started](content/introduction/).
+1. Download Emporix OpenAPI reference documentation for all Commerce Engine services from the [Emporix API](../README.md).
 2. For the service of your interest, copy its API reference yml file to the `src/main/resources/apis` directory.
 
 {% hint style="warning" %}
