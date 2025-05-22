@@ -165,7 +165,6 @@
 * [Products, Labels and Brands](products-labels-and-brands/README.md)
   * [Product Service](products-labels-and-brands/product-service/README.md)
     * [Product Tutorial](products-labels-and-brands/product-service/product.md)
-    * [Download OpenAPI Reference](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/products-labels-and-brands/product-service/api-reference/api.yml)
     * [API Reference](products-labels-and-brands/product-service/api-reference/README.md)
       * ```yaml
         props:
@@ -177,6 +176,7 @@
               kind: openapi
               spec: product-api
         ```
+    * [Download OpenAPI Reference](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/products-labels-and-brands/product-service/api-reference/api.yml)
   * [Label Service](products-labels-and-brands/label-service/README.md)
     * [Label Tutorial](products-labels-and-brands/label-service/label.md)
     * [API Reference](products-labels-and-brands/label-service/api-reference/README.md)
