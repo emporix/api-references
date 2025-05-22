@@ -19,7 +19,7 @@
 * [Authorization](api-guides-and-references/authorization/README.md)
   * [OAuth Service](authorization/oauth-service/README.md)
     * [API Reference](authorization/oauth-service/api-reference/README.md)
-      * [API yaml](https://storage.googleapis.com/emporix-test-public/webhook/api.json)
+      * [Download OpenAPI](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/authorization/oauth-service/api-reference/api.yml)
       * ```yaml
         props:
           models: true
