@@ -16,7 +16,7 @@ Make sure you have the following tools installed:
 
 Download the Maven project [OpenAPI Generator](static/openapi/apireference-client-generator.zip) and unpack it in a relevant destination.
 
-{% file src="../.gitbook/assets/apireference-client-generator.zip" %}
+{% file src="../../.gitbook/assets/apireference-client-generator.zip" %}
 
 ### Using OpenAPI Generator
 
