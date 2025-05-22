@@ -1,6 +1,7 @@
 # Table of contents
 
 * [Getting started with Emporix API](README.md)
+  * [Download OpenAPI Specification](https://github.com/emporix/api-references/releases/latest/download/api-references.zip)
 * [OpenAPI Generator](openapi-generator.md)
 
 ## Standard Practices
