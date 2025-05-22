@@ -18,7 +18,6 @@
 
 * [Authorization](api-guides-and-references/authorization/README.md)
   * [OAuth Service](authorization/oauth-service/README.md)
-  * [Download OpenAPI Reference](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/authorization/oauth-service/api-reference/api.yml)
     * [API Reference](authorization/oauth-service/api-reference/README.md)
       * [Download OpenAPI Reference](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/authorization/oauth-service/api-reference/api.yml)
       * ```yaml
@@ -166,8 +165,8 @@
 * [Products, Labels and Brands](products-labels-and-brands/README.md)
   * [Product Service](products-labels-and-brands/product-service/README.md)
     * [Product Tutorial](products-labels-and-brands/product-service/product.md)
+    * [Download OpenAPI Reference](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/products-labels-and-brands/product-service/api-reference/api.yml)
     * [API Reference](products-labels-and-brands/product-service/api-reference/README.md)
-      * [Download OpenAPI Reference](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/products-labels-and-brands/product-service/api-reference/api.yml)
       * ```yaml
         props:
           models: true
