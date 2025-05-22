@@ -18,6 +18,7 @@
 
 * [Authorization](api-guides-and-references/authorization/README.md)
   * [OAuth Service](authorization/oauth-service/README.md)
+  * [Download OpenAPI Reference](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/authorization/oauth-service/api-reference/api.yml)
     * [API Reference](authorization/oauth-service/api-reference/README.md)
       * [Download OpenAPI Reference](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/authorization/oauth-service/api-reference/api.yml)
       * ```yaml
