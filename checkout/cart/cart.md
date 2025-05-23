@@ -1135,7 +1135,7 @@ If the fee is taxable and has a tax code, the gross value is calculated. Otherwi
 
 # How to determine a tax country at cart level
 
-Since the shipping address is not set in the cart, you need to determine the country to find the `taxRate` for a fee that has a `taxCode` only.\
+Since the shipping address is not set in the cart, you need to determine the country to find the `taxRate` for a fee that has a `taxCode` only.
 Ways to find the country data:
 
 * Use the country code that is set on the cart
@@ -1149,7 +1149,7 @@ Ways to find the country data:
 
 Discounts are known as coupons and, with the relevant settings that influence `calculatedPrice`, they can be applied to a cart.
 
-Depending on the site configuration and the `includesTax=true/false`, the discount is applied to either the gross value - `includesTax=true`, or the net value - `includesTax=false`.\
+Depending on the site configuration and the `includesTax=true/false`, the discount is applied to either the gross value - `includesTax=true`, or the net value - `includesTax=false`.
 Based on this setting, the corresponding `netValue` or `grossValue` is recalculated using the tax rate.
 
 The information about which calculation method was used is available in `totalDiscount.calculationType=ApplyDiscountAfterTax/ApplyDiscountBeforeTax`:
@@ -1161,7 +1161,7 @@ The information about which calculation method was used is available in `totalDi
 
     * ABSOLUTE - a coupon that has a given type must have `discountAbsolute` attribute configured. It represents a monetary amount that should be discounted.
 
-    Depending on the `ApplyDiscountAfterTax/ApplyDiscountBeforeTax` discount, the absolute amount is subtracted either from the `grossValue` or the `netValue`.\
+    Depending on the `ApplyDiscountAfterTax/ApplyDiscountBeforeTax` discount, the absolute amount is subtracted either from the `grossValue` or the `netValue`.
     The value of the discount on the cart level is divided across all the applicable cart prices, proportionally to the `items[].calculatedPrice.price`, `items[].calculatedPrice.fees[].price` and the calculated shipping cost. It's related to the difference between `discountCalculationType:SUBTOTAL/TOTAL` described above, to know which items are applicable.
 
     * PERCENT - it takes the value of discount’s `discountPercentage` attribute and calculates the percentage discount to the price.
@@ -1215,51 +1215,53 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
 ## Usage examples
 
-### Adding multiple `productA` items with the `keepAsSeparateLineItem=true` flag:
+### Adding multiple `productA` items with the `keepAsSeparateLineItem=true` flag
 
   1. Adding the first `productA` item with `keepAsSeparateLineItem=true` results in:
 
-   <code>item0: productA, qty:1, keepAsSeparateLineItem=true</code>
+    ```bash
+    item0: productA, qty:1, keepAsSeparateLineItem=true
+    ```
 
   2. Adding another `productA` item with `keepAsSeparateLineItem=true` results in:
 
-    <code>
+    ```bash
       item0: productA, qty:1, keepAsSeparateLineItem=true
       item1: productA, qty:1, keepAsSeparateLineItem=true 
-    </code>
+    ```
 
-**Adding multiple `productA` items with the `keepAsSeparateLineItem=false` flag:**
+### Adding multiple `productA` items with the `keepAsSeparateLineItem=false` flag
 
   1. Adding the first `productA` item with `keepAsSeparateLineItem=false` results in:
 
-    ```json
+    ```bash
       item0: productA, qty:1, keepAsSeparateLineItem=false
     ```
 
   2. Adding another `productA` item with `keepAsSeparateLineItem=false` results in:
 
-    ```json
+   ```bash
       item0: productA, qty:2, keepAsSeparateLineItem=false
     ```
 
-**Adding multiple `productA` items with the `keepAsSeparateLineItem=true` and `keepAsSeparateLineItem=false` flags**
+### Adding multiple `productA` items with the `keepAsSeparateLineItem=true` and `keepAsSeparateLineItem=false` flags
 
   1. Adding the first `productA` item with two different flags results in:
 
-    ```json
+    ```bash
       item0: productA, qty:1, keepAsSeparateLineItem=true 
       item2: productA, qty:1, keepAsSeparateLineItem=false 
     ```
 
   2. Adding another two `productA` items with different flags results in:
 
-    ```json
+    ```bash
       item0: productA, qty:1, keepAsSeparateLineItem=true 
       item1: productA, qty:1, keepAsSeparateLineItem=true 
       item2: productA, qty:2, keepAsSeparateLineItem=false 
-  ```
+    ```
 
-**Products with external prices**
+## Products with external prices
 
   You can add external prices for both custom products and products from the internal catalog. Line items for the same product can have different prices if they’re added separately with `keepAsSeparateLineItem=true`.
 
@@ -1267,18 +1269,18 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   1. Adding the first `productA` item with `priceX` and `keepAsSeparateLineItem=true` results in:
 
-    ```json
+    ```bash
       item0: productA, external, priceX, qty:1, keepAsSeparateLineItem=true 
     ```
 
   2. Adding another `productA` item to it, but with `priceY` and `keepAsSeparateLineItem=true` results in:
 
-    ```json
+    ```bash
       item0: productA, external, priceX, qty:1, keepAsSeparateLineItem=true 
       item1: productA, external, priceY, qty:1, keepAsSeparateLineItem=true 
     ```
 
-**Products with standard prices**
+## Products with standard prices
 
   When using internal prices, the `priceId` is the same across all line items - if the product uses a standard price from the catalog, all lines for that item are expected to have the same price.
 
@@ -1286,13 +1288,13 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   1. Adding the first `productA` item with `priceX` and `keepAsSeparateLineItem=true` results in:
 
-    ```json
+    ```bash
       item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true 
     ```
 
   2. Adding another `productA` item with different `priceY` and `keepAsSeparateLineItem=true` results in:
 
-    ```json
+    ```bash
       item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true 
       item1: productA, internal, priceY, qty:1, keepAsSeparateLineItem=true 
     ```
@@ -1305,21 +1307,21 @@ By default, all items are grouped into a single line in the cart. This behavior 
   When the cart item validation is not executed on `add to cart`, you can use the [cart validation](https://emporix.gitbook.io/documentation-portal/api-references/~/revisions/yWwHvejmTq395ReuRRIQ/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid-validate) endpoint. It should return errors informing that the prices are duplicated.
   
   EXTERNAL pricing products can have different prices in the cart, INTERNAL pricing products can't.
-{% hint style="warning" %}
+  {% hint style="warning" %}
 
-**Adding products with internal and external pricing**
+## Adding products with internal and external pricing
 
   When you add the same product first as an internal one and then as an external, the items are split into separate line items even if `keepAsSeparateLineItem=false`, or if the flag is not present.
 
   1. Adding `productA` item, with internal `priceX` and `keepAsSeparateLineItem=false` results in:
 
-    ```json
+    ```bash
       item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false 
     ```
 
   2. Adding `productA` item to it, with external `priceY` and `keepAsSeparateLineItem=false` results in:
 
-    ```json
-      item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false 
-      item0: productA, external, priceY, qty:1, keepAsSeparateLineItem=false
-    ```
+  ```bash
+    item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false 
+    item0: productA, external, priceY, qty:1, keepAsSeparateLineItem=false
+  ```
