@@ -1315,14 +1315,14 @@ EXTERNAL pricing products can have different prices in the cart, INTERNAL pricin
 
   1. Adding `productA` item, with internal `priceX` and `keepAsSeparateLineItem=false` results in:
     
-    ```json
-        item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false
-    ```
+    <code>
+      item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false
+    </code>
     
 
   2. Adding `productA` item to it, with external `priceY` and `keepAsSeparateLineItem=false` results in:
 
-    ```js
-        item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false 
-        item0: productA, external, priceY, qty:1, keepAsSeparateLineItem=false
-    ```
+    <code>
+      item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false 
+      item0: productA, external, priceY, qty:1, keepAsSeparateLineItem=false
+    </code>
