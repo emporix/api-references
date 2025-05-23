@@ -1219,9 +1219,7 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   1. Adding the first `productA` item with `keepAsSeparateLineItem=true` results in:
 
-    ```json
-      item0: productA, qty:1, keepAsSeparateLineItem=true
-    ```
+  <code> item0: productA, qty:1, keepAsSeparateLineItem=true</code>
 
 
   2. Adding another `productA` item with `keepAsSeparateLineItem=true` results in:
