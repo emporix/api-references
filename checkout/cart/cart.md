@@ -1219,13 +1219,13 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   1. Adding the first `productA` item with `keepAsSeparateLineItem=true` results in:
 
-   ```
+   ```js
    item0: productA, qty:1, keepAsSeparateLineItem=true
    ```
 
   2. Adding another `productA` item with `keepAsSeparateLineItem=true` results in:
 
-    ```
+    ```js
     item0: productA, qty:1, keepAsSeparateLineItem=true
     item1: productA, qty:1, keepAsSeparateLineItem=true 
     ```
@@ -1234,13 +1234,13 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   1. Adding the first `productA` item with `keepAsSeparateLineItem=false` results in:
 
-    ```
+    ```js
     item0: productA, qty:1, keepAsSeparateLineItem=false
     ```
 
   2. Adding another `productA` item with `keepAsSeparateLineItem=false` results in:
 
-    ```
+    ```js
     item0: productA, qty:2, keepAsSeparateLineItem=false
     ```
 
@@ -1248,14 +1248,14 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   1. Adding the first `productA` item with two different flags results in:
 
-    ```
+    ```js
     item0: productA, qty:1, keepAsSeparateLineItem=true 
     item2: productA, qty:1, keepAsSeparateLineItem=false 
     ```
 
   2. Adding another two `productA` items with different flags results in:
 
-    ```
+    ```js
     item0: productA, qty:1, keepAsSeparateLineItem=true 
     item1: productA, qty:1, keepAsSeparateLineItem=true 
     item2: productA, qty:2, keepAsSeparateLineItem=false 
@@ -1269,12 +1269,13 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   1. Adding the first `productA` item with `priceX` and `keepAsSeparateLineItem=true` results in
    
-    ```
+    ```js
     item0: productA, external, priceX, qty:1, keepAsSeparateLineItem=true 
     ```
 
   2. Adding another `productA` item to it, but with `priceY` and `keepAsSeparateLineItem=true` results in:
-    ```
+   
+    ```js
     item0: productA, external, priceX, qty:1, keepAsSeparateLineItem=true 
     item1: productA, external, priceY, qty:1, keepAsSeparateLineItem=true 
     ```
@@ -1286,13 +1287,14 @@ By default, all items are grouped into a single line in the cart. This behavior 
   For example:
 
   1. Adding the first `productA` item with `priceX` and `keepAsSeparateLineItem=true` results in:
-    ```
+   
+    ```js
     item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true 
     ```
 
   2. Adding another `productA` item with different `priceY` and `keepAsSeparateLineItem=true` results in:
    
-    ```
+    ```js
     item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true 
     item1: productA, internal, priceY, qty:1, keepAsSeparateLineItem=true 
     ```
@@ -1313,13 +1315,13 @@ EXTERNAL pricing products can have different prices in the cart, INTERNAL pricin
 
   1. Adding `productA` item, with internal `priceX` and `keepAsSeparateLineItem=false` results in:
 
-    ```
+    ```js
     item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false 
     ```
 
   2. Adding `productA` item to it, with external `priceY` and `keepAsSeparateLineItem=false` results in:
 
-    ```
+    ```js
     item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false 
     item0: productA, external, priceY, qty:1, keepAsSeparateLineItem=false
     ```
