@@ -1226,14 +1226,14 @@ By default, all items are grouped into a single line in the cart. This behavior 
   2. Adding another `productA` item with `keepAsSeparateLineItem=true` results in:
 
     ```js
-      item0: productA, qty:1, keepAsSeparateLineItem=true
+    item0: productA, qty:1, keepAsSeparateLineItem=true
       item1: productA, qty:1, keepAsSeparateLineItem=true 
     ```
 
 **Adding multiple `productA` items with the `keepAsSeparateLineItem=false` flag**
 
   1. Adding the first `productA` item with `keepAsSeparateLineItem=false` results in:
-
+   
     ```js
     item0: productA, qty:1, keepAsSeparateLineItem=false
     ```
