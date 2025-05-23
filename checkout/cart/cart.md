@@ -10,9 +10,7 @@ editPage:
 label: Tutorials
 ---
 
-# Cart Tutorial
-
-## How to create a new cart
+# How to create a new cart
 
 To create a new cart, you need to send a request to the [Creating a new cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
 
@@ -41,11 +39,11 @@ curl -i -X POST \
   }'
 ```
 
-## How to add custom attributes to a cart
+# How to add custom attributes to a cart
 
 You can define custom attributes for a cart through `mixins`.
 
-## Define your custom attributes schema
+# Define your custom attributes schema
 
 First, define your custom attributes schema in the form of a JSON schema.
 
@@ -68,7 +66,7 @@ First, define your custom attributes schema in the form of a JSON schema.
 
 Upload your schema to a hosting service and save its URL
 
-## Update a cart with custom attributes
+# Update a cart with custom attributes
 
 To add custom attributes to a cart, you need to send a request to the [Updating a cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
@@ -119,7 +117,7 @@ curl -i -X PUT \
 }'
 ```
 
-## How to merge carts
+# How to merge carts
 
 {% hint style="warning" %}
 To learn more about merging carts, check out [Cart merging](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/carts#cart-merging) in the Carts guide.
@@ -148,7 +146,7 @@ curl -i -X POST \
 }'
 ```
 
-## How to source pricing information from an external price calculation tool
+# How to source pricing information from an external price calculation tool
 
 For B2B scenarios, you might want to integrate an external application for price calculation for your products. Usually, the systems, such as ERPs, store all the relevant customer-specific pricing information needed for customer-specific pricing.\
 The external system then can communicate with the Cart Service directly to overwrite the price of the product added to the cart.
@@ -198,7 +196,7 @@ Notice the `"itemType": "EXTERNAL"` definition which allows the Cart Service to 
 When you have enabled external pricing, it's essential to ensure the accuracy of the prices, as CE does not perform price validation in these instances.
 {% endhint %}
 
-## How to add a product from an external source to a cart
+# How to add a product from an external source to a cart
 
 For some cases, you might want to allow adding products from an external system to cart, and not only from your online store. The products from external product management sources can be added directly to the customer's cart, bypassing the standard product catalog.
 
@@ -246,7 +244,7 @@ curl -i -X POST \
   }'
 ```
 
-## How to add an external fee
+# How to add an external fee
 
 For some cases, you might need to calculate and charge additional fees, for example for packaging, freight, or any additional reasons. The fees calculated externally can be added directly to the customer's cart.
 
@@ -293,7 +291,7 @@ curl -i -X POST \
     ]
   }'
 ```
-## How to apply an external discount on an item level
+# How to apply an external discount on an item level
 
 Adding an external discount to an item in a cart is done with the `cart.cart_manage_external_prices` scope. Use the `externalDiscounts` attribute when adding an item to the cart or updating an existing one.
 
@@ -323,7 +321,7 @@ curl -L \
 ```
 
 
-## Pricing calculations
+# Pricing calculations
 
 To ensure that both net and gross prices are available, along with clear details on how these values are derived, the Cart Service includes the calculatedPrice field.
 
@@ -882,9 +880,9 @@ This calculation method provides a comprehensive breakdown of prices, including 
 </details>
 {% endhint %}
 
-## Pricing calculations glossary
+# Pricing calculations glossary
 
-## Calculated price on item level
+# Calculated price on item level
 
 <table data-full-width="false"><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A unit price from <code>priceMatch</code>, it's multiplied by item quantity.</p><pre><code>{
   "calculatedPrice": {
@@ -1007,7 +1005,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
 }
 </code></pre></td></tr></tbody></table>
 
-## Calculated price on cart level
+# Calculated price on cart level
 
 <table data-full-width="false"><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A sum of all line item prices without discounts.</p><pre><code>{
   "calculatedPrice": {
@@ -1112,7 +1110,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
 
 See the sections below for shipping, payment fee, tax and discounts calculations.
 
-## How is shipping calculated
+# How is shipping calculated
 
 The shipping calculation depends on the stage at which it is done.
 
@@ -1124,7 +1122,7 @@ The shipping calculation depends on the stage at which it is done.
 Always make sure that your site’s `homeBase.address` has the `country` and `zip-code` information included. It's mandatory for shipping calculations.
 {% endhint %}
 
-## How to calculate a payment fee at cart level
+# How to calculate a payment fee at cart level
 
 At the cart level, only one additional fee is calculated, apart from the fees applied at the item level. The `paymentFees` is an additional, non-discountable amount that the customer must pay for using a given payment method.
 
@@ -1135,7 +1133,7 @@ The fee has a specific format, and there are two options for calculating it:
 
 If the fee is taxable and has a tax code, the gross value is calculated. Otherwise, the `grossValue` is equal to `netValue`.
 
-## How to determine a tax country at cart level
+# How to determine a tax country at cart level
 
 Since the shipping address is not set in the cart, you need to determine the country to find the `taxRate` for a fee that has a `taxCode` only.\
 Ways to find the country data:
@@ -1147,7 +1145,7 @@ Ways to find the country data:
     If the matching address is not found, return an error.
 * Get country code from site’s `homeBase.address.country`.
 
-## How to apply discounts at cart level
+# How to apply discounts at cart level
 
 Discounts are known as coupons and, with the relevant settings that influence `calculatedPrice`, they can be applied to a cart.
 
@@ -1188,7 +1186,7 @@ To achieve the communication between Commerce Engine and the fee management tool
 
 To add a custom fee to the cart, you need to send the request to the endpoint. Provide the customer cart's ID in the cartId path parameter. The payload has to include the "itemType" : "EXTERNAL" parameter - see the [Adding a product to a cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) documentation.
 
-## How to apply separation of the same line items in the cart
+# How to apply separation of the same line items in the cart
 
 When you add an item to the cart, it's stored as a single line. If you add the same item multiple times, it remains a single line item, but the `quantity` attribute is updated to reflect the total amount, for example  when you add 5 items they are stored as `item1: productA, qty:5`. 
 #
@@ -1215,7 +1213,7 @@ By default, all items are grouped into a single line in the cart. This behavior 
 }
 ```
 
-### Usage examples
+## Usage examples
 
 **Adding multiple `productA` items with the `keepAsSeparateLineItem=true` flag:**
 
