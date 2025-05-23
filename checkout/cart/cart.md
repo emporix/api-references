@@ -18,8 +18,8 @@ To create a new cart, you need to send a request to the [Creating a new cart](ht
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../cart/api-reference/" %}
-[api-reference](../cart/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -74,8 +74,8 @@ To add custom attributes to a cart, you need to send a request to the [Updating 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../cart/api-reference/" %}
-[api-reference](../cart/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -122,15 +122,15 @@ curl -i -X PUT \
 ### How to merge carts
 
 {% hint style="warning" %}
-To learn more about merging carts, check out [Cart merging](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/carts#cart-merging) in the Carts guide.
+To learn more about merging carts, check out [Cart merging](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/carts#cart-merging) in the Carts guide.
 {% endhint %}
 
 To merge an anonymous cart with a customer cart, you need to send a request to the [Merging carts](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-merge) endpoint. Provide the customer cart's ID in the `cartId` path parameter and the anonymous cart's ID in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../cart/api-reference/" %}
-[api-reference](../cart/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -150,22 +150,22 @@ curl -i -X POST \
 
 ### How to source pricing information from an external price calculation tool
 
-For B2B scenarios, you might want to integrate an external application for price calculation for your products. Usually, the systems, such as ERPs, store all the relevant customer-specific pricing information needed for customer-specific pricing.
+For B2B scenarios, you might want to integrate an external application for price calculation for your products. Usually, the systems, such as ERPs, store all the relevant customer-specific pricing information needed for customer-specific pricing.\
 The external system then can communicate with the Cart Service directly to overwrite the price of the product added to the cart.
 
 {% hint style="warning" %}
-To achieve the communication between Commerce Engine and the external pricing tool, you have to configure both systems accordingly.
-The steps required for such a case are described in the [External Products, Pricing and Fees](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation.
+To achieve the communication between Commerce Engine and the external pricing tool, you have to configure both systems accordingly.\
+The steps required for such a case are described in the [External Products, Pricing and Fees](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation.\
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
-After enabling the external application to update carts with calculated prices, to add a product that is available within Commerce Engine, but with an external price, you need to send the request to the [Adding a product to cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
+After enabling the external application to update carts with calculated prices, to add a product that is available within Commerce Engine, but with an external price, you need to send the request to the [Adding a product to cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.\
 Provide the customer cart's ID in the `cartId` path parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../cart/api-reference/" %}
-[api-reference](../cart/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -203,17 +203,17 @@ When you have enabled external pricing, it's essential to ensure the accuracy of
 For some cases, you might want to allow adding products from an external system to cart, and not only from your online store. The products from external product management sources can be added directly to the customer's cart, bypassing the standard product catalog.
 
 {% hint style="warning" %}
-To achieve the communication between Commerce Engine and the external product management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation.
+To achieve the communication between Commerce Engine and the external product management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation.\
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
-To add a product outside Commerce Engine, you need to send the request to the Adding a product to cart endpoint.
+To add a product outside Commerce Engine, you need to send the request to the Adding a product to cart endpoint.\
 Provide the customer cart's ID in the `cartId` path parameter. The payload has to include the `"itemType" : "EXTERNAL"` parameter, as well as the price and tax information.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../cart/api-reference/" %}
-[api-reference](../cart/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -251,17 +251,17 @@ curl -i -X POST \
 For some cases, you might need to calculate and charge additional fees, for example for packaging, freight, or any additional reasons. The fees calculated externally can be added directly to the customer's cart.
 
 {% hint style="warning" %}
-To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation.
+To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation.\
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
-To add a custom fee to the cart, you need to send the request to the [Adding a product to cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
+To add a custom fee to the cart, you need to send the request to the [Adding a product to cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.\
 Provide the customer cart's ID in the `cartId` path parameter. The payload has to include the `"itemType" : "EXTERNAL"` parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../cart/api-reference/" %}
-[api-reference](../cart/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1087,7 +1087,7 @@ See the sections below for shipping, payment fee, tax and discounts calculations
 
 The shipping calculation depends on the stage at which it is done.
 
-* In the cart, where the address, delivery method, and zone are not available yet, the calculation uses the minimum shipping estimation. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`, and the `shipToAddress` is created based on the cart’s `countryCode` and `zipCode`.
+* In the cart, where the address, delivery method, and zone are not available yet, the calculation uses the minimum shipping estimation. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`, and the `shipToAddress` is created based on the cart’s `countryCode` and `zipCode`.\
   See the [Calculating the minimum shipping costs](https://emporix.gitbook.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) endpoint.
 * In the checkout, where information about the delivery window and zone is already available, the calculation uses the following endpoints: [Calculating the final shipping cost](https://emporix.gitbook.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-cost#post-shipping-tenant-site-quote), or [Calculating the shipping cost for a given slot](https://emporix.gitbook.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) accordingly.
 
@@ -1130,7 +1130,6 @@ The information about which calculation method was used is available in `totalDi
 * `discountCalculationType`:
   * SUBTOTAL - the discounts are applied on `items[].calculatedPrice.price`. The line item fees and shipping cost are **NOT** discounted.
   * TOTAL - the discounts are applied on `items[].calculatedPrice.price`, the line item fees and shipping cost.
-
 *   `discountType`:
 
     * ABSOLUTE - a coupon that has a given type must have `discountAbsolute` attribute configured. It represents a monetary amount that should be discounted.
@@ -1140,9 +1139,7 @@ The information about which calculation method was used is available in `totalDi
 
     * PERCENT - it takes the value of discount’s `discountPercentage` attribute and calculates the percentage discount to the price.
     * FREE\_SHIPPING - this type of a discount fully discounts the price of the `calculatedPrice.totalShipping`. It's applied before any other discount is applied.
-
 * `categoryRestricted` - the discount applies only to the line items that belong to a specific category. If the `discountCalculationType=TOTAL`, a fee of an item that fulfills the restriction is discounted. However, any other fees, or shipping are not part of the discounting.
-
 * `segmentRestricted` - the discount is applied only to the line items that belong to the given customer segment.
 
 Since the system can be configured to allow more than one discount to a cart, it has a few implications:
@@ -1153,12 +1150,11 @@ Since the system can be configured to allow more than one discount to a cart, it
 * Every ABSOLUTE discount uses the not discounted values for the discount value spread. It means that if the given applicable item is already fully discounted, the remaining amount of the discount is spread proportionally on the discounts that still have some value left.
 
 {% hint style="warning" %}
-
-Check the [System Preferences](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/settings/system-preferences/) documentation for coupons settings related to the number of discounts.
+Check the [System Preferences](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/settings/system-preferences) documentation for coupons settings related to the number of discounts.
 {% endhint %}
 
 For some cases, you might need to calculate and charge additional fees, for example for packaging, freight, or any additional reasons. The fees calculated externally can be added directly to the customer's cart.
 
-To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation. You need to generate a dedicated scope that serves as the authorization token for the API calls.
+To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation. You need to generate a dedicated scope that serves as the authorization token for the API calls.
 
 To add a custom fee to the cart, you need to send the request to the endpoint. Provide the customer cart's ID in the cartId path parameter. The payload has to include the "itemType" : "EXTERNAL" parameter - see the [Adding a product to a cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) documentation.

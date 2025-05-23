@@ -14,9 +14,9 @@ Make sure you have the following tools installed:
 
 ### Installing
 
-Download the Maven project [OpenAPI Generator](static/openapi/apireference-client-generator.zip) and unpack it in a relevant destination.
+Download the Maven project OpenAPI Generator and unpack it in a relevant destination.
 
-{% file src="../../.gitbook/assets/apireference-client-generator.zip" %}
+{% file src=".gitbook/assets/apireference-client-generator.zip" %}
 
 ### Using OpenAPI Generator
 
@@ -24,7 +24,7 @@ Download the Maven project [OpenAPI Generator](static/openapi/apireference-clien
 2. For the service of your interest, copy its API reference yml file to the `src/main/resources/apis` directory.
 
 {% hint style="warning" %}
-The file has to be named as `api.yml`.
+The file has to be named as `api.yml`.\
 If you want to choose a different name for the file, adjust the `pom.xml` by pointing to the right file name in the `<inputSpec></inputSpec>` property.
 {% endhint %}
 

@@ -249,9 +249,9 @@
     * [Session-context Tutorial](users-and-permissions/session-context/session-context.md)
     * [API Reference](users-and-permissions/session-context/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -572,9 +572,9 @@
     * [Sequential-id Tutorial](utilities/sequential-id/sequentialid.md)
     * [API Reference](utilities/sequential-id/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:
@@ -602,9 +602,9 @@
     * [Webhooks Tutorial](webhooks/webhook-service/webhooks-tutorial.md)
     * [API Reference](webhooks/webhook-service/api-reference/README.md)
       * ```yaml
-        type: builtin:openapi
         props:
           models: true
+        type: builtin:openapi
         dependencies:
           spec:
             ref:

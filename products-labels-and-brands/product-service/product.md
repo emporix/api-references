@@ -6,25 +6,23 @@ seo:
     variants, product bundle, product bundles, variant attributes
 ---
 
-# How to add your first products
+# Product Tutorial
+
+## How to add your first products
 
 {% hint style="warning" %}
-
-This tutorial presents how to create a basic product. To learn more about types of products available in the Emporix Commerce Engine, check out the [Products guide](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/product-user-guide).
-
+This tutorial presents how to create a basic product. To learn more about types of products available in the Emporix Commerce Engine, check out the [Products guide](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/product-user-guide).
 {% endhint %}
 
 Take a look at the relationships between prices and other resources in the Emporix Commerce Engine:
 
-<figure><img src="../../../../static/product/product_diagram.svg" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../static/product/product_diagram.svg" alt=""><figcaption></figcaption></figure>
 
 {% hint style="warning" %}
-
 Countries and regions are predefined in the Emporix API Country Service. You can check which countries and regions are available by sending requests to the following endpoints:
 
 * Retrieving all countries
 * Retrieving all regions
-
 {% endhint %}
 
 Adding your first product is a process made up of two main steps:
@@ -33,16 +31,14 @@ Adding your first product is a process made up of two main steps:
 2. [Adding products](product.md#add-products).
 3. [Adding media files for a product](product.md#add-media-for-a-product).
 
-## Define sales tax rates
+### Define sales tax rates
 
 Sales tax rates are stored in tax configurations. Each configuration indicates a country and defines tax classes applicable to it.
 
 You can manage your tax configurations through the Emporix API [Tax Service](../../prices-and-taxes/tax-service/tax.md).
 
 {% hint style="warning" %}
-
-For more information, check out the [Tax classes guide](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/taxes-v2).
-
+For more information, check out the [Tax classes guide](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/taxes-v2).
 {% endhint %}
 
 To define sales tax rates for a country, you need to send a request to the [Creating a new tax configuration](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/tax-service/api-reference/taxes#post-tax-tenant-taxes) endpoint.
@@ -93,14 +89,14 @@ curl -i -X POST \
   }'
 ```
 
-## Add products
+### Add products
 
 To add a single basic product, you need to send a request to the [Creating a new product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../product-service/api-reference/" %}
-[api-reference](../product-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -164,13 +160,14 @@ curl -i -X POST \
       }
     }
   }'
-  ```
+```
+
 You can also add multiple basic products at the same time. To achieve that, you need to send a request to the [Creating multiple products](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../product-service/api-reference/" %}
-[api-reference](../product-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -202,15 +199,14 @@ curl -i -X POST \
 }'
 ```
 
-## Add media for a product
+### Add media for a product
 
-To add media files, for example images or videos, for a particular product, you can upload them directly to the Emporix database, or link to their location on an external website.
+To add media files, for example images or videos, for a particular product, you can upload them directly to the Emporix database, or link to their location on an external website.\
 In the following example, we are creating a `public` type of an asset that is linked to the product of our choice by sending a request to the Creating an asset endpoint with the `media.asset_manage` scope.
 
 {% hint style="warning" %}
-
-Sending a json/application request to the Creating an asset endpoint does **not** mean that the asset is uploaded to the database. It is only linked to the resource (category or product).
-If you want to upload the asset to the database, you need to send a multipart request to the [Creating an asset](https://emporix.gitbook.io/documentation-portal/api-references/media/media/api-reference/assets#post-media-tenant-assets) endpoint.
+Sending a json/application request to the Creating an asset endpoint does **not** mean that the asset is uploaded to the database. It is only linked to the resource (category or product).\
+If you want to upload the asset to the database, you need to send a multipart request to the [Creating an asset](https://emporix.gitbook.io/documentation-portal/api-references/media/media/api-reference/assets#post-media-tenant-assets) endpoint.\
 For more information, check out the [_Media Management Tutorials_](../../media/media/media.md).
 {% endhint %}
 
@@ -229,40 +225,38 @@ curl -i -X POST \
   -F 'body=[object Object]'
 ```
 
-# How to create a bundle of personalized products
+## How to create a bundle of personalized products
 
 With Emporix API, you can group together two or more products that already exist in the system so that they can be sold at one collective price.
 
 You can also personalize your products by using the Emporix-provided templates, or by creating your own ones. The values of the template's attributes are specified in the product's `mixins.productTemplateAttributes` field.
 
 {% hint style="warning" %}
-
-To learn more about product bundles and templates, check out the [Products guide](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/product-user-guide).
-
+To learn more about product bundles and templates, check out the [Products guide](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/product-user-guide).
 {% endhint %}
 
 To create personalized products and then group them in a bundle, perform the following steps:
 
-1. [Create a template for your product.](../product-service/product.md#create-a-product-template)
-2. [Create a product by using a product template.](../product-service/product.md#create-a-product-by-using-a-product-template)
-3. [Create a bundle of products.](../product-service/product.md#create-a-bundle-of-products)
+1. [Create a template for your product.](product.md#create-a-product-template)
+2. [Create a product by using a product template.](product.md#create-a-product-by-using-a-product-template)
+3. [Create a bundle of products.](product.md#create-a-bundle-of-products)
 
-## Before you start
+### Before you start
 
 {% hint style="warning" %}
 The `product.product_publish` scope is only required if you want to publish the product on its creation.
 {% endhint %}
 
-[Ensure that you have defined sales tax rates.](../product-service/product.md#define-sales-tax-rates)
+[Ensure that you have defined sales tax rates.](product.md#define-sales-tax-rates)
 
-## Create a product template
+### Create a product template
 
 You can create a product template that contains additional attributes describing your product. To create a new product template, you need to call the [Creating a new product template](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/product-templates#post-product-tenant-product-templates) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../product-service/api-reference/" %}
-[api-reference](../product-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -307,30 +301,30 @@ curl -i -X POST \
         }
       ]
   }'
-  ```
+```
 
 The `id` from the response is further referred to as \{{product\_template\_Id\}}.
 
-## Create a product by using a product template
+### Create a product by using a product template
 
 By applying a product template, you can create a product that contains additional attributes, which are included in the product's `mixins.productTemplateAttributes` field.
 
 To create a new product by applying a product template to it, you need to call the Creating a new product endpoint and provide the template's ID in the request body.
 
 {% hint style="warning" %}
-In this example, we assign a template to a product on its creation. The created product can be a standalone one, or contain variants. Here, the product does not contain any variants. For creating a parent variant product with variants, check out the [How to create a parent product with variants](../product-service/product.md#how-to-create-a-parent-product-with-variants) tutorial.
+In this example, we assign a template to a product on its creation. The created product can be a standalone one, or contain variants. Here, the product does not contain any variants. For creating a parent variant product with variants, check out the [How to create a parent product with variants](product.md#how-to-create-a-parent-product-with-variants) tutorial.
 {% endhint %}
 
 {% hint style="warning" %}
-
 When creating or updating a product of the `PARENT_VARIANT` type, by default, product variants are generated. If you do **not** want to create product variants for the product, set the `skipVariantGeneration` parameter to `true`.
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../product-service/api-reference/" %}
-[api-reference](../product-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' \
@@ -403,7 +397,7 @@ curl -i -X POST \
 }
 ```
 
-## Create a bundle of products
+### Create a bundle of products
 
 You can group together two or more products that already exist in the system so that they can be sold at one collective price. To achieve that, you need to call the [Creating a new product](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
@@ -411,9 +405,10 @@ In this example, we will create a bundle of the T-shirt product we created above
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../product-service/api-reference/" %}
-[api-reference](../product-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' \
@@ -481,7 +476,7 @@ curl -i -X POST \
 
 The value of the `productId` from the response is the \{{bundle\_Id\}}.
 
-# How to create a parent variant product with variants
+## How to create a parent variant product with variants
 
 Variants are derivatives of the parent variant product. They contain the same attributes as their parent variant, but assume different attribute values.
 
@@ -489,19 +484,17 @@ Variants are derivatives of the parent variant product. They contain the same at
 The `product.product_publish` scope is only required if you want to publish the product on its creation.
 {% endhint %}
 
-## Create a parent variant product
+### Create a parent variant product
 
 Variants are created automatically whenever their parent variant product is created or updated. The combinations of variants are created based on the attributes defined in the product template applied to the parent variant, and the attributes and values specified in the `variantAttributes` field of the parent variant.
 
 Before you start, ensure that the `skipVariantGeneration` parameter is set to `false`.
 
 {% hint style="warning" %}
-
 When creating or updating a product of the `PARENT_VARIANT` type, by default, product variants are generated. If you do **not** want to create product variants for the product, set the `skipVariantGeneration` parameter to `true`.
 {% endhint %}
 
 {% hint style="warning" %}
-
 The product template can contain more attributes and values than are needed to create a parent variant. In the `variantAttributes` field, you need to specify the attributes and values from the product template that are relevant to the particular parent variant product and its variants.
 {% endhint %}
 
@@ -509,8 +502,8 @@ To create a single `parent_variant` type of product with variants, you need to s
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../product-service/api-reference/" %}
-[api-reference](../product-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -614,8 +607,8 @@ If you want to create multiple `parent_variant` products at the same time, send 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../product-service/api-reference/" %}
-[api-reference](../product-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -899,14 +892,12 @@ curl -i -X POST \
 }'
 ```
 
-
-
-# How to create variants with new attributes and values
+## How to create variants with new attributes and values
 
 If you want to create variants by adding new variant attributes and/or values for a parent variant, you need to perform the following actions:
 
-1. [Update the product template with new variant attributes and values.](../product-service/product.md#update-a-product-template-with-new-attributes-and-values)
-2. [Update the parent variant product with the newly updated product template.](../product-service/product.md#update-the-existing-parent-variant-product-with-the-new-product-template)
+1. [Update the product template with new variant attributes and values.](product.md#update-a-product-template-with-new-attributes-and-values)
+2. [Update the parent variant product with the newly updated product template.](product.md#update-the-existing-parent-variant-product-with-the-new-product-template)
 
 {% hint style="warning" %}
 You can add new attribute values either by adding them to the product template and then updating the product, or by updating the product with new values under `variantAttributes`, if they already exist in the product template.
@@ -916,7 +907,7 @@ You can add new attribute values either by adding them to the product template a
 The `product.product_publish` scope is only required if you want to publish the product on its creation.
 {% endhint %}
 
-## Update a product template with new attributes and values
+### Update a product template with new attributes and values
 
 To specify new attributes for your product's variants, you need to add them in the attributes field by calling the Updating a product template endpoint. Here, we've added a new key `size` to the list of available attributes.
 
@@ -928,8 +919,8 @@ To specify new values for your product's attributes, you need to add them in the
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../product-service/api-reference/" %}
-[api-reference](../product-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1035,23 +1026,23 @@ curl -i -X PUT \
 }'
 ```
 
-## Update the existing parent variant product with the new product template
+### Update the existing parent variant product with the new product template
 
 Since updating the product template results in it being assigned a new version, you need to update the parent variant by sending a request to the Partially updating a product endpoint and providing the new `template.version` value.
 
-{% hint style="warning" %}\
+{% hint style="warning" %}
+\
 In the `variantAttributes` field, you need to specify the attributes and attribute values that the variant products will assume. Based on the specified attributes, variant product combinations will be created automatically.
 {% endhint %}
 
 {% hint style="warning" %}
-
 When creating or updating a product of the `PARENT_VARIANT` type, by default, product variants are generated. If you do **not** want to create product variants for the product, set the `skipVariantGeneration` parameter to `true`.
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../product-service/api-reference/" %}
-[api-reference](../product-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1104,7 +1095,7 @@ curl -i -X PATCH \
 
 As a result, new product variants are created automatically, in combinations that include the newly specified attributes and values.
 
-# How to override variant attribute values
+## How to override variant attribute values
 
 You may choose to update the basic fields of a particular variant, for example `name`, `description`, or `relatedItems`.
 
@@ -1112,7 +1103,7 @@ You may choose to update the basic fields of a particular variant, for example `
 The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the product on its update.
 {% endhint %}
 
-## Updating a variant with new attribute values
+### Updating a variant with new attribute values
 
 By default, all variant products inherit their attributes from the parent variant. You need to include the name of the attribute in the `metadata.overriden` field to be able to replace the attribute values.
 
@@ -1129,8 +1120,8 @@ In the following example, we override the following fields:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../product-service/api-reference/" %}
-[api-reference](../product-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1171,19 +1162,21 @@ curl -i -X PUT \
     }
 }'
 ```
-# How to update multiple products in one operation
+
+## How to update multiple products in one operation
 
 If you want to update multiple products, use the bulk update feature to update several products in one operation. Send a request to the [Upserting multiple](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk) products endpoint.
 
-{% hint style="warning" %}\
-The `product.product_update` scope is required.
+{% hint style="warning" %}
+\
+The `product.product_update` scope is required.\
 The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the products on the update.
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../product-service/api-reference/" %}
-[api-reference](../product-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1259,7 +1252,7 @@ curl -i -X PUT \
 }'
 ```
 
-When the update request is sent successfully, the response for a particular product is returned at the same position (index) at which it is located in the request body.
+When the update request is sent successfully, the response for a particular product is returned at the same position (index) at which it is located in the request body.\
 The expected response is as follows:
 
 ```xml
