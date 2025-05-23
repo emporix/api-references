@@ -1219,47 +1219,47 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   1. Adding the first `productA` item with `keepAsSeparateLineItem=true` results in:
 
-   ```js
-   item0: productA, qty:1, keepAsSeparateLineItem=true
-   ```
+  ```js
+  item0: productA, qty:1, keepAsSeparateLineItem=true
+  ```
 
   2. Adding another `productA` item with `keepAsSeparateLineItem=true` results in:
 
-    ```js
-    item0: productA, qty:1, keepAsSeparateLineItem=true
-      item1: productA, qty:1, keepAsSeparateLineItem=true 
-    ```
+  ```js
+  item0: productA, qty:1, keepAsSeparateLineItem=true
+  item1: productA, qty:1, keepAsSeparateLineItem=true 
+  ```
 
 **Adding multiple `productA` items with the `keepAsSeparateLineItem=false` flag**
 
   1. Adding the first `productA` item with `keepAsSeparateLineItem=false` results in:
    
-    ```js
-    item0: productA, qty:1, keepAsSeparateLineItem=false
-    ```
+  ```js
+  item0: productA, qty:1, keepAsSeparateLineItem=false
+  ```
 
   2. Adding another `productA` item with `keepAsSeparateLineItem=false` results in:
 
-    ```js
-    item0: productA, qty:2, keepAsSeparateLineItem=false
-    ```
+  ```js
+  item0: productA, qty:2, keepAsSeparateLineItem=false
+  ```
 
 **Adding multiple `productA` items with the `keepAsSeparateLineItem=true` and `keepAsSeparateLineItem=false` flags**
 
   1. Adding the first `productA` item with two different flags results in:
 
-    ```js
-    item0: productA, qty:1, keepAsSeparateLineItem=true 
-    item2: productA, qty:1, keepAsSeparateLineItem=false 
-    ```
+  ```js
+  item0: productA, qty:1, keepAsSeparateLineItem=true 
+  item2: productA, qty:1, keepAsSeparateLineItem=false 
+  ```
 
   2. Adding another two `productA` items with different flags results in:
 
-    ```js
-    item0: productA, qty:1, keepAsSeparateLineItem=true 
-    item1: productA, qty:1, keepAsSeparateLineItem=true 
-    item2: productA, qty:2, keepAsSeparateLineItem=false 
-    ```
+  ```js
+  item0: productA, qty:1, keepAsSeparateLineItem=true 
+  item1: productA, qty:1, keepAsSeparateLineItem=true 
+  item2: productA, qty:2, keepAsSeparateLineItem=false 
+  ```
 
 ## Products with external prices
 
@@ -1269,16 +1269,16 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   1. Adding the first `productA` item with `priceX` and `keepAsSeparateLineItem=true` results in
    
-    ```js
-    item0: productA, external, priceX, qty:1, keepAsSeparateLineItem=true 
-    ```
+  ```
+  item0: productA, external, priceX, qty:1, keepAsSeparateLineItem=true 
+  ```
 
   2. Adding another `productA` item to it, but with `priceY` and `keepAsSeparateLineItem=true` results in:
    
-    ```js
-    item0: productA, external, priceX, qty:1, keepAsSeparateLineItem=true 
-    item1: productA, external, priceY, qty:1, keepAsSeparateLineItem=true 
-    ```
+  ```
+  item0: productA, external, priceX, qty:1, keepAsSeparateLineItem=true 
+  item1: productA, external, priceY, qty:1, keepAsSeparateLineItem=true 
+  ```
 
 ## Products with standard prices
 
@@ -1288,16 +1288,16 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   1. Adding the first `productA` item with `priceX` and `keepAsSeparateLineItem=true` results in:
    
-    ```js
-    item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true 
-    ```
+  ```
+  item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true 
+  ```
 
   2. Adding another `productA` item with different `priceY` and `keepAsSeparateLineItem=true` results in:
    
-    ```js
-    item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true 
-    item1: productA, internal, priceY, qty:1, keepAsSeparateLineItem=true 
-    ```
+  ```
+  item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true 
+  item1: productA, internal, priceY, qty:1, keepAsSeparateLineItem=true 
+  ```
 
   * If `cartItemValidationSkipExistingItemsValidationOnAddToCart=false`, the validation occurs, and an error is thrown due to the price mismatch.
 
