@@ -1218,10 +1218,9 @@ By default, all items are grouped into a single line in the cart. This behavior 
 ### Adding multiple `productA` items with the `keepAsSeparateLineItem=true` flag
 
   1. Adding the first `productA` item with `keepAsSeparateLineItem=true` results in:
-
-    ```bash
-    item0: productA, qty:1, keepAsSeparateLineItem=true
-    ```
+   ```
+   item0: productA, qty:1, keepAsSeparateLineItem=true
+   ```
 
   2. Adding another `productA` item with `keepAsSeparateLineItem=true` results in:
 
@@ -1240,7 +1239,7 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   2. Adding another `productA` item with `keepAsSeparateLineItem=false` results in:
 
-   ```bash
+    ```bash
       item0: productA, qty:2, keepAsSeparateLineItem=false
     ```
 
@@ -1248,9 +1247,9 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   1. Adding the first `productA` item with two different flags results in:
 
-    ```bash
-      item0: productA, qty:1, keepAsSeparateLineItem=true 
-      item2: productA, qty:1, keepAsSeparateLineItem=false 
+    ```
+    item0: productA, qty:1, keepAsSeparateLineItem=true 
+    item2: productA, qty:1, keepAsSeparateLineItem=false 
     ```
 
   2. Adding another two `productA` items with different flags results in:
