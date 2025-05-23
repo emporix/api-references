@@ -1215,19 +1215,18 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
 ## Usage examples
 
-**Adding multiple `productA` items with the `keepAsSeparateLineItem=true` flag:**
+### Adding multiple `productA` items with the `keepAsSeparateLineItem=true` flag:
 
   1. Adding the first `productA` item with `keepAsSeparateLineItem=true` results in:
 
-  <code> item0: productA, qty:1, keepAsSeparateLineItem=true</code>
-
+   <code>item0: productA, qty:1, keepAsSeparateLineItem=true</code>
 
   2. Adding another `productA` item with `keepAsSeparateLineItem=true` results in:
 
-    ```json
+    <code>
       item0: productA, qty:1, keepAsSeparateLineItem=true
       item1: productA, qty:1, keepAsSeparateLineItem=true 
-    ```
+    </code>
 
 **Adding multiple `productA` items with the `keepAsSeparateLineItem=false` flag:**
 
