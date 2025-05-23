@@ -1189,15 +1189,15 @@ To add a custom fee to the cart, you need to send the request to the endpoint. P
 # How to apply separation of the same line items in the cart
 
 When you add an item to the cart, it's stored as a single line. If you add the same item multiple times, it remains a single line item, but the `quantity` attribute is updated to reflect the total amount, for example  when you add 5 items they are stored as `item1: productA, qty:5`. 
-#
+
 If you need to add the same item multiple times on separate lines in the cart, use the `keepAsSeparateLineItem=true` flag - it ensures each instance of the item appears as a distinct line item. This can be useful in a variety of scenarios, such as applying different discounts or fees to the same product, or handling separate delivery options.
 
 A common use case is the *Buy 2, Get 1 Free* promotion. In this case, when a customer adds two of the same line items to the cart, the system can add a third instance as a separate line item marked as free.
 
 Using the `keepAsSeparateLineItem=true` flag stores each addition of the product as an individual line, while the `keepAsSeparateLineItem=false` keeps them all in one.
-#
+
 By default, all items are grouped into a single line in the cart. This behavior is defined by `keepAsSeparateLineItem=false`. However, even if the `keepAsSeparateLineItem` flag is not explicitly included in the payload, the system assumes this default behavior. In other words, unless stated otherwise, `keepAsSeparateLineItem=false` is always applied.
-#
+
 **Adding the `keepAsSeparateLineItem":true` flag to the payload example**:
 
 ```json
@@ -1219,14 +1219,14 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   1. Adding the first `productA` item with `keepAsSeparateLineItem=true` results in:
 
-    ```
+    ```json
       item0: productA, qty:1, keepAsSeparateLineItem=true
     ```
 
 
   2. Adding another `productA` item with `keepAsSeparateLineItem=true` results in:
 
-    ```code
+    ```json
       item0: productA, qty:1, keepAsSeparateLineItem=true
       item1: productA, qty:1, keepAsSeparateLineItem=true 
     ```
@@ -1235,13 +1235,13 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   1. Adding the first `productA` item with `keepAsSeparateLineItem=false` results in:
 
-    ```
+    ```json
       item0: productA, qty:1, keepAsSeparateLineItem=false
     ```
 
   2. Adding another `productA` item with `keepAsSeparateLineItem=false` results in:
 
-    ```
+    ```json
       item0: productA, qty:2, keepAsSeparateLineItem=false
     ```
 
@@ -1249,14 +1249,14 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   1. Adding the first `productA` item with two different flags results in:
 
-    ```code
+    ```json
       item0: productA, qty:1, keepAsSeparateLineItem=true 
       item2: productA, qty:1, keepAsSeparateLineItem=false 
     ```
 
   2. Adding another two `productA` items with different flags results in:
 
-    ```code
+    ```json
       item0: productA, qty:1, keepAsSeparateLineItem=true 
       item1: productA, qty:1, keepAsSeparateLineItem=true 
       item2: productA, qty:2, keepAsSeparateLineItem=false 
@@ -1270,13 +1270,13 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   1. Adding the first `productA` item with `priceX` and `keepAsSeparateLineItem=true` results in:
 
-    ```
+    ```json
       item0: productA, external, priceX, qty:1, keepAsSeparateLineItem=true 
     ```
 
   2. Adding another `productA` item to it, but with `priceY` and `keepAsSeparateLineItem=true` results in:
 
-    ```code
+    ```json
       item0: productA, external, priceX, qty:1, keepAsSeparateLineItem=true 
       item1: productA, external, priceY, qty:1, keepAsSeparateLineItem=true 
     ```
@@ -1289,13 +1289,13 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   1. Adding the first `productA` item with `priceX` and `keepAsSeparateLineItem=true` results in:
 
-    ```
+    ```json
       item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true 
     ```
 
   2. Adding another `productA` item with different `priceY` and `keepAsSeparateLineItem=true` results in:
 
-    ```code
+    ```json
       item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true 
       item1: productA, internal, priceY, qty:1, keepAsSeparateLineItem=true 
     ```
@@ -1304,11 +1304,11 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   * If `cartItemValidationSkipExistingItemsValidationOnAddToCart=true`, the validation does not occur, and the cart accepts the new line item.
 
-  :::warning
-  When the cart item validation is not executed on `add to cart`, you can use the [cart validation](https://developer.emporix.io/docs/openapi/cart/#operation/GET-cart-validate) endpoint. It should return errors informing that the prices are duplicated.
-  #
+  {% hint style="warning" %}
+  When the cart item validation is not executed on `add to cart`, you can use the [cart validation](https://emporix.gitbook.io/documentation-portal/api-references/~/revisions/yWwHvejmTq395ReuRRIQ/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid-validate) endpoint. It should return errors informing that the prices are duplicated.
+  
   EXTERNAL pricing products can have different prices in the cart, INTERNAL pricing products can't.
-  :::
+{% hint style="warning" %}
 
 **Adding products with internal and external pricing**
 
@@ -1316,13 +1316,13 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
   1. Adding `productA` item, with internal `priceX` and `keepAsSeparateLineItem=false` results in:
 
-    ```
+    ```json
       item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false 
     ```
 
   2. Adding `productA` item to it, with external `priceY` and `keepAsSeparateLineItem=false` results in:
 
-    ```code
+    ```json
       item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false 
       item0: productA, external, priceY, qty:1, keepAsSeparateLineItem=false
     ```
