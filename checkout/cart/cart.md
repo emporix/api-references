@@ -1114,7 +1114,7 @@ See the sections below for shipping, payment fee, tax and discounts calculations
 
 The shipping calculation depends on the stage at which it is done.
 
-* In the cart, where the address, delivery method, and zone are not available yet, the calculation uses the minimum shipping estimation. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`, and the `shipToAddress` is created based on the cart’s `countryCode` and `zipCode`.\
+* In the cart, where the address, delivery method, and zone are not available yet, the calculation uses the minimum shipping estimation. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`, and the `shipToAddress` is created based on the cart’s `countryCode` and `zipCode`.
   See the [Calculating the minimum shipping costs](https://emporix.gitbook.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) endpoint.
 * In the checkout, where information about the delivery window and zone is already available, the calculation uses the following endpoints: [Calculating the final shipping cost](https://emporix.gitbook.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-cost#post-shipping-tenant-site-quote), or [Calculating the shipping cost for a given slot](https://emporix.gitbook.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) accordingly.
 
@@ -1244,7 +1244,7 @@ By default, all items are grouped into a single line in the cart. This behavior 
     item0: productA, qty:2, keepAsSeparateLineItem=false
     ```
 
-### Adding multiple `productA` items with the `keepAsSeparateLineItem=true` and `keepAsSeparateLineItem=false` flags
+**Adding multiple `productA` items with the `keepAsSeparateLineItem=true` and `keepAsSeparateLineItem=false` flags**
 
   1. Adding the first `productA` item with two different flags results in:
 
@@ -1309,19 +1309,20 @@ When the cart item validation is not executed on `add to cart`, you can use the 
 EXTERNAL pricing products can have different prices in the cart, INTERNAL pricing products can't.
 {% endhint %}
 
-## Adding products with internal and external pricing
+**Adding products with internal and external pricing**
 
   When you add the same product first as an internal one and then as an external, the items are split into separate line items even if `keepAsSeparateLineItem=false`, or if the flag is not present.
 
   1. Adding `productA` item, with internal `priceX` and `keepAsSeparateLineItem=false` results in:
-
-    ```js
-    item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false 
+    
+    ```json
+        item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false
     ```
+    
 
   2. Adding `productA` item to it, with external `priceY` and `keepAsSeparateLineItem=false` results in:
 
     ```js
-    item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false 
-    item0: productA, external, priceY, qty:1, keepAsSeparateLineItem=false
+        item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false 
+        item0: productA, external, priceY, qty:1, keepAsSeparateLineItem=false
     ```
