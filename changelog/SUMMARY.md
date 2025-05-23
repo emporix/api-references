@@ -8,6 +8,7 @@
 
 ## 2025
 
+* [2025-05-26: Cart Service - add items as separate lines to a cart](2025/2025-05-26-separate-lines.md)
 * [2025-05-12: Customer Service - improvements](2025/2025-05-12-customer.md)
 * [2025-04-29: Customer Segments Service - fully operational](2025/2025-04-29-segments.md)
 * [2025-04-17: Product Service - deprecations](2025/2025-04-17-product.md)
