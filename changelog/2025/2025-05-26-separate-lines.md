@@ -24,8 +24,8 @@ To add item as a separate line, specify `keepAsSeparateLine` property in the `Ad
 
 | Endpoint                                                                                          | Description                               |
 |---------------------------------------------------------------------------------------------------|-------------------------------------------|
-| [Adding a product to cart](/openapi/cart/#operation/POST-cart-add-item-to-cart)                   | Added the `keepAsSeparateLine` attribute. |
-| [Adding multiple products to cart](/openapi/cart/#operation/POST-cart-add-multiple-items-to-cart) | Added the `keepAsSeparateLine` attribute. |
+| [Adding a product to cart]([/openapi/cart/#operation/POST-cart-add-item-to-cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items))                   | Added the `keepAsSeparateLine` attribute. |
+| [Adding multiple products to cart]([/openapi/cart/#operation/POST-cart-add-multiple-items-to-cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-itemsbatch)) | Added the `keepAsSeparateLine` attribute. |
 
 ## Known problems
 
