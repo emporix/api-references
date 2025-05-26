@@ -27,11 +27,16 @@ These announcements are intended to keep you informed about ongoing work and pot
 {% endhint %}
 
 
-* Service
-    * improvement of 
-* Service
-    * improvement of 
-* Service
-    * improvement of 
-* Service
-    * improvement of 
+* Cart Service
+    * improvement of shared orders functionality
+* Approval Service
+    * improvement of shared orders functionality
+* Checkout Service
+    * improvement of shared orders functionality
+* Customer Service
+    * improvement of shared orders functionality
+* IAM Service
+    * improvement of shared orders functionality
+
+| Service name | Description |
+| Cart Service/Approval Service/Checkout Service/Customer Service/IAM Service | Improvement of shared orders functionality |
