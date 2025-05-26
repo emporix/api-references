@@ -6,31 +6,6 @@ info:
     email: documentation@emporix.com
   description: |-
     High performance, extensible cart that holds products for a later checkout. 
-
-    ***
-
-    **Key Features**:
-    * Authenticated user cart
-    * Merging of carts
-    * Single cart across sites or individual cart per site
-    * Persistent for later checkout
-    * Add, remove, modify, and delete cart entries
-    * Support for products with unknown weight at checkout
-    * Calculates prices with high precision of up to 16 digits, which is a range from 1 quadrillion (1,000,000,000,000,000) to 0.000000000000001 (scale of 15)
-    * Multi-currency support with appropriate format (no fractions, ISO standard defined fractions or custom fractions)
-    * Support for promotions, discounts
-    * Support for coupons
-    * Deposit / fee handling
-    * Net / gross price support
-    * High-performance, auto-scaling
-    * External prices and fees
-
-    ***
-
-    **Key Benefits**:
-    * Ready to use cart implementation
-    * Guaranteed response times, high availability
-    * Support for web, native/reactive mobile, gaming consoles and other IoT devices.
 tags:
   - name: Carts
     description: Manage Carts
@@ -2778,6 +2753,10 @@ components:
         id:
           type: string
           description: 'Cart item''s unique identifier. '
+        keepAsSeparateLineItem:
+          type: boolean
+          description: "Indicates that products are maintained as individual entries in the cart, rather than being consolidated. 
+            When identical products are added multiple times, each addition creates a new line item instead of increasing the quantity of an existing one."
         product:
           allOf:
             - $ref: '#/components/schemas/product'
@@ -2958,6 +2937,10 @@ components:
         id:
           type: string
           description: Cart item's unique identifier generated when the item is added to cart.
+        keepAsSeparateLineItem:
+          type: boolean
+          description: "Indicates that products are maintained as individual entries in the cart, rather than being consolidated. 
+            When identical products are added multiple times, each addition creates a new line item instead of increasing the quantity of an existing one."
         yrn:
           $ref: '#/components/schemas/YRN'
         product:
@@ -3537,7 +3520,7 @@ components:
       properties:
         priceId:
           type: string
-          description: Price’s unique identifier generated when the price is created through the Price Service. This field should not be provided when itemType is EXTERNAL and request contain external price.
+          description: Price’s unique identifier generated when the price is created through the Price Service. This field should not be provided when itemType is EXTERNAL.
         yrn:
           $ref: '#/components/schemas/YRN'
         originalAmount:
