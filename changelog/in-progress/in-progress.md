@@ -28,15 +28,15 @@ These announcements are intended to keep you informed about ongoing work and pot
 
 
 * Cart Service
-    * improvement of shared orders functionality
+    * improvement of shared orders and customer groups functionality
 * Approval Service
-    * improvement of shared orders functionality
+    * improvement of shared orders and customer groups functionality
 * Checkout Service
-    * improvement of shared orders functionality
+    * improvement of shared orders and customer groups functionality
 * Customer Service
-    * improvement of shared orders functionality
+    * improvement of shared orders and customer groups functionality
 * IAM Service
-    * improvement of shared orders functionality
+    * improvement of shared orders and customer groups functionality
 
 
 <style type="text/css">
@@ -56,7 +56,7 @@ These announcements are intended to keep you informed about ongoing work and pot
 <tbody>
   <tr>
     <td class="tg-0pky" rowspan="5">Cart Service <br>Approval Service<br>Checkout Service<br>Customer Service<br>IAM Service</td>
-    <td class="tg-0pky" rowspan="5">Improvement of shared orders functionality</td>
+    <td class="tg-0pky" rowspan="5">Improvement of shared orders and customer groups functionality</td>
   </tr>
 </tbody>
 </table>
