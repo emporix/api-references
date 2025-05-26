@@ -43,3 +43,33 @@ These announcements are intended to keep you informed about ongoing work and pot
 | Service name | Description |
 | ---- | ---- |
 | Cart Service\ Approval Service\ Checkout Service\ Customer Service\ IAM Service | Improvement of shared orders functionality |
+
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-x6qq{background-color:#dae8fc;border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg"><thead>
+  <tr>
+    <th class="tg-x6qq">Service name</th>
+    <th class="tg-x6qq">Description</th>
+  </tr></thead>
+<tbody>
+  <tr>
+    <td class="tg-0pky" rowspan="5">Cart Service <br>Approval Service<br>Checkout Service<br>Customer Service<br>IAM Service</td>
+    <td class="tg-0pky" rowspan="5">Improvement of shared orders functionality</td>
+  </tr>
+  <tr>
+  </tr>
+  <tr>
+  </tr>
+  <tr>
+  </tr>
+  <tr>
+  </tr>
+</tbody>
+</table>
