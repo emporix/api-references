@@ -1,5 +1,11 @@
 # Start with Emporix API
 
+{% hint style="success" %}
+
+[Download API Specification for all Emporix Services - ZIP](https://github.com/emporix/api-references/releases/latest/download/api-references.zip)
+
+{% endhint %}
+
 ## Introduction
 
 The Emporix API is the core of our Commerce Engine designed to help you easily manage your business's resources. It is organized around REST and makes use of the following components:
@@ -58,7 +64,7 @@ Some endpoints do not require any scopes as they are implicitly readable.
 
 ## Customer audit logs
 
-You can request customer audit logs from Emporix by reaching out to our [Support Team](mailto:support@emporix.com) and sending the email request.\
+You can request customer audit logs from Emporix by reaching out to our [Support Team](mailto:support@emporix.com) and sending the email request.
 The logs are kept for the last 2 years. You can retrieve information about create, update or delete operations. The records contain information about the tenant, timestamp and the person who performed the actions.
 
 ## Quick Start Guide for developers
