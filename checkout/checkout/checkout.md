@@ -17,7 +17,7 @@ You need details about the customer's access and session tokens as these details
 
 1. When a user enters your storefront, before they choose to log in, an anonymous user session is created.
 
-  Get an anonymous access token by sending a request to the [Requesting an anonymous token](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/authorization/oauth-service/api-reference/anonymous-token) endpoint.
+  Get an anonymous access token by sending a request to the [Requesting an anonymous token](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/authorization/oauth-service/api-reference/anonymous-token) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -29,7 +29,7 @@ curl -i -X GET \
   'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id={client_id}'
   ```
 
-2. Log the customer in and send an authorization request to the [Requesting a customer token](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/authorization/oauth-service/api-reference/customer-token) endpoint.
+2. Log the customer in and send an authorization request to the [Requesting a customer token](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/authorization/oauth-service/api-reference/customer-token) endpoint.
 
 {% hint style="warning" %}
 You can skip this step and continue with the checkout process as a guest customer without the need to log in.
@@ -58,7 +58,7 @@ This operation returns the customer's access token and Saas token, which convey 
 
 Each country that you operate in may have different tax rules for different products and services. Add relevant configuration to calculate taxes accordingly.
 
-Add tax configuration by sending a request to the [Creating a new tax configuration](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/tax-service/api-reference/taxes#post-tax-tenant-taxes) endpoint.
+Add tax configuration by sending a request to the [Creating a new tax configuration](https://developer.emporix.io/documentation-portal/api-references/prices-and-taxes/tax-service/api-reference/taxes#post-tax-tenant-taxes) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -111,7 +111,7 @@ curl -i -X POST \
 Delivery zone is the area where you ship your goods to. You can define a country, or a zip code that you operate within.
 Delivery method is dependant on a specific site and delivery zone. 
 
-1. Define the delivery zone by sending a request to the [Creating a shipping zone](https://emporix.gitbook.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-zones#post-shipping-tenant-site-zones) endpoint.
+1. Define the delivery zone by sending a request to the [Creating a shipping zone](https://developer.emporix.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-zones#post-shipping-tenant-site-zones) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -138,7 +138,7 @@ curl -i -X POST \
   }'
 ```
 
-2. Specify how the goods can be shipped to a customer by sending a request to the [Creating a shipping method](https://emporix.gitbook.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-methods#post-shipping-tenant-site-zones-zoneid-methods) endpoint.
+2. Specify how the goods can be shipped to a customer by sending a request to the [Creating a shipping method](https://developer.emporix.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-methods#post-shipping-tenant-site-zones-zoneid-methods) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -196,7 +196,7 @@ curl -i -X POST \
   }'
 ``` 
 
-3. Define delivery time that will be matched with the delivery method and zone by sending the request to the [Creating a delivery time](https://emporix.gitbook.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/delivery-times-management#post-shipping-tenant-delivery-times) endpoint.
+3. Define delivery time that will be matched with the delivery method and zone by sending the request to the [Creating a delivery time](https://developer.emporix.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/delivery-times-management#post-shipping-tenant-delivery-times) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -238,7 +238,7 @@ curl -i -X POST \
 
 ## Add products to your store
 
-To create and add multiple products to your store, send the request to the [Creating multiple products](https://emporix.gitbook.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
+To create and add multiple products to your store, send the request to the [Creating multiple products](https://developer.emporix.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -259,7 +259,7 @@ curl -i -X POST \
  
 Price model defines your pricing strategy. You can specify how you want to go about price tiers and selling volumes.
 
-1. To define a price model send a request to the [Creating a new price model](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-models#post-price-tenant-pricemodels) endpoint.
+1. To define a price model send a request to the [Creating a new price model](https://developer.emporix.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-models#post-price-tenant-pricemodels) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -296,7 +296,7 @@ curl -i -X POST \
   }'
 ```
 
-2. Create a price for a specific product by sending a request to the [Creating a new price](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint.
+2. Create a price for a specific product by sending a request to the [Creating a new price](https://developer.emporix.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -346,7 +346,7 @@ url -i -X POST \
 The following request requires using the customer's access token for authorization, either anonymous or logged in, as the response contains the bearer's information. 
 {% endhint %}
 
-Send the request to the [Matching prices for session context](https://emporix.gitbook.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices-by-context) endpoint.
+Send the request to the [Matching prices for session context](https://developer.emporix.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices-by-context) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -383,7 +383,7 @@ The following requests require using the customer's access token for authorizati
 1. You have to enable an option to create a cart on your site while a customer is browsing through your products. Creating a cart takes care of things like gathering customer's session details, even anonymous, or setting up a proper cart's currency for final calculations at checkout.
 There are two options to create carts using API:
 
-* Create a cart by sending a request to the [Creating a new cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
+* Create a cart by sending a request to the [Creating a new cart](https://developer.emporix.io/documentation-portal/api-references/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -415,7 +415,7 @@ curl -i -X POST \
   }'
 ```
 
-* Create a cart by sending a `GET` request with `create=true` parameter to the [Retrieving a cart's details by criteria](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts) endpoint.
+* Create a cart by sending a `GET` request with `create=true` parameter to the [Retrieving a cart's details by criteria](https://developer.emporix.io/documentation-portal/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -442,7 +442,7 @@ curl -i -X POST \
   }'
   ```
 
-2. Add items to the cart by sending the request to the [Creating a new cart](https://emporix.gitbook.io/documentation-portal/api-references/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
+2. Add items to the cart by sending the request to the [Creating a new cart](https://developer.emporix.io/documentation-portal/api-references/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -485,7 +485,7 @@ Once a customer places the product in a cart, they can proceed with the checkout
 The checkout service validates the data that come from customer's session token, the cart, and tiered prices, and then proceeds with the delivery and payment details. 
 Then, it handles the payment and creates an order in the system, closing the cart. 
 
-You can trigger a checkout process through API as well by sending a request to the [Triggering a checkout](https://emporix.gitbook.io/documentation-portal/api-references/checkout/checkout/api-reference/checkouts) endpoint.
+You can trigger a checkout process through API as well by sending a request to the [Triggering a checkout](https://developer.emporix.io/documentation-portal/api-references/checkout/checkout/api-reference/checkouts) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

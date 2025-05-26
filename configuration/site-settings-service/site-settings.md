@@ -8,7 +8,7 @@ seo:
 
 ## How to create a new site
 
-To create a new site, you need to send a request to the [Creating a site](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites) endpoint.
+To create a new site, you need to send a request to the [Creating a site](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -49,7 +49,7 @@ curl -L \
 
 Countries that a site ships products to are stored as [ISO 3166-1 alpha-2 codes](https://www.iso.org/obp/ui/#iso:pub:PUB500001:en) in the `shipToCountries` list.
 
-To update the `shipToCountries` list, you need to send a request to the [Partially updating a site](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#patch-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
+To update the `shipToCountries` list, you need to send a request to the [Partially updating a site](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#patch-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -83,7 +83,7 @@ Payment methods are configured per site. Emporix Commerce Engine supports the fo
 
 Information on whether specific payment methods are enabled or disabled is stored in the form of boolean flags in the `orderProcessSettings` mixin. To enable a payment method, you need to set its flag to `true`.
 
-First, check if the `orderProcessSettings` mixin has already been configured by sending a request to the [Retrieving a site mixin](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
+First, check if the `orderProcessSettings` mixin has already been configured by sending a request to the [Retrieving a site mixin](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -99,7 +99,7 @@ curl -L \
 
 If your site's `orderProcessSettings` have never been configured before or have been deleted, you will receive a `404` error in the response body.
 
-In this case, to enable specific payment methods, you need to send a request to the [Creating a site mixin](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#post-site-tenant-sites-sitecode-mixins) endpoint and set desired flags to `true`.
+In this case, to enable specific payment methods, you need to send a request to the [Creating a site mixin](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#post-site-tenant-sites-sitecode-mixins) endpoint and set desired flags to `true`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -133,7 +133,7 @@ curl -L \
 
 If your site's `orderProcessSettings` have already been configured, you will receive them in the response body.
 
-In this case, to enable specific payment methods, you need to send a request to the [Partially updating a site mixin](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#patch-site-tenant-sites-sitecode-mixins-mixinname) endpoint and set desired flags to `true`.
+In this case, to enable specific payment methods, you need to send a request to the [Partially updating a site mixin](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#patch-site-tenant-sites-sitecode-mixins-mixinname) endpoint and set desired flags to `true`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -167,7 +167,7 @@ Make sure you have already finished the [How to enable payment methods](site-set
 
 Your business bank account information is stored in the `merchantInfo` mixin.
 
-First, check if the `merchantInfo` mixin has already been configured by sending a request to the [Retrieving a site mixin](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins) endpoint.
+First, check if the `merchantInfo` mixin has already been configured by sending a request to the [Retrieving a site mixin](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -181,7 +181,7 @@ curl -L \
   --header 'Accept: */*'
 ```
 
-If your site's `merchantInfo` has never been configured before or has been deleted, you will receive a `404` error in the response body. In this case, to set up your business's bank account information, you need to send a request to the [Creating a site mixin](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#post-site-tenant-sites-sitecode-mixins) endpoint.
+If your site's `merchantInfo` has never been configured before or has been deleted, you will receive a `404` error in the response body. In this case, to set up your business's bank account information, you need to send a request to the [Creating a site mixin](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#post-site-tenant-sites-sitecode-mixins) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -227,7 +227,7 @@ Check if all of the following fields are filled out with correct information:
 * `merchantFinanceInfo`
 {% endhint %}
 
-If you need to update your `merchantInfo`, you need to send a request to the [Partially updating a site](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#patch-site-tenant-sites-sitecode-mixins-mixinname) mixin endpoint.
+If you need to update your `merchantInfo`, you need to send a request to the [Partially updating a site](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#patch-site-tenant-sites-sitecode-mixins-mixinname) mixin endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -255,7 +255,7 @@ curl -L \
 
 ### Configure settings for direct debit payments
 
-Settings for direct debit payments are stored in the `debitSettings` mixin. To configure them, you need to send a request to the [Creating a site mixin](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#post-site-tenant-sites-sitecode-mixins) endpoint with a set of standard values in the request body.
+Settings for direct debit payments are stored in the `debitSettings` mixin. To configure them, you need to send a request to the [Creating a site mixin](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#post-site-tenant-sites-sitecode-mixins) endpoint with a set of standard values in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -302,7 +302,7 @@ curl -L \
 
 ### Specify your business's SEPA Creditor ID
 
-Your business's SEPA Creditor ID is stored in your tenant's `sepaCreditor` configuration. To set up a `sepaCreditor` configuration, you need to send a request to the [Creating configurations](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#post-configuration-tenant-configurations) endpoint.
+Your business's SEPA Creditor ID is stored in your tenant's `sepaCreditor` configuration. To set up a `sepaCreditor` configuration, you need to send a request to the [Creating configurations](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#post-configuration-tenant-configurations) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -373,7 +373,7 @@ Next, upload your schema to a hosting service and save its URL.
 
 ### Apply custom attributes to a site
 
-Once your schema is ready, send a request to the [Creating a site mixin](https://emporix.gitbook.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#post-site-tenant-sites-sitecode-mixins) endpoint with the site's custom attributes in the request body.
+Once your schema is ready, send a request to the [Creating a site mixin](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#post-site-tenant-sites-sitecode-mixins) endpoint with the site's custom attributes in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
