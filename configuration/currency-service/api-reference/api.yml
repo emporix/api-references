@@ -4,22 +4,6 @@ info:
   version: ''
   description: |-
     Hold and manage a list of currencies available for the tenant.
-
-    ***
-
-    **Key Features**:
-    * Create, manage and delete currencies
-    * Hold ISO-compliant currency information, including localized names
-    * Store exchange rates
-    * Calculate exchange between currencies, with high precision
-
-    ***
-
-    **Key Benefits**:
-    * Display product / service prices in the currency your customer prefers
-    * Optionally, exchange currencies, for example if your PSP processes prices in USD only
-    * Set prices for different markets (for more information, see the Price Service)
-    * Support for an unlimited number of currencies
   contact:
     email: documentation@emporix.com
 servers:

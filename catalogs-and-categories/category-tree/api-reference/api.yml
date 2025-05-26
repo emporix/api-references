@@ -3,14 +3,6 @@ info:
   title: Category
   description: |
     The Category Service allows you to manage your store's categories and resources assigned to them.
-
-    **Key Features**:
-      * Upsert support that enables seamless updates and inserts.
-      * Managing the order and hierarchy of categories.
-
-    **Note:**
-        When `X-Version` header is required use `v2`, otherwise the header is not necessary.
-
   contact:
     email: documentation@emporix.com
   version: ''

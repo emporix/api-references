@@ -6,18 +6,6 @@ info:
     email: documentation@emporix.com
   description: |-
     Manage the webhook configuration to allow users to choose which events they want to receive via the Svix webhook provider.
-
-    **Key Features**:
-    * View catalog
-    * View configuration
-    * Update configuration
-
-    ***
-
-    **Key Benefits**:
-    * View events catalog to be able to pick those that are of interest
-    * Subscribe and unsubscribe from events without having to provide the full configuration
-    * View current configuration
 servers:
   - url: 'https://api.emporix.io'
 tags:
