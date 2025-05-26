@@ -39,11 +39,6 @@ These announcements are intended to keep you informed about ongoing work and pot
     * improvement of shared orders functionality
 
 
-
-| Service name | Description |
-| ---- | ---- |
-| Cart Service\ Approval Service\ Checkout Service\ Customer Service\ IAM Service | Improvement of shared orders functionality |
-
 <style type="text/css">
 .tg  {border-collapse:collapse;border-spacing:0;}
 .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
@@ -62,14 +57,6 @@ These announcements are intended to keep you informed about ongoing work and pot
   <tr>
     <td class="tg-0pky" rowspan="5">Cart Service <br>Approval Service<br>Checkout Service<br>Customer Service<br>IAM Service</td>
     <td class="tg-0pky" rowspan="5">Improvement of shared orders functionality</td>
-  </tr>
-  <tr>
-  </tr>
-  <tr>
-  </tr>
-  <tr>
-  </tr>
-  <tr>
   </tr>
 </tbody>
 </table>
