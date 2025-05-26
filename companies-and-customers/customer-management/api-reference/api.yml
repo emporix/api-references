@@ -8,23 +8,6 @@ info:
     email: documentation@emporix.com
   description: |
     Create, manage, and delete customer profiles.
-
-    **Note**: This part of the Customer Service is managed by the customers on the storefront.
-
-    ***
-
-    **Key Features**:
-    * Rich customer profiles that are extensible with custom fields
-    * Multiple addresses for payment and delivery
-    * Social login with Twitter, Facebook, and others
-
-    ***
-
-    **Key Benefits**:
-    * Self-service for customers to manage profile information
-    * Convenient login and removal of login barriers with SSO for social logins
-    * Capture data that is important for your business to serve your customers better
-    * Secure login for your customers to their profile
 servers:
   - url: 'https://api.emporix.io'
 tags:
@@ -813,11 +796,12 @@ paths:
               examples:
                 Response example:
                   value:
-                    accessToken: aYR3Lu3rpsQ9ODhBIR83b3txTr5K
-                    saasToken: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMzg2OTAwMCIsImV4cCI6MTY0MDQ0NDAzMn0.lvxFOeCOk-DWi3kqwJwR8eKal3ON2rr53e9I6Pha5rI
-                    expiresIn: 2591999
-                    refreshToken: 94tKQ2Tsvlf9dYbmyccA7X1Rqe54B6dH
-                    refreshTokenExpiresIn: 86399
+                    access_token: aYR3Lu3rpsQ9ODhBIR83b3txTr5K
+                    saas_token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMzg2OTAwMCIsImV4cCI6MTY0MDQ0NDAzMn0.lvxFOeCOk-DWi3kqwJwR8eKal3ON2rr53e9I6Pha5rI
+                    expires_in: 2591999
+                    refresh_token: 94tKQ2Tsvlf9dYbmyccA7X1Rqe54B6dH
+                    refresh_token_expires_in: 86399
+                    token_type: Bearer
         '400':
           $ref: '#/components/responses/400_bad_request'
         '401':
@@ -887,14 +871,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomerToken'
+                $ref: '#/components/schemas/RefreshCustomerToken'
               examples:
                 Response example:
                   value:
-                    accessToken: 2yXy8H7sByl4JSWrr7GRqxiCRMUm
-                    expiresIn: 2591999
-                    refreshToken: iwXAFjGwboaehJar1qNOkV05phDw1god
-                    refreshTokenExpiresIn: 86390
+                    access_token: 2yXy8H7sByl4JSWrr7GRqxiCRMUm
+                    expires_in: 2591999
+                    refresh_token: iwXAFjGwboaehJar1qNOkV05phDw1god
+                    refresh_token_expires_in: 86390
+                    token_type: Bearer
         '400':
           $ref: '#/components/responses/400_bad_request'
         '401':
@@ -906,9 +891,7 @@ paths:
         ***
         ### Required scopes
         No specific scopes are required.
-      operationId: POST-customer-create-activation-link
-      security:
-        - AnonymousAccessToken: []
+      operationId: POST-customer-refresh-authtoken
       tags:
         - Authentication and authorization
       parameters:
@@ -934,11 +917,12 @@ paths:
               examples:
                 Customer has been automatically logged in:
                   value:
-                    accessToken: HzcnecB5l6STzXhRqU0Zp6hxS0Ay
-                    saasToken: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4NzQxMzI1MCIsImV4cCI6MTYzMjA1NDEzN30.p6g_G5ZbhjlvnObVC2OWGslLWWktxBw8onionfFvm4c
-                    expiresIn: 2591999
-                    refreshToken: tMhLYc8pfAqb1g10Z1o7BxABArxXe3db
-                    refreshTokenExpiresIn: 86399
+                    access_token: HzcnecB5l6STzXhRqU0Zp6hxS0Ay
+                    saas_token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4NzQxMzI1MCIsImV4cCI6MTYzMjA1NDEzN30.p6g_G5ZbhjlvnObVC2OWGslLWWktxBw8onionfFvm4c
+                    expires_in: 2591999
+                    refresh_token: tMhLYc8pfAqb1g10Z1o7BxABArxXe3db
+                    refresh_token_expires_in: 86399
+                    token_type: Bearer
         '400':
           $ref: '#/components/responses/400_bad_request'
         '401':
@@ -1117,7 +1101,7 @@ components:
           type: object
           description: Customer address' additional properties.
           additionalProperties: true
-          
+
       required:
         - contactName
     AddressCommonDto:
@@ -1364,21 +1348,46 @@ components:
     CustomerToken:
       description: ''
       type: object
-      x-examples: {}
+      allOf:
+        - $ref: '#/components/schemas/RefreshCustomerToken'
+      properties:
+        saasToken:
+          type: string
+          minLength: 1
+          deprecated: true
+        saas_token:
+          type: string
+          minLength: 1
+    RefreshCustomerToken:
+      description: ''
+      type: object
       properties:
         accessToken:
           type: string
           minLength: 1
-        saasToken:
-          type: string
-          minLength: 1
+          deprecated: true
         expiresIn:
           type: number
+          deprecated: true
         refreshToken:
           type: string
           minLength: 1
+          deprecated: true
         refreshTokenExpiresIn:
           type: number
+          deprecated: true
+        access_token:
+          type: string
+          minLength: 1
+        expires_in:
+          type: number
+        refresh_token:
+          type: string
+          minLength: 1
+        refresh_token_expires_in:
+          type: number
+        token_type:
+          type: string
     CustomerUpdateDto:
       allOf:
         - $ref: '#/components/schemas/CustomerCommonDto'
