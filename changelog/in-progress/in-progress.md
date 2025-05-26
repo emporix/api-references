@@ -50,7 +50,7 @@ These announcements are intended to keep you informed about ongoing work and pot
 </style>
 <table class="tg"><thead>
   <tr>
-    <th class="tg-x6qq">Service name</th>
+    <th class="tg-x6qq">Service Name</th>
     <th class="tg-x6qq">Description</th>
   </tr></thead>
 <tbody>
