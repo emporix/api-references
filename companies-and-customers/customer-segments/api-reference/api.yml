@@ -6,17 +6,6 @@ info:
     email: documentation@emporix.com
   description: |-
     The Customer Segment Service allows you to define segments for different customers so that you can prepare customer specific marketing campaigns, or prepare personalized content for different customers in each segment.
-    
-    ***
-    **Key Features**:
-    * Manage customer segments for different purposes.
-    * Assign customers to segments based on some quantitative characteristics, for example demographic, geographic, behavioral, or other.
-    
-    ***
-    **Key Benefits**:
-    * Use customer segments to create marketing campaigns targeted towards a specific audience, for instance, the gold segment or the Bosch segment (product-specific). 
-    * Determine the appropriate customers easily within the corresponding customer segment and provide relevant personalized selection of products and categories.
-
 servers:
   - url: 'https://api.emporix.io'
 tags:
@@ -36,7 +25,7 @@ paths:
         - Segments
       operationId: POST-customer-segment-create-segment
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Creates a new customer segment.
         ### Required scopes
         *  `customersegment.segment_manage` - required to create a customer segment
@@ -91,7 +80,7 @@ paths:
         '403':
           $ref: '#/components/responses/Common_response_Forbidden_403'
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Retrieves all customer segments.
         ### Required scopes
         *  `customersegment.segment_read` - allows you to retrieve all customer segments
@@ -140,7 +129,7 @@ paths:
         '403':
           $ref: '#/components/responses/Common_response_Forbidden_403'
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Returns all customer segments that match provided criteria.
         ### Required scopes
         *  `customersegment.segment_read` - allows you to retrieve all customer segments
@@ -179,7 +168,7 @@ paths:
           $ref: '#/components/responses/Common_response_NotFound_404'
       operationId: GET-customer-segment-retrieve-segment
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Retrieves segment with specified ID.
         ### Required scopes
         *  `customersegment.segment_read` - allows you to retrieve a customer segment
@@ -225,7 +214,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/contentLanguage'
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Performs the `UPSERT` operation. If a segment with specified ID exists in the system, then it is updated. If it doesn't exist, a new customer segment is created.
         ### Required scopes
         *  `customersegment.segment_manage`  - required to update a customer segment
@@ -276,7 +265,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/contentLanguage'
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Performs partial update of a segment.
         
         The patch request consists of set of operation, that should be defined according to [RFC-6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.
@@ -298,7 +287,7 @@ paths:
         '403':
           $ref: '#/components/responses/Common_response_Forbidden_403'
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Removes segment with specified ID.
         
         **Important**: If you want to delete a segment that has items or customers assigned to it, you need to set the `forceDelete` query parameter to `true`. In this case, all items and customers assignments will be deleted as well.
@@ -314,7 +303,7 @@ paths:
         - Segments
       operationId: POST-customer-segment-create-segments-bulk
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Creates multiple customer segments.
         ### Required scopes
         *  `customersegment.segment_manage` - required to create customer segments
@@ -354,7 +343,7 @@ paths:
         - Segments
       operationId: PUT-customer-segment-update-segments-bulk
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Performs the `UPSERT` operation for multiple customer segments. If a segment with specified ID exists in the system, then it is updated. If it doesn't exist, a new customer segment is created.
         ### Required scopes
         *  `customersegment.segment_manage` - required to update customer segments
@@ -396,7 +385,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/forceDelete'
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Removes multiple customer segments.
         ### The IDs of customer segments for deletion should be defined in the request body as an array of strings.
         #### Example: `["firstId", "secondId", "thirdId"]`
@@ -433,7 +422,7 @@ paths:
         - Segments
       operationId: POST-customer-segment-check-match
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
 
         Checks if the provided items match specified criteria - if ids of the products are assigned directly to one of the provided segments or indirectly through the category assignment. Only items assigned to the active segments will be returned.
         ### Required scopes
@@ -479,7 +468,7 @@ paths:
       tags:
         - Customers Assignments
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Retrieves all customer assignments for a given customer segment.
         ### Required scopes
         *  `customersegment.segment_read` - allows you to retrieve customer assignments for a customer segment
@@ -517,7 +506,7 @@ paths:
       tags:
         - Customers Assignments
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Returns all customer assignments that match provided criteria.
         ### Required scopes
         *  `customersegment.segment_read` - allows you to retrieve customer assignments for a customer segment
@@ -570,7 +559,7 @@ paths:
       tags:
         - Customers Assignments
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Retrieves a customer with specified customerId assigned to a customer segment.
         ### Required scopes
         *  `customersegment.segment_read` - allows you to retrieve a customer assignment for a active customer segment
@@ -599,7 +588,7 @@ paths:
         - Customers Assignments
       operationId: PUT-customer-segment-update-customer-by-customerId
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Performs `UPSERT` operation. Updates a customer assigned to a customer segment. A new customer assignment is created if it's not present in the system.
         ### Required scopes
         *  `customersegment.segment_manage` - required to add and modify customer assignments
@@ -630,7 +619,7 @@ paths:
         - Customers Assignments
       operationId: DELETE-customer-segment-remove-customer-by-customerId
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Removes customer assignment.
         ### Required scopes
         *  `customersegment.segment_manage` - required to delete customer assignments
@@ -662,7 +651,7 @@ paths:
       tags:
         - Customers Assignments
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Retrieves a customer with specified customerId and companyId assigned to a customer segment.
         ### Required scopes
         *  `customersegment.segment_read` - allows you to retrieve a customer assignment for a customer segment
@@ -691,7 +680,7 @@ paths:
         - Customers Assignments
       operationId: PUT-customer-segment-update-customer
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Performs `UPSERT` operation. Updates a customer assigned to a customer segment. A new customer assignment is created if it's not present in the system.
         ### Required scopes
         *  `customersegment.segment_manage` - required to add and modify customer assignments
@@ -722,7 +711,7 @@ paths:
         - Customers Assignments
       operationId: DELETE-customer-segment-remove-customer
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Removes customer assignment.
         ### Required scopes
         *  `customersegment.segment_manage` - required to delete customer assignments
@@ -743,7 +732,7 @@ paths:
         - Customers Assignments
       operationId: PUT-customer-segment-update-customers-bulk
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Performs `UPSERT` operation. Updates multiple customer assignments to a customer segment.
         ### Required scopes
         *  `customersegment.segment_manage` - required to add and modify customer assignments
@@ -781,7 +770,7 @@ paths:
         - Customers Assignments
       operationId: DELETE-customer-segment-remove-customers-bulk
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Removes multiple customer assignments to a customer segment.
         ### The request body for this endpoint is array of objects with `customerId` and `legalEntityId` fields.
         #### Example: `[{"customerId": "firstCustomerId", "legalEntityId": "firstLegalEntityId"}, {"customerId": "secondCustomerId", "legalEntityId": "secondLegalEntityId"}, {"customerId": "thirdCustomerId", "legalEntityId": "thirdLegalEntityId"}]`
@@ -813,7 +802,7 @@ paths:
       tags:
         - Items Assignments
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Retrieves category trees for the customer segments. Category trees are built based on only `active` segments.
         ### Required scopes
         *  `customersegment.segment_read_own` - allows customers to access categories that are assigned to the active segments they belong to
@@ -844,7 +833,7 @@ paths:
       tags:
         - Items Assignments
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Retrieves all items assignments for all customer segments.
         ### Required scopes
         *  `customersegment.segment_read_own` - allows customers to access items that are assigned to the active segments they belong to
@@ -886,7 +875,7 @@ paths:
       tags:
         - Items Assignments
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Retrieves all item assignments for a given customer segment.
         ### Required scopes
         *  `customersegment.segment_read` - allows you to retrieve all item assignments
@@ -926,7 +915,7 @@ paths:
       tags:
         - Items Assignments
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Retrieves all item assignments for a given customer segment.
         ### Required scopes
         *  `customersegment.segment_read` - allows you to retrieve all item assignments
@@ -979,7 +968,7 @@ paths:
       tags:
         - Items Assignments
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Retrieves an item assignment by specified ID for a given customer segment.
         ### Required scopes
         *  `customersegment.segment_read` - allows you to retrieve an item assignment
@@ -1011,7 +1000,7 @@ paths:
         - Items Assignments
       operationId: PUT-customer-segment-update-item
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Performs `UPSERT` operation. Updates an item assignment to a customer segment. A new item assignment is created if it's not present in the system.
         ### Required scopes
         *  `customersegment.segment_manage` - required to add and modify item assignments
@@ -1042,7 +1031,7 @@ paths:
         - Items Assignments
       operationId: DELETE-customer-segment-remove-item
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Removes an item assignment.
         ### Required scopes
         *  `customersegment.segment_manage` - required to delete item assignments
@@ -1064,7 +1053,7 @@ paths:
         - Items Assignments
       operationId: PUT-customer-segment-update-items-bulk
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Performs `UPSERT` operation. Updates multiple item assignments to a customer segments.
         ### Required scopes
         *  `customersegment.segment_manage` - required to add and modify item assignments
@@ -1102,7 +1091,7 @@ paths:
         - Items Assignments
       operationId: DELETE-customer-segment-remove-items-bulk
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
         Removes multiple customer segments item assignments.
         ### The IDs of items should be defined in the request body as an array of strings.
         #### Example: `["firstItemId", "secondItemId", "thirdItemId"]`
@@ -1131,7 +1120,7 @@ components:
     CommonSegment:
       type: object
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
       allOf:
         - type: object
           properties:
@@ -1240,7 +1229,7 @@ components:
     CustomerAssignmentUpsert:
       type: object
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
       properties:
         mixins:
           type: object
@@ -1287,7 +1276,7 @@ components:
     ItemAssignmentUpsert:
       type: object
       description: |
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        
       allOf:
         - type: object
           properties:
