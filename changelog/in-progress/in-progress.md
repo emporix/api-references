@@ -38,5 +38,8 @@ These announcements are intended to keep you informed about ongoing work and pot
 * IAM Service
     * improvement of shared orders functionality
 
+
+
 | Service name | Description |
+| ---- | ---- |
 | Cart Service/Approval Service/Checkout Service/Customer Service/IAM Service | Improvement of shared orders functionality |
