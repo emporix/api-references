@@ -284,7 +284,7 @@
           spec:
             ref:
               kind: openapi
-              spec: customer-managed
+              spec: customer-managed-api
         ```
     * [Download API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/customer-management/api-reference/api.yml)
   * [Customer Service (Tenant Managed)](companies-and-customers/customer-service/README.md)
