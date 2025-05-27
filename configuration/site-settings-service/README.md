@@ -1,5 +1,5 @@
 ---
-icon: browser
+icon: globe-pointer
 ---
 
 # Site Settings Service
