@@ -457,24 +457,14 @@
   * [Customer Service (Customer Managed)](companies-and-customers/customer-management/README.md)
     * [API Reference](companies-and-customers/customer-management/api-reference/README.md)
       * ```yaml
+        type: builtin:openapi
         props:
           models: true
-        type: builtin:openapi
         dependencies:
           spec:
             ref:
               kind: openapi
-              spec: customer-managed
-        ```
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: customer-managed
+              spec: customer-managed-api
         ```
     * [Download API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/customer-management/api-reference/api.yml)
   * [Customer Service (Tenant Managed)](companies-and-customers/customer-service/README.md)
