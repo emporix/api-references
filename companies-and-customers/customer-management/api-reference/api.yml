@@ -796,11 +796,12 @@ paths:
               examples:
                 Response example:
                   value:
-                    accessToken: aYR3Lu3rpsQ9ODhBIR83b3txTr5K
-                    saasToken: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMzg2OTAwMCIsImV4cCI6MTY0MDQ0NDAzMn0.lvxFOeCOk-DWi3kqwJwR8eKal3ON2rr53e9I6Pha5rI
-                    expiresIn: 2591999
-                    refreshToken: 94tKQ2Tsvlf9dYbmyccA7X1Rqe54B6dH
-                    refreshTokenExpiresIn: 86399
+                    access_token: aYR3Lu3rpsQ9ODhBIR83b3txTr5K
+                    saas_token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMzg2OTAwMCIsImV4cCI6MTY0MDQ0NDAzMn0.lvxFOeCOk-DWi3kqwJwR8eKal3ON2rr53e9I6Pha5rI
+                    expires_in: 2591999
+                    refresh_token: 94tKQ2Tsvlf9dYbmyccA7X1Rqe54B6dH
+                    refresh_token_expires_in: 86399
+                    token_type: Bearer
         '400':
           $ref: '#/components/responses/400_bad_request'
         '401':
@@ -870,14 +871,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomerToken'
+                $ref: '#/components/schemas/RefreshCustomerToken'
               examples:
                 Response example:
                   value:
-                    accessToken: 2yXy8H7sByl4JSWrr7GRqxiCRMUm
-                    expiresIn: 2591999
-                    refreshToken: iwXAFjGwboaehJar1qNOkV05phDw1god
-                    refreshTokenExpiresIn: 86390
+                    access_token: 2yXy8H7sByl4JSWrr7GRqxiCRMUm
+                    expires_in: 2591999
+                    refresh_token: iwXAFjGwboaehJar1qNOkV05phDw1god
+                    refresh_token_expires_in: 86390
+                    token_type: Bearer
         '400':
           $ref: '#/components/responses/400_bad_request'
         '401':
@@ -889,9 +891,7 @@ paths:
         ***
         ### Required scopes
         No specific scopes are required.
-      operationId: POST-customer-create-activation-link
-      security:
-        - AnonymousAccessToken: []
+      operationId: POST-customer-refresh-authtoken
       tags:
         - Authentication and authorization
       parameters:
@@ -917,11 +917,12 @@ paths:
               examples:
                 Customer has been automatically logged in:
                   value:
-                    accessToken: HzcnecB5l6STzXhRqU0Zp6hxS0Ay
-                    saasToken: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4NzQxMzI1MCIsImV4cCI6MTYzMjA1NDEzN30.p6g_G5ZbhjlvnObVC2OWGslLWWktxBw8onionfFvm4c
-                    expiresIn: 2591999
-                    refreshToken: tMhLYc8pfAqb1g10Z1o7BxABArxXe3db
-                    refreshTokenExpiresIn: 86399
+                    access_token: HzcnecB5l6STzXhRqU0Zp6hxS0Ay
+                    saas_token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4NzQxMzI1MCIsImV4cCI6MTYzMjA1NDEzN30.p6g_G5ZbhjlvnObVC2OWGslLWWktxBw8onionfFvm4c
+                    expires_in: 2591999
+                    refresh_token: tMhLYc8pfAqb1g10Z1o7BxABArxXe3db
+                    refresh_token_expires_in: 86399
+                    token_type: Bearer
         '400':
           $ref: '#/components/responses/400_bad_request'
         '401':
@@ -988,7 +989,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/tenant'
     post:
-      summary: Logging in a customer with Auth0
+      summary: Logging in a customer with social login
       operationId: POST-customer-login-customer-by-auth0
       responses:
         '200':
@@ -999,7 +1000,25 @@ paths:
                 description: ''
                 type: object
                 properties:
-                  customerNumber:
+                  social_access_token:
+                    type: string
+                  social_id_token:
+                    type: string
+                  refresh_token:
+                    type: string
+                  refresh_token_expires_in:
+                    type: string
+                  session_idle_time:
+                    type: integer
+                  token_type:
+                    type: string
+                  access_token:
+                    type: string
+                  saas_token:
+                    type: string
+                  expires_in:
+                    type: string
+                  scope:
                     type: string
         '400':
           $ref: '#/components/responses/400_bad_request'
@@ -1011,7 +1030,25 @@ paths:
           in: header
           name: session-id
           description: Anonymous customer's unique session identifier.
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: code
+          description: The authorization code received from the identity provider.
           required: true
+        - schema:
+            type: string
+          in: query
+          name: redirect_uri
+          description: The redirect URI that was used in the initial authorization request.
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: code_verifier
+          description: Required only if using PKCE (Proof Key for Code Exchange) flow.
+          required: false
       description: |-
         Logs in a customer using an authentication code from Auth0 and retrieves a standard customer token.
         ***
@@ -1022,18 +1059,6 @@ paths:
         - Authentication and authorization
       security:
         - AnonymousAccessToken: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Auth0Request'
-            examples:
-              Request example:
-                value:
-                  email: example@customer.com
-                  name: John Doe
-                  provider: string
-        description: ''
 components:
   schemas:
     AccountId:
@@ -1100,7 +1125,7 @@ components:
           type: object
           description: Customer address' additional properties.
           additionalProperties: true
-          
+
       required:
         - contactName
     AddressCommonDto:
@@ -1347,21 +1372,46 @@ components:
     CustomerToken:
       description: ''
       type: object
-      x-examples: {}
+      allOf:
+        - $ref: '#/components/schemas/RefreshCustomerToken'
+      properties:
+        saasToken:
+          type: string
+          minLength: 1
+          deprecated: true
+        saas_token:
+          type: string
+          minLength: 1
+    RefreshCustomerToken:
+      description: ''
+      type: object
       properties:
         accessToken:
           type: string
           minLength: 1
-        saasToken:
-          type: string
-          minLength: 1
+          deprecated: true
         expiresIn:
           type: number
+          deprecated: true
         refreshToken:
           type: string
           minLength: 1
+          deprecated: true
         refreshTokenExpiresIn:
           type: number
+          deprecated: true
+        access_token:
+          type: string
+          minLength: 1
+        expires_in:
+          type: number
+        refresh_token:
+          type: string
+          minLength: 1
+        refresh_token_expires_in:
+          type: number
+        token_type:
+          type: string
     CustomerUpdateDto:
       allOf:
         - $ref: '#/components/schemas/CustomerCommonDto'
@@ -1503,21 +1553,7 @@ components:
         token:
           type: string
           description: Token received by the customer through email.
-    Auth0Request:
-      title: Auth0Request
-      type: object
-      properties:
-        email:
-          type: string
-          description: Customer's email address.
-        name:
-          type: string
-          description: Customer's name.
-        picture:
-          type: string
-        provider:
-          type: string
-          description: Identity provider.
+
   responses:
     409_conflict:
       description: ''
