@@ -1,5 +1,5 @@
 ---
-icon: cart-arrow-down
+icon: bag-shopping
 ---
 
 # Order Service
