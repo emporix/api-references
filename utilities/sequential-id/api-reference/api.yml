@@ -8,21 +8,6 @@ info:
   version: ''
   description: |-
     Create sequentially unique IDs for orders, invoices, customers or similar.
-
-    ***
-
-    **Key Features**:
-    * Custom sequence pattern / schemas
-    * Pre-configured patterns for orders, invoices, pick-packs, and quotes 
-    * Customizable placeholders
-    * Customizable prefix and suffix
-      
-
-    ***
-
-    **Key Benefits**:
-    * Safely create unique IDs
-    * Be tax compliant with unique invoices IDs
 servers:
   - url: 'https://api.emporix.io'
 tags:

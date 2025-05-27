@@ -8,22 +8,6 @@ info:
     email: documentation@emporix.com
   description: |-
     Configure Onfleet as route management system or Veloce as logistics provider.
-
-    ***
-
-    **Key Features**:
-    * Deliver orders via Veloce or Onfleet
-    * Synchronize orders with the logistic provider configured for the site
-    * Configure a different logistics provider per site
-
-    ***
-
-    **Key Benefits**:
-    * Save time and money for your last mile delivery by optimizing routes with Onfleet
-    * Utilize third party logistics providers (3PLs) like Veloce to orchestrate the delivery of your orders
-    
-    ***
-    **Note**: To configure Veloce or Onfleet delivery provider please contact with Team Emporix
 servers:
   - url: 'https://api.emporix.io'
 tags:

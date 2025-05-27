@@ -4,21 +4,6 @@ info:
   version: ''
   description: |-
     Collect reward points and exchange them for coupons.
-
-    ***
-
-    **KeyFeatures**:
-    * Grant points to customers after they complete an order, or reward chosen customers irrespective of the orders made
-    * Define the exchange rate between points and currency when collecting points
-    * Points account balance per customer
-    * Redeem points in exchange for coupon codes
-
-    ***
-
-    **Key Benefits**:
-    * Increase customer loyalty
-    * Reward customers for their spending
-    * Increase customer spending
   contact:
     email: documentation@emporix.com
 paths:

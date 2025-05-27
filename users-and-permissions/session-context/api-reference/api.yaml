@@ -4,18 +4,6 @@ info:
   version: ''
   description: |
     Manage the customers' browser session context.
-
-    ***
-
-    **Key Features**:
-    * Stores properties matched with provided session ID, such as target location, preferred currency, or preferred site.
-    * Allows to retrieve and manage current session properties.
-    * Allows to manage custom attributes for particular sessions.
-
-    ***
-
-    **Key Benefits**:
-    * Contextual pricing based on a user's session.
   contact:
     email: documentation@emporix.com
 servers:

@@ -4,15 +4,6 @@ info:
   version: ''
   description: |-
     Holds a localized list of countries and regions to which the business may sell.
-
-    ***
-
-    **Key Features**:
-    * Provides a list of countries and regions
-    ***
-
-    **Key Benefits**:
-    * Holds a localized list of countries and regions to which the business may sell
   contact:
     email: documentation@emporix.com
 servers:

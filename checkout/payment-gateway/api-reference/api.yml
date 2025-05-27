@@ -6,23 +6,6 @@ info:
     email: documentation@emporix.com
   description: |-
     The Emporix API Payment-Gateway Service allows you to manage your payment methods.
-
-    ***
-
-    **Key Features**:
-    * Create payment strategies
-    * Configure payment methods per site
-    * Get transaction logs
-    * Enable refunds and cancellation
-    * Capture payments
-
-    ***
-
-    **Key Benefits**:
-    * Simplify payment processes
-    * React quickly to market needs and integrate with any payment provider
-    * Give your customers the choice of their payment methods
-    * Have an overview of transaction history
 tags:
   - name: Payment
   - name: Payment mode

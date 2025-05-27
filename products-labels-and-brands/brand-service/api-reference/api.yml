@@ -6,7 +6,6 @@ info:
     email: documentation@emporix.com
   description: |-
     Manage detailed brand information about products.
-
 servers:
   - url: 'https://api.emporix.io'
 tags:
