@@ -2,39 +2,34 @@
 seo:
   title: Schema Service Tutorials
   description: Schema Management
+icon: graduation-cap
 ---
 
-
-
-## Schema Service Tutorials
+# Schema Tutorial
 
 With the Schema Service you can easily create and manage customized/industry-specific fields for different types in Management Dashboard. The new fields appear in a separate tab when you create an instance of the extended type.
 
-{% hint style="warning" %}
-
 It is possible to create mixin schemas through API for the following entities: `category`, `company`, `coupon`, `customer`, `customer.address`, `order`, `price list`, `product`, `quote` and `return`.
 
-### How to add custom fields for an entity
+## How to add custom fields for an entity
 
 This tutorial explains how to add custom fields for a product entity.
 
-#### Create a schema
+### Create a schema
 
 To extend the product entity in Management Dashboard with some industry-specific fields, create a schema that defines the required fields and generates JSON file representation by sending a request to the Creating a schema endpoint.
 
-#### Retrieve a schema
+### Retrieve a schema
 
 Retrieve the created schema to get the schema URL by calling the Retrieving a schema endpoint.
 
 In the response, you can see the URL link to cloudinary repository, where the schema for the product type has been uploaded.
 
 {% hint style="warning" %}
-
 When you create a product, the validation mechanism runs against the schema stored under the mentioned cloudinary URL.
-
 {% endhint %}
 
-#### Create a product
+### Create a product
 
 Now, create a product that contains additional fields by sending a request to Creating a new product endpoint.
 
@@ -59,11 +54,11 @@ For example, you created a schema with **size** attribute and it got assigned an
 
 The product you created has already the custom fields added in the separate "Product Custom Attributes" tab.
 
-### How to create a more complex schema
+## How to create a more complex schema
 
 In case you need to add a schema for more complex attribute types than those supported by default, instead of creating a schema, you can create a reference. This tutorial shows you how to upload more complex schemas.
 
-#### Prepare a JSON schema definition
+### Prepare a JSON schema definition
 
 See the example JSON file that defines fields of different types:
 
@@ -222,19 +217,17 @@ See the example JSON file that defines fields of different types:
 
 ```
 
-#### Create a reference
+### Create a reference
 
 To use the schema in Emporix Commerce Engine, send a request to the Creating a reference endpoint. This action creates a reference to your schema so that you use the extended type.
 
 Result: The schema reference is used to create or edit product objects.
 
 {% hint style="warning" %}
-
 Note that the fields of types that are not supported by default are not displayed in the Management Dashboard. You can edit them by API requests.
-
 {% endhint %}
 
-#### Create a product
+### Create a product
 
 Now, create a product and provide values for the customized fields by sending a request to Creating a new product endpoint.
 

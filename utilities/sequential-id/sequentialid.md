@@ -2,6 +2,7 @@
 seo:
   title: Sequential ID Service Tutorials
   description: Sequential Ids Schema Management
+icon: graduation-cap
 ---
 
 # Sequential-id Tutorial
@@ -28,8 +29,8 @@ To create a schema for sequential IDs creation, send the request to the [Creatin
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../sequential-id/api-reference/" %}
-[api-reference](../sequential-id/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -69,8 +70,8 @@ To get the created schema details, make a call to the [Retrieving a schema](http
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../sequential-id/api-reference/" %}
-[api-reference](../sequential-id/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -87,8 +88,8 @@ Activate the schema to apply it in the system so that the order numbers follow t
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../sequential-id/api-reference/" %}
-[api-reference](../sequential-id/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -105,8 +106,8 @@ Now, you can generate the order IDs that follow the new schema. To create a sequ
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../sequential-id/api-reference/" %}
-[api-reference](../sequential-id/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash

@@ -2,6 +2,7 @@
 seo:
   title: Payment Gateway Tutorial
   description: payment-gateway
+icon: graduation-cap
 ---
 
 # Payment-gateway Tutorial

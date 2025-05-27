@@ -2,9 +2,10 @@
 seo:
   title: Identity providers at Emporix
   description: identity, providers, token, tokens, login, social login
+icon: id-badge
 ---
 
-# Identity providers
+# Identity Providers
 
 Emporix makes it possible to create standard customer tokens based on authentication provided by third-party identity providers. External identity providers can be used to offer users alternative ways of signing up, such as social login.
 

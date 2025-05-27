@@ -2,10 +2,10 @@
 seo:
   title: Label Service Tutorials
   description: Label Management
+icon: graduation-cap
 ---
 
-
-# Label Service Tutorials
+# Label Tutorial
 
 ## How to add a label to a product
 
@@ -21,8 +21,8 @@ To create a new label, send the request to the [Creating a label](https://develo
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../label-service/api-reference/" %}
-[api-reference](../label-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -40,7 +40,7 @@ Executing a request to create a label returns a response that includes an "id" f
 
 ## Add a label image
 
-Firstly, create and add an image for a new label. Design the image and upload it to your media repository. Send a request to the [Creating an asset](https://developer.emporix.io/documentation-portal/api-references/media/media/api-reference/assets#post-media-tenant-assets) endpoint.
+Firstly, create and add an image for a new label. Design the image and upload it to your media repository. Send a request to the [Creating an asset](https://developer.emporix.io/documentation-portal/api-references/media/media/api-reference/assets#post-media-tenant-assets) endpoint.\
 The `labelId` is necessary to provide.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -79,7 +79,7 @@ curl -L \
 
 You can now update a product with a newly created label to indicate that shipping is available worldwide for this product. Send the request to the [Partially updating a product](https://developer.emporix.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint.
 
-To specify a brand for a product, you need to provide the `labelId` field on product level which should be used. You can add brands either during the creation of the product, or by updating a product that already exists in the system. 
+To specify a brand for a product, you need to provide the `labelId` field on product level which should be used. You can add brands either during the creation of the product, or by updating a product that already exists in the system.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -99,5 +99,4 @@ curl -i -X PATCH \
   }'
 ```
 
-As a result, the product is marked with a new label. 
-
+As a result, the product is marked with a new label.

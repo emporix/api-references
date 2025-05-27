@@ -8,6 +8,7 @@ tocMaxDepth: 2
 editPage:
   disable: true
 label: Translations
+icon: globe
 ---
 
 # Translations

@@ -2,23 +2,24 @@
 seo:
   title: Tax Service Tutorials
   description: tax, taxes, tax classes, tax class, tax configuration
+icon: graduation-cap
 ---
 
-# How to calculate net and gross values for prices
+# Tax Tutorials
+
+## How to calculate net and gross values for prices
 
 You can calculate net and gross values for prices through the [Calculating net and gross values for prices](https://developer.emporix.io/documentation-portal/api-references/prices-and-taxes/tax-service/api-reference/tax-calculation) endpoint.
 
-## Before you start
+### Before you start
 
 Make sure you configured sales tax rates through the Emporix API Tax Service.
 
 {% hint style="warning" %}
-
-For instructions, check out [*How to add your first product*](../../products-labels-and-brands/product-service/product.md/#how-to-add-your-first-product).
-
+For instructions, check out [_How to add your first product_](../../products-labels-and-brands/product-service/product.md#how-to-add-your-first-product).
 {% endhint %}
 
-## Convert a gross price to a net price
+### Convert a gross price to a net price
 
 To calculate a price's net value based on its gross value, put the following data in the request body:
 
@@ -39,8 +40,8 @@ Then, send a request to the [Calculating net and gross values for prices](https:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -62,7 +63,7 @@ curl -i -X PUT \
 
 The calculated net value is returned in the `output.netPrice` field.
 
-## Convert a net price to a gross price
+### Convert a net price to a gross price
 
 To calculate a price's gross value based on its net value, put the following data in the request body:
 
@@ -79,12 +80,12 @@ To calculate a price's gross value based on its net value, put the following dat
 }
 ```
 
-Then, send a request to the  [Calculating net and gross values for prices](https://developer.emporix.io/documentation-portal/api-references/prices-and-taxes/tax-service/api-reference/tax-calculation) endpoint:
+Then, send a request to the [Calculating net and gross values for prices](https://developer.emporix.io/documentation-portal/api-references/prices-and-taxes/tax-service/api-reference/tax-calculation) endpoint:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -104,32 +105,27 @@ curl -i -X PUT \
   }'
 ```
 
-
 The calculated gross value is returned in the `output.grossPrice` field.
 
-# How to calculate gross values between countries
+## How to calculate gross values between countries
 
 You can calculate a gross price in one country to a gross price in another country through the [Calculating net and gross values for prices](https://developer.emporix.io/documentation-portal/api-references/prices-and-taxes/tax-service/api-reference/tax-calculation) endpoint.
 
 {% hint style="warning" %}
-
 This tutorial presents how to calculate gross prices between countries based on specific values.
 
-To learn how to calculate gross prices between countries based on `Price` objects, check out [*How to calculate gross prices between countries*](../price-service/price.md/#how-to-calculate-gross-prices-between-countries).
-
+To learn how to calculate gross prices between countries based on `Price` objects, check out [_How to calculate gross prices between countries_](../price-service/price.md#how-to-calculate-gross-prices-between-countries).
 {% endhint %}
 
-## Before you start
+### Before you start
 
 Make sure you configured sales tax rates through the Emporix API Tax Service.
 
 {% hint style="warning" %}
-
-For instructions, check out [*How to add your first product*](../../products-labels-and-brands/product-service/product.md/#how-to-add-your-first-product).
-
+For instructions, check out [_How to add your first product_](../../products-labels-and-brands/product-service/product.md#how-to-add-your-first-product).
 {% endhint %}
 
-## Calculate the price
+### Calculate the price
 
 To calculate a gross price between countries based on its applicable tax classes, put the following data in the request body:
 
@@ -154,8 +150,8 @@ Then, send a request to the [Calculating net and gross values for prices](https:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash

@@ -2,6 +2,7 @@
 seo:
   title: Category Service Tutorials
   description: category, categories
+icon: graduation-cap
 ---
 
 # Category Tutorials
@@ -9,11 +10,9 @@ seo:
 ## How to create a category
 
 {% hint style="warning" %}
-
 Category names and descriptions are localized. When creating a new category, you can specify the category name and descriptions in multiple languages.
 
 Looking for more info on localization? Check out [_Standard practices_](../../standard-practices/translations.md).
-
 {% endhint %}
 
 **Root categories vs. subcategories**
@@ -29,15 +28,13 @@ If you want to create a subcategory, include the `parentId` of the root category
 To create a new category, you need to send a request to the [Creating a new category](https://developer.emporix.io/documentation-portal/api-references/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint.
 
 {% hint style="danger" %}
-
 The `localizedSlug` field must not contain any diacritics.
-
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../category-tree/api-reference/" %}
-[api-reference](..category-tree/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -73,8 +70,7 @@ curl -L \
     "published": true,
     "mixins": {}
   }'
-  ```
-
+```
 
 ## How to assign a product to a category
 
@@ -84,7 +80,7 @@ You can assign resources, such as products, to particular categories.
 
 Make sure you have already finished the following tutorials:
 
-* [_How to create a category_](../category-tree/category.md#how-to-create-a-category)
+* [_How to create a category_](category.md#how-to-create-a-category)
 * [_How to add your first product_](../../products-labels-and-brands/product-service/product.md#how-to-add-your-first-product)
 
 ### Assign a product to a category
@@ -96,8 +92,8 @@ To assign a product to a category, you need to send a request to the Assigning a
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../category-tree/api-reference/" %}
-[api-reference](../category-tree/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -120,8 +116,8 @@ To check whether the resource was properly assigned to the category, you can sen
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../category-tree/api-reference/" %}
-[api-reference](../category-tree/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -136,9 +132,7 @@ curl -L \
 You can delete all resources assigned to a particular category, or just one specific assignment.
 
 {% hint style="warning" %}
-
 As a result of this procedure, only category assignments are deleted; the categories and resources themselves remain in the database.
-
 {% endhint %}
 
 #### Option one: Delete all product assignments
@@ -147,8 +141,8 @@ To delete all assignments for a specific category, you need to send a request to
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../category-tree/api-reference/" %}
-[api-reference](../category-tree/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -165,8 +159,8 @@ To delete only a specific assignment, you need to send a request to the Deleting
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../category-tree/api-reference/" %}
-[api-reference](../category-tree/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -179,12 +173,12 @@ curl -L \
 
 ## How to publish/unpublish a category
 
-To publish or unpublish a category, you need to send a request to the  Partially updating a category endpoint and set the `published` property to `true` or `false`.
+To publish or unpublish a category, you need to send a request to the Partially updating a category endpoint and set the `published` property to `true` or `false`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../category-tree/api-reference/" %}
-[api-reference](../category-tree/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -217,7 +211,6 @@ Category trees are built every time you create or update a category. The `parent
 **Option one: Retrieve a specific category tree**
 
 {% hint style="danger" %}
-
 It is only possible to retrieve a category tree for a root category. It is not possible to get it for a category that lies lower in a hierarchy.
 {% endhint %}
 
@@ -225,8 +218,8 @@ To retrieve a specific category tree, you need to send a request to the Retrievi
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../category-tree/api-reference/" %}
-[api-reference](../category-tree/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -242,8 +235,8 @@ To retrieve all category trees, you need to send a request to the Retrieving the
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../category-tree/api-reference/" %}
-[api-reference](../category-tree/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -258,18 +251,16 @@ curl -L \
 To retrieve a list of subcategories for a specific category, you need to send a request to the Retrieving subcategories for a category endpoint.
 
 {% hint style="warning" %}
-
 You can limit the depth of retrieved subcategories with the `depth` parameter.
 
 * If set to `1`, only direct children of the specified category are retrieved.
 * If not specified, all descendants of the specified category are retrieved.
-
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../category-tree/api-reference/" %}
-[api-reference](../category-tree/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -284,17 +275,15 @@ curl -L \
 You can move a category by modifying its `parentId` value.
 
 {% hint style="warning" %}
-
 When you move a category, all its subcategories and assigned references move along with it.
-
 {% endhint %}
 
 To move a category to be a child of another category, you need to send a request to the Partially updating a category endpoint and provide the desired parent category ID in the `parentId` field.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../category-tree/api-reference/" %}
-[api-reference](../category-tree/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash

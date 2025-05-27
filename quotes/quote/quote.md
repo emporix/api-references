@@ -2,41 +2,40 @@
 seo:
   title: Quote Service Tutorials
   description: Quote Management
+icon: graduation-cap
 ---
 
-{% hint style="danger" %}
+# Quote Tutorial
 
+{% hint style="danger" %}
 The Emporix API Quote Service is only available to tenants that use the Price v2 API Service.
 {% endhint %}
 
-## How to configure the Quote Service
+### How to configure the Quote Service
 
-The Quote Service allows you to send email notifications to customers every time a new quote is created or updated by the customers themselves or by an employee on their behalf. 
+The Quote Service allows you to send email notifications to customers every time a new quote is created or updated by the customers themselves or by an employee on their behalf.
 
 The following merchant information is necessary for the pdf file with quote to be generated:
 
-  * `merchantName`
-  * `merchantAddress`
-    * `merchantCity`
-    * `merchantStreet`  
-    * `merchantStreetNo`
-    * `merchantZipCode`
+* `merchantName`
+* `merchantAddress`
+  * `merchantCity`
+  * `merchantStreet`
+  * `merchantStreetNo`
+  * `merchantZipCode`
 
 {% hint style="warning" %}
-
 The pdf with quote will be sent to the customer in the notification email upon the quote's creation or change. It will also be available for the customer on the storefront.
 {% endhint %}
 
-### Retrieve your site's mixins
+#### Retrieve your site's mixins
 
 First, you need to check the current site mixin configuration for the `merchantInfo` parameter by sending a request to the [Retrieving site mixins](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
 
 {% hint style="warning" %}
-
 The following scope is required:
 
 `site.site_manage`
-
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -51,16 +50,14 @@ curl -i -X GET \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
-### Update merchant information
+#### Update merchant information
 
 Update the merchant information for your tenant's site by sending a request to the [Partially updating a site mixin](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#patch-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
 
 {% hint style="warning" %}
-
 The following scope is required:
 
 `site.site_manage`
-
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -77,32 +74,29 @@ curl -i -X PATCH \
   -d '{
     "active": true
   }'
-  ```
+```
 
-### Update available quote status change reasons
+#### Update available quote status change reasons
 
-When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action. 
+When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action.
 
 There are four default reasons that your customers and employees can select for the `DECLINED` or `CHANGED` quote statuses:
 
-|Quote status|Reason code|
-|---|---|
-|**DECLINE**|<ul><li>PRICE_TOO_HIGH</li><li>NO_LONGER_NEEDED</li><li>DELIVERY_TIME_LATE</li><li>OTHER</li></ul>|
-|**CHANGE**|<ul><li>WRONG_MATERIAL</li><li>PROVIDED_PRICE_TO_HIGH</li><li>DELIVERY_TIME_LATE</li><li>OTHER</li></ul>|
-
+| Quote status | Reason code                                                                                              |
+| ------------ | -------------------------------------------------------------------------------------------------------- |
+| **DECLINE**  | <ul><li>PRICE_TOO_HIGH</li><li>NO_LONGER_NEEDED</li><li>DELIVERY_TIME_LATE</li><li>OTHER</li></ul>       |
+| **CHANGE**   | <ul><li>WRONG_MATERIAL</li><li>PROVIDED_PRICE_TO_HIGH</li><li>DELIVERY_TIME_LATE</li><li>OTHER</li></ul> |
 
 {% hint style="warning" %}
-
 The quote reason of the `DECLINE` type can only be used for the `DECLINED` or `DECLINED_BY_MERCHANT` actions, while the `CHANGE` type can only be used for the `IN_PROGRESS` change of status.
 {% endhint %}
-
 
 By sending a request to the [Creating a reason for changing the quote status](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-reason#post-quote-tenant-quote-reasons) endpoint, you can create new quote status change reasons.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../quote/api-reference/" %}
-[api-reference](../quote/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -121,29 +115,27 @@ curl -i -X POST \
   }'
 ```
 
-## How to manage quote requests
+### How to manage quote requests
 
 A quote request can be created both by a customer directly on your business' storefront, or by an employee on behalf of a customer.
 
-### Create a quote by a customer
+#### Create a quote by a customer
 
-On the storefront, a customer adds selected products to cart. At checkout, they can proceed to purchasing the items, or requesting a quote. 
+On the storefront, a customer adds selected products to cart. At checkout, they can proceed to purchasing the items, or requesting a quote.\
 If a customer places a quote request, the [Creating a quote](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) endpoint is called.
 
 {% hint style="warning" %}
-
 The following scope is granted to a customer group:
 
 `quote.quote_manage_own`
-
 {% endhint %}
 
 The customer can place a quote request on the storefront only if they have created a cart with the requested items beforehand.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../quote/api-reference/" %}
-[api-reference](../quote/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -200,29 +192,26 @@ curl -i -X POST \
       }
     }
   }'
-  ```
+```
 
 {% hint style="warning" %}
-
 The initial status of a quote request created by a customer is always set to `AWAITING`.
 {% endhint %}
 
-### Create a quote on behalf of a customer
+#### Create a quote on behalf of a customer
 
 To create a quote request on behalf of a customer, you need to call the [Creating a quote](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) endpoint.
 
 {% hint style="warning" %}
-
 The following scope is required:
 
 `quote.quote_manage`
-
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../quote/api-reference/" %}
-[api-reference](../quote/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -279,35 +268,33 @@ curl -i -X POST \
       }
     }
   }'
-  ```
+```
 
 {% hint style="warning" %}
-
 The initial status of a quote request being created by an employee is always set to `CREATING`, and, subsequently, `OPEN` when the quote is created.
 {% endhint %}
 
-### Update a quote by an employee
+#### Update a quote by an employee
 
-There are two scenarios when an employee may need to update a quote: 
+There are two scenarios when an employee may need to update a quote:
+
 * A customer can contact your Customer Service so that an employee updates the quote request on their behalf
 * Employee updates the quote request with new information for the customer to review, such as price or status change
 
 To achieve that, the employee needs to send a request to the [Partially updating a quote](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid) endpoint.
 
 {% hint style="warning" %}
-
 The following scope is required:
 
 `quote.quote_manage`
-
 {% endhint %}
 
 In this example, an employee updates multiple fields:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../quote/api-reference/" %}
-[api-reference](../quote/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -322,8 +309,8 @@ In the following example, an employee updates only the price of requested items:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../quote/api-reference/" %}
-[api-reference](../quote/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -334,22 +321,20 @@ curl -i -X PATCH \
   -d '{}'
 ```
 
-### Accept a quote by a customer
+#### Accept a quote by a customer
 
 When a customer accepts a quote on the storefront, the following endpoint is called: [Partially updating a quote](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
 
 {% hint style="warning" %}
-
 The following scope is granted to the customer group:
 
 `quote.quote_manage_own`
-
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../quote/api-reference/" %}
-[api-reference](../quote/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -368,18 +353,15 @@ curl -i -X PATCH \
   }'
 ```
 
+#### Decline a quote by a customer
 
-### Decline a quote by a customer
-
-When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action.  
-On the storefront, when a customer declines the quote, a request to the following endpoint is sent: [Partially updating a quote](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).  
+When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action.\
+On the storefront, when a customer declines the quote, a request to the following endpoint is sent: [Partially updating a quote](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
 
 {% hint style="warning" %}
-
 The following scope is granted to the customer group:
 
 `quote.quote_manage_own`
-
 {% endhint %}
 
 If the customer wants to provide a reason for declining a quote, they can choose one of the provided reasons from a list of available reasons and/or add comments.
@@ -388,8 +370,8 @@ In this example, a customer receives a quote and decides to decline it because t
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../quote/api-reference/" %}
-[api-reference](../quote/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -407,7 +389,3 @@ curl -i -X PATCH \
     }
   }'
 ```
-
-
-
-

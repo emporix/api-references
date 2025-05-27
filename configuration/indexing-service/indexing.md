@@ -2,15 +2,16 @@
 seo:
   title: Indexer Service Tutorials
   description: indexer, search connector
+icon: graduation-cap
 ---
 
 # Indexing Tutorial
 
-The Indexing service is designed to manage indexing configuration. Currently, the index provider supported in Commerce Engine is [Algolia](https://www.algolia.com/).
+The Indexing service is designed to manage indexing configuration. Currently, the index provider supported in Commerce Engine is [Algolia](https://www.algolia.com/).\
 Proper indexing allows you to enhance your search mechanism within Emporix system. By connecting your Algolia instance to Commerce Engine, you get an improved search functionality.
 
 {% hint style="info" %}
-To learn more about the Indexing Service, see the [Indexing Service](../indexing-service/README.md).
+To learn more about the Indexing Service, see the [Indexing Service](./).
 {% endhint %}
 
 For every tenant, new Algolia credentials are created and kept as `AlgoliaClient`.
@@ -23,8 +24,8 @@ To create indexing configuration, send a request to the [Creating new configurat
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -49,8 +50,8 @@ Send the request to the [Get configuration by provider name](https://developer.e
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -63,8 +64,8 @@ To change configuration, make a call to the [Update configuration by provider na
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -92,8 +93,8 @@ You can run the reindex without the need to update all your resource data by sen
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -116,8 +117,8 @@ If you want to get your storefront index configuration without the need to updat
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash

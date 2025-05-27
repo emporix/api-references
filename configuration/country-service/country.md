@@ -2,6 +2,7 @@
 seo:
   title: Country Service Tutorials
   description: country, countries
+icon: graduation-cap
 ---
 
 # Country Tutorial
@@ -24,7 +25,7 @@ A particular site's country configuration specifies where that site is located.
 
 Country codes defined in country configurations must be compliant with the [ISO 3166-1 alpha-2 standard](https://www.iso.org/obp/ui/#iso:pub:PUB500001:en).
 
-Your tenant's country configuration is stored under the project\_country key in the [Emporix API Configuration Service](../configuration-service/README.md).
+Your tenant's country configuration is stored under the project\_country key in the [Emporix API Configuration Service](../configuration-service/).
 
 ```json
 {
@@ -47,9 +48,8 @@ Site-specific country configuration is stored in the `homeBase` field, inside th
 ```
 
 {% hint style="warning" %}
-For more information on the Site object, check out the [_Site Settings Service guide_](../site-settings-service/README.md)
+For more information on the Site object, check out the [_Site Settings Service guide_](../site-settings-service/)
 {% endhint %}
-
 
 ## Managing country configurations through Emporix API
 
@@ -57,7 +57,7 @@ Check out the following tutorials to learn more about country configuration with
 
 ### How to check which country is configured for your tenant
 
-To retrieve your tenant's country configuration, you need to send a request to the [Retrieving a configuration](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey) endpoint. 
+To retrieve your tenant's country configuration, you need to send a request to the [Retrieving a configuration](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

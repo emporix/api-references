@@ -2,18 +2,19 @@
 seo:
   title: Catalog Service Tutorials
   description: catalog, catalogs
+icon: graduation-cap
 ---
 
-# Catalog Service Tutorials
+# Catalog Tutorials
 
 ## How to localize your catalog
 
-The name and the description attribute of a catalog support localization. This means that you can provide values in a specific locale and also retrieve those values either localized, or all together, as you choose.
+The name and the description attribute of a catalog support localization. This means that you can provide values in a specific locale and also retrieve those values either localized, or all together, as you choose.\
 Localization is controlled via two headers:
 
-* Accept-Language - this is used to specify how to retrieve catalogs. If a value is provided, then the resources will be returned in that locale. If '*' is provided as a value, or the header is missing, all locales saved on a resource will be returned for that resource.
-* Content-Language - this header is used to specify if the data that will be stored for this request has a particular locale or you are providing all the desired locales.
-You can see detailed examples for the requests affected by this bellow.
+* Accept-Language - this is used to specify how to retrieve catalogs. If a value is provided, then the resources will be returned in that locale. If '\*' is provided as a value, or the header is missing, all locales saved on a resource will be returned for that resource.
+* Content-Language - this header is used to specify if the data that will be stored for this request has a particular locale or you are providing all the desired locales.\
+  You can see detailed examples for the requests affected by this bellow.
 
 ## How to create a catalog and assign a category to it
 
@@ -22,19 +23,17 @@ You can assign categories to a catalog when creating or updating the catalog. Th
 ### Create a catalog
 
 {% hint style="warning" %}
-
 Catalog names and descriptions are localized. When creating a new catalog, you can specify the catalog name and description in two different ways — in one language or in multiple languages.
 
-Looking for more info on localization? Check out [*Standard practices*](../../standard-practices/translations.md).
-
+Looking for more info on localization? Check out [_Standard practices_](../../standard-practices/translations.md).
 {% endhint %}
 
 To create a new catalog, you need to send a request to the [Creating a new catalog](https://developer.emporix.io/documentation-portal/api-references/catalogs-and-categories/catalog/api-reference/catalog-management#post-catalog-tenant-catalogs) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../catalog/api-reference/" %}
-[api-reference](../catalog/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -68,15 +67,13 @@ curl -i -X POST \
 ### Create a category
 
 {% hint style="warning" %}
-
-For more information, check out [*How to create a category*](../category-tree/#how-to-create-a-category).
-
+For more information, check out [_How to create a category_](../category-tree/#how-to-create-a-category).
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="../category-tree/api-reference/" %}
-[api-reference](..category-tree/api-reference/)
+[api-reference](../category-tree/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -113,7 +110,7 @@ curl -i -X POST \
     "published": true,
     "mixins": {}
   }'
-  ```
+```
 
 ### Assign the category to the catalog
 
@@ -154,11 +151,8 @@ curl -i -X PATCH \
       "version": 1
     }
   }'
-  ```
+```
 
-
-{% hint style="warning" %} 
-
+{% hint style="warning" %}
 The Catalog Service automatically checks for any category-deleted events. Every time a root category is deleted, it is automatically removed from all catalogs it belonged to.
-
 {% endhint %}

@@ -2,45 +2,42 @@
 seo:
   title: IAM Service Tutorials
   description: identity access management, access control groups, users
+icon: graduation-cap
 ---
 
-{% hint style="warning" %}
+# IAM Tutorial
 
+{% hint style="warning" %}
 Names and descriptions of groups, permissions, resources, access control templates, and role resources are localized.
 
-Looking for more info on localization? Check out [*Standard practices*](../../standard-practices/translations.md).
-
+Looking for more info on localization? Check out [_Standard practices_](../../standard-practices/translations.md).
 {% endhint %}
 
-# How to create a group of employees with a specific set of access controls
+## How to create a group of employees with a specific set of access controls
 
-To specify user access level in a particular service resource, you need to create a group of users that share the same access controls.
+To specify user access level in a particular service resource, you need to create a group of users that share the same access controls.\
 For the purposes of this tutorial, you will create an employee group with manager rights in Catalog API service.
 
-## Before you start
+### Before you start
 
 Ensure you have a tenant and users created.
 
 {% hint style="warning" %}
-
-To create users, check out the **Manage Users** tab in the [Emporix Developer Portal](https://app.emporix.io/users). 
-
+To create users, check out the **Manage Users** tab in the [Emporix Developer Portal](https://app.emporix.io/users).
 {% endhint %}
 
-## Retrieve a list of available access controls
+### Retrieve a list of available access controls
 
 {% hint style="warning" %}
-
 Access controls are predefined and designed to cover all necessary scenarios. It is not possible to create your own access controls.
-
 {% endhint %}
 
 To assign specific access control level to a group, first you need to retrieve a list of predefined access controls available for your tenant by sending a request to the [Retrieving all access controls](https://developer.emporix.io/documentation-portal/api-references/users-and-permissions/iam/api-reference/access-controls) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../iam/api-reference/" %}
-[api-reference](../iam/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -51,21 +48,18 @@ curl -i -X GET \
   -H 'X-Total-Count: true'
 ```
 
-
-## Create an employee group
+### Create an employee group
 
 Employee groups aggregate users that share the same access control within a particular service and resource. Create an employee group and assign access controls to it by sending a request to the [Creating a new group](https://developer.emporix.io/documentation-portal/api-references/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups) endpoint.
 
 {% hint style="warning" %}
-
 The user type in the `userType` parameter can be specified as `CUSTOMER` or `EMPLOYEE`. For the purposes of this tutorial, set the `userType` parameter as `EMPLOYEE`.
-
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../iam/api-reference/" %}
-[api-reference](../iam/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -97,20 +91,18 @@ curl -i -X POST \
   }'
 ```
 
-## Assign users to an employee group
+### Assign users to an employee group
 
 By assigning a user to a particular employee group, you grant them a specific access control level. Create assignments by calling the [Adding a user to a group](https://developer.emporix.io/documentation-portal/api-references/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups-groupid-users) endpoint.
 
 {% hint style="warning" %}
-
 The user type in the `userType` parameter can be specified as `customer` or `employee`. For the purposes of this tutorial, set the `userType` parameter as `employee`.
-
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../iam/api-reference/" %}
-[api-reference](../iam/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash

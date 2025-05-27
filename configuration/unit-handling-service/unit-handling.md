@@ -3,6 +3,7 @@ seo:
   title: Unit Handling Service Tutorials
   description: unit, units, measurement unit, measurement units
 label: Tutorials
+icon: graduation-cap
 ---
 
 # Unit Handling Tutorial
@@ -19,8 +20,8 @@ Looking for more info on localization? Check out [_Standard practices_](../../st
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../unit-handling-service/api-reference/" %}
-[api-reference](../unit-handling-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -47,8 +48,8 @@ To convert between units, you need to send a request to the [Converting units ](
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../unit-handling-service/api-reference/" %}
-[api-reference](../unit-handling-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 <pre class="language-bash"><code class="lang-bash">curl -L \

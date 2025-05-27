@@ -1,2 +1,6 @@
-# price-v2
+---
+icon: money-bill-wave
+---
+
+# Prices and Taxes
 

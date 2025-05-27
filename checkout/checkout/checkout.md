@@ -2,32 +2,36 @@
 seo:
   title: Checkout Service Tutorials
   description: checkout setup
+icon: graduation-cap
 ---
 
-As the checkout functionality is the core of your commerce operations, make sure it works properly in your online store. 
+# Checkout Tutorial
 
-The checkout service validates data that comes from different points in the system: cart, order, payment, delivery zone, shipping method, tax, and customer. Therefore, you need proper configuration of these services to make checkout work as expected.
+As the checkout functionality is the core of your commerce operations, make sure it works properly in your online store.
+
+The checkout service validates data that comes from different points in the system: cart, order, payment, delivery zone, shipping method, tax, and customer. Therefore, you need proper configuration of these services to make checkout work as expected.\
 This tutorial guides you through the basic setup of the checkout service.
 
-# How to configure the Checkout Service
+## How to configure the Checkout Service
 
-## Gather information about a customer's session on the storefront
+### Gather information about a customer's session on the storefront
 
 You need details about the customer's access and session tokens as these details influence the checkout process.
 
 1. When a user enters your storefront, before they choose to log in, an anonymous user session is created.
 
-  Get an anonymous access token by sending a request to the [Requesting an anonymous token](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/authorization/oauth-service/api-reference/anonymous-token) endpoint.
+Get an anonymous access token by sending a request to the [Requesting an anonymous token](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/authorization/oauth-service/api-reference/anonymous-token) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="../../authorization/oauth-service/api-reference/" %}
 [api-reference](../../authorization/oauth-service/api-reference/)
 {% endcontent-ref %}
+
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id={client_id}'
-  ```
+```
 
 2. Log the customer in and send an authorization request to the [Requesting a customer token](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/authorization/oauth-service/api-reference/customer-token) endpoint.
 
@@ -54,7 +58,7 @@ curl -i -X POST \
 
 This operation returns the customer's access token and Saas token, which convey information about the customer and their activities on the storefront. You might need these details in subsequent steps to get a proper authorization when a customer is logged in.
 
-## Add tax configuration
+### Add tax configuration
 
 Each country that you operate in may have different tax rules for different products and services. Add relevant configuration to calculate taxes accordingly.
 
@@ -106,10 +110,10 @@ curl -i -X POST \
   }'
 ```
 
-## Define the delivery zone, method, and time
+### Define the delivery zone, method, and time
 
-Delivery zone is the area where you ship your goods to. You can define a country, or a zip code that you operate within.
-Delivery method is dependant on a specific site and delivery zone. 
+Delivery zone is the area where you ship your goods to. You can define a country, or a zip code that you operate within.\
+Delivery method is dependant on a specific site and delivery zone.
 
 1. Define the delivery zone by sending a request to the [Creating a shipping zone](https://developer.emporix.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-zones#post-shipping-tenant-site-zones) endpoint.
 
@@ -145,6 +149,7 @@ curl -i -X POST \
 {% content-ref url="../../delivery-and-shipping/shipping/api-reference/" %}
 [api-reference](../../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/shipping/{tenant}/{site}/zones/{zoneId}/methods' \
@@ -194,7 +199,7 @@ curl -i -X POST \
       }
     ]
   }'
-``` 
+```
 
 3. Define delivery time that will be matched with the delivery method and zone by sending the request to the [Creating a delivery time](https://developer.emporix.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/delivery-times-management#post-shipping-tenant-delivery-times) endpoint.
 
@@ -203,6 +208,7 @@ curl -i -X POST \
 {% content-ref url="../../delivery-and-shipping/shipping/api-reference/" %}
 [api-reference](../../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/shipping/{tenant}/delivery-times?validateOverlap=true' \
@@ -234,9 +240,9 @@ curl -i -X POST \
       }
     ]
   }'
-  ```
+```
 
-## Add products to your store
+### Add products to your store
 
 To create and add multiple products to your store, send the request to the [Creating multiple products](https://developer.emporix.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
 
@@ -255,8 +261,8 @@ curl -i -X POST \
   -d '{}'
 ```
 
-## Create a price model and connect it to products
- 
+### Create a price model and connect it to products
+
 Price model defines your pricing strategy. You can specify how you want to go about price tiers and selling volumes.
 
 1. To define a price model send a request to the [Creating a new price model](https://developer.emporix.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-models#post-price-tenant-pricemodels) endpoint.
@@ -303,6 +309,7 @@ curl -i -X POST \
 {% content-ref url="../../prices-and-taxes/price-service/api-reference/" %}
 [api-reference](../../prices-and-taxes/price-service/api-reference/)
 {% endcontent-ref %}
+
 ```bash
 url -i -X POST \
   'https://api.emporix.io/price/{tenant}/prices' \
@@ -337,13 +344,12 @@ url -i -X POST \
       }
     ]
   }'
-  ```
+```
 
 3. Match the price by session context to allow your customers find the best price based on information retrieved from the session context.
 
 {% hint style="danger" %}
-
-The following request requires using the customer's access token for authorization, either anonymous or logged in, as the response contains the bearer's information. 
+The following request requires using the customer's access token for authorization, either anonymous or logged in, as the response contains the bearer's information.
 {% endhint %}
 
 Send the request to the [Matching prices for session context](https://developer.emporix.io/documentation-portal/api-references/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices-by-context) endpoint.
@@ -353,7 +359,8 @@ Send the request to the [Matching prices for session context](https://developer.
 {% content-ref url="../../prices-and-taxes/price-service/api-reference/" %}
 [api-reference](../../prices-and-taxes/price-service/api-reference/)
 {% endcontent-ref %}
-```bash 
+
+```bash
 curl -i -X POST \
   'https://api.emporix.io/price/{tenant}/match-prices-by-context' \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
@@ -372,16 +379,16 @@ curl -i -X POST \
       }
     ]
   }'
-  ```
-## Create a cart
+```
+
+### Create a cart
 
 {% hint style="danger" %}
-
-The following requests require using the customer's access token for authorization, either anonymous or logged in, as the response contains the bearer's information. 
+The following requests require using the customer's access token for authorization, either anonymous or logged in, as the response contains the bearer's information.
 {% endhint %}
 
-1. You have to enable an option to create a cart on your site while a customer is browsing through your products. Creating a cart takes care of things like gathering customer's session details, even anonymous, or setting up a proper cart's currency for final calculations at checkout.
-There are two options to create carts using API:
+1. You have to enable an option to create a cart on your site while a customer is browsing through your products. Creating a cart takes care of things like gathering customer's session details, even anonymous, or setting up a proper cart's currency for final calculations at checkout.\
+   There are two options to create carts using API:
 
 * Create a cart by sending a request to the [Creating a new cart](https://developer.emporix.io/documentation-portal/api-references/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
 
@@ -440,7 +447,7 @@ curl -i -X POST \
     },
     "sessionValidated": true
   }'
-  ```
+```
 
 2. Add items to the cart by sending the request to the [Creating a new cart](https://developer.emporix.io/documentation-portal/api-references/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
 
@@ -467,30 +474,30 @@ curl -i -X POST \
   }'
 ```
 
-## Define payment methods
+### Define payment methods
 
 You can configure payment methods in the Payment Gateway Service. Check the available options in the [Payment Systems](https://developer.emporix.io/user-guides/system-management/payment-gateway/payments) documentation.
 
-## Trigger the checkout 
+### Trigger the checkout
 
 {% hint style="warning" %}
 To complete the checkout, there are two options:
-* The customer has to be logged in to the storefront and then the following request requires using the customer's access token for authorization - see [Gather information about a customer's session on the storefront
-](#Gather-information-about-a-customer's-session-on-the-storefront).
+
+* The customer has to be logged in to the storefront and then the following request requires using the customer's access token for authorization - see [Gather information about a customer's session on the storefront](checkout.md#Gather-information-about-a-customer's-session-on-the-storefront).
 * The customer continues as a guest without logging in - the `customer:guest` field has to be set to `true`.
 {% endhint %}
 
 Once a customer places the product in a cart, they can proceed with the checkout process.
 
-The checkout service validates the data that come from customer's session token, the cart, and tiered prices, and then proceeds with the delivery and payment details. 
-Then, it handles the payment and creates an order in the system, closing the cart. 
+The checkout service validates the data that come from customer's session token, the cart, and tiered prices, and then proceeds with the delivery and payment details.\
+Then, it handles the payment and creates an order in the system, closing the cart.
 
 You can trigger a checkout process through API as well by sending a request to the [Triggering a checkout](https://developer.emporix.io/documentation-portal/api-references/checkout/checkout/api-reference/checkouts) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../checkout/api-reference/" %}
-[api-reference](../checkout/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash

@@ -2,6 +2,7 @@
 seo:
   title: Price Service Tutorials
   description: price, prices, price list, price lists, price personalization,
+icon: graduation-cap
 ---
 
 # Price Tutorials

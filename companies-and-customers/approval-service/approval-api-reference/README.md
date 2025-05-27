@@ -1,2 +1,6 @@
-# Approval API Reference
+---
+icon: rectangle-terminal
+---
+
+# API Reference
 

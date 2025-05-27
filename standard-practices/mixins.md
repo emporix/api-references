@@ -8,11 +8,12 @@ tocMaxDepth: 3
 editPage:
   disable: true
 label: Mixins
+icon: diamonds-4
 ---
 
 # Mixins
 
-Mixins are custom properties that you can use to describe your business resources in more details. Mixins can be applied to most objects in the Emporix API.
+Mixins are custom properties that you can use to describe your business resources in more details. Mixins can be applied to most objects in the Emporix API.\
 Learn more about mixin schemas in [Schema Service](https://developer.emporix.io/docs/openapi/schema/).
 
 ## Schemas

@@ -8,16 +8,19 @@ tocMaxDepth: 2
 editPage:
   disable: true
 label: Tutorials
+icon: graduation-cap
 ---
 
-# How to create a new cart
+# Cart Tutorial
+
+## How to create a new cart
 
 To create a new cart, you need to send a request to the [Creating a new cart](https://developer.emporix.io/documentation-portal/api-references/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../cart/api-reference/" %}
-[api-reference](../cart/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -39,11 +42,11 @@ curl -i -X POST \
   }'
 ```
 
-# How to add custom attributes to a cart
+## How to add custom attributes to a cart
 
 You can define custom attributes for a cart through `mixins`.
 
-# Define your custom attributes schema
+## Define your custom attributes schema
 
 First, define your custom attributes schema in the form of a JSON schema.
 
@@ -66,14 +69,14 @@ First, define your custom attributes schema in the form of a JSON schema.
 
 Upload your schema to a hosting service and save its URL
 
-# Update a cart with custom attributes
+## Update a cart with custom attributes
 
 To add custom attributes to a cart, you need to send a request to the [Updating a cart](https://developer.emporix.io/documentation-portal/api-references/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../cart/api-reference/" %}
-[api-reference](../cart/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -117,7 +120,7 @@ curl -i -X PUT \
 }'
 ```
 
-# How to merge carts
+## How to merge carts
 
 {% hint style="warning" %}
 To learn more about merging carts, check out [Cart merging](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/carts#cart-merging) in the Carts guide.
@@ -127,8 +130,8 @@ To merge an anonymous cart with a customer cart, you need to send a request to t
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../cart/api-reference/" %}
-[api-reference](../cart/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -146,7 +149,7 @@ curl -i -X POST \
 }'
 ```
 
-# How to source pricing information from an external price calculation tool
+## How to source pricing information from an external price calculation tool
 
 For B2B scenarios, you might want to integrate an external application for price calculation for your products. Usually, the systems, such as ERPs, store all the relevant customer-specific pricing information needed for customer-specific pricing.\
 The external system then can communicate with the Cart Service directly to overwrite the price of the product added to the cart.
@@ -162,8 +165,8 @@ Provide the customer cart's ID in the `cartId` path parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../cart/api-reference/" %}
-[api-reference](../cart/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -196,7 +199,7 @@ Notice the `"itemType": "EXTERNAL"` definition which allows the Cart Service to 
 When you have enabled external pricing, it's essential to ensure the accuracy of the prices, as CE does not perform price validation in these instances.
 {% endhint %}
 
-# How to add a product from an external source to a cart
+## How to add a product from an external source to a cart
 
 For some cases, you might want to allow adding products from an external system to cart, and not only from your online store. The products from external product management sources can be added directly to the customer's cart, bypassing the standard product catalog.
 
@@ -244,7 +247,7 @@ curl -i -X POST \
   }'
 ```
 
-# How to add an external fee
+## How to add an external fee
 
 For some cases, you might need to calculate and charge additional fees, for example for packaging, freight, or any additional reasons. The fees calculated externally can be added directly to the customer's cart.
 
@@ -258,8 +261,8 @@ Provide the customer cart's ID in the `cartId` path parameter. Custom fee can be
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../cart/api-reference/" %}
-[api-reference](../cart/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -291,16 +294,16 @@ curl -i -X POST \
     ]
   }'
 ```
-# How to apply an external discount on an item level
+
+## How to apply an external discount on an item level
 
 Adding an external discount to an item in a cart is done with the `cart.cart_manage_external_prices` scope. Use the `externalDiscounts` attribute when adding an item to the cart or updating an existing one.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../cart/api-reference/" %}
-[api-reference](../cart/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
-
 
 ```bash
 curl -L \
@@ -320,8 +323,7 @@ curl -L \
   }'
 ```
 
-
-# Pricing calculations
+## Pricing calculations
 
 To ensure that both net and gross prices are available, along with clear details on how these values are derived, the Cart Service includes the calculatedPrice field.
 
@@ -880,9 +882,9 @@ This calculation method provides a comprehensive breakdown of prices, including 
 </details>
 {% endhint %}
 
-# Pricing calculations glossary
+## Pricing calculations glossary
 
-# Calculated price on item level
+## Calculated price on item level
 
 <table data-full-width="false"><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A unit price from <code>priceMatch</code>, it's multiplied by item quantity.</p><pre><code>{
   "calculatedPrice": {
@@ -1005,7 +1007,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
 }
 </code></pre></td></tr></tbody></table>
 
-# Calculated price on cart level
+## Calculated price on cart level
 
 <table data-full-width="false"><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A sum of all line item prices without discounts.</p><pre><code>{
   "calculatedPrice": {
@@ -1110,11 +1112,11 @@ This calculation method provides a comprehensive breakdown of prices, including 
 
 See the sections below for shipping, payment fee, tax and discounts calculations.
 
-# How is shipping calculated
+## How is shipping calculated
 
 The shipping calculation depends on the stage at which it is done.
 
-* In the cart, where the address, delivery method, and zone are not available yet, the calculation uses the minimum shipping estimation. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`, and the `shipToAddress` is created based on the cart’s `countryCode` and `zipCode`.
+* In the cart, where the address, delivery method, and zone are not available yet, the calculation uses the minimum shipping estimation. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`, and the `shipToAddress` is created based on the cart’s `countryCode` and `zipCode`.\
   See the [Calculating the minimum shipping costs](https://developer.emporix.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) endpoint.
 * In the checkout, where information about the delivery window and zone is already available, the calculation uses the following endpoints: [Calculating the final shipping cost](https://developer.emporix.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-cost#post-shipping-tenant-site-quote), or [Calculating the shipping cost for a given slot](https://developer.emporix.io/documentation-portal/api-references/delivery-and-shipping/shipping/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) accordingly.
 
@@ -1122,7 +1124,7 @@ The shipping calculation depends on the stage at which it is done.
 Always make sure that your site’s `homeBase.address` has the `country` and `zip-code` information included. It's mandatory for shipping calculations.
 {% endhint %}
 
-# How to calculate a payment fee at cart level
+## How to calculate a payment fee at cart level
 
 At the cart level, only one additional fee is calculated, apart from the fees applied at the item level. The `paymentFees` is an additional, non-discountable amount that the customer must pay for using a given payment method.
 
@@ -1133,9 +1135,9 @@ The fee has a specific format, and there are two options for calculating it:
 
 If the fee is taxable and has a tax code, the gross value is calculated. Otherwise, the `grossValue` is equal to `netValue`.
 
-# How to determine a tax country at cart level
+## How to determine a tax country at cart level
 
-Since the shipping address is not set in the cart, you need to determine the country to find the `taxRate` for a fee that has a `taxCode` only.
+Since the shipping address is not set in the cart, you need to determine the country to find the `taxRate` for a fee that has a `taxCode` only.\
 Ways to find the country data:
 
 * Use the country code that is set on the cart
@@ -1145,11 +1147,11 @@ Ways to find the country data:
     If the matching address is not found, return an error.
 * Get country code from site’s `homeBase.address.country`.
 
-# How to apply discounts at cart level
+## How to apply discounts at cart level
 
 Discounts are known as coupons and, with the relevant settings that influence `calculatedPrice`, they can be applied to a cart.
 
-Depending on the site configuration and the `includesTax=true/false`, the discount is applied to either the gross value - `includesTax=true`, or the net value - `includesTax=false`.
+Depending on the site configuration and the `includesTax=true/false`, the discount is applied to either the gross value - `includesTax=true`, or the net value - `includesTax=false`.\
 Based on this setting, the corresponding `netValue` or `grossValue` is recalculated using the tax rate.
 
 The information about which calculation method was used is available in `totalDiscount.calculationType=ApplyDiscountAfterTax/ApplyDiscountBeforeTax`:
@@ -1161,7 +1163,7 @@ The information about which calculation method was used is available in `totalDi
 
     * ABSOLUTE - a coupon that has a given type must have `discountAbsolute` attribute configured. It represents a monetary amount that should be discounted.
 
-    Depending on the `ApplyDiscountAfterTax/ApplyDiscountBeforeTax` discount, the absolute amount is subtracted either from the `grossValue` or the `netValue`.
+    Depending on the `ApplyDiscountAfterTax/ApplyDiscountBeforeTax` discount, the absolute amount is subtracted either from the `grossValue` or the `netValue`.\
     The value of the discount on the cart level is divided across all the applicable cart prices, proportionally to the `items[].calculatedPrice.price`, `items[].calculatedPrice.fees[].price` and the calculated shipping cost. It's related to the difference between `discountCalculationType:SUBTOTAL/TOTAL` described above, to know which items are applicable.
 
     * PERCENT - it takes the value of discount’s `discountPercentage` attribute and calculates the percentage discount to the price.
@@ -1186,13 +1188,13 @@ To achieve the communication between Commerce Engine and the fee management tool
 
 To add a custom fee to the cart, you need to send the request to the endpoint. Provide the customer cart's ID in the cartId path parameter. The payload has to include the "itemType" : "EXTERNAL" parameter - see the [Adding a product to a cart](https://developer.emporix.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) documentation.
 
-# How to apply separation of the same line items in the cart
+## How to apply separation of the same line items in the cart
 
-When you add an item to the cart, it's stored as a single line. If you add the same item multiple times, it remains a single line item, but the `quantity` attribute is updated to reflect the total amount, for example  when you add 5 items they are stored as `item1: productA, qty:5`. 
+When you add an item to the cart, it's stored as a single line. If you add the same item multiple times, it remains a single line item, but the `quantity` attribute is updated to reflect the total amount, for example when you add 5 items they are stored as `item1: productA, qty:5`.
 
 If you need to add the same item multiple times on separate lines in the cart, use the `keepAsSeparateLineItem=true` flag - it ensures each instance of the item appears as a distinct line item. This can be useful in a variety of scenarios, such as applying different discounts or fees to the same product, or handling separate delivery options.
 
-A common use case is the *Buy 2, Get 1 Free* promotion. In this case, when a customer adds two of the same line items to the cart, the system can add a third instance as a separate line item marked as free.
+A common use case is the _Buy 2, Get 1 Free_ promotion. In this case, when a customer adds two of the same line items to the cart, the system can add a third instance as a separate line item marked as free.
 
 Using the `keepAsSeparateLineItem=true` flag stores each addition of the product as an individual line, while the `keepAsSeparateLineItem=false` keeps them all in one.
 
@@ -1213,97 +1215,96 @@ By default, all items are grouped into a single line in the cart. This behavior 
 }
 ```
 
-## Usage examples
+### Usage examples
 
 **Adding multiple `productA` items with the `keepAsSeparateLineItem=true` flag**
 
-  1. Adding the first `productA` item with `keepAsSeparateLineItem=true` results in:
+1. Adding the first `productA` item with `keepAsSeparateLineItem=true` results in:
 
-  ```js
-  item0: productA, qty:1, keepAsSeparateLineItem=true
-  ```
+```js
+item0: productA, qty:1, keepAsSeparateLineItem=true
+```
 
-  2. Adding another `productA` item with `keepAsSeparateLineItem=true` results in:
+2. Adding another `productA` item with `keepAsSeparateLineItem=true` results in:
 
-  ```js
-  item0: productA, qty:1, keepAsSeparateLineItem=true
-  item1: productA, qty:1, keepAsSeparateLineItem=true 
-  ```
+```js
+item0: productA, qty:1, keepAsSeparateLineItem=true
+item1: productA, qty:1, keepAsSeparateLineItem=true 
+```
 
 **Adding multiple `productA` items with the `keepAsSeparateLineItem=false` flag**
 
-  1. Adding the first `productA` item with `keepAsSeparateLineItem=false` results in:
-   
-  ```js
-  item0: productA, qty:1, keepAsSeparateLineItem=false
-  ```
+1. Adding the first `productA` item with `keepAsSeparateLineItem=false` results in:
 
-  2. Adding another `productA` item with `keepAsSeparateLineItem=false` results in:
+```js
+item0: productA, qty:1, keepAsSeparateLineItem=false
+```
 
-  ```js
-  item0: productA, qty:2, keepAsSeparateLineItem=false
-  ```
+2. Adding another `productA` item with `keepAsSeparateLineItem=false` results in:
+
+```js
+item0: productA, qty:2, keepAsSeparateLineItem=false
+```
 
 **Adding multiple `productA` items with the `keepAsSeparateLineItem=true` and `keepAsSeparateLineItem=false` flags**
 
-  1. Adding the first `productA` item with two different flags results in:
+1. Adding the first `productA` item with two different flags results in:
 
-  ```js
-  item0: productA, qty:1, keepAsSeparateLineItem=true 
-  item2: productA, qty:1, keepAsSeparateLineItem=false 
-  ```
+```js
+item0: productA, qty:1, keepAsSeparateLineItem=true 
+item2: productA, qty:1, keepAsSeparateLineItem=false 
+```
 
-  2. Adding another two `productA` items with different flags results in:
+2. Adding another two `productA` items with different flags results in:
 
-  ```js
-  item0: productA, qty:1, keepAsSeparateLineItem=true 
-  item1: productA, qty:1, keepAsSeparateLineItem=true 
-  item2: productA, qty:2, keepAsSeparateLineItem=false 
-  ```
+```js
+item0: productA, qty:1, keepAsSeparateLineItem=true 
+item1: productA, qty:1, keepAsSeparateLineItem=true 
+item2: productA, qty:2, keepAsSeparateLineItem=false 
+```
 
-## Products with external prices
+### Products with external prices
 
-  You can add external prices for both custom products and products from the internal catalog. Line items for the same product can have different prices if they’re added separately with `keepAsSeparateLineItem=true`.
+You can add external prices for both custom products and products from the internal catalog. Line items for the same product can have different prices if they’re added separately with `keepAsSeparateLineItem=true`.
 
-  For example:
+For example:
 
-  1. Adding the first `productA` item with `priceX` and `keepAsSeparateLineItem=true` results in
-   
-  ```js
-  item0: productA, external, priceX, qty:1, keepAsSeparateLineItem=true 
-  ```
+1. Adding the first `productA` item with `priceX` and `keepAsSeparateLineItem=true` results in
 
-  2. Adding another `productA` item to it, but with `priceY` and `keepAsSeparateLineItem=true` results in:
-   
-  ```js
-  item0: productA, external, priceX, qty:1, keepAsSeparateLineItem=true 
-  item1: productA, external, priceY, qty:1, keepAsSeparateLineItem=true 
-  ```
+```js
+item0: productA, external, priceX, qty:1, keepAsSeparateLineItem=true 
+```
 
-## Products with standard prices
+2. Adding another `productA` item to it, but with `priceY` and `keepAsSeparateLineItem=true` results in:
 
-  When using internal prices, the `priceId` is the same across all line items - if the product uses a standard price from the catalog, all lines for that item are expected to have the same price.
+```js
+item0: productA, external, priceX, qty:1, keepAsSeparateLineItem=true 
+item1: productA, external, priceY, qty:1, keepAsSeparateLineItem=true 
+```
 
-  For example:
+### Products with standard prices
 
-  1. Adding the first `productA` item with `priceX` and `keepAsSeparateLineItem=true` results in:
-   
-  ```js
-  item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true 
-  ```
+When using internal prices, the `priceId` is the same across all line items - if the product uses a standard price from the catalog, all lines for that item are expected to have the same price.
 
-  2. Adding another `productA` item with different `priceY` and `keepAsSeparateLineItem=true` results in:
-   
-  ```js
-  item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true 
-  item1: productA, internal, priceY, qty:1, keepAsSeparateLineItem=true 
-  ```
+For example:
 
-  * If `cartItemValidationSkipExistingItemsValidationOnAddToCart=false`, the validation occurs, and an error is thrown due to the price mismatch.
+1. Adding the first `productA` item with `priceX` and `keepAsSeparateLineItem=true` results in:
 
-  * If `cartItemValidationSkipExistingItemsValidationOnAddToCart=true`, the validation does not occur, and the cart accepts the new line item.
+```js
+item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true 
+```
 
- {% hint style="warning" %}
+2. Adding another `productA` item with different `priceY` and `keepAsSeparateLineItem=true` results in:
+
+```js
+item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true 
+item1: productA, internal, priceY, qty:1, keepAsSeparateLineItem=true 
+```
+
+* If `cartItemValidationSkipExistingItemsValidationOnAddToCart=false`, the validation occurs, and an error is thrown due to the price mismatch.
+* If `cartItemValidationSkipExistingItemsValidationOnAddToCart=true`, the validation does not occur, and the cart accepts the new line item.
+
+{% hint style="warning" %}
 When the cart item validation is not executed on `add to cart`, you can use the [cart validation](https://developer.emporix.io/documentation-portal/api-references/~/revisions/yWwHvejmTq395ReuRRIQ/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid-validate) endpoint. It should return errors informing that the prices are duplicated.
 
 EXTERNAL pricing products can have different prices in the cart, INTERNAL pricing products can't.
@@ -1311,17 +1312,17 @@ EXTERNAL pricing products can have different prices in the cart, INTERNAL pricin
 
 **Adding products with internal and external pricing**
 
-  When you add the same product first as an internal one and then as an external, the items are split into separate line items even if `keepAsSeparateLineItem=false`, or if the flag is not present.
+When you add the same product first as an internal one and then as an external, the items are split into separate line items even if `keepAsSeparateLineItem=false`, or if the flag is not present.
 
-  1. Adding `productA` item, with internal `priceX` and `keepAsSeparateLineItem=false` results in:
-    
-  ```js
-    item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false`
-  ```
+1. Adding `productA` item, with internal `priceX` and `keepAsSeparateLineItem=false` results in:
 
-  2. Adding `productA` item to it, with external `priceY` and `keepAsSeparateLineItem=false` results in:
+```js
+  item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false`
+```
 
-  ```js
-    item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false 
-    item0: productA, external, priceY, qty:1, keepAsSeparateLineItem=false
-  ```
+2. Adding `productA` item to it, with external `priceY` and `keepAsSeparateLineItem=false` results in:
+
+```js
+  item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false 
+  item0: productA, external, priceY, qty:1, keepAsSeparateLineItem=false
+```

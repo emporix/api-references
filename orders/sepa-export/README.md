@@ -1,4 +1,8 @@
-# SEPA Export
+---
+icon: euro-sign
+---
+
+# SEPA Export Service
 
 SEPA (Single Euro Payments Area) export service refers to the process of exporting payment data in a standardized format to facilitate cross-border bank transfers within the EU.
 

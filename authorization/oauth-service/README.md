@@ -1,3 +1,7 @@
+---
+icon: lock
+---
+
 # OAuth Service
 
 The OAuth Service allows you to generate various token types.
@@ -13,4 +17,3 @@ The OAuth Service allows you to generate various token types.
   * Functions similarly to the anonymous token, but is tied to a specific customer
 * Service access token
   * Required to access Emporix services such as adding products, managing categories, or modifying prices
-

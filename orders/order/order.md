@@ -2,6 +2,7 @@
 seo:
   title: Order Service Tutorials
   description: order
+icon: graduation-cap
 ---
 
 # Order Tutorial

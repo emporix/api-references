@@ -2,9 +2,12 @@
 seo:
   title: Approval Service Tutorials
   description: Approvals Management
+icon: graduation-cap
 ---
 
 # Approval Tutorials
+
+## Approval Tutorials
 
 The feature allows customers to manage approval processes for orders.
 
@@ -20,10 +23,10 @@ Designed for a customer, admin (`B2B_ADMIN`), buyer (`B2B_BUYER`) and requester 
 * `approval.approval_read`
 * `approval.approval_manage`
 
-> [!INFO]
+> \[!INFO]\
 > Users are able to read or manage only the approvals that are assigned to them.
 
-# Scopes rules
+## Scopes rules
 
 Only the customers from `B2B_REQUESTER` and `B2B_BUYER` groups can create an approval, and only a customer of the same company can be chosen as an approver. An approver needs to be assigned to the `B2B_ADMIN` or `B2B_BUYER` group.
 
@@ -35,7 +38,7 @@ The scopes that are granted depend on the user group to which the user is assign
 
 👉 [OAuth Service – Customer Token](https://developer.emporix.io/docs/openapi/oauth/#tag/Customer-Token)
 
-# How to manage approvals
+## How to manage approvals
 
 An approval can be created only by a customer who doesn't have the permission to trigger the checkout, which means to create an order.
 
@@ -43,7 +46,7 @@ Only customers from the `B2B_REQUESTER` and `B2B_BUYER` groups can create an app
 
 Customers from the `B2B_BUYER` group can create approval only when the cost of the order exceeds the company limit, then the approval from an admin is required.
 
-## Create an approval
+### Create an approval
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -119,9 +122,9 @@ curl -i -X POST \
       ]
     }
   }'
-  ```
+```
 
-## Update an approval
+### Update an approval
 
 After creating the approval, items can be updated by the PATCH endpoint. Customers can change the status, details, delivery window and comment of the approval.
 
@@ -135,9 +138,9 @@ curl -i -X PATCH \
   -d '{}'
 ```
 
----
+***
 
-## Retrieve an approval
+### Retrieve an approval
 
 Approvals can be fetched by a customer. Only the approval which is assigned to the customer is returned.
 

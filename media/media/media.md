@@ -2,6 +2,7 @@
 seo:
   title: Media Service Tutorials
   description: media and documents management
+icon: graduation-cap
 ---
 
 # Media Tutorial
@@ -14,7 +15,7 @@ Currently, it is possible to assign assets to categories and products only.
 
 ## How to manage public and internal assets
 
-The assets can either be linked to an external website where they are stored, or uploaded in the form of blob data by using a multipart/form-data request.
+The assets can either be linked to an external website where they are stored, or uploaded in the form of blob data by using a multipart/form-data request.\
 You can also specify the access types of the uploaded files - the public assets are files that will be visible on your business' storefront, and the private access files will be accessible only to your tenant's employees.
 
 In the following scenario, we are going to create public and private assets for an already existing category.
@@ -29,14 +30,14 @@ To add an asset for a category, you need to send a request to the Creating an as
 In the following example, we are creating a `private` type of an asset.
 
 {% hint style="warning" %}
-Sending a json/application request to the Creating an asset endpoint does **not** mean that the asset is uploaded to the database. It is only linked to the resource (category or product).
+Sending a json/application request to the Creating an asset endpoint does **not** mean that the asset is uploaded to the database. It is only linked to the resource (category or product).\
 If you want to upload the asset to the database, you need to send a multipart request to the [Creating an asset](https://developer.emporix.io/documentation-portal/api-references/media/media/api-reference/assets#post-media-tenant-assets) endpoint.
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../media/api-reference/" %}
-[api-reference](../media/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -56,8 +57,8 @@ Check out the "Asset of the BLOB type added for a CATEGORY" example:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../media/api-reference/" %}
-[api-reference](../media/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -79,8 +80,8 @@ Provide the q parameter in the following format: `q=refIds.id:z7235vn6-5b70-4b3d
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../media/api-reference/" %}
-[api-reference](../media/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash

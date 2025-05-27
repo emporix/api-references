@@ -1,1 +1,6 @@
+---
+icon: square-quote
+---
+
 # Quotes
+

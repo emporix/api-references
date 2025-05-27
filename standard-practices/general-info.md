@@ -2,6 +2,7 @@
 seo:
   title: General Info
   description: Standard practices
+icon: lightbulb-on
 ---
 
 # General Info

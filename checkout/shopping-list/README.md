@@ -1,3 +1,7 @@
+---
+icon: cart-circle-check
+---
+
 # Shopping List
 
 Manages shopping lists for customers.

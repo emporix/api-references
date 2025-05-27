@@ -4,6 +4,7 @@ seo:
   description: >-
     product, product template, product templates, product variant, product
     variants, product bundle, product bundles, variant attributes
+icon: graduation-cap
 ---
 
 # Product Tutorial

@@ -1,3 +1,7 @@
+---
+icon: graduation-cap
+---
+
 # Webhooks Tutorial
 
 The Emporix Webhook Event Publishing works in the following way:
@@ -14,14 +18,14 @@ For example, if you create a catalog in the Emporix environment, a notification 
 
 To receive notifications from Emporix API services, you need to subscribe to specific events by following the process below:
 
-* [Webhooks Tutorial](../webhook-service/webhooks-tutorial.md#webhooks-tutorial)
-  * [description: webhooks, webhook, events, event](../webhook-service/webhooks-tutorial.md#description-webhooks-webhook-events-event)
-* [Webhook Service Tutorials](../webhook-service/webhooks-tutorial.md#webhook-service-tutorials)
-  * [How to configure webhook notifications](../webhook-service/webhooks-tutorial.md#how-to-configure-webhook-notifications)
-    * [Retrieve all subscriptions](../webhook-service/webhooks-tutorial.md#retrieve-all-subscriptions)
-    * [Subscribe to events](../webhook-service/webhooks-tutorial.md#subscribe-to-events)
-  * [Connect to the Event Gateway](../webhook-service/webhooks-tutorial.md#connect-to-the-event-gateway)
-  * [Configure your endpoints](../webhook-service/webhooks-tutorial.md#configure-your-endpoints)
+* [Webhooks Tutorial](webhooks-tutorial.md#webhooks-tutorial)
+  * [description: webhooks, webhook, events, event](webhooks-tutorial.md#description-webhooks-webhook-events-event)
+* [Webhook Service Tutorials](webhooks-tutorial.md#webhook-service-tutorials)
+  * [How to configure webhook notifications](webhooks-tutorial.md#how-to-configure-webhook-notifications)
+    * [Retrieve all subscriptions](webhooks-tutorial.md#retrieve-all-subscriptions)
+    * [Subscribe to events](webhooks-tutorial.md#subscribe-to-events)
+  * [Connect to the Event Gateway](webhooks-tutorial.md#connect-to-the-event-gateway)
+  * [Configure your endpoints](webhooks-tutorial.md#configure-your-endpoints)
 
 {% hint style="warning" %}
 By default, the maximum number of events per tenant is limited to 5000/month. The limit resets on the first day of each month. If you want to publish more events, contact Emporix Support.
@@ -39,8 +43,8 @@ If there is no prior subscription to the event of your choice, the `metadata.ver
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../webhook-service/api-reference/" %}
-[api-reference](../webhook-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -60,8 +64,8 @@ In this example, you will subscribe to the following events: `catalog.created` a
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../webhook-service/api-reference/" %}
-[api-reference](../webhook-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -89,12 +93,12 @@ curl -i -X PATCH \
       "version": 1
     }
   }'
-  ```
+```
 
 **Learn about the `index.item-updated` event's specific behavior:**
 
-The `index.item-updated` webhook event is emitted whenever there is a change on an item in the system - the index is updated with the new information.
-For the event to be triggered, a product must have at least one defined **price**, as it is the price that determines products indexing on a specific site.
+The `index.item-updated` webhook event is emitted whenever there is a change on an item in the system - the index is updated with the new information.\
+For the event to be triggered, a product must have at least one defined **price**, as it is the price that determines products indexing on a specific site.\
 Bear in mind all the events are site-specific, which means that they are linked to activities happening on particular sites.\
 The prices are also site-specific, and a single price can be associated with multiple sites.\
 The number of events triggered in the system depends on **the number of sites** assigned to a specific product’s prices, with one event emitted per each site.
@@ -107,11 +111,9 @@ Example:
 | 234       | $10 - site A, $15 - sites A, B, C | 3                        | A, B, C                        |
 | 345       | no price                          | 0                        | none                           |
 
-
 * A product _123_ has one assigned price of _$10_, associated with two sites _A_ and _B_. When you update the product _123_, the number of emitted `index.item-updated` events is **2** as there are two sites associated with the product price.
 * A product _234_ has two assigned prices: _$10_ associated with site _A_ and _$15_ associated with site _A_, _B_, and _C_. So when you update the product _234_, the `index.item-updated` event runs **3** times, as there are three sites affected.
 * A product _345_ has no defined price. So when you update the _345_ product, the `index.item-updated` is not emitted as no site is associated with the product.
-
 
 ### Connect to the Event Gateway
 
@@ -123,8 +125,8 @@ To generate the login link with the authentication token needed to connect a ten
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../webhook-service/api-reference/" %}
-[api-reference](../webhook-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -139,6 +141,6 @@ You can use your Emporix tenant ID as application ID in Svix.
 
 ### Configure your endpoints
 
-To receive notifications about the events you subscribed to in [_Subscribe to events_](../webhook-service/webhooks-tutorial.md#subscribe-to-events), on the Event Gateway, you need to configure endpoints that relate to those events.
+To receive notifications about the events you subscribed to in [_Subscribe to events_](webhooks-tutorial.md#subscribe-to-events), on the Event Gateway, you need to configure endpoints that relate to those events.
 
 To configure endpoints by using the APIs, since we are currently using the Svix platform for this purpose, check out the "Add webhook endpoints/Using the API" section in the [official Svix documentation](https://docs.svix.com/quickstart).

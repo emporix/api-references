@@ -2,6 +2,7 @@
 seo:
   title: Currency Service Tutorials
   description: currency, currencies
+icon: graduation-cap
 ---
 
 # Currency Tutorial
@@ -26,7 +27,6 @@ If your business operates in a currency that's not listed on the Emporix Develop
 1. Choose one of the available currencies and finish creating your tenant.
 2. Get your Emporix API keys from the Emporix Developer Portal.
 3. Change your tenant's currency configuration.
-{% endhint %}
 
 ### Currency configurations
 
@@ -58,7 +58,7 @@ Site-specific currency configuration is stored in the `currency` field, inside t
 ```
 
 {% hint style="warning" %}
-For more information on the `Site` object, check out the [_Site Settings Service guide_](../site-settings-service/README.md)
+For more information on the `Site` object, check out the [_Site Settings Service guide_](../site-settings-service/)
 {% endhint %}
 
 ### Managing currency configurations through Emporix API
