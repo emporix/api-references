@@ -148,7 +148,7 @@ paths:
       description: |-
         Creates and returns the nextId in the sequence. If you specify the `sequenceKey` parameter in request body, the nextId number is generated for this sequence, otherwise default pool is used. 
         
-          This endpoint is `deprecated`. Please use the [/sequential-id/{tenant}/schemas/types/{schemaType}/nextId](https://emporix.gitbook.io/documentation-portal/api-references/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-types-schematype-nextid) instead.
+          This endpoint is `deprecated`. Please use the [/sequential-id/{tenant}/schemas/types/{schemaType}/nextId](https://developer.emporix.io/documentation-portal/api-references/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-types-schematype-nextid) instead.
       operationId: POST-sequential-id-create-nextId
       requestBody:
         content:

@@ -35,7 +35,7 @@ Access controls are predefined and designed to cover all necessary scenarios. It
 
 {% endhint %}
 
-To assign specific access control level to a group, first you need to retrieve a list of predefined access controls available for your tenant by sending a request to the [Retrieving all access controls](https://emporix.gitbook.io/documentation-portal/api-references/users-and-permissions/iam/api-reference/access-controls) endpoint.
+To assign specific access control level to a group, first you need to retrieve a list of predefined access controls available for your tenant by sending a request to the [Retrieving all access controls](https://developer.emporix.io/documentation-portal/api-references/users-and-permissions/iam/api-reference/access-controls) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -54,7 +54,7 @@ curl -i -X GET \
 
 ## Create an employee group
 
-Employee groups aggregate users that share the same access control within a particular service and resource. Create an employee group and assign access controls to it by sending a request to the [Creating a new group](https://emporix.gitbook.io/documentation-portal/api-references/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups) endpoint.
+Employee groups aggregate users that share the same access control within a particular service and resource. Create an employee group and assign access controls to it by sending a request to the [Creating a new group](https://developer.emporix.io/documentation-portal/api-references/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups) endpoint.
 
 {% hint style="warning" %}
 
@@ -99,7 +99,7 @@ curl -i -X POST \
 
 ## Assign users to an employee group
 
-By assigning a user to a particular employee group, you grant them a specific access control level. Create assignments by calling the [Adding a user to a group](https://emporix.gitbook.io/documentation-portal/api-references/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups-groupid-users) endpoint.
+By assigning a user to a particular employee group, you grant them a specific access control level. Create assignments by calling the [Adding a user to a group](https://developer.emporix.io/documentation-portal/api-references/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups-groupid-users) endpoint.
 
 {% hint style="warning" %}
 

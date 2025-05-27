@@ -40,7 +40,7 @@ In this approach, the Emporix cart interacts with an ERP system to retrieve real
 
 Commerce Orchestration Platform (COP) enables this functionality with external pricing, ensuring real-time accuracy.
 
-Communication with the ERP system occurs using the BFF (Backend-for-Frontend) layer and with a [POST](https://emporix.gitbook.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) request the order is send to an ERP system. This architecture ensures a secure, real-time pricing model while leveraging external systems for order calculations.
+Communication with the ERP system occurs using the BFF (Backend-for-Frontend) layer and with a [POST](https://developer.emporix.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) request the order is send to an ERP system. This architecture ensures a secure, real-time pricing model while leveraging external systems for order calculations.
 
 <figure><img src="../../static/order/diagram2.svg" alt=""><figcaption></figcaption></figure>
 

@@ -24,7 +24,7 @@ This tutorial demonstrates creating and using sequential IDs for order numbers.
 
 ### Create a sequence schema
 
-To create a schema for sequential IDs creation, send the request to the [Creating a schema](https://emporix.gitbook.io/documentation-portal/api-references/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas) endpoint.
+To create a schema for sequential IDs creation, send the request to the [Creating a schema](https://developer.emporix.io/documentation-portal/api-references/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -65,7 +65,7 @@ The values of the placeholder properties are resolved dynamically from the defin
 
 ### Retrieve the created schema
 
-To get the created schema details, make a call to the [Retrieving a schema](https://emporix.gitbook.io/documentation-portal/api-references/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-tenant-schemas-schemaid) endpoint.
+To get the created schema details, make a call to the [Retrieving a schema](https://developer.emporix.io/documentation-portal/api-references/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-tenant-schemas-schemaid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -83,7 +83,7 @@ Copy the schema ID.
 
 ### Activate the schema
 
-Activate the schema to apply it in the system so that the order numbers follow the new pattern. Send the request to the [Activating a schema](https://emporix.gitbook.io/documentation-portal/api-references/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-schemaid-setactive) endpoint.
+Activate the schema to apply it in the system so that the order numbers follow the new pattern. Send the request to the [Activating a schema](https://developer.emporix.io/documentation-portal/api-references/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-schemaid-setactive) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -101,7 +101,7 @@ Provide the `sequenceSchemaID` in the request.
 
 ### Generate a sequence ID based on the schema
 
-Now, you can generate the order IDs that follow the new schema. To create a sequence ID, make a call to the [Creating a nextId for schema type](https://emporix.gitbook.io/documentation-portal/api-references/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-types-schematype-nextid) endpoint.
+Now, you can generate the order IDs that follow the new schema. To create a sequence ID, make a call to the [Creating a nextId for schema type](https://developer.emporix.io/documentation-portal/api-references/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-types-schematype-nextid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

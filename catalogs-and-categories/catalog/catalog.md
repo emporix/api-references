@@ -29,7 +29,7 @@ Looking for more info on localization? Check out [*Standard practices*](../../st
 
 {% endhint %}
 
-To create a new catalog, you need to send a request to the [Creating a new catalog](https://emporix.gitbook.io/documentation-portal/api-references/catalogs-and-categories/catalog/api-reference/catalog-management#post-catalog-tenant-catalogs) endpoint.
+To create a new catalog, you need to send a request to the [Creating a new catalog](https://developer.emporix.io/documentation-portal/api-references/catalogs-and-categories/catalog/api-reference/catalog-management#post-catalog-tenant-catalogs) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -117,7 +117,7 @@ curl -i -X POST \
 
 ### Assign the category to the catalog
 
-To assign the newly created category to a catalog, you need to send a request to the [Partially updating a catalog](https://emporix.gitbook.io/documentation-portal/api-references/catalogs-and-categories/catalog/api-reference/catalog-management#patch-catalog-tenant-catalogs-catalogid) endpoint.
+To assign the newly created category to a catalog, you need to send a request to the [Partially updating a catalog](https://developer.emporix.io/documentation-portal/api-references/catalogs-and-categories/catalog/api-reference/catalog-management#patch-catalog-tenant-catalogs-catalogid) endpoint.
 
 In the request body, insert the ID of the category into the `categoryIds` array. In this example, we also present how to set the visibility timeframe of the catalog with the `visibility` field.
 
