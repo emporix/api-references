@@ -6,25 +6,6 @@ info:
     email: documentation@emporix.com
   description: |-
     Create an order from cart.
-
-    ***
-
-    **Key Features**:
-    * Create orders with products that have indicative prices (e.g. price is only known after an item has been weighed)
-    * Create and retrieve own orders, and update order statuses by customers (on the storefront)
-    * Create, retrieve, delete, and update orders by tenant's employees (through Emporix Management Dashboard or by using a third-party application)
-    * Show order history
-    * Convert historic orders into current order
-    * Creates missing address for customer model (can be disabled in system preferences)
-
-    ***
-
-    **Key Benefits**:
-    * Built for high volume / throughput
-    * Never let a customer not place an order
-    * Make it easy for your customers to order from last order
-    * Make order queues, virtual waiting queues a thing of the past
-    * Benefit from automatic / elastic scaling to cope easily with peak order volume
 servers:
   - url: 'https://api.emporix.io'
 tags:
@@ -415,11 +396,21 @@ paths:
         content:
           application/json:
             examples:
-              Order entries:
+              Add new product to order :
                 value:
                   entries:
                     - productId: '1010234'
                       quantity: 1
+              Modify quantity:
+                value:
+                  entries:
+                    - entryId: '1010234'
+                      quantity: 2
+              Remove entry:
+                value:
+                  entries:
+                    - entryId: '1010234'
+                      quantity: 0
             schema:
               $ref: '#/components/schemas/orderEntriesDto'
         required: true
@@ -771,14 +762,16 @@ components:
           type: array
           items:
             properties:
+              entryId:
+                type: string
+                description: Order entry id. Required if `productId` is not provided. Use for entry modification. Cannot be provided along with `productId`.
               productId:
                 type: string
-                description: Id of the product added to the order.
+                description: Id of the product added to the order. Required if `entryId` is not provided. Cannot be provided along with `entryId`.
               quantity:
                 type: number
                 description: Quantity of the products added to the order. When set to `0` then such entries are removed from the order.
             required:
-              - productId
               - quantity
       required:
         - entries
