@@ -55,7 +55,11 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr></thead>
 <tbody>
   <tr>
-    <td class="tg-0pky" rowspan="5">Cart Service <br>Approval Service<br>Checkout Service<br>Customer Service<br>IAM Service</td>
+    <td class="tg-0pky" rowspan="5">Cart Service </td>
+    <td class="tg-0pky" rowspan="5">Improvements in cart functionality</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky" rowspan="5">Approval Service<br>Checkout Service<br>Customer Service<br>IAM Service</td>
     <td class="tg-0pky" rowspan="5">Improvement of shared orders and customer groups functionality</td>
   </tr>
 </tbody>
