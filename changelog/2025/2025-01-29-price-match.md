@@ -23,8 +23,8 @@ The `priceListId` field  has been added to the price match endpoints. The field 
 
 | Endpoint                                                                 | Description                                                    |
 | ----------------------------------------------------------------------   | ---------------------------------------------------------------|
-| [Matching price for a specific attributes](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices) | Added a new `priceListId` field to the response.                                     |
-| [Matching price for session context](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices-by-context)  | Added a new `priceListId` field to the response. |
+| [Matching price for a specific attributes]https://developer.emporix.io/api-references/api-guides-and-references/api-references/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices) | Added a new `priceListId` field to the response.                                     |
+| [Matching price for session context]https://developer.emporix.io/api-references/api-guides-and-references/api-references/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices-by-context)  | Added a new `priceListId` field to the response. |
 
 
 ## Known problems

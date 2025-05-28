@@ -25,7 +25,7 @@ For instructions, check out [_How to add your first product_](../product-service
 
 ## Create a brand
 
-To create a brand and add media files to it, you need to send a request to the [Adding a new brand](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/products-labels-and-brands/brand-service/api-reference/brands#post-brands) endpoint.
+To create a brand and add media files to it, you need to send a request to the [Adding a new brand]https://developer.emporix.io/api-references/api-guides-and-references/api-references/products-labels-and-brands/brand-service/api-reference/brands#post-brands) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -55,7 +55,7 @@ Executing a request to create a brand returns a response that includes an "id" f
 
 ## Upload an image
 
-To include an image for a brand, you need to upload the image to the database by sending a multipart request to the [Creating an asset](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/media/media/api-reference/assets#post-media-tenant-assets) endpoint.\
+To include an image for a brand, you need to upload the image to the database by sending a multipart request to the [Creating an asset]https://developer.emporix.io/api-references/api-guides-and-references/api-references/media/media/api-reference/assets#post-media-tenant-assets) endpoint.\
 The `brandId` is necessary to provide.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -94,7 +94,7 @@ curl -L \
 
 To specify a brand for a product, you need to provide the `brandId` field on product level which should be used. You can add brands either during the creation of the product, or by updating a product that already exists in the system.
 
-To update the existing product with brand information, you need to send a request to the [Partially updating a product](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint.
+To update the existing product with brand information, you need to send a request to the [Partially updating a product]https://developer.emporix.io/api-references/api-guides-and-references/api-references/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

@@ -23,7 +23,7 @@ From now on, the response of the "Retrieving category trees for a customer segme
 
 | Endpoint                                                                                                                               | Description                                                                                                            |
 |----------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
-| [Retrieving category trees for a customer segments](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items-category-trees) | Added `localizedDescription`, `localizedSlug`, `ecn`, `validity`, `position`, and `published` fields to the responses. |
+| [Retrieving category trees for a customer segments]https://developer.emporix.io/api-references/api-guides-and-references/api-references/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items-category-trees) | Added `localizedDescription`, `localizedSlug`, `ecn`, `validity`, `position`, and `published` fields to the responses. |
 
 ## Known problems
 
