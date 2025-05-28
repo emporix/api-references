@@ -54,7 +54,7 @@ These announcements are intended to keep you informed about ongoing work and pot
     <th class="tg-x6qq">Description</th>
   </tr></thead>
 <tbody>
-  tr>
+  <tr>
     <td class="tg-0pky" rowspan="5">Cart Service </td>
     <td class="tg-0pky" rowspan="5">Improvements in cart functionality</td>
   </tr>
