@@ -112,7 +112,7 @@ The customer's session is terminated when the customer has logged out.
 
 To view the existing session context file, you need to have a session Id of a particular user session.
 
-Retrieve the session context values by sending a request to the [Retrieving a session context](https://developer.emporix.io/api-references/users-and-permissions/session-context/api-reference/session-management) endpoint with the `session_context.context_manage` scope.
+Retrieve the session context values by sending a request to the [Retrieving a session context](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/session-context/api-reference/session-management) endpoint with the `session_context.context_manage` scope.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -141,7 +141,7 @@ For example, it's raining in the user's location, so the list of suggested produ
 You can also implement a mechanism allowing users to manage and modify their own sessions and session contexts by calling the Adding a new attribute to a session context] endpoint on the storefront.
 {% endhint %}
 
-In the following example, we add an attribute by sending a request to the [Adding a new attribute to a session context](https://developer.emporix.io/api-references/users-and-permissions/session-context/api-reference/own-session-context-modification#post-session-context-tenant-me-context-attributes) endpoint with the `session_context.context_manage` scope.
+In the following example, we add an attribute by sending a request to the [Adding a new attribute to a session context](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/session-context/api-reference/own-session-context-modification#post-session-context-tenant-me-context-attributes) endpoint with the `session_context.context_manage` scope.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
