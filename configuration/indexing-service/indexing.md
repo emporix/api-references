@@ -20,7 +20,7 @@ The Indexing service uses separate API keys for every tenant, so that you get mo
 
 ## How to configure search indexing
 
-To create indexing configuration, send a request to the [Creating new configuration](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) endpoint.
+To create indexing configuration, send a request to the [Creating new configuration](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -46,7 +46,7 @@ curl -L \
 ## How to update the index configuration
 
 To update the index configuration you need to retrieve the `writeKey` first.\
-Send the request to the [Get configuration by provider name](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) endpoint.
+Send the request to the [Get configuration by provider name](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -60,7 +60,7 @@ curl -L \
   --header 'Accept: */*'
 ```
 
-To change configuration, make a call to the [Update configuration by provider name](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) endpoint, providing the `writeKey` from the previous step.
+To change configuration, make a call to the [Update configuration by provider name](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) endpoint, providing the `writeKey` from the previous step.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -89,7 +89,7 @@ To apply your configuration changes to existing data, run the reindexing process
 
 Usually, reindexing runs upon the update of a product or its dependant entity, such as category, price, or media. The scheduler job discovers what has been changed and pushes the changes to index frequently.\
 But, if you change your index configuration, you need to trigger the reindexing process to apply your configuration changes.\
-You can run the reindex without the need to update all your resource data by sending the request to the [Reindex](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/indexing-service/api-reference/reindex) endpoint.
+You can run the reindex without the need to update all your resource data by sending the request to the [Reindex](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/configuration/indexing-service/api-reference/reindex) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -113,7 +113,7 @@ This operation starts the full reindexing mode.
 
 How to retrieve public search configuration
 
-If you want to get your storefront index configuration without the need to update, you can call the public endpoint to get the `searchKey`. Send the request to the [Get all public configurations](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/indexing-service/api-reference/public-configuration#get-indexing-tenant-public-configurations) endpoint.
+If you want to get your storefront index configuration without the need to update, you can call the public endpoint to get the `searchKey`. Send the request to the [Get all public configurations](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/configuration/indexing-service/api-reference/public-configuration#get-indexing-tenant-public-configurations) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -130,7 +130,7 @@ curl -L \
 ## How to choose indexing strategy
 
 You can choose between two indexing strategies for your search index configuration: `MERGE` and `SPLIT`. `MERGE` strategy creates a single index for all sites declared in the system, while `SPLIT` creates a separate index for each site.\
-To choose the right mode for your index, send the request to the [Updating a configuration](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint.
+To choose the right mode for your index, send the request to the [Updating a configuration](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

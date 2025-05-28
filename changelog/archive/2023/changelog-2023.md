@@ -28,7 +28,7 @@ The endpoint for getting product availability does not require any scopes anymor
 
 | Endpoint                                                                                            | Description                    |
 | --------------------------------------------------------------------------------------------------- | ------------------------------ |
-| [Retrieving product availability](https://developer.emporix.io/documentation-portal/api-references/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) | The endpoint doesn't require scopes.   |
+| [Retrieving product availability](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) | The endpoint doesn't require scopes.   |
 
 **Known problems**
 
@@ -49,11 +49,11 @@ We introduced new endpoints for shopping-list. They allow for managing a shoppin
 
 | Endpoint                                                                                              | Description                                                                                     |
 | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| [Fetching all shopping lists](https://developer.emporix.io/documentation-portal/api-references/checkout/shopping-list/api-reference/shopping-lists)             | It fetches all shopping lists. The endpoint requires the `shoppinglist.shoppinglist_read` scope by an employee.  |
+| [Fetching all shopping lists](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/checkout/shopping-list/api-reference/shopping-lists)             | It fetches all shopping lists. The endpoint requires the `shoppinglist.shoppinglist_read` scope by an employee.  |
 | [Creating a shopping list](/openapi/shopping-list/#operation/POST-shopping-list-create-shopping-list)               | It creates a shopping list. The endpoint requires the `shoppinglist.shoppinglist_manage` scope by an employee.   |
-| [Updating a shopping list](https://developer.emporix.io/documentation-portal/api-references/checkout/shopping-list/api-reference/shopping-lists#put-shoppinglist-tenant-shopping-lists-customerid)     | It updates a shopping list. The endpoint requires the `shoppinglist.shoppinglist_manage` scope by an employee.   |
+| [Updating a shopping list](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/checkout/shopping-list/api-reference/shopping-lists#put-shoppinglist-tenant-shopping-lists-customerid)     | It updates a shopping list. The endpoint requires the `shoppinglist.shoppinglist_manage` scope by an employee.   |
 | [Removing a shopping list](/openapi/shopping-list/#operation/DELETE-shopping-list-remove-customer-shopping-list)  | It removes a shopping list. The endpoint requires the `shoppinglist.shoppinglist_manage` scope by an employee.   |
-| [Fetching a shopping list](https://developer.emporix.io/documentation-portal/api-references/checkout/shopping-list/api-reference/shopping-lists#get-shoppinglist-tenant-shopping-lists-customerid)    | It fetches a shopping list. The endpoint requires the `shoppinglist.shoppinglist_read` scope by an employee.     |
+| [Fetching a shopping list](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/checkout/shopping-list/api-reference/shopping-lists#get-shoppinglist-tenant-shopping-lists-customerid)    | It fetches a shopping list. The endpoint requires the `shoppinglist.shoppinglist_read` scope by an employee.     |
 
 
 ---
@@ -112,11 +112,11 @@ Coupon Service from now on supports the mixins feature. There are two new proper
 
 | Endpoint                                                                            | Description                                     |
 | ----------------------------------------------------------------------------------- | ----------------------------------------------- |
-| [Retrieving coupons](https://developer.emporix.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management    | We added `mixins` and `metadata.mixins` properties. |
-| [Creating a coupon](https://developer.emporix.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#post-coupon-tenant-coupons)                   | We added `mixins` and `metadata.mixins` properties. |
-| [Retrieving a coupon](https://developer.emporix.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#get-coupon-tenant-coupons-code)             | We added `mixins` and `metadata.mixins` properties. |
-| [Updating a coupon](https://developer.emporix.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#put-coupon-tenant-coupons-code)               | We added `mixins` and `metadata.mixins` properties. |
-| [Partially updating a coupon](https://developer.emporix.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#patch-coupon-tenant-coupons-code)   | We added `mixins` and `metadata.mixins` properties. |
+| [Retrieving coupons](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/rewards-and-promotions/coupon/api-reference/coupon-management    | We added `mixins` and `metadata.mixins` properties. |
+| [Creating a coupon](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#post-coupon-tenant-coupons)                   | We added `mixins` and `metadata.mixins` properties. |
+| [Retrieving a coupon](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#get-coupon-tenant-coupons-code)             | We added `mixins` and `metadata.mixins` properties. |
+| [Updating a coupon](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#put-coupon-tenant-coupons-code)               | We added `mixins` and `metadata.mixins` properties. |
+| [Partially updating a coupon](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#patch-coupon-tenant-coupons-code)   | We added `mixins` and `metadata.mixins` properties. |
 
 **Known problems**
 
@@ -139,8 +139,8 @@ Properties `price.originalAmount` and `price.effectiveAmount` for a cart item ca
 
 | Endpoint                                                                                          | Description                                                                                                                          |
 | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| [Adding multiple products to cart](https://developer.emporix.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-itemsbatch)  | Properties `price.originalAmount` and `price.effectiveAmount` can be optional. Validation is configurable by the system preferences. |
-| [Adding a product to cart](https://developer.emporix.io/documentation-portal/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items)               | Properties `price.originalAmount` and `price.effectiveAmount` can be optional. Validation is configurable by the system preferences. |
+| [Adding multiple products to cart](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-itemsbatch)  | Properties `price.originalAmount` and `price.effectiveAmount` can be optional. Validation is configurable by the system preferences. |
+| [Adding a product to cart](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items)               | Properties `price.originalAmount` and `price.effectiveAmount` can be optional. Validation is configurable by the system preferences. |
 | [Updating a cart item](/openapi/cart/#operation/PUT-cart-update-item-details)             | Properties `price.originalAmount` and `price.effectiveAmount` can be optional. Validation is configurable by the system preferences. |
 
 **Known problems**
@@ -193,7 +193,7 @@ If set to true, the endpoint permanently removes the coupon from the database.
 
 | Endpoint                                                                           | Description                                                                                             |
 | ---------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------|
-| [Deleting a coupon](https://developer.emporix.io/documentation-portal/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#delete-coupon-tenant-coupons-code)         | Depending on the configuration, it flags coupon as deleted or performs permanent deletion from database. |
+| [Deleting a coupon](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#delete-coupon-tenant-coupons-code)         | Depending on the configuration, it flags coupon as deleted or performs permanent deletion from database. |
 
 **Known problems**
 
@@ -275,7 +275,7 @@ Response for a particular product is returned at the same position (index) at wh
 
 | Endpoint                                                                           | Description               |
 | ---------------------------------------------------------------------------------- | --------------------------|
-| [Upserting multiple products](https://developer.emporix.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk) | It updates products in bulk. |
+| [Upserting multiple products](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk) | It updates products in bulk. |
 
 **Known problems**
 
@@ -301,7 +301,7 @@ If the `type` field is not provided, the customer is recognized as a standard cu
 | Endpoint | Description |
 | --- | --- |
 | [Updating a customer profile](/openapi/customer-customer/#operation/PATCH-customer-update-customer)| We added `type` property. |
-| [Retrieving a customer profile](https://developer.emporix.io/documentation-portal/api-references/companies-and-customers/customer-management/account-and-profile)| We added `type` property. |
+| [Retrieving a customer profile](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/companies-and-customers/customer-management/account-and-profile)| We added `type` property. |
 | [Creating a new customer](/openapi/customer-customer/#operation/POST-customer-create-customer-account)| We added `type` property. |
 
 **Known problems**
@@ -328,7 +328,7 @@ such customer is assigned to existing company straight away. If the company does
 | Endpoint | Description |
 | --- | --- |
 | [Patch a customer profile](/openapi/customer-customer/#operation/PATCH-customer-update-customer)| Company registration ID property has been added. |
-| [Get a customer profile](https://developer.emporix.io/documentation-portal/api-references/companies-and-customers/customer-management/account-and-profile)|  Company registration ID property has been added. |
+| [Get a customer profile](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/companies-and-customers/customer-management/account-and-profile)|  Company registration ID property has been added. |
 | [Post a new customer](/openapi/customer-customer/#operation/POST-customer-create-customer-account)| Company registration ID property has been added. |
 
 **Known problems**
@@ -355,10 +355,10 @@ We added a new scope `customer.customer_manage_own` to the endpoints. The scope 
 
 | Endpoint | Description |
 | --- | --- |
-| [Getting customers](https://developer.emporix.io/documentation-portal/api-references/companies-and-customers/customer-service/api-reference/account-and-profile#get-customer-tenant-customers)| We added the company registration ID property and the `customer.customer_read_own` scope. |
+| [Getting customers](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/companies-and-customers/customer-service/api-reference/account-and-profile#get-customer-tenant-customers)| We added the company registration ID property and the `customer.customer_read_own` scope. |
 | [Creating a customer](/openapi/customer-tenant/#operation/POST-customer-tenant-create-customer)| We added the company registration ID property and the `customer.customer_manage_own` scope. |
 | [Patching a customer](/openapi/customer-tenant/#operation/PATCH-customer-tenant-update-customer)| We added the company registration ID property and the `customer.customer_manage_own` scope. |
-| [Getting a single customer](https://developer.emporix.io/documentation-portal/api-references/companies-and-customers/customer-service/api-reference/account-and-profile#get-customer-tenant-customers-customernumber)| We added the company registration ID property and the `customer.customer_read_own` scope. |
+| [Getting a single customer](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/companies-and-customers/customer-service/api-reference/account-and-profile#get-customer-tenant-customers-customernumber)| We added the company registration ID property and the `customer.customer_read_own` scope. |
 | [Deleting a customer](/openapi/customer-tenant/#operation/DELETE-customer-tenant-remove-customer)| We added the `customer.customer_read_own` scope. |
 
 **Known problems**
@@ -468,8 +468,8 @@ Order object was expanded with a new property. The property is related to Assist
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving orders](https://developer.emporix.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders)| We added assisted buying property. |
-| [Retrieving a specific order](https://developer.emporix.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid)| We added assisted buying property. |
+| [Retrieving orders](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders)| We added assisted buying property. |
+| [Retrieving a specific order](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid)| We added assisted buying property. |
 
 **Known problems**
 
@@ -492,11 +492,11 @@ The Site object was expanded with a new property. The property is related to Ass
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving sites](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings)| We added assisted buying property. |
-| [Retrieving a site](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode)| We added assisted buying property. |
-| [Creating a site](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites)| We added assisted buying property. |
-| [Updating a site](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#put-site-tenant-sites-sitecode)| We added assisted buying property. |
-| [Partially updating a site](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode)| We added assisted buying property. |
+| [Retrieving sites](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings)| We added assisted buying property. |
+| [Retrieving a site](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode)| We added assisted buying property. |
+| [Creating a site](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites)| We added assisted buying property. |
+| [Updating a site](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#put-site-tenant-sites-sitecode)| We added assisted buying property. |
+| [Partially updating a site](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode)| We added assisted buying property. |
 
 **Known problems**
 
@@ -728,16 +728,16 @@ The Delivery Cycle Management functionality allows for more detailed way of cont
 | [Retrieving delivery windows by delivery area](/openapi/shipping/#operation/GET-shipping-retrieve-delivery-times-for-delivery-area) | Endpoint was deprecated.                                                                                                                                                                                      |
 | [Finding sites by postal code](/openapi/shipping/#operation/POST-shipping-find-sites)                                               | Response contains new properties - `zones.actualDeliveryWindows.deliveryCycle`, `zones.actualDeliveryWindows.deliveryMethod`, `zones.actualDeliveryWindows.cutOffTime`, `zones.actualDeliveryWindows.slotId`. |
 | [Retrieving orders](/openapi/order/#operation/GET_tenant-salesorders)                                                           | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
-| [Creating a new order](https://developer.emporix.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)                                                       | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
-| [Retrieving a specific order by ID](https://developer.emporix.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid)                                   | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
+| [Creating a new order](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)                                                       | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
+| [Retrieving a specific order by ID](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid)                                   | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
 | [Updating an order](/openapi/order/#operation/PUT-order-update-order)                                                   | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
-| [Partially updating an order](https://developer.emporix.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid)                                       | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
+| [Partially updating an order](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid)                                       | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
 | [Retrieving a list of orders](/openapi/order/#operation/GET-order-list-orders)                                                      | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
-| [Creating a new order](https://developer.emporix.io/documentation-portal/api-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders)                                                            | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
-| [Retrieving order details](https://developer.emporix.io/documentation-portal/api-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid)                                                 | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
+| [Creating a new order](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders)                                                            | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
+| [Retrieving order details](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid)                                                 | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
 | [Creating a new cart](/openapi/cart/#operation/POST-cart-create-cart)                                                               | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
-| [Retrieving a cart's details by criteria](https://developer.emporix.io/documentation-portal/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts)                                            | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
-| [Retrieving a cart's details by ID](https://developer.emporix.io/documentation-portal/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid)                                           | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
+| [Retrieving a cart's details by criteria](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts)                                            | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
+| [Retrieving a cart's details by ID](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid)                                           | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
 | [Updating a cart](/openapi/cart/#operation/PUT-cart-update-cart)                                                             | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
 
 **Known problems**
@@ -862,7 +862,7 @@ Response for a particular product is returned at the same position (index) at wh
 
 | Endpoint                                                                     | Description                                                                        |
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| [Creating multiple products](https://developer.emporix.io/documentation-portal/api-references/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk)| It creates products in bulk. Recommended size of a particular batch is up to 500 products. |
+| [Creating multiple products](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk)| It creates products in bulk. Recommended size of a particular batch is up to 500 products. |
 
 **Known problems**
 
@@ -959,9 +959,9 @@ The quote reason functionality enables the creation and management of quote reas
 | Endpoint                                                                                 | Description                                                                                                                                                                              |
 | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Partially updating a quote](/openapi/quote/#operation/PATCH-quote-update-quote)              | The quote has the `quoteReasonId` property as part of the status which should be provided when changing status of the quote to `DECLINED`, `DECLINED_BY_MERCHANT` or `IN_PROGRESS`.  |
-| [Retrieving a single quote](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid)        | The quote can contain `quoteReason` object as part of the `status` field.                                                                                                                |
-| [Retrieving quotes](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes)                         | The quote can contain `quoteReason` object as part of the `status` field.                                                                                                                |
-| [Retrieving quote history](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid-history) | Changelogs contain changes of the quotes containing quote reasons reference.                                                                                                             |
+| [Retrieving a single quote](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid)        | The quote can contain `quoteReason` object as part of the `status` field.                                                                                                                |
+| [Retrieving quotes](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes)                         | The quote can contain `quoteReason` object as part of the `status` field.                                                                                                                |
+| [Retrieving quote history](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid-history) | Changelogs contain changes of the quotes containing quote reasons reference.                                                                                                             |
 
 **Known problems**
 
@@ -989,11 +989,11 @@ The Quote Service API has been enhanced with `shipping` object. Users are now ab
 
 | Endpoint                                                                                 | Description                                                                 |
 | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| [Retrieving quotes](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes)                         | The quote has the `shipping` object required to the checkout process. |
-| [Retrieving a single quote](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid)        | The quote has the `shipping` object required to the checkout process. |
+| [Retrieving quotes](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes)                         | The quote has the `shipping` object required to the checkout process. |
+| [Retrieving a single quote](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid)        | The quote has the `shipping` object required to the checkout process. |
 | [Partially updating a quote](/openapi/quote/#operation/PATCH-quote-update-quote)              | The `shipping` object can be updated by the PATCH endpoint.                 |
 | [Creating a quote](/openapi/quote/#operation/POST-quote-create-quote)                          | A new optional field `shipping` was added for quote creation.        |
-| [Retrieving quote history](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid-history) | Changelogs contain changes of the shipping.                                 |
+| [Retrieving quote history](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid-history) | Changelogs contain changes of the shipping.                                 |
 
 **Known problems**
 
@@ -1022,11 +1022,11 @@ The Order Service now contains the tax of the shipping costs. Previously, the or
 
 | Endpoint                                                                                    | Description                                                                         |
 | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| [Creating a sales order](https://developer.emporix.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)                 | The shipping line of the response body contains the optional `tax` object. |
-| [Retrieving a single sales order](https://developer.emporix.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) | The shipping line of the response body contains the `tax` object.          |
-| [Retrieving sales order](https://developer.emporix.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders)                  | The shipping line of the response body contains the `tax` object.          |
-| [Creating an order](https://developer.emporix.io/documentation-portal/api-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders)                           | The shipping line of the response body contains the optional `tax` object. |
-| [Retrieving a single order](https://developer.emporix.io/documentation-portal/api-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid)            | The shipping line of the response body contains the `tax` object.          |
+| [Creating a sales order](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)                 | The shipping line of the response body contains the optional `tax` object. |
+| [Retrieving a single sales order](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) | The shipping line of the response body contains the `tax` object.          |
+| [Retrieving sales order](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders)                  | The shipping line of the response body contains the `tax` object.          |
+| [Creating an order](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders)                           | The shipping line of the response body contains the optional `tax` object. |
+| [Retrieving a single order](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid)            | The shipping line of the response body contains the `tax` object.          |
 | [Retrieving orders](/openapi/order/#operation/GET-order-list-orders)                            | The shipping line of the response body contains the `tax` object.          |
 
 **Known problems**
@@ -1083,8 +1083,8 @@ The Quote Service API has been enhanced with the new property - `orderId`. Users
 
 | Endpoint                                                                          | Description                                                           |
 | --------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| [Retrieving quotes](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes)                  | It gets the order id from an order that was created basing on the quote. |
-| [Retrieving a single quote](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid) | It gets the order id from an order that was created basing on the quote. |
+| [Retrieving quotes](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes)                  | It gets the order id from an order that was created basing on the quote. |
+| [Retrieving a single quote](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid) | It gets the order id from an order that was created basing on the quote. |
 
 **Known problems**
 
@@ -1112,11 +1112,11 @@ The Quote Service API has been enhanced with mixins feature. Users are now able 
 
 | Endpoint                                                                                 | Description                                                             |
 | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| [Retrieving quotes](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes)                         | New properties provide support for mixins and mixins metadata.     |
-| [Retrieving a single quote](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid)        | New properties provide support for mixins and mixins metadata.     |
+| [Retrieving quotes](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes)                         | New properties provide support for mixins and mixins metadata.     |
+| [Retrieving a single quote](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid)        | New properties provide support for mixins and mixins metadata.     |
 | [Partially updating a quote](/openapi/quote/#operation/PATCH-quote-update-quote)              | New paths provide support for updating mixins and mixins metadata. |
 | [Creating a quote](/openapi/quote/#operation/POST-quote-create-quote)                          | New properties provide support for mixins and mixins metadata.     |
-| [Retrieving quote history](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid-history) | Changelogs contain changes in the mixins and mixins metadata.           |
+| [Retrieving quote history](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid-history) | Changelogs contain changes in the mixins and mixins metadata.           |
 
 **Known problems**
 
@@ -1144,9 +1144,9 @@ The Order Service API has been enhanced with the new property - `quoteId`. Merch
 
 | Endpoint                                                                         | Description                                                          |
 | -------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| [Creating an order](https://developer.emporix.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)           | This property indicates from which quote the order has been created. |
-| [Getting a list of the orders](https://developer.emporix.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders) | This property indicates from which quote the order has been created. |
-| [Getting an order](https://developer.emporix.io/documentation-portal/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid)     | This property indicates from which quote the order has been created. |
+| [Creating an order](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)           | This property indicates from which quote the order has been created. |
+| [Getting a list of the orders](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders) | This property indicates from which quote the order has been created. |
+| [Getting an order](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid)     | This property indicates from which quote the order has been created. |
 
 **Known problems**
 
@@ -1203,9 +1203,9 @@ The quote management functionality enables the creation and management of quotat
 | [Creating a quote](/openapi/quote/#operation/POST-quote-create-quote)| It creates a new quote. |
 | [Partially updating a quote](/openapi/quote/#operation/PATCH-quote-update-quote) | It updates an existing quote. |
 | [Deleting a quote](/openapi/quote/#operation/DELETE-quote-remove-quote) | It deletes an existing quote. |
-| [Retrieving quotes](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes) | It gets a list of quotes. |
-| [Retrieving a single quote](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid) | It gets a single quote. |
-| [Retrieving quote history](https://developer.emporix.io/documentation-portal/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid-history) | It gets a single quote changelog. |
+| [Retrieving quotes](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes) | It gets a list of quotes. |
+| [Retrieving a single quote](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid) | It gets a single quote. |
+| [Retrieving quote history](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid-history) | It gets a single quote changelog. |
 | [Creating a quote PDF](/openapi/quote/#operation/POST-quote-generate-quote-pdf) | It generates a quote PDF.|
 
 **Known problems**

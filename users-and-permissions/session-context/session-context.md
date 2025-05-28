@@ -9,7 +9,7 @@ icon: graduation-cap
 
 ## How to configure the Session Context Service
 
-By default, an anonymous user session expires after one hour. You can refresh the anonymous session by sending a request to the [Refreshing an anonymous token](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/authorization/oauth-service/api-reference/anonymous-token#get-customerlogin-auth-anonymous-refresh) endpoint.
+By default, an anonymous user session expires after one hour. You can refresh the anonymous session by sending a request to the [Refreshing an anonymous token](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/authorization/oauth-service/api-reference/anonymous-token#get-customerlogin-auth-anonymous-refresh) endpoint.
 
 {% hint style="warning" %}
 There is no timeout for logged customer sessions.
@@ -39,7 +39,7 @@ To be able to manage a user session and its corresponding session context file, 
 
 ### Create an anonymous user session
 
-An anonymous user session is created every time a non-logged user enters the storefront and sends a request to the [Requesting an anonymous token](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/authorization/oauth-service/api-reference/anonymous-token#get-customerlogin-auth-anonymous-refresh) endpoint.
+An anonymous user session is created every time a non-logged user enters the storefront and sends a request to the [Requesting an anonymous token](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/authorization/oauth-service/api-reference/anonymous-token#get-customerlogin-auth-anonymous-refresh) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -71,7 +71,7 @@ An anonymous customer's session is terminated if one of those two requirements i
 
 ### Create a customer session
 
-The session is created when a customer logs in to the storefront. This means that the anonymous session that was established when the user entered the site is migrated into a customer session when a request is sent to the [Requesting a customer token](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/authorization/oauth-service/api-reference/customer-token#post-customer-tenant-login) endpoint.
+The session is created when a customer logs in to the storefront. This means that the anonymous session that was established when the user entered the site is migrated into a customer session when a request is sent to the [Requesting a customer token](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/authorization/oauth-service/api-reference/customer-token#post-customer-tenant-login) endpoint.
 
 {% hint style="warning" %}
 The session Id and session context remain the same.
@@ -112,7 +112,7 @@ The customer's session is terminated when the customer has logged out.
 
 To view the existing session context file, you need to have a session Id of a particular user session.
 
-Retrieve the session context values by sending a request to the [Retrieving a session context](https://developer.emporix.io/documentation-portal/api-references/users-and-permissions/session-context/api-reference/session-management) endpoint with the `session_context.context_manage` scope.
+Retrieve the session context values by sending a request to the [Retrieving a session context](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/users-and-permissions/session-context/api-reference/session-management) endpoint with the `session_context.context_manage` scope.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -141,7 +141,7 @@ For example, it's raining in the user's location, so the list of suggested produ
 You can also implement a mechanism allowing users to manage and modify their own sessions and session contexts by calling the Adding a new attribute to a session context] endpoint on the storefront.
 {% endhint %}
 
-In the following example, we add an attribute by sending a request to the [Adding a new attribute to a session context](https://developer.emporix.io/documentation-portal/api-references/users-and-permissions/session-context/api-reference/own-session-context-modification#post-session-context-tenant-me-context-attributes) endpoint with the `session_context.context_manage` scope.
+In the following example, we add an attribute by sending a request to the [Adding a new attribute to a session context](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/users-and-permissions/session-context/api-reference/own-session-context-modification#post-session-context-tenant-me-context-attributes) endpoint with the `session_context.context_manage` scope.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

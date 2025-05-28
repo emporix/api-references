@@ -15,7 +15,7 @@ To start using the reward points functionality, first you need to update the rew
 
 ### Retrieve the current reward points configuration for a site
 
-Check the current reward points mixin configuration for your site by calling the [Retrieving site mixins](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
+Check the current reward points mixin configuration for your site by calling the [Retrieving site mixins](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
 
 The following scope is required:
 
@@ -50,7 +50,7 @@ The parameters that need to be configured for the reward points are as follows:
 * `validityInMonths` - specifies the lifespan of reward points
 * `couponPrefix` - used to begin the coupon code generated at the moment of the reward points redemption, where the full coupon code with prefix is presented in the following format: `prefix-coupon_code`, for example `L-232394`
 
-To update the reward points settings, send a request to the [Partially updating a site mixin](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#patch-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
+To update the reward points settings, send a request to the [Partially updating a site mixin](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#patch-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
 
 The following scope is required:
 
@@ -86,7 +86,7 @@ If the reward points functionality is enabled, the reward points entry is create
 The communication between reward points and site settings is cached. The cache is invalidated every 15 minutes. It has to be considered after modifying the configuration of reward points in site's mixins.
 {% endhint %}
 
-You can also manually add reward points for a customer by sending a request to the [Adding reward points for a customer](https://developer.emporix.io/documentation-portal/api-references/rewards-and-promotions/reward-points/api-reference/reward-points-management#post-reward-points-customer-customerid-addpoints) endpoint.
+You can also manually add reward points for a customer by sending a request to the [Adding reward points for a customer](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/rewards-and-promotions/reward-points/api-reference/reward-points-management#post-reward-points-customer-customerid-addpoints) endpoint.
 
 The following scope is required:
 
@@ -123,7 +123,7 @@ curl -i -X POST \
 ### Create reward points redemption options
 
 As a merchant's employee, you can create a list of options for the customers to choose from when redeeming the collected reward points. For example, different types of coupons can be specified.\
-To achieve that, you must send a request to the [Creating redemption options](https://developer.emporix.io/documentation-portal/api-references/rewards-and-promotions/reward-points/api-reference/redeem-options-management#post-reward-points-tenant-redeemoptions) endpoint.
+To achieve that, you must send a request to the [Creating redemption options](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/rewards-and-promotions/reward-points/api-reference/redeem-options-management#post-reward-points-tenant-redeemoptions) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -162,7 +162,7 @@ Your customers can redeem the collected reward points by paying with coupons tha
 
 ### Check the available reward points redemption options
 
-If the customer wants to redeem reward points in exchange for a coupon, first they need to check the available coupon options offered by the merchant. To achieve that, they need to send a request to the [Retrieving redemption options](https://developer.emporix.io/documentation-portal/api-references/rewards-and-promotions/reward-points/api-reference/redeem-options-management#get-reward-points-tenant-redeemoptions) endpoint on the storefront.
+If the customer wants to redeem reward points in exchange for a coupon, first they need to check the available coupon options offered by the merchant. To achieve that, they need to send a request to the [Retrieving redemption options](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/rewards-and-promotions/reward-points/api-reference/redeem-options-management#get-reward-points-tenant-redeemoptions) endpoint on the storefront.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -178,7 +178,7 @@ curl -i -X GET \
 
 ### Redeem reward points for a coupon code
 
-To create a coupon based on a certain amount of reward points, the customer sends a request to the[Redeeming a logged-in customer's reward points for a coupon code](https://developer.emporix.io/documentation-portal/api-references/rewards-and-promotions/reward-points/api-reference/signed-in-customer-reward-points#post-reward-points-public-customer-redeem) endpoint on the storefront.
+To create a coupon based on a certain amount of reward points, the customer sends a request to the[Redeeming a logged-in customer's reward points for a coupon code](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/rewards-and-promotions/reward-points/api-reference/signed-in-customer-reward-points#post-reward-points-public-customer-redeem) endpoint on the storefront.
 
 {% hint style="warning" %}
 Reward points can only be exchanged for percentage and absolute coupons.
@@ -208,7 +208,7 @@ For more information on applying coupons to cart, check out [_How to apply coupo
 
 Customers can view how many points they have left, and see the history of redeemed reward points.
 
-To check the reward points balance and history, the customer sends a request to the [Retrieving a reward points summary of a signed-in customer](https://developer.emporix.io/documentation-portal/api-references/rewards-and-promotions/reward-points/api-reference/signed-in-customer-reward-points#get-reward-points-public-customer-summary) endpoint on the storefront.
+To check the reward points balance and history, the customer sends a request to the [Retrieving a reward points summary of a signed-in customer](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/rewards-and-promotions/reward-points/api-reference/signed-in-customer-reward-points#get-reward-points-public-customer-summary) endpoint on the storefront.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

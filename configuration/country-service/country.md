@@ -57,7 +57,7 @@ Check out the following tutorials to learn more about country configuration with
 
 ### How to check which country is configured for your tenant
 
-To retrieve your tenant's country configuration, you need to send a request to the [Retrieving a configuration](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey) endpoint.
+To retrieve your tenant's country configuration, you need to send a request to the [Retrieving a configuration](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -73,7 +73,7 @@ curl -L \
 
 ### How to change your tenant's country configuration
 
-To change your tenant's country configuration, you need to send a request to the [Updating a configuration](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint with updated country information in the request body.
+To change your tenant's country configuration, you need to send a request to the [Updating a configuration](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint with updated country information in the request body.
 
 {% hint style="warning" %}
 The value in the request body must be compliant with the [ISO 3166-1 alpha-2 standard](https://www.iso.org/obp/ui/#iso:pub:PUB500001:en).
@@ -100,7 +100,7 @@ curl -L \
 
 ### How to check which country is configured for a particular site
 
-To retrieve a particular site's country configuration, you need to send a request to the [Retrieving a site ](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode)endpoint. The country configuration will be returned under the `homeBase` field in the response body.
+To retrieve a particular site's country configuration, you need to send a request to the [Retrieving a site ](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode)endpoint. The country configuration will be returned under the `homeBase` field in the response body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -116,7 +116,7 @@ curl -L \
 
 ### How to change a particular site's country configuration
 
-To change a particular site's country configuration, you need to send a request to the [Partially updating a site](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode) endpoint with the address of your choice in the request body.
+To change a particular site's country configuration, you need to send a request to the [Partially updating a site](https://developer.emporix.io/documentation-portal/api-references/api-guides-and-references/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode) endpoint with the address of your choice in the request body.
 
 {% hint style="warning" %}
 The country code must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
