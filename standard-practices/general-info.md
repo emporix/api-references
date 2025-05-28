@@ -26,6 +26,6 @@ Check the below for specific practices:
 
 * [Mixins](./mixins.md)
 * [Translations](./translations.md)
-* [Query Parameter](./q-param.md))
+* [Query Parameter](./q-param.md)
 * [Upsert](./upsert.md)
 * [Custom ID](./custom-id.md)
