@@ -11,7 +11,7 @@ icon: graduation-cap
 
 ## How to create a new coupon
 
-To create a new coupon, you need to send a request to the [Creating a new coupon](https://developer.emporix.io/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#post-coupon-tenant-coupons) endpoint.
+To create a new coupon, you need to send a request to the [Creating a new coupon](https://developer.emporix.io/api-references/api-guides-and-references/rewards-and-promotions/coupon/api-reference/coupon-management#post-coupon-tenant-coupons) endpoint.
 
 ### Creating a free shipping coupon with minimum order value and 1 usage per customer
 
@@ -149,7 +149,7 @@ curl -i -X POST \
 
 ## How to update an existing coupon
 
-To update an existing coupon, you need to send a request to the [Partially updating a coupon](https://developer.emporix.io/api-references/rewards-and-promotions/coupon/api-reference/coupon-management#patch-coupon-tenant-coupons-code) endpoint.
+To update an existing coupon, you need to send a request to the [Partially updating a coupon](https://developer.emporix.io/api-references/api-guides-and-references/rewards-and-promotions/coupon/api-reference/coupon-management#patch-coupon-tenant-coupons-code) endpoint.
 
 {% hint style="warning" %}
 For more information on managing carts, check out the [_Carts guide_](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/carts).
@@ -226,7 +226,7 @@ curl -i -X PUT \
 
 ### Apply a coupon to a cart
 
-To apply a coupon to a cart, you need to send a request to the [Applying a discount to cart](https://developer.emporix.io/api-references/checkout/cart/api-reference/discounts#post-cart-tenant-carts-cartid-discounts) endpoint.
+To apply a coupon to a cart, you need to send a request to the [Applying a discount to cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/discounts#post-cart-tenant-carts-cartid-discounts) endpoint.
 
 {% hint style="warning" %}
 If you want to apply more than one coupon to a cart, you need to send a separate request for each discount coupon.
@@ -257,11 +257,11 @@ Applying the coupon to cart does not mean that the coupon is automatically redee
 A coupon can be redeemed in the following ways:
 
 * When a coupon is added to a cart and the order is completed at checkout, the coupon is automatically redeemed by the Checkout Service.
-* When you send a request to the [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-references/rewards-and-promotions/coupon/api-reference/coupon-redemption#post-coupon-tenant-coupons-code-redemptions) endpoint. This process is independent of the checkout, so a coupon can be used even after an order is created and processed at checkout. This can be done by a merchant on behalf of a customer.
+* When you send a request to the [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-references/api-guides-and-references/rewards-and-promotions/coupon/api-reference/coupon-redemption#post-coupon-tenant-coupons-code-redemptions) endpoint. This process is independent of the checkout, so a coupon can be used even after an order is created and processed at checkout. This can be done by a merchant on behalf of a customer.
 
 In the following example, we are redeeming a coupon on behalf of a customer.
 
-Redeem a coupon on behalf of a customer by sending a request to the [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-references/rewards-and-promotions/coupon/api-reference/coupon-redemption#post-coupon-tenant-coupons-code-redemptions) endpoint. The following scope is required:
+Redeem a coupon on behalf of a customer by sending a request to the [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-references/api-guides-and-references/rewards-and-promotions/coupon/api-reference/coupon-redemption#post-coupon-tenant-coupons-code-redemptions) endpoint. The following scope is required:
 
 ```
 coupon.coupon_redeem_on_behalf
@@ -505,7 +505,7 @@ curl -i -X PUT \
 
 ## How to generate a referral coupon for a specific customer
 
-To manually generate a referral coupon for a specific customer, you need to send a request to the [Creating a referral coupon code for a specific customer](https://developer.emporix.io/api-references/rewards-and-promotions/coupon/api-reference/referral-coupon-management#post-coupon-tenant-referral-coupons-customernumber) endpoint.
+To manually generate a referral coupon for a specific customer, you need to send a request to the [Creating a referral coupon code for a specific customer](https://developer.emporix.io/api-references/api-guides-and-references/rewards-and-promotions/coupon/api-reference/referral-coupon-management#post-coupon-tenant-referral-coupons-customernumber) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -521,7 +521,7 @@ curl -i -X POST \
 
 ## How to retrieve a specific customer's referral coupon
 
-To retrieve referral coupon information for a specific customer, you need to send a request to the [Retrieving customer's referral coupon code](https://developer.emporix.io/api-references/rewards-and-promotions/coupon/api-reference/referral-coupon-management#get-coupon-tenant-referral-coupons-customernumber) endpoint.
+To retrieve referral coupon information for a specific customer, you need to send a request to the [Retrieving customer's referral coupon code](https://developer.emporix.io/api-references/api-guides-and-references/rewards-and-promotions/coupon/api-reference/referral-coupon-management#get-coupon-tenant-referral-coupons-customernumber) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
