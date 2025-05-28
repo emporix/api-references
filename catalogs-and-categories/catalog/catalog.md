@@ -114,7 +114,7 @@ curl -i -X POST \
 
 ### Assign the category to the catalog
 
-To assign the newly created category to a catalog, you need to send a request to the [Partially updating a catalog](https://developer.emporix.io/api-references/api-guides-and-references/api-guides-and-references/api-guides-and-references/catalogs-and-categories/catalog/api-reference/catalog-management#patch-catalog-tenant-catalogs-catalogid) endpoint.
+To assign the newly created category to a catalog, you need to send a request to the [Partially updating a catalog](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/catalog/api-reference/catalog-management#patch-catalog-tenant-catalogs-catalogid) endpoint.
 
 In the request body, insert the ID of the category into the `categoryIds` array. In this example, we also present how to set the visibility timeframe of the catalog with the `visibility` field.
 
