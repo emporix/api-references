@@ -44,7 +44,7 @@ curl -L \
 
 You can convert between any measurement units that share the same base unit, such as kilograms to grams, or centimeters to meters.
 
-To convert between units, you need to send a request to the [Converting units ](https://developer.emporix.io/api-references/~/changes/115/api-guides-and-references/configuration/unit-handling-service/api-reference/unit-conversion)endpoint.
+To convert between units, you need to send a request to the [Converting units ](https://developer.emporix.io/api-references/api-guides-and-references/~/changes/115/api-guides-and-references/configuration/unit-handling-service/api-reference/unit-conversion)endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
