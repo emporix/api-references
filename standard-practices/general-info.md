@@ -24,8 +24,8 @@ To ensure consistency between the Emporix API services, some data types use stan
 
 Check the below for specific practices:
 
-* [Mixins](https://github.com/emporix/api-references/blob/master/content/mixins/README.md)
-* [Translations](https://github.com/emporix/api-references/blob/master/content/translations/README.md)
-* [Query Parameter](https://github.com/emporix/api-references/blob/master/content/q-param/README.md)
-* [Upsert](https://github.com/emporix/api-references/blob/master/content/upsert/README.md)
-* [Custom ID](https://github.com/emporix/api-references/blob/master/content/custom-id/README.md)
+* [Mixins](./mixins.md)
+* [Translations](./translations.md)
+* [Query Parameter](./q-param.md))
+* [Upsert](./upsert.md)
+* [Custom ID](./custom-id.md)
