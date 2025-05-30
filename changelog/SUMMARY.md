@@ -8,8 +8,8 @@
 
 ## 2025
 
-* [2025-05-26: Order Service - Adding entries to an order](2025/2025-05-26-orders.md)
-* [2025-05-26: Cart Service - add items as separate lines to a cart](2025/2025-05-26-separate-lines.md)
+* [2025-05-26: Order Service - adding entries to an order](2025/2025-05-26-orders.md)
+* [2025-05-26: Cart Service - adding items as separate lines to a cart](2025/2025-05-26-separate-lines.md)
 * [2025-05-12: Customer Service - improvements](2025/2025-05-12-customer.md)
 * [2025-04-29: Customer Segments Service - fully operational](2025/2025-04-29-segments.md)
 * [2025-04-17: Product Service - deprecations](2025/2025-04-17-product.md)
@@ -29,9 +29,9 @@
 * [2025-03-21: Site Settings Service - timezone field added](2025/2025-03-21-site.md)
 * [2025-03-17: Order Service - new endpoints to fetch orders for a legal entity](2025/2025-03-17-order.md)
 * [2025-03-07: Order Service - calculated prices](2025/2025-03-07-order.md)
-* [2025-03-05: Order Service - Legal Entity information in the order model](2025/2025-03-05-order.md)
+* [2025-03-05: Order Service - legal entity information in the order model](2025/2025-03-05-order.md)
 * [2025-03-05: Weight dependent products](2025/2025-03-05-weight-dependent.md)
-* [2025-03-04: Important Security Update – Discontinuation of Weak Cipher Support](2025/2025-03-04-security-update.md)
+* [2025-03-04: Important Security Update – discontinuation of Weak Cipher Support](2025/2025-03-04-security-update.md)
 * [2025-03-04: Media Service - support for brands](2025/2025-03-04-media.md)
 * [2025-03-04: Brand Service - deprecations](2025/2025-03-04-brand.md)
 * [2025-03-04: Shopping List Service - metadata field changes](2025/2025-03-04-shopping-list.md)
