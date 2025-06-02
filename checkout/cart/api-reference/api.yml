@@ -2568,7 +2568,7 @@ components:
           description: |
             A standard query parameter is used to search for specific values. 
             
-            See: [Standard practises - Query parameter](https://developer.emporix.io/docs/content/q-param/)
+            See: [Standard practises - Query parameter](https://developer.emporix.io/api-references/standard-practices/q-param/)
     baseCart:
       type: object
       properties:
