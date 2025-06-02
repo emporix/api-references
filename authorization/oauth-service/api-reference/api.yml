@@ -172,6 +172,8 @@ paths:
                     expires_in: 2591974
                     scope: approval.approval_read_own customermanagement.legalentity_read_own customer.customer_read_own quote.quote_read_own returns.returns_read_own iam.scope_read_own iam.user_read_own customersegment.segment_read_own iam.group_read_own order.order_readascustomer coupon.coupon_redeem customer.customerprofile_edit quote.quote_manage_own returns.returns_manage_own customer.customer_manage_own approval.approval_manage_own order.order_updateascustomer iam.assignment_delete_own customer.consent_view customer.customerprofile_view order.history_view iam.assignment_create_own customer.consent_manage tenant=test
                     sessionId: 415c340b-5996-4112-bb3b-38139a409f93
+                    email: customer@example.com
+                    legalEntityId: 53ac81fd0cce8b26b36f3492
         "401":
           description: Unauthorized
       servers:
@@ -427,6 +429,12 @@ components:
           x-stoplight:
             id: g9aiqlhvwrw1k
           description: Identifier of the user session.
+        email:
+          type: string
+          description: Customer email used to login (generate the token).
+        legalEntityId:
+          type: string
+          description: Legal Entity Id.
     LoginAccessToken:
       type: object
       properties:
