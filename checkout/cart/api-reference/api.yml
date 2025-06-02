@@ -2583,6 +2583,9 @@ components:
         legalEntityId:
           type: string
           description: Id of the legal entity to which customer is assigned.
+        orderId:
+          type: string
+          description: The identifier of an order generated from this cart.
         currency:
           type: string
           description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
