@@ -3555,11 +3555,19 @@ components:
         sku:
           type: string
           description: Product Stock Keeping Unit (SKU).
+        code:
+          type: string
+          description: Product code.
         yrn:
           $ref: '#/components/schemas/YRN'
         name:
           type: string
           description: Product name.
+        localizedName:
+          description: 'A product''s name represented as a map, with language as the key and the corresponding translated name as the value'
+          type: object
+          additionalProperties:
+            type: string
         description:
           type: string
           description: Product description.
@@ -3784,6 +3792,9 @@ components:
     updateProduct:
       type: object
       properties:
+        code:
+          type: string
+          description: Product code.
         sku:
           type: string
           description: Product Stock Keeping Unit (SKU).
@@ -3793,6 +3804,11 @@ components:
         name:
           type: string
           description: Product name.
+        localizedName:
+          description: A product''s name represented as a map, with language as the key and the corresponding translated name as the value
+          type: object
+          additionalProperties:
+            type: string
         images:
           type: array
           description: List of product images.
