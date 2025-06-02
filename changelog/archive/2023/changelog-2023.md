@@ -356,10 +356,10 @@ We added a new scope `customer.customer_manage_own` to the endpoints. The scope 
 | Endpoint | Description |
 | --- | --- |
 | [Getting customers](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#get-customer-tenant-customers)| We added the company registration ID property and the `customer.customer_read_own` scope. |
-| [Creating a customer](/openapi/customer-tenant/#operation/POST-customer-tenant-create-customer)| We added the company registration ID property and the `customer.customer_manage_own` scope. |
+| [Creating a customer](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#post-customer-tenant-customers)| We added the company registration ID property and the `customer.customer_manage_own` scope. |
 | [Patching a customer](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#patch-customer-tenant-customers-customernumber)| We added the company registration ID property and the `customer.customer_manage_own` scope. |
 | [Getting a single customer](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#get-customer-tenant-customers-customernumber)| We added the company registration ID property and the `customer.customer_read_own` scope. |
-| [Deleting a customer](/openapi/customer-tenant/#operation/DELETE-customer-tenant-remove-customer)| We added the `customer.customer_read_own` scope. |
+| [Deleting a customer](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#delete-customer-tenant-customers-customernumber)| We added the `customer.customer_read_own` scope. |
 
 **Known problems**
 
@@ -391,7 +391,7 @@ A new endpoint was added for retrieving customer scopes.
 | --- | --- |
 | [Retrieving all groups](/openapi/iam/#operation/GET-iam-list-tenant-user-groups)| The added `iam.group_read_own` scope allows customers to read the groups of customer types. |
 | [Retrieving users assigned to a group](/openapi/iam/#operation/GET-iam-list-group-users)| The added `iam.user_read_own` scope allows customers to read user assignments. The users have to be from the same company. |
-| [Adding a user to a group](/openapi/iam/#operation/POST-iam-add-user-to-group)| The added `iam.assignment_create_own` scope allows customers to assign other users to the group. The users have to be from the same company. |
+| [Adding a user to a group](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups-groupid-users)| The added `iam.assignment_create_own` scope allows customers to assign other users to the group. The users have to be from the same company. |
 | [Removing a user from a group](/openapi/iam/#operation/DELETE-iam-remove-user-from-group)| The added `iam.assignment_delete_own` scope allows customers to unassign users from the group. The users have to be from the same company. |
 
 **Known problems**
@@ -732,7 +732,7 @@ The Delivery Cycle Management functionality allows for more detailed way of cont
 | [Retrieving a specific order by ID](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid)                                   | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
 | [Updating an order](/openapi/order/#operation/PUT-order-update-order)                                                   | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
 | [Partially updating an order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid)                                       | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
-| [Retrieving a list of orders](/openapi/order/#operation/GET-order-list-orders)                                                      | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
+| [Retrieving a list of orders](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed)                                                      | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
 | [Creating a new order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders)                                                            | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
 | [Retrieving order details](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid)                                                 | Response contains a new property - `deliveryWindow`.                                                                                                                                                         |
 | [Creating a new cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/carts#post-cart-tenant-carts)                                                               | Request body contains a new property - `deliveryWindow`.                                                                                                                                                     |
@@ -891,8 +891,8 @@ The IAM Service API contains a new property - `b2b`. Users are now able to link 
 | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 | [Retrieving all groups](/openapi/iam/#operation/GET-iam-list-tenant-user-groups) | The `b2b.legalEntityId` property indicates the legal entity for which the group has been created.|
 | [Retrieving a group](/openapi/iam/#operation/GET-iam-retrieve-user-group)| The `b2b.legalEntityId` property indicates the legal entity for which the group has been created. |
-| [Creating a new group](/openapi/iam/#operation/POST-iam-create-user-group) | The `b2b.legalEntityId` property indicates the legal entity for which the group has been created.|
-| [Upserting a group](/openapi/iam/#operation/PUT-iam-update-user-group) | The `b2b.legalEntityId` property indicates the legal entity for which the group has been created.|
+| [Creating a new group](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups) | The `b2b.legalEntityId` property indicates the legal entity for which the group has been created.|
+| [Upserting a group](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/groups#put-iam-tenant-groups-groupid) | The `b2b.legalEntityId` property indicates the legal entity for which the group has been created.|
 **Known problems**
 
 There are no known problems.
@@ -1027,7 +1027,7 @@ The Order Service now contains the tax of the shipping costs. Previously, the or
 | [Retrieving sales order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders)                  | The shipping line of the response body contains the `tax` object.          |
 | [Creating an order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders)                           | The shipping line of the response body contains the optional `tax` object. |
 | [Retrieving a single order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid)            | The shipping line of the response body contains the `tax` object.          |
-| [Retrieving orders](/openapi/order/#operation/GET-order-list-orders)                            | The shipping line of the response body contains the `tax` object.          |
+| [Retrieving orders](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed)                            | The shipping line of the response body contains the `tax` object.          |
 
 **Known problems**
 

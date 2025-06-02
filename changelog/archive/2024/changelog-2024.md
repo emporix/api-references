@@ -135,7 +135,7 @@ The AI Service supports completion functionality. Generates a completion based o
 
 | Endpoint                                                                                                            | Description                                                                  |
 | ------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [AI Completions](/openapi/ai/#operation/POST-ai-completions) | Generates a completion based on conversation history.|
+| [AI Completions](https://developer.emporix.io/api-references/api-guides-and-references/artificial-intelligence/ai-service/api-reference/ai-completions) | Generates a completion based on conversation history.|
 
 
 **Known problems**
@@ -160,7 +160,7 @@ The q-param accepts string values both with and without quotes, while number val
 | Endpoint                                                                                   | Description                                                                                                       |
 | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
 | [Retrieving orders](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders)            | Q-param accepts `string` values both with and without quotes. `Number` values should be provided without quotes.  |
-| [Retrieving a list of orders](/openapi/order/#operation/GET-order-list-orders)             | Q-param accepts `string` values both with and without quotes. `Number` values should be provided without quotes.  |
+| [Retrieving a list of orders](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed)             | Q-param accepts `string` values both with and without quotes. `Number` values should be provided without quotes.  |
 
 **Known problems**
 
@@ -206,12 +206,12 @@ The Price Service supports `UPSERT` operation. The `PUT` method updates the pric
 
 | Endpoint                                                                                                               | Description                                                                  |
 | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [Upserting a price](/openapi/price/#operation/PUT-price-update-price)                                                  | Sending a request to the upsert endpoint with a non-existing price id creates a new price with the given id.|
-| [Upserting multiple prices](/openapi/price/#operation/PUT-price-update-multiple-prices)                                | Sending a request to the upsert endpoint with a non-existing price id creates a new price with the given id.|
-| [Upserting a price model](/openapi/price/#operation/PUT-price-update-price-model)                                      | Sending a request to the upsert endpoint with a non-existing price model id creates a new price model with the given id.|
-| [Upserting a price list](/openapi/price/#operation/PUT-price-update-price-list)                                       | Sending a request to the upsert endpoint with a non-existing price list id creates a new price list with the given id.|
-| [Upserting a price in a price list](/openapi/price/#operation/PUT-price-update-price-in-price-list)                             | Sending a request to the upsert endpoint with a non-existing price id creates a new price with the given id for the specified price list.|
-| [Upserting multiple prices in a price list](/openapi/price/#operation/PUT-price-update-multiple-prices-in-price-list)  | Sending a request to the upsert endpoint with a non-existing price id creates a new price with the given id for the specified price list.|
+| [Upserting a price](https://developer.emporix.io/api-references/api-guides-and-references/prices-and-taxes/price-service/api-reference/prices#put-price-tenant-prices-priceid)                                                  | Sending a request to the upsert endpoint with a non-existing price id creates a new price with the given id.|
+| [Upserting multiple prices](https://developer.emporix.io/api-references/api-guides-and-references/prices-and-taxes/price-service/api-reference/prices#put-price-tenant-prices-bulk)                                | Sending a request to the upsert endpoint with a non-existing price id creates a new price with the given id.|
+| [Upserting a price model](https://developer.emporix.io/api-references/api-guides-and-references/prices-and-taxes/price-service/api-reference/prices#put-price-tenant-prices-priceid-model)                                      | Sending a request to the upsert endpoint with a non-existing price model id creates a new price model with the given id.|
+| [Upserting a price list](https://developer.emporix.io/api-references/api-guides-and-references/prices-and-taxes/price-service/api-reference/prices#put-price-tenant-prices-priceid-list)                                       | Sending a request to the upsert endpoint with a non-existing price list id creates a new price list with the given id.|
+| [Upserting a price in a price list](https://developer.emporix.io/api-references/api-guides-and-references/prices-and-taxes/price-service/api-reference/prices#put-price-tenant-prices-priceid-in-price-list)                             | Sending a request to the upsert endpoint with a non-existing price id creates a new price with the given id for the specified price list.|
+| [Upserting multiple prices in a price list](https://developer.emporix.io/api-references/api-guides-and-references/prices-and-taxes/price-service/api-reference/prices#put-price-tenant-prices-bulk-in-price-list)  | Sending a request to the upsert endpoint with a non-existing price id creates a new price with the given id for the specified price list.|
 
 
 **Known problems**
@@ -264,9 +264,9 @@ The Customer Management Service supports `UPSERT` operation. For LegalEntity, Lo
 
 | Endpoint                                                                                                              | Description                                                                  |
 | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [Upserting a legal entity](/openapi/customer-management/#operation/PUT-customer-mgmt-update-legal-entity)              | Sending a request to the upsert endpoint with a non-existing legal entity id creates a new legal entity with the given id.|
+| [Upserting a legal entity](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/client-management/api-reference/legal-entities#put-tenant-legal-entities-legalentityid)              | Sending a request to the upsert endpoint with a non-existing legal entity id creates a new legal entity with the given id.|
 | [Upserting a location](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/client-management/api-reference/locations#put-tenant-locations-locationid)                     | Sending a request to the upsert endpoint with a non-existing location id creates a new location with the given id.|
-| [Upserting a contact assignment](/openapi/customer-management/#operation/PUT-customer-mgmt-update-contact-assignment) | Sending a request to the upsert endpoint with a non-existing contact assignment id creates a new contact assignment with the given id.|
+| [Upserting a contact assignment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/client-management/api-reference/contact-assignments#put-tenant-contact-assignments-contactassignmentid) | Sending a request to the upsert endpoint with a non-existing contact assignment id creates a new contact assignment with the given id.|
 
 
 **Known problems**
@@ -372,14 +372,14 @@ The scopes `iam.group_update`, `iam.group_create` and `iam.group_delete` have be
 
 | Endpoint                                                                                                            | Description                                                                  |
 | ------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [Creating a new group](/openapi/iam/#operation/POST-iam-create-user-group)                                          | The endpoint requires a new `iam.group_manage` scope, as the `iam.group_create` scope is deprecated.|
-| [Upserting a group](/openapi/iam/#operation/PUT-iam-update-user-group)                                              | The endpoint requires a new `iam.group_manage` scope, as the `iam.group_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing group id creates a new catalog with the given id.|
-| [Deleting a group](/openapi/iam/#operation/DELETE-iam-remove-user-group)                                            | The endpoint requires a new `iam.group_manage` scope, as the `iam.group_delete` scope is deprecated.|
-| [Adding a user to a group](/openapi/iam/#operation/POST-iam-add-user-to-group)                                      | The endpoint requires a new `iam.assignment_manage` scope, as the `iam.assignment_create` scope is deprecated.|
-| [Removing all users from a group](/openapi/iam/#operation/DELETE-iam-remove-all-users)                              | The endpoint requires a new `iam.assignment_manage` scope, as the `iam.assignment_delete` scope is deprecated.|
+| [Creating a new group](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups)                                          | The endpoint requires a new `iam.group_manage` scope, as the `iam.group_create` scope is deprecated.|
+| [Upserting a group](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/groups#put-iam-tenant-groups-groupid)                                              | The endpoint requires a new `iam.group_manage` scope, as the `iam.group_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing group id creates a new catalog with the given id.|
+| [Deleting a group](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/groups#delete-iam-tenant-groups-groupid)                                            | The endpoint requires a new `iam.group_manage` scope, as the `iam.group_delete` scope is deprecated.|
+| [Adding a user to a group](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups-groupid-users)                                      | The endpoint requires a new `iam.assignment_manage` scope, as the `iam.assignment_create` scope is deprecated.|
+| [Removing all users from a group](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/groups#delete-iam-tenant-groups-groupid-users)                              | The endpoint requires a new `iam.assignment_manage` scope, as the `iam.assignment_delete` scope is deprecated.|
 | [Removing a user from a group](/openapi/iam/#operation/DELETE-iam-remove-user-from-group)                           | The endpoint requires a new `iam.assignment_manage` scope, as the `iam.assignment_delete` scope is deprecated.|
-| [Removing a user from all groups](/openapi/iam/#operation/DELETE-iam-remove-user-from-all-groups)                   | The endpoint requires a new `iam.assignment_manage` scope, as the `iam.assignment_delete` scope is deprecated.|
-| [Upserting user assignment to a group](/openapi/iam/#operation/PUT-iam-update-user-to-group)                        | New endpoint that allows to create or update group assignment.|
+| [Removing a user from all groups](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/group-assignments#delete-iam-tenant-users-userid-groups)                   | The endpoint requires a new `iam.assignment_manage` scope, as the `iam.assignment_delete` scope is deprecated.|
+| [Upserting user assignment to a group](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/group-assignments#put-iam-tenant-groups-groupid-users-usertype-userid)                        | New endpoint that allows to create or update group assignment.|
 
 
 **Known problems**
@@ -405,10 +405,10 @@ The scopes `catalog.catalog_update`, `catalog.catalog_create` and `catalog.catal
 
 | Endpoint                                                                                           | Description                                                                  |
 | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [Creating a new catalog](/openapi/catalog/#operation/POST-catalog-create-catalog)                    | The endpoint requires a new `catalog.catalog_manage` scope, as the `catalog.catalog_create` scope is deprecated.|
-| [Upserting a catalog](/openapi/catalog/#operation/PUT-catalog-update-catalog)               | The endpoint requires a new `catalog.catalog_manage` scope, as the `catalog.catalog_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing catalog id creates a new catalog with the given id.|
-| [Partially updating a catalog](/openapi/catalog/#operation/PATCH-catalog-update-catalog-properties)  | The endpoint requires a new `catalog.catalog_manage` scope, as the `catalog.catalog_update` scope is deprecated.|
-| [Removing a catalog](/openapi/catalog/#operation/DELETE-catalog-remove-catalog)                        | The endpoint requires a new `catalog.catalog_manage` scope, as the `catalog.catalog_delete` scope is deprecated.|
+| [Creating a new catalog](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/catalog/api-reference/list-catalogs#post-catalog-tenant-catalogs)                    | The endpoint requires a new `catalog.catalog_manage` scope, as the `catalog.catalog_create` scope is deprecated.|
+| [Upserting a catalog](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/catalog/api-reference/list-catalogs#put-catalog-tenant-catalogs-catalogid)               | The endpoint requires a new `catalog.catalog_manage` scope, as the `catalog.catalog_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing catalog id creates a new catalog with the given id.|
+| [Partially updating a catalog](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/catalog/api-reference/list-catalogs#patch-catalog-tenant-catalogs-catalogid)  | The endpoint requires a new `catalog.catalog_manage` scope, as the `catalog.catalog_update` scope is deprecated.|
+| [Removing a catalog](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/catalog/api-reference/list-catalogs#delete-catalog-tenant-catalogs-catalogid)                        | The endpoint requires a new `catalog.catalog_manage` scope, as the `catalog.catalog_delete` scope is deprecated.|
 
 
 **Known problems**
@@ -435,17 +435,17 @@ The scopes `customer.customer_update`, `customer.customer_create` and `customer.
 
 | Endpoint                                                                                                                                  | Description                                                                  |
 | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [Creating a customer](/openapi/customer-tenant/#operation/POST-customer-tenant-create-customer)                                           | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_create` scope is deprecated.|
-| [Upserting a customer profile](/openapi/customer-tenant/#operation/PUT-customer-tenant-update-customer)                        | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing customer id creates a new customer with the given id.|
+| [Creating a customer](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#post-customer-tenant-customers)                                           | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_create` scope is deprecated.|
+| [Upserting a customer profile](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#patch-customer-tenant-customers-customernumber)                        | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing customer id creates a new customer with the given id.|
 | [Partially updating a customer profile](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#patch-customer-tenant-customers-customernumber)                        | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
-| [Assigning an account to an existing customer profile](/openapi/customer-tenant/#operation/POST-customer-tenant-assign-customer-account)  | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
-| [Deleting a customer profile](/openapi/customer-tenant/#operation/DELETE-customer-tenant-remove-customer)                                 | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_delete` scope is deprecated.|
-| [Adding a customer address](/openapi/customer-tenant/#operation/POST-customer-tenant-add-customer-address)                                | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
-| [Upserting a customer address](/openapi/customer-tenant/#operation/PUT-customer-tenant-update-customer-address)                | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing address id creates a new address with the given id.|
+| [Assigning an account to an existing customer profile](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#post-customer-tenant-customers-customernumber-accounts-internal)  | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
+| [Deleting a customer profile](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#delete-customer-tenant-customers-customernumber)                                 | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_delete` scope is deprecated.|
+| [Adding a customer address](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/addresses#post-customer-tenant-customers-customernumber-addresses)                                | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
+| [Upserting a customer address](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#patch-customer-tenant-customers-customernumber-address)                | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing address id creates a new address with the given id.|
 | [Partially updating a customer address](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#patch-customer-tenant-customers-customernumber-address)       | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
-| [Deleting a customer address](/openapi/customer-tenant/#operation/DELETE-customer-tenant-remove-customer-address)                         | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
-| [Adding tags to a customer address](/openapi/customer-tenant/#operation/POST-customer-tenant-add-address-tags)                            | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
-| [Deleting tags from a customer address](/openapi/customer-tenant/#operation/DELETE-customer-tenant-remove-address-tags)                   | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
+| [Deleting a customer address](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#delete-customer-tenant-customers-customernumber-address)                         | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
+| [Adding tags to a customer address](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/addresses#post-customer-tenant-customers-customernumber-addresses-addressid-tags)                            | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
+| [Deleting tags from a customer address](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/addresses#delete-customer-tenant-customers-customernumber-addresses-addressid-tags)                   | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
 
 
 **Known problems**
@@ -470,16 +470,16 @@ The scopes `category.category_update`, `category.category_create` and `category.
 
 | Endpoint                                                                                                                                       | Description                                                                  |
 | ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [Creating a new category](/openapi/category/#operation/POST-category-tree-create-category)                                                     | The endpoint requires a new `category.category_manage` scope, as the `category.category_create` scope is deprecated.|
-| [Upserting a category](/openapi/category/#operation/PUT-category-tree-update-category)                                                          | The endpoint requires a new `category.category_manage` scope, as the `category.category_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing category id creates a new category with the given id.|
-| [Partially updating a category](/openapi/category/#operation/PATCH-category-tree-update-category)                                              | The endpoint requires a new `category.category_manage` scope, as the `category.category_update` scope is deprecated.|
-| [Deleting a category](/openapi/category/#operation/DELETE-category-tree-remove-category)                                                       | The endpoint requires a new `category.category_manage` scope, as the `category.category_delete` scope is deprecated.|
-| [Assigning a resource to a category](/openapi/category/#operation/POST-category-tree-assign-resource)                                          | The endpoint requires a new `category.category_manage` scope, as the `category.category_update` scope is deprecated.|
-| [Assigning resources to a category](/openapi/category/#operation/POST-category-tree-assign-category-resources)                                 | The endpoint requires a new `category.category_manage` scope, as the `category.category_update` scope is deprecated.|
-| [Upserting a resource to a category assignment](/openapi/category/#operation/PUT-category-tree-assign-resource)                                                       | The endpoint requires a new `category.category_manage` scope, as the `category.category_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing category assignment id creates a new assignment with the given id.|
-| [Updating assignments](/openapi/category/#operation/PUT-category-tree-update-category-assignments)                                             | The endpoint requires a new `category.category_manage` scope, as the `category.category_update` scope is deprecated.|
-| [Deleting a category assignment by reference id](/openapi/category/#operation/DELETE-category-tree-remove-category-assignment-by-reference-id) | The endpoint requires a new `category.category_manage` scope, as the `category.category_update` scope is deprecated.|
-| [Deleting a category assignment by id](/openapi/category/#operation/DELETE-category-tree-remove-category-assignment)                           | The endpoint requires a new `category.category_manage` scope, as the `category.category_update` scope is deprecated.|
+| [Creating a new category](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories)                                                     | The endpoint requires a new `category.category_manage` scope, as the `category.category_create` scope is deprecated.|
+| [Upserting a category](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#put-category-tenant-categories-categoryid)                                                          | The endpoint requires a new `category.category_manage` scope, as the `category.category_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing category id creates a new category with the given id.|
+| [Partially updating a category](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#patch-category-tenant-categories-categoryid)                                              | The endpoint requires a new `category.category_manage` scope, as the `category.category_update` scope is deprecated.|
+| [Deleting a category](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#delete-category-tenant-categories-categoryid)                                                       | The endpoint requires a new `category.category_manage` scope, as the `category.category_delete` scope is deprecated.|
+| [Assigning a resource to a category](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#post-category-tenant-categories-categoryid-assignments-bulk)                                          | The endpoint requires a new `category.category_manage` scope, as the `category.category_update` scope is deprecated.|
+| [Assigning resources to a category](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#post-category-tenant-categories-categoryid-assignments)                                 | The endpoint requires a new `category.category_manage` scope, as the `category.category_update` scope is deprecated.|
+| [Upserting a resource to a category assignment](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#put-category-tenant-categories-categoryid-assignments-references-referenceid)                                                       | The endpoint requires a new `category.category_manage` scope, as the `category.category_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing category assignment id creates a new assignment with the given id.|
+| [Updating assignments](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#put-category-tenant-categories-categoryid-assignments)                                             | The endpoint requires a new `category.category_manage` scope, as the `category.category_update` scope is deprecated.|
+| [Deleting a category assignment by reference id](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#delete-category-tenant-categories-categoryid-assignment-by-reference-id) | The endpoint requires a new `category.category_manage` scope, as the `category.category_update` scope is deprecated.|
+| [Deleting a category assignment by id](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#delete-category-tenant-categories-categoryid-assignment)                           | The endpoint requires a new `category.category_manage` scope, as the `category.category_update` scope is deprecated.|
 | [Deleting all category assignments](/openapi/category/#operation/DELETE-category-tree-remove-all-category-assignments)                         | The endpoint requires a new `category.category_manage` scope, as the `category.category_update` scope is deprecated.|
 
 **Known problems**
@@ -554,9 +554,9 @@ We added new API for managing B2C customer assignments.
 
 | Endpoint                                                                                                                      | Description                                  |
 | ----------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| [Retrieving a customer assignment](/openapi/customer-segment/#operation/GET-customer-segment-retrieve-customer-by-customerId) | It retrieves a customer assignment.          |
-| [Upserting a customer assignment](/openapi/customer-segment/#operation/PUT-customer-segment-update-customer-by-customerId)    | It creates or updates a customer assignment. |
-| [Deleting a customer assignment](/openapi/customer-segment/#operation/DELETE-customer-segment-remove-customer-by-customerId)  | It deletes a customer assignment.            |
+| [Retrieving a customer assignment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/customers-assignments#get-customer-segment-tenant-segments-segmentid-customers-customerid) | It retrieves a customer assignment.          |
+| [Upserting a customer assignment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/customers-assignments#put-customer-segment-tenant-segments-segmentid-customers-customerid)    | It creates or updates a customer assignment. |
+| [Deleting a customer assignment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/customers-assignments#delete-customer-segment-tenant-segments-segmentid-customers-customerid)  | It deletes a customer assignment.            |
 
 **Known problems**
 
@@ -579,13 +579,13 @@ A new property is available in the category model - `metadata.mixins`. It allows
 
 | Endpoint                                                                                                      | Description                          |
 | ------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
-| [Creating a new category](/openapi/category/#operation/POST-category-tree-create-category)                    | We added `metadata.mixins` property. |
-| [Upserting a category](/openapi/category/#operation/PUT-category-tree-update-category)                         | We added `metadata.mixins` property. |
-| [Partially updating a category](/openapi/category/#operation/PATCH-category-tree-update-category)             | We added `metadata.mixins` property. |
-| [Retrieving a list of categories](/openapi/category/#operation/GET-category-tree-list-categories)             | We added `metadata.mixins` property. |
-| [Retrieving a category's details](/openapi/category/#operation/GET-category-tree-retrieve-category)           | We added `metadata.mixins` property. |
-| [Retrieving parents for a category](/openapi/category/#operation/GET-category-tree-retrieve-category-parents) | We added `metadata.mixins` property. |
-| [Retrieving subcategories for a category](/openapi/category/#operation/GET-category-tree-list-subcategories)  | We added `metadata.mixins` property. |
+| [Creating a new category](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories)                    | We added `metadata.mixins` property. |
+| [Upserting a category](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#put-category-tenant-categories-categoryid)                         | We added `metadata.mixins` property. |
+| [Partially updating a category](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#patch-category-tenant-categories-categoryid)             | We added `metadata.mixins` property. |
+| [Retrieving a list of categories](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#get-category-tenant-categories)             | We added `metadata.mixins` property. |
+| [Retrieving a category's details](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#get-category-tenant-categories-categoryid)           | We added `metadata.mixins` property. |
+| [Retrieving parents for a category](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#get-category-tenant-categories-categoryid-parents) | We added `metadata.mixins` property. |
+| [Retrieving subcategories for a category](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#get-category-tenant-categories-categoryid-subcategories)  | We added `metadata.mixins` property. |
 
 **Known problems**
 
@@ -609,7 +609,7 @@ If the ID is already in use, the service returns a 409 status code.
 
 | Endpoint                                                                                   | Description                                    |
 | ------------------------------------------------------------------------------------------ | ---------------------------------------------- |
-| [Creating a new group](/openapi/iam/#operation/POST-iam-create-user-group)                  | The `id` field added. |
+| [Creating a new group](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups)                  | The `id` field added. |
 
 
 **Known problems**
@@ -634,7 +634,7 @@ If the ID is already in use, the service returns a 409 status code.
 
 | Endpoint                                                                                   | Description                                    |
 | ------------------------------------------------------------------------------------------ | ---------------------------------------------- |
-| [Adding a customer address](/openapi/customer-tenant/#operation/POST-customer-tenant-add-customer-address)                  | The `id` field added. |
+| [Adding a customer address](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/addresses#post-customer-tenant-customers-customernumber-addresses)                  | The `id` field added. |
 
 
 **Known problems**
@@ -658,9 +658,9 @@ If the ID is already in use, the service returns a 409 status code.
 
 | Endpoint                                                                                   | Description                                    |
 | ------------------------------------------------------------------------------------------ | ---------------------------------------------- |
-| [Creating a new legal entity](/openapi/customer-management/#operation/POST-customer-mgmt-create-legal-entity)                  | The `id` field added. |
+| [Creating a new legal entity](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/client-management/api-reference/legal-entities#post-tenant-legal-entities)                  | The `id` field added. |
 | [Creating a new location](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/client-management/api-reference/locations#post-tenant-locations)                  | The `id` field added. |
-| [Creating a new contact assignment](/openapi/customer-management/#operation/POST-customer-mgmt-create-contact-assignment)                  | The `id` field added. |
+| [Creating a new contact assignment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/client-management/api-reference/contact-assignments#post-tenant-contact-assignments)                  | The `id` field added. |
 
 
 **Known problems**
@@ -682,7 +682,7 @@ The Customer-Management Service has been enhanced with the new endpoint which al
 
 | Endpoint                                                                                                         | Description                                                                                     |
 | ---------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| [Searching for legal entities](/openapi/customer-management/#operation/POST-customer-mgmt-search-legal-entities) | The new endpoint which allows to retrieve legal entities by criteria provided in request payload|
+| [Searching for legal entities](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/client-management/api-reference/legal-entities#post-tenant-legal-entities-search) | The new endpoint which allows to retrieve legal entities by criteria provided in request payload|
 
 ---
 
@@ -705,30 +705,30 @@ We added new API for managing customer segments, items assigned to segments and 
 
 | Endpoint                                                                                                                    | Description                                         |
 | --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| [Creating a segment](/openapi/customer-segment/#operation/POST-customer-segment-create-segment)                             | It creates a new segment.                           |
-| [Retrieving segments](/openapi/customer-segment/#operation/GET-customer-segment-retrieve-segments)                          | It retrieves segments.                              |
-| [Searching for segments](/openapi/customer-segment/#operation/POST-customer-segment-search-segments)                        | It searches for segments.                           |
-| [Retrieving a segment](/openapi/customer-segment/#operation/GET-customer-segment-retrieve-segment)                          | It retrieves a segment.                             |
-| [Updating a segment](/openapi/customer-segment/#operation/PUT-customer-segment-update-segment)                              | It updates a segment.                               |
-| [Patching a segment](/openapi/customer-segment/#operation/PATCH-customer-segment-update-segment)                            | It partially updates a segment.                     |
-| [Deleting a segment](/openapi/customer-segment/#operation/DELETE-customer-segment-remove-segment)                           | It deletes a segment.                               |
-| [Creating segments in bulk](/openapi/customer-segment/#operation/POST-customer-segment-create-segments-bulk)                | It creates segments in bulk.                        |
-| [Updating segments in bulk](/openapi/customer-segment/#operation/PUT-customer-segment-update-segments-bulk)                 | It updates segments in bulk.                        |
-| [Deleting segments in bulk](/openapi/customer-segment/#operation/DELETE-customer-segment-remove-segments-bulk)              | It deletes segments in bulk.                        |
-| [Retrieving customer assignments](/openapi/customer-segment/#operation/GET-customer-segment-retrieve-customers)             | It retrieves customer assignments.                  |
-| [Searching for customer assignments](/openapi/customer-segment/#operation/POST-customer-segment-search-customers)           | It searches for customer assignments.               |
-| [Retrieving a customer assignment](/openapi/customer-segment/#operation/GET-customer-segment-retrieve-customer)             | It retrieves a customer assignment.                 |
-| [Upserting a customer assignment](/openapi/customer-segment/#operation/PUT-customer-segment-update-customer)                | It creates or updates a customer assignment.        |
-| [Deleting a customer assignment](/openapi/customer-segment/#operation/DELETE-customer-segment-remove-customer)              | It deletes a customer assignment.                   |
-| [Upserting customer assignments in bulk](/openapi/customer-segment/#operation/PUT-customer-segment-update-customers-bulk)   | It creates or updates customer assignments in bulk. |
-| [Deleting customer assignments in bulk](/openapi/customer-segment/#operation/DELETE-customer-segment-remove-customers-bulk) | It deletes customer assignments in bulk.            |
-| [Retrieving item assignments](/openapi/customer-segment/#operation/GET-customer-segment-retrieve-segment-items)             | It retrieves item assignments.                      |
-| [Searching for item assignments](/openapi/customer-segment/#operation/POST-customer-segment-search-items)                   | It searches for item assignments.                   |
-| [Retrieving an item assignment](/openapi/customer-segment/#operation/GET-customer-segment-retrieve-item)                    | It retrieves an item assignment.                    |
-| [Updating an item assignment](/openapi/customer-segment/#operation/PUT-customer-segment-update-item)                        | It updates an item assignment.                      |
-| [Removing an item assignment](/openapi/customer-segment/#operation/DELETE-customer-segment-remove-item)                     | It removes an item assignment.                      |
-| [Upserting item assignments in bulk](/openapi/customer-segment/#operation/PUT-customer-segment-update-items-bulk)           | It creates or updates item assignments in bulk.     |
-| [Deleting item assignments in bulk](/openapi/customer-segment/#operation/DELETE-customer-segment-remove-items-bulk)         | It deletes item assignments in bulk.                |
+| [Creating a segment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments)                             | It creates a new segment.                           |
+| [Retrieving segments](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/segments#get-customer-segment-tenant-segments)                          | It retrieves segments.                              |
+| [Searching for segments](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments-search)                        | It searches for segments.                           |
+| [Retrieving a segment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/segments#get-customer-segment-tenant-segments-segmentid)                          | It retrieves a segment.                             |
+| [Updating a segment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/segments#put-customer-segment-tenant-segments-segmentid)                              | It updates a segment.                               |
+| [Patching a segment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/segments#patch-customer-segment-tenant-segments-segmentid)                            | It partially updates a segment.                     |
+| [Deleting a segment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/segments#delete-customer-segment-tenant-segments-segmentid)                           | It deletes a segment.                               |
+| [Creating segments in bulk](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segmentss-bulk)                | It creates segments in bulk.                        |
+| [Updating segments in bulk](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/segments#put-customer-segment-tenant-segments-segmentids-bulk)                 | It updates segments in bulk.                        |
+| [Deleting segments in bulk](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/segments#delete-customer-segment-tenant-segments-segmentids-bulk)              | It deletes segments in bulk.                        |
+| [Retrieving customer assignments](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/customers-assignments#get-customer-segment-tenant-segments-segmentid-customers)             | It retrieves customer assignments.                  |
+| [Searching for customer assignments](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/customers-assignments#post-customer-segment-tenant-segments-segmentid-customers-search)           | It searches for customer assignments.               |
+| [Retrieving a customer assignment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/customers-assignments#get-customer-segment-tenant-segments-segmentid-customers-customerid-legalentityid)             | It retrieves a customer assignment.                 |
+| [Upserting a customer assignment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/customers-assignments#put-customer-segment-tenant-segments-segmentid-customers-customerid-legalentityid)                | It creates or updates a customer assignment.        |
+| [Deleting a customer assignment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/customers-assignments#delete-customer-segment-tenant-segments-segmentid-customers-customerid-legalentityid)              | It deletes a customer assignment.                   |
+| [Upserting customer assignments in bulk](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/customers-assignments#put-customer-segment-tenant-segments-segmentid-customers-customerid-legalentityids-bulk)   | It creates or updates customer assignments in bulk. |
+| [Deleting customer assignments in bulk](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/customers-assignments#delete-customer-segment-tenant-segments-segmentid-customers-customerid-legalentityids-bulk) | It deletes customer assignments in bulk.            |
+| [Retrieving item assignments](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/segments#get-customer-segment-tenant-segments-segmentid-items)             | It retrieves item assignments.                      |
+| [Searching for item assignments](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/items-assignments#post-customer-segment-tenant-segments-segmentid-items-search)                   | It searches for item assignments.                   |
+| [Retrieving an item assignment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-segmentid-items-type-itemid)                    | It retrieves an item assignment.                    |
+| [Updating an item assignment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/items-assignments#put-customer-segment-tenant-segments-segmentid-items-type-itemid)                        | It updates an item assignment.                      |
+| [Removing an item assignment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/items-assignments#delete-customer-segment-tenant-segments-segmentid-items-type-itemid)                     | It removes an item assignment.                      |
+| [Upserting item assignments in bulk](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/items-assignments#put-customer-segment-tenant-segments-segmentid-items-type-itemid-bulk)           | It creates or updates item assignments in bulk.     |
+| [Deleting item assignments in bulk](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/items-assignments#delete-customer-segment-tenant-segments-segmentid-items-type-itemids-bulk)         | It deletes item assignments in bulk.                |
 
 **Known problems**
 
@@ -751,7 +751,7 @@ If the ID is already in use, the service returns a 409 status code.
 
 | Endpoint                                                                                   | Description                                    |
 | ------------------------------------------------------------------------------------------ | ---------------------------------------------- |
-| [Creating a new customer](/openapi/customer-tenant/#operation/POST-customer-tenant-create-customer)                  | The `id` field added. |
+| [Creating a new customer](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#post-customer-tenant-customers)                  | The `id` field added. |
 
 
 **Known problems**
@@ -777,10 +777,10 @@ Category assignments support upsert operation for single and multiple assignment
 
 | Endpoint                                                                                   | Description                                    |
 | ------------------------------------------------------------------------------------------ | ---------------------------------------------- |
-| [Creating a new category](/openapi/category/#operation/POST-category-tree-create-category)                  | The `id` field added. |
-| [Upserting a category](/openapi/category/#operation/PUT-category-tree-update-category)                  | The new endpoint that allows you to either create or update a category with a given id. |
-| [Upserting a resource to a category assignment](/openapi/category/#operation/PUT-category-tree-assign-resource)                  | The new endpoint that allows you to either create or update an assignment. |
-| [Upserting multiple category assignments](/openapi/category/#operation/PUT-category-tree-update-category-assignments)                  |The new endpoint that allows you to either create or update multiple assignments. |
+| [Creating a new category](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories)                  | The `id` field added. |
+| [Upserting a category](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#put-category-tenant-categories-categoryid)                  | The new endpoint that allows you to either create or update a category with a given id. |
+| [Upserting a resource to a category assignment](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#put-category-tenant-categories-categoryid-assignments-references-referenceid)                  | The new endpoint that allows you to either create or update an assignment. |
+| [Upserting multiple category assignments](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#put-category-tenant-categories-categoryid-assignments)                  |The new endpoint that allows you to either create or update multiple assignments. |
 
 
 **Known problems**
@@ -804,7 +804,7 @@ If the ID is already in use, the service will return a 409 status code.
 
 | Endpoint                                                                                   | Description                                    |
 | ------------------------------------------------------------------------------------------ | ---------------------------------------------- |
-| [Creating a new catalog](/openapi/catalog/#operation/POST-catalog-create-catalog)                  | The `id` field added. |
+| [Creating a new catalog](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/catalog/api-reference/list-catalogs#post-catalog-tenant-catalogs)                  | The `id` field added. |
 
 
 **Known problems**
@@ -938,7 +938,7 @@ New fields `feeYrnAggregate` and `fees` were introduced. The `feeYrnAggregate` f
 | [Retrieving a specific order by ID](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) | The response body schema contains `feeYrnAggregate` and `fees` fields.|
 | [Updating an order](/openapi/order/#operation/PUT-order-update-orde)                 | The request body schema contains `feeYrnAggregate` and `fees` fields. |
 | [Partially updating an order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid)     | The request body schema contains `feeYrnAggregate` and `fees` fields. |
-| [Retrieving a list of orders](/openapi/order/#operation/GET-order-list-orders)                    | The response body schema contains `feeYrnAggregate` and `fees` fields.|
+| [Retrieving a list of orders](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed)                    | The response body schema contains `feeYrnAggregate` and `fees` fields.|
 | [Creating a new order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders)                          | The request body schema contains `feeYrnAggregate` and `fees` fields. |
 | [Retrieving order details](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid)               | The response body schema contains `feeYrnAggregate` and `fees` fields.|
 
@@ -1448,7 +1448,7 @@ Price Service (v2) from now on supports the mixins feature for price lists. Two 
 | [Retrieving all price lists](/openapi/price/#operation/GET-price-retrieve-price-lists)               | We added the `mixins` and `metadata.mixins` properties. |
 | [Retrieving price list by id](/openapi/price/#operation/GET-price-retrieve-price-list)  | We added the `mixins` and `metadata.mixins` properties. |
 | [Creating a price list](/openapi/price/#operation/POST-price-create-price-list)                   | We added the `mixins` and `metadata.mixins` properties. |
-| [Updating a price list](/openapi/price/#operation/PUT-price-update-price-list)         | We added the `mixins` and `metadata.mixins` properties. |
+| [Updating a price list](https://developer.emporix.io/api-references/api-guides-and-references/prices-and-taxes/price-service/api-reference/prices#put-price-tenant-prices-priceid-list)         | We added the `mixins` and `metadata.mixins` properties. |
 
 
 **Known problems**
@@ -1541,7 +1541,7 @@ The endpoint for retrieving a list of categories for which the reference ID is a
 
 | Endpoint                                                                                                     | Description                                                                                        |
 | ------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
-| [Retrieving a list of categories of the assignment](/openapi/category/#operation/GET-category-tree-list-categories-by-reference-id) | New `expandSupercategoriesIds` parameter and `supercategoriesIds` field in response are available. |
+| [Retrieving a list of categories of the assignment](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#get-category-tenant-categories-by-reference-id) | New `expandSupercategoriesIds` parameter and `supercategoriesIds` field in response are available. |
 
 **Known problems**
 
