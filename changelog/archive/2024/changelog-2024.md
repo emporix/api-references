@@ -32,7 +32,7 @@ We extended the service with a new endpoint for checking which items match speci
 
 | Endpoint                                                                                                      | Description                             |
 | ------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
-| [Checking which items match criteria](/openapi/customer-segment/#operation/POST-customer-segment-check-match) | Checking which items belong to segment. |
+| [Checking which items match criteria](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments-match) | Checking which items belong to segment. |
 
 
 **Known problems**
@@ -56,8 +56,8 @@ The request and response bodies of endpoints for managing carts were extended wi
 
 | Endpoint                                                                                               | Description                                          |
 | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------- |
-| [Creating a new cart](/openapi/cart/#operation/POST-cart-create-cart)                                  | The request body has a new field - `legalEntityId`.  |
-| [Updating a cart](/openapi/cart/#operation/PUT-cart-update-cart)                                       | The request body has a new field - `legalEntityId`.  |
+| [Creating a new cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/carts#post-cart-tenant-carts)                                  | The request body has a new field - `legalEntityId`.  |
+| [Updating a cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid)                                       | The request body has a new field - `legalEntityId`.  |
 | [Retrieving a cart's details by criteria](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/carts#get-cart-tenant-carts) | The response body has a new field - `legalEntityId`. |
 | [Retrieving a cart's details by ID](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid)         | The response body has a new field - `legalEntityId`. |
 
@@ -89,7 +89,7 @@ We added new API for retrieving items assignments and category trees of category
 | Endpoint                                                                                                                                      | Description                                                   |
 | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | [Retrieving category trees for a customer segments](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items-category-trees)        | It retrieves category trees for the customer segments.        |
-| [Retrieving all items assignments for a customer segments](/openapi/customer-segment/#operation/GET-customer-segment-retrieve-segments-items) | It retrieves all items assignments for the customer segments. |
+| [Retrieving all items assignments for a customer segments](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items) | It retrieves all items assignments for the customer segments. |
 
 **Known problems**
 
@@ -112,7 +112,7 @@ Query parameter `segmentsIds` has been added to GET category assignments endpoin
 
 | Endpoint                                                                                                                      | Description                                            |
 | ----------------------------------------------------------------------------------------------------------------------------  | -----------------------------------------------------  |
-| [Retrieving resources assigned to a category](/openapi/category/#operation/GET-category-tree-retrieve-category-assignments)   | The new query parameter `segmentsIds` has been added.  |
+| [Retrieving resources assigned to a category](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#get-category-tenant-categories-categoryid-assignments)   | The new query parameter `segmentsIds` has been added.  |
 
 **Known problems**
 
@@ -265,7 +265,7 @@ The Customer Management Service supports `UPSERT` operation. For LegalEntity, Lo
 | Endpoint                                                                                                              | Description                                                                  |
 | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | [Upserting a legal entity](/openapi/customer-management/#operation/PUT-customer-mgmt-update-legal-entity)              | Sending a request to the upsert endpoint with a non-existing legal entity id creates a new legal entity with the given id.|
-| [Upserting a location](/openapi/customer-management/#operation/PUT-customer-mgmt-update-location)                     | Sending a request to the upsert endpoint with a non-existing location id creates a new location with the given id.|
+| [Upserting a location](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/client-management/api-reference/locations#put-tenant-locations-locationid)                     | Sending a request to the upsert endpoint with a non-existing location id creates a new location with the given id.|
 | [Upserting a contact assignment](/openapi/customer-management/#operation/PUT-customer-mgmt-update-contact-assignment) | Sending a request to the upsert endpoint with a non-existing contact assignment id creates a new contact assignment with the given id.|
 
 
@@ -437,12 +437,12 @@ The scopes `customer.customer_update`, `customer.customer_create` and `customer.
 | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | [Creating a customer](/openapi/customer-tenant/#operation/POST-customer-tenant-create-customer)                                           | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_create` scope is deprecated.|
 | [Upserting a customer profile](/openapi/customer-tenant/#operation/PUT-customer-tenant-update-customer)                        | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing customer id creates a new customer with the given id.|
-| [Partially updating a customer profile](/openapi/customer-tenant/#operation/PATCH-customer-tenant-update-customer)                        | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
+| [Partially updating a customer profile](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#patch-customer-tenant-customers-customernumber)                        | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
 | [Assigning an account to an existing customer profile](/openapi/customer-tenant/#operation/POST-customer-tenant-assign-customer-account)  | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
 | [Deleting a customer profile](/openapi/customer-tenant/#operation/DELETE-customer-tenant-remove-customer)                                 | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_delete` scope is deprecated.|
 | [Adding a customer address](/openapi/customer-tenant/#operation/POST-customer-tenant-add-customer-address)                                | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
 | [Upserting a customer address](/openapi/customer-tenant/#operation/PUT-customer-tenant-update-customer-address)                | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing address id creates a new address with the given id.|
-| [Partially updating a customer address](/openapi/customer-tenant/#operation/PATCH-customer-tenant-update-customer-address)       | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
+| [Partially updating a customer address](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#patch-customer-tenant-customers-customernumber-address)       | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
 | [Deleting a customer address](/openapi/customer-tenant/#operation/DELETE-customer-tenant-remove-customer-address)                         | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
 | [Adding tags to a customer address](/openapi/customer-tenant/#operation/POST-customer-tenant-add-address-tags)                            | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
 | [Deleting tags from a customer address](/openapi/customer-tenant/#operation/DELETE-customer-tenant-remove-address-tags)                   | The endpoint requires a new `customer.customer_manage` scope, as the `customer.customer_update` scope is deprecated.|
@@ -659,7 +659,7 @@ If the ID is already in use, the service returns a 409 status code.
 | Endpoint                                                                                   | Description                                    |
 | ------------------------------------------------------------------------------------------ | ---------------------------------------------- |
 | [Creating a new legal entity](/openapi/customer-management/#operation/POST-customer-mgmt-create-legal-entity)                  | The `id` field added. |
-| [Creating a new location](/openapi/customer-management/#operation/POST-customer-mgmt-create-location)                  | The `id` field added. |
+| [Creating a new location](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/client-management/api-reference/locations#post-tenant-locations)                  | The `id` field added. |
 | [Creating a new contact assignment](/openapi/customer-management/#operation/POST-customer-mgmt-create-contact-assignment)                  | The `id` field added. |
 
 
@@ -969,7 +969,7 @@ New field `externalFees` was added to the cart item model. This change allows to
 | [Retrieving all products added to a cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) | The response body schema contains new field `externalFees`.                 |
 | [Adding a product to cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items)               | The request body schema contains new field `externalFees`.                  |
 | [Retrieving a cart item](/openapi/cart/#operation/GET-cart-retrieve-item-details)           | The response body schema contains new field `externalFees`.                 |
-| [Updating a cart item](/openapi/cart/#operation/PUT-cart-update-item-details)             | The request body schema contains new field `externalFees`.                  |
+| [Updating a cart item](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#put-cart-tenant-carts-cartid-items-itemid)             | The request body schema contains new field `externalFees`.                  |
 
 **Known problems**
 
@@ -1088,8 +1088,8 @@ From now on `name` field is no longer mandatory for creating and updating locati
 
 | Endpoint                                                      | Description                                            |
 | ------------------------------------------------------------- | ------------------------------------------------------ |
-| [Creating location](/openapi/customer-management/#operation/POST-customer-mgmt-create-location) | `name` field in request payload is no longer mandatory |
-| [Upserting location](/openapi/customer-management/#operation/PUT-customer-mgmt-update-location)    | `name` field in request payload is no longer mandatory |
+| [Creating location](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/client-management/api-reference/locations#post-tenant-locations) | `name` field in request payload is no longer mandatory |
+| [Upserting location](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/client-management/api-reference/locations#put-tenant-locations-locationid)    | `name` field in request payload is no longer mandatory |
 
 **Known problems**
 
@@ -1138,7 +1138,7 @@ To handle external prices, the request payload now includes the `itemType` and `
 | --------------------------------------------------------------------------------------------- | ------------------------------------- |
 | [Adding item to cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items)                | The request includes the `itemType` and `tax` properties. |
 | [Adding item to cart in batch](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-itemsbatch)  | The request includes the `itemType` and `tax` properties. |
-| [Updating item in cart](/openapi/cart/#operation/PUT-cart-update-item-details)        | The request includes the `itemType` and `tax` properties. |
+| [Updating item in cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#put-cart-tenant-carts-cartid-items-itemid)        | The request includes the `itemType` and `tax` properties. |
 
 **Known problems**
 
@@ -1343,11 +1343,11 @@ We extended the schema with a new `PRICE_LIST` type.
 
 | Endpoint                                                                   | Description                  |
 | -------------------------------------------------------------------------- | -------------------------- |
-|[Creating a schema](/openapi/schema/#operation/POST-schema-create-schema)          | The new type is available. |
-|[Updating a schema](/openapi/schema/#operation/PUT-schema-update-schema)               | The new type is available. |
-|[Updating types of a schema](/openapi/schema/#operation/PUT-schema-update-schema-types)| The new type is available. |
-|[Creating a reference](/openapi/schema/#operation/POST-schema-create-reference)    | The new type is available. |
-|[Updating a reference](/openapi/schema/#operation/PUT-schema-update-reference)         | The new type is available. |
+|[Creating a schema](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/schema#post-schema-tenant-schemas)          | The new type is available. |
+|[Updating a schema](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id)               | The new type is available. |
+|[Updating types of a schema](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id-types)| The new type is available. |
+|[Creating a reference](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/reference#post-schema-tenant-references)    | The new type is available. |
+|[Updating a reference](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/reference#put-schema-tenant-references-id)         | The new type is available. |
 
 **Known problems**
 
@@ -1370,8 +1370,8 @@ Schema Service now supports object attributes. The `OBJECT` type was added to `S
 
 | Endpoint                                                           | Description                                                       |
 | ------------------------------------------------------------------ | ----------------------------------------------------------------- |
-| [Creating a schema](/openapi/schema/#operation/POST-schema-create-schema) | Schema attribute in the request body can now be of `OBJECT` type. |
-| [Updating a schema](/openapi/schema/#operation/PUT-schema-update-schema)      | Schema attribute in the request body can now be of `OBJECT` type. |
+| [Creating a schema](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Schema attribute in the request body can now be of `OBJECT` type. |
+| [Updating a schema](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id)      | Schema attribute in the request body can now be of `OBJECT` type. |
 
 **Known problems**
 
@@ -1394,8 +1394,8 @@ Schema Service now supports array attributes. `ARRAY` type was added to `SchemaA
 
 | Endpoint                                                           | Description                                                      |
 | ------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [Creating a schema](/openapi/schema/#operation/POST-schema-create-schema) | Schema attribute in the request body can now be of `ARRAY` type. |
-| [Updating a schema](/openapi/schema/#operation/PUT-schema-update-schema)      | Schema attribute in the request body can now be of `ARRAY` type. |
+| [Creating a schema](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Schema attribute in the request body can now be of `ARRAY` type. |
+| [Updating a schema](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id)      | Schema attribute in the request body can now be of `ARRAY` type. |
 
 **Known problems**
 
@@ -1472,8 +1472,8 @@ Schema Service now supports nullable attributes. `nullable` boolean property was
 
 | Endpoint                                                           | Description                                               |
 | ------------------------------------------------------------------ | --------------------------------------------------------- |
-| [Creating a schema](/openapi/schema/#operation/POST-schema-create-schema) | Schema attribute in the request body can now be nullable. |
-| [Updating a schema](/openapi/schema/#operation/PUT-schema-update-schema)      | Schema attribute in the request body can now be nullable. |
+| [Creating a schema](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Schema attribute in the request body can now be nullable. |
+| [Updating a schema](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id)      | Schema attribute in the request body can now be nullable. |
 
 **Known problems**
 
@@ -1494,8 +1494,8 @@ Schema Service now supports `DECIMAL` type. Supported multiplicity is `0.01`.
 
 | Endpoint                                                           | Description                                                               |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------- |
-| [Creating a schema](/openapi/schema/#operation/POST-schema-create-schema) | Schema attribute in the request body can now be of `DECIMAL` type. |
-| [Updating a schema](/openapi/schema/#operation/PUT-schema-update-schema)      | Schema attribute in the request body can now be of `DECIMAL` type. |
+| [Creating a schema](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Schema attribute in the request body can now be of `DECIMAL` type. |
+| [Updating a schema](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id)      | Schema attribute in the request body can now be of `DECIMAL` type. |
 
 **Known problems**
 
@@ -1518,7 +1518,7 @@ A new endpoint has been introduced for creating category assignments in bulk. It
 
 | Endpoint                                                                            | Description                                             |
 | ----------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| [Assigning resources to a category](/openapi/category/#operation/GET-category-tree-retrieve-category-assignments) | New endpoint for creating category assignments in bulk. |
+| [Assigning resources to a category](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#get-category-tenant-categories-categoryid-assignments) | New endpoint for creating category assignments in bulk. |
 
 **Known problems**
 
@@ -1728,9 +1728,9 @@ Config for HTTP provider is now enriched with the `headers` property. It allows 
 
 | Endpoint                                                                      | Description                              |
 | ----------------------------------------------------------------------------- | ---------------------------------------- |
-| [Creating a config](/openapi/webhook/#operation/POST-webhook-create-config)                  | You can define custom `headers` in the request body. |
-| [Updating a config](/openapi/webhook/#operation/PUT-webhook-update-config)             | You can define custom `headers` in the request body. |
-| [Partially updating a config](/openapi/webhook/#operation/PATCH-webhook-update-config)   | You can define custom `headers` in the request body. |
+| [Creating a config](https://developer.emporix.io/api-references/api-guides-and-references/webhooks/webhook-service/api-reference/config#post-webhook-tenant-config)                  | You can define custom `headers` in the request body. |
+| [Updating a config](https://developer.emporix.io/api-references/api-guides-and-references/webhooks/webhook-service/api-reference/config#put-webhook-tenant-config-code)             | You can define custom `headers` in the request body. |
+| [Partially updating a config](https://developer.emporix.io/api-references/api-guides-and-references/webhooks/webhook-service/api-reference/config#patch-webhook-tenant-config-code)   | You can define custom `headers` in the request body. |
 
 **Known problems**
 
@@ -1777,7 +1777,7 @@ There is a new property `published` added to assignment model that is updated au
 
 | Endpoint                                                                              | Description                                                                                                                                                    |
 | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Retrieving category assignments](/openapi/category/#operation/GET-category-tree-retrieve-category-assignments)        | We introduced the `hideUnpublishedProducts` parameter. Additionally, we added the `published` attribute into the category assignment model. |
+| [Retrieving category assignments](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#get-category-tenant-categories-categoryid-assignments)        | We introduced the `hideUnpublishedProducts` parameter. Additionally, we added the `published` attribute into the category assignment model. |
 
 **Known problems**
 
@@ -1804,7 +1804,7 @@ The action causes sending two emails (if the emails are configured):
 
 | Endpoint                                                                                      | Description                                                                                        |
 | --------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| [Updating customer](/openapi/customer-tenant/#operation/PATCH-customer-tenant-update-customer)  | We introduced logic for changing a type from `CONTACT` to `CUSTOMER`. |
+| [Updating customer](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#patch-customer-tenant-customers-customernumber)  | We introduced logic for changing a type from `CONTACT` to `CUSTOMER`. |
 
 **Known problems**
 
@@ -1827,10 +1827,10 @@ The location model has a new `contactDetails.tags` property. It allows for label
 
 | Endpoint                                                                              | Description                                         |
 | ------------------------------------------------------------------------------------- | --------------------------------------------------- |
-| [Creating a location](/openapi/customer-management/#operation/POST-customer-mgmt-create-location)          | Type property `contactDetails.tags` added. |
-| [Retrieving all locations](/openapi/customer-management/#operation/GET-customer-mgmt-list-all-locations)   | Type property `contactDetails.tags` added. |
-| [Retrieving a location](/openapi/customer-management/#operation/GET-customer-mgmt-retrieve-location)           | Type property `contactDetails.tags` added. |
-| [Upserting a location](/openapi/customer-management/#operation/PUT-customer-mgmt-update-location)             | Type property `contactDetails.tags` added. |
+| [Creating a location](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/client-management/api-reference/locations#post-tenant-locations)          | Type property `contactDetails.tags` added. |
+| [Retrieving all locations](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/client-management/api-reference/locations#get-tenant-locations)   | Type property `contactDetails.tags` added. |
+| [Retrieving a location](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/client-management/api-reference/locations#get-tenant-locations-locationid)           | Type property `contactDetails.tags` added. |
+| [Upserting a location](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/client-management/api-reference/locations#put-tenant-locations-locationid)             | Type property `contactDetails.tags` added. |
 
 **Known problems**
 
@@ -1855,7 +1855,7 @@ Property `price.currency` for a cart item can be set as optional. There are new 
 | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | [Adding multiple products to cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-itemsbatch)  | Property `price.currency` can be optional. Validation is configurable by the system preferences. |
 | [Adding a product to cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items)               | Property `price.currency` can be optional. Validation is configurable by the system preferences. |
-| [Updating a cart item](/openapi/cart/#operation/PUT-cart-update-item-details)             | Property `price.currency` can be optional. Validation is configurable by the system preferences. |
+| [Updating a cart item](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#put-cart-tenant-carts-cartid-items-itemid)             | Property `price.currency` can be optional. Validation is configurable by the system preferences. |
 
 **Known problems**
 
@@ -1882,13 +1882,13 @@ We extended `config` API. `PATCH` operation is now available and `DELETE` endpoi
 
 | Endpoint                                                                      | Description                                         |
 | ----------------------------------------------------------------------------- | --------------------------------------------------- |
-| [Removing a config](/openapi/webhook/#operation/DELETE-webhook-remove-config)            | We added the `force` flag, which allows you to remove active configs.  |
+| [Removing a config](https://developer.emporix.io/api-references/api-guides-and-references/webhooks/webhook-service/api-reference/config#delete-webhook-tenant-config-code)            | We added the `force` flag, which allows you to remove active configs.  |
 
 **Added endpoints**
 
 | Endpoint                                                                      | Description                                         |
 | ----------------------------------------------------------------------------- | --------------------------------------------------- |
-| [Partially updating a config](/openapi/webhook/#operation/PATCH-webhook-update-config)   | It partially updates a webhook config.                  |
+| [Partially updating a config](https://developer.emporix.io/api-references/api-guides-and-references/webhooks/webhook-service/api-reference/config#patch-webhook-tenant-config-code)   | It partially updates a webhook config.                  |
 
 **Known problems**
 
@@ -1939,13 +1939,13 @@ The functionality allows you to configure custom Algolia subscription and trigge
 
 | Endpoint                                                                             | Description                          |
 | ------------------------------------------------------------------------------------ | ------------------------------------ |
-| [Creating a config](/openapi/indexing/#operation/POST-indexing-create-config)        | It creates a new index config.           |
-| [Retrieving configs](/openapi/indexing/#operation/GET-indexing-list-configs)    | It retrieves all index configs.          |
-| [Updating a config](/openapi/indexing/#operation/PUT-indexing-update-config)           | It updates an index config.              |
-| [Retrieving a config](/openapi/indexing/#operation/GET-indexing-retrieve-config)       | It retrieves an index config.            |
-| [Removing a config](/openapi/indexing/#operation/DELETE-indexing-remove-config)        | It removes an index config.              |
-| [Retrieving public configs](/openapi/indexing/#operation/GET-indexing-list-public-configs)| It retrieves all index public configs.   |
-| [Retrieving a public config](/openapi/indexing/#operation/GET-indexing-retrieve-public-config)| It retrieves an index public config.     |
+| [Creating a config](https://developer.emporix.io/api-references/api-guides-and-references/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations)        | It creates a new index config.           |
+| [Retrieving configs](https://developer.emporix.io/api-references/api-guides-and-references/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations)    | It retrieves all index configs.          |
+| [Updating a config](https://developer.emporix.io/api-references/api-guides-and-references/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider)           | It updates an index config.              |
+| [Retrieving a config](https://developer.emporix.io/api-references/api-guides-and-references/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider)       | It retrieves an index config.            |
+| [Removing a config](https://developer.emporix.io/api-references/api-guides-and-references/configuration/indexing-service/api-reference/configuration#delete-indexing-tenant-configurations-provider)        | It removes an index config.              |
+| [Retrieving public configs](https://developer.emporix.io/api-references/api-guides-and-references/configuration/indexing-service/api-reference/public-configuration#get-indexing-tenant-public-configurations)| It retrieves all index public configs.   |
+| [Retrieving a public config](https://developer.emporix.io/api-references/api-guides-and-references/configuration/indexing-service/api-reference/public-configuration#get-indexing-tenant-public-configurations-provider)| It retrieves an index public config.     |
 | [Reindexing](/openapi/indexing/#operation/POST-indexing-reindex)                       | It triggers reindex operation.           |
 
 **Known problems**
@@ -1973,11 +1973,11 @@ We added new API for configuring webhook providers.
 
 | Endpoint                                                            | Description                     |
 | ------------------------------------------------------------------- | ------------------------------- |
-| [Creating a config](/openapi/webhook/#operation/POST-webhook-create-config)        | It creates a new webhook config.    |
-| [Retrieving configs](/openapi/webhook/#operation/GET-webhook-list-configs)         | It retrieves webhook configs.       |
-| [Updating a config](/openapi/webhook/#operation/PUT-webhook-update-config)   | It updates a webhook config.        |
-| [Retrieving a config](/openapi/webhook/#operation/GET-webhook-retrieve-config)   | It retrieves a webhook config.      |
-| [Removing a config](/openapi/webhook/#operation/DELETE-webhook-remove-config)  | It removes a webhook config.        |
+| [Creating a config](https://developer.emporix.io/api-references/api-guides-and-references/webhooks/webhook-service/api-reference/config#post-webhook-tenant-config)        | It creates a new webhook config.    |
+| [Retrieving configs](https://developer.emporix.io/api-references/api-guides-and-references/webhooks/webhook-service/api-reference/config#get-webhook-tenant-config)         | It retrieves webhook configs.       |
+| [Updating a config](https://developer.emporix.io/api-references/api-guides-and-references/webhooks/webhook-service/api-reference/config#put-webhook-tenant-config-code)   | It updates a webhook config.        |
+| [Retrieving a config](https://developer.emporix.io/api-references/api-guides-and-references/webhooks/webhook-service/api-reference/config#get-webhook-tenant-config-code)   | It retrieves a webhook config.      |
+| [Removing a config](https://developer.emporix.io/api-references/api-guides-and-references/webhooks/webhook-service/api-reference/config#delete-webhook-tenant-config-code)  | It removes a webhook config.        |
 
 **Known problems**
 
@@ -2000,11 +2000,11 @@ We extended the schema with a new `CUSTOMER.ADDRESS` type.
 
 | Endpoint                                                                 | Description                  |
 | ------------------------------------------------------------------------ | ---------------------------- |
-|[Creating a schema](/openapi/schema/#operation/POST-schema-create-schema)          | The new type is available. |
-|[Updating a schema](/openapi/schema/#operation/PUT-schema-update-schema)               | The new type is available. |
-|[Updating types of a schema](/openapi/schema/#operation/PUT-schema-update-schema-types)| The new type is available. |
-|[Creating a reference](/openapi/schema/#operation/POST-schema-create-reference)    | The new type is available. |
-|[Updating a reference](/openapi/schema/#operation/PUT-schema-update-reference)         | The new type is available. |
+|[Creating a schema](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/schema#post-schema-tenant-schemas)          | The new type is available. |
+|[Updating a schema](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id)               | The new type is available. |
+|[Updating types of a schema](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id-types)| The new type is available. |
+|[Creating a reference](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/reference#post-schema-tenant-references)    | The new type is available. |
+|[Updating a reference](https://developer.emporix.io/api-references/api-guides-and-references/utilities/schema/api-reference/reference#put-schema-tenant-references-id)         | The new type is available. |
 
 **Known problems**
 
