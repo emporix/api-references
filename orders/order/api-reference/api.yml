@@ -1536,6 +1536,9 @@ components:
                         These fields provide the same values with updated functionality."
         status:
           $ref: '#/components/schemas/orderStatus'
+        cartId:
+          type: string
+          description: The identifier of a cart that was used to create this order.
         entries:
           description: Ordered item list.
           type: array
