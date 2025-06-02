@@ -8,6 +8,7 @@
 
 ## 2025
 
+* [2025-06-02: Customer Service - add fields to /validateauthtoken response](2025/2025-06-02-validateauthtoken.md)
 * [2025-05-26: Order Service - adding entries to an order](2025/2025-05-26-orders.md)
 * [2025-05-26: Cart Service - adding items as separate lines to a cart](2025/2025-05-26-separate-lines.md)
 * [2025-05-12: Customer Service - improvements](2025/2025-05-12-customer.md)
