@@ -26,3 +26,7 @@ The /validateauthtoken endpoint of customer service returns now two additional f
 | Endpoint                                                                                          | Description                               |
 |---------------------------------------------------------------------------------------------------|-------------------------------------------|
 | [Adding a product to cart](https://developer.emporix.io/api-references/api-guides-and-references/authorization/oauth-service/api-reference/customer-token#get-customer-tenant-validateauthtoken)               | Added the `email` and `legalEntityId` fields in response. |
+
+## Known problems
+
+There are no known problems.
