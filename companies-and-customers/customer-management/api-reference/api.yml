@@ -1661,7 +1661,7 @@ components:
         type: string
         minLength: 1
         example: 'BILLING,SHIPPING'
-      description: 'List of address tags, separated by commas.'
+      description: List of address tags, separated by commas.
     token:
       name: token
       in: query
@@ -1683,8 +1683,8 @@ components:
     CustomerAccessToken:
       type: http
       scheme: bearer
-      description: 'To generate a customer''s access token, go to the [Logging in a customer](?urls.primaryName=Customer/Customer%20authentication%20and%20authorization/POST_tenant-login) endpoint.'
+      description: To generate a customer access token, go to the 'Logging in a customer' endpoint.
     AnonymousAccessToken:
       type: http
       scheme: bearer
-      description: 'To generate an anonymous token, check out the [Requesting an anonymous token](?urls.primaryName=OAuth#/Anonymous%20Token/anonymousCustomer) endpoint.'
+      description: To generate an anonymous token, check out the 'Requesting an anonymous token' endpoint.
