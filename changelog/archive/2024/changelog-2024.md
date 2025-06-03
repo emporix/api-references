@@ -1010,11 +1010,11 @@ If you set the tax determination as **shipping address**, the country for calcul
 
 | Endpoint                                                                                  | Description                                                                                              |
 | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| [Retrieving sites](/openapi/site-settings/#operation/get-users-userId)                    | The `taxDeterminationBasedOn` property allows you to determine the address for relevant tax calculation. |
-| [Retrieving a site](/openapi/site-settings/#operation/get-tenant-sites-siteCode)          | The `taxDeterminationBasedOn` property allows you to determine the address for relevant tax calculation. |
-| [Creating a site](/openapi/site-settings/#operation/post-tenant-sites)                    | The `taxDeterminationBasedOn` property allows you to determine the address for relevant tax calculation. |
-| [Updating a site](/openapi/site-settings/#operation/put-tenant-sites-siteCode)            | The `taxDeterminationBasedOn` property allows you to determine the address for relevant tax calculation. |
-| [Partially updating a site](/openapi/site-settings/#operation/patch-tenant-sites-siteCode)| The `taxDeterminationBasedOn` property allows you to determine the address for relevant tax calculation. |
+| [Retrieving sites](https://developer.emporix.io/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode)                    | The `taxDeterminationBasedOn` property allows you to determine the address for relevant tax calculation. |
+| [Retrieving a site](https://developer.emporix.io/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-siteslist)          | The `taxDeterminationBasedOn` property allows you to determine the address for relevant tax calculation. |
+| [Creating a site](https://developer.emporix.io/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites)                    | The `taxDeterminationBasedOn` property allows you to determine the address for relevant tax calculation. |
+| [Updating a site](https://developer.emporix.io/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#put-site-tenant-sites-sitecode)            | The `taxDeterminationBasedOn` property allows you to determine the address for relevant tax calculation. |
+| [Partially updating a site](https://developer.emporix.io/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode)| The `taxDeterminationBasedOn` property allows you to determine the address for relevant tax calculation. |
 
 **Known problems**
 
