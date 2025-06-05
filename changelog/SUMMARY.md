@@ -8,6 +8,7 @@
 
 ## 2025
 
+* [2025-06-05: OAuth Service - add session_id field to `login` and `refreshauthtoken` response](2025/2025-06-05-customer_token_response.md)
 * [2025-06-02: Oauth Service - add fields to `validateauthtoken` response](2025/2025-06-02-validateauthtoken.md)
 * [2025-05-26: Order Service - adding entries to an order](2025/2025-05-26-orders.md)
 * [2025-05-26: Cart Service - adding items as separate lines to a cart](2025/2025-05-26-separate-lines.md)
