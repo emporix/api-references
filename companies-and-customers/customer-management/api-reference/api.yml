@@ -802,6 +802,7 @@ paths:
                     refresh_token: 94tKQ2Tsvlf9dYbmyccA7X1Rqe54B6dH
                     refresh_token_expires_in: 86399
                     token_type: Bearer
+                    session_id: 45c9726e-77c8-4bd0-b29d-61ab56f59726
         '400':
           $ref: '#/components/responses/400_bad_request'
         '401':
@@ -880,6 +881,7 @@ paths:
                     refresh_token: iwXAFjGwboaehJar1qNOkV05phDw1god
                     refresh_token_expires_in: 86390
                     token_type: Bearer
+                    session_id: 45c9726e-77c8-4bd0-b29d-61ab56f59726
         '400':
           $ref: '#/components/responses/400_bad_request'
         '401':
@@ -1411,6 +1413,8 @@ components:
         refresh_token_expires_in:
           type: number
         token_type:
+          type: string
+        session_id:
           type: string
     CustomerUpdateDto:
       allOf:

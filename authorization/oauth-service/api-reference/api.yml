@@ -69,11 +69,12 @@ paths:
               examples:
                 Response example:
                   value:
-                    accessToken: CZXFASGEG@!@$!24fasASDF
-                    saasToken: eyJhbGciOiJIUzI1NiJ9.eyJzdWIAFAFGVZE!@£$FSDVZERTNX0.BK1_F8aRMnnNN6y2Q6TVa4x_Knj3-Qojy4QsPNkHcz8
-                    expiresIn: 14399
-                    refreshToken: QBeG0XJfRqElE67U4tHJAQWrtfas1VR5eg
-                    refreshTokenExpiresIn: 86399
+                    access_token: CZXFASGEG@!@$!24fasASDF
+                    saas_token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIAFAFGVZE!@£$FSDVZERTNX0.BK1_F8aRMnnNN6y2Q6TVa4x_Knj3-Qojy4QsPNkHcz8
+                    expires_in: 14399
+                    refresh_token: QBeG0XJfRqElE67U4tHJAQWrtfas1VR5eg
+                    refresh_token_expires_in: 86399
+                    session_id: 45c9726e-77c8-4bd0-b29d-61ab56f59726
       servers:
       - url: https://api.emporix.io
         description: Production
@@ -129,7 +130,7 @@ paths:
                     expires_in: 1799
                     refresh_token_expires_in: 86326
                     refresh_token: xIMsJmuyyltCWYD7uftonNeBtSAQMldH
-                    scope: "tenant={tenant}"
+                    session_id: 45c9726e-77c8-4bd0-b29d-61ab56f59726
       servers:
       - url: https://api.emporix.io
         description: Production
@@ -407,7 +408,7 @@ components:
         refresh_token_expires_in:
           type: integer
           format: int32
-        scope:
+        session_id:
           type: string
     ValidateTokenResponse:
       type: object
@@ -440,14 +441,28 @@ components:
       properties:
         accessToken:
           type: string
+          deprecated: true
+        access_token:
+          type: string
         saasToken:
+          type: string
+          deprecated: true
+        saas_token:
           type: string
         expires_in:
           type: integer
           format: int32
         refreshToken:
           type: string
+          deprecated: true
+        refresh_token:
+          type: string
         refreshTokenExpiresIn:
+          type: string
+          deprecated: true
+        refresh_token_expires_in:
+          type: string
+        session_id:
           type: string
     LoginRequest:
       required:
