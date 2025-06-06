@@ -4,7 +4,7 @@ icon: graduation-cap
 
 # Webhooks Tutorial
 
-The Emporix Webhook Event Publishing works in the following way:
+The Emporix Webhook Event publishing works in the following way:
 
 1. When an event takes place and you subscribed to receiving notifications about this event, a message is sent to the Webhook Service.
 2. The Webhook Service forwards the message to the Event Gateway.
@@ -43,8 +43,8 @@ If there is no prior subscription to the event of your choice, the `metadata.ver
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="./api-reference/" %}
+[api-reference](./api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -64,8 +64,8 @@ In this example, you will subscribe to the following events: `catalog.created` a
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="./api-reference/" %}
+[api-reference](./api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -125,8 +125,8 @@ To generate the login link with the authentication token needed to connect a ten
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="./api-reference/" %}
+[api-reference](./api-reference/)
 {% endcontent-ref %}
 
 ```bash
