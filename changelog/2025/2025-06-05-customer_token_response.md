@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2025-06-05: OAuth Service - add session_id field to /login and /refreshauthtoken response
+# 2025-06-05: OAuth Service - added session_id field to /login and /refreshauthtoken response
 
 ## Overview
 
