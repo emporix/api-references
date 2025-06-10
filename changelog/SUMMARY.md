@@ -8,6 +8,8 @@
 
 ## 2025
 
+* [2025-06-12: Order Service - `calculatedPrice` has been enriched](2025/2025-06-12-order.md)
+* [2025-06-12: Cart Service - `calculatedPrice` has been enriched](2025/2025-06-12-cart.md)
 * [2025-06-05: OAuth Service - added session_id field to `login` and `refreshauthtoken` response](2025/2025-06-05-customer_token_response.md)
 * [2025-06-04: Cart Service - orderId added](2025/2025-06-04-cart_orderId.md)
 * [2025-06-04: Cart Service - auto populate product details](2025/2025-06-04-cart.md)
