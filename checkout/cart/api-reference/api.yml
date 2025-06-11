@@ -5639,7 +5639,7 @@ components:
         price:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'
-            - description: Total discounts price. When discounts are applied before tax the value equals price.netValue and price.grossValue for discounts applied after tax.
+            - description: Total discounts price. When discounts are applied before tax the value equals `price.netValue` and `price.grossValue` for discounts applied after tax.
         appliedDiscounts:
           type: array
           description: All applied discounts that are parts of the sum. Sum of all `discountedPrice.appliedDiscounts[].value` and `fees[].discountedPrice.appliedDiscounts[].value`.
