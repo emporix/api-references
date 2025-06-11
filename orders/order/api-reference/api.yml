@@ -12,7 +12,7 @@ tags:
   - name: Orders (tenant-managed)
     description: Manage tenant orders
   - name: Orders (customer-managed)
-    description: Manager customer orders
+    description: Manage customer orders
 paths:
   '/order-v2/{tenant}/salesorders':
     get:
@@ -2132,7 +2132,7 @@ components:
         price:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'
-            - description: Total discounts price. When discounts are applied before tax the value equals price.netValue and price.grossValue for discounts applied after tax.
+            - description: Total discounts price. When discounts are applied before tax the value equals `price.netValue` and `price.grossValue` for discounts applied after tax.
         appliedDiscounts:
           type: array
           description: All applied discounts that are parts of the sum.
