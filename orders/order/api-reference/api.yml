@@ -1873,7 +1873,7 @@ components:
         fees:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'
-            - description: The sum of all fees applied on the line items plus the payment fee *before discounts*
+            - description: The sum of all fees applied on the line items plus the payment fee *before discounts*.
         totalFee:
           allOf:
             - $ref: '#/components/schemas/calculatedPriceWithDiscounts'
