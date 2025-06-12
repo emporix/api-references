@@ -1877,7 +1877,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
     },
   }
 }
-</code></pre></td></tr><tr><td><code>totalDiscount</code></td><td><p>A summary of all discounts. It's the sum of all <code>lines[].totalDiscount</code> and shipping discounts.</p><pre><code>{
+</code></pre></td></tr><tr><td><code>totalDiscount</code></td><td><p>A summary of all discounts. It's the sum of all <code>lines[].totalDiscount</code> and shipping discounts. When discount is applied before tax the value equals <code>price.netValue</code> and <code>price.grossValue</code> for discount applied after tax.</p><pre><code>{
   "calculatedPrice": {
      "totalDiscount" : {
           "calculationType": "ApplyDiscountAfterTax",
