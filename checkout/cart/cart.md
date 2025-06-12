@@ -335,81 +335,152 @@ At the item level, there's a `calculatedPrice` attribute, which contains detaile
 <summary>See the item level calculation payload example</summary>
 
 ```json
-"calculatedPrice" : {
-      "price" : {
-        "netValue" : 100.0,
-        "grossValue" : 110.0,
-        "taxValue" : 10.0,
-        "taxCode" : "STANDARD",
-        "taxRate" : 10.0
+"calculatedPrice": {
+      "price": {
+          "netValue": 588.235,
+          "grossValue": 700.0,
+          "taxValue": 111.765,
+          "taxCode": "STANDARD",
+          "taxRate": 19.0
       },
-      "upliftValue" : {
-        "netValue" : 30.0,
-        "grossValue" : 33.0,
-        "taxValue" : 3.0,
-        "taxCode" : "STANDARD",
-        "taxRate" : 10.0
+      "discountedPrice": {
+          "netValue": 282.511,
+          "grossValue": 336.188,
+          "taxValue": 53.677,
+          "taxCode": "STANDARD",
+          "taxRate": 19.0,
+          "appliedDiscounts": [
+              {
+                  "id": "buy-2-get-1-free",
+                  "value": 280.000,
+                  "price": {
+                      "netValue": 235.294,
+                      "grossValue": 280.000,
+                      "taxValue": 44.706,
+                      "taxCode": "STANDARD",
+                      "taxRate": 19.0
+                  },
+                  "discountType": "PERCENT",
+                  "origin": "EXTERNAL"
+              },
+              {
+                  "id": "LS100EUROTOTAL",
+                  "value": 83.812,
+                  "price": {
+                      "netValue": 70.430,
+                      "grossValue": 83.812,
+                      "taxValue": 13.382,
+                      "taxCode": "STANDARD",
+                      "taxRate": 19.0
+                  },
+                  "discountType": "ABSOLUTE",
+                  "origin": "INTERNAL"
+              }
+          ]
       },
-      "discountedPrice" : {
-        "netValue" : 90.0,
-        "grossValue" : 99.0,
-        "taxValue" : 9.0,
-        "taxCode" : "STANDARD",
-        "taxRate" : 10.0,
-        "appliedDiscounts" : [ {
-          "id" : "LS10PTOTAL",
-          "value" : 10.0,
-          "discountType" : "PERCENT"
-        } ]
+      "fees": [
+          {
+              "id": "677d49ca3a421b451eab23f2",
+              "type": "ABSOLUTE",
+              "origin": "INTERNAL",
+              "name": {
+                  "de": "Apple Picking Fee",
+                  "en": "Apple Picking Fee"
+              },
+              "price": {
+                  "netValue": 3.5,
+                  "grossValue": 3.745,
+                  "taxValue": 0.245,
+                  "taxCode": "REDUCED",
+                  "taxRate": 7.0
+              },
+              "discountedPrice": {
+                  "netValue": 3.081,
+                  "grossValue": 3.297,
+                  "taxValue": 0.216,
+                  "taxCode": "REDUCED",
+                  "taxRate": 7.0,
+                  "appliedDiscounts": [
+                      {
+                          "id": "LS100EUROTOTAL",
+                          "value": 0.448,
+                          "price": {
+                              "netValue": 0.419,
+                              "grossValue": 0.448,
+                              "taxValue": 0.029,
+                              "taxCode": "REDUCED",
+                              "taxRate": 7.0
+                          },
+                          "discountType": "ABSOLUTE",
+                          "origin": "INTERNAL"
+                      }
+                  ]
+              }
+          }
+      ],
+      "totalFee": {
+          "netValue": 3.081,
+          "grossValue": 3.297,
+          "taxValue": 0.216,
+          "taxCode": "REDUCED",
+          "taxRate": 7.0,
+          "appliedDiscounts": [
+              {
+                  "id": "LS100EUROTOTAL",
+                  "value": 0.448,
+                  "price": {
+                      "netValue": 0.419,
+                      "grossValue": 0.448,
+                      "taxValue": 0.029,
+                      "taxCode": "REDUCED",
+                      "taxRate": 7.0
+                  },
+                  "discountType": "ABSOLUTE",
+                  "origin": "INTERNAL"
+              }
+          ]
       },
-      "fees" : [ {
-        "id" : "6793753e7d4bba47e2a99801",
-        "type" : "ABSOLUTE",
-        "origin": "EXTERNAL",
-        "name" : {
-          "en" : "Freight Fee"
-        },
-        "price" : {
-          "netValue" : 5.0,
-          "grossValue" : 5.0,
-          "taxValue" : 0
-        },
-        "discountedPrice" : {
-          "netValue" : 4.5,
-          "grossValue" : 4.5,
-          "taxValue" : 0.0,
-          "appliedDiscounts" : [ {
-            "id" : "LS10PTOTAL",
-            "value" : 0.5,
-            "discountType" : "PERCENT"
-          } ]
-        }
-      } ],
-      "totalFee" : {
-        "netValue" : 4.5,
-        "grossValue" : 4.5,
-        "taxValue" : 0.0,
-        "appliedDiscounts" : [ {
-          "id" : "LS10PTOTAL",
-          "value" : 0.5,
-          "discountType" : "PERCENT"
-        } ]
+      "totalDiscount": {
+          "calculationType": "ApplyDiscountAfterTax",
+          "value": 364.26,
+          "price": {
+              "netValue": 306.143,
+              "grossValue": 364.26,
+              "taxValue": 58.117
+          },
+          "appliedDiscounts": [
+              {
+                  "id": "buy-2-get-1-free",
+                  "value": 280.000,
+                  "price": {
+                      "netValue": 235.294,
+                      "grossValue": 280.000,
+                      "taxValue": 44.706,
+                      "taxCode": "STANDARD",
+                      "taxRate": 19.0
+                  },
+                  "discountType": "PERCENT",
+                  "origin": "EXTERNAL"
+              },
+              {
+                  "id": "LS100EUROTOTAL",
+                  "value": 84.260,
+                  "price": {
+                      "netValue": 70.849,
+                      "grossValue": 84.260,
+                      "taxValue": 13.411
+                  },
+                  "discountType": "ABSOLUTE",
+                  "origin": "INTERNAL"
+              }
+          ]
       },
-      "totalDiscount" : {
-        "calculationType" : "ApplyDiscountBeforeTax",
-        "value" : 10.5,
-        "appliedDiscounts" : [ {
-          "id" : "LS10PTOTAL",
-          "value" : 10.5,
-          "discountType" : "PERCENT"
-        } ]
-      },
-      "finalPrice" : {
-        "netValue" : 94.5,
-        "grossValue" : 103.5,
-        "taxValue" : 9.0
+      "finalPrice": {
+          "netValue": 285.592,
+          "grossValue": 339.485,
+          "taxValue": 53.893
       }
-    }
+  }
 ```
 
 </details>
@@ -420,90 +491,165 @@ At the item level, there's a `calculatedPrice` attribute, which contains detaile
 
 ```json
   "calculatedPrice" : {
-    "price" : {
-      "netValue" : 100.0,
-      "grossValue" : 110.0,
-      "taxValue" : 10.0,
-      "taxCode" : "STANDARD",
-      "taxRate" : 10.0
-    },
-    "upliftValue" : {
-      "netValue" : 30.0,
-      "grossValue" : 33.0,
-      "taxValue" : 3.0,
-      "taxCode" : "STANDARD",
-      "taxRate" : 10.0
-    },
-    "discountedPrice" : {
-      "netValue" : 90.0,
-      "grossValue" : 99.0,
-      "taxValue" : 9.0,
-      "taxCode" : "STANDARD",
-      "taxRate" : 10.0,
-      "appliedDiscounts" : [ {
-        "id" : "LS10PTOTAL",
-        "value" : 10.0,
-        "discountType" : "PERCENT"
-      } ]
-    },
-    "totalFee" : {
-      "netValue" : 4.5,
-      "grossValue" : 4.5,
-      "taxValue" : 0.0,
-      "appliedDiscounts" : [ {
-        "id" : "LS10PTOTAL",
-        "value" : 0.5,
-        "discountType" : "PERCENT"
-      } ]
-    },
-    "totalDiscount" : {
-      "calculationType" : "ApplyDiscountBeforeTax",
-      "value" : 11.22,
-      "appliedDiscounts" : [ {
-        "id" : "LS10PTOTAL",
-        "value" : 11.22,
-        "discountType" : "PERCENT"
-      } ]
-    },
-    "totalShipping" : {
-      "netValue" : 6.5,
-      "grossValue" : 6.955,
-      "taxValue" : 0.455,
-      "taxCode" : "REDUCED",
-      "taxRate" : 7.0,
-      "appliedDiscounts" : [ {
-        "id" : "LS10PTOTAL",
-        "value" : 0.72,
-        "discountType" : "PERCENT"
-      } ]
-    },
-    "finalPrice" : {
-      "netValue" : 101.0,
-      "grossValue" : 110.455,
-      "taxValue" : 9.455,
-       "taxAggregate":
-                "lines": [
-                    {
-                        "netValue" : 96.5,
-                        "grossValue" : 103.26,
-                        "taxValue" : 6.76,
-                        "taxCode" : "REDUCED",
-                        "taxRate" : 7.0
-                    },
-                    {
-                        "netValue" : 263.19,
-                        "grossValue" : 313.2,
-                        "taxValue" : 50.01,
-                        "taxCode" : "STANDARD",
-                        "taxRate" : 19.0
-                    },
-                    {
-                        "netValue" : 9.0,
-                        "grossValue" : 9.0,
-                        "taxValue" : 0.0
-                    }
-                ]
-            }
+      "price": {
+          "netValue": 700.385,
+          "grossValue": 820.0,
+          "taxValue": 119.615
+      },
+      "upliftValue": {
+          "netValue": 30.841,
+          "grossValue": 33.0,
+          "taxValue": 2.159,
+          "taxCode": "REDUCED",
+          "taxRate": 7.0
+      },
+      "discountedPrice": {
+          "netValue": 381.233,
+          "grossValue": 441.821,
+          "taxValue": 60.588,
+          "appliedDiscounts": [
+              {
+                  "id": "buy-2-get-1-free",
+                  "value": 280.000,
+                  "price": {
+                      "netValue": 235.294,
+                      "grossValue": 280.000,
+                      "taxValue": 44.706,
+                      "taxCode": "STANDARD",
+                      "taxRate": 19.0
+                  },
+                  "discountType": "PERCENT",
+                  "origin": "EXTERNAL"
+              },
+              {
+                  "id": "LS100EUROTOTAL",
+                  "value": 98.179,
+                  "price": {
+                      "netValue": 83.857,
+                      "grossValue": 98.179,
+                      "taxValue": 14.322
+                  },
+                  "discountType": "ABSOLUTE",
+                  "origin": "INTERNAL"
+              }
+          ]
+      },
+      "fees": {
+          "netValue": 7.0,
+          "grossValue": 7.49,
+          "taxValue": 0.49,
+          "taxCode": "REDUCED",
+          "taxRate": 7.0
+      },
+      "totalFee": {
+          "netValue": 6.162,
+          "grossValue": 6.594,
+          "taxValue": 0.432,
+          "taxCode": "REDUCED",
+          "taxRate": 7.0,
+          "appliedDiscounts": [
+              {
+                  "id": "LS100EUROTOTAL",
+                  "value": 0.896,
+                  "price": {
+                      "netValue": 0.838,
+                      "grossValue": 0.896,
+                      "taxValue": 0.058,
+                      "taxCode": "REDUCED",
+                      "taxRate": 7.0
+                  },
+                  "discountType": "ABSOLUTE",
+                  "origin": "INTERNAL"
+              }
+          ]
+      },
+      "shipping": {
+          "netValue": 7.22,
+          "grossValue": 7.725,
+          "taxValue": 0.505,
+          "taxCode": "REDUCED",
+          "taxRate": 7.0
+      },
+      "totalShipping": {
+          "netValue": 6.355,
+          "grossValue": 6.8,
+          "taxValue": 0.445,
+          "taxCode": "REDUCED",
+          "taxRate": 7.0,
+          "appliedDiscounts": [
+              {
+                  "id": "LS100EUROTOTAL",
+                  "value": 0.925,
+                  "price": {
+                      "netValue": 0.864,
+                      "grossValue": 0.925,
+                      "taxValue": 0.061,
+                      "taxCode": "REDUCED",
+                      "taxRate": 7.0
+                  },
+                  "discountType": "ABSOLUTE",
+                  "origin": "INTERNAL"
+              }
+          ]
+      },
+      "totalDiscount": {
+          "calculationType": "ApplyDiscountAfterTax",
+          "value": 380.0,
+          "price": {
+              "netValue": 320.853,
+              "grossValue": 380.0,
+              "taxValue": 59.147
+          },
+          "appliedDiscounts": [
+              {
+                  "id": "buy-2-get-1-free",
+                  "value": 280.000,
+                  "price": {
+                      "netValue": 235.294,
+                      "grossValue": 280.000,
+                      "taxValue": 44.706,
+                      "taxCode": "STANDARD",
+                      "taxRate": 19.0
+                  },
+                  "discountType": "PERCENT",
+                  "origin": "EXTERNAL"
+              },
+              {
+                  "id": "LS100EUROTOTAL",
+                  "value": 100.000,
+                  "price": {
+                      "netValue": 85.559,
+                      "grossValue": 100.000,
+                      "taxValue": 14.441
+                  },
+                  "discountType": "ABSOLUTE",
+                  "origin": "INTERNAL"
+              }
+          ]
+      },
+      "finalPrice": {
+          "netValue": 393.75,
+          "grossValue": 455.215,
+          "taxValue": 61.465,
+          "taxAggregate": {
+              "lines": [
+                  {
+                      "netValue": 111.239,
+                      "grossValue": 119.027,
+                      "taxValue": 7.788,
+                      "taxCode": "REDUCED",
+                      "taxRate": 7.0
+                  },
+                  {
+                      "netValue": 282.511,
+                      "grossValue": 336.188,
+                      "taxValue": 53.677,
+                      "taxCode": "STANDARD",
+                      "taxRate": 19.0
+                  }
+              ]
+          }
+      }
   }
 ```
 
