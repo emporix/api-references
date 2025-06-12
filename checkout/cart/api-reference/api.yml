@@ -128,7 +128,7 @@ paths:
                     customerId: "45620894"
                     currency: EUR
                     siteCode: GrossSite
-                    type: shoppingDUpaeaaa2s12234
+                    type: shopping
                     channel:
                       name: storefront
                       source: https://your-storefront.com/
@@ -944,7 +944,7 @@ paths:
                       customerId: "45620894"
                       currency: EUR
                       siteCode: GrossSite
-                      type: shoppingDUpaeaaa2s12234
+                      type: shopping
                       channel:
                         name: storefront
                         source: https://your-storefront.com/
@@ -1654,7 +1654,7 @@ paths:
                     customerId: "45620894"
                     currency: EUR
                     siteCode: GrossSite
-                    type: shoppingDUpaeaaa2s12234
+                    type: shopping
                     channel:
                       name: storefront
                       source: https://your-storefront.com/
