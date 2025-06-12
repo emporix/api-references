@@ -1,6 +1,7 @@
 # Table of contents
 
 * [Emporix API](README.md)
+  * [List of API Services](readme/list-of-api-services.md)
 * [OpenAPI Generator](openapi-generator.md)
 
 ## Standard Practices
