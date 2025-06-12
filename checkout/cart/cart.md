@@ -519,363 +519,892 @@ This calculation method provides a comprehensive breakdown of prices, including 
 
 ```json
 {
-  "id" : "67b73cf5e4081e623d81fa47",
-  "yrn" : "urn:yaas:hybris:cart:cart:b2b2cstage;67b73cf5e4081e623d81fa47",
-  "customerId" : "45620894",
-  "currency" : "EUR",
-  "siteCode" : "GrossSite",
-  "type" : "shopping",
-  "channel" : {
-    "name" : "storefront",
-    "source" : "https://your-storefront.com/"
-  },
-  "items" : [ {
-    "id" : "0",
-    "type" : "INTERNAL",
-    "itemYrn" : "urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s27-gross",
-    "quantity" : 2.0,
-    "effectiveQuantity" : 2.0,
-    "unitPrice" : {
-      "netValue" : 46.22,
-      "grossValue" : 55.0,
-      "taxValue" : 8.78,
-      "taxCode" : "STANDARD",
-      "taxRate" : 19.0
+    "id": "68481e9e8bf22744fc578572",
+    "yrn": "urn:yaas:hybris:cart:cart:b2b2cstage;68481e9e8bf22744fc578572",
+    "customerId": "45620894",
+    "currency": "EUR",
+    "siteCode": "GrossSite",
+    "type": "shoppingDUpaeaaa2s12234",
+    "channel": {
+        "name": "storefront",
+        "source": "https://your-storefront.com/"
     },
-    "couponDiscounts" : [ {
-      "couponId" : "LS10PTOTAL",
-      "value" : 11.0
-    } ],
-    "calculatedPrice" : {
-      "price" : {
-        "netValue" : 92.44,
-        "grossValue" : 110.0,
-        "taxValue" : 17.56,
-        "taxCode" : "STANDARD",
-        "taxRate" : 19.0
-      },
-      "discountedPrice" : {
-        "netValue" : 83.19,
-        "grossValue" : 99.0,
-        "taxValue" : 15.81,
-        "taxCode" : "STANDARD",
-        "taxRate" : 19.0,
-        "appliedDiscounts" : [ {
-          "id" : "LS10PTOTAL",
-          "value" : 11.0,
-          "discountType" : "PERCENT"
-        } ]
-      },
-      "totalDiscount" : {
-        "calculationType" : "ApplyDiscountAfterTax",
-        "value" : 11.0,
-        "appliedDiscounts" : [ {
-          "id" : "LS10PTOTAL",
-          "value" : 11.0,
-          "discountType" : "PERCENT"
-        } ]
-      },
-      "finalPrice" : {
-        "netValue" : 83.19,
-        "grossValue" : 99.0,
-        "taxValue" : 15.81,
-        "taxCode" : "STANDARD",
-        "taxRate" : 19.0
-      }
-    }
-  }, {
-    "id" : "1",
-    "type" : "EXTERNAL",
-    "itemYrn" : "urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross",
-    "quantity" : 1.0,
-    "effectiveQuantity" : 1.0,
-    "couponDiscounts" : [ {
-      "couponId" : "LS10PTOTAL",
-      "value" : 11.2
-    } ],
-    "calculatedPrice" : {
-      "price" : {
-        "netValue" : 100.0,
-        "grossValue" : 107.0,
-        "taxValue" : 7.0,
-        "taxCode" : "REDUCED",
-        "taxRate" : 7.0
-      },
-      "upliftValue" : {
-        "netValue" : 30.0,
-        "grossValue" : 32.1,
-        "taxValue" : 2.1,
-        "taxCode" : "REDUCED",
-        "taxRate" : 7.0
-      },
-      "discountedPrice" : {
-        "netValue" : 90.0,
-        "grossValue" : 96.3,
-        "taxValue" : 6.3,
-        "taxCode" : "REDUCED",
-        "taxRate" : 7.0,
-        "appliedDiscounts" : [ {
-          "id" : "LS10PTOTAL",
-          "value" : 10.7,
-          "discountType" : "PERCENT"
-        } ]
-      },
-      "fees" : [ {
-        "id" : "67b73d01e4081e623d81fa48",
-        "type" : "ABSOLUTE",
-        "origin" : "EXTERNAL",
-        "name" : {
-          "en" : "Freight Fee"
+    "items": [
+        {
+            "id": "0",
+            "keepAsSeparateLineItem": true,
+            "type": "INTERNAL",
+            "product": {
+                "id": "samsung-galaxy-s24-gross",
+                "sku": "Samsung Galaxy s24 gross",
+                "code": "Samsung Galaxy s24 gross",
+                "name": "Samsung Galaxy s24 gross",
+                "localizedName": {
+                    "en": "Samsung Galaxy s24 gross"
+                },
+                "images": [
+                    {
+                        "id": "67169928ceaab717e17f3734",
+                        "url": "http://res.cloudinary.com/saas-ag/image/upload/v1729534248/b2b2cstage/media/67169928ceaab717e17f3734"
+                    }
+                ]
+            },
+            "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross",
+            "quantity": 2.0,
+            "effectiveQuantity": 2.0,
+            "price": {
+                "priceId": "679ca63dbcdefe5b380c98bc",
+                "priceListId": "abc123",
+                "originalAmount": 350.0,
+                "effectiveAmount": 350.0,
+                "currency": "EUR"
+            },
+            "unitPrice": {
+                "netValue": 294.118,
+                "grossValue": 350.0,
+                "taxValue": 55.882,
+                "taxCode": "STANDARD",
+                "taxRate": 19.0
+            },
+            "itemPrice": {
+                "amount": 700.0,
+                "currency": "EUR"
+            },
+            "itemTaxInfo": [
+                {
+                    "name": "STANDARD",
+                    "value": {
+                        "amount": 111.76
+                    },
+                    "rate": 19.0,
+                    "grossValue": 700.00,
+                    "netValue": 588.24
+                }
+            ],
+            "fees": {
+                "elements": [
+                    {
+                        "yrn": "urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2",
+                        "taxCode": "REDUCED",
+                        "total": {
+                            "subTotal": 3.50,
+                            "totalTax": 0.00,
+                            "total": 3.08,
+                            "discount": 0.42
+                        },
+                        "name": {
+                            "de": "Apple Picking Fee",
+                            "en": "Apple Picking Fee"
+                        }
+                    }
+                ],
+                "total": {
+                    "subTotal": 3.50,
+                    "totalTax": 0.00,
+                    "total": 3.08,
+                    "discount": 0.42
+                }
+            },
+            "authorizedAmount": {
+                "amount": 700.0,
+                "currency": "EUR"
+            },
+            "totalDiscount": {
+                "amount": 84.32,
+                "currency": "EUR"
+            },
+            "couponDiscounts": [
+                {
+                    "couponId": "LS100EUROTOTAL",
+                    "value": 84.32
+                }
+            ],
+            "externalDiscounts": [
+                {
+                    "id": "buy-2-get-1-free",
+                    "discountType": "PERCENT",
+                    "value": 40.00,
+                    "sequence": 1
+                }
+            ],
+            "calculatedPrice": {
+                "price": {
+                    "netValue": 588.235,
+                    "grossValue": 700.0,
+                    "taxValue": 111.765,
+                    "taxCode": "STANDARD",
+                    "taxRate": 19.0
+                },
+                "discountedPrice": {
+                    "netValue": 282.511,
+                    "grossValue": 336.188,
+                    "taxValue": 53.677,
+                    "taxCode": "STANDARD",
+                    "taxRate": 19.0,
+                    "appliedDiscounts": [
+                        {
+                            "id": "buy-2-get-1-free",
+                            "value": 280.000,
+                            "price": {
+                                "netValue": 235.294,
+                                "grossValue": 280.000,
+                                "taxValue": 44.706,
+                                "taxCode": "STANDARD",
+                                "taxRate": 19.0
+                            },
+                            "discountType": "PERCENT",
+                            "origin": "EXTERNAL"
+                        },
+                        {
+                            "id": "LS100EUROTOTAL",
+                            "value": 83.812,
+                            "price": {
+                                "netValue": 70.430,
+                                "grossValue": 83.812,
+                                "taxValue": 13.382,
+                                "taxCode": "STANDARD",
+                                "taxRate": 19.0
+                            },
+                            "discountType": "ABSOLUTE",
+                            "origin": "INTERNAL"
+                        }
+                    ]
+                },
+                "fees": [
+                    {
+                        "id": "677d49ca3a421b451eab23f2",
+                        "type": "ABSOLUTE",
+                        "origin": "INTERNAL",
+                        "name": {
+                            "de": "Apple Picking Fee",
+                            "en": "Apple Picking Fee"
+                        },
+                        "price": {
+                            "netValue": 3.5,
+                            "grossValue": 3.745,
+                            "taxValue": 0.245,
+                            "taxCode": "REDUCED",
+                            "taxRate": 7.0
+                        },
+                        "discountedPrice": {
+                            "netValue": 3.081,
+                            "grossValue": 3.297,
+                            "taxValue": 0.216,
+                            "taxCode": "REDUCED",
+                            "taxRate": 7.0,
+                            "appliedDiscounts": [
+                                {
+                                    "id": "LS100EUROTOTAL",
+                                    "value": 0.448,
+                                    "price": {
+                                        "netValue": 0.419,
+                                        "grossValue": 0.448,
+                                        "taxValue": 0.029,
+                                        "taxCode": "REDUCED",
+                                        "taxRate": 7.0
+                                    },
+                                    "discountType": "ABSOLUTE",
+                                    "origin": "INTERNAL"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "totalFee": {
+                    "netValue": 3.081,
+                    "grossValue": 3.297,
+                    "taxValue": 0.216,
+                    "taxCode": "REDUCED",
+                    "taxRate": 7.0,
+                    "appliedDiscounts": [
+                        {
+                            "id": "LS100EUROTOTAL",
+                            "value": 0.448,
+                            "price": {
+                                "netValue": 0.419,
+                                "grossValue": 0.448,
+                                "taxValue": 0.029,
+                                "taxCode": "REDUCED",
+                                "taxRate": 7.0
+                            },
+                            "discountType": "ABSOLUTE",
+                            "origin": "INTERNAL"
+                        }
+                    ]
+                },
+                "totalDiscount": {
+                    "calculationType": "ApplyDiscountAfterTax",
+                    "value": 364.26,
+                    "price": {
+                        "netValue": 306.143,
+                        "grossValue": 364.26,
+                        "taxValue": 58.117
+                    },
+                    "appliedDiscounts": [
+                        {
+                            "id": "buy-2-get-1-free",
+                            "value": 280.000,
+                            "price": {
+                                "netValue": 235.294,
+                                "grossValue": 280.000,
+                                "taxValue": 44.706,
+                                "taxCode": "STANDARD",
+                                "taxRate": 19.0
+                            },
+                            "discountType": "PERCENT",
+                            "origin": "EXTERNAL"
+                        },
+                        {
+                            "id": "LS100EUROTOTAL",
+                            "value": 84.260,
+                            "price": {
+                                "netValue": 70.849,
+                                "grossValue": 84.260,
+                                "taxValue": 13.411
+                            },
+                            "discountType": "ABSOLUTE",
+                            "origin": "INTERNAL"
+                        }
+                    ]
+                },
+                "finalPrice": {
+                    "netValue": 285.592,
+                    "grossValue": 339.485,
+                    "taxValue": 53.893
+                }
+            }
         },
-        "price" : {
-          "netValue" : 5.0,
-          "grossValue" : 5.0,
-          "taxValue" : 0.0
+        {
+            "id": "1",
+            "keepAsSeparateLineItem": false,
+            "type": "INTERNAL",
+            "product": {
+                "id": "shirt--301722c1-23e8-42b4-a4d8-1a5480fe3ea5",
+                "sku": "shirt--red",
+                "code": "shirt--red",
+                "name": "shirt",
+                "localizedName": {
+                    "en": "shirt"
+                },
+                "description": ""
+            },
+            "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;shirt--301722c1-23e8-42b4-a4d8-1a5480fe3ea5",
+            "quantity": 1.0,
+            "effectiveQuantity": 1.0,
+            "price": {
+                "priceId": "6818c032524d1c16623037e2",
+                "originalAmount": 10.0,
+                "effectiveAmount": 10.0,
+                "currency": "EUR"
+            },
+            "unitPrice": {
+                "netValue": 9.346,
+                "grossValue": 10.0,
+                "taxValue": 0.654,
+                "taxCode": "REDUCED",
+                "taxRate": 7.0
+            },
+            "itemPrice": {
+                "amount": 10.0,
+                "currency": "EUR"
+            },
+            "itemTaxInfo": [
+                {
+                    "name": "REDUCED",
+                    "value": {
+                        "amount": 0.65
+                    },
+                    "rate": 7.0,
+                    "grossValue": 10.00,
+                    "netValue": 9.35
+                }
+            ],
+            "fees": {
+                "total": {
+                    "subTotal": 0.00,
+                    "totalTax": 0.00,
+                    "total": 0.00,
+                    "discount": 0.00
+                }
+            },
+            "authorizedAmount": {
+                "amount": 10.0,
+                "currency": "EUR"
+            },
+            "totalDiscount": {
+                "amount": 1.2,
+                "currency": "EUR"
+            },
+            "couponDiscounts": [
+                {
+                    "couponId": "LS100EUROTOTAL",
+                    "value": 1.20
+                }
+            ],
+            "calculatedPrice": {
+                "price": {
+                    "netValue": 9.346,
+                    "grossValue": 10.0,
+                    "taxValue": 0.654,
+                    "taxCode": "REDUCED",
+                    "taxRate": 7.0
+                },
+                "discountedPrice": {
+                    "netValue": 8.227,
+                    "grossValue": 8.803,
+                    "taxValue": 0.576,
+                    "taxCode": "REDUCED",
+                    "taxRate": 7.0,
+                    "appliedDiscounts": [
+                        {
+                            "id": "LS100EUROTOTAL",
+                            "value": 1.197,
+                            "price": {
+                                "netValue": 1.119,
+                                "grossValue": 1.197,
+                                "taxValue": 0.078,
+                                "taxCode": "REDUCED",
+                                "taxRate": 7.0
+                            },
+                            "discountType": "ABSOLUTE",
+                            "origin": "INTERNAL"
+                        }
+                    ]
+                },
+                "totalDiscount": {
+                    "calculationType": "ApplyDiscountAfterTax",
+                    "value": 1.197,
+                    "price": {
+                        "netValue": 1.119,
+                        "grossValue": 1.197,
+                        "taxValue": 0.078,
+                        "taxCode": "REDUCED",
+                        "taxRate": 7.0
+                    },
+                    "appliedDiscounts": [
+                        {
+                            "id": "LS100EUROTOTAL",
+                            "value": 1.197,
+                            "price": {
+                                "netValue": 1.119,
+                                "grossValue": 1.197,
+                                "taxValue": 0.078,
+                                "taxCode": "REDUCED",
+                                "taxRate": 7.0
+                            },
+                            "discountType": "ABSOLUTE",
+                            "origin": "INTERNAL"
+                        }
+                    ]
+                },
+                "finalPrice": {
+                    "netValue": 8.227,
+                    "grossValue": 8.803,
+                    "taxValue": 0.576,
+                    "taxCode": "REDUCED",
+                    "taxRate": 7.0
+                }
+            }
         },
-        "discountedPrice" : {
-          "netValue" : 4.5,
-          "grossValue" : 4.5,
-          "taxValue" : 0.0,
-          "appliedDiscounts" : [ {
-            "id" : "LS10PTOTAL",
-            "value" : 0.5,
-            "discountType" : "PERCENT"
-          } ]
+        {
+            "id": "2",
+            "keepAsSeparateLineItem": true,
+            "type": "INTERNAL",
+            "product": {
+                "id": "samsung-galaxy-s27-gross",
+                "sku": "samsung-galaxy-s27-gross",
+                "code": "samsung-galaxy-s27-gross",
+                "name": "samsung-galaxy-s27-gross",
+                "localizedName": {
+                    "en": "samsung-galaxy-s27-gross"
+                },
+                "description": "samsung-galaxy-s27-gross"
+            },
+            "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s27-gross",
+            "quantity": 2.0,
+            "effectiveQuantity": 2.0,
+            "price": {
+                "priceId": "6797da2f3537716a5a537ecf",
+                "originalAmount": 55.0,
+                "effectiveAmount": 55.0,
+                "currency": "EUR"
+            },
+            "unitPrice": {
+                "netValue": 51.402,
+                "grossValue": 55.0,
+                "taxValue": 3.598,
+                "taxCode": "REDUCED",
+                "taxRate": 7.0
+            },
+            "itemPrice": {
+                "amount": 110.0,
+                "currency": "EUR"
+            },
+            "itemTaxInfo": [
+                {
+                    "name": "REDUCED",
+                    "value": {
+                        "amount": 7.2
+                    },
+                    "rate": 7.0,
+                    "grossValue": 110.00,
+                    "netValue": 102.80
+                }
+            ],
+            "fees": {
+                "elements": [
+                    {
+                        "yrn": "urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2",
+                        "taxCode": "REDUCED",
+                        "total": {
+                            "subTotal": 3.50,
+                            "totalTax": 0.00,
+                            "total": 3.08,
+                            "discount": 0.42
+                        },
+                        "name": "Apple Picking Fee"
+                    }
+                ],
+                "total": {
+                    "subTotal": 3.50,
+                    "totalTax": 0.00,
+                    "total": 3.08,
+                    "discount": 0.42
+                }
+            },
+            "authorizedAmount": {
+                "amount": 143.0,
+                "currency": "EUR"
+            },
+            "totalDiscount": {
+                "amount": 13.61,
+                "currency": "EUR"
+            },
+            "couponDiscounts": [
+                {
+                    "couponId": "LS100EUROTOTAL",
+                    "value": 13.61
+                }
+            ],
+            "calculatedPrice": {
+                "price": {
+                    "netValue": 102.804,
+                    "grossValue": 110.0,
+                    "taxValue": 7.196,
+                    "taxCode": "REDUCED",
+                    "taxRate": 7.0
+                },
+                "upliftValue": {
+                    "netValue": 30.841,
+                    "grossValue": 33.0,
+                    "taxValue": 2.159,
+                    "taxCode": "REDUCED",
+                    "taxRate": 7.0
+                },
+                "discountedPrice": {
+                    "netValue": 90.495,
+                    "grossValue": 96.83,
+                    "taxValue": 6.335,
+                    "taxCode": "REDUCED",
+                    "taxRate": 7.0,
+                    "appliedDiscounts": [
+                        {
+                            "id": "LS100EUROTOTAL",
+                            "value": 13.170,
+                            "price": {
+                                "netValue": 12.308,
+                                "grossValue": 13.170,
+                                "taxValue": 0.862,
+                                "taxCode": "REDUCED",
+                                "taxRate": 7.0
+                            },
+                            "discountType": "ABSOLUTE",
+                            "origin": "INTERNAL"
+                        }
+                    ]
+                },
+                "fees": [
+                    {
+                        "id": "677d49ca3a421b451eab23f2",
+                        "type": "ABSOLUTE",
+                        "origin": "INTERNAL",
+                        "name": "Apple Picking Fee",
+                        "price": {
+                            "netValue": 3.5,
+                            "grossValue": 3.745,
+                            "taxValue": 0.245,
+                            "taxCode": "REDUCED",
+                            "taxRate": 7.0
+                        },
+                        "discountedPrice": {
+                            "netValue": 3.081,
+                            "grossValue": 3.297,
+                            "taxValue": 0.216,
+                            "taxCode": "REDUCED",
+                            "taxRate": 7.0,
+                            "appliedDiscounts": [
+                                {
+                                    "id": "LS100EUROTOTAL",
+                                    "value": 0.448,
+                                    "price": {
+                                        "netValue": 0.419,
+                                        "grossValue": 0.448,
+                                        "taxValue": 0.029,
+                                        "taxCode": "REDUCED",
+                                        "taxRate": 7.0
+                                    },
+                                    "discountType": "ABSOLUTE",
+                                    "origin": "INTERNAL"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "totalFee": {
+                    "netValue": 3.081,
+                    "grossValue": 3.297,
+                    "taxValue": 0.216,
+                    "taxCode": "REDUCED",
+                    "taxRate": 7.0,
+                    "appliedDiscounts": [
+                        {
+                            "id": "LS100EUROTOTAL",
+                            "value": 0.448,
+                            "price": {
+                                "netValue": 0.419,
+                                "grossValue": 0.448,
+                                "taxValue": 0.029,
+                                "taxCode": "REDUCED",
+                                "taxRate": 7.0
+                            },
+                            "discountType": "ABSOLUTE",
+                            "origin": "INTERNAL"
+                        }
+                    ]
+                },
+                "totalDiscount": {
+                    "calculationType": "ApplyDiscountAfterTax",
+                    "value": 13.618,
+                    "price": {
+                        "netValue": 12.727,
+                        "grossValue": 13.618,
+                        "taxValue": 0.891,
+                        "taxCode": "REDUCED",
+                        "taxRate": 7.0
+                    },
+                    "appliedDiscounts": [
+                        {
+                            "id": "LS100EUROTOTAL",
+                            "value": 13.618,
+                            "price": {
+                                "netValue": 12.727,
+                                "grossValue": 13.618,
+                                "taxValue": 0.891,
+                                "taxCode": "REDUCED",
+                                "taxRate": 7.0
+                            },
+                            "discountType": "ABSOLUTE",
+                            "origin": "INTERNAL"
+                        }
+                    ]
+                },
+                "finalPrice": {
+                    "netValue": 93.576,
+                    "grossValue": 100.127,
+                    "taxValue": 6.551,
+                    "taxCode": "REDUCED",
+                    "taxRate": 7.0
+                }
+            }
         }
-      } ],
-      "totalFee" : {
-        "netValue" : 4.5,
-        "grossValue" : 4.5,
-        "taxValue" : 0.0,
-        "appliedDiscounts" : [ {
-          "id" : "LS10PTOTAL",
-          "value" : 0.5,
-          "discountType" : "PERCENT"
-        } ]
-      },
-      "totalDiscount" : {
-        "calculationType" : "ApplyDiscountAfterTax",
-        "value" : 11.2,
-        "appliedDiscounts" : [ {
-          "id" : "LS10PTOTAL",
-          "value" : 11.2,
-          "discountType" : "PERCENT"
-        } ]
-      },
-      "finalPrice" : {
-        "netValue" : 94.5,
-        "grossValue" : 100.8,
-        "taxValue" : 6.3
-      }
-    }
-  }, {
-    "id" : "2",
-    "type" : "EXTERNAL",
-    "product" : {
-      "id" : "myTestId",
-      "sku" : "sku",
-      "name" : "myExternalProduct",
-      "description" : "testExternalProduct",
-      "images" : [ {
-        "id" : "imageid",
-        "url" : "imageURL"
-      } ]
-    },
-    "quantity" : 2.0,
-    "effectiveQuantity" : 2.0,
-    "unitPrice" : {
-      "netValue" : 100.0,
-      "grossValue" : 119.0,
-      "taxValue" : 19.0,
-      "taxCode" : "STANDARD",
-      "taxRate" : 19.0
-    },
-    "couponDiscounts" : [ {
-      "couponId" : "LS10PTOTAL",
-      "value" : 24.3
-    } ],
-    "calculatedPrice" : {
-      "price" : {
-        "netValue" : 200.0,
-        "grossValue" : 238.0,
-        "taxValue" : 38.0,
-        "taxCode" : "STANDARD",
-        "taxRate" : 19.0
-      },
-      "discountedPrice" : {
-        "netValue" : 180.0,
-        "grossValue" : 214.2,
-        "taxValue" : 34.2,
-        "taxCode" : "STANDARD",
-        "taxRate" : 19.0,
-        "appliedDiscounts" : [ {
-          "id" : "LS10PTOTAL",
-          "value" : 23.8,
-          "discountType" : "PERCENT"
-        } ]
-      },
-      "fees" : [ {
-        "id" : "67b73d04e4081e623d81fa49",
-        "type" : "ABSOLUTE",
-        "origin" : "EXTERNAL",
-        "name" : {
-          "en" : "Freight Fee"
-        },
-        "price" : {
-          "netValue" : 5.0,
-          "grossValue" : 5.0,
-          "taxValue" : 0.0
-        },
-        "discountedPrice" : {
-          "netValue" : 4.5,
-          "grossValue" : 4.5,
-          "taxValue" : 0.0,
-          "appliedDiscounts" : [ {
-            "id" : "LS10PTOTAL",
-            "value" : 0.5,
-            "discountType" : "PERCENT"
-          } ]
+    ],
+    "discounts": [
+        {
+            "id": "0",
+            "code": "LS100EUROTOTAL",
+            "amount": 100.0,
+            "currency": "EUR",
+            "name": "LS100EUROTOTAL",
+            "calculationType": "ApplyDiscountBeforeTax",
+            "valid": true,
+            "links": [
+                {
+                    "rel": "validate",
+                    "title": "Coupon Validation",
+                    "href": "https://api-stage.emporix.io/coupon/b2b2cstage/coupons/LS100EUROTOTAL/validation",
+                    "type": "application/json"
+                },
+                {
+                    "rel": "redeem",
+                    "title": "Coupon Redemption",
+                    "href": "https://api-stage.emporix.io/coupon/b2b2cstage/coupons/LS100EUROTOTAL/redemptions",
+                    "type": "application/json"
+                }
+            ],
+            "discountType": "ABSOLUTE",
+            "discountCalculationType": "TOTAL",
+            "categoryRestricted": false
         }
-      } ],
-      "totalFee" : {
-        "netValue" : 4.5,
-        "grossValue" : 4.5,
-        "taxValue" : 0.0,
-        "appliedDiscounts" : [ {
-          "id" : "LS10PTOTAL",
-          "value" : 0.5,
-          "discountType" : "PERCENT"
-        } ]
-      },
-      "totalDiscount" : {
-        "calculationType" : "ApplyDiscountAfterTax",
-        "value" : 24.3,
-        "appliedDiscounts" : [ {
-          "id" : "LS10PTOTAL",
-          "value" : 24.3,
-          "discountType" : "PERCENT"
-        } ]
-      },
-      "finalPrice" : {
-        "netValue" : 184.5,
-        "grossValue" : 218.7,
-        "taxValue" : 34.2
-      }
+    ],
+    "feeYrnAggregate": {
+        "elements": [
+            {
+                "yrn": "urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2",
+                "taxCode": "REDUCED",
+                "total": {
+                    "subTotal": 7.00,
+                    "totalTax": 0.00,
+                    "total": 6.16,
+                    "discount": 0.84
+                },
+                "name": {
+                    "de": "Apple Picking Fee",
+                    "en": "Apple Picking Fee"
+                }
+            }
+        ],
+        "total": {
+            "subTotal": 7.00,
+            "totalTax": 0.00,
+            "total": 6.16,
+            "discount": 0.84
+        }
+    },
+    "totalPrice": {
+        "amount": 734.22,
+        "currency": "EUR"
+    },
+    "subTotalPrice": {
+        "amount": 820.0,
+        "currency": "EUR"
+    },
+    "shipping": {
+        "fee": {
+            "amount": 7.22,
+            "currency": "EUR"
+        },
+        "total": {
+            "subTotal": 7.22,
+            "totalTax": 0.00,
+            "total": 6.35,
+            "discount": 0.87
+        }
+    },
+    "totalUnitsCount": 5.0,
+    "metadata": {
+        "createdAt": "2025-06-10T12:01:34.057Z",
+        "modifiedAt": "2025-06-10T12:23:14.894Z",
+        "calculatedAt": "2025-06-10T12:23:14.894Z",
+        "version": 5
+    },
+    "totalTax": {
+        "amount": 0.0,
+        "currency": "EUR"
+    },
+    "taxAggregate": {
+        "lines": [
+            {
+                "name": "REDUCED",
+                "amount": 7.85,
+                "rate": 7.0,
+                "taxable": 120.0
+            },
+            {
+                "name": "STANDARD",
+                "amount": 111.77,
+                "rate": 19.0,
+                "taxable": 700.01
+            }
+        ]
+    },
+    "subtotalAggregate": {
+        "currency": "EUR",
+        "netValue": 700.39,
+        "grossValue": 820.01,
+        "taxValue": 119.62
+    },
+    "totalDiscount": {
+        "amount": 100.0,
+        "currency": "EUR"
+    },
+    "itemFeesTotal": {
+        "subTotal": 7.00,
+        "totalTax": 0.00,
+        "total": 6.16,
+        "discount": 0.84
+    },
+    "paymentFeesTotal": {
+        "subTotal": 0.00,
+        "totalTax": 0.00,
+        "total": 0.00,
+        "discount": 0.00
+    },
+    "leadTime": 0,
+    "totalAuthorizedAmount": {
+        "amount": 767.22,
+        "currency": "EUR"
+    },
+    "calculatedPrice": {
+        "price": {
+            "netValue": 700.385,
+            "grossValue": 820.0,
+            "taxValue": 119.615
+        },
+        "upliftValue": {
+            "netValue": 30.841,
+            "grossValue": 33.0,
+            "taxValue": 2.159,
+            "taxCode": "REDUCED",
+            "taxRate": 7.0
+        },
+        "discountedPrice": {
+            "netValue": 381.233,
+            "grossValue": 441.821,
+            "taxValue": 60.588,
+            "appliedDiscounts": [
+                {
+                    "id": "buy-2-get-1-free",
+                    "value": 280.000,
+                    "price": {
+                        "netValue": 235.294,
+                        "grossValue": 280.000,
+                        "taxValue": 44.706,
+                        "taxCode": "STANDARD",
+                        "taxRate": 19.0
+                    },
+                    "discountType": "PERCENT",
+                    "origin": "EXTERNAL"
+                },
+                {
+                    "id": "LS100EUROTOTAL",
+                    "value": 98.179,
+                    "price": {
+                        "netValue": 83.857,
+                        "grossValue": 98.179,
+                        "taxValue": 14.322
+                    },
+                    "discountType": "ABSOLUTE",
+                    "origin": "INTERNAL"
+                }
+            ]
+        },
+        "fees": {
+            "netValue": 7.0,
+            "grossValue": 7.49,
+            "taxValue": 0.49,
+            "taxCode": "REDUCED",
+            "taxRate": 7.0
+        },
+        "totalFee": {
+            "netValue": 6.162,
+            "grossValue": 6.594,
+            "taxValue": 0.432,
+            "taxCode": "REDUCED",
+            "taxRate": 7.0,
+            "appliedDiscounts": [
+                {
+                    "id": "LS100EUROTOTAL",
+                    "value": 0.896,
+                    "price": {
+                        "netValue": 0.838,
+                        "grossValue": 0.896,
+                        "taxValue": 0.058,
+                        "taxCode": "REDUCED",
+                        "taxRate": 7.0
+                    },
+                    "discountType": "ABSOLUTE",
+                    "origin": "INTERNAL"
+                }
+            ]
+        },
+        "shipping": {
+            "netValue": 7.22,
+            "grossValue": 7.725,
+            "taxValue": 0.505,
+            "taxCode": "REDUCED",
+            "taxRate": 7.0
+        },
+        "totalShipping": {
+            "netValue": 6.355,
+            "grossValue": 6.8,
+            "taxValue": 0.445,
+            "taxCode": "REDUCED",
+            "taxRate": 7.0,
+            "appliedDiscounts": [
+                {
+                    "id": "LS100EUROTOTAL",
+                    "value": 0.925,
+                    "price": {
+                        "netValue": 0.864,
+                        "grossValue": 0.925,
+                        "taxValue": 0.061,
+                        "taxCode": "REDUCED",
+                        "taxRate": 7.0
+                    },
+                    "discountType": "ABSOLUTE",
+                    "origin": "INTERNAL"
+                }
+            ]
+        },
+        "totalDiscount": {
+            "calculationType": "ApplyDiscountAfterTax",
+            "value": 380.0,
+            "price": {
+                "netValue": 320.853,
+                "grossValue": 380.0,
+                "taxValue": 59.147
+            },
+            "appliedDiscounts": [
+                {
+                    "id": "buy-2-get-1-free",
+                    "value": 280.000,
+                    "price": {
+                        "netValue": 235.294,
+                        "grossValue": 280.000,
+                        "taxValue": 44.706,
+                        "taxCode": "STANDARD",
+                        "taxRate": 19.0
+                    },
+                    "discountType": "PERCENT",
+                    "origin": "EXTERNAL"
+                },
+                {
+                    "id": "LS100EUROTOTAL",
+                    "value": 100.000,
+                    "price": {
+                        "netValue": 85.559,
+                        "grossValue": 100.000,
+                        "taxValue": 14.441
+                    },
+                    "discountType": "ABSOLUTE",
+                    "origin": "INTERNAL"
+                }
+            ]
+        },
+        "finalPrice": {
+            "netValue": 393.75,
+            "grossValue": 455.215,
+            "taxValue": 61.465,
+            "taxAggregate": {
+                "lines": [
+                    {
+                        "netValue": 111.239,
+                        "grossValue": 119.027,
+                        "taxValue": 7.788,
+                        "taxCode": "REDUCED",
+                        "taxRate": 7.0
+                    },
+                    {
+                        "netValue": 282.511,
+                        "grossValue": 336.188,
+                        "taxValue": 53.677,
+                        "taxCode": "STANDARD",
+                        "taxRate": 19.0
+                    }
+                ]
+            }
+        }
     }
-  } ],
-  "discounts" : [ {
-    "id" : "0",
-    "code" : "LS10PTOTAL",
-    "currency" : "EUR",
-    "discountRate" : 10.0,
-    "name" : "LS10PTOTAL",
-    "calculationType" : "ApplyDiscountBeforeTax",
-    "valid" : true,
-    "links" : [ {
-      "rel" : "validate",
-      "title" : "Coupon Validation",
-      "href" : "https://api-stage.emporix.io/caas-coupon/b2b2cstage/coupons/LS10PTOTAL/validation",
-      "type" : "application/json"
-    }, {
-      "rel" : "redeem",
-      "title" : "Coupon Redemption",
-      "href" : "https://api-stage.emporix.io/caas-coupon/b2b2cstage/coupons/LS10PTOTAL/redemptions",
-      "type" : "application/json"
-    } ],
-    "discountType" : "PERCENT",
-    "discountCalculationType" : "TOTAL",
-    "categoryRestricted" : false
-  } ],
-  "totalUnitsCount" : 5.0,
-  "metadata" : {
-    "createdAt" : "2025-02-20T14:32:45.290134Z",
-    "modifiedAt" : "2025-02-20T14:32:45.290155Z",
-    "version" : 3
-  },
-  "totalTax" : {
-    "amount" : 0.0,
-    "currency" : "EUR"
-  },
-  "leadTime" : 0,
-  "calculatedPrice" : {
-    "price" : {
-      "netValue" : 392.44,
-      "grossValue" : 455.0,
-      "taxValue" : 62.56
-    },
-    "upliftValue" : {
-      "netValue" : 30.0,
-      "grossValue" : 32.1,
-      "taxValue" : 2.1,
-      "taxCode" : "REDUCED",
-      "taxRate" : 7.0
-    },
-    "discountedPrice" : {
-      "netValue" : 353.19,
-      "grossValue" : 409.5,
-      "taxValue" : 56.31,
-      "appliedDiscounts" : [ {
-        "id" : "LS10PTOTAL",
-        "value" : 45.5,
-        "discountType" : "PERCENT"
-      } ]
-    },
-    "totalFee" : {
-      "netValue" : 9.0,
-      "grossValue" : 9.0,
-      "taxValue" : 0.0,
-      "appliedDiscounts" : [ {
-        "id" : "LS10PTOTAL",
-        "value" : 1.0,
-        "discountType" : "PERCENT"
-      } ]
-    },
-    "totalDiscount" : {
-      "calculationType" : "ApplyDiscountAfterTax",
-      "value" : 47.27,
-      "appliedDiscounts" : [ {
-        "id" : "LS10PTOTAL",
-        "value" : 47.27,
-        "discountType" : "PERCENT"
-      } ]
-    },
-    "totalShipping" : {
-      "netValue" : 6.5,
-      "grossValue" : 6.96,
-      "taxValue" : 0.46,
-      "taxCode" : "REDUCED",
-      "taxRate" : 7.0,
-      "appliedDiscounts" : [ {
-        "id" : "LS10PTOTAL",
-        "value" : 0.77,
-        "discountType" : "PERCENT"
-      } ]
-    },
-    "finalPrice" : {
-      "netValue" : 368.69,
-      "grossValue" : 425.46,
-      "taxValue" : 56.77,
-      "taxAggregate" : {
-        "lines" : [ {
-          "netValue" : 96.5,
-          "grossValue" : 103.26,
-          "taxValue" : 6.76,
-          "taxCode" : "REDUCED",
-          "taxRate" : 7.0
-        }, {
-          "netValue" : 263.19,
-          "grossValue" : 313.2,
-          "taxValue" : 50.01,
-          "taxCode" : "STANDARD",
-          "taxRate" : 19.0
-        }, {
-          "netValue" : 9.0,
-          "grossValue" : 9.0,
-          "taxValue" : 0.0
-        } ]
-      }
-    }
-  }
 }
 ```
 
@@ -889,12 +1418,12 @@ This calculation method provides a comprehensive breakdown of prices, including 
 <table data-full-width="false"><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A unit price from <code>priceMatch</code>, it's multiplied by item quantity.</p><pre><code>{
   "calculatedPrice": {
     "price": {
-      "netValue": 100.0,
-      "grossValue": 110.0,
-      "taxValue": 10.0,
+      "netValue": 588.235,
+      "grossValue": 700.0,
+      "taxValue": 111.765,
       "taxCode": "STANDARD",
-      "taxRate": 10.0
-    }
+      "taxRate": 19.0
+  }
     //...
   }
 }
@@ -914,60 +1443,85 @@ This calculation method provides a comprehensive breakdown of prices, including 
 </code></pre></td></tr><tr><td><code>discountedPrice</code></td><td><p>The price of the line item is calculated as unit price × quantity, with any applied discounts. If no discounts are applied to a given line item, this attribute is not included in the response. Depending on the site configuration, the <code>includesTax</code> attribute can be <code>true</code> or <code>false</code>. The discount is applied to <code>price.grossValue</code> when <code>includesTax=true</code> or <code>price.netValue</code> when <code>includesTax=false</code>. Based on this, the corresponding <code>netValue</code> or <code>grossValue</code> is recalculated using the <code>taxRate</code>. The calculation method that was used is indicated in <code>totalDiscount.calculationType</code>, which can be either <code>ApplyDiscountAfterTax</code> or <code>ApplyDiscountBeforeTax</code>.</p><pre><code>{
   "calculatedPrice": {
     //...
-    "discountedPrice" : {
-          "netValue" : 4.5,
-          "grossValue" : 4.5,
-          "taxValue" : 0.0,
-          "appliedDiscounts" : [ {
-            "id" : "LS10PTOTAL",
-            "value" : 0.5,
-            "discountType" : "PERCENT"
-          } ]
-        },
-    //...
-  }
-}
-</code></pre></td></tr><tr><td><code>totalDiscount</code></td><td><p>A summary of all discounts applied to the line, including discounts on both the line item's price and its fees. If there are no discounts applied on the line item, it's not returned in the response.</p><pre><code>{
-  "calculatedPrice": {
-    //...
-    "totalDiscount" : {
-        "calculationType" : "ApplyDiscountBeforeTax",
-        "value" : 10.5,
-        "appliedDiscounts" : [ {
-          "id" : "LS10PTOTAL",
-          "value" : 10.5,
-          "discountType" : "PERCENT"
-        } ]
+      "discountedPrice" : {
+          "netValue": 282.511,
+          "grossValue": 336.188,
+          "taxValue": 53.677,
+          "taxCode": "STANDARD",
+          "taxRate": 19.0,
+          "appliedDiscounts": [
+              {
+                  "id": "buy-2-get-1-free",
+                  "value": 280.000,
+                  "price": {
+                      "netValue": 235.294,
+                      "grossValue": 280.000,
+                      "taxValue": 44.706,
+                      "taxCode": "STANDARD",
+                      "taxRate": 19.0
+                  },
+                  "discountType": "PERCENT",
+                  "origin": "EXTERNAL"
+              },
+              {
+                  "id": "LS100EUROTOTAL",
+                  "value": 83.812,
+                  "price": {
+                      "netValue": 70.430,
+                      "grossValue": 83.812,
+                      "taxValue": 13.382,
+                      "taxCode": "STANDARD",
+                      "taxRate": 19.0
+                  },
+                  "discountType": "ABSOLUTE",
+                  "origin": "INTERNAL"
+              }
+          ]
       },
-    //...
+      //...
   }
 }
 </code></pre></td></tr><tr><td><code>fees</code></td><td><p>A list of fees applied to the line item. If there are no fees on the line item, it's not returned in the response.</p><ul><li><p>Types of fees:</p><ul><li>PERCENT - The fee percentage of the line item <code>price.netValue</code> - unit price x quantity.</li><li>ABSOLUTE - The absolute amount assigned to the item line.</li><li>ABSOLUTE_MULTIPLY_ITEMQUANTITY - Monetary amount multiplied by the item quantity and assigned to the item line.</li></ul></li><li><p>Fees origin:</p><ul><li><code>INTERNAL</code> - Defined in commerce engine</li><li><code>EXTERNAL</code> - Specified when an item is added to the cart.</li></ul></li><li><p><code>netValue</code> - Monetary amount of the fee. Depends on the fee type:</p><ul><li>ABSOLUTE - The value of the defined fee's <code>feeAbsolute.amount</code> attribute.</li><li>ABSOLUTE_MULTIPLY_ITEMQUANTITY - The value of the defined fee's <code>feeAbsolute.amount</code> attribute multiplied by the quantity of the line item.</li><li>PERCENT - The defined fee level percentage (<code>feePercentage</code> attribute) of the line item <code>price.netValue</code>.</li></ul></li><li><code>grossValue</code> - Value calculated based on the <code>taxCode</code> and the <code>taxRate</code> if <code>taxable=true</code>. For a fee that is <code>taxable=true</code> and has a correct <code>taxCode</code>, the <code>taxRate</code> defined for that <code>taxCode</code> is used to calculate the <code>grossValue</code>. If the fee is not taxable, the <code>netValue</code> is equal to <code>grossValue</code>.</li><li><code>taxRate</code> - If a fee is defined with the attribute <code>taxable=true</code>, the tax rate is calculated based on the provided <code>taxCode</code> at the fee level. A taxable fee must have a defined <code>taxCode</code>.</li><li><code>taxCode</code> - Tax code defined on the fee level, for example STANDARD. The value should match the available tax codes in the system configuration.</li></ul><pre><code>{
   "calculatedPrice": {
     //...
     "fees" : [ {
-        "id" : "6793753e7d4bba47e2a99801",
-        "type" : "ABSOLUTE",
-        "origin": "EXTERNAL",
-        "name" : {
-          "en" : "Freight Fee"
+        "id": "677d49ca3a421b451eab23f2",
+        "type": "ABSOLUTE",
+        "origin": "INTERNAL",
+        "name": {
+            "de": "Apple Picking Fee",
+            "en": "Apple Picking Fee"
         },
-        "price" : {
-          "netValue" : 5.0,
-          "grossValue" : 5.0,
-          "taxValue" : 0
+        "price": {
+            "netValue": 3.5,
+            "grossValue": 3.745,
+            "taxValue": 0.245,
+            "taxCode": "REDUCED",
+            "taxRate": 7.0
         },
-        "discountedPrice" : {
-          "netValue" : 4.5,
-          "grossValue" : 4.5,
-          "taxValue" : 0.0,
-          "appliedDiscounts" : [ {
-            "id" : "LS10PTOTAL",
-            "value" : 0.5,
-            "discountType" : "PERCENT"
-          } ]
+        "discountedPrice": {
+            "netValue": 3.081,
+            "grossValue": 3.297,
+            "taxValue": 0.216,
+            "taxCode": "REDUCED",
+            "taxRate": 7.0,
+            "appliedDiscounts": [
+                {
+                    "id": "LS100EUROTOTAL",
+                    "value": 0.448,
+                    "price": {
+                        "netValue": 0.419,
+                        "grossValue": 0.448,
+                        "taxValue": 0.029,
+                        "taxCode": "REDUCED",
+                        "taxRate": 7.0
+                    },
+                    "discountType": "ABSOLUTE",
+                    "origin": "INTERNAL"
+                }
+            ]
         }
-      } ],
+    } ],
     //...
   }
 }
@@ -975,14 +1529,26 @@ This calculation method provides a comprehensive breakdown of prices, including 
   "calculatedPrice": {
     //...
     "totalFee" : {
-        "netValue" : 4.5,
-        "grossValue" : 4.5,
-        "taxValue" : 0.0,
-        "appliedDiscounts" : [ {
-          "id" : "LS10PTOTAL",
-          "value" : 0.5,
-          "discountType" : "PERCENT"
-        } ]
+        "netValue": 3.081,
+        "grossValue": 3.297,
+        "taxValue": 0.216,
+        "taxCode": "REDUCED",
+        "taxRate": 7.0,
+        "appliedDiscounts": [
+            {
+                "id": "LS100EUROTOTAL",
+                "value": 0.448,
+                "price": {
+                    "netValue": 0.419,
+                    "grossValue": 0.448,
+                    "taxValue": 0.029,
+                    "taxCode": "REDUCED",
+                    "taxRate": 7.0
+                },
+                "discountType": "ABSOLUTE",
+                "origin": "INTERNAL"
+            }
+        ]
       },
     //...
   }
@@ -995,13 +1561,54 @@ This calculation method provides a comprehensive breakdown of prices, including 
     //...
   }
 }
+</code></pre></td></tr><tr><td><code>totalDiscount</code></td><td><p>A summary of all discounts applied to the line, including discounts on both the line item's price and its fees. If there are no discounts applied on the line item, it's not returned in the response.</p><pre><code>{
+  "calculatedPrice": {
+    //...
+    "totalDiscount" : {
+          "calculationType": "ApplyDiscountAfterTax",
+          "value": 364.26,
+          "price": {
+              "netValue": 306.143,
+              "grossValue": 364.26,
+              "taxValue": 58.117
+          },
+          "appliedDiscounts": [
+              {
+                  "id": "buy-2-get-1-free",
+                  "value": 280.000,
+                  "price": {
+                      "netValue": 235.294,
+                      "grossValue": 280.000,
+                      "taxValue": 44.706,
+                      "taxCode": "STANDARD",
+                      "taxRate": 19.0
+                  },
+                  "discountType": "PERCENT",
+                  "origin": "EXTERNAL"
+              },
+              {
+                  "id": "LS100EUROTOTAL",
+                  "value": 84.260,
+                  "price": {
+                      "netValue": 70.849,
+                      "grossValue": 84.260,
+                      "taxValue": 13.411
+                  },
+                  "discountType": "ABSOLUTE",
+                  "origin": "INTERNAL"
+              }
+          ]
+      },
+    //...
+  }
+}
 </code></pre></td></tr><tr><td><code>finalPrice</code></td><td><p>The final price is the sum of the <code>discountedPrice</code> or the original price, depending on whether any discounts were applied to the line item, and the <code>totalFee</code>, which includes all fees applied to the line item.</p><pre><code>{
   "calculatedPrice": {
     //...
     "finalPrice" : {
-        "netValue" : 94.5,
-        "grossValue" : 103.5,
-        "taxValue" : 9.0
+          "netValue": 285.592,
+          "grossValue": 339.485,
+          "taxValue": 53.893
       }
   }
 }
@@ -1012,11 +1619,22 @@ This calculation method provides a comprehensive breakdown of prices, including 
 <table data-full-width="false"><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A sum of all line item prices without discounts.</p><pre><code>{
   "calculatedPrice": {
     "price" : {
-      "netValue" : 100.0,
-      "grossValue" : 110.0,
-      "taxValue" : 10.0,
-      "taxCode" : "STANDARD",
-      "taxRate" : 10.0
+        "netValue": 700.385,
+        "grossValue": 820.0,
+        "taxValue": 119.615
+    },
+    //...
+  }
+}
+</code></pre></td></tr><tr><td><code>upliftValue</code></td><td><p>It's the sum of all uplift values from item lines. At item level, it's an additional amount authorized for payment to cover potential price adjustments during packing of weight-based products. There are two conditions to have this value for an item line:</p><ul><li>The item has to be added to the cart with the <code>"weightDependent":true</code> attribute. It means that the quantity may vary during packaging, as some items, for example a case of bananas, cannot be divided to precisely match a given weight.</li><li>The tenant has to have the percentage uplift defined - <code>authorizedAmountUplift</code>, for example 0,1=10%. If the item <code>price.netValue=12</code>, the <code>upliftValue.netValue=1,2</code> with the 10% uplift configured. If the upliftValue is not configured for an item, it's not returned in the response.</li></ul><pre><code>{
+  "calculatedPrice": {
+    //...
+    "upliftValue" : {
+        "netValue": 30.841,
+        "grossValue": 33.0,
+        "taxValue": 2.159,
+        "taxCode": "REDUCED",
+        "taxRate": 7.0
     },
     //...
   }
@@ -1025,65 +1643,194 @@ This calculation method provides a comprehensive breakdown of prices, including 
   "calculatedPrice": {
     //...
     "discountedPrice" : {
-      "netValue" : 90.0,
-      "grossValue" : 99.0,
-      "taxValue" : 9.0,
-      "taxCode" : "STANDARD",
-      "taxRate" : 10.0,
-      "appliedDiscounts" : [ {
-        "id" : "LS10PTOTAL",
-        "value" : 10.0,
-        "discountType" : "PERCENT"
-      } ]
+        "netValue": 381.233,
+        "grossValue": 441.821,
+        "taxValue": 60.588,
+        "appliedDiscounts": [
+            {
+                "id": "buy-2-get-1-free",
+                "value": 280.000,
+                "price": {
+                    "netValue": 235.294,
+                    "grossValue": 280.000,
+                    "taxValue": 44.706,
+                    "taxCode": "STANDARD",
+                    "taxRate": 19.0
+                },
+                "discountType": "PERCENT",
+                "origin": "EXTERNAL"
+            },
+            {
+                "id": "LS100EUROTOTAL",
+                "value": 98.179,
+                "price": {
+                    "netValue": 83.857,
+                    "grossValue": 98.179,
+                    "taxValue": 14.322
+                },
+                "discountType": "ABSOLUTE",
+                "origin": "INTERNAL"
+            }
+        ]
     },
     //...
   }
 }
-</code></pre></td></tr><tr><td><code>totalShipping</code></td><td><p>The calculated shipping cost. It takes the sum of <code>items[].calculatedPrice.price.grossValue</code> for shipping estimation.</p><pre><code>{
+</code></pre></td></tr><tr><td><code>fees</code></td><td><p>It's a sum of all the fees of the line items in the cart. The fees are without discounts.</p><pre><code>{
+  "calculatedPrice": {
+    //...
+    "fees": {
+        "netValue": 7.0,
+        "grossValue": 7.49,
+        "taxValue": 0.49,
+        "taxCode": "REDUCED",
+        "taxRate": 7.0
+    },
+    //...
+  }
+}
+</code></pre></td></tr><tr><td><code>totalFee</code></td><td><p>Sum of all fees applied on the line items. It's a sum of <code>items[].calculatedPrice.fees</code> with applied discounts.</p><pre><code>{
+  "calculatedPrice": {
+    //...
+    "totalFee": {
+        "netValue": 6.162,
+        "grossValue": 6.594,
+        "taxValue": 0.432,
+        "taxCode": "REDUCED",
+        "taxRate": 7.0,
+        "appliedDiscounts": [
+            {
+                "id": "LS100EUROTOTAL",
+                "value": 0.896,
+                "price": {
+                    "netValue": 0.838,
+                    "grossValue": 0.896,
+                    "taxValue": 0.058,
+                    "taxCode": "REDUCED",
+                    "taxRate": 7.0
+                },
+                "discountType": "ABSOLUTE",
+                "origin": "INTERNAL"
+            }
+        ]
+    },
+    //...
+  }
+}
+</code></pre></td></tr><tr><td><code>Shipping</code></td><td><p>The calculated shipping cost. It takes the sum of <code>items[].calculatedPrice.price.grossValue</code> for shipping estimation. It's shipping cost without applied discounts.</p><pre><code>{
+  "calculatedPrice": {
+    //...
+    "shipping": {
+        "netValue": 7.22,
+        "grossValue": 7.725,
+        "taxValue": 0.505,
+        "taxCode": "REDUCED",
+        "taxRate": 7.0
+    },
+    //...
+  }
+}
+</code></pre></td></tr><tr><td><code>totalShipping</code></td><td><p>The total shipping cost is calculated by summing <code>items[].calculatedPrice.price.grossValue</code> for shipping estimation. <code>grossValue</code> is used because, even for zero-tax items, it remains equal to <code>netValue</code>. It's a shipping cost with applied discounts.</p><pre><code>{
   "calculatedPrice": {
     //...
     "totalShipping" : {
-      "netValue" : 6.5,
-      "grossValue" : 6.955,
-      "taxValue" : 0.455,
-      "taxCode" : "REDUCED",
-      "taxRate" : 7.0,
-      "appliedDiscounts" : [ {
-        "id" : "LS10PTOTAL",
-        "value" : 0.72,
-        "discountType" : "PERCENT"
-      } ]
+        "netValue": 6.355,
+        "grossValue": 6.8,
+        "taxValue": 0.445,
+        "taxCode": "REDUCED",
+        "taxRate": 7.0,
+        "appliedDiscounts": [
+            {
+                "id": "LS100EUROTOTAL",
+                "value": 0.925,
+                "price": {
+                    "netValue": 0.864,
+                    "grossValue": 0.925,
+                    "taxValue": 0.061,
+                    "taxCode": "REDUCED",
+                    "taxRate": 7.0
+                },
+                "discountType": "ABSOLUTE",
+                "origin": "INTERNAL"
+            }
+        ]
     },
     //...
   }
 }
-</code></pre></td></tr><tr><td><code>paymentFees</code></td><td>A list of payment fees applied to an order. This field is only available after checkout, as payment is not processed in the shopping cart. Payment fees are not discounted even if discount/coupon is set to TOTAL.</td></tr><tr><td><code>totalDiscount</code></td><td><p>A summary of all discounts. It's the sum of all <code>lines[].totalDiscount</code> and shipping discounts.</p><pre><code>{
+</code></pre></td></tr><tr><td><code>totalDiscount</code></td><td><p>A summary of all discounts. It's the sum of all <code>lines[].totalDiscount</code> and shipping discounts.</p><pre><code>{
   "calculatedPrice": {
     //...
      "totalDiscount" : {
-      "calculationType" : "ApplyDiscountBeforeTax",
-      "value" : 11.22,
-      "appliedDiscounts" : [ {
-        "id" : "LS10PTOTAL",
-        "value" : 11.22,
-        "discountType" : "PERCENT"
+          "calculationType": "ApplyDiscountAfterTax",
+          "value": 380.0,
+          "price": {
+              "netValue": 320.853,
+              "grossValue": 380.0,
+              "taxValue": 59.147
+          },
+          "appliedDiscounts": [
+              {
+                  "id": "buy-2-get-1-free",
+                  "value": 280.000,
+                  "price": {
+                      "netValue": 235.294,
+                      "grossValue": 280.000,
+                      "taxValue": 44.706,
+                      "taxCode": "STANDARD",
+                      "taxRate": 19.0
+                  },
+                  "discountType": "PERCENT",
+                  "origin": "EXTERNAL"
+              },
+              {
+                  "id": "LS100EUROTOTAL",
+                  "value": 100.000,
+                  "price": {
+                      "netValue": 85.559,
+                      "grossValue": 100.000,
+                      "taxValue": 14.441
+                  },
+                  "discountType": "ABSOLUTE",
+                  "origin": "INTERNAL"
+              }
+          ]
       } ]
     },
     //...
   }
 }
-</code></pre></td></tr><tr><td><code>finalPrice</code></td><td><p>The final price is the sum of <code>items[].finalPrice</code>, <code>totalShipping</code> and <code>paymentFee</code>.</p><pre><code>{
+</code></pre></td></tr><tr><td><code>finalPrice</code></td><td><p>The final price is the sum of <code>items[].finalPrice</code>, <code>totalShipping</code> and <code>paymentFee</code>. Payment fees are applied to an order. This field is only available after checkout, as payment is not processed in the shopping cart. Payment fees are not discounted even if discount/coupon is set to TOTAL.</p><pre><code>{
   "calculatedPrice": {
     //...
     "finalPrice" : {
-      "netValue" : 101.0,
-      "grossValue" : 110.455,
-      "taxValue" : 9.455
+        "netValue": 393.75,
+        "grossValue": 455.215,
+        "taxValue": 61.465,
+        "taxAggregate": {
+            "lines": [
+                {
+                    "netValue": 111.239,
+                    "grossValue": 119.027,
+                    "taxValue": 7.788,
+                    "taxCode": "REDUCED",
+                    "taxRate": 7.0
+                },
+                {
+                    "netValue": 282.511,
+                    "grossValue": 336.188,
+                    "taxValue": 53.677,
+                    "taxCode": "STANDARD",
+                    "taxRate": 19.0
+                }
+            ]
+        }
+    }
     //...
     }
   }
 }
-</code></pre></td></tr><tr><td><code>taxAggregate</code> - <code>lines</code></td><td><p>A list of tax values grouped by <code>taxCode</code> and <code>taxRate</code>. It includes the sum of <code>item[].calculatedPrice.discountedPrice</code> or <code>item[].calculatedPrice.price</code>, <code>item[].calculatedPrice.fees[].discountedPrice</code> or <code>item[].calculatedPrice.fees[].price</code>, <code>calculatedPrice.totalShipping</code> and <code>calculatedPrice.paymentFees</code>. If any of these values have the same <code>taxRate</code> but different <code>taxCode</code>, they are listed separately. The aggregation also includes items that do not have a <code>taxRate</code> or <code>taxCode</code> defined.</p><pre><code>{
+</code></pre></td></tr><tr><td><code>finalPrice.taxAggregate</code> - <code>lines</code></td><td><p>A list of tax values grouped by <code>taxCode</code> and <code>taxRate</code>. It includes the sum of <code>item[].calculatedPrice.discountedPrice</code> or <code>item[].calculatedPrice.price</code>, <code>item[].calculatedPrice.fees[].discountedPrice</code> or <code>item[].calculatedPrice.fees[].price</code>, <code>calculatedPrice.totalShipping</code> and <code>calculatedPrice.paymentFees</code>. If any of these values have the same <code>taxRate</code> but different <code>taxCode</code>, they are listed separately. The aggregation also includes items that do not have a <code>taxRate</code> or <code>taxCode</code> defined.</p><pre><code>{
   "finalPrice": {
     //...
     "taxAggregate" : {
