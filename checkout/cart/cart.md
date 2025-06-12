@@ -1574,7 +1574,6 @@ This calculation method provides a comprehensive breakdown of prices, including 
 }
 </code></pre></td></tr><tr><td><code>upliftValue</code></td><td><p>An additional amount authorized for payment to cover potential price adjustments during packing of weight-based products. There are two conditions to have this value for an item line:</p><ul><li>The item has to be added to the cart with the <code>"weightDependent":true</code> attribute. It means that the quantity may vary during packaging, as some items, for example a case of bananas, cannot be divided to precisely match a given weight.</li><li>The tenant has to have the percentage uplift defined - <code>authorizedAmountUplift</code>, for example 0,1=10%. If the item <code>price.netValue=12</code>, the <code>upliftValue.netValue=1,2</code> with the 10% uplift configured. If the upliftValue is not configured for an item, it's not returned in the response.</li></ul><pre><code>{
   "calculatedPrice": {
-    //...
     "upliftValue" : {
         "netValue" : 30.0,
         "grossValue" : 33.0,
@@ -1582,53 +1581,49 @@ This calculation method provides a comprehensive breakdown of prices, including 
         "taxCode" : "STANDARD",
         "taxRate" : 10.0
       },
-    //...
   }
 }
 </code></pre></td></tr><tr><td><code>discountedPrice</code></td><td><p>The price of the line item is calculated as unit price × quantity, with any applied discounts. If no discounts are applied to a given line item, this attribute is not included in the response. Depending on the site configuration, the <code>includesTax</code> attribute can be <code>true</code> or <code>false</code>. The discount is applied to <code>price.grossValue</code> when <code>includesTax=true</code> or <code>price.netValue</code> when <code>includesTax=false</code>. Based on this, the corresponding <code>netValue</code> or <code>grossValue</code> is recalculated using the <code>taxRate</code>. The calculation method that was used is indicated in <code>totalDiscount.calculationType</code>, which can be either <code>ApplyDiscountAfterTax</code> or <code>ApplyDiscountBeforeTax</code>.</p><pre><code>{
   "calculatedPrice": {
-    //...
-      "discountedPrice" : {
-          "netValue": 282.511,
-          "grossValue": 336.188,
-          "taxValue": 53.677,
-          "taxCode": "STANDARD",
-          "taxRate": 19.0,
-          "appliedDiscounts": [
-              {
-                  "id": "buy-2-get-1-free",
-                  "value": 280.000,
-                  "price": {
-                      "netValue": 235.294,
-                      "grossValue": 280.000,
-                      "taxValue": 44.706,
-                      "taxCode": "STANDARD",
-                      "taxRate": 19.0
-                  },
-                  "discountType": "PERCENT",
-                  "origin": "EXTERNAL"
-              },
-              {
-                  "id": "LS100EUROTOTAL",
-                  "value": 83.812,
-                  "price": {
-                      "netValue": 70.430,
-                      "grossValue": 83.812,
-                      "taxValue": 13.382,
-                      "taxCode": "STANDARD",
-                      "taxRate": 19.0
-                  },
-                  "discountType": "ABSOLUTE",
-                  "origin": "INTERNAL"
-              }
-          ]
-      },
-      //...
+    "discountedPrice" : {
+        "netValue": 282.511,
+        "grossValue": 336.188,
+        "taxValue": 53.677,
+        "taxCode": "STANDARD",
+        "taxRate": 19.0,
+        "appliedDiscounts": [
+            {
+                "id": "buy-2-get-1-free",
+                "value": 280.000,
+                "price": {
+                    "netValue": 235.294,
+                    "grossValue": 280.000,
+                    "taxValue": 44.706,
+                    "taxCode": "STANDARD",
+                    "taxRate": 19.0
+                },
+                "discountType": "PERCENT",
+                "origin": "EXTERNAL"
+            },
+            {
+                "id": "LS100EUROTOTAL",
+                "value": 83.812,
+                "price": {
+                    "netValue": 70.430,
+                    "grossValue": 83.812,
+                    "taxValue": 13.382,
+                    "taxCode": "STANDARD",
+                    "taxRate": 19.0
+                },
+                "discountType": "ABSOLUTE",
+                "origin": "INTERNAL"
+            }
+        ]
+    },
   }
 }
 </code></pre></td></tr><tr><td><code>fees</code></td><td><p>A list of fees applied to the line item. If there are no fees on the line item, it's not returned in the response.</p><ul><li><p>Types of fees:</p><ul><li>PERCENT - The fee percentage of the line item <code>price.netValue</code> - unit price x quantity.</li><li>ABSOLUTE - The absolute amount assigned to the item line.</li><li>ABSOLUTE_MULTIPLY_ITEMQUANTITY - Monetary amount multiplied by the item quantity and assigned to the item line.</li></ul></li><li><p>Fees origin:</p><ul><li><code>INTERNAL</code> - Defined in commerce engine</li><li><code>EXTERNAL</code> - Specified when an item is added to the cart.</li></ul></li><li><p><code>netValue</code> - Monetary amount of the fee. Depends on the fee type:</p><ul><li>ABSOLUTE - The value of the defined fee's <code>feeAbsolute.amount</code> attribute.</li><li>ABSOLUTE_MULTIPLY_ITEMQUANTITY - The value of the defined fee's <code>feeAbsolute.amount</code> attribute multiplied by the quantity of the line item.</li><li>PERCENT - The defined fee level percentage (<code>feePercentage</code> attribute) of the line item <code>price.netValue</code>.</li></ul></li><li><code>grossValue</code> - Value calculated based on the <code>taxCode</code> and the <code>taxRate</code> if <code>taxable=true</code>. For a fee that is <code>taxable=true</code> and has a correct <code>taxCode</code>, the <code>taxRate</code> defined for that <code>taxCode</code> is used to calculate the <code>grossValue</code>. If the fee is not taxable, the <code>netValue</code> is equal to <code>grossValue</code>.</li><li><code>taxRate</code> - If a fee is defined with the attribute <code>taxable=true</code>, the tax rate is calculated based on the provided <code>taxCode</code> at the fee level. A taxable fee must have a defined <code>taxCode</code>.</li><li><code>taxCode</code> - Tax code defined on the fee level, for example STANDARD. The value should match the available tax codes in the system configuration.</li></ul><pre><code>{
   "calculatedPrice": {
-    //...
     "fees" : [ {
         "id": "677d49ca3a421b451eab23f2",
         "type": "ABSOLUTE",
@@ -1667,89 +1662,81 @@ This calculation method provides a comprehensive breakdown of prices, including 
             ]
         }
     } ],
-    //...
   }
 }
 </code></pre></td></tr><tr><td><code>totalFee</code></td><td><p>Sum of all fees applied to the line item. It's calculated by summarizing <code>fees[].discountedPrice</code> if any discounts were applied to the fee, or <code>fees[].price</code> for a a not discounted fee.</p><pre><code>{
   "calculatedPrice": {
-    //...
     "totalFee" : {
-        "netValue": 3.081,
-        "grossValue": 3.297,
-        "taxValue": 0.216,
-        "taxCode": "REDUCED",
-        "taxRate": 7.0,
+      "netValue": 3.081,
+      "grossValue": 3.297,
+      "taxValue": 0.216,
+      "taxCode": "REDUCED",
+      "taxRate": 7.0,
+      "appliedDiscounts": [
+          {
+              "id": "LS100EUROTOTAL",
+              "value": 0.448,
+              "price": {
+                  "netValue": 0.419,
+                  "grossValue": 0.448,
+                  "taxValue": 0.029,
+                  "taxCode": "REDUCED",
+                  "taxRate": 7.0
+              },
+              "discountType": "ABSOLUTE",
+              "origin": "INTERNAL"
+          }
+      ]
+    },
+  }
+}
+</code></pre></td></tr><tr><td><code>calculationType</code></td><td><p>Indicates whether discounts were applied to net or gross values.</p><ul><li>The discount is applied to either <code>price.grossValue</code>, when <code>includesTax=true</code>, or <code>price.netValue</code>, when <code>includesTax=false</code>. Based on this, the corresponding net or gross value is recalculated using the tax rate.</li><li>The calculation method used is indicated in <code>totalDiscount.calculationType</code>>, which can be either <code>ApplyDiscountAfterTax</code> or <code>ApplyDiscountBeforeTax</code>.</li></ul><pre><code>{
+  "calculatedPrice": {
+    "totalDiscount" : {
+        "calculationType" : "ApplyDiscountBeforeTax",
+  }
+}
+</code></pre></td></tr><tr><td><code>totalDiscount</code></td><td><p>A summary of all discounts applied to the line, including discounts on both the line item's price and its fees. If there are no discounts applied on the line item, it's not returned in the response.</p><pre><code>{
+  "calculatedPrice": {
+    "totalDiscount" : {
+        "calculationType": "ApplyDiscountAfterTax",
+        "value": 364.26,
+        "price": {
+            "netValue": 306.143,
+            "grossValue": 364.26,
+            "taxValue": 58.117
+        },
         "appliedDiscounts": [
             {
-                "id": "LS100EUROTOTAL",
-                "value": 0.448,
+                "id": "buy-2-get-1-free",
+                "value": 280.000,
                 "price": {
-                    "netValue": 0.419,
-                    "grossValue": 0.448,
-                    "taxValue": 0.029,
-                    "taxCode": "REDUCED",
-                    "taxRate": 7.0
+                    "netValue": 235.294,
+                    "grossValue": 280.000,
+                    "taxValue": 44.706,
+                    "taxCode": "STANDARD",
+                    "taxRate": 19.0
+                },
+                "discountType": "PERCENT",
+                "origin": "EXTERNAL"
+            },
+            {
+                "id": "LS100EUROTOTAL",
+                "value": 84.260,
+                "price": {
+                    "netValue": 70.849,
+                    "grossValue": 84.260,
+                    "taxValue": 13.411
                 },
                 "discountType": "ABSOLUTE",
                 "origin": "INTERNAL"
             }
         ]
-      },
-    //...
-  }
-}
-</code></pre></td></tr><tr><td><code>calculationType</code></td><td><p>Indicates whether discounts were applied to net or gross values.</p><ul><li>The discount is applied to either <code>price.grossValue</code>, when <code>includesTax=true</code>, or <code>price.netValue</code>, when <code>includesTax=false</code>. Based on this, the corresponding net or gross value is recalculated using the tax rate.</li><li>The calculation method used is indicated in <code>totalDiscount.calculationType</code>>, which can be either <code>ApplyDiscountAfterTax</code> or <code>ApplyDiscountBeforeTax</code>.</li></ul><pre><code>{
-  "calculatedPrice": {
-    //...
-    "totalDiscount" : {
-        "calculationType" : "ApplyDiscountBeforeTax",
-    //...
-  }
-}
-</code></pre></td></tr><tr><td><code>totalDiscount</code></td><td><p>A summary of all discounts applied to the line, including discounts on both the line item's price and its fees. If there are no discounts applied on the line item, it's not returned in the response.</p><pre><code>{
-  "calculatedPrice": {
-    //...
-    "totalDiscount" : {
-          "calculationType": "ApplyDiscountAfterTax",
-          "value": 364.26,
-          "price": {
-              "netValue": 306.143,
-              "grossValue": 364.26,
-              "taxValue": 58.117
-          },
-          "appliedDiscounts": [
-              {
-                  "id": "buy-2-get-1-free",
-                  "value": 280.000,
-                  "price": {
-                      "netValue": 235.294,
-                      "grossValue": 280.000,
-                      "taxValue": 44.706,
-                      "taxCode": "STANDARD",
-                      "taxRate": 19.0
-                  },
-                  "discountType": "PERCENT",
-                  "origin": "EXTERNAL"
-              },
-              {
-                  "id": "LS100EUROTOTAL",
-                  "value": 84.260,
-                  "price": {
-                      "netValue": 70.849,
-                      "grossValue": 84.260,
-                      "taxValue": 13.411
-                  },
-                  "discountType": "ABSOLUTE",
-                  "origin": "INTERNAL"
-              }
-          ]
-      },
-    //...
+    },
   }
 }
 </code></pre></td></tr><tr><td><code>finalPrice</code></td><td><p>The final price is the sum of the <code>discountedPrice</code> or the original price, depending on whether any discounts were applied to the line item, and the <code>totalFee</code>, which includes all fees applied to the line item.</p><pre><code>{
   "calculatedPrice": {
-    //...
     "finalPrice" : {
           "netValue": 285.592,
           "grossValue": 339.485,
@@ -1768,12 +1755,10 @@ This calculation method provides a comprehensive breakdown of prices, including 
         "grossValue": 820.0,
         "taxValue": 119.615
     },
-    //...
   }
 }
 </code></pre></td></tr><tr><td><code>upliftValue</code></td><td><p>It's the sum of all uplift values from item lines. At item level, it's an additional amount authorized for payment to cover potential price adjustments during packing of weight-based products. There are two conditions to have this value for an item line:</p><ul><li>The item has to be added to the cart with the <code>"weightDependent":true</code> attribute. It means that the quantity may vary during packaging, as some items, for example a case of bananas, cannot be divided to precisely match a given weight.</li><li>The tenant has to have the percentage uplift defined - <code>authorizedAmountUplift</code>, for example 0,1=10%. If the item <code>price.netValue=12</code>, the <code>upliftValue.netValue=1,2</code> with the 10% uplift configured. If the upliftValue is not configured for an item, it's not returned in the response.</li></ul><pre><code>{
   "calculatedPrice": {
-    //...
     "upliftValue" : {
         "netValue": 30.841,
         "grossValue": 33.0,
@@ -1781,12 +1766,10 @@ This calculation method provides a comprehensive breakdown of prices, including 
         "taxCode": "REDUCED",
         "taxRate": 7.0
     },
-    //...
   }
 }
 </code></pre></td></tr><tr><td><code>discountedPrice</code></td><td><p>The sum of all line item prices after discounts. This attribute is included in the response if at least one line item has a discounted price. It represents the total of discounted prices for line items with discounts applied, or the regular prices for line items without discounts. Ultimately, it reflects the total cost of all line items after discounts.</p><pre><code>{
   "calculatedPrice": {
-    //...
     "discountedPrice" : {
         "netValue": 381.233,
         "grossValue": 441.821,
@@ -1818,12 +1801,10 @@ This calculation method provides a comprehensive breakdown of prices, including 
             }
         ]
     },
-    //...
   }
 }
 </code></pre></td></tr><tr><td><code>fees</code></td><td><p>It's a sum of all the fees of the line items in the cart. The fees are without discounts.</p><pre><code>{
   "calculatedPrice": {
-    //...
     "fees": {
         "netValue": 7.0,
         "grossValue": 7.49,
@@ -1831,12 +1812,10 @@ This calculation method provides a comprehensive breakdown of prices, including 
         "taxCode": "REDUCED",
         "taxRate": 7.0
     },
-    //...
   }
 }
 </code></pre></td></tr><tr><td><code>totalFee</code></td><td><p>Sum of all fees applied on the line items. It's a sum of <code>items[].calculatedPrice.fees</code> with applied discounts.</p><pre><code>{
   "calculatedPrice": {
-    //...
     "totalFee": {
         "netValue": 6.162,
         "grossValue": 6.594,
@@ -1859,12 +1838,10 @@ This calculation method provides a comprehensive breakdown of prices, including 
             }
         ]
     },
-    //...
   }
 }
 </code></pre></td></tr><tr><td><code>Shipping</code></td><td><p>The calculated shipping cost. It takes the sum of <code>items[].calculatedPrice.price.grossValue</code> for shipping estimation. It's shipping cost without applied discounts.</p><pre><code>{
   "calculatedPrice": {
-    //...
     "shipping": {
         "netValue": 7.22,
         "grossValue": 7.725,
@@ -1872,12 +1849,10 @@ This calculation method provides a comprehensive breakdown of prices, including 
         "taxCode": "REDUCED",
         "taxRate": 7.0
     },
-    //...
   }
 }
 </code></pre></td></tr><tr><td><code>totalShipping</code></td><td><p>The total shipping cost is calculated by summing <code>items[].calculatedPrice.price.grossValue</code> for shipping estimation. <code>grossValue</code> is used because, even for zero-tax items, it remains equal to <code>netValue</code>. It's a shipping cost with applied discounts.</p><pre><code>{
   "calculatedPrice": {
-    //...
     "totalShipping" : {
         "netValue": 6.355,
         "grossValue": 6.8,
@@ -1900,12 +1875,10 @@ This calculation method provides a comprehensive breakdown of prices, including 
             }
         ]
     },
-    //...
   }
 }
 </code></pre></td></tr><tr><td><code>totalDiscount</code></td><td><p>A summary of all discounts. It's the sum of all <code>lines[].totalDiscount</code> and shipping discounts.</p><pre><code>{
   "calculatedPrice": {
-    //...
      "totalDiscount" : {
           "calculationType": "ApplyDiscountAfterTax",
           "value": 380.0,
@@ -1942,12 +1915,10 @@ This calculation method provides a comprehensive breakdown of prices, including 
           ]
       } ]
     },
-    //...
   }
 }
 </code></pre></td></tr><tr><td><code>finalPrice</code></td><td><p>The final price is the sum of <code>items[].finalPrice</code>, <code>totalShipping</code> and <code>paymentFee</code>. Payment fees are applied to an order. This field is only available after checkout, as payment is not processed in the shopping cart. Payment fees are not discounted even if discount/coupon is set to TOTAL.</p><pre><code>{
   "calculatedPrice": {
-    //...
     "finalPrice" : {
         "netValue": 393.75,
         "grossValue": 455.215,
@@ -1971,13 +1942,10 @@ This calculation method provides a comprehensive breakdown of prices, including 
             ]
         }
     }
-    //...
-    }
   }
 }
 </code></pre></td></tr><tr><td><code>finalPrice.taxAggregate</code> - <code>lines</code></td><td><p>A list of tax values grouped by <code>taxCode</code> and <code>taxRate</code>. It includes the sum of <code>item[].calculatedPrice.discountedPrice</code> or <code>item[].calculatedPrice.price</code>, <code>item[].calculatedPrice.fees[].discountedPrice</code> or <code>item[].calculatedPrice.fees[].price</code>, <code>calculatedPrice.totalShipping</code> and <code>calculatedPrice.paymentFees</code>. If any of these values have the same <code>taxRate</code> but different <code>taxCode</code>, they are listed separately. The aggregation also includes items that do not have a <code>taxRate</code> or <code>taxCode</code> defined.</p><pre><code>{
   "finalPrice": {
-    //...
     "taxAggregate" : {
         "lines" : [ {
           "netValue" : 96.5,
@@ -1997,7 +1965,6 @@ This calculation method provides a comprehensive breakdown of prices, including 
           "taxValue" : 0.0
         } ]
       }
-    //...
   }
 }
 </code></pre></td></tr></tbody></table>
@@ -2008,7 +1975,7 @@ See the sections below for shipping, payment fee, tax and discounts calculations
 
 The shipping calculation depends on the stage at which it is done.
 
-* In the cart, where the address, delivery method, and zone are not available yet, the calculation uses the minimum shipping estimation. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`, and the `shipToAddress` is created based on the cart’s `countryCode` and `zipCode`.\
+* In the cart, where the address, delivery method, and zone are not available yet, the calculation uses the minimum shipping estimation. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`, and the `shipToAddress` is created based on the cart’s `countryCode` and `zipCode`.
   See the [Calculating the minimum shipping costs](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) endpoint.
 * In the checkout, where information about the delivery window and zone is already available, the calculation uses the following endpoints: [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping/api-reference/shipping-cost#post-shipping-tenant-site-quote), or [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) accordingly.
 
