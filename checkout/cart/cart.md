@@ -1917,7 +1917,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
     },
   }
 }
-</code></pre></td></tr><tr><td><code>finalPrice</code></td><td><p>The final price is the sum of <code>items[].finalPrice</code>, <code>totalShipping</code> and <code>paymentFee</code>. Payment fees are applied to an order. This field is only available after checkout, as payment is not processed in the shopping cart. Payment fees are not discounted even if discount/coupon is set to TOTAL.</p><pre><code>{
+</code></pre></td></tr><tr><td><code>finalPrice</code></td><td><p>The final price is the sum of <code>items[].finalPrice</code>, <code>totalShipping</code>.</p><pre><code>{
   "calculatedPrice": {
     "finalPrice": {
             "netValue": 393.75,
