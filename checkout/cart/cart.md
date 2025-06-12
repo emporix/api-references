@@ -1803,7 +1803,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
     },
   }
 }
-</code></pre></td></tr><tr><td><code>fees</code></td><td><p>It's a sum of all the fees of the line items in the cart - sum of all <code>items[].calculatedPrice.fees.price</code>. The fees are **without** discounts.</p><pre><code>{
+</code></pre></td></tr><tr><td><code>fees</code></td><td><p>It's a sum of all the fees of the line items in the cart - sum of all <code>items[].calculatedPrice.fees.price</code>. The fees are *without* discounts.</p><pre><code>{
   "calculatedPrice": {
     "fees": {
         "netValue": 7.0,
@@ -1814,7 +1814,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
     },
   }
 }
-</code></pre></td></tr><tr><td><code>totalFee</code></td><td><p>Sum of all fees applied on the line items. It's a sum of <code>items[].calculatedPrice.totalFee</code>, **with** applied discounts.</p><pre><code>{
+</code></pre></td></tr><tr><td><code>totalFee</code></td><td><p>Sum of all fees applied on the line items. It's a sum of <code>items[].calculatedPrice.totalFee</code>, *with* applied discounts.</p><pre><code>{
   "calculatedPrice": {
     "totalFee": {
         "netValue": 6.162,
@@ -1840,7 +1840,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
     },
   }
 }
-</code></pre></td></tr><tr><td><code>shipping</code></td><td><p>The calculated shipping cost. It takes the sum of <code>items[].calculatedPrice.price.grossValue</code> for shipping estimation. It's shipping cost **without** applied discounts.</p><pre><code>{
+</code></pre></td></tr><tr><td><code>shipping</code></td><td><p>The calculated shipping cost. It takes the sum of <code>items[].calculatedPrice.price.grossValue</code> for shipping estimation. It's shipping cost *without* applied discounts.</p><pre><code>{
   "calculatedPrice": {
     "shipping": {
         "netValue": 7.22,
@@ -1851,7 +1851,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
     },
   }
 }
-</code></pre></td></tr><tr><td><code>totalShipping</code></td><td><p>The total shipping cost is calculated by summing <code>items[].calculatedPrice.price.grossValue</code> for shipping estimation. <code>grossValue</code> is used because, even for zero-tax items, it remains equal to <code>netValue</code>. It's a shipping cost **with** applied discounts.</p><pre><code>{
+</code></pre></td></tr><tr><td><code>totalShipping</code></td><td><p>The total shipping cost is calculated by summing <code>items[].calculatedPrice.price.grossValue</code> for shipping estimation. <code>grossValue</code> is used because, even for zero-tax items, it remains equal to <code>netValue</code>. It's a shipping cost *with* applied discounts.</p><pre><code>{
   "calculatedPrice": {
     "totalShipping" : {
         "netValue": 6.355,
