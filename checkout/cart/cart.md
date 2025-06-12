@@ -1586,39 +1586,39 @@ This calculation method provides a comprehensive breakdown of prices, including 
 </code></pre></td></tr><tr><td><code>discountedPrice</code></td><td><p>The price of the line item is calculated as unit price × quantity, with any applied discounts. If no discounts are applied to a given line item, this attribute is not included in the response. Depending on the site configuration, the <code>includesTax</code> attribute can be <code>true</code> or <code>false</code>. The discount is applied to <code>price.grossValue</code> when <code>includesTax=true</code> or <code>price.netValue</code> when <code>includesTax=false</code>. Based on this, the corresponding <code>netValue</code> or <code>grossValue</code> is recalculated using the <code>taxRate</code>. The calculation method that was used is indicated in <code>totalDiscount.calculationType</code>, which can be either <code>ApplyDiscountAfterTax</code> or <code>ApplyDiscountBeforeTax</code>.</p><pre><code>{
   "calculatedPrice": {
     "discountedPrice" : {
-        "netValue": 282.511,
-        "grossValue": 336.188,
-        "taxValue": 53.677,
-        "taxCode": "STANDARD",
-        "taxRate": 19.0,
-        "appliedDiscounts": [
-            {
-                "id": "buy-2-get-1-free",
-                "value": 280.000,
-                "price": {
-                    "netValue": 235.294,
-                    "grossValue": 280.000,
-                    "taxValue": 44.706,
-                    "taxCode": "STANDARD",
-                    "taxRate": 19.0
-                },
-                "discountType": "PERCENT",
-                "origin": "EXTERNAL"
-            },
-            {
-                "id": "LS100EUROTOTAL",
-                "value": 83.812,
-                "price": {
-                    "netValue": 70.430,
-                    "grossValue": 83.812,
-                    "taxValue": 13.382,
-                    "taxCode": "STANDARD",
-                    "taxRate": 19.0
-                },
-                "discountType": "ABSOLUTE",
-                "origin": "INTERNAL"
-            }
-        ]
+      "netValue": 282.511,
+      "grossValue": 336.188,
+      "taxValue": 53.677,
+      "taxCode": "STANDARD",
+      "taxRate": 19.0,
+      "appliedDiscounts": [
+          {
+              "id": "buy-2-get-1-free",
+              "value": 280.000,
+              "price": {
+                  "netValue": 235.294,
+                  "grossValue": 280.000,
+                  "taxValue": 44.706,
+                  "taxCode": "STANDARD",
+                  "taxRate": 19.0
+              },
+              "discountType": "PERCENT",
+              "origin": "EXTERNAL"
+          },
+          {
+              "id": "LS100EUROTOTAL",
+              "value": 83.812,
+              "price": {
+                  "netValue": 70.430,
+                  "grossValue": 83.812,
+                  "taxValue": 13.382,
+                  "taxCode": "STANDARD",
+                  "taxRate": 19.0
+              },
+              "discountType": "ABSOLUTE",
+              "origin": "INTERNAL"
+          }
+      ]
     },
   }
 }
@@ -1667,33 +1667,33 @@ This calculation method provides a comprehensive breakdown of prices, including 
 </code></pre></td></tr><tr><td><code>totalFee</code></td><td><p>Sum of all fees applied to the line item. It's calculated by summarizing <code>fees[].discountedPrice</code> if any discounts were applied to the fee, or <code>fees[].price</code> for a a not discounted fee.</p><pre><code>{
   "calculatedPrice": {
     "totalFee" : {
-      "netValue": 3.081,
-      "grossValue": 3.297,
-      "taxValue": 0.216,
-      "taxCode": "REDUCED",
-      "taxRate": 7.0,
-      "appliedDiscounts": [
-          {
-              "id": "LS100EUROTOTAL",
-              "value": 0.448,
-              "price": {
-                  "netValue": 0.419,
-                  "grossValue": 0.448,
-                  "taxValue": 0.029,
-                  "taxCode": "REDUCED",
-                  "taxRate": 7.0
-              },
-              "discountType": "ABSOLUTE",
-              "origin": "INTERNAL"
-          }
-      ]
+        "netValue": 3.081,
+        "grossValue": 3.297,
+        "taxValue": 0.216,
+        "taxCode": "REDUCED",
+        "taxRate": 7.0,
+        "appliedDiscounts": [
+            {
+                "id": "LS100EUROTOTAL",
+                "value": 0.448,
+                "price": {
+                    "netValue": 0.419,
+                    "grossValue": 0.448,
+                    "taxValue": 0.029,
+                    "taxCode": "REDUCED",
+                    "taxRate": 7.0
+                },
+                "discountType": "ABSOLUTE",
+                "origin": "INTERNAL"
+            }
+        ]
     },
   }
 }
 </code></pre></td></tr><tr><td><code>calculationType</code></td><td><p>Indicates whether discounts were applied to net or gross values.</p><ul><li>The discount is applied to either <code>price.grossValue</code>, when <code>includesTax=true</code>, or <code>price.netValue</code>, when <code>includesTax=false</code>. Based on this, the corresponding net or gross value is recalculated using the tax rate.</li><li>The calculation method used is indicated in <code>totalDiscount.calculationType</code>>, which can be either <code>ApplyDiscountAfterTax</code> or <code>ApplyDiscountBeforeTax</code>.</li></ul><pre><code>{
   "calculatedPrice": {
     "totalDiscount" : {
-        "calculationType" : "ApplyDiscountBeforeTax",
+        "calculationType" : "ApplyDiscountAfterTax",
   }
 }
 </code></pre></td></tr><tr><td><code>totalDiscount</code></td><td><p>A summary of all discounts applied to the line, including discounts on both the line item's price and its fees. If there are no discounts applied on the line item, it's not returned in the response.</p><pre><code>{
@@ -1738,10 +1738,10 @@ This calculation method provides a comprehensive breakdown of prices, including 
 </code></pre></td></tr><tr><td><code>finalPrice</code></td><td><p>The final price is the sum of the <code>discountedPrice</code> or the original price, depending on whether any discounts were applied to the line item, and the <code>totalFee</code>, which includes all fees applied to the line item.</p><pre><code>{
   "calculatedPrice": {
     "finalPrice" : {
-          "netValue": 285.592,
-          "grossValue": 339.485,
-          "taxValue": 53.893
-      }
+        "netValue": 285.592,
+        "grossValue": 339.485,
+        "taxValue": 53.893
+    }
   }
 }
 </code></pre></td></tr></tbody></table>
@@ -1919,30 +1919,30 @@ This calculation method provides a comprehensive breakdown of prices, including 
 }
 </code></pre></td></tr><tr><td><code>finalPrice</code></td><td><p>The final price is the sum of <code>items[].finalPrice</code>, <code>totalShipping</code> and <code>paymentFee</code>. Payment fees are applied to an order. This field is only available after checkout, as payment is not processed in the shopping cart. Payment fees are not discounted even if discount/coupon is set to TOTAL.</p><pre><code>{
   "calculatedPrice": {
-    "finalPrice" : {
-        "netValue": 393.75,
-        "grossValue": 455.215,
-        "taxValue": 61.465,
-        "taxAggregate": {
-            "lines": [
-                {
-                    "netValue": 111.239,
-                    "grossValue": 119.027,
-                    "taxValue": 7.788,
-                    "taxCode": "REDUCED",
-                    "taxRate": 7.0
-                },
-                {
-                    "netValue": 282.511,
-                    "grossValue": 336.188,
-                    "taxValue": 53.677,
-                    "taxCode": "STANDARD",
-                    "taxRate": 19.0
-                }
-            ]
+    "finalPrice": {
+            "netValue": 393.75,
+            "grossValue": 455.215,
+            "taxValue": 61.465,
+            "taxAggregate": {
+                "lines": [
+                    {
+                        "netValue": 111.239,
+                        "grossValue": 119.027,
+                        "taxValue": 7.788,
+                        "taxCode": "REDUCED",
+                        "taxRate": 7.0
+                    },
+                    {
+                        "netValue": 282.511,
+                        "grossValue": 336.188,
+                        "taxValue": 53.677,
+                        "taxCode": "STANDARD",
+                        "taxRate": 19.0
+                    }
+                ]
+            }
         }
     }
-  }
 }
 </code></pre></td></tr><tr><td><code>finalPrice.taxAggregate</code> - <code>lines</code></td><td><p>A list of tax values grouped by <code>taxCode</code> and <code>taxRate</code>. It includes the sum of <code>item[].calculatedPrice.discountedPrice</code> or <code>item[].calculatedPrice.price</code>, <code>item[].calculatedPrice.fees[].discountedPrice</code> or <code>item[].calculatedPrice.fees[].price</code>, <code>calculatedPrice.totalShipping</code> and <code>calculatedPrice.paymentFees</code>. If any of these values have the same <code>taxRate</code> but different <code>taxCode</code>, they are listed separately. The aggregation also includes items that do not have a <code>taxRate</code> or <code>taxCode</code> defined.</p><pre><code>{
   "finalPrice": {
