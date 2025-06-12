@@ -1690,13 +1690,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
     },
   }
 }
-</code></pre></td></tr><tr><td><code>calculationType</code></td><td><p>Indicates whether discounts were applied to net or gross values.</p><ul><li>The discount is applied to either <code>price.grossValue</code>, when <code>includesTax=true</code>, or <code>price.netValue</code>, when <code>includesTax=false</code>. Based on this, the corresponding net or gross value is recalculated using the tax rate.</li><li>The calculation method used is indicated in <code>totalDiscount.calculationType</code>>, which can be either <code>ApplyDiscountAfterTax</code> or <code>ApplyDiscountBeforeTax</code>.</li></ul><pre><code>{
-  "calculatedPrice": {
-    "totalDiscount" : {
-        "calculationType" : "ApplyDiscountAfterTax",
-  }
-}
-</code></pre></td></tr><tr><td><code>totalDiscount</code></td><td><p>A summary of all discounts applied to the line, including discounts on both the line item's price and its fees. If there are no discounts applied on the line item, it's not returned in the response.</p><pre><code>{
+</code></pre></td></tr><tr><td><code>totalDiscount</code></td><td><p>A summary of all discounts applied to the line, including discounts on both the line item's price and its fees. If there are no discounts applied on the line item, it's not returned in the response. </p><pre><code>{
   "calculatedPrice": {
     "totalDiscount" : {
         "calculationType": "ApplyDiscountAfterTax",
@@ -1733,6 +1727,12 @@ This calculation method provides a comprehensive breakdown of prices, including 
             }
         ]
     },
+  }
+}
+</code></pre></td></tr><tr><td><code>totalDiscount.calculationType</code></td><td><p>Indicates whether discounts were applied to net or gross values.</p><ul><li>The discount is applied to either <code>price.grossValue</code>, when <code>includesTax=true</code>, or <code>price.netValue</code>, when <code>includesTax=false</code>. Based on this, the corresponding net or gross value is recalculated using the tax rate.</li><li>The calculation method used is indicated in <code>totalDiscount.calculationType</code>>, which can be either <code>ApplyDiscountAfterTax</code> or <code>ApplyDiscountBeforeTax</code>.</li></ul><pre><code>{
+  "calculatedPrice": {
+    "totalDiscount" : {
+        "calculationType" : "ApplyDiscountAfterTax",
   }
 }
 </code></pre></td></tr><tr><td><code>finalPrice</code></td><td><p>The final price is the sum of the <code>discountedPrice</code> or the original price, depending on whether any discounts were applied to the line item, and the <code>totalFee</code>, which includes all fees applied to the line item.</p><pre><code>{
@@ -1803,7 +1803,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
     },
   }
 }
-</code></pre></td></tr><tr><td><code>fees</code></td><td><p>It's a sum of all the fees of the line items in the cart. The fees are without discounts.</p><pre><code>{
+</code></pre></td></tr><tr><td><code>fees</code></td><td><p>It's a sum of all the fees of the line items in the cart - sum of all <code>items[].calculatedPrice.fees.price</code>. The fees are **without** discounts.</p><pre><code>{
   "calculatedPrice": {
     "fees": {
         "netValue": 7.0,
@@ -1814,7 +1814,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
     },
   }
 }
-</code></pre></td></tr><tr><td><code>totalFee</code></td><td><p>Sum of all fees applied on the line items. It's a sum of <code>items[].calculatedPrice.fees</code> with applied discounts.</p><pre><code>{
+</code></pre></td></tr><tr><td><code>totalFee</code></td><td><p>Sum of all fees applied on the line items. It's a sum of <code>items[].calculatedPrice.totalFee</code>, **with** applied discounts.</p><pre><code>{
   "calculatedPrice": {
     "totalFee": {
         "netValue": 6.162,
@@ -1840,7 +1840,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
     },
   }
 }
-</code></pre></td></tr><tr><td><code>Shipping</code></td><td><p>The calculated shipping cost. It takes the sum of <code>items[].calculatedPrice.price.grossValue</code> for shipping estimation. It's shipping cost without applied discounts.</p><pre><code>{
+</code></pre></td></tr><tr><td><code>shipping</code></td><td><p>The calculated shipping cost. It takes the sum of <code>items[].calculatedPrice.price.grossValue</code> for shipping estimation. It's shipping cost **without** applied discounts.</p><pre><code>{
   "calculatedPrice": {
     "shipping": {
         "netValue": 7.22,
@@ -1851,7 +1851,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
     },
   }
 }
-</code></pre></td></tr><tr><td><code>totalShipping</code></td><td><p>The total shipping cost is calculated by summing <code>items[].calculatedPrice.price.grossValue</code> for shipping estimation. <code>grossValue</code> is used because, even for zero-tax items, it remains equal to <code>netValue</code>. It's a shipping cost with applied discounts.</p><pre><code>{
+</code></pre></td></tr><tr><td><code>totalShipping</code></td><td><p>The total shipping cost is calculated by summing <code>items[].calculatedPrice.price.grossValue</code> for shipping estimation. <code>grossValue</code> is used because, even for zero-tax items, it remains equal to <code>netValue</code>. It's a shipping cost **with** applied discounts.</p><pre><code>{
   "calculatedPrice": {
     "totalShipping" : {
         "netValue": 6.355,
@@ -1947,23 +1947,21 @@ This calculation method provides a comprehensive breakdown of prices, including 
 </code></pre></td></tr><tr><td><code>finalPrice.taxAggregate</code> - <code>lines</code></td><td><p>A list of tax values grouped by <code>taxCode</code> and <code>taxRate</code>. It includes the sum of <code>item[].calculatedPrice.discountedPrice</code> or <code>item[].calculatedPrice.price</code>, <code>item[].calculatedPrice.fees[].discountedPrice</code> or <code>item[].calculatedPrice.fees[].price</code>, <code>calculatedPrice.totalShipping</code> and <code>calculatedPrice.paymentFees</code>. If any of these values have the same <code>taxRate</code> but different <code>taxCode</code>, they are listed separately. The aggregation also includes items that do not have a <code>taxRate</code> or <code>taxCode</code> defined.</p><pre><code>{
   "finalPrice": {
     "taxAggregate" : {
-        "lines" : [ {
-          "netValue" : 96.5,
-          "grossValue" : 103.26,
-          "taxValue" : 6.76,
-          "taxCode" : "REDUCED",
-          "taxRate" : 7.0
-        }, {
-          "netValue" : 263.19,
-          "grossValue" : 313.2,
-          "taxValue" : 50.01,
-          "taxCode" : "STANDARD",
-          "taxRate" : 19.0
-        }, {
-          "netValue" : 9.0,
-          "grossValue" : 9.0,
-          "taxValue" : 0.0
-        } ]
+      "lines": [
+          {
+              "netValue": 111.239,
+              "grossValue": 119.027,
+              "taxValue": 7.788,
+              "taxCode": "REDUCED",
+              "taxRate": 7.0
+          },
+          {
+              "netValue": 282.511,
+              "grossValue": 336.188,
+              "taxValue": 53.677,
+              "taxCode": "STANDARD",
+              "taxRate": 19.0
+          } ]
       }
   }
 }
