@@ -78,6 +78,8 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
 
 ## Payload example
 
+{% hint style="warning" %}
+
 <details>
 <summary>See the order calculation payload example</summary>
 
@@ -1187,3 +1189,4 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
 ```
 
 </details>
+{% endhint %}
