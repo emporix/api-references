@@ -43,6 +43,8 @@ paths:
       - name: Content-Type
         in: header
         required: true
+        schema: 
+          type: string        
         content:
           application/json:
             schema:
@@ -308,6 +310,8 @@ paths:
       - name: Content-Type
         in: header
         required: true
+        schema: 
+          type: string
         content:
           application/json:
             schema:
