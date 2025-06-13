@@ -136,7 +136,7 @@ After creating the approval, items can be updated by the PATCH endpoint. Custome
 curl -i -X PATCH 
   'https://api.emporix.io/approval/{tenant}/approvals/{approvalId}' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Type: application/json' \
+  -H 'Content-Type: application/json' 
 ```
 
 ### Retrieve an approval
