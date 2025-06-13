@@ -218,7 +218,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       description: |-
-        Creates multiple prices.
+        Creates multiple prices. The maximum batch size is 200.
 
         Response for a particular price will be returned at the same position (index) at which that price is located in the request body.
 
@@ -329,7 +329,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       description: |-
-        Updates or creates multiple prices.
+        Updates or creates multiple prices. The maximum batch size is 200.
 
         Response for a particular price will be returned at the same position (index) at which that price is located in the request body.
 
