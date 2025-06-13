@@ -48,9 +48,9 @@ If there is no prior subscription to the event of your choice, the `metadata.ver
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET \
-  'https://api.emporix.io/webhook/{tenant}/event-subscriptions' \
-  -H 'Accept-Language: fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7' \
+curl -i -X GET 
+  'https://api.emporix.io/webhook/{tenant}/event-subscriptions' 
+  -H 'Accept-Language: fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
@@ -69,10 +69,10 @@ In this example, you will subscribe to the following events: `catalog.created` a
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PATCH \
-  'https://api.emporix.io/webhook/{tenant}/event-subscriptions' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X PATCH 
+  'https://api.emporix.io/webhook/{tenant}/event-subscriptions' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "eventType": "catalog.created",
     "action": "SUBSCRIBE",
@@ -97,10 +97,10 @@ curl -i -X PATCH \
 
 **Learn about the `index.item-updated` event's specific behavior:**
 
-The `index.item-updated` webhook event is emitted whenever there is a change on an item in the system - the index is updated with the new information.\
-For the event to be triggered, a product must have at least one defined **price**, as it is the price that determines products indexing on a specific site.\
-Bear in mind all the events are site-specific, which means that they are linked to activities happening on particular sites.\
-The prices are also site-specific, and a single price can be associated with multiple sites.\
+The `index.item-updated` webhook event is emitted whenever there is a change on an item in the system - the index is updated with the new information.
+For the event to be triggered, a product must have at least one defined **price**, as it is the price that determines products indexing on a specific site.
+Bear in mind all the events are site-specific, which means that they are linked to activities happening on particular sites.
+The prices are also site-specific, and a single price can be associated with multiple sites.
 The number of events triggered in the system depends on **the number of sites** assigned to a specific product’s prices, with one event emitted per each site.
 
 Example:
@@ -130,8 +130,8 @@ To generate the login link with the authentication token needed to connect a ten
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET \
-  'https://api.emporix.io/webhook/{tenant}/dashboard-access' \
+curl -i -X GET 
+  'https://api.emporix.io/webhook/{tenant}/dashboard-access' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 

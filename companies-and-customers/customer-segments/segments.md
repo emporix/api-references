@@ -309,13 +309,13 @@ To filter products that belong to a category that is assigned to a particular se
 [api-reference](../../catalogs-and-categories/category-tree/api-reference/)
 {% endcontent-ref %}
 
-\`\`\`bash\
-curl -i -X GET \\\
-'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments?assignmentType=PRODUCT\&ref.localizedName=Twix\&ref.id=5c3348bda9812100098ffaa3\&showUnpublished=true\&withSubcategories=true\&segmentsIds=segmentId1%2CsegmentId2\&pageNumber=1\&pageSize=60\&sort={fieldName}%3AASC%2C{fieldName2}%3ADESC\&hideUnpublishedProducts=false' \\\
--H 'Accept-Language: \`\*\`, \`en\`, \`en,de,fr\`, \`en-EN\`, \`fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7\`' \\\
--H 'Authorization: Bearer ' \\\
--H 'X-Total-Count: true' \\\
--H 'X-Version: v2'\
-\`\`\`
+```bash
+curl -i -X GET 
+'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments?assignmentType=PRODUCT\&ref.localizedName=Twix\&ref.id=5c3348bda9812100098ffaa3\&showUnpublished=true\&withSubcategories=true\&segmentsIds=segmentId1%2CsegmentId2\&pageNumber=1\&pageSize=60\&sort={fieldName}%3AASC%2C{fieldName2}%3ADESC\&hideUnpublishedProducts=false' 
+-H 'Accept-Language: \`\*\`, \`en\`, \`en,de,fr\`, \`en-EN\`, \`fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7\`' 
+-H 'Authorization: Bearer ' 
+-H 'X-Total-Count: true' 
+-H 'X-Version: v2'
+```
 
 Specify the segment id in the request.
