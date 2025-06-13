@@ -467,10 +467,10 @@ To add referral email templates to an existing `emailTemplates` configuration, y
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X PUT 
+  'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "key": "emailTemplates",
     "secured": false,
@@ -509,13 +509,13 @@ To manually generate a referral coupon for a specific customer, you need to send
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="./api-reference/" %}
+[api-reference](./api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/coupon/{tenant}/referral-coupons/{customerNumber}' \
+curl -i -X POST 
+  'https://api.emporix.io/coupon/{tenant}/referral-coupons/{customerNumber}' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
@@ -525,12 +525,12 @@ To retrieve referral coupon information for a specific customer, you need to sen
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="./api-reference/" %}
+[api-reference](./api-reference/)
 {% endcontent-ref %}
 
-\`\`\`bash\
-curl -i -X GET \\\
-'https://api.emporix.io/coupon/{tenant}/referral-coupons/{customerNumber}' \\\
--H 'Authorization: Bearer '\
-\`\`\`
+```bash
+curl -i -X GET 
+'https://api.emporix.io/coupon/{tenant}/referral-coupons/{customerNumber}'
+-H 'Authorization: Bearer '
+```

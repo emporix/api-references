@@ -41,11 +41,11 @@ If you want to upload the asset to the database, you need to send a multipart re
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/media/{tenant}/assets' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: multipart/form-data' \
-  -F 'file=[object Object]' \
+curl -i -X POST 
+  'https://api.emporix.io/media/{tenant}/assets' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: multipart/form-data' 
+  -F 'file=[object Object]' 
   -F 'body=[object Object]'
 ```
 
@@ -62,11 +62,11 @@ Check out the "Asset of the BLOB type added for a CATEGORY" example:
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/media/{tenant}/assets' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: multipart/form-data' \
-  -F 'file=[object Object]' \
+curl -i -X POST 
+  'https://api.emporix.io/media/{tenant}/assets' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: multipart/form-data' 
+  -F 'file=[object Object]' 
   -F 'body=[object Object]'
 ```
 
@@ -85,8 +85,8 @@ Provide the q parameter in the following format: `q=refIds.id:z7235vn6-5b70-4b3d
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET \
-'https://api.emporix.io/media/{tenant}/assets?pageNumber=1&pageSize=60&sort=name%2Cmetadata.createdAt%3Adesc&q=name%3A{name}' \
--H 'Authorization: Bearer ' \
+curl -i -X GET 
+'https://api.emporix.io/media/{tenant}/assets?pageNumber=1&pageSize=60&sort=name%2Cmetadata.createdAt%3Adesc&q=name%3A{name}' 
+-H 'Authorization: Bearer ' 
 -H 'X-Total-Count: false'
 ```
