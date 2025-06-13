@@ -13,4 +13,4 @@ Emporix makes it possible to create standard customer tokens based on authentica
 
 ## Identity providers supported by Emporix
 
-* [Auth0](integrations/auth0.md)
+* [Auth0](Integrations/auth0.md)
