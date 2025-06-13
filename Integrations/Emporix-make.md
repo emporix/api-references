@@ -7,7 +7,7 @@ icon: m
 
 # Emporix and Make
 
-Here you can find an overview of the Emporix Maker app for the [Make.com](https://www.make.com/en) Marketplace, along with its features and benefits.
+Here you can find an overview of the Emporix Maker app for the [make.com](https://www.make.com/en) Marketplace, along with its features and benefits.
 
 ## Purpose
 
