@@ -2,7 +2,7 @@
 seo:
   title: Identity providers at Emporix
   description: identity, providers, token, tokens, login, social login
-icon: id-badge
+icon: id-card-clip
 ---
 
 # Identity Providers
@@ -13,4 +13,5 @@ Emporix makes it possible to create standard customer tokens based on authentica
 
 ## Identity providers supported by Emporix
 
-* [Auth0](Integrations/auth0.md)
+* [Auth0](auth0.md)
+
