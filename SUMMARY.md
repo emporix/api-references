@@ -625,7 +625,7 @@
   * [Events-Product](webhooks/events-product.md)
   * [Events-Quote](webhooks/events-quote.md)
   * [Events-Product](webhooks/events-return.md)
-* [Integrations](integrations/README.md)
+* [Integrations](Integrations/README.md)
   * [Identity Providers](Integrations/identity-providers.md)
     * [Auth0](Integrations/auth0.md)
   * [Workflow Automation](Integrations/workflow-automation.md)

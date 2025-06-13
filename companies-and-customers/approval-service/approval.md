@@ -52,7 +52,7 @@ Customers from the `B2B_BUYER` group can create approval only when the cost of t
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="./approval-api-reference/api-reference/" %}
+{% content-ref url="./approval-api-reference/" %}
 [api-reference](./approval-api-reference/)
 {% endcontent-ref %}
 
@@ -133,14 +133,11 @@ After creating the approval, items can be updated by the PATCH endpoint. Custome
 **PATCH /approval/update-approval**
 
 ```bash
-curl -i -X PATCH \
-  'https://api.emporix.io/approval/{tenant}/approvals/{approvalId}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -d '{}'
+curl -i -X PATCH 
+  'https://api.emporix.io/approval/{tenant}/approvals/{approvalId}' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
 ```
-
-***
 
 ### Retrieve an approval
 
@@ -149,7 +146,7 @@ Approvals can be fetched by a customer. Only the approval which is assigned to t
 **GET /approval/retrieve-approval**
 
 ```bash
-curl -i -X GET \
-  'https://api.emporix.io/approval/{tenant}/approvals/{approvalId}' \
+curl -i -X GET 
+  'https://api.emporix.io/approval/{tenant}/approvals/{approvalId}' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```

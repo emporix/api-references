@@ -13,14 +13,14 @@ The Fee Service allows you to manage additional fees that you want to connect to
 
 Follow these steps to create a fee and connect it to a product.
 
-1. Create a fee
+1. Create a fee.
 
 To create a fee in the system, send the request to the [Creating a fee](https://developer.emporix.io/api-references/api-guides-and-references/checkout/fee/api-reference/fee-management#post-fee-tenant-fees) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="./api-reference/" %}
+[api-reference](./api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -54,8 +54,8 @@ Make sure you provide the relevant `siteCode` of a site that you want to apply t
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="./api-reference/" %}
+[api-reference](./api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -78,8 +78,8 @@ The `siteCode` in the query parameter must correspond to the site you've created
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="./api-reference/" %}
+[api-reference](./api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -94,8 +94,8 @@ Or, you can check if the fee was applied by sending the request to the [Searchin
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="./api-reference/" %}
+[api-reference](./api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -121,8 +121,8 @@ The Fee Service supports adding fees to payments methods. See the example of cre
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="./api-reference/" %}
+[api-reference](./api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -151,8 +151,7 @@ curl -i -X POST
 When creating a payment fee, the fee `code` has to be identical with the payment mode `code`. To check the available payment modes for a given site, make a call to the [Retrieving all the payment modes](https://developer.emporix.io/api-references/api-guides-and-references/checkout/payment-gateway/api-reference/payment-mode-frontend#get-payment-gateway-tenant-paymentmodes-frontend) endpoint first.
 Notice the `code` in the above payload corresponds to the payment mode `code` we want ta apply the fee to.
 
-2. Copy the `feeId`. To connect the fee to the specific payment type, create the item fee by sending the request to the [Creating itemFee](https://developer.emporix.io/api-references/api-guides-and-references/checkout/fee/api-reference/item-fee-management#post-fee-tenant-itemfees) endpoint
-   and specify the `itemYrn` of the chosen payment type in the request body.
+2. Copy the `feeId`. To connect the fee to the specific payment type, create the item fee by sending the request to the [Creating itemFee](https://developer.emporix.io/api-references/api-guides-and-references/checkout/fee/api-reference/item-fee-management#post-fee-tenant-itemfees) endpoint and specify the `itemYrn` of the chosen payment type in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -172,12 +171,12 @@ curl -i -X POST
 Notice the part of `itemYrn` contains the payment mode `code` which is identical with the fee `code`.
 
 3. Apply the fee to the payment mode. Make a call to the [Adding a list of fees to an item](https://developer.emporix.io/api-references/api-guides-and-references/checkout/fee/api-reference/item-fee-management#put-fee-tenant-itemfees-itemyrn-fees) endpoint.
-   You need to specify the `itemYrn` of the chosen payment type in the request path and pass the `feeId` in the body.
+You need to specify the `itemYrn` of the chosen payment type in the request path and pass the `feeId` in the body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="./api-reference/" %}
+[api-reference](./api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -202,8 +201,8 @@ For each payment mode you can create and connect one fee only.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="./api-reference/" %}
+[api-reference](./api-reference/)
 {% endcontent-ref %}
 
 ```bash
