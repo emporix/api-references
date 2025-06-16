@@ -1190,3 +1190,555 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
 
 </details>
 {% endhint %}
+
+## How to create an order on behalf of a customer
+
+The Order Service functionality allows your employees to act on behalf of a customer and create an order for them. This way merchants can facilitate order process for your customers. See the  steps. 
+
+### Create an order as a merchant
+
+#### Get authorization
+
+To create an order, first get the credentials to log in as a customer on the storefront:
+
+1. Get the `access_token` by sending the request to the [Requesting a service access token](https://developer.emporix.io/api-references/api-guides-and-references/authorization/oauth-service/api-reference/service-access-token).
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../authorization/oauth-service/api-reference/" %}
+[api-reference](../../authorization/oauth-service/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/oauth/token' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "client_id": "{client_id}",
+    "client_secret": "{client_secret}",
+    "grant_type": "client_credentials",
+    "scope": "scope=order.order_read order.order_delete order.order_create order.order_update tenant={tenant}"
+  }'
+```
+
+2. Retrieve the `anonymous_token` by sending a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides-and-references/authorization/oauth-service/api-reference/anonymous-token) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../authorization/oauth-service/api-reference/" %}
+[api-reference](../../authorization/oauth-service/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl 'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id&{client_id}'
+```
+ 
+3. Log the customer in and send an authorization request to the [Requesting a customer token](https://developer.emporix.io/api-references/api-guides-and-references/authorization/oauth-service/api-reference/customer-token) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../authorization/oauth-service/api-reference/" %}
+[api-reference](../../authorization/oauth-service/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl 'https://api.emporix.io/customer/{tenant}/login' \
+  --request POST \
+  --header 'Authorization: Bearer {anonymous_access_token}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "email": "customer@emporix.com",
+  "password": "Qwurmdch673;'"
+}'
+```
+
+#### Create an order
+
+Send the request to the [Creating a new order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../authorization/oauth-service/api-reference/" %}
+[api-reference](../../orders/order/api-reference)
+{% endcontent-ref %}
+
+```bash
+curl --location 'https://api.emporix.io/order-v2/{tenant}/salesorders' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--header 'Authorization: {customer_token}' \
+--data-raw '{
+  "entries": [
+    {
+      "id": "5c336893a981210009900071",
+      "amount": 3,
+      "orderedAmount": 3,
+      "effectiveQuantity": 3,
+      "originalAmount": 34.9,
+      "originalPrice": 34.9,
+      "unitPrice": 34.9,
+      "measurementUnit": {
+        "value": 1,
+        "unit": "H87"
+      },
+      "totalPrice": 104.7,
+      "authorizedAmount": 104.7,
+      "product": {
+        "metadata": {
+          "mixins": {
+            "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/v1560527845/schemata/CAAS/productCustomAttributesMixIn-v38.json",
+            "productBundle": "https://res.cloudinary.com/saas-ag/raw/upload/llproductdata/productBundleMixIn.v5.json",
+            "salePricesData": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/salePriceData.json"
+          }
+        },
+        "id": "5c336893a981210009900071",
+        "sku": "A705121365",
+        "name": "Moët & Chandon Impérial Brut Champagner 0,375 l Flasche",
+        "description": "​Der Moët & Chandon Impérial ist der gelungenste Ausdruck des typischen Stils des Hauses. Ein lebhafter und generöser Champagner, der sich durch seine ausgeprägte Frucht, verführerische Gaumennote sowie durch eine elegante Reife auszeichnet.",
+        "published": true,
+        "images": [
+          {
+            "id": "8c135ce0-3c5c-4c86-9052-ba2ad2f761cc",
+            "url": "https://res.cloudinary.com/saas-ag/image/upload/v1546872983/mytenant/products/8c135ce0-3c5c-4c86-9052-ba2ad2f761cc.jpg",
+            "stored": false
+          }
+        ],
+        "mixins": {
+          "productCustomAttributes": {
+            "activeTab": "CrossSellings",
+            "brand": "59db24c530d7de000e47ba9c",
+            "categoryPath": {
+              "categoryLevel1": "getraenke-weine",
+              "categoryLevel2": "weine",
+              "prettyName": "moët-chandon-impérial-brut-champagner-0375-l-flasche",
+              "categoryLevel3": ""
+            },
+            "containsAlcohol": true,
+            "crossSellings": [
+              "5c333885a9812100098ff7c3",
+              "5c333aa3a9812100098ff821",
+              "5c33570aa9812100098ffd36",
+              "5c334d22a9812100098ffb83"
+            ],
+            "defaultOrderQuantity": 1,
+            "deposit": 0,
+            "deposits": [
+              "59d6216289e840000ead05fb"
+            ],
+            "inStock": true,
+            "lastModifiedDate": "1546873061413",
+            "lmiv": {
+              "alcoholConcentration": "12",
+              "foodBusinessOperator": "<p>Moët Hennessy Deutschland GmbH, Seidlstr. 23, 80335 München<br/></p>"
+            },
+            "maxOrderQuantity": 25,
+            "minOrderQuantity": 1,
+            "orderUnit": "H87",
+            "originCountry": "59db258c30d7de000e47bb21",
+            "originRegion": "Champagne",
+            "packagingDescription": "Glasflasche",
+            "packagingGroup": "2_Standard",
+            "packagingPosition": "1_Unten_unempfindlich",
+            "packagingUnit": "0,375 l Flasche",
+            "pricingMeasure": {
+              "unitCode": "H87",
+              "value": 1
+            },
+            "pricingMeasurePrice": 34.9,
+            "productState": "ok",
+            "surcharge": "XXnnsv4m3a8BeRnk50YfQA==",
+            "taxClass": "FULL",
+            "unitPricingBaseMeasure": {
+              "unitCode": "LTR",
+              "value": 1
+            },
+            "unitPricingMeasure": {
+              "unitCode": "MLT",
+              "value": 375
+            },
+            "cutting": [],
+            "labels": [],
+            "servicePackaging": [],
+            "longDescription": "",
+            "lmivDescription": "",
+            "lastModifiedUser": ""
+          },
+          "salePricesData": {
+            "salePrices": [
+              {
+                "salePriceAmount": 30.9,
+                "salePriceEnd": "2020-03-01T23:59:00.000+0000",
+                "salePriceStart": "2020-02-27T00:00:00.000+0000"
+              }
+            ]
+          }
+        }
+      },
+      "price": {
+        "priceId": "5c3368958232760008f1df0b",
+        "productId": "5c336893a981210009900071",
+        "yrn": "urn:yaas:hybris:price:price:mytenant;5c3368958232760008f1df0b",
+        "siteCode": "main",
+        "currency": "EUR",
+        "originalAmount": 34.9,
+        "effectiveAmount": 34.9,
+        "measurementUnit": {
+          "unitCode": "H87",
+          "quantity": 1
+        },
+        "basePrice": {
+          "effectiveAmount": 93.0666666667,
+          "originalAmount": 93.0666666667,
+          "measurementUnit": {
+            "unitCode": "LTR",
+            "quantity": 1
+          }
+        },
+        "presentationPrice": {
+          "effectiveAmount": 34.9,
+          "originalAmount": 34.9,
+          "measurementUnit": {
+            "unitCode": "H87",
+            "quantity": 1
+          }
+        },
+        "metadata": {
+          "createdAt": "2019-01-07T14:57:42.988Z",
+          "modifiedAt": "2021-04-08T11:53:18.825Z",
+          "version": 17
+        }
+      },
+      "totalDiscount": {
+        "currency": "EUR"
+      },
+      "metadata": {
+        "mixins": {
+          "cartItemOptions": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/cartItemOptionsMixIn.v2.json",
+          "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/v1560527845/schemata/CAAS/productCustomAttributesMixIn-v38.json",
+          "fees": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json"
+        }
+      },
+      "mixins": {
+        "cartItemOptions": {},
+        "productCustomAttributes": {},
+        "fees": {
+          "elements": [
+            {
+              "yrn": "urn:yaas:saasag:fee:fee:mytenant;59d6216289e840000ead05fb",
+              "taxCode": "ZERO",
+              "total": {
+                "subTotal": 0,
+                "totalTax": 0,
+                "total": 0
+              }
+            }
+          ],
+          "total": {
+            "subTotal": 0,
+            "totalTax": 0,
+            "total": 0
+          }
+        }
+      }
+    }
+  ],
+  "discounts": [],
+  "customer": {
+    "id": "57924485",
+    "name": "John Dee",
+    "title": "MRS",
+    "firstName": "John",
+    "lastName": "Dee",
+    "email": "j.dee@emporix.com",
+    "metadata": {
+      "mixins": {
+        "generalAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/customerGeneralAttributesMixIn.v4.json",
+        "backofficeAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/accountBoMixIn.v3.json",
+        "payment": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/paymentMixIn.v3.json",
+        "marketing": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/accountMarketingMixIn.v4.json",
+        "administration": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/administrativeMixIn.v4.json",
+        "deliveryOptions": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryOptionsMixIn.v6.json"
+      }
+    },
+    "mixins": {
+      "generalAttributes": {
+        "lastDeliveryAddress": "a2cb0ce944",
+        "invoiceNotDeliveryAddress": false,
+        "birthday": "7.7.1972",
+        "mobilePhone": "608232233",
+        "contactPhone": "608232233",
+        "customerType": "private",
+        "customerNumber": "K701141"
+      },
+      "backofficeAttributes": {
+        "country": "DE"
+      },
+      "payment": {
+        "paymentType": "paymentByCash",
+        "paymentCosts": 0,
+        "paymentByDebit": {
+          "bankAccountOwner": "",
+          "iban": "",
+          "bankName": ""
+        }
+      },
+      "marketing": {},
+      "administration": {
+        "creationDate": "2020-12-08T13:39:45.813Z"
+      },
+      "deliveryOptions": {
+        "substituteProduct": true,
+        "packaging": "Paper",
+        "hint": "",
+        "pickup": false,
+        "pickupAddress": {
+          "id": "Pickup 1",
+          "street": "Fabrikstr",
+          "streetNumber": "5.",
+          "city": "Cham",
+          "zipCode": "6033",
+          "companyName": "SaaS test AG",
+          "country": "DE",
+          "addressName": "Fabrikstr. 5.",
+          "description": "test description for multiple pickup points",
+          "addressTag": "pickupAddress"
+        }
+      }
+    }
+  },
+  "siteCode": "main",
+  "countryCode": "DE",
+  "billingAddress": {
+    "contactName": "John Dee",
+    "street": "Maximilianstrasse",
+    "streetNumber": "55",
+    "streetAppendix": "",
+    "zipCode": "70173",
+    "city": "Stuttgart-Mitte",
+    "country": "DE",
+    "metadata": {
+      "mixins": {
+        "customAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/addressMixIn.v4.json"
+      }
+    },
+    "mixins": {
+      "customAttributes": {
+        "title": "MRS",
+        "firstName": "John",
+        "lastName": "Dee",
+        "birthday": "7.7.1972"
+      }
+    }
+  },
+  "shippingAddress": {
+    "contactName": "John Dee",
+    "street": "Maximilianstrasse",
+    "streetNumber": "55",
+    "streetAppendix": "",
+    "zipCode": "70173",
+    "city": "Stuttgart-Mitte",
+    "country": "DE",
+    "metadata": {
+      "mixins": {
+        "customAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/addressMixIn.v4.json"
+      }
+    },
+    "mixins": {
+      "customAttributes": {
+        "title": "MR",
+        "firstName": "John",
+        "lastName": "Dee",
+        "birthday": "7.7.1972"
+      }
+    }
+  },
+  "payments": [
+    {
+      "status": "PENDING",
+      "method": "cash-on-delivery",
+      "paidAmount": 0,
+      "currency": "EUR"
+    }
+  ],
+  "shipping": {
+    "total": {
+      "amount": 20,
+      "currency": "EUR"
+    },
+    "lines": [
+      {
+        "amount": 20,
+        "currency": "EUR",
+        "code": "4-more_hours_timeframe",
+        "tax": {
+          "total": {
+            "amount": 0,
+            "currency": "USD",
+            "inclusive": false
+          }
+        },
+        "shippingTaxCode": "ZERO"
+      }
+    ]
+  },
+  "tax": {
+    "total": {
+      "amount": 0,
+      "currency": "EUR",
+      "inclusive": false
+    }
+  },
+  "subTotalPrice": 104.7,
+  "totalPrice": 124.7,
+  "totalAuthorizedAmount": 124.7,
+  "currency": "EUR",
+  "metadata": {
+    "mixins": {
+      "deliveryTime": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryTimeMixIn.v2.json",
+      "payment": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/paymentMixIn.v3.json",
+      "deliveryOptions": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryOptionsMixIn.v6.json",
+      "generalAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/orderGeneralAttributesMixIn.v9.json",
+      "payments": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json"
+    },
+    "version": 1
+  },
+  "mixins": {
+    "deliveryTime": {
+      "replace": false,
+      "deliveryDate": "2021-12-09T12:00:00.000Z",
+      "deliveryTimeFrom": "15:00",
+      "deliveryTimeTo": "22:00",
+      "deliveryCosts": 20,
+      "pickupSettings": "Fabrikstr. 5.",
+      "deliveryTimeId": "5b5572a7f19a51001ad55509"
+    },
+    "payment": {
+      "paymentType": "paymentByCash",
+      "paymentCosts": 0,
+      "paymentByDebit": {
+        "bankAccountOwner": "",
+        "iban": "",
+        "bankName": ""
+      }
+    },
+    "deliveryOptions": {
+      "substituteProduct": true,
+      "packaging": "Paper",
+      "hint": "",
+      "pickup": false,
+      "pickupAddress": {
+        "id": "Pickup 1",
+        "street": "Fabrikstr",
+        "streetNumber": "5.",
+        "city": "Cham",
+        "zipCode": "6033",
+        "companyName": "SaaS test AG",
+        "country": "DE",
+        "addressName": "Fabrikstr. 5.",
+        "description": "test description for multiple pickup points",
+        "addressTag": "pickupAddress"
+      }
+    },
+    "generalAttributes": {
+      "extendedOrderStatus": "10",
+      "orderType": "CUSTOMER_ORDER",
+      "customerFirstOrder": false,
+      "orderNumber": "B7022093"
+    },
+    "payments": {
+      "elements": [
+        {
+          "paymentMethodYrn": "urn:yaas:hybris:payments:payment-method:mytenant;cash-on-delivery",
+          "fees": {
+            "total": {
+              "subTotal": 0,
+              "totalTax": 0,
+              "total": 0
+            }
+          },
+          "total": {
+            "subTotal": 0,
+            "totalTax": 0,
+            "total": 0
+          }
+        }
+      ],
+      "total": {
+        "subTotal": 0,
+        "totalTax": 0,
+        "total": 0
+      }
+    }
+  },
+  "orderCycle": "2021-12-09T12:00:00.000Z",
+  "deliveryWindowId": "5b5572a7f19a51001ad55509",
+  "channel": {}
+}'
+```
+#### Confirm order creation 
+
+You can rerieve order details as a merchant or as a customer themselves.
+
+* To check as a merhcant, send the request to the [Retrieving a specific order by ID](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../authorization/oauth-service/api-reference/" %}
+[api-reference](../../authorization/oauth-service/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}'
+```
+
+* To check if the order is visible in the order history as a customer, send the request to the [Retrieving a list of orders](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../authorization/oauth-service/api-reference/" %}
+[api-reference](../../authorization/oauth-service/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
+  --header 'Saas-Token: '
+```
+
+### Change the order status
+
+When the order is prepared and dispatched, as a merchant change the order status to `SHIPPED`. Send the request to the [Partially updating an order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../authorization/oauth-service/api-reference/" %}
+[api-reference](../../authorization/oauth-service/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl --location --request PATCH 'https://api.emporix.io/order-v2/mrworkerdev/salesorders/{order_id}?recalculate=false' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--header 'Authorization: Bearer {YOUR_OAUTH2_TOKEN}' \
+--data '{
+  "status": "SHIPPED"
+  }'
+```
+
+### Check the status transitions
+
+To check the status history of the order, send the request to the [Retrieving status transitions for an order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid-transitions) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../authorization/oauth-service/api-reference/" %}
+[api-reference](../../authorization/oauth-service/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}/transitions' \
+  --header 'Authorization: Bearer {YOUR_OAUTH2_TOKEN}' \
+  --header 'Accept: */*'
+```
+
