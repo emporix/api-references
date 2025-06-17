@@ -1234,7 +1234,7 @@ curl -L \
 curl 'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id&{client_id}'
 ```
  
-3. Log the customer in and send an authorization request to the [Requesting a customer token](https://developer.emporix.io/api-references/api-guides-and-references/authorization/oauth-service/api-reference/customer-token) endpoint.
+3. Log in as the customer by sending an authorization request to the [Requesting a customer token](https://developer.emporix.io/api-references/api-guides-and-references/authorization/oauth-service/api-reference/customer-token) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -1259,7 +1259,7 @@ Send the request to the [Creating a new order](https://developer.emporix.io/api-
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../authorization/oauth-service/api-reference/" %}
+{% content-ref url="../../orders/order/api-reference/api-reference/" %}
 [api-reference](../../orders/order/api-reference)
 {% endcontent-ref %}
 
@@ -1678,14 +1678,14 @@ curl --location 'https://api.emporix.io/order-v2/{tenant}/salesorders' \
 ```
 #### Confirm order creation 
 
-You can rerieve order details as a merchant or as a customer themselves.
+You can retrieve the order details as a merchant or as a customer themselves.
 
-* To check as a merhcant, send the request to the [Retrieving a specific order by ID](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) endpoint.
+* To check the order creation as a merchant, send the request to the [Retrieving a specific order by ID](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../authorization/oauth-service/api-reference/" %}
-[api-reference](../../authorization/oauth-service/api-reference/)
+{% content-ref url="../../orders/order/api-reference" %}
+[api-reference](../../orders/order/api-reference)
 {% endcontent-ref %}
 
 ```bash
@@ -1696,8 +1696,8 @@ curl 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}'
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../authorization/oauth-service/api-reference/" %}
-[api-reference](../../authorization/oauth-service/api-reference/)
+{% content-ref url="../../orders/order/api-reference" %}
+[api-reference](../../orders/order/api-reference)
 {% endcontent-ref %}
 
 ```bash
@@ -1707,12 +1707,12 @@ curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
 
 ### Change the order status
 
-When the order is prepared and dispatched, as a merchant change the order status to `SHIPPED`. Send the request to the [Partially updating an order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid) endpoint.
+As a merchant, when the order has been prepared and dispatched, change the order status to `SHIPPED`. Send the request to the [Partially updating an order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../authorization/oauth-service/api-reference/" %}
-[api-reference](../../authorization/oauth-service/api-reference/)
+{% content-ref url="../../orders/order/api-reference" %}
+[api-reference](../../orders/order/api-reference)
 {% endcontent-ref %}
 
 ```bash
@@ -1731,8 +1731,8 @@ To check the status history of the order, send the request to the [Retrieving st
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../authorization/oauth-service/api-reference/" %}
-[api-reference](../../authorization/oauth-service/api-reference/)
+{% content-ref url="../../orders/order/api-reference" %}
+[api-reference](../../orders/order/api-reference)
 {% endcontent-ref %}
 
 ```bash
