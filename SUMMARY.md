@@ -16,7 +16,7 @@
 
 ## API Guides and References
 
-* [Authorization](api-guides-and-references/authorization/README.md)
+* [Authorization](api-guides-and-references/authorization/oauth-service/README.md)
   * [OAuth Service](authorization/oauth-service/README.md)
     * [API Reference](authorization/oauth-service/api-reference/README.md)
       * ```yaml
@@ -625,7 +625,7 @@
   * [Events-Product](webhooks/events-product.md)
   * [Events-Quote](webhooks/events-quote.md)
   * [Events-Product](webhooks/events-return.md)
-* [Integrations](api-guides-and-references/integrations/README.md)
+* [Integrations](api-guides-and-references/Integrations/README.md)
   * [Identity Providers](Integrations/identity-providers.md)
     * [Auth0](Integrations/auth0.md)
   * [Workflow Automation](Integrations/workflow-automation.md)
