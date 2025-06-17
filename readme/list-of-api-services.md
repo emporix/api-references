@@ -18,7 +18,7 @@ For easier testing of Emporix API, check out the Postman Collection [Emporix Com
 
 * To download an individual OpenAPI specification, you can do so directly from the repository - see the list of services with links:
 
-| Services documention                                                                   | Links to download the specifications                                                                                                                                                                  |
+| Services documentation                                                                   | Links to download the specifications                                                                                                                                                                  |
 | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [AI Service](../artificial-intelligence/ai-service/)                                   | [api-references/artificial-intelligence/ai-service/api-reference/api.yml at main · emporix/api-references](../artificial-intelligence/ai-service/api-reference/api.yml)                               |
 | [Approval Service](../companies-and-customers/approval-service/)                       | [api-references/companies-and-customers/approval-service/approval-api-reference/api.yml at main · emporix/api-references](../companies-and-customers/approval-service/approval-api-reference/api.yml) |
