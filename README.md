@@ -8,6 +8,10 @@ icon: code-branch
 [Download API Specification for all Emporix Services - ZIP](https://github.com/emporix/api-references/releases/latest/download/api-references.zip)
 {% endhint %}
 
+{% hint style="success" %}
+For easier testing of Emporix API, check out the Postman Collection with example flows: [Emporix Commerce Orchestration Platform](https://www.postman.com/emporix/emporix-commerce-orchestration-platform/overview).
+{% endhint %}
+
 ## Introduction
 
 The Emporix API is the core of our Commerce Engine designed to help you easily manage your business's resources. It is organized around REST and makes use of the following components:
