@@ -13,7 +13,7 @@ All of our services are documented in the API sections of our docs, with referen
 {% endhint %}
 
 {% hint style="success" %}
-For easier testing of Emporix API, check out the Postman Collection [Emporix Commerce Orchestration Platform](https://www.postman.com/emporix/emporix-commerce-orchestration-platform/overview).
+For easier testing of Emporix API, check out the Postman Collection with example flows: [Emporix Commerce Orchestration Platform](https://www.postman.com/emporix/emporix-commerce-orchestration-platform/overview).
 {% endhint %}
 
 * To download an individual OpenAPI specification, you can do so directly from the repository - see the list of services with links:
