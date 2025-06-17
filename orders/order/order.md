@@ -1210,10 +1210,10 @@ To create an order, first get the credentials to log in as a customer on the sto
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/oauth/token' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/oauth/token' 
+  --header 'Content-Type: application/json' 
   --data '{
     "client_id": "{client_id}",
     "client_secret": "{client_secret}",
@@ -1243,10 +1243,10 @@ curl 'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&
 {% endcontent-ref %}
 
 ```bash
-curl 'https://api.emporix.io/customer/{tenant}/login' \
-  --request POST \
-  --header 'Authorization: Bearer {anonymous_access_token}' \
-  --header 'Content-Type: application/json' \
+curl 'https://api.emporix.io/customer/{tenant}/login' 
+  --request POST 
+  --header 'Authorization: Bearer {anonymous_access_token}' 
+  --header 'Content-Type: application/json' 
   --data '{
   "email": "customer@emporix.com",
   "password": "Qwurmdch673;'"
@@ -1264,10 +1264,10 @@ Send the request to the [Creating a new order](https://developer.emporix.io/api-
 {% endcontent-ref %}
 
 ```bash
-curl --location 'https://api.emporix.io/order-v2/{tenant}/salesorders' \
---header 'Content-Type: application/json' \
---header 'Accept: application/json' \
---header 'Authorization: {customer_token}' \
+curl --location 'https://api.emporix.io/order-v2/{tenant}/salesorders' 
+--header 'Content-Type: application/json' 
+--header 'Accept: application/json' 
+--header 'Authorization: {customer_token}' 
 --data-raw '{
   "entries": [
     {
@@ -1678,7 +1678,7 @@ curl --location 'https://api.emporix.io/order-v2/{tenant}/salesorders' \
 ```
 #### Confirm order creation 
 
-You can retrieve the order details as a merchant or as a customer themselves.
+You can retrieve the order details as a merchant or as the customer.
 
 * To check the order creation as a merchant, send the request to the [Retrieving a specific order by ID](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) endpoint.
 
@@ -1716,10 +1716,10 @@ As a merchant, when the order has been prepared and dispatched, change the order
 {% endcontent-ref %}
 
 ```bash
-curl --location --request PATCH 'https://api.emporix.io/order-v2/mrworkerdev/salesorders/{order_id}?recalculate=false' \
---header 'Content-Type: application/json' \
---header 'Accept: application/json' \
---header 'Authorization: Bearer {YOUR_OAUTH2_TOKEN}' \
+curl --location --request PATCH 'https://api.emporix.io/order-v2/mrworkerdev/salesorders/{order_id}?recalculate=false' 
+--header 'Content-Type: application/json' 
+--header 'Accept: application/json' 
+--header 'Authorization: Bearer {YOUR_OAUTH2_TOKEN}' 
 --data '{
   "status": "SHIPPED"
   }'
@@ -1736,9 +1736,9 @@ To check the status history of the order, send the request to the [Retrieving st
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --url 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}/transitions' \
-  --header 'Authorization: Bearer {YOUR_OAUTH2_TOKEN}' \
+curl -L 
+  --url 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}/transitions' 
+  --header 'Authorization: Bearer {YOUR_OAUTH2_TOKEN}' 
   --header 'Accept: */*'
 ```
 
