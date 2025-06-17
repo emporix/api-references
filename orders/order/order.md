@@ -1193,7 +1193,7 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
 
 ## How to create an order on behalf of a customer
 
-The Order Service functionality allows your employees to act on behalf of a customer and create an order for them. This way merchants can facilitate order process for your customers. See the  steps. 
+The Order Service functionality allows your employees to act on behalf of a customer and create an order for them. This way, merchants can facilitate order process for your customers. See the steps of the order process flow. 
 
 ### Create an order as a merchant
 
@@ -1259,7 +1259,7 @@ Send the request to the [Creating a new order](https://developer.emporix.io/api-
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../orders/order/api-reference/api-reference/" %}
+{% content-ref url="../../orders/order/api-reference/" %}
 [api-reference](../../orders/order/api-reference)
 {% endcontent-ref %}
 
