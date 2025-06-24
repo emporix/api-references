@@ -8,6 +8,7 @@
 
 ## 2025
 
+* [2025-06-24: Webhook Service - new events added](2025/2025-06-24-webhook.md)
 * [2025-06-12: Order Service - `calculatedPrice` has been enriched](2025/2025-06-12-order.md)
 * [2025-06-12: Cart Service - `calculatedPrice` has been enriched](2025/2025-06-12-cart.md)
 * [2025-06-05: OAuth Service - added session_id field to `login` and `refreshauthtoken` response](2025/2025-06-05-customer_token_response.md)
