@@ -1536,6 +1536,26 @@ curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/saleso
   }'
 ```
 
+* As a customer, you can only change the order status from `CREATED` to `DECLINED` if for any reason you need to cancel the order. To decline the order, send the quest to the [Updating order status](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders-orderid-transitions) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../orders/order/api-reference" %}
+[api-reference](../../orders/order/api-reference)
+{% endcontent-ref %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' \
+  --header 'saas-token: text' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "status": "DECLINED"
+  }'
+```
+
 ### Check the status transitions
 
 Order Service APIs provide also tools for controlling the status transitions logs.
