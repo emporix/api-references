@@ -104,9 +104,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
             "amount": 2,
             "orderedAmount": 2,
             "effectiveQuantity": 2.0,
-            "originalAmount": 350,
-            "originalPrice": 350,
-            "unitPrice": 350,
             "calculatedUnitPrice": {
                 "netValue": 294.118,
                 "grossValue": 350.0,
@@ -114,8 +111,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
                 "taxCode": "STANDARD",
                 "taxRate": 19.0
             },
-            "totalPrice": 700.0,
-            "authorizedAmount": 700.0,
             "product": {
                 "id": "samsung-galaxy-s24-gross",
                 "sku": "Samsung Galaxy s24 gross",
@@ -133,24 +128,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
                 ],
                 "productType": "BASIC"
             },
-            "tax": {
-                "lines": [
-                    {
-                        "amount": 111.76,
-                        "currency": "EUR",
-                        "code": "STANDARD",
-                        "name": "STANDARD",
-                        "rate": 19.0,
-                        "sequenceId": 0,
-                        "inclusive": true
-                    }
-                ],
-                "total": {
-                    "amount": 0,
-                    "currency": "EUR",
-                    "inclusive": true
-                }
-            },
             "price": {
                 "priceId": "679ca63dbcdefe5b380c98bc",
                 "priceListId": "abc123",
@@ -163,63 +140,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
                     "createdAt": "2025-01-31T10:30:21.998Z",
                     "modifiedAt": "2025-01-31T10:30:21.998Z",
                     "version": 1
-                }
-            },
-            "totalDiscount": {
-                "amount": 84.06,
-                "currency": "EUR"
-            },
-            "fees": {
-                "elements": [
-                    {
-                        "yrn": "urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2",
-                        "name": {
-                            "de": "Apple Picking Fee",
-                            "en": "Apple Picking Fee"
-                        },
-                        "taxCode": "REDUCED",
-                        "total": {
-                            "subTotal": 3.5,
-                            "totalTax": 0.0,
-                            "total": 3.08
-                        }
-                    }
-                ],
-                "total": {
-                    "subTotal": 3.5,
-                    "totalTax": 0.0,
-                    "total": 3.08
-                }
-            },
-            "metadata": {
-                "mixins": {
-                    "fees": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json"
-                }
-            },
-            "mixins": {
-                "fees": {
-                    "elements": [
-                        {
-                            "yrn": "urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2",
-                            "name": {
-                                "de": "Apple Picking Fee",
-                                "en": "Apple Picking Fee"
-                            },
-                            "taxCode": "REDUCED",
-                            "total": {
-                                "subTotal": 3.5,
-                                "totalTax": 0.0,
-                                "total": 3.08,
-                                "discount": 0.42
-                            }
-                        }
-                    ],
-                    "total": {
-                        "subTotal": 3.5,
-                        "totalTax": 0.0,
-                        "total": 3.08,
-                        "discount": 0.42
-                    }
                 }
             },
             "calculatedPrice": {
@@ -389,9 +309,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
             "amount": 1,
             "orderedAmount": 1,
             "effectiveQuantity": 1.0,
-            "originalAmount": 10,
-            "originalPrice": 10,
-            "unitPrice": 10,
             "calculatedUnitPrice": {
                 "netValue": 9.346,
                 "grossValue": 10.0,
@@ -399,8 +316,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
                 "taxCode": "REDUCED",
                 "taxRate": 7.0
             },
-            "totalPrice": 10.0,
-            "authorizedAmount": 10.0,
             "product": {
                 "metadata": {
                     "mixins": {
@@ -423,63 +338,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
                     }
                 },
                 "productType": "VARIANT"
-            },
-            "tax": {
-                "lines": [
-                    {
-                        "amount": 0.65,
-                        "currency": "EUR",
-                        "code": "REDUCED",
-                        "name": "REDUCED",
-                        "rate": 7.0,
-                        "sequenceId": 0,
-                        "inclusive": true
-                    }
-                ],
-                "total": {
-                    "amount": 0,
-                    "currency": "EUR",
-                    "inclusive": true
-                }
-            },
-            "price": {
-                "priceId": "6818c032524d1c16623037e2",
-                "currency": "EUR",
-                "originalAmount": 10.0,
-                "effectiveAmount": 10.0,
-                "basePrice": {},
-                "presentationPrice": {},
-                "metadata": {
-                    "createdAt": "2025-05-05T13:42:10.674Z",
-                    "modifiedAt": "2025-05-05T13:44:20.599Z",
-                    "version": 2
-                }
-            },
-            "totalDiscount": {
-                "amount": 1.19,
-                "currency": "EUR"
-            },
-            "fees": {
-                "total": {
-                    "subTotal": 0.0,
-                    "totalTax": 0.0,
-                    "total": 0.0
-                }
-            },
-            "metadata": {
-                "mixins": {
-                    "fees": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json"
-                }
-            },
-            "mixins": {
-                "fees": {
-                    "total": {
-                        "subTotal": 0.0,
-                        "totalTax": 0.0,
-                        "total": 0.0,
-                        "discount": 0.0
-                    }
-                }
             },
             "calculatedPrice": {
                 "price": {
@@ -560,9 +418,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
             "amount": 2,
             "orderedAmount": 2,
             "effectiveQuantity": 2.0,
-            "originalAmount": 55,
-            "originalPrice": 55,
-            "unitPrice": 55,
             "calculatedUnitPrice": {
                 "netValue": 51.402,
                 "grossValue": 55.0,
@@ -570,8 +425,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
                 "taxCode": "REDUCED",
                 "taxRate": 7.0
             },
-            "totalPrice": 110.0,
-            "authorizedAmount": 143.0,
             "product": {
                 "id": "samsung-galaxy-s27-gross",
                 "sku": "samsung-galaxy-s27-gross",
@@ -583,88 +436,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
                 "published": true,
                 "images": [],
                 "productType": "BASIC"
-            },
-            "tax": {
-                "lines": [
-                    {
-                        "amount": 7.2,
-                        "currency": "EUR",
-                        "code": "REDUCED",
-                        "name": "REDUCED",
-                        "rate": 7.0,
-                        "sequenceId": 0,
-                        "inclusive": true
-                    }
-                ],
-                "total": {
-                    "amount": 0,
-                    "currency": "EUR",
-                    "inclusive": true
-                }
-            },
-            "price": {
-                "priceId": "6797da2f3537716a5a537ecf",
-                "currency": "EUR",
-                "originalAmount": 55.0,
-                "effectiveAmount": 55.0,
-                "basePrice": {},
-                "presentationPrice": {},
-                "metadata": {
-                    "createdAt": "2025-01-27T19:10:39.966Z",
-                    "modifiedAt": "2025-04-14T07:54:30.431Z",
-                    "version": 23
-                }
-            },
-            "totalDiscount": {
-                "amount": 13.56,
-                "currency": "EUR"
-            },
-            "fees": {
-                "elements": [
-                    {
-                        "yrn": "urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2",
-                        "name": "Apple Picking Fee",
-                        "taxCode": "REDUCED",
-                        "total": {
-                            "subTotal": 3.5,
-                            "totalTax": 0.0,
-                            "total": 3.08
-                        }
-                    }
-                ],
-                "total": {
-                    "subTotal": 3.5,
-                    "totalTax": 0.0,
-                    "total": 3.08
-                }
-            },
-            "metadata": {
-                "mixins": {
-                    "fees": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json"
-                }
-            },
-            "mixins": {
-                "fees": {
-                    "elements": [
-                        {
-                            "yrn": "urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2",
-                            "name": "Apple Picking Fee",
-                            "taxCode": "REDUCED",
-                            "total": {
-                                "subTotal": 3.5,
-                                "totalTax": 0.0,
-                                "total": 3.08,
-                                "discount": 0.42
-                            }
-                        }
-                    ],
-                    "total": {
-                        "subTotal": 3.5,
-                        "totalTax": 0.0,
-                        "total": 3.08,
-                        "discount": 0.42
-                    }
-                }
             },
             "calculatedPrice": {
                 "price": {
@@ -1230,117 +1001,6 @@ curl --location 'https://api.emporix.io/order-v2/{tenant}/salesorders'
         "deliveryOptions": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryOptionsMixIn.v6.json"
       }
     }
-  },
-  "siteCode": "main",
-  "countryCode": "DE",
-  "billingAddress": {
-    "contactName": "John Dee",
-    "street": "Maximilianstrasse",
-    "streetNumber": "55",
-    "streetAppendix": "",
-    "zipCode": "70173",
-    "city": "Stuttgart-Mitte",
-    "country": "DE",
-    "metadata": {
-      "mixins": {
-        "customAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/addressMixIn.v4.json"
-      }
-    }
-  },
-  "shippingAddress": {
-    "contactName": "John Dee",
-    "street": "Maximilianstrasse",
-    "streetNumber": "55",
-    "streetAppendix": "",
-    "zipCode": "70173",
-    "city": "Stuttgart-Mitte",
-    "country": "DE",
-    "metadata": {
-      "mixins": {
-        "customAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/addressMixIn.v4.json"
-      }
-    }
-  },
-  "payments": [
-    {
-      "status": "PENDING",
-      "method": "cash-on-delivery",
-      "paidAmount": 0,
-      "currency": "EUR"
-    }
-  ],
-  "calculatedPrice": {
-        "price": {
-            "netValue": 882.354,
-            "grossValue": 1050.00,
-            "taxValue": 167.646
-        },
-        "finalPrice": {
-            "netValue": 882.354,
-            "grossValue": 1050.00,
-            "taxValue": 167.646
-        }
-  },
-  "channel": {}
-}
-
-```
-
-* As a logged in customer, create an order by sending a request to the [Creating a new order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders) endpoint.
-
-Make sure you have the `order.order_post` scope granted.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../../orders/order/api-reference/" %}
-[api-reference](../../orders/order/api-reference)
-{% endcontent-ref %}
-
-```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/order-v2/{tenant}/orders' \
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' \
-  --header 'saas-token: text' \
-  --header 'Content-Type: application/json' \
-  --data '{
-  "entries": [
-    {
-      "id": "5c336893a981210009900071",
-      "amount": 3,
-      "orderedAmount": 3,
-      "effectiveQuantity": 3,
-      "calculatedUnitPrice": {
-        "netValue": 294.118,
-        "grossValue": 350.0,
-        "taxValue": 55.882,
-        "taxCode": "STANDARD",
-        "taxRate": 19.0
-      },
-      "measurementUnit": {
-        "value": 1,
-        "unit": "H87"
-      },
-      "calculatedPrice": {
-        "price": {
-            "netValue": 882.354,
-            "grossValue": 1050.0,
-            "taxValue": 167.646,
-            "taxCode": "STANDARD",
-            "taxRate": 19.0
-        },
-        "finalPrice": {
-            "netValue": 882.354,
-            "grossValue": 1050.0,
-            "taxValue": 167.646
-        }
-      }
-    }
-  ],
-  "discounts": [],
-  "customer": {
-    "id": "{{first_customer_id}}",
-    "name": "John Dee"
   },
   "siteCode": "main",
   "countryCode": "DE",
