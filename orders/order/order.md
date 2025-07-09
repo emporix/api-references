@@ -936,7 +936,7 @@ curl 'https://api.emporix.io/customer/{tenant}/login'
 
 #### Create an order
 
-* As a merchant acting on behalf of a customer, send the request to the [Creating a new order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) endpoint.
+As a merchant acting on behalf of a customer, send the request to the [Creating a new order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
