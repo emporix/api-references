@@ -861,61 +861,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
             "provider": "stripe"
         }
     ],
-    "shipping": {
-        "total": {
-            "amount": 10.71,
-            "currency": "EUR"
-        },
-        "lines": [
-            {
-                "amount": 10.0,
-                "currency": "EUR",
-                "code": "Pickup",
-                "name": "Pickup",
-                "localizedName": {
-                    "en": "Pickup"
-                },
-                "tax": {
-                    "total": {
-                        "amount": 1.9,
-                        "currency": "EUR",
-                        "inclusive": false
-                    },
-                    "rate": 19.0
-                },
-                "shippingTaxCode": "STANDARD"
-            }
-        ]
-    },
-    "tax": {
-        "lines": [
-            {
-                "amount": 7.85,
-                "currency": "EUR",
-                "code": "REDUCED",
-                "name": "REDUCED",
-                "rate": 7.0,
-                "sequenceId": 0,
-                "inclusive": false
-            },
-            {
-                "amount": 113.66,
-                "currency": "EUR",
-                "code": "STANDARD",
-                "name": "STANDARD",
-                "rate": 19.0,
-                "sequenceId": 1,
-                "inclusive": false
-            }
-        ],
-        "total": {
-            "amount": 1.9,
-            "currency": "EUR",
-            "inclusive": false
-        }
-    },
-    "subTotalPrice": 820.0,
-    "totalPrice": 812.79,
     "totalAuthorizedAmount": 534.829,
     "currency": "EUR",
     "metadata": {
@@ -973,41 +918,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
             "extendedOrderStatus": "10",
             "customerFirstOrder": false,
             "orderNumber": "EON1200"
-        }
-    },
-    "feeYrnAggregate": {
-        "elements": [
-            {
-                "yrn": "urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2",
-                "name": {
-                    "de": "Apple Picking Fee",
-                    "en": "Apple Picking Fee"
-                },
-                "taxCode": "REDUCED",
-                "total": {
-                    "subTotal": 7.0,
-                    "totalTax": 0.0,
-                    "total": 6.16
-                }
-            },
-            {
-                "yrn": "urn:yaas:saasag:fee:fee:b2b2cstage;678f552a949c723de46bdb14",
-                "name": {
-                    "de": "Payment fee",
-                    "en": "Payment fee"
-                },
-                "taxCode": "REDUCED",
-                "total": {
-                    "subTotal": 73.89,
-                    "totalTax": 0.0,
-                    "total": 73.89
-                }
-            }
-        ],
-        "total": {
-            "subTotal": 80.89,
-            "totalTax": 0.0,
-            "total": 80.05
         }
     },
     "calculatedPrice": {
