@@ -35,34 +35,44 @@ Once an order is placed, the order information simply reflects the calculated pr
 ---
 config:
   layout: fixed
-  theme: neutral
-  look: neo
+  theme: default
+  look: classic
+  font-family: Lato, sans-serif
 ---
 flowchart LR
- subgraph subGraph0["Emporix System"]
+ subgraph subGraph0["Storefront"]
+        A["Customer"]
+  end
+ subgraph subGraph1["Emporix"]
         CS["Cart Service"]
         CHK["Checkout Service"]
         OS["Order Service"]
   end
- subgraph subGraph1["Customer's System"]
+ subgraph subGraph2["Customer's System"]
         ERP["ERP"]
   end
-    SF["Storefront"] -- "1.Add product to cart" --> CS
-    SF -- "2.Start checkout" --> CHK
+    A -- "1.Add product to cart" --> CS
+    A -- "2.Start checkout" --> CHK
     CHK -- "3.Fetch cart data" --> CS
     CHK -- "4.Replicate order to ERP" --> ERP
     CHK -- "5.Create order" --> OS
+    A@{ shape: rounded}
     CS@{ shape: rounded}
     CHK@{ shape: rounded}
     OS@{ shape: rounded}
     ERP@{ shape: rounded}
-    SF@{ shape: rounded}
-     SF:::Class_02
+     A:::Class_04
+     CS:::Class_04
+     CHK:::Class_04
+     ERP:::Class_04
+     OS:::Class_04
      subGraph1:::Class_03
      subGraph0:::Class_01
+     subGraph2:::Class_02
     classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#DDE6EE, fill:#DDE6EE
     classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#A1BDDC, fill:#A1BDDC
-    classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#DBF1FE, fill:#DBF1FE
+    classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#DBF1FE, fill:#3b73bb
+    classDef Class_04 fill:#F2F6FA, stroke:#E86C07
 ```
 
 {% hint style="info" %}
