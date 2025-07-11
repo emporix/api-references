@@ -40,15 +40,15 @@ config:
   font-family: Lato, sans-serif
 ---
 flowchart LR
- subgraph subGraph0["Storefront"]
+ subgraph subGraph0["`**Storefront**`"]
         A["Customer"]
   end
- subgraph subGraph1["Emporix"]
+ subgraph subGraph1["`**Emporix**`"]
         CS["Cart Service"]
         CHK["Checkout Service"]
         OS["Order Service"]
   end
- subgraph subGraph2["Customer's System"]
+ subgraph subGraph2["`**Customer's System**`"]
         ERP["ERP"]
   end
     A -- "1.Add product to cart" --> CS
@@ -97,15 +97,15 @@ config:
   look: classic
 ---
 flowchart LR
- subgraph subGraph0["Storefront"]
+ subgraph subGraph0["`**Storefront**`"]
         A["Customer"]
   end
- subgraph subGraph1["Emporix"]
+ subgraph subGraph1["`**Emporix**`"]
         CS["Cart Service"]
         CHK["Checkout Service"]
         OS["Order Service"]
   end
- subgraph subGraph2["Customer's System"]
+ subgraph subGraph2["`**Customer's System**`"]
         BFF["Backend for Frontend (BFF)"]
         ERP["ERP"]
   end
@@ -158,14 +158,14 @@ config:
   look: classic
 ---
 flowchart LR
- subgraph subGraph0["Storefront"]
+ subgraph subGraph0["`**Storefront**`"]
         A["Customer"]
   end
- subgraph subGraph1["Emporix"]
+ subgraph subGraph1["`**Emporix**`"]
         CS["Cart Service"]
         OS["Order Service"]
   end
- subgraph subGraph2["Customer's System"]
+ subgraph subGraph2["`**Customer's System**`"]
         BFF["Backend for Frontend (BFF)"]
         ERP["ERP"]
   end
