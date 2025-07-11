@@ -29,7 +29,7 @@ During checkout, the final price is calculated based on customer-specific detail
 
 Once an order is placed, the order information simply reflects the calculated prices without further modifications, ensuring accuracy and transparency in the final transaction.
 
-<figure><img src="../../static/order/diagram1.svg" alt=""><figcaption></figcaption></figure>
+<!-- <figure><img src="../../static/order/diagram1.svg" alt=""><figcaption></figcaption></figure> -->
 
 ```mermaid
 ---
@@ -87,7 +87,56 @@ Commerce Orchestration Platform (COP) enables this functionality with external p
 
 Communication with the ERP system occurs using the BFF (Backend-for-Frontend) layer and with a [POST](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) request the order is send to an ERP system. This architecture ensures a secure, real-time pricing model while leveraging external systems for order calculations.
 
-<figure><img src="../../static/order/diagram2.svg" alt=""><figcaption></figcaption></figure>
+<!-- <figure><img src="../../static/order/diagram2.svg" alt=""><figcaption></figcaption></figure> -->
+
+```mermaid
+---
+config:
+  layout: fixed
+  theme: default
+  look: classic
+---
+flowchart LR
+ subgraph subGraph0["Storefront"]
+        A["Customer"]
+  end
+ subgraph subGraph1["Emporix"]
+        CS["Cart Service"]
+        CHK["Checkout Service"]
+        OS["Order Service"]
+  end
+ subgraph subGraph2["Customer's System"]
+        BFF["Backend for Frontend (BFF)"]
+        ERP["ERP"]
+  end
+    A -- "1.Add product to cart" --> BFF
+    BFF -- "2.Calculate a price" --> ERP
+    BFF -- "3.Add a product with an external price to a cart" --> CS
+    A -- "4.Start checkout" --> CHK
+    CHK -- "5.Fetch cart data" --> CS
+    CHK -- "6.Replicate order" --> ERP
+    CHK -- "7.Create order" --> OS
+    A@{ shape: rounded}
+    CS@{ shape: rounded}
+    CHK@{ shape: rounded}
+    OS@{ shape: rounded}
+    BFF@{ shape: rounded}
+    ERP@{ shape: rounded}
+     A:::Class_04
+     CS:::Class_04
+     CHK:::Class_04
+     OS:::Class_04
+     BFF:::Class_04
+     ERP:::Class_04
+     subGraph1:::Class_03
+     subGraph0:::Class_01
+     subGraph2:::Class_02
+    classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#DDE6EE, fill:#DDE6EE
+    classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#A1BDDC, fill:#A1BDDC
+    classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#DBF1FE, fill:#3b73bb
+    classDef Class_04 fill:#F2F6FA, stroke:#E86C07
+
+```
 
 {% hint style="info" %}
 For more information, see the [External Pricing](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) guides.
@@ -99,7 +148,51 @@ With this use case, the Commerce Orchestration Platform cart is used to collect 
 
 Once the order is validated and priced by the ERP, the BFF layer creates the order in COP using the [Sales Order API](api-reference/). This allows for seamless integration between Emporix and the external ERP system while maintaining flexibility in how orders are processed.
 
-<figure><img src="../../static/order/diagram3.svg" alt=""><figcaption></figcaption></figure>
+<!-- <figure><img src="../../static/order/diagram3.svg" alt=""><figcaption></figcaption></figure> -->
+
+```mermaid
+---
+config:
+  layout: fixed
+  theme: default
+  look: classic
+---
+flowchart LR
+ subgraph subGraph0["Storefront"]
+        A["Customer"]
+  end
+ subgraph subGraph1["Emporix"]
+        CS["Cart Service"]
+        OS["Order Service"]
+  end
+ subgraph subGraph2["Customer's System"]
+        BFF["Backend for Frontend (BFF)"]
+        ERP["ERP"]
+  end
+    A -- "1.Start checkout" --> BFF
+    BFF -- "2.Get cart data" --> CS
+    BFF -- "3.Simulate order" --> ERP
+    BFF -- "4.Cretae sales order" --> OS
+    OS -- "5.Replicate order" --> ERP
+    A@{ shape: rounded}
+    CS@{ shape: rounded}
+    OS@{ shape: rounded}
+    BFF@{ shape: rounded}
+    ERP@{ shape: rounded}
+     A:::Class_04
+     CS:::Class_04
+     OS:::Class_04
+     BFF:::Class_04
+     ERP:::Class_04
+     subGraph1:::Class_03
+     subGraph0:::Class_01
+     subGraph2:::Class_02
+    classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#DDE6EE, fill:#DDE6EE
+    classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#A1BDDC, fill:#A1BDDC
+    classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#DBF1FE, fill:#3b73bb
+    classDef Class_04 fill:#F2F6FA, stroke:#E86C07
+
+```
 
 ## Order calculation approaches comparison
 
