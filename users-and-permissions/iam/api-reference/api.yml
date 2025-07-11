@@ -3466,71 +3466,18 @@ paths:
               schema:
                 type: array
                 items: { }
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  code:
-                    type: integer
-                  status:
-                    type: string
-                  message:
-                    type: string
-                  details:
-                    type: array
-                    items:
-                      type: string
-              examples:
-                Wrong user type:
-                  value:
-                    code: 400
-                    status: Bad Request
-                    message: This user type is not supported yet for the user search
-                    details:
-                      - Wrong user type.
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
           $ref: '#/components/responses/Forbidden_403'
-      operationId: GET-iam-list-users-with-groups
+      operationId: GET-iam-list-users-with-groups-vendor
       description: |-
-        Retrieves all users for the given tenant with the assigned groups. The user type can be specified as `EMPLOYEE` or `CUSTOMER`.
+        Retrieves all users for the given vendor with the assigned groups.
         ***
 
         ### Required scopes
 
           * `iam.user_read`
-      parameters:
-        - schema:
-            type: string
-          in: query
-          description: Page number to be retrieved. The number of the first page is 1.
-          name: pageNumber
-        - schema:
-            type: string
-          in: query
-          name: pageSize
-          description: Number of items to be retrieved per page.
-        - schema:
-            type: string
-            enum:
-              - groups
-            example: groups
-          in: query
-          name: expand
-          description: Adds expanded groups objects to the response result.
-        - schema:
-            type: string
-            enum:
-              - EMPLOYEE
-            example: EMPLOYEE
-          in: query
-          name: userType
-          description: 'The user type of the returned users. Supported types: `EMPLOYEE` and `CUSTOMER`.'
-        - $ref: '#/components/parameters/trait_XTotalCount_header'
       security:
         - OAuth2:
             - iam.user_read
@@ -3844,7 +3791,7 @@ components:
       #   id: e243dc9e-a3f6-4573-bb01-a8ae21d2d4ae
     UserIdResponse:
       type: object
-      example: 
+      example:
         id: e243dc9e-a3f6-4573-bb01-a8ae21d2d4ae
       properties:
         id:

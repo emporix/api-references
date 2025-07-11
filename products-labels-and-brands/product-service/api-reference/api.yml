@@ -34,7 +34,7 @@ paths:
         **Required scopes**
 
         * `product.product_read_unpublished` **Note:** Only required if the response should contain unpublished products.
-        * `product.product_read_by_vendor` allows vendor employee to see vendor's products
+        * `product.product_read_by_vendor` - allows vendor employee to see vendor's products
       operationId: POST-product-search-products
       requestBody:
         $ref: '#/components/requestBodies/productsSearchBody'
@@ -73,7 +73,7 @@ paths:
 
         * `product.product_read_unpublished` **Note:** Only required if the response should contain unpublished products.
         * `product.product_read_by_vendor` - allows vendor employee to see vendor's products
-        * `product.product_manage_by_vendor - allows vendor employee to see vendor's products
+        * `product.product_manage_by_vendor` - allows vendor employee to see vendor's products
       operationId: GET-product-list-products
       security:
         - OAuth2: []
@@ -441,7 +441,7 @@ paths:
 
         * `product.product_read_unpublished` **Note:** Only required if the product has not been published.
         * `product.product_read_by_vendor` - allows vendor employee to see vendor's products
-        * `product.product_manage_by_vendor - allows vendor employee to see vendor's products
+        * `product.product_manage_by_vendor` - allows vendor employee to see vendor's products
       operationId: GET-product-retrieve-product
       security:
         - OAuth2: []
