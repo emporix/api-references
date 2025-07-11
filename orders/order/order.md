@@ -194,7 +194,8 @@ flowchart LR
     classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#A1BDDC, fill:#A1BDDC
     classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#3b73bb, fill:#3b73bb
     classDef Class_04 fill:#F2F6FA, stroke:#E86C07
-
+    style subGraph0 color:#FFFFFF
+    style subGraph1 color:#FFFFFF
 ```
 
 ## Order calculation approaches comparison
