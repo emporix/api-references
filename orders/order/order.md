@@ -172,7 +172,7 @@ flowchart LR
     A -- "1.Start checkout" --> BFF
     BFF -- "2.Get cart data" --> CS
     BFF -- "3.Simulate order" --> ERP
-    BFF -- "4.Cretae sales order" --> OS
+    BFF -- "4.Create sales order" --> OS
     OS -- "5.Replicate order" --> ERP
     A@{ shape: rounded}
     CS@{ shape: rounded}
