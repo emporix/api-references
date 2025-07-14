@@ -37,35 +37,38 @@ config:
   layout: fixed
   theme: default
   look: classic
-  font-family: Lato, sans-serif
 ---
 flowchart LR
- subgraph subGraph0["`**Storefront**`"]
+ subgraph subGraph0["**Storefront**"]
         A["Customer"]
   end
- subgraph subGraph1["`**Emporix**`"]
+ subgraph subGraph1["**Emporix**"]
         CS["Cart Service"]
         CHK["Checkout Service"]
         OS["Order Service"]
+        WS["Webhook Service"]
   end
- subgraph subGraph2["`**Customer's System**`"]
+ subgraph subGraph2["**Customer's System**"]
         ERP["ERP"]
   end
     A -- "1.Add product to cart" --> CS
     A -- "2.Start checkout" --> CHK
     CHK -- "3.Fetch cart data" --> CS
-    CHK -- "4.Replicate order to ERP" --> ERP
-    CHK -- "5.Create order" --> OS
+    CHK -- "4.Create order" --> OS
+    WS -- "5.Receive order.created event" --> OS
+    WS -- "6.Replicate order to ERP" --> ERP
     A@{ shape: rounded}
     CS@{ shape: rounded}
     CHK@{ shape: rounded}
     OS@{ shape: rounded}
     ERP@{ shape: rounded}
+    WS@{ shape: rounded}
      A:::Class_04
      CS:::Class_04
      CHK:::Class_04
-     ERP:::Class_04
      OS:::Class_04
+     WS:::Class_04
+     ERP:::Class_04
      subGraph1:::Class_03
      subGraph0:::Class_01
      subGraph2:::Class_02
@@ -76,6 +79,9 @@ flowchart LR
     style subGraph0 color:#FFFFFF
     style subGraph1 color:#FFFFFF
 ```
+{% hint style="warning" %}
+You have to register your listener in the Emporix Webhook Service so that the listener pushes order information to your ERP system.
+{% endhint %}
 
 {% hint style="info" %}
 To learn how pricing is calculated at Emporix, see the [Cart Service Tutorials](../../checkout/cart/cart.md#pricing-calculations).
@@ -99,15 +105,16 @@ config:
   look: classic
 ---
 flowchart LR
- subgraph subGraph0["`**Storefront**`"]
+ subgraph subGraph0["**Storefront**"]
         A["Customer"]
   end
- subgraph subGraph1["`**Emporix**`"]
+ subgraph subGraph1["**Emporix**"]
         CS["Cart Service"]
         CHK["Checkout Service"]
         OS["Order Service"]
+        WS["Webhook Service"]
   end
- subgraph subGraph2["`**Customer's System**`"]
+ subgraph subGraph2["**Customer's System**"]
         BFF["Backend for Frontend (BFF)"]
         ERP["ERP"]
   end
@@ -116,18 +123,21 @@ flowchart LR
     BFF -- "3.Add a product with an external price to a cart" --> CS
     A -- "4.Start checkout" --> CHK
     CHK -- "5.Fetch cart data" --> CS
-    CHK -- "6.Replicate order" --> ERP
-    CHK -- "7.Create order" --> OS
+    CHK -- "6.Create order" --> OS
+    WS -- "7.Receive order.created event" --> OS
+    WS -- "8.Replicate order" --> ERP
     A@{ shape: rounded}
     CS@{ shape: rounded}
     CHK@{ shape: rounded}
     OS@{ shape: rounded}
+    WS@{ shape: rounded}
     BFF@{ shape: rounded}
     ERP@{ shape: rounded}
      A:::Class_04
      CS:::Class_04
      CHK:::Class_04
      OS:::Class_04
+     WS:::Class_04
      BFF:::Class_04
      ERP:::Class_04
      subGraph1:::Class_03
@@ -137,10 +147,13 @@ flowchart LR
     classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#A1BDDC, fill:#A1BDDC
     classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#3b73bb, fill:#3b73bb
     classDef Class_04 fill:#F2F6FA, stroke:#E86C07
-    style subGraph0 color:#FFFFFF
     style subGraph1 color:#FFFFFF
-
+    style subGraph0 color:#FFFFFF
 ```
+
+{% hint style="warning" %}
+You have to register your listener in the Emporix Webhook Service so that the listener pushes order information to your ERP system.
+{% endhint %}
 
 {% hint style="info" %}
 For more information, see the [External Pricing](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) guides.
@@ -162,14 +175,15 @@ config:
   look: classic
 ---
 flowchart LR
- subgraph subGraph0["`**Storefront**`"]
+ subgraph subGraph0["**Storefront**"]
         A["Customer"]
   end
- subgraph subGraph1["`**Emporix**`"]
+ subgraph subGraph1["**Emporix**"]
         CS["Cart Service"]
         OS["Order Service"]
+        WS["Webhook Service"]
   end
- subgraph subGraph2["`**Customer's System**`"]
+ subgraph subGraph2["**Customer's System**"]
         BFF["Backend for Frontend (BFF)"]
         ERP["ERP"]
   end
@@ -177,15 +191,18 @@ flowchart LR
     BFF -- "2.Get cart data" --> CS
     BFF -- "3.Simulate order" --> ERP
     BFF -- "4.Create sales order" --> OS
-    OS -- "5.Replicate order" --> ERP
+    WS -- "5.Receive order.created event" --> OS
+    WS -- "6.Replicate order" --> ERP
     A@{ shape: rounded}
     CS@{ shape: rounded}
     OS@{ shape: rounded}
+    WS@{ shape: rounded}
     BFF@{ shape: rounded}
     ERP@{ shape: rounded}
      A:::Class_04
      CS:::Class_04
      OS:::Class_04
+     WS:::Class_04
      BFF:::Class_04
      ERP:::Class_04
      subGraph1:::Class_03
@@ -195,9 +212,13 @@ flowchart LR
     classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#A1BDDC, fill:#A1BDDC
     classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#3b73bb, fill:#3b73bb
     classDef Class_04 fill:#F2F6FA, stroke:#E86C07
-    style subGraph0 color:#FFFFFF
     style subGraph1 color:#FFFFFF
+    style subGraph0 color:#FFFFFF
 ```
+
+{% hint style="warning" %}
+You have to register your listener in the Emporix Webhook Service so that the listener pushes order information to your ERP system.
+{% endhint %}
 
 ## Order calculation approaches comparison
 

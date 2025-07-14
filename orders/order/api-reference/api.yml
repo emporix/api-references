@@ -2324,8 +2324,8 @@ components:
           type: number
           format: double
           minimum: 0.0
-          maximum: 100.0 for discountType=`PERCENT`, ABSOLUTE is not limited
-          description: Value of the discount (percentage e.g 15.00 -> 15% or absolute amount e.g 10.00 -> 10 EUR depending on the discountType).
+          maximum: 100.0
+          description: Value of the discount (percentage e.g 15.00 -> 15% or absolute amount e.g 10.00 -> 10 EUR depending on the discountType). For discountType=`PERCENT`, maximum is 100.0; for ABSOLUTE, there is no limit.
         includeFees:
           type: boolean
           description: Flag indicating whether the discount is also applied to fees.

@@ -5,15 +5,16 @@ config:
   look: classic
 ---
 flowchart LR
- subgraph subGraph0["Storefront"]
+ subgraph subGraph0["**Storefront**"]
         A["Customer"]
   end
- subgraph subGraph1["Emporix"]
+ subgraph subGraph1["**Emporix**"]
         CS["Cart Service"]
         CHK["Checkout Service"]
         OS["Order Service"]
+        WS["Webhook Service"]
   end
- subgraph subGraph2["Customer's System"]
+ subgraph subGraph2["**Customer's System**"]
         BFF["Backend for Frontend (BFF)"]
         ERP["ERP"]
   end
@@ -22,18 +23,21 @@ flowchart LR
     BFF -- "3.Add a product with an external price to a cart" --> CS
     A -- "4.Start checkout" --> CHK
     CHK -- "5.Fetch cart data" --> CS
-    CHK -- "6.Replicate order" --> ERP
-    CHK -- "7.Create order" --> OS
+    CHK -- "6.Create order" --> OS
+    WS -- "7.Receive order.created event" --> OS
+    WS -- "8.Replicate order" --> ERP
     A@{ shape: rounded}
     CS@{ shape: rounded}
     CHK@{ shape: rounded}
     OS@{ shape: rounded}
+    WS@{ shape: rounded}
     BFF@{ shape: rounded}
     ERP@{ shape: rounded}
      A:::Class_04
      CS:::Class_04
      CHK:::Class_04
      OS:::Class_04
+     WS:::Class_04
      BFF:::Class_04
      ERP:::Class_04
      subGraph1:::Class_03
@@ -41,5 +45,7 @@ flowchart LR
      subGraph2:::Class_02
     classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#DDE6EE, fill:#DDE6EE
     classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#A1BDDC, fill:#A1BDDC
-    classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#DBF1FE, fill:#3b73bb
+    classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#3b73bb, fill:#3b73bb
     classDef Class_04 fill:#F2F6FA, stroke:#E86C07
+    style subGraph1 color:#FFFFFF
+    style subGraph0 color:#FFFFFF
