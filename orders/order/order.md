@@ -55,7 +55,7 @@ flowchart LR
     A -- "2.Start checkout" --> CHK
     CHK -- "3.Fetch cart data" --> CS
     CHK -- "4.Create order" --> OS
-    WS -- "5.Receive order.created event" --> OS
+    OS -- "5.Receive order.created event" --> WS
     WS -- "6.Replicate order to ERP" --> ERP
     A@{ shape: rounded}
     CS@{ shape: rounded}
@@ -124,7 +124,7 @@ flowchart LR
     A -- "4.Start checkout" --> CHK
     CHK -- "5.Fetch cart data" --> CS
     CHK -- "6.Create order" --> OS
-    WS -- "7.Receive order.created event" --> OS
+    OS -- "7.Receive order.created event" --> WS
     WS -- "8.Replicate order" --> ERP
     A@{ shape: rounded}
     CS@{ shape: rounded}
@@ -191,7 +191,7 @@ flowchart LR
     BFF -- "2.Get cart data" --> CS
     BFF -- "3.Simulate order" --> ERP
     BFF -- "4.Create sales order" --> OS
-    WS -- "5.Receive order.created event" --> OS
+    OS -- "5.Receive order.created event" --> WS
     WS -- "6.Replicate order" --> ERP
     A@{ shape: rounded}
     CS@{ shape: rounded}

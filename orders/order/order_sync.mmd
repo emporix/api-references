@@ -24,7 +24,7 @@ flowchart LR
     A -- "4.Start checkout" --> CHK
     CHK -- "5.Fetch cart data" --> CS
     CHK -- "6.Create order" --> OS
-    WS -- "7.Receive order.created event" --> OS
+    OS -- "7.Receive order.created event" --> WS
     WS -- "8.Replicate order" --> ERP
     A@{ shape: rounded}
     CS@{ shape: rounded}

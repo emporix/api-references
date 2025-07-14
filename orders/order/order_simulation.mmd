@@ -21,7 +21,7 @@ flowchart LR
     BFF -- "2.Get cart data" --> CS
     BFF -- "3.Simulate order" --> ERP
     BFF -- "4.Create sales order" --> OS
-    WS -- "5.Receive order.created event" --> OS
+    OS -- "5.Receive order.created event" --> WS
     WS -- "6.Replicate order" --> ERP
     A@{ shape: rounded}
     CS@{ shape: rounded}
