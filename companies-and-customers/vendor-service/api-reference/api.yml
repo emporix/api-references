@@ -4,10 +4,6 @@ info:
   version: ''
   description: |
     The Vendor service allows you to manage vendors and their locations in your system.
-    
-    **Key Features**:
-      * Upsert support that enables seamless updates and inserts.
-      * Location management for vendor addresses.
   contact:
     name: Emporix
     url: 'https://emporix.com'
@@ -24,7 +20,7 @@ paths:
     post:
       summary: Creating vendor
       description: |-
-        Creates a new vendor for the tenant. A vendor represents a supplier or business partner in the system.
+        Creates a new vendor for the tenant. A vendor represents a supplier or a business partner in the system.
 
         ***
 
@@ -131,7 +127,7 @@ paths:
     post:
       summary: Searching with parameters for vendors
       description: |-
-        Retrieves all vendors that match provided criteria.
+        Retrieves all vendors that match the provided criteria.
 
         ***
 
@@ -226,7 +222,7 @@ paths:
     put:
       summary: Upserting a vendor
       description: |-
-        Updates or creates a vendor with given vendor id. You can omit the `metadata.version`, but then optimistic locking is not enabled.
+        Updates or creates a vendor with a given vendor ID. You can omit the `metadata.version`, but then optimistic locking is not enabled.
 
         ***
 
@@ -468,7 +464,7 @@ paths:
     put:
       summary: Upserting a location
       description: |-
-        Updates or creates a location with given location id. You can omit the `metadata.version`, but then optimistic locking is not enabled.
+        Updates or creates a location with a given location ID. You can omit the `metadata.version`, but then optimistic locking is not enabled.
 
         ***
 
@@ -713,10 +709,10 @@ components:
           enum:
             - COMPANY
             - SUBSIDIARY
-          description: 'The type of the vendor. Default value if not provided is: `COMPANY`'
+          description: 'The type of the vendor. If not provided, the default value is: `COMPANY`.'
         parentId:
           type: string
-          description: The id of the parent vendor.
+          description: The ID of the parent vendor.
         legalInfo:
           $ref: '#/components/schemas/legalInfo'
         contactDetails:
@@ -750,7 +746,7 @@ components:
           description: The type of the vendor.
         parentId:
           type: string
-          description: The id of the parent vendor.
+          description: The ID of the parent vendor.
         legalInfo:
           $ref: '#/components/schemas/legalInfo'
         contactDetails:
@@ -832,7 +828,7 @@ components:
       properties:
         name:
           type: string
-          description: The name of the location
+          description: The name of the location.
         type:
           type: string
           enum:
@@ -940,7 +936,7 @@ components:
         X-Total-Count:
           description: |-
             'The total number of entities in the database matching the specified query criteria.
-            Returned if request X-Total-Count header has been set to true.'
+            Returned if the request X-Total-Count header has been set to true.'
           schema:
             type: number
             example: 69
