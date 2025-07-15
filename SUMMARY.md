@@ -329,20 +329,20 @@
               spec: approval-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/approval-service/approval-api-reference/api.yml)
-    * [Vendor Service](companies-and-customer/vendor-service/README.md)
-      * [Vendor Tutorials](companies-and-customer/vendor-service/vendor.md)
-      * [API Reference](companies-and-customers/vendor-service/api-reference/README.md)
-        * ```yaml
-          props:
-            models: true
-          type: builtin:openapi
-          dependencies:
-            spec:
-              ref:
-                kind: openapi
-                spec: vendor-api
-          ```
-      * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/d6675c6452921e0758d35aba027ba3e83ec2ec4a/companies-and-customers/vendor-service/api-reference/api.yml)
+  * [Vendor Service](companies-and-customer/vendor-service/README.md)
+    * [Vendor Tutorials](companies-and-customer/vendor-service/vendor.md)
+    * [API Reference](companies-and-customers/vendor-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: vendor-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/d6675c6452921e0758d35aba027ba3e83ec2ec4a/companies-and-customers/vendor-service/api-reference/api.yml)
 * [Delivery and Shipping](delivery-and-shipping/README.md)
   * [Shipping Service](delivery-and-shipping/shipping/README.md)
     * [Shipping Tutorial](delivery-and-shipping/shipping/shipping.md)

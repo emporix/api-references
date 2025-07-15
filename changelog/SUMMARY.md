@@ -8,6 +8,10 @@
 
 ## 2025
 
+* [2025-07-10: Vendor Service - Vendor Service with locations](2025/2025-07-10-vendor.md)
+* [2025-07-10: IAM Service - new endpoint and vendorId attribute](2025/2025-07-10-iam.md)
+* [2025-07-10: Product Service - vendorId added](2025/2025-07-10-product.md)
+* [2025-07-10: Order Service - vendor added](2025/2025-07-10-order.md)
 * [2025-06-24: Webhook Service - new events added](2025/2025-06-24-webhook.md)
 * [2025-06-12: Order Service - `calculatedPrice` has been enriched](2025/2025-06-12-order.md)
 * [2025-06-12: Cart Service - `calculatedPrice` has been enriched](2025/2025-06-12-cart.md)
