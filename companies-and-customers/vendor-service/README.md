@@ -1,6 +1,6 @@
 ---
-description: Tenant-managed
-icon: users
+description: vendor
+icon: pallet-boxes
 ---
 
 # Vendor Management
