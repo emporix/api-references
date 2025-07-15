@@ -2324,8 +2324,8 @@ components:
           type: number
           format: double
           minimum: 0.0
-          maximum: 100.0 for discountType=`PERCENT`, ABSOLUTE is not limited
-          description: Value of the discount (percentage e.g 15.00 -> 15% or absolute amount e.g 10.00 -> 10 EUR depending on the discountType).
+          maximum: 100.0
+          description: Value of the discount (percentage e.g 15.00 -> 15% or absolute amount e.g 10.00 -> 10 EUR depending on the discountType). For discountType=`PERCENT`, maximum is 100.0; for ABSOLUTE, there is no limit.
         includeFees:
           type: boolean
           description: Flag indicating whether the discount is also applied to fees.
@@ -3501,17 +3501,12 @@ components:
             amount: 3
             orderedAmount: 3
             effectiveQuantity: 3
-            originalAmount: 100
-            originalPrice: 100
-            unitPrice: 100
             calculatedUnitPrice:
               netValue: 100
               grossValue: 119
               taxValue: 19
               taxCode: STANDARD
               taxRate: 19
-            totalPrice: 300
-            authorizedAmount: 300
             product:
               metadata:
                 mixins:
@@ -3533,19 +3528,6 @@ components:
                 productVariantAttributes:
                   size: 43
               productType: VARIANT
-            tax:
-              lines:
-                - amount: 57
-                  currency: EUR
-                  code: STANDARD
-                  name: STANDARD
-                  rate: 19
-                  sequenceId: 0
-                  inclusive: false
-              total:
-                amount: 0
-                currency: EUR
-                inclusive: false
             price:
               priceId: 6763cd21139f370cd9244d37
               currency: EUR
@@ -3557,24 +3539,6 @@ components:
                 createdAt: '2024-12-19T07:37:05.559Z'
                 modifiedAt: '2024-12-19T07:37:05.559Z'
                 version: 1
-            totalDiscount:
-              amount: 0
-              currency: EUR
-            fees:
-              total:
-                subTotal: 0
-                totalTax: 0
-                total: 0
-            metadata:
-              mixins:
-                fees: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
-            mixins:
-              fees:
-                total:
-                  subTotal: 0
-                  totalTax: 0
-                  total: 0
-                  discount: 0
             calculatedPrice:
               price:
                 netValue: 300
@@ -3632,47 +3596,6 @@ components:
             transactionId: fcc2bf50-f064-4dc3-833f-0909a7857387
             authorizedAmount: 373.12
             provider: payment-gateway
-        shipping:
-          total:
-            amount: 39.2
-            currency: EUR
-          lines:
-            - amount: 35
-              currency: EUR
-              code: pickup
-              name: pickup
-              localizedName:
-                en: pickup
-                de: pickup
-              tax:
-                total:
-                  amount: 4.2
-                  currency: EUR
-                  inclusive: false
-                rate: 12
-              shippingTaxCode: REDUCED
-        tax:
-          lines:
-            - amount: 4.2
-              currency: EUR
-              code: REDUCED
-              name: REDUCED
-              rate: 12
-              sequenceId: 0
-              inclusive: false
-            - amount: 57
-              currency: EUR
-              code: STANDARD
-              name: STANDARD
-              rate: 19
-              sequenceId: 1
-              inclusive: false
-          total:
-            amount: 0
-            currency: EUR
-            inclusive: false
-        subTotalPrice: 300
-        totalPrice: 333.92
         totalAuthorizedAmount: 373.12
         currency: EUR
         metadata:
@@ -3736,21 +3659,6 @@ components:
           deliveryTimeRange:
             timeFrom: '10:00'
             timeTo: '14:30'
-        feeYrnAggregate:
-          elements:
-            - yrn: 'urn:yaas:saasag:fee:fee:test;678f552a949c723de46bdb14'
-              name:
-                de: Payment fee
-                en: Payment fee
-              taxCode: REDUCED
-              total:
-                subTotal: 33.92
-                totalTax: 0
-                total: 33.92
-          total:
-            subTotal: 33.92
-            totalTax: 0
-            total: 33.92
         calculatedPrice:
           price:
             netValue: 300
@@ -3817,17 +3725,12 @@ components:
             amount: 3
             orderedAmount: 3
             effectiveQuantity: 3
-            originalAmount: 100
-            originalPrice: 100
-            unitPrice: 100
             calculatedUnitPrice:
               netValue: 100
               grossValue: 119
               taxValue: 19
               taxCode: STANDARD
               taxRate: 19
-            totalPrice: 300
-            authorizedAmount: 300
             product:
               metadata:
                 mixins:
@@ -3849,19 +3752,6 @@ components:
                 productVariantAttributes:
                   size: 43
               productType: VARIANT
-            tax:
-              lines:
-                - amount: 57
-                  currency: EUR
-                  code: STANDARD
-                  name: STANDARD
-                  rate: 19
-                  sequenceId: 0
-                  inclusive: false
-              total:
-                amount: 0
-                currency: EUR
-                inclusive: false
             price:
               priceId: 6763cd21139f370cd9244d37
               currency: EUR
@@ -3873,24 +3763,6 @@ components:
                 createdAt: '2024-12-19T07:37:05.559Z'
                 modifiedAt: '2024-12-19T07:37:05.559Z'
                 version: 1
-            totalDiscount:
-              amount: 0
-              currency: EUR
-            fees:
-              total:
-                subTotal: 0
-                totalTax: 0
-                total: 0
-            metadata:
-              mixins:
-                fees: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
-            mixins:
-              fees:
-                total:
-                  subTotal: 0
-                  totalTax: 0
-                  total: 0
-                  discount: 0
             calculatedPrice:
               price:
                 netValue: 300
@@ -3948,47 +3820,6 @@ components:
             transactionId: fcc2bf50-f064-4dc3-833f-0909a7857387
             authorizedAmount: 373.12
             provider: payment-gateway
-        shipping:
-          total:
-            amount: 39.2
-            currency: EUR
-          lines:
-            - amount: 35
-              currency: EUR
-              code: pickup
-              name: pickup
-              localizedName:
-                en: pickup
-                de: pickup
-              tax:
-                total:
-                  amount: 4.2
-                  currency: EUR
-                  inclusive: false
-                rate: 12
-              shippingTaxCode: REDUCED
-        tax:
-          lines:
-            - amount: 4.2
-              currency: EUR
-              code: REDUCED
-              name: REDUCED
-              rate: 12
-              sequenceId: 0
-              inclusive: false
-            - amount: 57
-              currency: EUR
-              code: STANDARD
-              name: STANDARD
-              rate: 19
-              sequenceId: 1
-              inclusive: false
-          total:
-            amount: 0
-            currency: EUR
-            inclusive: false
-        subTotalPrice: 300
-        totalPrice: 333.92
         totalAuthorizedAmount: 373.12
         currency: EUR
         metadata:
@@ -4052,21 +3883,6 @@ components:
           deliveryTimeRange:
             timeFrom: '10:00'
             timeTo: '14:30'
-        feeYrnAggregate:
-          elements:
-            - yrn: 'urn:yaas:saasag:fee:fee:test;678f552a949c723de46bdb14'
-              name:
-                de: Payment fee
-                en: Payment fee
-              taxCode: REDUCED
-              total:
-                subTotal: 33.92
-                totalTax: 0
-                total: 33.92
-          total:
-            subTotal: 33.92
-            totalTax: 0
-            total: 33.92
         calculatedPrice:
           price:
             netValue: 300
@@ -5283,17 +5099,12 @@ components:
             amount: 3
             orderedAmount: 3
             effectiveQuantity: 3
-            originalAmount: 100
-            originalPrice: 100
-            unitPrice: 100
             calculatedUnitPrice:
               netValue: 100
               grossValue: 119
               taxValue: 19
               taxCode: STANDARD
               taxRate: 19
-            totalPrice: 300
-            authorizedAmount: 300
             product:
               metadata:
                 mixins:
@@ -5315,19 +5126,6 @@ components:
                 productVariantAttributes:
                   size: 43
               productType: VARIANT
-            tax:
-              lines:
-                - amount: 57
-                  currency: EUR
-                  code: STANDARD
-                  name: STANDARD
-                  rate: 19
-                  sequenceId: 0
-                  inclusive: false
-              total:
-                amount: 0
-                currency: EUR
-                inclusive: false
             price:
               priceId: 6763cd21139f370cd9244d37
               currency: EUR
@@ -5339,24 +5137,6 @@ components:
                 createdAt: '2024-12-19T07:37:05.559Z'
                 modifiedAt: '2024-12-19T07:37:05.559Z'
                 version: 1
-            totalDiscount:
-              amount: 0
-              currency: EUR
-            fees:
-              total:
-                subTotal: 0
-                totalTax: 0
-                total: 0
-            metadata:
-              mixins:
-                fees: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
-            mixins:
-              fees:
-                total:
-                  subTotal: 0
-                  totalTax: 0
-                  total: 0
-                  discount: 0
             calculatedPrice:
               price:
                 netValue: 300
@@ -5414,47 +5194,6 @@ components:
             transactionId: fcc2bf50-f064-4dc3-833f-0909a7857387
             authorizedAmount: 373.12
             provider: payment-gateway
-        shipping:
-          total:
-            amount: 39.2
-            currency: EUR
-          lines:
-            - amount: 35
-              currency: EUR
-              code: pickup
-              name: pickup
-              localizedName:
-                en: pickup
-                de: pickup
-              tax:
-                total:
-                  amount: 4.2
-                  currency: EUR
-                  inclusive: false
-                rate: 12
-              shippingTaxCode: REDUCED
-        tax:
-          lines:
-            - amount: 4.2
-              currency: EUR
-              code: REDUCED
-              name: REDUCED
-              rate: 12
-              sequenceId: 0
-              inclusive: false
-            - amount: 57
-              currency: EUR
-              code: STANDARD
-              name: STANDARD
-              rate: 19
-              sequenceId: 1
-              inclusive: false
-          total:
-            amount: 0
-            currency: EUR
-            inclusive: false
-        subTotalPrice: 300
-        totalPrice: 333.92
         totalAuthorizedAmount: 373.12
         currency: EUR
         metadata:
@@ -5518,21 +5257,6 @@ components:
           deliveryTimeRange:
             timeFrom: '10:00'
             timeTo: '14:30'
-        feeYrnAggregate:
-          elements:
-            - yrn: 'urn:yaas:saasag:fee:fee:test;678f552a949c723de46bdb14'
-              name:
-                de: Payment fee
-                en: Payment fee
-              taxCode: REDUCED
-              total:
-                subTotal: 33.92
-                totalTax: 0
-                total: 33.92
-          total:
-            subTotal: 33.92
-            totalTax: 0
-            total: 33.92
         calculatedPrice:
           price:
             netValue: 300

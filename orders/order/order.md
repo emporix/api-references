@@ -29,7 +29,59 @@ During checkout, the final price is calculated based on customer-specific detail
 
 Once an order is placed, the order information simply reflects the calculated prices without further modifications, ensuring accuracy and transparency in the final transaction.
 
-<figure><img src="../../static/order/diagram1.svg" alt=""><figcaption></figcaption></figure>
+<!-- <figure><img src="../../static/order/diagram1.svg" alt=""><figcaption></figcaption></figure> -->
+
+```mermaid
+---
+config:
+  layout: fixed
+  theme: default
+  look: classic
+---
+flowchart LR
+ subgraph subGraph0["**Storefront**"]
+        A["Customer"]
+  end
+ subgraph subGraph1["**Emporix**"]
+        CS["Cart Service"]
+        CHK["Checkout Service"]
+        OS["Order Service"]
+        WS["Webhook Service"]
+  end
+ subgraph subGraph2["**Customer's System**"]
+        ERP["ERP"]
+  end
+    A -- "1.Add product to cart" --> CS
+    A -- "2.Start checkout" --> CHK
+    CHK -- "3.Fetch cart data" --> CS
+    CHK -- "4.Create order" --> OS
+    OS -- "5.Receive order.created event" --> WS
+    WS -- "6.Replicate order to ERP" --> ERP
+    A@{ shape: rounded}
+    CS@{ shape: rounded}
+    CHK@{ shape: rounded}
+    OS@{ shape: rounded}
+    ERP@{ shape: rounded}
+    WS@{ shape: rounded}
+     A:::Class_04
+     CS:::Class_04
+     CHK:::Class_04
+     OS:::Class_04
+     WS:::Class_04
+     ERP:::Class_04
+     subGraph1:::Class_03
+     subGraph0:::Class_01
+     subGraph2:::Class_02
+    classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#DDE6EE, fill:#DDE6EE
+    classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#A1BDDC, fill:#A1BDDC
+    classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#3b73bb, fill:#3b73bb
+    classDef Class_04 fill:#F2F6FA, stroke:#E86C07
+    style subGraph0 color:#FFFFFF
+    style subGraph1 color:#FFFFFF
+```
+{% hint style="warning" %}
+You have to register your listener in the Emporix Webhook Service so that the listener pushes order information to your ERP system.
+{% endhint %}
 
 {% hint style="info" %}
 To learn how pricing is calculated at Emporix, see the [Cart Service Tutorials](../../checkout/cart/cart.md#pricing-calculations).
@@ -43,7 +95,65 @@ Commerce Orchestration Platform (COP) enables this functionality with external p
 
 Communication with the ERP system occurs using the BFF (Backend-for-Frontend) layer and with a [POST](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) request the order is send to an ERP system. This architecture ensures a secure, real-time pricing model while leveraging external systems for order calculations.
 
-<figure><img src="../../static/order/diagram2.svg" alt=""><figcaption></figcaption></figure>
+<!-- <figure><img src="../../static/order/diagram2.svg" alt=""><figcaption></figcaption></figure> -->
+
+```mermaid
+---
+config:
+  layout: fixed
+  theme: default
+  look: classic
+---
+flowchart LR
+ subgraph subGraph0["**Storefront**"]
+        A["Customer"]
+  end
+ subgraph subGraph1["**Emporix**"]
+        CS["Cart Service"]
+        CHK["Checkout Service"]
+        OS["Order Service"]
+        WS["Webhook Service"]
+  end
+ subgraph subGraph2["**Customer's System**"]
+        BFF["Backend for Frontend (BFF)"]
+        ERP["ERP"]
+  end
+    A -- "1.Add product to cart" --> BFF
+    BFF -- "2.Calculate a price" --> ERP
+    BFF -- "3.Add a product with an external price to a cart" --> CS
+    A -- "4.Start checkout" --> CHK
+    CHK -- "5.Fetch cart data" --> CS
+    CHK -- "6.Create order" --> OS
+    OS -- "7.Receive order.created event" --> WS
+    WS -- "8.Replicate order" --> ERP
+    A@{ shape: rounded}
+    CS@{ shape: rounded}
+    CHK@{ shape: rounded}
+    OS@{ shape: rounded}
+    WS@{ shape: rounded}
+    BFF@{ shape: rounded}
+    ERP@{ shape: rounded}
+     A:::Class_04
+     CS:::Class_04
+     CHK:::Class_04
+     OS:::Class_04
+     WS:::Class_04
+     BFF:::Class_04
+     ERP:::Class_04
+     subGraph1:::Class_03
+     subGraph0:::Class_01
+     subGraph2:::Class_02
+    classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#DDE6EE, fill:#DDE6EE
+    classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#A1BDDC, fill:#A1BDDC
+    classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#3b73bb, fill:#3b73bb
+    classDef Class_04 fill:#F2F6FA, stroke:#E86C07
+    style subGraph1 color:#FFFFFF
+    style subGraph0 color:#FFFFFF
+```
+
+{% hint style="warning" %}
+You have to register your listener in the Emporix Webhook Service so that the listener pushes order information to your ERP system.
+{% endhint %}
 
 {% hint style="info" %}
 For more information, see the [External Pricing](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) guides.
@@ -55,7 +165,60 @@ With this use case, the Commerce Orchestration Platform cart is used to collect 
 
 Once the order is validated and priced by the ERP, the BFF layer creates the order in COP using the [Sales Order API](api-reference/). This allows for seamless integration between Emporix and the external ERP system while maintaining flexibility in how orders are processed.
 
-<figure><img src="../../static/order/diagram3.svg" alt=""><figcaption></figcaption></figure>
+<!-- <figure><img src="../../static/order/diagram3.svg" alt=""><figcaption></figcaption></figure> -->
+
+```mermaid
+---
+config:
+  layout: fixed
+  theme: default
+  look: classic
+---
+flowchart LR
+ subgraph subGraph0["**Storefront**"]
+        A["Customer"]
+  end
+ subgraph subGraph1["**Emporix**"]
+        CS["Cart Service"]
+        OS["Order Service"]
+        WS["Webhook Service"]
+  end
+ subgraph subGraph2["**Customer's System**"]
+        BFF["Backend for Frontend (BFF)"]
+        ERP["ERP"]
+  end
+    A -- "1.Start checkout" --> BFF
+    BFF -- "2.Get cart data" --> CS
+    BFF -- "3.Simulate order" --> ERP
+    BFF -- "4.Create sales order" --> OS
+    OS -- "5.Receive order.created event" --> WS
+    WS -- "6.Replicate order" --> ERP
+    A@{ shape: rounded}
+    CS@{ shape: rounded}
+    OS@{ shape: rounded}
+    WS@{ shape: rounded}
+    BFF@{ shape: rounded}
+    ERP@{ shape: rounded}
+     A:::Class_04
+     CS:::Class_04
+     OS:::Class_04
+     WS:::Class_04
+     BFF:::Class_04
+     ERP:::Class_04
+     subGraph1:::Class_03
+     subGraph0:::Class_01
+     subGraph2:::Class_02
+    classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#DDE6EE, fill:#DDE6EE
+    classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#A1BDDC, fill:#A1BDDC
+    classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#3b73bb, fill:#3b73bb
+    classDef Class_04 fill:#F2F6FA, stroke:#E86C07
+    style subGraph1 color:#FFFFFF
+    style subGraph0 color:#FFFFFF
+```
+
+{% hint style="warning" %}
+You have to register your listener in the Emporix Webhook Service so that the listener pushes order information to your ERP system.
+{% endhint %}
 
 ## Order calculation approaches comparison
 
@@ -104,9 +267,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
             "amount": 2,
             "orderedAmount": 2,
             "effectiveQuantity": 2.0,
-            "originalAmount": 350,
-            "originalPrice": 350,
-            "unitPrice": 350,
             "calculatedUnitPrice": {
                 "netValue": 294.118,
                 "grossValue": 350.0,
@@ -114,8 +274,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
                 "taxCode": "STANDARD",
                 "taxRate": 19.0
             },
-            "totalPrice": 700.0,
-            "authorizedAmount": 700.0,
             "product": {
                 "id": "samsung-galaxy-s24-gross",
                 "sku": "Samsung Galaxy s24 gross",
@@ -133,24 +291,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
                 ],
                 "productType": "BASIC"
             },
-            "tax": {
-                "lines": [
-                    {
-                        "amount": 111.76,
-                        "currency": "EUR",
-                        "code": "STANDARD",
-                        "name": "STANDARD",
-                        "rate": 19.0,
-                        "sequenceId": 0,
-                        "inclusive": true
-                    }
-                ],
-                "total": {
-                    "amount": 0,
-                    "currency": "EUR",
-                    "inclusive": true
-                }
-            },
             "price": {
                 "priceId": "679ca63dbcdefe5b380c98bc",
                 "priceListId": "abc123",
@@ -163,63 +303,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
                     "createdAt": "2025-01-31T10:30:21.998Z",
                     "modifiedAt": "2025-01-31T10:30:21.998Z",
                     "version": 1
-                }
-            },
-            "totalDiscount": {
-                "amount": 84.06,
-                "currency": "EUR"
-            },
-            "fees": {
-                "elements": [
-                    {
-                        "yrn": "urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2",
-                        "name": {
-                            "de": "Apple Picking Fee",
-                            "en": "Apple Picking Fee"
-                        },
-                        "taxCode": "REDUCED",
-                        "total": {
-                            "subTotal": 3.5,
-                            "totalTax": 0.0,
-                            "total": 3.08
-                        }
-                    }
-                ],
-                "total": {
-                    "subTotal": 3.5,
-                    "totalTax": 0.0,
-                    "total": 3.08
-                }
-            },
-            "metadata": {
-                "mixins": {
-                    "fees": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json"
-                }
-            },
-            "mixins": {
-                "fees": {
-                    "elements": [
-                        {
-                            "yrn": "urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2",
-                            "name": {
-                                "de": "Apple Picking Fee",
-                                "en": "Apple Picking Fee"
-                            },
-                            "taxCode": "REDUCED",
-                            "total": {
-                                "subTotal": 3.5,
-                                "totalTax": 0.0,
-                                "total": 3.08,
-                                "discount": 0.42
-                            }
-                        }
-                    ],
-                    "total": {
-                        "subTotal": 3.5,
-                        "totalTax": 0.0,
-                        "total": 3.08,
-                        "discount": 0.42
-                    }
                 }
             },
             "calculatedPrice": {
@@ -389,9 +472,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
             "amount": 1,
             "orderedAmount": 1,
             "effectiveQuantity": 1.0,
-            "originalAmount": 10,
-            "originalPrice": 10,
-            "unitPrice": 10,
             "calculatedUnitPrice": {
                 "netValue": 9.346,
                 "grossValue": 10.0,
@@ -399,8 +479,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
                 "taxCode": "REDUCED",
                 "taxRate": 7.0
             },
-            "totalPrice": 10.0,
-            "authorizedAmount": 10.0,
             "product": {
                 "metadata": {
                     "mixins": {
@@ -423,63 +501,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
                     }
                 },
                 "productType": "VARIANT"
-            },
-            "tax": {
-                "lines": [
-                    {
-                        "amount": 0.65,
-                        "currency": "EUR",
-                        "code": "REDUCED",
-                        "name": "REDUCED",
-                        "rate": 7.0,
-                        "sequenceId": 0,
-                        "inclusive": true
-                    }
-                ],
-                "total": {
-                    "amount": 0,
-                    "currency": "EUR",
-                    "inclusive": true
-                }
-            },
-            "price": {
-                "priceId": "6818c032524d1c16623037e2",
-                "currency": "EUR",
-                "originalAmount": 10.0,
-                "effectiveAmount": 10.0,
-                "basePrice": {},
-                "presentationPrice": {},
-                "metadata": {
-                    "createdAt": "2025-05-05T13:42:10.674Z",
-                    "modifiedAt": "2025-05-05T13:44:20.599Z",
-                    "version": 2
-                }
-            },
-            "totalDiscount": {
-                "amount": 1.19,
-                "currency": "EUR"
-            },
-            "fees": {
-                "total": {
-                    "subTotal": 0.0,
-                    "totalTax": 0.0,
-                    "total": 0.0
-                }
-            },
-            "metadata": {
-                "mixins": {
-                    "fees": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json"
-                }
-            },
-            "mixins": {
-                "fees": {
-                    "total": {
-                        "subTotal": 0.0,
-                        "totalTax": 0.0,
-                        "total": 0.0,
-                        "discount": 0.0
-                    }
-                }
             },
             "calculatedPrice": {
                 "price": {
@@ -560,9 +581,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
             "amount": 2,
             "orderedAmount": 2,
             "effectiveQuantity": 2.0,
-            "originalAmount": 55,
-            "originalPrice": 55,
-            "unitPrice": 55,
             "calculatedUnitPrice": {
                 "netValue": 51.402,
                 "grossValue": 55.0,
@@ -570,8 +588,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
                 "taxCode": "REDUCED",
                 "taxRate": 7.0
             },
-            "totalPrice": 110.0,
-            "authorizedAmount": 143.0,
             "product": {
                 "id": "samsung-galaxy-s27-gross",
                 "sku": "samsung-galaxy-s27-gross",
@@ -583,88 +599,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
                 "published": true,
                 "images": [],
                 "productType": "BASIC"
-            },
-            "tax": {
-                "lines": [
-                    {
-                        "amount": 7.2,
-                        "currency": "EUR",
-                        "code": "REDUCED",
-                        "name": "REDUCED",
-                        "rate": 7.0,
-                        "sequenceId": 0,
-                        "inclusive": true
-                    }
-                ],
-                "total": {
-                    "amount": 0,
-                    "currency": "EUR",
-                    "inclusive": true
-                }
-            },
-            "price": {
-                "priceId": "6797da2f3537716a5a537ecf",
-                "currency": "EUR",
-                "originalAmount": 55.0,
-                "effectiveAmount": 55.0,
-                "basePrice": {},
-                "presentationPrice": {},
-                "metadata": {
-                    "createdAt": "2025-01-27T19:10:39.966Z",
-                    "modifiedAt": "2025-04-14T07:54:30.431Z",
-                    "version": 23
-                }
-            },
-            "totalDiscount": {
-                "amount": 13.56,
-                "currency": "EUR"
-            },
-            "fees": {
-                "elements": [
-                    {
-                        "yrn": "urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2",
-                        "name": "Apple Picking Fee",
-                        "taxCode": "REDUCED",
-                        "total": {
-                            "subTotal": 3.5,
-                            "totalTax": 0.0,
-                            "total": 3.08
-                        }
-                    }
-                ],
-                "total": {
-                    "subTotal": 3.5,
-                    "totalTax": 0.0,
-                    "total": 3.08
-                }
-            },
-            "metadata": {
-                "mixins": {
-                    "fees": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json"
-                }
-            },
-            "mixins": {
-                "fees": {
-                    "elements": [
-                        {
-                            "yrn": "urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2",
-                            "name": "Apple Picking Fee",
-                            "taxCode": "REDUCED",
-                            "total": {
-                                "subTotal": 3.5,
-                                "totalTax": 0.0,
-                                "total": 3.08,
-                                "discount": 0.42
-                            }
-                        }
-                    ],
-                    "total": {
-                        "subTotal": 3.5,
-                        "totalTax": 0.0,
-                        "total": 3.08,
-                        "discount": 0.42
-                    }
-                }
             },
             "calculatedPrice": {
                 "price": {
@@ -861,61 +795,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
             "provider": "stripe"
         }
     ],
-    "shipping": {
-        "total": {
-            "amount": 10.71,
-            "currency": "EUR"
-        },
-        "lines": [
-            {
-                "amount": 10.0,
-                "currency": "EUR",
-                "code": "Pickup",
-                "name": "Pickup",
-                "localizedName": {
-                    "en": "Pickup"
-                },
-                "tax": {
-                    "total": {
-                        "amount": 1.9,
-                        "currency": "EUR",
-                        "inclusive": false
-                    },
-                    "rate": 19.0
-                },
-                "shippingTaxCode": "STANDARD"
-            }
-        ]
-    },
-    "tax": {
-        "lines": [
-            {
-                "amount": 7.85,
-                "currency": "EUR",
-                "code": "REDUCED",
-                "name": "REDUCED",
-                "rate": 7.0,
-                "sequenceId": 0,
-                "inclusive": false
-            },
-            {
-                "amount": 113.66,
-                "currency": "EUR",
-                "code": "STANDARD",
-                "name": "STANDARD",
-                "rate": 19.0,
-                "sequenceId": 1,
-                "inclusive": false
-            }
-        ],
-        "total": {
-            "amount": 1.9,
-            "currency": "EUR",
-            "inclusive": false
-        }
-    },
-    "subTotalPrice": 820.0,
-    "totalPrice": 812.79,
     "totalAuthorizedAmount": 534.829,
     "currency": "EUR",
     "metadata": {
@@ -973,41 +852,6 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
             "extendedOrderStatus": "10",
             "customerFirstOrder": false,
             "orderNumber": "EON1200"
-        }
-    },
-    "feeYrnAggregate": {
-        "elements": [
-            {
-                "yrn": "urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2",
-                "name": {
-                    "de": "Apple Picking Fee",
-                    "en": "Apple Picking Fee"
-                },
-                "taxCode": "REDUCED",
-                "total": {
-                    "subTotal": 7.0,
-                    "totalTax": 0.0,
-                    "total": 6.16
-                }
-            },
-            {
-                "yrn": "urn:yaas:saasag:fee:fee:b2b2cstage;678f552a949c723de46bdb14",
-                "name": {
-                    "de": "Payment fee",
-                    "en": "Payment fee"
-                },
-                "taxCode": "REDUCED",
-                "total": {
-                    "subTotal": 73.89,
-                    "totalTax": 0.0,
-                    "total": 73.89
-                }
-            }
-        ],
-        "total": {
-            "subTotal": 80.89,
-            "totalTax": 0.0,
-            "total": 80.05
         }
     },
     "calculatedPrice": {
@@ -1190,3 +1034,292 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
 
 </details>
 {% endhint %}
+
+## How to create an order on behalf of a customer
+
+The Order Service functionality allows your employees to act on behalf of a customer and create an order for them. This way, merchants can facilitate order process for your customers. See the steps of the order process flow. 
+
+### Create an order as a merchant
+
+#### Get authorization
+
+To create an order, first get the credentials to log in as a customer on the storefront:
+
+1. Get the `access_token` by sending the request to the [Requesting a service access token](https://developer.emporix.io/api-references/api-guides-and-references/authorization/oauth-service/api-reference/service-access-token).
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../authorization/oauth-service/api-reference/" %}
+[api-reference](../../authorization/oauth-service/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/oauth/token' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "client_id": "{client_id}",
+    "client_secret": "{client_secret}",
+    "grant_type": "client_credentials",
+    "scope": "scope=order.order_read order.order_delete order.order_create order.order_update tenant={tenant}"
+  }'
+```
+
+2. Retrieve the `anonymous_token` by sending a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides-and-references/authorization/oauth-service/api-reference/anonymous-token) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../authorization/oauth-service/api-reference/" %}
+[api-reference](../../authorization/oauth-service/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl 'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id&{client_id}'
+```
+ 
+3. Log in as the customer by sending an authorization request to the [Requesting a customer token](https://developer.emporix.io/api-references/api-guides-and-references/authorization/oauth-service/api-reference/customer-token) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../authorization/oauth-service/api-reference/" %}
+[api-reference](../../authorization/oauth-service/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl 'https://api.emporix.io/customer/{tenant}/login' 
+  --request POST 
+  --header 'Authorization: Bearer {anonymous_access_token}' 
+  --header 'Content-Type: application/json' 
+  --data '{
+  "email": "customer@emporix.com",
+  "password": "Qwurmdch673;'"
+}'
+```
+
+#### Create an order
+
+As a merchant acting on behalf of a customer, send the request to the [Creating a new order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../orders/order/api-reference/" %}
+[api-reference](../../orders/order/api-reference)
+{% endcontent-ref %}
+
+```bash
+curl --location 'https://api.emporix.io/order-v2/{tenant}/salesorders' 
+--header 'Content-Type: application/json' 
+--header 'Accept: application/json' 
+--header 'Authorization: {customer_token}' 
+--data-raw '{
+  "entries": [
+    {
+      "id": "5c336893a981210009900071",
+      "amount": 3,
+      "orderedAmount": 3,
+      "effectiveQuantity": 3,
+      "calculatedUnitPrice": {
+        "netValue": 294.118,
+        "grossValue": 350.0,
+        "taxValue": 55.882,
+        "taxCode": "STANDARD",
+        "taxRate": 19.0
+      },
+      "measurementUnit": {
+        "value": 1,
+        "unit": "H87"
+      },
+      "calculatedPrice": {
+        "price": {
+            "netValue": 882.354,
+            "grossValue": 1050.0,
+            "taxValue": 167.646,
+            "taxCode": "STANDARD",
+            "taxRate": 19.0
+        },
+        "finalPrice": {
+            "netValue": 882.354,
+            "grossValue": 1050.0,
+            "taxValue": 167.646
+        }
+      }
+    }
+  ],
+  "discounts": [],
+  "customer": {
+    "id": "{{first_customer_id}}",
+    "name": "John Dee",
+    "title": "MRS",
+    "firstName": "John",
+    "lastName": "Dee",
+    "email": "j.dee@emporix.com",
+    "metadata": {
+      "mixins": {
+        "generalAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/customerGeneralAttributesMixIn.v4.json",
+        "backofficeAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/accountBoMixIn.v3.json",
+        "payment": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/paymentMixIn.v3.json",
+        "marketing": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/accountMarketingMixIn.v4.json",
+        "administration": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/administrativeMixIn.v4.json",
+        "deliveryOptions": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryOptionsMixIn.v6.json"
+      }
+    }
+  },
+  "siteCode": "main",
+  "countryCode": "DE",
+  "billingAddress": {
+    "contactName": "John Dee",
+    "street": "Maximilianstrasse",
+    "streetNumber": "55",
+    "streetAppendix": "",
+    "zipCode": "70173",
+    "city": "Stuttgart-Mitte",
+    "country": "DE",
+    "metadata": {
+      "mixins": {
+        "customAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/addressMixIn.v4.json"
+      }
+    }
+  },
+  "shippingAddress": {
+    "contactName": "John Dee",
+    "street": "Maximilianstrasse",
+    "streetNumber": "55",
+    "streetAppendix": "",
+    "zipCode": "70173",
+    "city": "Stuttgart-Mitte",
+    "country": "DE",
+    "metadata": {
+      "mixins": {
+        "customAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/addressMixIn.v4.json"
+      }
+    }
+  },
+  "payments": [
+    {
+      "status": "PENDING",
+      "method": "cash-on-delivery",
+      "paidAmount": 0,
+      "currency": "EUR"
+    }
+  ],
+  "calculatedPrice": {
+        "price": {
+            "netValue": 882.354,
+            "grossValue": 1050.00,
+            "taxValue": 167.646
+        },
+        "finalPrice": {
+            "netValue": 882.354,
+            "grossValue": 1050.00,
+            "taxValue": 167.646
+        }
+  },
+  "channel": {}
+}
+
+```
+
+#### Confirm order creation 
+
+You can retrieve the order details as a merchant or as the customer.
+
+* As a merchant, if you want to confirm that the order has been created, send the request to the [Retrieving a specific order by ID](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../orders/order/api-reference" %}
+[api-reference](../../orders/order/api-reference)
+{% endcontent-ref %}
+
+```bash
+curl 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}'
+```
+
+* As a logged in customer, you can display your orders history in the store. Use the [Retrieving a list of orders](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders) to fetch your own orders.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../orders/order/api-reference" %}
+[api-reference](../../orders/order/api-reference)
+{% endcontent-ref %}
+
+```bash
+curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
+  --header 'Saas-Token: '
+```
+
+### Change the order status
+
+* As a merchant, when the order has been prepared and dispatched, change the order status to `SHIPPED`. Send the request to the [Partially updating an order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../orders/order/api-reference" %}
+[api-reference](../../orders/order/api-reference)
+{% endcontent-ref %}
+
+```bash
+curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/salesorders/{order_id}?recalculate=false' 
+--header 'Content-Type: application/json' 
+--header 'Accept: application/json' 
+--header 'Authorization: Bearer {YOUR_OAUTH2_TOKEN}' 
+--data '{
+  "status": "SHIPPED"
+  }'
+```
+
+* As a customer, you can only change the order status from `CREATED` to `DECLINED` if for any reason you need to cancel the order. To decline the order, send the quest to the [Updating order status](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders-orderid-transitions) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../orders/order/api-reference" %}
+[api-reference](../../orders/order/api-reference)
+{% endcontent-ref %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' \
+  --header 'saas-token: text' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "status": "DECLINED"
+  }'
+```
+
+### Check the status transitions
+
+Order Service APIs provide also tools for controlling the status transitions logs.
+
+* As a merchant, check the status history of the order by sending the request to the [Retrieving status transitions for an order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid-transitions) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../orders/order/api-reference" %}
+[api-reference](../../orders/order/api-reference)
+{% endcontent-ref %}
+
+```bash
+curl -L 
+  --url 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}/transitions' 
+  --header 'Authorization: Bearer {YOUR_OAUTH2_TOKEN}' 
+  --header 'Accept: */*'
+```
+
+* As a logged in customer, you can fetch your own order status transitions history. Use the [Retrieving status transitions for an order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid-transitions) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../orders/order/api-reference" %}
+[api-reference](../../orders/order/api-reference)
+{% endcontent-ref %}
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' \
+  --header 'saas-token: text' \
+  --header 'Accept: */*'
+  ```

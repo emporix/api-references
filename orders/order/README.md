@@ -4,7 +4,7 @@ icon: bag-shopping
 
 # Order Service
 
-Createa an order from cart.
+Creates an order from cart.
 
 ### Key features and benefits
 
