@@ -34,7 +34,7 @@ Once an order is placed, the order information simply reflects the calculated pr
 ```mermaid
 ---
 config:
-  layout: fixed
+  layout: dagre
   theme: default
   look: classic
 ---
@@ -100,7 +100,7 @@ Communication with the ERP system occurs using the BFF (Backend-for-Frontend) la
 ```mermaid
 ---
 config:
-  layout: fixed
+  layout: dagre
   theme: default
   look: classic
 ---
@@ -170,7 +170,7 @@ Once the order is validated and priced by the ERP, the BFF layer creates the ord
 ```mermaid
 ---
 config:
-  layout: fixed
+  layout: dagre
   theme: default
   look: classic
 ---
