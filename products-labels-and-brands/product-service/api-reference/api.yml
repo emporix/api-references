@@ -2207,9 +2207,8 @@ components:
           allOf:
             - $ref: '#/components/schemas/localizedValue'
           description: Product description.
-        vendorId:
-          type: string
-          description: An identifier of a vendor to whom the product belongs
+        vendor:
+          $ref: '#/components/schemas/vendor'
         taxClasses:
           $ref: '#/components/schemas/taxClasses'
         published:
@@ -2525,6 +2524,17 @@ components:
               $ref: '#/components/schemas/variantAttributes'
             metadata:
               $ref: '#/components/schemas/productMetadataWithVersion'
+    vendor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier of a vendor to whom the product belongs
+        name:
+          type: string
+          description: vendor name
+      required:
+        - id
     searchProducts:
       type: object
       properties:
@@ -2826,8 +2836,8 @@ components:
             product.product_publish: Needed to publish products.
             product.product_unpublish: Needed to unpublish products.
             product.product_read_unpublished: Needed to retrieve unpublished products.
-            product.product_read_by_vendor: The scope allows vendor to read products with assigned vendorId
-            product.product_manage_by_vendor: The scope allows vendor to manage products with assigned vendorId
+            product.product_read_by_vendor: The scope allows vendor to read products with assigned vendor
+            product.product_manage_by_vendor: The scope allows vendor to manage products with assigned vendor
             product.price_manage: Needed to manage product prices.
             product.product_template_read: Needed for reading product templates.
             product.product_template_manage: Needed for updating and removing a product template.
