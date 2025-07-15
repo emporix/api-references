@@ -1535,6 +1535,17 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/salesOrder'
+    vendor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier of a vendor to whom the product belongs
+        name:
+          type: string
+          description: vendor name
+      required:
+        - id
     orderCommonDto:
       title: Order Common DTO
       description: 'The base order fields. This object is inherited by all of other order objects as Order Creation DTO, Order Update DTO etc.'
@@ -1551,9 +1562,8 @@ components:
         cartId:
           type: string
           description: The identifier of a cart that was used to create this order.
-        vendorId:
-          type: string
-          description: An identifier of a vendor to whom the order belongs for fulfilment.
+        vendor:
+          $ref: '#/components/schemas/vendor'
         entries:
           description: Ordered item list.
           type: array
@@ -6889,8 +6899,8 @@ components:
             order.history_view: Needed to view order when logged as a customer.
             order.order_readascustomer: Needed to read an order as a customer.
             order.order_updateascustomer: Needed to update an order as a customer.
-            order.order_read_by_vendor: The scope allows vendor to read order with assigned vendorId
-            order.order_manage_by_vendor: The scope allows vendor to manage order with assigned vendorId
+            order.order_read_by_vendor: The scope allows vendor to read order with assigned vendor
+            order.order_manage_by_vendor: The scope allows vendor to manage order with assigned vendor
   links: {}
   callbacks: {}
 security:
