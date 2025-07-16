@@ -1,5 +1,4 @@
 ---
-description: vendor
 icon: pallet-boxes
 ---
 
