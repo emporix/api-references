@@ -55,12 +55,24 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr></thead>
 <tbody>
   <tr>
+    <td class="tg-0pky" rowspan="5">Approval Service<br>Checkout Service<br>Client Management<br>Customer Service<br>IAM Service<br> Order Service</td>
+    <td class="tg-0pky" rowspan="5">Improvements in shared orders and customer groups functionality</td>
+  </tr>
+  <tr>
     <td class="tg-0pky" rowspan="5">Cart Service </td>
     <td class="tg-0pky" rowspan="5">Improvements in cart functionality</td>
   </tr>
   <tr>
-    <td class="tg-0pky" rowspan="5">Approval Service<br>Checkout Service<br>Customer Service<br>IAM Service</td>
-    <td class="tg-0pky" rowspan="5">Improvement of shared orders and customer groups functionality</td>
+    <td class="tg-0pky" rowspan="5">Order Service </td>
+    <td class="tg-0pky" rowspan="5">Improvements in order functionality</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky" rowspan="5">Price Service </td>
+    <td class="tg-0pky" rowspan="5">Improvements in pricing functionality</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky" rowspan="5">IAM Service<br>Product Service<br>Order Service </td>
+    <td class="tg-0pky" rowspan="5">Vendor-specific access functionality</td>
   </tr>
 </tbody>
 </table>

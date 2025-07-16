@@ -1,0 +1,46 @@
+---
+config:
+  layout: fixed
+  theme: default
+  look: classic
+---
+flowchart LR
+ subgraph subGraph0["**Storefront**"]
+        A["Customer"]
+  end
+ subgraph subGraph1["**Emporix**"]
+        CS["Cart Service"]
+        CHK["Checkout Service"]
+        OS["Order Service"]
+        WS["Webhook Service"]
+  end
+ subgraph subGraph2["**Customer's System**"]
+        ERP["ERP"]
+  end
+    A -- "1.Add product to cart" --> CS
+    A -- "2.Start checkout" --> CHK
+    CHK -- "3.Fetch cart data" --> CS
+    CHK -- "4.Create order" --> OS
+    OS -- "5.Receive order.created event" --> WS
+    WS -- "6.Replicate order to ERP" --> ERP
+    A@{ shape: rounded}
+    CS@{ shape: rounded}
+    CHK@{ shape: rounded}
+    OS@{ shape: rounded}
+    ERP@{ shape: rounded}
+    WS@{ shape: rounded}
+     A:::Class_04
+     CS:::Class_04
+     CHK:::Class_04
+     OS:::Class_04
+     WS:::Class_04
+     ERP:::Class_04
+     subGraph1:::Class_03
+     subGraph0:::Class_01
+     subGraph2:::Class_02
+    classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#DDE6EE, fill:#DDE6EE
+    classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#A1BDDC, fill:#A1BDDC
+    classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#3b73bb, fill:#3b73bb
+    classDef Class_04 fill:#F2F6FA, stroke:#E86C07
+    style subGraph0 color:#FFFFFF
+    style subGraph1 color:#FFFFFF
