@@ -21,7 +21,9 @@ paths:
     post:
       summary: Creating a vendor
       description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
         Creates a new vendor for the tenant. A vendor represents a supplier or a business partner in the system.
+        
 
         ***
 
@@ -78,6 +80,7 @@ paths:
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: POST-vendor-mgmt-create-vendor
       x-stability: preview
+      
       tags:
         - Vendors
     get:
