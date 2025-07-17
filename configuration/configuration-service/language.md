@@ -80,7 +80,7 @@ To retrieve your tenant's language configuration, you need to send a request to 
 
 ```bash
 curl -L \
-  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
   --header 'Accept: */*'
 ```
 
@@ -99,10 +99,10 @@ The id in the request body must be compliant with the [ISO 4217 standard](https:
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request PUT \
-  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request PUT 
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
+  --header 'Content-Type: application/json' 
   --data '{
     "key": "project_country",
     "secured": false,
@@ -122,8 +122,8 @@ To retrieve a particular site's language configuration, you need to send a reque
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
+curl -L 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' 
   --header 'Accept: */*'
 ```
 
@@ -142,10 +142,10 @@ The currency code must be compliant with the [ISO 4217 standard](https://en.wiki
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request PATCH \
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request PATCH 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' 
+  --header 'Content-Type: application/json' 
   --data '{
     "defaultLanguage": "en"
   }'

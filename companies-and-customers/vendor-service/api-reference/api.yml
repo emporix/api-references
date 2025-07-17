@@ -18,7 +18,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
     post:
-      summary: Creating vendor
+      summary: Creating a vendor
       description: |-
         Creates a new vendor for the tenant. A vendor represents a supplier or a business partner in the system.
 
@@ -318,7 +318,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
     post:
-      summary: Creating location
+      summary: Creating a location
       description: |-
         Creates a new location for the tenant. A location represents address information for a vendor.
 
