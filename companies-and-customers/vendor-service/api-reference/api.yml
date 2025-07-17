@@ -3,6 +3,7 @@ info:
   title: Vendor Service
   version: ''
   description: |
+    **This functionality is in preview mode - some of the features may not be fully operational yet.**
     The Vendor service allows you to manage vendors and their locations in your system.
   contact:
     name: Emporix
@@ -120,6 +121,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: GET-vendor-mgmt-list-vendors
+      x-stability: preview
       tags:
         - Vendors
   '/vendor/{tenant}/vendors/search':
@@ -182,6 +184,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: POST-vendor-mgmt-search-vendors
+      x-stability: preview
       tags:
         - Vendors
   '/vendor/{tenant}/vendors/{vendorId}':
@@ -218,6 +221,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: GET-vendor-mgmt-retrieve-vendor
+      x-stability: preview
       tags:
         - Vendors
     put:
@@ -285,6 +289,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: PUT-vendor-mgmt-update-vendor
+      x-stability: preview
       tags:
         - Vendors
     delete:
@@ -313,6 +318,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: DELETE-vendor-mgmt-remove-vendor
+      x-stability: preview
       tags:
         - Vendors
   '/{tenant}/locations':
@@ -380,6 +386,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: POST-vendor-mgmt-create-location
+      x-stability: preview
       tags:
         - Locations
     get:
@@ -424,6 +431,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: GET-vendor-mgmt-list-all-locations
+      x-stability: preview
       tags:
         - Locations
   '/{tenant}/locations/{locationId}':
@@ -460,6 +468,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: GET-vendor-mgmt-retrieve-location
+      x-stability: preview
       tags:
         - Locations
     put:
@@ -530,6 +539,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: PUT-vendor-mgmt-update-location
+      x-stability: preview
       tags:
         - Locations
     delete:
@@ -558,6 +568,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: DELETE-vendor-mgmt-remove-location
+      x-stability: preview
       tags:
         - Locations
 components:
