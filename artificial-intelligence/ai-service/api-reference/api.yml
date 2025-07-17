@@ -137,6 +137,8 @@ paths:
         '500':
           $ref: '#/components/responses/500_resp_common'
       description: |-
+        **This functionality is in preview mode — some of the features may not be fully operational yet.**
+        
         Allows for communication with Emporix's agents.
 
 
@@ -146,7 +148,7 @@ paths:
         If you don't provide your own OpenAI token, the Emporix one is used with the following limits: 3 mln input tokens and 1 mln output tokens. When you reach the limit, the next requests are rejected and you have to provide your own OpenAI token. 
         Emporix uses the gpt-4o-mini model by default. If you want to use your own OpenAI account with a different AI model please contact our [Emporix Support Team](mailto:support@emporix.com) to negotiate the model and usage.
         ***
-
+        
         ### Required scopes
 
         * `ai.completion_manage`
@@ -191,6 +193,8 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
+        **This functionality is in preview mode — some of the features may not be fully operational yet.**
+        
         Retrieves agent templates which can be later use as a base for custom agents.
         
         ### Required scopes
@@ -229,8 +233,10 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
+        **This functionality is in preview mode — some of the features may not be fully operational yet.**
+        
         Searches for agent templates based on the provided query.
-                
+        
         ### Required scopes
 
         * `ai.agent_read`
