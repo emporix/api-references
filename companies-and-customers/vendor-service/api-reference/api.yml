@@ -76,7 +76,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: POST-vendor-mgmt-create-vendor
-      x-stability: experimental
+      x-stability: preview
       tags:
         - Vendors
     get:
