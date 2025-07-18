@@ -341,7 +341,7 @@
               kind: openapi
               spec: vendor-api
         ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/88918e0fbd4cb3a456bb2015261fc895749fdc2d/companies-and-customers/vendor-service/api-reference/api.yml)
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/8352345e2606b18879721b478f5f55eddafb884d/companies-and-customers/vendor-service/api-reference/api.yml)
 * [Delivery and Shipping](delivery-and-shipping/README.md)
   * [Shipping Service](delivery-and-shipping/shipping/README.md)
     * [Shipping Tutorial](delivery-and-shipping/shipping/shipping.md)
