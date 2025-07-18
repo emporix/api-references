@@ -315,7 +315,7 @@ paths:
       operationId: DELETE-vendor-mgmt-remove-vendor
       tags:
         - Vendors
-  '/{tenant}/locations':
+  '/vendor/{tenant}/locations':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
     post:
@@ -426,7 +426,7 @@ paths:
       operationId: GET-vendor-mgmt-list-all-locations
       tags:
         - Locations
-  '/{tenant}/locations/{locationId}':
+  '/vendor/{tenant}/locations/{locationId}':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
       - $ref: '#/components/parameters/trait_location_id_path'
