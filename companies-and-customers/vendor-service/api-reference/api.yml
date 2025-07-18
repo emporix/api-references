@@ -21,7 +21,8 @@ paths:
     post:
       summary: Creating a vendor
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752821493/emporix/icons/preview_api.png)
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752823744/emporix/icons/preview_api1.png)
+
         Creates a new vendor for the tenant. A vendor represents a supplier or a business partner in the system.
         
 
