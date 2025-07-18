@@ -1841,7 +1841,8 @@ components:
       title: productTemplateUpdate
       allOf:
         - $ref: '#/components/schemas/productTemplateBase'
-        - properties:
+        - type: object
+          properties:
             metadata:
               type: object
               properties:
@@ -1850,7 +1851,6 @@ components:
                   description: Version of the object. The value is required while product template update.
               required:
                 - version
-          type: object
       required:
         - name
         - attributes

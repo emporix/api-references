@@ -803,14 +803,14 @@ components:
       type: string
     getApprovalResponse:
       title: An approval response
-      description: Base schema for an approval response.
       allOf:
         - $ref: '#/components/schemas/basicApproval'
         - type: object
+          description: Base schema for an approval response.
           properties:
             id:
               type: string
-              description: An identifier of the approval document
+              description: An identifier of the approval document.
             approverComment:
               type: string
               description: A comment from an approver user
@@ -828,9 +828,9 @@ components:
               $ref: '#/components/schemas/metadata'
     approvalPermittedResponse:
       title: approval permitted response
-      description: Base schema for approval permitted response
       allOf:
         - type: object
+          description: Base schema for approval permitted response.
           properties:
             action:
               $ref: '#/components/schemas/approvalAction'
@@ -934,10 +934,10 @@ components:
         $ref: '#/components/schemas/user'
     createApprovalRequest:
       title: Create an approval
-      description: Base schema for an approval creation.
       allOf:
         - $ref: '#/components/schemas/basicApproval'
         - type: object
+          description: Base schema for an approval creation.
           properties:
             id:
               type: string

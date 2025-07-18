@@ -2531,14 +2531,16 @@ components:
         tierDefinition:
           allOf:
             - $ref: '#/components/schemas/tierDefinitionCreation'
-          description: Definition of pricing tiers.
+            - type: object
+              description: Definition of pricing tiers.
         measurementUnit:
           allOf:
             - $ref: '#/components/schemas/measurementUnitV2'
-          description: |
-            Measurement unit and quantity for which the price is defined.
+            - type: object
+              description: |
+                Measurement unit and quantity for which the price is defined.
 
-            For example, if a product is sold by the piece, the field should contain `1 pc`. If products relevant to this price model are sold per kilogram, this field should contain `1 kg`.
+                For example, if a product is sold by the piece, the field should contain `1 pc`. If products relevant to this price model are sold per kilogram, this field should contain `1 kg`.
       required:
         - includesTax
         - name
@@ -2583,14 +2585,16 @@ components:
         tierDefinition:
           allOf:
             - $ref: '#/components/schemas/tierDefinitionCreation'
-          description: Definition of pricing tiers.
+            - type: object
+              description: Definition of pricing tiers.
         measurementUnit:
           allOf:
             - $ref: '#/components/schemas/measurementUnitV2'
-          description: |
-            Measurement unit and quantity for which the price is defined.
+            - type: object
+              description: |
+                Measurement unit and quantity for which the price is defined.
 
-            For example, if a product is sold by the piece, the field should contain `1 pc`. If products for this price model are sold per kilogram, this field should contain `1kg`.
+                For example, if a product is sold by the piece, the field should contain `1 pc`. If products for this price model are sold per kilogram, this field should contain `1kg`.
     priceModelDefinitionCreationResponse:
       title: priceModelDefinitionCreationResponse
       type: object
@@ -2655,7 +2659,8 @@ components:
         minQuantity:
           allOf:
             - $ref: '#/components/schemas/measurementUnitV2'
-          description: Minimum quantity of the product from which the tier applies.
+            - type: object
+              description: Minimum quantity of the product from which the tier applies.
       required:
         - minQuantity
     matchResponse:
@@ -2894,7 +2899,8 @@ components:
 
                 **Note**: You can provide the names only in languages defined in the Configuration Service. In case the name is provided in a language that is not defined in the Configuration Service, the request will be rejected.
         - $ref: '#/components/schemas/priceListCore'
-        - properties:
+        - type: object
+          properties:
             metadata:
               properties:
                 mixins:
@@ -2909,7 +2915,8 @@ components:
       title: priceListUpdate
       allOf:
         - $ref: '#/components/schemas/priceListCreation'
-        - properties:
+        - type: object
+          properties:
             metadata:
               properties:
                 version:
@@ -2919,11 +2926,12 @@ components:
                   type: object
                   additionalProperties:
                     type: string
-                  description: Mixins schemas
+                  description: Mixins schemas.
     priceList:
       title: priceList
       allOf:
-        - properties:
+        - type: object
+          properties:
             id:
               type: string
               description: 'Unique identifier of the price that belongs to a price list, generated when the price is created and added to the price list.'
@@ -2931,7 +2939,8 @@ components:
               type: object
               description: 'Price list''s name, expressed as a map of translations.'
         - $ref: '#/components/schemas/priceListCore'
-        - properties:
+        - type: object
+          properties:
             metadata:
               allOf:
                 - $ref: '#/components/schemas/metadata'
@@ -2969,7 +2978,8 @@ components:
           items:
             allOf:
               - $ref: '#/components/schemas/tierValueCreation'
-              - properties:
+              - type: object
+                properties:
                   priceValue:
                     description: |-
                       This field should contain a net price given by a number where the cent part is separated by a dot sign - such as `12.99`.
@@ -2979,37 +2989,34 @@ components:
       title: priceListPriceCreation
       allOf:
         - $ref: '#/components/schemas/priceListPriceCore'
-        - required:
-            - itemId
-            - priceModelId
-            - tierValues
-        - properties:
-            id:
-              type: string
-              description: 'Custom price identifier. If not provided, it is automatically generated.'
-            itemId:
-              required:
-                - id
-                - itemType
+        - type: object
+          properties:
+              id:
+                type: string
+                description: 'Custom price identifier. If not provided, it is automatically generated.'
+              itemId:
+                required:
+                  - id
+                  - itemType
+      required:
+        - itemId
+        - priceModelId
+        - tierValues
     priceListPriceUpdate:
       title: priceListPriceUpdate
       allOf:
-        - properties:
+        - type: object
+          properties:
             id:
               type: string
               description: 'Unique identifier of the price that belongs to a price list, generated when the price is created and added to the price list.'
-        - allOf:
-            - $ref: '#/components/schemas/priceListPriceCore'
-            - required:
-                - itemId
-                - priceModelId
-                - tierValues
-            - properties:
-                itemId:
-                  required:
-                    - id
-                    - itemType
-        - properties:
+        - $ref: '#/components/schemas/priceListPriceCore'
+          required:
+            - itemId
+            - priceModelId
+            - tierValues
+        - type: object
+          properties:
             metadata:
               properties:
                 version:
@@ -3023,12 +3030,14 @@ components:
     priceListPrice:
       title: priceListPrice
       allOf:
-        - properties:
+        - type: object
+          properties:
             id:
               type: string
               description: 'Unique identifier of the price that belongs to a price list, generated when the price is created and added to the price list.'
         - $ref: '#/components/schemas/priceListPriceCore'
-        - properties:
+        - type: object
+          properties:
             metadata:
               $ref: '#/components/schemas/metadata'
     priceBulkResponseEntry:
@@ -3107,10 +3116,11 @@ components:
     priceModelExpand:
       allOf:
         - $ref: '#/components/schemas/priceModelRetrieval'
-      description: |-
-        Price model to which the price is assigned.
+        - type: object
+          description: |-
+            Price model to which the price is assigned.
 
-        **Note**: This field is only returned if the `extendWithPriceModel` query param is set to `true` when retrieving a price by ID.
+            **Note**: This field is only returned if the `extendWithPriceModel` query param is set to `true` when retrieving a price by ID.
     getSinglePriceV2:
       allOf:
         - $ref: '#/components/schemas/getPriceV2'
