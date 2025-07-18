@@ -4,6 +4,10 @@ icon: pallet-boxes
 
 # Vendor Management
 
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
 Allows you to manage vendors and their employees in your system. Vendor employees have access to vendor's products and orders only.
 
 ### Key features and benefits

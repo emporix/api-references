@@ -21,8 +21,7 @@ paths:
     post:
       summary: Creating a vendor
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752823744/emporix/icons/preview_api1.png)
-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png) 
         Creates a new vendor for the tenant. A vendor represents a supplier or a business partner in the system.
         
 
@@ -85,7 +84,7 @@ paths:
     get:
       summary: Retrieving all vendors
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752821493/emporix/icons/preview_api.png)
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves all vendors. You can filter, sort and paginate the results with query parameters.
 
         ***
@@ -132,7 +131,7 @@ paths:
     post:
       summary: Searching with parameters for vendors
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752821493/emporix/icons/preview_api.png)
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves all vendors that match the provided criteria.
 
         ***
@@ -198,7 +197,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/trait_fields'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752821493/emporix/icons/preview_api.png)
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves a vendor by the specified unique identifier.
 
         ***
@@ -229,7 +228,7 @@ paths:
     put:
       summary: Upserting a vendor
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752821493/emporix/icons/preview_api.png)
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Updates or creates a vendor with a given vendor ID. You can omit the `metadata.version`, but then optimistic locking is not enabled.
 
         ***
@@ -297,7 +296,7 @@ paths:
     delete:
       summary: Delete a vendor
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752821493/emporix/icons/preview_api.png)
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Deletes a vendor.
 
         ***
@@ -329,7 +328,7 @@ paths:
     post:
       summary: Creating a location
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752821493/emporix/icons/preview_api.png)
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Creates a new location for the tenant. A location represents address information for a vendor.
 
         ***
@@ -394,7 +393,7 @@ paths:
     get:
       summary: Retrieving all locations
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752821493/emporix/icons/preview_api.png)
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves all locations assigned to the tenant. You can filter, sort and paginate the results with query parameters.
 
         ***
@@ -445,7 +444,7 @@ paths:
         - $ref: '#/components/parameters/trait_fields'
       summary: Retrieving a location
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752821493/emporix/icons/preview_api.png)
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves a location by the specified unique identifier.
 
         ***
@@ -476,7 +475,7 @@ paths:
     put:
       summary: Upserting a location
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752821493/emporix/icons/preview_api.png)
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Updates or creates a location with a given location ID. You can omit the `metadata.version`, but then optimistic locking is not enabled.
 
         ***
@@ -547,7 +546,7 @@ paths:
     delete:
       summary: Delete a location
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752821493/emporix/icons/preview_api.png)
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Deletes a location.
 
         ***
