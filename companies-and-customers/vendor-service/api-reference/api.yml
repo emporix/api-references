@@ -3,7 +3,6 @@ info:
   title: Vendor Service
   version: ''
   description: |
-    **This functionality is in preview mode - some of the features may not be fully operational yet.**
     The Vendor service allows you to manage vendors and their locations in your system.
   contact:
     name: Emporix
