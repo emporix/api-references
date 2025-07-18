@@ -21,7 +21,7 @@ paths:
     post:
       summary: Creating a vendor
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1657695298/internal/preview.png)
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752819332/emporix/icons/preview_label.png)
         Creates a new vendor for the tenant. A vendor represents a supplier or a business partner in the system.
         
 
@@ -78,14 +78,13 @@ paths:
           $ref: '#/components/responses/Conflict_409'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
-      operationId: POST-vendor-mgmt-create-vendor
-      x-stability: experimental
-      
+      operationId: POST-vendor-mgmt-create-vendor      
       tags:
         - Vendors
     get:
       summary: Retrieving all vendors
       description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752819332/emporix/icons/preview_label.png)
         Retrieves all vendors. You can filter, sort and paginate the results with query parameters.
 
         ***
@@ -124,7 +123,6 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: GET-vendor-mgmt-list-vendors
-      x-stability: preview
       tags:
         - Vendors
   '/vendor/{tenant}/vendors/search':
@@ -133,6 +131,7 @@ paths:
     post:
       summary: Searching with parameters for vendors
       description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752819332/emporix/icons/preview_label.png)
         Retrieves all vendors that match the provided criteria.
 
         ***
@@ -187,7 +186,6 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: POST-vendor-mgmt-search-vendors
-      x-stability: preview
       tags:
         - Vendors
   '/vendor/{tenant}/vendors/{vendorId}':
@@ -199,6 +197,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/trait_fields'
       description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752819332/emporix/icons/preview_label.png)
         Retrieves a vendor by the specified unique identifier.
 
         ***
@@ -224,12 +223,12 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: GET-vendor-mgmt-retrieve-vendor
-      x-stability: preview
       tags:
         - Vendors
     put:
       summary: Upserting a vendor
       description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752819332/emporix/icons/preview_label.png)
         Updates or creates a vendor with a given vendor ID. You can omit the `metadata.version`, but then optimistic locking is not enabled.
 
         ***
@@ -292,12 +291,12 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: PUT-vendor-mgmt-update-vendor
-      x-stability: preview
       tags:
         - Vendors
     delete:
       summary: Delete a vendor
       description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752819332/emporix/icons/preview_label.png)
         Deletes a vendor.
 
         ***
@@ -321,7 +320,6 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: DELETE-vendor-mgmt-remove-vendor
-      x-stability: preview
       tags:
         - Vendors
   '/{tenant}/locations':
@@ -330,6 +328,7 @@ paths:
     post:
       summary: Creating a location
       description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752819332/emporix/icons/preview_label.png)
         Creates a new location for the tenant. A location represents address information for a vendor.
 
         ***
@@ -389,12 +388,12 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: POST-vendor-mgmt-create-location
-      x-stability: preview
       tags:
         - Locations
     get:
       summary: Retrieving all locations
       description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752819332/emporix/icons/preview_label.png)
         Retrieves all locations assigned to the tenant. You can filter, sort and paginate the results with query parameters.
 
         ***
@@ -434,7 +433,6 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: GET-vendor-mgmt-list-all-locations
-      x-stability: preview
       tags:
         - Locations
   '/{tenant}/locations/{locationId}':
@@ -446,6 +444,7 @@ paths:
         - $ref: '#/components/parameters/trait_fields'
       summary: Retrieving a location
       description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752819332/emporix/icons/preview_label.png)
         Retrieves a location by the specified unique identifier.
 
         ***
@@ -471,12 +470,12 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: GET-vendor-mgmt-retrieve-location
-      x-stability: preview
       tags:
         - Locations
     put:
       summary: Upserting a location
       description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752819332/emporix/icons/preview_label.png)
         Updates or creates a location with a given location ID. You can omit the `metadata.version`, but then optimistic locking is not enabled.
 
         ***
@@ -542,12 +541,12 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: PUT-vendor-mgmt-update-location
-      x-stability: preview
       tags:
         - Locations
     delete:
       summary: Delete a location
       description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752819332/emporix/icons/preview_label.png)
         Deletes a location.
 
         ***
@@ -571,7 +570,6 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: DELETE-vendor-mgmt-remove-location
-      x-stability: preview
       tags:
         - Locations
 components:
