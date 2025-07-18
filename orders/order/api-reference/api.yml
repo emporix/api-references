@@ -1977,7 +1977,6 @@ components:
             taxAggregate:
               $ref: '#/components/schemas/calculatedTaxAggregate'
       description: A price calculation model that includes tax aggregate information
-
     calculatedTaxAggregate:
       type: object
       properties:
@@ -3669,10 +3668,6 @@ components:
                   taxCode: REDUCED
                   taxRate: 12
           channel: {}
-          created: '2025-01-30T13:45:34.406Z'
-          lastStatusChange: '2025-01-30T13:45:34.406Z'
-          id: EON2076
-          createdBy: '61443563'
     salesOrder1:
       value:
         status: IN_CHECKOUT
