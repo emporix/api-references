@@ -34,6 +34,7 @@ paths:
         **Required scopes**
 
         * `product.product_read_unpublished` **Note:** Only required if the response should contain unpublished products.
+        * `product.product_read_by_vendor` - allows vendor employee to see vendor's products
       operationId: POST-product-search-products
       requestBody:
         $ref: '#/components/requestBodies/productsSearchBody'
@@ -71,6 +72,8 @@ paths:
         **Required scopes**
 
         * `product.product_read_unpublished` **Note:** Only required if the response should contain unpublished products.
+        * `product.product_read_by_vendor` - allows vendor employee to see vendor's products
+        * `product.product_manage_by_vendor` - allows vendor employee to see vendor's products
       operationId: GET-product-list-products
       security:
         - OAuth2: []
@@ -118,6 +121,7 @@ paths:
         **Required scopes**
 
          * `product.product_manage`
+         * `product.product_manage_by_vendor` - allows vendor employee to manage vendor's products
          * `product.product_publish` **Note:** Only required if you want to publish the product when creating it.
       operationId: POST-product-create-product
       requestBody:
@@ -166,6 +170,7 @@ paths:
         **Required scopes**
 
          * `product.product_manage`
+         * `product.product_manage_by_vendor` - allows vendor employee to manage vendor's products
          * `product.product_publish` **Note:** Only required if you want to publish the product when creating it.
       security:
         - OAuth2:
@@ -195,6 +200,7 @@ paths:
         **Required scopes**
 
         * `product.product_manage`
+        * `product.product_manage_by_vendor` - allows vendor employee to manage vendor's products
         * `product.product_publish` **Note:** Only required if you want to publish the product when updating it.
         * `product.product_unpublish` **Note:** Only required if you want to unpublish the product when updating it.
       operationId: PUT-product-update-bulk-products
@@ -434,6 +440,8 @@ paths:
         **Required scopes**
 
         * `product.product_read_unpublished` **Note:** Only required if the product has not been published.
+        * `product.product_read_by_vendor` - allows vendor employee to see vendor's products
+        * `product.product_manage_by_vendor` - allows vendor employee to see vendor's products
       operationId: GET-product-retrieve-product
       security:
         - OAuth2: []
@@ -485,6 +493,7 @@ paths:
         **Required scopes**
 
         * `product.product_manage`
+        * `product.product_manage_by_vendor` - allows vendor employee to manage vendor's products
         * `product.product_publish` **Note:** Only required if you want to publish the product when updating it.
         * `product.product_unpublish` **Note:** Only required if you want to unpublish the product when updating it.
       operationId: PUT-product-update-product
@@ -532,6 +541,7 @@ paths:
         **Required scopes**
 
         * `product.product_manage`
+        * `product.product_manage_by_vendor` - allows vendor employee to manage vendor's products
         * `product.product_publish` **Note:** Only required if you want to publish the product when updating it.
         * `product.product_unpublish` **Note:** Only required if you want to unpublish the product when updating it.
       operationId: PATCH-product-update-product
@@ -567,6 +577,7 @@ paths:
         **Required scopes**
 
         * `product.product_manage`
+        * `product.product_manage_by_vendor` - allows vendor employee to delete vendor's products
       operationId: DELETE-product-remove-product
       security:
         - OAuth2:
@@ -2196,6 +2207,8 @@ components:
           allOf:
             - $ref: '#/components/schemas/localizedValue'
           description: Product description.
+        vendor:
+          $ref: '#/components/schemas/vendor'
         taxClasses:
           $ref: '#/components/schemas/taxClasses'
         published:
@@ -2511,6 +2524,17 @@ components:
               $ref: '#/components/schemas/variantAttributes'
             metadata:
               $ref: '#/components/schemas/productMetadataWithVersion'
+    vendor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: An identifier of a vendor to whom the product belongs
+        name:
+          type: string
+          description: vendor name
+      required:
+        - id
     searchProducts:
       type: object
       properties:
@@ -2812,6 +2836,8 @@ components:
             product.product_publish: Needed to publish products.
             product.product_unpublish: Needed to unpublish products.
             product.product_read_unpublished: Needed to retrieve unpublished products.
+            product.product_read_by_vendor: The scope allows vendor to read products with assigned vendor
+            product.product_manage_by_vendor: The scope allows vendor to manage products with assigned vendor
             product.price_manage: Needed to manage product prices.
             product.product_template_read: Needed for reading product templates.
             product.product_template_manage: Needed for updating and removing a product template.

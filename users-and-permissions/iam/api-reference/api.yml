@@ -1392,6 +1392,8 @@ paths:
       summary: Adding a user to a group
       description: |
         Assigns a user to a specified group. The user will gain all access controls (scopes) specified for this group.
+        
+        Groups assigned to employee users must share the same vendor identifier.
 
         `iam.assignment_create_own` scope allows customer to assign a user to a specified group only if the user is assigned to the same company.
 
@@ -1491,6 +1493,9 @@ paths:
       description: |
         Creates user's assignment to a specified group. The user gains all access controls (scopes) specified for this group.
         In case the assignment already exists, nothing happens as the type of assignment cannot be changed.
+        
+        Groups assigned to employee users must share the same vendor identifier
+
         ***
 
         ### Required scopes
@@ -3359,6 +3364,123 @@ paths:
             Indicates whether user will be deleted from Developer Portal as well.
             
             **NOTE:** Only Developer Portal admin can perform force delete.
+  '/iam/{tenant}/users/vendors/{vendorId}':
+    parameters:
+      - $ref: '#/components/parameters/tenant'
+      - $ref: '#/components/parameters/vendorId'
+    get:
+      summary: Retrieving a list of vendor users
+      tags:
+        - Management Dashboard Users
+      responses:
+        '200':
+          description: The request was successful a list of users is returned.
+          headers:
+            X-Total-Count:
+              description: Total number of retrieved users.
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+              examples:
+                Employee list with extended groups:
+                  value:
+                    - id: 00u4ukrqkmEP1opFf417
+                      firstName: John 2
+                      lastName: Doe
+                      backofficeUserNumber: 00u4ukrqkmEP1opFf417
+                      preferredSite: main
+                      preferredCurrency: PLN
+                      preferredLanguage: en
+                      department: departmentName
+                      validFrom: '2022-08-19T10:41:28Z'
+                      isAccountLocked: true
+                      contactEmail: user2@gmail.com
+                      status: ACTIVE
+                      groupIds:
+                        - 1gr5e52e-6e27-4ac5-9471-2467d3fb7503
+                      groups:
+                        - id: 1gr5e52e-6e27-4ac5-9471-2467d3fb7503
+                          name:
+                            de: Raw Materials Vendor Order manager
+                            en: Raw Materials Bestellmanager Lieferant
+                          userType: EMPLOYEE
+                    - id: 00u4ukqvzlEP31sCk417
+                      firstName: John
+                      lastName: Doe
+                      backofficeUserNumber: 00u4ukqvzlEP31sCk417
+                      preferredSite: main
+                      preferredCurrency: PLN
+                      preferredLanguage: en
+                      department: departmentName
+                      validFrom: '2022-08-19T10:41:10Z'
+                      isAccountLocked: true
+                      contactEmail: user1@gmail.com
+                      status: PROVISIONED
+                      groupIds:
+                        - 1gr5e52e-6e27-4ac5-9471-2467d3fb7503
+                      groups:
+                        - id: 1gr5e52e-6e27-4ac5-9471-2467d3fb7503
+                          name:
+                            de: Raw Materials Vendor Order manager
+                            en: Raw Materials Bestellmanager Lieferant
+                          userType: EMPLOYEE
+                No employees found:
+                  value: [ ]
+                Employee list:
+                  value:
+                    - id: 00u4ukrqkmEP1opFf417
+                      firstName: John 2
+                      lastName: Doe
+                      backofficeUserNumber: 00u4ukrqkmEP1opFf417
+                      preferredSite: main
+                      preferredCurrency: PLN
+                      preferredLanguage: en
+                      department: departmentName
+                      validFrom: '2022-08-19T10:41:28Z'
+                      isAccountLocked: true
+                      contactEmail: user2@gmail.com
+                      status: ACTIVE
+                      groupIds:
+                        - 1gr5e52e-6e27-4ac5-9471-2467d3fb7503
+                    - id: 00u4ukqvzlEP31sCk417
+                      firstName: John
+                      lastName: Doe
+                      backofficeUserNumber: 00u4ukqvzlEP31sCk417
+                      preferredSite: main
+                      preferredCurrency: PLN
+                      preferredLanguage: en
+                      department: departmentName
+                      validFrom: '2022-08-19T10:41:10Z'
+                      isAccountLocked: true
+                      contactEmail: user1@gmail.com
+                      status: PROVISIONED
+                      groupIds:
+                        - 1gr5e52e-6e27-4ac5-9471-2467d3fb7503
+            application/xml:
+              schema:
+                type: array
+                items: { }
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+      operationId: GET-iam-list-users-with-groups-vendor
+      description: |-
+        Retrieves all users for the given vendor with the assigned groups.
+        ***
+
+        ### Required scopes
+
+          * `iam.user_read`
+      security:
+        - OAuth2:
+            - iam.user_read
 components:
   schemas:
     AccessControlMetadataQueryDocument:
@@ -3537,6 +3659,10 @@ components:
         id:
           type: string
           description:  Custom group's identifier. If not provided, it is automatically generated
+        vendorId:
+          type: string
+          description: An identifier of a vendor to whom the group belongs. Can only be set during creation and is immutable thereafter. A group with vendorId can only be assigned to users of type `EMPLOYEE`
+          readOnly: true
         name:
           minItems: 1
           type: object
@@ -3665,7 +3791,7 @@ components:
       #   id: e243dc9e-a3f6-4573-bb01-a8ae21d2d4ae
     UserIdResponse:
       type: object
-      example: 
+      example:
         id: e243dc9e-a3f6-4573-bb01-a8ae21d2d4ae
       properties:
         id:
@@ -3710,6 +3836,10 @@ components:
           additionalProperties:
             type: string
           description: Localized group description in the form of a map of translations.
+        vendorId:
+          type: string
+          description: An identifier of a vendor to whom the group belongs. Can only be set during creation and is immutable thereafter. A group with vendorId can only be assigned to users of type `EMPLOYEE`
+          readOnly: true
         accessControls:
           type: array
           description: Access control unique identifiers associated with this group.
@@ -3970,6 +4100,10 @@ components:
         scopes:
           type: string
           description: User scopes.
+        vendorId:
+          type: string
+          description: An identifier of a vendor to whom the user belongs. Calculated based on groups assignment
+          readOnly: true
       description: Definition of user scopes
       example:
         id: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
@@ -4329,6 +4463,13 @@ components:
       schema:
         type: string
       description: 'User type that may be one of: ''CUSTOMER'', ''EMPLOYEE'''
+    vendorId:
+      name: vendorId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: 'Unique identifier of a vendor'
     resourceId:
       name: resourceId
       in: path
