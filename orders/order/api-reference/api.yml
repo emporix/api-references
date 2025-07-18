@@ -679,7 +679,8 @@ components:
               name:
                 allOf:
                   - $ref: '#/components/schemas/localizedValue'
-                description: Fee name.
+                  - type: object
+                    description: Fee name.
               yrn:
                 type: string
                 description: Unique identifier of the fee.
@@ -787,8 +788,9 @@ components:
         fees:
           allOf:
             - $ref: '#/components/schemas/aggregateFee'
+            - type: object
+              description: '**This field is deprecated**. Please use `calculatedPrice.fees` instead. The `calculatedPrice.fees` field provides the same value with updated functionality.'
           deprecated: true
-          description: '**This field is deprecated**. Please use `calculatedPrice.fees` instead. The `calculatedPrice.fees` field provides the same value with updated functionality.'
         amount:
           description: The amount of items.
           type: integer
@@ -817,7 +819,8 @@ components:
         calculatedUnitPrice:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'
-          description: 'Product''s unit price with tax values, can be skipped if deprecated `unitPrice` is provided for backward compatibility'
+            - type: object
+              description: 'Product''s unit price with tax values, can be skipped if deprecated `unitPrice` is provided for backward compatibility.'
         measurementUnit:
           $ref: '#/components/schemas/measurementUnit'
         link:
@@ -839,8 +842,9 @@ components:
         tax:
           allOf:
             - $ref: '#/components/schemas/tax'
+            - type: object
+              description: '**This field is deprecated**. Please use `calculatedPrice.price` instead. The `calculatedPrice.price` field provides the same value with updated functionality.'
           deprecated: true
-          description: '**This field is deprecated**. Please use `calculatedPrice.price` instead. The `calculatedPrice.price` field provides the same value with updated functionality.'
         price:
           $ref: '#/components/schemas/price'
         metadata:
@@ -850,7 +854,8 @@ components:
         calculatedPrice:
           allOf:
             - $ref: '#/components/schemas/orderEntryCalculatedPrice'
-          description: Detailed price calculation for a single line item with all pricing components. Can be skipped if deprecated `totalPrice` is provided for backward compatibility
+            - type: object
+              description: Detailed price calculation for a single line item with all pricing components. Can be skipped if deprecated `totalPrice` is provided for backward compatibility.
         priceMatchDetails:
           $ref: '#/components/schemas/priceMatchDetails'
         externalDiscounts:
@@ -930,16 +935,18 @@ components:
           description: Discount's unique sequence ID identifier.
           type: integer
         link:
-          description: Link to discount.
           allOf:
             - $ref: '#/components/schemas/reference'
+            - type: object
+              description: Link to discount.
         categoryRestricted:
-          description: This flag indicates if discount is category restricted
+          description: This flag indicates if discount is category restricted.
           type: boolean
         restrictions:
-          description: The restrictions based on which the discount can be applied
           allOf:
             - $ref: '#/components/schemas/discountRestrictions'
+            - type: object
+              description: The restrictions based on which the discount can be applied.
       required:
         - code
         - currency
@@ -947,15 +954,16 @@ components:
       title: Discount Restrictions
       properties:
         validFrom:
-          description: The date from which the discount restriction is valid
+          description: The date from which the discount restriction is valid.
           type: string
         validUntil:
           description: The date from which the discount restriction is valid.
           type: string
         minOrderValue:
-          description: The minimum order price for which the discount is valid
           allOf:
             - $ref: '#/components/schemas/discountRestrictionsPrice'
+            - type: object
+              description: The minimum order price for which the discount is valid.
         includedCategories:
           description: List of included categories.
           type: array
@@ -1026,9 +1034,10 @@ components:
           description: Customer's email address.
           type: string
         metadata:
-          description: Metadata.
           allOf:
             - $ref: '#/components/schemas/mixinsMetadata'
+            - type: object
+              description: Metadata.
         mixins:
           description: Customer additional information.
           type: object
@@ -1083,9 +1092,10 @@ components:
           description: Customer's contact phone.
           type: string
         metadata:
-          description: Metadata.
           allOf:
             - $ref: '#/components/schemas/mixinsMetadata'
+            - type: object
+              description: Metadata.
         mixins:
           description: Additional address information.
           type: object
@@ -1356,9 +1366,10 @@ components:
           type: object
           additionalProperties: true
         metadata:
-          description: The metadata of the product
           allOf:
             - $ref: '#/components/schemas/mixinsMetadata'
+            - type: object
+              description: The metadata of the product.
     bundleProduct:
       title: Bundle Product
       description: Represents the product used in a bundle.
@@ -1376,7 +1387,7 @@ components:
       type: object
       properties:
         priceId:
-          description: Id of the price related to order entry
+          description: Id of the price related to order entry.
           type: string
         priceListId:
           type: string
@@ -1388,12 +1399,13 @@ components:
           description: Oryginal amount is a price set by the merchant.
           type: number
         currency:
-          description: Currency of the entry price
+          description: Currency of the entry price.
           type: string
         salePrice:
-          description: Attributes of the sale price
           allOf:
             - $ref: '#/components/schemas/salePrice'
+            - type: object
+              description: Attributes of the sale price.
     media:
       title: Media
       description: The media.
@@ -1487,9 +1499,10 @@ components:
         feeYrnAggregate:
           allOf:
             - $ref: '#/components/schemas/aggregateFee'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.totalFees` and `entries[].calculatedPrice.fees` instead.
+            - type: object
+              description: "**This field is deprecated**. Please use `calculatedPrice.totalFees` and `entries[].calculatedPrice.fees` instead.
                         These fields provide the same values with updated functionality."
+          deprecated: true
         status:
           $ref: '#/components/schemas/orderStatus'
         cartId:
@@ -1526,15 +1539,17 @@ components:
         shipping:
           allOf:
             - $ref: '#/components/schemas/shipping'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.totalShipping` instead.
+            - type: object
+              description: "**This field is deprecated**. Please use `calculatedPrice.totalShipping` instead.
                         The `unitPrice` field provides the same value with updated functionality."
+          deprecated: true
         tax:
           allOf:
             - $ref: '#/components/schemas/tax'
-          deprecated: true
-          description: "**This field is deprecated**. Please use `calculatedPrice.finalPrice.taxAggregate` instead.
+            - type: object
+              description: "**This field is deprecated**. Please use `calculatedPrice.finalPrice.taxAggregate` instead.
                         The `calculatedPrice.finalPrice.taxAggregate` field provides the same value with updated functionality."
+          deprecated: true
         subTotalPrice:
           type: number
           deprecated: true
@@ -1574,7 +1589,8 @@ components:
         calculatedPrice:
           allOf:
             - $ref: '#/components/schemas/orderCalculatedPrice'
-          description: 'A breakdown of the total price calculated from all line items, including detailed pricing components. Can be skipped if deprecated`totalPrice` is provided to preserve backward compatibility'
+            - type: object
+              description: 'A breakdown of the total price calculated from all line items, including detailed pricing components. Can be skipped if deprecated`totalPrice` is provided to preserve backward compatibility'
         legalEntityId:
           type: string
           description: The identifier of the legal entity on whose behalf the order was placed.
@@ -1584,9 +1600,9 @@ components:
         - calculatedPrice
     order:
       title: Order
-      description: 'The order visible for a customer, which includes all ordered items, customer addresses, information about ordered products etc.'
       allOf:
         - type: object
+          description: 'The order visible for a customer, which includes all ordered items, customer addresses, information about ordered products etc.'
           properties:
             id:
               description: Order's unique identifier.
@@ -1629,9 +1645,9 @@ components:
         - $ref: '#/components/schemas/orderUpdateDto'
     salesOrderCreationDto:
       title: Order Creation DTO
-      description: The order creation DTO.
       allOf:
         - type: object
+          description: The order creation DTO.
           properties:
             quoteId:
               description: Identifier of the quote from which the order has been created
@@ -1639,9 +1655,9 @@ components:
         - $ref: '#/components/schemas/orderCreationDto'
     orderCreationDto:
       title: Order Creation DTO
-      description: The order creation DTO.
       allOf:
         - type: object
+          description: The order creation DTO.
           properties:
             channel:
               $ref: '#/components/schemas/channel'
@@ -1832,7 +1848,8 @@ components:
         fees:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'
-            - description: The sum of all fees applied on the line items plus the payment fee *before discounts*.
+            - type: object
+              description: The sum of all fees applied on the line items plus the payment fee *before discounts*.
         totalFee:
           allOf:
             - $ref: '#/components/schemas/calculatedPriceWithDiscounts'
@@ -1888,7 +1905,8 @@ components:
         shipping:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'
-            - description: The total shipping cost is calculated by summing `items[].calculatedPrice.price.grossValue` for shipping estimation. `GrossValue` is used because, even for zero-tax items, it remains equal to `netValue`. The `shipping` is the value *before discounts*, use totalShipping to get the value after discounts.
+            - type: object
+              description: The total shipping cost is calculated by summing `items[].calculatedPrice.price.grossValue` for shipping estimation. `GrossValue` is used because, even for zero-tax items, it remains equal to `netValue`. The `shipping` is the value *before discounts*, use totalShipping to get the value after discounts.
         totalShipping:
           allOf:
             - $ref: '#/components/schemas/calculatedPriceWithDiscounts'
@@ -1984,10 +2002,10 @@ components:
       allOf:
         - $ref: '#/components/schemas/calculatedPrice'
         - type: object
+          description: A price calculation model that includes tax aggregate information.
           properties:
             taxAggregate:
               $ref: '#/components/schemas/calculatedTaxAggregate'
-      description: A price calculation model that includes tax aggregate information
     calculatedTaxAggregate:
       type: object
       properties:
@@ -2067,7 +2085,8 @@ components:
         price:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'
-            - description: Applied discount's price. When discount is applied before tax the value equals `price.netValue` and `price.grossValue` for discount applied after tax.
+            - type: object
+              description: Applied discount's price. When discount is applied before tax the value equals `price.netValue` and `price.grossValue` for discount applied after tax.
         discountType:
           type: string
           enum:
@@ -2083,14 +2102,14 @@ components:
           description: Indicates whether the discount is from internal coupon (INTERNAL) or external discount (EXTERNAL).
     calculatedTotalDiscount:
       type: object
-      description: The total combined value of all applied discounts
+      description: The total combined value of all applied discounts.
       properties:
         calculationType:
           type: string
           enum:
             - ApplyDiscountBeforeTax
             - ApplyDiscountAfterTax
-          description: Indicates whether discounts were calculated using net or gross price values
+          description: Indicates whether discounts were calculated using net or gross price values.
         value:
           type: number
           format: double
@@ -2098,7 +2117,8 @@ components:
         price:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'
-            - description: Total discounts price. When discounts are applied before tax the value equals `price.netValue` and `price.grossValue` for discounts applied after tax.
+            - type: object
+              description: Total discounts price. When discounts are applied before tax the value equals `price.netValue` and `price.grossValue` for discounts applied after tax.
         appliedDiscounts:
           type: array
           description: All applied discounts that are parts of the sum.
@@ -2110,7 +2130,8 @@ components:
         price:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'
-            - description: The price is calculated by multiplying the unit price (taken from priceMatch) by the quantity.
+            - type: object
+              description: The price is calculated by multiplying the unit price (taken from priceMatch) by the quantity.
         upliftValue:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'
