@@ -9,7 +9,7 @@ info:
     url: 'https://emporix.com'
     email: documentation@emporix.com
 servers:
-  - url: 'https://api.emporix.io/vendor'
+  - url: 'https://api.emporix.io'
 tags:
   - name: Vendors
   - name: Locations
