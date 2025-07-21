@@ -5231,14 +5231,23 @@ components:
               description: The sum of all line item price values, it means unit prices multiplied by quantity - `items[].calculatedPrice.price`.
               properties:
                 netValue:
+                  type: number
+                  format: double
                   description: Net value of the price, price without tax.
                 grossValue:
+                  type: number
+                  format: double
                   description: Gross value of the price, price with tax.
                 taxValue:
+                  type: number
+                  format: double
                   description: Tax value of the price, it's the actual amount of tax that has to be paid.
                 taxCode:
+                  type: string
                   description: Tax code applied to the price, a tax code is a country's set of tax rules. If all fees have the same taxRate, then the value is present. Otherwise, the field is not returned.
                 taxRate:
+                  type: number
+                  format: double
                   description: Tax rate applied to the price, it's the percentage at which an individual or business is taxed. If all fees have the same taxRate, then the value is present. Otherwise, the field is not returned.
         upliftValue:
           allOf:
@@ -5247,14 +5256,23 @@ components:
               description: The sum of all line item uplift values. Uplift value is the maximum additional amount to be authorized for payment to cover potential price adjustments during packaging of weight-based products. For example, if the item’s `price.netValue=12`, the `upliftValue.netValue=1,2`, with 10% uplift configured. If the uplift value is not configured for an item, it's not returned in the response.
               properties:
                 netValue:
+                  type: number
+                  format: double
                   description: Net value of the uplift amount, value without tax.
                 grossValue:
+                  type: number
+                  format: double
                   description: Gross value of the uplift amount, value with tax.
                 taxValue:
+                  type: number
+                  format: double
                   description: Tax value of the uplift amount, it's the actual amount of tax that has to be paid.
                 taxCode:
+                  type: string
                   description: Tax code applied to uplift amount, a tax code is a country's set of tax rules. If all fees have the same taxRate, then the value is present. Otherwise, the field is not returned.
                 taxRate:
+                  type: number
+                  format: double
                   description: Tax rate applied to the uplift amount, it's the percentage at which an individual or business is taxed. If all fees have the same taxRate, then the value is present. Otherwise, the field is not returned.
         discountedPrice:
           allOf:
@@ -5263,14 +5281,23 @@ components:
               description: The sum of all line item prices after discounts are calculated. It's included in the response if at least one line item has a discounted price. It's the total amount of discounted prices for items with applied discounts and the original prices for items without discounts. It reflects the total cost of all line items after discounts.
               properties:
                 netValue:
+                  type: number
+                  format: double
                   description: The net value after applying discounts.
                 grossValue:
+                  type: number
+                  format: double
                   description: The gross value after applying discounts.
                 taxValue:
+                  type: number
+                  format: double
                   description: The difference between `grossValue` and `netValue`.
                 taxCode:
+                  type: string
                   description: Tax code applied to the discounted price, a tax code is a country's set of tax rules. If all fees have the same taxRate, then the value is present. Otherwise, the field is not returned.
                 taxRate:
+                  type: number
+                  format: double
                   description: Tax rate applied to the discounted price, it's the percentage at which an individual or business is taxed. If all fees have the same taxRate, then the value is present. Otherwise, the field is not returned.
         fees:
           allOf:
@@ -5284,14 +5311,23 @@ components:
               description: The sum of all fees applied on the line items plus the payment fee. It's calculated by summing `items[].calculatedPrice.totalFee` with `paymentFee`. The `totalFee` is the value after all the discounts, if any discounts were applied.
               properties:
                 netValue:
+                  type: number
+                  format: double
                   description: Net value of the total fee, value without tax.
                 grossValue:
+                  type: number
+                  format: double
                   description: Gross value of the total fee, value with tax.
                 taxValue:
+                  type: number
+                  format: double
                   description: Tax value of the total fee, it's the actual amount of tax that has to be paid.
                 taxRate:
+                  type: number
+                  format: double
                   description: If all fees have the same `taxCode` defined, resulting in the same `taxRate`, the value is present. Otherwise, the field is not returned in the response.
                 taxCode:
+                  type: string
                   description: If all fees have the same `taxCode` defined, the value is present. Otherwise, the field is not returned in the response.
                 appliedDiscounts:
                   description: A list of discounts applied to on the line item fees. The payment fee itself is not discountable.
@@ -5301,10 +5337,18 @@ components:
                       - type: object
                         properties:
                           id:
+                            type: string
                             description: Discount identifier.
                           value:
+                            type: number
+                            format: double
                             description: The sum of all `lines[].calculatedPrice.totalFee[].appliedDiscounts[].value` grouped by `discount.id`.
                           discountType:
+                            type: string
+                            enum:
+                              - PERCENT
+                              - ABSOLUTE
+                              - FREE_SHIPPING
                             description: PERCENT for percentage discounts and ABSOLUTE for amount applied to the fee.
         shipping:
           allOf:
@@ -5318,27 +5362,45 @@ components:
             - type: object
               properties:
                 netValue:
+                  type: number
+                  format: double
                   description: The net value after applying discounts.
                 grossValue:
+                  type: number
+                  format: double
                   description: The gross value after applying discounts.
                 taxValue:
+                  type: number
+                  format: double
                   description: The difference between `grossValue` and `netValue`.
                 taxCode:
+                  type: string
                   description: Tax code applied to the shipping cost, a tax code is a country's set of tax rules.
                 taxRate:
+                  type: number
+                  format: double
                   description: Tax rate applied to the shipping cost, it's the percentage at which an individual or business is taxed.
                 appliedDiscounts:
                   description: A list of discounts applied to shipping.
+                  type: array
                   items:
                     allOf:
                       - $ref: '#/components/schemas/calculatedAppliedDiscount'
                       - type: object
                         properties:
                           id:
+                            type: string
                             description: Discount identifier.
                           value:
+                            type: number
+                            format: double
                             description: Value of the discount that was applied.
                           discountType:
+                            type: string
+                            enum: 
+                              - PERCENT
+                              - ABSOLUTE
+                              - FREE_SHIPPING
                             description: PERCENT for percentage discounts and ABSOLUTE for amount applied to the line item.
         totalDiscount:
           allOf:
@@ -5347,10 +5409,17 @@ components:
               description: A summary of all discounts applied at a cart level - sum of `lines[].totalDiscount` and shipping discounts. If there are no discounts applied, it's not returned in the response.
               properties:
                 calculationType:
+                  type: string
+                  enum:
+                    - ApplyDiscountBeforeTax
+                    - ApplyDiscountAfterTax
                   description: Indicates whether discounts were applied to net or gross values.
                 value:
+                  type: number
+                  format: double
                   description: Aggregated sum of `lines[].calculatedPrice.totalDiscount.value` plus the sum of shipping discounts `totalShipping.appliedDiscounts[].value`.
                 appliedDiscounts:
+                  type: array
                   description: A list of the applied discounts.
                   items:
                     allOf:
@@ -5358,10 +5427,18 @@ components:
                       - type: object
                         properties:
                           id:
+                            type: string
                             description: Discount identifier.
                           value:
+                            type: number
+                            format: double
                             description: The sum of all `lines[].calculatedPrice.totalDiscount.value` plus `totalShipping.appliedDiscounts[].value` grouped by the discount ID.
                           discountType:
+                            type: string
+                            enum:
+                              - PERCENT
+                              - ABSOLUTE
+                              - FREE_SHIPPING
                             description: PERCENT for percentage discounts, ABSOLUTE for monetary amount and FREE_SHIPPING is shipping is fully discounted.
         finalPrice:
           allOf:
@@ -5370,12 +5447,20 @@ components:
               description: The final price is the sum of `items[].finalPrice`, `totalShipping`, and `paymentFee`, without the uplift value.
               properties:
                 netValue:
+                  type: number
+                  format: double
                   description: The sum of line items, `discountedPrice.netValue` or `price.netValue`, and `totalFee.netValue`.
                 grossValue:
+                  type: number
+                  format: double
                   description: The sum of line items, `discountedPrice.grossValue` or `price.grossValue`, and `totalFee.grossValue`.
                 taxValue:
+                  type: number
+                  format: double
                   description: The result of subtracting `netValue` and `grossValue`, which is equal to the sum of all `taxValues` from the prices.
                 taxRate:
+                  type: number
+                  format: double
                   description: If the tax code of the line item matches the tax code of all applied fees, the tax rate is populated with the value. Otherwise, it's not returned in the response.
                 taxCode:
                   type: string
@@ -5389,14 +5474,23 @@ components:
                           description: A list of tax values grouped by `taxCode` and `taxRate`. It includes the sum of `item[].calculatedPrice.discountedPrice` or `item[].calculatedPrice.price`, `item[].calculatedPrice.fees[].discountedPrice` or `item[].calculatedPrice.fees[].price`, `calculatedPrice.totalShipping` and `calculatedPrice.paymentFees`. If any of these values have the same `taxRate` but different `taxCode`, they are listed separately. The aggregation also includes items that do not have a `taxRate` or `taxCode` defined.
                           properties:
                             netValue:
+                              type: number
+                              format: double
                               description: Net value of the tax, value without tax.
                             grossValue:
+                              type: number
+                              format: double
                               description: Gross value of the tax, value with tax.
                             taxValue:
+                              type: number
+                              format: double
                               description: Tax value of the tax, it's the actual amount of tax that has to be paid.
                             taxCode:
+                              type: string
                               description: Tax code applied to the tax, a tax code is a country's set of tax rules.
                             taxRate:
+                              type: number
+                              format: double
                               description: Tax rate applied to the tax, it's the percentage at which an individual or business is taxed.
     calculatedFee:
       type: object
@@ -5470,14 +5564,23 @@ components:
               description: Maximum additional amount authorized for payment to cover potential price adjustments during packaging of weight-based products. For example, if the item’s `price.netValue=12`, the `upliftValue.netValue=1,2`, with 10% uplift configured. If the uplift value is not configured for an item, it's not returned in the response.
               properties:
                 netValue:
+                  type: number
+                  format: double
                   description: Net value of the uplift amount, value without tax.
                 grossValue:
+                  type: number
+                  format: double
                   description: Gross value of the uplift amount, value with tax.
                 taxValue:
+                  type: number
+                  format: double
                   description: Tax value of the uplift amount, it's the actual amount of tax that has to be paid.
                 taxCode:
+                  type: string
                   description: Tax code applied to uplift amount, a tax code is a country's set of tax rules.
                 taxRate:
+                  type: number
+                  format: double
                   description: Tax rate applied to the uplift amount, it's the percentage at which an individual or business is taxed.
         discountedPrice:
           allOf:
@@ -5486,16 +5589,26 @@ components:
               description: The total price for the item line calculated by multiplying the unit price by the quantity, with applied discounts. If there are no applied discounts to the given line item, the attribute is not returned in the response.
               properties:
                 netValue:
+                  type: number
+                  format: double
                   description: The net value after applying discounts, calculated if `includesTax=false`.
                 grossValue:
+                  type: number
+                  format: double
                   description: The gross value after applying discounts, calculated if `includesTax=true`.
                 taxValue:
+                  type: number
+                  format: double
                   description: The difference between `grossValue` and `netValue`.
                 taxRate:
+                  type: number
+                  format: double
                   description: Tax rate applied to the discounted price, it's the percentage at which an individual or business is taxed.
                 taxCode:
+                  type: string
                   description: Tax code applied to the discounted price, a tax code is a country's set of tax rules.
                 appliedDiscounts:
+                  type: array
                   description: A list of discounts applied to the line item.
                   items:
                     allOf:
@@ -5503,10 +5616,18 @@ components:
                       - type: object
                         properties:
                           id:
+                            type: string
                             description: Discount identifier.
                           value:
+                            type: number
+                            format: double
                             description: Value of the discount that was applied.
                           discountType:
+                            type: string
+                            enum:
+                              - PERCENT
+                              - ABSOLUTE
+                              - FREE_SHIPPING
                             description: PERCENT for percentage discounts and ABSOLUTE for amount applied to the line item.
         fees:
           type: array
@@ -5517,23 +5638,41 @@ components:
               - type: object
                 properties:
                   id:
+                    type: string
                     description: Fee identifier.
                   type:
+                    type: string
+                    enum:
+                      - PERCENT
+                      - ABSOLUTE
+                      - ABSOLUTE_MULTIPLY_ITEMQUANTITY
                     description: PERCENT for fee percentage of the item's line `price.netValue` - unit price x quantity. ABSOLUTE for the absolute amount assigned to the item line. ABSOLUTE_MULTIPLY_ITEMQUANTITY for the monetary amount multiplied by the item quantity and assigned to the item line.
                   origin:
+                    enum:
+                      - INTERNAL
+                      - EXTERNAL
+                    type: string
                     description: INTERNAL defined in commerce engine, EXTERNAL specified when an item is added to the cart.
                   name:
+                    type: object
                     description: Fee name.
                   price:
                     description: The calculated price of the fee.
                     properties:
                       netValue:
+                        type: number
+                        format: double
                         description: Monetary amount of the fee, depends on the fee type.
                       grossValue:
+                        type: number
+                        format: double
                         description: Value calculated based on the `taxCode` and the `taxRate` if `taxable=true`.
                       taxRate:
+                        type: number
+                        format: double
                         description: If a fee is defined with the attribute `taxable=true`, the tax rate is calculated based on the provided `taxCode` at the fee level. A taxable fee must have a defined `taxCode`.
                       taxCode:
+                        type: string
                         description: Tax code defined on the fee level, for example STANDARD. The value should match the available tax codes in the system configuration.
                       discountedPrice:
                         allOf:
@@ -5542,16 +5681,26 @@ components:
                             description: The total price for the item line calculated by multiplying the unit price by the quantity, with applied discounts. If there are no applied discounts to the given line item, the attribute is not returned in the response.
                             properties:
                               netValue:
+                                type: number
+                                format: double
                                 description: The net value after applying discounts, calculated if `includesTax=false`.
                               grossValue:
+                                type: number
+                                format: double
                                 description: The gross value after applying discounts, calculated if `includesTax=true`.
                               taxValue:
+                                type: number
+                                format: double
                                 description: The difference between `grossValue` and `netValue`.
                               taxRate:
+                                type: number
+                                format: double
                                 description: Refers to `fees[].price.taxRate`.
                               taxCode:
+                                type: string
                                 description: Refers to `fees[].price.taxCode`.
                               appliedDiscounts:
+                                type: array
                                 description: A list of discounts applied to the line item.
                                 items:
                                   allOf:
@@ -5559,10 +5708,18 @@ components:
                                     - type: object
                                       properties:
                                         id:
+                                          type: string
                                           description: Discount identifier.
                                         value:
+                                          type: number
+                                          format: double
                                           description: Monetary amount of the discount applied to the price for the given discount ID.
                                         discountType:
+                                          type: string
+                                          enum:
+                                            - PERCENT
+                                            - ABSOLUTE
+                                            - FREE_SHIPPING
                                           description: PERCENT for percentage discounts and ABSOLUTE for amount applied to the line item.
         totalFee:
           allOf:
@@ -5571,16 +5728,26 @@ components:
               description: Sum of all fees applied to the item. It's calculated by summarizing `fees[].discountedPrice` if any discounts were applied to the fee, or `fees[].price` for an pre-discounted fee. If there are no fees applied to the line item, it's not returned in the response. The `totalFee` is the value after all the discounts, if any discounts were applied.
               properties:
                 netValue:
+                  type: number
+                  format: double
                   description: Net value of the price, price without tax.
                 grossValue:
+                  type: number
+                  format: double
                   description: Gross value of the price, price with tax.
                 taxValue:
+                  type: number
+                  format: double
                   description: Tax value of the price, it's the actual amount of tax that has to be paid.
                 taxRate:
+                  type: number
+                  format: double
                   description: If all fees have the same `taxCode` defined, which results in the same `taxRate`, then the value is present. Otherwise, the field is not returned.
                 taxCode:
+                  type: string
                   description: If all fees have the same `taxCode`, then the value is present. Otherwise, the field is not returned.
                 appliedDiscounts:
+                  type: array
                   description: A list of discounts applied to the line item.
                   items:
                     allOf:
@@ -5588,10 +5755,18 @@ components:
                       - type: object
                         properties:
                           id:
+                            type: string
                             description: Discount identifier.
                           value:
+                            type: number
+                            format: double
                             description: Sum of all `fees[].discountedPrice.appliedDiscounts[].value` grouped by `discount.id`
                           discountType:
+                            type: string
+                            enum:
+                              - PERCENT
+                              - ABSOLUTE
+                              - FREE_SHIPPING
                             description: PERCENT for percentage discounts and ABSOLUTE for amount applied to the line item.
         totalDiscount:
           allOf:
@@ -5600,10 +5775,17 @@ components:
               description: A summary of all discounts applied to the line, including discounts on both the line item's price and its fees. If there are no discounts applied on to the line item, it's not returned in the response.
               properties:
                 calculationType:
+                  type: string
+                  enum:
+                    - ApplyDiscountBeforeTax
+                    - ApplyDiscountAfterTax
                   description: Indicates whether discounts were applied to net or gross values.
                 value:
+                  type: number
+                  format: double
                   description: Aggregated sum of `lines[].calculatedPrice.totalDiscount.value` plus the sum of shipping discounts `totalShipping.appliedDiscounts[].value`.
                 appliedDiscounts:
+                  type: array
                   description: A list of the applied discounts.
                   items:
                     allOf:
@@ -5611,10 +5793,18 @@ components:
                       - type: object
                         properties:
                           id:
+                            type: string
                             description: Discount identifier.
                           value:
+                            type: number
+                            format: double
                             description: The sum of `discountedPrice.appliedDiscounts[].value` and `fees[].discountedPrice.appliedDiscounts[].value`.
                           discountType:
+                            type: string
+                            enum:
+                              - PERCENT
+                              - ABSOLUTE
+                              - FREE_SHIPPING
                             description: PERCENT for percentage discounts and ABSOLUTE for monetary amount.
         finalPrice:
           allOf:
@@ -5623,14 +5813,23 @@ components:
               description: The final price is the sum of the `discountedPrice` or the original price, depending on whether any discounts were applied to the line item, and the `totalFee`, which includes all fees applied to the line item. Since the total fee already includes the discounted prices of fees, the sum is calculated at the `totalFee` level.
               properties:
                 netValue:
+                  type: number
+                  format: double
                   description: The sum of line items, `discountedPrice.netValue` or `price.netValue`, and `totalFee.netValue`.
                 grossValue:
+                  type: number
+                  format: double
                   description: The sum of line items, `discountedPrice.grossValue` or `price.grossValue`, and `totalFee.grossValue`.
                 taxValue:
+                  type: number
+                  format: double
                   description: The result of subtracting `netValue` and `grossValue`, which is equal to the sum of all `taxValues` from the prices.
                 taxRate:
+                  type: number
+                  format: double
                   description: If the tax code of the line item matches the tax code of all applied fees, the tax rate is populated with the value. Otherwise, it's not returned in the response.
                 taxCode:
+                  type: string
                   description: The common tax code of the line item and all applicable fees. If at least one fee does not have a defined tax code, the common tax code cannot be determined, and the field is empty.
           description: Detailed price calculation for a single line item with all pricing components.
     cartItemsResponse:
