@@ -2981,6 +2981,7 @@ components:
               - type: object
                 properties:
                   priceValue:
+                    type: number
                     description: |-
                       This field should contain a net price given by a number where the cent part is separated by a dot sign - such as `12.99`.
 
@@ -2995,6 +2996,7 @@ components:
                 type: string
                 description: 'Custom price identifier. If not provided, it is automatically generated.'
               itemId:
+                type: object
                 required:
                   - id
                   - itemType
