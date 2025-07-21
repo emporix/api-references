@@ -94,7 +94,7 @@ Your vendor is created and you get its ID in the request response, for example `
 
 To check what vendors are created for your tenant, send the request to [Retrieving all vendors](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/vendor-service/api-reference/vendors#get-vendor-tenant-vendors) endpoint.
 
-As a response, you get information about all your tenant vendors with company and location details:
+As a response, you get information about all your tenant vendors with company and location details, for example:
 
 ```bash
   {
@@ -196,16 +196,18 @@ curl -L
     }
   }'
 ```
-- does this work this way? should I provide company details from the first POST request and then it should work? the examples in the api.yml seem not to be related to one another
+
+
+- *does this work this way? should I provide company details from the first POST request and then it should work? the examples in the api.yml seem not to be related to one another*
 
 ### How to link a customer group with a vendor? / How to set up permissions? How to set up vendor employees?
 
-should I create customer group first? or is it automatically created when I create a new company? I know that some groups will be automatically created with Lukasz S updates?
+*should I create customer group first? or is it automatically created when I create a new company? I know that some groups will be automatically created with Lukasz S updates?*
 
 ### How to make products visible only for the vendor employee?
 
 Create a new product visible for the vendor. 
-Send a request to Create a product endpoint with the required vendor scopes:
+Send a request to Create a product endpoint with the required vendor scope:
 
 * `product.product_read_by_vendor`
 * `product.product_manage_by_vendor`
