@@ -438,6 +438,60 @@ paths:
         schema:
           default: false
           type: boolean
+  '/order-v2/{tenant}/salesorders/{orderId}/split':
+    post:
+      tags:
+        - Orders (tenant-managed)
+      summary: Splitting order
+      description: |
+        Splits order into sub orders based on given criteria. Allowed orders:
+        - order with `CREATED` status
+        - orders that have `orderType` = null, meaning that have not been split and are not sub orders of a master order.
+        - orders with discounts are not supported
+          ### Required scopes
+        *  `order.order_update`
+      operationId: POST-order-split
+      responses:
+        '200':
+          description: |
+            The order has been successfully split.
+          content:
+            application/json:
+              examples:
+                Oder split by vendor:
+                  value:
+                    masterOrder: "EON1227"
+                    splitBy: "VENDOR_ID"
+                    subOrders:
+                      - id: "EON1228"
+                        uniqueValue: "6879eecd1cc84b218acaaec7"
+                      - id: "EON1229"
+                        uniqueValue: "6879ecf11cc84b218acaaec6"
+              schema:
+                $ref: '#/components/schemas/orderSplitResponse'
+        '400':
+          description: Bad Request
+        '403':
+          $ref: '#/components/responses/trait_restricted_403'
+        '404':
+          $ref: '#/components/responses/trait_order_404'
+        '500':
+          $ref: '#/components/responses/trait_500'
+      requestBody:
+        content:
+          application/json:
+            examples:
+              Split by vendor id:
+                value:
+                  splitBy: "VENDOR_ID"
+            schema:
+              $ref: '#/components/schemas/orderSplitRequest'
+        required: true
+      security:
+        - OAuth2: [ ]
+    parameters:
+      - $ref: '#/components/parameters/trait_orderId'
+      - $ref: '#/components/parameters/trait_tenant'
   '/order-v2/{tenant}/orders':
     get:
       tags:
@@ -1363,14 +1417,8 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/media'
-        mixins:
-          description: Product additional information.
-          type: object
-          additionalProperties: true
-        metadata:
-          description: The metadata of the product
-          allOf:
-            - $ref: '#/components/schemas/mixinsMetadata'
+        vendor:
+          $ref: '#/components/schemas/vendor'
     bundleProduct:
       title: Bundle Product
       description: Represents the product used in a bundle.
@@ -1496,7 +1544,7 @@ components:
       properties:
         id:
           type: string
-          description: An identifier of a vendor to whom the product belongs
+          description: An identifier of a vendor
         name:
           type: string
           description: vendor name
@@ -1520,6 +1568,21 @@ components:
           description: The identifier of a cart that was used to create this order.
         vendor:
           $ref: '#/components/schemas/vendor'
+        orderType:
+          $ref: '#/components/schemas/splitOrderType'
+        masterOrder:
+          type: string
+          description: The identifier of a master order. Available on sub orders that have been created after splitting the master order.
+        splitBy:
+          allOf:
+             - $ref: '#/components/schemas/splitBy'
+          type: string
+          description: Available on an order that has been split into sub orders. Holds an information based on what order was split.
+        splitInfo:
+          $ref: '#/components/schemas/splitInfo'
+        subOrders:
+          type: array
+          description: List of string id of sub orders that have been created after split. Available only on master order that was split.
         entries:
           description: Ordered item list.
           type: array
@@ -1704,6 +1767,53 @@ components:
         - SHIPPED
         - COMPLETED
       description: 'Status of the order. Supported order statuses are `IN_CHECKOUT`, `CREATED`, `CONFIRMED`, `DECLINED`, `SHIPPED`, `COMPLETED`''. Customers can only change the order status from `CREATED` to `DECLINED`.'
+    splitOrderType:
+      type: string
+      enum:
+        - MASTER_ORDER
+        - SUB_ORDER
+      description: 'Available on orders that have been split. For standard orders the value will be null. For order that has been split to sub orders it will be `MASTER_ORDER` and for order that were create from the split `SUB_ORDER`'
+    splitBy:
+      type: string
+      enum:
+        - VENDOR_ID
+      description: 'Defines based on what a master order is split into sub orders. As of now only `VENDOR_ID` supported.'
+    splitInfo:
+      type: object
+      properties:
+        splitBy:
+          $ref: '#/components/schemas/splitBy'
+        uniqueValue:
+          type: string
+          description: 'A unique value from that was used to split master order entries into separate sub orders'
+      description: Information how the order was split from master order. Available only on sub orders.
+    splitItemResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: an id of a sub order
+        uniqueValue:
+          type: string
+          description: 'A unique value from that was used to split master order entries into separate sub orders'
+      description: Information how the order was split from master order. Available only on sub orders.
+    orderSplitRequest:
+      type: object
+      properties:
+        splitBy:
+          $ref: '#/components/schemas/splitBy'
+    orderSplitResponse:
+      type: object
+      properties:
+        masterOrder:
+          type: string
+          description: id of order that was split. The same as in the path
+        splitBy:
+          $ref: '#/components/schemas/splitBy'
+        subOrders:
+          type: array
+          items:
+            $ref: '#/components/schemas/splitItemResponse'
     paymentStatus:
       type: string
       enum:
