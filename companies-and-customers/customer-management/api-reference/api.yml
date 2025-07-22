@@ -7,15 +7,20 @@ info:
     url: https://emporix.com
     email: documentation@emporix.com
   description: |
-    Create, manage, and delete customer profiles.
+    Customer Service (customer-managed) allows you to create, manage, and delete customer profiles. It allows you to generate relevant access tokens to log in an anonymous or registered customers on a storefront.
 servers:
   - url: 'https://api.emporix.io'
 tags:
-  - name: Addresses
   - name: Account and profile
+    description: Manage customer account details.
+  - name: Addresses
+    description: Manage customer address information.
   - name: Authentication and authorization
-  - name: Double opt-in
+    description: Create and manage customer access tokens.
   - name: Credentials
+    description: Manage customer credentials.
+  - name: Double opt-in
+    description: Allow option for double opt-in.
 paths:
   '/customer/{tenant}/me':
     patch:
@@ -784,11 +789,125 @@ paths:
         - Authentication and authorization
     parameters:
       - $ref: '#/components/parameters/tenant'
+  /customerlogin/auth/anonymous/login:
+    get:
+      tags:
+        - Authentication and authorization
+      summary: Requesting an anonymous token
+      description: |
+        Sends an authentication request and returns an anonymous token. This operation causes creation of a new session-context document.
+
+        Anonymous token is valid for one hour. After that time it should be refreshed in order to keep the same session ID associated.
+      operationId: GET-oauth-generate-anonymous-access-token
+      parameters:
+      - name: tenant
+        in: query
+        description: "Name of the tenant.\n\n**Note**: Name of the tenant is always\
+          \ written in lowercase.\n"
+        required: true
+        schema:
+          type: string
+          example: "{tenant}"
+      - name: client_id
+        in: query
+        description: Your Emporix API key - client ID.
+        required: true
+        schema:
+          type: string
+          example: "{client_id}"
+      responses:
+        "200":
+          description: The request was successful. An anonymous token is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnonymousAccessToken'
+              examples:
+                Response example:
+                  value:
+                    token_type: Bearer
+                    access_token: tpYgJPZqddEQ2zwfzNtx79noBP65
+                    expires_in: 3599
+                    refresh_token: 7FnviYrxvQWYdzUVBVTvXeNAA4Jy1HPe
+                    refresh_token_expires_in: 86399
+                    sessionId: 6d4d4d5e-04b9-40c5-9074-4df1405c6081
+                    scope: "tenant={tenant}"
+      servers:
+      - url: https://api.emporix.io
+        description: Production
+  /customerlogin/auth/anonymous/refresh:
+    get:
+      tags:
+        - Authentication and authorization
+      summary: Refreshing an anonymous token
+      description: "Sends an authentication request and returns new anonymous token\
+        \ with same session ID attached.\n\nThis operation causes update of a session-context\
+        \ document with given session ID.\n\nAnonymous token is valid for one hour.\
+        \ After that time, another refresh anonymous token request should be sent.\n"
+      operationId: GET-oauth-refresh-anonymous-access-token
+      parameters:
+      - name: tenant
+        in: query
+        description: "Name of the tenant.\n\n**Note**: Name of the tenant is always\
+          \ written in lowercase.\n"
+        required: true
+        schema:
+          type: string
+          example: "{tenant}"
+      - name: anonymous_token
+        in: query
+        description: "NOTE: It's recommended to use `refresh_token` parameter instead. <br>Anonymous token that needs to be refreshed so that the same session ID will be kept. Provide the value of the `access_token` you get in response to requesting a token request."
+        required: true
+        deprecated: true
+        schema:
+          type: string
+          example: "{GOToGKaEKFyR8DokPBwHH0Y3AKCo}"
+      - name: refresh_token
+        in: query
+        description: "A refresh token generated when the anonymous token is created."
+        required: true
+        schema:
+          type: string
+          example: "{7FnviYrxvQWYdzUVBVTvXeNAA4Jy1HPe}"
+      - name: client_id
+        in: query
+        description: Your Emporix API key - client ID.
+        required: true
+        schema:
+          type: string
+          example: "{client_id}"
+      responses:
+        "200":
+          description: The request was successful. An anonymous token is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnonymousAccessToken'
+              examples:
+                Response example - Anonymous Token:
+                  value:
+                    token_type: Bearer
+                    access_token: tpYgJPZqddEQ2zwfzNtx79noBP65
+                    expires_in: 3599
+                    refresh_token: 7FnviYrxvQWYdzUVBVTvXeNAA4Jy1HPe
+                    refresh_token_expires_in: 86399
+                    sessionId: 6d4d4d5e-04b9-40c5-9074-4df1405c6081
+                    scope: "tenant={tenant}"
+                Response example - Refresh Token (deprecated):
+                  value:
+                    token_type: Bearer
+                    access_token: Zq91ySuLxLIzQ0vd0QxiC7imAIHi
+                    expires_in: 3599
+                    sessionId: 5b7ae416-5d88-4dd9-bbe9-6b262f45b4e8
+                    scope: "tenant={tenant}"
+      servers:
+      - url: https://api.emporix.io
+        description: Production
   '/customer/{tenant}/login':
     post:
       responses:
         '200':
-          description: OK
+          description: The request was successful. A customer token is returned.
           content:
             application/json:
               schema:
@@ -808,7 +927,8 @@ paths:
         '401':
           $ref: '#/components/responses/401_unauthorized'
       description: |-
-        Logs in a customer and sends an authentication request and retrieves a customer token.
+        Logs in a customer and sends an authentication request. Returns\
+        \ two customer tokens: \n    - Customer access token.\n    - Customer SaaS token.
 
         **Note**: The request needs to be authorized with an anonymous access token.
         ***
@@ -823,7 +943,7 @@ paths:
             examples:
               Request example:
                 value:
-                  email: example@customer.com
+                  email: customer@customer.com
                   password: password123
         required: true
       security:
@@ -868,7 +988,7 @@ paths:
     get:
       responses:
         '200':
-          description: OK
+          description: The request was successful. A refresh token is returned.
           content:
             application/json:
               schema:
@@ -887,25 +1007,97 @@ paths:
         '401':
           $ref: '#/components/responses/401_unauthorized'
       description: |-
-        Refreshes a customer's access token.
+        Sends an authentication request and returns a refresh token.
 
         **Note**: The request needs to be authorized with an anonymous access token.
         ***
         ### Required scopes
         No specific scopes are required.
-      operationId: POST-customer-refresh-authtoken
+      operationId: GET-customer-refresh-authtoken
       tags:
         - Authentication and authorization
       parameters:
-        - schema:
+        - name: tenant
+          in: path
+          description: "Name of the tenant.\n\n**Note**: Name of the tenant is always\
+            \ written in lowercase.\n"
+          required: true
+          schema:
             type: string
+          example: "{tenant}"
+        - name: Authorization
+          in: header
+          description: Customer's access token generated when the customer token is
+            created.
+          required: true
+          schema:
+            type: string
+          example: "Bearer {customer_access_token}"
+        - name: refreshToken
           in: query
-          name: refreshToken
           description: Customer's refresh token generated when a customer token is requested.
           required: true
+          schema:
+            type: string
+            example: "{customer_refresh_token}"
+        - name: legalEntityId
+          in: query
+          description: Identifier of the legal entity associated with the user session.
+          schema:
+            type: string
       summary: Refreshing a customer token
+      security: 
+        -  AnonymousAccessToken: []
     parameters:
       - $ref: '#/components/parameters/tenant'
+  /customer/{tenant}/validateauthtoken:
+    get:
+      tags:
+        - Authentication and authorization
+      summary: Validate a token
+      description: "Checks whether a token is valid. If the token is invalid, it returns a 401 status code. If the token is valid, it provides the token details."
+      operationId: GET-customer-validate-token
+      parameters:
+        - name: tenant
+          in: path
+          description: |
+            Name of the tenant.
+
+            **Note**: Name of the tenant is always written in lowercase.
+          required: true
+          schema:
+            type: string
+          example: "{tenant}"
+        - name: Authorization
+          in: header
+          description: Customer's access token generated upon the customer token creation.
+          required: true
+          schema:
+            type: string
+          example: "Bearer {customer_access_token}"
+      responses:
+        "200":
+          description: The request was successful. A token details are returned.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidateTokenResponse"
+              examples:
+                Validation response:
+                  value:
+                    token_type: Bearer
+                    expires_in: 2591974
+                    scope: approval.approval_read_own customermanagement.legalentity_read_own customer.customer_read_own quote.quote_read_own returns.returns_read_own iam.scope_read_own iam.user_read_own customersegment.segment_read_own iam.group_read_own order.order_readascustomer coupon.coupon_redeem customer.customerprofile_edit quote.quote_manage_own returns.returns_manage_own customer.customer_manage_own approval.approval_manage_own order.order_updateascustomer iam.assignment_delete_own customer.consent_view customer.customerprofile_view order.history_view iam.assignment_create_own customer.consent_manage tenant=test
+                    sessionId: 415c340b-5996-4112-bb3b-38139a409f93
+                    email: customer@example.com
+                    legalEntityId: 53ac81fd0cce8b26b36f3492
+        "401":
+          description: Unauthorized
+      security: 
+        -  CustomerAccessToken: []
+      servers:
+        - url: https://api.emporix.io
+          description: Production
   '/customer/{tenant}/signup/optin/{token}':
     get:
       operationId: GET-customer-signup-customer-optin
@@ -1202,6 +1394,20 @@ components:
             isDefault:
               type: boolean
               description: Flag indicating whether the address is the customer's default address.
+    AnonymousAccessToken:
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+        expires_in:
+          type: integer
+          format: int32
+        sessionId:
+          type: string
+        scope:
+          type: string
     ChangeEmailRequestDto:
       title: ChangeEmailRequestDto
       type: object
@@ -1394,6 +1600,7 @@ components:
           deprecated: true
         expiresIn:
           type: number
+          format: int32
           deprecated: true
         refreshToken:
           type: string
@@ -1401,17 +1608,20 @@ components:
           deprecated: true
         refreshTokenExpiresIn:
           type: number
+          format: int32
           deprecated: true
         access_token:
           type: string
           minLength: 1
         expires_in:
           type: number
+          format: int32
         refresh_token:
           type: string
           minLength: 1
         refresh_token_expires_in:
           type: number
+          format: int32
         token_type:
           type: string
         session_id:
@@ -1491,9 +1701,11 @@ components:
       type: object
       properties:
         email:
+          minLength: 1
           type: string
           description: Customer's email address.
         password:
+          minLength: 6
           type: string
           description: Customer's account password.
       required:
@@ -1557,7 +1769,32 @@ components:
         token:
           type: string
           description: Token received by the customer through email.
-
+    ValidateTokenResponse:
+      type: object
+      x-stoplight:
+        id: rjgbt7z8oqzgq
+      properties:
+        token_type:
+          type: string
+          description: Type of the token. Usually it's `Bearer`.
+        expires_in:
+          type: integer
+          format: int32
+          description: 'Specifies the token''s expiration time, represented in seconds.'
+        scope:
+          type: string
+          description: A list of scopes assigned to the user.
+        sessionId:
+          type: string
+          x-stoplight:
+            id: g9aiqlhvwrw1k
+          description: Identifier of the user session.
+        email:
+          type: string
+          description: Customer email used to login (generate the token).
+        legalEntityId:
+          type: string
+          description: Legal Entity Id.
   responses:
     409_conflict:
       description: ''
