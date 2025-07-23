@@ -627,18 +627,22 @@ components:
         id:
           type: string
           description: The vendor unique identifier.
+          example: "VND001"
         name:
           type: string
           description: The name of the vendor.
+          example: "Vendor Company"
         type:
           type: string
           enum:
             - COMPANY
             - SUBSIDIARY
           description: The type of the vendor.
+          example: COMPANY
         parentId:
           type: string
           description: The id of the parent vendor.
+          example: "PARENT123"
         legalInfo:
           $ref: '#/components/schemas/legalInfo'
         contactDetails:
@@ -651,6 +655,8 @@ components:
           description: The list of locations assigned to the vendor.
           items:
             $ref: '#/components/schemas/location'
+          example:
+            - id: "LOC001"
         metadata:
           $ref: '#/components/schemas/metadata'
         mixins:
@@ -664,32 +670,58 @@ components:
         legalName:
           type: string
           description: The legal name of the vendor.
+          example: "Vendor Company"
         registrationDate:
           type: string
-          description: 'The registration date of the vendor in the ISO 8601 format, e.g. 2020-04-30T04:00:00.000Z.'
+          description: 'The registration date of the vendor in the ISO 8601 format.'
+          example: "2022-03-31T13:18:02.379Z"
         countryOfRegistration:
           type: string
           description: The country in which the vendor has been registered.
+          example: "US"
         taxRegistrationNumber:
           type: string
           description: The tax registration number of the vendor.
+          example: "US-123456789"
     vendorContactDetails:
-      title: Vendor Contact Details
+      title: Contact Details
       type: object
       properties:
-        firstName:
+        emails:
+          type: array
+          items:
+            type: string
+            format: email
+          description: The list of contact emails.
+          example:
+            - "contact@vendor.com"
+        phones:
+          type: array
+          items:
+            type: string
+          description: The list of contact phone numbers.
+          example:
+            - "+1-555-0123"
+        addressLine1:
           type: string
-          description: The first name of the contact person.
-        lastName:
+          description: The first address line of the contact.
+          example: "123 High Rd"
+        city:
           type: string
-          description: The last name of the contact person.
-        email:
+          description: The city of the contact.
+          example: "South Bend"
+        state:
           type: string
-          format: email
-          description: The email address of the contact person.
-        phone:
+          description: The state of the contact.
+          example: "Indiana"
+        postcode:
           type: string
-          description: The phone number of the contact person.
+          description: The post code of the contact.
+          example: "46619"
+        countryCode:
+          type: string
+          description: The country code of the contact.
+          example: "US"
       required:
         - email
     vendorCreate:
@@ -702,18 +734,22 @@ components:
           minLength: 1
           maxLength: 66
           pattern: ^[a-zA-Z0-9_-]+$
+          example: "VND001"
         name:
           type: string
           description: The name of the vendor.
+          example: "Vendor Company"
         type:
           type: string
           enum:
             - COMPANY
             - SUBSIDIARY
           description: 'The type of the vendor. If not provided, the default value is: `COMPANY`.'
+          example: COMPANY
         parentId:
           type: string
           description: The ID of the parent vendor.
+          example: "PARENT123"
         legalInfo:
           $ref: '#/components/schemas/legalInfo'
         contactDetails:
@@ -726,6 +762,8 @@ components:
           description: The list of location IDs assigned to the vendor.
           items:
             $ref: '#/components/schemas/resourceId'
+          example:
+            - id: "LOC001"
         mixins:
           type: object
           description: Mixins request. A map where a key represent mixins set name and a value represent a map with key-value pairs.
@@ -739,15 +777,18 @@ components:
         name:
           type: string
           description: The name of the vendor.
+          example: "Vendor Company"
         type:
           type: string
           enum:
             - COMPANY
             - SUBSIDIARY
           description: The type of the vendor.
+          example: COMPANY
         parentId:
           type: string
           description: The ID of the parent vendor.
+          example: "PARENT123"
         legalInfo:
           $ref: '#/components/schemas/legalInfo'
         contactDetails:
@@ -760,6 +801,8 @@ components:
           description: The list of location IDs assigned to the vendor.
           items:
             $ref: '#/components/schemas/resourceId'
+          example:
+            - id: "LOC001"
         metadata:
           $ref: '#/components/schemas/metadataUpdate'
         mixins:
@@ -776,9 +819,11 @@ components:
         id:
           type: string
           description: The location unique identifier.
+          example: "LOC001"
         name:
           type: string
-          description: The name of the location
+          description: The name of the location.
+          example: "Main HQ"
         type:
           type: string
           enum:
@@ -786,6 +831,7 @@ components:
             - WAREHOUSE
             - OFFICE
           description: The type of the location.
+          example: HEADQUARTER
         contactDetails:
           $ref: '#/components/schemas/contactDetails'
         metadata:
@@ -858,29 +904,33 @@ components:
             type: string
             format: email
           description: The list of contact emails.
+          example: ["contact@vendorcompany.com"]
         phones:
           type: array
           items:
             type: string
           description: The list of contact phone numbers.
+          example: ["+1-555-0123"]
         addressLine1:
           type: string
           description: The first address line of the contact.
-        addressLine2:
-          type: string
-          description: The second address line of the contact.
+          example: "123 Industrial Rd"
         city:
           type: string
           description: The city of the contact.
+          example: "South Bend"
         state:
           type: string
           description: The state of the contact.
+          example: "Indiana"
         postcode:
           type: string
           description: The post code of the contact.
+          example: "46619"
         countryCode:
           type: string
           description: The country code of the contact.
+          example: "US"
         tags:
           type: array
           items:
