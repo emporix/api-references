@@ -324,7 +324,7 @@ This means every such product has a `vendorId` field populated.
 When a customer adds a product to the cart that belongs to a vendor, the system automatically adds that vendor information to the cart entry.
 This ensures that when the checkout happens, every product “knows” which vendor it belongs to.
 
-## How does vendor work with order-splitting? 
+## How does vendor work with order splitting? 
 
 When the customer completes the checkout, a single order is created containing all the selected products. Each order entry retains the vendor information and is a standard order but with vendor details.
 
@@ -339,6 +339,7 @@ If you need to separate this combined order into vendor-specific suborders, send
 When you send this request, the API analyses all the order entries and groups them by vendor:
 * The original order becomes a master order with orderType: `MASTER_ORDER`.
 * A `splitBy` field is added - currently the `VENDOR_ID` is supported.
+* `uniqueValue` field reflects the VendorID, or is null when no vendor is assigned
 * Suborders are created:
   * One for each unique vendor.
   * One extra for items without a vendor.
