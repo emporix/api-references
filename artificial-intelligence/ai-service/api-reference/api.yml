@@ -15,6 +15,13 @@ info:
      * Consistency in tone and language
      * Increased visibility resulting from optimization for search engines
   contact: {}
+tags:
+  - name: AI Completions
+    description: AI Completions
+  - name: Text Generation
+    description: AI Text Generation
+  - name: Agentic
+    description: Manage Agents
 servers:
   - url: 'https://api.emporix.io'
 paths:
@@ -67,11 +74,7 @@ paths:
         - Text Generation
   '/ai-service/{tenant}/completions':
     parameters:
-      - schema:
-          type: string
-        name: tenant
-        in: path
-        required: true
+      - $ref: '#/components/parameters/path_tenant'
     post:
       summary: AI Completions
       operationId: POST-ai-completions
@@ -108,13 +111,9 @@ paths:
         $ref: '#/components/requestBodies/Completion'
       tags:
         - AI Completions
-  '/ai-service/{tenant}/agents/chat':
+  '/ai-service/{tenant}/agentic/chat':
     parameters:
-      - schema:
-          type: string
-        name: tenant
-        in: path
-        required: true
+      - $ref: '#/components/parameters/path_tenant'
       - schema:
           type: string
           format: uuid
@@ -124,7 +123,6 @@ paths:
     post:
       summary: Agent's Chat
       operationId: POST-ai-agents-chat
-      x-stability: preview
       responses:
         '200':
           $ref: '#/components/responses/200_resp_GET_agent_chat'
@@ -137,8 +135,7 @@ paths:
         '500':
           $ref: '#/components/responses/500_resp_common'
       description: |-
-        **This functionality is in preview mode — some of the features may not be fully operational yet.**
-        
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Allows for communication with Emporix's agents.
 
 
@@ -159,13 +156,9 @@ paths:
         $ref: '#/components/requestBodies/AgenticChat'
       tags:
         - Agentic
-  '/ai-service/{tenant}/agents/templates':
+  '/ai-service/{tenant}/agentic/templates':
     parameters:
-      - schema:
-          type: string
-        name: tenant
-        in: path
-        required: true
+      - $ref: '#/components/parameters/path_tenant'
       - $ref: '#/components/parameters/qParam'
       - $ref: '#/components/parameters/pageSize'
       - $ref: '#/components/parameters/pageNumber'
@@ -174,8 +167,7 @@ paths:
       - $ref: '#/components/parameters/header_xTotalCount'
     get:
       summary: Get available agent templates
-      operationId: GET-ai_agents-templates
-      x-stability: preview
+      operationId: GET-ai-list-templates
       responses:
         '200':
           description: List of available agent templates
@@ -193,8 +185,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        **This functionality is in preview mode — some of the features may not be fully operational yet.**
-        
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves agent templates which can be later use as a base for custom agents.
         
         ### Required scopes
@@ -205,17 +196,12 @@ paths:
             - ai.agent_read
       tags:
         - Agentic
-  '/ai-service/{tenant}/agents/templates/search':
+  '/ai-service/{tenant}/agentic/templates/search':
     parameters:
-      - schema:
-          type: string
-        name: tenant
-        in: path
-        required: true
+      - $ref: '#/components/parameters/path_tenant'
     post:
       summary: Search agent templates
-      operationId: POST-ai_agents-templates-search
-      x-stability: preview
+      operationId: POST-ai-search-templates
       responses:
         '200':
           description: List of available agent templates
@@ -233,8 +219,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        **This functionality is in preview mode — some of the features may not be fully operational yet.**
-        
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Searches for agent templates based on the provided query.
         
         ### Required scopes
@@ -245,6 +230,250 @@ paths:
             - ai.agent_read
       requestBody:
         $ref: '#/components/requestBodies/AgentTemplateSearch'
+      tags:
+        - Agentic
+  '/ai-service/{tenant}/agentic/templates/{templateId}/clone':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - schema:
+          type: string
+        name: templateId
+        in: path
+        required: true
+    post:
+      summary: Create agent instance based on the template
+      operationId: POST-ai-clone-template
+      requestBody:
+        $ref: '#/components/requestBodies/AgentTemplateCloneRequest'
+      responses:
+        '201':
+          description: Id of created agent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdResponse'
+              examples:
+                Cloned Agent Template Response:
+                  $ref: '#/components/examples/IdResponse'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Creates an instance of the agent based of the given agent template.
+        
+        **Info:** Only active templates can be cloned
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      tags:
+        - Agentic
+  '/ai-service/{tenant}/agentic/agents':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    get:
+      summary: Get generic agents
+      operationId: GET-ai-list-agents
+      responses:
+        '200':
+          description: List of available agent templates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AgentResponse'
+              examples:
+                Agent Templates Response:
+                  $ref: '#/components/examples/AgentResponse'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Retrieves agent templates based on the provided query.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Agentic
+  '/ai-service/{tenant}/agentic/agents/search':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    post:
+      summary: Get generic agents
+      operationId: POST-ai-search-agents
+      responses:
+        '200':
+          description: List of available agent templates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AgentResponse'
+              examples:
+                Agent Templates Response:
+                  $ref: '#/components/examples/AgentResponse'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Searches for agent templates based on the provided query.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Agentic
+  '/ai-service/{tenant}/agentic/agents/{agentId}':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - schema:
+          type: string
+        name: agentId
+        in: path
+        required: true
+    get:
+      summary: Get generic agent by Id
+      operationId: GET-ai-retrieve-agent
+      responses:
+        '200':
+          description: List of available agent templates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AgentResponse'
+              examples:
+                Agent Templates Response:
+                  $ref: '#/components/examples/AgentResponse'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Retrieves the agent by given Id
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Agentic
+    put:
+      summary: Upsert generic agents
+      operationId: PUT-ai-list-agents
+      responses:
+        '201':
+          description: Id of created agent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdResponse'
+              examples:
+                Cloned Agent Template Response:
+                  $ref: '#/components/examples/IdResponse'
+        '204':
+          description: The resource has been successfully updated.
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+        '409':
+          $ref: '#/components/responses/409_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Updates or creates a specified product by replacing all of its existing data with data from the request body.
+        If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      requestBody:
+        $ref: '#/components/requestBodies/AgentTemplateSearch'
+      tags:
+        - Agentic
+    patch:
+      summary: Partially update generic agent
+      operationId: PATCH-ai-update-agent
+      responses:
+        '204':
+          description: No Content
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Partially updates a single approval document with given information. To update the approval, the user needs to be a requestor or an approval giver. 
+        Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
+          - `add` (adding an item to the items list)
+          - `remove` (removing an item from the items list)
+          - `replace` (replacing an item with given id with new definition)
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      requestBody:
+        $ref: '#/components/requestBodies/approvalUpdateBody'
+      tags:
+        - Agentic
+    delete:
+      summary: Delete generic agent
+      operationId: DELETE-ai-delete-agent
+      responses:
+        '204':
+          description: Given agent has been deleted
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Deletes agent by given Id.
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
       tags:
         - Agentic
 components:
@@ -349,6 +578,12 @@ components:
           type: string
           format: uuid
           description: Session identifier for tracking purposes
+    IdResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the resource.
     AgentTemplateResponse:
       type: object
       properties:
@@ -367,6 +602,14 @@ components:
             - SUPPORT
             - COMPLAINT
           description: Type of the agent template.
+        icon:
+          type: string
+          description: fa class of react icon
+        tags:
+          type: array
+          items:
+            type: string
+            description: allows to categorise the agent templates
         mcpServers:
           type: array
           items:
@@ -378,6 +621,133 @@ components:
         enabled:
           type: boolean
           description: Whether the agent template is enabled.
+    AgentRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the agent.
+        name:
+          type: string
+          description: Name of the agent.
+        description:
+          type: string
+          description: Description of the agent.
+        systemPrompt:
+          type: string
+          description: System prompt of the agent.
+        trigger:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - endpoint
+              description: Type of the trigger.
+        llmConfig:
+          type: object
+          properties:
+            model:
+              type: string
+              description: Model of the agent.
+            temperature:
+              type: number
+              description: Temperature of the agent.
+            maxTokens:
+              type: integer
+              description: Maximum number of tokens.
+            apiKey:
+              type: string
+              description: API key of the provider.
+            provider:
+              type: string
+              enum:
+                - OPENAI
+                - EMPORIX_OPENAI
+              description: Provider of the agent.
+          required:
+            - provider
+        mcpServers:
+          type: array
+          items:
+            $ref: '#/components/schemas/McpServer'
+        nativeTools:
+          type: array
+          items:
+            $ref: '#/components/schemas/GenericAgentTool'
+        agentCollaborations:
+          type: array
+          items:
+            type: object
+            properties:
+              agentId:
+                type: string
+                description: Identifier of the agent.
+              description:
+                type: string
+                description: Description of the agent collaboration.
+        enableMemory:
+          type: boolean
+          description: Whether the agent should use memory.
+        maxRecursionLimit:
+          type: integer
+          maximum: 50
+          description: Maximum number of recursion limit.
+        enabled:
+          type: boolean
+          description: Whether the agent is enabled.
+        type:
+          type: string
+          enum:
+            - SUPPORT
+            - COMPLAINT
+          description: Type of the agent.
+        icon:
+          type: string
+          description: fa class of the react icon
+        tags:
+          type: array
+          items:
+            type: string
+            description: allows to categorise the agent templates
+        metadata:
+          $ref: '#/components/schemas/basicMetadata'
+      required:
+        - name
+        - systemPrompt
+        - llmConfig
+        - trigger
+    AgentResponse:
+      allOf:
+        - $ref: '#/components/schemas/AgentRequest'
+        - type: object
+          properties:
+            metadata:
+              $ref: '#/components/schemas/metadata'
+    basicMetadata:
+      type: object
+      properties:
+        version:
+          minimum: 1
+          type: integer
+          description: Version of the object. The version is required during the update operation because of the optimistic locking mechanism.
+      required:
+        - version
+    metadata:
+      allOf:
+        - $ref: '#/components/schemas/basicMetadata'
+        - type: object
+          properties:
+            createdAt:
+              description: 'Date and time when the object was created. The value is approved as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
+              type: string
+            modifiedAt:
+              description: 'Date and time when the object was last modified. The value is approved as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
+              type: string
+          required:
+            - version
+            - createdAt
+            - modifiedAt
     GenerationResponse:
       title: GenerationResponse
       type: object
@@ -425,6 +795,21 @@ components:
             A standard query parameter is used to search for specific values. 
             
             See: [Standard practises - Query parameter](https://developer.emporix.io/docs/content/q-param/)
+    AgentTemplateCloneRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the creating agent.
+        description:
+          type: string
+          description: Description of the creating agent.
+        id:
+          type: string
+          description: Identifier of the creating agent. If not provided, a random value is generated.
+      required:
+        - name
+        - description
     McpServer:
       type: object
       properties:
@@ -451,6 +836,35 @@ components:
         enabled:
           type: boolean
           description: Whether the generic agent tool is enabled.
+    agentUpdateRequest:
+      type: array
+      description: Agent partial update operation list.
+      items:
+        type: object
+        properties:
+          op:
+            anyOf:
+              - enum:
+                  - ADD
+                  - REMOVE
+                  - REPLACE
+            type: string
+          path:
+            anyOf:
+              - enum:
+                  - /name
+                  - /description
+                  - /llmConfig/model
+            type: string
+          value:
+            anyOf:
+              - type: string
+                description: Value of the string type
+              - type: object
+                description: Any part of the details object
+        required:
+          - op
+          - path
   securitySchemes:
     OAuth2:
       type: oauth2
@@ -596,19 +1010,35 @@ components:
                 message: Validation problem with request body.
                 details:
                   - message: code must not be null nor blank
-    404_resp_product:
+    404_resp_common:
       description: Example response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorMessage'
           examples:
-            Product not found:
+            Resource not found:
               value:
-                productId: 628cd20c6e8b2432b6346ca6
+                resourceId: 628cd20c6e8b2432b6346ca6
                 code: 404
                 status: Not Found
-                message: The product with id 628cd20c6e8b2432b6346ca6 has not been found.
+                message: The resource with id 628cd20c6e8b2432b6346ca6 has not been found.
+    409_resp_common:
+      description: |
+        There are three possible reasons:
+         1. Resource with given code already exists, please choose unique code for your resource
+         2. Optimistic locking failed. If user sends metadata/version attribute which is outdated (someone else updated resource in the time user was performing his changes). User should retrieve the latest product data and retry the request.
+         3. Optimistic locking failed. User did not provide metadata/version attribute in update request, but someone else updated product while it was internally handled by product service. Resending the same request can result in successful update, but the update can override recently persisted changes.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessage'
+          examples:
+            Resource conflict:
+              value:
+                code: 409
+                status: Conflict
+                message: Conflict - a resource with given code or id has already exist.
     200_resp_GET_text_generation:
       description: ''
       content:
@@ -629,7 +1059,7 @@ components:
           examples:
             Agentic Response:
               value:
-                agentType: supervisor
+                agentType: SUPERVISOR
                 message: 'Found a product with "EON1243" code. Details...'
                 sessionId: fe91d168-4ce9-4b4d-8451-0029035b34a5
                 metadata:
@@ -679,14 +1109,81 @@ components:
             Search Request:
               value:
                 q: name:~Support
+    AgentTemplateCloneRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AgentTemplateCloneRequest'
+          examples:
+            Search Request:
+              value:
+                name: Complaint Agent
+                description: Agent which is responsible for reading emails and base on that resolve the customer's complaints
+                id: a81bc81b-dead-4e5d-abff-90865d1e13b1
+    approvalUpdateBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/agentUpdateRequest'
+          examples:
+            Multiple update list:
+              value:
+                - op: REPLACE
+                  path: /description
+                  value: New agent description
+                - op: REPLACE
+                  path: /name
+                  value: Complaint Agent
+            Change model of the LLM:
+              value:
+                - op: REPLACE
+                  path: /llmConfig/model
+                  value: OPENAI
   examples:
+    IdResponse:
+      value:
+        id: a81bc81b-dead-4e5d-abff-90865d1e13b1
     AgentTemplatesResponse:
       value:
-        - id: 123
+        - id: "123"
           name: Support Agent
           description: Support agent template
           type: SUPPORT
           enabled: true
+          tags:
+            - productivity
+          icon: fa-productivity
+          mcpServers:
+            - name: Order MCP server
+              enabled: true
+              type: MCP_SERVER
+              tools:
+                - get-orders
+                - get-order
+          nativeTools:
+            - name: Slack
+              enabled: true
+    AgentResponse:
+      value:
+        - id: "123"
+          name: Complaint Agent
+          description: Complaint agent
+          type: COMPLAINT
+          enabled: true
+          systemPrompt: "You are an complaint agent for checking emails and do some action"
+          llmConfig:
+            model: GPT-4.1
+            apiKey: secureApiKey
+            provider: OPENAI
+            maxTokens: 100000
+            temperature: 0.2
+          trigger:
+            type: endpoint
+          maxRecurionsLimit: 20
+          enabledMemory: true
+          tags:
+            - productivity
+          icon: fa-productivity
           mcpServers:
             - name: Order MCP server
               enabled: true
