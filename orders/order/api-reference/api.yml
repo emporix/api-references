@@ -2183,7 +2183,7 @@ components:
       properties:
         id:
           type: string
-          description: The IDof the applied discount.
+          description: The ID of the applied discount.
         value:
           type: number
           format: double
