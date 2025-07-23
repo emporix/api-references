@@ -417,7 +417,7 @@ paths:
         - OAuth2:
             - ai.agent_manage
       requestBody:
-        $ref: '#/components/requestBodies/AgentTemplateSearch'
+        $ref: '#/components/requestBodies/agentUpsertBody'
       tags:
         - Agentic
     patch:
@@ -447,7 +447,7 @@ paths:
         - OAuth2:
             - ai.agent_manage
       requestBody:
-        $ref: '#/components/requestBodies/approvalUpdateBody'
+        $ref: '#/components/requestBodies/agentPatchBody'
       tags:
         - Agentic
     delete:
@@ -836,7 +836,7 @@ components:
         enabled:
           type: boolean
           description: Whether the generic agent tool is enabled.
-    agentUpdateRequest:
+    agentPatchRequest:
       type: array
       description: Agent partial update operation list.
       items:
@@ -1120,11 +1120,11 @@ components:
                 name: Complaint Agent
                 description: Agent which is responsible for reading emails and base on that resolve the customer's complaints
                 id: a81bc81b-dead-4e5d-abff-90865d1e13b1
-    approvalUpdateBody:
+    agentPatchBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/agentUpdateRequest'
+            $ref: '#/components/schemas/agentPatchRequest'
           examples:
             Multiple update list:
               value:
@@ -1139,6 +1139,14 @@ components:
                 - op: REPLACE
                   path: /llmConfig/model
                   value: OPENAI
+    agentUpsertBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AgentRequest'
+          examples:
+            Create agent:
+              $ref: '#/components/examples/AgentRequest'
   examples:
     IdResponse:
       value:
@@ -1164,6 +1172,37 @@ components:
             - name: Slack
               enabled: true
     AgentResponse:
+      value:
+        - id: "123"
+          name: Complaint Agent
+          description: Complaint agent
+          type: COMPLAINT
+          enabled: true
+          systemPrompt: "You are an complaint agent for checking emails and do some action"
+          llmConfig:
+            model: GPT-4.1
+            apiKey: secureApiKey
+            provider: OPENAI
+            maxTokens: 100000
+            temperature: 0.2
+          trigger:
+            type: endpoint
+          maxRecurionsLimit: 20
+          enabledMemory: true
+          tags:
+            - productivity
+          icon: fa-productivity
+          mcpServers:
+            - name: Order MCP server
+              enabled: true
+              type: MCP_SERVER
+              tools:
+                - get-orders
+                - get-order
+          nativeTools:
+            - name: Slack
+              enabled: true
+    AgentRequest:
       value:
         - id: "123"
           name: Complaint Agent
