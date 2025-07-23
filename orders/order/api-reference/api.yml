@@ -444,10 +444,10 @@ paths:
         - Orders (tenant-managed)
       summary: Splitting order
       description: |
-        Splits order into sub orders based on given criteria. Allowed orders:
-        - order with `CREATED` status
-        - orders that have `orderType` = null, meaning that have not been split and are not sub orders of a master order.
-        - orders with discounts are not supported
+        Splits order into suborders based on the given criteria. It works for:
+        - orders with `CREATED` status
+        - orders where `orderType` = null, meaning that the order has not been split and there are not suborders of a master order.
+        - orders without discounts, the ones with included discounts are not supported
           ### Required scopes
         *  `order.order_update`
       operationId: POST-order-split
@@ -1187,7 +1187,7 @@ components:
           description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
           type: string
         transactionId:
-          description: The id of the payment transaction
+          description: The ID of the payment transaction.
           type: string
         redirectUrl:
           description: Redirect url.
@@ -1196,7 +1196,7 @@ components:
           description: Authorized amount.
           type: number
         provider:
-          description: Payment provider
+          description: Payment provider.
           type: string
       required:
         - method
@@ -1572,17 +1572,17 @@ components:
           $ref: '#/components/schemas/splitOrderType'
         masterOrder:
           type: string
-          description: The identifier of a master order. Available on sub orders that have been created after splitting the master order.
+          description: The identifier of a master order. Available on suborders that have been created after splitting the master order.
         splitBy:
           allOf:
              - $ref: '#/components/schemas/splitBy'
           type: string
-          description: Available on an order that has been split into sub orders. Holds an information based on what order was split.
+          description: Available on an order that has been split into suborders. It contains information about the original order which was divided.
         splitInfo:
           $ref: '#/components/schemas/splitInfo'
         subOrders:
           type: array
-          description: List of string id of sub orders that have been created after split. Available only on master order that was split.
+          description: A list of string IDs for suborders created after a split. Available only on the master order from which the split originated.
         entries:
           description: Ordered item list.
           type: array
@@ -1772,12 +1772,12 @@ components:
       enum:
         - MASTER_ORDER
         - SUB_ORDER
-      description: 'Available on orders that have been split. For standard orders the value will be null. For order that has been split to sub orders it will be `MASTER_ORDER` and for order that were create from the split `SUB_ORDER`'
+      description: 'Available on orders that have been split. For standard orders, the value is `null`. For the original order that was split, the value is `MASTER_ORDER`s, and for the created suborders, the value is `SUB_ORDER`.'
     splitBy:
       type: string
       enum:
         - VENDOR_ID
-      description: 'Defines based on what a master order is split into sub orders. As of now only `VENDOR_ID` supported.'
+      description: 'Specifies the criteria used to split a master order into suborders. Currently, only `VENDOR_ID` is supported.'
     splitInfo:
       type: object
       properties:
@@ -1785,18 +1785,18 @@ components:
           $ref: '#/components/schemas/splitBy'
         uniqueValue:
           type: string
-          description: 'A unique value from that was used to split master order entries into separate sub orders'
-      description: Information how the order was split from master order. Available only on sub orders.
+          description: 'A unique value used to split the entries of a master order into separate suborders.'
+      description: Information about how the order was split from the master order. Available only on suborders.
     splitItemResponse:
       type: object
       properties:
         id:
           type: string
-          description: an id of a sub order
+          description: An ID of a suborder.
         uniqueValue:
           type: string
-          description: 'A unique value from that was used to split master order entries into separate sub orders'
-      description: Information how the order was split from master order. Available only on sub orders.
+          description: 'A unique value used to split the entries of a master order into separate suborders.'
+      description: Information about how the order was split from the master order. Available only on suborders.
     orderSplitRequest:
       type: object
       properties:
@@ -1807,7 +1807,7 @@ components:
       properties:
         masterOrder:
           type: string
-          description: id of order that was split. The same as in the path
+          description: ID of the order that was split. The same as in the path.
         splitBy:
           $ref: '#/components/schemas/splitBy'
         subOrders:
@@ -2183,7 +2183,7 @@ components:
       properties:
         id:
           type: string
-          description: The id of the applied discount.
+          description: The IDof the applied discount.
         value:
           type: number
           format: double
