@@ -1,6 +1,6 @@
 ---
 seo:
-  title: Vendor Service Tutorials
+  title: Vendor Service Tutorial
   description: vendor
 icon: graduation-cap
 ---
@@ -15,13 +15,13 @@ Related Services:
 * [Product](/products-labels-and-brands/product-service/README.md)
 * [Order](/orders/order/README.md)
 
-### How to create a vendor?
+## How to create a vendor?
 
 To create a vendor, send a request to the [Creating a vendor](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/vendor-service/api-reference/vendors#post-vendor-tenant-vendors) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../companies-and-customers/vendor-service/api-reference/" %}
+{% content-ref url="/companies-and-customers/vendor-service/api-reference/" %}
 [api-reference](/companies-and-customers/vendor-service/api-reference/)
 {% endcontent-ref %}
 
@@ -171,7 +171,7 @@ As a response, you get information about all your tenant vendors with company an
 ]
 ```
 
-### How to set up a location for an existing vendor?
+## How to set up a location for an existing vendor?
 
 To set up a location for the vendor, send the request to the [Creating a location](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/vendor-service/api-reference/locations#post-vendor-tenant-locations) endpoint.
 
@@ -206,15 +206,15 @@ curl -L
 }'
 ```
 
-As a response you get the location ID, for example `687a4055b036735470a91bb8`, which you can now place in the request to [Upserting a location](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/vendor-service/api-reference/vendors#put-vendor-tenant-vendors-vendorid) endpoint or in a request to [Creating a vendor](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/vendor-service/api-reference/vendors#post-vendor-tenant-vendors) endpoint.
+As a response you get the location ID, for example `687a4055b036735470a91bb8` that you can assign to your vendor.
 
-### How to link users group with a vendor? 
+## How to link users group with a vendor? 
 
-Start with retrieving the groups that are created for your tenant. Send the request to [Retrieving all groups](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups) endpoint.
+Start with checking the groups that are created for your tenant. Send the request to [Retrieving all groups](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../users-and-permissions/iam/api-reference/" %}
+{% content-ref url="/users-and-permissions/iam/api-reference/" %}
 [api-reference](/users-and-permissions/iam/api-reference/)
 {% endcontent-ref %}
 
@@ -288,7 +288,7 @@ If you have created a vendor earlier for the tenant, you should see all the rele
   }
 ```
 
-Each vendor groups has it's own ID. To assign a user to the vendor group, send the request to [Adding a user to a group](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/group-assignments#post-iam-tenant-groups-groupid-users) endpoint.
+Each vendor group has it's own ID. To assign a user to the vendor group, send the request to [Adding a user to a group](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/group-assignments#post-iam-tenant-groups-groupid-users) endpoint.
 Provide the vendor group's ID and user's ID in the request.
 
 {% hint style="info" %}
@@ -297,7 +297,7 @@ A single user can belong to only one vendor group.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../users-and-permissions/iam/api-reference/" %}
+{% content-ref url="/users-and-permissions/iam/api-reference/" %}
 [api-reference](/users-and-permissions/iam/api-reference/)
 {% endcontent-ref %}
 
@@ -315,13 +315,8 @@ curl -L
 
 You can then check the user's assignment to a vendor group by sending a request to the [Retrieving a list of vendor users](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/management-dashboard-users#get-iam-tenant-users-vendors-vendorid) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../users-and-permissions/iam/api-reference/" %}
-[api-reference](/users-and-permissions/iam/api-reference/)
-{% endcontent-ref %}
-
-### How does product relate to a vendor? 
+## How does product relate to a vendor? 
 
 When a logged-in user who belongs to a vendor creates a product, that product is automatically assigned to the vendor.
 This means every such product has a `vendorId` field populated.
@@ -329,9 +324,9 @@ This means every such product has a `vendorId` field populated.
 When a customer adds a product to the cart that belongs to a vendor, the system automatically adds that vendor information to the cart entry.
 This ensures that when the checkout happens, every product “knows” which vendor it belongs to.
 
-### How does vendor work with order-splitting? 
+## How does vendor work with order-splitting? 
 
-When the customer completes the checkout, a single order is created containing all selected products. Each order entry retains the vendor information and is a standard order but with vendor details.
+When the customer completes the checkout, a single order is created containing all the selected products. Each order entry retains the vendor information and is a standard order but with vendor details.
 
 If you need to separate this combined order into vendor-specific suborders, send the request to the [Splitting Order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-salesorders-orderid-split) endpoint.
 
@@ -348,7 +343,7 @@ When you send this request, the API analyses all the order entries and groups th
   * One for each unique vendor.
   * One extra for items without a vendor.
 
-### Order split example:
+### Order split example
 
 1. A vendor creates a product → it’s automatically assigned to their vendor ID.
 2. A customer adds products to the cart → vendor info stays with each product.
@@ -446,6 +441,8 @@ flowchart TD
       F@{ shape: rounded}
       G@{ shape: rounded}
       H@{ shape: rounded}
+      I@{ shape: rounded}
+      J@{ shape: rounded}
       A:::Class_04
       B:::Class_04
       C:::Class_04
@@ -454,9 +451,8 @@ flowchart TD
       F:::Class_04
       G:::Class_04
       H:::Class_04
-     subGraph1:::Class_03
-     subGraph0:::Class_01
-     subGraph2:::Class_02
+      I:::Class_04
+      J:::Class_04
     classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#DDE6EE, fill:#DDE6EE
     classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#A1BDDC, fill:#A1BDDC
     classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#3b73bb, fill:#3b73bb
