@@ -38,10 +38,10 @@ paths:
             examples:
               Create a company:
                 value:
-                  name: Supplier Company
+                  name: Vendor Company
                   type: COMPANY
                   legalInfo:
-                    legalName: Supplier Company Inc.
+                    legalName: Vendor Company Inc.
                     registrationDate: '2022-03-31T13:18:02.379Z'
                     countryOfRegistration: US
                     taxRegistrationNumber: '1234567890'
@@ -169,7 +169,7 @@ paths:
                   q: "type:COMPANY"
               Search by name:
                 value:
-                  q: "name:\"Supplier Company\""
+                  q: "name:\"Vendor Company\""
       responses:
         '200':
           $ref: '#/components/responses/GetVendors'
@@ -240,10 +240,10 @@ paths:
             examples:
               Update the vendor:
                 value:
-                  name: Updated Supplier Company
+                  name: Updated Vendor Company
                   type: COMPANY
                   legalInfo:
-                    legalName: Updated Supplier Company Inc.
+                    legalName: Updated Vendor Company Inc.
                     registrationDate: '2022-03-31T13:18:02.379Z'
                     countryOfRegistration: US
                     taxRegistrationNumber: '1234567890'
@@ -947,10 +947,10 @@ components:
             Requested vendor:
               value:
                 id: 123e06ecf0452c2d6c0b81390
-                name: Supplier Company
+                name: Vendor Company
                 type: COMPANY
                 legalInfo:
-                  legalName: Supplier Company Inc.
+                  legalName: Vendor Company Inc.
                   registrationDate: '2022-03-31T13:18:02.379Z'
                   countryOfRegistration: US
                   taxRegistrationNumber: '1234567890'
