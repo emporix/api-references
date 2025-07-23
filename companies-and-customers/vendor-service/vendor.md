@@ -345,6 +345,8 @@ When you send this request, the API analyses all the order entries and groups th
 
 ### Order split example
 
+Check how the order splitting flow works on the example:
+
 1. A vendor creates a product → it’s automatically assigned to their vendor ID.
 2. A customer adds products to the cart → vendor info stays with each product.
 3. Checkout creates a single combined order.
@@ -448,11 +450,11 @@ flowchart TD
       C:::Class_04
       D:::Class_04
       E:::Class_04
-      F:::Class_01
-      G:::Class_02
-      H:::Class_02
-      I:::Class_03
-      J:::Class_03
+      F:::Class_03
+      G:::Class_01
+      H:::Class_01
+      I:::Class_02
+      J:::Class_02
     classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#DDE6EE, fill:#DDE6EE
     classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#A1BDDC, fill:#A1BDDC
     classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#3b73bb, fill:#3b73bb
