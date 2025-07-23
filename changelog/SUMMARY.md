@@ -8,6 +8,8 @@
 
 ## 2025
 
+* [2025-07-23: Cart Service - vendor added](2025/2025-07-23-cart.md)
+* [2025-07-23: Order Service - order splitting](2025/2025-07-23-order.md)
 * [2025-07-18: Vendor Service - Vendor Service with locations](2025/2025-07-18-vendor.md)
 * [2025-07-18: IAM Service - new endpoint and vendorId attribute](2025/2025-07-18-iam.md)
 * [2025-07-18: Product Service - vendorId added](2025/2025-07-18-product.md)
