@@ -313,7 +313,7 @@ curl -L
   }'
   ```
 
-You can then check the user's assignment by sending a request to the [Retrieving a list of vendor users](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/management-dashboard-users#get-iam-tenant-users-vendors-vendorid) endpoint.
+You can then check the user's assignment to a vendor group by sending a request to the [Retrieving a list of vendor users](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/management-dashboard-users#get-iam-tenant-users-vendors-vendorid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -321,95 +321,146 @@ You can then check the user's assignment by sending a request to the [Retrieving
 [api-reference](/users-and-permissions/iam/api-reference/)
 {% endcontent-ref %}
 
-### How to make products visible only for the vendor employee?
+### How does product relate to a vendor? 
 
-jak ktos jest zalogowany userem nalezacym do vendora i stworzy produckt to jest odarazu przypisany do vendora
+When a logged-in user who belongs to a vendor creates a product, that product is automatically assigned to the vendor.
+This means every such product has a `vendorId` field populated.
 
-przypisane vendor id
-jak mam produkt ktory nalezy do vendora, dodajemy do carta, robimy checkotuta (order jest wspolny, produkt nalezy do vendora) i pozniej order split ktory stworzy suborder by vendor
+When a customer adds a product to the cart that belongs to a vendor, the system automatically adds that vendor information to the cart entry.
+This ensures that when the checkout happens, every product “knows” which vendor it belongs to.
 
-(polaczenie pozniej z ui)
+### How does vendor work with order-splitting? 
 
-Create a new product visible for the vendor. 
-Send a request to Create a product endpoint with the required vendor scope:
+When the customer completes the checkout, a single order is created containing all selected products. Each order entry retains the vendor information and is a standard order but with vendor details.
 
-* `product.product_read_by_vendor`
-* `product.product_manage_by_vendor`
+If you need to separate this combined order into vendor-specific suborders, send the request to the [Splitting Order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-salesorders-orderid-split) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+{% hint style="info" %}
+* Only orders in the CREATED status can be split.
+* Orders that are already suborders or have been split before cannot be split again.
+* Orders with discounts cannot be split.
+{% endhint %}
 
-{% content-ref url="../products-labels-and-brands/product-service/api-reference/" %}
-[api-reference](/products-labels-and-brands/product-service/api-reference/)
-{% endcontent-ref %}
-  
+When you send this request, the API analyses all the order entries and groups them by vendor:
+* The original order becomes a master order with orderType: `MASTER_ORDER`.
+* A `splitBy` field is added - currently the `VENDOR_ID` is supported.
+* Suborders are created:
+  * One for each unique vendor.
+  * One extra for items without a vendor.
+
+### Order split example:
+
+1. A vendor creates a product → it’s automatically assigned to their vendor ID.
+2. A customer adds products to the cart → vendor info stays with each product.
+3. Checkout creates a single combined order.
+4. Calling /split transforms it into:
+   * One master order (ORD5001)
+   * Multiple suborders (ORD5002, ORD5003) — one per vendor and one for non-vendor items.
+
+Vendors can only view and manage their own suborders.
+
+Master order example after split:
 
 ```bash
-curl https://api.emporix.io/product/featuredemo/products 
-  --request POST 
-  --header 'Content-Type: application/json' 
-  --data '{
-  "name": "Product One",
-  "code": "P001",
-  "description": "The world best book.",
-  "published": false,
-  "productType": "BASIC"
-}'
+{
+  "id": "ORD5001",
+  "cartId": "CART123",
+  "createdBy": "USR789",
+  "status": "CREATED",
+  "orderType": "MASTER_ORDER",
+  "splitBy": "VENDOR_ID",
+  "subOrders": ["ORD5002", "ORD5003"]
+}
 ```
 
+Vendor-specific suborder example:
 
-### How to make orders visible only for vendor employees?
-### Order splitting?
-
-Product has vendor field.
-
-1. When adding a product to a cart that has vendor field in the product catalog, the vendor will be auto populated in the cart entry
-2. Then once You make a checkout an order will be created with entries that have product.vendor also populated. 
-3. We have a new endpoint /{orderId}/split 
-    - only orders in CREATED status
-    - only order that have not been split yet nor sub order. 
-    - order cannot have any disconunts
-4. Once You sent that request and You have in your order entries with products that belong to different vendors the api will:
-    - mark the main order with orderType: MASTER_ORDER
-    {
-    "id": "EON1215",
-    "cartId": "687a3516ca9d8d2488b7c9c1",
-    "createdBy": "45620894",
-    "status": "CREATED",
-    "lastStatusChange": "2025-07-18T11:51:00.162Z",
-    "created": "2025-07-18T11:51:00.162Z",
-    "channel": {
-        "name": "storefront",
-        "source": "https://your-storefront.com/"
-    },
-    "orderType": "MASTER_ORDER",
+```bash
+{
+  "id": "ORD5002",
+  "createdBy": "USR789",
+  "status": "CREATED",
+  "masterOrder": "ORD5001",
+  "orderType": "SUB_ORDER",
+  "splitInfo": {
     "splitBy": "VENDOR_ID",
-    "subOrders": [
-        "EON1216",
-        "EON1217"
-    ],
-    - create sub orders 1 for every unique vendor and one if the was a product that does not belong to any vendor. e.g. 10 product, 9 of them belong to 3 different vendors and one does not have any vendor -> 4 sub orders. 
-    - sub order have masterOrder orderId, splitInfo (splitBy:VENDOR_ID, unqiueValue="")
+    "uniqueValue": "VND001"
+  },
+  "vendor": {
+    "id": "VND001",
+    "name": "RawMaterial INC B"
+  },
+  "entries": [
     {
-    "id": "EON1228",
-    "createdBy": "45620894",
-    "status": "CREATED",
-    "lastStatusChange": "2025-07-21T09:16:58.834Z",
-    "created": "2025-07-21T09:16:58.834Z",
-    "channel": {
-        "name": "storefront",
-        "source": "https://your-storefront.com/"
-    },
-    "masterOrder": "EON1227",
-    "orderType": "SUB_ORDER",
-    "splitInfo": {
-        "splitBy": "VENDOR_ID",
-        "uniqueValue": "6879eecd1cc84b218acaaec7"
-    },
-    "vendor": { /// that important!!!
-        "id": "6879eecd1cc84b218acaaec7",
-        "name": "RawMaterial INC B"
-    },
+      "productId": "PRD1001",
+      "quantity": 2
+    }
+  ]
+}
+```
 
-    Because sub orders have vendorPopulated. If vendor logins into MD or tries to fetch orders in api with his login credentials he will only see orders that belong to this vendor.
+Suborder for products without vendor example:
 
+```bash
+{
+  "id": "ORD5003",
+  "createdBy": "USR789",
+  "status": "CREATED",
+  "masterOrder": "ORD5001",
+  "orderType": "SUB_ORDER",
+  "splitInfo": {
+    "splitBy": "VENDOR_ID",
+    "uniqueValue": null
+  },
+  "entries": [
+    {
+      "productId": "PRD2001",
+      "quantity": 1
+    }
+  ]
+}
+```
 
+```mermaid
+---
+config:
+  layout: fixed
+  theme: default
+  look: classic
+---
+flowchart TD
+    A[Vendor user creates product] -->|Assigned vendorId| B[Product in catalog]
+    B --> C[Customer adds product to cart]
+    C -->|Vendor info retained| D[Checkout creates single order ORD5001]
+    D -->|POST /orders/ORD5001/split| E[API processes split]
+    E --> F[Master Order ORD5001]
+    E --> G[Suborder ORD5002 - Vendor: VND001]
+    E --> H[Suborder ORD5003 - No vendor]
+    G --> I[Visible to Vendor VND001]
+    H --> J[Visible only to admin / other roles]
+      A@{ shape: rounded}
+      B@{ shape: rounded}
+      C@{ shape: rounded}
+      D@{ shape: rounded}
+      E@{ shape: rounded}
+      F@{ shape: rounded}
+      G@{ shape: rounded}
+      H@{ shape: rounded}
+      A:::Class_04
+      B:::Class_04
+      C:::Class_04
+      D:::Class_04
+      E:::Class_04
+      F:::Class_04
+      G:::Class_04
+      H:::Class_04
+     subGraph1:::Class_03
+     subGraph0:::Class_01
+     subGraph2:::Class_02
+    classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#DDE6EE, fill:#DDE6EE
+    classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#A1BDDC, fill:#A1BDDC
+    classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#3b73bb, fill:#3b73bb
+    classDef Class_04 fill:#F2F6FA, stroke:#E86C07
+    style subGraph1 color:#FFFFFF
+    style subGraph0 color:#FFFFFF
+```
