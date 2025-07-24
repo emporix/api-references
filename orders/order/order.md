@@ -1324,9 +1324,9 @@ curl -L \
   --header 'Accept: */*'
   ```
 
-  ### Order splitting
+  ## Order splitting
 
-To enable order splitting, the Order Service works directly with the Vendor Service.
+To enable order splitting, the Order Service works directly with the [Vendor Service](/api-guides-and-references/companies-and-customers/vendor-service).
 
 When a customer completes checkout, a single order is created containing all the selected products. Each order entry includes vendor information, making it a standard order with additional vendor details.
 
