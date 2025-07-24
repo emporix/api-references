@@ -2,6 +2,7 @@
 seo:
   title: Webhook Service Tutorials
   description: webhooks, webhook, events, event
+icon: graduation-cap
 ---
 
 # Webhook Service Tutorials

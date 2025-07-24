@@ -2,6 +2,7 @@
 seo:
   title: Make
   description: Make, Make app, Maker app, Emporix Maker app
+  parent: workflow-automation
 icon: m
 ---
 
