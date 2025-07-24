@@ -4,9 +4,6 @@ seo:
   description: webhooks, webhook, events, event
 ---
 
-
-
-
 # Webhook Service Tutorials
 
 The Emporix Webhook Event Publishing works in the following way:
