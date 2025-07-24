@@ -1245,7 +1245,7 @@ curl 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}'
 {% endcontent-ref %}
 
 ```bash
-curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
+curl 'https://api.emporix.io/order-v2/{tenant}/orders' 
   --header 'Saas-Token: '
 ```
 
@@ -1278,12 +1278,12 @@ curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/saleso
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' \
-  --header 'saas-token: text' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'saas-token: text' 
+  --header 'Content-Type: application/json' 
   --data '{
     "status": "DECLINED"
   }'
@@ -1317,9 +1317,35 @@ curl -L
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --url 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' \
-  --header 'saas-token: text' \
+curl -L 
+  --url 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'saas-token: text' 
   --header 'Accept: */*'
   ```
+
+  ## Order splitting
+
+To enable order splitting, the Order Service works directly with the [Vendor Service](/api-guides-and-references/companies-and-customers/vendor-service).
+
+When a customer completes checkout, a single order is created containing all the selected products. Each order entry includes vendor information, making it a standard order with additional vendor details.
+
+If you need to separate this combined order into vendor-specific suborders, send the request to the [Splitting Order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-salesorders-orderid-split) endpoint.
+
+{% hint style="info" %}
+* Only orders in the CREATED status can be split.
+* Orders that are already suborders or have been split before cannot be split again.
+* Orders with discounts cannot be split.
+{% endhint %}
+
+To support this functionality, the following order attributes are introduced:
+
+- `entries.product.vendor` - marks a product as vendor dependent
+- `orderType` - populated only for orders involved in the splitting process
+- `masterOrder` - the identifier of a master order, available on suborders created after splitting the master order
+- `splitInfo` - information based on what was the suborder created
+- `subOrders` - list of suborders that were created after splitting the master order
+
+{% hint style="info" %}
+To check the end to end story for order splitting, see the [Vendor Tutorial - Order Split](/api-guides-and-references/companies-and-customers/vendor-service/vendor#how-does-vendor-work-with-order-splitting) example.
+{% endhint %}
