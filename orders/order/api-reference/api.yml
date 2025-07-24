@@ -1573,11 +1573,6 @@ components:
         masterOrder:
           type: string
           description: The identifier of a master order. Available on suborders that have been created after splitting the master order.
-        splitBy:
-          allOf:
-             - $ref: '#/components/schemas/splitBy'
-          type: string
-          description: Available on an order that has been split into suborders. It contains information about the original order which was divided.
         splitInfo:
           $ref: '#/components/schemas/splitInfo'
         subOrders:
@@ -1785,8 +1780,8 @@ components:
           $ref: '#/components/schemas/splitBy'
         uniqueValue:
           type: string
-          description: 'A unique value used to split the entries of a master order into separate suborders.'
-      description: Information about how the order was split from the master order. Available only on suborders.
+          description: 'A unique value used to split the entries of a master order into separate suborders. Available only on suborders that had uniqueValue for the split. Not available on master order.'
+      description: Information about how the order was split from the master order.
     splitItemResponse:
       type: object
       properties:
@@ -1796,7 +1791,7 @@ components:
         uniqueValue:
           type: string
           description: 'A unique value used to split the entries of a master order into separate suborders.'
-      description: Information about how the order was split from the master order. Available only on suborders.
+      description: Information about how the order was split from the master order.
     orderSplitRequest:
       type: object
       properties:
