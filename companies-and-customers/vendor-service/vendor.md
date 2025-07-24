@@ -338,11 +338,12 @@ If you need to separate this combined order into vendor-specific suborders, send
 
 When you send this request, the API analyses all the order entries and groups them by vendor:
 * The original order becomes a master order with orderType: `MASTER_ORDER`.
-* A `splitBy` field is added - currently the `VENDOR_ID` is supported.
-* `uniqueValue` field reflects the VendorID, or is null when no vendor is assigned
 * Suborders are created:
   * One for each unique vendor.
   * One extra for items without a vendor.
+  * `splitInfo` field is added with:
+    * `splitBy` field, currently the `VENDOR_ID` is supported.
+    * `uniqueValue` field reflects the VendorID, or is null when no vendor is assigned
 
 ### Order split example
 
@@ -366,7 +367,6 @@ Master order example after split:
   "createdBy": "USR789",
   "status": "CREATED",
   "orderType": "MASTER_ORDER",
-  "splitBy": "VENDOR_ID",
   "subOrders": ["ORD5002", "ORD5003"]
 }
 ```
