@@ -1419,6 +1419,14 @@ components:
             $ref: '#/components/schemas/media'
         vendor:
           $ref: '#/components/schemas/vendor'
+        mixins:
+          description: Product additional information.
+          type: object
+          additionalProperties: true
+        metadata:
+          description: The metadata of the product
+          allOf:
+            - $ref: '#/components/schemas/mixinsMetadata'
     bundleProduct:
       title: Bundle Product
       description: Represents the product used in a bundle.
