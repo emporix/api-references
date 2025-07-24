@@ -8,6 +8,7 @@
 
 ## 2025
 
+* [2025-07-23: B2B Customer Groups - Migration](2025/2025-07-23-b2b-customer-groups-migration.md)
 * [2025-07-18: Vendor Service - Vendor Service with locations](2025/2025-07-18-vendor.md)
 * [2025-07-18: IAM Service - new endpoint and vendorId attribute](2025/2025-07-18-iam.md)
 * [2025-07-18: Product Service - vendorId added](2025/2025-07-18-product.md)
