@@ -59,7 +59,7 @@ sequenceDiagram
 ```
 
 {% hint style="warning" %}
-Passing the `legalEntityId` parameter in the authorization token is the recommended way of handling the B2B customer legal entity information across services.\
+Passing the `legalEntityId` parameter in the authorization token is the proper way to handle the B2B customer legal entity information across services.\
 The token approach ensures a consistent user experience, and centralized security enforcement while enabling the required legal entity-based access control.
 {% endhint %}
 
