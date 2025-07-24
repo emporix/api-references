@@ -64,86 +64,6 @@ If you want to check what vendors are created for your tenant, send the request 
 As a response, you get information about all your tenant vendors with company and location details, for example:
 
 ```bash
-  [
-  {
-    "id": "687a410560a76003fbece671",
-    "name": "Example Company",
-    "type": "COMPANY",
-    "legalInfo": {
-      "legalName": "Example Company Inc.",
-      "registrationDate": "2022-03-31T13:18:02.379Z",
-      "countryOfRegistration": "US",
-      "taxRegistrationNumber": "1234567890"
-    },
-    "locations": [
-      {
-        "id": "687a4055b036735470a91bb8",
-        "name": "Example HQ",
-        "type": "HEADQUARTER",
-        "contactDetails": {
-          "emails": [
-            "jane.doe@example.com",
-            "adam.smith@sample.org"
-          ],
-          "phones": [
-            "1234567890",
-            "123456789"
-          ],
-          "addressLine1": "W Sample St",
-          "addressLine2": "3601-3799",
-          "city": "South Bend",
-          "state": "Indiana",
-          "postcode": "46619",
-          "countryCode": "US",
-          "tags": [
-            "shipping"
-          ]
-        },
-        "metadata": {
-          "version": 1,
-          "createdAt": "2025-07-18T12:38:45.399Z",
-          "modifiedAt": "2025-07-18T12:38:45.399Z"
-        }
-      }
-    ],
-    "metadata": {
-      "version": 1,
-      "createdAt": "2025-07-18T12:41:41.143Z",
-      "modifiedAt": "2025-07-18T12:41:41.143Z"
-    },
-    "contactDetails": [
-      {
-        "firstName": "Jane",
-        "lastName": "Doe",
-        "email": "jane.doe@example.com",
-        "phone": "+1-555-0123"
-      }
-    ]
-  },
-  {
-    "id": "687f7a85b036735470a91bbc",
-    "name": "Supplier Company",
-    "type": "COMPANY",
-    "legalInfo": {
-      "legalName": "Supplier Company Inc.",
-      "registrationDate": "2022-03-31T13:18:02.379Z",
-      "countryOfRegistration": "US",
-      "taxRegistrationNumber": "1234567890"
-    },
-    "metadata": {
-      "version": 1,
-      "createdAt": "2025-07-22T11:48:21.724Z",
-      "modifiedAt": "2025-07-22T11:48:21.724Z"
-    },
-    "contactDetails": [
-      {
-        "firstName": "John",
-        "lastName": "Doe",
-        "email": "john.doe@supplier.com",
-        "phone": "+1-555-0123"
-      }
-    ]
-  },
   {
     "id": "6880c8e860a76003fbece674",
     "name": "ABC Company",
@@ -168,7 +88,6 @@ As a response, you get information about all your tenant vendors with company an
       }
     ]
   }
-]
 ```
 
 ## How to set up a location for an existing vendor?
@@ -367,6 +286,9 @@ Master order example after split:
   "createdBy": "USR789",
   "status": "CREATED",
   "orderType": "MASTER_ORDER",
+  "splitInfo": {
+    splitBy:VENDOR_ID
+    }
   "subOrders": ["ORD5002", "ORD5003"]
 }
 ```
@@ -456,8 +378,8 @@ flowchart TD
       H:::Class_01
       I:::Class_02
       J:::Class_02
-    classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#DDE6EE, fill:#DDE6EE
-    classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#A1BDDC, fill:#A1BDDC
+    classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#DDE6EE
+    classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#A1BDDC
     classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#3b73bb, fill:#3b73bb
-    classDef Class_04 fill:#F2F6FA, stroke:#E86C07
+    classDef Class_04 fill:#F2F6FA, stroke:#4C5359
 ```
