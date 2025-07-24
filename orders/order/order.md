@@ -1245,7 +1245,7 @@ curl 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}'
 {% endcontent-ref %}
 
 ```bash
-curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
+curl 'https://api.emporix.io/order-v2/{tenant}/orders' 
   --header 'Saas-Token: '
 ```
 
@@ -1278,12 +1278,12 @@ curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/saleso
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' \
-  --header 'saas-token: text' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'saas-token: text' 
+  --header 'Content-Type: application/json' 
   --data '{
     "status": "DECLINED"
   }'
@@ -1317,10 +1317,10 @@ curl -L
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --url 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' \
-  --header 'saas-token: text' \
+curl -L 
+  --url 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'saas-token: text' 
   --header 'Accept: */*'
   ```
 
