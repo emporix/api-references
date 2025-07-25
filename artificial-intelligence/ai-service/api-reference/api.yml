@@ -165,6 +165,7 @@ paths:
       - $ref: '#/components/parameters/sort'
       - $ref: '#/components/parameters/fields'
       - $ref: '#/components/parameters/header_xTotalCount'
+      - $ref: '#/components/parameters/header_Accept-Language'
     get:
       summary: Get available agent templates
       operationId: GET-ai-list-templates
@@ -199,6 +200,7 @@ paths:
   '/ai-service/{tenant}/agentic/templates/search':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/header_Accept-Language'
     post:
       summary: Search agent templates
       operationId: POST-ai-search-templates
@@ -229,12 +231,13 @@ paths:
         - OAuth2:
             - ai.agent_read
       requestBody:
-        $ref: '#/components/requestBodies/AgentTemplateSearch'
+        $ref: '#/components/requestBodies/QParamSearchBody'
       tags:
         - Agentic
   '/ai-service/{tenant}/agentic/templates/{templateId}/clone':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/header_Content-Language'
       - schema:
           type: string
         name: templateId
@@ -276,6 +279,13 @@ paths:
   '/ai-service/{tenant}/agentic/agents':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/header_Accept-Language'
+      - $ref: '#/components/parameters/qParam'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/header_xTotalCount'
     get:
       summary: Get generic agents
       operationId: GET-ai-list-agents
@@ -311,6 +321,12 @@ paths:
     parameters:
       - $ref: '#/components/parameters/path_tenant'
     post:
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/header_xTotalCount'
       summary: Get generic agents
       operationId: POST-ai-search-agents
       responses:
@@ -329,6 +345,8 @@ paths:
           $ref: '#/components/responses/401_resp_common'
         '403':
           $ref: '#/components/responses/403_resp_common'
+      requestBody:
+        $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
         ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Searches for agent templates based on the provided query.
@@ -350,6 +368,8 @@ paths:
         in: path
         required: true
     get:
+      parameters:
+        - $ref: '#/components/parameters/header_Accept-Language'
       summary: Get generic agent by Id
       operationId: GET-ai-retrieve-agent
       responses:
@@ -383,6 +403,8 @@ paths:
       tags:
         - Agentic
     put:
+      parameters:
+        - $ref: '#/components/parameters/header_Content-Language'
       summary: Upsert generic agents
       operationId: PUT-ai-list-agents
       responses:
@@ -591,11 +613,15 @@ components:
           type: string
           description: Identifier of the agent template.
         name:
-          type: string
-          description: Name of the agent template.
+          type: object
+          description: Localized name ofthe agent template.
+          additionalProperties:
+            type: string
         description:
-          type: string
+          type: object
           description: Description of the agent template.
+          additionalProperties:
+            type: string
         type:
           type: string
           enum:
@@ -628,11 +654,15 @@ components:
           type: string
           description: Identifier of the agent.
         name:
-          type: string
-          description: Name of the agent.
+          type: object
+          description: Localized name ofthe agent template.
+          additionalProperties:
+            type: string
         description:
-          type: string
-          description: Description of the agent.
+          type: object
+          description: Description of the agent template.
+          additionalProperties:
+            type: string
         systemPrompt:
           type: string
           description: System prompt of the agent.
@@ -786,7 +816,7 @@ components:
               content:
                 type: string
                 description: 'Content of the message. Depending on the role parameter it can be a background instruction, user instruction or AI response.'
-    AgentTemplateSearch:
+    QParamSearchBody:
       type: object
       properties:
         q:
@@ -799,11 +829,15 @@ components:
       type: object
       properties:
         name:
-          type: string
-          description: Name of the creating agent.
+          type: object
+          description: Localized name ofthe agent template.
+          additionalProperties:
+            type: string
         description:
-          type: string
-          description: Description of the creating agent.
+          type: object
+          description: Description of the agent template.
+          additionalProperties:
+            type: string
         id:
           type: string
           description: Identifier of the creating agent. If not provided, a random value is generated.
@@ -1100,11 +1134,11 @@ components:
                 messages:
                   - role: SYSTEM
                     content: You are an assistant responsible for creating a configuration based on information provided by user.
-    AgentTemplateSearch:
+    QParamSearchBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AgentTemplateSearch'
+            $ref: '#/components/schemas/QParamSearchBody'
           examples:
             Search Request:
               value:
@@ -1117,8 +1151,10 @@ components:
           examples:
             Search Request:
               value:
-                name: Complaint Agent
-                description: Agent which is responsible for reading emails and base on that resolve the customer's complaints
+                name:
+                  en: Complaint Agent
+                description:
+                  de: Agent which is responsible for reading emails and base on that resolve the customer's complaints
                 id: a81bc81b-dead-4e5d-abff-90865d1e13b1
     agentPatchBody:
       content:
@@ -1154,8 +1190,10 @@ components:
     AgentTemplatesResponse:
       value:
         - id: "123"
-          name: Support Agent
-          description: Support agent template
+          name:
+            en: Support Agent
+          description:
+            en: Support agent template
           type: SUPPORT
           enabled: true
           tags:
@@ -1174,8 +1212,10 @@ components:
     AgentResponse:
       value:
         - id: "123"
-          name: Complaint Agent
-          description: Complaint agent
+          name:
+            en: Complaint Agent
+          description:
+            en: Complaint agent
           type: COMPLAINT
           enabled: true
           systemPrompt: "You are an complaint agent for checking emails and do some action"
@@ -1205,8 +1245,10 @@ components:
     AgentRequest:
       value:
         - id: "123"
-          name: Complaint Agent
-          description: Complaint agent
+          name:
+            en: Complaint Agent
+          description:
+            en: Complaint agent
           type: COMPLAINT
           enabled: true
           systemPrompt: "You are an complaint agent for checking emails and do some action"
