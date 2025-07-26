@@ -924,6 +924,11 @@ components:
           description: External discounts applied to this order entry.
           items:
             $ref: '#/components/schemas/externalDiscount'
+        externalFees:
+          type: array
+          description: External fees applied to this order entry.
+          items:
+            $ref: '#/components/schemas/externalFee'
       required:
         - amount
         - calculatedUnitPrice
@@ -2429,6 +2434,47 @@ components:
         - id
         - discountType
         - value
+    externalFee:
+      type: object
+      required:
+        - feeType
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the fee.
+        name:
+          allOf:
+            - $ref: '#/components/schemas/localizedValue'
+          description: Fee name.
+        feeType:
+          type: string
+          description: Type of the fee.
+          enum:
+            - PERCENT
+            - ABSOLUTE
+            - ABSOLUTE_MULTIPLY_ITEMQUANTITY
+        feePercentage:
+          type: number
+          description: Value of fee as percentage. It must be provided when feeType equals `PERCENT`.
+        feeAbsolute:
+          type: object
+          description: Value of fee as absolute. It must be provided when feeType equals `ABSOLUTE` or `ABSOLUTE_MULTIPLY_ITEMQUANTITY`.
+          required:
+            - currency
+            - amount
+          properties:
+            currency:
+              type: string
+              description: Currency of fee absolute.
+            amount:
+              type: number
+              description: Value of fee absolute.
+        taxable:
+          type: boolean
+          description: Whether tax should be included to the fee or not. Taxable fee must have taxCode provided
+        taxCode:
+          type: string
+          description: Tax code of the fee.
     priceMatchDetails:
       title: priceMatchDetails
       type: object
