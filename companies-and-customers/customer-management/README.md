@@ -20,3 +20,6 @@ This part of the Customer Service is managed by the customers on the storefront.
 * Provides convenient login and removes login barriers with SSO for social logins
 * Captures data important for the business to serve customers better
 * Ensures secure login for customers to access their profiles
+* Generates proper authorization tokens:
+    * Anonymous token - Used by the storefront to access public resources with read-only permissions; it allows customers to browse products, view prices, and add products to the cart and is not associated with any specific customer
+    * SaaS (customer) token - A JSON Web Token (JWT) containing encrypted customer data; it functions similarly to the anonymous token, but is tied to a specific customer
