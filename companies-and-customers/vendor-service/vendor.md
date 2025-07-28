@@ -349,8 +349,10 @@ config:
   look: classic
   themeVariables:
     background: transparent
-    lineColor: "#4C5359"
-    arrowheadColor: "#4C5359"
+    lineColor: "#C0D0DF"
+    arrowheadColor: "#C0D0DF"
+    edgeLabelBackground: "#F2FAFE"
+    edgeLabelTextColor: "#4C5359"
 ---
 flowchart TD
     A[Vendor user creates product] -->|Assigned vendorId| B[Product in catalog]
