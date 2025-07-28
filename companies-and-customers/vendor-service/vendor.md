@@ -349,9 +349,9 @@ config:
   look: classic
   themeVariables:
     background: transparent
-    lineColor: "#4C5359"
-    arrowheadColor: "#4C5359"
-    edgeLabelBackground: "#F2F6FA" 
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128" 
     edgeLabelTextColor: "#4C5359"
 ---
 flowchart TD
