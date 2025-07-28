@@ -351,7 +351,7 @@ config:
     background: transparent
     lineColor: "#9CBBE3"
     arrowheadColor: "#9CBBE3"
-    edgeLabelBackground: "#FFDA2F" 
+    edgeLabelBackground: "#FFC128" 
     edgeLabelTextColor: "#4C5359"
 ---
 flowchart TD
