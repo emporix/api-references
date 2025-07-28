@@ -2455,23 +2455,23 @@ components:
             - ABSOLUTE_MULTIPLY_ITEMQUANTITY
         feePercentage:
           type: number
-          description: Value of fee as percentage. It must be provided when feeType equals `PERCENT`.
+          description: Value of the fee as percentage. It must be provided when feeType equals `PERCENT`.
         feeAbsolute:
           type: object
-          description: Value of fee as absolute. It must be provided when feeType equals `ABSOLUTE` or `ABSOLUTE_MULTIPLY_ITEMQUANTITY`.
+          description: Value of the fee as absolute. It must be provided when feeType equals `ABSOLUTE` or `ABSOLUTE_MULTIPLY_ITEMQUANTITY`.
           required:
             - currency
             - amount
           properties:
             currency:
               type: string
-              description: Currency of fee absolute.
+              description: Currency of the fee absolute.
             amount:
               type: number
-              description: Value of fee absolute.
+              description: Value of the fee absolute.
         taxable:
           type: boolean
-          description: Whether tax should be included to the fee or not. Taxable fee must have taxCode provided
+          description: It marks whether tax should be included to the fee or not. A taxable fee must have the `taxCode` attribute provided.
         taxCode:
           type: string
           description: Tax code of the fee.
