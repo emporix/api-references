@@ -349,7 +349,6 @@ config:
   look: classic
   themeVariables:
     background: transparent
-    lineColor: "#9CBBE3"
 ---
 flowchart TD
     A[Vendor user creates product] -->|Assigned vendorId| B[Product in catalog]
