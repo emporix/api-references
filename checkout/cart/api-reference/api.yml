@@ -2818,6 +2818,7 @@ paths:
                         rate: 19
                         grossValue: 595.0
                         netValue: 500
+                        quantity: 3
                       fees:
                         elements:
                           - yrn: urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2
@@ -3081,7 +3082,7 @@ paths:
                     rate: 19
                     grossValue: 595.0
                     netValue: 500
-                  quantity: 5
+                  quantity: 3
               External product example:
                 value:
                   itemType: EXTERNAL
@@ -3240,6 +3241,7 @@ paths:
                       rate: 19
                       grossValue: 595.0
                       netValue: 500
+                      quantity: 3
                     fees:
                       elements:
                         - yrn: urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2
@@ -5650,7 +5652,7 @@ components:
                   type: string
                   description: Indicates how the line item price was determined.
                     - `INTERNAL` — Calculated by Emporix using unit price × quantity.
-                    - `EXTERNAL` — Provided externally with `linePrice` and optionally `lineTax`.
+                    - `EXTERNAL` — Provided externally with `lineTax`.
                   enum:
                     - INTERNAL
                     - EXTERNAL

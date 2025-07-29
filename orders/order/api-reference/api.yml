@@ -2272,7 +2272,7 @@ components:
                   type: string
                   description: Indicates how the line item price was determined.
                     - `INTERNAL` — Calculated by Emporix using unit price × quantity.
-                    - `EXTERNAL` — Provided externally with `linePrice` and optionally `lineTax`.
+                    - `EXTERNAL` — Provided externally with `lineTax`.
                   enum:
                     - INTERNAL
                     - EXTERNAL
