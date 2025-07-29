@@ -2951,6 +2951,7 @@ paths:
                           netValue: 285.592
                           grossValue: 339.485
                           taxValue: 53.893
+                Example with line price and line tax:
 
         '400':
           $ref: '#/components/responses/trait_400'
@@ -3049,6 +3050,30 @@ paths:
                     rate: 10
                     grossValue: 2
                     netValue: 1.82
+                  quantity: 5
+              External line price and line tax example:
+                value:
+                  itemYrn: "urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross"
+                  keepAsSeparateLineItem: true
+                  itemType: "EXTERNAL"
+                  price:
+                    effectiveAmount: 119.0
+                    originalAmount: 139.0
+                    currency: "EUR"
+                  tax:
+                    name: "STANDARD"
+                    rate: 19
+                    grossValue: 119.0
+                    netValue: 100.0
+                  linePrice:
+                    effectiveAmount: 595.0
+                    originalAmount: 795.0
+                    currency: "EUR"
+                  lineTax:
+                    name: "STANDARD"
+                    rate: 19
+                    grossValue: 595.0
+                    netValue: 500
                   quantity: 5
               External product example:
                 value:
@@ -3199,6 +3224,15 @@ paths:
                         rate: 19
                         grossValue: 700
                         netValue: 588.24
+                    linePrice:
+                      effectiveAmount: 595.0
+                      originalAmount: 795.0
+                      currency: "EUR"
+                    lineTax:
+                      name: "STANDARD"
+                      rate: 19
+                      grossValue: 595.0
+                      netValue: 500
                     fees:
                       elements:
                         - yrn: urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2
@@ -3413,6 +3447,19 @@ paths:
                     measurementUnit:
                       quantity: 1
                       unitCode: H87
+              Example with updated line price and line tax:
+                summary: Update item with new external line price
+                value:
+                  linePrice:
+                    effectiveAmount: 1000.0
+                    originalAmount: 1200.0
+                    currency: "EUR"
+                  lineTax:
+                    name: "STANDARD"
+                    rate: 19
+                    grossValue: 1000.0
+                    netValue: 840.0
+                  quantity: 10
         required: false
       security:
         - OAuth2: []
@@ -4256,6 +4303,17 @@ components:
           description: External discounts applied to this cart item.
           items:
             $ref: '#/components/schemas/externalDiscount'
+        linePrice:
+          allOf:
+            - $ref: '#/components/schemas/calculatedPrice'
+          description: >
+            Externally calculated total line price (`unit price × quantity`). When provided, this overrides internal calculations.
+        lineTax:
+          allOf:
+            - $ref: '#/components/schemas/calculatedPrice'
+          description: >
+            Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`.
+          readOnly: true
       required:
         - quantity
         - effectiveQuantity
