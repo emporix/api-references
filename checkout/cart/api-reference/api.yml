@@ -2809,6 +2809,15 @@ paths:
                           rate: 19
                           grossValue: 700
                           netValue: 588.24
+                      linePrice:
+                        effectiveAmount: 595.0
+                        originalAmount: 795.0
+                        currency: "EUR"
+                      lineTax:
+                        name: "STANDARD"
+                        rate: 19
+                        grossValue: 595.0
+                        netValue: 500
                       fees:
                         elements:
                           - yrn: urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2
