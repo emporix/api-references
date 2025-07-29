@@ -1716,7 +1716,8 @@ components:
       type: object
       allOf:
         - $ref: '#/components/schemas/coreErrorMessage'
-        - properties:
+        - type: object
+          properties:
             details:
               type: array
               description: Error message details.
@@ -1733,11 +1734,12 @@ components:
                     type: string
     productErrorMessage:
       allOf:
-        - properties:
+        - $ref: '#/components/schemas/coreErrorMessage'
+        - type: object
+          properties:
             productId:
               type: string
               description: Identifier of the product.
-        - $ref: '#/components/schemas/coreErrorMessage'
     productTemplateBase:
       type: object
       properties:
@@ -1759,7 +1761,8 @@ components:
       type: object
       allOf:
         - $ref: '#/components/schemas/productTemplateBase'
-        - properties:
+        - type: object
+          properties:
             id:
               type: string
               description: Identifier of the product template.
@@ -1799,9 +1802,10 @@ components:
         values:
           allOf:
             - $ref: '#/components/schemas/values'
-          description: |-
-            If the values are populated then the attribute behaves as an enum property. In other words, the attribute in a product instance can contain only values mentioned in this array. For each
-             attribute the value should consist of object with key and localized names.
+            - type: object
+              description: |-
+                If the values are populated then the attribute behaves as an enum property. In other words, the attribute in a product instance can contain only values mentioned in this array. For each
+                attribute the value should consist of object with key and localized names.
       required:
         - key
         - name
@@ -1829,7 +1833,8 @@ components:
     productTemplateResponse:
       allOf:
         - $ref: '#/components/schemas/productTemplateCreation'
-        - properties:
+        - type: object
+          properties:
             metadata:
               $ref: '#/components/schemas/productTemplateMetadata'
     productTemplatesResponse:
@@ -1841,7 +1846,8 @@ components:
       title: productTemplateUpdate
       allOf:
         - $ref: '#/components/schemas/productTemplateBase'
-        - properties:
+        - type: object
+          properties:
             metadata:
               type: object
               properties:
@@ -1850,7 +1856,6 @@ components:
                   description: Version of the object. The value is required while product template update.
               required:
                 - version
-          type: object
       required:
         - name
         - attributes
@@ -2109,7 +2114,8 @@ components:
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productMetadataCore'
-        - properties:
+        - type: object
+          properties:
             version:
               type: number
               description: Version of the document
@@ -2119,7 +2125,8 @@ components:
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productMetadataWithVersion'
-        - properties:
+        - type: object
+          properties:
             createdAt:
               type: string
               description: creation date in the ISO 8601 standard
@@ -2139,7 +2146,8 @@ components:
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productMetadataCore'
-        - properties:
+        - type: object
+          properties:
             overridden:
               type: array
               description: |-
@@ -2155,7 +2163,8 @@ components:
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/variantProductMetadataCore'
-        - properties:
+        - type: object
+          properties:
             version:
               type: number
               description: Version of the document
@@ -2198,7 +2207,8 @@ components:
         name:
           allOf:
             - $ref: '#/components/schemas/localizedValue'
-          description: Product name.
+            - type: object
+              description: Product name.
         code:
           type: string
           minLength: 1
@@ -2206,7 +2216,8 @@ components:
         description:
           allOf:
             - $ref: '#/components/schemas/localizedValue'
-          description: Product description.
+            - type: object
+              description: Product description.
         vendor:
           $ref: '#/components/schemas/vendor'
         taxClasses:
@@ -2239,7 +2250,8 @@ components:
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productCore'
-        - properties:
+        - type: object
+          properties:
             metadata:
               $ref: '#/components/schemas/productMetadataCore'
             template:
@@ -2251,7 +2263,8 @@ components:
       type: object
       description: Schema for creating products of the BASIC type.
       allOf:
-        - properties:
+        - type: object
+          properties:
             id:
               type: string
               maxLength: 32
@@ -2263,13 +2276,15 @@ components:
       type: object
       description: Schema for retrieving products of the BASIC type.
       allOf:
-        - properties:
+        - type: object
+          properties:
             id:
               $ref: '#/components/schemas/id'
             yrn:
               $ref: '#/components/schemas/YRN'
         - $ref: '#/components/schemas/basicProductCreation'
-        - properties:
+        - type: object
+          properties:
             media:
               $ref: '#/components/schemas/productMedia'
             metadata:
@@ -2284,7 +2299,8 @@ components:
       description: Schema for updating products of the BASIC type.
       allOf:
         - $ref: '#/components/schemas/basicProduct'
-        - properties:
+        - type: object
+          properties:
             metadata:
               $ref: '#/components/schemas/productMetadataWithVersion'
             productType:
@@ -2293,7 +2309,8 @@ components:
       type: object
       description: Schema for updating products of the BASIC type in bulk.
       allOf:
-        - properties:
+        - type: object
+          properties:
             id:
               $ref: '#/components/schemas/id'
         - $ref: '#/components/schemas/basicProductUpdate'
@@ -2304,7 +2321,8 @@ components:
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productCore'
-        - properties:
+        - type: object
+          properties:
             metadata:
               $ref: '#/components/schemas/productMetadataCore'
             template:
@@ -2322,7 +2340,8 @@ components:
       type: object
       description: Schema for creating products of the BUNDLE type.
       allOf:
-        - properties:
+        - type: object
+          properties:
             id:
               type: string
               maxLength: 32
@@ -2334,13 +2353,15 @@ components:
       type: object
       description: Schema for retrieving products of the BUNDLE type.
       allOf:
-        - properties:
+        - type: object
+          properties:
             id:
               $ref: '#/components/schemas/id'
             yrn:
               $ref: '#/components/schemas/YRN'
         - $ref: '#/components/schemas/bundleProductCreation'
-        - properties:
+        - type: object
+          properties:
             media:
               $ref: '#/components/schemas/productMedia'
             metadata:
@@ -2362,7 +2383,8 @@ components:
       type: object
       description: Schema for updating products of the BUNDLE type in bulk.
       allOf:
-        - properties:
+        - type: object
+          properties:
             id:
               $ref: '#/components/schemas/id'
         - $ref: '#/components/schemas/bundleProductUpdate'
@@ -2374,7 +2396,8 @@ components:
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productCore'
-        - properties:
+        - type: object
+          properties:
             metadata:
               $ref: '#/components/schemas/productMetadataCore'
             template:
@@ -2391,7 +2414,8 @@ components:
       type: object
       description: Schema for creating products of the PARENT_VARIANT type.
       allOf:
-        - properties:
+        - type: object
+          properties:
             id:
               type: string
               maxLength: 32
@@ -2403,13 +2427,15 @@ components:
       type: object
       description: Schema for retrieving products of the PARENT_VARIANT type.
       allOf:
-        - properties:
+        - type: object
+          properties:
             id:
               $ref: '#/components/schemas/id'
             yrn:
               $ref: '#/components/schemas/YRN'
         - $ref: '#/components/schemas/parentVariantProductCreation'
-        - properties:
+        - type: object
+          properties:
             media:
               $ref: '#/components/schemas/productMedia'
             metadata:
@@ -2424,7 +2450,8 @@ components:
       description: Schema for updating products of the PARENT_VARIANT type.
       allOf:
         - $ref: '#/components/schemas/parentVariantProduct'
-        - properties:
+        - type: object
+          properties:
             metadata:
               $ref: '#/components/schemas/productMetadataWithVersion'
             productType:
@@ -2433,7 +2460,8 @@ components:
       type: object
       description: Schema for updating products of the PARENT_VARIANT type in bulk.
       allOf:
-        - properties:
+        - type: object
+          properties:
             id:
               $ref: '#/components/schemas/id'
         - $ref: '#/components/schemas/parentVariantProductUpdate'
@@ -2444,7 +2472,8 @@ components:
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productCore'
-        - properties:
+        - type: object
+          properties:
             mixins:
               $ref: '#/components/schemas/productVariantMixins'
         - required:
@@ -2456,7 +2485,8 @@ components:
       type: object
       description: Schema for creating products of the VARIANT type.
       allOf:
-        - properties:
+        - type: object
+          properties:
             id:
               type: string
               maxLength: 32
@@ -2473,13 +2503,15 @@ components:
       type: object
       description: Schema for retrieving products of the VARIANT type.
       allOf:
-        - properties:
+        - type: object
+          properties:
             id:
               $ref: '#/components/schemas/id'
             yrn:
               $ref: '#/components/schemas/YRN'
         - $ref: '#/components/schemas/variantProductCreation'
-        - properties:
+        - type: object
+          properties:
             media:
               $ref: '#/components/schemas/productMedia'
             metadata:
@@ -2494,7 +2526,8 @@ components:
       description: Schema for updating products of the VARIANT type.
       allOf:
         - $ref: '#/components/schemas/variantProduct'
-        - properties:
+        - type: object
+          properties:
             metadata:
               $ref: '#/components/schemas/variantProductMetadataWithVersion'
             productType:
@@ -2506,7 +2539,8 @@ components:
       type: object
       description: Schema for updating products of the VARIANT type in bulk.
       allOf:
-        - properties:
+        - type: object
+          properties:
             id:
               $ref: '#/components/schemas/id'
         - $ref: '#/components/schemas/variantProductUpdate'
@@ -2515,7 +2549,8 @@ components:
     productPartialUpdate:
       allOf:
         - $ref: '#/components/schemas/productCore'
-        - properties:
+        - type: object
+          properties:
             template:
               $ref: '#/components/schemas/template'
             bundledProducts:
