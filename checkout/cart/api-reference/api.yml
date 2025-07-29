@@ -2960,8 +2960,6 @@ paths:
                           netValue: 285.592
                           grossValue: 339.485
                           taxValue: 53.893
-                Example with line price and line tax:
-
         '400':
           $ref: '#/components/responses/trait_400'
         '403':
