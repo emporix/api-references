@@ -326,7 +326,9 @@ curl -L \
 
 The Cart Service supports externally calculated pricing and tax amounts for cart items. This allows integrated systems to override cart's internal pricing logic with the values determined by external systems.
 
-To support the calculation for line price and line tax when adding or updating items in the cart, you need two attributes provided on add/update cart item requests:
+If you don’t want Emporix to calculate the line price by multiplying quantity × unit price, but instead want to provide the calculation from your ERP system, you can do so by supplying both `linePrice` and `lineTax`. These values are reflected in the line’s calculated price with calculated: EXTERNAL.
+
+In the response, the lineTax will include the quantity information that was used in the add-to-cart request.
 
 * `linePrice` - externally calculated total price for the item line (unit price × quantity)
 * `lineTax` - externally calculated total tax for the item line, allowed only for external product type

@@ -3457,6 +3457,15 @@ paths:
               Example with updated line price and line tax:
                 summary: Update item with new external line price
                 value:
+                  itemType: "EXTERNAL"
+                  price:
+                    priceId: 5f59fe70fb29e20020be8f12
+                    originalAmount: 9.49
+                    effectiveAmount: 9.49
+                    currency: EUR
+                    measurementUnit:
+                      quantity: 1
+                      unitCode: H87
                   linePrice:
                     effectiveAmount: 1000.0
                     originalAmount: 1200.0
@@ -4312,15 +4321,29 @@ components:
             $ref: '#/components/schemas/externalDiscount'
         linePrice:
           allOf:
-            - $ref: '#/components/schemas/calculatedPrice'
-          description: >
-            Externally calculated total line price (`unit price × quantity`). When provided, this overrides internal calculations.
+            - $ref: '#/components/schemas/price'
+          description: Externally calculated total line price (`unit price × quantity`). When provided, this overrides internal calculations.
+          properties:
+            effectiveAmount:
+              type: number
+              minimum: 0
+            originalAmount:
+              type: number
+              minimum: 0
+            currency:
+              type: string
+          required:
+            - effectiveAmount
+            - originalAmount
+            - currency
         lineTax:
           allOf:
-            - $ref: '#/components/schemas/calculatedPrice'
-          description: >
-            Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`.
-          readOnly: true
+            - $ref: '#/components/schemas/taxValue'
+          description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`. 
+          required:
+            - netValue
+            - grossValue
+            - rate
       required:
         - quantity
         - effectiveQuantity
