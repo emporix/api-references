@@ -397,9 +397,11 @@ When you use `linePrice` and `lineTax` in cart operations, the following rules a
 * For **partial cart item update**s (with `partial=true`), any existing `linePrice` or `lineTax` values are preserved if they are not provided in the update payload.
 * For **full cart item updates**, any previously set `linePrice` or `lineTax` values are cleared if they are not included in the update payload.
 * If the item’s **quantity is updated after an external** `linePrice` **was set**, the cart recalculates it internally (`calculated = INTERNAL`) and ignores the previous external value. To restore external pricing, a new `linePrice` must be provided that matches the new quantity. 
+
   The quantity of the provided `linePrice` number has to much the quantity of items in the cart. Otherwise, the additional items are calculated internally.
 * If **only** `lineTax` **is provided** (without the `linePrice`), the final price is still calculated using the standard internal price logic.
 * In [Retrieving all products added to a cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#get-cart-tenant-carts-cartid-items) or [Retrieving a cart item](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#get-cart-tenant-carts-cartid-items-itemid), any externally provided `linePrice` and `lineTax` are returned unchanged. 
+  
     A `quantity` field is included on `lineTax` in responses, reflecting the quantity used when the external tax was calculated. 
 
 For order entries, the `calculated = INTERNAL/EXTERNAL` flag is also returned - it indicates  how the pricing was derived.
