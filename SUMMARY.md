@@ -16,7 +16,7 @@
 
 ## API Guides and References
 
-* [Authorization](api-guides-and-references/authorization/oauth-service/README.md)
+* [Authorization](api-guides-and-references/authorization/README.md)
   * [OAuth Service](authorization/oauth-service/README.md)
     * [API Reference](authorization/oauth-service/api-reference/README.md)
       * ```yaml
@@ -329,6 +329,19 @@
               spec: approval-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/approval-service/approval-api-reference/api.yml)
+  * [Vendor Service](companies-and-customers/vendor-service/README.md)
+    * [API Reference](companies-and-customers/vendor-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: vendor-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/vendor-service/api-reference/api.yml)
 * [Delivery and Shipping](delivery-and-shipping/README.md)
   * [Shipping Service](delivery-and-shipping/shipping/README.md)
     * [Shipping Tutorial](delivery-and-shipping/shipping/shipping.md)
@@ -625,8 +638,8 @@
   * [Events-Product](webhooks/events-product.md)
   * [Events-Quote](webhooks/events-quote.md)
   * [Events-Product](webhooks/events-return.md)
-* [Integrations](api-guides-and-references/integrations/README.md)
-  * [Identity Providers](integrations/identity-providers.md)
-    * [Auth0](integrations/auth0.md)
-  * [Workflow Automation](integrations/workflow-automation.md)
-    * [Emporix and Make](integrations/Emporix-make.md)
+* [Integrations](integrations/README.md)
+  * [Identity Providers](integrations/authorization/identity-providers.md)
+    * [Auth0](integrations/authorization/auth0.md)
+  * [Workflow Automation](integrations/workflow-automation/README.md)
+    * [Emporix and Make](integrations/workflow-automation/emporix-and-make.md)
