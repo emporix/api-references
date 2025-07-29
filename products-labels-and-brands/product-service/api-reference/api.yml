@@ -1325,6 +1325,15 @@ components:
                 relatedItems:
                   - refId: 634cea2740033d7c2e7b03a9
                     type: CONSUMABLE
+                vendor:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: VND001
+                    name:
+                      type: string
+                      example: Vendor1
                 mixins:
                   salePricesData:
                     - salePriceStart: '2021-07-20T22:00:00.000+0000'
@@ -2564,10 +2573,10 @@ components:
       properties:
         id:
           type: string
-          description: An identifier of a vendor to whom the product belongs
+          description: An identifier of a vendor to whom the product belongs.
         name:
           type: string
-          description: vendor name
+          description: Vendor name.
       required:
         - id
     searchProducts:
