@@ -407,7 +407,7 @@ When you use `linePrice` and `lineTax` in cart operations, the following rules a
 For order entries, the `calculated = INTERNAL/EXTERNAL` flag is also returned - it indicates  how the pricing was derived.
 
 {% hint style="warning" %}
-The `lineTax` value is mandatory as it's a base for the calculation. The `linePrice` is can be an optional value.
+The `lineTax` value is mandatory as it's a base for the calculation. The `linePrice` can be provided optionally value.
 
 {% endhint %}
 
