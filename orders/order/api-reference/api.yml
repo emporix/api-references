@@ -2267,6 +2267,15 @@ components:
             - $ref: '#/components/schemas/calculatedPrice'
             - type: object
               description: The price is calculated by multiplying the unit price (taken from priceMatch) by the quantity.
+            - properties:
+                calculated:
+                  type: string
+                  description: Indicates how the line item price was determined.
+                    - `INTERNAL` — Calculated by Emporix using unit price × quantity.
+                    - `EXTERNAL` — Provided externally with `linePrice` and optionally `lineTax`.
+                  enum:
+                    - INTERNAL
+                    - EXTERNAL
         upliftValue:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'
