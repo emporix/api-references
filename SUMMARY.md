@@ -16,7 +16,7 @@
 
 ## API Guides and References
 
-* [Authorization](api-guides-and-references/authorization/oauth-service/README.md)
+* [Authorization](api-guides-and-references/authorization/README.md)
   * [OAuth Service](authorization/oauth-service/README.md)
     * [API Reference](authorization/oauth-service/api-reference/README.md)
       * ```yaml
@@ -639,8 +639,8 @@
   * [Events-Product](webhooks/events-product.md)
   * [Events-Quote](webhooks/events-quote.md)
   * [Events-Product](webhooks/events-return.md)
-* [Integrations](api-guides-and-references/integrations/README.md)
-  * [Identity Providers](integrations/identity-providers.md)
-    * [Auth0](integrations/auth0.md)
-  * [Workflow Automation](integrations/workflow-automation.md)
-    * [Emporix and Make](integrations/Emporix-make.md)
+* [Integrations](integrations/README.md)
+  * [Identity Providers](integrations/authorization/identity-providers.md)
+    * [Auth0](integrations/authorization/auth0.md)
+  * [Workflow Automation](integrations/workflow-automation/README.md)
+    * [Emporix and Make](integrations/workflow-automation/emporix-and-make.md)
