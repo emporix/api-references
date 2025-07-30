@@ -1132,6 +1132,7 @@ components:
               type: integer
               description: Defines the maximum number of reasoning steps or internal calls an AI agent is allowed to perform during a single task. Helps prevent infinite loops or excessive resource usage.
               example: 10
+              default: 20
               minimum: 1
               maximum: 50
             enabledMemory:
@@ -1667,7 +1668,7 @@ components:
           temperature: 0.2
         trigger:
           type: endpoint
-        maxRecursionsLimit: 20
+        maxRecursionLimit: 20
         enabledMemory: true
         tags:
           - productivity
@@ -1703,7 +1704,7 @@ components:
             temperature: 0.2
           trigger:
             type: endpoint
-          maxRecursionsLimit: 20
+          maxRecursionLimit: 20
           enabledMemory: true
           tags:
             - productivity
@@ -1737,7 +1738,7 @@ components:
           temperature: 0.2
         trigger:
           type: endpoint
-        maxRecursionsLimit: 20
+        maxRecursionLimit: 20
         enabledMemory: true
         tags:
           - productivity
