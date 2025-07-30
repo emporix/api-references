@@ -4145,8 +4145,6 @@ components:
             - type: object
               description: Tax information per unit. This field is only required when itemType is EXTERNAL and request contains external price. It's optional for the `INTERNAL` itemType.'
         linePrice:
-          allOf:
-            - $ref: '#/components/schemas/price'
           description: Externally calculated total line price (`unit price × quantity`). When provided, this overrides internal calculations.
           properties:
             effectiveAmount:
