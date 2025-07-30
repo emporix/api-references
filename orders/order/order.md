@@ -29,14 +29,18 @@ During checkout, the final price is calculated based on customer-specific detail
 
 Once an order is placed, the order information simply reflects the calculated prices without further modifications, ensuring accuracy and transparency in the final transaction.
 
-<!-- <figure><img src="../../static/order/diagram1.svg" alt=""><figcaption></figcaption></figure> -->
-
-```mermaid
+```mermaid fullWidth="true"
 ---
 config:
   layout: fixed
-  theme: default
+  theme: base
   look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128" 
+    edgeLabelTextColor: "#4C5359"
 ---
 flowchart LR
  subgraph subGraph0["**Storefront**"]
@@ -61,8 +65,8 @@ flowchart LR
     CS@{ shape: rounded}
     CHK@{ shape: rounded}
     OS@{ shape: rounded}
-    ERP@{ shape: rounded}
     WS@{ shape: rounded}
+    ERP@{ shape: rounded}
      A:::Class_04
      CS:::Class_04
      CHK:::Class_04
@@ -76,9 +80,10 @@ flowchart LR
     classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#A1BDDC, fill:#A1BDDC
     classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#3b73bb, fill:#3b73bb
     classDef Class_04 fill:#F2F6FA, stroke:#E86C07
-    style subGraph0 color:#FFFFFF
     style subGraph1 color:#FFFFFF
+    style subGraph0 color:#FFFFFF
 ```
+
 {% hint style="warning" %}
 You have to register your listener in the Emporix Webhook Service so that the listener pushes order information to your ERP system.
 {% endhint %}
@@ -95,14 +100,18 @@ Commerce Orchestration Platform (COP) enables this functionality with external p
 
 Communication with the ERP system occurs using the BFF (Backend-for-Frontend) layer and with a [POST](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) request the order is send to an ERP system. This architecture ensures a secure, real-time pricing model while leveraging external systems for order calculations.
 
-<!-- <figure><img src="../../static/order/diagram2.svg" alt=""><figcaption></figcaption></figure> -->
-
-```mermaid
+```mermaid fullWidth="true"
 ---
 config:
   layout: fixed
-  theme: default
+  theme: base
   look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128" 
+    edgeLabelTextColor: "#4C5359"
 ---
 flowchart LR
  subgraph subGraph0["**Storefront**"]
@@ -165,14 +174,18 @@ With this use case, the Commerce Orchestration Platform cart is used to collect 
 
 Once the order is validated and priced by the ERP, the BFF layer creates the order in COP using the [Sales Order API](api-reference/). This allows for seamless integration between Emporix and the external ERP system while maintaining flexibility in how orders are processed.
 
-<!-- <figure><img src="../../static/order/diagram3.svg" alt=""><figcaption></figcaption></figure> -->
-
-```mermaid
+```mermaid fullWidth="true"
 ---
 config:
   layout: fixed
-  theme: default
+  theme: base
   look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128" 
+    edgeLabelTextColor: "#4C5359"
 ---
 flowchart LR
  subgraph subGraph0["**Storefront**"]
@@ -242,8 +255,8 @@ You have to register your listener in the Emporix Webhook Service so that the li
 ## Payload example
 
 {% hint style="warning" %}
-
 <details>
+
 <summary>See the order calculation payload example</summary>
 
 ```json
@@ -1037,7 +1050,7 @@ You have to register your listener in the Emporix Webhook Service so that the li
 
 ## How to create an order on behalf of a customer
 
-The Order Service functionality allows your employees to act on behalf of a customer and create an order for them. This way, merchants can facilitate order process for your customers. See the steps of the order process flow. 
+The Order Service functionality allows your employees to act on behalf of a customer and create an order for them. This way, merchants can facilitate order process for your customers. See the steps of the order process flow.
 
 ### Create an order as a merchant
 
@@ -1070,20 +1083,20 @@ curl -L
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../companies-and-customers/customer-management/api-reference" %}
-[api-reference](../../companies-and-customers/customer-management/api-reference)
+{% content-ref url="../../companies-and-customers/customer-management/api-reference/" %}
+[api-reference](../../companies-and-customers/customer-management/api-reference/)
 {% endcontent-ref %}
 
 ```bash
 curl 'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id&{client_id}'
 ```
- 
+
 3. Log in as the customer by sending an authorization request to the [Logging in a customer](hhttps://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../companies-and-customers/customer-management/api-reference" %}
-[api-reference](../../companies-and-customers/customer-management/api-reference)
+{% content-ref url="../../companies-and-customers/customer-management/api-reference/" %}
+[api-reference](../../companies-and-customers/customer-management/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1103,8 +1116,8 @@ As a merchant acting on behalf of a customer, send the request to the [Creating 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../orders/order/api-reference/" %}
-[api-reference](../../orders/order/api-reference)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1220,7 +1233,7 @@ curl --location 'https://api.emporix.io/order-v2/{tenant}/salesorders'
 
 ```
 
-#### Confirm order creation 
+#### Confirm order creation
 
 You can retrieve the order details as a merchant or as the customer.
 
@@ -1228,8 +1241,8 @@ You can retrieve the order details as a merchant or as the customer.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../orders/order/api-reference" %}
-[api-reference](../../orders/order/api-reference)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1240,8 +1253,8 @@ curl 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}'
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../orders/order/api-reference" %}
-[api-reference](../../orders/order/api-reference)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1255,8 +1268,8 @@ curl 'https://api.emporix.io/order-v2/{tenant}/orders'
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../orders/order/api-reference" %}
-[api-reference](../../orders/order/api-reference)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1273,8 +1286,8 @@ curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/saleso
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../orders/order/api-reference" %}
-[api-reference](../../orders/order/api-reference)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1297,8 +1310,8 @@ Order Service APIs provide also tools for controlling the status transitions log
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../orders/order/api-reference" %}
-[api-reference](../../orders/order/api-reference)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1312,8 +1325,8 @@ curl -L
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../orders/order/api-reference" %}
-[api-reference](../../orders/order/api-reference)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1322,11 +1335,11 @@ curl -L
   --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
   --header 'saas-token: text' 
   --header 'Accept: */*'
-  ```
+```
 
-  ## Order splitting
+## Order splitting
 
-To enable order splitting, the Order Service works directly with the [Vendor Service](/api-guides-and-references/companies-and-customers/vendor-service).
+To enable order splitting, the Order Service works directly with the [Vendor Service](../../api-guides-and-references/companies-and-customers/vendor-service/).
 
 When a customer completes checkout, a single order is created containing all the selected products. Each order entry includes vendor information, making it a standard order with additional vendor details.
 
@@ -1340,12 +1353,12 @@ If you need to separate this combined order into vendor-specific suborders, send
 
 To support this functionality, the following order attributes are introduced:
 
-- `entries.product.vendor` - marks a product as vendor dependent
-- `orderType` - populated only for orders involved in the splitting process
-- `masterOrder` - the identifier of a master order, available on suborders created after splitting the master order
-- `splitInfo` - information based on what was the suborder created
-- `subOrders` - list of suborders that were created after splitting the master order
+* `entries.product.vendor` - marks a product as vendor dependent
+* `orderType` - populated only for orders involved in the splitting process
+* `masterOrder` - the identifier of a master order, available on suborders created after splitting the master order
+* `splitInfo` - information based on what was the suborder created
+* `subOrders` - list of suborders that were created after splitting the master order
 
 {% hint style="info" %}
-To check the end to end story for order splitting, see the [Vendor Tutorial - Order Split](/api-guides-and-references/companies-and-customers/vendor-service/vendor#how-does-vendor-work-with-order-splitting) example.
+To check the end to end story for order splitting, see the [Vendor Tutorial - Order Split](../../api-guides-and-references/companies-and-customers/vendor-service/vendor/#how-does-vendor-work-with-order-splitting) example.
 {% endhint %}
