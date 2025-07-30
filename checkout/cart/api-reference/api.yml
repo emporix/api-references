@@ -4169,7 +4169,6 @@ components:
             - netValue
             - grossValue
             - rate
-            - quantity
         metadata:
           $ref: '#/components/schemas/metadataRequest'
         mixins:
@@ -4397,7 +4396,7 @@ components:
                 - currency
             lineTax:
               allOf:
-                - $ref: '#/components/schemas/taxValue'
+                - $ref: '#/components/schemas/taxValueWithQuantity'
               description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`. 
               required:
                 - netValue
@@ -5091,6 +5090,15 @@ components:
         netValue:
           type: number
           description: The net value (amount excluding tax). If not provided, it's calculated based on the gross value and tax rate.  If provided then the price effective amount must be equal to it. This field is required only when the itemType is set as EXTERNAL and the request contains an external price.
+    taxValueWithQuantity:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/taxValue'
+        - type: object
+          properties:
+            quantity:
+              type: number
+              description: Quantity associated with `lineTax`
       required:
         - rate
         - grossValue
@@ -5221,7 +5229,6 @@ components:
             - netValue
             - grossValue
             - rate
-            - quantity
         metadata:
           $ref: '#/components/schemas/metadataRequest'
         mixins:
