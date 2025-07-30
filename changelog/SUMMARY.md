@@ -8,6 +8,8 @@
 
 ## 2025
 
+* [2025-07-30: Cart Service - new attributes on item level](2025/2025-07-30-cart.md)
+* [2025-07-30: Order Service - orderEntryCalculatedPrice.price updated with new property](2025/2025-07-30-order.md)
 * [2025-07-29: Schema Service - support for Site type](2025/2025-07-29-schema.md)
 * [2025-07-23: B2B Customer Groups - Migration](2025/2025-07-23-b2b-customer-groups-migration.md)
 * [2025-07-18: Vendor Service - Vendor Service with locations](2025/2025-07-18-vendor.md)

@@ -2809,6 +2809,16 @@ paths:
                           rate: 19
                           grossValue: 700
                           netValue: 588.24
+                      linePrice:
+                        effectiveAmount: 595.0
+                        originalAmount: 795.0
+                        currency: "EUR"
+                      lineTax:
+                        name: "STANDARD"
+                        rate: 19
+                        grossValue: 595.0
+                        netValue: 500
+                        quantity: 3
                       fees:
                         elements:
                           - yrn: urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2
@@ -2951,7 +2961,6 @@ paths:
                           netValue: 285.592
                           grossValue: 339.485
                           taxValue: 53.893
-
         '400':
           $ref: '#/components/responses/trait_400'
         '403':
@@ -3050,6 +3059,30 @@ paths:
                     grossValue: 2
                     netValue: 1.82
                   quantity: 5
+              External line price and line tax example:
+                value:
+                  itemYrn: "urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross"
+                  keepAsSeparateLineItem: true
+                  itemType: "EXTERNAL"
+                  price:
+                    effectiveAmount: 119.0
+                    originalAmount: 139.0
+                    currency: "EUR"
+                  tax:
+                    name: "STANDARD"
+                    rate: 19
+                    grossValue: 119.0
+                    netValue: 100.0
+                  linePrice:
+                    effectiveAmount: 595.0
+                    originalAmount: 795.0
+                    currency: "EUR"
+                  lineTax:
+                    name: "STANDARD"
+                    rate: 19
+                    grossValue: 595.0
+                    netValue: 500
+                  quantity: 3
               External product example:
                 value:
                   itemType: EXTERNAL
@@ -3199,6 +3232,16 @@ paths:
                         rate: 19
                         grossValue: 700
                         netValue: 588.24
+                    linePrice:
+                      effectiveAmount: 595.0
+                      originalAmount: 795.0
+                      currency: "EUR"
+                    lineTax:
+                      name: "STANDARD"
+                      rate: 19
+                      grossValue: 595.0
+                      netValue: 500
+                      quantity: 3
                     fees:
                       elements:
                         - yrn: urn:yaas:saasag:fee:fee:b2b2cstage;677d49ca3a421b451eab23f2
@@ -3413,6 +3456,28 @@ paths:
                     measurementUnit:
                       quantity: 1
                       unitCode: H87
+              Example with updated line price and line tax:
+                summary: Update item with new external line price
+                value:
+                  itemType: "EXTERNAL"
+                  price:
+                    priceId: 5f59fe70fb29e20020be8f12
+                    originalAmount: 9.49
+                    effectiveAmount: 9.49
+                    currency: EUR
+                    measurementUnit:
+                      quantity: 1
+                      unitCode: H87
+                  linePrice:
+                    effectiveAmount: 1000.0
+                    originalAmount: 1200.0
+                    currency: "EUR"
+                  lineTax:
+                    name: "STANDARD"
+                    rate: 19
+                    grossValue: 1000.0
+                    netValue: 840.0
+                  quantity: 10
         required: false
       security:
         - OAuth2: []
@@ -4079,6 +4144,29 @@ components:
             - $ref: '#/components/schemas/taxValue'
             - type: object
               description: Tax information per unit. This field is only required when itemType is EXTERNAL and request contains external price. It's optional for the `INTERNAL` itemType.'
+        linePrice:
+          description: Externally calculated total line price (`unit price × quantity`). When provided, this overrides internal calculations.
+          properties:
+            effectiveAmount:
+              type: number
+              minimum: 0
+            originalAmount:
+              type: number
+              minimum: 0
+            currency:
+              type: string
+          required:
+            - effectiveAmount
+            - originalAmount
+            - currency
+        lineTax:
+          allOf:
+            - $ref: '#/components/schemas/taxValue'
+          description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`. 
+          required:
+            - netValue
+            - grossValue
+            - rate
         metadata:
           $ref: '#/components/schemas/metadataRequest'
         mixins:
@@ -4287,6 +4375,30 @@ components:
                   description: "**This field is deprecated**. Please use `unitPrice` instead.
                             The `unitPrice` field provides the same value with updated functionality."
               deprecated: true
+            linePrice:
+              description: Externally calculated total line price (`unit price × quantity`). When provided, this overrides internal calculations.
+              properties:
+                effectiveAmount:
+                  type: number
+                  minimum: 0
+                originalAmount:
+                  type: number
+                  minimum: 0
+                currency:
+                  type: string
+              required:
+                - effectiveAmount
+                - originalAmount
+                - currency
+            lineTax:
+              allOf:
+                - $ref: '#/components/schemas/taxValueWithQuantity'
+              description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`. 
+              required:
+                - netValue
+                - grossValue
+                - rate
+                - quantity
             couponDiscounts:
               allOf:
                 - $ref: '#/components/schemas/couponDiscounts'
@@ -4974,6 +5086,15 @@ components:
         netValue:
           type: number
           description: The net value (amount excluding tax). If not provided, it's calculated based on the gross value and tax rate.  If provided then the price effective amount must be equal to it. This field is required only when the itemType is set as EXTERNAL and the request contains an external price.
+    taxValueWithQuantity:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/taxValue'
+        - type: object
+          properties:
+            quantity:
+              type: number
+              description: Represents the item quantity for which the external `lineTax` was provided.
       required:
         - rate
         - grossValue
@@ -5079,6 +5200,29 @@ components:
               description: Tax information per unit. This field is required only when the itemType is set as EXTERNAL and the request contains an external price.
         price:
           $ref: '#/components/schemas/priceRowItem'
+        linePrice:
+          description: Externally calculated total line price (`unit price × quantity`). When provided, this overrides internal calculations.
+          properties:
+            effectiveAmount:
+              type: number
+              minimum: 0
+            originalAmount:
+              type: number
+              minimum: 0
+            currency:
+              type: string
+          required:
+            - effectiveAmount
+            - originalAmount
+            - currency
+        lineTax:
+          allOf:
+            - $ref: '#/components/schemas/taxValue'
+          description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`. 
+          required:
+            - netValue
+            - grossValue
+            - rate
         metadata:
           $ref: '#/components/schemas/metadataRequest'
         mixins:
@@ -5557,6 +5701,15 @@ components:
             - $ref: '#/components/schemas/calculatedPrice'
             - type: object
               description: The price is calculated by multiplying the unit price (taken from priceMatch) by the quantity.
+            - properties:
+                calculated:
+                  type: string
+                  description: Indicates how the line item price was determined.
+                    - `INTERNAL` — Calculated by Emporix using unit price × quantity.
+                    - `EXTERNAL` — Provided externally with `lineTax`.
+                  enum:
+                    - INTERNAL
+                    - EXTERNAL
         upliftValue:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'

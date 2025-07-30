@@ -322,6 +322,94 @@ curl -L \
     ]
   }'
 ```
+## How to pass externally calculated line price and line tax to items added or updated in the cart?
+
+The Cart Service supports externally calculated pricing and tax amounts for cart items. This allows integrated systems to override cart's internal pricing logic with the values determined by external systems.
+
+If you don’t want Emporix to calculate the line price by multiplying quantity × unit price, but instead want to provide the calculation from your ERP system, you can do so by supplying both `linePrice` and `lineTax`. These values are reflected in the line’s calculated price with calculated: EXTERNAL.
+
+In the response, the lineTax will include the quantity information that was used in the add-to-cart request.
+
+* `linePrice` - externally calculated total price for the item line (unit price × quantity)
+* `lineTax` - externally calculated total tax for the item line, allowed only for external product type
+
+{% hint style="warning" %}
+Externally calculated pricing and tax amounts for cart items require the `lineTax` value as it's a base for the calculation. The `linePrice` can be provided as an optional value.
+
+{% endhint %}
+
+The attributes are only allowed when `itemType = EXTERNAL`. If these values are provided, they are stored and returned unchanged in cart responses.
+
+Payload example for [Adding a product to cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items):
+
+```bash
+{
+    "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross",
+    "keepAsSeparateLineItem": true,
+    "itemType": "EXTERNAL",
+    "price": {
+        "effectiveAmount": 119.0,
+        "originalAmount": 139.0,
+        "currency": "EUR"
+    },
+    "tax": {
+        "name": "STANDARD",
+        "rate": 19,
+        "grossValue": 119.0,
+        "netValue": 100.0
+    },
+    "linePrice": {
+        "effectiveAmount": 595.0,
+        "originalAmount": 795.0,
+        "currency": "EUR"
+    },
+    "lineTax": {
+        "name": "STANDARD",
+        "rate": 19,
+        "grossValue": 595.0,
+        "netValue": 500
+    },
+    "quantity": 5
+}
+```
+Returned response example:
+
+```bash
+{
+    "items": [{
+        "itemType": "EXTERNAL",
+        "price": { ... },
+        "tax": { ... },
+        "linePrice": { ... },
+        "lineTax": { ... },
+        "calculatedPrice": {
+            "price": {
+                "calculated": "EXTERNAL"
+            }
+        }
+    }]
+}
+```
+The `price.calculated` field indicates the source of the total price:
+* INTERNAL – for the price calculated by Emporix (unitPrice × quantity).
+* EXTERNAL – for the price taken directly from `linePrice` (authoritative).
+
+### Calculation behaviour with external line price and line tax
+
+When you use `linePrice` and `lineTax` in cart operations, the following rules apply:
+
+* If `lineTax` is provided, these values take priority over internally calculated totals for `calculatedPrice` and `finalPrice`. If neither is provided, then cart service calculates totals internally based on the unit price and quantity.
+* For **partial cart item updates** (with `partial=true`), any existing `linePrice` or `lineTax` values are preserved if they are not provided in the update payload.
+* For **full cart item updates**, any previously set `linePrice` or `lineTax` values are cleared if they are not included in the update payload.
+* If the item’s **quantity is updated after an external** `linePrice` **was set**, the cart recalculates it internally (`calculated = INTERNAL`) and ignores the previous external value. To restore external pricing, a new `linePrice` must be provided that matches the new quantity. 
+
+  If the `linePrice` is provided, the quantity of the provided `linePrice` values has to much the quantity of items in the cart. Otherwise, the additional items are calculated internally.
+
+* In [Retrieving all products added to a cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#get-cart-tenant-carts-cartid-items) or [Retrieving a cart item](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#get-cart-tenant-carts-cartid-items-itemid), any externally provided `linePrice` and `lineTax` are returned unchanged. 
+  
+    A `quantity` field is included on `lineTax` in responses, reflecting the quantity used when the external tax was calculated. 
+
+For order entries, the `calculated = INTERNAL/EXTERNAL` flag is also returned - it indicates  how the pricing was derived.
 
 ## Pricing calculations
 
