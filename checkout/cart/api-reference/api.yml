@@ -4378,8 +4378,6 @@ components:
                             The `unitPrice` field provides the same value with updated functionality."
               deprecated: true
             linePrice:
-              allOf:
-                - $ref: '#/components/schemas/price'
               description: Externally calculated total line price (`unit price × quantity`). When provided, this overrides internal calculations.
               properties:
                 effectiveAmount:
