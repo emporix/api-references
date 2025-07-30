@@ -1343,7 +1343,7 @@ To enable order splitting, the Order Service works directly with the [Vendor Ser
 
 When a customer completes checkout, a single order is created containing all the selected products. Each order entry includes vendor information, making it a standard order with additional vendor details.
 
-If you need to separate this combined order into vendor-specific suborders, send the request to the [Splitting Order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-salesorders-orderid-split) endpoint.
+If you need to separate this combined order into vendor-specific suborders, send the request to the [Splitting Order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders-orderid-split) endpoint.
 
 You can also use a Digital Process for the splitting mechanism, see the Order Splitting Digital Process template for reference:&#x20;
 

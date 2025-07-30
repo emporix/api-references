@@ -243,7 +243,7 @@ When a customer adds a product to the cart that belongs to a vendor, the system 
 
 When the customer completes the checkout, a single order is created containing all the selected products. Each order entry retains the vendor information and is a standard order but with vendor details.
 
-If you need to separate this combined order into vendor-specific suborders, send the request to the [Splitting Order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-salesorders-orderid-split) endpoint.
+If you need to separate this combined order into vendor-specific suborders, send the request to the [Splitting Order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders-orderid-split) endpoint.
 
 You can also use a Digital Process for the splitting mechanism, see the Order Splitting Digital Process template for reference:&#x20;
 
