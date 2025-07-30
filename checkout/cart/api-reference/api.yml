@@ -5201,8 +5201,6 @@ components:
         price:
           $ref: '#/components/schemas/priceRowItem'
         linePrice:
-          allOf:
-            - $ref: '#/components/schemas/price'
           description: Externally calculated total line price (`unit price × quantity`). When provided, this overrides internal calculations.
           properties:
             effectiveAmount:
