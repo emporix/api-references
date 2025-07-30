@@ -5098,7 +5098,7 @@ components:
           properties:
             quantity:
               type: number
-              description: Represents the item quantity used where the external `lineTax` was provided.
+              description: Represents the item quantity for which the external `lineTax` was provided.
       required:
         - rate
         - grossValue

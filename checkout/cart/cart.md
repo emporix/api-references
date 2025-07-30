@@ -333,6 +333,11 @@ In the response, the lineTax will include the quantity information that was used
 * `linePrice` - externally calculated total price for the item line (unit price × quantity)
 * `lineTax` - externally calculated total tax for the item line, allowed only for external product type
 
+{% hint style="warning" %}
+Externally calculated pricing and tax amounts for cart items, requires the `lineTax` value as it's a base for the calculation. The `linePrice` can be provided as an optional value.
+
+{% endhint %}
+
 The attributes are only allowed when `itemType = EXTERNAL`. If these values are provided, they are stored and returned unchanged in cart responses.
 
 Payload example for [Adding a product to cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items):
@@ -405,11 +410,6 @@ When you use `linePrice` and `lineTax` in cart operations, the following rules a
     A `quantity` field is included on `lineTax` in responses, reflecting the quantity used when the external tax was calculated. 
 
 For order entries, the `calculated = INTERNAL/EXTERNAL` flag is also returned - it indicates  how the pricing was derived.
-
-{% hint style="warning" %}
-The `lineTax` value is mandatory as it's a base for the calculation. The `linePrice` can be provided as an optional value.
-
-{% endhint %}
 
 ## Pricing calculations
 
