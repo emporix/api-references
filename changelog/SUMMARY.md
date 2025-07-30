@@ -8,6 +8,9 @@
 
 ## 2025
 
+* [2025-07-30: Cart Service - vendor added](2025/2025-07-30-cart-vendor.md)
+* [2025-07-30: Order Service - order splitting](2025/2025-07-30-order-vendor.md)
+* [2025-07-30: Webhook Service - update order event schema](2025/2025-07-30-webhook-vendor.md)
 * [2025-07-30: Cart Service - new attributes on item level](2025/2025-07-30-cart.md)
 * [2025-07-30: Order Service - orderEntryCalculatedPrice.price updated with new property](2025/2025-07-30-order.md)
 * [2025-07-29: Schema Service - support for Site type](2025/2025-07-29-schema.md)

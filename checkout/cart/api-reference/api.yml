@@ -4318,7 +4318,7 @@ components:
         yrn:
           $ref: '#/components/schemas/YRN'
         product:
-          $ref: '#/components/schemas/product'
+          $ref: '#/components/schemas/cartItemResponseProduct'
         itemYrn:
           $ref: '#/components/schemas/YRN'
         type:
@@ -4987,6 +4987,25 @@ components:
           type: object
           description: ''
           additionalProperties: true
+    cartItemResponseProduct:
+      allOf:
+        - $ref: '#/components/schemas/product'
+        - type: object
+          properties:
+            vendor:
+              $ref: '#/components/schemas/vendor'
+    vendor:
+      type: object
+      description: Product's vendor information, autopopulated based on product catalog information.
+      properties:
+        id:
+          type: string
+          description: An identifier of a vendor to whom the product belongs
+        name:
+          type: string
+          description: vendor name
+      required:
+        - id
     productImage:
       type: object
       properties:
