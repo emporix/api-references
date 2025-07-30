@@ -154,7 +154,8 @@ paths:
                         version: 1
                         createdAt: '2025-07-25T10:30:27.167Z'
                         modifiedAt: '2025-07-25T10:31:14.509Z'
-
+        '400':
+          $ref: '#/components/responses/400_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
@@ -165,10 +166,10 @@ paths:
         
         ### Required scopes
 
-        * `ai.completion_manage`
+        * `ai.agent_read`
       security:
         - OAuth2:
-            - ai.completion_manage
+            - ai.agent_read
       tags:
         - Job
   '/ai-service/{tenant}/jobs/{jobId}':
@@ -216,16 +217,18 @@ paths:
           $ref: '#/components/responses/401_resp_common'
         '403':
           $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
       description: |-
         ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves agent job.
         
         ### Required scopes
 
-        * `ai.completion_manage`
+        * `ai.agent_read`
       security:
         - OAuth2:
-            - ai.completion_manage
+            - ai.agent_read
       tags:
         - Job
     delete:
@@ -248,10 +251,10 @@ paths:
         
         ### Required scopes
 
-        * `ai.completion_manage`
+        * `ai.agent_manage`
       security:
         - OAuth2:
-            - ai.completion_manage
+            - ai.agent_manage
       tags:
         - Job
   '/ai-service/{tenant}/jobs/search':
@@ -295,6 +298,8 @@ paths:
                         version: 1
                         createdAt: '2025-07-25T10:30:27.167Z'
                         modifiedAt: '2025-07-25T10:31:14.509Z'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
@@ -307,10 +312,10 @@ paths:
         
         ### Required scopes
 
-        * `ai.completion_manage`
+        * `ai.agent_read`
       security:
         - OAuth2:
-            - ai.completion_manage
+            - ai.agent_read
       tags:
         - Job
   '/ai-service/{tenant}/agentic/chat':
@@ -337,10 +342,10 @@ paths:
               examples:
                 JobId:
                   value:
-                    agentId: complaint-agent
-                    agentType: complaint
-                    message: Found an order with its details.
-                    sessionId: fe91d168-4ce9-4b4d-8451-0029035b34a5
+                    - agentId: complaint-agent
+                      agentType: complaint
+                      message: Found an order with its details.
+                      sessionId: fe91d168-4ce9-4b4d-8451-0029035b34a5
         '400':
           $ref: '#/components/responses/400_resp_common'
         '401':
@@ -383,11 +388,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/IdResponse'
+                  $ref: '#/components/schemas/JobIdResponse'
               examples:
                 JobId:
                   value:
-                    id: 68835cc3ef4e8e1425c360ad
+                    - jobId: 68835cc3ef4e8e1425c360ad
         '400':
           $ref: '#/components/responses/400_resp_common'
         '401':
@@ -435,6 +440,8 @@ paths:
               examples:
                 Agent Templates Response:
                   $ref: '#/components/examples/AgentTemplatesResponse'
+        '400':
+          $ref: '#/components/responses/401_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
@@ -454,6 +461,11 @@ paths:
   '/ai-service/{tenant}/agentic/templates/search':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/header_xTotalCount'
       - $ref: '#/components/parameters/header_Accept-Language'
     post:
       summary: Search agent templates
@@ -470,6 +482,8 @@ paths:
               examples:
                 Agent Templates Response:
                   $ref: '#/components/examples/AgentTemplatesResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
@@ -510,11 +524,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/IdResponse'
               examples:
-                Cloned Agent Template Response:
+                Agent Based on Template Response:
                   $ref: '#/components/examples/IdResponse'
+        '400':
+          $ref: '#/components/responses/401_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
           $ref: '#/components/responses/403_resp_common'
       description: |-
         ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
@@ -677,6 +695,8 @@ paths:
                   $ref: '#/components/examples/IdResponse'
         '204':
           description: The resource has been successfully updated.
+        '400':
+          $ref: '#/components/responses/400_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
@@ -706,6 +726,8 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/400_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
@@ -802,22 +824,19 @@ components:
         agentId:
           type: string
           description: Unique identifier of the agent.
-        agentType:
-          $ref: '#/components/schemas/AgentType'
         message:
           type: string
           description: The user message to the agent.
       required:
         - agentId
-        - agentType
         - message
     AgentType:
       type: string
       description: Type of the agent handling the request
       enum:
-        - SUPPORT
-        - GENERIC
-        - COMPLAINT
+        - support
+        - generic
+        - complaint
     TextGenerationRequest:
       title: TextGenerationRequest
       type: object
@@ -834,30 +853,6 @@ components:
         maxTokens:
           type: integer
           description: Maximum number of tokens that should be used during text generation. If not provided then 4097 is used.
-    AgenticResponse:
-      type: object
-      properties:
-        agentType:
-          $ref: '#/components/schemas/AgentType'
-        message:
-          type: string
-          description: The response message from the agent
-        metadata:
-          type: object
-          properties:
-            totalTokens:
-              type: integer
-              description: Total number of token taken by the last call.
-            promptTokens:
-              type: integer
-              description: Number of tokens taken by the input (prompt).
-            outputTokens:
-              type: integer
-              description: Number of tokens taken by the output.
-        sessionId:
-          type: string
-          format: uuid
-          description: Session identifier for tracking purposes
     IdResponse:
       type: object
       properties:
@@ -997,10 +992,6 @@ components:
           - $ref: '#/components/schemas/PredefinedMcpServer'
 
     # LLM Config:
-    LlmProvider:
-      type: string
-      enum: [openai,emporix_openai]
-      description: Type of the LLM Provider. The `emporix_openai` allows to use OpenAI token provided by Emporix. The token usage is limited. When using this provider `apiKey` property can be omitted. The `openai` provider allows to provider your own OpenAI token.
     BaseLlm:
       type: object
       properties:
@@ -1018,30 +1009,38 @@ components:
           type: integer
           description: The limit of tokens which agent can burn during one request session.
           example: 1000
-        provider:
-          $ref: '#/components/schemas/LlmProvider'
       required:
         - model
         - temperature
         - maxTokens
-        - provider
     EmporixOpenAiLlm:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
         - type: object
           properties:
             provider:
+              type: string
+              description: Type of the LLM Provider. The `emporix_openai` allows to use OpenAI token provided by Emporix. The token usage is limited. When using this provider `apiKey` property can be omitted.
+              enum: [emporix_openai]
               example: emporix_openai
+          required:
+            - provider
     OpenAiLlmRequest:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
         - type: object
           properties:
             provider:
+              type: string
+              description: Type of the LLM Provider. The `openai` provider allows to provider your own OpenAI token. When using this provider `apiKey` property cannot be omitted.
+              enum: [openai]
               example: openai
             apiKey:
               type: string
               description: The API Key of OpenAI.
+          required:
+            - provider
+            - apiKey
     OpenAiLlmResponse:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
@@ -1167,14 +1166,14 @@ components:
           properties:
             nativeTools:
               $ref: '#/components/schemas/NativeToolsRequest'
-            llmProvider:
+            llmConfig:
               oneOf:
                 - $ref: '#/components/schemas/EmporixOpenAiLlm'
                 - $ref: '#/components/schemas/OpenAiLlmRequest'
             metadata:
               $ref: '#/components/schemas/basicMetadata'
           required:
-            - llmProvider
+            - llmConfig
     AgentResponse:
       allOf:
         - $ref: '#/components/schemas/BaseForAgentRequestAndResponse'
@@ -1182,7 +1181,7 @@ components:
           properties:
             nativeTools:
               $ref: '#/components/schemas/NativeToolsResponse'
-            llmProvider:
+            llmConfig:
               oneOf:
                 - $ref: '#/components/schemas/EmporixOpenAiLlm'
                 - $ref: '#/components/schemas/OpenAiLlmResponse'
@@ -1234,6 +1233,8 @@ components:
         id:
           type: string
           description: Unique identifier of the job.
+        agentType:
+          $ref: '#/components/schemas/AgentType'
         status:
           $ref: '#/components/schemas/JobStatus'
         sessionId:
@@ -1247,6 +1248,12 @@ components:
           description: Agent's message.
         metadata:
           $ref: '#/components/schemas/metadata'
+    JobIdResponse:
+      type: object
+      properties:
+        jobId:
+          type: string
+          description: Identifier of the job.
 
     ChatResponse:
       type: object
@@ -1551,7 +1558,6 @@ components:
             Agentic Chat request:
               value:
                 agentId: complaint-agent
-                agentType: COMPLAINT
                 message: 'Find a product with "EON1243" code'
     Completion:
       content:
@@ -1726,7 +1732,7 @@ components:
         llmConfig:
           model: GPT-4.1
           apiKey: secureApiKey
-          provider: OPENAI
+          provider: openai
           maxTokens: 100000
           temperature: 0.2
         trigger:
@@ -1744,7 +1750,7 @@ components:
               - get-orders
               - get-order
         nativeTools:
-          - name: slack
+          - type: slack
             enabled: true
             config:
               teamId: T08J7676
