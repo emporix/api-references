@@ -334,7 +334,7 @@ In the response, the lineTax will include the quantity information that was used
 * `lineTax` - externally calculated total tax for the item line, allowed only for external product type
 
 {% hint style="warning" %}
-Externally calculated pricing and tax amounts for cart items, requires the `lineTax` value as it's a base for the calculation. The `linePrice` can be provided as an optional value.
+Externally calculated pricing and tax amounts for cart items require the `lineTax` value as it's a base for the calculation. The `linePrice` can be provided as an optional value.
 
 {% endhint %}
 
