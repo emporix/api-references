@@ -4335,31 +4335,6 @@ components:
           description: External discounts applied to this cart item.
           items:
             $ref: '#/components/schemas/externalDiscount'
-        linePrice:
-          allOf:
-            - $ref: '#/components/schemas/price'
-          description: Externally calculated total line price (`unit price × quantity`). When provided, this overrides internal calculations.
-          properties:
-            effectiveAmount:
-              type: number
-              minimum: 0
-            originalAmount:
-              type: number
-              minimum: 0
-            currency:
-              type: string
-          required:
-            - effectiveAmount
-            - originalAmount
-            - currency
-        lineTax:
-          allOf:
-            - $ref: '#/components/schemas/taxValue'
-          description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`. 
-          required:
-            - netValue
-            - grossValue
-            - rate
       required:
         - quantity
         - effectiveQuantity
@@ -4377,6 +4352,32 @@ components:
                   description: "**This field is deprecated**. Please use `unitPrice` instead.
                             The `unitPrice` field provides the same value with updated functionality."
               deprecated: true
+            linePrice:
+              allOf:
+                - $ref: '#/components/schemas/price'
+              description: Externally calculated total line price (`unit price × quantity`). When provided, this overrides internal calculations.
+              properties:
+                effectiveAmount:
+                  type: number
+                  minimum: 0
+                originalAmount:
+                  type: number
+                  minimum: 0
+                currency:
+                  type: string
+              required:
+                - effectiveAmount
+                - originalAmount
+                - currency
+            lineTax:
+              allOf:
+                - $ref: '#/components/schemas/taxValue'
+              description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`. 
+              required:
+                - netValue
+                - grossValue
+                - rate
+                - quantity
             couponDiscounts:
               allOf:
                 - $ref: '#/components/schemas/couponDiscounts'

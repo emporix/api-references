@@ -394,12 +394,12 @@ The `price.calculated` field indicates the source of the total price:
 When you use `linePrice` and `lineTax` in cart operations, the following rules apply:
 
 * If `lineTax` is provided, these values take priority over internally calculated totals for `calculatedPrice` and `finalPrice`. If neither is provided, then cart service calculates totals internally based on the unit price and quantity.
-* For **partial cart item update**s (with `partial=true`), any existing `linePrice` or `lineTax` values are preserved if they are not provided in the update payload.
+* For **partial cart item updates** (with `partial=true`), any existing `linePrice` or `lineTax` values are preserved if they are not provided in the update payload.
 * For **full cart item updates**, any previously set `linePrice` or `lineTax` values are cleared if they are not included in the update payload.
 * If the item’s **quantity is updated after an external** `linePrice` **was set**, the cart recalculates it internally (`calculated = INTERNAL`) and ignores the previous external value. To restore external pricing, a new `linePrice` must be provided that matches the new quantity. 
 
   If the `linePrice` is provided, the quantity of the provided `linePrice` values has to much the quantity of items in the cart. Otherwise, the additional items are calculated internally.
-* If **only** `lineTax` **is provided** (without the `linePrice`), the final price is still calculated using the standard internal price logic.
+
 * In [Retrieving all products added to a cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#get-cart-tenant-carts-cartid-items) or [Retrieving a cart item](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#get-cart-tenant-carts-cartid-items-itemid), any externally provided `linePrice` and `lineTax` are returned unchanged. 
   
     A `quantity` field is included on `lineTax` in responses, reflecting the quantity used when the external tax was calculated. 
@@ -407,7 +407,7 @@ When you use `linePrice` and `lineTax` in cart operations, the following rules a
 For order entries, the `calculated = INTERNAL/EXTERNAL` flag is also returned - it indicates  how the pricing was derived.
 
 {% hint style="warning" %}
-The `lineTax` value is mandatory as it's a base for the calculation. The `linePrice` can be provided optionally value.
+The `lineTax` value is mandatory as it's a base for the calculation. The `linePrice` can be provided as an optional value.
 
 {% endhint %}
 
