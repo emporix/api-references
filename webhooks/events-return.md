@@ -12,9 +12,7 @@ Webhook events the creation, update, and deletion of a return.
 
 ## Available events
 
-| Event type     | Event schema                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| return.created | <pre class="language-json"><code class="lang-json">{
+<table><thead><tr><th>Event type</th><th>Event schema</th></tr></thead><tbody><tr><td>return.created</td><td><pre class="language-json"><code class="lang-json">{
   "approvalStatus": "String",
   "approver": {
     "id": "String",
@@ -72,12 +70,10 @@ Webhook events the creation, update, and deletion of a return.
     "value": "Number"
   }
 }
-</code></pre> |
-| return.deleted | <pre class="language-json"><code class="lang-json">{
+</code></pre></td></tr><tr><td>return.deleted</td><td><pre class="language-json"><code class="lang-json">{
   "id": "String"
 }
-</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| return.updated | <pre class="language-json"><code class="lang-json">{
+</code></pre></td></tr><tr><td>return.updated</td><td><pre class="language-json"><code class="lang-json">{
   "approvalStatus": "String",
   "approver": {
     "id": "String",
@@ -135,4 +131,4 @@ Webhook events the creation, update, and deletion of a return.
     "value": "Number"
   }
 }
-</code></pre>  |
+</code></pre></td></tr></tbody></table>

@@ -32,8 +32,8 @@ To create a new catalog, you need to send a request to the [Creating a new catal
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../category-tree/api-reference/" %}
+[api-reference](../category-tree/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -72,8 +72,8 @@ For more information, check out [_How to create a category_](../category-tree/#h
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../category-tree/api-reference/" %}
-[api-reference](../category-tree/api-reference/)
+{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
+[api-reference](../../products-labels-and-brands/product-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -120,8 +120,8 @@ In the request body, insert the ID of the category into the `categoryIds` array.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../category-tree/api-reference/" %}
-[api-reference](../category-tree/api-reference/)
+{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
+[api-reference](../../products-labels-and-brands/product-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash

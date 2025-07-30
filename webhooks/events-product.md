@@ -12,9 +12,7 @@ Webhook events related to the creation, update, and deletion of a product.
 
 ## Available events
 
-| Event type      | Event schema                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| product.created | <pre class="language-json"><code class="lang-json">{
+<table><thead><tr><th>Event type</th><th>Event schema</th></tr></thead><tbody><tr><td>product.created</td><td><pre class="language-json"><code class="lang-json">{
   "id": "String",
   "code": "String",
   "name": "Map",
@@ -62,8 +60,7 @@ Webhook events related to the creation, update, and deletion of a product.
     "modifiedAt": "String"
   }
 }
-</code></pre> |
-| product.updated | <pre class="language-json"><code class="lang-json">{
+</code></pre></td></tr><tr><td>product.updated</td><td><pre class="language-json"><code class="lang-json">{
   "id": "String",
   "code": "String",
   "name": "Map",
@@ -111,8 +108,7 @@ Webhook events related to the creation, update, and deletion of a product.
     "modifiedAt": "String"
   }
 }
-</code></pre> |
-| product.deleted | <pre class="language-json"><code class="lang-json">{
+</code></pre></td></tr><tr><td>product.deleted</td><td><pre class="language-json"><code class="lang-json">{
   "id": "String"
 }
-</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+</code></pre></td></tr></tbody></table>

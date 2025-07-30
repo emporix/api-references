@@ -12,9 +12,7 @@ Webhook events related to the creation, update, and deletion of a category tree 
 
 ## Available events
 
-| Event type         | Event schema                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| category.created   | <pre class="language-json"><code class="lang-json">{
+<table><thead><tr><th>Event type</th><th>Event schema</th></tr></thead><tbody><tr><td>category.created</td><td><pre class="language-json"><code class="lang-json">{
   "id": "String",
   "parentId": "String",
   "name": {
@@ -48,8 +46,7 @@ Webhook events related to the creation, update, and deletion of a category tree 
     "modifiedAt": "String"
   }
 }
-</code></pre> |
-| category.updated   | <pre class="language-json"><code class="lang-json">{
+</code></pre></td></tr><tr><td>category.updated</td><td><pre class="language-json"><code class="lang-json">{
   "id": "String",
   "parentId": "String",
   "name": {
@@ -83,13 +80,11 @@ Webhook events related to the creation, update, and deletion of a category tree 
     "modifiedAt": "String"
   }
 }
-</code></pre> |
-| category.deleted   | <pre class="language-json"><code class="lang-json">{
+</code></pre></td></tr><tr><td>category.deleted</td><td><pre class="language-json"><code class="lang-json">{
   "id": "String",
   "parentId": "String"
 }
-</code></pre>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| assignment.created | <pre class="language-json"><code class="lang-json">{
+</code></pre></td></tr><tr><td>assignment.created</td><td><pre class="language-json"><code class="lang-json">{
   "categoryId": "String",
   "assignment": {
     "id": "String",
@@ -104,8 +99,7 @@ Webhook events related to the creation, update, and deletion of a category tree 
     "createdAt": "String"
   }
 }
-</code></pre>                                                                                                                                                                                                                                                                                |
-| assignment.deleted | <pre class="language-json"><code class="lang-json">{
+</code></pre></td></tr><tr><td>assignment.deleted</td><td><pre class="language-json"><code class="lang-json">{
   "categoryId": "String",
   "assignments": [
     {
@@ -119,4 +113,4 @@ Webhook events related to the creation, update, and deletion of a category tree 
     }
   ]
 }
-</code></pre>                                                                                                                                                                                                                                                                                                    |
+</code></pre></td></tr></tbody></table>

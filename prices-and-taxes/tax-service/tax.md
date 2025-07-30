@@ -40,8 +40,8 @@ Then, send a request to the [Calculating net and gross values for prices](https:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../users-and-permissions/iam/api-reference/" %}
+[api-reference](../../users-and-permissions/iam/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -84,8 +84,8 @@ Then, send a request to the [Calculating net and gross values for prices](https:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../users-and-permissions/iam/api-reference/" %}
+[api-reference](../../users-and-permissions/iam/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -150,8 +150,8 @@ Then, send a request to the [Calculating net and gross values for prices](https:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../users-and-permissions/iam/api-reference/" %}
+[api-reference](../../users-and-permissions/iam/api-reference/)
 {% endcontent-ref %}
 
 ```bash

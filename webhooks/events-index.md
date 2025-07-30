@@ -14,16 +14,8 @@ Webhook events related to indexing data.
 
 ### Available events
 
-| Event type                          | Event schema                                                       |
-| ----------------------------------- | ------------------------------------------------------------------ |
-| index-item.updated                  | <pre class="language-json"><code class="lang-json">{
-</code></pre> |
-| "availability": "Object",           |                                                                    |
-| "available": "Boolean",             |                                                                    |
-| "categoryAssignments": \["Object"], |                                                                    |
-| "code": "String",                   |                                                                    |
-| "id": "String",                     |                                                                    |
-| "medias": \[                        |                                                                    |
+<table><thead><tr><th>Event type</th><th>Event schema</th></tr></thead><tbody><tr><td>index-item.updated</td><td><pre class="language-json"><code class="lang-json">{
+</code></pre></td></tr><tr><td>"availability": "Object",</td><td></td></tr><tr><td>"available": "Boolean",</td><td></td></tr><tr><td>"categoryAssignments": ["Object"],</td><td></td></tr><tr><td>"code": "String",</td><td></td></tr><tr><td>"id": "String",</td><td></td></tr><tr><td>"medias": [</td><td></td></tr></tbody></table>
 
 ```
 {"Object"}

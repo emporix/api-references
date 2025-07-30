@@ -23,8 +23,8 @@ Create a customer segment by sending a request to the the [Creating a customer s
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../approval-service/approval-api-reference/" %}
+[approval-api-reference](../approval-service/approval-api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -59,8 +59,8 @@ Connect the segment with specific products and/or categories for more customized
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../approval-service/approval-api-reference/" %}
+[approval-api-reference](../approval-service/approval-api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -86,8 +86,8 @@ curl -i -X PUT \
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../approval-service/approval-api-reference/" %}
+[approval-api-reference](../approval-service/approval-api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -110,8 +110,8 @@ Now, add customers to the segment. Depending on your setup and purpose, you can 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../approval-service/approval-api-reference/" %}
+[approval-api-reference](../approval-service/approval-api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -137,8 +137,8 @@ curl -i -X PUT \
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../approval-service/approval-api-reference/" %}
+[approval-api-reference](../approval-service/approval-api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -164,8 +164,8 @@ curl -i -X PUT \
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../approval-service/approval-api-reference/" %}
+[approval-api-reference](../approval-service/approval-api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -188,8 +188,8 @@ To search for a segment, you need the `customersegment.segment_read` scope to re
 
 You can use the search API to find a segment of your interest that match a specific criteria. Send the request to the [Searching with parameters for customer segments](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments-search) endpoint.
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../approval-service/approval-api-reference/" %}
+[approval-api-reference](../approval-service/approval-api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -267,8 +267,8 @@ Send the request to the [Retrieving all items assignments for all customer segme
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../approval-service/approval-api-reference/" %}
+[approval-api-reference](../approval-service/approval-api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -288,8 +288,8 @@ Send the request to the [Retrieving category trees for a customer segments](http
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../approval-service/approval-api-reference/" %}
+[approval-api-reference](../approval-service/approval-api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -305,8 +305,8 @@ To filter products that belong to a category that is assigned to a particular se
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../catalogs-and-categories/category-tree/api-reference/" %}
-[api-reference](../../catalogs-and-categories/category-tree/api-reference/)
+{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
+[api-reference](../../products-labels-and-brands/product-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash

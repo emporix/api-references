@@ -49,12 +49,12 @@ The Emporix Developer Portal provides you with two types of credentials:
 
 When using our API, you will come across four types of access tokens:
 
-| Token type           | Description                                                                                                                                                                                                               | Emporix API endpoint                                                                        |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| Anonymous token      | Used by the storefront to access public resources with a reading scope. It allows customers to browse products, view prices, or add products to a cart. The anonymous token is not associated with any specific customer. | [Requesting an anonymous token](authorization/oauth-service/api-reference/#anonymous-token) |
-| Customer token       | A JSON Web Token (JWT) which contains encrypted customer data. The customer token works similarly to the anonymous token, but it is associated with a specific customer.                                                  | [Requesting a customer token](authorization/oauth-service/api-reference/)                   |
-| Refresh token        | Used to refresh the customer token.                                                                                                                                                                                       | [Requesting a refresh token](authorization/oauth-service/api-reference/)                    |
-| Service access token | Needed to access and manage the Emporix services such as adding new products, managing categories, or modifying prices.                                                                                                   | [Requesting a service access token](authorization/oauth-service/api-reference/)             |
+| Token type           | Description                                                                                                                                                                                                               | Emporix API endpoint                                                                               |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Anonymous token      | Used by the storefront to access public resources with a reading scope. It allows customers to browse products, view prices, or add products to a cart. The anonymous token is not associated with any specific customer. | [Requesting an anonymous token](artificial-intelligence/ai-service/api-reference/#anonymous-token) |
+| Customer token       | A JSON Web Token (JWT) which contains encrypted customer data. The customer token works similarly to the anonymous token, but it is associated with a specific customer.                                                  | [Requesting a customer token](artificial-intelligence/ai-service/api-reference/)                   |
+| Refresh token        | Used to refresh the customer token.                                                                                                                                                                                       | [Requesting a refresh token](artificial-intelligence/ai-service/api-reference/)                    |
+| Service access token | Needed to access and manage the Emporix services such as adding new products, managing categories, or modifying prices.                                                                                                   | [Requesting a service access token](artificial-intelligence/ai-service/api-reference/)             |
 
 ### Scopes
 
@@ -89,7 +89,7 @@ To access the Emporix API, you first need to retrieve your API keys. Perform the
 
 ### Send a sample request
 
-You can now use your Emporix API keys to authorize requests. Try it out by calling the [Retrieving sites](configuration/indexing-service/api-reference/) endpoint:
+You can now use your Emporix API keys to authorize requests. Try it out by calling the [Retrieving sites](catalogs-and-categories/catalog/api-reference/) endpoint:
 
 ```bash
 curl -i -X GET \

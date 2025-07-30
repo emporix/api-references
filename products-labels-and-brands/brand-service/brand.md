@@ -29,8 +29,8 @@ To create a brand and add media files to it, you need to send a request to the [
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../prices-and-taxes/price-service/api-reference/" %}
+[api-reference](../../prices-and-taxes/price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -98,8 +98,8 @@ To update the existing product with brand information, you need to send a reques
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../product-service/api-reference/" %}
-[api-reference](../product-service/api-reference/)
+{% content-ref url="../label-service/api-reference/" %}
+[api-reference](../label-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash

@@ -11,9 +11,9 @@ Vendor Service allows you to configure how vendor's employees access products an
 
 Related Services:
 
-* [IAM](/users-and-permissions/iam/README.md)
-* [Product](/products-labels-and-brands/product-service/README.md)
-* [Order](/orders/order/README.md)
+* [IAM](../../users-and-permissions/iam/)
+* [Product](../../products-labels-and-brands/product-service/)
+* [Order](../../orders/order/)
 
 ## How to create a vendor?
 
@@ -21,8 +21,8 @@ To create a vendor, send a request to the [Creating a vendor](https://developer.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="/companies-and-customers/vendor-service/api-reference/" %}
-[api-reference](/companies-and-customers/vendor-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -50,9 +50,10 @@ curl -L
   ]
 }
 ```
+
 Your vendor is created and you get its ID in the request response, for example `6880c8e860a76003fbece674`.
 
-When a vendor is created, it automatically creates four new user groups for your tenant - `vendor.order.manager`, `vendor.order.viewer.` `vendor.product.manager`, `vendor.product.viewer`. In the example based on ABC Company the groups are: 
+When a vendor is created, it automatically creates four new user groups for your tenant - `vendor.order.manager`, `vendor.order.viewer.` `vendor.product.manager`, `vendor.product.viewer`. In the example based on ABC Company the groups are:
 
 * ABC Company Vendor Product Manager
 * ABC Company Vendor Product Viewer
@@ -127,16 +128,15 @@ curl -L
 
 As a response you get the location ID, for example `687a4055b036735470a91bb8` that you can assign to your vendor.
 
-## How to link users group with a vendor? 
+## How to link users group with a vendor?
 
 Start with checking the groups that are created for your tenant. Send the request to [Retrieving all groups](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="/users-and-permissions/iam/api-reference/" %}
-[api-reference](/users-and-permissions/iam/api-reference/)
+{% content-ref url="../../users-and-permissions/iam/api-reference/" %}
+[api-reference](../../users-and-permissions/iam/api-reference/)
 {% endcontent-ref %}
-
 
 If you have created a vendor earlier for the tenant, you should see all the relevant vendor groups in the response. For example:
 
@@ -207,17 +207,16 @@ If you have created a vendor earlier for the tenant, you should see all the rele
   }
 ```
 
-Each vendor group has it's own ID. To assign a user to the vendor group, send the request to [Adding a user to a group](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/group-assignments#post-iam-tenant-groups-groupid-users) endpoint.
-Provide the vendor group's ID and user's ID in the request.
+Each vendor group has it's own ID. To assign a user to the vendor group, send the request to [Adding a user to a group](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/group-assignments#post-iam-tenant-groups-groupid-users) endpoint. Provide the vendor group's ID and user's ID in the request.
 
 {% hint style="info" %}
-A single user can belong to only one vendor group. 
+A single user can belong to only one vendor group.
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="/users-and-permissions/iam/api-reference/" %}
-[api-reference](/users-and-permissions/iam/api-reference/)
+{% content-ref url="../../users-and-permissions/iam/api-reference/" %}
+[api-reference](../../users-and-permissions/iam/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -230,24 +229,25 @@ curl -L
     "userId": "3bf883fc-d18a-4175-8137-aaf64f810835",
     "userType": "EMPLOYEE"
   }'
-  ```
+```
 
 You can then check the user's assignment to a vendor group by sending a request to the [Retrieving a list of vendor users](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/management-dashboard-users#get-iam-tenant-users-vendors-vendorid) endpoint.
 
+## How does product relate to a vendor?
 
-## How does product relate to a vendor? 
+When a logged-in user who belongs to a vendor creates a product, that product is automatically assigned to the vendor. This means every such product has a `vendorId` field populated.
 
-When a logged-in user who belongs to a vendor creates a product, that product is automatically assigned to the vendor.
-This means every such product has a `vendorId` field populated.
+When a customer adds a product to the cart that belongs to a vendor, the system automatically adds that vendor information to the cart entry. This ensures that when the checkout happens, every product “knows” which vendor it belongs to.
 
-When a customer adds a product to the cart that belongs to a vendor, the system automatically adds that vendor information to the cart entry.
-This ensures that when the checkout happens, every product “knows” which vendor it belongs to.
-
-## How does vendor work with order splitting? 
+## How does vendor work with order splitting?
 
 When the customer completes the checkout, a single order is created containing all the selected products. Each order entry retains the vendor information and is a standard order but with vendor details.
 
 If you need to separate this combined order into vendor-specific suborders, send the request to the [Splitting Order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-salesorders-orderid-split) endpoint.
+
+You can also use a Digital Process for the splitting mechanism, see the Order Splitting Digital Process template for reference:&#x20;
+
+{% file src="../../.gitbook/assets/Order Splitting Digital Process.json" %}
 
 {% hint style="info" %}
 * Only orders in the CREATED status can be split.
@@ -256,6 +256,7 @@ If you need to separate this combined order into vendor-specific suborders, send
 {% endhint %}
 
 When you send this request, the API analyses all the order entries and groups them by vendor:
+
 * The original order becomes a master order with orderType: `MASTER_ORDER`.
 * Suborders are created:
   * One for each unique vendor.

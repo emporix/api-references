@@ -8,7 +8,7 @@ With Emporix support for AI, you can enhance text for product descriptions and g
 
 ## Before you start
 
-Make sure to configure your API token. To do that, you can use the [Configuration Service](../../configuration/configuration-service/api-reference/) and store the token under `openAiApiToken` key.
+Make sure to configure your API token. To do that, you can use the [Configuration Service](../../configuration/country-service/api-reference/) and store the token under `openAiApiToken` key.
 
 [broken-reference](broken-reference/ "mention")
 
@@ -18,8 +18,8 @@ You can generate the text by sending a request based on a provided prompt. To se
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../configuration/configuration-service/api-reference/" %}
+[api-reference](../../configuration/configuration-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -43,8 +43,8 @@ To generate the AI completion, send the request using the [AI Completions](https
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../configuration/configuration-service/api-reference/" %}
+[api-reference](../../configuration/configuration-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash

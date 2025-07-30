@@ -25,8 +25,8 @@ site.site_manage
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/site-settings-service/api-reference/" %}
-[api-reference](../../configuration/site-settings-service/api-reference/)
+{% content-ref url="../../configuration/indexing-service/api-reference/" %}
+[api-reference](../../configuration/indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -60,8 +60,8 @@ site.site_manage
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/site-settings-service/api-reference/" %}
-[api-reference](../../configuration/site-settings-service/api-reference/)
+{% content-ref url="../../configuration/indexing-service/api-reference/" %}
+[api-reference](../../configuration/indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash

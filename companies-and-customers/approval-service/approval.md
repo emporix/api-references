@@ -25,7 +25,6 @@ Designed for a customer, admin (`B2B_ADMIN`), buyer (`B2B_BUYER`) and requester 
 
 {% hint style="warning" %}
 Users are able to read or manage only the approvals that are assigned to them.
-
 {% endhint %}
 
 ## Scopes rules
@@ -52,8 +51,8 @@ Customers from the `B2B_BUYER` group can create approval only when the cost of t
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="./approval-api-reference/" %}
-[api-reference](./approval-api-reference/)
+{% content-ref url="../vendor-service/api-reference/" %}
+[api-reference](../vendor-service/api-reference/)
 {% endcontent-ref %}
 
 **POST /approval/create-approval**

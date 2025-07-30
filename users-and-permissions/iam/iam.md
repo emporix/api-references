@@ -36,8 +36,8 @@ To assign specific access control level to a group, first you need to retrieve a
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../session-context/api-reference/" %}
+[api-reference](../session-context/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -58,8 +58,8 @@ The user type in the `userType` parameter can be specified as `CUSTOMER` or `EMP
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../session-context/api-reference/" %}
+[api-reference](../session-context/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -101,8 +101,8 @@ The user type in the `userType` parameter can be specified as `customer` or `emp
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../session-context/api-reference/" %}
+[api-reference](../session-context/api-reference/)
 {% endcontent-ref %}
 
 ```bash

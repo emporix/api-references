@@ -1345,6 +1345,10 @@ When a customer completes checkout, a single order is created containing all the
 
 If you need to separate this combined order into vendor-specific suborders, send the request to the [Splitting Order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-salesorders-orderid-split) endpoint.
 
+You can also use a Digital Process for the splitting mechanism, see the Order Splitting Digital Process template for reference:&#x20;
+
+{% file src="../../.gitbook/assets/Order Splitting Digital Process.json" %}
+
 {% hint style="info" %}
 * Only orders in the CREATED status can be split.
 * Orders that are already suborders or have been split before cannot be split again.
