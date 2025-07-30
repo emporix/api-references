@@ -4144,6 +4144,32 @@ components:
             - $ref: '#/components/schemas/taxValue'
             - type: object
               description: Tax information per unit. This field is only required when itemType is EXTERNAL and request contains external price. It's optional for the `INTERNAL` itemType.'
+        linePrice:
+          allOf:
+            - $ref: '#/components/schemas/price'
+          description: Externally calculated total line price (`unit price × quantity`). When provided, this overrides internal calculations.
+          properties:
+            effectiveAmount:
+              type: number
+              minimum: 0
+            originalAmount:
+              type: number
+              minimum: 0
+            currency:
+              type: string
+          required:
+            - effectiveAmount
+            - originalAmount
+            - currency
+        lineTax:
+          allOf:
+            - $ref: '#/components/schemas/taxValue'
+          description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`. 
+          required:
+            - netValue
+            - grossValue
+            - rate
+            - quantity
         metadata:
           $ref: '#/components/schemas/metadataRequest'
         mixins:
@@ -5170,6 +5196,32 @@ components:
               description: Tax information per unit. This field is required only when the itemType is set as EXTERNAL and the request contains an external price.
         price:
           $ref: '#/components/schemas/priceRowItem'
+        linePrice:
+          allOf:
+            - $ref: '#/components/schemas/price'
+          description: Externally calculated total line price (`unit price × quantity`). When provided, this overrides internal calculations.
+          properties:
+            effectiveAmount:
+              type: number
+              minimum: 0
+            originalAmount:
+              type: number
+              minimum: 0
+            currency:
+              type: string
+          required:
+            - effectiveAmount
+            - originalAmount
+            - currency
+        lineTax:
+          allOf:
+            - $ref: '#/components/schemas/taxValue'
+          description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`. 
+          required:
+            - netValue
+            - grossValue
+            - rate
+            - quantity
         metadata:
           $ref: '#/components/schemas/metadataRequest'
         mixins:
