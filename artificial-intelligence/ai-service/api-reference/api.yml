@@ -2,19 +2,11 @@ openapi: 3.0.0
 info:
   title: AI Service
   version: ''
-  description: |
-    The service facilitates and streamlines e-commerce processes of product marketing.
-    ***
-    **Key Features**
-     * Integration with https://platform.openai.com/ platform
-     * Possibility to generate product descriptions 
-    ***
-    **Key Benefits** 
-     * Product managers can facilitate and streamline the process of creating and updating product descriptions
-     * Creating product descriptions that gain more attention and interest by adapting various writing styles
-     * Consistency in tone and language
-     * Increased visibility resulting from optimization for search engines
-  contact: {}
+  description: The service facilitates and streamlines e-commerce processes of product marketing.
+  contact:
+    name: Emporix
+    url: https://emporix.com
+    email: documentation@emporix.com
 tags:
   - name: AI Completions
     description: AI Completions
@@ -25,7 +17,7 @@ tags:
   - name: Job
     description: Manage Jobs
 servers:
-  - url: 'https://api.emporix.io'
+  - url: https://api.emporix.io
 paths:
   '/ai-service/{tenant}/texts':
     parameters:
@@ -332,7 +324,7 @@ paths:
       operationId: POST-ai-agents-chat
       responses:
         '200':
-          description: Job Id response
+          description: Chat response
           content:
             application/json:
               schema:
@@ -381,7 +373,7 @@ paths:
       summary: Agent's Async Chat
       operationId: POST-ai-agents-chat-async
       responses:
-        '200':
+        '201':
           description: Job Id response
           content:
             application/json:
