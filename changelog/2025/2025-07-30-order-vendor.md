@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2025-07-24: Order Service - order splitting
+# 2025-07-30: Order Service - order splitting
 
 ## Overview
 Order was extended with new capabilities of splitting orders by vendor.
