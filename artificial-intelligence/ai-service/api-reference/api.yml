@@ -326,7 +326,7 @@ paths:
           format: uuid
         name: session-id
         in: header
-        description: Unique session's identifier which allows for storing the context of the chat. It will be generated if not provided.
+        description: Unique session's identifier which allows for storing the context of the chat. If not provided, the system generates it.
     post:
       summary: Agent's Chat
       operationId: POST-ai-agents-chat
@@ -376,7 +376,7 @@ paths:
           format: uuid
         name: session-id
         in: header
-        description: Unique session's identifier which allows for storing the context of the chat. It will be generated if not provided.
+        description: Unique session's identifier which allows for storing the context of the chat. If not provided, the system generates it.
     post:
       summary: Agent's Async Chat
       operationId: POST-ai-agents-chat-async
@@ -917,13 +917,13 @@ components:
               $ref: '#/components/schemas/SlackNativeToolConfigResponse'
     NativeToolsRequest:
       type: array
-      description: List of native tools to which agents should have access.
+      description: List of native tools which agents should have access to.
       items:
         oneOf:
           - $ref: '#/components/schemas/SlackNativeToolRequest'
     NativeToolsResponse:
       type: array
-      description: List of native tools to which agents should have access.
+      description: List of native tools which agents should have access to.
       items:
         oneOf:
           - $ref: '#/components/schemas/SlackNativeToolResponse'
@@ -932,11 +932,11 @@ components:
     McpServerType:
       type: string
       enum: [custom,predefined]
-      description: Type of the MCP server. The `custom` type allows to integrate with your own MCP server instance while the `predefined` type allows to integrate with one of the instances provided by `Emporix`.
+      description: Type of the MCP server. The `custom` type allows you to integrate with your own MCP server instance, while the `predefined` type allows you to integrate with one of the instances provided by `Emporix`.
     CustomMcpServerTransportType:
       type: string
       enum: [sse]
-      description: Type of the communication between the agent and the mcp server. For now only `sse` is supported.
+      description: Type of the communication between the agent and the MCP server. For now, only `sse` is supported.
     BaseMcpServer:
       type: object
       properties:
@@ -985,7 +985,7 @@ components:
             - transport
     McpServers:
       type: array
-      description: List of mcp servers to which agents should have access.
+      description: List of MCP servers which agents should have access to.
       items:
         oneOf:
           - $ref: '#/components/schemas/CustomMcpServer'
@@ -1020,7 +1020,7 @@ components:
           properties:
             provider:
               type: string
-              description: Type of the LLM Provider. The `emporix_openai` allows to use OpenAI token provided by Emporix. The token usage is limited. When using this provider `apiKey` property can be omitted.
+              description: Type of the LLM Provider. The `emporix_openai` allows using the OpenAI token provided by Emporix. The token usage is limited. When using this provider `apiKey` property can be omitted.
               enum: [emporix_openai]
               example: emporix_openai
           required:
@@ -1032,7 +1032,7 @@ components:
           properties:
             provider:
               type: string
-              description: Type of the LLM Provider. The `openai` provider allows to provider your own OpenAI token. When using this provider `apiKey` property cannot be omitted.
+              description: Type of the LLM Provider. The `openai` provider allows you to provide your own OpenAI token. When using this provider, the `apiKey` property cannot be omitted.
               enum: [openai]
               example: openai
             apiKey:
@@ -1051,7 +1051,7 @@ components:
 
     AgentCollaborations:
       type: array
-      description: List of agent collaborations which allows agent to handoff its task to other agents.
+      description: List of agent collaborations which allows an agent to hand off its task to other agents.
       items:
         type: object
         properties:
@@ -1106,7 +1106,7 @@ components:
               type: array
               items:
                 type: string
-                description: allows to categorise the agent.
+                description: markers that allow to categorise the agent.
             mcpServers:
               $ref: '#/components/schemas/McpServers'
             enabled:
@@ -1317,7 +1317,7 @@ components:
           description: |
             A standard query parameter is used to search for specific values. 
             
-            See: [Standard practises - Query parameter](https://developer.emporix.io/docs/content/q-param/)
+            See: [Standard practises - Query parameter](https://developer.emporix.io/api-references/standard-practices/q-param)
     AgentFromTemplateRequest:
       allOf:
         - $ref: '#/components/schemas/BaseForAgentAndTemplateAndHandOff'
