@@ -20,12 +20,12 @@ You need details about the customer's access and session tokens as these details
 
 1. When a user enters your storefront, before they choose to log in, an anonymous user session is created.
 
-Get an anonymous access token by sending a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides-and-references/authorization/oauth-service/api-reference/anonymous-token) endpoint.
+Get an anonymous access token by sending a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-login) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../authorization/oauth-service/api-reference/" %}
-[api-reference](../../authorization/oauth-service/api-reference/)
+{% content-ref url="../../companies-and-customers/customer-management/api-reference" %}
+[api-reference](../../companies-and-customers/customer-management/api-reference)
 {% endcontent-ref %}
 
 ```bash
@@ -33,7 +33,7 @@ curl -i -X GET \
   'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id={client_id}'
 ```
 
-2. Log the customer in and send an authorization request to the [Requesting a customer token](https://developer.emporix.io/api-references/api-guides-and-references/authorization/oauth-service/api-reference/customer-token) endpoint.
+2. Log the customer in and send an authorization request to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.
 
 {% hint style="warning" %}
 You can skip this step and continue with the checkout process as a guest customer without the need to log in.
@@ -41,8 +41,8 @@ You can skip this step and continue with the checkout process as a guest custome
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../authorization/oauth-service/api-reference/" %}
-[api-reference](../../authorization/oauth-service/api-reference/)
+{% content-ref url="../../companies-and-customers/customer-management/api-reference" %}
+[api-reference](../../companies-and-customers/customer-management/api-reference)
 {% endcontent-ref %}
 
 ```bash

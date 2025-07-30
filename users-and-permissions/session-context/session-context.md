@@ -9,7 +9,7 @@ icon: graduation-cap
 
 ## How to configure the Session Context Service
 
-By default, an anonymous user session expires after one hour. You can refresh the anonymous session by sending a request to the [Refreshing an anonymous token](https://developer.emporix.io/api-references/api-guides-and-references/authorization/oauth-service/api-reference/anonymous-token#get-customerlogin-auth-anonymous-refresh) endpoint.
+By default, an anonymous user session expires after one hour. You can refresh the anonymous session by sending a request to the [Refreshing an anonymous token](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-refresh) endpoint.
 
 {% hint style="warning" %}
 There is no timeout for logged customer sessions.
@@ -39,12 +39,12 @@ To be able to manage a user session and its corresponding session context file, 
 
 ### Create an anonymous user session
 
-An anonymous user session is created every time a non-logged user enters the storefront and sends a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides-and-references/authorization/oauth-service/api-reference/anonymous-token#get-customerlogin-auth-anonymous-refresh) endpoint.
+An anonymous user session is created every time a non-logged user enters the storefront and sends a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-refresh) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../authorization/oauth-service/api-reference/" %}
-[api-reference](../../authorization/oauth-service/api-reference/)
+{% content-ref url="../../companies-and-customers/customer-management/api-reference" %}
+[api-reference](../../companies-and-customers/customer-management/api-reference)
 {% endcontent-ref %}
 
 ```bash
@@ -71,7 +71,7 @@ An anonymous customer's session is terminated if one of those two requirements i
 
 ### Create a customer session
 
-The session is created when a customer logs in to the storefront. This means that the anonymous session that was established when the user entered the site is migrated into a customer session when a request is sent to the [Requesting a customer token](https://developer.emporix.io/api-references/api-guides-and-references/authorization/oauth-service/api-reference/customer-token#post-customer-tenant-login) endpoint.
+The session is created when a customer logs in to the storefront. This means that the anonymous session that was established when the user entered the site is migrated into a customer session when a request is sent to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.
 
 {% hint style="warning" %}
 The session Id and session context remain the same.
@@ -79,8 +79,8 @@ The session Id and session context remain the same.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../authorization/oauth-service/api-reference/" %}
-[api-reference](../../authorization/oauth-service/api-reference/)
+{% content-ref url="../../companies-and-customers/customer-management/api-reference" %}
+[api-reference](../../companies-and-customers/customer-management/api-reference)
 {% endcontent-ref %}
 
 ```bash
