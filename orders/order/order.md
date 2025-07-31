@@ -29,7 +29,7 @@ During checkout, the final price is calculated based on customer-specific detail
 
 Once an order is placed, the order information simply reflects the calculated prices without further modifications, ensuring accuracy and transparency in the final transaction.
 
-```mermaid fullWidth="true"
+```mermaid fullWidth="false"
 ---
 config:
   layout: fixed
@@ -42,7 +42,7 @@ config:
     edgeLabelBackground: "#FFC128" 
     edgeLabelTextColor: "#4C5359"
 ---
-flowchart LR
+flowchart TB
  subgraph subGraph0["**Storefront**"]
         A["Customer"]
   end
@@ -100,7 +100,7 @@ Commerce Orchestration Platform (COP) enables this functionality with external p
 
 Communication with the ERP system occurs using the BFF (Backend-for-Frontend) layer and with a [POST](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) request the order is send to an ERP system. This architecture ensures a secure, real-time pricing model while leveraging external systems for order calculations.
 
-```mermaid fullWidth="true"
+```mermaid fullWidth="false"
 ---
 config:
   layout: fixed
@@ -113,7 +113,7 @@ config:
     edgeLabelBackground: "#FFC128" 
     edgeLabelTextColor: "#4C5359"
 ---
-flowchart LR
+flowchart 
  subgraph subGraph0["**Storefront**"]
         A["Customer"]
   end
@@ -174,7 +174,7 @@ With this use case, the Commerce Orchestration Platform cart is used to collect 
 
 Once the order is validated and priced by the ERP, the BFF layer creates the order in COP using the [Sales Order API](api-reference/). This allows for seamless integration between Emporix and the external ERP system while maintaining flexibility in how orders are processed.
 
-```mermaid fullWidth="true"
+```mermaid fullWidth="false"
 ---
 config:
   layout: fixed
@@ -187,7 +187,7 @@ config:
     edgeLabelBackground: "#FFC128" 
     edgeLabelTextColor: "#4C5359"
 ---
-flowchart LR
+flowchart 
  subgraph subGraph0["**Storefront**"]
         A["Customer"]
   end
@@ -1345,7 +1345,7 @@ When a customer completes checkout, a single order is created containing all the
 
 If you need to separate this combined order into vendor-specific suborders, send the request to the [Splitting Order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders-orderid-split) endpoint.
 
-You can also use a Digital Process for the splitting mechanism, see the Order Splitting Digital Process template for reference:&#x20;
+You can also use a Digital Process for the splitting mechanism, see the Order Splitting Digital Process template for reference:
 
 {% file src="../../.gitbook/assets/Order Splitting Digital Process.json" %}
 
