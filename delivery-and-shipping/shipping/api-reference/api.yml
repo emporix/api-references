@@ -2714,13 +2714,13 @@ components:
       properties:
         deliveryTimeId:
           type: string
-          description: Id of the delivery time.
+          description: A unique identifier for the overall delivery time period or range.
         slotId:
           type: string
-          description: Id of the slot.
+          description: A unique identifier that represents a specific delivery slot within the delivery time.
         deliveryDate:
           type: string
-          description: The selected delivery date
+          description: The selected delivery date.
       required:
         - deliveryTimeId
         - slotId
@@ -3035,10 +3035,10 @@ components:
           $ref: '#/components/schemas/Address'
         slotId:
           type: string
-          description: The `slotId` for which the quote should be calculated
+          description: The `slotId` for which the quote should be calculated.
         deliveryWindowId:
           type: string
-          description: The delivery window id for which the slot with selected shipping method exists
+          description: The delivery window id for which the slot with selected shipping method exists.
       required:
         - cartTotal
         - slotId
@@ -3175,7 +3175,7 @@ components:
           description: The selected delivery date
         slotId:
           type: string
-          description: The slot that was selected for the delivery
+          description: The slot that was selected for the delivery.
       required:
         - deliveryWindowId
         - deliveryDate
