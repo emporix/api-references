@@ -1017,15 +1017,18 @@ components:
               example: emporix_openai
           required:
             - provider
-    OpenAiLlmRequest:
+    SupportedLlmRequest:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
         - type: object
           properties:
             provider:
               type: string
-              description: Type of the LLM Provider. The `openai` provider allows you to provide your own OpenAI token. When using this provider, the `apiKey` property cannot be omitted.
-              enum: [openai]
+              description: Type of the LLM Provider. The supported providers allows you to provide your own API key. When using this providers, the `apiKey` property cannot be omitted.
+              enum:
+              - openai
+              - google
+              - anthropic
               example: openai
             apiKey:
               type: string
@@ -1033,14 +1036,19 @@ components:
           required:
             - provider
             - apiKey
-    OpenAiLlmResponse:
+    SupportedLlmResponse:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
         - type: object
           properties:
             provider:
+              type: string
+              description: Type of the LLM Provider. The supported providers allows you to provide your own API key. When using this providers, the `apiKey` property cannot be omitted.
+              enum:
+                - openai
+                - google
+                - anthropic
               example: openai
-
     AgentCollaborations:
       type: array
       description: List of agent collaborations which allows an agent to hand off its task to other agents.
@@ -1162,7 +1170,7 @@ components:
             llmConfig:
               oneOf:
                 - $ref: '#/components/schemas/EmporixOpenAiLlm'
-                - $ref: '#/components/schemas/OpenAiLlmRequest'
+                - $ref: '#/components/schemas/SupportedLlmRequest'
             metadata:
               $ref: '#/components/schemas/basicMetadata'
           required:
@@ -1177,7 +1185,7 @@ components:
             llmConfig:
               oneOf:
                 - $ref: '#/components/schemas/EmporixOpenAiLlm'
-                - $ref: '#/components/schemas/OpenAiLlmResponse'
+                - $ref: '#/components/schemas/SupportedLlmResponse'
             handOff:
               allOf:
                 - $ref: '#/components/schemas/HandOff'
