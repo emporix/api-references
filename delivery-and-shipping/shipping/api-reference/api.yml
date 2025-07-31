@@ -3035,10 +3035,10 @@ components:
           $ref: '#/components/schemas/Address'
         slotId:
           type: string
-          description: The `slotId` for which the quote should be calculated.
+          description: The `slotId`` which the quote should be calculated for.
         deliveryWindowId:
           type: string
-          description: The delivery window id for which the slot with selected shipping method exists.
+          description: The delivery window id which the slot with selected shipping method exists for.
       required:
         - cartTotal
         - slotId

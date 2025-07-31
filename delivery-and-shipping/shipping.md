@@ -13,7 +13,7 @@ label: Tutorials
 icon: graduation-cap
 ---
 
-# Delivery and shipping Tutorial
+# Delivery and Shipping Tutorial
 
 {% hint style="warning" %}
 Names and/or descriptions of shipping zones, methods, and groups are localized. When creating a new shipping zone, method, or group, you can specify its name and/or description in one or multiple languages.
@@ -24,7 +24,7 @@ Looking for more info on localization? Check out [_Standard practices_](../stand
 
 ## How does Delivery Cycle work?
 
-A Delivery Cycle defines the structured schedule and availability of delivery options within the shipping domain of the Emporix Commerce platform. It is a core concept that governs how delivery times and delivery slots are organized, managed, and exposed via APIs to facilitate precise control over shipping logistics. 
+A Delivery Cycle defines the structured schedule and availability of delivery options within the shipping domain of the Emporix Commerce platform. It is a core concept that governs how delivery times and delivery slots are organized, managed, and exposed through APIs to facilitate precise control over shipping logistics. 
 
 * Delivery Times: Configurable time ranges (for example days of the week, business hours) during which deliveries are operationally feasible. These are scoped according to shipping zones or regions and form the upper-level availability constraints.
 
@@ -66,8 +66,8 @@ Shipping zones are countries that your business delivers products to. You can cr
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -95,8 +95,8 @@ You can set up shipping groups for customers and define different shipping metho
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -121,8 +121,8 @@ Assign customers to shipping groups by calling the [Creating a customer-group re
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -142,8 +142,8 @@ Add shipping methods and configure shipping fees by calling the [Creating a ship
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -205,8 +205,8 @@ Add delivery times by calling the [Creating a delivery time](https://developer.e
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -268,8 +268,8 @@ Add delivery time slots by calling the [Creating a delivery time slot](https://d
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -313,8 +313,8 @@ Retrieve delivery windows by calling the [Retrieving delivery windows by cart](h
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
