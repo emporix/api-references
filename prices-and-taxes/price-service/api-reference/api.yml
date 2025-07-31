@@ -142,6 +142,7 @@ paths:
       security:
         - OAuth2: []
       parameters:
+        - $ref: '#/components/parameters/trait_qParam'
         - $ref: '#/components/parameters/trait_siteCodeAware_siteCode'
         - $ref: '#/components/parameters/trait_currencyAware_currency'
         - $ref: '#/components/parameters/trait_effectiveDateAware_effectiveDate'
@@ -1396,6 +1397,7 @@ paths:
         - OAuth2:
             - price.pricelist_read
       parameters:
+        - $ref: '#/components/parameters/trait_qParam'
         - $ref: '#/components/parameters/header_acceptLanguageV2'
         - $ref: '#/components/parameters/trait_paged_pageNumber'
         - $ref: '#/components/parameters/trait_paged_pageSize'
@@ -3301,6 +3303,15 @@ components:
         default: 60
         minimum: 1
         type: integer
+    trait_qParam:
+      in: query
+      name: q
+      description:  |
+        A standard query parameter is used to search for specific values. 
+        
+        See: [Standard practises - Query parameter](https://developer.emporix.io/api-references/standard-practices/q-param)
+      schema:
+        type: string
     trait_currencyAware_currency:
       name: currency
       in: query
