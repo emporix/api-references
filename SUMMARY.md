@@ -344,7 +344,7 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/vendor-service/api-reference/api.yml)
 * [Delivery and Shipping](delivery-and-shipping/README.md)
-  * [Delivery and Shipping Tutorial](delivery-and-shipping/shipping/shipping.md)
+  * [Delivery and Shipping Tutorial](delivery-and-shipping/shipping.md)
   * [Shipping Service](delivery-and-shipping/shipping/README.md)
     * [API Reference](delivery-and-shipping/shipping/api-reference/README.md)
       * ```yaml
