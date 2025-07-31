@@ -1017,19 +1017,21 @@ components:
               example: emporix_openai
           required:
             - provider
+    SupportedLlmProvider:
+      type: string
+      description: Type of the LLM Provider. The supported providers allows you to provide your own API key. When using this providers, the `apiKey` property cannot be omitted.
+      enum:
+        - openai
+        - google
+        - anthropic
+      example: openai
     SupportedLlmRequest:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
         - type: object
           properties:
             provider:
-              type: string
-              description: Type of the LLM Provider. The supported providers allows you to provide your own API key. When using this providers, the `apiKey` property cannot be omitted.
-              enum:
-              - openai
-              - google
-              - anthropic
-              example: openai
+              $ref: '#/components/schemas/SupportedLlmProvider'
             apiKey:
               type: string
               description: The API Key of OpenAI.
@@ -1042,13 +1044,7 @@ components:
         - type: object
           properties:
             provider:
-              type: string
-              description: Type of the LLM Provider. The supported providers allows you to provide your own API key. When using this providers, the `apiKey` property cannot be omitted.
-              enum:
-                - openai
-                - google
-                - anthropic
-              example: openai
+              $ref: '#/components/schemas/SupportedLlmProvider'
     AgentCollaborations:
       type: array
       description: List of agent collaborations which allows an agent to hand off its task to other agents.
