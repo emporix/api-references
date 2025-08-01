@@ -9,6 +9,7 @@
 ## 2025
 
 * [2025-08-04: Price Service - q param support](2025/2025-08-04-price.md)
+* [2025-08-01: Webhook Service - new Vendor events](2025/2025-08-01-webhook.md)
 * [2025-07-30: Cart Service - vendor added](2025/2025-07-30-cart-vendor.md)
 * [2025-07-30: Order Service - order splitting](2025/2025-07-30-order-vendor.md)
 * [2025-07-30: Webhook Service - update order event schema](2025/2025-07-30-webhook-vendor.md)
