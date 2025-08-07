@@ -1017,6 +1017,37 @@ components:
               example: emporix_openai
           required:
             - provider
+    SelfHostedLlm:
+      allOf:
+        - $ref: '#/components/schemas/BaseLlm'
+        - type: object
+          properties:
+            model:
+              type: string
+              description: The exact name of the model.
+              example: mistral
+            provider:
+              type: string
+              description: Type of the LLM Provider. The self-hosted LLM allows you to provide tour own LLMs. When using this providers, the `selfHostedParams.url` property cannot be omitted
+              enum: [self_hosted_ollama]
+              example: self_hosted_ollama
+            selfHostedParams:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: Url of the self-hosted LLM
+                authorizationHeader:
+                  type: string
+                  description: Header required for authorization e.g. `Authorization`
+                authorizationHeaderValue:
+                  type: string
+                  description: Value of the authorization header e.g. `Bearer api_key`
+              required:
+                - url
+          required:
+            - provider
+            - selfHostedParams
     SupportedLlmProvider:
       type: string
       description: Type of the LLM Provider. The supported providers allows you to provide your own API key. When using this providers, the `apiKey` property cannot be omitted.
@@ -1167,6 +1198,7 @@ components:
               oneOf:
                 - $ref: '#/components/schemas/EmporixOpenAiLlm'
                 - $ref: '#/components/schemas/SupportedLlmRequest'
+                - $ref: '#/components/schemas/SelfHostedLlm'
             metadata:
               $ref: '#/components/schemas/basicMetadata'
           required:
@@ -1182,6 +1214,7 @@ components:
               oneOf:
                 - $ref: '#/components/schemas/EmporixOpenAiLlm'
                 - $ref: '#/components/schemas/SupportedLlmResponse'
+                - $ref: '#/components/schemas/SelfHostedLlm'
             handOff:
               allOf:
                 - $ref: '#/components/schemas/HandOff'
