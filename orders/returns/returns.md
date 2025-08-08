@@ -19,8 +19,8 @@ In the following example, we are changing the expiration date offset to 14 days.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/configuration-service/api-reference/" %}
-[api-reference](../../configuration/configuration-service/api-reference/)
+{% content-ref url="../../configuration/country-service/api-reference/" %}
+[api-reference](../../configuration/country-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash

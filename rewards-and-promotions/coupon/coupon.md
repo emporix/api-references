@@ -207,8 +207,8 @@ In the following example, we are changing the maximum number of coupons that can
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/configuration-service/api-reference/" %}
-[api-reference](../../configuration/configuration-service/api-reference/)
+{% content-ref url="../../configuration/country-service/api-reference/" %}
+[api-reference](../../configuration/country-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -305,8 +305,8 @@ First, check if your `couponSettings` mixin has already been configured by sendi
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/site-settings-service/api-reference/" %}
-[api-reference](../../configuration/site-settings-service/api-reference/)
+{% content-ref url="../../configuration/indexing-service/api-reference/" %}
+[api-reference](../../configuration/indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -321,8 +321,8 @@ In this case, to configure referral coupons, you need to send a request to the [
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/site-settings-service/api-reference/" %}
-[api-reference](../../configuration/site-settings-service/api-reference/)
+{% content-ref url="../../configuration/indexing-service/api-reference/" %}
+[api-reference](../../configuration/indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -359,8 +359,8 @@ In this case, to configure referral coupons, you need to send a request to the [
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/site-settings-service/api-reference/" %}
-[api-reference](../../configuration/site-settings-service/api-reference/)
+{% content-ref url="../../configuration/indexing-service/api-reference/" %}
+[api-reference](../../configuration/indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -375,14 +375,14 @@ curl -i -X PATCH \
 
 ### Configure referral email templates
 
-Referral email templates are referenced in the `emailTemplates` configuration in the [Configuration Service](../../configuration/configuration-service/api-reference/).
+Referral email templates are referenced in the `emailTemplates` configuration in the [Configuration Service](../../configuration/country-service/api-reference/).
 
 First, check if your `emailTemplates` have already been configured by sending a request to the [Retrieving a configuration](https://developer.emporix.io/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/configuration-service/api-reference/" %}
-[api-reference](../../configuration/configuration-service/api-reference/)
+{% content-ref url="../../configuration/country-service/api-reference/" %}
+[api-reference](../../configuration/country-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -397,8 +397,8 @@ In this case, to configure referral email templates, you need to send a request 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/configuration-service/api-reference/" %}
-[api-reference](../../configuration/configuration-service/api-reference/)
+{% content-ref url="../../configuration/country-service/api-reference/" %}
+[api-reference](../../configuration/country-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -462,8 +462,8 @@ To add referral email templates to an existing `emailTemplates` configuration, y
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/configuration-service/api-reference/" %}
-[api-reference](../../configuration/configuration-service/api-reference/)
+{% content-ref url="../../configuration/country-service/api-reference/" %}
+[api-reference](../../configuration/country-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -509,8 +509,8 @@ To manually generate a referral coupon for a specific customer, you need to send
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="./api-reference/" %}
-[api-reference](./api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -525,8 +525,8 @@ To retrieve referral coupon information for a specific customer, you need to sen
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="./api-reference/" %}
-[api-reference](./api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash

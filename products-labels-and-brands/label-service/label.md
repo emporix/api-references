@@ -21,8 +21,8 @@ To create a new label, send the request to the [Creating a label](https://develo
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../brand-service/api-reference/" %}
+[api-reference](../brand-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -83,8 +83,8 @@ To specify a brand for a product, you need to provide the `labelId` field on pro
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../product-service/api-reference/" %}
-[api-reference](../product-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash

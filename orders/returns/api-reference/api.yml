@@ -628,45 +628,44 @@ components:
     metadataResponse:
       allOf:
         - $ref: '#/components/schemas/metadataUpdate'
-      type: object
-      properties:
-        createdAt:
-          description: 'Date and time when the object was created. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
-          type: string
-        modifiedAt:
-          description: 'Date and time when the object was last modified. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
-          type: string
+        - type: object
+          properties:
+            createdAt:
+              description: 'Date and time when the object was created. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
+              type: string
+            modifiedAt:
+              description: 'Date and time when the object was last modified. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
+              type: string
     basicReturn:
       title: basicReturn
       description: Base schema for a return.
-      allOf:
-        - properties:
-            orders:
-              type: array
-              description: 'A list of orders that contain items to be returned. All the orders must have the same currency. '
-              items:
-                $ref: '#/components/schemas/order'
-            reason:
-              type: object
-              description: 'A reason why the return is created. One of the values needs to be provided: `code` or `details`. '
-              properties:
-                code:
-                  type: string
-                  description: Code of a particular reason for return. A number which represents a reason why an order has been (fully or partially) returned.
-                details:
-                  type: string
-                  description: Details why an order has been (fully or partially) returned.
-            mixins:
-              type: object
-              description: |-
-                The field contains mixins values.
-              additionalProperties: true
-            metadata:
-              $ref: '#/components/schemas/metadataCore'
-          required:
-            - orders
-            - reason
       type: object
+      properties:
+        orders:
+          type: array
+          description: 'A list of orders that contain items to be returned. All the orders must have the same currency. '
+          items:
+            $ref: '#/components/schemas/order'
+        reason:
+          type: object
+          description: 'A reason why the return is created. One of the values needs to be provided: `code` or `details`. '
+          properties:
+            code:
+              type: string
+              description: Code of a particular reason for return. A number which represents a reason why an order has been (fully or partially) returned.
+            details:
+              type: string
+              description: Details why an order has been (fully or partially) returned.
+        mixins:
+          type: object
+          description: |-
+            The field contains mixins values.
+          additionalProperties: true
+        metadata:
+          $ref: '#/components/schemas/metadataCore'
+      required:
+        - orders
+        - reason
     basicCustomerReturn:
       title: A return request created by a customer.
       description: Base schema for a return requested by a customer.

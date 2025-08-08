@@ -8,6 +8,14 @@
 
 ## 2025
 
+* [2025-08-04: Webhook Service - new Vendor events](2025/2025-08-04-webhook.md)
+* [2025-08-04: Price Service - q param support](2025/2025-08-04-price.md)
+* [2025-07-30: Cart Service - vendor added](2025/2025-07-30-cart-vendor.md)
+* [2025-07-30: Order Service - order splitting](2025/2025-07-30-order-vendor.md)
+* [2025-07-30: Webhook Service - update order event schema](2025/2025-07-30-webhook-vendor.md)
+* [2025-07-30: Cart Service - new attributes on item level](2025/2025-07-30-cart.md)
+* [2025-07-30: Order Service - orderEntryCalculatedPrice.price updated with new property](2025/2025-07-30-order.md)
+* [2025-07-29: Schema Service - support for Site type](2025/2025-07-29-schema.md)
 * [2025-07-23: B2B Customer Groups - Migration](2025/2025-07-23-b2b-customer-groups-migration.md)
 * [2025-07-18: Vendor Service - Vendor Service with locations](2025/2025-07-18-vendor.md)
 * [2025-07-18: IAM Service - new endpoint and vendorId attribute](2025/2025-07-18-iam.md)

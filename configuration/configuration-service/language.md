@@ -74,8 +74,8 @@ To retrieve your tenant's language configuration, you need to send a request to 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../country-service/api-reference/" %}
+[api-reference](../country-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -94,8 +94,8 @@ The id in the request body must be compliant with the [ISO 4217 standard](https:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../country-service/api-reference/" %}
+[api-reference](../country-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -117,8 +117,8 @@ To retrieve a particular site's language configuration, you need to send a reque
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../site-settings-service/api-reference/" %}
-[api-reference](../site-settings-service/api-reference/)
+{% content-ref url="../indexing-service/api-reference/" %}
+[api-reference](../indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -137,8 +137,8 @@ The currency code must be compliant with the [ISO 4217 standard](https://en.wiki
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../site-settings-service/api-reference/" %}
-[api-reference](../site-settings-service/api-reference/)
+{% content-ref url="../indexing-service/api-reference/" %}
+[api-reference](../indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash

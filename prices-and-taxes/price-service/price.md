@@ -34,8 +34,8 @@ To add a new entry to your configuration of currencies, you need to send a reque
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/currency-service/api-reference/" %}
-[api-reference](../../configuration/currency-service/api-reference/)
+{% content-ref url="../../configuration/unit-handling-service/api-reference/" %}
+[api-reference](../../configuration/unit-handling-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -65,8 +65,8 @@ To create a new price model, you need to send a request to the [Creating a new p
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -115,8 +115,8 @@ Price models that use the basic pricing strategy have one tier. To retrieve its 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -134,8 +134,8 @@ To define a new price for a product, you need to send a request to the [Creating
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -512,8 +512,8 @@ To create a new list-specific price, you need to send a request to the [Adding a
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -608,8 +608,8 @@ Create a sample product through the [Creating a new product](https://developer.e
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
-[api-reference](../../products-labels-and-brands/product-service/api-reference/)
+{% content-ref url="../../products-labels-and-brands/label-service/api-reference/" %}
+[api-reference](../../products-labels-and-brands/label-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -688,8 +688,8 @@ Start with defining a price model with [Creating a price model](https://develope
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -731,8 +731,8 @@ Now, retrieve the automatically-generated ID of the pricing tier, use the [Retri
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -746,8 +746,8 @@ Once you know the tier ID, define a price for the bananas, use the [Creating a n
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -785,8 +785,8 @@ Then, define a price model where the price per kilogram changes based on the ord
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -838,8 +838,8 @@ Now, retrieve the automatically-generated IDs of the pricing tiers, use the [Ret
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -853,8 +853,8 @@ Once you know the tier IDs, define another price for the bananas, use the [Creat
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -904,8 +904,8 @@ Check the best price for both one kilogram and ten kilograms of bananas:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -970,8 +970,8 @@ Define sales tax rates for the desired country by sending a request to the [Crea
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
+{% content-ref url="../../users-and-permissions/iam/api-reference/" %}
+[api-reference](../../users-and-permissions/iam/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1030,8 +1030,8 @@ To update a product with applicable tax classes, send a request to the [Partiall
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
-[api-reference](../../products-labels-and-brands/product-service/api-reference/)
+{% content-ref url="../../products-labels-and-brands/label-service/api-reference/" %}
+[api-reference](../../products-labels-and-brands/label-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1056,8 +1056,8 @@ To calculate a gross price between countries, send a request to the [Matching pr
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1104,8 +1104,8 @@ Add the currency in which the price will be retrieved to your configuration of c
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/currency-service/api-reference/" %}
-[api-reference](../../configuration/currency-service/api-reference/)
+{% content-ref url="../../configuration/unit-handling-service/api-reference/" %}
+[api-reference](../../configuration/unit-handling-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1138,8 +1138,8 @@ To define a new exchange rate, send a request to the [Creating a new exchange ra
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/currency-service/api-reference/" %}
-[api-reference](../../configuration/currency-service/api-reference/)
+{% content-ref url="../../configuration/unit-handling-service/api-reference/" %}
+[api-reference](../../configuration/unit-handling-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1160,8 +1160,8 @@ To retrieve a price in the desired currency, send a request to the [Matching pri
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1214,8 +1214,8 @@ To add or update the `includesTax` field in your site's settings, you need to se
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/site-settings-service/api-reference/" %}
-[api-reference](../../configuration/site-settings-service/api-reference/)
+{% content-ref url="../../configuration/indexing-service/api-reference/" %}
+[api-reference](../../configuration/indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash

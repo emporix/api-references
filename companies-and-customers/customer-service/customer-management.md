@@ -32,8 +32,8 @@ A location is a physical address where a company operates, such as its headquart
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../customer-segments/api-reference/" %}
+[api-reference](../customer-segments/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -76,8 +76,8 @@ A legal entity is a representation of a company. To add a new legal entity, you 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../customer-segments/api-reference/" %}
+[api-reference](../customer-segments/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -142,8 +142,8 @@ To find out what a company's ID is, you need to send a request to the [Retrievin
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../customer-segments/api-reference/" %}
+[api-reference](../customer-segments/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -163,8 +163,8 @@ Subsidiaries are added similarly to their parent companies. To add a new subsidi
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../customer-segments/api-reference/" %}
+[api-reference](../customer-segments/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -243,8 +243,8 @@ To find out what a company's ID is, you need to send a request to the [Retrievin
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../customer-segments/api-reference/" %}
+[api-reference](../customer-segments/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -264,8 +264,8 @@ To retrieve an employee's customer ID, you need to send a request to the [Retrie
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../customer-management/api-reference/" %}
-[api-reference](../customer-management/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -285,8 +285,8 @@ To assign a contact to a legal entity (in this case, the desired company), you n
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../customer-segments/api-reference/" %}
+[api-reference](../customer-segments/api-reference/)
 {% endcontent-ref %}
 
 ```bash

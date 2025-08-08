@@ -61,8 +61,8 @@ To retrieve your tenant's country configuration, you need to send a request to t
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../configuration-service/api-reference/" %}
-[api-reference](../configuration-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -81,8 +81,8 @@ The value in the request body must be compliant with the [ISO 3166-1 alpha-2 sta
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../configuration-service/api-reference/" %}
-[api-reference](../configuration-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -104,8 +104,8 @@ To retrieve a particular site's country configuration, you need to send a reques
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../site-settings-service/api-reference/" %}
-[api-reference](../site-settings-service/api-reference/)
+{% content-ref url="../indexing-service/api-reference/" %}
+[api-reference](../indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -124,8 +124,8 @@ The country code must be compliant with the [ISO 4217 standard](https://en.wikip
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../site-settings-service/api-reference/" %}
-[api-reference](../site-settings-service/api-reference/)
+{% content-ref url="../indexing-service/api-reference/" %}
+[api-reference](../indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
