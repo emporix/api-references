@@ -8,6 +8,7 @@
 
 ## 2025
 
+* [2025-08-30: AI Service - support for AI agents](2025/2025-08-30-ai.md)
 * [2025-08-04: Webhook Service - new Vendor events](2025/2025-08-04-webhook.md)
 * [2025-08-04: Price Service - q param support](2025/2025-08-04-price.md)
 * [2025-07-30: Cart Service - vendor added](2025/2025-07-30-cart-vendor.md)
