@@ -96,8 +96,8 @@ To add a single basic product, you need to send a request to the [Creating a new
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../label-service/api-reference/" %}
+[api-reference](../label-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -167,8 +167,8 @@ You can also add multiple basic products at the same time. To achieve that, you 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../label-service/api-reference/" %}
+[api-reference](../label-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -256,8 +256,8 @@ You can create a product template that contains additional attributes describing
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../label-service/api-reference/" %}
+[api-reference](../label-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -322,8 +322,8 @@ When creating or updating a product of the `PARENT_VARIANT` type, by default, pr
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../label-service/api-reference/" %}
+[api-reference](../label-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -406,8 +406,8 @@ In this example, we will create a bundle of the T-shirt product we created above
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../label-service/api-reference/" %}
+[api-reference](../label-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -503,8 +503,8 @@ To create a single `parent_variant` type of product with variants, you need to s
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../label-service/api-reference/" %}
+[api-reference](../label-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -608,8 +608,8 @@ If you want to create multiple `parent_variant` products at the same time, send 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../label-service/api-reference/" %}
+[api-reference](../label-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -920,8 +920,8 @@ To specify new values for your product's attributes, you need to add them in the
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../label-service/api-reference/" %}
+[api-reference](../label-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1042,8 +1042,8 @@ When creating or updating a product of the `PARENT_VARIANT` type, by default, pr
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../label-service/api-reference/" %}
+[api-reference](../label-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1121,8 +1121,8 @@ In the following example, we override the following fields:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../label-service/api-reference/" %}
+[api-reference](../label-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1176,8 +1176,8 @@ The `product.product_publish` and `product.product_unpublish` scopes are only re
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../label-service/api-reference/" %}
+[api-reference](../label-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash

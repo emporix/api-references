@@ -20,8 +20,8 @@ Looking for more info on localization? Check out [_Standard practices_](../../st
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -48,8 +48,8 @@ To convert between units, you need to send a request to the [Converting units ](
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 <pre class="language-bash"><code class="lang-bash">curl -L \

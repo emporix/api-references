@@ -12,9 +12,7 @@ Webhook events related to the creation, update, and deletion of an availability.
 
 ## Available events
 
-| Event type           | Event schema                                                                                                                                                                                                                                                                                                                                                                   |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| availability.created | <pre class="language-json"><code class="lang-json">{
+<table><thead><tr><th>Event type</th><th>Event schema</th></tr></thead><tbody><tr><td>availability.created</td><td><pre class="language-json"><code class="lang-json">{
   "available": "Boolean",
   "distributionChannel": "String",
   "id": "String",
@@ -29,8 +27,7 @@ Webhook events related to the creation, update, and deletion of an availability.
   "site": "String",
   "stockLevel": "Number"
 }
-</code></pre>   |
-| availability.updated | <pre class="language-json"><code class="lang-json">{
+</code></pre></td></tr><tr><td>availability.updated</td><td><pre class="language-json"><code class="lang-json">{
   "available": "Boolean",
   "distributionChannel": "String",
   "id": "String",
@@ -45,8 +42,7 @@ Webhook events related to the creation, update, and deletion of an availability.
   "site": "String",
   "stockLevel": "Number"  
 }
-</code></pre> |
-| availability.deleted | <pre class="language-json"><code class="lang-json">{
+</code></pre></td></tr><tr><td>availability.deleted</td><td><pre class="language-json"><code class="lang-json">{
   "id": "String"
 }
-</code></pre>                                                                                                                                                                                                                                                                                          |
+</code></pre></td></tr></tbody></table>

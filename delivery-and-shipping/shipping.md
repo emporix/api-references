@@ -13,12 +13,29 @@ label: Tutorials
 icon: graduation-cap
 ---
 
-# Shipping Tutorial
+# Delivery and Shipping Tutorial
 
 {% hint style="warning" %}
 Names and/or descriptions of shipping zones, methods, and groups are localized. When creating a new shipping zone, method, or group, you can specify its name and/or description in one or multiple languages.
 
 Looking for more info on localization? Check out [_Standard practices_](../standard-practices/translations.md).
+
+{% endhint %}
+
+## How does Delivery Cycle work?
+
+A Delivery Cycle defines the structured schedule and availability of delivery options within the shipping domain of the Emporix Commerce platform. It is a core concept that governs how delivery times and delivery slots are organized, managed, and exposed through APIs to facilitate precise control over shipping logistics. 
+
+* Delivery Times: Configurable time ranges (for example days of the week, business hours) during which deliveries are operationally feasible. These are scoped according to shipping zones or regions and form the upper-level availability constraints.
+
+* Delivery Slots: Smaller time intervals nested within Delivery Times, representing granular windows customers can select for order fulfillment. Slots enable scheduling precision and enhance customer choice.
+
+* Delivery Windows: Combinations of delivery times and slots filtered dynamically based on factors such as postal code, cart contents, and business rules, used to present valid delivery options during checkout.
+
+{% hint style="success" %}
+
+To see how Delivery Cycle Management works in practice, check the [Delivery Cycle Management](http://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/delivery-cycle-management) user guides.
+
 {% endhint %}
 
 ## How to configure delivery and shipping settings
@@ -49,8 +66,8 @@ Shipping zones are countries that your business delivers products to. You can cr
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -78,16 +95,16 @@ You can set up shipping groups for customers and define different shipping metho
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/shipping/{tenant}/{site}/groups' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: fr' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/shipping/{tenant}/{site}/groups' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: fr' 
+  -H 'Content-Type: application/json' 
   -d '{
     "id": "group1",
     "description": {
@@ -104,15 +121,15 @@ Assign customers to shipping groups by calling the [Creating a customer-group re
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/shipping/{tenant}/{site}/cgrelations' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/shipping/{tenant}/{site}/cgrelations' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "customerId": "C001",
     "groupId": "group1"
@@ -125,16 +142,16 @@ Add shipping methods and configure shipping fees by calling the [Creating a ship
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/shipping/{tenant}/{site}/zones/{zoneId}/methods' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: fr' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/shipping/{tenant}/{site}/zones/{zoneId}/methods' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: fr'
+  -H 'Content-Type: application/json' 
   -d '{
     "id": "fedex-2dayground",
     "name": "FedEx 2Day",
@@ -188,16 +205,16 @@ Add delivery times by calling the [Creating a delivery time](https://developer.e
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/shipping/{tenant}/{site}/zones/{zoneId}/methods' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: fr' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/shipping/{tenant}/{site}/zones/{zoneId}/methods' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: fr'
+  -H 'Content-Type: application/json' 
   -d '{
     "id": "fedex-2dayground",
     "name": "FedEx 2Day",
@@ -251,15 +268,15 @@ Add delivery time slots by calling the [Creating a delivery time slot](https://d
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/shipping/{tenant}/delivery-times/{deliveryTimeId}/slots?validateOverlap=true' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/shipping/{tenant}/delivery-times/{deliveryTimeId}/slots?validateOverlap=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "shippingMethod": "method2",
     "deliveryTimeRange": {
@@ -291,18 +308,18 @@ You need to retrieve available delivery windows to be able to estimate the deliv
 
 ### Retrieve available delivery windows for a particular postal code and cart
 
-Shipping times for particular postal codes are automatically calculated based on the business' shipping configuration, for example shipping capacity, or cut-off time.\
+Shipping times for particular postal codes are automatically calculated based on the business' shipping configuration, for example shipping capacity, or cut-off time.
 Retrieve delivery windows by calling the [Retrieving delivery windows by cart](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping/api-reference/delivery-windows#get-shipping-tenant-actualdeliverywindows-cartid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET \
-  'https://api.emporix.io/shipping/{tenant}/{site}/cgrelations/{customerId}' \
+curl -i -X GET 
+  'https://api.emporix.io/shipping/{tenant}/{site}/cgrelations/{customerId}' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
@@ -317,10 +334,10 @@ Add the delivery information to the cart by calling the [Updating a cart](https:
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/cart/{tenant}/carts/{cartId}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X PUT 
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "customerId": "87413250",
     "currency": "EUR",

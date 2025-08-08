@@ -43,8 +43,8 @@ If there is no prior subscription to the event of your choice, the `metadata.ver
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="./api-reference/" %}
-[api-reference](./api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -64,8 +64,8 @@ In this example, you will subscribe to the following events: `catalog.created` a
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="./api-reference/" %}
-[api-reference](./api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -97,10 +97,10 @@ curl -i -X PATCH
 
 **Learn about the `index.item-updated` event's specific behavior:**
 
-The `index.item-updated` webhook event is emitted whenever there is a change on an item in the system - the index is updated with the new information.
-For the event to be triggered, a product must have at least one defined **price**, as it is the price that determines products indexing on a specific site.
-Bear in mind all the events are site-specific, which means that they are linked to activities happening on particular sites.
-The prices are also site-specific, and a single price can be associated with multiple sites.
+The `index.item-updated` webhook event is emitted whenever there is a change on an item in the system - the index is updated with the new information.\
+For the event to be triggered, a product must have at least one defined **price**, as it is the price that determines products indexing on a specific site.\
+Bear in mind all the events are site-specific, which means that they are linked to activities happening on particular sites.\
+The prices are also site-specific, and a single price can be associated with multiple sites.\
 The number of events triggered in the system depends on **the number of sites** assigned to a specific product’s prices, with one event emitted per each site.
 
 Example:
@@ -125,8 +125,8 @@ To generate the login link with the authentication token needed to connect a ten
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="./api-reference/" %}
-[api-reference](./api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
