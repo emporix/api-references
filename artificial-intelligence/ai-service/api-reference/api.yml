@@ -1005,7 +1005,7 @@ components:
         - model
         - temperature
         - maxTokens
-    EmporixOpenAiLlm:
+    EmporixLlm:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
         - type: object
@@ -1017,38 +1017,54 @@ components:
               example: emporix_openai
           required:
             - provider
+    SelfHostedParamsResponse:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Url of the self-hosted LLM
+        authorizationHeader:
+          type: string
+          description: Header required for authorization e.g. `Authorization`
+    SelfHostedParamsRequest:
+      allOf:
+        - $ref: '#/components/schemas/SelfHostedParamsResponse'
+        - type: object
+          properties:
+            authorizationHeaderValue:
+              type: string
+              description: Value of the authorization header e.g. `Bearer api_key`
+          required:
+            - url
     SelfHostedLlm:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
         - type: object
           properties:
-            model:
-              type: string
-              description: The exact name of the model.
-              example: mistral
             provider:
               type: string
               description: Type of the LLM Provider. The self-hosted LLM allows you to provide tour own LLMs. When using this providers, the `selfHostedParams.url` property cannot be omitted
               enum: [self_hosted_ollama]
               example: self_hosted_ollama
-            selfHostedParams:
-              type: object
-              properties:
-                url:
-                  type: string
-                  description: Url of the self-hosted LLM
-                authorizationHeader:
-                  type: string
-                  description: Header required for authorization e.g. `Authorization`
-                authorizationHeaderValue:
-                  type: string
-                  description: Value of the authorization header e.g. `Bearer api_key`
-              required:
-                - url
           required:
             - provider
+    SelfHostedLlmRequest:
+      allOf:
+        - $ref: '#/components/schemas/SelfHostedLlm'
+        - type: object
+          properties:
+            selfHostedParams:
+              $ref: '#/components/schemas/SelfHostedParamsRequest'
+          required:
             - selfHostedParams
-    SupportedLlmProvider:
+    SelfHostedLlmResponse:
+      allOf:
+        - $ref: '#/components/schemas/SelfHostedLlm'
+        - type: object
+          properties:
+            selfHostedParams:
+              $ref: '#/components/schemas/SelfHostedParamsResponse'
+    ApiKeyLlmProvider:
       type: string
       description: Type of the LLM Provider. The supported providers allows you to provide your own API key. When using this providers, the `apiKey` property cannot be omitted.
       enum:
@@ -1056,26 +1072,26 @@ components:
         - google
         - anthropic
       example: openai
-    SupportedLlmRequest:
+    ApiKeyLlmRequest:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
         - type: object
           properties:
             provider:
-              $ref: '#/components/schemas/SupportedLlmProvider'
+              $ref: '#/components/schemas/ApiKeyLlmProvider'
             apiKey:
               type: string
               description: The API Key of OpenAI.
           required:
             - provider
             - apiKey
-    SupportedLlmResponse:
+    ApiKeyLlmResponse:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
         - type: object
           properties:
             provider:
-              $ref: '#/components/schemas/SupportedLlmProvider'
+              $ref: '#/components/schemas/ApiKeyLlmProvider'
     AgentCollaborations:
       type: array
       description: List of agent collaborations which allows an agent to hand off its task to other agents.
@@ -1196,9 +1212,9 @@ components:
               $ref: '#/components/schemas/NativeToolsRequest'
             llmConfig:
               oneOf:
-                - $ref: '#/components/schemas/EmporixOpenAiLlm'
-                - $ref: '#/components/schemas/SupportedLlmRequest'
-                - $ref: '#/components/schemas/SelfHostedLlm'
+                - $ref: '#/components/schemas/EmporixLlm'
+                - $ref: '#/components/schemas/ApiKeyLlmRequest'
+                - $ref: '#/components/schemas/SelfHostedLlmRequest'
             metadata:
               $ref: '#/components/schemas/basicMetadata'
           required:
@@ -1212,9 +1228,9 @@ components:
               $ref: '#/components/schemas/NativeToolsResponse'
             llmConfig:
               oneOf:
-                - $ref: '#/components/schemas/EmporixOpenAiLlm'
-                - $ref: '#/components/schemas/SupportedLlmResponse'
-                - $ref: '#/components/schemas/SelfHostedLlm'
+                - $ref: '#/components/schemas/EmporixLlm'
+                - $ref: '#/components/schemas/ApiKeyLlmResponse'
+                - $ref: '#/components/schemas/SelfHostedLlmResponse'
             handOff:
               allOf:
                 - $ref: '#/components/schemas/HandOff'
