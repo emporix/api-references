@@ -2,11 +2,22 @@ openapi: 3.0.0
 info:
   title: AI Service
   version: ''
-  description: |
-    The service facilitates and streamlines e-commerce processes of product marketing.
-  contact: {}
+  description: The service facilitates and streamlines e-commerce processes of product marketing.
+  contact:
+    name: Emporix
+    url: https://emporix.com
+    email: documentation@emporix.com
+tags:
+  - name: AI Completions
+    description: AI Completions
+  - name: Text Generation
+    description: AI Text Generation
+  - name: Agentic
+    description: Manage Agents
+  - name: Job
+    description: Manage Jobs
 servers:
-  - url: 'http://api.emporix.io'
+  - url: https://api.emporix.io
 paths:
   '/ai-service/{tenant}/texts':
     parameters:
@@ -45,7 +56,7 @@ paths:
         If you want to use your own OpenAI account with a different AI model please contact our [Emporix Support Team](mailto:support@emporix.com) to negotiate the model and usage.
         ***
 
-        ###Required scopes###
+        ### Required scopes
 
         * `ai.text_manage`
       security:
@@ -57,11 +68,7 @@ paths:
         - Text Generation
   '/ai-service/{tenant}/completions':
     parameters:
-      - schema:
-          type: string
-        name: tenant
-        in: path
-        required: true
+      - $ref: '#/components/parameters/path_tenant'
     post:
       summary: AI Completions
       operationId: POST-ai-completions
@@ -88,7 +95,7 @@ paths:
         Emporix uses the gpt-4o-mini model by default. If you want to use your own OpenAI account with a different AI model please contact our [Emporix Support Team](mailto:support@emporix.com) to negotiate the model and usage.
         ***
 
-        ###Required scopes###
+        ### Required scopes
 
         * `ai.completion_manage`
       security:
@@ -98,6 +105,671 @@ paths:
         $ref: '#/components/requestBodies/Completion'
       tags:
         - AI Completions
+  '/ai-service/{tenant}/jobs':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/qParam'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/header_xTotalCount'
+    get:
+      summary: Get available jobs
+      operationId: GET-ai-list-jobs
+      responses:
+        '200':
+          description: List of available jobs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+              examples:
+                Jobs:
+                  value:
+                    - id: 68835cc3ef4e8e1425c360ad
+                      status: success
+                      sessionId: 123e4567-e89b-12d3-a456-426614174000
+                      agentType: complaint
+                      agentId: complaint-agent
+                      message: |-
+                        Dear Customer,
+                        
+                        We have successfully processed your support request regarding the incorrect information on invoice EIN251131 for order EON1031. Our team has verified the order and customer details, confirming both the order and legal entity were found.
+                        Thank you for your patience and cooperation.
+                        
+                        Best regards,  
+                        [Your Support Team]
+                      metadata:
+                        version: 1
+                        createdAt: '2025-07-25T10:30:27.167Z'
+                        modifiedAt: '2025-07-25T10:31:14.509Z'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Retrieves agent jobs.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Job
+  '/ai-service/{tenant}/jobs/{jobId}':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - schema:
+          type: string
+        name: jobId
+        in: path
+        required: true
+    get:
+      parameters:
+        - $ref: '#/components/parameters/fields'
+      summary: Get available job
+      operationId: GET-ai-job
+      responses:
+        '200':
+          description: A jobs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+              examples:
+                Jobs:
+                  value:
+                    id: 68835cc3ef4e8e1425c360ad
+                    status: success
+                    sessionId: 123e4567-e89b-12d3-a456-426614174000
+                    agentType: complaint
+                    agentId: complaint-agent
+                    message: |-
+                      Dear Customer,
+                      
+                      We have successfully processed your support request regarding the incorrect information on invoice EIN251131 for order EON1031. Our team has verified the order and customer details, confirming both the order and legal entity were found.
+                      Thank you for your patience and cooperation.
+                      
+                      Best regards,  
+                      [Your Support Team]
+                    metadata:
+                      version: 1
+                      createdAt: '2025-07-25T10:30:27.167Z'
+                      modifiedAt: '2025-07-25T10:31:14.509Z'
+
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Retrieves agent job.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Job
+    delete:
+      summary: Delete job
+      operationId: DELETE-ai-job
+      responses:
+        '204':
+          description: Given job has been deleted
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Deletes job by given Id.
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      tags:
+        - Job
+  '/ai-service/{tenant}/jobs/search':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    post:
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/header_xTotalCount'
+      summary: Get jobs
+      operationId: POST-ai-search-jobs
+      responses:
+        '200':
+          description: List of available jobs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+              examples:
+                Jobs:
+                  value:
+                    - id: 68835cc3ef4e8e1425c360ad
+                      status: success
+                      sessionId: 123e4567-e89b-12d3-a456-426614174000
+                      agentType: complaint
+                      agentId: complaint-agent
+                      message: |-
+                        Dear Customer,
+                        
+                        We have successfully processed your support request regarding the incorrect information on invoice EIN251131 for order EON1031. Our team has verified the order and customer details, confirming both the order and legal entity were found.
+                        Thank you for your patience and cooperation.
+                        
+                        Best regards,  
+                        [Your Support Team]
+                      metadata:
+                        version: 1
+                        createdAt: '2025-07-25T10:30:27.167Z'
+                        modifiedAt: '2025-07-25T10:31:14.509Z'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      requestBody:
+        $ref: '#/components/requestBodies/QParamSearchBody'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Searches for agent templates based on the provided query.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Job
+  '/ai-service/{tenant}/agentic/chat':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - schema:
+          type: string
+          format: uuid
+        name: session-id
+        in: header
+        description: Unique session's identifier which allows for storing the context of the chat. If not provided, the system generates it.
+    post:
+      summary: Agent's Chat
+      operationId: POST-ai-agents-chat
+      responses:
+        '200':
+          description: Chat response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChatResponse'
+              examples:
+                JobId:
+                  value:
+                    - agentId: complaint-agent
+                      agentType: complaint
+                      message: Found an order with its details.
+                      sessionId: fe91d168-4ce9-4b4d-8451-0029035b34a5
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Allows for communication with Emporix's agents.
+
+        ### Required scopes
+
+        * `ai.completion_manage`
+      security:
+        - OAuth2:
+            - ai.completion_manage
+      requestBody:
+        $ref: '#/components/requestBodies/AgenticChat'
+      tags:
+        - Agentic
+  '/ai-service/{tenant}/agentic/chat-async':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - schema:
+          type: string
+          format: uuid
+        name: session-id
+        in: header
+        description: Unique session's identifier which allows for storing the context of the chat. If not provided, the system generates it.
+    post:
+      summary: Agent's Async Chat
+      operationId: POST-ai-agents-chat-async
+      responses:
+        '201':
+          description: Job Id response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobIdResponse'
+              examples:
+                JobId:
+                  value:
+                    - jobId: 68835cc3ef4e8e1425c360ad
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Allows for communication with Emporix's agents in async way.
+
+        ### Required scopes
+
+        * `ai.completion_manage`
+      security:
+        - OAuth2:
+            - ai.completion_manage
+      requestBody:
+        $ref: '#/components/requestBodies/AgenticChat'
+      tags:
+        - Agentic
+  '/ai-service/{tenant}/agentic/templates':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/qParam'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/header_xTotalCount'
+      - $ref: '#/components/parameters/header_Accept-Language'
+    get:
+      summary: Get available agent templates
+      operationId: GET-ai-list-templates
+      responses:
+        '200':
+          description: List of available agent templates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AgentTemplateResponse'
+              examples:
+                Agent Templates Response:
+                  $ref: '#/components/examples/AgentTemplatesResponse'
+        '400':
+          $ref: '#/components/responses/401_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Retrieves agent templates which can be later use as a base for custom agents.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Agentic
+  '/ai-service/{tenant}/agentic/templates/search':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/header_xTotalCount'
+      - $ref: '#/components/parameters/header_Accept-Language'
+    post:
+      summary: Search agent templates
+      operationId: POST-ai-search-templates
+      responses:
+        '200':
+          description: List of available agent templates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AgentTemplateResponse'
+              examples:
+                Agent Templates Response:
+                  $ref: '#/components/examples/AgentTemplatesResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Searches for agent templates based on the provided query.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      requestBody:
+        $ref: '#/components/requestBodies/QParamSearchBody'
+      tags:
+        - Agentic
+  '/ai-service/{tenant}/agentic/templates/{templateId}/agent':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/header_Content-Language'
+      - schema:
+          type: string
+        name: templateId
+        in: path
+        required: true
+    post:
+      summary: Create agent instance based on the template
+      operationId: POST-ai-clone-template
+      requestBody:
+        $ref: '#/components/requestBodies/AgentFromTemplateRequest'
+      responses:
+        '201':
+          description: Id of created agent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdResponse'
+              examples:
+                Agent Based on Template Response:
+                  $ref: '#/components/examples/IdResponse'
+        '400':
+          $ref: '#/components/responses/401_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Creates an instance of the agent based of the given agent template.
+        
+        **Info:** Only active templates can be cloned
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      tags:
+        - Agentic
+  '/ai-service/{tenant}/agentic/agents':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/header_Accept-Language'
+      - $ref: '#/components/parameters/qParam'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/header_xTotalCount'
+    get:
+      summary: Get generic agents
+      operationId: GET-ai-list-agents
+      responses:
+        '200':
+          description: List of available agent templates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/AgentResponse'
+                    - $ref: '#/components/schemas/AgentHandOffResponse'
+              examples:
+                Agents Response:
+                  $ref: '#/components/examples/AgentsResponse'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Retrieves agent templates based on the provided query.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Agentic
+  '/ai-service/{tenant}/agentic/agents/search':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    post:
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/header_xTotalCount'
+      summary: Get generic agents
+      operationId: POST-ai-search-agents
+      responses:
+        '200':
+          description: List of available agent
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/AgentResponse'
+                    - $ref: '#/components/schemas/AgentHandOffResponse'
+              examples:
+                Agents Response:
+                  $ref: '#/components/examples/AgentsResponse'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      requestBody:
+        $ref: '#/components/requestBodies/QParamSearchBody'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Searches for agent templates based on the provided query.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Agentic
+  '/ai-service/{tenant}/agentic/agents/{agentId}':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - schema:
+          type: string
+        name: agentId
+        in: path
+        required: true
+    get:
+      parameters:
+        - $ref: '#/components/parameters/header_Accept-Language'
+      summary: Get generic agent by Id
+      operationId: GET-ai-retrieve-agent
+      responses:
+        '200':
+          description: A single agent
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/AgentResponse'
+                  - $ref: '#/components/schemas/AgentHandOffResponse'
+              examples:
+                Agent Response:
+                  $ref: '#/components/examples/AgentResponse'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Retrieves the agent by given Id
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Agentic
+    put:
+      parameters:
+        - $ref: '#/components/parameters/header_Content-Language'
+      summary: Upsert generic agents
+      operationId: PUT-ai-list-agents
+      responses:
+        '201':
+          description: Id of created agent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdResponse'
+              examples:
+                Cloned Agent Template Response:
+                  $ref: '#/components/examples/IdResponse'
+        '204':
+          description: The resource has been successfully updated.
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+        '409':
+          $ref: '#/components/responses/409_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Updates or creates a specified product by replacing all of its existing data with data from the request body.
+        If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      requestBody:
+        $ref: '#/components/requestBodies/agentUpsertBody'
+      tags:
+        - Agentic
+    patch:
+      summary: Partially update generic agent
+      operationId: PATCH-ai-update-agent
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Partially updates a single approval document with given information. To update the approval, the user needs to be a requestor or an approval giver. 
+        Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
+          - `add` (adding an item to the items list)
+          - `remove` (removing an item from the items list)
+          - `replace` (replacing an item with given id with new definition)
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      requestBody:
+        $ref: '#/components/requestBodies/agentPatchBody'
+      tags:
+        - Agentic
+    delete:
+      summary: Delete generic agent
+      operationId: DELETE-ai-delete-agent
+      responses:
+        '204':
+          description: Given agent has been deleted
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Deletes agent by given Id.
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      tags:
+        - Agentic
 components:
   schemas:
     ErrorMessage:
@@ -138,6 +810,25 @@ components:
               properties:
                 errorcode:
                   type: string
+    AgenticRequest:
+      type: object
+      properties:
+        agentId:
+          type: string
+          description: Unique identifier of the agent.
+        message:
+          type: string
+          description: The user message to the agent.
+      required:
+        - agentId
+        - message
+    AgentType:
+      type: string
+      description: Type of the agent handling the request
+      enum:
+        - support
+        - generic
+        - complaint
     TextGenerationRequest:
       title: TextGenerationRequest
       type: object
@@ -154,6 +845,477 @@ components:
         maxTokens:
           type: integer
           description: Maximum number of tokens that should be used during text generation. If not provided then 4097 is used.
+    IdResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the resource.
+
+    # Native Tools:
+    NativeToolType:
+      type: string
+      enum: [slack]
+      description: Type of the native tool.
+    BaseNativeTool:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/NativeToolType'
+        enabled:
+          type: boolean
+          description: Informs whether the tool is enabled or not.
+      required:
+        - type
+    SlackNativeToolConfigResponse:
+      type: object
+      properties:
+        teamId:
+          type: string
+          description: Unique identifier of the Slack workspace (team) associated with the request. Used to distinguish the source Slack environment when handling events or API calls.
+      required:
+        - teamId
+    SlackNativeToolConfigRequest:
+      allOf:
+        - $ref: '#/components/schemas/SlackNativeToolConfigResponse'
+        - type: object
+          properties:
+            botToken:
+              type: string
+              description: OAuth token used to authenticate the Slack bot within the specified workspace. Required for performing authorized actions on behalf of the bot. Format usually starts with `xoxb-...`.
+          required:
+            - botToken
+    SlackNativeToolRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseNativeTool'
+        - type: object
+          properties:
+            type:
+              description: For SlackNativeTool it has to be set to `slack`.
+              example: slack
+            config:
+              $ref: '#/components/schemas/SlackNativeToolConfigRequest'
+          required:
+            - config
+    SlackNativeToolResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseNativeTool'
+        - type: object
+          properties:
+            type:
+              description: For SlackNativeTool it has to be set to `slack`.
+              example: slack
+            config:
+              $ref: '#/components/schemas/SlackNativeToolConfigResponse'
+    NativeToolsRequest:
+      type: array
+      description: List of native tools which agents should have access to.
+      items:
+        oneOf:
+          - $ref: '#/components/schemas/SlackNativeToolRequest'
+    NativeToolsResponse:
+      type: array
+      description: List of native tools which agents should have access to.
+      items:
+        oneOf:
+          - $ref: '#/components/schemas/SlackNativeToolResponse'
+
+    # MCP Servers:
+    McpServerType:
+      type: string
+      enum: [custom,predefined]
+      description: Type of the MCP server. The `custom` type allows you to integrate with your own MCP server instance, while the `predefined` type allows you to integrate with one of the instances provided by `Emporix`.
+    CustomMcpServerTransportType:
+      type: string
+      enum: [sse]
+      description: Type of the communication between the agent and the MCP server. For now, only `sse` is supported.
+    BaseMcpServer:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/McpServerType'
+        enabled:
+          type: boolean
+          description: Informs whether the tool is enabled or not.
+        name:
+          type: string
+          description: Name of the MCP Server.
+      required:
+        - type
+        - name
+    PredefinedMcpServer:
+      allOf:
+        - $ref: '#/components/schemas/BaseMcpServer'
+        - type: object
+          properties:
+            type:
+              description: For PredefinedMcpServer it has to be set to `predefined`.
+              example: predefined
+            name:
+              enum: [customer,extensibility,order,product]
+            tools:
+              type: array
+              description: List of the tools which should be used by the agent from this particular MCP server.
+              items:
+                type: string
+    CustomMcpServer:
+      allOf:
+        - $ref: '#/components/schemas/BaseMcpServer'
+        - type: object
+          properties:
+            type:
+              description: For CustomMcpServer it has to be set to `custom`.
+              example: custom
+            url:
+              type: string
+              format: uri
+              description: URL of MCP Server.
+            transport:
+              $ref: '#/components/schemas/CustomMcpServerTransportType'
+          required:
+            - url
+            - transport
+    McpServers:
+      type: array
+      description: List of MCP servers which agents should have access to.
+      items:
+        oneOf:
+          - $ref: '#/components/schemas/CustomMcpServer'
+          - $ref: '#/components/schemas/PredefinedMcpServer'
+
+    # LLM Config:
+    BaseLlm:
+      type: object
+      properties:
+        model:
+          type: string
+          description: The exact name of the model.
+          example: gpt-4.1-mini
+        temperature:
+          type: number
+          format: float
+          description: Value between 0.1 and 1.0 (inclusive), in steps of 0.1. The lower value the more creative (but less stable) the model is.
+          enum: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+          example: 0.7
+        maxTokens:
+          type: integer
+          description: The limit of tokens which agent can burn during one request session.
+          example: 1000
+      required:
+        - model
+        - temperature
+        - maxTokens
+    EmporixLlm:
+      allOf:
+        - $ref: '#/components/schemas/BaseLlm'
+        - type: object
+          properties:
+            provider:
+              type: string
+              description: Type of the LLM Provider. The `emporix_openai` allows using the OpenAI token provided by Emporix. The token usage is limited. When using this provider `apiKey` property can be omitted.
+              enum: [emporix_openai]
+              example: emporix_openai
+          required:
+            - provider
+    SelfHostedParamsResponse:
+      type: object
+      properties:
+        url:
+          type: string
+          description: Url of the self-hosted LLM
+        authorizationHeader:
+          type: string
+          description: Header required for authorization e.g. `Authorization`
+    SelfHostedParamsRequest:
+      allOf:
+        - $ref: '#/components/schemas/SelfHostedParamsResponse'
+        - type: object
+          properties:
+            authorizationHeaderValue:
+              type: string
+              description: Value of the authorization header e.g. `Bearer api_key`
+          required:
+            - url
+    SelfHostedLlm:
+      allOf:
+        - $ref: '#/components/schemas/BaseLlm'
+        - type: object
+          properties:
+            provider:
+              type: string
+              description: Type of the LLM Provider. The self-hosted LLM allows you to provide tour own LLMs. When using this providers, the `selfHostedParams.url` property cannot be omitted
+              enum: [self_hosted_ollama]
+              example: self_hosted_ollama
+          required:
+            - provider
+    SelfHostedLlmRequest:
+      allOf:
+        - $ref: '#/components/schemas/SelfHostedLlm'
+        - type: object
+          properties:
+            selfHostedParams:
+              $ref: '#/components/schemas/SelfHostedParamsRequest'
+          required:
+            - selfHostedParams
+    SelfHostedLlmResponse:
+      allOf:
+        - $ref: '#/components/schemas/SelfHostedLlm'
+        - type: object
+          properties:
+            selfHostedParams:
+              $ref: '#/components/schemas/SelfHostedParamsResponse'
+    ApiKeyLlmProvider:
+      type: string
+      description: Type of the LLM Provider. The supported providers allows you to provide your own API key. When using this providers, the `apiKey` property cannot be omitted.
+      enum:
+        - openai
+        - google
+        - anthropic
+      example: openai
+    ApiKeyLlmRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseLlm'
+        - type: object
+          properties:
+            provider:
+              $ref: '#/components/schemas/ApiKeyLlmProvider'
+            apiKey:
+              type: string
+              description: The API Key of OpenAI.
+          required:
+            - provider
+            - apiKey
+    ApiKeyLlmResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseLlm'
+        - type: object
+          properties:
+            provider:
+              $ref: '#/components/schemas/ApiKeyLlmProvider'
+    AgentCollaborations:
+      type: array
+      description: List of agent collaborations which allows an agent to hand off its task to other agents.
+      items:
+        type: object
+        properties:
+          agentId:
+            type: string
+            description: Identifier of the agent.
+          description:
+            type: string
+            description: Description of the agent collaboration.
+
+    TriggerType:
+      type: string
+      enum: [endpoint,slack]
+      description: Type of the trigger. The `slack` trigger type can be used only for `support` agent type.
+    AgentTrigger:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/TriggerType'
+      required:
+        - type
+
+    HandOff:
+      type: boolean
+      description: Whether the agent is handOff or not. HandOff agents are special types of agents which can be called by other agents through `agentCollaborations` property and their configuration is hidden.
+
+    BaseForAgentAndTemplateAndHandOff:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the agent.
+        name:
+          type: object
+          description: Localized name of the agent.
+          additionalProperties:
+            type: string
+        description:
+          type: object
+          description: Description of the agent.
+          additionalProperties:
+            type: string
+    BaseForAgentAndTemplate:
+      allOf:
+        - $ref: '#/components/schemas/BaseForAgentAndTemplateAndHandOff'
+        - type: object
+          properties:
+            icon:
+              type: string
+              description: fa class of react icon
+            tags:
+              type: array
+              items:
+                type: string
+                description: markers that allow to categorise the agent.
+            mcpServers:
+              $ref: '#/components/schemas/McpServers'
+            enabled:
+              type: boolean
+              description: Whether the agent is enabled.
+              default: false
+          required:
+            - name
+            - mcpServers
+    BaseForAgentRequestAndResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseForAgentAndTemplate'
+        - type: object
+          properties:
+            userPrompt:
+              type: string
+              description: LLM Prompt which in detailed way describes how agent should work like, which tools it could use to solve some problems, it can contain examples and step by step guidance.
+            trigger:
+              $ref: '#/components/schemas/AgentTrigger'
+            agentCollaborations:
+              $ref: '#/components/schemas/AgentCollaborations'
+            maxRecursionLimit:
+              type: integer
+              description: Defines the maximum number of reasoning steps or internal calls an AI agent is allowed to perform during a single task. Helps prevent infinite loops or excessive resource usage.
+              example: 10
+              default: 20
+              minimum: 1
+              maximum: 50
+            enabledMemory:
+              type: boolean
+              description: Defines whether the session memory should be stored between different agent calls.
+              default: false
+          required:
+            - userPrompt
+            - trigger
+    AgentTemplateResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseForAgentAndTemplate'
+        - type: object
+          properties:
+            nativeTools:
+              $ref: '#/components/schemas/NativeToolsResponse'
+    AgentHandOffResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseForAgentAndTemplateAndHandOff'
+        - type: object
+          properties:
+            handOff:
+              allOf:
+                - $ref: '#/components/schemas/HandOff'
+              example: true
+            metadata:
+              $ref: '#/components/schemas/metadata'
+    AgentRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseForAgentRequestAndResponse'
+        - type: object
+          properties:
+            nativeTools:
+              $ref: '#/components/schemas/NativeToolsRequest'
+            llmConfig:
+              oneOf:
+                - $ref: '#/components/schemas/EmporixLlm'
+                - $ref: '#/components/schemas/ApiKeyLlmRequest'
+                - $ref: '#/components/schemas/SelfHostedLlmRequest'
+            metadata:
+              $ref: '#/components/schemas/basicMetadata'
+          required:
+            - llmConfig
+    AgentResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseForAgentRequestAndResponse'
+        - type: object
+          properties:
+            nativeTools:
+              $ref: '#/components/schemas/NativeToolsResponse'
+            llmConfig:
+              oneOf:
+                - $ref: '#/components/schemas/EmporixLlm'
+                - $ref: '#/components/schemas/ApiKeyLlmResponse'
+                - $ref: '#/components/schemas/SelfHostedLlmResponse'
+            handOff:
+              allOf:
+                - $ref: '#/components/schemas/HandOff'
+              example: false
+            type:
+              $ref: '#/components/schemas/AgentType'
+            templatePrompt:
+              type: string
+              description: Prompt which is inherited from the template (if agent is created based on the template). The prompt provided by the user is then concatenated with this prompt.
+            metadata:
+              $ref: '#/components/schemas/metadata'
+    basicMetadata:
+      type: object
+      properties:
+        version:
+          minimum: 1
+          type: integer
+          description: Version of the object. The version is required during the update operation because of the optimistic locking mechanism.
+      required:
+        - version
+    metadata:
+      allOf:
+        - $ref: '#/components/schemas/basicMetadata'
+        - type: object
+          properties:
+            createdAt:
+              description: 'Date and time when the object was created. The value is approved as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
+              type: string
+            modifiedAt:
+              description: 'Date and time when the object was last modified. The value is approved as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
+              type: string
+          required:
+            - version
+            - createdAt
+            - modifiedAt
+
+    # Jobs:
+    JobStatus:
+      type: string
+      enum: [in_progress,success,failure]
+      description: Status of the job.
+    Job:
+      type: object
+      description: Contains information about the job's result - whether it was successful or not, what was the agent's output etc.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the job.
+        agentType:
+          $ref: '#/components/schemas/AgentType'
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        sessionId:
+          type: string
+          description: Unique identifier of the session.
+        agentId:
+          type: string
+          description: Unique identifier of the agent.
+        message:
+          type: string
+          description: Agent's message.
+        metadata:
+          $ref: '#/components/schemas/metadata'
+    JobIdResponse:
+      type: object
+      properties:
+        jobId:
+          type: string
+          description: Identifier of the job.
+
+    ChatResponse:
+      type: object
+      properties:
+        agentId:
+          type: string
+          description: Unique identifier of the agent.
+        agentType:
+          $ref: '#/components/schemas/AgentType'
+        sessionId:
+          type: string
+          description: Unique identifier of the session.
+        message:
+          type: string
+          description: Agent's message.
+
     GenerationResponse:
       title: GenerationResponse
       type: object
@@ -192,6 +1354,50 @@ components:
               content:
                 type: string
                 description: 'Content of the message. Depending on the role parameter it can be a background instruction, user instruction or AI response.'
+    QParamSearchBody:
+      type: object
+      properties:
+        q:
+          type: string
+          description: |
+            A standard query parameter is used to search for specific values. 
+            
+            See: [Standard practises - Query parameter](https://developer.emporix.io/api-references/standard-practices/q-param)
+    AgentFromTemplateRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseForAgentAndTemplateAndHandOff'
+      required:
+        - name
+        - description
+    AgentPatchRequest:
+      type: array
+      description: Agent partial update operation list.
+      items:
+        type: object
+        properties:
+          op:
+            anyOf:
+              - enum:
+                  - ADD
+                  - REMOVE
+                  - REPLACE
+            type: string
+          path:
+            anyOf:
+              - enum:
+                  - /name
+                  - /description
+                  - /llmConfig/model
+            type: string
+          value:
+            anyOf:
+              - type: string
+                description: Value of the string type
+              - type: object
+                description: Any part of the details object
+        required:
+          - op
+          - path
   securitySchemes:
     OAuth2:
       type: oauth2
@@ -200,6 +1406,8 @@ components:
           scopes:
             ai.text_manage: Needed to execute actions related to the text generation.
             ai.completion_manage: Needed to execute actions related to the AI completions.
+            ai.agent_read: Needed to read AI agents
+            ai.agent_manage: Needed to manage AI agents
           tokenUrl: 'https://api.emporix.io/oauth/token'
   parameters:
     path_tenant:
@@ -238,6 +1446,45 @@ components:
         * If the header is empty, the endpoint will assume that the localized fields are provided in the default language defined in the Configuration Service.
 
         **Note**: You can provide the localized fields only in languages defined in the Configuration Service. In case the fields are provided in languages that are not defined in the Configuration Service, the request will be rejected.
+    header_xTotalCount:
+      schema:
+        type: boolean
+      in: header
+      name: X-Total-Count
+      description: Flag indicating whether the total number of retrieved results should be returned.
+    qParam:
+      in: query
+      name: q
+      description:  |
+        A standard query parameter is used to search for specific values. 
+        
+        See: [Standard practises - Query parameter](https://developer.emporix.io/docs/content/q-param)
+      schema:
+        type: string
+    pageSize:
+      schema:
+        type: string
+      in: query
+      name: pageSize
+      description: The number of documents to be retrieved per page.
+    pageNumber:
+      schema:
+        type: string
+      in: query
+      name: pageNumber
+      description: The page number to be retrieved. The size of the pages should be specified by the pageSize parameter.
+    sort:
+      schema:
+        type: string
+      in: query
+      name: sort
+      description: List of properties used to sort the results, separated by colons.
+    fields:
+      schema:
+        type: string
+      in: query
+      name: fields
+      description: Fields to be returned in the response.
   responses:
     401_resp_common:
       description: The authorization token is invalid or has expired.
@@ -296,19 +1543,35 @@ components:
                 message: Validation problem with request body.
                 details:
                   - message: code must not be null nor blank
-    404_resp_product:
+    404_resp_common:
       description: Example response
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorMessage'
           examples:
-            Product not found:
+            Resource not found:
               value:
-                productId: 628cd20c6e8b2432b6346ca6
+                resourceId: 628cd20c6e8b2432b6346ca6
                 code: 404
                 status: Not Found
-                message: The product with id 628cd20c6e8b2432b6346ca6 has not been found.
+                message: The resource with id 628cd20c6e8b2432b6346ca6 has not been found.
+    409_resp_common:
+      description: |
+        There are three possible reasons:
+         1. Resource with given code already exists, please choose unique code for your resource
+         2. Optimistic locking failed. If user sends metadata/version attribute which is outdated (someone else updated resource in the time user was performing his changes). User should retrieve the latest product data and retry the request.
+         3. Optimistic locking failed. User did not provide metadata/version attribute in update request, but someone else updated product while it was internally handled by product service. Resending the same request can result in successful update, but the update can override recently persisted changes.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessage'
+          examples:
+            Resource conflict:
+              value:
+                code: 409
+                status: Conflict
+                message: Conflict - a resource with given code or id has already exist.
     200_resp_GET_text_generation:
       description: ''
       content:
@@ -319,7 +1582,7 @@ components:
             Text Generation Response:
               value:
                 id: en
-                result: 'Mini pipe cutters are small cutting tools that are designed to precisely and effectively cut through pipes ranging in size from 3 to 16 millimeters. Unlike some larger pipe cutters, these mini versions are conveniently small and light enough to be carried around easily and used in places where a standard-sized cutter may not be able to fit. They are typically made of hardened steel and are designed to work on most types of tubing and thin-walled plastic piping. The continuous interlocking jaws hold the pipe securely while the cutting blade smoothly and accurately creates a precise and neat cutting edge. Mini pipe cutters are the perfect tool for plumbers, DIYers and those tackling smaller scale pipe work in hard-to-reach places.'
+                result: 'Mini pipe cutters are small cutting tools that are designed to precisely and effectively cut through pipes ranging in size from 3 to 16 millimeters. Unlike some larger pipe cutters, these mini versions are conveniently small and light enough to be carried around easily and used in places where a standard-sized cutter may not be able to fit. They are typically made of hardened steel and are designed to work on most types of tubing and thin-walled plastic piping. The continuous interlocking jaws hold the pipe securely while the cutting blade smoothly and accurately creates a precise and neat cutting edge. Mini pipe cutters are the perfect tool for plumbers and those tackling smaller scale pipe work in hard-to-reach places.'
   requestBodies:
     TextGeneration:
       content:
@@ -332,6 +1595,16 @@ components:
                 id: en
                 prompt: 'Generate a long description for product ''pipe cutter'' in language EN '
                 maxTokens: 2048
+    AgenticChat:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AgenticRequest'
+          examples:
+            Agentic Chat request:
+              value:
+                agentId: complaint-agent
+                message: 'Find a product with "EON1243" code'
     Completion:
       content:
         application/json:
@@ -344,4 +1617,187 @@ components:
                 messages:
                   - role: SYSTEM
                     content: You are an assistant responsible for creating a configuration based on information provided by user.
-  examples: {}
+    QParamSearchBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/QParamSearchBody'
+          examples:
+            Search Request:
+              value:
+                q: name:~Support
+    AgentFromTemplateRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AgentFromTemplateRequest'
+          examples:
+            Search Request:
+              value:
+                name:
+                  en: Complaint Agent
+                description:
+                  de: Agent which is responsible for reading emails and base on that resolve the customer's complaints
+                id: a81bc81b-dead-4e5d-abff-90865d1e13b1
+    agentPatchBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AgentPatchRequest'
+          examples:
+            Multiple update list:
+              value:
+                - op: REPLACE
+                  path: /description
+                  value: New agent description
+                - op: REPLACE
+                  path: /name
+                  value: Complaint Agent
+            Change model of the LLM:
+              value:
+                - op: REPLACE
+                  path: /llmConfig/model
+                  value: OPENAI
+    agentUpsertBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AgentRequest'
+          examples:
+            Create agent:
+              $ref: '#/components/examples/AgentRequest'
+  examples:
+    IdResponse:
+      value:
+        id: a81bc81b-dead-4e5d-abff-90865d1e13b1
+    AgentTemplatesResponse:
+      value:
+        - id: "123"
+          name:
+            en: Support Agent
+          description:
+            en: Support agent template
+          type: SUPPORT
+          enabled: true
+          tags:
+            - productivity
+          icon: fa-productivity
+          mcpServers:
+            - name: order
+              enabled: true
+              type: predefined
+              tools:
+                - get-orders
+                - get-order
+          nativeTools:
+            - type: slack
+              enabled: true
+              config:
+                teamId: T0445953
+    AgentResponse:
+      value:
+        id: "123"
+        name:
+          en: Complaint Agent
+        description:
+          en: Complaint agent
+        type: complaint
+        enabled: true
+        templatePrompt: "You are an complaint agent for checking emails and do some action."
+        userPrompt: "Use get-order tool to fetch order."
+        llmConfig:
+          model: GPT-4.1
+          apiKey: secureApiKey
+          provider: openai
+          maxTokens: 100000
+          temperature: 0.2
+        trigger:
+          type: endpoint
+        maxRecursionLimit: 20
+        enabledMemory: true
+        tags:
+          - productivity
+        icon: fa-productivity
+        mcpServers:
+          - name: order
+            enabled: true
+            type: predefined
+            tools:
+              - get-orders
+              - get-order
+        nativeTools:
+          - name: slack
+            enabled: true
+            config:
+              teamId: T0445953
+    AgentsResponse:
+      value:
+        - id: "123"
+          name:
+            en: Complaint Agent
+          description:
+            en: Complaint agent
+          type: complaint
+          enabled: true
+          templatePrompt: "You are an complaint agent for checking emails and do some action."
+          userPrompt: "Use get-order tool to fetch order."
+          llmConfig:
+            model: GPT-4.1
+            apiKey: secureApiKey
+            provider: openai
+            maxTokens: 100000
+            temperature: 0.2
+          trigger:
+            type: endpoint
+          maxRecursionLimit: 20
+          enabledMemory: true
+          tags:
+            - productivity
+          icon: fa-productivity
+          mcpServers:
+            - name: order
+              enabled: true
+              type: predefined
+              tools:
+                - get-orders
+                - get-order
+          nativeTools:
+            - name: slack
+              enabled: true
+              config:
+                teamId: T0445953
+    AgentRequest:
+      value:
+        id: "123"
+        name:
+          en: Complaint Agent
+        description:
+          en: Complaint agent
+        enabled: true
+        userPrompt: "You are an complaint agent for checking emails and do some action"
+        llmConfig:
+          model: GPT-4.1
+          apiKey: secureApiKey
+          provider: openai
+          maxTokens: 100000
+          temperature: 0.2
+        trigger:
+          type: endpoint
+        maxRecursionLimit: 20
+        enabledMemory: true
+        tags:
+          - productivity
+        icon: fa-productivity
+        mcpServers:
+          - name: order
+            enabled: true
+            type: predefined
+            tools:
+              - get-orders
+              - get-order
+        nativeTools:
+          - type: slack
+            enabled: true
+            config:
+              teamId: T08J7676
+              botToken: xoxb-8437473473
