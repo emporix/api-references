@@ -9,7 +9,7 @@ Holds and manages a list of currencies available for the tenant.
 ### Key features and benefits
 
 * Creates, manages, and deletes currencies
-* Holds ISO standard compliant currency code information, including localized names - for more information, see [ISO-4217 Currency Codes](https://www.iso.org/iso-4217-currency-codes.html)
+* Provides the ISO-compliant currency code information, including localized names - for more information, see [ISO-4217 Currency Codes](https://www.iso.org/iso-4217-currency-codes.html)
 * Stores exchange rates
 * Calculates exchanges between currencies with high precision
 * Displays product/service prices in the currency preferred by the customer

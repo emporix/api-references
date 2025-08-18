@@ -485,7 +485,7 @@
               spec: shopping-list-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/checkout/shopping-list/api-reference/api.yml)
-* [Orders](orders/README.md)
+* [Orders and Order Fulfillment](orders/README.md)
   * [Availability Service](orders/availability/README.md)
     * [Availability Tutorial](orders/availability/availability.md)
     * [API Reference](orders/availability/api-reference/README.md)
