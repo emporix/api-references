@@ -4,7 +4,7 @@ seo:
   description: Webhooks, availability events
 ---
 
-# Events-Availability
+# Events - Availability
 
 ## Overview
 

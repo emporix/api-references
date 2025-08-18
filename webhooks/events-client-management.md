@@ -4,7 +4,7 @@ seo:
   description: Webhooks, client management events
 ---
 
-# Events-Client Management
+# Events - Client Management
 
 ## Overview
 

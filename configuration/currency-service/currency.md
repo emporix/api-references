@@ -38,7 +38,7 @@ _What's the difference between a tenant's currency configuration and a site's cu
 Currency configured for a particular site needs to be one of the currencies configured for the whole tenant. In other words, your tenant's currency configuration must include all currencies configured for all of the sites.
 {% endhint %}
 
-Currency codes defined in currency configurations must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
+Currency codes defined in currency configurations must be compliant with the [ISO 4217 standard](https://www.iso.org/iso-4217-currency-codes.html).
 
 Your tenant's currency configuration is stored under the `project_curr` key in the Emporix API [Configuration Service](../configuration-service/). Check out the following example:
 

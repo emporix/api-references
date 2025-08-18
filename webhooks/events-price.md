@@ -4,7 +4,7 @@ seo:
   description: Webhooks, price events
 ---
 
-# Events-Price
+# Events - Price
 
 ## Overview
 
