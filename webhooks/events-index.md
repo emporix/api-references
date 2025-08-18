@@ -33,7 +33,9 @@ Webhook events related to indexing data.
    }
   ],
   "mixins": "Map",
-  "name": "Map",
+  "name": {
+    "name" : "Map"
+  },
   "popularity": "Number",
   "prices": [
     {}

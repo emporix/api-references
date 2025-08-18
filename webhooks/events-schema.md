@@ -18,8 +18,10 @@ Webhook events related to the creation, update, and deletion of custom mixin sch
     "customInstance": {
         "id": "String",
         "metadata": {},
-        "mixins"" "Map",
-        "name": "Map"
+        "mixins": "Map",
+        "name": {
+            "name" : "Map"
+        },
     }
 }
 </code></pre></td></tr><tr><td>schema.custom-instance-deleted</td><td><pre class="language-json"><code class="lang-json">{
@@ -33,8 +35,10 @@ Webhook events related to the creation, update, and deletion of custom mixin sch
     "customInstance": {
         "id": "String",
         "metadata": {},
-        "mixins"" "Map",
-        "name": "Map"
+        "mixins": "Map",
+        "name": {
+            "name" : "Map"
+        },
     }
 }
 </code></pre></td></tr>

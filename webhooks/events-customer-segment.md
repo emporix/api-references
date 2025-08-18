@@ -56,7 +56,9 @@ Webhook events related to the creation, update, and deletion of customer segment
   "item": {
     "code": "String",
     "id": "String",
-    "name": "Map"
+    "name": {
+        "name" : "Map"
+    },
   }
   "metadata": {},
   "mixins": "Map",
@@ -74,7 +76,9 @@ Webhook events related to the creation, update, and deletion of customer segment
   "item": {
     "code": "String",
     "id": "String",
-    "name": "Map"
+    "name": {
+        "name" : "Map"
+    },
   }
   "metadata": {},
   "mixins": "Map",
@@ -86,7 +90,9 @@ Webhook events related to the creation, update, and deletion of customer segment
   "description": {},
   "id": "String",
   "metadata": {},
-  "name": "Map",
+  "name": {
+    "name" : "Map"
+  },
   "siteCode": "String",
   "status": "String",
   "tenant": "String",
@@ -101,7 +107,9 @@ Webhook events related to the creation, update, and deletion of customer segment
   "id": "String",
   "metadata": {},
   "mixins": "Map",
-  "name": "Map",
+  "name": {
+    "name" : "Map"
+  },
   "previousStatus": "String",
   "siteCode": "String",
   "status": "String",
