@@ -29,11 +29,11 @@ For more information, check out the [official Make documentation for Emporix/Mak
 
 **How do I set up a connection?**
 
-To start working with the Emporix Maker app, you need to establish a connection between Make and Emporix API by using Emporix API credentials. For more information, check out [Connections](https://www.make.com/en/help/connections) in the official Make documentation.
+To start working with the Emporix Maker app, you need to establish a connection between Make and Emporix API by using Emporix API credentials. For more information, the [Emporix Commerce Engine](https://apps.make.com/emporix-commerce) in the official Make documentation.
 
 **Where can I find Emporix API credentials?**
 
-Your tenant credentials for Emporix API (ClientID and ClientSecret) are located on the [Emporix Developer Portal](https://login.emporix.io/developer/login) under **API keys** → **Manage API Keys**.
+Your tenant credentials for Emporix API (ClientID and ClientSecret) are located on the [Emporix Developer Portal]((https://app.emporix.io/)) under **API keys** → **Manage API Keys**.
 
 **Are all Emporix API endpoints available through Make?**
 
