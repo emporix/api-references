@@ -39,10 +39,7 @@ Your tenant credentials for Emporix API (ClientID and ClientSecret) are located 
 
 Yes, all Emporix API endpoints are available either through dedicated Make Modules or the Generic **Make an API Call** Module.
 
-{% hint style="success" %}
 For a full list of modules and see the [Emporix Commerce Engine](https://apps.make.com/emporix-commerce) Make documentation.
-
-{% endhint %}
 
 **How do I interact with Emporix API?**
 
