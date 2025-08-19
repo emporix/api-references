@@ -1,10 +1,10 @@
 ---
 seo:
   title: Category Service events
-  description: Webhooks, category events
+  description: Webhooks, category tree events
 ---
 
-# Events-Category
+# Events - Category Tree
 
 ## Overview
 

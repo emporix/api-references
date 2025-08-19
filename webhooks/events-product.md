@@ -4,7 +4,7 @@ seo:
   description: Webhooks, product events
 ---
 
-# Events-Product
+# Events - Product
 
 ## Overview
 

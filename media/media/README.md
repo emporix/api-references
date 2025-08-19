@@ -12,3 +12,9 @@ The Media Service allows you to manage assets associated with your tenant. The a
 * Supports managing a variety of asset types, including images, videos, contracts, and specification sheets
 * Provides the ability to download assets from the system
 * Ensures efficient organization and access to important media for business operations
+* Supports creation of assets of the following link types:
+    * `BLOB`
+    * `LINK`
+* Supports setting the following access types: 
+    * Public - from GCS  
+    * Private - from Cloudinary

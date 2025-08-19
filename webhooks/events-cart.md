@@ -4,7 +4,7 @@ seo:
   description: Webhooks, cart events
 ---
 
-# Events-Cart
+# Events - Cart
 
 ## Overview
 

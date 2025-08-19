@@ -4,7 +4,7 @@ seo:
   description: Webhooks, Quote events
 ---
 
-# Events-Quote
+# Events - Quote
 
 ## Overview
 

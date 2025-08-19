@@ -4,7 +4,7 @@ seo:
   description: Webhooks, catalog events
 ---
 
-# Events-Catalog
+# Events - Catalog
 
 ## Overview
 

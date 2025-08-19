@@ -4,7 +4,7 @@ icon: square-quote
 
 # Quote Service
 
-Manages the customers' quotes before going to checkout.
+Manages customer enquiries as quotes that can be converted into orders.
 
 ### Key features and benefits
 
@@ -20,3 +20,6 @@ Manages the customers' quotes before going to checkout.
 * Automates notifications, minimizing the amount of manual work
 * Ensures transparent quote status
 * Integrates the quotation process easily
+* Generates PDFs within Management Dashboard
+* Allows for managing quote reasons - the configurable status codes that be can used for customers within the business storefront
+* Provides time restrictions for quotes 

@@ -4,7 +4,7 @@ seo:
   description: Webhooks, customer events
 ---
 
-# Events-Customer
+# Events - Customer
 
 ## Overview
 

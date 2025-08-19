@@ -4,89 +4,50 @@ seo:
   description: Webhooks, indexing service events
 ---
 
-# Events-Index
+# Events - Index Item
 
-## Index events
-
-### Overview
+## Overview
 
 Webhook events related to indexing data.
 
-### Available events
+## Available events
 
 <table><thead><tr><th>Event type</th><th>Event schema</th></tr></thead><tbody><tr><td>index-item.updated</td><td><pre class="language-json"><code class="lang-json">{
-</code></pre></td></tr><tr><td>"availability": "Object",</td><td></td></tr><tr><td>"available": "Boolean",</td><td></td></tr><tr><td>"categoryAssignments": ["Object"],</td><td></td></tr><tr><td>"code": "String",</td><td></td></tr><tr><td>"id": "String",</td><td></td></tr><tr><td>"medias": [</td><td></td></tr></tbody></table>
-
-```
-{"Object"}
-```
-
-],\
-"mixins": "Object",\
-"popularity": "Number",\
-"prices": \[\
-{\
-"currency": "String",\
-"effectiveAmount": "Number",\
-"id": "String",\
-"itemId": {\
-"id": "String",\
-"itemType": "String",\
-"name": {"Object"}\
-},\
-"location": {\
-"countryCode": "String"\
-}\
-"originalAmount": "Number",\
-"priceModel": {\
-"description": {"Map"},\
-"id": "String",\
-"includesTax": "Boolean",\
-"measurementUnit": {\
-"quantity": "Integer",\
-"unitCode": "String"\
-},\
-"name": {"Object"},\
-"tierDefinition":{\
-"tierType": "String",\
-"tiers": \[\
-{\
-"id": "String",\
-"minQuantity": {\
-"quantity": "Integer",\
-"unitCode": "String"\
-}\
-}\
-]\
-}\
-},\
-"priceModelId": "String",\
-"restrictions": {\
-"siteCodes": \["String"]\
-},\
-"siteCode": "String",\
-"tierValues": \[\
-{\
-"id": "String",\
-priceValue": "Number"\
-}\
-]\
-}\
-],\
-"published": "Boolean",\
-"siteCode": "String",\
-"tags": \["String"]\
-}\
-|\
-\| index-item.deleted |
-
-```json
-{
-"id": "String",
-"siteCode": "String"
+  "availability": {},
+  "available": "Boolean",
+  "categoryAssignments": [
+    {
+      "id": "String",
+      "localizedName": "Map",
+      "name": "String",
+      "parent": {}
+    }
+  ],
+  "code": "String",
+  "description": "Map",
+  "id": "String",
+  "medias": [
+   {
+    "mainImage": "Boolean",
+    "url": "String"
+   }
+  ],
+  "mixins": "Map",
+  "name": {
+    "name" : "Map"
+  },
+  "popularity": "Number",
+  "prices": [
+    {}
+  ],
+  "published": "Boolean",
+  "siteCode": "String",
+  "tags": ["String"]
 }
-```
-
+</code></pre></td></tr><tr><td>index-item.deleted</td><td><pre class="language-json"><code class="lang-json">{
+  "id": "String",
+  "siteCode": "String",
+</code></pre></td></tr></tbody></table>
 |
 
 {% hint style="info" %}
