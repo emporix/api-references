@@ -25,19 +25,24 @@ The Emporix Maker app allows Make customers to integrate with Emporix API servic
 ## FAQ
 
 Here you can find answers to the most popular questions regarding the usage of the Emporix Maker app.
-For more information, check out the [official Make documentation for Emporix/Make integration](https://www.make.com/en/integrations/emporix-commerce).
+For more information, check out the Make documentation for [Connect Emporix Commerce Engine integrations](https://www.make.com/en/integrations/emporix-commerce).
 
 **How do I set up a connection?**
 
-To start working with the Emporix Maker app, you need to establish a connection between Make and Emporix API by using Emporix API credentials. For more information, the [Emporix Commerce Engine](https://apps.make.com/emporix-commerce) in the official Make documentation.
+To start working with the Emporix Maker app, you need to establish a connection between Make and Emporix API by using Emporix API credentials. For more information, check out the [Emporix Commerce Engine](https://apps.make.com/emporix-commerce) in the official Make documentation.
 
 **Where can I find Emporix API credentials?**
 
-Your tenant credentials for Emporix API (ClientID and ClientSecret) are located on the [Emporix Developer Portal]((https://app.emporix.io/)) under **API keys** → **Manage API Keys**.
+Your tenant credentials for Emporix API (ClientID and ClientSecret) are located on the [Developer Portal](https://app.emporix.io/) under **API keys** → **Manage API Keys**.
 
 **Are all Emporix API endpoints available through Make?**
 
 Yes, all Emporix API endpoints are available either through dedicated Make Modules or the Generic **Make an API Call** Module.
+
+{% hint style="success" %}
+For a full list of modules and see the [Emporix Commerce Engine](https://apps.make.com/emporix-commerce) Make documentation.
+
+{% endhint %}
 
 **How do I interact with Emporix API?**
 
