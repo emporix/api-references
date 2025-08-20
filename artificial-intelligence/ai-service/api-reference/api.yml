@@ -22,6 +22,8 @@ tags:
     description: Manage Tools
   - name: Token
     description: Manage Tokens
+  - name: MCP Server
+    description: Manage MCP Servers
   - name: Job
     description: Manage Jobs
 servers:
@@ -1244,6 +1246,232 @@ paths:
       tags:
         - Token
 
+
+  '/ai-service/{tenant}/agentic/mcp-servers':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/qParam'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/expandMcpServer'
+      - $ref: '#/components/parameters/header_xTotalCount'
+    get:
+      summary: Get mcp servers
+      operationId: GET-ai-list-mcp-servers
+      responses:
+        '200':
+          description: List of mcp servers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/McpServerResponse'
+              examples:
+                Mcp Servers Response:
+                  $ref: '#/components/examples/McpServersResponse'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Retrieves mcp servers based on the provided query.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - MCP Server
+  '/ai-service/{tenant}/agentic/mcp-servers/search':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    post:
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/expandMcpServer'
+        - $ref: '#/components/parameters/header_xTotalCount'
+      summary: Get mcp servers
+      operationId: POST-ai-search-mcp-servs
+      responses:
+        '200':
+          description: List of mcp servers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/McpServerResponse'
+              examples:
+                Tokens Response:
+                  $ref: '#/components/examples/McpServersResponse'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      requestBody:
+        $ref: '#/components/requestBodies/QParamSearchBody'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Searches for mcp servers based on the provided query.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - MCP Server
+  '/ai-service/{tenant}/agentic/mcp-servers/{mcpServerId}':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - schema:
+          type: string
+        name: mcpServerId
+        in: path
+        required: true
+    get:
+      parameters:
+        - $ref: '#/components/parameters/fields'
+      summary: Get mcp server by Id
+      operationId: GET-ai-retrieve-mcp-server
+      responses:
+        '200':
+          description: A single mcp server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/McpServerResponse'
+              examples:
+                Tool Response:
+                  $ref: '#/components/examples/McpServerResponse'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Retrieves the mcp server by given Id
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - MCP Server
+    put:
+      summary: Upsert mcp server
+      operationId: PUT-ai-upsert-mcp-server
+      responses:
+        '201':
+          description: Id of created mcp server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdResponse'
+              examples:
+                Id Of Created Mcp Server:
+                  $ref: '#/components/examples/IdResponse'
+        '204':
+          description: The resource has been successfully updated.
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+        '409':
+          $ref: '#/components/responses/409_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Updates or creates a specified mcp server by replacing all of its existing data with data from the request body.
+        If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
+
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      requestBody:
+        $ref: '#/components/requestBodies/mcpServerUpsertBody'
+      tags:
+        - MCP Server
+    patch:
+      summary: Partially update mcp server
+      operationId: PATCH-ai-update-mcp-server
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Partially updates a single mcp server document with given information.
+        Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
+          - `add` (adding an item to the items list)
+          - `remove` (removing an item from the items list)
+          - `replace` (replacing an item with given id with new definition)
+
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      requestBody:
+        $ref: '#/components/requestBodies/mcpServerPatchBody'
+      tags:
+        - MCP Server
+    delete:
+      summary: Delete mcp server
+      operationId: DELETE-ai-delete-mcp-server
+      responses:
+        '204':
+          description: Given mcp server has been deleted
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Deletes mcp server by given Id.
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      tags:
+        - MCP Server
+
+
 components:
   schemas:
     ErrorMessage:
@@ -1397,6 +1625,61 @@ components:
           - $ref: '#/components/schemas/SlackNativeToolResponse'
 
     # MCP Servers:
+    McpServerConfigRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of the MCP server.
+        authorizationHeaderName:
+          type: string
+          description: Name of the header required for authorization e.g. `Authorization`.
+        authorizationHeaderTokenId:
+          type: string
+          description: Id of the token which should store secret for authorization header.
+      required:
+        - url
+    McpServerConfigResponse:
+      allOf:
+        - $ref: '#/components/schemas/McpServerConfigRequest'
+        - type: object
+          properties:
+            authorizationHeaderToken:
+              allOf:
+                - $ref: '#/components/schemas/TokenResponse'
+                - description: The full response representing token. It is returned instead of `authorizationHeaderTokenId` when `expand=token` query parameter has been used.
+    BaseMcpServer:
+      type: object
+      description: An object representing customer's own implementation of the MCP server.
+      properties:
+        name:
+          type: string
+          description: Name of the MCP server.
+        transport:
+          $ref: '#/components/schemas/CustomMcpServerTransportType'
+    McpServerRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseMcpServer'
+        - type: object
+          properties:
+            config:
+              $ref: '#/components/schemas/McpServerConfigRequest'
+            metadata:
+              $ref: '#/components/schemas/MetadataRequest'
+          required:
+            - name
+            - transport
+            - config
+    McpServerResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseMcpServer'
+        - type: object
+          properties:
+            config:
+              $ref: '#/components/schemas/McpServerConfigResponse'
+            metadata:
+              $ref: '#/components/schemas/MetadataResponse'
+
     McpServerType:
       type: string
       enum: [custom,predefined]
@@ -1405,59 +1688,64 @@ components:
       type: string
       enum: [sse]
       description: Type of the communication between the agent and the MCP server. For now, only `sse` is supported.
-    BaseMcpServer:
+    BaseAgentMcpServer:
       type: object
       properties:
         type:
           $ref: '#/components/schemas/McpServerType'
-        enabled:
-          type: boolean
-          description: Informs whether the tool is enabled or not.
-        name:
-          type: string
-          description: Name of the MCP Server.
       required:
         - type
-        - name
-    PredefinedMcpServer:
+    PredefinedAgentMcpServer:
       allOf:
-        - $ref: '#/components/schemas/BaseMcpServer'
+        - $ref: '#/components/schemas/BaseAgentMcpServer'
         - type: object
           properties:
             type:
               description: For PredefinedMcpServer it has to be set to `predefined`.
               example: predefined
-            name:
+            domain:
               enum: [customer,extensibility,order,product]
             tools:
               type: array
               description: List of the tools which should be used by the agent from this particular MCP server.
               items:
                 type: string
-    CustomMcpServer:
+    CustomAgentMcpServerRequest:
       allOf:
-        - $ref: '#/components/schemas/BaseMcpServer'
+        - $ref: '#/components/schemas/BaseAgentMcpServer'
         - type: object
           properties:
             type:
               description: For CustomMcpServer it has to be set to `custom`.
               example: custom
-            url:
+            mcpServerId:
               type: string
-              format: uri
-              description: URL of MCP Server.
-            transport:
-              $ref: '#/components/schemas/CustomMcpServerTransportType'
+              description: Id of the mcp server.
           required:
-            - url
-            - transport
-    McpServers:
+            - mcpServerId
+    CustomAgentMcpServerResponse:
+      allOf:
+        - $ref: '#/components/schemas/CustomAgentMcpServerRequest'
+        - type: object
+          properties:
+            mcpServer:
+              allOf:
+                - $ref: '#/components/schemas/McpServerResponse'
+                - description: The full response representing mcp server. It is returned instead of `mcpServerId` when `expand=mcpServer` query parameter has been used.
+    AgentMcpServersRequest:
       type: array
       description: List of MCP servers which agents should have access to.
       items:
         oneOf:
-          - $ref: '#/components/schemas/CustomMcpServer'
-          - $ref: '#/components/schemas/PredefinedMcpServer'
+          - $ref: '#/components/schemas/CustomAgentMcpServerRequest'
+          - $ref: '#/components/schemas/PredefinedAgentMcpServer'
+    AgentMcpServersResponse:
+      type: array
+      description: List of MCP servers which agents should have access to.
+      items:
+        oneOf:
+          - $ref: '#/components/schemas/CustomAgentMcpServerResponse'
+          - $ref: '#/components/schemas/PredefinedAgentMcpServer'
 
     # LLM Config:
     BaseLlm:
@@ -1665,8 +1953,6 @@ components:
               items:
                 type: string
                 description: markers that allow to categorise the agent.
-            mcpServers:
-              $ref: '#/components/schemas/McpServers'
             nativeToolIds:
               type: array
               items:
@@ -1678,7 +1964,6 @@ components:
               default: false
           required:
             - name
-            - mcpServers
     BaseForAgentRequestAndResponse:
       allOf:
         - $ref: '#/components/schemas/BaseForAgentAndTemplate'
@@ -1712,6 +1997,8 @@ components:
           properties:
             nativeTools:
               $ref: '#/components/schemas/NativeToolsResponse'
+            mcpServers:
+              $ref: '#/components/schemas/AgentMcpServersResponse'
     AgentHandOffResponse:
       allOf:
         - $ref: '#/components/schemas/BaseForAgentAndTemplateAndHandOff'
@@ -1733,10 +2020,13 @@ components:
                 - $ref: '#/components/schemas/EmporixLlm'
                 - $ref: '#/components/schemas/ApiKeyLlmRequest'
                 - $ref: '#/components/schemas/SelfHostedLlmRequest'
+            mcpServers:
+              $ref: '#/components/schemas/AgentMcpServersRequest'
             metadata:
               $ref: '#/components/schemas/MetadataRequest'
           required:
             - llmConfig
+            - mcpServers
     AgentResponse:
       allOf:
         - $ref: '#/components/schemas/BaseForAgentRequestAndResponse'
@@ -1749,6 +2039,8 @@ components:
                 - $ref: '#/components/schemas/EmporixLlm'
                 - $ref: '#/components/schemas/ApiKeyLlmResponse'
                 - $ref: '#/components/schemas/SelfHostedLlmResponse'
+            mcpServers:
+              $ref: '#/components/schemas/AgentMcpServersResponse'
             handOff:
               allOf:
                 - $ref: '#/components/schemas/HandOff'
@@ -2004,7 +2296,13 @@ components:
         type: string
       in: query
       name: expand
-      description: Fields to be expanded in the response. It means that instead of the object ids, the whole objects are returned in the response. Possible values [nativeTools]
+      description: Fields to be expanded in the response. It means that instead of the object ids, the whole objects are returned in the response. Possible values [nativeTools, token, mcpServers]
+    expandMcpServer:
+      schema:
+        type: string
+      in: query
+      name: expand
+      description: Fields to be expanded in the response. It means that instead of the object ids, the whole objects are returned in the response. Possible values [token]
   responses:
     401_resp_common:
       description: The authorization token is invalid or has expired.
@@ -2186,6 +2484,25 @@ components:
           examples:
             Create agent:
               $ref: '#/components/examples/AgentRequest'
+    mcpServerUpsertBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/McpServerRequest'
+          examples:
+            Create Custom MCP Server:
+              $ref: '#/components/examples/McpServerRequest'
+    mcpServerPatchBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PatchRequest'
+          examples:
+            Change name:
+              value:
+                - op: REPLACE
+                  path: /name
+                  value: New Custom MCP Server
     tokenUpsertBody:
       content:
         application/json:
@@ -2250,7 +2567,7 @@ components:
             - productivity
           icon: fa-productivity
           mcpServers:
-            - name: order
+            - domain: order
               enabled: true
               type: predefined
               tools:
@@ -2262,6 +2579,24 @@ components:
               enabled: true
               config:
                 teamId: T0445953
+    McpServerResponse:
+      value:
+        id: mcp-custom
+        name: Custom MCP Server
+        transport: sse
+        config:
+          url: 'http://localhost:7900'
+          authorizationHeaderName: Authorization
+          authorizationHeaderTokenId: token-id
+    McpServersResponse:
+      value:
+        - id: mcp-custom
+          name: Custom MCP Server
+          transport: sse
+          config:
+            url: 'http://localhost:7900'
+            authorizationHeaderName: Authorization
+            authorizationHeaderTokenId: token-id
     TokenResponse:
       value:
         id: openai
@@ -2311,7 +2646,7 @@ components:
           - productivity
         icon: fa-productivity
         mcpServers:
-          - name: order
+          - domain: order
             enabled: true
             type: predefined
             tools:
@@ -2347,7 +2682,7 @@ components:
             - productivity
           icon: fa-productivity
           mcpServers:
-            - name: order
+            - domain: order
               enabled: true
               type: predefined
               tools:
@@ -2358,6 +2693,14 @@ components:
               enabled: true
               config:
                 teamId: T0445953
+    McpServerRequest:
+      value:
+        name: Custom MCP Server
+        transport: sse
+        config:
+          url: 'http://localhost:7900'
+          authorizationHeaderName: Authorization
+          authorizationHeaderTokenId: token-id
     TokenRequest:
       value:
         id: openai
@@ -2394,7 +2737,7 @@ components:
           - productivity
         icon: fa-productivity
         mcpServers:
-          - name: order
+          - domain: order
             enabled: true
             type: predefined
             tools:
