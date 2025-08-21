@@ -46,8 +46,8 @@ To define sales tax rates for a country, you need to send a request to the [Crea
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
