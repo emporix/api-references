@@ -85,15 +85,67 @@ sequenceDiagram
     Frontend->>Emporix Resource: Invokes Emporix API with `Authorization: Bearer {access_token}` header
     Emporix Resource->>Emporix Auth Service: Validates token
     Emporix Resource-->>Frontend: Resource response
-        participant Client:::Class_01
-        participant Frontend:::Class_01
-        participant Keycloak:::Class_02
-        participant OpenID Provider:::Class_02
-        participant Emporix Auth Service:::Class_04
-        participant Emporix Customer Service:::Class_04
-        participant Emporix Resource:::Class_04
+```
+
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128" 
+    edgeLabelTextColor: "#4C5359"
+---
+flowchart TD
+    A[Client clicks on social login button] --> B[Frontend forwards request to Keycloak<br/>with state param {configName--randomValue}]
+    B --> C[Keycloak delegates authentication to OpenID Provider]
+    C --> D[OpenID Provider authenticates user]
+    D --> E[Keycloak redirects to REDIRECT_URI<br/>with code and state]
+    E --> F[Frontend exchanges code for Emporix token<br/>POST /customer/{tenant}/socialLogin?code=...]
+    F --> G[Emporix Auth Service exchanges authorization code with Keycloak]
+    G --> H[Emporix Auth Service creates customer if needed<br/>via Emporix Customer Service]
+    H --> I[Emporix Customer Service returns customer number]
+    I --> J[Emporix Auth Service generates oAuth token]
+    J --> K[Emporix Auth Service returns access_token + saas_token to Frontend]
+    K --> L[Frontend calls Emporix Resource<br/>with Authorization: Bearer {access_token}]
+    L --> M[Emporix Resource validates token with Auth Service]
+    M --> N[Emporix Resource returns response to Frontend]
+
+    A@{ shape: rounded}
+    B@{ shape: rounded}
+    C@{ shape: rounded}
+    D@{ shape: rounded}
+    E@{ shape: rounded}
+    F@{ shape: rounded}
+    G@{ shape: rounded}
+    H@{ shape: rounded}
+    I@{ shape: rounded}
+    J@{ shape: rounded}
+    K@{ shape: rounded}
+    L@{ shape: rounded}
+    M@{ shape: rounded}
+    N@{ shape: rounded}
+
+    A:::Class_04
+    B:::Class_04
+    C:::Class_04
+    D:::Class_04
+    E:::Class_04
+    F:::Class_04
+    G:::Class_04
+    H:::Class_04
+    I:::Class_04
+    J:::Class_01
+    K:::Class_01
+    L:::Class_04
+    M:::Class_04
+    N:::Class_02
+
     classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#DDE6EE
     classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#A1BDDC
-    classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#3b73bb, fill:#3b73bb
     classDef Class_04 fill:#F2F6FA, stroke:#4C5359
 ```
