@@ -958,7 +958,7 @@ components:
           examples:
             BadRequestExample:
               $ref: '#/components/examples/AmbiguousTenant_400'
-            DestinationUrlValidationError_400:
+            DestinationUrlValidationError:
               $ref: "#/components/examples/DestinationUrlValidationError_400"
     Forbidden_403:
       description: Given authorization scopes are not sufficient and do not match the scopes required by the endpoint.
