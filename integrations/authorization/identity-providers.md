@@ -11,7 +11,7 @@ Emporix makes it possible to create standard customer tokens based on authentica
 
 **Social login** is a single sign-on method that allows customers to authenticate themselves with an existing social media account. Introducing social login to your storefront simplifies the registration process by eliminating the need to manually create an account.
 
-Emporix uses Ory as its primary authentication provider and also integrates with Auth0 and Keycloak as external IDPs.
+Emporix uses **Ory** as its primary authentication provider and also integrates with **Auth0** and **Keycloak** as external IDPs.
 
 ## Configuring multiple IDPs
 
