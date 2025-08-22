@@ -1057,7 +1057,7 @@ components:
       value:
         code: 400
         status: Bad Request
-        message: There is a validation error. Please check the details."
+        message: There is a validation error. Please check the details.
         details: [ "destinationUrl: The resource specified by the URL is not accessible. For a webhook to be accessible, it needs to respond with any successful status for either `HEAD` or `OPTIONS` request."] 
     Conflict_409:
       value:
