@@ -71,6 +71,12 @@ sequenceDiagram
     participant Emporix Customer Service
     participant Emporix Resource
 
+    %% Add colored notes to simulate flowchart styling
+    note over Client, Frontend, Keycloak, OpenID_Provider: fill:#F2F6FA,stroke:#4C5359
+    note over Emporix_Auth: fill:#A1BDDC,stroke:#4C5359
+    note over Emporix_Customer: fill:#F2F6FA,stroke:#4C5359
+    note over Emporix_Resource: fill:#DDE6EE,stroke:#4C5359
+
     Client->>Frontend: Clicks on social login button
     Frontend->>Keycloak: Forwards the request to Keycloak domain URL<br/>with state query parameter : {configName--randomValue}
     Keycloak->>OpenID Provider: Delegates authentication
@@ -85,12 +91,4 @@ sequenceDiagram
     Frontend->>Emporix Resource: Invokes Emporix API with `Authorization: Bearer {access_token}` header
     Emporix Resource->>Emporix Auth Service: Validates token
     Emporix Resource-->>Frontend: Resource response
-    %% Assign classes to participants for coloring
-    class Client,Frontend,Keycloak,OpenID_Provider,Emporix_Auth,Emporix_Customer,Emporix_Resource Class_04
-    class Emporix_Auth Class_01
-    class Emporix_Resource Class_02
-    %% Class definitions
-    classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#A1BDDC
-    classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#DDE6EE
-    classDef Class_04 fill:#F2F6FA, stroke:#4C5359
 ```
