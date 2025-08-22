@@ -1058,6 +1058,7 @@ components:
         code: 400
         status: Bad Request
         message: There is a destinationUrl validation error. For a webhook to be accessible, it needs to respond with any successful status for either `HEAD` or `OPTIONS` request. Otherwise, it is rejected.
+        details: ["destinationUrl: The resource specified by the URL is not accessible."] 
     Conflict_409:
       value:
         code: 409
