@@ -55,12 +55,6 @@ config:
   layout: fixed
   theme: base
   look: classic
-  themeVariables:
-    background: transparent
-    lineColor: "#9CBBE3"
-    arrowheadColor: "#9CBBE3"
-    edgeLabelBackground: "#FFC128" 
-    edgeLabelTextColor: "#4C5359"
 ---
 sequenceDiagram
     participant Client
@@ -70,12 +64,6 @@ sequenceDiagram
     participant Emporix Auth Service
     participant Emporix Customer Service
     participant Emporix Resource
-
-    %% Add colored notes to simulate flowchart styling
-    note over Client, Frontend, Keycloak, OpenID_Provider: fill:#F2F6FA,stroke:#4C5359
-    note over Emporix_Auth: fill:#A1BDDC,stroke:#4C5359
-    note over Emporix_Customer: fill:#F2F6FA,stroke:#4C5359
-    note over Emporix_Resource: fill:#DDE6EE,stroke:#4C5359
 
     Client->>Frontend: Clicks on social login button
     Frontend->>Keycloak: Forwards the request to Keycloak domain URL<br/>with state query parameter : {configName--randomValue}
