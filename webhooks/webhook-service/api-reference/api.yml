@@ -958,6 +958,8 @@ components:
           examples:
             BadRequestExample:
               $ref: '#/components/examples/AmbiguousTenant_400'
+            DestinationUrlValidationError_400:
+              $ref: "#/components/examples/DestinationUrlValidationError_400"
     Forbidden_403:
       description: Given authorization scopes are not sufficient and do not match the scopes required by the endpoint.
       content:
@@ -1051,6 +1053,11 @@ components:
         code: 400
         status: Bad Request
         message: Tenant in the header is not matching with the one provided in the URI.
+    DestinationUrlValidationError_400:
+      value:
+        code: 400
+        status: Bad Request
+        message: There is a destinationUrl validation error. For a webhook to be accessible, it needs to respond with any successful status for either `HEAD` or `OPTIONS` request. Otherwise, it is rejected.
     Conflict_409:
       value:
         code: 409
