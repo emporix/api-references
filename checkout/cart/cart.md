@@ -2178,7 +2178,7 @@ https://api.emporix.io/cart/{tenant}/carts/{cartId}
 
 As a result, the response includes the shipping costs details:
 
-```
+```JSON
 "calculatedPrice": {   
     "shipping": {     
         "amount": 20.00,     
