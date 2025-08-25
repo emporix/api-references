@@ -18,7 +18,7 @@ icon: graduation-cap
 {% hint style="warning" %}
 Names and/or descriptions of shipping zones, methods, and groups are localized. When creating a new shipping zone, method, or group, you can specify its name and/or description in one or multiple languages.
 
-Looking for more info on localization? Check out [_Standard practices_](../standard-practices/translations.md).
+Looking for more info on localization? Check out [Standard practices](../standard-practices/translations.md).
 
 {% endhint %}
 
@@ -42,12 +42,12 @@ To see how Delivery Cycle Management works in practice, check the [Delivery Cycl
 
 To allow customers to place orders, you need to configure delivery and shipping settings by following the process below:
 
-1. [Create a shipping zone](shipping.md#create-a-shipping-zone).
-2. [Create a shipping group](shipping.md#create-a-shipping-group).
-3. [Assign customers to a shipping group](shipping.md#assign-customers-to-shipping-groups).
-4. [Add shipping methods and define shipping fees](shipping.md#add-shipping-methods-and-define-fees).
-5. [Add delivery times](shipping.md#add-delivery-times).
-6. [Add delivery slots](shipping.md#add-delivery-slots).
+1. [Create a shipping zone](shipping.md#create-a-shipping-zone)
+2. [Create a shipping group](shipping.md#create-a-shipping-group)
+3. [Assign customers to a shipping group](shipping.md#assign-customers-to-shipping-groups)
+4. [Add shipping methods and define shipping fees](shipping.md#add-shipping-methods-and-define-fees)
+5. [Add delivery times](shipping.md#add-delivery-times)
+6. [Add delivery slots](shipping.md#add-delivery-slots)
 
 ### Before you start
 
@@ -56,13 +56,13 @@ Ensure that you have created at least one customer.
 {% hint style="warning" %}
 A customer account can be created by the employee themselves or from your Emporix tenant's side. For more information, check out the following endpoints in the Emporix API Reference:
 
-* [Creating a new customer (customer-managed)](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/authentication-and-authorization#post-customer-tenant-signup)
+* [Creating a new customer (customer-managed)](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-signup)
 * [Creating a new customer (tenant-managed)](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#post-customer-tenant-customers)
 {% endhint %}
 
 ### Create a shipping zone
 
-Shipping zones are countries that your business delivers products to. You can create a shipping zone by calling the [Creating a shipping zone](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping/api-reference/shipping-zones#post-shipping-tenant-site-zones) endpoint.
+Shipping zones are countries that your business delivers products to. You can create a shipping zone by calling the [Creating a shipping zone](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/shipping-zones#post-shipping-tenant-site-zones) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -91,7 +91,7 @@ curl -i -X POST \
 
 ### Create a shipping group
 
-You can set up shipping groups for customers and define different shipping methods and costs for these groups. To create a shipping group, you need to call the [Creating a shipping group](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping/api-reference/shipping-groups#post-shipping-tenant-site-groups) endpoint.
+You can set up shipping groups for customers and define different shipping methods and costs for these groups. To create a shipping group, you need to call the [Creating a shipping group](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/shipping-groups#post-shipping-tenant-site-groups) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -117,7 +117,7 @@ curl -i -X POST
 ### Assign customers to shipping groups
 
 By adding customers to shipping groups, you can offer them different shipping methods and costs.\
-Assign customers to shipping groups by calling the [Creating a customer-group relation](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping/api-reference/customer-group-relations#post-shipping-tenant-site-cgrelations) endpoint.
+Assign customers to shipping groups by calling the [Creating a customer-group relation](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/customer-group-relations#post-shipping-tenant-site-cgrelations) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -138,7 +138,7 @@ curl -i -X POST
 
 ### Add shipping methods and define fees
 
-Add shipping methods and configure shipping fees by calling the [Creating a shipping method](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping/api-reference/shipping-methods#post-shipping-tenant-site-zones-zoneid-methods) endpoint.
+Add shipping methods and configure shipping fees by calling the [Creating a shipping method](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/shipping-methods#post-shipping-tenant-site-zones-zoneid-methods) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -201,7 +201,7 @@ curl -i -X POST
 
 Delivery times specify days of the week and hours of the day on which orders can be delivered. They are defined for particular shipping zones.
 
-Add delivery times by calling the [Creating a delivery time](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping/api-reference/delivery-times-management#post-shipping-tenant-delivery-times) endpoint.
+Add delivery times by calling the [Creating a delivery time](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/delivery-times-management#post-shipping-tenant-delivery-times) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -264,7 +264,7 @@ curl -i -X POST
 
 Delivery slots specify periods during the day, when the delivery can take place. You can create multiple slots for every day.
 
-Add delivery time slots by calling the [Creating a delivery time slot](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping/api-reference/delivery-times-slots-management#post-shipping-tenant-delivery-times-deliverytimeid-slots) endpoint.
+Add delivery time slots by calling the [Creating a delivery time slot](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/delivery-times-slots-management#post-shipping-tenant-delivery-times-deliverytimeid-slots) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -296,20 +296,20 @@ curl -i -X POST
 
 You need to retrieve available delivery windows to be able to estimate the delivery time for a specific postal code. At checkout, updating the cart with delivery and shipping information is necessary for the order to be placed.
 
-1. [Retrieve available delivery windows](shipping.md#retrieve-available-delivery-windows-for-a-particular-postal-code-and-cart).
-2. [Add delivery information to the customer's cart](shipping.md#update-the-cart-with-delivery-information).
+1. [Retrieve available delivery windows](shipping.md#retrieve-available-delivery-windows-for-a-particular-postal-code-and-cart)
+2. [Add delivery information to the customer's cart](shipping.md#update-the-cart-with-delivery-information)
 
 ### Before you start
 
-1. Ensure that you have already finished the [_How to configure delivery and shipping settings_](shipping.md#how-to-configure-delivery-and-shipping-settings) tutorial.
+1. Ensure that you have already finished the [How to configure delivery and shipping settings](shipping.md#how-to-configure-delivery-and-shipping-settings) tutorial.
 2. Ensure that you have created at least one customer.
-3. Ensure that you have configured payment options. For more information on payments, check out [_How to enable payment methods_](../../configuration/site-settings-service/site-settings.md#how-to-enable-payment-methods).
+3. Ensure that you have configured payment options. For more information on payments, check out [How to enable payment methods](../../configuration/site-settings-service/site-settings.md#how-to-enable-payment-methods).
 4. Ensure that the order settings are configured. For more information, check out the [Order Service API Reference](../../orders/order/).
 
 ### Retrieve available delivery windows for a particular postal code and cart
 
 Shipping times for particular postal codes are automatically calculated based on the business' shipping configuration, for example shipping capacity, or cut-off time.
-Retrieve delivery windows by calling the [Retrieving delivery windows by cart](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping/api-reference/delivery-windows#get-shipping-tenant-actualdeliverywindows-cartid) endpoint.
+Retrieve delivery windows by calling the [Retrieving delivery windows by cart](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/delivery-windows#get-shipping-tenant-actualdeliverywindows-cartid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
