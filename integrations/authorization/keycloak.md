@@ -61,6 +61,7 @@ config:
     actorBorder: '#4C5359'
     actorLineColor: '#4C5359'
     signalColor: '#E86C07'
+    signalTextColor: '#7B8B99'
     background: transparent 
 ---
 sequenceDiagram
