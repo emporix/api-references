@@ -2169,16 +2169,18 @@ curl -X GET
 https://api.emporix.io/cart/{tenant}/carts/{cartId}    
 -H "Authorization: Bearer <TOKEN>" 
 ```
-As a result, the response includes the shipping details:
+As a result, the response includes the shipping costs details:
 
 ```
 "calculatedPrice": {   
     "shipping": {     
-        "amount": <X.XX>,     
+        "amount": 20.00,     
         "currency": "EUR"   
     } 
 }
 ```
+{% endstep %}
+{% endstepper %}
 
 ## How to calculate a payment fee at cart level
 
@@ -2193,7 +2195,7 @@ If the fee is taxable and has a tax code, the gross value is calculated. Otherwi
 
 ## How to determine a tax country at cart level
 
-Since the shipping address is not set in the cart, you need to determine the country to find the `taxRate` for a fee that has a `taxCode` only.\
+Since the shipping address is not set in the cart, you need to determine the country to find the `taxRate` for a fee that has a `taxCode` only.
 Ways to find the country data:
 
 * Use the country code that is set on the cart
