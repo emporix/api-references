@@ -1682,7 +1682,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
 
 #### Calculated price on item level
 
-<table data-full-width="false"><thead><tr><th width="115.72796630859375">Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A unit price from <code>priceMatch</code>, it's multiplied by item quantity.</p><pre><code>{
+<table data-full-width="false"><thead><tr><th width="150">Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A unit price from <code>priceMatch</code>, it's multiplied by item quantity.</p><pre><code>{
   "calculatedPrice": {
     "price": {
       "netValue": 588.235,
@@ -1869,7 +1869,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
 
 #### Calculated price on cart level
 
-<table data-full-width="false"><thead><tr><th width="115.72796630859375">Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A sum of all line item prices without discounts.</p><pre><code>{
+<table data-full-width="false"><thead><tr><th width="150">Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A sum of all line item prices without discounts.</p><pre><code>{
   "calculatedPrice": {
     "price" : {
         "netValue": 700.385,
