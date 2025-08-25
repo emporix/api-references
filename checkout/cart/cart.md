@@ -227,7 +227,7 @@ You need to generate a dedicated scope that serves as the authorization token fo
 
 {% stepper %}
 {% step %}
-To add a product outside Commerce Engine, you need to send the request to the Adding a product to cart endpoint.\
+To add a product outside Commerce Engine, you need to send the request to the Adding a product to cart endpoint.
 Provide the customer cart's ID in the `cartId` path parameter. The payload has to include the `"itemType" : "EXTERNAL"` parameter, as well as the price and tax information.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -277,9 +277,8 @@ To achieve the communication between Commerce Engine and the fee management tool
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
-{% stepper%}
+{% stepper %}
 {% step %}
-
 To add a custom fee to the cart, you need to send the request to the [Adding a product to cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.\
 Provide the customer cart's ID in the `cartId` path parameter. Custom fee can be configured both for EXTERNAL and INTERNAL products, the payload should include the `"itemType" : "EXTERNAL"` or `"itemType" : "INTERNAL"` parameter. If the parameter is not provided, then "INTERNAL" is taken as default.
 
@@ -319,11 +318,14 @@ curl -i -X POST \
   }'
 ```
 {% endstep %}
-{% endstep %}
+{% endstepper %}
 
 ### How to apply an external discount on an item level
 
-Adding an external discount to an item in a cart is done with the `cart.cart_manage_external_prices` scope. Use the `externalDiscounts` attribute when adding an item to the cart or updating an existing one.
+Adding an external discount to an item in a cart is done with the `cart.cart_manage_external_prices` scope. 
+{% stepper %}
+{% step %}
+Use the `externalDiscounts` attribute when adding an item to the cart or updating an existing one.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -348,6 +350,9 @@ curl -L \
     ]
   }'
 ```
+{% endstep %}
+{% endstepper %}
+
 ### How to pass externally calculated line price and line tax to items added or updated in the cart?
 
 The Cart Service supports externally calculated pricing and tax amounts for cart items. This allows integrated systems to override cart's internal pricing logic with the values determined by external systems.
@@ -1673,11 +1678,11 @@ This calculation method provides a comprehensive breakdown of prices, including 
 </details>
 {% endhint %}
 
-## Pricing calculations glossary
+### Pricing calculations glossary
 
-### Calculated price on item level
+#### Calculated price on item level
 
-<table data-full-width="false"><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A unit price from <code>priceMatch</code>, it's multiplied by item quantity.</p><pre><code>{
+<table data-full-width="false"><thead><tr><th width="115.72796630859375">Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A unit price from <code>priceMatch</code>, it's multiplied by item quantity.</p><pre><code>{
   "calculatedPrice": {
     "price": {
       "netValue": 588.235,
@@ -1862,9 +1867,9 @@ This calculation method provides a comprehensive breakdown of prices, including 
 }
 </code></pre></td></tr></tbody></table>
 
-### Calculated price on cart level
+#### Calculated price on cart level
 
-<table data-full-width="false"><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A sum of all line item prices without discounts.</p><pre><code>{
+<table data-full-width="false"><thead><tr><th width="115.72796630859375">Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A sum of all line item prices without discounts.</p><pre><code>{
   "calculatedPrice": {
     "price" : {
         "netValue": 700.385,
@@ -2200,8 +2205,8 @@ Ways to find the country data:
 
 * Use the country code that is set on the cart
 * If the cart has a customer, check the customer addresses, based on site’s setting `taxDeterminationBasedOn`:
-  * SHIPPING\_ADDRESS - use the address that is tagged with `SHIPPING`, select the default address or the first match.
-  * BILLING\_ADDRESS - use the address that is tagged with `BILLING`, select the default address or the first match.\
+  * SHIPPING_ADDRESS - use the address that is tagged with `SHIPPING`, select the default address or the first match.
+  * BILLING_ADDRESS - use the address that is tagged with `BILLING`, select the default address or the first match.
     If the matching address is not found, return an error.
 * Get country code from site’s `homeBase.address.country`.
 
@@ -2209,10 +2214,10 @@ Ways to find the country data:
 
 Discounts are known as coupons and, with the relevant settings that influence `calculatedPrice`, they can be applied to a cart.
 
-Depending on the site configuration and the `includesTax=true/false`, the discount is applied to either the gross value - `includesTax=true`, or the net value - `includesTax=false`.\
+Depending on the site configuration and the `includesTax=true/false`, the discount is applied to either the gross value - `includesTax=true`, or the net value - `includesTax=false`.
 Based on this setting, the corresponding `netValue` or `grossValue` is recalculated using the tax rate.
 
-The information about which calculation method was used is available in `totalDiscount.calculationType=ApplyDiscountAfterTax/ApplyDiscountBeforeTax`:
+The information about which calculation method was used is available in the `totalDiscount.calculationType=ApplyDiscountAfterTax/ApplyDiscountBeforeTax`:
 
 * `discountCalculationType`:
   * SUBTOTAL - the discounts are applied on `items[].calculatedPrice.price`. The line item fees and shipping cost are **NOT** discounted.
