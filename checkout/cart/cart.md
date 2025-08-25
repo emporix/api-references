@@ -23,11 +23,11 @@ To create a new cart, you need to send a request to the [Creating a new cart](ht
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/cart/{tenant}/carts' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -H 'saas-token: string' \
-  -H 'session-id: string' \
+  'https://api.emporix.io/cart/{tenant}/carts' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
+  -H 'saas-token: string' 
+  -H 'session-id: string' 
   -d '{
     "siteCode": "main",
     "currency": "EUR",
@@ -89,9 +89,9 @@ To add custom attributes to a cart, you need to send a request to the [Updating 
 
 ```bash
 curl -i -X PUT \
-  'https://api.emporix.io/cart/{tenant}/carts/{cartId}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
   "customerId": "87413250",
   "currency": "EUR",
@@ -148,12 +148,12 @@ To merge an anonymous cart with a customer cart, you need to send a request to t
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/merge' \
-  -H 'Accept-Language: string' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
-  -H 'languages: string' \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/merge' 
+  -H 'Accept-Language: string' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
+  -H 'languages: string' 
   -d '{
   "carts": [
     " "
@@ -188,9 +188,9 @@ Provide the customer cart's ID in the `cartId` path parameter.
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "itemYrn": "urn:yaas:saasag:caasproduct:product:mytenant;1600A016BF",
     "price": {
@@ -240,9 +240,9 @@ Provide the customer cart's ID in the `cartId` path parameter. The payload has t
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "itemYrn": "{productYrn}",
     "price": {
@@ -292,9 +292,9 @@ Provide the customer cart's ID in the `cartId` path parameter. Custom fee can be
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "itemYrn": "{productYrn}",
     "price": {
@@ -338,9 +338,9 @@ Use the `externalDiscounts` attribute when adding an item to the cart or updatin
 ```bash
 curl -L \
   --request POST \
-  --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=text' \
-  --header 'Authorization: Bearer YOUR_SECRET_TOKEN' \
-  --header 'Content-Type: application/json' \
+  --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=text' 
+  --header 'Authorization: Bearer YOUR_SECRET_TOKEN' 
+  --header 'Content-Type: application/json' 
   --data '{
     "externalDiscounts": [
         {
@@ -2176,7 +2176,7 @@ https://api.emporix.io/cart/{tenant}/carts/{cartId}
 
 As a result, the response includes the shipping costs details:
 
-```JSON
+```bash
 {
     "calculatedPrice": {   
         "shipping": {     
