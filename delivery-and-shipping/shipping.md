@@ -60,6 +60,8 @@ A customer account can be created by the employee themselves or from your Empori
 * [Creating a new customer (tenant-managed)](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-service/api-reference/account-and-profile#post-customer-tenant-customers)
 {% endhint %}
 
+{% stepper %}
+{% step %}
 ### Create a shipping zone
 
 Shipping zones are countries that your business delivers products to. You can create a shipping zone by calling the [Creating a shipping zone](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/shipping-zones#post-shipping-tenant-site-zones) endpoint.
@@ -88,16 +90,15 @@ curl -i -X POST \
     "default": true
   }'
 ```
+{% endstep %}
 
+{%step %}
 ### Create a shipping group
 
 You can set up shipping groups for customers and define different shipping methods and costs for these groups. To create a shipping group, you need to call the [Creating a shipping group](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/shipping-groups#post-shipping-tenant-site-groups) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
-[api-reference](../delivery-and-shipping/shipping/api-reference/)
-{% endcontent-ref %}
 
 ```bash
 curl -i -X POST 
@@ -113,7 +114,9 @@ curl -i -X POST
     }
   }'
 ```
+{% endstep %}
 
+{% step %}
 ### Assign customers to shipping groups
 
 By adding customers to shipping groups, you can offer them different shipping methods and costs.
@@ -135,7 +138,9 @@ curl -i -X POST
     "groupId": "group1"
   }'
 ```
+{% endstep %}
 
+{% step %}
 ### Add shipping methods and define fees
 
 Add shipping methods and configure shipping fees by calling the [Creating a shipping method](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/shipping-methods#post-shipping-tenant-site-zones-zoneid-methods) endpoint.
@@ -196,7 +201,9 @@ curl -i -X POST
     ]
   }'
 ```
+{% endstep %}
 
+{% step %}
 ### Add delivery times
 
 Delivery times specify days of the week and hours of the day on which orders can be delivered. They are defined for particular shipping zones.
@@ -259,7 +266,9 @@ curl -i -X POST
     ]
   }'
 ```
+{% endstep %}
 
+{% step %}
 ### Add delivery slots
 
 Delivery slots specify periods during the day, when the delivery can take place. You can create multiple slots for every day.
@@ -291,6 +300,12 @@ curl -i -X POST
     "capacity": 100
   }'
 ```
+{% endstep %}
+{% endstepper %}
+
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[Shipping API Reference](../delivery-and-shipping/shipping/api-reference/)
+{% endcontent-ref %}
 
 ## How to manage delivery and shipping information upon checkout
 
@@ -306,6 +321,8 @@ You need to retrieve available delivery windows to be able to estimate the deliv
 3. Ensure that you have configured payment options. For more information on payments, check out [How to enable payment methods](../../configuration/site-settings-service/site-settings.md#how-to-enable-payment-methods).
 4. Ensure that the order settings are configured. For more information, check out the [Order Service API Reference](../../orders/order/).
 
+{% stepper %}
+{% step %}
 ### Retrieve available delivery windows for a particular postal code and cart
 
 Shipping times for particular postal codes are automatically calculated based on the business' shipping configuration, for example shipping capacity, or cut-off time.
@@ -313,25 +330,19 @@ Retrieve delivery windows by calling the [Retrieving delivery windows by cart](h
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
-[api-reference](../delivery-and-shipping/shipping/api-reference/)
-{% endcontent-ref %}
-
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/shipping/{tenant}/{site}/cgrelations/{customerId}' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
+{% endstep %}
 
+{% step %}
 ### Update the cart with delivery information
 
 Add the delivery information to the cart by calling the [Updating a cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../../checkout/cart/api-reference/" %}
-[api-reference](../../checkout/cart/api-reference/)
-{% endcontent-ref %}
 
 ```bash
 curl -i -X PUT 
@@ -369,3 +380,13 @@ curl -i -X PUT
     }
   }'
 ```
+{% endstep %}
+{% endstepper %}
+
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[Shipping API Reference](../delivery-and-shipping/shipping/api-reference/)
+{% endcontent-ref %}
+
+{% content-ref url="../../checkout/cart/api-reference/" %}
+[Cart API Reference](../../checkout/cart/api-reference/)
+{% endcontent-ref %}
