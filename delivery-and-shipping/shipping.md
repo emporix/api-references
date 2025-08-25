@@ -391,6 +391,3 @@ curl -i -X PUT
 [Shipping API Reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
-{% content-ref url="../../checkout/cart/api-reference/" %}
-[Cart API Reference](../../checkout/cart/api-reference/)
-{% endcontent-ref %}

@@ -2174,10 +2174,6 @@ https://api.emporix.io/cart/{tenant}/carts/{cartId}
 [Shipping API Reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
-{% content-ref url="api-reference/" %}
-[Cart API Reference](api-reference/)
-{% endcontent-ref %}
-
 As a result, the response includes the shipping costs details:
 
 ```JSON
