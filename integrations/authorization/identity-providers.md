@@ -17,7 +17,7 @@ Emporix uses **Ory** as its primary authentication provider and also integrates 
 
 With Emporix, you can configure one or multiple Identity Providers (IDPs) within a single tenant. When submitting your IDP configuration, you need to specify whether you want to use a single IDP or multiple IDPs.
 
-Multiple IDPs mean either different providers (for example: Ory, Auth0 or Keycloak), or the same provider with multiple realms.
+Multiple IDPs mean either different providers (for example Auth0 or Keycloak), or the same provider with multiple realms.
 
 {% stepper %}
 {% step %}
