@@ -2138,7 +2138,7 @@ Pick the delivery window you'd like to use and update the cart accordingly by ca
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
-[api-reference](api-reference)
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -2179,11 +2179,13 @@ https://api.emporix.io/cart/{tenant}/carts/{cartId}
 As a result, the response includes the shipping costs details:
 
 ```JSON
-"calculatedPrice": {   
-    "shipping": {     
-        "amount": 20.00,     
-        "currency": "EUR"   
-    } 
+{
+    "calculatedPrice": {   
+        "shipping": {     
+            "amount": 20.00,     
+            "currency": "EUR"   
+        } 
+    }
 }
 ```
 

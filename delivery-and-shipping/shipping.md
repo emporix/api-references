@@ -116,7 +116,7 @@ curl -i -X POST
 
 ### Assign customers to shipping groups
 
-By adding customers to shipping groups, you can offer them different shipping methods and costs.\
+By adding customers to shipping groups, you can offer them different shipping methods and costs.
 Assign customers to shipping groups by calling the [Creating a customer-group relation](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/customer-group-relations#post-shipping-tenant-site-cgrelations) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
