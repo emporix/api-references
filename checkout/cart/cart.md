@@ -46,8 +46,9 @@ curl -i -X POST \
 
 You can define custom attributes for a cart through `mixins`.
 
-## Define your custom attributes schema
-
+### Define your custom attributes schema
+{% stepper %}
+{% step %}
 First, define your custom attributes schema in the form of a JSON schema.
 
 ```json
@@ -66,11 +67,16 @@ First, define your custom attributes schema in the form of a JSON schema.
     }
 }
 ```
+{% endstep %}
+{% step %}
+Upload your schema to a hosting service and save its URL.
+{% endstep %}
+{% endstepper %}
 
-Upload your schema to a hosting service and save its URL
+### Update a cart with custom attributes
 
-## Update a cart with custom attributes
-
+{% stepper %}
+{% step %}
 To add custom attributes to a cart, you need to send a request to the [Updating a cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -119,6 +125,8 @@ curl -i -X PUT \
   }
 }'
 ```
+{% endstep %}
+{% endstepper %}
 
 ## How to merge carts
 
@@ -126,6 +134,8 @@ curl -i -X PUT \
 To learn more about merging carts, check out [Cart merging](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/carts#cart-merging) in the Carts guide.
 {% endhint %}
 
+{% stepper %}
+{% step %}
 To merge an anonymous cart with a customer cart, you need to send a request to the [Merging carts](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-merge) endpoint. Provide the customer cart's ID in the `cartId` path parameter and the anonymous cart's ID in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -148,6 +158,8 @@ curl -i -X POST \
   ]
 }'
 ```
+{% endstep %}
+{% endstepper %}
 
 ## How to source pricing information from an external price calculation tool
 
@@ -159,6 +171,9 @@ To achieve the communication between Commerce Engine and the external pricing to
 The steps required for such a case are described in the [External Products, Pricing and Fees](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation.\
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
+
+{% stepper %}
+{% step %}
 
 After enabling the external application to update carts with calculated prices, to add a product that is available within Commerce Engine, but with an external price, you need to send the request to the [Adding a product to cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.\
 Provide the customer cart's ID in the `cartId` path parameter.
@@ -192,6 +207,8 @@ curl -i -X POST \
     }
   }'
 ```
+{% endstep %}
+{% endstepper %}
 
 Notice the `"itemType": "EXTERNAL"` definition which allows the Cart Service to overwrite the pricing from Commerce Engine. The payload must include the price and tax information.
 
@@ -199,7 +216,7 @@ Notice the `"itemType": "EXTERNAL"` definition which allows the Cart Service to 
 When you have enabled external pricing, it's essential to ensure the accuracy of the prices, as CE does not perform price validation in these instances.
 {% endhint %}
 
-## How to add a product from an external source to a cart
+### How to add a product from an external source to a cart
 
 For some cases, you might want to allow adding products from an external system to cart, and not only from your online store. The products from external product management sources can be added directly to the customer's cart, bypassing the standard product catalog.
 
@@ -208,6 +225,8 @@ To achieve the communication between Commerce Engine and the external product ma
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
+{% stepper %}
+{% step %}
 To add a product outside Commerce Engine, you need to send the request to the Adding a product to cart endpoint.\
 Provide the customer cart's ID in the `cartId` path parameter. The payload has to include the `"itemType" : "EXTERNAL"` parameter, as well as the price and tax information.
 
@@ -246,8 +265,10 @@ curl -i -X POST \
     }
   }'
 ```
+{% endstep %}
+{% endstepper %}
 
-## How to add an external fee
+### How to add an external fee
 
 For some cases, you might need to calculate and charge additional fees, for example for packaging, freight, or any additional reasons. The fees calculated externally can be added directly to the customer's cart.
 
@@ -255,6 +276,9 @@ For some cases, you might need to calculate and charge additional fees, for exam
 To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation.\
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
+
+{% stepper%}
+{% step %}
 
 To add a custom fee to the cart, you need to send the request to the [Adding a product to cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.\
 Provide the customer cart's ID in the `cartId` path parameter. Custom fee can be configured both for EXTERNAL and INTERNAL products, the payload should include the `"itemType" : "EXTERNAL"` or `"itemType" : "INTERNAL"` parameter. If the parameter is not provided, then "INTERNAL" is taken as default.
@@ -294,8 +318,10 @@ curl -i -X POST \
     ]
   }'
 ```
+{% endstep %}
+{% endstep %}
 
-## How to apply an external discount on an item level
+### How to apply an external discount on an item level
 
 Adding an external discount to an item in a cart is done with the `cart.cart_manage_external_prices` scope. Use the `externalDiscounts` attribute when adding an item to the cart or updating an existing one.
 
@@ -322,7 +348,7 @@ curl -L \
     ]
   }'
 ```
-## How to pass externally calculated line price and line tax to items added or updated in the cart?
+### How to pass externally calculated line price and line tax to items added or updated in the cart?
 
 The Cart Service supports externally calculated pricing and tax amounts for cart items. This allows integrated systems to override cart's internal pricing logic with the values determined by external systems.
 
@@ -418,6 +444,7 @@ To ensure that both net and gross prices are available, along with clear details
 At the item level, there's a `calculatedPrice` attribute, which contains detailed price calculations for a specific item. Additionally, a `calculatedPrice` is also available at the cart level, summarizing the price calculations for all items in the cart.
 
 {% hint style="warning" %}
+**Examples**
 <details>
 
 <summary>See the item level calculation payload example</summary>
@@ -747,6 +774,7 @@ At the item level, there's a `calculatedPrice` attribute, which contains detaile
 This calculation method provides a comprehensive breakdown of prices, including net values, gross values, tax details, fees, and discounts, both at the cart level and for individual line items.
 
 {% hint style="warning" %}
+**Payload example**
 <details>
 
 <summary>See the full payload example</summary>
@@ -1647,7 +1675,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
 
 ## Pricing calculations glossary
 
-## Calculated price on item level
+### Calculated price on item level
 
 <table data-full-width="false"><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A unit price from <code>priceMatch</code>, it's multiplied by item quantity.</p><pre><code>{
   "calculatedPrice": {
@@ -1834,7 +1862,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
 }
 </code></pre></td></tr></tbody></table>
 
-## Calculated price on cart level
+### Calculated price on cart level
 
 <table data-full-width="false"><thead><tr><th>Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A sum of all line item prices without discounts.</p><pre><code>{
   "calculatedPrice": {
@@ -2057,7 +2085,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
 
 See the sections below for shipping, payment fee, tax and discounts calculations.
 
-## How is shipping calculated
+## How is shipping cost calculated
 
 The shipping calculation depends on the stage at which it is done.
 
@@ -2169,6 +2197,9 @@ curl -X GET
 https://api.emporix.io/cart/{tenant}/carts/{cartId}    
 -H "Authorization: Bearer <TOKEN>" 
 ```
+{% endstep %}
+{% endstepper %}
+
 As a result, the response includes the shipping costs details:
 
 ```
@@ -2179,8 +2210,6 @@ As a result, the response includes the shipping costs details:
     } 
 }
 ```
-{% endstep %}
-{% endstepper %}
 
 ## How to calculate a payment fee at cart level
 
