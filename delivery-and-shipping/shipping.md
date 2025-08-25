@@ -49,9 +49,11 @@ To allow customers to place orders, you need to configure delivery and shipping 
 5. [Add delivery times](shipping.md#add-delivery-times)
 6. [Add delivery slots](shipping.md#add-delivery-slots)
 
-### Before you start
+{% hint style="success" %}
+**Before you start**
 
 Ensure that you have created at least one customer.
+{% endhint %}
 
 {% hint style="warning" %}
 A customer account can be created by the employee themselves or from your Emporix tenant's side. For more information, check out the following endpoints in the Emporix API Reference:
@@ -314,12 +316,14 @@ You need to retrieve available delivery windows to be able to estimate the deliv
 1. [Retrieve available delivery windows](shipping.md#retrieve-available-delivery-windows-for-a-particular-postal-code-and-cart)
 2. [Add delivery information to the customer's cart](shipping.md#update-the-cart-with-delivery-information)
 
-### Before you start
+{% hint style="success" %}
+**Before you start**
 
 1. Ensure that you have already finished the [How to configure delivery and shipping settings](shipping.md#how-to-configure-delivery-and-shipping-settings) tutorial.
 2. Ensure that you have created at least one customer.
 3. Ensure that you have configured payment options. For more information on payments, check out [How to enable payment methods](../../configuration/site-settings-service/site-settings.md#how-to-enable-payment-methods).
 4. Ensure that the order settings are configured. For more information, check out the [Order Service API Reference](../../orders/order/).
+{% endhint %}
 
 {% stepper %}
 {% step %}
