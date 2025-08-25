@@ -36,7 +36,9 @@ Emporix extracts the `configName` and matches it to the corresponding configurat
 * If no match is found, the default configuration is used. 
 
 
-## External identity providers supported by Emporix
+## Support for external identity providers
+
+See the documentation below for configuration details of different external IDPs:
 
 * [Auth0](auth0.md)
 * [Keycloak](keycloak.md)

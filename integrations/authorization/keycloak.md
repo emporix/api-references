@@ -57,7 +57,7 @@ config:
   themeVariables:
     primaryColor: '#DDE6EE'
     primaryBorderColor: '#4C5359'
-    actorBkg: '#DDE6EE'
+    actorBkg: '#A1BDDC'
     actorBorder: '#4C5359'
     actorLineColor: '#4C5359'
     signalColor: '#E86C07'
