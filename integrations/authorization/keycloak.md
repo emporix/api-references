@@ -54,7 +54,14 @@ Request example:
 config:
   layout: fixed
   theme: base
-  look: classic
+  themeVariables:
+    primaryColor: '#DDE6EE'
+    primaryBorderColor: '#4C5359'
+    actorBkg: '#DDE6EE'
+    actorBorder: '#4C5359'
+    actorLineColor: '#4C5359'
+    signalColor: '#E86C07'
+    background: transparent 
 ---
 sequenceDiagram
     participant Client

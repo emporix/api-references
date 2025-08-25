@@ -347,14 +347,13 @@ Suborder for products without vendor example:
 config:
   layout: fixed
   theme: base
+  look: classic
   themeVariables:
-    primaryColor: '#DDE6EE'
-    primaryBorderColor: '#4C5359'
-    actorBkg: '#DDE6EE'
-    actorBorder: '#4C5359'
-    actorLineColor: '#4C5359'
-    signalColor: '#E86C07'
-    background: transparent 
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128" 
+    edgeLabelTextColor: "#4C5359"
 ---
 flowchart TD
     A[Vendor user creates product] -->|Assigned vendorId| B[Product in catalog]
