@@ -2062,12 +2062,123 @@ See the sections below for shipping, payment fee, tax and discounts calculations
 The shipping calculation depends on the stage at which it is done.
 
 * In the cart, where the address, delivery method, and zone are not available yet, the calculation uses the minimum shipping estimation. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`, and the `shipToAddress` is created based on the cart’s `countryCode` and `zipCode`.
-  See the [Calculating the minimum shipping costs](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) endpoint.
-* In the checkout, where information about the delivery window and zone is already available, the calculation uses the following endpoints: [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping/api-reference/shipping-cost#post-shipping-tenant-site-quote), or [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) accordingly.
+  See the [Calculating the minimum shipping costs](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) endpoint.
+* In the checkout, where information about the delivery window and zone is already available, the calculation uses the following endpoints: [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote), or [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) accordingly.
 
 {% hint style="danger" %}
 Always make sure that your site’s `homeBase.address` has the `country` and `zip-code` information included. It's mandatory for shipping calculations.
 {% endhint %}
+
+### How to calculate shipping cost at cart level
+
+{% hint style="warning" %}
+
+Shipping costs are typically calculated during checkout, and not automatically on the cart object alone.
+{% endhint %}
+
+To get the shipping costs calculated and shown at the cart level, you need to update the cart with shipping information. That means, you have to set the shipping address with the `countryCode` and `zipCode` and then assign a valid shipping method to the cart so that it can trigger the shipping cost calculation.
+
+{% stepper %}
+{% step %}
+Create a shipping zone for relevant `countryCode` and `zipCode` by calling the [Creating a shipping zone](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/shipping-zones#post-shipping-tenant-site-zones) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](../../delivery-and-shipping/shipping/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/shipping/{tenant}/{site}/zones' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "shipTo": [
+      {
+        "country": "DE",
+        "postalCode": "70190"
+      }
+    ],
+    "name": "Zone 1",
+    "id": "zone1",
+    "default": true
+  }'
+```
+{% endstep%}
+
+{% step %}
+Fetch available delivery windows for a cart by calling the [Retrieving delivery windows by cart](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/delivery-windows#get-shipping-tenant-actualdeliverywindows-cartid) endpoint.
+
+{% hint style="warning" %}
+Make sure the shipping zone is properly stored in the delivery times object.
+{% endhint %}
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference)
+{% endcontent-ref %}
+
+```bash
+curl -X GET    
+https://api.emporix.io/shipping/{tenant}/actualDeliveryWindows/{cartId}    
+-H "Authorization: Bearer <TOKEN>"
+```
+{% endstep %}
+
+{% step %}
+Pick the delivery window you'd like to use and update the cart accordingly by calling the [Updating a cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference)
+{% endcontent-ref %}
+
+```bash
+curl -X PUT    
+https://api.emporix.io/cart/{tenant}/carts/{cartId}    
+-H "Authorization: Bearer <TOKEN>"    
+-H "Content-Type: application/json"    
+-d '{     
+    "countryCode": "DE",     
+    "zipCode": "10115",     
+    "deliveryWindowId": "1234567890abcdef",    
+    "deliveryWindow": {       
+        "id": "1234567890abcdef",       
+        "deliveryDate": "2025-07-25T10:00:00.000Z",       
+        "slotId": "slot123"     
+        }   
+    }' 
+```
+{% endstep %}
+
+{% step %}
+Verify the results by retrieving the cart. Call the [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference)
+{% endcontent-ref %}
+
+```bash
+curl -X GET    
+https://api.emporix.io/cart/{tenant}/carts/{cartId}    
+-H "Authorization: Bearer <TOKEN>" 
+```
+As a result, the response includes the shipping details:
+
+```
+"calculatedPrice": {   
+    "shipping": {     
+        "amount": <X.XX>,     
+        "currency": "EUR"   
+    } 
+}
+```
 
 ## How to calculate a payment fee at cart level
 
