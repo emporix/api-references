@@ -2129,8 +2129,8 @@ Make sure the shipping zone is properly stored in the delivery times object.
 
 ```bash
 curl -X GET    
-https://api.emporix.io/shipping/{tenant}/actualDeliveryWindows/{cartId}    
--H "Authorization: Bearer <TOKEN>"
+    `https://api.emporix.io/shipping/{tenant}/actualDeliveryWindows/{cartId}`  
+    -H "Authorization: Bearer <TOKEN>"
 ```
 {% endstep %}
 
@@ -2141,19 +2141,19 @@ Pick the delivery window you'd like to use and update the cart accordingly by ca
 
 ```bash
 curl -X PUT    
-https://api.emporix.io/cart/{tenant}/carts/{cartId}    
--H "Authorization: Bearer <TOKEN>"    
--H "Content-Type: application/json"    
--d '{     
-    "countryCode": "DE",     
-    "zipCode": "10115",     
-    "deliveryWindowId": "1234567890abcdef",    
-    "deliveryWindow": {       
-        "id": "1234567890abcdef",       
-        "deliveryDate": "2025-07-25T10:00:00.000Z",       
-        "slotId": "slot123"     
-        }   
-    }' 
+    `https://api.emporix.io/cart/{tenant}/carts/{cartId}`   
+    -H "Authorization: Bearer <TOKEN>"    
+    -H "Content-Type: application/json"    
+    -d '{     
+        "countryCode": "DE",     
+        "zipCode": "10115",     
+        "deliveryWindowId": "1234567890abcdef",    
+        "deliveryWindow": {       
+            "id": "1234567890abcdef",       
+            "deliveryDate": "2025-07-25T10:00:00.000Z",       
+            "slotId": "slot123"     
+            }   
+        }' 
 ```
 {% endstep %}
 
@@ -2164,8 +2164,8 @@ Verify the results by retrieving the cart. Call the [Retrieving cart details by 
 
 ```bash
 curl -X GET    
-https://api.emporix.io/cart/{tenant}/carts/{cartId}    
--H "Authorization: Bearer <TOKEN>" 
+    `https://api.emporix.io/cart/{tenant}/carts/{cartId}`
+    -H "Authorization: Bearer <TOKEN>" 
 ```
 {% endstep %}
 {% endstepper %}
