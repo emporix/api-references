@@ -2108,35 +2108,6 @@ To get the shipping costs calculated and shown at the cart level, you need to up
 
 {% stepper %}
 {% step %}
-Create a shipping zone for relevant `countryCode` and `zipCode` by calling the [Creating a shipping zone](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/shipping-zones#post-shipping-tenant-site-zones) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](../../delivery-and-shipping/shipping/api-reference/)
-{% endcontent-ref %}
-
-```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/shipping/{tenant}/{site}/zones' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
-  --header 'Content-Type: application/json' 
-  --data '{
-    "shipTo": [
-      {
-        "country": "DE",
-        "postalCode": "70190"
-      }
-    ],
-    "name": "Zone 1",
-    "id": "zone1",
-    "default": true
-  }'
-```
-{% endstep%}
-
-{% step %}
 Fetch available delivery windows for a cart by calling the [Retrieving delivery windows by cart](https://developer.emporix.io/api-references/api-guides-and-references/delivery-and-shipping/shipping-1/api-reference/delivery-windows#get-shipping-tenant-actualdeliverywindows-cartid) endpoint.
 
 {% hint style="warning" %}
@@ -2145,8 +2116,8 @@ Make sure the shipping zone is properly stored in the delivery times object.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference)
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
