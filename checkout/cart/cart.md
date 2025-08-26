@@ -2283,7 +2283,7 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
 ### Usage examples
 
-**Adding multiple `productA` items with the `keepAsSeparateLineItem=true` flag**
+#### Adding multiple `productA` items with the `keepAsSeparateLineItem=true` flag
 
 * Adding the first `productA` item with `keepAsSeparateLineItem=true` results in:
 
@@ -2298,7 +2298,7 @@ item0: productA, qty:1, keepAsSeparateLineItem=true
 item1: productA, qty:1, keepAsSeparateLineItem=true 
 ```
 
-**Adding multiple `productA` items with the `keepAsSeparateLineItem=false` flag**
+#### Adding multiple `productA` items with the `keepAsSeparateLineItem=false` flag
 
 * Adding the first `productA` item with `keepAsSeparateLineItem=false` results in:
 
@@ -2312,7 +2312,7 @@ item0: productA, qty:1, keepAsSeparateLineItem=false
 item0: productA, qty:2, keepAsSeparateLineItem=false
 ```
 
-**Adding multiple `productA` items with the `keepAsSeparateLineItem=true` and `keepAsSeparateLineItem=false` flags**
+#### Adding multiple `productA` items with the `keepAsSeparateLineItem=true` and `keepAsSeparateLineItem=false` flags
 
 * Adding the first `productA` item with two different flags results in:
 
@@ -2362,13 +2362,14 @@ item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true
 
 * Adding another `productA` item with different `priceY` and `keepAsSeparateLineItem=true` results in:
 
+    * If `cartItemValidationSkipExistingItemsValidationOnAddToCart=false`, the validation occurs, and an error is thrown due to the price mismatch.
+    * If `cartItemValidationSkipExistingItemsValidationOnAddToCart=true`, the validation does not occur, and the cart accepts the new line item.
+
+
 ```js
 item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true 
 item1: productA, internal, priceY, qty:1, keepAsSeparateLineItem=true 
 ```
-
-    * If `cartItemValidationSkipExistingItemsValidationOnAddToCart=false`, the validation occurs, and an error is thrown due to the price mismatch.
-    * If `cartItemValidationSkipExistingItemsValidationOnAddToCart=true`, the validation does not occur, and the cart accepts the new line item.
 
 {% hint style="warning" %}
 When the cart item validation is not executed on `add to cart`, you can use the [cart validation](https://developer.emporix.io/api-references/api-guides-and-references/~/revisions/yWwHvejmTq395ReuRRIQ/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid-validate) endpoint. It should return errors informing that the prices are duplicated.
