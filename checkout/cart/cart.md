@@ -167,7 +167,7 @@ curl -i -X POST \
 [Cart API. Reference](api-reference/)
 {% endcontent-ref %}
 
-## How to use external sources for products, pricing, discounts, and more
+## How to use external sources to modify a cart
 
 Learn the ways to use external sources, like for example ERP systems, for modifying carts. It's possible to source externally price calculations, products, fees, or discounts. 
 
