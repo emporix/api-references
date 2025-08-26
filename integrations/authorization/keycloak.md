@@ -44,7 +44,7 @@ Request example:
     "client_id" : "showcase",
     "redirect_uri" : "https://storefront.emporix.io/keycloak",
     "client_secret" : "8Ku1to4R3mJAJ3tJ3u045EgKt4YfqRoN",
-    "public_key" : "-----BEGIN CERTIFICATE-----\nMIICnzCCAYcCBgGYHysPdTANBgkqhkiG9w0BAQsFADATMRwDwYDVQQDDAhWYWlsbGFudDAeFw0yNTA3MTgyMDExMTJaFw0zNTA3MTgyMDEyNTJaMBMxETAPBgNVBAMMCFZhaWxsYW50MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjvCfvrd4TDFRJ8ZqvwhoQMicDBSZq2DRaKilTdRK8zYKWK0feBrP1cl9pR58peQugBQpodxTE7F11sMDGoMicHvonXGIaETpQvYnZWwauBrNbp4HfCiHnQkqTQa8Q2fIUjJ0vmVxquGmPzyq0rmysuTeM4ltxdaZ6/6WDmMHnUcXYn/vgQ+7T7fZZKmtdwDytergnF1Ycoe16ZTraPTTkIfhpJTnbP3LxxB94dZV55maVkJC0vBpr3IyG7Oii6xOpg8HwIQ85K/27kSZXgM2mNHaMQ+wCK4wrcQsbf7aOeR3waDkxA4ZKwD9MesCwfKcdfY4fw27aiVwIDAQABM0GCSqGSIb3DQEBCwUAA4IBARTtCkCIIsp3CNmI1+m3JhgBLcNITwa/4jOJQghMx32j8Fxfq4IDAsG36w1YF7AOUqdokz3bqH6mU//wJVyzYcejGrzQLWAweWHWX2uTi0+7xv64diUrwFVSenkagShLRQsDx3r0RSePP3SFhIlkwB8wTE4k5Xryay2ehmLk/CBH3cBYng0x+HQNxwFzrRBXVyXbW61Qp8zyozKEyJG1rtbrMfX7h86ESv0d7mUF7PXkiT2/KANNVC1PQB88L9zOkSADdDd/vqs6lV5x+40Y2puNjJXBqkqOI4Cnsyyjh/EkODXEmaXIHjYWdETh4WdWJV4A0Mgyd+3HKvv8VfN0F0\n-----END CERTIFICATE-----"
+    "public_key" : "-----BEGIN CERTIFICATE-----\nMIICnzCC+F0\n-----END CERTIFICATE-----"
 }
 ```
 ## Keycloak configuration flow with social login diagram
