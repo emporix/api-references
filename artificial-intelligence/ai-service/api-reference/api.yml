@@ -796,7 +796,6 @@ paths:
       - $ref: '#/components/parameters/pageNumber'
       - $ref: '#/components/parameters/sort'
       - $ref: '#/components/parameters/fields'
-      - $ref: '#/components/parameters/expand'
       - $ref: '#/components/parameters/header_xTotalCount'
     get:
       summary: Get tools
@@ -814,6 +813,8 @@ paths:
               examples:
                 Tools Response:
                   $ref: '#/components/examples/SlackNativeToolsResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
@@ -839,7 +840,6 @@ paths:
         - $ref: '#/components/parameters/pageNumber'
         - $ref: '#/components/parameters/sort'
         - $ref: '#/components/parameters/fields'
-        - $ref: '#/components/parameters/expand'
         - $ref: '#/components/parameters/header_xTotalCount'
       summary: Get tools
       operationId: POST-ai-search-tools
@@ -856,6 +856,8 @@ paths:
               examples:
                 Tools Response:
                   $ref: '#/components/examples/SlackNativeToolsResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
@@ -1360,7 +1362,7 @@ components:
           properties:
             botToken:
               type: string
-              description: OAuth token used to authenticate the Slack bot within the specified workspace. Required for performing authorized actions on behalf of the bot. Format usually starts with `xoxb-...`.
+              description: OAuth token used to authenticate the Slack bot within the specified workspace. Required for performing authorized actions on behalf of the bot. Format usually starts with `xoxb-...`. It is required only for creation, for update operation it can be omitted.
           required:
             - botToken
     SlackNativeToolRequest:
