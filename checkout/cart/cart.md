@@ -167,7 +167,11 @@ curl -i -X POST \
 [Cart API. Reference](api-reference/)
 {% endcontent-ref %}
 
-## How to source pricing information from an external price calculation tool
+## How to use external sources for products, pricing, discounts, and more
+
+Learn the ways to use external sources, like for example ERP systems, for modifying carts. It's possible to source externally price calculations, products, fees, or discounts. 
+
+### How to source pricing information from an external price calculation tool
 
 For B2B scenarios, you might want to integrate an external application for price calculation for your products. Usually, the systems, such as ERPs, store all the relevant customer-specific pricing information needed for customer-specific pricing.
 The external system then can communicate with the Cart Service directly to overwrite the price of the product added to the cart.
@@ -448,7 +452,7 @@ When you use `linePrice` and `lineTax` in cart operations, the following rules a
 
 For order entries, the `calculated = INTERNAL/EXTERNAL` flag is also returned - it indicates  how the pricing was derived.
 
-## Pricing calculations
+## How is price calculated 
 
 To ensure that both net and gross prices are available, along with clear details on how these values are derived, the Cart Service includes the calculatedPrice field.
 
@@ -1684,9 +1688,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
 </details>
 {% endhint %}
 
-### Pricing calculations glossary
-
-#### Calculated price on item level
+### Pricing glossary - calculated price on item level
 
 <table data-full-width="false"><thead><tr><th width="150">Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A unit price from <code>priceMatch</code>, it's multiplied by item quantity.</p><pre><code>{
   "calculatedPrice": {
@@ -1873,7 +1875,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
 }
 </code></pre></td></tr></tbody></table>
 
-#### Calculated price on cart level
+### Pricing glossary - calculated price on cart level
 
 <table data-full-width="false"><thead><tr><th width="150">Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A sum of all line item prices without discounts.</p><pre><code>{
   "calculatedPrice": {
@@ -2096,7 +2098,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
 
 See the sections below for shipping, payment fee, tax and discounts calculations.
 
-## How is shipping cost calculated
+## How to calculate shipping cost at cart level
 
 The shipping calculation depends on the stage at which it is done.
 
@@ -2107,8 +2109,6 @@ The shipping calculation depends on the stage at which it is done.
 {% hint style="danger" %}
 Always make sure that your site’s `homeBase.address` has the `country` and `zip-code` information included. It's mandatory for shipping calculations.
 {% endhint %}
-
-### How to calculate shipping cost at cart level
 
 {% hint style="warning" %}
 
@@ -2285,13 +2285,13 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
 **Adding multiple `productA` items with the `keepAsSeparateLineItem=true` flag**
 
-1. Adding the first `productA` item with `keepAsSeparateLineItem=true` results in:
+* Adding the first `productA` item with `keepAsSeparateLineItem=true` results in:
 
 ```js
 item0: productA, qty:1, keepAsSeparateLineItem=true
 ```
 
-2. Adding another `productA` item with `keepAsSeparateLineItem=true` results in:
+* Adding another `productA` item with `keepAsSeparateLineItem=true` results in:
 
 ```js
 item0: productA, qty:1, keepAsSeparateLineItem=true
@@ -2300,13 +2300,13 @@ item1: productA, qty:1, keepAsSeparateLineItem=true
 
 **Adding multiple `productA` items with the `keepAsSeparateLineItem=false` flag**
 
-1. Adding the first `productA` item with `keepAsSeparateLineItem=false` results in:
+* Adding the first `productA` item with `keepAsSeparateLineItem=false` results in:
 
 ```js
 item0: productA, qty:1, keepAsSeparateLineItem=false
 ```
 
-2. Adding another `productA` item with `keepAsSeparateLineItem=false` results in:
+* Adding another `productA` item with `keepAsSeparateLineItem=false` results in:
 
 ```js
 item0: productA, qty:2, keepAsSeparateLineItem=false
@@ -2314,14 +2314,14 @@ item0: productA, qty:2, keepAsSeparateLineItem=false
 
 **Adding multiple `productA` items with the `keepAsSeparateLineItem=true` and `keepAsSeparateLineItem=false` flags**
 
-1. Adding the first `productA` item with two different flags results in:
+* Adding the first `productA` item with two different flags results in:
 
 ```js
 item0: productA, qty:1, keepAsSeparateLineItem=true 
 item2: productA, qty:1, keepAsSeparateLineItem=false 
 ```
 
-2. Adding another two `productA` items with different flags results in:
+* Adding another two `productA` items with different flags results in:
 
 ```js
 item0: productA, qty:1, keepAsSeparateLineItem=true 
@@ -2335,13 +2335,13 @@ You can add external prices for both custom products and products from the inter
 
 For example:
 
-1. Adding the first `productA` item with `priceX` and `keepAsSeparateLineItem=true` results in
+* Adding the first `productA` item with `priceX` and `keepAsSeparateLineItem=true` results in
 
 ```js
 item0: productA, external, priceX, qty:1, keepAsSeparateLineItem=true 
 ```
 
-2. Adding another `productA` item to it, but with `priceY` and `keepAsSeparateLineItem=true` results in:
+* Adding another `productA` item to it, but with `priceY` and `keepAsSeparateLineItem=true` results in:
 
 ```js
 item0: productA, external, priceX, qty:1, keepAsSeparateLineItem=true 
@@ -2354,21 +2354,21 @@ When using internal prices, the `priceId` is the same across all line items - if
 
 For example:
 
-1. Adding the first `productA` item with `priceX` and `keepAsSeparateLineItem=true` results in:
+* Adding the first `productA` item with `priceX` and `keepAsSeparateLineItem=true` results in:
 
 ```js
 item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true 
 ```
 
-2. Adding another `productA` item with different `priceY` and `keepAsSeparateLineItem=true` results in:
+* Adding another `productA` item with different `priceY` and `keepAsSeparateLineItem=true` results in:
 
 ```js
 item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=true 
 item1: productA, internal, priceY, qty:1, keepAsSeparateLineItem=true 
 ```
 
-* If `cartItemValidationSkipExistingItemsValidationOnAddToCart=false`, the validation occurs, and an error is thrown due to the price mismatch.
-* If `cartItemValidationSkipExistingItemsValidationOnAddToCart=true`, the validation does not occur, and the cart accepts the new line item.
+    * If `cartItemValidationSkipExistingItemsValidationOnAddToCart=false`, the validation occurs, and an error is thrown due to the price mismatch.
+    * If `cartItemValidationSkipExistingItemsValidationOnAddToCart=true`, the validation does not occur, and the cart accepts the new line item.
 
 {% hint style="warning" %}
 When the cart item validation is not executed on `add to cart`, you can use the [cart validation](https://developer.emporix.io/api-references/api-guides-and-references/~/revisions/yWwHvejmTq395ReuRRIQ/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid-validate) endpoint. It should return errors informing that the prices are duplicated.
@@ -2380,13 +2380,13 @@ EXTERNAL pricing products can have different prices in the cart, INTERNAL pricin
 
 When you add the same product first as an internal one and then as an external, the items are split into separate line items even if `keepAsSeparateLineItem=false`, or if the flag is not present.
 
-1. Adding `productA` item, with internal `priceX` and `keepAsSeparateLineItem=false` results in:
+* Adding `productA` item, with internal `priceX` and `keepAsSeparateLineItem=false` results in:
 
 ```js
   item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false`
 ```
 
-2. Adding `productA` item to it, with external `priceY` and `keepAsSeparateLineItem=false` results in:
+* Adding `productA` item to it, with external `priceY` and `keepAsSeparateLineItem=false` results in:
 
 ```js
   item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false 
