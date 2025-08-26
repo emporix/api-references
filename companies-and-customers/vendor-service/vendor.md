@@ -60,6 +60,15 @@ When a vendor is created, it automatically creates four new user groups for your
 * ABC Company Vendor Order Manager
 * ABC Company Vendor Order Viewer
 
+The specific vendor group access rights are:
+
+| Group                   | Order Access   | Product Access | Notes |
+|--------------------------|----------------|----------------|-------|
+| Vendor order manager | Manage orders  | ✗              | – |
+| Vendor order viewer   | Read orders    | ✗              | – |
+| Vendor product manager| ✗              | Manage products, including prices, availability, and media | Can also be granted permissions to publish/unpublish products. |
+| Vendor product viewer | ✗              | Read products, including prices, availability, and media | Cannot be granted publishing rights. |
+
 If you want to check what vendors are created for your tenant, send the request to [Retrieving all vendors](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/vendor-service/api-reference/vendors#get-vendor-tenant-vendors) endpoint.
 
 As a response, you get information about all your tenant vendors with company and location details, for example:
