@@ -26,9 +26,11 @@ paths:
 
          ### Required scopes
         * `media.asset_manage`
+        * `media.asset_manage_by_vendor` - allows to create an asset for products which belong to the vendor
       security:
         - OAuth2:
             - media.asset_manage
+            - media.asset_manage_by_vendor
       requestBody:
         content:
           multipart/form-data:
@@ -150,10 +152,13 @@ paths:
 
          ### Required scopes
         * `media.asset_read`
+        * `media.asset_read_by_vendor` - allows to read assets which belong to the vendor
       security:
         - OAuth2:
             - media.asset_read
             - media.asset_manage
+            - media.asset_read_by_vendor
+            - media.asset_manage_by_vendor
       parameters:
         - $ref: '#/components/parameters/trait_paged_pageNumber'
         - $ref: '#/components/parameters/trait_paged_pageSize'
@@ -185,9 +190,12 @@ paths:
 
          ### Required scopes
         * `media.asset_read`
+        * `media.asset_read_by_vendor` - allows to read an asset which belongs to the vendor
       security:
         - OAuth2:
             - media.asset_read
+            - media.asset_read_by_vendor
+            - media.asset_manage_by_vendor
       responses:
         '200':
           $ref: '#/components/responses/GetAsset'
@@ -213,9 +221,11 @@ paths:
 
          ### Required scopes
         * `media.asset_manage`
+        * `media.asset_manage_by_vendor` - allows to update an asset which belong to the vendor
       security:
         - OAuth2:
             - media.asset_manage
+            - media.asset_manage_by_vendor
       requestBody:
         content:
           multipart/form-data:
@@ -278,9 +288,11 @@ paths:
 
          ### Required scopes
         * `media.asset_manage`
+        * `media.asset_manage_by_vendor` - allows to delete an asset which belong to the vendor
       security:
         - OAuth2:
             - media.asset_manage
+            - media.asset_manage_by_vendor
       responses:
         '204':
           description: The asset has been deleted successfully.
@@ -306,9 +318,12 @@ paths:
 
          ### Required scopes
         * `media.asset_read`
+        * `media.asset_read_by_vendor` - allows to download an asset which belongs to the vendor
       security:
         - OAuth2:
             - media.asset_read
+            - media.asset_read_by_vendor
+            - media.asset_manage_by_vendor
       responses:
         '200':
           $ref: '#/components/responses/GetPrivateAsset'
@@ -516,6 +531,9 @@ components:
             - BLOB
             - LINK
           description: Asset type. This property is immutable.
+        vendorId:
+          type: string
+          description: Id of a vendor to which the asset belongs.
         url:
           type: string
           description: Resource link.
@@ -532,6 +550,9 @@ components:
         id:
           type: string
           description: Unique identifier of an asset.
+        vendorId:
+          type: string
+          description: Id of a vendor to which the asset belongs.
         metadata:
           $ref: '#/components/schemas/MetadataGet'
     GetAssetBlob:
@@ -543,6 +564,9 @@ components:
         id:
           type: string
           description: Unique identifier of an asset.
+        vendorId:
+          type: string
+          description: Id of a vendor to which the asset belongs.
         details:
           $ref: '#/components/schemas/AssetDetailsGet'
         metadata:
