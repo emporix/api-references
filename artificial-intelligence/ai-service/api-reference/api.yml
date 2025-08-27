@@ -1274,6 +1274,8 @@ paths:
               examples:
                 Mcp Servers Response:
                   $ref: '#/components/examples/McpServersResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
@@ -1315,6 +1317,8 @@ paths:
               examples:
                 Tokens Response:
                   $ref: '#/components/examples/McpServersResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
@@ -1636,9 +1640,14 @@ components:
         authorizationHeaderName:
           type: string
           description: Name of the header required for authorization e.g. `Authorization`.
-        authorizationHeaderTokenId:
-          type: string
-          description: Id of the token which should store secret for authorization header.
+        authorizationHeaderToken:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Id of the token which should store secret for authorization header.
+          required:
+            - id
       required:
         - url
     McpServerConfigResponse:
@@ -1649,7 +1658,7 @@ components:
             authorizationHeaderToken:
               allOf:
                 - $ref: '#/components/schemas/TokenResponse'
-                - description: The full response representing token. It is returned instead of `authorizationHeaderTokenId` when `expand=token` query parameter has been used.
+                - description: The full response representing token. If not `expand=token` is used then only `id` field is returned, otherwise all fields are returned.
     BaseMcpServer:
       type: object
       description: An object representing customer's own implementation of the MCP server.
@@ -1720,11 +1729,16 @@ components:
             type:
               description: For CustomMcpServer it has to be set to `custom`.
               example: custom
-            mcpServerId:
-              type: string
-              description: Id of the mcp server.
+            mcpServer:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: Id of the mcp server.
+              required:
+                - id
           required:
-            - mcpServerId
+            - mcpServer
     CustomAgentMcpServerResponse:
       allOf:
         - $ref: '#/components/schemas/CustomAgentMcpServerRequest'
@@ -1733,7 +1747,7 @@ components:
             mcpServer:
               allOf:
                 - $ref: '#/components/schemas/McpServerResponse'
-                - description: The full response representing mcp server. It is returned instead of `mcpServerId` when `expand=mcpServer` query parameter has been used.
+                - description: The full response representing mcp server. If not `expand=mcpServer` is used then only `id` field is returned, otherwise all fields are returned.
     AgentMcpServersRequest:
       type: array
       description: List of MCP servers which agents should have access to.
@@ -1810,7 +1824,7 @@ components:
             authorizationHeaderToken:
               allOf:
                 - $ref: '#/components/schemas/TokenResponse'
-                - description: The full response representing token. It is returned instead of `authorizationHeaderTokenId` when `expand=token` query parameter has been used.
+                - description: The full response representing token. If not `expand=token` is used then only `id` field is returned, otherwise all fields are returned.
     SelfHostedLlm:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
@@ -1873,7 +1887,7 @@ components:
             token:
               allOf:
                 - $ref: '#/components/schemas/TokenResponse'
-                - description: The full response representing token. It is returned instead of `tokenId` when `expand=token` query parameter has been used.
+                - description: The full response representing token. If not `expand=token` is used then only `id` field is returned, otherwise all fields are returned.
 
     ## Token:
     BaseToken:
