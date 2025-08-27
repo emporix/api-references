@@ -564,7 +564,7 @@ paths:
       - $ref: '#/components/parameters/expand'
       - $ref: '#/components/parameters/header_xTotalCount'
     get:
-      summary: Get generic agents
+      summary: Get agents
       operationId: GET-ai-list-agents
       responses:
         '200':
@@ -608,7 +608,7 @@ paths:
         - $ref: '#/components/parameters/fields'
         - $ref: '#/components/parameters/expand'
         - $ref: '#/components/parameters/header_xTotalCount'
-      summary: Get generic agents
+      summary: Get agents
       operationId: POST-ai-search-agents
       responses:
         '200':
@@ -655,7 +655,7 @@ paths:
         - $ref: '#/components/parameters/header_Accept-Language'
         - $ref: '#/components/parameters/fields'
         - $ref: '#/components/parameters/expand'
-      summary: Get generic agent by Id
+      summary: Get agent by Id
       operationId: GET-ai-retrieve-agent
       responses:
         '200':
@@ -690,8 +690,8 @@ paths:
     put:
       parameters:
         - $ref: '#/components/parameters/header_Content-Language'
-      summary: Upsert generic agents
-      operationId: PUT-ai-list-agents
+      summary: Upsert agent
+      operationId: PUT-ai-agent
       responses:
         '201':
           description: Id of created agent
@@ -730,7 +730,7 @@ paths:
       tags:
         - Agent
     patch:
-      summary: Partially update generic agent
+      summary: Partially update agent
       operationId: PATCH-ai-update-agent
       responses:
         '204':
@@ -762,7 +762,7 @@ paths:
       tags:
         - Agent
     delete:
-      summary: Delete generic agent
+      summary: Delete agent
       operationId: DELETE-ai-delete-agent
       responses:
         '204':
