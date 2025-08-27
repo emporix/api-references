@@ -798,7 +798,6 @@ paths:
       - $ref: '#/components/parameters/pageNumber'
       - $ref: '#/components/parameters/sort'
       - $ref: '#/components/parameters/fields'
-      - $ref: '#/components/parameters/expand'
       - $ref: '#/components/parameters/header_xTotalCount'
     get:
       summary: Get tools
@@ -816,6 +815,8 @@ paths:
               examples:
                 Tools Response:
                   $ref: '#/components/examples/SlackNativeToolsResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
@@ -841,7 +842,6 @@ paths:
         - $ref: '#/components/parameters/pageNumber'
         - $ref: '#/components/parameters/sort'
         - $ref: '#/components/parameters/fields'
-        - $ref: '#/components/parameters/expand'
         - $ref: '#/components/parameters/header_xTotalCount'
       summary: Get tools
       operationId: POST-ai-search-tools
@@ -858,6 +858,8 @@ paths:
               examples:
                 Tools Response:
                   $ref: '#/components/examples/SlackNativeToolsResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
@@ -1026,7 +1028,6 @@ paths:
       - $ref: '#/components/parameters/pageNumber'
       - $ref: '#/components/parameters/sort'
       - $ref: '#/components/parameters/fields'
-      - $ref: '#/components/parameters/expand'
       - $ref: '#/components/parameters/header_xTotalCount'
     get:
       summary: Get tokens
@@ -1043,6 +1044,8 @@ paths:
               examples:
                 Tokens Response:
                   $ref: '#/components/examples/TokensResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
@@ -1068,7 +1071,6 @@ paths:
         - $ref: '#/components/parameters/pageNumber'
         - $ref: '#/components/parameters/sort'
         - $ref: '#/components/parameters/fields'
-        - $ref: '#/components/parameters/expand'
         - $ref: '#/components/parameters/header_xTotalCount'
       summary: Get tokens
       operationId: POST-ai-search-tokens
@@ -1084,6 +1086,8 @@ paths:
               examples:
                 Tokens Response:
                   $ref: '#/components/examples/TokensResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
@@ -1231,8 +1235,6 @@ paths:
           $ref: '#/components/responses/401_resp_common'
         '403':
           $ref: '#/components/responses/403_resp_common'
-        '404':
-          $ref: '#/components/responses/404_resp_common'
       description: |-
         ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Deletes tokens by given Id. In order to delete a token, it cannot be used by any of the existing agents.
@@ -1588,7 +1590,7 @@ components:
           properties:
             botToken:
               type: string
-              description: OAuth token used to authenticate the Slack bot within the specified workspace. Required for performing authorized actions on behalf of the bot. Format usually starts with `xoxb-...`.
+              description: OAuth token used to authenticate the Slack bot within the specified workspace. Required for performing authorized actions on behalf of the bot. Format usually starts with `xoxb-...`. It is required only for creation, for update operation it can be omitted.
           required:
             - botToken
     SlackNativeToolRequest:
@@ -1790,9 +1792,14 @@ components:
         authorizationHeaderName:
           type: string
           description: Name of the header required for authorization e.g. `Authorization`
-        authorizationHeaderTokenId:
-          type: string
-          description: Id of the token which should store secret for authorization header.
+        authorizationHeaderToken:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Id of the token which should store secret for authorization header.
+          required:
+            - id
       required:
         - url
     SelfHostedParamsResponse:
@@ -1847,12 +1854,17 @@ components:
           properties:
             provider:
               $ref: '#/components/schemas/ApiKeyLlmProvider'
-            tokenId:
-              type: string
-              description: Id of the token which should store secret representing api key.
+            token:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: Id of the token which should store secret representing api key.
+              required:
+                - id
           required:
             - provider
-            - tokenId
+            - token
     ApiKeyLlmResponse:
       allOf:
         - $ref: '#/components/schemas/ApiKeyLlmRequest'
@@ -1894,6 +1906,14 @@ components:
               description: Unique identifier of the token.
             metadata:
               $ref: '#/components/schemas/MetadataResponse'
+
+    IdWrapper:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
 
     AgentCollaborations:
       type: array
@@ -1953,11 +1973,6 @@ components:
               items:
                 type: string
                 description: markers that allow to categorise the agent.
-            nativeToolIds:
-              type: array
-              items:
-                type: string
-              description: Id of the native tools.
             enabled:
               type: boolean
               description: Whether the agent is enabled.
@@ -2015,6 +2030,11 @@ components:
         - $ref: '#/components/schemas/BaseForAgentRequestAndResponse'
         - type: object
           properties:
+            nativeTools:
+              type: array
+              items:
+                $ref: '#/components/schemas/IdWrapper'
+              description: Id of the native tools.
             llmConfig:
               oneOf:
                 - $ref: '#/components/schemas/EmporixLlm'
@@ -2725,7 +2745,8 @@ components:
         userPrompt: "You are an complaint agent for checking emails and do some action"
         llmConfig:
           model: GPT-4.1
-          tokenId: openai-token
+          token:
+            id: openai-token
           provider: openai
           maxTokens: 100000
           temperature: 0.2
