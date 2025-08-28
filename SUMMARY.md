@@ -7,7 +7,7 @@
 * [Quickstart](getting-started/quickstart.md)
 * [Publish your docs](getting-started/publish-your-docs.md)
 
-## Basics
+## Standard Practices
 
 * [Editor](basics/editor.md)
 * [Markdown](basics/markdown.md)
