@@ -1,5 +1,5 @@
 ---
-icon: hand-wave
+icon: code-merge
 layout:
   width: default
   title:
