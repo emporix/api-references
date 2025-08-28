@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Welcome](README.md)
+* [API Guides](README.md)
 
 ## API Quickstart
 
@@ -20,9 +20,9 @@
 
 ## API Guides
 
-* [OAuth Service](../authorization/oauth-service/README.md)
-* [AI Service](../artificial-intelligence/ai-service/README.md)
-    * [AI Tutorials](../artificial-intelligence/ai-service/ai-tutorial.md)
+* [OAuth Service](../authorization/oauth-service/README)
+* [AI Service](../artificial-intelligence/ai-service/README)
+    * [AI Tutorials](../api-references/artificial-intelligence/ai-service/ai-tutorial)
 * [Configuration Service](../configuration/configuration-service/README.md)
     * [Language Tutorials](../configuration/configuration-service/language.md)
 * [Country Service](../configuration/country-service/README.md)
