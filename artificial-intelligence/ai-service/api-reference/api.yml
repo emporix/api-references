@@ -1583,9 +1583,6 @@ components:
       properties:
         type:
           $ref: '#/components/schemas/NativeToolType'
-        id:
-          type: string
-          description: Unique identifier of the tool.
         name:
           type: string
           description: Name of the tool.
@@ -1629,6 +1626,9 @@ components:
         - $ref: '#/components/schemas/BaseNativeTool'
         - type: object
           properties:
+            id:
+              type: string
+              description: Unique identifier of the tool.
             type:
               description: For SlackNativeTool it has to be set to `slack`.
               example: slack
@@ -1974,9 +1974,6 @@ components:
     BaseForAgentAndTemplateAndHandOff:
       type: object
       properties:
-        id:
-          type: string
-          description: Identifier of the agent.
         name:
           type: object
           description: Localized name of the agent.
@@ -2037,6 +2034,9 @@ components:
         - $ref: '#/components/schemas/BaseForAgentAndTemplate'
         - type: object
           properties:
+            id:
+              type: string
+              description: Identifier of the agent.
             nativeTools:
               $ref: '#/components/schemas/NativeToolsResponse'
             mcpServers:
@@ -2046,6 +2046,9 @@ components:
         - $ref: '#/components/schemas/BaseForAgentAndTemplateAndHandOff'
         - type: object
           properties:
+            id:
+              type: string
+              description: Identifier of the agent.
             handOff:
               allOf:
                 - $ref: '#/components/schemas/HandOff'
@@ -2079,6 +2082,9 @@ components:
         - $ref: '#/components/schemas/BaseForAgentRequestAndResponse'
         - type: object
           properties:
+            id:
+              type: string
+              description: Identifier of the agent.
             nativeTools:
               $ref: '#/components/schemas/NativeToolsResponse'
             llmConfig:
@@ -2341,15 +2347,21 @@ components:
     expand:
       schema:
         type: string
+        enum:
+          - mcpServers
+          - nativeTools
+          - token
       in: query
       name: expand
-      description: Fields to be expanded in the response. It means that instead of the object ids, the whole objects are returned in the response. Possible values [nativeTools, token, mcpServers]
+      description: Fields to be expanded in the response. It means that instead of the object ids, the whole objects are returned in the response.
     expandMcpServer:
       schema:
         type: string
+        enum:
+          - token
       in: query
       name: expand
-      description: Fields to be expanded in the response. It means that instead of the object ids, the whole objects are returned in the response. Possible values [token]
+      description: Fields to be expanded in the response. It means that instead of the object ids, the whole objects are returned in the response.
     force:
       schema:
         type: boolean
@@ -2757,12 +2769,10 @@ components:
           authorizationHeaderTokenId: token-id
     TokenRequest:
       value:
-        id: openai
         name: OpenAI Token
         value: sk-secret
     SlackNativeToolRequest:
       value:
-        id: "slack-1"
         name: Slack Native Tool
         type: slack
         config:
@@ -2770,7 +2780,6 @@ components:
           botToken: xoxb-35354
     AgentRequest:
       value:
-        id: "123"
         name:
           en: Complaint Agent
         description:
@@ -2798,5 +2807,5 @@ components:
             tools:
               - get-orders
               - get-order
-        nativeToolIds:
-          - slack-1
+        nativeTools:
+          - id: slack-1
