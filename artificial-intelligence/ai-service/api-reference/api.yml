@@ -2634,7 +2634,6 @@ components:
           icon: fa-productivity
           mcpServers:
             - domain: order
-              enabled: true
               type: predefined
               tools:
                 - get-orders
@@ -2642,7 +2641,6 @@ components:
           nativeTools:
             - type: slack
               name: Slack Tool
-              enabled: true
               config:
                 teamId: T0445953
     McpServerResponse:
@@ -2713,14 +2711,12 @@ components:
         icon: fa-productivity
         mcpServers:
           - domain: order
-            enabled: true
             type: predefined
             tools:
               - get-orders
               - get-order
         nativeTools:
           - name: slack
-            enabled: true
             config:
               teamId: T0445953
     AgentsResponse:
@@ -2749,14 +2745,12 @@ components:
           icon: fa-productivity
           mcpServers:
             - domain: order
-              enabled: true
               type: predefined
               tools:
                 - get-orders
                 - get-order
           nativeTools:
             - name: slack
-              enabled: true
               config:
                 teamId: T0445953
     McpServerRequest:
@@ -2802,7 +2796,6 @@ components:
         icon: fa-productivity
         mcpServers:
           - domain: order
-            enabled: true
             type: predefined
             tools:
               - get-orders
