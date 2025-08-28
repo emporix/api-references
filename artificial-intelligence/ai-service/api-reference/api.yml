@@ -1304,7 +1304,7 @@ paths:
         - $ref: '#/components/parameters/expandMcpServer'
         - $ref: '#/components/parameters/header_xTotalCount'
       summary: Get mcp servers
-      operationId: POST-ai-search-mcp-servs
+      operationId: POST-ai-search-mcp-servers
       responses:
         '200':
           description: List of mcp servers
