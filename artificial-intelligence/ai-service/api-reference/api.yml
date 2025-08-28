@@ -993,6 +993,8 @@ paths:
       tags:
         - Tool
     delete:
+      parameters:
+        - $ref: '#/components/parameters/force'
       summary: Delete tool
       operationId: DELETE-ai-delete-tool
       responses:
@@ -1009,6 +1011,8 @@ paths:
       description: |-
         ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Deletes tool by given Id.
+        
+        ***Important***: If tool is being used by an agent then delete operation is not possible without `force` flag set to `true`.
         
         ### Required scopes
 
@@ -1224,6 +1228,8 @@ paths:
       tags:
         - Token
     delete:
+      parameters:
+        - $ref: '#/components/parameters/force'
       summary: Delete token
       operationId: DELETE-ai-delete-token
       responses:
@@ -1237,7 +1243,10 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
-        Deletes tokens by given Id. In order to delete a token, it cannot be used by any of the existing agents.
+        Deletes tokens by given Id.
+        
+        
+        ***Important***: If token is being used by an agent or by an mcp server then delete operation is not possible without `force` flag set to `true`.
         
         ### Required scopes
 
@@ -1451,6 +1460,8 @@ paths:
       tags:
         - MCP Server
     delete:
+      parameters:
+        - $ref: '#/components/parameters/force'
       summary: Delete mcp server
       operationId: DELETE-ai-delete-mcp-server
       responses:
@@ -1466,7 +1477,9 @@ paths:
           $ref: '#/components/responses/404_resp_common'
       description: |-
         ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
-        Deletes mcp server by given Id.
+        Deletes mcp server by given Id. 
+        
+        ***Important***: If mcp server is being used by an agent then delete operation is not possible without `force` flag set to `true`.
         
         ### Required scopes
 
@@ -2337,6 +2350,13 @@ components:
       in: query
       name: expand
       description: Fields to be expanded in the response. It means that instead of the object ids, the whole objects are returned in the response. Possible values [token]
+    force:
+      schema:
+        type: boolean
+      in: query
+      name: force
+      example: false
+      description: Allows to remove given entity even if it is used as a dependency in another entries. In that case, the removed entity is unassigned from other entries.
   responses:
     401_resp_common:
       description: The authorization token is invalid or has expired.
