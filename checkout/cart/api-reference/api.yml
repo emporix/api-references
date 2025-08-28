@@ -4271,7 +4271,7 @@ components:
                   currency:
                     type: string
                     description: Currency of the tax.
-                  value:
+                  amount:
                     type: number
                     description: Value of the tax.
     externalDiscountType:
