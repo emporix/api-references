@@ -1,0 +1,6 @@
+---
+icon: pallet-boxes
+---
+
+# Vendor
+
