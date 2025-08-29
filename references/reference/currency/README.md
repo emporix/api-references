@@ -1,6 +1,0 @@
----
-icon: dollar-sign
----
-
-# Currency
-

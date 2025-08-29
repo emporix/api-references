@@ -1,6 +1,0 @@
----
-icon: list-check
----
-
-# Schema
-

@@ -1,6 +1,0 @@
----
-icon: album-collection
----
-
-# Catalog
-

@@ -1,6 +1,0 @@
----
-icon: icons
----
-
-# Category
-

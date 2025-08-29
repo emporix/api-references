@@ -1,6 +1,0 @@
----
-icon: calculator-simple
----
-
-# Tax
-

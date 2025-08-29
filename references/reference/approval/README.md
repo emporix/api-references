@@ -1,6 +1,0 @@
----
-icon: thumbs-up
----
-
-# Approval
-

@@ -4,7 +4,7 @@
 
 ## Reference
 
-* [AI](reference/ai/README.md)
+* [AI](../artificial-intelligence/README.md)
   * ```yaml
     props:
       models: true
@@ -15,7 +15,7 @@
           kind: openapi
           spec: ai-api
     ```
-* [Approval](reference/approval/README.md)
+* [Approval](../companies-and-customers/approval-service/README.md)
   * ```yaml
     props:
       models: true
@@ -26,7 +26,7 @@
           kind: openapi
           spec: approval-api
     ```
-* [Availability](reference/availability/README.md)
+* [Availability](../orders/availability/README.md)
   * ```yaml
     props:
       models: true
@@ -37,7 +37,7 @@
           kind: openapi
           spec: availability-api
     ```
-* [Brand](reference/brand/README.md)
+* [Brand](../products-labels-and-brands/brand-service/README.md)
   * ```yaml
     props:
       models: true
@@ -48,7 +48,7 @@
           kind: openapi
           spec: brand-api
     ```
-* [Cart](reference/cart/README.md)
+* [Cart](../checkout/cart/README.md)
   * ```yaml
     props:
       models: true
@@ -59,7 +59,7 @@
           kind: openapi
           spec: cart-api
     ```
-* [Catalog](reference/catalog/README.md)
+* [Catalog](../catalogs-and-categories/catalog/README.md)
   * ```yaml
     props:
       models: true
@@ -70,7 +70,7 @@
           kind: openapi
           spec: catalog-api
     ```
-* [Category](reference/category/README.md)
+* [Category](../catalogs-and-categories/category-tree/README.md)
   * ```yaml
     props:
       models: true
@@ -81,7 +81,7 @@
           kind: openapi
           spec: category-api
     ```
-* [Checkout](reference/checkout/README.md)
+* [Checkout](../checkout/checkout/README.md)
   * ```yaml
     props:
       models: true
@@ -92,7 +92,7 @@
           kind: openapi
           spec: checkout-api
     ```
-* [Configuration](reference/configuration/README.md)
+* [Configuration](../configuration/configuration-service/README.md)
   * ```yaml
     props:
       models: true
@@ -103,7 +103,7 @@
           kind: openapi
           spec: configuration-api
     ```
-* [Country](reference/country/README.md)
+* [Country](../configuration/country-service/README.md)
   * ```yaml
     props:
       models: true
@@ -114,7 +114,7 @@
           kind: openapi
           spec: country-api
     ```
-* [Coupon](reference/coupon/README.md)
+* [Coupon](../configuration/country-service/README.md)
   * ```yaml
     props:
       models: true
@@ -125,7 +125,7 @@
           kind: openapi
           spec: coupon-api
     ```
-* [Currency](reference/currency/README.md)
+* [Currency](../configuration/currency-service/README.md)
   * ```yaml
     props:
       models: true

@@ -1,6 +1,0 @@
----
-icon: warehouse-full
----
-
-# Availability
-

@@ -1,6 +1,0 @@
----
-icon: cart-shopping
----
-
-# Cart
-

@@ -1,6 +1,0 @@
----
-icon: bag-shopping
----
-
-# Order
-
