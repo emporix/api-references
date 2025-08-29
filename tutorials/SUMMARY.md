@@ -1,6 +1,6 @@
 # Table of contents
 
-* [API Guides](README.md)
+* [Emporix API Tutorials](README.md)
 
 ## API Quickstart
 
@@ -18,11 +18,19 @@
 * [Upsert](../standard-practices/upsert.md)
 * [B2B Token](../standard-practices/b2btoken.md)
 
+## Integrations
+
+* [Integrations](../integrations/README.md)
+  * [Identity Providers](../integrations/authorization/identity-providers.md)
+    * [Auth0](../integrations/authorization/auth0.md)
+  * [Workflow Automation](../integrations/workflow-automation/README.md)
+    * [Emporix and Make](../integrations/workflow-automation/emporix-and-make.md)
+
 ## API Guides
 
-* [OAuth Service](../authorization/oauth-service/README)
-* [AI Service](../artificial-intelligence/ai-service/README)
-    * [AI Tutorials](../api-references/artificial-intelligence/ai-service/ai-tutorial)
+* [OAuth Service](../authorization/oauth-service/README.md)
+* [AI Service](../artificial-intelligence/ai-service/README.md)
+    * [AI Tutorials](../artificial-intelligence/ai-service/ai-tutorial.md)
 * [Configuration Service](../configuration/configuration-service/README.md)
     * [Language Tutorials](../configuration/configuration-service/language.md)
 * [Country Service](../configuration/country-service/README.md)
@@ -116,11 +124,3 @@
   * [Events - Schema](../webhooks/events-schema.md)
   * [Events - Site](../webhooks/events-site.md)
   * [Events - Vendor](../webhooks/events-vendor.md)
-
-## Integrations
-
-* [Integrations](../integrations/README.md)
-  * [Identity Providers](../integrations/authorization/identity-providers.md)
-    * [Auth0](../integrations/authorization/auth0.md)
-  * [Workflow Automation](../integrations/workflow-automation/README.md)
-    * [Emporix and Make](../integrations/workflow-automation/emporix-and-make.md)

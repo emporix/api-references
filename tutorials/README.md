@@ -1,5 +1,5 @@
 ---
-icon: code-merge
+icon: graduation-cap
 layout:
   width: default
   title:
