@@ -114,7 +114,7 @@
           kind: openapi
           spec: country-api
     ```
-* [Coupon](../configuration/country-service/README.md)
+* [Coupon](../rewards-and-promotions/coupon/README.md)
   * ```yaml
     props:
       models: true
