@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Welcome](README.md)
+* [Emporix API Tutorials](README.md)
 
 ## API Quickstart
 

@@ -19,6 +19,10 @@ layout:
 
 # Developer Platform API
 
+{% hint %} 
+For step-by-step API guides, refer to the [Emporix API Tutorials](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/OB5JNNqs4YPvE8urtMSV/).
+{% endhint %}
+
 Head to particular service to view API specifications.
 
 <a href="https://github.com/emporix/api-references/releases/latest/download/api-references.zip" class="button primary" data-icon="down-to-line">Download all Emporix API Specs - ZIP</a>
