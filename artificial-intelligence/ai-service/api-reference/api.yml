@@ -20,6 +20,8 @@ tags:
     description: Manage Agents
   - name: Tool
     description: Manage Tools
+  - name: Token
+    description: Manage Tokens
   - name: Job
     description: Manage Jobs
 servers:
@@ -809,7 +811,7 @@ paths:
                   oneOf:
                     - $ref: '#/components/schemas/SlackNativeToolResponse'
               examples:
-                Agents Response:
+                Tools Response:
                   $ref: '#/components/examples/SlackNativeToolsResponse'
         '400':
           $ref: '#/components/responses/400_resp_common'
@@ -1014,6 +1016,235 @@ paths:
             - ai.agent_manage
       tags:
         - Tool
+
+
+  '/ai-service/{tenant}/agentic/tokens':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/qParam'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/header_xTotalCount'
+    get:
+      summary: Get tokens
+      operationId: GET-ai-list-tokens
+      responses:
+        '200':
+          description: List of tokens
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TokenResponse'
+              examples:
+                Tokens Response:
+                  $ref: '#/components/examples/TokensResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Retrieves tokens based on the provided query.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Token
+  '/ai-service/{tenant}/agentic/tokens/search':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    post:
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/header_xTotalCount'
+      summary: Get tokens
+      operationId: POST-ai-search-tokens
+      responses:
+        '200':
+          description: List of tokens
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TokenResponse'
+              examples:
+                Tokens Response:
+                  $ref: '#/components/examples/TokensResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      requestBody:
+        $ref: '#/components/requestBodies/QParamSearchBody'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Searches for tokens based on the provided query.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Token
+  '/ai-service/{tenant}/agentic/tokens/{tokenId}':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - schema:
+          type: string
+        name: tokenId
+        in: path
+        required: true
+    get:
+      parameters:
+        - $ref: '#/components/parameters/fields'
+      summary: Get token by Id
+      operationId: GET-ai-retrieve-token
+      responses:
+        '200':
+          description: A single token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+              examples:
+                Tool Response:
+                  $ref: '#/components/examples/TokenResponse'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Retrieves the token by given Id
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Token
+    put:
+      summary: Upsert token
+      operationId: PUT-ai-upsert-token
+      responses:
+        '201':
+          description: Id of created token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdResponse'
+              examples:
+                Id Of Created Tool:
+                  $ref: '#/components/examples/IdResponse'
+        '204':
+          description: The resource has been successfully updated.
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+        '409':
+          $ref: '#/components/responses/409_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Updates or creates a specified token by replacing all of its existing data with data from the request body.
+        If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
+        
+        **Important**: The `value` field cannot be updated, once created token cannot change `value` field.
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      requestBody:
+        $ref: '#/components/requestBodies/tokenUpsertBody'
+      tags:
+        - Token
+    patch:
+      summary: Partially update token
+      operationId: PATCH-ai-update-token
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Partially updates a single token document with given information.
+        Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
+          - `add` (adding an item to the items list)
+          - `remove` (removing an item from the items list)
+          - `replace` (replacing an item with given id with new definition)
+        
+        **Important**: The `value` field cannot be updated, once created token cannot change `value` field.
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      requestBody:
+        $ref: '#/components/requestBodies/tokenPatchBody'
+      tags:
+        - Token
+    delete:
+      summary: Delete token
+      operationId: DELETE-ai-delete-token
+      responses:
+        '204':
+          description: Given token has been deleted
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Deletes tokens by given Id. In order to delete a token, it cannot be used by any of the existing agents.
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      tags:
+        - Token
 
 components:
   schemas:
@@ -1264,25 +1495,34 @@ components:
               example: emporix_openai
           required:
             - provider
-    SelfHostedParamsResponse:
+    SelfHostedParamsRequest:
       type: object
       properties:
         url:
           type: string
           description: Url of the self-hosted LLM
-        authorizationHeader:
+        authorizationHeaderName:
           type: string
-          description: Header required for authorization e.g. `Authorization`
-    SelfHostedParamsRequest:
+          description: Name of the header required for authorization e.g. `Authorization`
+        authorizationHeaderToken:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Id of the token which should store secret for authorization header.
+          required:
+            - id
+      required:
+        - url
+    SelfHostedParamsResponse:
       allOf:
-        - $ref: '#/components/schemas/SelfHostedParamsResponse'
+        - $ref: '#/components/schemas/SelfHostedParamsRequest'
         - type: object
           properties:
-            authorizationHeaderValue:
-              type: string
-              description: Value of the authorization header e.g. `Bearer api_key`
-          required:
-            - url
+            authorizationHeaderToken:
+              allOf:
+                - $ref: '#/components/schemas/TokenResponse'
+                - description: The full response representing token. It is returned instead of `authorizationHeaderTokenId` when `expand=token` query parameter has been used.
     SelfHostedLlm:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
@@ -1326,19 +1566,67 @@ components:
           properties:
             provider:
               $ref: '#/components/schemas/ApiKeyLlmProvider'
-            apiKey:
-              type: string
-              description: The API Key of OpenAI.
+            token:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: Id of the token which should store secret representing api key.
+              required:
+                - id
           required:
             - provider
-            - apiKey
+            - token
     ApiKeyLlmResponse:
       allOf:
-        - $ref: '#/components/schemas/BaseLlm'
+        - $ref: '#/components/schemas/ApiKeyLlmRequest'
         - type: object
           properties:
-            provider:
-              $ref: '#/components/schemas/ApiKeyLlmProvider'
+            token:
+              allOf:
+                - $ref: '#/components/schemas/TokenResponse'
+                - description: The full response representing token. It is returned instead of `tokenId` when `expand=token` query parameter has been used.
+
+    ## Token:
+    BaseToken:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the token
+      required:
+        - name
+    TokenRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseToken'
+        - type: object
+          properties:
+            value:
+              type: string
+              description: Value which represents token.
+            metadata:
+              $ref: '#/components/schemas/MetadataRequest'
+          required:
+            - value
+    TokenResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseToken'
+        - type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier of the token.
+            metadata:
+              $ref: '#/components/schemas/MetadataResponse'
+
+    IdWrapper:
+      type: object
+      properties:
+        id:
+          type: string
+      required:
+        - id
+
     AgentCollaborations:
       type: array
       description: List of agent collaborations which allows an agent to hand off its task to other agents.
@@ -1399,11 +1687,6 @@ components:
                 description: markers that allow to categorise the agent.
             mcpServers:
               $ref: '#/components/schemas/McpServers'
-            nativeToolIds:
-              type: array
-              items:
-                type: string
-              description: Id of the native tools.
             enabled:
               type: boolean
               description: Whether the agent is enabled.
@@ -1460,6 +1743,11 @@ components:
         - $ref: '#/components/schemas/BaseForAgentRequestAndResponse'
         - type: object
           properties:
+            nativeTools:
+              type: array
+              items:
+                $ref: '#/components/schemas/IdWrapper'
+              description: Id of the native tools.
             llmConfig:
               oneOf:
                 - $ref: '#/components/schemas/EmporixLlm'
@@ -1918,6 +2206,25 @@ components:
           examples:
             Create agent:
               $ref: '#/components/examples/AgentRequest'
+    tokenUpsertBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TokenRequest'
+          examples:
+            Create OpenAI Token:
+              $ref: '#/components/examples/TokenRequest'
+    tokenPatchBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PatchRequest'
+          examples:
+            Change name:
+              value:
+                - op: REPLACE
+                  path: /name
+                  value: New OpenAI Token
     toolUpsertBody:
       content:
         application/json:
@@ -1975,6 +2282,16 @@ components:
               enabled: true
               config:
                 teamId: T0445953
+    TokenResponse:
+      value:
+        id: openai
+        name: OpenAi Token
+    TokensResponse:
+      value:
+        - id: emporix--openai
+          name: Emporix OpenAi Token
+        - id: openai
+          name: OpenAi Token
     SlackNativeToolResponse:
       value:
         id: "slack-1"
@@ -2061,6 +2378,11 @@ components:
               enabled: true
               config:
                 teamId: T0445953
+    TokenRequest:
+      value:
+        id: openai
+        name: OpenAI Token
+        value: sk-secret
     SlackNativeToolRequest:
       value:
         id: "slack-1"
@@ -2080,7 +2402,8 @@ components:
         userPrompt: "You are an complaint agent for checking emails and do some action"
         llmConfig:
           model: GPT-4.1
-          apiKey: secureApiKey
+          token:
+            id: openai-token
           provider: openai
           maxTokens: 100000
           temperature: 0.2
