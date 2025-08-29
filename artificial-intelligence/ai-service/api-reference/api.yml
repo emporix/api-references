@@ -993,6 +993,8 @@ paths:
       tags:
         - Tool
     delete:
+      parameters:
+        - $ref: '#/components/parameters/force'
       summary: Delete tool
       operationId: DELETE-ai-delete-tool
       responses:
@@ -1009,6 +1011,8 @@ paths:
       description: |-
         ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Deletes tool by given Id.
+        
+        ***Important***: If tool is being used by an agent then delete operation is not possible without `force` flag set to `true`.
         
         ### Required scopes
 
@@ -1224,6 +1228,8 @@ paths:
       tags:
         - Token
     delete:
+      parameters:
+        - $ref: '#/components/parameters/force'
       summary: Delete token
       operationId: DELETE-ai-delete-token
       responses:
@@ -1237,7 +1243,10 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
-        Deletes tokens by given Id. In order to delete a token, it cannot be used by any of the existing agents.
+        Deletes tokens by given Id.
+        
+        
+        ***Important***: If token is being used by an agent or by an mcp server then delete operation is not possible without `force` flag set to `true`.
         
         ### Required scopes
 
@@ -1451,6 +1460,8 @@ paths:
       tags:
         - MCP Server
     delete:
+      parameters:
+        - $ref: '#/components/parameters/force'
       summary: Delete mcp server
       operationId: DELETE-ai-delete-mcp-server
       responses:
@@ -1466,7 +1477,9 @@ paths:
           $ref: '#/components/responses/404_resp_common'
       description: |-
         ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
-        Deletes mcp server by given Id.
+        Deletes mcp server by given Id. 
+        
+        ***Important***: If mcp server is being used by an agent then delete operation is not possible without `force` flag set to `true`.
         
         ### Required scopes
 
@@ -1570,9 +1583,6 @@ components:
       properties:
         type:
           $ref: '#/components/schemas/NativeToolType'
-        id:
-          type: string
-          description: Unique identifier of the tool.
         name:
           type: string
           description: Name of the tool.
@@ -1616,6 +1626,9 @@ components:
         - $ref: '#/components/schemas/BaseNativeTool'
         - type: object
           properties:
+            id:
+              type: string
+              description: Unique identifier of the tool.
             type:
               description: For SlackNativeTool it has to be set to `slack`.
               example: slack
@@ -1961,9 +1974,6 @@ components:
     BaseForAgentAndTemplateAndHandOff:
       type: object
       properties:
-        id:
-          type: string
-          description: Identifier of the agent.
         name:
           type: object
           description: Localized name of the agent.
@@ -2024,6 +2034,9 @@ components:
         - $ref: '#/components/schemas/BaseForAgentAndTemplate'
         - type: object
           properties:
+            id:
+              type: string
+              description: Identifier of the agent.
             nativeTools:
               $ref: '#/components/schemas/NativeToolsResponse'
             mcpServers:
@@ -2033,6 +2046,9 @@ components:
         - $ref: '#/components/schemas/BaseForAgentAndTemplateAndHandOff'
         - type: object
           properties:
+            id:
+              type: string
+              description: Identifier of the agent.
             handOff:
               allOf:
                 - $ref: '#/components/schemas/HandOff'
@@ -2066,6 +2082,9 @@ components:
         - $ref: '#/components/schemas/BaseForAgentRequestAndResponse'
         - type: object
           properties:
+            id:
+              type: string
+              description: Identifier of the agent.
             nativeTools:
               $ref: '#/components/schemas/NativeToolsResponse'
             llmConfig:
@@ -2328,15 +2347,28 @@ components:
     expand:
       schema:
         type: string
+        enum:
+          - mcpServers
+          - nativeTools
+          - token
       in: query
       name: expand
-      description: Fields to be expanded in the response. It means that instead of the object ids, the whole objects are returned in the response. Possible values [nativeTools, token, mcpServers]
+      description: Fields to be expanded in the response. It means that instead of the object ids, the whole objects are returned in the response.
     expandMcpServer:
       schema:
         type: string
+        enum:
+          - token
       in: query
       name: expand
-      description: Fields to be expanded in the response. It means that instead of the object ids, the whole objects are returned in the response. Possible values [token]
+      description: Fields to be expanded in the response. It means that instead of the object ids, the whole objects are returned in the response.
+    force:
+      schema:
+        type: boolean
+      in: query
+      name: force
+      example: false
+      description: Allows to remove given entity even if it is used as a dependency in another entries. In that case, the removed entity is unassigned from other entries.
   responses:
     401_resp_common:
       description: The authorization token is invalid or has expired.
@@ -2602,7 +2634,6 @@ components:
           icon: fa-productivity
           mcpServers:
             - domain: order
-              enabled: true
               type: predefined
               tools:
                 - get-orders
@@ -2610,7 +2641,6 @@ components:
           nativeTools:
             - type: slack
               name: Slack Tool
-              enabled: true
               config:
                 teamId: T0445953
     McpServerResponse:
@@ -2681,14 +2711,12 @@ components:
         icon: fa-productivity
         mcpServers:
           - domain: order
-            enabled: true
             type: predefined
             tools:
               - get-orders
               - get-order
         nativeTools:
           - name: slack
-            enabled: true
             config:
               teamId: T0445953
     AgentsResponse:
@@ -2717,14 +2745,12 @@ components:
           icon: fa-productivity
           mcpServers:
             - domain: order
-              enabled: true
               type: predefined
               tools:
                 - get-orders
                 - get-order
           nativeTools:
             - name: slack
-              enabled: true
               config:
                 teamId: T0445953
     McpServerRequest:
@@ -2737,12 +2763,10 @@ components:
           authorizationHeaderTokenId: token-id
     TokenRequest:
       value:
-        id: openai
         name: OpenAI Token
         value: sk-secret
     SlackNativeToolRequest:
       value:
-        id: "slack-1"
         name: Slack Native Tool
         type: slack
         config:
@@ -2750,7 +2774,6 @@ components:
           botToken: xoxb-35354
     AgentRequest:
       value:
-        id: "123"
         name:
           en: Complaint Agent
         description:
@@ -2773,10 +2796,9 @@ components:
         icon: fa-productivity
         mcpServers:
           - domain: order
-            enabled: true
             type: predefined
             tools:
               - get-orders
               - get-order
-        nativeToolIds:
-          - slack-1
+        nativeTools:
+          - id: slack-1
