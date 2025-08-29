@@ -12,8 +12,14 @@ tags:
     description: AI Completions
   - name: Text Generation
     description: AI Text Generation
-  - name: Agentic
+  - name: Agent Chat
+    description: Chat With Agents
+  - name: Agent Template
+    description: Manage Agent Templates
+  - name: Agent
     description: Manage Agents
+  - name: Tool
+    description: Manage Tools
   - name: Job
     description: Manage Jobs
 servers:
@@ -359,7 +365,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/AgenticChat'
       tags:
-        - Agentic
+        - Agent Chat
   '/ai-service/{tenant}/agentic/chat-async':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -406,7 +412,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/AgenticChat'
       tags:
-        - Agentic
+        - Agent Chat
   '/ai-service/{tenant}/agentic/templates':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -415,6 +421,7 @@ paths:
       - $ref: '#/components/parameters/pageNumber'
       - $ref: '#/components/parameters/sort'
       - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/expand'
       - $ref: '#/components/parameters/header_xTotalCount'
       - $ref: '#/components/parameters/header_Accept-Language'
     get:
@@ -449,7 +456,7 @@ paths:
         - OAuth2:
             - ai.agent_read
       tags:
-        - Agentic
+        - Agent Template
   '/ai-service/{tenant}/agentic/templates/search':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -457,6 +464,7 @@ paths:
       - $ref: '#/components/parameters/pageNumber'
       - $ref: '#/components/parameters/sort'
       - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/expand'
       - $ref: '#/components/parameters/header_xTotalCount'
       - $ref: '#/components/parameters/header_Accept-Language'
     post:
@@ -493,7 +501,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/QParamSearchBody'
       tags:
-        - Agentic
+        - Agent Template
   '/ai-service/{tenant}/agentic/templates/{templateId}/agent':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -539,7 +547,7 @@ paths:
         - OAuth2:
             - ai.agent_manage
       tags:
-        - Agentic
+        - Agent Template
   '/ai-service/{tenant}/agentic/agents':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -549,13 +557,14 @@ paths:
       - $ref: '#/components/parameters/pageNumber'
       - $ref: '#/components/parameters/sort'
       - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/expand'
       - $ref: '#/components/parameters/header_xTotalCount'
     get:
       summary: Get generic agents
       operationId: GET-ai-list-agents
       responses:
         '200':
-          description: List of available agent templates
+          description: List of agents
           content:
             application/json:
               schema:
@@ -582,22 +591,24 @@ paths:
         - OAuth2:
             - ai.agent_read
       tags:
-        - Agentic
+        - Agent
   '/ai-service/{tenant}/agentic/agents/search':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
     post:
       parameters:
+        - $ref: '#/components/parameters/header_Accept-Language'
         - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/pageNumber'
         - $ref: '#/components/parameters/sort'
         - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/expand'
         - $ref: '#/components/parameters/header_xTotalCount'
       summary: Get generic agents
       operationId: POST-ai-search-agents
       responses:
         '200':
-          description: List of available agent
+          description: List of agents
           content:
             application/json:
               schema:
@@ -617,7 +628,7 @@ paths:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
         ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
-        Searches for agent templates based on the provided query.
+        Searches for agents based on the provided query.
         
         ### Required scopes
 
@@ -626,7 +637,7 @@ paths:
         - OAuth2:
             - ai.agent_read
       tags:
-        - Agentic
+        - Agent
   '/ai-service/{tenant}/agentic/agents/{agentId}':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -638,6 +649,8 @@ paths:
     get:
       parameters:
         - $ref: '#/components/parameters/header_Accept-Language'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/expand'
       summary: Get generic agent by Id
       operationId: GET-ai-retrieve-agent
       responses:
@@ -669,7 +682,7 @@ paths:
         - OAuth2:
             - ai.agent_read
       tags:
-        - Agentic
+        - Agent
     put:
       parameters:
         - $ref: '#/components/parameters/header_Content-Language'
@@ -711,7 +724,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/agentUpsertBody'
       tags:
-        - Agentic
+        - Agent
     patch:
       summary: Partially update generic agent
       operationId: PATCH-ai-update-agent
@@ -728,7 +741,7 @@ paths:
           $ref: '#/components/responses/404_resp_common'
       description: |-
         ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
-        Partially updates a single approval document with given information. To update the approval, the user needs to be a requestor or an approval giver. 
+        Partially updates a single agent document with given information.
         Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
           - `add` (adding an item to the items list)
           - `remove` (removing an item from the items list)
@@ -743,7 +756,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/agentPatchBody'
       tags:
-        - Agentic
+        - Agent
     delete:
       summary: Delete generic agent
       operationId: DELETE-ai-delete-agent
@@ -769,7 +782,239 @@ paths:
         - OAuth2:
             - ai.agent_manage
       tags:
-        - Agentic
+        - Agent
+
+
+
+  '/ai-service/{tenant}/agentic/tools':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/qParam'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/header_xTotalCount'
+    get:
+      summary: Get tools
+      operationId: GET-ai-list-tools
+      responses:
+        '200':
+          description: List of tools
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/SlackNativeToolResponse'
+              examples:
+                Agents Response:
+                  $ref: '#/components/examples/SlackNativeToolsResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Retrieves tools based on the provided query.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Tool
+  '/ai-service/{tenant}/agentic/tools/search':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    post:
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/header_xTotalCount'
+      summary: Get tools
+      operationId: POST-ai-search-tools
+      responses:
+        '200':
+          description: List of tools
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/SlackNativeToolResponse'
+              examples:
+                Tools Response:
+                  $ref: '#/components/examples/SlackNativeToolsResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      requestBody:
+        $ref: '#/components/requestBodies/QParamSearchBody'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Searches for tools based on the provided query.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Tool
+  '/ai-service/{tenant}/agentic/tools/{toolId}':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - schema:
+          type: string
+        name: toolId
+        in: path
+        required: true
+    get:
+      parameters:
+        - $ref: '#/components/parameters/fields'
+      summary: Get tool by Id
+      operationId: GET-ai-retrieve-tool
+      responses:
+        '200':
+          description: A single tool
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/SlackNativeToolResponse'
+              examples:
+                Tool Response:
+                  $ref: '#/components/examples/SlackNativeToolResponse'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Retrieves the tool by given Id
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Tool
+    put:
+      summary: Upsert tool
+      operationId: PUT-ai-upsert-tool
+      responses:
+        '201':
+          description: Id of created tool
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdResponse'
+              examples:
+                Id Of Created Tool:
+                  $ref: '#/components/examples/IdResponse'
+        '204':
+          description: The resource has been successfully updated.
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+        '409':
+          $ref: '#/components/responses/409_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Updates or creates a specified tool by replacing all of its existing data with data from the request body.
+        If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      requestBody:
+        $ref: '#/components/requestBodies/toolUpsertBody'
+      tags:
+        - Tool
+    patch:
+      summary: Partially update tool
+      operationId: PATCH-ai-update-tool
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Partially updates a single tool document with given information.
+        Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
+          - `add` (adding an item to the items list)
+          - `remove` (removing an item from the items list)
+          - `replace` (replacing an item with given id with new definition)
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      requestBody:
+        $ref: '#/components/requestBodies/toolPatchBody'
+      tags:
+        - Tool
+    delete:
+      summary: Delete tool
+      operationId: DELETE-ai-delete-tool
+      responses:
+        '204':
+          description: Given tool has been deleted
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Deletes tool by given Id.
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      tags:
+        - Tool
+
 components:
   schemas:
     ErrorMessage:
@@ -862,11 +1107,15 @@ components:
       properties:
         type:
           $ref: '#/components/schemas/NativeToolType'
-        enabled:
-          type: boolean
-          description: Informs whether the tool is enabled or not.
+        id:
+          type: string
+          description: Unique identifier of the tool.
+        name:
+          type: string
+          description: Name of the tool.
       required:
         - type
+        - name
     SlackNativeToolConfigResponse:
       type: object
       properties:
@@ -882,7 +1131,7 @@ components:
           properties:
             botToken:
               type: string
-              description: OAuth token used to authenticate the Slack bot within the specified workspace. Required for performing authorized actions on behalf of the bot. Format usually starts with `xoxb-...`.
+              description: OAuth token used to authenticate the Slack bot within the specified workspace. Required for performing authorized actions on behalf of the bot. Format usually starts with `xoxb-...`. It is required only for creation, for update operation it can be omitted.
           required:
             - botToken
     SlackNativeToolRequest:
@@ -895,6 +1144,8 @@ components:
               example: slack
             config:
               $ref: '#/components/schemas/SlackNativeToolConfigRequest'
+            metadata:
+              $ref: '#/components/schemas/MetadataRequest'
           required:
             - config
     SlackNativeToolResponse:
@@ -907,12 +1158,8 @@ components:
               example: slack
             config:
               $ref: '#/components/schemas/SlackNativeToolConfigResponse'
-    NativeToolsRequest:
-      type: array
-      description: List of native tools which agents should have access to.
-      items:
-        oneOf:
-          - $ref: '#/components/schemas/SlackNativeToolRequest'
+            metadata:
+              $ref: '#/components/schemas/MetadataResponse'
     NativeToolsResponse:
       type: array
       description: List of native tools which agents should have access to.
@@ -1152,6 +1399,11 @@ components:
                 description: markers that allow to categorise the agent.
             mcpServers:
               $ref: '#/components/schemas/McpServers'
+            nativeToolIds:
+              type: array
+              items:
+                type: string
+              description: Id of the native tools.
             enabled:
               type: boolean
               description: Whether the agent is enabled.
@@ -1202,21 +1454,19 @@ components:
                 - $ref: '#/components/schemas/HandOff'
               example: true
             metadata:
-              $ref: '#/components/schemas/metadata'
+              $ref: '#/components/schemas/MetadataResponse'
     AgentRequest:
       allOf:
         - $ref: '#/components/schemas/BaseForAgentRequestAndResponse'
         - type: object
           properties:
-            nativeTools:
-              $ref: '#/components/schemas/NativeToolsRequest'
             llmConfig:
               oneOf:
                 - $ref: '#/components/schemas/EmporixLlm'
                 - $ref: '#/components/schemas/ApiKeyLlmRequest'
                 - $ref: '#/components/schemas/SelfHostedLlmRequest'
             metadata:
-              $ref: '#/components/schemas/basicMetadata'
+              $ref: '#/components/schemas/MetadataRequest'
           required:
             - llmConfig
     AgentResponse:
@@ -1241,8 +1491,8 @@ components:
               type: string
               description: Prompt which is inherited from the template (if agent is created based on the template). The prompt provided by the user is then concatenated with this prompt.
             metadata:
-              $ref: '#/components/schemas/metadata'
-    basicMetadata:
+              $ref: '#/components/schemas/MetadataResponse'
+    MetadataRequest:
       type: object
       properties:
         version:
@@ -1251,9 +1501,9 @@ components:
           description: Version of the object. The version is required during the update operation because of the optimistic locking mechanism.
       required:
         - version
-    metadata:
+    MetadataResponse:
       allOf:
-        - $ref: '#/components/schemas/basicMetadata'
+        - $ref: '#/components/schemas/MetadataRequest'
         - type: object
           properties:
             createdAt:
@@ -1293,7 +1543,7 @@ components:
           type: string
           description: Agent's message.
         metadata:
-          $ref: '#/components/schemas/metadata'
+          $ref: '#/components/schemas/MetadataResponse'
     JobIdResponse:
       type: object
       properties:
@@ -1369,9 +1619,9 @@ components:
       required:
         - name
         - description
-    AgentPatchRequest:
+    PatchRequest:
       type: array
-      description: Agent partial update operation list.
+      description: Partial update operation list.
       items:
         type: object
         properties:
@@ -1383,12 +1633,8 @@ components:
                   - REPLACE
             type: string
           path:
-            anyOf:
-              - enum:
-                  - /name
-                  - /description
-                  - /llmConfig/model
             type: string
+            example: /name
           value:
             anyOf:
               - type: string
@@ -1485,6 +1731,12 @@ components:
       in: query
       name: fields
       description: Fields to be returned in the response.
+    expand:
+      schema:
+        type: string
+      in: query
+      name: expand
+      description: Fields to be expanded in the response. It means that instead of the object ids, the whole objects are returned in the response. Possible values [nativeTools]
   responses:
     401_resp_common:
       description: The authorization token is invalid or has expired.
@@ -1643,7 +1895,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/AgentPatchRequest'
+            $ref: '#/components/schemas/PatchRequest'
           examples:
             Multiple update list:
               value:
@@ -1666,6 +1918,34 @@ components:
           examples:
             Create agent:
               $ref: '#/components/examples/AgentRequest'
+    toolUpsertBody:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/SlackNativeToolRequest'
+          examples:
+            Create Slack Tool:
+              $ref: '#/components/examples/SlackNativeToolRequest'
+    toolPatchBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PatchRequest'
+          examples:
+            Multiple update list:
+              value:
+                - op: REPLACE
+                  path: /config/botToken
+                  value: New bot token
+                - op: REPLACE
+                  path: /name
+                  value: New slack name
+            Change name:
+              value:
+                - op: REPLACE
+                  path: /name
+                  value: New slack name
   examples:
     IdResponse:
       value:
@@ -1691,9 +1971,24 @@ components:
                 - get-order
           nativeTools:
             - type: slack
+              name: Slack Tool
               enabled: true
               config:
                 teamId: T0445953
+    SlackNativeToolResponse:
+      value:
+        id: "slack-1"
+        name: Slack Native Tool
+        type: slack
+        config:
+          teamId: "12345"
+    SlackNativeToolsResponse:
+      value:
+        - id: "slack-1"
+          name: Slack Native Tool
+          type: slack
+          config:
+            teamId: "12345"
     AgentResponse:
       value:
         id: "123"
@@ -1766,6 +2061,14 @@ components:
               enabled: true
               config:
                 teamId: T0445953
+    SlackNativeToolRequest:
+      value:
+        id: "slack-1"
+        name: Slack Native Tool
+        type: slack
+        config:
+          teamId: "12345"
+          botToken: xoxb-35354
     AgentRequest:
       value:
         id: "123"
@@ -1795,9 +2098,5 @@ components:
             tools:
               - get-orders
               - get-order
-        nativeTools:
-          - type: slack
-            enabled: true
-            config:
-              teamId: T08J7676
-              botToken: xoxb-8437473473
+        nativeToolIds:
+          - slack-1
