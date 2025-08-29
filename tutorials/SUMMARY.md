@@ -18,6 +18,14 @@
 * [Upsert](../standard-practices/upsert.md)
 * [B2B Token](../standard-practices/b2btoken.md)
 
+## Integrations
+
+* [Integrations](../integrations/README.md)
+  * [Identity Providers](../integrations/authorization/identity-providers.md)
+    * [Auth0](../integrations/authorization/auth0.md)
+  * [Workflow Automation](../integrations/workflow-automation/README.md)
+    * [Emporix and Make](../integrations/workflow-automation/emporix-and-make.md)
+
 ## API Guides
 
 * [OAuth Service](../authorization/oauth-service/README.md)
@@ -116,11 +124,3 @@
   * [Events - Schema](../webhooks/events-schema.md)
   * [Events - Site](../webhooks/events-site.md)
   * [Events - Vendor](../webhooks/events-vendor.md)
-
-## Integrations
-
-* [Integrations](../integrations/README.md)
-  * [Identity Providers](../integrations/authorization/identity-providers.md)
-    * [Auth0](../integrations/authorization/auth0.md)
-  * [Workflow Automation](../integrations/workflow-automation/README.md)
-    * [Emporix and Make](../integrations/workflow-automation/emporix-and-make.md)
