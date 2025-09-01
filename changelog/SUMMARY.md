@@ -8,6 +8,7 @@
 
 ## 2025
 
+* [2025-09-04: Customer Service - initial password for customer](2025/2025-09-04-customer.md)
 * [2025-08-29: Price service - vendor handling added](2025/2025-08-29-price.md)
 * [2025-08-29: Media service - vendor handling added](2025/2025-08-29-media.md)
 * [2025-08-29: Availability service - vendor handling added](2025/2025-08-29-availability.md)

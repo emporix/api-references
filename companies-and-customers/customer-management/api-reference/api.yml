@@ -922,6 +922,7 @@ paths:
                     refresh_token_expires_in: 86399
                     token_type: Bearer
                     session_id: 45c9726e-77c8-4bd0-b29d-61ab56f59726
+                    initialPassword: false
         '400':
           $ref: '#/components/responses/400_bad_request'
         '401':
@@ -1590,6 +1591,9 @@ components:
         saas_token:
           type: string
           minLength: 1
+        initialPassword:
+          type: string
+          description: Indicates if login was performed with password created by an employee
     RefreshCustomerToken:
       description: ''
       type: object
