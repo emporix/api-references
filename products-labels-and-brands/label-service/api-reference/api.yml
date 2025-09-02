@@ -180,6 +180,7 @@ paths:
               Label update payload:
                 value:
                   name: Worldwide Shipment
+                  description: Worldwide Shipment
             schema:
               $ref: '#/components/schemas/labelUpdate'
       responses:
@@ -226,69 +227,6 @@ paths:
         - OAuth2: []
     parameters:
       - $ref: '#/components/parameters/labelId'
-  '/media':
-    post:
-      deprecated: true
-      tags:
-        - Media
-      summary: Creating a media
-      description: |
-        Creates an image for a label. This endpoint is `deprecated`. Please use `media-service` instead.
-        ### See: [Media Service](https://docs.emporix.com/docs/openapi/media/)
-        ### Required scopes
-        *  `label.label_manage`
-      operationId: POST-label-create-media
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/mediaRequest'
-      responses:
-        '200':
-          description: |
-            Successfully created media.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/mediaResponse'
-              examples:
-                Media response:
-                  $ref: '#/components/examples/media'
-        '401':
-          $ref: '#/components/responses/unauthorized_401'
-        '403':
-          $ref: '#/components/responses/forbidden_403'
-        '500':
-          $ref: '#/components/responses/internal_server_error_500'
-      security:
-        - OAuth2: []
-  '/media/{mediaId}':
-    delete:
-      deprecated: true
-      tags:
-        - Media
-      summary: Deleting a media
-      description: |
-        Deletes label image with specified media ID. This endpoint is `deprecated`. Please use `media-service` instead.
-        ### See: [Media Service](https://docs.emporix.com/docs/openapi/media/)
-        ### Required scopes
-        *  `label.label_manage`
-      operationId: DELETE-label-remove-media
-      responses:
-        '200':
-          description: Media successfully deleted.
-        '401':
-          $ref: '#/components/responses/unauthorized_401'
-        '403':
-          $ref: '#/components/responses/forbidden_403'
-        '404':
-          description: Resource does not exist.
-        '500':
-          $ref: '#/components/responses/internal_server_error_500'
-      security:
-        - OAuth2: []
-    parameters:
-      - $ref: '#/components/parameters/mediaId'
 components:
   examples:
     label:
@@ -310,8 +248,6 @@ components:
         id: 66fe65e83132e30001e6be29
         name: Worldwide Shipment
         description: <p>Worldwide Shipment</p>
-        image: https://res.cloudinary.com/saas-ag/image/upload/v1727903960/tenant/labels/54fd0a26-fa47-45b7-ae22-8e54e0bb98d2.jpg
-        cloudinaryUrl: tenant/labels/54fd0a26-fa47-45b7-ae22-8e54e0bb98d2
         overlay:
           position: 0
           isTrue: true
@@ -319,8 +255,6 @@ components:
       value:
         name: Worldwide Shipment
         description: <p>Worldwide Shipment</p>
-        image: https://res.cloudinary.com/saas-ag/image/upload/v1727903960/tenant/labels/54fd0a26-fa47-45b7-ae22-8e54e0bb98d2.jpg
-        cloudinaryUrl: tenant/labels/54fd0a26-fa47-45b7-ae22-8e54e0bb98d2
         overlay:
           position: 0
           isTrue: true
@@ -350,24 +284,12 @@ components:
             createdAt: 2024-10-03T09:30:10.548Z
             modifiedAt: 2024-10-03T09:30:10.548Z
             version: 2
-    media:
-      value:
-        link: https://res.cloudinary.com/saas-ag/image/upload/v1728023450/tenant/labels/0a075c00-3893-47e7-b0d7-84f9ba7e339a.jpg
-        id: tenant/labels/0a075c00-3893-47e7-b0d7-84f9ba7e339a
   schemas:
     labelUpdate:
       properties:
         name:
           type: string
           description: Name of the label.
-        image:
-          type: string
-          description: Image URL. This field is `deprecated`. Media assignment should be done through `media-service`.
-          deprecated: true
-        cloudinaryUrl:
-          type: string
-          description: Cludinary path. Media assignment should be done through `media-service`.
-          deprecated: true
         overlay:
           $ref: '#/components/schemas/overlay'
         description:
@@ -396,6 +318,9 @@ components:
         name:
           type: string
           description: Name of the label.
+        mediaId:
+          type: string
+          description: Id of the media.
         image:
           type: string
           description: Image URL.
@@ -436,25 +361,6 @@ components:
         version:
           description: The document version number.
           type: integer
-    mediaRequest:
-      type: object
-      properties:
-        file:
-          type: object
-          format: binary
-        metadata:
-          type: string
-      required:
-        - file
-    mediaResponse:
-      type: object
-      properties:
-        link:
-          type: string
-          description: URL to created image
-        id:
-          type: string
-          description: ID of the image
   responses:
     bad_request_400:
       description: Request was syntactically incorrect. Any details will be provided within the response payload.
@@ -473,7 +379,6 @@ components:
                   type: string
             example:
               - message: may not be null
-                messageTemplate: {javax.validation.constraints.NotNull.message}
                 path: LabelsResource.post.arg1.name
 
     not_found_404:
@@ -506,8 +411,8 @@ components:
                 message: Label not Found.
                 moreInfo: ""
                 details:
-                  - message: Couldn't find a label with id '670308343132e30001e6be2fs'
-                    moreInfo: ""
+                  message: Couldn't find a label with id '670308343132e30001e6be2fs'
+                  moreInfo: ""
             Update:
               value:
                 status: 404
@@ -515,8 +420,8 @@ components:
                 message: Label not Updated.
                 moreInfo: ""
                 details:
-                  - message: Couldn't find a label with id '670308343132e30001e6be2fs'
-                    moreInfo: ""
+                  message: Couldn't find a label with id '670308343132e30001e6be2fs'
+                  moreInfo: ""
 
     conflict_409:
       description: Label with given ID already exists.
@@ -546,8 +451,8 @@ components:
               message: Label already exists.
               moreInfo: ""
               details:
-                - message: Duplicate label with id 'WorldWideShippingId' on tenant 'myTenant'.
-                  moreInfo: ""
+                message: Duplicate label with id 'WorldWideShippingId' on tenant 'myTenant'.
+                moreInfo: ""
     unauthorized_401:
       description: Unauthorized. The caller is not allowed to access this resource.
       content:
@@ -618,20 +523,11 @@ components:
               type: internal_service_error
               message: Something went wrong while processing the request. Please contact the administrator.
               moreInfo: ""
-              details: []
   parameters:
     labelId:
       name: labelId
       description: |
         Unique identifier of the label.
-      in: path
-      required: true
-      schema:
-        type: string
-    mediaId:
-      name: mediaId
-      description: |
-        Unique identifier of the media.
       in: path
       required: true
       schema:
