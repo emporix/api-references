@@ -1066,6 +1066,9 @@ components:
               pattern: ^[a-zA-Z0-9_-]$
             contactEmail:
               type: string
+            password:
+              type: string
+              description: Initial password for customer
     CustomerUpdateBySellerDto:
       allOf:
         - $ref: '#/components/schemas/CustomerCommonDto'
