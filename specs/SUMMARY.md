@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Developer API Specifications](list-of-api-services.md)
+* [Developer API Specifications](../list-of-api-services.md)
 
 ## Reference
 
