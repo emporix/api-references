@@ -2,6 +2,7 @@
 seo:
   title: Customer Segment Service events
   description: Webhooks, Customer segment events
+icon: webhook
 ---
 
 # Events - Customer Segments

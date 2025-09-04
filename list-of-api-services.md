@@ -11,15 +11,15 @@ For step-by-step API guides, refer to the [API Documentation](https://app.gitboo
 
 All of our services are documented in the API sections of our docs, with references presented in a developer-friendly format. The main `api.yml` files are stored in our GitHub repository.
 
-* Download the full specification:
+Download the full specification:
 
 <a href="https://github.com/emporix/api-references/releases/latest/download/api-references.zip" class="button primary" data-icon="down-to-line">Download all Emporix API Specs - ZIP</a>
 
-* To download an individual OpenAPI specification, you can do so directly from the repository - see the list of services with links:
+To download an individual OpenAPI specification, you can do so directly from the repository. See the list of services with links.
 
 | Services documentation | Links to download the specifications |
 | ---------------------- | ------------------------------------ |
-| [AI Service](../artificial-intelligence/ai-service/) | <p><a href="../artificial-intelligence/ai-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download AI API Specs</a><br><a href="https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/artificial-intelligence/ai-service/api-reference/api.yml" class="button secondary" data-icon="code">View Raw AI API Specs</a></p> |
+| [AI Service](../artificial-intelligence/ai-service) | <p><a href="../artificial-intelligence/ai-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download AI API Specs</a><br><a href="https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/artificial-intelligence/ai-service/api-reference/api.yml" class="button secondary" data-icon="code">View Raw AI API Specs</a></p> |
 | [Approval Service](../companies-and-customers/approval-service/) | <p><a href="../companies-and-customers/approval-service/approval-api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Approval API Specs</a><br><a href="https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/approval-service/approval-api-reference/api.yml" class="button secondary" data-icon="code">View Raw Approval API Specs</a></p> |
 | [Availability Service](../orders/availability/) | <p><a href="../orders/availability/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Availability API Specs</a><br><a href="https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/orders/availability/api-reference/api.yml" class="button secondary" data-icon="code">View Raw Availability API Specs</a></p> |
 | [Brand Service](../products-labels-and-brands/brand-service/) | <p><a href="../products-labels-and-brands/brand-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Brand API Specs</a><br><a href="https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/products-labels-and-brands/brand-service/api-reference/api.yml" class="button secondary" data-icon="code">View Raw Brand API Specs</a></p> |

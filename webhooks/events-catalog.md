@@ -2,6 +2,7 @@
 seo:
   title: Catalog Service events
   description: Webhooks, catalog events
+icon: webhook
 ---
 
 # Events - Catalog

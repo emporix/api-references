@@ -2,6 +2,7 @@
 seo:
   title: Availability Service events
   description: Webhooks, availability events
+icon: webhook
 ---
 
 # Events - Availability

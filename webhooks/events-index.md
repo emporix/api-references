@@ -2,6 +2,7 @@
 seo:
   title: Indexing Service events
   description: Webhooks, indexing service events
+icon: webhook
 ---
 
 # Events - Index Item

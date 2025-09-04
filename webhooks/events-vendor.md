@@ -2,6 +2,7 @@
 seo:
   title: Vendor Service events
   description: Webhooks, Vendor events
+icon: webhook
 ---
 
 # Events - Vendor

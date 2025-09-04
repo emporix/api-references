@@ -2,6 +2,7 @@
 seo:
   title: Cart Service events
   description: Webhooks, cart events
+icon: webhook
 ---
 
 # Events - Cart

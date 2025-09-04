@@ -2,6 +2,7 @@
 seo:
   title: Price Service events
   description: Webhooks, price events
+icon: webhook
 ---
 
 # Events - Price

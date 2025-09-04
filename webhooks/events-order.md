@@ -2,6 +2,7 @@
 seo:
   title: Order Service events
   description: Webhooks, order events
+icon: webhook
 ---
 
 # Events - Order

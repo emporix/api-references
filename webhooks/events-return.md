@@ -2,6 +2,7 @@
 seo:
   title: Return Service events
   description: Webhooks, return service events
+icon: webhook
 ---
 
 # Events - Return

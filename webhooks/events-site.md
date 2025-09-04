@@ -2,6 +2,7 @@
 seo:
   title: Site Service events
   description: Webhooks, site service events
+icon: webhook
 ---
 
 # Events - Site

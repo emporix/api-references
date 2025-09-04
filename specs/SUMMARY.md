@@ -1,9 +1,9 @@
 # Table of contents
 
-* [Developer API Specifications](README.md)
+* [API Reference](README.md)
 * [List of API Services](../list-of-api-services.md)
 
-## Reference
+## API Reference
 
 * [AI](../artificial-intelligence/README.md)
   * ```yaml
@@ -16,7 +16,7 @@
           kind: openapi
           spec: ai-api
     ```
-* [Approval](../companies-and-customers/approval-service/README.md)
+* [Approval](../companies-and-customers/approval-service/approval-api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -27,7 +27,7 @@
           kind: openapi
           spec: approval-api
     ```
-* [Availability](../orders/availability/README.md)
+* [Availability](../orders/availability/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -38,7 +38,7 @@
           kind: openapi
           spec: availability-api
     ```
-* [Brand](../products-labels-and-brands/brand-service/README.md)
+* [Brand](../products-labels-and-brands/brand-service/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -49,7 +49,7 @@
           kind: openapi
           spec: brand-api
     ```
-* [Cart](../checkout/cart/README.md)
+* [Cart](../checkout/cart/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -60,7 +60,7 @@
           kind: openapi
           spec: cart-api
     ```
-* [Catalog](../catalogs-and-categories/catalog/README.md)
+* [Catalog](../catalogs-and-categories/catalog/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -71,7 +71,7 @@
           kind: openapi
           spec: catalog-api
     ```
-* [Category](../catalogs-and-categories/category-tree/README.md)
+* [Category](../catalogs-and-categories/category-tree/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -82,7 +82,7 @@
           kind: openapi
           spec: category-api
     ```
-* [Checkout](../checkout/checkout/README.md)
+* [Checkout](../checkout/checkout/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -93,7 +93,7 @@
           kind: openapi
           spec: checkout-api
     ```
-* [Configuration](../configuration/configuration-service/README.md)
+* [Configuration](../configuration/configuration-service/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -104,7 +104,7 @@
           kind: openapi
           spec: configuration-api
     ```
-* [Country](../configuration/country-service/README.md)
+* [Country](../configuration/country-service/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -115,7 +115,7 @@
           kind: openapi
           spec: country-api
     ```
-* [Coupon](../rewards-and-promotions/coupon/README.md)
+* [Coupon](../rewards-and-promotions/coupon/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -126,7 +126,7 @@
           kind: openapi
           spec: coupon-api
     ```
-* [Currency](../configuration/currency-service/README.md)
+* [Currency](../configuration/currency-service/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -137,7 +137,7 @@
           kind: openapi
           spec: currency-api
     ```
-* [Customer (Customer Managed)](reference/customer-customer-managed/README.md)
+* [Customer (Customer Managed)](../companies-and-customers/customer-management/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -148,7 +148,7 @@
           kind: openapi
           spec: customer-managed-api
     ```
-* [Customer (Tenant Managed)](reference/customer-tenant-managed/README.md)
+* [Customer (Tenant Managed)](../companies-and-customers/customer-service/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -159,7 +159,7 @@
           kind: openapi
           spec: customer-tenant-api
     ```
-* [Customer Management](reference/customer-management/README.md)
+* [Customer Management](../companies-and-customers/client-management/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -170,7 +170,7 @@
           kind: openapi
           spec: customer-client-management-api
     ```
-* [Customer Segment](reference/customer-segment/README.md)
+* [Customer Segment](../companies-and-customers/customer-segments/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -181,7 +181,7 @@
           kind: openapi
           spec: segments-api
     ```
-* [Delivery](reference/delivery/README.md)
+* [Delivery Providers](../delivery-and-shipping/delivery-providers-service/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -192,7 +192,7 @@
           kind: openapi
           spec: delivery-api
     ```
-* [Fee](reference/fee/README.md)
+* [Fee](../checkout/fee/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -203,7 +203,7 @@
           kind: openapi
           spec: fee-api
     ```
-* [IAM](reference/iam/README.md)
+* [IAM](../users-and-permissions/iam/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -214,7 +214,7 @@
           kind: openapi
           spec: iam-api
     ```
-* [Indexing](reference/indexing/README.md)
+* [Indexing](../configuration/indexing-service/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -225,7 +225,7 @@
           kind: openapi
           spec: indexing-api
     ```
-* [Invoice](reference/invoice/README.md)
+* [Invoice](../orders/invoice/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -236,7 +236,7 @@
           kind: openapi
           spec: invoice-api
     ```
-* [Label](reference/label/README.md)
+* [Label](../products-labels-and-brands/label-service/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -247,7 +247,7 @@
           kind: openapi
           spec: label-api
     ```
-* [Media](reference/media/README.md)
+* [Media](../media/media/api-reference/README.md)
   * ```yaml
     props:
       models: true

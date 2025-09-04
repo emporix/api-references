@@ -2,6 +2,7 @@
 seo:
   title: Product Service events
   description: Webhooks, product events
+icon: webhook
 ---
 
 # Events - Product

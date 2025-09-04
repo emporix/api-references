@@ -343,7 +343,7 @@
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/approval-service/approval-api-reference/api.yml)
   * [Vendor Service](companies-and-customers/vendor-service/README.md)
     * [Vendor Tutorial](companies-and-customers/vendor-service/vendor.md)
-    * [API Reference](/companies-and-customers/vendor-service/api-reference/README.md)
+    * [API Reference](companies-and-customers/vendor-service/api-reference/README.md)
       * ```yaml
         props:
           models: true

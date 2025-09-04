@@ -2,6 +2,7 @@
 seo:
   title: Client Management Service events
   description: Webhooks, client management events
+icon: webhook
 ---
 
 # Events - Client Management

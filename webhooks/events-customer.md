@@ -2,6 +2,7 @@
 seo:
   title: Customer Service events
   description: Webhooks, customer events
+icon: webhook
 ---
 
 # Events - Customer

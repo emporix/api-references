@@ -2,6 +2,7 @@
 seo:
   title: Category Service events
   description: Webhooks, category tree events
+icon: webhook
 ---
 
 # Events - Category Tree

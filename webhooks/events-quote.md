@@ -2,6 +2,7 @@
 seo:
   title: Quote Service events
   description: Webhooks, Quote events
+icon: webhook
 ---
 
 # Events - Quote

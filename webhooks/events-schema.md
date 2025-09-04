@@ -2,6 +2,7 @@
 seo:
   title: Schema Service events
   description: Webhooks, schema events
+icon: webhook
 ---
 
 # Events - Schema
