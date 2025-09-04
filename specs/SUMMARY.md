@@ -258,7 +258,7 @@
           kind: openapi
           spec: media-api
     ```
-* [OAuth](reference/oauth/README.md)
+* [OAuth](../authorization/oauth-service/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -269,7 +269,7 @@
           kind: openapi
           spec: oauth-api
     ```
-* [Order](reference/order/README.md)
+* [Order](../orders/order/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -280,7 +280,7 @@
           kind: openapi
           spec: order-api
     ```
-* [Payment Gateway](reference/payment-gateway/README.md)
+* [Payment Gateway](../checkout/payment-gateway/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -291,7 +291,7 @@
           kind: openapi
           spec: payment-gateway-api
     ```
-* [Pick Pack](reference/pick-pack/README.md)
+* [Pick Pack](../orders/pick-pack/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -302,7 +302,7 @@
           kind: openapi
           spec: pick-pack-api
     ```
-* [Price](reference/price/README.md)
+* [Price](../prices-and-taxes/price-service/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -313,7 +313,7 @@
           kind: openapi
           spec: price-api
     ```
-* [Product](reference/product/README.md)
+* [Product](../products-labels-and-brands/product-service/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -324,7 +324,7 @@
           kind: openapi
           spec: product-api
     ```
-* [Quote](reference/quote/README.md)
+* [Quote](../quotes/quote/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -335,7 +335,7 @@
           kind: openapi
           spec: quote-api
     ```
-* [Return](reference/return/README.md)
+* [Return](../orders/returns/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -346,7 +346,7 @@
           kind: openapi
           spec: returns-api
     ```
-* [Reward Points](reference/reward-points/README.md)
+* [Reward Points](../rewards-and-promotions/reward-points/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -357,7 +357,7 @@
           kind: openapi
           spec: reward-points-api
     ```
-* [Schema](reference/schema/README.md)
+* [Schema](../utilities/schema/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -368,7 +368,7 @@
           kind: openapi
           spec: schema-api
     ```
-* [SEPA Export](reference/sepa-export/README.md)
+* [SEPA Export](../orders/sepa-export/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -379,7 +379,7 @@
           kind: openapi
           spec: sepa-export-api
     ```
-* [Sequential ID](reference/sequential-id/README.md)
+* [Sequential ID](../utilities/sequential-id/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -390,7 +390,7 @@
           kind: openapi
           spec: sequential-id-api
     ```
-* [Session Context](reference/session-context/README.md)
+* [Session Context](../users-and-permissions/session-context/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -401,7 +401,7 @@
           kind: openapi
           spec: session-context-api
     ```
-* [Shipping](reference/shipping/README.md)
+* [Shipping](../delivery-and-shipping/shipping/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -412,7 +412,7 @@
           kind: openapi
           spec: shipping-api
     ```
-* [Shopping List](reference/shopping-list/README.md)
+* [Shopping List](../checkout/shopping-list/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -423,7 +423,7 @@
           kind: openapi
           spec: shopping-list-api
     ```
-* [Site Settings](reference/site-settings/README.md)
+* [Site Settings](../configuration/site-settings-service/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -434,7 +434,7 @@
           kind: openapi
           spec: site-settings-api
     ```
-* [Tax](reference/tax/README.md)
+* [Tax](../prices-and-taxes/tax-service/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -445,7 +445,7 @@
           kind: openapi
           spec: tax-api
     ```
-* [Unit Handling](reference/unit-handling/README.md)
+* [Unit Handling](../configuration/unit-handling-service/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -456,7 +456,7 @@
           kind: openapi
           spec: unit-handling-api
     ```
-* [Vendor](reference/vendor/README.md)
+* [Vendor](../companies-and-customers/vendor-service/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -467,7 +467,7 @@
           kind: openapi
           spec: vendor-api
     ```
-* [Webhook](reference/webhook/README.md)
+* [Webhook](../webhooks/webhook-service/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -478,3 +478,20 @@
           kind: openapi
           spec: webhook-api
     ```
+* [Events](webhook-events.md)
+  * [Events - Availability](webhooks/events-availability.md)
+  * [Events - Cart](webhooks/events-cart.md)
+  * [Events - Catalog](webhooks/events-catalog.md)
+  * [Events - Category Tree](webhooks/events-category.md)
+  * [Events - Client Management](webhooks/events-client-management.md)
+  * [Events - Customer](webhooks/events-customer.md)
+  * [Events - Customer Segment](webhooks/events-customer-segment.md)
+  * [Events - Index Item](webhooks/events-index.md)
+  * [Events - Order](webhooks/events-order.md)
+  * [Events - Price](webhooks/events-price.md)
+  * [Events - Product](webhooks/events-product.md)
+  * [Events - Quote](webhooks/events-quote.md)
+  * [Events - Return](webhooks/events-return.md)
+  * [Events - Schema](webhooks/events-schema.md)
+  * [Events - Site](webhooks/events-site.md)
+  * [Events - Vendor](webhooks/events-vendor.md)
