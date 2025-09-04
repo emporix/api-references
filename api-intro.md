@@ -4,13 +4,14 @@ icon: code-branch
 
 # API Quickstart
 
-{% hint style="success" %}
-[Download API Specification for all Emporix Services - ZIP](https://github.com/emporix/api-references/releases/latest/download/api-references.zip)
-{% endhint %}
+Download API references:
 
-{% hint style="success" %}
-For easier testing of Emporix API, check out the Postman Collection with example flows: [Emporix Commerce Orchestration Platform](https://www.postman.com/emporix/emporix-commerce-orchestration-platform/overview).
-{% endhint %}
+<a href="https://github.com/emporix/api-references/releases/latest/download/api-references.zip" class="button primary" data-icon="down-to-line">Download all Emporix API Specs - ZIP</a>
+
+For easier testing of Emporix API, check out the Postman Collection with example flows:
+
+{% embed url="https://www.postman.com/emporix/emporix-commerce-orchestration-platform/overview" %}
+
 
 ## Introduction
 
