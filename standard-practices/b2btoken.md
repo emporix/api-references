@@ -9,6 +9,7 @@ editPage:
   disable: true
 label: B2B Customers - Legal Entity
 icon: business-time
+description: The B2B Token embeds a customer’s selected legal entity in their authorization token, enabling consistent access control and data visibility without re-login.
 ---
 
 # B2B Token

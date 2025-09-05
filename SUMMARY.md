@@ -1,7 +1,11 @@
 # Table of contents
 
-* [Emporix API](README.md)
-  * [List of API Services](readme/list-of-api-services.md)
+* [API Documentation](README.md)
+
+## Quickstart
+
+* [Emporix API](api-intro.md)
+* [List of API Services](list-of-api-services.md)
 * [OpenAPI Generator](openapi-generator.md)
 
 ## Standard Practices
@@ -14,9 +18,17 @@
 * [Upsert](standard-practices/upsert.md)
 * [B2B Token](standard-practices/b2btoken.md)
 
+## Integrations
+
+* [Integrations](integrations/README.md)
+  * [Identity Providers](integrations/authorization/identity-providers.md)
+    * [Auth0](integrations/authorization/auth0.md)
+  * [Workflow Automation](integrations/workflow-automation/README.md)
+    * [Emporix and Make](integrations/workflow-automation/emporix-and-make.md)
+
 ## API Guides and References
 
-* [Authorization](api-guides-and-references/authorization/README.md)
+* [Authorization](authorization/README.md)
   * [OAuth Service](authorization/oauth-service/README.md)
     * [API Reference](authorization/oauth-service/api-reference/README.md)
       * ```yaml
@@ -331,7 +343,7 @@
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/approval-service/approval-api-reference/api.yml)
   * [Vendor Service](companies-and-customers/vendor-service/README.md)
     * [Vendor Tutorial](companies-and-customers/vendor-service/vendor.md)
-    * [API Reference](/companies-and-customers/vendor-service/api-reference/README.md)
+    * [API Reference](companies-and-customers/vendor-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
@@ -627,24 +639,20 @@
               spec: webhook-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/webhooks/webhook-service/api-reference/api.yml)
-  * [Events - Availability](webhooks/events-availability.md)
-  * [Events - Cart](webhooks/events-cart.md)
-  * [Events - Catalog](webhooks/events-catalog.md)
-  * [Events - Category Tree](webhooks/events-category.md)
-  * [Events - Client Management](webhooks/events-client-management.md)
-  * [Events - Customer](webhooks/events-customer.md)
-  * [Events - Customer Segment](webhooks/events-customer-segment.md)
-  * [Events - Index Item](webhooks/events-index.md)
-  * [Events - Order](webhooks/events-order.md)
-  * [Events - Price](webhooks/events-price.md)
-  * [Events - Product](webhooks/events-product.md)
-  * [Events - Quote](webhooks/events-quote.md)
-  * [Events - Return](webhooks/events-return.md)
-  * [Events - Schema](webhooks/events-schema.md)
-  * [Events - Site](webhooks/events-site.md)
-  * [Events - Vendor](webhooks/events-vendor.md)
-* [Integrations](integrations/README.md)
-  * [Identity Providers](integrations/authorization/identity-providers.md)
-    * [Auth0](integrations/authorization/auth0.md)
-  * [Workflow Automation](integrations/workflow-automation/README.md)
-    * [Emporix and Make](integrations/workflow-automation/emporix-and-make.md)
+    * [Webhook - Events](webhooks/webhook-events.md)
+        * [Events - Availability](webhooks/events-availability.md)
+        * [Events - Cart](webhooks/events-cart.md)
+        * [Events - Catalog](webhooks/events-catalog.md)
+        * [Events - Category Tree](webhooks/events-category.md)
+        * [Events - Client Management](webhooks/events-client-management.md)
+        * [Events - Customer](webhooks/events-customer.md)
+        * [Events - Customer Segment](webhooks/events-customer-segment.md)
+        * [Events - Index Item](webhooks/events-index.md)
+        * [Events - Order](webhooks/events-order.md)
+        * [Events - Price](webhooks/events-price.md)
+        * [Events - Product](webhooks/events-product.md)
+        * [Events - Quote](webhooks/events-quote.md)
+        * [Events - Return](webhooks/events-return.md)
+        * [Events - Schema](webhooks/events-schema.md)
+        * [Events - Site](webhooks/events-site.md)
+        * [Events - Vendor](webhooks/events-vendor.md)

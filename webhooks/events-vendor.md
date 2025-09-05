@@ -2,13 +2,11 @@
 seo:
   title: Vendor Service events
   description: Webhooks, Vendor events
+icon: webhook
+description: Webhook events related to the creation, update, and deletion of a vendor.
 ---
 
 # Events - Vendor
-
-## Overview
-
-Webhook events related to the creation, update, and deletion of a vendor.
 
 ## Available events
 

@@ -3,6 +3,20 @@ seo:
   title: Category Service Tutorials
   description: category, categories
 icon: graduation-cap
+layout:
+  width: wide
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
 ---
 
 # Category Tutorials

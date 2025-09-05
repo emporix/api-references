@@ -9,6 +9,7 @@ editPage:
   disable: true
 label: Mixins
 icon: diamonds-4
+description: Mixins let you extend business resources with custom properties by defining JSON schemas, hosting them, and referencing them in resource metadata for flexible, schema-driven data enrichment.
 ---
 
 # Mixins
