@@ -5,7 +5,7 @@
 
 ## API Reference
 
-* [AI](../artificial-intelligence/README.md)
+* [AI](../artificial-intelligence/ai-service/api-reference/README.md)
   * ```yaml
     props:
       models: true
@@ -478,20 +478,20 @@
           kind: openapi
           spec: webhook-api
     ```
-* [Events](webhook-events.md)
-  * [Events - Availability](webhooks/events-availability.md)
-  * [Events - Cart](webhooks/events-cart.md)
-  * [Events - Catalog](webhooks/events-catalog.md)
-  * [Events - Category Tree](webhooks/events-category.md)
-  * [Events - Client Management](webhooks/events-client-management.md)
-  * [Events - Customer](webhooks/events-customer.md)
-  * [Events - Customer Segment](webhooks/events-customer-segment.md)
-  * [Events - Index Item](webhooks/events-index.md)
-  * [Events - Order](webhooks/events-order.md)
-  * [Events - Price](webhooks/events-price.md)
-  * [Events - Product](webhooks/events-product.md)
-  * [Events - Quote](webhooks/events-quote.md)
-  * [Events - Return](webhooks/events-return.md)
-  * [Events - Schema](webhooks/events-schema.md)
-  * [Events - Site](webhooks/events-site.md)
-  * [Events - Vendor](webhooks/events-vendor.md)
+ * [Webhook Events](../webhooks/webhook-events.md)
+    * [Events - Availability](../webhooks/events-availability.md)
+    * [Events - Cart](../webhooks/events-cart.md)
+    * [Events - Catalog](../webhooks/events-catalog.md)
+    * [Events - Category Tree](../webhooks/events-category.md)
+    * [Events - Client Management](../webhooks/events-client-management.md)
+    * [Events - Customer](../webhooks/events-customer.md)
+    * [Events - Customer Segment](../webhooks/events-customer-segment.md)
+    * [Events - Index Item](../webhooks/events-index.md)
+    * [Events - Order](../webhooks/events-order.md)
+    * [Events - Price](../webhooks/events-price.md)
+    * [Events - Product](../webhooks/events-product.md)
+    * [Events - Quote](../webhooks/events-quote.md)
+    * [Events - Return](../webhooks/events-return.md)
+    * [Events - Schema](../webhooks/events-schema.md)
+    * [Events - Site](../webhooks/events-site.md)
+    * [Events - Vendor](../webhooks/events-vendor.md)
