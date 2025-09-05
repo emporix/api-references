@@ -18,7 +18,7 @@ layout:
 
 # Emporix API Documentation
 
-Here, you'll get an overview of all the possibilities and functionalities that are part of your commerce package. Discover what you can achieve using our APIs to build your great commerce solutions.
+Here, you'll get an overview of all the possibilities and functionalities that are part of your commerce package. Discover what you can achieve using our APIs to build your great commerce solutions. Follow the step-by-step tutorials to learn how to configure and customize your ecommerce business using our API.
 
 ### Jump right in
 
