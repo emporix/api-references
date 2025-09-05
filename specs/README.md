@@ -1,5 +1,5 @@
 ---
-description: Get quick reference with Emporix API.
+description: Get quick reference to Emporix API.
 icon: rectangle-terminal
 layout:
   width: wide

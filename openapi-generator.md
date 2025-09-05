@@ -1,6 +1,6 @@
 ---
 icon: display-code
-description: The OpenAPI Generator lets you create SDKs from Emporix API specifications, enabling seamless integration with the Commerce Engine by generating client code via Maven and Java from service-specific OpenAPI files.
+description: Create SDKs from Emporix API specifications for seamless integration with the Commerce Engine using OpenApi Generator.
 ---
 
 # OpenAPI Generator

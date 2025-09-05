@@ -5,10 +5,6 @@ icon: atom-simple
 
 # API Services
 
-{% hint %} 
-For step-by-step API guides, refer to the [API Documentation](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/d4POTWomuSS7d3dnh4Dg/), where you can find tutorials for each service.
-{% endhint %}
-
 All of our services are documented in the API sections of our docs, with references presented in a developer-friendly format. The main `api.yml` files are stored in our GitHub repository.
 
 Download the full specification:
