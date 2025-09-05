@@ -1,7 +1,6 @@
 # Table of contents
 
 * [API Reference](README.md)
-* [List of API Services](../list-of-api-services.md)
 
 ## API Reference
 
