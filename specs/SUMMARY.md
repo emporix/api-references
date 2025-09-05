@@ -1,9 +1,8 @@
 # Table of contents
 
-* [API Reference](README.md)
-
 ## API Reference
 
+* [API Reference](README.md)
 * [AI](../artificial-intelligence/ai-service/api-reference/README.md)
   * ```yaml
     props:
