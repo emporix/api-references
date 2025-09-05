@@ -3,6 +3,7 @@ seo:
   title: Custom ID
   description: Standard practices
 icon: pen-field
+description: Custom IDs in Emporix allow ERP systems to use their own identifiers as authoritative references for key entities, ensuring consistent relationships across systems while respecting case sensitivity in both creation and retrieval.
 ---
 
 # Custom ID

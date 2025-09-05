@@ -1,5 +1,6 @@
 ---
 icon: display-code
+description: The OpenAPI Generator lets you create SDKs from Emporix API specifications, enabling seamless integration with the Commerce Engine by generating client code via Maven and Java from service-specific OpenAPI files.
 ---
 
 # OpenAPI Generator
@@ -40,6 +41,6 @@ mvn clean compile
 
 **Result:** This command generates the code out of API reference documentation in the `target` directory. You can see the generated classes under `/target/generated-sources/openapi/src/`.
 
-##
+
 
 ![Generated classes](static/openapi/openapi_gen.png)

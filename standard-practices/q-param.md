@@ -3,6 +3,7 @@ seo:
   title: Query Parameter
   description: standard practices
 icon: magnifying-glass-waveform
+description: The Emporix API supports flexible searching with the `q` query parameter, allowing filtering by string, localized, or numeric field values using exact matches, comparisons, and ranges.
 ---
 
 # Query Parameter
