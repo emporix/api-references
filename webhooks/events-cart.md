@@ -3,13 +3,10 @@ seo:
   title: Cart Service events
   description: Webhooks, cart events
 icon: webhook
+description: Webhook events related to the creation, update, and deletion of a cart.
 ---
 
 # Events - Cart
-
-## Overview
-
-Webhook events related to the creation, update, and deletion of a cart.
 
 ## Available events
 

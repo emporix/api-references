@@ -3,13 +3,10 @@ seo:
   title: Site Service events
   description: Webhooks, site service events
 icon: webhook
+descriptions: Webhook events the creation, update, and deletion of a site.
 ---
 
 # Events - Site
-
-## Overview
-
-Webhook events the creation, update, and deletion of a site.
 
 ## Available events
 

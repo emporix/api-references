@@ -3,13 +3,10 @@ seo:
   title: Catalog Service events
   description: Webhooks, catalog events
 icon: webhook
+description: Webhook events related to the creation, update, and deletion of a catalog.
 ---
 
 # Events - Catalog
-
-## Overview
-
-Webhook events related to the creation, update, and deletion of a catalog.
 
 ## Available events
 

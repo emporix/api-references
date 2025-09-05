@@ -3,13 +3,10 @@ seo:
   title: Customer Segment Service events
   description: Webhooks, Customer segment events
 icon: webhook
+description: Webhook events related to the creation, update, and deletion of customer segments.
 ---
 
 # Events - Customer Segments
-
-## Overview
-
-Webhook events related to the creation, update, and deletion of customer segments.
 
 ## Available events
 

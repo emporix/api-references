@@ -3,13 +3,10 @@ seo:
   title: Indexing Service events
   description: Webhooks, indexing service events
 icon: webhook
+description: Webhook events related to indexing data.
 ---
 
 # Events - Index Item
-
-## Overview
-
-Webhook events related to indexing data.
 
 ## Available events
 

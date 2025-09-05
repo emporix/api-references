@@ -3,13 +3,10 @@ seo:
   title: Schema Service events
   description: Webhooks, schema events
 icon: webhook
+description: Webhook events related to the creation, update, and deletion of custom mixin schemas.
 ---
 
 # Events - Schema
-
-## Overview
-
-Webhook events related to the creation, update, and deletion of custom mixin schemas.
 
 ## Available events
 

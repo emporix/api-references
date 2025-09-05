@@ -3,13 +3,10 @@ seo:
   title: Customer Service events
   description: Webhooks, customer events
 icon: webhook
+description: Webhook events related to the creation, update and deletion of customer, sending a request to reset a customer's password and resending an account activation link to a customer.
 ---
 
 # Events - Customer
-
-## Overview
-
-Webhook events related to the creation, update and deletion of customer, sending a request to reset a customer's password and resending an account activation link to a customer.
 
 ## Available events
 
