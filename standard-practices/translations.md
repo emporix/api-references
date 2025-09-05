@@ -9,7 +9,7 @@ editPage:
   disable: true
 label: Translations
 icon: globe
-description: Translations are supported by storing localized fields as language-code maps, allowing objects to be created, retrieved, and updated in single or multiple languages using the Content-Language and Accept-Language headers.
+description: Translations use language-code maps, enabling objects to be created, retrieved, and updated in one or multiple languages.
 ---
 
 # Translations
