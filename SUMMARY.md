@@ -646,5 +646,6 @@
 * [Integrations](integrations/README.md)
   * [Identity Providers](integrations/authorization/identity-providers.md)
     * [Auth0](integrations/authorization/auth0.md)
+    * [Keycloak](integrations/authorization/keycloak.md)
   * [Workflow Automation](integrations/workflow-automation/README.md)
     * [Emporix and Make](integrations/workflow-automation/emporix-and-make.md)
