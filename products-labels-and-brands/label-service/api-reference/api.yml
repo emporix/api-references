@@ -167,7 +167,7 @@ paths:
     patch:
       tags:
         - Label
-      summary: Partailly updating a label
+      summary: Partially updating a label
       description: |
         Partially updates a label with the specified label ID.
         ### Required scopes
