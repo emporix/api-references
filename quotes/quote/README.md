@@ -1,5 +1,19 @@
 ---
 icon: square-quote
+layout:
+  width: wide
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
 ---
 
 # Quote Service
@@ -22,4 +36,4 @@ Manages customer enquiries as quotes that can be converted into orders.
 * Integrates the quotation process easily
 * Generates PDFs within Management Dashboard
 * Allows for managing quote reasons - the configurable status codes that be can used for customers within the business storefront
-* Provides time restrictions for quotes 
+* Provides time restrictions for quotes&#x20;
