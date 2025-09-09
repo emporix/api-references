@@ -49,42 +49,4 @@ Request example:
 ```
 ## Keycloak configuration flow with social login diagram
 
-```mermaid
----
-config:
-  layout: fixed
-  theme: base
-  themeVariables:
-    primaryColor: '#DDE6EE'
-    primaryBorderColor: '#4C5359'
-    actorBkg: '#A1BDDC'
-    actorBorder: '#4C5359'
-    actorLineColor: '#4C5359'
-    signalColor: '#E86C07'
-    signalTextColor: '#7B8B99'
-    background: transparent 
----
-sequenceDiagram
-    participant Client
-    participant Frontend
-    participant Keycloak
-    participant OpenID Provider
-    participant Emporix Auth Service
-    participant Emporix Customer Service
-    participant Emporix Resource
-
-    Client->>Frontend: Clicks on social login button
-    Frontend->>Keycloak: Forwards the request to Keycloak domain URL<br/>with state query parameter : {configName--randomValue}
-    Keycloak->>OpenID Provider: Delegates authentication
-    OpenID Provider-->>Keycloak: User authenticated
-    Keycloak-->>Frontend: Redirects to REDIRECT_URI param<br/>with additional "code" and "state" query param
-    Frontend->>Emporix Auth Service: Exchange the code to Emporix token<br/>`https://api.emporix.io/customer/${TENANT}/socialLogin?code=${CODE}&anonymous_token=${ANONYMOUS_TOKEN}&state=${configName--randomValue}`
-    Emporix Auth Service->>Keycloak: Exchanges the authorization code
-    Emporix Auth Service->>Emporix Customer Service: Creates a new customer if needed<br/>`https://api.emporix.io/customer/{tenant}/socialLogin`
-    Emporix Customer Service-->>Emporix Auth Service: Returns customer number
-    Emporix Auth Service->>Emporix Auth Service: Generates oAuth token
-    Emporix Auth Service-->>Frontend: Returns a response with access_token and saas_token
-    Frontend->>Emporix Resource: Invokes Emporix API with `Authorization: Bearer {access_token}` header
-    Emporix Resource->>Emporix Auth Service: Validates token
-    Emporix Resource-->>Frontend: Resource response
-```
+<figure><img src="../../static/mermaid_diagrams/keycloak_diagram.svg" alt=""><figcaption></figcaption></figure>
