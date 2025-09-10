@@ -53,12 +53,21 @@ curl -L
 
 Your vendor is created and you get its ID in the request response, for example `6880c8e860a76003fbece674`.
 
-When a vendor is created, it automatically creates four new user groups for your tenant - `vendor.order.manager`, `vendor.order.viewer.` `vendor.product.manager`, `vendor.product.viewer`. In the example based on ABC Company the groups are:
+When a vendor is created, it automatically creates four new user groups for your tenant - `vendor.order.manager`, `vendor.order.viewer.`, `vendor.product.manager`, `vendor.product.viewer`. In the example based on ABC Company the groups are:
 
 * ABC Company Vendor Product Manager
 * ABC Company Vendor Product Viewer
 * ABC Company Vendor Order Manager
 * ABC Company Vendor Order Viewer
+
+The specific vendor group access rights are:
+
+| Group                   | Order Access   | Product Access | Notes |
+|--------------------------|----------------|----------------|-------|
+| Vendor order manager | Manage orders  | ✗              | – |
+| Vendor order viewer   | Read orders    | ✗              | – |
+| Vendor product manager| ✗              | Manage products, including prices, availability, and media | Can also be granted permissions to publish/unpublish products. |
+| Vendor product viewer | ✗              | Read products, including prices, availability, and media | Cannot be granted publishing rights. |
 
 If you want to check what vendors are created for your tenant, send the request to [Retrieving all vendors](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/vendor-service/api-reference/vendors#get-vendor-tenant-vendors) endpoint.
 

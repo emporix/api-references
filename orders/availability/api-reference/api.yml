@@ -238,8 +238,9 @@ paths:
 
         ***
 
-        **Required scopes**
-        No specific scopes are required.
+        ### **Required scopes**
+        * No specific scopes are required.
+        * Scope `availability.availability_view_by_vendor` allows to fetch just the availabilities belonging to the vendor.
       security:
         - OAuth2: []
       responses:
@@ -276,8 +277,9 @@ paths:
 
         ***
 
-        **Required scopes**
-        No specific scopes are required.
+        ### **Required scopes**
+        * No specific scopes are required.
+        * Scope `availability.availability_view_by_vendor` allows to fetch just the availabilities belonging to the vendor.
       security:
         - OAuth2: []
       parameters:
@@ -328,6 +330,10 @@ paths:
       summary: Retrieving a product's availability
       description: |-
         Retrieves a specified product's availability details.
+        
+        ### **Required scopes**
+        * No specific scopes are required.
+        * Scope `availability.availability_view_by_vendor` allows to fetch just the availabilities belonging to the vendor.
 
         ***
       responses:
@@ -364,6 +370,7 @@ paths:
 
         **Required scopes**
         *  `availability.availability_manage`
+        *  `availability.availability_manage_by_vendor` - allows to create availabilities for products belonging to the vendor
       security:
         - OAuth2:
             - availability.availability_manage
@@ -408,6 +415,7 @@ paths:
 
         **Required scopes**
         *  `availability.availability_manage`
+        *  `availability.availability_manage_by_vendor` - allows to update availabilities belonging to the vendor
       security:
         - OAuth2:
             - availability.availability_manage
@@ -454,6 +462,7 @@ paths:
 
         **Required scopes**
         *  `availability.availability_manage`
+        *  `availability.availability_manage_by_vendor` - allows to delete belonging to the vendor
       security:
         - OAuth2:
             - availability.availability_manage
@@ -606,6 +615,9 @@ components:
           type: string
           description: 'Unique identifier of the product, generated when the product is created through the Product Service.'
           example: 5f7c996173fc281cdd412345
+        vendorId:
+          type: string
+          description: Id of a vendor to which the availability belongs.
         popularity:
           type: integer
           description: 'Popularity of the product, expressed as a number.'
@@ -664,6 +676,9 @@ components:
           type: string
           description: 'Unique identifier of the product, generated when the product is created through the Product Service.'
           example: 5f7c996173fc281cdd412345
+        vendorId:
+          type: string
+          description: Id of a vendor to which the availability belongs.
         popularity:
           type: integer
           description: 'Popularity of the product, expressed as a number.'
