@@ -102,20 +102,6 @@
               spec: cart-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/checkout/cart/api-reference/api.yml)
-  * [Payment-gateway Service](checkout/payment-gateway/README.md)
-    * [Payment-gateway Tutorial](checkout/payment-gateway/payment-gateway.md)
-    * [API Reference](checkout/payment-gateway/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: payment-gateway-api
-        ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/checkout/payment-gateway/api-reference/api.yml)
   * [Checkout Service](checkout/checkout/README.md)
     * [Checkout Tutorial](checkout/checkout/checkout.md)
     * [API Reference](checkout/checkout/api-reference/README.md)
@@ -144,6 +130,20 @@
               spec: fee-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/checkout/fee/api-reference/api.yml)
+  * [Payment-gateway Service](checkout/payment-gateway/README.md)
+    * [Payment-gateway Tutorial](checkout/payment-gateway/payment-gateway.md)
+    * [API Reference](checkout/payment-gateway/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: payment-gateway-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/checkout/payment-gateway/api-reference/api.yml)
   * [Shopping List](checkout/shopping-list/README.md)
     * [API Reference](checkout/shopping-list/api-reference/README.md)
       * ```yaml
@@ -158,6 +158,20 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/checkout/shopping-list/api-reference/api.yml)
 * [Companies and Customers](companies-and-customers/README.md)
+  * [Approval Service](companies-and-customers/approval-service/README.md)
+    * [Approval Tutorials](companies-and-customers/approval-service/approval.md)
+    * [API Reference](companies-and-customers/approval-service/approval-api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: approval-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/approval-service/approval-api-reference/api.yml)
   * [Customer Management](companies-and-customers/client-management/README.md)
     * [Customer Management Tutorial](companies-and-customers/customer-service/customer-management.md)
     * [API Reference](companies-and-customers/client-management/api-reference/README.md)
@@ -172,6 +186,20 @@
               spec: customer-client-management-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/client-management/api-reference/api.yml)
+  * [Customer Segments](companies-and-customers/customer-segments/README.md)
+    * [Segments Tutorial](companies-and-customers/customer-segments/segments.md)
+    * [API Reference](companies-and-customers/customer-segments/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: segments-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/customer-segments/api-reference/api.yml)
   * [Customer Service (Customer Managed)](companies-and-customers/customer-management/README.md)
     * [API Reference](companies-and-customers/customer-management/api-reference/README.md)
       * ```yaml
@@ -198,34 +226,6 @@
               spec: customer-tenant-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/customer-service/api-reference/api.yml)
-  * [Customer Segments](companies-and-customers/customer-segments/README.md)
-    * [Segments Tutorial](companies-and-customers/customer-segments/segments.md)
-    * [API Reference](companies-and-customers/customer-segments/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: segments-api
-        ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/customer-segments/api-reference/api.yml)
-  * [Approval Service](companies-and-customers/approval-service/README.md)
-    * [Approval Tutorials](companies-and-customers/approval-service/approval.md)
-    * [API Reference](companies-and-customers/approval-service/approval-api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: approval-api
-        ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/approval-service/approval-api-reference/api.yml)
   * [Vendor Service](companies-and-customers/vendor-service/README.md)
     * [Vendor Tutorial](companies-and-customers/vendor-service/vendor.md)
     * [API Reference](companies-and-customers/vendor-service/api-reference/README.md)
@@ -283,34 +283,6 @@
               spec: currency-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/configuration/currency-service/api-reference/api.yml)
-  * [Unit Handling Service](configuration/unit-handling-service/README.md)
-    * [Unit Handling Tutorial](configuration/unit-handling-service/unit-handling.md)
-    * [API Reference](configuration/unit-handling-service/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: unit-handling-api
-        ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/configuration/unit-handling-service/api-reference/api.yml)
-  * [Site Settings Service](configuration/site-settings-service/README.md)
-    * [Site Settings Tutorial](configuration/site-settings-service/site-settings.md)
-    * [API Reference](configuration/site-settings-service/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: site-settings-api
-        ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/configuration/site-settings-service/api-reference/api.yml)
   * [Indexing Service](configuration/indexing-service/README.md)
     * [Indexing Tutorial](configuration/indexing-service/indexing.md)
     * [API Reference](configuration/indexing-service/api-reference/README.md)
@@ -325,10 +297,9 @@
               spec: indexing-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/configuration/indexing-service/api-reference/api.yml)
-* [Delivery and Shipping](delivery-and-shipping/README.md)
-  * [Delivery and Shipping Tutorial](delivery-and-shipping/shipping.md)
-  * [Shipping Service](delivery-and-shipping/shipping/README.md)
-    * [API Reference](delivery-and-shipping/shipping/api-reference/README.md)
+  * [Site Settings Service](configuration/site-settings-service/README.md)
+    * [Site Settings Tutorial](configuration/site-settings-service/site-settings.md)
+    * [API Reference](configuration/site-settings-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
@@ -337,9 +308,25 @@
           spec:
             ref:
               kind: openapi
-              spec: shipping-api
+              spec: site-settings-api
         ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/delivery-and-shipping/shipping/api-reference/api.yml)
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/configuration/site-settings-service/api-reference/api.yml)
+  * [Unit Handling Service](configuration/unit-handling-service/README.md)
+    * [Unit Handling Tutorial](configuration/unit-handling-service/unit-handling.md)
+    * [API Reference](configuration/unit-handling-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: unit-handling-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/configuration/unit-handling-service/api-reference/api.yml)
+* [Delivery and Shipping](delivery-and-shipping/README.md)
+  * [Delivery and Shipping Tutorial](delivery-and-shipping/shipping.md)
   * [Delivery Providers Service](delivery-and-shipping/delivery-providers-service/README.md)
     * [API Reference](delivery-and-shipping/delivery-providers-service/api-reference/README.md)
       * ```yaml
@@ -353,6 +340,19 @@
               spec: delivery-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/delivery-and-shipping/delivery-providers-service/api-reference/api.yml)
+  * [Shipping Service](delivery-and-shipping/shipping/README.md)
+    * [API Reference](delivery-and-shipping/shipping/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: shipping-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/delivery-and-shipping/shipping/api-reference/api.yml)
 * [Media](media/README.md)
   * [Media Service](media/media/README.md)
     * [Media Tutorial](media/media/media.md)
@@ -383,6 +383,20 @@
               spec: availability-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/orders/availability/api-reference/api.yml)
+  * [Invoice Service](orders/invoice/README.md)
+    * [Invoice Tutorial](orders/invoice/invoice.md)
+    * [API Reference](orders/invoice/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: invoice-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/orders/invoice/api-reference/api.yaml)
   * [Order Service](orders/order/README.md)
     * [Order Tutorial](orders/order/order.md)
     * [API Reference](orders/order/api-reference/README.md)
@@ -410,20 +424,6 @@
               spec: pick-pack-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/orders/pick-pack/api-reference/api.yml)
-  * [Invoice Service](orders/invoice/README.md)
-    * [Invoice Tutorial](orders/invoice/invoice.md)
-    * [API Reference](orders/invoice/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: invoice-api
-        ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/orders/invoice/api-reference/api.yaml)
   * [Returns Service](orders/returns/README.md)
     * [Returns Tutorial](orders/returns/returns.md)
     * [API Reference](orders/returns/api-reference/README.md)
@@ -481,34 +481,6 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/prices-and-taxes/tax-service/api-reference/api.yml)
 * [Products, Labels and Brands](products-labels-and-brands/README.md)
-  * [Product Service](products-labels-and-brands/product-service/README.md)
-    * [Product Tutorial](products-labels-and-brands/product-service/product.md)
-    * [API Reference](products-labels-and-brands/product-service/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: product-api
-        ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/products-labels-and-brands/product-service/api-reference/api.yml)
-  * [Label Service](products-labels-and-brands/label-service/README.md)
-    * [Label Tutorial](products-labels-and-brands/label-service/label.md)
-    * [API Reference](products-labels-and-brands/label-service/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: label-api
-        ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/products-labels-and-brands/label-service/api-reference/api.yml)
   * [Brand Service](products-labels-and-brands/brand-service/README.md)
     * [Brand Tutorial](products-labels-and-brands/brand-service/brand.md)
     * [API Reference](products-labels-and-brands/brand-service/api-reference/README.md)
@@ -523,6 +495,34 @@
               spec: brand-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/products-labels-and-brands/brand-service/api-reference/api.yml)
+  * [Label Service](products-labels-and-brands/label-service/README.md)
+    * [Label Tutorial](products-labels-and-brands/label-service/label.md)
+    * [API Reference](products-labels-and-brands/label-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: label-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/products-labels-and-brands/label-service/api-reference/api.yml)
+  * [Product Service](products-labels-and-brands/product-service/README.md)
+    * [Product Tutorial](products-labels-and-brands/product-service/product.md)
+    * [API Reference](products-labels-and-brands/product-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: product-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/products-labels-and-brands/product-service/api-reference/api.yml)
 * [Quotes](quotes/README.md)
   * [Quote Service](quotes/quote/README.md)
     * [Quote Tutorial](quotes/quote/quote.md)
