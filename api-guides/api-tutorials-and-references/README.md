@@ -54,7 +54,9 @@ layout:
 
 {% columns %}
 {% column %}
-
+{% content-ref url="../../orders/" %}
+[orders](../../orders/)
+{% endcontent-ref %}
 {% endcolumn %}
 
 {% column %}
