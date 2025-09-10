@@ -1,5 +1,19 @@
 ---
 icon: code-branch
+layout:
+  width: default
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
 ---
 
 # Emporix API
@@ -49,12 +63,12 @@ The Emporix Developer Portal provides you with two types of credentials:
 
 When using our API, you will come across four types of access tokens:
 
-| Token type           | Description                                                                                                                                                                                                               | Emporix API endpoint                                  |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- |
-| Anonymous token      | Used by the storefront to access public resources with a reading scope. It allows customers to browse products, view prices, or add products to a cart. The anonymous token is not associated with any specific customer. | [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization)     |
-| Customer token       | A JSON Web Token (JWT) which contains encrypted customer data. The customer token works similarly to the anonymous token, but it is associated with a specific customer.                                                  | [Requesting a customer token](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization)       |
-| Refresh token        | Used to refresh the customer token.                                                                                                                                                                                       | [Requesting a refresh token](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization)        |
-| Service access token | Needed to access and manage the Emporix services such as adding new products, managing categories, or modifying prices.                                                                                                   | [Requesting a service access token](https://developer.emporix.io/api-references/api-guides-and-references/authorization/oauth-service/api-reference/service-access-token) |
+| Token type           | Description                                                                                                                                                                                                               | Emporix API endpoint                                                                                                                                                                              |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Anonymous token      | Used by the storefront to access public resources with a reading scope. It allows customers to browse products, view prices, or add products to a cart. The anonymous token is not associated with any specific customer. | [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization) |
+| Customer token       | A JSON Web Token (JWT) which contains encrypted customer data. The customer token works similarly to the anonymous token, but it is associated with a specific customer.                                                  | [Requesting a customer token](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization)   |
+| Refresh token        | Used to refresh the customer token.                                                                                                                                                                                       | [Requesting a refresh token](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization)    |
+| Service access token | Needed to access and manage the Emporix services such as adding new products, managing categories, or modifying prices.                                                                                                   | [Requesting a service access token](https://developer.emporix.io/api-references/api-guides-and-references/authorization/oauth-service/api-reference/service-access-token)                         |
 
 ### Scopes
 
