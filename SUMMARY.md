@@ -26,9 +26,9 @@
   * [Workflow Automation](integrations/workflow-automation/README.md)
     * [Emporix and Make](integrations/workflow-automation/emporix-and-make.md)
 
-## API Guides and References
+## API Guides
 
-* [API Guides and References](api-guides-and-references/api-guides-intro.md)
+* [API Tutorials and References](api-guides-and-references/api-guides-intro.md)
   * [Authorization](authorization/README.md)
     * [OAuth Service](authorization/oauth-service/README.md)
       * [API Reference](authorization/oauth-service/api-reference/README.md)
