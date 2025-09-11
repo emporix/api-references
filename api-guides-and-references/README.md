@@ -1,6 +1,6 @@
 ---
 description: Check out step-by-step tutorials and API specifications for each service.
-icon: book
+icon: book-open
 layout:
   width: wide
   title:
