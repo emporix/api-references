@@ -21,29 +21,6 @@ layout:
 
 {% columns %}
 {% column width="50%" %}
----
-description: Check out step-by-step tutorials and API specifications for each service.
-icon: arrow-progress
-layout:
-  width: wide
-  title:
-    visible: true
-  description:
-    visible: true
-  tableOfContents:
-    visible: true
-  outline:
-    visible: false
-  pagination:
-    visible: true
-  metadata:
-    visible: true
----
-
-# API Tutorials and References
-
-{% columns %}
-{% column width="50%" %}
 {% content-ref url="../../artificial-intelligence/" %}
 [artificial-intelligence](../../artificial-intelligence/)
 {% endcontent-ref %}
