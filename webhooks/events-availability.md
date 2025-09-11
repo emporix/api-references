@@ -2,13 +2,11 @@
 seo:
   title: Availability Service events
   description: Webhooks, availability events
+icon: webhook
+description: Webhook events related to the creation, update, and deletion of an availability.
 ---
 
 # Events - Availability
-
-## Overview
-
-Webhook events related to the creation, update, and deletion of an availability.
 
 ## Available events
 

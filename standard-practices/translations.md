@@ -9,6 +9,7 @@ editPage:
   disable: true
 label: Translations
 icon: globe
+description: Translations use language-code maps, enabling objects to be created, retrieved, and updated in one or multiple languages.
 ---
 
 # Translations

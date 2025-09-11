@@ -2,13 +2,11 @@
 seo:
   title: Order Service events
   description: Webhooks, order events
+icon: webhook
+description: Webhook events related to the creation, update, cancellation, and status change of an order.
 ---
 
 # Events - Order
-
-## Overview
-
-Webhook events related to the creation, update, cancellation, and status change of an order.
 
 ## Available events
 

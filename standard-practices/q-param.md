@@ -3,11 +3,10 @@ seo:
   title: Query Parameter
   description: standard practices
 icon: magnifying-glass-waveform
+description: You can use a standard q parameter to filter search by string, localized, or numeric field values using exact matches, comparisons, and ranges.
 ---
 
 # Query Parameter
-
-You can use a standard `q` parameter to search for specific values.
 
 #### Searching for items by string-based properties
 

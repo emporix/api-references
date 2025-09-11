@@ -2,13 +2,11 @@
 seo:
   title: Quote Service events
   description: Webhooks, Quote events
+icon: webhook
+description: Webhook events related to the creation, update, and deletion of a quote.
 ---
 
 # Events - Quote
-
-## Overview
-
-Webhook events related to the creation, update, and deletion of a quote.
 
 ## Available events
 
