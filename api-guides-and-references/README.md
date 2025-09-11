@@ -1,6 +1,6 @@
 ---
 description: Check out step-by-step tutorials and API specifications for each service.
-icon: arrow-progress
+icon: book
 layout:
   width: wide
   title:
