@@ -28,7 +28,7 @@
 
 ## API Guides
 
-* [API Tutorials and References](api-guides/api-tutorials-and-references/README.md)
+* [API Tutorials and References](api-guides-and-references/README.md)
 * [Artificial Intelligence](artificial-intelligence/README.md)
   * [AI Service](artificial-intelligence/ai-service/README.md)
     * [AI Tutorials](artificial-intelligence/ai-service/ai-tutorial.md)
@@ -44,7 +44,7 @@
               spec: ai-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/artificial-intelligence/ai-service/api-reference/api.yml)
-* [Authorization](api-guides/authorization/README.md)
+* [Authorization](authorization/README.md)
   * [OAuth Service](authorization/oauth-service/README.md)
     * [API Reference](authorization/oauth-service/api-reference/README.md)
       * ```yaml
@@ -639,7 +639,6 @@
               kind: openapi
               spec: webhook-api
         ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/webhooks/webhook-service/api-reference/api.yml)
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/webhooks/webhook-service/api-reference/api.yml)
     * [Webhook - Events](webhooks/webhook-events.md)
       * [Events - Availability](webhooks/events-availability.md)
