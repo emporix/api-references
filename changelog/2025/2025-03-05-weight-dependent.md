@@ -23,15 +23,15 @@ Having the attribute available directly on the product level, the corresponding 
 
 | Endpoint                                                                                          | Description                                     |
 |---------------------------------------------------------------------------------------------------|-------------------------------------------------|
-| [Adding a product to cart](https://developer.emporix.io/api-references/api-guides//checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items)                   | Deprecated request attribute `weightDependent`. |
-| [Adding multiple products to cart](https://developer.emporix.io/api-references/api-guides//checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-itemsbatch) | Deprecated request attribute `weightDependent`. |
-| [Creating a new product](https://developer.emporix.io/api-references/api-guides//products-labels-and-brands/product-service/api-reference/products)                 | New request attribute `weightDependent` added.  |
-| [Creating multiple products](https://developer.emporix.io/api-references/api-guides//products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk)       | New request attribute `weightDependent` added.  |
-| [Upserting a product](https://developer.emporix.io/api-references/api-guides//products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid)                      | New request attribute `weightDependent` added.   |
-| [Upserting multiple products](https://developer.emporix.io/api-references/api-guides//products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk)       | New request attribute `weightDependent` added.   |
-| [Partially updating a product](https://developer.emporix.io/api-references/api-guides//products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid)          | New request attribute `weightDependent` added.   |
-| [Retrieving a product](https://developer.emporix.io/api-references/api-guides//products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid)                  | New response attribute `weightDependent` added.  |
-| [Retrieving all of products](https://developer.emporix.io/api-references/api-guides//products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products)               | New response attribute `weightDependent` added.  |
+| [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items)                   | Deprecated request attribute `weightDependent`. |
+| [Adding multiple products to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-itemsbatch) | Deprecated request attribute `weightDependent`. |
+| [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products)                 | New request attribute `weightDependent` added.  |
+| [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk)       | New request attribute `weightDependent` added.  |
+| [Upserting a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid)                      | New request attribute `weightDependent` added.   |
+| [Upserting multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk)       | New request attribute `weightDependent` added.   |
+| [Partially updating a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid)          | New request attribute `weightDependent` added.   |
+| [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid)                  | New response attribute `weightDependent` added.  |
+| [Retrieving all of products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products)               | New response attribute `weightDependent` added.  |
 
 ## Known problems
 

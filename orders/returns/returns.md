@@ -13,7 +13,7 @@ By default, the expiration date offset for a return request is set to 30 days.
 
 ### Update the expiration date settings
 
-You can update the expiration date offset for a tenant by sending a request to the [Updating a configuration](https://developer.emporix.io/api-references/api-guides//configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint in the Configuration Service.
+You can update the expiration date offset for a tenant by sending a request to the [Updating a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint in the Configuration Service.
 
 In the following example, we are changing the expiration date offset to 14 days.
 
@@ -57,7 +57,7 @@ On the storefront, a customer fills in the applicable fields in the return reque
 
 Based on your tenant's configuration settings and customer's oauth token, the remaining fields are populated automatically.
 
-When a customer sends a return request, the [Creating a single return entity](https://developer.emporix.io/api-references/api-guides//orders/returns/api-reference/returns#post-return-tenant-returns) endpoint is called.
+When a customer sends a return request, the [Creating a single return entity](https://developer.emporix.io/api-references/api-guides/orders/returns/api-reference/returns#post-return-tenant-returns) endpoint is called.
 
 {% hint style="warning" %}
 The following set of scopes is granted to a customer group:
@@ -123,7 +123,7 @@ curl -i -X POST \
 
 ### Create a return on behalf of a customer
 
-To create a return on behalf of a customer, you need to send a request to the [Creating a single return entity](https://developer.emporix.io/api-references/api-guides//orders/returns/api-reference/returns#post-return-tenant-returns) endpoint.
+To create a return on behalf of a customer, you need to send a request to the [Creating a single return entity](https://developer.emporix.io/api-references/api-guides/orders/returns/api-reference/returns#post-return-tenant-returns) endpoint.
 
 {% hint style="warning" %}
 The following set of scopes is required for an employee group:
@@ -193,7 +193,7 @@ The `approvalStatus` field is automatically populated during the creation of a r
 
 ### Update the return request by a customer
 
-Customers can update their return request only when the approval status of the request is `PENDING`. When a customer updates a return, the [Updating a single return](https://developer.emporix.io/api-references/api-guides//orders/returns/api-reference/returns#post-return-tenant-returns) endpoint is called.
+Customers can update their return request only when the approval status of the request is `PENDING`. When a customer updates a return, the [Updating a single return](https://developer.emporix.io/api-references/api-guides/orders/returns/api-reference/returns#post-return-tenant-returns) endpoint is called.
 
 {% hint style="warning" %}
 The following set of scopes is granted to a customer group:
@@ -257,7 +257,7 @@ curl -i -X PUT \
 
 ### Update the return status
 
-As an employee, you can update all the fields available during the return creation, as well as the `approvalStatus` and `received` fields, by sending a request to the [Updating a single return](https://developer.emporix.io/api-references/api-guides//orders/returns/api-reference/returns#put-return-tenant-returns-returnid) endpoint.
+As an employee, you can update all the fields available during the return creation, as well as the `approvalStatus` and `received` fields, by sending a request to the [Updating a single return](https://developer.emporix.io/api-references/api-guides/orders/returns/api-reference/returns#put-return-tenant-returns-returnid) endpoint.
 
 {% hint style="warning" %}
 The following set of scopes is required for an employee group:

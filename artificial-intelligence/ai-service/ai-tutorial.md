@@ -39,7 +39,7 @@ curl -i -X POST \
 Completion is generated based on chat history. It's a generated response or continuation of a conversation, crafted by the AI to address the given input in context.\
 It can include answering questions, providing suggestions, or completing a sentence or thought.\
 The currently supported AI engine for the completion is [OpenAI](https://platform.openai.com/).\
-To generate the AI completion, send the request using the [AI Completions](https://developer.emporix.io/api-references/api-guides//artificial-intelligence/ai-service/api-reference/ai-completions) endpoint.
+To generate the AI completion, send the request using the [AI Completions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/ai-completions) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
