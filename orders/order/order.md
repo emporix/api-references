@@ -98,7 +98,7 @@ In this approach, the Emporix cart interacts with an ERP system to retrieve real
 
 Commerce Orchestration Platform (COP) enables this functionality with external pricing, ensuring real-time accuracy.
 
-Communication with the ERP system occurs using the BFF (Backend-for-Frontend) layer and with a [POST](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) request the order is send to an ERP system. This architecture ensures a secure, real-time pricing model while leveraging external systems for order calculations.
+Communication with the ERP system occurs using the BFF (Backend-for-Frontend) layer and with a [POST](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) request the order is send to an ERP system. This architecture ensures a secure, real-time pricing model while leveraging external systems for order calculations.
 
 ```mermaid fullWidth="false"
 ---
@@ -1058,7 +1058,7 @@ The Order Service functionality allows your employees to act on behalf of a cust
 
 To create an order, first get the credentials to log in as a customer on the storefront:
 
-1. Get the `access_token` by sending the request to the [Requesting a service access token](https://developer.emporix.io/api-references/api-guides-and-references/authorization/oauth-service/api-reference/service-access-token).
+1. Get the `access_token` by sending the request to the [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authorization/oauth-service/api-reference/service-access-token).
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -1079,7 +1079,7 @@ curl -L
   }'
 ```
 
-2. Retrieve the `anonymous_token` by sending a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-login) endpoint.
+2. Retrieve the `anonymous_token` by sending a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-login) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -1091,7 +1091,7 @@ curl -L
 curl 'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id&{client_id}'
 ```
 
-3. Log in as the customer by sending an authorization request to the [Logging in a customer](hhttps://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.
+3. Log in as the customer by sending an authorization request to the [Logging in a customer](hhttps://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -1112,7 +1112,7 @@ curl 'https://api.emporix.io/customer/{tenant}/login'
 
 #### Create an order
 
-As a merchant acting on behalf of a customer, send the request to the [Creating a new order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) endpoint.
+As a merchant acting on behalf of a customer, send the request to the [Creating a new order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -1237,7 +1237,7 @@ curl --location 'https://api.emporix.io/order-v2/{tenant}/salesorders'
 
 You can retrieve the order details as a merchant or as the customer.
 
-* As a merchant, if you want to confirm that the order has been created, send the request to the [Retrieving a specific order by ID](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) endpoint.
+* As a merchant, if you want to confirm that the order has been created, send the request to the [Retrieving a specific order by ID](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -1249,7 +1249,7 @@ You can retrieve the order details as a merchant or as the customer.
 curl 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}'
 ```
 
-* As a logged in customer, you can display your orders history in the store. Use the [Retrieving a list of orders](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders) to fetch your own orders.
+* As a logged in customer, you can display your orders history in the store. Use the [Retrieving a list of orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders) to fetch your own orders.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -1264,7 +1264,7 @@ curl 'https://api.emporix.io/order-v2/{tenant}/orders'
 
 ### Change the order status
 
-* As a merchant, when the order has been prepared and dispatched, change the order status to `SHIPPED`. Send the request to the [Partially updating an order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid) endpoint.
+* As a merchant, when the order has been prepared and dispatched, change the order status to `SHIPPED`. Send the request to the [Partially updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -1282,7 +1282,7 @@ curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/saleso
   }'
 ```
 
-* As a customer, you can only change the order status from `CREATED` to `DECLINED` if for any reason you need to cancel the order. To decline the order, send the quest to the [Updating order status](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders-orderid-transitions) endpoint.
+* As a customer, you can only change the order status from `CREATED` to `DECLINED` if for any reason you need to cancel the order. To decline the order, send the quest to the [Updating order status](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders-orderid-transitions) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -1306,7 +1306,7 @@ curl -L
 
 Order Service APIs provide also tools for controlling the status transitions logs.
 
-* As a merchant, check the status history of the order by sending the request to the [Retrieving status transitions for an order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid-transitions) endpoint.
+* As a merchant, check the status history of the order by sending the request to the [Retrieving status transitions for an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid-transitions) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -1321,7 +1321,7 @@ curl -L
   --header 'Accept: */*'
 ```
 
-* As a logged in customer, you can fetch your own order status transitions history. Use the [Retrieving status transitions for an order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid-transitions) endpoint.
+* As a logged in customer, you can fetch your own order status transitions history. Use the [Retrieving status transitions for an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid-transitions) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -1343,7 +1343,7 @@ To enable order splitting, the Order Service works directly with the [Vendor Ser
 
 When a customer completes checkout, a single order is created containing all the selected products. Each order entry includes vendor information, making it a standard order with additional vendor details.
 
-If you need to separate this combined order into vendor-specific suborders, send the request to the [Splitting Order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders-orderid-split) endpoint.
+If you need to separate this combined order into vendor-specific suborders, send the request to the [Splitting Order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders-orderid-split) endpoint.
 
 You can also use a Digital Process for the splitting mechanism, see the Order Splitting Digital Process template for reference:
 
