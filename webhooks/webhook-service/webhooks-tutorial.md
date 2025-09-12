@@ -36,9 +36,9 @@ By default, the maximum number of events per tenant is limited to 5000/month. Th
 Before you subscribe to events, you need to check for any active subscriptions by sending a request to the Retrieving all subscriptions endpoint.
 
 {% hint style="warning" %}
-If the subscription to the event of your choice already exists and you want to update it, note down the `metadata.version` value. You will need it to call the [Subscribing and unsubscribing from events](https://developer.emporix.io/api-references/api-guides-and-references/webhooks/webhook-service/api-reference/events#patch-webhook-tenant-event-subscriptions) endpoint further in the tutorial.
+If the subscription to the event of your choice already exists and you want to update it, note down the `metadata.version` value. You will need it to call the [Subscribing and unsubscribing from events](https://developer.emporix.io/api-references/api-guides//webhooks/webhook-service/api-reference/events#patch-webhook-tenant-event-subscriptions) endpoint further in the tutorial.
 
-If there is no prior subscription to the event of your choice, the `metadata.version` is empty. It is automatically set to `1` when you send a request to the [Subscribing and unsubscribing from events](https://developer.emporix.io/api-references/api-guides-and-references/webhooks/webhook-service/api-reference/events#patch-webhook-tenant-event-subscriptions) endpoint.
+If there is no prior subscription to the event of your choice, the `metadata.version` is empty. It is automatically set to `1` when you send a request to the [Subscribing and unsubscribing from events](https://developer.emporix.io/api-references/api-guides//webhooks/webhook-service/api-reference/events#patch-webhook-tenant-event-subscriptions) endpoint.
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -58,7 +58,7 @@ curl -i -X GET
 
 To receive notifications about events, for example creating or updating a catalog in the **Catalog Service**, you need to subscribe to them by using the Webhook Service.
 
-To subscribe to an event, you need to send a request to the [Subscribing and unsubscribing from events](https://developer.emporix.io/api-references/api-guides-and-references/webhooks/webhook-service/api-reference/events#patch-webhook-tenant-event-subscriptions) endpoint.
+To subscribe to an event, you need to send a request to the [Subscribing and unsubscribing from events](https://developer.emporix.io/api-references/api-guides//webhooks/webhook-service/api-reference/events#patch-webhook-tenant-event-subscriptions) endpoint.
 
 In this example, you will subscribe to the following events: `catalog.created` and `catalog.updated`.
 
@@ -121,7 +121,7 @@ You need to have access to the Event Gateway to connect the tenant with their co
 
 When you subscribe to events, you will receive an email with an automatically generated link to the application portal.
 
-To generate the login link with the authentication token needed to connect a tenant to their consumer application portal, you need to send a request to the [Retrieving a dashboard access URL](https://developer.emporix.io/api-references/api-guides-and-references/webhooks/webhook-service/api-reference/svix-emporix-shared-account) endpoint.
+To generate the login link with the authentication token needed to connect a tenant to their consumer application portal, you need to send a request to the [Retrieving a dashboard access URL](https://developer.emporix.io/api-references/api-guides//webhooks/webhook-service/api-reference/svix-emporix-shared-account) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

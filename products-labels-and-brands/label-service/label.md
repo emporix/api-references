@@ -17,7 +17,7 @@ To label a product with a specific information, follow these steps:
 
 ## Create a label
 
-To create a new label, send the request to the [Creating a label](https://developer.emporix.io/api-references/api-guides-and-references/products-labels-and-brands/label-service/api-reference/label#post-labels) endpoint.
+To create a new label, send the request to the [Creating a label](https://developer.emporix.io/api-references/api-guides//products-labels-and-brands/label-service/api-reference/label#post-labels) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -40,7 +40,7 @@ Executing a request to create a label returns a response that includes an "id" f
 
 ## Add a label image
 
-Firstly, create and add an image for a new label. Design the image and upload it to your media repository. Send a request to the [Creating an asset](https://developer.emporix.io/api-references/api-guides-and-references/media/media/api-reference/assets#post-media-tenant-assets) endpoint.\
+Firstly, create and add an image for a new label. Design the image and upload it to your media repository. Send a request to the [Creating an asset](https://developer.emporix.io/api-references/api-guides//media/media/api-reference/assets#post-media-tenant-assets) endpoint.\
 The `labelId` is necessary to provide.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -77,7 +77,7 @@ curl -L \
 
 ## Update a product with a new label
 
-You can now update a product with a newly created label to indicate that shipping is available worldwide for this product. Send the request to the [Partially updating a product](https://developer.emporix.io/api-references/api-guides-and-references/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint.
+You can now update a product with a newly created label to indicate that shipping is available worldwide for this product. Send the request to the [Partially updating a product](https://developer.emporix.io/api-references/api-guides//products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint.
 
 To specify a brand for a product, you need to provide the `labelId` field on product level which should be used. You can add brands either during the creation of the product, or by updating a product that already exists in the system.
 

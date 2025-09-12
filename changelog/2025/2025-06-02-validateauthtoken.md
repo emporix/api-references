@@ -17,7 +17,7 @@ layout:
 
 ## Overview
 
-The [Validate a token](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-validateauthtoken) endpoint of Oauth service returns now two additional fields:
+The [Validate a token](https://developer.emporix.io/api-references/api-guides//companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-validateauthtoken) endpoint of Oauth service returns now two additional fields:
 * email - Customer email used to login (generate the token).
 * legalEntityId - Legal Entity Id.
 
@@ -25,7 +25,7 @@ The [Validate a token](https://developer.emporix.io/api-references/api-guides-an
 
 | Endpoint                                                                                          | Description                               |
 |---------------------------------------------------------------------------------------------------|-------------------------------------------|
-| [Validate a token](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-validateauthtoken)               | Added the `email` and `legalEntityId` fields in response. |
+| [Validate a token](https://developer.emporix.io/api-references/api-guides//companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-validateauthtoken)               | Added the `email` and `legalEntityId` fields in response. |
 
 ## Known problems
 

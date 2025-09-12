@@ -22,9 +22,9 @@ The `metadata` field at root level is now deprecated in GET responses, as each s
 
 | Endpoint                                                                                                                     | Description                                                                                 |
 |------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
-| [Retrieving a shopping list](https://developer.emporix.io/api-references/api-guides-and-references/checkout/shopping-list/api-reference/shopping-lists)                     | Deprecated `metadata` field on root level and added `metadata` field to each shopping list. |
-| [Retrieving a customer shopping list](https://developer.emporix.io/api-references/api-guides-and-references/checkout/shopping-list/api-reference/shopping-lists#get-shoppinglist-tenant-shopping-lists-customerid)   | Deprecated `metadata` field on root level and added `metadata` field to each shopping list. |
-| [Updating a customer shopping list](https://developer.emporix.io/api-references/api-guides-and-references/checkout/shopping-list/api-reference/shopping-lists#put-shoppinglist-tenant-shopping-lists-customerid)       | Added `metadata.version` to request payload which allows for version validation             |
+| [Retrieving a shopping list](https://developer.emporix.io/api-references/api-guides//checkout/shopping-list/api-reference/shopping-lists)                     | Deprecated `metadata` field on root level and added `metadata` field to each shopping list. |
+| [Retrieving a customer shopping list](https://developer.emporix.io/api-references/api-guides//checkout/shopping-list/api-reference/shopping-lists#get-shoppinglist-tenant-shopping-lists-customerid)   | Deprecated `metadata` field on root level and added `metadata` field to each shopping list. |
+| [Updating a customer shopping list](https://developer.emporix.io/api-references/api-guides//checkout/shopping-list/api-reference/shopping-lists#put-shoppinglist-tenant-shopping-lists-customerid)       | Added `metadata.version` to request payload which allows for version validation             |
 
 ## Known problems
 

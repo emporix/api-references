@@ -35,14 +35,14 @@ A new endpoint that allows to split an order has been added.
 | Endpoint                                                                                                                                                                                            | Description                        |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|
 | [Creating a new order](https://developer.emporix.io/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)                                    | New attributes added.              |
-| [Retrieving orders](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed)                                                         | New attributes added.              |
-| [Retrieving a specific order by ID](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) | New attributes added.              |
-| [Updating an order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid)                 | New attributes added.              |
-| [Partially updating an order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid)     | New attributes added.              |
-| [Creating a new order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders)                        | New attributes added.              |
-| [Retrieving order details](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid)             | New attributes added.              |
-| [Retrieving a list of orders](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders)                  | New attributes added.              |
-| [Splitting order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders-orderid-split)          | New endpoint for splitting orders. |
+| [Retrieving orders](https://developer.emporix.io/api-references/api-guides//orders/order/api-reference/orders-tenant-managed)                                                         | New attributes added.              |
+| [Retrieving a specific order by ID](https://developer.emporix.io/api-references/api-guides//orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) | New attributes added.              |
+| [Updating an order](https://developer.emporix.io/api-references/api-guides//orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid)                 | New attributes added.              |
+| [Partially updating an order](https://developer.emporix.io/api-references/api-guides//orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid)     | New attributes added.              |
+| [Creating a new order](https://developer.emporix.io/api-references/api-guides//orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders)                        | New attributes added.              |
+| [Retrieving order details](https://developer.emporix.io/api-references/api-guides//orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid)             | New attributes added.              |
+| [Retrieving a list of orders](https://developer.emporix.io/api-references/api-guides//orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders)                  | New attributes added.              |
+| [Splitting order](https://developer.emporix.io/api-references/api-guides//orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders-orderid-split)          | New endpoint for splitting orders. |
 
 
 ## Known problems

@@ -17,15 +17,15 @@ layout:
 
 ## Overview
 
-The [Logging in a customer](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) and [Refreshing a customer token](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken) endpoints of Customer Service now return the additional field:
+The [Logging in a customer](https://developer.emporix.io/api-references/api-guides//companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) and [Refreshing a customer token](https://developer.emporix.io/api-references/api-guides//companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken) endpoints of Customer Service now return the additional field:
 * `session_id` - Customer email used to login (generate the token).
 
 ## Updated endpoints
 
 | Endpoint                                                                                          | Description                               |
 |---------------------------------------------------------------------------------------------------|-------------------------------------------|
-| [Logging in a customer](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login)               | Added the `session_id` field in response. |
-| [Refreshing a customer token](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken)              | Added the `session_id` field in response. |
+| [Logging in a customer](https://developer.emporix.io/api-references/api-guides//companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login)               | Added the `session_id` field in response. |
+| [Refreshing a customer token](https://developer.emporix.io/api-references/api-guides//companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken)              | Added the `session_id` field in response. |
 
 ## Known problems
 

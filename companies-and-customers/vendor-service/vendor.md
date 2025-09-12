@@ -17,7 +17,7 @@ Related Services:
 
 ## How to create a vendor?
 
-To create a vendor, send a request to the [Creating a vendor](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/vendor-service/api-reference/vendors#post-vendor-tenant-vendors) endpoint.
+To create a vendor, send a request to the [Creating a vendor](https://developer.emporix.io/api-references/api-guides//companies-and-customers/vendor-service/api-reference/vendors#post-vendor-tenant-vendors) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -69,7 +69,7 @@ The specific vendor group access rights are:
 | Vendor product manager| ✗              | Manage products, including prices, availability, and media | Can also be granted permissions to publish/unpublish products. |
 | Vendor product viewer | ✗              | Read products, including prices, availability, and media | Cannot be granted publishing rights. |
 
-If you want to check what vendors are created for your tenant, send the request to [Retrieving all vendors](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/vendor-service/api-reference/vendors#get-vendor-tenant-vendors) endpoint.
+If you want to check what vendors are created for your tenant, send the request to [Retrieving all vendors](https://developer.emporix.io/api-references/api-guides//companies-and-customers/vendor-service/api-reference/vendors#get-vendor-tenant-vendors) endpoint.
 
 As a response, you get information about all your tenant vendors with company and location details, for example:
 
@@ -102,7 +102,7 @@ As a response, you get information about all your tenant vendors with company an
 
 ## How to set up a location for an existing vendor?
 
-To set up a location for the vendor, send the request to the [Creating a location](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/vendor-service/api-reference/locations#post-vendor-tenant-locations) endpoint.
+To set up a location for the vendor, send the request to the [Creating a location](https://developer.emporix.io/api-references/api-guides//companies-and-customers/vendor-service/api-reference/locations#post-vendor-tenant-locations) endpoint.
 
 ```bash
 curl -L 
@@ -139,7 +139,7 @@ As a response you get the location ID, for example `687a4055b036735470a91bb8` th
 
 ## How to link users group with a vendor?
 
-Start with checking the groups that are created for your tenant. Send the request to [Retrieving all groups](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups) endpoint.
+Start with checking the groups that are created for your tenant. Send the request to [Retrieving all groups](https://developer.emporix.io/api-references/api-guides//users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -216,7 +216,7 @@ If you have created a vendor earlier for the tenant, you should see all the rele
   }
 ```
 
-Each vendor group has it's own ID. To assign a user to the vendor group, send the request to [Adding a user to a group](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/group-assignments#post-iam-tenant-groups-groupid-users) endpoint. Provide the vendor group's ID and user's ID in the request.
+Each vendor group has it's own ID. To assign a user to the vendor group, send the request to [Adding a user to a group](https://developer.emporix.io/api-references/api-guides//users-and-permissions/iam/api-reference/group-assignments#post-iam-tenant-groups-groupid-users) endpoint. Provide the vendor group's ID and user's ID in the request.
 
 {% hint style="info" %}
 A single user can belong to only one vendor group.
@@ -240,7 +240,7 @@ curl -L
   }'
 ```
 
-You can then check the user's assignment to a vendor group by sending a request to the [Retrieving a list of vendor users](https://developer.emporix.io/api-references/api-guides-and-references/users-and-permissions/iam/api-reference/management-dashboard-users#get-iam-tenant-users-vendors-vendorid) endpoint.
+You can then check the user's assignment to a vendor group by sending a request to the [Retrieving a list of vendor users](https://developer.emporix.io/api-references/api-guides//users-and-permissions/iam/api-reference/management-dashboard-users#get-iam-tenant-users-vendors-vendorid) endpoint.
 
 ## How does product relate to a vendor?
 
@@ -252,7 +252,7 @@ When a customer adds a product to the cart that belongs to a vendor, the system 
 
 When the customer completes the checkout, a single order is created containing all the selected products. Each order entry retains the vendor information and is a standard order but with vendor details.
 
-If you need to separate this combined order into vendor-specific suborders, send the request to the [Splitting Order](https://developer.emporix.io/api-references/api-guides-and-references/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders-orderid-split) endpoint.
+If you need to separate this combined order into vendor-specific suborders, send the request to the [Splitting Order](https://developer.emporix.io/api-references/api-guides//orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders-orderid-split) endpoint.
 
 You can also use a Digital Process for the splitting mechanism, see the Order Splitting Digital Process template for reference:&#x20;
 

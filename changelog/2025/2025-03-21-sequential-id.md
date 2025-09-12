@@ -31,9 +31,9 @@ If these values are missing in a site configuration, the following defaults are 
 
 | Endpoint                                                                                                               | Description                   |
 |------------------------------------------------------------------------------------------------------------------------|-------------------------------|
-| [Creating a nextId](https://developer.emporix.io/api-references/api-guides-and-references/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-sequenceschemas-sequenceschema-nextids)                                | Query param `siteCode` added. |
-| [Creating a nextId for schema type](https://developer.emporix.io/api-references/api-guides-and-references/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-types-schematype-nextid)    | Query param `siteCode` added. |
-| [Creating a nextId for schema types](https://developer.emporix.io/api-references/api-guides-and-references/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-sequenceschemabatch-nextids) | Query param `siteCode` added. |
+| [Creating a nextId](https://developer.emporix.io/api-references/api-guides//utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-sequenceschemas-sequenceschema-nextids)                                | Query param `siteCode` added. |
+| [Creating a nextId for schema type](https://developer.emporix.io/api-references/api-guides//utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-types-schematype-nextid)    | Query param `siteCode` added. |
+| [Creating a nextId for schema types](https://developer.emporix.io/api-references/api-guides//utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-sequenceschemabatch-nextids) | Query param `siteCode` added. |
 
 ## Known problems
 
