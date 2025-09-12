@@ -308,7 +308,7 @@ curl -i -X POST
 
 Once desired employees are added to appropriate customer groups, you can — for example — create personalized price lists for them. For instructions, check out [_How to configure a price list_](../../prices-and-taxes/price-service/price.md#how-to-configure-a-price-list) in the _Price Service guide_.
 
-## Customer groups behaviour
+## Customer assignment rules
 
 Our platform enforces rules when assigning customers to predefined groups to ensure role assignments remain valid, avoid conflicts, and support both cross-company and hierarchical organizational structures.
 
