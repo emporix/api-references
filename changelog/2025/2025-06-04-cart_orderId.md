@@ -23,9 +23,9 @@ A new attribute `orderId` has been added to the cart object. The new field will 
 
 | Endpoint                                                                                                                                                              | Description                    |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|
-| [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) | New attribute `orderId` added. |
-| [Retrieving cart details by criteria](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/carts#get-cart-tenant-carts)  | New attribute `orderId` added. |
-| [Searching for carts](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/carts#post-cart-tenant-carts-search)          | New attribute `orderId` added. |
+| [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) | New attribute `orderId` added. |
+| [Retrieving cart details by criteria](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts)  | New attribute `orderId` added. |
+| [Searching for carts](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-search)          | New attribute `orderId` added. |
 
 ## Known problems
 
