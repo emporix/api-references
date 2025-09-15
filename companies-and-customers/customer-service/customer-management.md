@@ -310,10 +310,13 @@ Once desired employees are added to appropriate customer groups, you can — for
 
 ## Customer assignment rules
 
-Our platform enforces rules when assigning customers to predefined groups to ensure role assignments remain valid, avoid conflicts, and support both cross-company and hierarchical organizational structures.
+Emporix platform enforces rules when assigning customers to predefined groups to ensure role assignments remain valid, avoid conflicts, and support both cross-company and hierarchical organizational structures. 
+Customer validation is limited to a single company (legal entity). Validation processes do not apply across different companies or their subsidiaries.
+
+For example: 
 
 * If a customer is already assigned to one predefined group (for example, Emporix Admin Group), then it's not possible to assign that same customer to another predefined group within the same company.
-    However, if the group being assigned is *Contact*, then it may always be added, regardless of any other predefined group assignments.
+     The only exception is the *Contact* group, which can always be assigned.
 
 * If a customer is assigned to an *Admin* group in one company (for example, Company A), then the same customer may also be assigned to an *Admin* group in another company (for example, Company B).
 * If a customer is assigned to an *Admin* group in a parent company (for example, Company A), then that same customer may also be assigned to another role such as *Buyer* in the parent company’s subsidiary.
