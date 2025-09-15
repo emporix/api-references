@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:truck
+icon: truck
 ---
 
 # Delivery and Shipping

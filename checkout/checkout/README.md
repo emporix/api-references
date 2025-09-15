@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:bag-shopping
+icon: bag-shopping
 ---
 
 # Checkout Service

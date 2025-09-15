@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:treasure-chest
+icon: treasure-chest
 ---
 
 # Rewards and Promotions

@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:coin-blank
+icon: coin-blank
 ---
 
 # Fee Service

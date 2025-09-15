@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:calculator-simple
+icon: calculator-simple
 ---
 
 # Tax Service

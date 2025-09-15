@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:person-carry-box
+icon: person-carry-box
 ---
 
 # Shipping Service

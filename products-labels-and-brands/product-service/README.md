@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:box-open
+icon: box-open
 ---
 
 # Product Service

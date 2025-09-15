@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:fingerprint
+icon: fingerprint
 ---
 
 # Authorization

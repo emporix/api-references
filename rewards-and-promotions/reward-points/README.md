@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:hand-holding-box
+icon: hand-holding-box
 ---
 
 # Reward-points Service

@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:lock
+icon: lock
 ---
 
 # OAuth Service

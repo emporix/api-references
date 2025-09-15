@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:id-card-clip
+icon: id-card-clip
 ---
 
 # IAM Service

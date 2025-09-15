@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:users-gear
+icon: users-gear
 ---
 
 # Users and Permissions

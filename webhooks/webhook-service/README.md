@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:webhook
+icon: webhook
 ---
 
 # Webhook Service

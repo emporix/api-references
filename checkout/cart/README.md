@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:cart-shopping
+icon: cart-shopping
 ---
 
 # Cart Service

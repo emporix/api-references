@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:arrow-turn-down-left
+icon: arrow-turn-down-left
 ---
 
 # Returns Service

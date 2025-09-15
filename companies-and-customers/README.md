@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:building-user
+icon: building-user
 ---
 
 # Companies and Customers

@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:building-memo
+icon: building-memo
 ---
 
 # Customer Management

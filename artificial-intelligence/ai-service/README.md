@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:robot-astromech
+icon: robot-astromech
 ---
 
 # AI Service

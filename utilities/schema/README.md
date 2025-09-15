@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:list-check
+icon: list-check
 ---
 
 # Schema Service

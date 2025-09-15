@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:ruler
+icon: ruler
 ---
 
 # Unit Handling Service
