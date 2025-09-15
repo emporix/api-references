@@ -310,8 +310,8 @@ Once desired employees are added to appropriate customer groups, you can — for
 
 ## Customer assignment rules
 
-Emporix platform enforces rules when assigning customers to predefined groups to ensure role assignments remain valid, avoid conflicts, and support both cross-company and hierarchical organizational structures. 
-Customer validation is limited to a single company (legal entity). Validation processes do not apply across different companies or any company subsidiaries.
+Emporix platform enforces rules when assigning customers to predefined groups to ensure role assignments remain valid and avoid conflicts.
+Validation applies within the scope of a single company (legal entity) only. It does not extend across different companies or their subsidiaries, although cross-company and hierarchical assignments are supported.
 
 Examples: 
 
