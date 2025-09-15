@@ -316,7 +316,11 @@ Customer validation is limited to a single company (legal entity). Validation pr
 For example: 
 
 * If a customer is already assigned to one predefined group (for example, Emporix Admin Group), then it's not possible to assign that same customer to another predefined group within the same company.
-     The only exception is the *Contact* group, which can always be assigned.
-
 * If a customer is assigned to an *Admin* group in one company (for example, Company A), then the same customer may also be assigned to an *Admin* group in another company (for example, Company B).
 * If a customer is assigned to an *Admin* group in a parent company (for example, Company A), then that same customer may also be assigned to another role such as *Buyer* in the parent company’s subsidiary.
+
+{% hint style="success" %}
+
+The only exception is the *Contact* group, which can always be assigned.
+
+{% endhint %}
