@@ -3,6 +3,7 @@ layout:
   width: wide
 icon: sparkles
 layout:
+  width: wide 
   title:
     visible: true
   description:
