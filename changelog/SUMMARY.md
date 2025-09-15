@@ -8,6 +8,7 @@
 
 ## 2025
 
+* [2025-09-15: IAM Service – Validation of predefined group assignments](2025/2025-09-16-iam.md)
 * [2025-09-10: Customer Service - initial password for customer](2025/2025-09-10-customer.md)
 * [2025-09-10: Brand Service - removed deprecated endpoints and fields](2025/2025-09-10-brand.md)
 * [2025-09-10: Label Service - removed deprecated endpoints and fields](2025/2025-09-10-label.md)
