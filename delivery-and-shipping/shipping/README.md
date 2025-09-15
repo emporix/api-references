@@ -1,5 +1,7 @@
 ---
-icon: person-carry-box
+layout:
+  width: wide
+icon:person-carry-box
 ---
 
 # Shipping Service

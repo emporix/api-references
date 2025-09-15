@@ -1,5 +1,7 @@
 ---
-icon: warehouse-full
+layout:
+  width: wide
+icon:warehouse-full
 ---
 
 # Availability Service

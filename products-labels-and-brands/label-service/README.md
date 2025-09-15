@@ -1,5 +1,7 @@
 ---
-icon: tags
+layout:
+  width: wide
+icon:tags
 ---
 
 # Label Service

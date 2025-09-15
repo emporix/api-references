@@ -1,5 +1,7 @@
 ---
-icon: wrench
+layout:
+  width: wide
+icon:wrench
 ---
 
 # Configuration Service

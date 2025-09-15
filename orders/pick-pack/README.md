@@ -1,5 +1,7 @@
 ---
-icon: box-taped
+layout:
+  width: wide
+icon:box-taped
 ---
 
 # Pick-pack Service

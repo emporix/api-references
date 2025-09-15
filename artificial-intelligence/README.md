@@ -1,5 +1,7 @@
 ---
-icon: head-side-gear
+layout:
+  width: wide
+icon:head-side-gear
 ---
 
 # Artificial Intelligence

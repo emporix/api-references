@@ -1,5 +1,7 @@
 ---
-icon: rectangle-terminal
+layout:
+  width: wide
+icon:rectangle-terminal
 ---
 
 # API Reference

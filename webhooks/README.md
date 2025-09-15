@@ -1,5 +1,7 @@
 ---
-icon: webhook
+layout:
+  width: wide
+icon:webhook
 ---
 
 # Webhooks

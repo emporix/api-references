@@ -1,5 +1,7 @@
 ---
-icon: euro-sign
+layout:
+  width: wide
+icon:euro-sign
 ---
 
 # SEPA Export Service

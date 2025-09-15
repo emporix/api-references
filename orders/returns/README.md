@@ -1,5 +1,7 @@
 ---
-icon: arrow-turn-down-left
+layout:
+  width: wide
+icon:arrow-turn-down-left
 ---
 
 # Returns Service

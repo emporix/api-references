@@ -1,5 +1,7 @@
 ---
-icon: globe-pointer
+layout:
+  width: wide
+icon:globe-pointer
 ---
 
 # Site Settings Service

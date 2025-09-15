@@ -1,5 +1,7 @@
 ---
-icon: money-bill-1
+layout:
+  width: wide
+icon:money-bill-1
 ---
 
 # Payment-gateway Service
