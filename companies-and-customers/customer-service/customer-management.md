@@ -310,7 +310,7 @@ Once desired employees are added to appropriate customer groups, you can — for
 
 ## Customer assignment rules
 
-Emporix platform enforces rules when assigning customers to predefined groups to ensure role assignments remain valid and avoid conflicts.
+Emporix platform enforces rules when assigning customers to predefined groups to ensure role assignments remain valid and avoid conflicts. Within a single company, a user can belong to only one predefined group.
 Validation applies within the scope of a single company (legal entity) only. It does not extend across different companies or any subsidiaries.
 
 Examples: 
