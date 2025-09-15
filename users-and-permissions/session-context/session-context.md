@@ -3,6 +3,8 @@ seo:
   title: Session Context Service Tutorials
   description: session context
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Session-context Tutorial

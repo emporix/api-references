@@ -3,6 +3,8 @@ seo:
   title: Returns Service Tutorials
   description: returns
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Returns Tutorial
