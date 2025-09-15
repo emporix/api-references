@@ -1,4 +1,6 @@
 ---
+layout:
+  width: wide
 icon: display-code
 description: Create SDKs from Emporix API specifications for seamless integration with the Commerce Engine using OpenApi Generator.
 ---

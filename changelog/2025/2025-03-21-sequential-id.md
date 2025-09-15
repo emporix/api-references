@@ -1,4 +1,6 @@
 ---
+layout:
+  width: wide
 icon: sliders
 layout:
   title:
