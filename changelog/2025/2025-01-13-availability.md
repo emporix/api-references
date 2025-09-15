@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon:  hourglass-half
+icon: hourglass-half
 layout:
   width: wide
   title:
