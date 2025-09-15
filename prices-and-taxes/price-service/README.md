@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: circle-dollar
+icon:circle-dollar
 ---
 
 # Price Service

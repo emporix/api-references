@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: timer
+icon:timer
 ---
 
 # Session-context Service

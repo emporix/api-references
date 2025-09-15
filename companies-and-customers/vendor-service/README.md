@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: pallet-boxes
+icon:pallet-boxes
 ---
 
 # Vendor Management

@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: square-quote
+icon:square-quote
 layout:
   width: wide
   title:

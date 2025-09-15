@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: magnifying-glass
+icon:magnifying-glass
 ---
 
 # Indexing Service

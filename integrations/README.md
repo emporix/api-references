@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: plug
+icon:plug
 ---
 
 # Integrations

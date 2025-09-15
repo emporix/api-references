@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: screwdriver-wrench
+icon:screwdriver-wrench
 ---
 
 # Configuration

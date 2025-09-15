@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: file-invoice
+icon:file-invoice
 ---
 
 # Invoice Service

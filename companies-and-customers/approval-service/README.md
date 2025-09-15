@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: thumbs-up
+icon:thumbs-up
 ---
 
 # Approval Service

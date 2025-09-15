@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: graduation-cap
+icon:graduation-cap
 ---
 
 # AI Tutorials

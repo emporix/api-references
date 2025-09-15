@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: photo-film
+icon:photo-film
 ---
 
 # Media

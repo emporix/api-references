@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: photo-film-music
+icon:photo-film-music
 ---
 
 # Media Service

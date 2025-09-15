@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: gift
+icon:gift
 ---
 
 # Coupon Service

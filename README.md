@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: rectangle-terminal
+icon:rectangle-terminal
 layout:
   width: default
   title:

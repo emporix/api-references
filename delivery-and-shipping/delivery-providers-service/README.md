@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: truck-ramp-couch
+icon:truck-ramp-couch
 ---
 
 # Delivery Providers Service

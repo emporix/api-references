@@ -1,7 +1,9 @@
 ---
 layout:
   width: wide
-icon: copyright
+icon::
+  width: wide
+icon:copyright
 ---
 
 # Brand Service

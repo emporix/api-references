@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: album-collection
+icon:album-collection
 ---
 
 # Catalogs and Categories
