@@ -1,6 +1,4 @@
 ---
-layout:
-  width: wide
 icon: wand-sparkles
 layout:
   width: wide 

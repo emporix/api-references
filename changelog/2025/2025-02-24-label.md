@@ -1,6 +1,4 @@
 ---
-layout:
-  width: wide
 icon: hourglass-half
 layout:
   width: wide 

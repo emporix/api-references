@@ -1,6 +1,4 @@
 ---
-layout:
-  width: wide
 icon: arrow-progress
 description: See what we are currently working on.
 title: Current work in progress
