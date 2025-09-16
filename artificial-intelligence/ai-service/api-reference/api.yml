@@ -1733,7 +1733,7 @@ components:
       properties:
         events:
           type: array
-          description: List of events available to use by agent with `COMMERCE_EVENTS` trigger
+          description: List of events available to use by an agent with the `COMMERCE_EVENTS` trigger.
           items:
             type: string
 
