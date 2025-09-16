@@ -1,0 +1,31 @@
+---
+icon: sparkles
+layout:
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: false
+  pagination:
+    visible: true
+---
+
+# 2025-09-16: Client Management Service – new customer assignment propagation settings
+
+## Overview
+
+New `companyContactPropagation` settings were added to define how company contact assignments are propagated within a company hierarchy.
+
+* DOWNWARD – from parent to subsidiaries
+* UPWARD – from subsidiaries to parent
+* DISABLED – no propagation
+
+Propagation occurs only at the moment of assignment: creating a contact in one company also creates corresponding contacts in related companies based on the configured direction.
+
+## Known problems
+
+There are no known problems.
+
