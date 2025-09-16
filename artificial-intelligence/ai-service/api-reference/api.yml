@@ -2013,7 +2013,7 @@ components:
               $ref: '#/components/schemas/CommerceEventsTriggerType'
             config:
               type: object
-              description: Additional configuration for the trigger
+              description: Additional configuration for the trigger.
               properties:
                 events:
                   type: string
