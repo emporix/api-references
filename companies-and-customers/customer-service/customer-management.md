@@ -324,3 +324,12 @@ Examples:
 The exception is the *Contact* group, which can always be assigned.
 
 {% endhint %}
+
+### Company Contact Propagation
+As a part of the group assignment you can decide how the contact assignments are shared within a company hierarchy. You can choose from the following options:
+
+* **UPWARD**: Contacts assigned to a subsidiary are also visible at the parent company level. This is a default setting.
+* **DOWNWARD**: Contacts assigned to a parent company are also visible in all subsidiaries.  
+* **DISABLED**: Contacts remain only in the company where they were assigned, with no propagation. 
+
+Propagation happens only at the moment of assignment - creating the contact in the selected company also creates corresponding contacts in related companies according to the chosen direction.
