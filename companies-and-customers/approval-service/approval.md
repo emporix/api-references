@@ -43,6 +43,7 @@ The scopes that are granted depend on the user group to which the user is assign
 An approval can be created (requested) only by a customer who doesn't have the permission to trigger the checkout, which means they can't create an order.
 Only customers from the `B2B_REQUESTER` and `B2B_BUYER` groups can create an approval.
 Customers from the `B2B_BUYER` group can create approval only when the cost of the order exceeds the company limit, then the approval from an admin is required.
+If the user is a B2C user or an admin, the Approval API returns either info about no necessary approval or an error. The API is scoped specifically for `B2B_REQUESTER` and `B2B_BUYER` roles.
 
 ### How to check user approval rights
 
@@ -56,9 +57,11 @@ To check user approval rights upfront, send the request to [Retrieving all group
 
 You can also perform the check during checkout. If the user lacks the necessary rights, the approval flow can be triggered after the checkout fails. However, this approach requires first distinguishing between B2B and B2C users to verify whether they belong to a B2B legal entity or group.
 
-### Create an approval
+### How to start the approval flow
 
-To create a new approval, send a request to the [Creating a single approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#post-approval-tenant-approvals) endpoint.
+To start with the flow, you need to create an approval. Send a request to the [Creating a single approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#post-approval-tenant-approvals) endpoint.
+
+Only users from the `B2B_REQUESTER` or `B2B_BUYER` can initiate the flow. They are the users with the `approval.approval_manage_own` scope.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
