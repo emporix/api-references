@@ -1,4 +1,6 @@
 ---
+layout:
+    width: wide
 description: Browse the list of our services with links to downloadable specification files.
 icon: atom-simple
 ---

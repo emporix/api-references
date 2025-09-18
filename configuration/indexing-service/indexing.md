@@ -3,6 +3,8 @@ seo:
   title: Indexer Service Tutorials
   description: indexer, search connector
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Indexing Tutorial

@@ -3,6 +3,8 @@ seo:
   title: Customer Segment Service Tutorials
   description: customer segments
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Segments Tutorial

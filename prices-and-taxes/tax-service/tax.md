@@ -3,6 +3,8 @@ seo:
   title: Tax Service Tutorials
   description: tax, taxes, tax classes, tax class, tax configuration
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Tax Tutorials

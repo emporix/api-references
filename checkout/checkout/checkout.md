@@ -3,6 +3,8 @@ seo:
   title: Checkout Service Tutorials
   description: checkout setup
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Checkout Tutorial

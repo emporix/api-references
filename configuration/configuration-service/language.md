@@ -3,6 +3,8 @@ seo:
   title: Language Configuration Tutorials
   description: language, languages
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Language Tutorials

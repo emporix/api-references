@@ -9,6 +9,8 @@ editPage:
   disable: true
 label: Tutorials
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Cart Tutorial

@@ -3,6 +3,8 @@ seo:
   title: Schema Service Tutorials
   description: Schema Management
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Schema Tutorial

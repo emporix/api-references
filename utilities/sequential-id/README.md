@@ -1,4 +1,6 @@
 ---
+layout:
+  width: wide
 icon: arrows-rotate-reverse
 ---
 

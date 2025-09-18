@@ -3,6 +3,8 @@ seo:
   title: Reward Points Service Tutorials
   description: Reward Points Management
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Reward-points Tutorial

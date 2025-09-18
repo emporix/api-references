@@ -3,6 +3,8 @@ seo:
   title: Custom ID
   description: Standard practices
 icon: pen-field
+layout:
+  width: wide
 description: Custom IDs allow external systems to use their own identifiers as references for key entities, ensuring consistent relationships across systems.
 ---
 

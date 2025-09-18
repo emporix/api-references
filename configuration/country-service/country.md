@@ -3,6 +3,8 @@ seo:
   title: Country Service Tutorials
   description: country, countries
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Country Tutorial

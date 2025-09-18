@@ -3,6 +3,8 @@ seo:
   title: Order Service Tutorials
   description: order
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Order Tutorial

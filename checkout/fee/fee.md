@@ -3,6 +3,8 @@ seo:
   title: Fee Service Tutorials
   description: fee management
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Fee Tutorial

@@ -3,6 +3,8 @@ seo:
   title: Approval Service Tutorials
   description: Approvals Management
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Approval Tutorials

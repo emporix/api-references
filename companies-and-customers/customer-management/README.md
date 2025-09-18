@@ -1,4 +1,6 @@
 ---
+layout:
+    width: wide
 description: Customer-managed
 icon: user-group-crown
 ---

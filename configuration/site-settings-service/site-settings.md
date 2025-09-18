@@ -3,6 +3,8 @@ seo:
   title: Site Settings Service Tutorials
   description: site settings, site, sites
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Site Settings Tutorial

@@ -3,6 +3,8 @@ seo:
   title: Media Service Tutorials
   description: media and documents management
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Media Tutorial

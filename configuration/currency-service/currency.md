@@ -3,6 +3,8 @@ seo:
   title: Currency Service Tutorials
   description: currency, currencies
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Currency Tutorial

@@ -1,4 +1,6 @@
 ---
+layout:
+  width: wide
 icon: arrow-turn-down-left
 ---
 

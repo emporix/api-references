@@ -3,6 +3,8 @@ seo:
   title: Upsert
   description: upsert general setup
 icon: arrow-turn-up
+layout:
+  width: wide
 description: Upsert in Emporix simplifies entity management by allowing a PUT request to either create a new record if it doesn’t exist or update it if it does.
 ---
 
