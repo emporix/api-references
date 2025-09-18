@@ -7,8 +7,10 @@ icon: graduation-cap
 
 # Approval Tutorials
 
-The feature allows customers to manage approval processes for orders.
-There are four scopes in the functionality that were designed for *Admin*, *Buyer* and *Requester* roles.
+An approval process is essential for organizations to define the proper purchasing flow and enforce budget limits. Depending on the role of the customer creating an order, some orders are approved automatically, while others require additional confirmation from eligible users. This feature enables customers to manage approval processes for orders.
+
+The approval flow begins when a customer adds products to the cart in the storefront.
+The functionality supports four scopes, designed for *Admin*, *Buyer* and *Requester* roles.
 
 Scopes designed for a customer:
 
@@ -24,9 +26,100 @@ Scopes designed for a customer, admin (`B2B_ADMIN`), buyer (`B2B_BUYER`) and req
 Users are able to read or manage only the approvals that are assigned to them. 
 {% endhint %}
 
-{% hint style="info" %}
-To learn more about the approval groups, see the [Approvals](https://developer.emporix.io/ce/core-commerce/customer-management/approvals) user guides documentation.
-{% endhint %}
+See the different approval flows depending on the roles:
+
+Admin:
+
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  themeVariables:
+    primaryColor: '#DDE6EE'
+    primaryBorderColor: '#4C5359'
+    actorBkg: '#DDE6EE'
+    actorBorder: '#4C5359'
+    actorLineColor: '#4C5359'
+    signalColor: '#E86C07'
+    signalTextColor: '#7B8B99'
+    background: transparent 
+---
+sequenceDiagram
+    participant Admin as B2B ADMIN
+    participant Cart as CART
+    participant Approval as APPROVAL SERVICE
+    participant Order as ORDER
+
+    Admin ->> Cart: Product added to the cart
+    Cart ->> Approval: Permission check
+    Approval -->> Cart: Response
+    Cart ->> Order: Checkout triggered
+```
+
+Buyer:
+
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  themeVariables:
+    primaryColor: '#DDE6EE'
+    primaryBorderColor: '#4C5359'
+    actorBkg: '#DDE6EE'
+    actorBorder: '#4C5359'
+    actorLineColor: '#4C5359'
+    signalColor: '#E86C07'
+    signalTextColor: '#7B8B99'
+    background: transparent 
+---
+sequenceDiagram
+    participant Buyer as B2B BUYER
+    participant Cart as CART
+    participant Approval as APPROVAL SERVICE
+    participant Approver as APPROVER
+    participant Order as ORDER
+
+    Buyer ->> Cart: Product added to the cart
+    Cart ->> Order: Checkout triggered
+
+    Cart ->> Approval: Permission check
+    Approval -->> Cart: Auto-permit checkout<br/>(if within company limit)
+
+    Approval ->> Approver: Approval created by company approver
+    Approver ->> Order: Approver finishes the order process
+```
+
+Requester: 
+
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  themeVariables:
+    primaryColor: '#DDE6EE'
+    primaryBorderColor: '#4C5359'
+    actorBkg: '#DDE6EE'
+    actorBorder: '#4C5359'
+    actorLineColor: '#4C5359'
+    signalColor: '#E86C07'
+    signalTextColor: '#7B8B99'
+    background: transparent 
+---
+sequenceDiagram
+    participant BR as B2B Requester
+    participant C as Cart
+    participant AS as Approval Service
+    participant A as Approver
+    participant O as Order
+
+    BR->>C: Product added to the cart
+    C->>AS: Permission check
+    AS->>A: Approval created by the company approver
+    A->>O: The approver finishes the order process
+```
 
 ## Scopes rules
 
@@ -56,6 +149,12 @@ To check user approval rights upfront, send the request to [Retrieving all group
 {% endcontent-ref %}
 
 You can also perform the check during checkout. If the user lacks the necessary rights, the approval flow can be triggered after the checkout fails. However, this approach requires first distinguishing between B2B and B2C users to verify whether they belong to a B2B legal entity or group.
+
+### How to check eligible approvers
+
+Query your IAM or company user service for users in the same legal entity who belong to B2B_ADMIN or B2B_BUYER groups.
+
+You can optionally surface their names/emails in the UI to let the Requester choose.
 
 ### How to start the approval flow
 
@@ -173,3 +272,18 @@ curl -i -X GET
   'https://api.emporix.io/approval/{tenant}/approvals/{approvalId}' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
+
+## FAQ
+
+### Do I get approval notifications?
+
+After sending the approval request, an email notification is sent to the approver. You can also see a confirmation message indicating that the approval was requested. In your Saved Carts, you can check the status of your request.
+
+### Are multiple approvers supported?
+
+Currently, the Emporix approval service supports only one approver per request. There is no built-in mechanism to define multiple approvers where “any one can approve.” A possible workaround is to create a user account using a shared email address, such as approvers@emporix.com, which can be accessed by multiple team members.
+
+
+{% hint style="info" %}
+To learn more about the approval groups, see the [Approvals](https://developer.emporix.io/ce/core-commerce/customer-management/approvals) user guides documentation.
+{% endhint %}
