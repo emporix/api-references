@@ -9,6 +9,8 @@ icon: graduation-cap
 
 An approval process is essential for organizations to define the proper purchasing flow and enforce budget limits. Depending on the role of the customer creating an order, some orders are approved automatically, while others require additional confirmation from eligible users. This feature enables customers to manage approval processes for orders.
 
+## Roles and scopes
+
 The approval flow begins when a customer adds products to the cart in the storefront.
 The functionality supports four scopes, designed for *Admin*, *Buyer* and *Requester* roles.
 
@@ -28,7 +30,7 @@ Users are able to read or manage only the approvals that are assigned to them.
 
 See the different approval flows depending on the roles:
 
-Admin:
+**Admin**
 
 ```mermaid
 ---
@@ -57,7 +59,7 @@ sequenceDiagram
     Cart ->> Order: Checkout triggered
 ```
 
-Buyer:
+**Buyer**
 
 ```mermaid
 ---
@@ -90,8 +92,7 @@ sequenceDiagram
     Approval ->> Approver: Approval created by company approver
     Approver ->> Order: Approver finishes the order process
 ```
-
-Requester: 
+**Requester**
 
 ```mermaid
 ---
@@ -120,8 +121,7 @@ sequenceDiagram
     AS->>A: Approval created by the company approver
     A->>O: The approver finishes the order process
 ```
-
-## Scopes rules
+### Role rules
 
 Only the customers from `B2B_REQUESTER` and `B2B_BUYER` groups can create an approval, and only a customer of the same company can be chosen as an approver. An approver needs to be assigned to the `B2B_ADMIN` or `B2B_BUYER` group.
 
@@ -281,8 +281,7 @@ After sending the approval request, an email notification is sent to the approve
 
 ### Are multiple approvers supported?
 
-Currently, the Emporix approval service supports only one approver per request. There is no built-in mechanism to define multiple approvers where “any one can approve.” A possible workaround is to create a user account using a shared email address, such as approvers@emporix.com, which can be accessed by multiple team members.
-
+Currently, the Approval Service supports only one approver per request. There is no built-in mechanism to define multiple approvers. A possible workaround is to create a user account using a shared email address, such as approvers@emporix.com, which can be accessed by multiple team members.
 
 {% hint style="info" %}
 To learn more about the approval groups, see the [Approvals](https://developer.emporix.io/ce/core-commerce/customer-management/approvals) user guides documentation.
