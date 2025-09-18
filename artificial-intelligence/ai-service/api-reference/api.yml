@@ -1541,6 +1541,7 @@ components:
         - support
         - generic
         - complaint
+        - anti_fraud
     TextGenerationRequest:
       title: TextGenerationRequest
       type: object
