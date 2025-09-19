@@ -78,7 +78,7 @@ classDiagram
     ResourceCart --> SubtotalAggregate : subtotalAggregate
     ResourceCart --> DeliveryWindow : deliveryWindow
     ResourceCart --> Item : items
-    ```
+  ```
 
 ## Roles and scopes
 
