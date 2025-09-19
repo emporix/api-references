@@ -4,7 +4,7 @@ seo:
   description: IDPs, token, tokens, login, social login,
 icon: id-card-clip
 layout:
-  width: default
+  width: wide
   title:
     visible: true
   description:
