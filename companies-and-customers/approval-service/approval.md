@@ -45,39 +45,9 @@ classDiagram
         deliveryWindow : DeliveryWindow
         items : Item[]
     }
-
-    class Price {
-        currency : String
-        amount : Number
-    }
-
-    class SubtotalAggregate {
-        currency : String
-        netValue : Number
-        grossValue : Number
-        taxValue : Number
-    }
-
-    class DeliveryWindow {
-        id : String
-        slotId : String
-        deliveryDate : String
-    }
-
-    class Item {
-        quantity : Number
-        itemPrice : Price
-        itemYrn : String
-    }
-
     Approval --> Customer : approver
     Approval --> Customer : requestor
     Approval --> ResourceCart : resource
-    ResourceCart --> Price : totalPrice
-    ResourceCart --> Price : subTotalPrice
-    ResourceCart --> SubtotalAggregate : subtotalAggregate
-    ResourceCart --> DeliveryWindow : deliveryWindow
-    ResourceCart --> Item : items
   ```
 
 ## Roles and scopes
