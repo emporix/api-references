@@ -1060,7 +1060,7 @@ components:
           properties:
             id:
               type: string
-              description: Custom customer identifier. If not provided, it will be automatically generated.
+              description: Custom customer identifier. If not provided, it is automatically generated.
               minLength: 1
               maxLength: 66
               pattern: ^[a-zA-Z0-9_-]$
