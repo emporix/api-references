@@ -1217,7 +1217,7 @@ components:
             - BILLING
             - LOGISTICS
             - CONTACT
-          description: The type of the customer assignment. If not provided, it is set to `Contact`.
+          description: The type of the customer assignment. If not provided, it is set to `Contact` by default.
         primary:
           type: boolean
           default: false
