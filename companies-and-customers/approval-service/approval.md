@@ -9,6 +9,77 @@ icon: graduation-cap
 
 An approval process is essential for organizations to define the proper purchasing flow and enforce budget limits. Depending on the role of the customer creating an order, some orders are approved automatically, while others require additional confirmation from eligible users. This feature enables customers to manage approval processes for orders.
 
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128" 
+    edgeLabelTextColor: "#4C5359"
+---
+classDiagram
+    class Approval {
+        id : String
+        approver : Customer
+        requestor : Customer
+        resource : ResourceCart
+    }
+
+    class Customer {
+        id : String
+        firstName : String
+        lastName : String
+    }
+
+    class ResourceCart {
+        id : String
+        totalPrice : Price
+        subTotalPrice : Price
+        subtotalAggregate : SubtotalAggregate
+        siteCode : String
+        deliveryWindow : DeliveryWindow
+        items : Item[]
+    }
+
+    class Price {
+        currency : String
+        amount : Number
+    }
+
+    class SubtotalAggregate {
+        currency : String
+        netValue : Number
+        grossValue : Number
+        taxValue : Number
+    }
+
+    class DeliveryWindow {
+        id : String
+        slotId : String
+        deliveryDate : String
+    }
+
+    class Item {
+        quantity : Number
+        itemPrice : Price
+        itemYrn : String
+    }
+
+    Approval --> Customer : approver
+    Approval --> Customer : requestor
+    Approval --> ResourceCart : resource
+    ResourceCart --> Price : totalPrice
+    ResourceCart --> Price : subTotalPrice
+    ResourceCart --> SubtotalAggregate : subtotalAggregate
+    ResourceCart --> DeliveryWindow : deliveryWindow
+    ResourceCart --> Item : items
+    ```
+
 ## Roles and scopes
 
 The approval flow begins when a customer adds products to the cart in the storefront.
@@ -132,7 +203,9 @@ Scopes are granted automatically when a customer logs in, depending on their gro
 
 ### How to check user rights for approval flow
 
-To check user approval rights upfront, send the request to [Retrieving all groups to which a user is assigned](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-groups) endpoint.
+You can check the approval rights either with IAM or Approval service.
+
+* **IAM**: To check user approval rights upfront, send the request to [Retrieving all groups to which a user is assigned](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-groups) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -148,7 +221,7 @@ curl -L
   --header 'Accept: */*'
 ```
 
-You can also perform the check during checkout. If the user lacks the necessary rights, the approval flow can be triggered after the checkout fails. However, this approach requires first distinguishing between B2B and B2C users to verify whether they belong to a B2B legal entity or group.
+* **Approval**: You can perform the check during checkout. If the user lacks the necessary rights, the approval flow can be triggered after the checkout fails. However, this approach requires first distinguishing between B2B and B2C users to verify whether they belong to a B2B legal entity or group.
 
 ### How to check eligible approvers
 
