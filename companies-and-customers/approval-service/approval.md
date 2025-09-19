@@ -48,6 +48,13 @@ classDiagram
     Approval --> Customer : approver
     Approval --> Customer : requestor
     Approval --> ResourceCart : resource
+
+    class Approval
+    class Customer
+    class ResourceCart
+    style Approval fill:#F2F6FA
+    style Customer fill:#F2F6FA
+    style ResourceCart fill:#F2F6FA
   ```
 
 ## Roles and scopes
