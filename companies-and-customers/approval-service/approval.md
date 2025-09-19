@@ -28,7 +28,7 @@ Scopes designed for a customer, admin (`B2B_ADMIN`), buyer (`B2B_BUYER`) and req
 Users are able to read or manage only the approvals that are assigned to them. 
 {% endhint %}
 
-See the different approval flows depending on the roles:
+See the different approval flows depending on the roles placing the order:
 
 **Admin**
 
@@ -58,9 +58,7 @@ sequenceDiagram
     Approval -->> Cart: Response
     Cart ->> Order: Checkout triggered
 ```
-
 **Buyer**
-
 ```mermaid
 ---
 config:
@@ -93,7 +91,6 @@ sequenceDiagram
     Approver ->> Order: Approver finishes the order process
 ```
 **Requester**
-
 ```mermaid
 ---
 config:
@@ -123,22 +120,17 @@ sequenceDiagram
 ```
 ### Role rules
 
-Only the customers from `B2B_REQUESTER` and `B2B_BUYER` groups can create an approval, and only a customer of the same company can be chosen as an approver. An approver needs to be assigned to the `B2B_ADMIN` or `B2B_BUYER` group.
+Only customers from the `B2B_REQUESTER` and `B2B_BUYER` groups can create an approval, but only a customer from the same company can be chosen as the approver. An approver must belong to the `B2B_ADMIN` or `B2B_BUYER` group.
 
-An approval for a given resource can be created only by the resource owner. The approval can be updated, but only if it's still pending processing — the status is then visible as `PENDING`.
+An approval can be created (requested) only by a customer who does not have permission to trigger checkout - this means they cannot create an order. Additionally, `B2B_BUYER` customers can create an approval only if the order cost exceeds the company limit, in which case approval from an Admin is required. For `B2C` users or Admins, the Approval API either indicates that no approval is necessary or returns an error.
 
-Customers can manage only the approvals which are assigned to them. The scopes are granted automatically when a customer is logged in to our system.
+An approval for a given resource can only be created by the resource owner. Approvals can be updated while their status is PENDING. Customers can manage only the approvals assigned to them.
 
-The scopes that are granted depend on the user group to which the user is assigned. Nevertheless, if a token needs to be generated based on an API key, then you can use the Customer Service to get the token: [Customer Service – Customer Token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-validateauthtoken).
+Scopes are granted automatically when a customer logs in, depending on their group. If a token needs to be generated based on an API key, then you can use the Customer Service to get the token: [Customer Service – Customer Token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-validateauthtoken).
 
-## How to manage approvals
+## Managing approvals
 
-An approval can be created (requested) only by a customer who doesn't have the permission to trigger the checkout, which means they can't create an order.
-Only customers from the `B2B_REQUESTER` and `B2B_BUYER` groups can create an approval.
-Customers from the `B2B_BUYER` group can create approval only when the cost of the order exceeds the company limit, then the approval from an admin is required.
-If the user is a B2C user or an admin, the Approval API returns either info about no necessary approval or an error. The API is scoped specifically for `B2B_REQUESTER` and `B2B_BUYER` roles.
-
-### How to check user approval rights
+### How to check user rights for approval flow
 
 To check user approval rights upfront, send the request to [Retrieving all groups to which a user is assigned](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-groups) endpoint.
 
@@ -152,9 +144,8 @@ You can also perform the check during checkout. If the user lacks the necessary 
 
 ### How to check eligible approvers
 
-Query your IAM or company user service for users in the same legal entity who belong to B2B_ADMIN or B2B_BUYER groups.
+To check approvers from your company, query the IAM Service or company user service for users in the same legal entity who belong to `B2B_ADMIN` or `B2B_BUYER` groups.
 
-You can optionally surface their names/emails in the UI to let the Requester choose.
 
 ### How to start the approval flow
 
