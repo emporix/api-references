@@ -107,11 +107,11 @@ config:
     background: transparent 
 ---
 sequenceDiagram
-    participant BR as B2B Requester
-    participant C as Cart
-    participant AS as Approval Service
-    participant A as Approver
-    participant O as Order
+    participant BR as B2B REQUESTER
+    participant C as CART
+    participant AS as APPROVAL SERVICE
+    participant A as APPROVAL
+    participant O as ORDER
 
     BR->>C: Product added to the cart
     C->>AS: Permission check
@@ -120,7 +120,7 @@ sequenceDiagram
 ```
 ### Role rules
 
-Only customers from the `B2B_REQUESTER` and `B2B_BUYER` groups can create an approval, but only a customer from the same company can be chosen as the approver. An approver must belong to the `B2B_ADMIN` or `B2B_BUYER` group.
+Only customers from the `B2B_REQUESTER` and `B2B_BUYER` groups can create an approval, and only a customer from the same company can be chosen as the approver. An approver must belong to the `B2B_ADMIN` or `B2B_BUYER` group.
 
 An approval can be created (requested) only by a customer who does not have permission to trigger checkout - this means they cannot create an order. Additionally, `B2B_BUYER` customers can create an approval only if the order cost exceeds the company limit, in which case approval from an Admin is required. For `B2C` users or Admins, the Approval API either indicates that no approval is necessary or returns an error.
 
@@ -140,13 +140,21 @@ To check user approval rights upfront, send the request to [Retrieving all group
 [api-reference](../../users-and-permissions/iam/api-reference/)
 {% endcontent-ref %}
 
+
+```bash
+curl -L 
+  --url 'https://api.emporix.io/iam/{tenant}/users/{userId}/groups' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Accept: */*'
+```
+
 You can also perform the check during checkout. If the user lacks the necessary rights, the approval flow can be triggered after the checkout fails. However, this approach requires first distinguishing between B2B and B2C users to verify whether they belong to a B2B legal entity or group.
 
 ### How to check eligible approvers
 
 To check approvers from your company, query the IAM Service or company user service for users in the same legal entity who belong to `B2B_ADMIN` or `B2B_BUYER` groups.
 
-Send the request to the [Retrieving users assigned to a group]https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups-groupid-users) endpoint and provide the `groupId` (for example of the Admin group) to get a response with assigned users.
+Send the request to the [Retrieving users assigned to a group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups-groupid-users) endpoint and provide the `groupId` (*Admin* or *Buyer* group) to get a response with assigned users.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -172,8 +180,8 @@ If a customer is in `B2B_ADMIN` role, the create approval flow does not start.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../approval-service/api-reference/" %}
-[api-reference](../approval-service/api-reference/)
+{% content-ref url="../approval-service/approval-api-reference/" %}
+[api-reference](../approval-service/approval-api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -252,8 +260,8 @@ To update an approval, send a request to the [Updating a single approval](https:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../approval-service/api-reference/" %}
-[api-reference](../approval-service/api-reference/)
+{% content-ref url="../approval-service/approval-api-reference/" %}
+[api-reference](../approval-service/approval-api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -271,8 +279,8 @@ To retrieve an approval, send a request to the [Retrieving a single approval](ht
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../approval-service/api-reference/" %}
-[api-reference](../approval-service/api-reference/)
+{% content-ref url="../approval-service/approval-api-reference/" %}
+[api-reference](../approval-service/approval-api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -283,7 +291,7 @@ curl -i -X GET
 
 ## FAQ
 
-### Do I get approval notifications?
+### How do I get approval notifications?
 
 After sending the approval request, an email notification is sent to the approver. 
 As a requester, you can also see a confirmation message indicating that the approval was requested. You can find it in your storefront account under Saved Carts. You can also check there the status of your request.
