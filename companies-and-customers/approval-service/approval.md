@@ -146,12 +146,29 @@ You can also perform the check during checkout. If the user lacks the necessary 
 
 To check approvers from your company, query the IAM Service or company user service for users in the same legal entity who belong to `B2B_ADMIN` or `B2B_BUYER` groups.
 
+Send the request to the [Retrieving users assigned to a group]https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups-groupid-users) endpoint and provide the `groupId` (for example of the Admin group) to get a response with assigned users.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../users-and-permissions/iam/api-reference/" %}
+[api-reference](../../users-and-permissions/iam/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -L 
+  --url 'https://api.emporix.io/iam/{tenant}/groups/{groupId}/users' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Accept: */*'
+```
 
 ### How to start the approval flow
 
-To start with the flow, you need to create an approval. Send a request to the [Creating a single approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#post-approval-tenant-approvals) endpoint.
+To start with the flow, you need to create an approval. 
 
-Only users from the `B2B_REQUESTER` or `B2B_BUYER` can initiate the flow. They are the users with the `approval.approval_manage_own` scope.
+Send a request to the [Creating a single approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#post-approval-tenant-approvals) endpoint.
+
+Only customers with the `B2B_REQUESTER` or `B2B_BUYER` roles can initiate the flow. They are the users with the `approval.approval_manage_own` scope.
+If a customer is in `B2B_ADMIN` role, the create approval flow does not start.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -268,12 +285,15 @@ curl -i -X GET
 
 ### Do I get approval notifications?
 
-After sending the approval request, an email notification is sent to the approver. You can also see a confirmation message indicating that the approval was requested. In your Saved Carts, you can check the status of your request.
+After sending the approval request, an email notification is sent to the approver. 
+As a requester, you can also see a confirmation message indicating that the approval was requested. You can find it in your storefront account under Saved Carts. You can also check there the status of your request.
 
 ### Are multiple approvers supported?
 
-Currently, the Approval Service supports only one approver per request. There is no built-in mechanism to define multiple approvers. A possible workaround is to create a user account using a shared email address, such as approvers@emporix.com, which can be accessed by multiple team members.
+The Approval Service supports only one approver per request. There is no built-in mechanism to define multiple approvers. A possible workaround is to create a user account using a shared email address, such as approvers@emporix.com, which can be accessed by multiple team members.
 
 {% hint style="info" %}
 To learn more about the approval groups, see the [Approvals](https://developer.emporix.io/ce/core-commerce/customer-management/approvals) user guides documentation.
+
+To see an end-to-end flow from the storefront perspective, see the [User Management and Approvals](https://developer.emporix.io/ce/customer-use-cases/scenarios-introduction/right-roles#requesting-an-approval) use case.
 {% endhint %}
