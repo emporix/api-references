@@ -19,8 +19,7 @@ config:
     background: transparent
     lineColor: "#9CBBE3"
     arrowheadColor: "#9CBBE3"
-    edgeLabelBackground: "#FFC128" 
-    edgeLabelTextColor: "#4C5359"
+    
 ---
 classDiagram
     class Approval {
@@ -52,9 +51,9 @@ classDiagram
     class Approval
     class Customer
     class ResourceCart
-    style Approval fill:#F2F6FA
-    style Customer fill:#F2F6FA
-    style ResourceCart fill:#F2F6FA
+    style Approval fill:#F2F6FA, stroke:#4C5359
+    style Customer fill:#F2F6FA, stroke:#4C5359
+    style ResourceCart fill:#F2F6FA, stroke:#4C5359
   ```
 
 ## Roles and scopes
