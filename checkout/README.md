@@ -1,5 +1,7 @@
 ---
-icon: cash-register
+layout:
+  width: wide
+icon:cash-register
 ---
 
 # Checkout

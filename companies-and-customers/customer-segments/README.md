@@ -1,5 +1,7 @@
 ---
-icon: people-roof
+layout:
+  width: wide
+icon:people-roof
 ---
 
 # Customer Segments

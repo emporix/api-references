@@ -1,5 +1,7 @@
 ---
-icon: icons
+layout:
+  width: wide
+icon:icons
 ---
 
 # Category Service

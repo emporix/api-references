@@ -1,6 +1,8 @@
 ---
+
 icon: folder-open
 layout:
+  width: wide 
   title:
     visible: true
   description:

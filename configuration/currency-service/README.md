@@ -1,5 +1,7 @@
 ---
-icon: dollar-sign
+layout:
+  width: wide
+icon:dollar-sign
 ---
 
 # Currency Service

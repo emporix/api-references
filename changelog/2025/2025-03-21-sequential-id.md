@@ -1,6 +1,9 @@
 ---
+layout:
+  width: wide
 icon: sliders
 layout:
+  width: wide 
   title:
     visible: true
   description:

@@ -1,5 +1,7 @@
 ---
-icon: cart-circle-check
+layout:
+  width: wide
+icon:cart-circle-check
 ---
 
 # Shopping List

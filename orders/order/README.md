@@ -1,5 +1,7 @@
 ---
-icon: bag-shopping
+layout:
+  width: wide
+icon:bag-shopping
 ---
 
 # Order Service

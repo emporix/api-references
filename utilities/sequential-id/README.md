@@ -1,5 +1,7 @@
 ---
-icon: arrows-rotate-reverse
+layout:
+  width: wide
+icon:arrows-rotate-reverse
 ---
 
 # Sequential-id Service

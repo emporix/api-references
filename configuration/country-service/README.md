@@ -1,5 +1,7 @@
 ---
-icon: flag
+layout:
+  width: wide
+icon:flag
 ---
 
 # Country Service

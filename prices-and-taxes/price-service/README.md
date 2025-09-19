@@ -1,5 +1,7 @@
 ---
-icon: circle-dollar
+layout:
+  width: wide
+icon:circle-dollar
 ---
 
 # Price Service
