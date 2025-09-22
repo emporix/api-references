@@ -1506,7 +1506,7 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
-        Retrieves commerce events available for egents with `COMMERCE_EVENTS` trigger.
+        Retrieves commerce events available for agents with `COMMERCE_EVENTS` trigger.
         
         ### Required scopes
 
