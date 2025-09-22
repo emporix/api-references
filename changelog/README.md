@@ -1,3 +1,8 @@
+---
+layout:
+    width: wide
+---
+
 # Changelog
 
 Find out what has been recently changed in the Emporix system.
