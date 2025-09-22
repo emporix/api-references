@@ -347,7 +347,7 @@ As a requester, you can also see a confirmation message indicating that the appr
 
 ### Are multiple approvers supported?
 
-The Approval Service supports only one approver per request. There is no built-in mechanism to define multiple approvers. A possible workaround is to create a user account using a shared email address, such as approvers@emporix.com, which can be accessed by multiple team members.
+The Approval Service supports only one approver per request. There is no built-in mechanism to define multiple approvers. A possible workaround is to create a user account using a shared email address, such as for example approvers@yourcompany.com, which can be accessed by multiple team members.
 
 {% hint style="info" %}
 To learn more about the approval groups, see the [Approvals](https://developer.emporix.io/ce/core-commerce/customer-management/approvals) user guides documentation.
