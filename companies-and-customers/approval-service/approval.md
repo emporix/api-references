@@ -301,7 +301,7 @@ curl -i -X POST
   }'
 ```
 
-### Update an approval
+### How to update an approval
 
 After creating the approval, items can be updated by the PATCH endpoint. Customers can change the status, details, delivery window and comment of the approval.
 
@@ -320,7 +320,7 @@ curl -i -X PATCH
   -H 'Content-Type: application/json' 
 ```
 
-### Retrieve an approval
+### How to retrieve an approval
 
 Approvals can be fetched by a customer. Only the approval which is assigned to the customer is returned.
 
