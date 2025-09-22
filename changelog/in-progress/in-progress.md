@@ -2,7 +2,6 @@
 icon: arrow-progress
 description: See what we are currently working on.
 title: Current work in progress
----
 layout:
    width: wide
    title:
@@ -15,7 +14,6 @@ layout:
     visible: false
   pagination:
     visible: true
-
 ---
 
 # Current work in progress

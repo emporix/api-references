@@ -1,6 +1,5 @@
 ---
 icon: hourglass-half
----
 layout:
    width: wide
    title:

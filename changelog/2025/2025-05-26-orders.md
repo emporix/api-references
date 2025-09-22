@@ -1,6 +1,5 @@
 ---
 icon: sparkles
----
 layout:
    width: wide
    title:

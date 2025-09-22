@@ -1,6 +1,5 @@
 ---
 icon: sliders
----
 layout:
    width: wide
    title:

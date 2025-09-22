@@ -1,6 +1,5 @@
 ---
 icon: wand-sparkles
----
 layout:
    width: wide
    title:
