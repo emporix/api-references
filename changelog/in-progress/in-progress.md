@@ -3,8 +3,8 @@ icon: arrow-progress
 description: See what we are currently working on.
 title: Current work in progress
 layout:
-   width: wide
-   title:
+  width: wide
+  title:
     visible: true
   description:
     visible: true

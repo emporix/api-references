@@ -1,8 +1,8 @@
 ---
 icon: hourglass-half
 layout:
-   width: wide
-   title:
+  width: wide
+  title:
     visible: true
   description:
     visible: true
