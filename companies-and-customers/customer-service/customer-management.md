@@ -39,10 +39,10 @@ A location is a physical address where a company operates, such as its headquart
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/customer-management/{tenant}/locations' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/customer-management/{tenant}/locations' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "name": "Main HQ",
     "type": "HEADQUARTER",
@@ -83,10 +83,10 @@ A legal entity is a representation of a company. To add a new legal entity, you 
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/customer-management/{tenant}/legal-entities' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/customer-management/{tenant}/legal-entities' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "name": "Company name",
     "type": "COMPANY",
@@ -149,9 +149,9 @@ To find out what a company's ID is, you need to send a request to the [Retrievin
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET \
+curl -i -X GET 
   'https://api.emporix.io/customer-management/{tenant}/legal-entities?pageNumber=1&pageSize=16&sort=name%2Cmetadata.createdAt%3Adesc&q=name%3A~john&fields=name%2Ctype&id=string&name=string&type=COMPANY&parentId=string&legalInfo.legalName=string&legalInfo.registrationDate=string&legalInfo.taxRegistrationNumber=string&legalInfo.registrationAgency=string&legalInfo.countryOfRegistration=string&legalInfo.registrationId=string' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'X-Total-Count: false'
 ```
 
@@ -170,10 +170,10 @@ Subsidiaries are added similarly to their parent companies. To add a new subsidi
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/customer-management/{tenant}/legal-entities' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/customer-management/{tenant}/legal-entities' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "name": "Company name",
     "type": "COMPANY",
@@ -250,9 +250,9 @@ To find out what a company's ID is, you need to send a request to the [Retrievin
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET \
-  'https://api.emporix.io/customer-management/{tenant}/legal-entities?pageNumber=1&pageSize=16&sort=name%2Cmetadata.createdAt%3Adesc&q=name%3A~john&fields=name%2Ctype&id=string&name=string&type=COMPANY&parentId=string&legalInfo.legalName=string&legalInfo.registrationDate=string&legalInfo.taxRegistrationNumber=string&legalInfo.registrationAgency=string&legalInfo.countryOfRegistration=string&legalInfo.registrationId=string' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+curl -i -X GET 
+  'https://api.emporix.io/customer-management/{tenant}/legal-entities?pageNumber=1&pageSize=16&sort=name%2Cmetadata.createdAt%3Adesc&q=name%3A~john&fields=name%2Ctype&id=string&name=string&type=COMPANY&parentId=string&legalInfo.legalName=string&legalInfo.registrationDate=string&legalInfo.taxRegistrationNumber=string&legalInfo.registrationAgency=string&legalInfo.countryOfRegistration=string&legalInfo.registrationId=string' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'X-Total-Count: false'
 ```
 
@@ -271,8 +271,8 @@ To retrieve an employee's customer ID, you need to send a request to the [Retrie
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET \
-  'https://api.emporix.io/customer/{tenant}/customers?q=contactEmail%3A{email}&sort=string&pageNumber=1&pageSize=60&expand=string' \
+curl -i -X GET 
+  'https://api.emporix.io/customer/{tenant}/customers?q=contactEmail%3A{email}&sort=string&pageNumber=1&pageSize=60&expand=string' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
@@ -282,7 +282,7 @@ The `id` from the response is further referred to as `customerId`.
 
 ### Assign the contact to the company
 
-A contact represents an employee of one or more business customers.\
+A contact represents an employee of one or more business customers.
 To assign a contact to a legal entity (in this case, the desired company), you need to send a request to the [Creating a new contact assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/contact-assignments#post-tenant-contact-assignments) endpoint and provide `legalEntityId` and `customerId` in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -292,10 +292,10 @@ To assign a contact to a legal entity (in this case, the desired company), you n
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/customer-management/{tenant}/contact-assignments' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/customer-management/{tenant}/contact-assignments' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "legalEntity": {
       "id": "612306ecf0452c2d6c0b81392"
@@ -309,3 +309,29 @@ curl -i -X POST \
 ```
 
 Once desired employees are added to appropriate customer groups, you can — for example — create personalized price lists for them. For instructions, check out [_How to configure a price list_](../../prices-and-taxes/price-service/price.md#how-to-configure-a-price-list) in the _Price Service guide_.
+
+## Customer assignment rules
+
+Emporix platform enforces rules when assigning customers to predefined groups to ensure role assignments remain valid and avoid conflicts. Within a single company, a user can belong to only one predefined group.
+Validation applies within the scope of a single company (legal entity) only. It does not extend across different companies or any subsidiaries.
+
+Examples: 
+
+* If a customer is already assigned to one predefined group (for example, Emporix Admin Group), then it's not possible to assign that same customer to another predefined group within the same company.
+* If a customer is assigned to an *Admin* group in one company (for example, Company A), then the same customer may also be assigned to an *Admin* group in another company (for example, Company B).
+* If a customer is assigned to an *Admin* group in a parent company (for example, Company A), then that same customer may also be assigned to another role such as *Buyer* in the parent company’s subsidiary.
+
+{% hint style="success" %}
+
+The exception is the *Contact* group, which can always be assigned.
+
+{% endhint %}
+
+### Company Contact Propagation
+As a part of the group assignment you can decide how the contact assignments are shared within a company hierarchy. You can choose from the following options:
+
+* **UPWARD**: Contacts assigned to a subsidiary are also visible at the parent company level. This is a default setting.
+* **DOWNWARD**: Contacts assigned to a parent company are also visible in all subsidiaries.  
+* **DISABLED**: Contacts remain only in the company where they were assigned, with no propagation. 
+
+Propagation happens only at the moment of assignment - creating the contact in the selected company also creates corresponding contacts in related companies according to the chosen direction.
