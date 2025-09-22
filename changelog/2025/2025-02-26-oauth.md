@@ -1,7 +1,9 @@
 ---
 icon: wand-sparkles
+---
 layout:
-  title:
+   width: wide
+   title:
     visible: true
   description:
     visible: true
