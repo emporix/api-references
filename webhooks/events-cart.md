@@ -4,6 +4,8 @@ seo:
   description: Webhooks, cart events
 icon: webhook
 description: Webhook events related to the creation, update, and deletion of a cart.
+layout:
+  width: wide
 ---
 
 # Events - Cart

@@ -4,6 +4,8 @@ seo:
   description: Webhooks, order events
 icon: webhook
 description: Webhook events related to the creation, update, cancellation, and status change of an order.
+layout:
+  width: wide
 ---
 
 # Events - Order

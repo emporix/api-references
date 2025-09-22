@@ -4,6 +4,8 @@ seo:
   description: Webhooks, indexing service events
 icon: webhook
 description: Webhook events related to indexing data.
+layout:
+  width: wide
 ---
 
 # Events - Index Item

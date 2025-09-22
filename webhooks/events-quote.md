@@ -4,6 +4,8 @@ seo:
   description: Webhooks, Quote events
 icon: webhook
 description: Webhook events related to the creation, update, and deletion of a quote.
+layout:
+  width: wide
 ---
 
 # Events - Quote

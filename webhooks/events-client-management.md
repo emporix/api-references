@@ -4,6 +4,8 @@ seo:
   description: Webhooks, client management events
 icon: webhook
 description: Webhook events related to the creation, update and deletion of legal entity and assigning user to legal entity.
+layout:
+  width: wide
 ---
 
 # Events - Client Management

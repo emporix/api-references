@@ -3,6 +3,8 @@ seo:
   title: Catalog Service Tutorials
   description: catalog, catalogs
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Catalog Tutorials
