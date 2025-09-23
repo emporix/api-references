@@ -1,15 +1,15 @@
 ---
 icon: hourglass-half
-  title:
-    visible: true
-  description:
-    visible: true
-  tableOfContents:
-    visible: true
-  outline:
-    visible: false
-  pagination:
-    visible: true
+title:
+  visible: true
+description:
+  visible: true
+tableOfContents:
+  visible: true
+outline:
+  visible: false
+pagination:
+  visible: true
 ---
 
 # 2025-01-13: Availability Service - availability endpoints replacement
