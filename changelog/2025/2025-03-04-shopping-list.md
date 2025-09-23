@@ -1,10 +1,6 @@
 ---
 icon: sliders
 layout:
-<<<<<<< HEAD
-  width: wide
-=======
->>>>>>> parent of 31b07a6 (changelog width)
   title:
     visible: true
   description:
