@@ -4,8 +4,6 @@ seo:
   description: Webhooks, product events
 icon: webhook
 description: Webhook events related to the creation, update, and deletion of a product.
-layout:
-  width: wide
 ---
 
 # Events - Product

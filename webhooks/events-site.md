@@ -4,8 +4,6 @@ seo:
   description: Webhooks, site service events
 icon: webhook
 description: Webhook events the creation, update, and deletion of a site.
-layout:
-  width: wide
 ---
 
 # Events - Site

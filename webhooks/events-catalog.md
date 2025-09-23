@@ -4,8 +4,6 @@ seo:
   description: Webhooks, catalog events
 icon: webhook
 description: Webhook events related to the creation, update, and deletion of a catalog.
-layout:
-  width: wide
 ---
 
 # Events - Catalog

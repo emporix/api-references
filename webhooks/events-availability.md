@@ -4,9 +4,6 @@ seo:
   description: Webhooks, availability events
 icon: webhook
 description: Webhook events related to the creation, update, and deletion of an availability.
-layout:
-  width: wide
-
 ---
 
 # Events - Availability

@@ -4,8 +4,6 @@ seo:
   description: Webhooks, Vendor events
 icon: webhook
 description: Webhook events related to the creation, update, and deletion of a vendor.
-layout:
-  width: wide
 ---
 
 # Events - Vendor

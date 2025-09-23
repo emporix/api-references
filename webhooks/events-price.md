@@ -4,8 +4,6 @@ seo:
   description: Webhooks, price events
 icon: webhook
 description: Webhook events related to the creation, update, and deletion of a price, price model, price list and a price list price.
-layout:
-  width: wide
 ---
 
 # Events - Price

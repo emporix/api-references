@@ -4,8 +4,6 @@ seo:
   description: Webhooks, schema events
 icon: webhook
 description: Webhook events related to the creation, update, and deletion of custom mixin schemas.
-layout:
-  width: wide
 ---
 
 # Events - Schema
