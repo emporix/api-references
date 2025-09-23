@@ -3,6 +3,8 @@ seo:
   title: Invoice Service Tutorials
   description: Invoices Generation
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Invoice Tutorial

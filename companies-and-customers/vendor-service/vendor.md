@@ -3,6 +3,8 @@ seo:
   title: Vendor Service Tutorial
   description: vendor
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Vendor Tutorial

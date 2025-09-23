@@ -4,6 +4,8 @@ seo:
   description: unit, units, measurement unit, measurement units
 label: Tutorials
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Unit Handling Tutorial

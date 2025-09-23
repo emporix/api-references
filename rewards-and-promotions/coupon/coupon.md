@@ -5,6 +5,8 @@ seo:
     coupon, coupons, free shipping, fixed discount, percentage discount,
     discount, discounts, referral, referrals
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Coupon Tutorial

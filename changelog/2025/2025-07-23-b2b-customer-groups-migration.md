@@ -1,19 +1,17 @@
 ---
 icon: wand-sparkles
-layout:
-  width: default
-  title:
-    visible: true
-  description:
-    visible: true
-  tableOfContents:
-    visible: true
-  outline:
-    visible: false
-  pagination:
-    visible: true
-  metadata:
-    visible: true
+title:
+  visible: true
+description:
+  visible: true
+tableOfContents:
+  visible: true
+outline:
+  visible: false
+pagination:
+  visible: true
+metadata:
+  visible: true
 ---
 
 # 2025-07-23: B2B Customer Groups - Migration

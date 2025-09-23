@@ -4,6 +4,8 @@ seo:
   description: Webhooks, return service events
 icon: webhook
 description: Webhook events the creation, update, and deletion of a return.
+layout:
+  width: wide
 ---
 
 # Events - Return

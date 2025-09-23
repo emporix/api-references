@@ -4,6 +4,8 @@ seo:
   description: Webhooks, category tree events
 icon: webhook
 description: Webhook events related to the creation, update, and deletion of a category tree and to the creation and deletion of a category assignment.
+layout:
+  width: wide
 ---
 
 # Events - Category Tree
