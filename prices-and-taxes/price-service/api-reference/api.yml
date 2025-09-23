@@ -773,7 +773,7 @@ paths:
       description: |-
         Finds the best price based on information retrieved from the session context.
 
-        The behavior of the logic is the same as of the price/{tenant}/match-prices (function/mechanism?). The only exception is that the criteria are created based on the information retrieved from the session details assigned to the access-token in the Session-context Service`.
+        The behavior of the logic is the same as of the price/{tenant}/match-prices mechanism. The only exception is that the criteria are created based on the information retrieved from the session details assigned to the access-token in the Session-context Service.
 
         The list of items is also needed as body parameter (similar to the other endpoint).
       responses:
