@@ -1,7 +1,5 @@
 ---
 icon: arrows-rotate-reverse
-layout:
-   width: wide
 ---
 
 # Changelog
