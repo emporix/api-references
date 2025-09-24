@@ -47,8 +47,6 @@ paths:
         
         This endpoint is `deprecated`. Please use the [/sequential-id/{tenant}/schemas](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-tenant-schemas) instead.
 
-        ***
-
          ### Required scopes
         * `sequentialid.schema_view`
       operationId: GET-sequential-id-retrieve-schemas
@@ -78,7 +76,7 @@ paths:
         Creates a new sequence schema.
                 
         This endpoint is `deprecated`. Please use the [/sequential-id/{tenant}/schemas](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas) instead.
-        ***
+
 
          ### Required scopes
         * `sequentialid.schema_manage`
