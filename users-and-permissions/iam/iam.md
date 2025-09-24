@@ -3,6 +3,8 @@ seo:
   title: IAM Service Tutorials
   description: identity access management, access control groups, users
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # IAM Tutorial

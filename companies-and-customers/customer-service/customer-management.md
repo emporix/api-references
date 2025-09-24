@@ -5,6 +5,8 @@ seo:
     client management, customer management, client, clients, contact, contacts,
     subsidiary, subsidiaries
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Customer Management Tutorial

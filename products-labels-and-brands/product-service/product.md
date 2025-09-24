@@ -5,6 +5,8 @@ seo:
     product, product template, product templates, product variant, product
     variants, product bundle, product bundles, variant attributes
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Product Tutorial

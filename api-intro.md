@@ -1,4 +1,6 @@
 ---
+layout:
+  width: wide
 icon: code-branch
 description: Get familiar with Emporix API.
 ---

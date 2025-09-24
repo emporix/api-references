@@ -1283,4 +1283,4 @@ components:
     CustomerAccessToken:
       type: http
       scheme: bearer
-      description: 'To generate a customer''s access token, go to the [Logging in a customer](?urls.primaryName=Customer/Customer%20authentication%20and%20authorization/POST_tenant-login) endpoint.'
+      description: 'To generate a customer''s access token, go to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.'

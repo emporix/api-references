@@ -3,6 +3,8 @@ seo:
   title: Brand Service Tutorials
   description: brands, brands, logo, logos
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Brand Tutorial

@@ -3,6 +3,8 @@ seo:
   title: Label Service Tutorials
   description: Label Management
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Label Tutorial

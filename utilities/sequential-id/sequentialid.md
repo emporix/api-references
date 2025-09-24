@@ -3,6 +3,8 @@ seo:
   title: Sequential ID Service Tutorials
   description: Sequential Ids Schema Management
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Sequential-id Tutorial

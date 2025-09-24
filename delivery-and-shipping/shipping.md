@@ -11,6 +11,8 @@ editPage:
   disable: true
 label: Tutorials
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Delivery and Shipping Tutorial

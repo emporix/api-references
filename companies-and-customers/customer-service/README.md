@@ -1,4 +1,6 @@
 ---
+layout:
+    width: wide
 description: Tenant-managed
 icon: users
 ---

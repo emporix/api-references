@@ -3,6 +3,8 @@ seo:
   title: General Info
   description: Standard practices
 icon: lightbulb-on
+layout:
+  width: wide
 description: The Emporix API follows standardized practices for data consistency, using ISO and IETF formats for countries, currencies, dates/times, and languages across its services.
 ---
 

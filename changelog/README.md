@@ -1,3 +1,7 @@
+---
+icon: arrows-rotate-reverse
+---
+
 # Changelog
 
 Find out what has been recently changed in the Emporix system.
