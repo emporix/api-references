@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2025-09-22: Client Management Service – Added a new contact assignment type
+# 2025-09-24: Client Management Service – Added a new contact assignment type
 
 ## Overview
 

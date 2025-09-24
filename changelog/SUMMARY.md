@@ -8,7 +8,7 @@
 
 ## 2025
 
-* [2025-09-22: Client Management Service – added a new contact assignment type](2025/2025-09-22-contact-management.md)
+* [2025-09-24: Client Management Service – added a new contact assignment type](2025/2025-09-24-contact-management.md)
 * [2025-09-16: Client Management Service – new customer assignment propagation settings](2025/2025-09-16-client-management.md)
 * [2025-09-16: IAM Service – validation of predefined group assignments](2025/2025-09-16-iam.md)
 * [2025-09-10: Customer Service - initial password for customer](2025/2025-09-10-customer.md)
