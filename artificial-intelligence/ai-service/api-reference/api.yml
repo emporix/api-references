@@ -2070,8 +2070,10 @@ components:
             userPrompt:
               type: string
               description: LLM Prompt which describes how agent should work in a detailed way, which tools it could use to solve problems etc; it can contain examples and step by step guidance.
-            trigger:
-              $ref: '#/components/schemas/AgentTrigger'
+            triggers:
+              type: array
+              items:
+                $ref: '#/components/schemas/AgentTrigger'
             agentCollaborations:
               $ref: '#/components/schemas/AgentCollaborations'
             maxRecursionLimit:
@@ -2087,7 +2089,7 @@ components:
               default: false
           required:
             - userPrompt
-            - trigger
+            - triggers
     AgentTemplateResponse:
       allOf:
         - $ref: '#/components/schemas/BaseForAgentAndTemplate'
@@ -2766,8 +2768,8 @@ components:
           provider: openai
           maxTokens: 100000
           temperature: 0.2
-        trigger:
-          type: endpoint
+        triggers:
+          - type: endpoint
         maxRecursionLimit: 20
         enabledMemory: true
         tags:
@@ -2800,8 +2802,8 @@ components:
             provider: openai
             maxTokens: 100000
             temperature: 0.2
-          trigger:
-            type: endpoint
+          triggers:
+            - type: endpoint
           maxRecursionLimit: 20
           enabledMemory: true
           tags:
@@ -2851,8 +2853,8 @@ components:
           provider: openai
           maxTokens: 100000
           temperature: 0.2
-        trigger:
-          type: endpoint
+        triggers:
+          - type: endpoint
         maxRecursionLimit: 20
         enabledMemory: true
         tags:
