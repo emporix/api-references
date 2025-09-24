@@ -77,12 +77,7 @@ paths:
       description: |-
         Creates a new sequence schema.
                 
-<<<<<<< Updated upstream
-        This endpoint is `deprecated`. Please use the [/sequential-id/{tenant}/schemas](/openapi/sequential-id/{tenant}/schemas) instead.
-=======
         This endpoint is `deprecated`. Please use the [/sequential-id/{tenant}/schemas](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas) instead.
->>>>>>> Stashed changes
-
         ***
 
          ### Required scopes
