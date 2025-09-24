@@ -77,7 +77,7 @@ paths:
       description: |-
         Creates a new sequence schema.
                 
-        This endpoint is `deprecated`. Please use the [/sequential-id/{tenant}/schemas](/openapi/sequential-id/#operation/POST-sequential-id-create-tenant-schema) instead.
+        This endpoint is `deprecated`. Please use the [/sequential-id/{tenant}/schemas](/openapi/sequential-id/{tenant}/schemas) instead.
 
         ***
 
