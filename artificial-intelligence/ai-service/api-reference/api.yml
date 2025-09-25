@@ -146,6 +146,7 @@ paths:
                       sessionId: 123e4567-e89b-12d3-a456-426614174000
                       agentType: complaint
                       agentId: complaint-agent
+                      commerceEvent: product.product-updated
                       message: |-
                         Dear Customer,
                         
@@ -205,6 +206,7 @@ paths:
                       sessionId: 123e4567-e89b-12d3-a456-426614174000
                       agentType: complaint
                       agentId: complaint-agent
+                      commerceEvent: product.product-updated
                       message: |-
                         Dear Customer,
                         
@@ -265,6 +267,7 @@ paths:
                     sessionId: 123e4567-e89b-12d3-a456-426614174000
                     agentType: complaint
                     agentId: complaint-agent
+                    commerceEvent: product.product-updated
                     message: |-
                       Dear Customer,
                       
@@ -2214,6 +2217,9 @@ components:
         message:
           type: string
           description: Agent's message.
+        commerceEvent:
+          type: string
+          description: Commerce event which triggered the job
         metadata:
           $ref: '#/components/schemas/MetadataResponse'
     JobIdResponse:
