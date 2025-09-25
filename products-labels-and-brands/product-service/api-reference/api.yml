@@ -1647,57 +1647,94 @@ components:
           schema:
             type: array
             items:
+              type: object
+              discriminator:
+                propertyName: productType
+                mapping:
+                  BASIC: '#/components/schemas/basicProductBulkUpdateFlat'
+                  BUNDLE: '#/components/schemas/bundleProductBulkUpdateFlat'
+                  PARENT_VARIANT: '#/components/schemas/parentVariantProductBulkUpdateFlat'
+                  VARIANT: '#/components/schemas/variantProductBulkUpdateFlat'
               oneOf:
-                - $ref: '#/components/schemas/basicProductBulkUpdate'
-                - $ref: '#/components/schemas/bundleProductBulkUpdate'
-                - $ref: '#/components/schemas/parentVariantProductBulkUpdate'
-                - $ref: '#/components/schemas/variantProductBulkUpdate'
+                - $ref: '#/components/schemas/basicProductBulkUpdateFlat'
+                - $ref: '#/components/schemas/bundleProductBulkUpdateFlat'
+                - $ref: '#/components/schemas/parentVariantProductBulkUpdateFlat'
+                - $ref: '#/components/schemas/variantProductBulkUpdateFlat'
           examples:
             Update multiple products in bulk:
               value:
-                - id: abc-123
-                  code: '532432412331'
-                  name: Product 1
+                - id: "abc-123"
+                  productType: "BASIC"
+                  code: "532432412331"
+                  name: "Product 1"
+                  published: true
                   metadata:
                     version: 1
-                - id: abc-124
-                  code: '532432412332'
-                  name: Product 2
+                - id: "abc-124"
+                  productType: "BUNDLE"
+                  code: "532432412332"
+                  name: "Bundle Product"
+                  bundledProducts:
+                    - productId: "bundle-item-1"
+                      amount: 2
                   metadata:
                     version: 1
-                - id: abc-125
-                  code: '532432412333'
-                  name: Product 3
+                - id: "abc-125"
+                  productType: "VARIANT"
+                  code: "532432412333"
+                  name: "Product Variant"
+                  parentVariantId: "parent-123"
                   metadata:
                     version: 1
-      description: A list of product update requests
+                    overridden: ["name", "published"]
+        description: A list of product update requests.
     productBulkCreateBody:
       content:
         application/json:
           schema:
             type: array
             items:
+              type: object
+              discriminator:
+                propertyName: productType
+                mapping:
+                  BASIC: '#/components/schemas/basicProductBulkCreateFlat'
+                  BUNDLE: '#/components/schemas/bundleProductBulkCreateFlat'
+                  PARENT_VARIANT: '#/components/schemas/parentVariantProductBulkCreateFlat'
+                  VARIANT: '#/components/schemas/variantProductBulkCreateFlat'
               oneOf:
-                - $ref: '#/components/schemas/basicProductCreation'
-                - $ref: '#/components/schemas/bundleProductCreation'
-                - $ref: '#/components/schemas/parentVariantProductCreation'
-                - $ref: '#/components/schemas/variantProductCreation'
+                - $ref: '#/components/schemas/basicProductBulkCreateFlat'
+                - $ref: '#/components/schemas/bundleProductBulkCreateFlat'
+                - $ref: '#/components/schemas/parentVariantProductBulkCreateFlat'
+                - $ref: '#/components/schemas/variantProductBulkCreateFlat'
           examples:
             Create multiple products in bulk:
               value:
-                - id: abc-123
-                  code: '532432412331'
-                  name: Product 1
-                  productType: BASIC
-                - id: abc-124
-                  code: '532432412332'
-                  name: Product 2
-                  productType: BASIC
-                - id: abc-125
-                  code: '532432412333'
-                  name: Product 3
-                  productType: BASIC
-      description: A list of product create requests
+                - name: "Basic Product"
+                  code: "532432412331"
+                  productType: "BASIC"
+                - name: "Bundle Product"
+                  code: "532432412332"
+                  productType: "BUNDLE"
+                  bundledProducts:
+                    - productId: "basic-product-1"
+                      amount: 1
+                    - productId: "basic-product-2"
+                      amount: 2
+                - name: "Parent Variant"
+                  code: "532432412333"
+                  productType: "PARENT_VARIANT"
+                  template:
+                    id: "template-123"
+                    version: "1"
+                  variantAttributes:
+                    color:
+                      - key: "RED"
+                      - key: "BLUE"
+                    size:
+                      - key: "S"
+                      - key: "M"
+      description: A list of product create requests.
   schemas:
     localizedValue:
       description: Localized value which can have different structure which depends on provided `Content-Language` header.
@@ -2314,6 +2351,50 @@ components:
               $ref: '#/components/schemas/productMetadataWithVersion'
             productType:
               $ref: '#/components/schemas/productTypeUpdate'
+    basicProductBulkUpdateFlat:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Product's unique identifier
+        productType:
+          type: string
+          enum: [BASIC]
+          description: Product type
+        name:
+          $ref: '#/components/schemas/localizedValue'
+        code:
+          type: string
+          description: Unique product identifier
+        description:
+          $ref: '#/components/schemas/localizedValue'
+        published:
+          type: boolean
+        template:
+          $ref: '#/components/schemas/template'
+        taxClasses:
+          $ref: '#/components/schemas/taxClasses'
+        relatedItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/relatedItem'
+        vendor:
+          $ref: '#/components/schemas/vendor'
+        mixins:
+          type: object
+          additionalProperties: true
+        metadata:
+          type: object
+          properties:
+            version:
+              type: number
+              description: Version of the document (required for updates)
+            mixins:
+              type: object
+              additionalProperties: true
+      required:
+        - id
+        - productType
     basicProductBulkUpdate:
       type: object
       description: Schema for updating products of the BASIC type in bulk.
@@ -2388,6 +2469,53 @@ components:
         - properties:
             metadata:
               $ref: '#/components/schemas/productMetadataWithVersion'
+    bundleProductBulkUpdateFlat:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Product's unique identifier
+        productType:
+          type: string
+          enum: [BUNDLE]
+          description: Product type
+        name:
+          $ref: '#/components/schemas/localizedValue'
+        code:
+          type: string
+          description: Unique product identifier
+        description:
+          $ref: '#/components/schemas/localizedValue'
+        published:
+          type: boolean
+        template:
+          $ref: '#/components/schemas/template'
+        taxClasses:
+          $ref: '#/components/schemas/taxClasses'
+        bundledProducts:
+          $ref: '#/components/schemas/bundledProducts'
+        relatedItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/relatedItem'
+        vendor:
+          $ref: '#/components/schemas/vendor'
+        mixins:
+          type: object
+          additionalProperties: true
+        metadata:
+          type: object
+          properties:
+            version:
+              type: number
+              description: Version of the document (required for updates)
+            mixins:
+              type: object
+              additionalProperties: true
+      required:
+        - id
+        - productType
+        - bundledProducts
     bundleProductBulkUpdate:
       type: object
       description: Schema for updating products of the BUNDLE type in bulk.
@@ -2476,6 +2604,191 @@ components:
         - $ref: '#/components/schemas/parentVariantProductUpdate'
         - required:
             - id
+    parentVariantProductBulkCreateFlat:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 32
+          description: Custom product identifier (optional)
+        productType:
+          type: string
+          enum: [PARENT_VARIANT]
+          description: Product type
+        name:
+          $ref: '#/components/schemas/localizedValue'
+        code:
+          type: string
+          description: Unique product identifier
+        description:
+          $ref: '#/components/schemas/localizedValue'
+        published:
+          type: boolean
+          default: false
+        template:
+          $ref: '#/components/schemas/template'
+        taxClasses:
+          $ref: '#/components/schemas/taxClasses'
+        variantAttributes:
+          $ref: '#/components/schemas/variantAttributes'
+        relatedItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/relatedItem'
+        vendor:
+          $ref: '#/components/schemas/vendor'
+        mixins:
+          type: object
+          additionalProperties: true
+        metadata:
+          $ref: '#/components/schemas/productMetadataCore'
+      required:
+        - name
+        - code
+        - productType
+        - template
+        - variantAttributes
+    parentVariantProductBulkUpdateFlat:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Product's unique identifier
+        productType:
+          type: string
+          enum: [PARENT_VARIANT]
+          description: Product type
+        name:
+          $ref: '#/components/schemas/localizedValue'
+        code:
+          type: string
+          description: Unique product identifier
+        description:
+          $ref: '#/components/schemas/localizedValue'
+        published:
+          type: boolean
+        template:
+          $ref: '#/components/schemas/template'
+        taxClasses:
+          $ref: '#/components/schemas/taxClasses'
+        variantAttributes:
+          $ref: '#/components/schemas/variantAttributes'
+        relatedItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/relatedItem'
+        vendor:
+          $ref: '#/components/schemas/vendor'
+        mixins:
+          type: object
+          additionalProperties: true
+        metadata:
+          type: object
+          properties:
+            version:
+              type: number
+              description: Version of the document (required for updates)
+            mixins:
+              type: object
+              additionalProperties: true
+      required:
+        - id
+        - productType
+        - template
+        - variantAttributes
+    variantProductBulkCreateFlat:
+      type: object
+      properties:
+        id:
+          type: string
+          maxLength: 32
+          description: Custom product identifier (optional)
+        productType:
+          type: string
+          enum: [VARIANT]
+          description: Product type
+        name:
+          $ref: '#/components/schemas/localizedValue'
+        code:
+          type: string
+          description: Unique product identifier
+        description:
+          $ref: '#/components/schemas/localizedValue'
+        published:
+          type: boolean
+          default: false
+        taxClasses:
+          $ref: '#/components/schemas/taxClasses'
+        parentVariantId:
+          type: string
+          description: Identifier of the PARENT_VARIANT product
+        relatedItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/relatedItem'
+        vendor:
+          $ref: '#/components/schemas/vendor'
+        mixins:
+          type: object
+          additionalProperties: true
+        metadata:
+          $ref: '#/components/schemas/variantProductMetadataCore'
+      required:
+        - name
+        - code
+        - productType
+        - parentVariantId
+    variantProductBulkUpdateFlat:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Product's unique identifier
+      productType:
+        type: string
+        enum: [VARIANT]
+        description: Product type
+      name:
+        $ref: '#/components/schemas/localizedValue'
+      code:
+        type: string
+        description: Unique product identifier
+      description:
+        $ref: '#/components/schemas/localizedValue'
+      published:
+        type: boolean
+      taxClasses:
+        $ref: '#/components/schemas/taxClasses'
+      parentVariantId:
+        type: string
+        description: Identifier of the PARENT_VARIANT product
+      relatedItems:
+        type: array
+        items:
+          $ref: '#/components/schemas/relatedItem'
+      vendor:
+        $ref: '#/components/schemas/vendor'
+      mixins:
+        type: object
+        additionalProperties: true
+      metadata:
+        type: object
+        properties:
+          version:
+            type: number
+            description: Version of the document (required for updates)
+          overridden:
+            type: array
+            items:
+              type: string
+            description: List of overridden fields
+          mixins:
+            type: object
+            additionalProperties: true
+    required:
+      - id
+      - productType
+      - parentVariantId
     variantProduct:
       type: object
       additionalProperties: false
