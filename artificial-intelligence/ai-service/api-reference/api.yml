@@ -14,6 +14,8 @@ tags:
     description: Chat With Agents
   - name: Agent Template
     description: Manage Agent Templates
+  - name: Commerce Events
+    description: Read Commerce Events
   - name: AI Completions
     description: AI Completions
   - name: Job
@@ -144,6 +146,7 @@ paths:
                       sessionId: 123e4567-e89b-12d3-a456-426614174000
                       agentType: complaint
                       agentId: complaint-agent
+                      commerceEvent: product.product-updated
                       message: |-
                         Dear Customer,
                         
@@ -203,6 +206,7 @@ paths:
                       sessionId: 123e4567-e89b-12d3-a456-426614174000
                       agentType: complaint
                       agentId: complaint-agent
+                      commerceEvent: product.product-updated
                       message: |-
                         Dear Customer,
                         
@@ -263,6 +267,7 @@ paths:
                     sessionId: 123e4567-e89b-12d3-a456-426614174000
                     agentType: complaint
                     agentId: complaint-agent
+                    commerceEvent: product.product-updated
                     message: |-
                       Dear Customer,
                       
@@ -1482,6 +1487,38 @@ paths:
             - ai.agent_manage
       tags:
         - MCP Server
+  '/ai-service/{tenant}/agentic/commerce-events':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    get:
+      summary: Get commerce events
+      operationId: GET-ai-commerce-events
+      responses:
+        '200':
+          description: List of available commerce events.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommerceEventsResponse'
+              examples:
+                Tools Response:
+                  $ref: '#/components/examples/CommerceEventsResponse'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        Retrieves commerce events available for agents with `COMMERCE_EVENTS` trigger.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Commerce Events
 components:
   schemas:
     ErrorMessage:
@@ -1695,6 +1732,14 @@ components:
               $ref: '#/components/schemas/McpServerConfigResponse'
             metadata:
               $ref: '#/components/schemas/MetadataResponse'
+    CommerceEventsResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          description: List of events available to use by an agent with the `COMMERCE_EVENTS` trigger.
+          items:
+            type: string
 
     McpServerType:
       type: string
@@ -1949,15 +1994,41 @@ components:
 
     TriggerType:
       type: string
-      enum: [endpoint,slack]
+      enum:
+        - endpoint
+        - slack
       description: Type of the trigger. The `slack` trigger type can be used only for `support` agent type.
+    CommerceEventsTriggerType:
+      type: string
+      enum:
+        - commerce_events
+      description: Type of the trigger.
     AgentTrigger:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/TriggerType'
-      required:
-        - type
+      oneOf:
+        - type: object
+          properties:
+            type:
+              $ref: '#/components/schemas/TriggerType'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              $ref: '#/components/schemas/CommerceEventsTriggerType'
+            config:
+              type: object
+              description: Additional configuration for the trigger.
+              properties:
+                events:
+                  type: string
+                  minItems: 1
+                  description: List of events that trigger the agent
+              required:
+                - events
+          required:
+            - type
+            - config
+
 
     HandOff:
       type: boolean
@@ -2147,6 +2218,9 @@ components:
         message:
           type: string
           description: Agent's message.
+        commerceEvent:
+          type: string
+          description: Commerce event which triggered the job
         metadata:
           $ref: '#/components/schemas/MetadataResponse'
     JobIdResponse:
@@ -2653,6 +2727,11 @@ components:
             url: 'http://localhost:7900'
             authorizationHeaderName: Authorization
             authorizationHeaderTokenId: token-id
+    CommerceEventsResponse:
+      value:
+        events:
+          - product.product-created
+          - product.product-updated
     TokenResponse:
       value:
         id: openai
