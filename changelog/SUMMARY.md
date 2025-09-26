@@ -8,7 +8,7 @@
 
 ## 2025
 
-* [2025-09-29: Category tree - filter unpublished categories](2025/2025-09-29-contegory-tree.md)
+* [2025-09-29: Category tree - filter unpublished categories](2025/2025-09-29-category-tree.md)
 * [2025-09-24: Client Management Service – added a new contact assignment type](2025/2025-09-24-contact-management.md)
 * [2025-09-16: Client Management Service – new customer assignment propagation settings](2025/2025-09-16-client-management.md)
 * [2025-09-16: IAM Service – validation of predefined group assignments](2025/2025-09-16-iam.md)
