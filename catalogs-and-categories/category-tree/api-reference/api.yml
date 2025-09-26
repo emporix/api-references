@@ -65,6 +65,7 @@ paths:
             Possible values:
             * `true`
             * `false`
+            
             **Note**: To get unpublished categories you need to have `category.category_read_unpublished` scope.
           schema:
             type: boolean
@@ -439,6 +440,7 @@ paths:
             Possible values:
             * `true`
             * `false`
+            
             **Note**: To get unpublished categories you need to have `category.category_read_unpublished` scope.
           schema:
             type: boolean
@@ -992,6 +994,7 @@ paths:
             Possible values:
             * `true`
             * `false`
+            
             **Note**: To get unpublished categories you need to have `category.category_read_unpublished` scope.
           schema:
             type: boolean
@@ -1757,6 +1760,7 @@ paths:
             Possible values:
             * `true`
             * `false`
+            
             **Note**: To get unpublished categories you need to have `category.category_read_unpublished` scope.
           schema:
             type: boolean
@@ -2497,6 +2501,7 @@ paths:
             Possible values:
             * `true`
             * `false`
+            
             **Note**: To get unpublished categories you need to have `category.category_read_unpublished` scope.
           schema:
             type: boolean
@@ -2690,6 +2695,7 @@ paths:
             Possible values:
             * `true`
             * `false`
+            
             **Note**: To get unpublished categories you need to have `category.category_read_unpublished` scope.
           schema:
             type: boolean
@@ -2855,6 +2861,7 @@ paths:
             Possible values:
             * `true`
             * `false`
+            
             **Note**: To get unpublished categories you need to have `category.category_read_unpublished` scope.
           schema:
             type: boolean
@@ -2944,6 +2951,7 @@ paths:
             Possible values:
             * `true`
             * `false`
+            
             **Note**: To get unpublished categories you need to have `category.category_read_unpublished` scope.
           schema:
             type: boolean
