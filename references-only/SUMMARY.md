@@ -502,3 +502,13 @@
           kind: openapi
           spec: product-test
     ```
+* ```yaml
+  type: builtin:openapi
+  props:
+    models: true
+  dependencies:
+    spec:
+      ref:
+        kind: openapi
+        spec: product-test-2
+  ```
