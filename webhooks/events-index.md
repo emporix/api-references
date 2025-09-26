@@ -2,8 +2,8 @@
 seo:
   title: Indexing Service events
   description: Webhooks, indexing service events
-icon: webhook
 description: Webhook events related to indexing data.
+icon: webhook
 ---
 
 # Events - Index Item
@@ -46,12 +46,13 @@ description: Webhook events related to indexing data.
   "id": "String",
   "siteCode": "String",
 </code></pre></td></tr></tbody></table>
+
 |
 
 {% hint style="info" %}
 **Learn about the `index.item-updated` event's specific behavior**
 
-###
+####
 
 The `index.item-updated` webhook event is emitted whenever there is a change on an item in the system - the index is updated with the new information.\
 For the event to be triggered, a product must have at least one defined **price**, as it is the price that determines products indexing on a specific site.\
