@@ -2291,13 +2291,11 @@ components:
               $ref: '#/components/schemas/id'
             yrn:
               $ref: '#/components/schemas/YRN'
-        - $ref: '#/components/schemas/basicProductCreation'
-        - type: object
-          properties:
             media:
               $ref: '#/components/schemas/productMedia'
             metadata:
               $ref: '#/components/schemas/productMetadataGet'
+        - $ref: '#/components/schemas/basicProductCreation'
     basicProductsArray:
       type: array
       description: List of products of the BASIC type.
@@ -2368,13 +2366,11 @@ components:
               $ref: '#/components/schemas/id'
             yrn:
               $ref: '#/components/schemas/YRN'
-        - $ref: '#/components/schemas/bundleProductCreation'
-        - type: object
-          properties:
             media:
               $ref: '#/components/schemas/productMedia'
             metadata:
               $ref: '#/components/schemas/productMetadataGet'
+        - $ref: '#/components/schemas/bundleProductCreation'
     bundleProductsArray:
       type: array
       description: List of products of the BUNDLE type.
@@ -2442,13 +2438,11 @@ components:
               $ref: '#/components/schemas/id'
             yrn:
               $ref: '#/components/schemas/YRN'
-        - $ref: '#/components/schemas/parentVariantProductCreation'
-        - type: object
-          properties:
             media:
               $ref: '#/components/schemas/productMedia'
             metadata:
               $ref: '#/components/schemas/productMetadataGet'
+        - $ref: '#/components/schemas/parentVariantProductCreation'
     parentVariantProductsArray:
       type: array
       description: List of products of the PARENT_VARIANT type.
@@ -2518,13 +2512,11 @@ components:
               $ref: '#/components/schemas/id'
             yrn:
               $ref: '#/components/schemas/YRN'
-        - $ref: '#/components/schemas/variantProductCreation'
-        - type: object
-          properties:
             media:
               $ref: '#/components/schemas/productMedia'
             metadata:
               $ref: '#/components/schemas/variantProductMetadataGet'
+        - $ref: '#/components/schemas/variantProductCreation'
     variantProductsArray:
       type: array
       description: List of products of the VARIANT type.
