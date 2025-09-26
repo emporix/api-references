@@ -20,15 +20,15 @@ layout:
 
 ## Overview
 
-Category tree endpoints will exclude trees where the root category has `published=false` when only published categories are requested (`showUnpublished=false`).
+Category tree endpoints exclude trees in which the root category has `published=false`, when only published categories are requested (`showUnpublished=false`).
 
 
 ## Modified endpoints
 
 | Endpoint                                                                                                                                                                          | Description                                                                                              |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
-| [Retrieving the category trees](https://developer.emporix.io/api-references-1/readme/api-reference-5/category-tree-resources#get-category-tenant-category-trees)                  | When show `showUnpublished=false` in query params, trees with unpublished root node will not be returned |
-| [Retrieving a specific category tree](https://developer.emporix.io/api-references-1/readme/api-reference-5/category-tree-resources#get-category-tenant-category-trees-categoryid) | When show `showUnpublished=false` in query params, trees with unpublished root node will not be returned |
+| [Retrieving the category trees](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees)                  |When `showUnpublished=false` is set in the query parameters, trees with an unpublished root node are not returned.|
+| [Retrieving a specific category tree](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees-categoryid) | When `showUnpublished=false` is set in the query parameters, trees with an unpublished root node are not returned.|
 
 ## Known problems
 
