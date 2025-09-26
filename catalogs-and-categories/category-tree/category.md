@@ -189,7 +189,7 @@ curl -L
 
 To publish or unpublish a category, you need to send a request to the [Upserting a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#put-category-tenant-categories-categoryid) endpoint and set the `published` property to `true` or `false`.
 
-Category tree endpoints exclude trees in which the root category has `published=false`, when only published categories are requested (`showUnpublished=false`).
+Category tree [Retrieving the category trees](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees)  and [Retrieving a specific category tree](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees-categoryid) endpoints exclude trees in which the root category has `published=false`, when only published categories are requested (`showUnpublished=false`).
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
