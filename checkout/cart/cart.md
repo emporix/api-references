@@ -19,12 +19,12 @@ layout:
 
 {% stepper %}
 {% step %}
-To create a new cart, you need to send a request to the [Creating a new cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
+To create a new cart, send a request to the [Creating a new cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -i -X POST \
+curl -i -X POST 
   'https://api.emporix.io/cart/{tenant}/carts' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'Content-Type: application/json' 
@@ -85,12 +85,10 @@ Upload your schema to a hosting service and save its URL.
 {% step %}
 ### Update a cart with custom attributes
 
-To add custom attributes to a cart, you need to send a request to the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+To add custom attributes to a cart, send a request to the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
 ```bash
-curl -i -X PUT \
+curl -i -X PUT 
   'https://api.emporix.io/cart/{tenant}/carts/{cartId}' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'Content-Type: application/json' 
@@ -138,13 +136,9 @@ curl -i -X PUT \
 
 ## How to merge carts
 
-{% hint style="warning" %}
-To learn more about merging carts, check out [Cart merging](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/carts#cart-merging) in the Carts guide.
-{% endhint %}
-
 {% stepper %}
 {% step %}
-To merge an anonymous cart with a customer cart, you need to send a request to the [Merging carts](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-merge) endpoint. Provide the customer cart's ID in the `cartId` path parameter and the anonymous cart's ID in the request body.
+To merge an anonymous cart with a customer cart, send a request to the [Merging carts](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-merge) endpoint. Provide the customer cart's ID in the `cartId` path parameter and the anonymous cart's ID in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -166,8 +160,12 @@ curl -i -X POST \
 {% endstepper %}
 
 {% content-ref url="api-reference/" %}
-[Cart API. Reference](api-reference/)
+[Cart API Reference](api-reference/)
 {% endcontent-ref %}
+
+{% hint style="warning" %}
+To learn more about merging carts, check out [Cart merging](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/carts#cart-merging) in the Carts guide.
+{% endhint %}
 
 ## How to use external sources to modify a cart
 
@@ -187,13 +185,13 @@ You need to generate a dedicated scope that serves as the authorization token fo
 {% stepper %}
 {% step %}
 
-After enabling the external application to update carts with calculated prices, to add a product that is available within Commerce Engine, but with an external price, you need to send the request to the [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
+Once external pricing is enabled, you can add a product that is available within Commerce Engine, but with an external price. Send the request to the [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
 Provide the customer cart's ID in the `cartId` path parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -i -X POST \
+curl -i -X POST 
   'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'Content-Type: application/json' 
@@ -218,11 +216,11 @@ curl -i -X POST \
 {% endstep %}
 {% endstepper %}
 
+Notice the `"itemType": "EXTERNAL"` definition which allows the Cart Service to overwrite the pricing from Commerce Engine. The payload must include the price and tax information.
+
 {% content-ref url="api-reference/" %}
 [Cart API Reference](api-reference/)
 {% endcontent-ref %}
-
-Notice the `"itemType": "EXTERNAL"` definition which allows the Cart Service to overwrite the pricing from Commerce Engine. The payload must include the price and tax information.
 
 {% hint style="danger" %}
 When you have enabled external pricing, it's essential to ensure the accuracy of the prices, as CE does not perform price validation in these instances.
@@ -239,37 +237,37 @@ You need to generate a dedicated scope that serves as the authorization token fo
 
 {% stepper %}
 {% step %}
-To add a product outside Commerce Engine, you need to send the request to the Adding a product to cart endpoint.
+To add a product outside Commerce Engine, send the request to the Adding a product to cart endpoint.
 Provide the customer cart's ID in the `cartId` path parameter. The payload has to include the `"itemType" : "EXTERNAL"` parameter, as well as the price and tax information.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' 
+curl -i -X POST 
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode={siteCode}' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'Content-Type: application/json' 
   -d '{
-    "itemYrn": "{productYrn}",
+    "itemYrn": null,
     "price": {
-      "priceId": "{priceId}",
-      "effectiveAmount": 1239,
-      "originalAmount": 1239,
+      "priceId": "external-price-001",
+      "effectiveAmount": 49.99,
+      "originalAmount": 59.99,
       "currency": "EUR"
     },
-    "quantity": 1,
+    "quantity": 2,
     "itemType": "EXTERNAL",
     "product": {
-      "id": "ip15p",
-      "name": "iPhone 15 pro",
-      "description": "Apple iPhone 15 pro 128gb natural titanium",
-      "sku": "testSku",
+      "id": "ext-001",
+      "name": "Wireless Mouse",
+      "description": "Ergonomic wireless gaming mouse",
+      "sku": "GM-1000"
     },
-    " tax": {
+    "tax": {
       "name": "STANDARD",
       "rate": 19,
-      "grossValue": 1239,
-      "netValue": 1041.18
+      "grossValue": 99.98,
+      "netValue": 84.02
     }
   }'
 ```
@@ -291,13 +289,13 @@ You need to generate a dedicated scope that serves as the authorization token fo
 
 {% stepper %}
 {% step %}
-To add a custom fee to the cart, you need to send the request to the [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
+To add a custom fee to the cart, send the request to the [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
 Provide the customer cart's ID in the `cartId` path parameter. Custom fee can be configured both for EXTERNAL and INTERNAL products, the payload should include the `"itemType" : "EXTERNAL"` or `"itemType" : "INTERNAL"` parameter. If the parameter is not provided, then "INTERNAL" is taken as default.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -i -X POST \
+curl -i -X POST 
   'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'Content-Type: application/json' 
@@ -342,8 +340,8 @@ Use the `externalDiscounts` attribute when adding an item to the cart or updatin
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -L \
-  --request POST \
+curl -L 
+  --request POST 
   --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=text' 
   --header 'Authorization: Bearer YOUR_SECRET_TOKEN' 
   --header 'Content-Type: application/json' 
@@ -2117,7 +2115,7 @@ Always make sure that your site’s `homeBase.address` has the `country` and `zi
 Shipping costs are typically calculated during checkout, and not automatically on the cart object alone.
 {% endhint %}
 
-To get the shipping costs calculated and shown at the cart level, you need to update the cart with shipping information. That means, you have to set the shipping address with the `countryCode` and `zipCode` and then assign a valid shipping method to the cart so that it can trigger the shipping cost calculation.
+To get the shipping costs calculated and shown at the cart level, update the cart with shipping information. That means, you have to set the shipping address with the `countryCode` and `zipCode` and then assign a valid shipping method to the cart so that it can trigger the shipping cost calculation.
 
 {% stepper %}
 {% step %}
@@ -2167,17 +2165,13 @@ Verify the results by retrieving the cart. Call the [Retrieving cart details by 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -L \
+curl -L 
   --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}'
   --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN'
   --header 'Accept: */*'
 ```
 {% endstep %}
 {% endstepper %}
-
-{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
-[Shipping API Reference](../delivery-and-shipping/shipping/api-reference/)
-{% endcontent-ref %}
 
 As a result, the response includes the shipping costs details:
 
@@ -2192,6 +2186,16 @@ As a result, the response includes the shipping costs details:
 }
 ```
 
+Cart API reference:
+{% content-ref url="api-reference/" %}
+[Cart API Reference](api-reference/)
+{% endcontent-ref %}
+
+Delivery and Shipping API reference:
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[Shipping API Reference](../delivery-and-shipping/shipping/api-reference/)
+{% endcontent-ref %}
+
 ## How to calculate a payment fee at cart level
 
 At the cart level, only one additional fee is calculated, apart from the fees applied at the item level. The `paymentFees` is an additional, non-discountable amount that the customer must pay for using a given payment method.
@@ -2205,7 +2209,7 @@ If the fee is taxable and has a tax code, the gross value is calculated. Otherwi
 
 ## How to determine a tax country at cart level
 
-Since the shipping address is not set in the cart, you need to determine the country to find the `taxRate` for a fee that has a `taxCode` only.
+Since the shipping address is not set in the cart, determine the country to find the `taxRate` for a fee that has a `taxCode` only.
 Ways to find the country data:
 
 * Use the country code that is set on the cart
@@ -2254,13 +2258,13 @@ For some cases, you might need to calculate and charge additional fees, for exam
 
 To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation. You need to generate a dedicated scope that serves as the authorization token for the API calls.
 
-To add a custom fee to the cart, you need to send the request to the endpoint. Provide the customer cart's ID in the cartId path parameter. The payload has to include the "itemType" : "EXTERNAL" parameter - see the [Adding a product to a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) documentation.
+To add a custom fee to the cart, send the request to the endpoint. Provide the customer cart's ID in the cartId path parameter. The payload has to include the "itemType" : "EXTERNAL" parameter - see the [Adding a product to a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) documentation.
 
 ## How to apply separation of the same line items in the cart
 
 When you add an item to the cart, it's stored as a single line. If you add the same item multiple times, it remains a single line item, but the `quantity` attribute is updated to reflect the total amount, for example when you add 5 items they are stored as `item1: productA, qty:5`.
 
-If you need to add the same item multiple times on separate lines in the cart, use the `keepAsSeparateLineItem=true` flag - it ensures each instance of the item appears as a distinct line item. This can be useful in a variety of scenarios, such as applying different discounts or fees to the same product, or handling separate delivery options.
+If add the same item multiple times on separate lines in the cart, use the `keepAsSeparateLineItem=true` flag - it ensures each instance of the item appears as a distinct line item. This can be useful in a variety of scenarios, such as applying different discounts or fees to the same product, or handling separate delivery options.
 
 A common use case is the _Buy 2, Get 1 Free_ promotion. In this case, when a customer adds two of the same line items to the cart, the system can add a third instance as a separate line item marked as free.
 
