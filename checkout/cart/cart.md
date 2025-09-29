@@ -19,7 +19,7 @@ layout:
 
 {% stepper %}
 {% step %}
-To create a new cart, you need to send a request to the [Creating a new cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
+To create a new cart, send a request to the [Creating a new cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -87,14 +87,8 @@ Upload your schema to a hosting service and save its URL.
 
 To add custom attributes to a cart, send a request to the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[Cart API Reference](api-reference/)
-{% endcontent-ref %}
-
 ```bash
-curl -i -X PUT \
+curl -i -X PUT 
   'https://api.emporix.io/cart/{tenant}/carts/{cartId}' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'Content-Type: application/json' 
@@ -135,6 +129,10 @@ curl -i -X PUT \
 ```
 {% endstep %}
 {% endstepper %}
+
+{% content-ref url="api-reference/" %}
+[Cart API Reference](api-reference/)
+{% endcontent-ref %}
 
 ## How to merge carts
 
@@ -244,10 +242,6 @@ Provide the customer cart's ID in the `cartId` path parameter. The payload has t
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[Cart API Reference](api-reference/)
-{% endcontent-ref %}
-
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode={siteCode}' 
@@ -279,6 +273,10 @@ curl -i -X POST
 ```
 {% endstep %}
 {% endstepper %}
+
+{% content-ref url="api-reference/" %}
+[Cart API Reference](api-reference/)
+{% endcontent-ref %}
 
 ### How to add an external fee
 
