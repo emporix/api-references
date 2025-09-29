@@ -185,7 +185,7 @@ You need to generate a dedicated scope that serves as the authorization token fo
 {% stepper %}
 {% step %}
 
-After enabling the external application to update carts with calculated prices, to add a product that is available within Commerce Engine, but with an external price, send the request to the [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
+Once external pricing is enabled, you can add a product that is available within Commerce Engine, but with an external price. Send the request to the [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
 Provide the customer cart's ID in the `cartId` path parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -294,10 +294,6 @@ Provide the customer cart's ID in the `cartId` path parameter. Custom fee can be
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[Cart API Reference](api-reference/)
-{% endcontent-ref %}
-
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' 
@@ -330,6 +326,10 @@ curl -i -X POST
 {% endstep %}
 {% endstepper %}
 
+{% content-ref url="api-reference/" %}
+[Cart API Reference](api-reference/)
+{% endcontent-ref %}
+
 ### How to apply an external discount on an item level
 
 Adding an external discount to an item in a cart is done with the `cart.cart_manage_external_prices` scope. 
@@ -338,10 +338,6 @@ Adding an external discount to an item in a cart is done with the `cart.cart_man
 Use the `externalDiscounts` attribute when adding an item to the cart or updating an existing one.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[Cart API Reference](api-reference/)
-{% endcontent-ref %}
 
 ```bash
 curl -L 
@@ -363,6 +359,9 @@ curl -L
 {% endstep %}
 {% endstepper %}
 
+{% content-ref url="api-reference/" %}
+[Cart API Reference](api-reference/)
+{% endcontent-ref %}
 
 ### How to pass externally calculated line price and line tax to items added or updated in the cart?
 
@@ -2128,10 +2127,6 @@ Make sure the shipping zone is properly stored in the delivery times object.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
-[Shipping API Reference](../delivery-and-shipping/shipping/api-reference/)
-{% endcontent-ref %}
-
 ```bash
 curl -L 
   --url 'https://api.emporix.io/shipping/{tenant}/actualDeliveryWindows/{cartId}' 
@@ -2144,10 +2139,6 @@ curl -L
 Pick the delivery window you'd like to use and update the cart accordingly by calling the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[Cart API Reference](api-reference/)
-{% endcontent-ref %}
 
 ```bash
 curl -L 
@@ -2173,10 +2164,6 @@ Verify the results by retrieving the cart. Call the [Retrieving cart details by 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[Cart API Reference](api-reference/)
-{% endcontent-ref %}
-
 ```bash
 curl -L 
   --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}'
@@ -2198,6 +2185,16 @@ As a result, the response includes the shipping costs details:
     }
 }
 ```
+
+Cart API reference:
+{% content-ref url="api-reference/" %}
+[Cart API Reference](api-reference/)
+{% endcontent-ref %}
+
+Delivery and Shipping API reference:
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[Shipping API Reference](../delivery-and-shipping/shipping/api-reference/)
+{% endcontent-ref %}
 
 ## How to calculate a payment fee at cart level
 
