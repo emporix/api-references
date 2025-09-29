@@ -17,15 +17,9 @@ layout:
 
 ## How to create a new cart
 
-{% stepper %}
-{% step %}
 To create a new cart, you need to send a request to the [Creating a new cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[Cart API Reference](api-reference/)
-{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -45,8 +39,10 @@ curl -i -X POST \
     "sessionValidated": true
   }'
 ```
-{% endstep %}
-{% endstepper %}
+
+{% content-ref url="api-reference/" %}
+[Cart API Reference](api-reference/)
+{% endcontent-ref %}
 
 ## How to add custom attributes to a cart
 
@@ -136,14 +132,12 @@ curl -i -X PUT \
 {% endstep %}
 {% endstepper %}
 
+{% content-ref url="api-reference/" %}
+[Cart API Reference](api-reference/)
+{% endcontent-ref %}
+
 ## How to merge carts
 
-{% hint style="warning" %}
-To learn more about merging carts, check out [Cart merging](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/carts#cart-merging) in the Carts guide.
-{% endhint %}
-
-{% stepper %}
-{% step %}
 To merge an anonymous cart with a customer cart, you need to send a request to the [Merging carts](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-merge) endpoint. Provide the customer cart's ID in the `cartId` path parameter and the anonymous cart's ID in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -166,8 +160,9 @@ curl -i -X POST \
   ]
 }'
 ```
-{% endstep %}
-{% endstepper %}
+{% hint style="warning" %}
+To learn more about merging carts, check out [Cart merging](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/carts#cart-merging) in the Carts guide.
+{% endhint %}
 
 ## How to use external sources to modify a cart
 
@@ -184,13 +179,11 @@ The steps required for such a case are described in the [External Products, Pric
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
-{% stepper %}
-{% step %}
-
 After enabling the external application to update carts with calculated prices, to add a product that is available within Commerce Engine, but with an external price, you need to send the request to the [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
 Provide the customer cart's ID in the `cartId` path parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
+
 {% content-ref url="api-reference/" %}
 [Cart API Reference](api-reference/)
 {% endcontent-ref %}
@@ -218,8 +211,6 @@ curl -i -X POST \
     }
   }'
 ```
-{% endstep %}
-{% endstepper %}
 
 Notice the `"itemType": "EXTERNAL"` definition which allows the Cart Service to overwrite the pricing from Commerce Engine. The payload must include the price and tax information.
 
@@ -288,8 +279,6 @@ To achieve the communication between Commerce Engine and the fee management tool
 You need to generate a dedicated scope that serves as the authorization token for the API calls.
 {% endhint %}
 
-{% stepper %}
-{% step %}
 To add a custom fee to the cart, you need to send the request to the [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
 Provide the customer cart's ID in the `cartId` path parameter. Custom fee can be configured both for EXTERNAL and INTERNAL products, the payload should include the `"itemType" : "EXTERNAL"` or `"itemType" : "INTERNAL"` parameter. If the parameter is not provided, then "INTERNAL" is taken as default.
 
@@ -328,14 +317,11 @@ curl -i -X POST
     ]
   }'
 ```
-{% endstep %}
-{% endstepper %}
 
 ### How to apply an external discount on an item level
 
 Adding an external discount to an item in a cart is done with the `cart.cart_manage_external_prices` scope. 
-{% stepper %}
-{% step %}
+
 Use the `externalDiscounts` attribute when adding an item to the cart or updating an existing one.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -361,9 +347,6 @@ curl -L
     ]
   }'
 ```
-{% endstep %}
-{% endstepper %}
-
 
 ### How to pass externally calculated line price and line tax to items added or updated in the cart?
 
@@ -2129,10 +2112,6 @@ Make sure the shipping zone is properly stored in the delivery times object.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
-[Shipping API Reference](../delivery-and-shipping/shipping/api-reference/)
-{% endcontent-ref %}
-
 ```bash
 curl -L 
   --url 'https://api.emporix.io/shipping/{tenant}/actualDeliveryWindows/{cartId}' 
@@ -2145,10 +2124,6 @@ curl -L
 Pick the delivery window you'd like to use and update the cart accordingly by calling the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[Cart API Reference](api-reference/)
-{% endcontent-ref %}
 
 ```bash
 curl -L 
@@ -2174,10 +2149,6 @@ Verify the results by retrieving the cart. Call the [Retrieving cart details by 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[Cart API Reference](api-reference/)
-{% endcontent-ref %}
-
 ```bash
 curl -L 
   --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}'
@@ -2199,6 +2170,17 @@ As a result, the response includes the shipping costs details:
     }
 }
 ```
+Delivery and shipping API reference:
+
+{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
+[Shipping API Reference](../delivery-and-shipping/shipping/api-reference/)
+{% endcontent-ref %}
+
+Cart API reference:
+
+{% content-ref url="api-reference/" %}
+[Cart API Reference](api-reference/)
+{% endcontent-ref %}
 
 ## How to calculate a payment fee at cart level
 
