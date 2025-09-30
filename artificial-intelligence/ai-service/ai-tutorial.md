@@ -23,7 +23,7 @@ Send the request to the [Creating Configurations](https://developer.emporix.io/a
 ```bash
 curl -L 
   --request POST 
-  --url 'https://api.emporix.io/configuration/{tenant}/configurations' \
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations' 
   --header 'Content-Type: application/json' 
   --data '[
     {
