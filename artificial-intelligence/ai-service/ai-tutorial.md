@@ -26,16 +26,14 @@ curl -L
   --url 'https://api.emporix.io/configuration/{tenant}/configurations' \
   --header 'Content-Type: application/json' 
   --data '[
-  {
-    "key": "68dbce65057dee5e70165d24",
-    "value": "mc-ZtG7zOY9lywNv2539383fLeJr34444",
-    "version": 1,
-    "secured": false
-  }
+    {
+      "_id": "openAiApiToken",
+      "value": "mc-ZtG7zOY9lywNv2539383fLeJr34444",
+      "version": 1,
+      "secured": false
+    }
 ]
 ```
-
-[broken-reference](broken-reference/ "mention")
 
 ## How to generate an AI supported text for a product
 
