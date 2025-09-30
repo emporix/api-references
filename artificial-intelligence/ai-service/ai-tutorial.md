@@ -68,3 +68,82 @@ curl -i -X POST \
 {% hint style="info" %}
 To see some more examples of using AI at Emporix, check our guides for Management Dashboard - [Powered by AI](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/ai-intro/ai-config).
 {% endhint %}
+
+## How to create an AI agent using a template
+
+Create an AI agent using one of Emporix agent template.
+
+{% stepper %}
+{% step %}
+### Get the agent template ID 
+To create an agent, you'll need a template ID.
+* Either, retrieve all the available agent templates by calling the [Listing available agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template) endpoint.
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/templates' \
+  --header 'Accept: */*'
+```
+* Use the [Searching agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template) endpoint to find the specific agent template.
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/templates/search' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "q": "name:~Support"
+  }'
+```
+Copy and note down the template ID of your interest.
+{% endstep %}
+
+{% step %}
+### Create an agent
+Call the [Creating agent instance based on the template](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template) endpoint to add an agent to your system. In the path parameter, provide the `templateID` you have copied.
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/ai-service/mytenant/agentic/templates/123/agent' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": {
+      "en": "Complaint Agent"
+    },
+    "description": {
+      "de": "Agent which is responsible for reading emails and base on that resolve the customer's complaints"
+    },
+    "id": "a81bc81b-dead-4e5d-abff-90865d1e13b1"
+  }'
+```
+
+{% endstep %}
+
+## How to search for the AI Agents
+
+When you want to trigger an AI agent you already have enabled through API, for example as a part of a digital process or from an external system, you need to fetch the specific agent details.
+
+* Use the [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/search) endpoint to pass a query parameter against the agents in your system. 
+
+For example, to find agents of `Complaint` type:
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/ai-service/mytenant/agentic/agents/search' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "q": "name:~Complaint"
+  }'
+```
+
+* If you know the agent's ID, you can use the [Retrieving the agent by ID]()endpoint.
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/ai-service/mytenant/agentic/agents/invoice-complaint' \
+  --header 'Accept: */*'
+```
+
+You can use the retrieved details to establish the required connections and triggers for the AI Agent.
