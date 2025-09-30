@@ -34,7 +34,8 @@ paths:
         '500':
           $ref: '#/components/responses/500_resp_common'
       description: |-
-        Generates a text based on a prompt. Currently, the supported AI engine for the text generation is https://platform.openai.com/.
+        Generates a text based on a prompt. 
+        Currently, the supported AI engine for the text generation is https://platform.openai.com/.
 
         ***
         Prerequisite: Using the AI service requires an API token, you have to either configure your own OpenAI account, or use the Emporix one. To configure your own OpenAI token, use the configuration service by storing the token under `openAiApiToken` key.  
@@ -76,7 +77,8 @@ paths:
         '500':
           $ref: '#/components/responses/500_resp_common'
       description: |-
-        Generates a completion based on chat history. Currently, the supported AI engine for the text generation is https://platform.openai.com/.
+        Generates a completion based on chat history. 
+        Currently, the supported AI engine for the text generation is https://platform.openai.com/.
 
 
         ***
