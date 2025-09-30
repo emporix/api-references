@@ -122,7 +122,7 @@ curl -L \
 
 ## How to search for the AI Agents
 
-When you want to trigger an AI agent you already have enabled through API, for example as a part of a digital process or from an external system, you need to fetch the specific agent details.
+When you want to add a trigger for an enabled AI agent through API, for example as a part of a digital process or from an external system, you need to fetch the specific agent details.
 
 * Use the [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/search) endpoint to pass a query parameter against the agents in your system. 
 
