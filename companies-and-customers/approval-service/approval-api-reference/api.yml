@@ -19,6 +19,55 @@ paths:
   '/approval/{tenant}/approvals':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
+        
+    post:
+      summary: Creating a single approval
+      responses:
+        '201':
+          description: |
+            The resource has been successfully created. 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/approvalId'
+              examples:
+                approvalId:
+                  value:
+                    id: 88b1779c-a8bf-4b94-b1be-b0edd149bba5
+        '400':
+          $ref: '#/components/responses/approvals_response_BadRequest_400'
+        '401':
+          $ref: '#/components/responses/common_response_Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/common_response_Forbidden_403'
+        '409':
+          $ref: '#/components/responses/approval_post_response_Conflict_409'
+      description: |
+        Creates a single approval document with information about the approver and order details.
+
+        In case of any validation problems, the below `errorCodes` can be returned:
+          - **APPROVAL-400003**: Incorrect value of the approval status
+          - **APPROVAL-400004**: Not matching combination of approval action and resource type 
+          - **APPROVAL-400005**: Approval has been already given
+          - **APPROVAL-400006**: Provided approver cannot be assigned to the approval
+          - **APPROVAL-400008**: Requested user has no permissions to the resource
+          - **APPROVAL-400011**: Requested user is not assigned to any company
+          - **APPROVAL-404002**: Provided resource does not exist
+          - **APPROVAL-404003**: Requested user is not assigned to any legal entity
+          - **APPROVAL-409001**: Approval already exists
+        
+        ***
+        **Required scopes**
+        * `approval.approval_manage_own`
+      operationId: POST-approval-create-approval
+      requestBody:
+        $ref: '#/components/requestBodies/approvalCreateBody'
+      parameters:
+        - $ref: '#/components/parameters/path_tenant'
+      security:
+        - CustomerAccessToken: []
+      tags:
+        - Approvals
     get:
       summary: Retrieving a list of approvals
       operationId: GET-approval-list-approvals
@@ -73,54 +122,34 @@ paths:
           $ref: '#/components/responses/approvals_response_NotFound_404'
       security:
         - CustomerAccessToken: []
-    post:
-      summary: Creating a single approval
+    delete:
+      summary: Deleting a single approval
+      operationId: DELETE-approval-remove-approval
       responses:
-        '201':
-          description: |
-            The resource has been successfully created. 
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/approvalId'
-              examples:
-                approvalId:
-                  value:
-                    id: 88b1779c-a8bf-4b94-b1be-b0edd149bba5
+        '204':
+          description: No Content
         '400':
-          $ref: '#/components/responses/approvals_response_BadRequest_400'
+          $ref: '#/components/responses/approvals_response_DeleteBadRequest_400'
         '401':
           $ref: '#/components/responses/common_response_Unauthorized_401'
         '403':
           $ref: '#/components/responses/common_response_Forbidden_403'
-        '409':
-          $ref: '#/components/responses/approval_post_response_Conflict_409'
-      description: |
-        Creates a single approval document with information about the approver and order details.
-
-        In case of any validation problems, the below `errorCodes` can be returned:
-          - **APPROVAL-400003**: Incorrect value of the approval status
-          - **APPROVAL-400004**: Not matching combination of approval action and resource type 
-          - **APPROVAL-400005**: Approval has been already given
-          - **APPROVAL-400006**: Provided approver cannot be assigned to the approval
-          - **APPROVAL-400008**: Requested user has no permissions to the resource
-          - **APPROVAL-400011**: Requested user is not assigned to any company
-          - **APPROVAL-404002**: Provided resource does not exist
-          - **APPROVAL-404003**: Requested user is not assigned to any legal entity
-          - **APPROVAL-409001**: Approval already exists
-        
-        ***
-        **Required scopes**
-        * `approval.approval_manage_own`
-      operationId: POST-approval-create-approval
-      requestBody:
-        $ref: '#/components/requestBodies/approvalCreateBody'
-      parameters:
-        - $ref: '#/components/parameters/path_tenant'
-      security:
-        - CustomerAccessToken: []
+        '404':
+          $ref: '#/components/responses/approvals_response_NotFound_404'
       tags:
         - Approvals
+      description: |-
+        Deletes a single approval document.
+        A customer, who has the `approval.approval_manage_own` scope granted and is assigned to the approval as a requestor, can delete an approval. The approval can only be deleted if its status is `PENDING`. The approval status is changed to `CLOSED` during deletion.
+
+        In case of any validation problems, the below `errorCodes` can be returned:
+          - **APPROVAL-404001**: Approval does not exist
+        
+        ***
+        ***Required scopes**
+        * `approval.approval_manage_own`
+      security:
+        - CustomerAccessToken: []
     patch:
       summary: Updating a single approval
       operationId: PATCH-approval-update-approval
@@ -160,34 +189,6 @@ paths:
         * `approval.approval_manage_own`
       requestBody:
         $ref: '#/components/requestBodies/approvalUpdateBody'
-      security:
-        - CustomerAccessToken: []
-    delete:
-      summary: Deleting a single approval
-      operationId: DELETE-approval-remove-approval
-      responses:
-        '204':
-          description: No Content
-        '400':
-          $ref: '#/components/responses/approvals_response_DeleteBadRequest_400'
-        '401':
-          $ref: '#/components/responses/common_response_Unauthorized_401'
-        '403':
-          $ref: '#/components/responses/common_response_Forbidden_403'
-        '404':
-          $ref: '#/components/responses/approvals_response_NotFound_404'
-      tags:
-        - Approvals
-      description: |-
-        Deletes a single approval document.
-        A customer, who has the `approval.approval_manage_own` scope granted and is assigned to the approval as a requestor, can delete an approval. The approval can only be deleted if its status is `PENDING`. The approval status is changed to `CLOSED` during deletion.
-
-        In case of any validation problems, the below `errorCodes` can be returned:
-          - **APPROVAL-404001**: Approval does not exist
-        
-        ***
-        ***Required scopes**
-        * `approval.approval_manage_own`
       security:
         - CustomerAccessToken: []
   '/approval/{tenant}/approval/permitted':
