@@ -491,3 +491,13 @@
     * [Events - Schema](../webhooks/events-schema.md)
     * [Events - Site](../webhooks/events-site.md)
     * [Events - Vendor](../webhooks/events-vendor.md)
+* ```yaml
+  type: builtin:openapi
+  props:
+    models: true
+  dependencies:
+    spec:
+      ref:
+        kind: openapi
+        spec: product-test-3
+  ```
