@@ -82,7 +82,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/path_tenant'
     post:
-      summary: AI Completions
+      summary: Generating AI Completions
       operationId: POST-ai-completions
       responses:
         '200':
@@ -127,7 +127,7 @@ paths:
       - $ref: '#/components/parameters/fields'
       - $ref: '#/components/parameters/header_xTotalCount'
     get:
-      summary: Get available jobs
+      summary: Listing available jobs
       operationId: GET-ai-list-jobs
       responses:
         '200':
@@ -187,7 +187,7 @@ paths:
         - $ref: '#/components/parameters/sort'
         - $ref: '#/components/parameters/fields'
         - $ref: '#/components/parameters/header_xTotalCount'
-      summary: Get jobs
+      summary: Searching jobs
       operationId: POST-ai-search-jobs
       responses:
         '200':
@@ -250,7 +250,7 @@ paths:
     get:
       parameters:
         - $ref: '#/components/parameters/fields'
-      summary: Get available job
+      summary: Retrieving available job
       operationId: GET-ai-job
       responses:
         '200':
@@ -300,7 +300,7 @@ paths:
       tags:
         - Job
     delete:
-      summary: Delete job
+      summary: Deleting a job
       operationId: DELETE-ai-job
       responses:
         '204':
@@ -335,7 +335,7 @@ paths:
         in: header
         description: Unique session's identifier which allows for storing the context of the chat. If not provided, the system generates it.
     post:
-      summary: Agent's Chat
+      summary: Starting agent chat
       operationId: POST-ai-agents-chat
       responses:
         '200':
@@ -385,7 +385,7 @@ paths:
         in: header
         description: Unique session's identifier which allows for storing the context of the chat. If not provided, the system generates it.
     post:
-      summary: Agent's Async Chat
+      summary: Starting agent async chat
       operationId: POST-ai-agents-chat-async
       responses:
         '201':
@@ -434,7 +434,7 @@ paths:
       - $ref: '#/components/parameters/header_xTotalCount'
       - $ref: '#/components/parameters/header_Accept-Language'
     get:
-      summary: Get available agent templates
+      summary: Listing available agent templates
       operationId: GET-ai-list-templates
       responses:
         '200':
@@ -477,7 +477,7 @@ paths:
       - $ref: '#/components/parameters/header_xTotalCount'
       - $ref: '#/components/parameters/header_Accept-Language'
     post:
-      summary: Search agent templates
+      summary: Searching agent templates
       operationId: POST-ai-search-templates
       responses:
         '200':
@@ -521,7 +521,7 @@ paths:
         in: path
         required: true
     post:
-      summary: Create agent instance based on the template
+      summary: Creating agent instance based on a template
       operationId: POST-ai-clone-template
       requestBody:
         $ref: '#/components/requestBodies/AgentFromTemplateRequest'
@@ -569,7 +569,7 @@ paths:
       - $ref: '#/components/parameters/expand'
       - $ref: '#/components/parameters/header_xTotalCount'
     get:
-      summary: Get agents
+      summary: Listing agents
       operationId: GET-ai-list-agents
       responses:
         '200':
@@ -613,7 +613,7 @@ paths:
         - $ref: '#/components/parameters/fields'
         - $ref: '#/components/parameters/expand'
         - $ref: '#/components/parameters/header_xTotalCount'
-      summary: Get agents
+      summary: Searching agents
       operationId: POST-ai-search-agents
       responses:
         '200':
@@ -660,7 +660,7 @@ paths:
         - $ref: '#/components/parameters/header_Accept-Language'
         - $ref: '#/components/parameters/fields'
         - $ref: '#/components/parameters/expand'
-      summary: Get agent by ID
+      summary: Retrieving agent by ID
       operationId: GET-ai-retrieve-agent
       responses:
         '200':
@@ -695,7 +695,7 @@ paths:
     put:
       parameters:
         - $ref: '#/components/parameters/header_Content-Language'
-      summary: Upsert agent
+      summary: Upserting agent
       operationId: PUT-ai-agent
       responses:
         '201':
@@ -735,7 +735,7 @@ paths:
       tags:
         - Agent
     patch:
-      summary: Partially update agent
+      summary: Partially updating agent
       operationId: PATCH-ai-update-agent
       responses:
         '204':
@@ -767,7 +767,7 @@ paths:
       tags:
         - Agent
     delete:
-      summary: Delete agent
+      summary: Deleting agent
       operationId: DELETE-ai-delete-agent
       responses:
         '204':
@@ -802,7 +802,7 @@ paths:
       - $ref: '#/components/parameters/fields'
       - $ref: '#/components/parameters/header_xTotalCount'
     get:
-      summary: Get tools
+      summary: Listing tools
       operationId: GET-ai-list-tools
       responses:
         '200':
@@ -845,7 +845,7 @@ paths:
         - $ref: '#/components/parameters/sort'
         - $ref: '#/components/parameters/fields'
         - $ref: '#/components/parameters/header_xTotalCount'
-      summary: Get tools
+      summary: Searching tools
       operationId: POST-ai-search-tools
       responses:
         '200':
@@ -891,7 +891,7 @@ paths:
     get:
       parameters:
         - $ref: '#/components/parameters/fields'
-      summary: Get tool by ID
+      summary: Retrieving tool by ID
       operationId: GET-ai-retrieve-tool
       responses:
         '200':
@@ -923,7 +923,7 @@ paths:
       tags:
         - Tool
     put:
-      summary: Upsert tool
+      summary: Upserting tool
       operationId: PUT-ai-upsert-tool
       responses:
         '201':
@@ -963,7 +963,7 @@ paths:
       tags:
         - Tool
     patch:
-      summary: Partially update tool
+      summary: Partially updating tool
       operationId: PATCH-ai-update-tool
       responses:
         '204':
@@ -997,7 +997,7 @@ paths:
     delete:
       parameters:
         - $ref: '#/components/parameters/force'
-      summary: Delete tool
+      summary: Deleting tool
       operationId: DELETE-ai-delete-tool
       responses:
         '204':
@@ -1034,7 +1034,7 @@ paths:
       - $ref: '#/components/parameters/fields'
       - $ref: '#/components/parameters/header_xTotalCount'
     get:
-      summary: Get tokens
+      summary: Listing tokens
       operationId: GET-ai-list-tokens
       responses:
         '200':
@@ -1076,7 +1076,7 @@ paths:
         - $ref: '#/components/parameters/sort'
         - $ref: '#/components/parameters/fields'
         - $ref: '#/components/parameters/header_xTotalCount'
-      summary: Get tokens
+      summary: Searching tokens
       operationId: POST-ai-search-tokens
       responses:
         '200':
@@ -1121,7 +1121,7 @@ paths:
     get:
       parameters:
         - $ref: '#/components/parameters/fields'
-      summary: Get token by ID
+      summary: Retrieving token by ID
       operationId: GET-ai-retrieve-token
       responses:
         '200':
@@ -1152,7 +1152,7 @@ paths:
       tags:
         - Token
     put:
-      summary: Upsert token
+      summary: Upserting token
       operationId: PUT-ai-upsert-token
       responses:
         '201':
@@ -1194,7 +1194,7 @@ paths:
       tags:
         - Token
     patch:
-      summary: Partially update token
+      summary: Partially updating token
       operationId: PATCH-ai-update-token
       responses:
         '204':
@@ -1230,7 +1230,7 @@ paths:
     delete:
       parameters:
         - $ref: '#/components/parameters/force'
-      summary: Delete token
+      summary: Deleting token
       operationId: DELETE-ai-delete-token
       responses:
         '204':
@@ -1267,7 +1267,7 @@ paths:
       - $ref: '#/components/parameters/expandMcpServer'
       - $ref: '#/components/parameters/header_xTotalCount'
     get:
-      summary: Get mcp servers
+      summary: Listing MCP servers
       operationId: GET-ai-list-mcp-servers
       responses:
         '200':
@@ -1310,7 +1310,7 @@ paths:
         - $ref: '#/components/parameters/fields'
         - $ref: '#/components/parameters/expandMcpServer'
         - $ref: '#/components/parameters/header_xTotalCount'
-      summary: Get mcp servers
+      summary: Searching MCP servers
       operationId: POST-ai-search-mcp-servers
       responses:
         '200':
@@ -1355,7 +1355,7 @@ paths:
     get:
       parameters:
         - $ref: '#/components/parameters/fields'
-      summary: Get mcp server by ID
+      summary: Retrieving MCP server by ID
       operationId: GET-ai-retrieve-mcp-server
       responses:
         '200':
@@ -1386,7 +1386,7 @@ paths:
       tags:
         - MCP Server
     put:
-      summary: Upsert mcp server
+      summary: Upserting MCP server
       operationId: PUT-ai-upsert-mcp-server
       responses:
         '201':
@@ -1426,7 +1426,7 @@ paths:
       tags:
         - MCP Server
     patch:
-      summary: Partially update mcp server
+      summary: Partially updating MCP server
       operationId: PATCH-ai-update-mcp-server
       responses:
         '204':
@@ -1460,7 +1460,7 @@ paths:
     delete:
       parameters:
         - $ref: '#/components/parameters/force'
-      summary: Delete mcp server
+      summary: Deleting MCP server
       operationId: DELETE-ai-delete-mcp-server
       responses:
         '204':
@@ -1491,7 +1491,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/path_tenant'
     get:
-      summary: Get commerce events
+      summary: Listing commerce events
       operationId: GET-ai-commerce-events
       responses:
         '200':
