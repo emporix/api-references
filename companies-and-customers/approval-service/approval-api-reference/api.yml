@@ -80,8 +80,7 @@ paths:
       tags:
         - Approvals
       description: |
-        Retrieves a list of approval documents which is assigned to the user. The user needs to be a requestor or the approval giver.
-        Retrieves a list of approval documents which is assigned to the user. The user needs to be a requestor or an approval giver.
+        Retrieves a list of approval documents which is assigned to the user. The user needs to be a *Requestor* or the *Approver*.
         ***
         **Required scopes**
         * `approval.approval_read_own`
@@ -103,7 +102,7 @@ paths:
         - Approvals
       operationId: GET-approval-retrieve-approval
       description: |
-        Retrieves a single approval document which is assigned to the user. The user needs to be a requestor or an approval giver.
+        Retrieves a single approval document which is assigned to the user. The user needs to be a *Requestor* or the *Approver*.
         
         In case of any validation problems, the below `errorCodes` can be returned:
           - **APPROVAL-404001**: Approval does not exist
@@ -139,7 +138,7 @@ paths:
       tags:
         - Approvals
       description: |
-        Partially updates a single approval document with given information. To update the approval, the user needs to be a requestor or an approval giver. 
+        Partially updates a single approval document with given information. To update the approval, the user needs to be a *Requestor* or the *Approver*. 
         Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
           - `add` (adding an item to the items list)
           - `remove` (removing an item from the items list)
@@ -206,7 +205,7 @@ paths:
         '403':
           $ref: '#/components/responses/common_response_Forbidden_403'
       description: |
-        Checks the approval for given resource
+        Checks the approval for given resource. The endpoint verifies whether a user is authorized to perform a specific action on a given resource within a tenant.
 
         In case of any validation problems, the below `errorCodes` can be returned:
           - **APPROVAL-400011**: Requested user is not assigned to any company
@@ -227,7 +226,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/path_tenant'
     post:
-      summary: Search for the approver users
+      summary: Search for the users eligible to act as *Approvers*.
       responses:
         '200':
           $ref: '#/components/responses/ApprovalSearchUsersResponse_200'
@@ -657,7 +656,7 @@ components:
         - approver
     address:
       type: object
-      description: Information about the customer's address.
+      description: Information about the customer address.
       properties:
         contactName:
           type: string
@@ -1206,7 +1205,7 @@ components:
       in: path
       required: true
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
         **Note**: The tenant name should always be written in lowercase.
       schema:
         pattern: '^[a-z][a-z0-9]+$'
@@ -1247,7 +1246,7 @@ components:
         type: string
         example: 'q=status:APPROVED'
       description: |
-        A standard query parameter is used to search for specific values.
+        A standard query parameter is used to search for the specific values.
 
            + Searching for an item by a string property: `q=status:PENDING`, where `status` is the name of the string field and `PENDING` is its required value.
            + Searching for items by a number-based property:
@@ -1283,4 +1282,4 @@ components:
     CustomerAccessToken:
       type: http
       scheme: bearer
-      description: 'To generate a customer''s access token, go to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.'
+      description: 'To generate a customer access token, go to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.'
