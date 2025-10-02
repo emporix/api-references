@@ -80,7 +80,7 @@ paths:
       tags:
         - Approvals
       description: |
-        Retrieves a list of approval documents which is assigned to the user. The user needs to be a *Requestor* or the *Approver*.
+        Retrieves a list of approval documents which is assigned to the user. The user needs to be a *Requestor* or an *Approver*.
         ***
         **Required scopes**
         * `approval.approval_read_own`
@@ -102,7 +102,7 @@ paths:
         - Approvals
       operationId: GET-approval-retrieve-approval
       description: |
-        Retrieves a single approval document which is assigned to the user. The user needs to be a *Requestor* or the *Approver*.
+        Retrieves a single approval document which is assigned to the user. The user needs to be a *Requestor* or an *Approver*.
         
         In case of any validation problems, the below `errorCodes` can be returned:
           - **APPROVAL-404001**: Approval does not exist
@@ -138,7 +138,7 @@ paths:
       tags:
         - Approvals
       description: |
-        Partially updates a single approval document with given information. To update the approval, the user needs to be a *Requestor* or the *Approver*. 
+        Partially updates a single approval document with given information. To update the approval, the user needs to be a *Requestor* or an *Approver*. 
         Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
           - `add` (adding an item to the items list)
           - `remove` (removing an item from the items list)
