@@ -126,7 +126,7 @@ paths:
       operationId: PATCH-approval-update-approval
       responses:
         '204':
-          description: No Content
+          description: No Content.
         '400':
           $ref: '#/components/responses/approvals_response_BadRequest_400'
         '401':
@@ -183,7 +183,7 @@ paths:
         A customer, who has the `approval.approval_manage_own` scope granted and is assigned to the approval as a requestor, can delete an approval. The approval can only be deleted if its status is `PENDING`. The approval status is changed to `CLOSED` during deletion.
 
         In case of any validation problems, the below `errorCodes` can be returned:
-          - **APPROVAL-404001**: Approval does not exist
+          - **APPROVAL-404001**: Approval does not exist.
         
         ***
         ***Required scopes**
@@ -240,10 +240,10 @@ paths:
         Search for the users who can be assigned to the approvals.
 
         In case of any validation problem, the below `errorCodes` can be returned:
-          - **APPROVAL-400008**: Requested user has no permissions to the resource
-          - **APPROVAL-400011**: Requested user is not assigned to any company
-          - **APPROVAL-404002**: Provided resource does not exist
-          - **APPROVAL-404003**: Requested user is not assigned to any legal entity
+          - **APPROVAL-400008**: Requested user has no permissions to the resource.
+          - **APPROVAL-400011**: Requested user is not assigned to any company.
+          - **APPROVAL-404002**: Provided resource does not exist.
+          - **APPROVAL-404003**: Requested user is not assigned to any legal entity.
         
         ***
         **Required scopes**
@@ -275,7 +275,7 @@ components:
                   - message: 'resourceType: cannot be null'
                 errorCode: APPROVAL-400001
     approvals_response_NotFound_404:
-      description: 'Resource cannot be found'
+      description: 'Resource cannot be found.'
       content:
         application/json:
           schema:
@@ -288,7 +288,7 @@ components:
                 message: "Approval with id '123456789' does not exist."
                 errorCode: APPROVAL-404001
     common_response_Unauthorized_401:
-      description: Unauthorized
+      description: Unauthorized.
       content:
         application/json:
           schema:
@@ -447,7 +447,7 @@ components:
                   modifiedAt: '2023-04-31T13:18:02.379Z'
                   version: 1
     listOfApprovalsResponse_200:
-      description: Example response
+      description: Example response.
       content:
         application/json:
           schema:
@@ -539,7 +539,7 @@ components:
                     modifiedAt: '2023-04-31T13:18:02.379Z'
                     version: 1
     ApprovalPermittedResponse_200:
-      description: Approval permitted response
+      description: Approval permitted response.
       content:
         application/json:
           schema:
@@ -566,7 +566,7 @@ components:
                 action: CHECKOUT
                 permitted: false
     ApprovalSearchUsersResponse_200:
-      description: Approval permitted response
+      description: Approval permitted response.
       content:
         application/json:
           schema:
@@ -592,9 +592,9 @@ components:
           description: Error message.
         errorCode:
           type: string
-          description: code of the error
+          description: code of the error.
         details:
-          description: Details information
+          description: Details information.
           type: array
           items:
             type: object
@@ -618,18 +618,18 @@ components:
           $ref: '#/components/schemas/approvalAction'
         approver:
           type: object
-          description: User which can approve the approval request
+          description: User which can approve the approval request.
           properties:
             userId:
               type: string
-              description: Identifier of the user
+              description: Identifier of the user.
         comment:
           type: string
-          description: A comment from the requestor to the approver
+          description: A comment from the requestor to the approver.
         details:
           type: object
           title: additional information
-          description: additional information required for approval process
+          description: additional information required for approval process.
           properties:
             shipping:
               $ref: '#/components/schemas/shipping'
@@ -714,7 +714,7 @@ components:
           description: Shipping net cost.
         shippingTaxCode:
           type: string
-          description: The tax code of the shipping
+          description: The tax code of the shipping.
     payment:
       type: object
       description: Information about the payment.
@@ -763,32 +763,32 @@ components:
       properties:
         userId:
           type: string
-          description: An identifier of the user
+          description: An identifier of the user.
         firstName:
           type: string
-          description: First name of the user
+          description: First name of the user.
         lastName:
           type: string
-          description: Last name of the user
+          description: Last name of the user.
       required:
         - userId
         - firstName
         - lastName
     resourceType:
       title: A type of a resource
-      description: Base schema for an approval resource type
+      description: Base schema for an approval resource type.
       type: string
       enum:
         - CART
     approvalAction:
       title: An approval action
-      description: Base schema for an approval action type
+      description: Base schema for an approval action type.
       type: string
       enum:
         - CHECKOUT
     approvalStatus:
       title: A status of the approval
-      description: Base schema for the approval status
+      description: Base schema for the approval status.
       type: string
       enum:
         - PENDING
@@ -812,7 +812,7 @@ components:
               description: An identifier of the approval document.
             approverComment:
               type: string
-              description: A comment from an approver user
+              description: A comment from an approver user.
             resource:
               $ref: '#/components/schemas/resourceResponse'
             requestor:
@@ -837,21 +837,21 @@ components:
               $ref: '#/components/schemas/approvalStatus'
             permitted:
               type: boolean
-              description: Indicates if the operation is permitted
+              description: Indicates if the operation is permitted.
             approvalId:
               type: string
-              description: Identifier of the approval
+              description: Identifier of the approval.
           required:
             - permitted
             - action
     resourceResponse:
       title: Resource
-      description: Resource of the approval
+      description: Resource of the approval.
       type: object
       properties:
         id:
           type: string
-          description: The identifier of the resource
+          description: The identifier of the resource.
         items:
           type: array
           items:
@@ -864,70 +864,70 @@ components:
           $ref: '#/components/schemas/taxablePrice'
         amount:
           type: number
-          description: Value of the price
+          description: Value of the price.
         siteCode:
           type: string
-          description: Name of the site
+          description: Name of the site.
         deliveryWindow:
           $ref: '#/components/schemas/deliveryWindow'
     resourceItem:
       title: Resource item
-      description: Item of the resource
+      description: Item of the resource.
       type: object
       properties:
         quantity:
           type: number
-          description: Quantity of the given item
+          description: Quantity of the given item.
         itemPrice:
           $ref: '#/components/schemas/price'
         itemYrn:
           type: string
-          description: YRN which identifies the product
+          description: YRN which identifies the product.
     price:
       title: Price value
-      description: Price value with the currency
+      description: Price value with the currency.
       type: object
       properties:
         currency:
           type: string
-          description: Currency of the price
+          description: Currency of the price.
         amount:
           type: number
-          description: Value of the price
+          description: Value of the price.
     taxablePrice:
       title: Taxable price value
-      description: Price value with the currency and tax information
+      description: Price value with the currency and tax information.
       type: object
       properties:
         currency:
           type: string
-          description: Currency of the price
+          description: Currency of the price.
         netValue:
           type: number
-          description: Net value of the price
+          description: Net value of the price.
         grossValue:
           type: number
-          description: Gross value of the price
+          description: Gross value of the price.
         taxValue:
           type: number
-          description: Tax value of the price
+          description: Tax value of the price.
     deliveryWindow:
       title: Delivery Window
-      description: delivery window required for order
+      description: delivery window required for order.
       type: object
       properties:
         id:
           type: string
-          description: Identifier of the delivery window
+          description: Identifier of the delivery window.
         slotId:
           type: string
-          description: Identifier of the slot
+          description: Identifier of the slot.
         deliveryDate:
           type: string
-          description: Delivery date
+          description: Delivery date.
     approvalSearchUsersResponse:
       title: Search approval users response
-      description: Base schema search approval users response
+      description: Base schema search approval users response.
       type: array
       items:
         $ref: '#/components/schemas/user'
@@ -940,10 +940,10 @@ components:
           properties:
             id:
               type: string
-              description: An identifier of the approval document
+              description: An identifier of the approval document.
             resourceId:
               type: string
-              description: An identifier of the approval resource
+              description: An identifier of the approval resource.
     updateApprovalRequest:
       type: array
       description: Approval partial update operation list.
@@ -970,11 +970,11 @@ components:
             anyOf:
               - $ref: '#/components/schemas/approvalStatus'
               - type: string
-                description: Value of the string type
+                description: Value of the string type.
               - type: object
-                description: Any part of the details object
+                description: Any part of the details object.
               - type: object
-                description: Any part of the delivery window object
+                description: Any part of the delivery window object.
         required:
           - op
           - path
@@ -1017,7 +1017,7 @@ components:
           $ref: '#/components/schemas/resourceType'
         resourceId:
           type: string
-          description: An identifier of the resource for approval
+          description: An identifier of the resource for approval.
         action:
           $ref: '#/components/schemas/approvalAction'
       required:
@@ -1032,7 +1032,7 @@ components:
           $ref: '#/components/schemas/resourceType'
         resourceId:
           type: string
-          description: An identifier of the resource for approval
+          description: An identifier of the resource for approval.
         action:
           $ref: '#/components/schemas/approvalAction'
       required:
