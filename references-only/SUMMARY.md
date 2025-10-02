@@ -3,9 +3,9 @@
 * [API Reference](README.md)
   * [AI](../artificial-intelligence/ai-service/api-reference/README.md)
     * ```yaml
+      type: builtin:openapi
       props:
         models: true
-      type: builtin:openapi
       dependencies:
         spec:
           ref:
