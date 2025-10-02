@@ -618,7 +618,7 @@ components:
           $ref: '#/components/schemas/approvalAction'
         approver:
           type: object
-          description: User which can approve the approval request.
+          description: User who can approve the approval request.
           properties:
             userId:
               type: string
