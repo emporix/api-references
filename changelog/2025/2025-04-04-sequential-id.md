@@ -12,7 +12,7 @@ layout:
   pagination:
     visible: true
 ---
-# 2025-04-04: Sequential-ID Service - deprecations
+# 2025-04-04: Sequential ID Service - deprecations
 
 ## Overview
 
