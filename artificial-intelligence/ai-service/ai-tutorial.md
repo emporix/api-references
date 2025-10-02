@@ -159,7 +159,7 @@ curl -L \
   }'
 ```
 
-* If you know the agent's ID, you can use the [Retrieving the agent by ID]()endpoint.
+* If you know the agent's ID, you can use the [Retrieving the agent by ID]() endpoint.
 
 ```bash
 curl -L \
