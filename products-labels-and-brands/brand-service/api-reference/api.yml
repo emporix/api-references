@@ -323,82 +323,6 @@ paths:
       summary: Deleting a brand
     parameters:
       - $ref: '#/components/parameters/path_brandId'
-  '/media':
-    post:
-      deprecated: true
-      tags:
-        - Media
-      description: |
-        Creates a public image for a brand. This endpoint is `deprecated`. Please use `media-service` instead.
-        ### See: [Media Service](https://docs.emporix.com/docs/openapi/media/)
-        ***
-
-        **Required scopes**
-
-        * `brand.brand_manage`
-      operationId: POST-brand-add-media
-      requestBody:
-        content:
-          multipart/form-data:
-            schema:
-              required:
-                - binaryContent
-              properties:
-                file:
-                  type: string
-                  description: Actual file content.
-                  format: byte
-                metadata:
-                  type: string
-                  description: The metadata for the image as string encoded json - only simple strings are supported.
-                  example: Image metadata json
-        required: true
-      security:
-        - OAuth2:
-            - brand.brand_manage
-      responses:
-        '201':
-          description: The image has been successfully created.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/mediaResponse'
-        '400':
-          $ref: '#/components/responses/trait_400'
-        '403':
-          $ref: '#/components/responses/trait_403'
-        '500':
-          $ref: '#/components/responses/trait_500'
-      summary: Adding an image for a brand
-  '/media/{mediaId}':
-    delete:
-      deprecated: true
-      tags:
-        - Media
-      description: |-
-        Deletes a specified public image from a brand. This endpoint is `deprecated`. Please use `media-service` instead.
-        ### See: [Media Service](https://docs.emporix.com/docs/openapi/media/)
-        ***
-
-        **Required scopes**
-
-        * `brand.brand_delete`
-      operationId: DELETE-brand-remove-media
-      security:
-        - OAuth2:
-            - brand.brand_delete
-      responses:
-        '200':
-          description: The image has been successfully deleted.
-        '403':
-          $ref: '#/components/responses/trait_403'
-        '404':
-          $ref: '#/components/responses/trait_404'
-        '500':
-          $ref: '#/components/responses/trait_500'
-      summary: Deleting an image from a brand
-    parameters:
-      - $ref: '#/components/parameters/path_mediaId'
 components:
   schemas:
     brands:
@@ -438,16 +362,6 @@ components:
           example:
             en: Description of <strong>Brand one</strong> in HTML.
             de: Beschreibung der <strong>Marke einz</strong> in HTML.
-        image:
-          type: string
-          description: Link to the associated media file. This field is `deprecated`. Media assignment should be done through `media-service`.
-          deprecated: true
-          example: 'https://res.cloudinary.com/saas-ag/image/upload/tenant/brands/media_Id'
-        cloudinaryUrl:
-          type: string
-          description: Id of the associated media file. This field is `deprecated`. Media assignment should be done through `media-service`.
-          deprecated: true
-          example: 'tenant/brands/media_Id'
     updateBrand:
       title: Brand
       type: object
@@ -476,16 +390,6 @@ components:
           example:
             en: Description of <strong>Brand one</strong> in HTML.
             de: Beschreibung der <strong>Marke einz</strong> in HTML.
-        image:
-          type: string
-          description: Link to the associated media file. This field is `deprecated`. Media assignment should be done through `media-service`.
-          deprecated: true
-          example: 'https://res.cloudinary.com/saas-ag/image/upload/tenant/brands/media_Id'
-        cloudinaryUrl:
-          type: string
-          description: Id of the associated media file. This field is `deprecated`. Media assignment should be done through `media-service`.
-          deprecated: true
-          example: '{tenant}/brands/{media_Id}'
         metadata:
           $ref: '#/components/schemas/updateMetaData'
     brandResponse:
@@ -514,6 +418,9 @@ components:
         image:
           type: string
           description: Link to the associated media file.
+        mediaId:
+          type: string
+          description: Id of the media.
         id:
           type: string
           description: Unique identifier of a brand.
@@ -595,18 +502,6 @@ components:
                     description: Link to documentation.
                 description: Schema for the specific error cause.
       description: Schema for API-specific errors.
-    mediaResponse:
-      title: mediaResponse
-      type: object
-      properties:
-        link:
-          type: string
-          description: Link to the media file in Cloudinary.
-          example: https://res.cloudinary.com/saas-ag/image/upload/tenant/brands/imageName.jpg
-        id:
-          type: string
-          example: 'tenant/brands/d05f14d8-4fab-4c51-98f9-05a93d8ec822'
-          description: File location and Id.
   responses:
     trait_400:
       description: Request syntactically incorrect. Any details will be provided within the response payload.
@@ -683,13 +578,6 @@ components:
       schema:
         type: string
       description: Unique identifier of a brand.
-    path_mediaId:
-      name: mediaId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: Unique identifier of a media file.
     query_q:
       name: q
       in: query

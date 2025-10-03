@@ -4,13 +4,15 @@ seo:
   description: unit, units, measurement unit, measurement units
 label: Tutorials
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Unit Handling Tutorial
 
 ### How to add a new unit
 
-To add a new measurement unit to your configuration, you need to send a request to the [Adding a new unit](https://developer.emporix.io/api-references/api-guides-and-references/configuration/unit-handling-service/api-reference/unit-management#post-unit-handling-tenant-units) endpoint.
+To add a new measurement unit to your configuration, you need to send a request to the [Adding a new unit](https://developer.emporix.io/api-references/api-guides/configuration/unit-handling-service/api-reference/unit-management#post-unit-handling-tenant-units) endpoint.
 
 {% hint style="warning" %}
 Unit names are localized. When creating a new unit, you can specify the unit name in two different ways — in one language or in multiple languages.
@@ -44,7 +46,7 @@ curl -L \
 
 You can convert between any measurement units that share the same base unit, such as kilograms to grams, or centimeters to meters.
 
-To convert between units, you need to send a request to the [Converting units ](https://developer.emporix.io/api-references/api-guides-and-references/~/changes/115/api-guides-and-references/configuration/unit-handling-service/api-reference/unit-conversion)endpoint.
+To convert between units, you need to send a request to the [Converting units ](https://developer.emporix.io/api-references/api-guides/~/changes/115/api-guides-and-references/configuration/unit-handling-service/api-reference/unit-conversion)endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

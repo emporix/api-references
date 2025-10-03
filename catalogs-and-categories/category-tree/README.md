@@ -1,4 +1,6 @@
 ---
+layout:
+  width: wide
 icon: icons
 ---
 
@@ -8,8 +10,12 @@ The Category Service allows you to manage your store's categories and resources 
 
 ### Key features and benefits
 
+* Links categories with other categories
+* Creates simple or complex category hierarchy to help users find products faster
 * Provides upsert support that enables seamless updates and inserts
-* Manages the order and hierarchy of categories
+* Assigns category images
+* Manages the order of categories
+
 
 {% hint style="info" %}
 When the `X-Version` header is required, use `v2` — otherwise, the header is not necessary.

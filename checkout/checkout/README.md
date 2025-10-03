@@ -1,4 +1,6 @@
 ---
+layout:
+  width: wide
 icon: bag-shopping
 ---
 
@@ -6,7 +8,7 @@ icon: bag-shopping
 
 Converts a cart into a sales order by executing a number of checkout steps in sequence.
 
-### Key features
+### Key features and benefits
 
 * Validates product availability and product prices
 * Automatically applies coupons and promotions

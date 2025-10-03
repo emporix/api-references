@@ -897,7 +897,7 @@ paths:
             **Note**: The query param is optional, but if not provided then only cart without `type` is returned.
         - name: zipCode
           in: query
-          description: Zip code for cart filtering
+          description: The zip code of the shipping address, used for tax calculations, shipping cost estimations, and pricing. Must be provided together with `countryCode` if either of the parameters is specified. If the cart already has both (`zipCode` and `countyCode`) address values, the request parameters are ignored. If the cart is missing either value, request parameters are used to fill the missing one.
           required: false
           schema:
             type: string
@@ -905,7 +905,7 @@ paths:
             maxLength: 9
         - name: countryCode
           in: query
-          description: Country code for cart filtering
+          description: The country code of the shipping address, used for tax calculations, shipping cost estimations, and pricing. Must be provided together with `zipCode` if either of the parameters is specified. If the cart already has both (`zipCode` and `countyCode`) address values, the request parameters are ignored. If the cart is missing either value, request parameters are used to fill the missing one.
           required: false
           schema:
             type: string
@@ -2345,7 +2345,7 @@ paths:
           description: 'If set to `true`, a fully calculated cart is returned.'
         - name: zipCode
           in: query
-          description: Zip code for cart filtering
+          description: The zip code of the shipping address, used for tax calculations, shipping cost estimations, and pricing. Must be provided together with `countryCode` if either of the parameters is specified. If the cart already has both (`zipCode` and `countryCode`) address values, the request parameters are ignored. If the cart is missing either value, request parameters are used to fill the missing one.
           required: false
           schema:
             type: string
@@ -2353,7 +2353,7 @@ paths:
             maxLength: 9
         - name: countryCode
           in: query
-          description: Country code for cart filtering
+          description: The country code of the shipping address, used for tax calculations, shipping cost estimations, and pricing. Must be provided together with `zipCode` if either of the parameters is specified. If the cart already has both (`zipCode` and `countryCode`) address values, the request parameters are ignored. If the cart is missing either value, request parameters are used to fill the missing one.
           required: false
           schema:
             type: string
@@ -4271,7 +4271,7 @@ components:
                   currency:
                     type: string
                     description: Currency of the tax.
-                  value:
+                  amount:
                     type: number
                     description: Value of the tax.
     externalDiscountType:

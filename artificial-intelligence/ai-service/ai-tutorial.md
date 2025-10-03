@@ -1,4 +1,6 @@
 ---
+layout:
+  width: wide
 icon: graduation-cap
 ---
 
@@ -8,13 +10,9 @@ With Emporix support for AI, you can enhance text for product descriptions and g
 
 ## Before you start
 
-Make sure to configure your API token. To do that, you can use the [Configuration Service](../../configuration/country-service/api-reference/) and store the token under `openAiApiToken` key.
+Make sure to configure your API token. To do that, you can use the [Configuration Service](../../configuration/configuration-service/api-reference/) and store the token under `openAiApiToken` key.
 
-[broken-reference](broken-reference/ "mention")
-
-## How to generate an AI supported text for a product
-
-You can generate the text by sending a request based on a provided prompt. To send the request, use the [Text Generation](https://developer.emporix.io/api-references/api-guides-and-references/artificial-intelligence/ai-service/api-reference/text-generation) endpoint.
+Send the request to the [Creating Configurations](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#post-configuration-tenant-configurations) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -23,10 +21,35 @@ You can generate the text by sending a request based on a provided prompt. To se
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'http://api.emporix.io/ai-service/{tenant}/texts' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations' 
+  --header 'Content-Type: application/json' 
+  --data '[
+    {
+      "_id": "openAiApiToken",
+      "value": "mc-ZtG7zOY9lywNv2539383fLeJr34444",
+      "version": 1,
+      "secured": false
+    }
+]
+```
+
+## How to generate an AI supported text for a product
+
+You can generate the text by sending a request based on a provided prompt. To send the request, use the [Text Generation](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/text-generation) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../artificial-intelligence/ai-service/api-reference/" %}
+[api-reference](../../artificial-intelligence/ai-service/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -i -X POST 
+  'http://api.emporix.io/ai-service/{tenant}/texts' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "id": "en",
     "prompt": "Generate a long description for product '\''pipe cutter'\'' in language EN ",
@@ -36,22 +59,22 @@ curl -i -X POST \
 
 ## How to generate an AI completion
 
-Completion is generated based on chat history. It's a generated response or continuation of a conversation, crafted by the AI to address the given input in context.\
-It can include answering questions, providing suggestions, or completing a sentence or thought.\
-The currently supported AI engine for the completion is [OpenAI](https://platform.openai.com/).\
-To generate the AI completion, send the request using the [AI Completions](https://developer.emporix.io/api-references/api-guides-and-references/artificial-intelligence/ai-service/api-reference/ai-completions) endpoint.
+Completion is generated based on chat history. It's a generated response or continuation of a conversation, crafted by the AI to address the given input in context.
+It can include answering questions, providing suggestions, or completing a sentence or thought.
+The currently supported AI engine for the completion is [OpenAI](https://platform.openai.com/).
+To generate the AI completion, send the request using the [AI Completions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/ai-completions) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/configuration-service/api-reference/" %}
-[api-reference](../../configuration/configuration-service/api-reference/)
+{% content-ref url="../../artificial-intelligence/ai-service/api-reference/" %}
+[api-reference](../../artificial-intelligence/ai-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'http://api.emporix.io/ai-service/{tenant}/completions' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'http://api.emporix.io/ai-service/{tenant}/completions' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "id": "abc-123",
     "messages": [

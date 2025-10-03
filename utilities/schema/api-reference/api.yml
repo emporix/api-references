@@ -231,7 +231,7 @@ paths:
         - name: type
           in: query
           description: |
-            Filters schemas by type. Possible types to specify, CART, CATEGORY, COMPANY, COUPON, CUSTOMER, CUSTOMER.ADDRESS, ORDER, PRODUCT, QUOTE, RETURN, PRICE_LIST, SITE, CUSTOM_ENTITY. When the newest version of the schema is of different type than the previous one and the previous one matches the type specified in this query param, then the previous version is returned.
+            Filters schemas by type. Possible types to specify, CART, CATEGORY, COMPANY, COUPON, CUSTOMER, CUSTOMER.ADDRESS, ORDER, PRODUCT, QUOTE, RETURN, PRICE_LIST, SITE, CUSTOM_ENTITY, VENDOR. When the newest version of the schema is of different type than the previous one and the previous one matches the type specified in this query param, then the previous version is returned.
           schema:
             type: string
   '/schema/{tenant}/schemas/{id}':
@@ -601,7 +601,7 @@ paths:
         - name: type
           in: query
           description: |
-            Filters references by type. Possible types to specify, CART, CATEGORY, COMPANY, COUPON, CUSTOMER, CUSTOMER_ADDRESS, ORDER, PRODUCT, QUOTE, RETURN, PRICE_LIST, SITE, CUSTOM_ENTITY. When the newer version of a reference is of different type than the previous one and the previous one matches the type specified in this query param, then the previous version is returned.
+            Filters references by type. Possible types to specify, CART, CATEGORY, COMPANY, COUPON, CUSTOMER, CUSTOMER_ADDRESS, ORDER, PRODUCT, QUOTE, RETURN, PRICE_LIST, SITE, CUSTOM_ENTITY, VENDOR. When the newer version of a reference is of different type than the previous one and the previous one matches the type specified in this query param, then the previous version is returned.
           schema:
             type: string
   '/schema/{tenant}/references/{id}':
@@ -1656,7 +1656,7 @@ components:
     SchemaType:
       type: string
       description: Type which the schema should be assigned to. Can be one of the predefined values or any custom schema type id.
-      enum: [CART, CATEGORY, COMPANY, COUPON, CUSTOMER, CUSTOMER_ADDRESS, ORDER, PRODUCT, QUOTE, RETURN, PRICE_LIST, SITE, CUSTOM_ENTITY]
+      enum: [CART, CATEGORY, COMPANY, COUPON, CUSTOMER, CUSTOMER_ADDRESS, ORDER, PRODUCT, QUOTE, RETURN, PRICE_LIST, SITE, CUSTOM_ENTITY, VENDOR]
     SchemaTypes:
       type: array
       description: List of types to which assign the schema.

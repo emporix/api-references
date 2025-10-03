@@ -8,7 +8,18 @@
 
 ## 2025
 
-* [2025-08-30: AI Service - support for AI agents](2025/2025-08-30-ai.md)
+* [2025-10-27: AI Service - support for AI agents](2025/2025-10-27-ai.md)
+* [2025-09-30: Media service - add MODULE media id type](2025/2025-09-30-media.md)
+* [2025-09-29: Category tree - filter unpublished categories](2025/2025-09-29-category-tree.md)
+* [2025-09-24: Client Management Service – added a new contact assignment type](2025/2025-09-24-contact-management.md)
+* [2025-09-16: Client Management Service – new customer assignment propagation settings](2025/2025-09-16-client-management.md)
+* [2025-09-16: IAM Service – validation of predefined group assignments](2025/2025-09-16-iam.md)
+* [2025-09-10: Customer Service - initial password for customer](2025/2025-09-10-customer.md)
+* [2025-09-10: Brand Service - removed deprecated endpoints and fields](2025/2025-09-10-brand.md)
+* [2025-09-10: Label Service - removed deprecated endpoints and fields](2025/2025-09-10-label.md)
+* [2025-08-29: Price service - vendor handling added](2025/2025-08-29-price.md)
+* [2025-08-29: Media service - vendor handling added](2025/2025-08-29-media.md)
+* [2025-08-29: Availability service - vendor handling added](2025/2025-08-29-availability.md)
 * [2025-08-04: Webhook Service - new Vendor events](2025/2025-08-04-webhook.md)
 * [2025-08-04: Price Service - q param support](2025/2025-08-04-price.md)
 * [2025-07-30: Cart Service - vendor added](2025/2025-07-30-cart-vendor.md)

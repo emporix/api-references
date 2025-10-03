@@ -1,5 +1,8 @@
 ---
+layout:
+  width: wide
 icon: display-code
+description: Create SDKs from Emporix API specifications for seamless integration with the Commerce Engine using OpenApi Generator.
 ---
 
 # OpenAPI Generator
@@ -40,6 +43,6 @@ mvn clean compile
 
 **Result:** This command generates the code out of API reference documentation in the `target` directory. You can see the generated classes under `/target/generated-sources/openapi/src/`.
 
-##
+
 
 ![Generated classes](static/openapi/openapi_gen.png)

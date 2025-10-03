@@ -1,4 +1,6 @@
 ---
+layout:
+  width: wide
 icon: person-carry-box
 ---
 
@@ -18,3 +20,6 @@ Defines shipping zones & delivery windows.
 * Gives customers the choice of their preferred delivery date and time
 * Better organizes delivery routes
 * Minimizes costs for shipping and delivery, for example, by creating zones that align with truck routes
+* Validates date combinations, for example:
+    * Delivery on a single date 22/12/2023 and non-delivery on the same single date 22/12/2023 is not possible 
+    * Delivery on a single date 22/12/2023 which overrides a non-delivery period 21-28/12/2023 is possible 

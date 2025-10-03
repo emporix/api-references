@@ -2,13 +2,11 @@
 seo:
   title: Product Service events
   description: Webhooks, product events
+icon: webhook
+description: Webhook events related to the creation, update, and deletion of a product.
 ---
 
-# Events-Product
-
-## Overview
-
-Webhook events related to the creation, update, and deletion of a product.
+# Events - Product
 
 ## Available events
 
