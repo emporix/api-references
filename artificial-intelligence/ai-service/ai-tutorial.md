@@ -189,7 +189,7 @@ curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat' \
 
 Trigger the specific agent providing its `agentId`. In the `message`, type in your query or data you want the agent to process.
 
-In the above example, the German Translation Agent is triggered. The Agent acts according to its defined prompt - here the agent is programmed to find the product `name` and `description` in the request message and translate the fields into German language. As a result, the Agent gets back with the following response:
+In the above example, the German Translation Agent is triggered. The Agent acts according to its defined prompt - here, the agent is programmed to find the product `name` and `description` in the request message and translate the fields into German language. As a result, the Agent gets back with the following response:
 
 ```
 {
@@ -213,5 +213,7 @@ curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-async' \
     "message": Find the details of the customer order \"EON1243\"."
 }'
 ```
-The triggered Agent acts according to its prompt and in the response provides the requested details.
+
+Similarly, provide the relevant `agentId` and pass your query in the `message`.
+The triggered Agent acts according to its prompt and provides the requested details in the response.
 
