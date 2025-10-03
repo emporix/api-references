@@ -3,6 +3,8 @@ seo:
   title: Invoice Service Tutorials
   description: Invoices Generation
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Invoice Tutorial
@@ -75,7 +77,7 @@ curl -i -X POST \
 ## Set up the Site Settings service
 
 The logo URL configuration allows to upload a custom logo that should be visible on the invoice header.\
-Add your company logo to the invoice with the [Creating a site mixin](https://developer.emporix.io/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#post-site-tenant-sites-sitecode-mixins) endpoint.
+Add your company logo to the invoice with the [Creating a site mixin](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#post-site-tenant-sites-sitecode-mixins) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

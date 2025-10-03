@@ -3,6 +3,8 @@ seo:
   title: Customer Segment Service Tutorials
   description: customer segments
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Segments Tutorial
@@ -19,7 +21,7 @@ To create and configure a segment, you need the `customersegment.segment_manage`
 
 ### Create a customer segment
 
-Create a customer segment by sending a request to the the [Creating a customer segment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments) endpoint.
+Create a customer segment by sending a request to the the [Creating a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -54,7 +56,7 @@ curl -i -X POST \
 
 Connect the segment with specific products and/or categories for more customized content.
 
-* To add an individual product or a category, call the [Updating an item assignment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/items-assignments#put-customer-segment-tenant-segments-segmentid-items-type-itemid)\
+* To add an individual product or a category, call the [Updating an item assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#put-customer-segment-tenant-segments-segmentid-items-type-itemid)\
   endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -82,7 +84,7 @@ curl -i -X PUT \
   }'
 ```
 
-* To assign multiple products or categories to the segment, call the [Updating multiple item assignments](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/items-assignments#put-customer-segment-tenant-segments-segmentid-items-type-bulk) endpoint.
+* To assign multiple products or categories to the segment, call the [Updating multiple item assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#put-customer-segment-tenant-segments-segmentid-items-type-bulk) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -106,7 +108,7 @@ Note that this operation performs an `UPSERT` operation. The `UPSERT` means that
 
 Now, add customers to the segment. Depending on your setup and purpose, you can add B2B or B2C customers.
 
-* To add a B2B customer, send the request to the [Updating a customer assignment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/customers-assignments#put-customer-segment-tenant-segments-segmentid-customers-customerid-legalentityid) endpoint.
+* To add a B2B customer, send the request to the [Updating a customer assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/customers-assignments#put-customer-segment-tenant-segments-segmentid-customers-customerid-legalentityid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -133,7 +135,7 @@ curl -i -X PUT \
   }'
 ```
 
-* To add a B2C customer, send the request to the [Updating a customer assignment](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/customers-assignments#put-customer-segment-tenant-segments-segmentid-customers-customerid) endpoint.
+* To add a B2C customer, send the request to the [Updating a customer assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/customers-assignments#put-customer-segment-tenant-segments-segmentid-customers-customerid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -160,7 +162,7 @@ curl -i -X PUT \
   }'
 ```
 
-* To add multiple customers at once, send the request to the [Updating multiple customer assignments](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/customers-assignments#put-customer-segment-tenant-segments-segmentid-customers-bulk) endpoint.
+* To add multiple customers at once, send the request to the [Updating multiple customer assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/customers-assignments#put-customer-segment-tenant-segments-segmentid-customers-bulk) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -186,7 +188,7 @@ Note that this operation performs an `UPSERT` operation. The `UPSERT` means that
 To search for a segment, you need the `customersegment.segment_read` scope to retrieve all customer segments.
 {% endhint %}
 
-You can use the search API to find a segment of your interest that match a specific criteria. Send the request to the [Searching with parameters for customer segments](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments-search) endpoint.
+You can use the search API to find a segment of your interest that match a specific criteria. Send the request to the [Searching with parameters for customer segments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments-search) endpoint.
 
 {% content-ref url="../approval-service/approval-api-reference/" %}
 [approval-api-reference](../approval-service/approval-api-reference/)
@@ -209,7 +211,7 @@ In the request body, pass the criteria you're looking for in the `q` parameter.
 ## How to apply a coupon to a segment
 
 Optionally, you can offer a discount coupon to a customer segment. The coupon then applies only to the assigned products/categories and is valid only for the customers that are the segment members.\
-To create a coupon that is valid only for a specific segment, send the request to the [Creating a new coupon](https://developer.emporix.io/api-references/api-guides-and-references/rewards-and-promotions/coupon/api-reference/coupon-management#post-coupon-tenant-coupons) endpoint.
+To create a coupon that is valid only for a specific segment, send the request to the [Creating a new coupon](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/coupon-management#post-coupon-tenant-coupons) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -263,7 +265,7 @@ Or, you'd rather limit products/categories visibility to only those that a segme
 ### Retrieve all products and/or categories
 
 To display the content you want, first retrieve all the products/categories assigned to all segments that a customer is a member of.\
-Send the request to the [Retrieving all items assignments for all customer segments](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items) endpoint.
+Send the request to the [Retrieving all items assignments for all customer segments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -284,7 +286,7 @@ Depending on your needs, you can limit the search using the `q` parameter, for e
 ### Use the segment information
 
 If you want to use segments to restrict the content on your storefront, to display only the product and categories assigned to a segment for segment customers, use the endpoint to build a segment-based category tree.\
-Send the request to the [Retrieving category trees for a customer segments](https://developer.emporix.io/api-references/api-guides-and-references/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items-category-trees) endpoint.
+Send the request to the [Retrieving category trees for a customer segments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items-category-trees) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -301,7 +303,7 @@ curl -i -X GET \
 
 The request generates a category tree with categories assigned to a segment and their parent categories, if applicable. If a segment specifies a subcategory only, the customer of that segment is able to see the parent category label, but content-wise, only the products from the subcategory are available.
 
-To filter products that belong to a category that is assigned to a particular segment, send the request to the [Retrieving resources assigned to a category](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#get-category-tenant-categories-categoryid-assignments) endpoint.
+To filter products that belong to a category that is assigned to a particular segment, send the request to the [Retrieving resources assigned to a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#get-category-tenant-categories-categoryid-assignments) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

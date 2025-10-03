@@ -1142,6 +1142,7 @@ components:
             - PRIMARY
             - BILLING
             - LOGISTICS
+            - CONTACT
           description: The type of the customer assignment.
         primary:
           type: boolean
@@ -1174,6 +1175,7 @@ components:
             - PRIMARY
             - BILLING
             - LOGISTICS
+            - CONTACT
           description: The type of the customer assignment.
         primary:
           type: boolean
@@ -1214,7 +1216,8 @@ components:
             - PRIMARY
             - BILLING
             - LOGISTICS
-          description: The type of the customer assignment.
+            - CONTACT
+          description: The type of the customer assignment. If not provided, it is set to `Contact` by default.
         primary:
           type: boolean
           default: false
@@ -1228,7 +1231,6 @@ components:
       required:
         - legalEntity
         - customer
-        - type
     contactAssignmentUpdate:
       title: Contact Assignment update payload
       type: object
@@ -1257,6 +1259,7 @@ components:
             - PRIMARY
             - BILLING
             - LOGISTICS
+            - CONTACT
           description: The type of the customer assignment.
         primary:
           type: boolean
@@ -2198,6 +2201,7 @@ components:
           - PRIMARY
           - BILLING
           - LOGISTICS
+          - CONTACT
       description: |
         The type of the customer assignment. When specified, only customer assignments with the specified type will be returned.
 

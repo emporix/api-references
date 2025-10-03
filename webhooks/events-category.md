@@ -1,14 +1,12 @@
 ---
 seo:
   title: Category Service events
-  description: Webhooks, category events
+  description: Webhooks, category tree events
+icon: webhook
+description: Webhook events related to the creation, update, and deletion of a category tree and to the creation and deletion of a category assignment.
 ---
 
-# Events-Category
-
-## Overview
-
-Webhook events related to the creation, update, and deletion of a category tree and to the creation and deletion of a category assignment.
+# Events - Category Tree
 
 ## Available events
 

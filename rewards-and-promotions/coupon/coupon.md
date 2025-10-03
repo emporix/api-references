@@ -5,13 +5,15 @@ seo:
     coupon, coupons, free shipping, fixed discount, percentage discount,
     discount, discounts, referral, referrals
 icon: graduation-cap
+layout:
+  width: wide
 ---
 
 # Coupon Tutorial
 
 ## How to create a new coupon
 
-To create a new coupon, you need to send a request to the [Creating a new coupon](https://developer.emporix.io/api-references/api-guides-and-references/rewards-and-promotions/coupon/api-reference/coupon-management#post-coupon-tenant-coupons) endpoint.
+To create a new coupon, you need to send a request to the [Creating a new coupon](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/coupon-management#post-coupon-tenant-coupons) endpoint.
 
 ### Creating a free shipping coupon with minimum order value and 1 usage per customer
 
@@ -149,7 +151,7 @@ curl -i -X POST \
 
 ## How to update an existing coupon
 
-To update an existing coupon, you need to send a request to the [Partially updating a coupon](https://developer.emporix.io/api-references/api-guides-and-references/rewards-and-promotions/coupon/api-reference/coupon-management#patch-coupon-tenant-coupons-code) endpoint.
+To update an existing coupon, you need to send a request to the [Partially updating a coupon](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/coupon-management#patch-coupon-tenant-coupons-code) endpoint.
 
 {% hint style="warning" %}
 For more information on managing carts, check out the [_Carts guide_](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/carts).
@@ -201,7 +203,7 @@ You can apply one or more coupons to a cart. Coupons of different types can be a
 
 ### Specify the number of coupons per cart
 
-If you want to specify how many coupons can be added to a cart, first you need to send a request to the [Updating a configuration](https://developer.emporix.io/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint in the Configuration Service.
+If you want to specify how many coupons can be added to a cart, first you need to send a request to the [Updating a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint in the Configuration Service.
 
 In the following example, we are changing the maximum number of coupons that can be applied to a single cart to 3.
 
@@ -226,7 +228,7 @@ curl -i -X PUT \
 
 ### Apply a coupon to a cart
 
-To apply a coupon to a cart, you need to send a request to the [Applying a discount to cart](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/discounts#post-cart-tenant-carts-cartid-discounts) endpoint.
+To apply a coupon to a cart, you need to send a request to the [Applying a discount to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/discounts#post-cart-tenant-carts-cartid-discounts) endpoint.
 
 {% hint style="warning" %}
 If you want to apply more than one coupon to a cart, you need to send a separate request for each discount coupon.
@@ -257,11 +259,11 @@ Applying the coupon to cart does not mean that the coupon is automatically redee
 A coupon can be redeemed in the following ways:
 
 * When a coupon is added to a cart and the order is completed at checkout, the coupon is automatically redeemed by the Checkout Service.
-* When you send a request to the [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-references/api-guides-and-references/rewards-and-promotions/coupon/api-reference/coupon-redemption#post-coupon-tenant-coupons-code-redemptions) endpoint. This process is independent of the checkout, so a coupon can be used even after an order is created and processed at checkout. This can be done by a merchant on behalf of a customer.
+* When you send a request to the [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/coupon-redemption#post-coupon-tenant-coupons-code-redemptions) endpoint. This process is independent of the checkout, so a coupon can be used even after an order is created and processed at checkout. This can be done by a merchant on behalf of a customer.
 
 In the following example, we are redeeming a coupon on behalf of a customer.
 
-Redeem a coupon on behalf of a customer by sending a request to the [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-references/api-guides-and-references/rewards-and-promotions/coupon/api-reference/coupon-redemption#post-coupon-tenant-coupons-code-redemptions) endpoint. The following scope is required:
+Redeem a coupon on behalf of a customer by sending a request to the [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/coupon-redemption#post-coupon-tenant-coupons-code-redemptions) endpoint. The following scope is required:
 
 ```
 coupon.coupon_redeem_on_behalf
@@ -301,7 +303,7 @@ The redeemed coupon cannot be used used again during checkout.
 
 Referral coupon settings are stored in your main site's `couponSettings` mixin.
 
-First, check if your `couponSettings` mixin has already been configured by sending a request to the [Retrieving a site mixin](https://developer.emporix.io/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
+First, check if your `couponSettings` mixin has already been configured by sending a request to the [Retrieving a site mixin](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -317,7 +319,7 @@ curl -i -X GET \
 
 If your site's `couponSettings` have never been configured before or have been deleted, you will receive a `404` error in the response body.
 
-In this case, to configure referral coupons, you need to send a request to the [Creating a site mixin](https://developer.emporix.io/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#post-site-tenant-sites-sitecode-mixins) endpoint.
+In this case, to configure referral coupons, you need to send a request to the [Creating a site mixin](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#post-site-tenant-sites-sitecode-mixins) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -355,7 +357,7 @@ curl -i -X POST \
 
 If your site's `couponSettings` have already been configured, you will receive them in the response body.
 
-In this case, to configure referral coupons, you need to send a request to the [Partially updating a site mixin](https://developer.emporix.io/api-references/api-guides-and-references/configuration/site-settings-service/api-reference/mixins#patch-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
+In this case, to configure referral coupons, you need to send a request to the [Partially updating a site mixin](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#patch-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -377,7 +379,7 @@ curl -i -X PATCH \
 
 Referral email templates are referenced in the `emailTemplates` configuration in the [Configuration Service](../../configuration/country-service/api-reference/).
 
-First, check if your `emailTemplates` have already been configured by sending a request to the [Retrieving a configuration](https://developer.emporix.io/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey) endpoint.
+First, check if your `emailTemplates` have already been configured by sending a request to the [Retrieving a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -393,7 +395,7 @@ curl -i -X GET \
 
 If your `emailTemplates` have never been configured before or have been deleted, you will receive a `404` error in the response body.
 
-In this case, to configure referral email templates, you need to send a request to the [Creating configurations](https://developer.emporix.io/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#post-configuration-tenant-configurations) endpoint.
+In this case, to configure referral email templates, you need to send a request to the [Creating configurations](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#post-configuration-tenant-configurations) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -458,7 +460,7 @@ In this case, you need to copy the response body and add the following objects t
 }
 ```
 
-To add referral email templates to an existing `emailTemplates` configuration, you need to send a request to the [Updating a configuration](https://developer.emporix.io/api-references/api-guides-and-references/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint.
+To add referral email templates to an existing `emailTemplates` configuration, you need to send a request to the [Updating a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -505,7 +507,7 @@ curl -i -X PUT
 
 ## How to generate a referral coupon for a specific customer
 
-To manually generate a referral coupon for a specific customer, you need to send a request to the [Creating a referral coupon code for a specific customer](https://developer.emporix.io/api-references/api-guides-and-references/rewards-and-promotions/coupon/api-reference/referral-coupon-management#post-coupon-tenant-referral-coupons-customernumber) endpoint.
+To manually generate a referral coupon for a specific customer, you need to send a request to the [Creating a referral coupon code for a specific customer](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/referral-coupon-management#post-coupon-tenant-referral-coupons-customernumber) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -521,7 +523,7 @@ curl -i -X POST
 
 ## How to retrieve a specific customer's referral coupon
 
-To retrieve referral coupon information for a specific customer, you need to send a request to the [Retrieving customer's referral coupon code](https://developer.emporix.io/api-references/api-guides-and-references/rewards-and-promotions/coupon/api-reference/referral-coupon-management#get-coupon-tenant-referral-coupons-customernumber) endpoint.
+To retrieve referral coupon information for a specific customer, you need to send a request to the [Retrieving customer's referral coupon code](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/referral-coupon-management#get-coupon-tenant-referral-coupons-customernumber) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

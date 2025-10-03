@@ -3,6 +3,20 @@ seo:
   title: Category Service Tutorials
   description: category, categories
 icon: graduation-cap
+layout:
+  width: wide
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
 ---
 
 # Category Tutorials
@@ -25,7 +39,7 @@ If you want to create a root category, choose one from the following:
 
 If you want to create a subcategory, include the `parentId` of the root category in the request body.
 
-To create a new category, you need to send a request to the [Creating a new category](https://developer.emporix.io/api-references/api-guides-and-references/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint.
+To create a new category, you need to send a request to the [Creating a new category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint.
 
 {% hint style="danger" %}
 The `localizedSlug` field must not contain any diacritics.
@@ -33,16 +47,16 @@ The `localizedSlug` field must not contain any diacritics.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
-[api-reference](../../products-labels-and-brands/product-service/api-reference/)
+{% content-ref url="../../catalogs-and-categories/category-tree/api-reference/" %}
+[api-reference](../../catalogs-and-categories/category-tree/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/category/{tenant}/categories' \
-  --header 'X-Version: v2' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/category/{tenant}/categories' 
+  --header 'X-Version: v2' 
+  --header 'Content-Type: application/json' 
   --data '{
     "parentId": "056bcaf6-66b8-4ddd-9489-65c5f6449e74",
     "localizedName": {
@@ -85,23 +99,23 @@ Make sure you have already finished the following tutorials:
 
 ### Assign a product to a category
 
-To assign a product to a category, you need to send a request to the Assigning a resource to a category endpoint and do the following:
+To assign a product to a category, you need to send a request to the [Assigning a resource to a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#post-category-tenant-categories-categoryid-assignments) endpoint and do the following:
 
 * Set the `ref.type` field to `"PRODUCT"`.
 * Provide the product ID in the `ref.id` field.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
-[api-reference](../../products-labels-and-brands/product-service/api-reference/)
+{% content-ref url="../../catalogs-and-categories/category-tree/api-reference/" %}
+[api-reference](../../catalogs-and-categories/category-tree/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' \
-  --header 'X-Version: v2' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' 
+  --header 'X-Version: v2' 
+  --header 'Content-Type: application/json' 
   --data '{
     "ref": {
       "id": "1639265",
@@ -112,18 +126,18 @@ curl -L \
 
 ### Retrieve the category assignments
 
-To check whether the resource was properly assigned to the category, you can send a request to the Retrieving resources assigned to a category endpoint.
+To check whether the resource was properly assigned to the category, you can send a request to the [Retrieving resources assigned to a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#get-category-tenant-categories-categoryid-assignments) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
-[api-reference](../../products-labels-and-brands/product-service/api-reference/)
+{% content-ref url="../../catalogs-and-categories/category-tree/api-reference/" %}
+[api-reference](../../catalogs-and-categories/category-tree/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' \
-  --header 'X-Version: v2' \
+curl -L 
+  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' 
+  --header 'X-Version: v2' 
   --header 'Accept: */*'
 ```
 
@@ -137,56 +151,58 @@ As a result of this procedure, only category assignments are deleted; the catego
 
 #### Option one: Delete all product assignments
 
-To delete all assignments for a specific category, you need to send a request to the Deleting all category assignments endpoint and set the `assignmentType` query parameter to `PRODUCT`.
+To delete all assignments for a specific category, you need to send a request to the [Deleting all category assignments](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#delete-category-tenant-categories-categoryid-assignments) endpoint and set the `assignmentType` query parameter to `PRODUCT`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
-[api-reference](../../products-labels-and-brands/product-service/api-reference/)
+{% content-ref url="../../catalogs-and-categories/category-tree/api-reference/" %}
+[api-reference](../../catalogs-and-categories/category-tree/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request DELETE \
-  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' \
-  --header 'X-Version: v2' \
+curl -L 
+  --request DELETE 
+  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' 
+  --header 'X-Version: v2' 
   --header 'Accept: */*'
 ```
 
 ### Option two: Delete a specific product assignment
 
-To delete only a specific assignment, you need to send a request to the Deleting a category assignment by reference ID and enter the ID of the resource in the `referenceId` path parameter.
+To delete only a specific assignment, you need to send a request to the [Deleting a category assignment by reference ID](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#delete-category-tenant-categories-categoryid-assignments-assignmentid) and enter the ID of the resource in the `referenceId` path parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
-[api-reference](../../products-labels-and-brands/product-service/api-reference/)
+{% content-ref url="../../catalogs-and-categories/category-tree/api-reference/" %}
+[api-reference](../../catalogs-and-categories/category-tree/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request DELETE \
-  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments/{assignmentId}' \
-  --header 'X-Version: v2' \
+curl -L 
+  --request DELETE 
+  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments/{assignmentId}' 
+  --header 'X-Version: v2' 
   --header 'Accept: */*'
 ```
 
 ## How to publish/unpublish a category
 
-To publish or unpublish a category, you need to send a request to the Partially updating a category endpoint and set the `published` property to `true` or `false`.
+To publish or unpublish a category, you need to send a request to the [Upserting a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#put-category-tenant-categories-categoryid) endpoint and set the `published` property to `true` or `false`.
+
+Category tree [Retrieving the category trees](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees)  and [Retrieving a specific category tree](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees-categoryid) endpoints exclude trees in which the root category has `published=false`, when only published categories are requested (`showUnpublished=false`).
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
-[api-reference](../../products-labels-and-brands/product-service/api-reference/)
+{% content-ref url="../../catalogs-and-categories/category-tree/api-reference/" %}
+[api-reference](../../catalogs-and-categories/category-tree/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request PATCH \
-  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}' \
-  --header 'X-Version: v2' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request PATCH 
+  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}' 
+  --header 'X-Version: v2' 
+  --header 'Content-Type: application/json' 
   --data '{
     "localizedName": {
       "en": "Floor Care Liquids"
@@ -214,41 +230,41 @@ Category trees are built every time you create or update a category. The `parent
 It is only possible to retrieve a category tree for a root category. It is not possible to get it for a category that lies lower in a hierarchy.
 {% endhint %}
 
-To retrieve a specific category tree, you need to send a request to the Retrieving the category tree endpoint and provide the category ID in the `categoryId` path parameter.
+To retrieve a specific category tree, you need to send a request to the [Retrieving a specific category tree](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees-categoryid) endpoint and provide the category ID in the `categoryId` path parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
-[api-reference](../../products-labels-and-brands/product-service/api-reference/)
+{% content-ref url="../../catalogs-and-categories/category-tree/api-reference/" %}
+[api-reference](../../catalogs-and-categories/category-tree/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --url 'https://api.emporix.io/category/{tenant}/category-trees/{categoryId}' \
-  --header 'X-Version: v2' \
+curl -L 
+  --url 'https://api.emporix.io/category/{tenant}/category-trees/{categoryId}' 
+  --header 'X-Version: v2' 
   --header 'Accept: */*'
 ```
 
 **Option two: Retrieve all category trees belonging to the tenant**
 
-To retrieve all category trees, you need to send a request to the Retrieving the category trees endpoint.
+To retrieve all category trees, you need to send a request to the [Retrieving the category trees](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
-[api-reference](../../products-labels-and-brands/product-service/api-reference/)
+{% content-ref url="../../catalogs-and-categories/category-tree/api-reference/" %}
+[api-reference](../../catalogs-and-categories/category-tree/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --url 'https://api.emporix.io/category/{tenant}/category-trees' \
-  --header 'X-Version: v2' \
+curl -L 
+  --url 'https://api.emporix.io/category/{tenant}/category-trees' 
+  --header 'X-Version: v2' 
   --header 'Accept: */*'
 ```
 
 **Option three: Retrieve a list of subcategories of a category**
 
-To retrieve a list of subcategories for a specific category, you need to send a request to the Retrieving subcategories for a category endpoint.
+To retrieve a list of subcategories for a specific category, you need to send a request to the [Retrieving subcategories for a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#get-category-tenant-categories-categoryid-subcategories) endpoint.
 
 {% hint style="warning" %}
 You can limit the depth of retrieved subcategories with the `depth` parameter.
@@ -259,14 +275,14 @@ You can limit the depth of retrieved subcategories with the `depth` parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
-[api-reference](../../products-labels-and-brands/product-service/api-reference/)
+{% content-ref url="../../catalogs-and-categories/category-tree/api-reference/" %}
+[api-reference](../../catalogs-and-categories/category-tree/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/subcategories' \
-  --header 'X-Version: v2' \
+curl -L 
+  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/subcategories' 
+  --header 'X-Version: v2' 
   --header 'Accept: */*'
 ```
 
@@ -278,20 +294,20 @@ You can move a category by modifying its `parentId` value.
 When you move a category, all its subcategories and assigned references move along with it.
 {% endhint %}
 
-To move a category to be a child of another category, you need to send a request to the Partially updating a category endpoint and provide the desired parent category ID in the `parentId` field.
+To move a category to be a child of another category, you need to send a request to the [Upserting a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#put-category-tenant-categories-categoryid) endpoint and provide the desired parent category ID in the `parentId` field.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
-[api-reference](../../products-labels-and-brands/product-service/api-reference/)
+{% content-ref url="../../catalogs-and-categories/category-tree/api-reference/" %}
+[api-reference](../../catalogs-and-categories/category-tree/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request PATCH \
-  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}' \
-  --header 'X-Version: v2' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request PATCH 
+  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}' 
+  --header 'X-Version: v2' 
+  --header 'Content-Type: application/json' 
   --data '{
     "localizedName": {
       "en": "Floor Care Liquids"

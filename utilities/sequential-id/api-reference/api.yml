@@ -45,9 +45,7 @@ paths:
       description: |-
         Gets all sequence schemas. 
         
-        This endpoint is `deprecated`. Please use the [/sequential-id/{tenant}/schemas](/openapi/sequential-id/#operation/GET-sequential-id-retrieve-tenant-schemas) instead.
-
-        ***
+        This endpoint is `deprecated`. Please use the [/sequential-id/{tenant}/schemas](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-tenant-schemas) instead.
 
          ### Required scopes
         * `sequentialid.schema_view`
@@ -77,9 +75,8 @@ paths:
       description: |-
         Creates a new sequence schema.
                 
-        This endpoint is `deprecated`. Please use the [/sequential-id/{tenant}/schemas](/openapi/sequential-id/#operation/POST-sequential-id-create-tenant-schema) instead.
+        This endpoint is `deprecated`. Please use the [/sequential-id/{tenant}/schemas](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas) instead.
 
-        ***
 
          ### Required scopes
         * `sequentialid.schema_manage`
@@ -148,7 +145,7 @@ paths:
       description: |-
         Creates and returns the nextId in the sequence. If you specify the `sequenceKey` parameter in request body, the nextId number is generated for this sequence, otherwise default pool is used. 
         
-          This endpoint is `deprecated`. Please use the [/sequential-id/{tenant}/schemas/types/{schemaType}/nextId](https://developer.emporix.io/api-references/api-guides-and-references/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-types-schematype-nextid) instead.
+          This endpoint is `deprecated`. Please use the [/sequential-id/{tenant}/schemas/types/{schemaType}/nextId](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-types-schematype-nextid) instead.
       operationId: POST-sequential-id-create-nextId
       requestBody:
         content:

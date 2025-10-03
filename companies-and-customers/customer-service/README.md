@@ -1,4 +1,6 @@
 ---
+layout:
+    width: wide
 description: Tenant-managed
 icon: users
 ---
@@ -15,7 +17,7 @@ This part of the Customer Service is managed by tenant's employees on behalf of 
 
 * Provides rich customer profiles that are extensible with custom fields
 * Supports multiple addresses for payment and delivery
-* Enables social login with Twitter, Facebook, and other platforms
+* Supports social login for different platforms
 * Offers self-service for customers to manage their profile information
 * Provides convenient login and removes login barriers with SSO for social logins
 * Captures data important for the business to serve customers better

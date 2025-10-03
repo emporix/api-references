@@ -23,10 +23,10 @@ A new attribute `vendor` has been added to the cart item's product. The value is
 
 | Endpoint                                                                                                                                                                                   | Description                                                |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------|
-| [Retrieving all products added to a cart](https://developer.emporix.io/api-guides-and-references/checkout/cart/api-reference/cart-items#get-cart-tenant-carts-cartid-items)                | New attribute `vendor` added in the response on item's product. |
-| [Retrieving a cart item](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/cart-items#get-cart-tenant-carts-cartid-items-itemid)           | New attribute `vendor` added in the response on item's product. |
-| [Retrieving cart details by criteria](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/carts#get-cart-tenant-carts)                       | New attribute `vendor` added in the response on item's product.  |
-| [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides-and-references/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid)                      | New attribute `vendor` added in the response on item's product.  |
+| [Retrieving all products added to a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#get-cart-tenant-carts-cartid-items)                | New attribute `vendor` added in the response on item's product. |
+| [Retrieving a cart item](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#get-cart-tenant-carts-cartid-items-itemid)           | New attribute `vendor` added in the response on item's product. |
+| [Retrieving cart details by criteria](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts)                       | New attribute `vendor` added in the response on item's product.  |
+| [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid)                      | New attribute `vendor` added in the response on item's product.  |
 
 ## Known problems
 

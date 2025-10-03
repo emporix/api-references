@@ -69,6 +69,7 @@ paths:
 
         ### Required scopes
         * `price.price_manage`
+        * `price.price_manage_by_vendor` - allows to create prices for products belonging to the vendor
       operationId: POST-price-create-price
       requestBody:
         content:
@@ -139,6 +140,7 @@ paths:
 
         ### Required scopes
         No specific scopes are required.
+        Scope `price.price_read_by_vendor` allows to fetch just the prices belonging to the vendor.
       security:
         - OAuth2: []
       parameters:
@@ -227,6 +229,7 @@ paths:
 
         ### Required scopes
         * `price.price_manage`
+        * `price.price_manage_by_vendor` - allows to create prices for products belonging to the vendor
       operationId: POST-price-create-multiple-prices
       requestBody:
         content:
@@ -338,6 +341,7 @@ paths:
 
         ### Required scopes
         * `price.price_manage`
+        * `price.price_manage_by_vendor` - allows to update prices belonging to the vendor
       operationId: PUT-price-update-multiple-prices
       requestBody:
         content:
@@ -491,6 +495,8 @@ paths:
 
         ### Required scopes
         No specific scopes are required.
+        
+        Scope `price.price_read_by_vendor` allows to fetch just the prices belonging to the vendor.
       security:
         - OAuth2: []
       operationId: GET-price-retrieve-price
@@ -526,6 +532,7 @@ paths:
 
         ### Required scopes
         * `price.price_manage`
+        * `price.price_manage_by_vendor` - allows to update prices belonging to the vendor
       requestBody:
         content:
           application/json:
@@ -581,6 +588,7 @@ paths:
 
         ### Required scopes
         * `price.price_manage`
+        * `price.price_manage_by_vendor` - allows to delete prices belonging to the vendor
       security:
         - OAuth2:
             - price.price_manage
@@ -765,7 +773,7 @@ paths:
       description: |-
         Finds the best price based on information retrieved from the session context.
 
-        The behavior of the logic is the same as of the price/{tenant}/match-prices (function/mechanism?). The only exception is that the criteria are created based on the information retrieved from the session details assigned to the access-token in the Session-context Service`.
+        The behavior of the logic is the same as of the price/{tenant}/match-prices mechanism. The only exception is that the criteria are created based on the information retrieved from the session details assigned to the access-token in the Session-context Service.
 
         The list of items is also needed as body parameter (similar to the other endpoint).
       responses:
@@ -2068,6 +2076,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/tierValueRetrieval'
+        vendorId:
+          type: string
+          description: Id of a vendor to which the price belongs.
         mixins:
           type: object
           description: |-
