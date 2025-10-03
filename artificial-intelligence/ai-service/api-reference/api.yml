@@ -251,7 +251,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/fields'
       summary: Retrieving available job
-      operationId: GET-ai-job
+      operationId: GET-ai-retrieve-job
       responses:
         '200':
           description: A job details.
@@ -301,7 +301,7 @@ paths:
         - Job
     delete:
       summary: Deleting a job
-      operationId: DELETE-ai-job
+      operationId: DELETE-ai-delete-job
       responses:
         '204':
           description: Given job has been deleted.
@@ -1492,7 +1492,7 @@ paths:
       - $ref: '#/components/parameters/path_tenant'
     get:
       summary: Listing commerce events
-      operationId: GET-ai-commerce-events
+      operationId: GET-ai-list-commerce-events
       responses:
         '200':
           description: List of available commerce events.
