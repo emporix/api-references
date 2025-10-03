@@ -19,7 +19,7 @@ paths:
       tags:
         - Brands
       description: |-
-        Retrieves all brands created by the tenant.
+        Retrieves all brands created in the tenant.
 
         ***
 
@@ -241,7 +241,7 @@ paths:
       tags:
         - Brands
       description: |
-        Partially updates a specified brand by replacing specificed fields from the request body.
+        Partially updates a specified brand by replacing fields provided in the request body.
         ***
 
         **Required scopes**
