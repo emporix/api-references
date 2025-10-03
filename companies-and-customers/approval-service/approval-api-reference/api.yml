@@ -802,11 +802,11 @@ components:
       type: string
     getApprovalResponse:
       title: An approval response
+      description: Base schema for an approval response.
+      type: object
       allOf:
         - $ref: '#/components/schemas/basicApproval'
-        - type: object
-          description: Base schema for an approval response.
-          properties:
+        - properties:
             id:
               type: string
               description: An identifier of the approval document.
@@ -818,7 +818,7 @@ components:
             requestor:
               $ref: '#/components/schemas/user'
             approver:
-              $ref: '#/components/schemas/user'
+             $ref: '#/components/schemas/user'
             status:
               $ref: '#/components/schemas/approvalStatus'
             expiryDate:
@@ -827,10 +827,10 @@ components:
               $ref: '#/components/schemas/metadata'
     approvalPermittedResponse:
       title: approval permitted response
+      type: object
       allOf:
-        - type: object
-          description: Base schema for approval permitted response.
-          properties:
+        - description: Base schema for approval permitted response.
+        - properties:
             action:
               $ref: '#/components/schemas/approvalAction'
             status:
@@ -933,11 +933,11 @@ components:
         $ref: '#/components/schemas/user'
     createApprovalRequest:
       title: Create an approval
+      description: Schema for creating an approval.
+      type: object
       allOf:
-        - type: object
-          $ref: '#/components/schemas/basicApproval'
-          description: Base schema for an approval creation.
-          properties:
+        - $ref: '#/components/schemas/basicApproval'
+        - properties:
             id:
               type: string
               description: An identifier of the approval document.
@@ -988,16 +988,17 @@ components:
       required:
         - version
     metadata:
+      title: Metadata
+      type: object
       allOf:
         - $ref: '#/components/schemas/basicMetadata'
-        - type: object
-          properties:
-            createdAt:
-              description: 'Date and time when the object was created. The value is approved as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
-              type: string
-            modifiedAt:
-              description: 'Date and time when the object was last modified. The value is approved as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
-              type: string
+        - properties:
+          createdAt:
+            description: 'Date and time when the object was created. The value is approved as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
+            type: string
+          modifiedAt:
+            description: 'Date and time when the object was last modified. The value is approved as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
+            type: string
       required:
         - createdAt
         - modifiedAt
