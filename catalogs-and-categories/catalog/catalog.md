@@ -34,15 +34,15 @@ To create a new catalog, you need to send a request to the [Creating a new catal
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../category-tree/api-reference/" %}
-[api-reference](../category-tree/api-reference/)
+{% content-ref url="../catalog/api-reference/" %}
+[api-reference](../catalog/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/catalog/{tenant}/catalogs' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/catalog/{tenant}/catalogs' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
   "name": {
     "en": "Grocery catalog",
@@ -69,22 +69,22 @@ curl -i -X POST \
 ### Create a category
 
 {% hint style="warning" %}
-For more information, check out [_How to create a category_](../category-tree/#how-to-create-a-category).
+For more information, check out [_How to create a category_](../category-tree/category.md/#how-to-create-a-category).
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
-[api-reference](../../products-labels-and-brands/product-service/api-reference/)
+{% content-ref url="../../catalogs-and-categories/category-tree/api-reference/" %}
+[api-reference](../../catalogs-and-categories/category-tree/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/category/{tenant}/categories?publish=true' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: `*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`' \
-  -H 'Content-Type: application/json' \
-  -H 'X-Version: v2' \
+curl -i -X POST 
+  'https://api.emporix.io/category/{tenant}/categories?publish=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: `*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`' 
+  -H 'Content-Type: application/json' 
+  -H 'X-Version: v2' 
   -d '{
     "parentId": "056bcaf6-66b8-4ddd-9489-65c5f6449e74",
     "localizedName": {
@@ -122,15 +122,15 @@ In the request body, insert the ID of the category into the `categoryIds` array.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
-[api-reference](../../products-labels-and-brands/product-service/api-reference/)
+{% content-ref url="../catalog/api-reference/" %}
+[api-reference](../catalog/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PATCH \
-  'https://api.emporix.io/catalog/{tenant}/catalogs/{catalogId}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X PATCH 
+  'https://api.emporix.io/catalog/{tenant}/catalogs/{catalogId}' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "name": {
       "en": "This is the same catalog"

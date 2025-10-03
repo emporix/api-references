@@ -804,14 +804,12 @@ components:
           maxLength: 66
           pattern: ^[a-zA-Z0-9_-]$
         name:
-          allOf:
-            - $ref: '#/components/schemas/Object'
-            - description: Name of the catalog must be a string if the Content-Language
+          $ref: '#/components/schemas/Object'
+          description: Name of the catalog must be a string if the Content-Language
                 header is set or a map of translations if the header is missing.
         description:
-          allOf:
-            - $ref: '#/components/schemas/Object'
-            - description: Description of the catalog must be a string if the Content-Language
+          $ref: '#/components/schemas/Object'
+          description: Description of the catalog must be a string if the Content-Language
                 header is set or a map of translations if the header is missing.
         visibility:
           $ref: '#/components/schemas/VisibilityInformation'
@@ -916,14 +914,12 @@ components:
       type: object
       properties:
         name:
-          allOf:
-            - $ref: '#/components/schemas/Object'
-            - description: Name of the catalog must be a string if the Content-Language
+          $ref: '#/components/schemas/Object'
+          description: Name of the catalog must be a string if the Content-Language
                 header is set or a map of translations if the header is missing.
         description:
-          allOf:
-            - $ref: '#/components/schemas/Object'
-            - description: Description of the catalog must be a string if the Content-Language
+          $ref: '#/components/schemas/Object'
+          description: Description of the catalog must be a string if the Content-Language
                 header is set or a map of translations if the header is missing.
         visibility:
           $ref: '#/components/schemas/VisibilityInformation'
@@ -962,14 +958,12 @@ components:
       type: object
       properties:
         name:
-          allOf:
-            - $ref: '#/components/schemas/Object'
-            - description: Name of the catalog must be a string if the Content-Language
+          $ref: '#/components/schemas/Object'
+          description: Name of the catalog must be a string if the Content-Language
                 header is set or a map of translations if the header is missing.
         description:
-          allOf:
-            - $ref: '#/components/schemas/Object'
-            - description: Description of the catalog must be a string if the Content-Language
+          $ref: '#/components/schemas/Object'
+          description: Description of the catalog must be a string if the Content-Language
                 header is set or a map of translations if the header is missing.
         visibility:
           $ref: '#/components/schemas/VisibilityInformation'
