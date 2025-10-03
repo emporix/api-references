@@ -934,8 +934,8 @@ components:
     createApprovalRequest:
       title: Create an approval
       allOf:
-        - $ref: '#/components/schemas/basicApproval'
         - type: object
+          $ref: '#/components/schemas/basicApproval'
           description: Base schema for an approval creation.
           properties:
             id:
