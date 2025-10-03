@@ -491,3 +491,14 @@
     * [Events - Schema](../webhooks/events-schema.md)
     * [Events - Site](../webhooks/events-site.md)
     * [Events - Vendor](../webhooks/events-vendor.md)
+* [test](test/README.md)
+  * ```yaml
+    type: builtin:openapi
+    props:
+      models: true
+    dependencies:
+      spec:
+        ref:
+          kind: openapi
+          spec: approval-review-test
+    ```
