@@ -168,3 +168,50 @@ curl -L \
 ```
 
 You can use the retrieved details to establish the required connections and triggers for the AI Agent.
+
+## How to communicate with an Agent 
+
+For some Agents, it is convenient to trigger their actions by API calls. To allow communication with the selected agent, you can use the dedicated endpoints.
+
+* When instant responses are required from the agent, send the request to the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/chat)
+
+```bash
+curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat' \
+-H 'tenant: {tenant}' \
+-H 'scopes: ai.completion_manage' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Basic {token}' \
+-d '{
+    "agentId": "de-agent",
+    "message": "{\"id\":\"delightCoffee\",\"name\":{\"en\":\"Delight Coffee\"},\"yrn\":\"urn:yaas:saasag:caasproduct:product:{tenant};delightCoffee\",\"code\":\"delightCoffee\",\"description\":{\"en\":\"Awaken your senses with our hand-selected Gourmet Coffee, crafted for true coffee lovers who crave depth, aroma, and sophistication in every sip. Sourced from the world’s finest high-altitude farms, each bean is carefully harvested at peak ripeness, then small-batch roasted to unlock its natural sweetness and complex flavor notes.\"},\"media\":[],\"productType\":\"BASIC\",\"template\":{},\"published\":false,\"metadata\":{\"version\":1,\"createdAt\":\"2025-09-25T04:42:42.607Z\",\"modifiedAt\":\"2025-09-25T04:42:42.607Z\"}}"
+}'
+```
+
+Trigger the specific agent providing its `agentId`. In the `message`, type in your query or data you want the agent to process.
+
+In the above example, the German Translation Agent is triggered. The Agent acts according to its defined prompt - here the agent is programmed to find the product `name` and `description` in the request message and translate the fields into German language. As a result, the Agent gets back with the following response:
+
+```
+{
+    "agentId": "de-agent",
+    "agentType": "generic",
+    "message": "{\"id\":\"delightCoffee\",\"name\":{\"en\":\"Delight Coffee\",\"de\":\"Delight Kaffee\"},\"yrn\":\"urn:yaas:saasag:caasproduct:product:mytenant;delightCoffee\",\"code\":\"delightCoffee\",\"description\":{\"en\":\"Awaken your senses with our hand-selected Gourmet Coffee, crafted for true coffee lovers who crave depth, aroma, and sophistication in every sip. Sourced from the world’s finest high-altitude farms, each bean is carefully harvested at peak ripeness, then small-batch roasted to unlock its natural sweetness and complex flavor notes.\",\"de\":\"Wecken Sie Ihre Sinne mit unserem handverlesenen Gourmetkaffee, kreiert für wahre Kaffeeliebhaber, die Tiefe, Aroma und Raffinesse in jedem Schluck suchen. Aus den besten Hochlandfarmen der Welt bezogen, wird jede Bohne sorgfältig zum Höhepunkt ihrer Reife geerntet und dann in kleinen Chargen geröstet, um ihre natürliche Süße und komplexen Geschmacksnoten freizusetzen.\"},\"media\":[],\"productType\":\"BASIC\",\"template\":{},\"published\":false,\"metadata\":{\"version\":1,\"createdAt\":\"2025-09-25T04:42:42.607Z\",\"modifiedAt\":\"2025-09-25T04:42:42.607Z\"}}",
+    "sessionId": "33a550d0-d812-4fb2-bb0d-d50dbfe3627b"
+}
+```
+
+* When it is more pragmatic to wait for the agent's response, for example, when the agent needs to process more data which takes more time, or the agent needs to wait for another task to be completed, use the asynchronous communication. 
+Send the request to the agent using the [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/chat-async).
+
+```bash
+curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-async' \
+-H 'tenant: {tenant}' \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Basic {token}' \
+-d '{
+    "agentId": "complaint-agent",
+    "message": Find the details of the customer order \"EON1243\"."
+}'
+```
+The triggered Agent acts according to its prompt and in the response provides the requested details.
+
