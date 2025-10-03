@@ -818,7 +818,7 @@ components:
             requestor:
               $ref: '#/components/schemas/user'
             approver:
-             $ref: '#/components/schemas/user'
+              $ref: '#/components/schemas/user'
             status:
               $ref: '#/components/schemas/approvalStatus'
             expiryDate:
