@@ -3155,12 +3155,12 @@ components:
           type: object
           additionalProperties:
             type: string
-          description: Localized category name in a form of a map of translations.
+          description: Localized category name as a map of translations.
         localizedDescription:
           type: object
           additionalProperties:
             type: string
-          description: Localized category description in a form of a map of translations.
+          description: Localized category description as a map of translations.
         localizedSlug:
           type: object
           additionalProperties:
@@ -3176,30 +3176,31 @@ components:
           deprecated: true
         code:
           type: string
-          description: 'Unique category identifier, defined by the tenant.'
+          description: Unique category identifier defined by the tenant.
         ecn:
           type: array
-          description: List of external category numbers (ECNs) unique for every category.
+          description: List of external category numbers (ECNs) unique for each category.
           items:
             type: string
-        Validity:
+        validity:
           $ref: '#/components/schemas/Validity'
+          description: Category validity.
         position:
           type: integer
-          description: 'Category position, set in relation to the categories on the same level (sharing the same parent) in the tree.'
           format: int32
+          description: Category position relative to sibling categories.
         published:
           type: boolean
-          description: Flag indicating whether the category has been published or not.
+          description: Flag indicating whether the category has been published.
         supercategoriesIds:
           type: array
-          description: Ids of supercategories.
+          description: IDs of supercategories.
           items:
             type: string
         mixins:
           type: object
-          description: Custom category attributes that need to be included directly in the mixins object.
-        Metadata:
+          description: Custom category attributes included directly in the mixins object.
+        metadata:
           $ref: '#/components/schemas/MetadataResponse'
         media:
           type: array
@@ -3210,7 +3211,7 @@ components:
         - localizedName
         - position
         - published
-        - Metadata
+        - metadata
         - media
       example:
         id: "0310086a-d9d6-44bc-9199-ee4381bc9e4e"
@@ -3240,12 +3241,12 @@ components:
           type: object
           additionalProperties:
             type: string
-          description: Localized category name in a form of a map of translations.
+          description: Localized category name as a map of translations.
         localizedDescription:
           type: object
           additionalProperties:
             type: string
-          description: Localized category description in a form of a map of translations.
+          description: Localized category description as a map of translations.
         localizedSlug:
           type: object
           additionalProperties:
@@ -3261,30 +3262,31 @@ components:
           deprecated: true
         code:
           type: string
-          description: 'Unique category identifier, defined by the tenant.'
+          description: Unique category identifier defined by the tenant.
         ecn:
           type: array
-          description: List of external category numbers (ECNs) unique for every category.
+          description: List of external category numbers (ECNs) unique for each category.
           items:
             type: string
-        Validity:
+        validity:
           $ref: '#/components/schemas/Validity'
+          description: Category validity.
         position:
           type: integer
-          description: 'Category position, set in relation to the categories on the same level (sharing the same parent) in the tree.'
           format: int32
+          description: Category position relative to sibling categories.
         published:
           type: boolean
-          description: Flag indicating whether the category has been published or not.
+          description: Flag indicating whether the category has been published.
         supercategoriesIds:
           type: array
-          description: Ids of supercategories.
+          description: IDs of supercategories.
           items:
             type: string
         mixins:
           type: object
-          description: Custom category attributes that need to be included directly in the mixins object.
-        Metadata:
+          description: Custom category attributes included directly in the mixins object.
+        metadata:
           $ref: '#/components/schemas/MetadataResponse'
         media:
           type: array
@@ -3295,9 +3297,9 @@ components:
         - localizedName
         - position
         - published
-        - Metadata
+        - metadata
         - media
-      example:
+      examples:
         cordless:
           summary: Cordless impact driver category
           value:
