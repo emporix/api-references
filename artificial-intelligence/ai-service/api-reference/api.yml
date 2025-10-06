@@ -1605,7 +1605,7 @@ components:
     # Native Tools:
     NativeToolType:
       type: string
-      enum: [slack]
+      enum: [ slack ]
       description: Type of the native tool.
     BaseNativeTool:
       type: object
@@ -1743,11 +1743,11 @@ components:
 
     McpServerType:
       type: string
-      enum: [custom,predefined]
+      enum: [ custom,predefined ]
       description: Type of the MCP server. The `custom` type allows you to integrate with your own MCP server instance, while the `predefined` type allows you to integrate with one of the instances provided by Emporix.
     CustomMcpServerTransportType:
       type: string
-      enum: [sse]
+      enum: [ sse ]
       description: Type of the communication between the agent and the MCP server. For now, only `sse` is supported.
     BaseAgentMcpServer:
       type: object
@@ -1765,7 +1765,7 @@ components:
               description: For the `PredefinedMcpServer` it has to be set to `predefined`.
               example: predefined
             domain:
-              enum: [customer,extensibility,order,product]
+              enum: [ customer,extensibility,order,product ]
             tools:
               type: array
               description: List of the tools which should be used by the agent from this particular MCP server.
@@ -1825,7 +1825,7 @@ components:
           type: number
           format: float
           description: Value between 0.1 and 1.0 (inclusive), in steps of 0.1. The lower value the more creative (but less stable) the model is.
-          enum: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+          enum: [ 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0 ]
           example: 0.7
         maxTokens:
           type: integer
@@ -1843,7 +1843,7 @@ components:
             provider:
               type: string
               description: Type of the LLM Provider. The `emporix_openai` allows using the OpenAI token provided by Emporix. The token usage is limited. When using this provider `apiKey` property can be omitted.
-              enum: [emporix_openai]
+              enum: [ emporix_openai ]
               example: emporix_openai
           required:
             - provider
@@ -1883,7 +1883,7 @@ components:
             provider:
               type: string
               description: Type of the LLM Provider. The self-hosted LLM allows you to provide your own LLMs. When using this providers, the `selfHostedParams.url` property cannot be omitted.
-              enum: [self_hosted_ollama]
+              enum: [ self_hosted_ollama ]
               example: self_hosted_ollama
           required:
             - provider
@@ -2052,6 +2052,9 @@ components:
         - $ref: '#/components/schemas/BaseForAgentAndTemplateAndHandOff'
         - type: object
           properties:
+            userPrompt:
+              type: string
+              description: LLM Prompt which describes how agent should work in a detailed way, which tools it could use to solve problems etc; it can contain examples and step by step guidance.
             icon:
               type: string
               description: fa class of react icon.
@@ -2071,9 +2074,6 @@ components:
         - $ref: '#/components/schemas/BaseForAgentAndTemplate'
         - type: object
           properties:
-            userPrompt:
-              type: string
-              description: LLM Prompt which describes how agent should work in a detailed way, which tools it could use to solve problems etc; it can contain examples and step by step guidance.
             triggers:
               type: array
               items:
@@ -2099,6 +2099,9 @@ components:
         - $ref: '#/components/schemas/BaseForAgentAndTemplate'
         - type: object
           properties:
+            templatePrompt:
+              type: string
+              description: Immutable LLM base prompt which is concatenated with the `userPrompt`.
             id:
               type: string
               description: Identifier of the agent.
@@ -2198,7 +2201,7 @@ components:
     # Jobs:
     JobStatus:
       type: string
-      enum: [in_progress,success,failure]
+      enum: [ in_progress,success,failure ]
       description: Status of the job.
     Job:
       type: object
@@ -2300,9 +2303,15 @@ components:
     AgentFromTemplateRequest:
       allOf:
         - $ref: '#/components/schemas/BaseForAgentAndTemplateAndHandOff'
+        - type: object
+          properties:
+            userPrompt:
+              type: string
+              description: LLM Prompt which describes how agent should work in a detailed way, which tools it could use to solve problems etc; it can contain examples and step by step guidance.
       required:
         - name
         - description
+        - userPrompt
     PatchRequest:
       type: array
       description: Partial update operation list.
@@ -2385,7 +2394,7 @@ components:
     qParam:
       in: query
       name: q
-      description:  |
+      description: |
         A standard query parameter is used to search for specific values.
 
         See: [Standard Practices - Query parameter](https://developer.emporix.io/docs/content/q-param)
@@ -2593,6 +2602,7 @@ components:
                   en: Complaint Agent
                 description:
                   de: Agent which is responsible for reading emails and base on that resolve the customer's complaints
+                userPrompt: Use get-order tool to fetch order.
                 id: a81bc81b-dead-4e5d-abff-90865d1e13b1
     agentPatchBody:
       content:
@@ -2698,6 +2708,8 @@ components:
             en: Support Agent
           description:
             en: Support agent template
+          userPrompt: Use get-order tool to fetch order.
+          templatePrompt: "You are an support agent which helps users with their requests, which using following tools: {{user_prompt}}"
           type: SUPPORT
           enabled: true
           tags:
