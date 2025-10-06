@@ -3227,109 +3227,35 @@ components:
           createdAt: "2024-08-28T14:00:17.353Z"
           modifiedAt: "2024-08-28T14:00:17.353Z"
     CategoryList:
-      type: object
-      description: Definition of category
-      properties:
-        id:
-          type: string
-          description: Category unique identifier generated when the category is created.
-        parentId:
-          type: string
-          description: Unique identifier of the parent category. No parentId in the body indicates that this is a root category.
-          nullable: true
-        localizedName:
-          type: object
-          additionalProperties:
-            type: string
-          description: Localized category name as a map of translations.
-        localizedDescription:
-          type: object
-          additionalProperties:
-            type: string
-          description: Localized category description as a map of translations.
-        localizedSlug:
-          type: object
-          additionalProperties:
-            type: string
-          description: Provides localized category name or code without diacritics for the URL.
-        name:
-          type: string
-          description: Category name in tenant default language.
-          deprecated: true
-        description:
-          type: string
-          description: Description in tenant default language.
-          deprecated: true
-        code:
-          type: string
-          description: Unique category identifier defined by the tenant.
-        ecn:
-          type: array
-          description: List of external category numbers (ECNs) unique for each category.
-          items:
-            type: string
-        validity:
-          $ref: '#/components/schemas/Validity'
-          description: Category validity.
-        position:
-          type: integer
-          format: int32
-          description: Category position relative to sibling categories.
-        published:
-          type: boolean
-          description: Flag indicating whether the category has been published.
-        supercategoriesIds:
-          type: array
-          description: IDs of supercategories.
-          items:
-            type: string
-        mixins:
-          type: object
-          description: Custom category attributes included directly in the mixins object.
-        metadata:
-          $ref: '#/components/schemas/MetadataResponse'
-        media:
-          type: array
-          items:
-            $ref: '#/components/schemas/Media'
-      required:
-        - id
-        - localizedName
-        - position
-        - published
-        - metadata
-        - media
-      examples:
-        cordless:
-          summary: Cordless impact driver category
-          value:
-            id: "0310086a-d9d6-44bc-9199-ee4381bc9e4e"
-            parentId: "4901acd1-5dad-4c7b-b4f0-32d0198621fc"
-            localizedName:
-              en: "CORDLESS IMPACT DRIVERS"
-            name: "CORDLESS IMPACT DRIVERS"
-            validity: {}
-            position: 0
-            published: true
-            metadata:
-              version: 0
-              createdAt: "2024-08-28T14:00:17.353Z"
-              modifiedAt: "2024-08-28T14:00:17.353Z"
-        corded:
-          summary: Corded powertools category
-          value:
-            id: "0720b75e-ee1c-4d76-9f53-eb3af3927e13"
-            parentId: "7d2b0d76-3628-46b3-ac92-34c903f5c3cb"
-            localizedName:
-              en: "CORDED POWERTOOLS"
-            name: "CORDED POWERTOOLS"
-            validity: {}
-            position: 0
-            published: true
-            metadata:
-              version: 0
-              createdAt: "2024-08-28T14:00:13.181Z"
-              modifiedAt: "2024-08-28T14:00:13.181Z"
+      type: array
+      description: A list of categories.
+      items:
+        $ref: '#/components/schemas/Category'
+      example:
+        - id: "0310086a-d9d6-44bc-9199-ee4381bc9e4e"
+          parentId: "4901acd1-5dad-4c7b-b4f0-32d0198621fc"
+          localizedName:
+            en: "CORDLESS IMPACT DRIVERS"
+          name: "CORDLESS IMPACT DRIVERS"
+          validity: {}
+          position: 0
+          published: true
+          metadata:
+            version: 0
+            createdAt: "2024-08-28T14:00:17.353Z"
+            modifiedAt: "2024-08-28T14:00:17.353Z"
+        - id: "0720b75e-ee1c-4d76-9f53-eb3af3927e13"
+          parentId: "7d2b0d76-3628-46b3-ac92-34c903f5c3cb"
+          localizedName:
+            en: "CORDED POWERTOOLS"
+          name: "CORDED POWERTOOLS"
+          validity: {}
+          position: 0
+          published: true
+          metadata:
+            version: 0
+            createdAt: "2024-08-28T14:00:13.181Z"
+            modifiedAt: "2024-08-28T14:00:13.181Z"
     CategoryAssignment:
       type: object
       properties:
