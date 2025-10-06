@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2025-10-02: Sequential ID Service - removal of deprecated endpoints
+# 2025-10-06: Sequential ID Service - removal of deprecated endpoints
 
 ## Overview
 
