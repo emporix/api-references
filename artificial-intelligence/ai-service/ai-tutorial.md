@@ -235,5 +235,21 @@ curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-async' \
 ```
 
 Similarly, provide the relevant `agentId` and pass your query in the `message`.
-The triggered Agent acts according to its prompt and provides the requested details in the response.
+
+In async requests, the response contains the `jobId` parameter, for example:
+
+```
+{
+    "jobId": "68e3a593b2cb061e36630849"
+}
+```
+Use the `jobId` to check details of the job through the [Retrieving agent job by its ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/jobs) endpoint. For example:
+
+```bash
+curl -X 'GET' \
+  'https://api.emporix.io/ai-service/{tenant}/jobs/68e3a593b2cb061e36630849' \
+  -H 'accept: application/json'
+```
+
+The job entity contains information about the request and response from the agent.
 
