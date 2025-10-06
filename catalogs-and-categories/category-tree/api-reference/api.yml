@@ -49,7 +49,7 @@ paths:
         - name: referenceId
           in: path
           description: |
-            Assignment's reference unique identifier, for example: productId.
+            Assignment reference unique identifier, for example: productId.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -235,7 +235,7 @@ paths:
         - name: referenceId
           in: path
           description: |
-            Assignment's reference unique identifier, for example: productId.
+            Assignment reference unique identifier, for example: productId.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -299,7 +299,7 @@ paths:
         - Category Assignment Resources
       summary: Updating assignment of resources to a category
       description: |
-        Assigns resources to a specified category in bulk. Assignments that do not exist will be created and existing ones will be updated. 
+        Assigns resources (such as products) to a specified category in bulk. Creates new assignments if they do not exist and updates existing ones. 
         ***
 
         ### Required scopes
@@ -320,7 +320,7 @@ paths:
         - name: categoryId
           in: path
           description: |
-            Category's unique identifier generated when the category is created.
+            Category unique identifier generated when the category is created.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -584,43 +584,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Category'
-              examples:
-200:
-  description: Successful response
-  content:
-    application/json:
-      schema:
-        type: array
-        items:
-          $ref: '#/components/schemas/Category'
-      examples:
-        categories:
-          value:
-            - id: "0310086a-d9d6-44bc-9199-ee4381bc9e4e"
-              parentId: "4901acd1-5dad-4c7b-b4f0-32d0198621fc"
-              localizedName:
-                en: "CORDLESS IMPACT DRIVERS"
-              name: "CORDLESS IMPACT DRIVERS"
-              validity: {}
-              position: 0
-              published: true
-              metadata:
-                version: 0
-                createdAt: "2024-08-28T14:00:17.353Z"
-                modifiedAt: "2024-08-28T14:00:17.353Z"
-
-            - id: "0720b75e-ee1c-4d76-9f53-eb3af3927e13"
-              parentId: "7d2b0d76-3628-46b3-ac92-34c903f5c3cb"
-              localizedName:
-                en: "CORDED POWERTOOLS"
-              name: "CORDED POWERTOOLS"
-              validity: {}
-              position: 0
-              published: true
-              metadata:
-                version: 0
-                createdAt: "2024-08-28T14:00:13.181Z"
-                modifiedAt: "2024-08-28T14:00:13.181Z"
         '400':
           description: Request was syntactically incorrect. Details will be provided in the response payload
           content:
@@ -1015,7 +978,7 @@ paths:
         - name: categoryId
           in: path
           description: |
-            Category's unique identifier generated when the category is created.
+            Category unique identifier generated when the category is created.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -1144,7 +1107,7 @@ paths:
         - name: categoryId
           in: path
           description: |
-            Category's unique identifier either existing category id or custom id that will be used to create a new category.
+            Category unique identifier either existing category id or custom id that will be used to create a new category.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -1362,7 +1325,7 @@ paths:
         - name: categoryId
           in: path
           description: |
-            Category's unique identifier generated when the category is created.
+            Category unique identifier generated when the category is created.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -1479,7 +1442,7 @@ paths:
         - name: categoryId
           in: path
           description: |
-            Category's unique identifier generated when the category is created.
+            Category unique identifier generated when the category is created.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -1627,7 +1590,7 @@ paths:
         - Category Assignment Resources
       summary: Assigning resources to a category
       description: |
-        Assigns resources to a specified category.
+        Assigns resources (such as products) to a specified category.
         ***
 
         ### Required scopes
@@ -1648,7 +1611,7 @@ paths:
         - name: categoryId
           in: path
           description: |
-            Category's unique identifier generated when the category is created.
+            Category unique identifier generated when the category is created.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -1732,8 +1695,7 @@ paths:
         - Category Assignment Resources
       summary: Retrieving resources assigned to a category
       description: |
-        Retrieves resources (such as products) assigned to a specified category.
-        Localized name field contains resource (product) name. This information is attached to assignment asynchronously and will be visible in the response while getting it.
+        Retrieves resources (such as products) assigned to a specified category. The localizedName field contains the resource (product) name. This information is attached to the assignment asynchronously and is visible in the response when retrieved.
         ***
 
         ### Required scopes
@@ -1756,7 +1718,7 @@ paths:
         - name: categoryId
           in: path
           description: |
-            Category's unique identifier generated when the category is created.
+            Category unique identifier generated when the category is created.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -1990,7 +1952,7 @@ paths:
         - name: categoryId
           in: path
           description: |
-            Category's unique identifier generated when the category is created.
+            Category unique identifier generated when the category is created.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -2094,7 +2056,7 @@ paths:
         - name: categoryId
           in: path
           description: |
-            Category's unique identifier generated when the category is created.
+            Category unique identifier generated when the category is created.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -2186,7 +2148,7 @@ paths:
         - name: categoryId
           in: path
           description: |
-            Category's unique identifier generated when the category is created.
+            Category unique identifier generated when the category is created.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -2198,7 +2160,7 @@ paths:
         - name: assignmentId
           in: path
           description: |
-            Assignment's unique identifier
+            Assignment unique identifier
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -2294,7 +2256,7 @@ paths:
         - name: categoryId
           in: path
           description: |
-            Category's unique identifier generated when the category is created.
+            Category unique identifier generated when the category is created.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -2306,7 +2268,7 @@ paths:
         - name: referenceId
           in: path
           description: |
-            Assignment's reference unique identifier, for example: productId.
+            Assignment reference unique identifier, for example: productId.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -2410,7 +2372,7 @@ paths:
         - name: categoryId
           in: path
           description: |
-            Category's unique identifier generated when the category is created.
+            Category unique identifier generated when the category is created.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -2422,7 +2384,7 @@ paths:
         - name: referenceId
           in: path
           description: |
-            Assignment's reference unique identifier, for example: productId.
+            Assignment reference unique identifier, for example: productId.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -2499,7 +2461,7 @@ paths:
         Retrieves a list of parents for a specified category. Parents are sorted in ascending order from root to leaf by default.
 
         If there are unpublished categories in the category tree, then if the parameter `showUnpublished=false` is used,
-        unpublished category parents will be omitted in the response.
+        unpublished category parents are omitted in the response.
         ***
 
         ### Required scopes
@@ -2522,7 +2484,7 @@ paths:
         - name: categoryId
           in: path
           description: |
-            Category's unique identifier generated when the category is created.
+            Category unique identifier generated when the category is created.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -2680,7 +2642,7 @@ paths:
         Retrieves a list of subcategories for a specified category.
 
         If there are unpublished categories in the category tree, then when the `showUnpublished=false`
-        parameter is used, only subcategories up to the last published subcategory will be shown.
+        parameter is used, only subcategories up to the last published subcategory are shown.
         ***
 
         ### Required scopes
@@ -2703,7 +2665,7 @@ paths:
         - name: categoryId
           in: path
           description: |
-            Category's unique identifier generated when the category is created.
+            Category unique identifier generated when the category is created.
           required: true
           deprecated: false
           allowEmptyValue: false
@@ -3050,7 +3012,7 @@ components:
       properties:
         id:
           type: string
-          description: Assignment's unique identifier generated when a resource is assigned to a category.
+          description: Assignment unique identifier generated when a resource is assigned to a category.
         ref:
           required:
             - id
@@ -3172,9 +3134,8 @@ components:
       type: object
       properties:
         ref:
-          allOf:
-            - $ref: '#/components/schemas/Reference'
-            - description: Assignment reference.
+          $ref: '#/components/schemas/Reference'
+          description: Assignment reference.
       example:
         ref:
           id: '1639265'
@@ -3185,7 +3146,7 @@ components:
       properties:
         id:
           type: string
-          description: Category's unique identifier generated when the category is created.
+          description: Category unique identifier generated when the category is created.
         parentId:
           type: string
           description: Unique identifier of the parent category. No parentId in the body indicates that this is a root category.
@@ -3225,7 +3186,7 @@ components:
           $ref: '#/components/schemas/Validity'
         position:
           type: integer
-          description: 'Category''s position, set in relation to the categories on the same level (sharing the same parent) in the tree.'
+          description: 'Category position, set in relation to the categories on the same level (sharing the same parent) in the tree.'
           format: int32
         published:
           type: boolean
@@ -3251,6 +3212,19 @@ components:
         - published
         - Metadata
         - media
+      example:
+        id: "0310086a-d9d6-44bc-9199-ee4381bc9e4e"
+        parentId: "4901acd1-5dad-4c7b-b4f0-32d0198621fc"
+        localizedName:
+          en: "CORDLESS IMPACT DRIVERS"
+        name: "CORDLESS IMPACT DRIVERS"
+        validity: {}
+        position: 0
+        published: true
+        metadata:
+          version: 0
+          createdAt: "2024-08-28T14:00:17.353Z"
+          modifiedAt: "2024-08-28T14:00:17.353Z"
     CategoryAssignment:
       type: object
       properties:
@@ -3339,11 +3313,11 @@ components:
           additionalProperties:
             type: string
             format: date-time
-          description: Category's validity.
+          description: Category validity.
         position:
           minimum: 0
           type: integer
-          description: 'Category''s position, set in relation to the categories on the same level (sharing the same parent) in the tree.'
+          description: 'Category position, set in relation to the categories on the same level (sharing the same parent) in the tree.'
           format: int32
           nullable: true
         published:
@@ -3361,7 +3335,7 @@ components:
       properties:
         id:
           type: string
-          description: Category's unique identifier generated when the category is created.
+          description: Category unique identifier generated when the category is created.
         parentId:
           type: string
           description: Unique identifier of the parent category.
@@ -3486,10 +3460,10 @@ components:
           additionalProperties:
             type: string
             format: date-time
-          description: Category's validity.
+          description: Category validity.
         position:
           type: integer
-          description: 'Category''s position, set in relation to the categories on the same level (sharing the same parent) in the tree.'
+          description: 'Category position, set in relation to the categories on the same level (sharing the same parent) in the tree.'
           format: int32
           nullable: true
         published:
@@ -3503,17 +3477,18 @@ components:
         metadata:
           $ref: '#/components/schemas/MetadataUpdate'
     CategoryTree:
+      type: object
+      description: Definition of category tree
       required:
         - id
         - localizedName
         - name
         - position
         - published
-      type: object
       properties:
         id:
           type: string
-          description: Category's unique identifier generated when the category is created.
+          description: Category unique identifier generated when the category is created.
         name:
           type: string
           description: Category name in tenant default language.
@@ -3524,37 +3499,36 @@ components:
           deprecated: true
         code:
           type: string
-          description: 'Unique category identifier, defined by the tenant.'
+          description: Unique category identifier defined by the tenant.
           deprecated: true
         localizedName:
           type: object
           additionalProperties:
             type: string
-          description: Localized category name in a form of a map of translations.
+          description: Localized category name as a map of translations.
         localizedDescription:
           type: object
           additionalProperties:
             type: string
-          description: Localized category description in a form of a map of translations.
+          description: Localized category description as a map of translations.
         localizedSlug:
           type: object
           additionalProperties:
             type: string
           description: Provides localized category name or code without diacritics for the URL.
         validity:
-          allOf:
-            - $ref: '#/components/schemas/Validity'
-            - description: Category's validity.
+          $ref: '#/components/schemas/Validity'
+          description: Category validity.
         position:
           type: integer
-          description: 'Category''s position, set in relation to the categories on the same level (sharing the same parent) in the tree.'
           format: int32
+          description: Category position in relation to sibling categories.
         published:
           type: boolean
-          description: Flag indicating whether the category has been published or not.
+          description: Flag indicating whether the category has been published.
         ecn:
           type: array
-          description: List of external category numbers (ECNs) unique for every category.
+          description: List of external category numbers (ECNs) unique for each category.
           items:
             type: string
         subcategories:
@@ -3562,38 +3536,37 @@ components:
           description: Subcategories of this category.
           items:
             $ref: '#/components/schemas/CategoryTree'
-      description: Definition of category tree
       example:
-        id: 46124ba108-e6fd-4139-b831-5ac5fded6d52
+        id: "46124ba108-e6fd-4139-b831-5ac5fded6d52"
         localizedName:
-          en: ProductRoot
-        code: productroot
+          en: "ProductRoot"
+        code: "productroot"
         localizedSlug:
-          en: productroot
+          en: "productroot"
         localizedDescription:
-          en: ProductRoot
+          en: "ProductRoot"
         position: 55555
         published: true
         subcategories:
-          - id: 12a24ba108-e6fd-4139-b831-5ac5fded6d34
-            parentId: 46124ba108-e6fd-4139-b831-5ac5fded6d52
+          - id: "12a24ba108-e6fd-4139-b831-5ac5fded6d34"
+            parentId: "46124ba108-e6fd-4139-b831-5ac5fded6d52"
             localizedName:
-              en: Fruits & Vegetables
-            code: fruits-&-vegetables
+              en: "Fruits & Vegetables"
+            code: "fruits-&-vegetables"
             localizedSlug:
-              en: fruits-&-vegetables
+              en: "fruits-&-vegetables"
             localizedDescription:
-              en: Fresh and tasty fruits and vegetables.
+              en: "Fresh and tasty fruits and vegetables."
             position: 0
             published: true
             subcategories:
-              - id: 12a24ba108-e6fd-4139-b831-5ac5fded6d34
-                parentId: 34a24ba108-e6fd-4139-b831-5ac5fded6dae
+              - id: "34a24ba108-e6fd-4139-b831-5ac5fded6dae"
+                parentId: "12a24ba108-e6fd-4139-b831-5ac5fded6d34"
                 localizedName:
-                  en: Fruit
-                code: fruit
+                  en: "Fruit"
+                code: "fruit"
                 localizedSlug:
-                  en: fruit
+                  en: "fruit"
                 position: 0
                 published: true
     CategoryUpdateRequest:
@@ -3637,11 +3610,11 @@ components:
           additionalProperties:
             type: string
             format: date-time
-          description: Category's validity.
+          description: Category validity.
         position:
           minimum: 0
           type: integer
-          description: 'Category''s position, set in relation to the categories on the same level (sharing the same parent) in the tree.'
+          description: 'Category position, set in relation to the categories on the same level (sharing the same parent) in the tree.'
           format: int32
           nullable: true
         published:
