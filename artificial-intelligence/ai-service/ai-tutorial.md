@@ -199,22 +199,23 @@ In the above example, the German Translation Agent is triggered. The Agent acts 
         "id":"delightCoffee",
         "name":{
             "en":"Delight Coffee",
-            "de":"Delight Kaffee"},
-            "yrn":"urn:yaas:saasag:caasproduct:product:mytenant;delightCoffee",
-            "code":"delightCoffee",
-            "description":{
-                "en":"Awaken your senses with our hand-selected Gourmet Coffee, crafted for true coffee lovers who crave depth, aroma, and sophistication in every sip. Sourced from the world’s finest high-altitude farms, each bean is carefully harvested at peak ripeness, then small-batch roasted to unlock its natural sweetness and complex flavor notes.",
-                "de":"Wecken Sie Ihre Sinne mit unserem handverlesenen Gourmetkaffee, kreiert für wahre Kaffeeliebhaber, die Tiefe, Aroma und Raffinesse in jedem Schluck suchen. Aus den besten Hochlandfarmen der Welt bezogen, wird jede Bohne sorgfältig zum Höhepunkt ihrer Reife geerntet und dann in kleinen Chargen geröstet, um ihre natürliche Süße und komplexen Geschmacksnoten freizusetzen."
-            },
-            "media":[],
-            "productType":"BASIC",
-            "template":{},
-            "published":false,"metadata":{
-                "version":1,
-                "createdAt":"2025-09-25T04:42:42.607Z",
-                "modifiedAt":"2025-09-25T04:42:42.607Z"
-            }
-        }",
+            "de":"Delight Kaffee"
+        },
+        "yrn":"urn:yaas:saasag:caasproduct:product:mytenant;delightCoffee",
+        "code":"delightCoffee",
+        "description":{
+            "en":"Awaken your senses with our hand-selected Gourmet Coffee, crafted for true coffee lovers who crave depth, aroma, and sophistication in every sip. Sourced from the world’s finest high-altitude farms, each bean is carefully harvested at peak ripeness, then small-batch roasted to unlock its natural sweetness and complex flavor notes.",
+            "de":"Wecken Sie Ihre Sinne mit unserem handverlesenen Gourmetkaffee, kreiert für wahre Kaffeeliebhaber, die Tiefe, Aroma und Raffinesse in jedem Schluck suchen. Aus den besten Hochlandfarmen der Welt bezogen, wird jede Bohne sorgfältig zum Höhepunkt ihrer Reife geerntet und dann in kleinen Chargen geröstet, um ihre natürliche Süße und komplexen Geschmacksnoten freizusetzen."
+        },
+        "media":[],
+        "productType":"BASIC",
+        "template":{},
+        "published":false,"metadata":{
+            "version":1,
+            "createdAt":"2025-09-25T04:42:42.607Z",
+            "modifiedAt":"2025-09-25T04:42:42.607Z"
+        }
+    }",
     "sessionId": "33a550d0-d812-4fb2-bb0d-d50dbfe3627b"
 }
 ```
