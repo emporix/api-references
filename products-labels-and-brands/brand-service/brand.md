@@ -44,7 +44,7 @@ To create a brand and add media files to it, you need to send a request to the [
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
+curl -i -X POST 
   https://api.emporix.io/brands 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'Content-Language: en' 

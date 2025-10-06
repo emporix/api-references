@@ -39,7 +39,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -225,7 +225,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -310,7 +310,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -415,7 +415,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -488,21 +488,21 @@ paths:
         - name: localizedName
           in: query
           description: |
-            Search by the localizedName of the categories, it will be conformed against all of the specified accepted-languages.
+            Search by the localizedName of the categories, it is conformed against all of the specified accepted-languages.
           schema:
             type: string
             example: Example category name
         - name: localizedDescription
           in: query
           description: |
-            Search by the localizeDescription of the categories, it will be conformed against all of the specified accepted-languages.
+            Search by the localizeDescription of the categories, it is conformed against all of the specified accepted-languages.
           schema:
             type: string
             example: Example category description
         - name: localizedSlug
           in: query
           description: |
-            Search by the localizedSlug of the categories, it will be conformed against all of the specified accepted-languages.
+            Search by the localizedSlug of the categories, it is conformed against all of the specified accepted-languages.
           schema:
             type: string
             example: Example category slug
@@ -584,6 +584,43 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Category'
+              examples:
+200:
+  description: Successful response
+  content:
+    application/json:
+      schema:
+        type: array
+        items:
+          $ref: '#/components/schemas/Category'
+      examples:
+        categories:
+          value:
+            - id: "0310086a-d9d6-44bc-9199-ee4381bc9e4e"
+              parentId: "4901acd1-5dad-4c7b-b4f0-32d0198621fc"
+              localizedName:
+                en: "CORDLESS IMPACT DRIVERS"
+              name: "CORDLESS IMPACT DRIVERS"
+              validity: {}
+              position: 0
+              published: true
+              metadata:
+                version: 0
+                createdAt: "2024-08-28T14:00:17.353Z"
+                modifiedAt: "2024-08-28T14:00:17.353Z"
+
+            - id: "0720b75e-ee1c-4d76-9f53-eb3af3927e13"
+              parentId: "7d2b0d76-3628-46b3-ac92-34c903f5c3cb"
+              localizedName:
+                en: "CORDED POWERTOOLS"
+              name: "CORDED POWERTOOLS"
+              validity: {}
+              position: 0
+              published: true
+              metadata:
+                version: 0
+                createdAt: "2024-08-28T14:00:13.181Z"
+                modifiedAt: "2024-08-28T14:00:13.181Z"
         '400':
           description: Request was syntactically incorrect. Details will be provided in the response payload
           content:
@@ -649,7 +686,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -938,7 +975,7 @@ paths:
       - name: tenant
         in: path
         description: |
-          Your Emporix tenant's name.
+          Your Emporix tenant name.
 
           **Note**: The tenant should always be written in lowercase.
         required: true
@@ -951,7 +988,7 @@ paths:
     get:
       tags:
         - Category Resources
-      summary: Retrieving a category's details
+      summary: Retrieving a category details
       description: |
         Retrieves a specified category and its details using the category ID.
 
@@ -968,7 +1005,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -1097,7 +1134,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -1315,7 +1352,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -1432,7 +1469,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -1601,7 +1638,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -1709,7 +1746,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -1943,7 +1980,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -2047,7 +2084,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -2139,7 +2176,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -2247,7 +2284,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -2363,7 +2400,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -2475,7 +2512,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -2656,7 +2693,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -2847,7 +2884,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -2925,7 +2962,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant should always be written in lowercase.
           required: true
@@ -3170,11 +3207,11 @@ components:
           description: Provides localized category name or code without diacritics for the URL.
         name:
           type: string
-          description: Category name in tenant's default language.
+          description: Category name in tenant default language.
           deprecated: true
         description:
           type: string
-          description: Description in tenant's default language.
+          description: Description in tenant default language.
           deprecated: true
         code:
           type: string
@@ -3479,11 +3516,11 @@ components:
           description: Category's unique identifier generated when the category is created.
         name:
           type: string
-          description: Category name in tenant's default language.
+          description: Category name in tenant default language.
           deprecated: true
         description:
           type: string
-          description: Description in tenant's default language.
+          description: Description in tenant default language.
           deprecated: true
         code:
           type: string
