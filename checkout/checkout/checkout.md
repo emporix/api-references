@@ -494,7 +494,7 @@ There are several options to configure your payment methods. Check all the avail
 {% hint style="warning" %}
 To complete the checkout, there are two options:
 
-* The customer has to be logged in to the storefront and then the following request requires using the customer's access token for authorization - see [Gather information about a customer's session on the storefront](checkout.md#Gather-information-about-a-customer's-session-on-the-storefront).
+* The customer has to be logged in to the storefront and then the following request requires using the customer's access token for authorization.
 * The customer continues as a guest without logging in - the `customer:guest` field has to be set to `true`.
 {% endhint %}
 
