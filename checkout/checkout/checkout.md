@@ -16,9 +16,7 @@ This tutorial guides you through the basic setup of the checkout service.
 
 ## How to configure the Checkout Service
 
-### Gather information about a customer's session on the storefront
-
-You need details about the customer's access and session tokens as these details influence the checkout process.
+Gather information about a customer's session on the storefront - you need details about the customer's access and session tokens as these details influence the checkout process.
 
 {% stepper %}
 {% step %}
@@ -52,9 +50,8 @@ You can skip this step and continue with the checkout process as a guest custome
 {% endhint %}
 
 This operation returns the customer's access token and Saas token, which convey information about the customer and their activities on the storefront. You might need these details in subsequent steps to get a proper authorization when a customer is logged in.
-
 {% endstep %}
-{% endsteper %}
+{% endstepper %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -208,7 +205,7 @@ curl -i -X POST
 
 {% endstep %}
 {% step %}
-### Define delivery time 
+### Define the delivery time 
 
 The delivery time is matched with the delivery method and zone by sending the request to the [Creating a delivery time](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping/api-reference/delivery-times-management#post-shipping-tenant-delivery-times) endpoint.
 
@@ -505,8 +502,6 @@ Once a customer places the product in a cart, they can proceed with the checkout
 
 The checkout service validates the data that come from customer's session token, the cart, and tiered prices, and then proceeds with the delivery and payment details.
 Then, it handles the payment and creates an order in the system, closing the cart.
-
-### Trigger a checkout process
 
 {% stepper %}
 {% step %}
