@@ -18,7 +18,7 @@ paths:
       description: |-
         Creates a new currency. 
 
-        The currency consists of a code compliant with the ISO-4217 standard (see https://www.iso.org/iso-4217-currency-codes.html) and a currency name. The `name` field is localized.
+        The currency consists of a code compliant with the ISO-4217 standard (https://www.iso.org/iso-4217-currency-codes.html) and a currency name. The `name` field is localized.
 
         If the `Content-Language` is set to `*`, the request body payload should contain localized fields as a map in the `key:value` pairs format, where `key` is the language code, and `value` is the translation.
         ***
@@ -250,7 +250,7 @@ paths:
       description: |-
         Creates a new exchange rate between two currencies. 
 
-        **Note:** Both the source and target currency codes must be compliant with the ISO-4217 standard (see https://www.iso.org/iso-4217-currency-codes.html) and must be defined in the system. 
+        **Note:** Both the source and target currency codes must be compliant with the ISO-4217 standard (https://www.iso.org/iso-4217-currency-codes.html) and must be defined in the system. 
         ***
         **Required scopes**
         * `currency.currency_manage`
@@ -517,7 +517,7 @@ components:
     currencyCreation:
       type: object
       title: currencyCreation
-      description: 'Represents a single currency creation. The currency consists of a code compliant with the ISO-4217 standard (see https://www.iso.org/iso-4217-currency-codes.html) and a currency name. The `name` field is localized.'
+      description: 'Represents a single currency creation. The currency consists of a code compliant with the ISO-4217 standard (https://www.iso.org/iso-4217-currency-codes.html) and a currency name. The `name` field is localized.'
       properties:
         code:
           type: string
@@ -531,7 +531,7 @@ components:
             - type: object
               description: |-
                 Map of translations in the `key:value` pairs format, where `key` is the language code, and `value` is the translation.
-                Both the source and target currency codes must be compliant with the ISO-4217 standard (see https://www.iso.org/iso-4217-currency-codes.html) and must be defined in the system.
+                Both the source and target currency codes must be compliant with the ISO-4217 standard (https://www.iso.org/iso-4217-currency-codes.html) and must be defined in the system.
               example:
                 en: Euro
               additionalProperties:
@@ -591,7 +591,7 @@ components:
     currencyRetrieval:
       title: currencyRetrieval
       type: object
-      description: 'Represents a single currency. The currency consists of a code compliant with ISO-4217 (see https://www.iso.org/iso-4217-currency-codes.html) and a currency name. The name field is localized.'
+      description: 'Represents a single currency. The currency consists of a code compliant with ISO-4217 (https://www.iso.org/iso-4217-currency-codes.html) and a currency name. The name field is localized.'
       properties:
         code:
           type: string

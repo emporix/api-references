@@ -78,8 +78,8 @@ To retrieve your tenant's currency configuration, you need to send a request to 
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
+curl -L 
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
   --header 'Accept: */*'
 ```
 
@@ -98,10 +98,10 @@ The id in the request body must be compliant with the [ISO 4217 standard](https:
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request PUT \
-  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request PUT 
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
+  --header 'Content-Type: application/json' 
   --data '{
     "key": "project_curr",
     "secured": false,
@@ -127,8 +127,8 @@ To retrieve a particular site's currency configuration, you need to call the [Re
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
+curl -L 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' 
   --header 'Accept: */*'
 ```
 
@@ -147,10 +147,10 @@ The currency code must be compliant with the [ISO 4217 standard](https://en.wiki
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request PATCH \
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request PATCH 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' 
+  --header 'Content-Type: application/json' 
   --data '{
     "defaultLanguage": "en"
     "currency": "PLN"
