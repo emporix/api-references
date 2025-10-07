@@ -20,64 +20,65 @@ This tutorial guides you through the basic setup of the checkout service.
 
 You need details about the customer's access and session tokens as these details influence the checkout process.
 
-1. When a user enters your storefront, before they choose to log in, an anonymous user session is created.
+{% stepper %}
+{% step %}
+### Anonymous session start
+When a user enters your storefront, before they choose to log in, an anonymous user session is created.
 
 Get an anonymous access token by sending a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-login) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../../companies-and-customers/customer-management/api-reference" %}
-[api-reference](../../companies-and-customers/customer-management/api-reference)
-{% endcontent-ref %}
-
 ```bash
-curl -i -X GET \
+curl -i -X GET 
   'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id={client_id}'
 ```
 
-2. Log the customer in and send an authorization request to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.
-
-{% hint style="warning" %}
-You can skip this step and continue with the checkout process as a guest customer without the need to log in.
-{% endhint %}
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../../companies-and-customers/customer-management/api-reference" %}
-[api-reference](../../companies-and-customers/customer-management/api-reference)
-{% endcontent-ref %}
+{% endstep %}
+{% step %}
+### Log the customer in
+Send an authorization request to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/customer/{tenant}/login' \
-  -H 'Authorization: string' \
-  -H 'Content-Type: application/json' \
+  'https://api.emporix.io/customer/{tenant}/login' 
+  -H 'Authorization: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "email": "customer@emporix.com",
     "password": "Qwurmdch673;'\''"
   }'
 ```
 
+{% hint style="warning" %}
+You can skip this step and continue with the checkout process as a guest customer without the need to log in.
+{% endhint %}
+
 This operation returns the customer's access token and Saas token, which convey information about the customer and their activities on the storefront. You might need these details in subsequent steps to get a proper authorization when a customer is logged in.
+
+{% endstep %}
+{% endsteper %}
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../companies-and-customers/customer-management/api-reference" %}
+[api-reference](../../companies-and-customers/customer-management/api-reference)
+{% endcontent-ref %}
+
 
 ### Add tax configuration
 
 Each country that you operate in may have different tax rules for different products and services. Add relevant configuration to calculate taxes accordingly.
 
-Add tax configuration by sending a request to the [Creating a new tax configuration](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/tax-service/api-reference/taxes#post-tax-tenant-taxes) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../../prices-and-taxes/tax-service/api-reference/" %}
-[api-reference](../../prices-and-taxes/tax-service/api-reference/)
-{% endcontent-ref %}
+{% stepper %}
+{% step %}
+### Add tax configuration 
+Send a request to the [Creating a new tax configuration](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/tax-service/api-reference/taxes#post-tax-tenant-taxes) endpoint.
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/tax/{tenant}/taxes' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/tax/{tenant}/taxes' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "location": {
       "countryCode": "DE"
@@ -112,25 +113,32 @@ curl -i -X POST \
   }'
 ```
 
-### Define the delivery zone, method, and time
-
-Delivery zone is the area where you ship your goods to. You can define a country, or a zip code that you operate within.\
-Delivery method is dependant on a specific site and delivery zone.
-
-1. Define the delivery zone by sending a request to the [Creating a shipping zone](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping/api-reference/shipping-zones#post-shipping-tenant-site-zones) endpoint.
+{% endstep %}
+{% endstepper %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../delivery-and-shipping/shipping/api-reference/" %}
-[api-reference](../../delivery-and-shipping/shipping/api-reference/)
+{% content-ref url="../../prices-and-taxes/tax-service/api-reference/" %}
+[api-reference](../../prices-and-taxes/tax-service/api-reference/)
 {% endcontent-ref %}
 
+
+### Define the delivery zone, method, and time
+
+Delivery zone is the area where you ship your goods to. You can define a country, or a zip code that you operate within.
+Delivery method is dependant on a specific site and delivery zone.
+
+{% stepper %}
+{% step %}
+### Define the delivery zone 
+Send a request to the [Creating a shipping zone](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping/api-reference/shipping-zones#post-shipping-tenant-site-zones) endpoint.
+
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/shipping/{tenant}/{site}/zones' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: fr' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/shipping/{tenant}/{site}/zones' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: fr' 
+  -H 'Content-Type: application/json' 
   -d '{
     "shipTo": [
       {
@@ -143,21 +151,18 @@ curl -i -X POST \
     "default": true
   }'
 ```
+{% endstep %}
 
-2. Specify how the goods can be shipped to a customer by sending a request to the [Creating a shipping method](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping/api-reference/shipping-methods#post-shipping-tenant-site-zones-zoneid-methods) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../../delivery-and-shipping/shipping/api-reference/" %}
-[api-reference](../../delivery-and-shipping/shipping/api-reference/)
-{% endcontent-ref %}
+{% step %}
+### Specify how the goods can be shipped to a customer
+Send a request to the [Creating a shipping method](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping/api-reference/shipping-methods#post-shipping-tenant-site-zones-zoneid-methods) endpoint.
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/shipping/{tenant}/{site}/zones/{zoneId}/methods' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: fr' \
-  -H 'Content-Type: application/json' \
+  'https://api.emporix.io/shipping/{tenant}/{site}/zones/{zoneId}/methods' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: fr' 
+  -H 'Content-Type: application/json' 
   -d '{
     "id": "fedex-2dayground",
     "name": "FedEx 2Day",
@@ -203,19 +208,18 @@ curl -i -X POST \
   }'
 ```
 
-3. Define delivery time that will be matched with the delivery method and zone by sending the request to the [Creating a delivery time](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping/api-reference/delivery-times-management#post-shipping-tenant-delivery-times) endpoint.
+{% endstep %}
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+{% step %}
+### Define delivery time 
 
-{% content-ref url="../../delivery-and-shipping/shipping/api-reference/" %}
-[api-reference](../../delivery-and-shipping/shipping/api-reference/)
-{% endcontent-ref %}
+The delivery time is matched with the delivery method and zone by sending the request to the [Creating a delivery time](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping/api-reference/delivery-times-management#post-shipping-tenant-delivery-times) endpoint.
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/shipping/{tenant}/delivery-times?validateOverlap=true' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/shipping/{tenant}/delivery-times?validateOverlap=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "siteCode": "main",
     "name": "deliverytime1",
@@ -243,10 +247,33 @@ curl -i -X POST \
     ]
   }'
 ```
+{% endstep}
+{% endstepper %}
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../../delivery-and-shipping/shipping/api-reference/)
+{% endcontent-ref %}
+
 
 ### Add products to your store
 
-To create and add multiple products to your store, send the request to the [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
+{% stepper %}
+{% step %}
+### Create and add multiple products to your store
+Send the request to the [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
+
+```bash
+curl -i -X POST 
+  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
+  -d '{}'
+```
+{% endstep %}
+{% endstepper %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -254,33 +281,21 @@ To create and add multiple products to your store, send the request to the [Crea
 [api-reference](../../products-labels-and-brands/product-service/api-reference/)
 {% endcontent-ref %}
 
-```bash
-curl -i -X POST \
-  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
-  -d '{}'
-```
-
 ### Create a price model and connect it to products
 
 Price model defines your pricing strategy. You can specify how you want to go about price tiers and selling volumes.
 
-1. To define a price model send a request to the [Creating a new price model](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/price-models#post-price-tenant-pricemodels) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../../prices-and-taxes/price-service/api-reference/" %}
-[api-reference](../../prices-and-taxes/price-service/api-reference/)
-{% endcontent-ref %}
+{% stepper %}
+{% step %}
+### Define a price model 
+Send a request to the [Creating a new price model](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/price-models#post-price-tenant-pricemodels) endpoint.
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/price/{tenant}/priceModels' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/price/{tenant}/priceModels' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "includesTax": true,
     "includesMarkup": true,
@@ -303,21 +318,18 @@ curl -i -X POST \
     }
   }'
 ```
+{% endstep %}
 
-2. Create a price for a specific product by sending a request to the [Creating a new price](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../../prices-and-taxes/price-service/api-reference/" %}
-[api-reference](../../prices-and-taxes/price-service/api-reference/)
-{% endcontent-ref %}
+{% step %}
+### Create a price for a specific product
+Send a request to the [Creating a new price](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint.
 
 ```bash
-url -i -X POST \
-  'https://api.emporix.io/price/{tenant}/prices' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+url -i -X POST 
+  'https://api.emporix.io/price/{tenant}/prices' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "id": "6245aa0a78a8576e338fa9c4",
     "itemId": {
@@ -347,26 +359,18 @@ url -i -X POST \
     ]
   }'
 ```
-
-3. Match the price by session context to allow your customers find the best price based on information retrieved from the session context.
-
-{% hint style="danger" %}
-The following request requires using the customer's access token for authorization, either anonymous or logged in, as the response contains the bearer's information.
-{% endhint %}
-
+{% endstep %}
+{% step %}
+### Match the price by session context 
+Allow your customers find the best price based on information retrieved from the session context.
 Send the request to the [Matching prices for session context](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices-by-context) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../../prices-and-taxes/price-service/api-reference/" %}
-[api-reference](../../prices-and-taxes/price-service/api-reference/)
-{% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/price/{tenant}/match-prices-by-context' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/price/{tenant}/match-prices-by-context' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "items": [
       {
@@ -382,6 +386,14 @@ curl -i -X POST \
     ]
   }'
 ```
+{% endstep %}
+{% endstepper %}
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../prices-and-taxes/price-service/api-reference/" %}
+[api-reference](../../prices-and-taxes/price-service/api-reference/)
+{% endcontent-ref %}
 
 ### Create a cart
 
@@ -389,24 +401,21 @@ curl -i -X POST \
 The following requests require using the customer's access token for authorization, either anonymous or logged in, as the response contains the bearer's information.
 {% endhint %}
 
-1. You have to enable an option to create a cart on your site while a customer is browsing through your products. Creating a cart takes care of things like gathering customer's session details, even anonymous, or setting up a proper cart's currency for final calculations at checkout.\
-   There are two options to create carts using API:
+{% stepper %}
+{% step %}
+### Enable an option to create a cart on your site while a customer is browsing through your products
+Creating a cart takes care of things like gathering customer's session details, even anonymous, or setting up a proper cart's currency for final calculations at checkout.
+There are two options to create carts using API:
 
 * Create a cart by sending a request to the [Creating a new cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../cart/api-reference/" %}
-[api-reference](../cart/api-reference/)
-{% endcontent-ref %}
-
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/cart/{tenant}/carts' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -H 'saas-token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MTQ0MzU2MyIsImV4cCI6MTY5Nzk3MDUyOH0.F0b5jr6KeSoBCj-suTLuasmydaJEudc1ZrESkQXSCGk' \
-  -H 'session-id: string' \
+curl -i -X POST 
+  'https://api.emporix.io/cart/{tenant}/carts' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
+  -H 'saas-token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MTQ0MzU2MyIsImV4cCI6MTY5Nzk3MDUyOH0.F0b5jr6KeSoBCj-suTLuasmydaJEudc1ZrESkQXSCGk' 
+  -H 'session-id: string' 
   -d '{
     "customerId": "87413250",
     "siteCode": "main",
@@ -426,19 +435,13 @@ curl -i -X POST \
 
 * Create a cart by sending a `GET` request with `create=true` parameter to the [Retrieving a cart's details by criteria](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../cart/api-reference/" %}
-[api-reference](../cart/api-reference/)
-{% endcontent-ref %}
-
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/cart/{tenant}/carts' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -H 'saas-token: string' \
-  -H 'session-id: string' \
+curl -i -X POST 
+  'https://api.emporix.io/cart/{tenant}/carts' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
+  -H 'saas-token: string' 
+  -H 'session-id: string' 
   -d '{
     "siteCode": "main",
     "currency": "EUR",
@@ -450,20 +453,17 @@ curl -i -X POST \
     "sessionValidated": true
   }'
 ```
+{% endstep %}
 
-2. Add items to the cart by sending the request to the [Creating a new cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../cart/api-reference/" %}
-[api-reference](../cart/api-reference/)
-{% endcontent-ref %}
+{% step %}
+### Add items to the cart 
+Send a request to the [Creating a new cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "itemYrn": "{productYrn}",
     "price": {
@@ -475,6 +475,14 @@ curl -i -X POST \
     "quantity": 6
   }'
 ```
+{% endstep %}
+{% endstepper %}
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../cart/api-reference/" %}
+[api-reference](../cart/api-reference/)
+{% endcontent-ref %}
 
 ### Define payment methods
 
@@ -491,22 +499,20 @@ To complete the checkout, there are two options:
 
 Once a customer places the product in a cart, they can proceed with the checkout process.
 
-The checkout service validates the data that come from customer's session token, the cart, and tiered prices, and then proceeds with the delivery and payment details.\
+The checkout service validates the data that come from customer's session token, the cart, and tiered prices, and then proceeds with the delivery and payment details.
 Then, it handles the payment and creates an order in the system, closing the cart.
 
-You can trigger a checkout process through API as well by sending a request to the [Triggering a checkout](https://developer.emporix.io/api-references/api-guides/checkout/checkout/api-reference/checkouts) endpoint.
+{% stepper %}
+{% step %}
+### Trigger a checkout process
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
+Send a request to the [Triggering a checkout](https://developer.emporix.io/api-references/api-guides/checkout/checkout/api-reference/checkouts) endpoint.
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/checkout/{tenant}/checkouts/order' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/checkout/{tenant}/checkouts/order' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -H 'saas-token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MTQ0MzU2MyIsImV4cCI6MTY5Nzk3MDUyOH0.F0b5jr6KeSoBCj-suTLuasmydaJEudc1ZrESkQXSCGk' \
   -d '{
     "cartId": "9b36757a-5ea1-4689-9ed3-fb630eb5048c",
@@ -581,3 +587,8 @@ curl -i -X POST \
     }
   }'
 ```
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}

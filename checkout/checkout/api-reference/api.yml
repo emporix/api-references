@@ -74,7 +74,7 @@ paths:
                     message: Something went wrong while processing the request. Please contact the administrator.
                     details: []
       description: |-
-        This endpoint triggers a checkout for a given cart or for a given quote. Customer must be active while checkout is proceed. Checkout is an atomic operation either it succeeds or fails. When a checkout request fails a proper validation message will be returned. Depending of the issue the checkout payload or cart content can be corrected to satisfy the validation rules and the request can be retried. 
+        This endpoint initiates a checkout for a given cart or quote. The customer must be active while the checkout is in progress. Checkout is an atomic operation — it either succeeds or fails. If a checkout request fails, an appropriate validation message is returned. Depending on the issue, the checkout payload or cart content can be adjusted to meet the validation rules, and the request can then be retried.
 
          The checkout process performs the following operations:
          * Validates checkout
@@ -91,9 +91,9 @@ paths:
            * checks if the currency in the cart is the same as configured for the site 
            * checks if the selected delivery window capacity is valid
            * checks if the cart's delivery window has all required fields
-         * Creates an order.
-         * Handles the payment.
-         * Closes the cart.
+         * Creates an order
+         * Handles the payment
+         * Closes the cart
       operationId: POST-checkout-trigger-checkout
       requestBody:
         content:
