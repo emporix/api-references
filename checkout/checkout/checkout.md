@@ -31,7 +31,6 @@ Get an anonymous access token by sending a request to the [Requesting an anonymo
 curl -i -X GET 
   'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id={client_id}'
 ```
-
 {% endstep %}
 {% step %}
 ### Log the customer in
@@ -152,13 +151,12 @@ curl -i -X POST
   }'
 ```
 {% endstep %}
-
 {% step %}
 ### Specify how the goods can be shipped to a customer
 Send a request to the [Creating a shipping method](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping/api-reference/shipping-methods#post-shipping-tenant-site-zones-zoneid-methods) endpoint.
 
 ```bash
-curl -i -X POST \
+curl -i -X POST 
   'https://api.emporix.io/shipping/{tenant}/{site}/zones/{zoneId}/methods' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'Content-Language: fr' 
@@ -209,7 +207,6 @@ curl -i -X POST \
 ```
 
 {% endstep %}
-
 {% step %}
 ### Define delivery time 
 
@@ -247,7 +244,7 @@ curl -i -X POST
     ]
   }'
 ```
-{% endstep}
+{% endstep %}
 {% endstepper %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -486,7 +483,14 @@ curl -i -X POST
 
 ### Define payment methods
 
-You can configure payment methods in the Payment Gateway Service. Check the available options in the [Payment Systems](https://developer.emporix.io/user-guides/system-management/payment-gateway/payments) documentation.
+{% stepper %}
+{% step %}
+### Configure the payment methods
+
+There are several options to configure your payment methods. Check all the available ones in the [Payment Systems](https://developer.emporix.io/user-guides/system-management/payment-gateway/payments) documentation.
+
+{% endstep %}
+{% endstepper %}
 
 ### Trigger the checkout
 
@@ -502,10 +506,11 @@ Once a customer places the product in a cart, they can proceed with the checkout
 The checkout service validates the data that come from customer's session token, the cart, and tiered prices, and then proceeds with the delivery and payment details.
 Then, it handles the payment and creates an order in the system, closing the cart.
 
-{% stepper %}
-{% step %}
 ### Trigger a checkout process
 
+{% stepper %}
+{% step %}
+### Start the checkout
 Send a request to the [Triggering a checkout](https://developer.emporix.io/api-references/api-guides/checkout/checkout/api-reference/checkouts) endpoint.
 
 ```bash
@@ -587,6 +592,10 @@ curl -i -X POST
     }
   }'
 ```
+
+{% endstep %}
+{% endstepper %}
+
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
