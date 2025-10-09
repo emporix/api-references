@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Subscribe to Emporix Newsletter | Changelog & Release Notes</title>
+    <meta name="title" content="Subscribe to Emporix Newsletter | Changelog & Release Notes">
+    <meta name="description" content="Stay up-to-date with the latest Emporix updates, new features, and improvements. Subscribe to our newsletter for changelog updates and release notes for Commerce Engine, Orchestration Engine, and Value Stream Modeller.">
+    <meta name="keywords" content="Emporix newsletter, changelog, release notes, updates, Commerce Engine updates, Orchestration Engine releases, Value Stream Modeller news, API updates, platform updates">
+    <meta name="author" content="Emporix">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://developer.emporix.io/newsletter">
+    <meta property="og:title" content="Subscribe to Emporix Newsletter | Changelog & Release Notes">
+    <meta property="og:description" content="Stay up-to-date with the latest Emporix updates, new features, and improvements. Subscribe to our newsletter for changelog updates and release notes.">
+    <meta property="og:image" content="https://developer.emporix.io/assets/emporix-newsletter-card.png">
+    <meta property="og:site_name" content="Emporix Developer Portal">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://developer.emporix.io/newsletter">
+    <meta property="twitter:title" content="Subscribe to Emporix Newsletter | Changelog & Release Notes">
+    <meta property="twitter:description" content="Stay up-to-date with the latest Emporix updates, new features, and improvements. Subscribe to our newsletter for changelog updates and release notes.">
+    <meta property="twitter:image" content="https://developer.emporix.io/assets/emporix-newsletter-card.png">
+    <meta property="twitter:site" content="@emporix">
+    <meta property="twitter:creator" content="@emporix">
+    
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#4299e1">
+    <meta name="msapplication-TileColor" content="#4299e1">
+    <meta name="application-name" content="Emporix Developer Portal">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://developer.emporix.io/newsletter">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://developer.emporix.io/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://developer.emporix.io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://developer.emporix.io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://developer.emporix.io/favicon-16x16.png">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://app.mailjet.com">
+    <link rel="preconnect" href="https://xwihq.mjt.lu">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Emporix",
+        "url": "https://emporix.com",
+        "logo": "https://developer.emporix.io/assets/emporix-logo.png",
+        "description": "Commerce Orchestration Platform that brings together Commerce Engine, Orchestration Engine, and Value Stream Modeller",
+        "offers": {
+            "@type": "Offer",
+            "name": "Newsletter Subscription",
+            "description": "Subscribe to Emporix newsletter for changelog and release notes",
+            "url": "https://developer.emporix.io/newsletter"
+        },
+        "sameAs": [
+            "https://www.linkedin.com/company/emporix/",
+            "https://developer.emporix.io/"
+        ]
+    }
+    </script>
+</head>
+<body>
+    <div class="container">
+        
+        <div class="iframe-container">
+            <div class="loading" id="loading">Loading newsletter subscription form...</div>
+            
+            <iframe 
+                data-w-type="embedded" 
+                src="https://xwihq.mjt.lu/wgt/xwihq/x4n0/form?c=f5daf7ad" 
+                width="100%" 
+                style="height: 0; border: 0;"
+                onload="handleIframeLoad()"
+                id="embeddedForm"
+                title="Emporix Newsletter Subscription Form"
+                aria-label="Newsletter subscription form for Emporix changelog and release notes">
+            </iframe>
+        </div>
+        
+        <div class="footer">
+            <p>
+                <a href="https://developer.emporix.io/changelog" target="_blank" rel="noopener">View Changelog</a> | 
+                <a href="https://developer.emporix.io/release-notes" target="_blank" rel="noopener">Release Notes</a> | 
+                <a href="https://developer.emporix.io/" target="_blank" rel="noopener">Developer Portal</a> | 
+                <a href="https://emporix.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>
+            </p>
+            <p class="powered-by">
+                Powered by <a href="https://emporix.com" target="_blank" rel="noopener">Emporix</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Mailjet Script -->
+    <script type="text/javascript" src="https://app.mailjet.com/pas-nc-embedded-v1.js" async onerror="console.warn('Mailjet script failed to load')"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        function handleIframeLoad() {
+            // Hide loading message when iframe loads
+            const loading = document.getElementById('loading');
+            const iframe = document.getElementById('embeddedForm');
+            
+            if (loading) {
+                loading.style.display = 'none';
+            }
+            
+            // Add loaded class for any additional styling
+            if (iframe) {
+                iframe.classList.add('loaded');
+            }
+        }
+        
+        // Fallback to hide loading after 5 seconds
+        setTimeout(() => {
+            const loading = document.getElementById('loading');
+            if (loading && loading.style.display !== 'none') {
+                loading.style.display = 'none';
+                console.log('Loading timeout reached, hiding loading indicator');
+            }
+        }, 5000);
+        
+        // Error handling for iframe
+        document.getElementById('embeddedForm').addEventListener('error', function() {
+            const loading = document.getElementById('loading');
+            if (loading) {
+                loading.innerHTML = 'Unable to load newsletter form. Please visit <a href="https://developer.emporix.io/" target="_blank">developer.emporix.io</a> to stay updated.';
+            }
+        });
+        
+        // Analytics tracking (if needed)
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'page_view', {
+                page_title: 'Newsletter Subscription',
+                page_location: window.location.href
+            });
+            
+            // Track newsletter subscription intent
+            gtag('event', 'newsletter_view', {
+                event_category: 'engagement',
+                event_label: 'changelog_newsletter'
+            });
+        }
+    </script>
+</body>
+</html>
