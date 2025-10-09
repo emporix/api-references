@@ -1,0 +1,26 @@
+name: Build and deploy to Prod
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'newsletter/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          firebaseToolsVersion: "12.9.1"
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
+          projectId: prod-2-14e62
+          channelId: live
+          target: newsletter-mailjet
