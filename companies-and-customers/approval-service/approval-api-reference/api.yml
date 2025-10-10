@@ -186,7 +186,7 @@ paths:
           - **APPROVAL-404001**: Approval does not exist.
         
         ***
-        ***Required scopes**
+        **Required scopes**
         * `approval.approval_manage_own`
       security:
         - CustomerAccessToken: []
