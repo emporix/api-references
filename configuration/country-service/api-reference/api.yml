@@ -420,29 +420,31 @@ components:
       in: query
       name: sort
       required: false
-      description: "description: |
+      description: "
         Fields to sort the response data by, following the order of the parameters from left to right.
 
         Can contain multiple fields in the format: `fieldName:sortDirection`, separated by commas.
 
-        - The colon with the sort direction parameter is optional.
-        - Descending order is used only if the sort direction equals `desc` or `DESC`.
-        - Ascending order is assumed in all other cases.
+        * The colon with the sort direction parameter is optional.
+
+        * Descending order is used only if the sort direction equals `desc` or `DESC`.
+        
+        * Ascending order is assumed in all other cases.
 
         While sorting by a localized field, the following rules apply:
 
-        1. If a localized field includes a language code, that language is used.  
+        * If a localized field includes a language code, that language is used.  
           Example: `name.en:ASC` → English (`en`) is used for sorting the `name` property.  
           The language suffix takes precedence over the `Accept-Language` header.
 
-        2. If a localized field does not include a language code, the `Accept-Language` header is used.  
+        * If a localized field does not include a language code, the `Accept-Language` header is used.  
           Example: `name:ASC` with `Accept-Language: de` → German (`de`) is used for sorting.
 
-        3. If a localized field has no language code and the `Accept-Language` header contains `*`,  
+        * If a localized field has no language code and the `Accept-Language` header contains `*`,  
           the default language from the configuration service is used.  
           Example: `name:ASC`, `Accept-Language: *`, default language = `pl` → Polish (`pl`) is used.
 
-        4. If a localized field has no language code and there is no `Accept-Language` header,  
+        * If a localized field has no language code and there is no `Accept-Language` header,  
           the default language from the configuration service is used. "
       schema:
         type: string
