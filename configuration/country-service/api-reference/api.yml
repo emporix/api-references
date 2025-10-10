@@ -423,15 +423,16 @@ components:
       description: "
         Fields to sort the response data by, following the order of the parameters from left to right.
 
-        Can contain multiple fields in the format: `fieldName:sortDirection`, separated by commas.
+        * Can contain multiple fields in the format: `fieldName:sortDirection`, separated by commas.
 
         * The colon with the sort direction parameter is optional.
 
         * Descending order is used only if the sort direction equals `desc` or `DESC`.
-        
+
         * Ascending order is assumed in all other cases.
 
-        While sorting by a localized field, the following rules apply:
+
+       While sorting by a localized field, the following rules apply:
 
         * If a localized field includes a language code, that language is used.  
           Example: `name.en:ASC` → English (`en`) is used for sorting the `name` property.  
