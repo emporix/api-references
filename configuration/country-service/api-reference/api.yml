@@ -420,7 +420,32 @@ components:
       in: query
       name: sort
       required: false
-      description: "Fields to sort the response data by following order of the parameters from left to right. Can contain multiple fields in format:\_field name:sort direction\_separated by a comma. The colon with\_sort direction\_parameter is redundant and descending order is taken only if it is equal to\_desc\_or\_DESC. Ascending order is considered in any other case. While sorting by a localised field the following rule is taken into account:  1. If a localized field contains information about a language then the language should be used. For example `name.en:ASC`. In that case en language will be used for sorting the name property. The language suffix takes precedence over `Accept-Language` header.  2. If a localized field does not contain information about language then `Accept-Language` header will be used. For example `name:ASC` and `Accept-Language: de`. In that case de will be used for sorting the name property  3. If a localized field does not contain information about language and `Accept-Language` header contains `*` then default language from configuration service will be used as a language. For example `name:ASC` and `Accept-Language: *` and default language is pl then pl will be used as a language for name property  4. If a localized field does not contains information about language and `Accept-Language` header does not exists in the request then default language from configuration service will  be used.  "
+      description: |
+        Fields to sort the response data by, following the order of the parameters from left to right.
+
+        * Can contain multiple fields in the format: `fieldName:sortDirection`, separated by commas.
+
+        * The colon with the sort direction parameter is optional.
+
+        * Descending order is used only if the sort direction equals `desc` or `DESC`.
+
+        * Ascending order is assumed in all other cases.
+
+        While sorting by a localized field, the following rules apply:
+
+        * If a localized field includes a language code, that language is used.  
+          Example: `name.en:ASC` → English (`en`) is used for sorting the `name` property.  
+          The language suffix takes precedence over the `Accept-Language` header.
+
+        * If a localized field does not include a language code, the `Accept-Language` header is used.  
+          Example: `name:ASC` with `Accept-Language: de` → German (`de`) is used for sorting.
+
+        * If a localized field has no language code and the `Accept-Language` header contains `*`,  
+          the default language from the configuration service is used.  
+          Example: `name:ASC`, `Accept-Language: *`, default language = `pl` → Polish (`pl`) is used.
+
+        * If a localized field has no language code and there is no `Accept-Language` header,  
+          the default language from the configuration service is used.
       schema:
         type: string
         example: 'name,code:desc'
