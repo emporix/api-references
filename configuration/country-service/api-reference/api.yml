@@ -431,7 +431,7 @@ components:
 
         * Ascending order is assumed in all other cases.
 
-
+       *** 
        While sorting by a localized field, the following rules apply:
 
         * If a localized field includes a language code, that language is used.  
