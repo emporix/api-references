@@ -420,7 +420,7 @@ components:
       in: query
       name: sort
       required: false
-      description: "
+      description: |
         Fields to sort the response data by, following the order of the parameters from left to right.
 
         * Can contain multiple fields in the format: `fieldName:sortDirection`, separated by commas.
@@ -431,8 +431,7 @@ components:
 
         * Ascending order is assumed in all other cases.
 
-       *** 
-       While sorting by a localized field, the following rules apply:
+        While sorting by a localized field, the following rules apply:
 
         * If a localized field includes a language code, that language is used.  
           Example: `name.en:ASC` → English (`en`) is used for sorting the `name` property.  
@@ -446,7 +445,7 @@ components:
           Example: `name:ASC`, `Accept-Language: *`, default language = `pl` → Polish (`pl`) is used.
 
         * If a localized field has no language code and there is no `Accept-Language` header,  
-          the default language from the configuration service is used. "
+          the default language from the configuration service is used.
       schema:
         type: string
         example: 'name,code:desc'
