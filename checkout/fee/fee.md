@@ -11,7 +11,7 @@ layout:
 
 The Fee Service allows you to manage additional fees that you want to connect to specific items. For example, you can add a fee and link it to a product or a payment type.
 
-**Fee types**
+**Fee types**:
 
 The Fee Service supports multiple fee types. Each type determines how the fee is calculated and applied:
 
@@ -20,6 +20,8 @@ The Fee Service supports multiple fee types. Each type determines how the fee is
 
 * **PERCENTAGE** - A fee calculated as a percentage of the item’s price.  
   *Example:* 5% of the product price as a handling fee.
+
+* **ABSOLUTE_MULTIPLY_ITEMQUANTITY** - Monetary amount multiplied by the item quantity and assigned to the item line. 
 
 
 ## How to create a product fee
@@ -231,5 +233,5 @@ The response contains the details of the fee applied to the payment for a given 
 {% endcontent-ref %}
 
 {% hint style="info" %}
-If you're looking for information about fees and cart calculations, see [How to calculate a payment fee at cart level](../checkout/cart/cart.md#how-to-calculate-a-payment-fee-at-cart-level)
+If you're looking for information about fees and cart calculations, see [How to calculate a payment fee at cart level](../../checkout/cart/cart.md#how-to-calculate-a-payment-fee-at-cart-level).
 {% endhint %}
