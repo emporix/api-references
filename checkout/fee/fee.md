@@ -16,6 +16,7 @@ The Fee Service allows you to manage additional fees that you want to connect to
 Follow these steps to create a fee and connect it to a product.
 
 {% stepper %}
+
 {% step %}
 ### Create a fee
 
@@ -49,6 +50,7 @@ Make sure you provide the relevant `siteCode` of a site that you want to apply t
 {% endhint %}
 
 {% endstep %}
+
 {% step %}
 ### Copy the `feeId` of the created fee
 
@@ -71,10 +73,11 @@ In the request path parameter, provide the `productId` to add the fee to.
 The `siteCode` in the query parameter must correspond to the site you've created the fee for.
 
 {% endstep %}
+
 {% step %}
 ### Review the fee 
-{% endstep %}
-To make sure the fee has been added properly, you can send the request to the [Retrieving all fees with the given productId(](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/product-fees-management#get-fee-tenant-productfees-productid-fees)) endpoint.
+
+To make sure the fee has been added properly, you can send the request to the [Retrieving all fees with the given productId(](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/product-fees-management#get-fee-tenant-productfees-productid-fees) endpoint.
 
 ```bash
 curl -i -X GET 
@@ -101,6 +104,7 @@ curl -i -X POST
     "pageNumber": 1,
     "pageSize": 10
   }'
+{% endstep %}
 {% endstepper %}
 
 ```
@@ -196,12 +200,6 @@ For each payment mode you can create and connect one fee only.
 
 send the request to the [Checking of a fee has been applied](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/item-fee-search#post-fee-tenant-itemfees-search) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
-
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/fee/{tenant}/itemFees/search?siteCode=main' 
@@ -222,3 +220,8 @@ The response contains the details of the fee applied to the payment for a given 
 
 {% endstepper %}
 
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
