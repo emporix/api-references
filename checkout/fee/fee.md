@@ -11,6 +11,20 @@ layout:
 
 The Fee Service allows you to manage additional fees that you want to connect to specific items. For example, you can add a fee and link it to a product or a payment type.
 
+## Fee Types
+
+The Fee Service supports multiple fee types. Each type determines how the fee is calculated and applied:
+
+* **ABSOLUTE** - A fixed amount fee applied regardless of the item’s price.  
+  *Example:* €3 packaging fee per product.
+
+* **PERCENTAGE** - A fee calculated as a percentage of the item’s price.  
+  *Example:* 5% of the product price as a handling fee.
+
+* **FREIGHT** - A fee associated with shipping or delivery costs.  
+  *Example:* €10 shipping fee per order.
+
+
 ## How to create a product fee
 
 Follow these steps to create a fee and connect it to a product.
