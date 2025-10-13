@@ -3230,7 +3230,7 @@ components:
         - type
   responses:
     yaasAware_400:
-      description: Request syntactically incorrect. Any details will be provided within the response payload.
+      description: Request syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -3247,7 +3247,7 @@ components:
                     message: size must be between 2 and 16
                     type: invalid_header
     zone_400:
-      description: Request syntactically incorrect. Any details will be provided within the response payload.
+      description: Request syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -3264,7 +3264,7 @@ components:
                     message: 'shipTo[0].country Provided value is not a valid country code'
                     type: invalid_field
     quote_400:
-      description: Request syntactically incorrect. Any details will be provided within the response payload.
+      description: Request syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -3283,7 +3283,7 @@ components:
                     message: cartTotal must not be null
                     type: missing_field
     method_400:
-      description: Request syntactically incorrect. Any details will be provided within the response payload.
+      description: Request syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -3305,7 +3305,7 @@ components:
                     message: fees may not be empty
                     type: invalid_field
     group_400:
-      description: Request syntactically incorrect. Any details will be provided within the response payload.
+      description: Request syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -3432,7 +3432,7 @@ components:
                     errorcode: oauth.v2.InvalidAccessToken
     resourceConflict_409:
       description: |
-        Creation failed because there was a conflict with another resource. Any details will be provided within the response payload.
+        Creation failed because there was a conflict with another resource. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -3446,7 +3446,7 @@ components:
                 type: conflict_resource
     zone_409:
       description: |
-        Creation failed because there was a conflict with another resource. Any details will be provided within the response payload.
+        Creation failed because there was a conflict with another resource. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -3460,7 +3460,7 @@ components:
                 type: conflict_resource
     method_409:
       description: |
-        Creation failed because there was a conflict with another resource. Any details will be provided within the response payload.
+        Creation failed because there was a conflict with another resource. Details of the error are included in the response payload.
       content:
         application/json:
           schema:

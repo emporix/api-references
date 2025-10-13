@@ -732,13 +732,11 @@ components:
           description: Unique identifier of the fee.
           type: string
         name:
-          allOf:
-            - description: The localized fee name.
-            - $ref: '#/components/schemas/Localized'
+          description: The localized fee name.
+          $ref: '#/components/schemas/Localized'
         description:
-          allOf:
-            - description: The localized fee description.
-            - $ref: '#/components/schemas/Localized'
+          description: The localized fee description.
+          $ref: '#/components/schemas/Localized'
         code:
           maxLength: 100
           description: 'The code-name, unique for the tenant.'
@@ -755,9 +753,8 @@ components:
           description: The fee rate in percentage. Required if feeType is 'PERCENT'.
           type: number
         feeAbsolute:
-          allOf:
-            - description: The fee as an absolute amount. Required if type is 'ABSOLUTE'.
-            - $ref: '#/components/schemas/monetaryAmount'
+          description: The fee as an absolute amount. Required if type is 'ABSOLUTE'.
+          $ref: '#/components/schemas/monetaryAmount'
         itemType:
           description: |-
             The itemtype the fee can belong to. It could be a product or
@@ -1202,7 +1199,7 @@ components:
         type: string
   responses:
     trait_localizedRetrieval_400:
-      description: Request syntactically incorrect. Any details will be provided within the response payload.
+      description: Request syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -1418,7 +1415,7 @@ components:
               - type
     trait_yaasAware_409:
       description: |
-        Creation failed because there was a conflict with another resource. Any details will be provided within the response payload.
+        Creation failed because there was a conflict with another resource. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -1510,7 +1507,7 @@ components:
               $ref: '#/components/examples/ItemFees'
     trait_paged_400:
       description: |
-        Request was syntactically incorrect. Any details will be provided within the response payload.
+        Request was syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -1570,7 +1567,7 @@ components:
               - type
     trait_feeId_not_found_400:
       description: |
-        Request was syntactically incorrect. Any details will be provided within the response payload.
+        Request was syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
