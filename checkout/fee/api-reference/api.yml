@@ -88,7 +88,7 @@ paths:
         Retrieve the details of a fee by id.
       tags:
         - Fee management
-      summary: Retrieving a fee by id.
+      summary: Retrieving a fee by id
       operationId: GET-fee-retrieve-fee
       responses:
         '200':
