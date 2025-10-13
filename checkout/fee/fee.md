@@ -11,7 +11,7 @@ layout:
 
 The Fee Service allows you to manage additional fees that you want to connect to specific items. For example, you can add a fee and link it to a product or a payment type.
 
-## Fee Types
+**Fee types**
 
 The Fee Service supports multiple fee types. Each type determines how the fee is calculated and applied:
 
@@ -30,7 +30,6 @@ The Fee Service supports multiple fee types. Each type determines how the fee is
 Follow these steps to create a fee and connect it to a product.
 
 {% stepper %}
-
 {% step %}
 ### Create a fee
 
@@ -62,9 +61,7 @@ curl -i -X POST
 {% hint style="danger" %}
 Make sure you provide the relevant `siteCode` of a site that you want to apply the fee to.
 {% endhint %}
-
 {% endstep %}
-
 {% step %}
 ### Copy the `feeId` of the created fee
 
@@ -87,7 +84,6 @@ In the request path parameter, provide the `productId` to add the fee to.
 The `siteCode` in the query parameter must correspond to the site you've created the fee for.
 
 {% endstep %}
-
 {% step %}
 ### Review the fee 
 
@@ -99,11 +95,9 @@ curl -i -X GET
   -H 'Accept-Language: *' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
-
 In the query parameter, provide the `siteCode` of the specific site the fee was applied to, for example `?siteCode=DE`.
 
 Or, you can check if the fee was applied by sending the request to the [Searching itemFees by productId](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/item-fee-search#post-fee-tenant-itemfees-searchbyproductid) endpoint.
-
 
 ```bash
 curl -i -X POST 
@@ -118,10 +112,9 @@ curl -i -X POST
     "pageNumber": 1,
     "pageSize": 10
   }'
+```
 {% endstep %}
 {% endstepper %}
-
-```
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
