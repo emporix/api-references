@@ -8,7 +8,7 @@
 
 ## 2025
 
-* [2025-10-06: Sequential ID Service - removal of deprecated endpoints](2025/2025-10-06-sequential-id.md)
+* [2025-10-13: Sequential ID Service - removal of deprecated endpoints](2025/2025-10-13-sequential-id.md)
 * [2025-09-30: Media Service - add MODULE media id type](2025/2025-09-30-media.md)
 * [2025-09-29: Category Tree - filter unpublished categories](2025/2025-09-29-category-tree.md)
 * [2025-09-24: Client Management Service – added a new contact assignment type](2025/2025-09-24-contact-management.md)
