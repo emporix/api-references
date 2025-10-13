@@ -87,7 +87,7 @@ The `siteCode` in the query parameter must correspond to the site you've created
 {% step %}
 ### Review the fee 
 
-To make sure the fee has been added properly, you can send the request to the [Retrieving all fees with the given productId(](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/product-fees-management#get-fee-tenant-productfees-productid-fees) endpoint.
+To make sure the fee has been added properly, you can send the request to the [Retrieving all fees with the given productId](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/product-fees-management#get-fee-tenant-productfees-productid-fees) endpoint.
 
 ```bash
 curl -i -X GET 
