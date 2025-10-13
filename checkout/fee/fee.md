@@ -232,3 +232,7 @@ The response contains the details of the fee applied to the payment for a given 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
+
+{% hint style="info" %}
+If you're looking for information about fees and cart calculations, see [How to calculate a payment fee at cart level](../checkout/cart/cart.md#how-to-calculate-a-payment-fee-at-cart-level)
+{% endhint %}
