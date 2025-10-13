@@ -21,9 +21,6 @@ The Fee Service supports multiple fee types. Each type determines how the fee is
 * **PERCENTAGE** - A fee calculated as a percentage of the item’s price.  
   *Example:* 5% of the product price as a handling fee.
 
-* **FREIGHT** - A fee associated with shipping or delivery costs.  
-  *Example:* €10 shipping fee per order.
-
 
 ## How to create a product fee
 
