@@ -23,6 +23,9 @@ The Fee Service supports multiple fee types. Each type determines how the fee is
 
 * **ABSOLUTE_MULTIPLY_ITEMQUANTITY** - Monetary amount multiplied by the item quantity and assigned to the item line. 
 
+{% hint style="info" %}
+If you're looking for information about fees and cart calculations, see [How to calculate a payment fee at cart level](../../checkout/cart/cart.md#how-to-calculate-a-payment-fee-at-cart-level).
+{% endhint %}
 
 ## How to create a product fee
 
@@ -232,6 +235,3 @@ The response contains the details of the fee applied to the payment for a given 
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
-{% hint style="info" %}
-If you're looking for information about fees and cart calculations, see [How to calculate a payment fee at cart level](../../checkout/cart/cart.md#how-to-calculate-a-payment-fee-at-cart-level).
-{% endhint %}
