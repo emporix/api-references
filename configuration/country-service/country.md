@@ -27,7 +27,7 @@ A particular site's country configuration specifies where that site is located.
 
 Country codes defined in country configurations must be compliant with the [ISO 3166-1 alpha-2 standard](https://www.iso.org/obp/ui/#iso:pub:PUB500001:en).
 
-Your tenant's country configuration is stored under the project\_country key in the [Emporix API Configuration Service](../configuration-service/).
+Your tenant country configuration is stored under the project\_country key in the [Emporix API Configuration Service](../configuration-service/).
 
 ```json
 {
@@ -50,7 +50,7 @@ Site-specific country configuration is stored in the `homeBase` field, inside th
 ```
 
 {% hint style="warning" %}
-For more information on the Site object, check out the [_Site Settings Service guide_](../site-settings-service/)
+For more information on the Site object, check out the [_Site Settings Service guide_](../site-settings-service/).
 {% endhint %}
 
 ## Managing country configurations through Emporix API
@@ -68,8 +68,8 @@ To retrieve your tenant's country configuration, you need to send a request to t
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
+curl -L 
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
   --header 'Accept: */*'
 ```
 
@@ -83,15 +83,15 @@ The value in the request body must be compliant with the [ISO 3166-1 alpha-2 sta
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../configuration-service/api-reference/" %}
+[api-reference](../configuration-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request PUT \
-  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request PUT 
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
+  --header 'Content-Type: application/json' 
   --data '{
     "key": "project_country",
     "secured": false,
@@ -106,13 +106,13 @@ To retrieve a particular site's country configuration, you need to send a reques
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
+curl -L 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' 
   --header 'Accept: */*'
 ```
 
@@ -126,15 +126,15 @@ The country code must be compliant with the [ISO 4217 standard](https://en.wikip
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request PATCH \
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request PATCH 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' 
+  --header 'Content-Type: application/json' 
   --data '{
     "defaultLanguage": "en"
     "homeBase": {
