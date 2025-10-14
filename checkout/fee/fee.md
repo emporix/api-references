@@ -15,11 +15,9 @@ The Fee Service allows you to manage additional fees that you want to connect to
 
 The Fee Service supports multiple fee types. Each type determines how the fee is calculated and applied:
 
-* **ABSOLUTE** - A fixed amount fee applied regardless of the item’s price.  
-  *Example:* €3 packaging fee per product.
+* **ABSOLUTE** - A fixed amount fee applied regardless of the item’s price, for example, €3 packaging fee per product.
 
-* **PERCENTAGE** - A fee calculated as a percentage of the item’s price.  
-  *Example:* 5% of the product price as a handling fee.
+* **PERCENTAGE** - A fee calculated as a percentage of the item’s price, for example, 5% of the product price as a handling fee.
 
 * **ABSOLUTE_MULTIPLY_ITEMQUANTITY** - Monetary amount multiplied by the item quantity and assigned to the item line. 
 
@@ -131,7 +129,7 @@ The Fee Service supports adding fees to payments methods. See the example of cre
 {% stepper %}
 {% step %}
 ### Create a fee
-sending the request to the [Creating a fee](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/fee-management#post-fee-tenant-fees) endpoint.
+Send the request to the [Creating a fee](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/fee-management#post-fee-tenant-fees) endpoint.
 
 ```bash
 curl -i -X POST 
@@ -207,7 +205,7 @@ For each payment mode you can create and connect one fee only.
 {% step %}
 ### Review the fee 
 
-send the request to the [Checking of a fee has been applied](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/item-fee-search#post-fee-tenant-itemfees-search) endpoint.
+Send the request to the [Checking of a fee has been applied](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/item-fee-search#post-fee-tenant-itemfees-search) endpoint.
 
 ```bash
 curl -i -X POST 
