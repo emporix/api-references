@@ -756,7 +756,7 @@ components:
                 type: string
   responses:
     trait_yaasAware_400:
-      description: Request syntactically incorrect. Any details will be provided within the response payload.
+      description: Request syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
