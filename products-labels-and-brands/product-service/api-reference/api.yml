@@ -236,18 +236,18 @@ paths:
               examples:
                 BASIC Product:
                   value:
-                    id: 545b4e3dfaee4c10def3db24
-                    yrn: 'urn:yaas:saasag:caasproduct:product:myshop;545b4e3dfaee4c10def3db24'
-                    code: SmartphoneX21415269949943
                     name: Smartphone X2
+                    code: SmartphoneX21415269949943
                     description: The world's best camera and camcorder in a waterproof smartphone.
+                    id: 545b4e3dfaee4c10def3db24
+                    productType: BASIC
+                    yrn: 'urn:yaas:saasag:caasproduct:product:myshop;545b4e3dfaee4c10def3db24'
+                    taxClasses:
+                      EN: STANDARD
                     published: false
                     template:
                       id: 633d774f37937d425ce5570f
                       version: 1
-                    taxClasses:
-                      EN: STANDARD
-                    productType: BASIC
                     relatedItems:
                       - refId: 631c6adac2d4ea73be34f0d1
                         type: ACCESSORY
@@ -279,17 +279,18 @@ paths:
                         productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
                 BUNDLE Product:
                   value:
-                    yrn: 'urn:yaas:saasag:caasproduct:product:myshop;545b4e3dfaee4c10def3db24'
-                    code: SmartphoneX21415269949943
                     name: Smartphone X2 with headset
+                    code: SmartphoneX21415269949943
                     description: The world's best camera and camcorder in a waterproof smartphone with headset.
+                    id: 545b4e3dfaee4c10def3db24
+                    productType: BUNDLE
+                    yrn: 'urn:yaas:saasag:caasproduct:product:myshop;545b4e3dfaee4c10def3db24'
                     published: false
                     template:
                       id: 633d774f37937d425ce5570f
                       version: 1
                     taxClasses:
                       EN: STANDARD
-                    productType: BUNDLE
                     relatedItems:
                       - refId: 631c6adac2d4ea73be34f0d1
                         type: ACCESSORY
@@ -326,15 +327,15 @@ paths:
                         productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
                 PARENT VARIANT Product:
                   value:
-                    id: 545b4e3dfaee4c10def3db24
-                    yrn: 'urn:yaas:saasag:caasproduct:product:myshop;545b4e3dfaee4c10def3db24'
-                    code: SmartphoneX21415269949943
                     name: Smartphone X2
+                    code: SmartphoneX21415269949943
                     description: The world's best camera and camcorder in a waterproof smartphone.
+                    id: 545b4e3dfaee4c10def3db24
+                    productType: PARENT_VARIANT
+                    yrn: 'urn:yaas:saasag:caasproduct:product:myshop;545b4e3dfaee4c10def3db24'
                     published: false
                     taxClasses:
                       EN: STANDARD
-                    productType: PARENT_VARIANT
                     template:
                       id: 633d774f37937d425ce5570f
                       version: 1
@@ -380,19 +381,19 @@ paths:
                         productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
                 VARIANT Product:
                   value:
+                    name: Smartphone X2 black
+                    code: SmartphoneX21415269949943
+                    description: The world's best camera and camcorder in a waterproof smartphone.
                     id: 545b4e3dfaee4c10def3db24--545b4e3dfaee4c10def3db25
                     yrn: 'urn:yaas:saasag:caasproduct:product:myshop;545b4e3dfaee4c10def3db24'
-                    code: SmartphoneX21415269949943
-                    name: Smartphone X2 black
-                    description: The world's best camera and camcorder in a waterproof smartphone.
                     published: false
                     taxClasses:
                       EN: STANDARD
+                    parentVariantId: 545b4e3dfaee4c10def3db24
                     productType: VARIANT
                     relatedItems:
                       - refId: 631c6adac2d4ea73be34f0d1
                         type: ACCESSORY
-                    parentVariantId: 545b4e3dfaee4c10def3db24
                     mixins:
                       productTemplateAttributes:
                         color: RED
