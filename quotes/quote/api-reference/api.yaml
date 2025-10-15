@@ -800,10 +800,10 @@ paths:
       operationId: PATCH-quote-update-quote
       summary: Partially updating a quote
       description: |
-        Partially updates a quote with a given Id. Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
+        Partially updates a quote with a given ID. Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
           - `add` - adding an item to the items list
           - `remove` - removing an item from the items list
-          - `replace` - replacing an item with given id with new definition which may contain custom price proposal or defined price
+          - `replace` - replacing an item with given ID with new definition which may contain custom price proposal or defined price
 
         After events are saved, some of the information is retrieved in the async way from other services: full price definition is based on the provided price ID, and the full product name is based on the provided product ID.
 
@@ -1058,7 +1058,7 @@ paths:
         - Quote management
       operationId: DELETE-quote-remove-quote
       description: |-
-        Deletes a quote with a given quote Id.
+        Deletes a quote with a given quote ID.
         ***
 
         ### Required scopes
@@ -1397,7 +1397,7 @@ components:
       properties:
         priceId:
           type: string
-          description: The id of the matched price
+          description: The ID of the matched price
         unitePrice:
           minimum: 0
           type: number
@@ -1433,7 +1433,7 @@ components:
         quoteReasonId:
           type: string
           description: |-
-            The id of the quote reason. Can be provided only in following scenarios:
+            The ID of the quote reason. Can be provided only in following scenarios:
             - when changing state from OPEN to IN_PROGRESS - quote reason has to be of CHANGE type
             - when changing state from OPEN to DECLINED - quote reason has to be of DECLINE type
             - when changing state from IN_PROGRESS to DECLINED_BY_MERCHANT - quote reason has to be of DECLINE type
@@ -1468,7 +1468,7 @@ components:
           description: ID of the generated document.
       example:
         id: e343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-      description: Id of the generated quote.
+      description: ID of the generated quote.
     QuoteReasonIdResponse:
       type: object
       properties:
@@ -1477,7 +1477,7 @@ components:
           description: ID of the generated document.
       example:
         id: 642c1ff3c78f9b2958d17c18
-      description: Id of the generated quote reason.
+      description: ID of the generated quote reason.
     QuoteItemUpdatePrice:
       type: object
       description: TotalNetValue item model.
@@ -1509,19 +1509,19 @@ components:
         - product
     QuoteItemsReplaceUpdate:
       type: array
-      description: Quote item Id.
+      description: Quote item ID.
       items:
         $ref: '#/components/schemas/QuoteItemUpdate'
         properties:
           itemId:
             type: string
-            description: Id of the item. It's generated automatically when it's not provided.
+            description: ID of the item. It's generated automatically when it's not provided.
     AddressResponse:
       type: object
       properties:
         id:
           type: string
-          description: The id of the address.
+          description: The ID of the address.
         name:
           type: string
           description: The name of the address.
@@ -1533,7 +1533,7 @@ components:
           description: Second line of the address.
         city:
           type: string
-          description: City location.
+          description: City name.
         postcode:
           type: string
           description: The postal code of the city.
@@ -1548,7 +1548,7 @@ components:
       properties:
         id:
           type: string
-          description: The quote reason id.
+          description: The quote reason ID.
         type:
           type: string
           enum:
@@ -1586,7 +1586,7 @@ components:
         id:
           type: string
           description: |-
-            Quote id
+            Quote ID
 
             **NOTE**:
             If not specified during creation, this attribute is automatically generated. It is also possible to assign a custom ID.
@@ -1602,7 +1602,7 @@ components:
           properties:
             customerId:
               type: string
-              description: The id of the customer for whom the quote was created.
+              description: The ID of the customer for whom the quote was created.
             firstName:
               type: string
               description: |-
@@ -1630,7 +1630,7 @@ components:
           properties:
             employeeId:
               type: string
-              description: The id of the employee that is processing the quote.
+              description: The ID of the employee that is processing the quote.
             firstName:
               type: string
               description: |-
@@ -1647,7 +1647,7 @@ components:
                 This attribute is filled automatically after the quote is created or the employee ID is updated.
         cartId:
           type: string
-          description: The id of the cart from which the quote was created (not available when the quote was created manually)
+          description: The ID of the cart from which the quote was created (not available when the quote was created manually)
         company:
           type: object
           description: The company for which the quote was created.
@@ -1660,7 +1660,7 @@ components:
           description: The site code for which the quote was created
         orderId:
           type: string
-          description: The id of the order which was created based on the quote. The order is created and assigned to the quote when status of the quote transitions to `ACCEPTED`.
+          description: The ID of the order which was created based on the quote. The order is created and assigned to the quote when status of the quote transitions to `ACCEPTED`.
         currency:
           type: string
           description: The currency of the quote prices.
@@ -1781,7 +1781,7 @@ components:
                 properties:
                   priceId:
                     type: string
-                    description: The id of the price that was initially assigned to the item.
+                    description: The ID of the price that was initially assigned to the item.
                   unitPrice:
                     type: number
                     description: The original unit price of the item that is copied from the initial price.
@@ -1832,7 +1832,7 @@ components:
                     properties:
                       contentType:
                         type: string
-                        description: The content type of the media. For example an image or jpg.
+                        description: The content type of the media. For example an image/jpg.
                       url:
                         type: string
                         description: The url to the product media.
@@ -1961,7 +1961,7 @@ components:
             properties:
               itemId:
                 type: string
-                description: Id of the item. It's generated automatically when it's not provided.
+                description: ID of the item. It's generated automatically when it's not provided.
               quantity:
                 type: object
                 description: The quantity of the quote item in a given unit.
@@ -2059,13 +2059,13 @@ components:
           description: Tax code of the shipping method.
     QuoteItemIds:
       type: array
-      description: List of item ids.
+      description: List of item IDs.
       items:
         type: object
         properties:
           itemId:
             type: string
-            description: Id of the item.
+            description: ID of the item.
     QuoteUpdateRequest:
       type: array
       description: Quote update operation list.
@@ -2118,7 +2118,7 @@ components:
         type: object
         properties:
           id:
-            description: The unique id of the audit log.
+            description: The unique ID of the audit log.
             type: string
           op:
             description: operation type
@@ -2154,7 +2154,7 @@ components:
             $ref: '#/components/schemas/QuoteUpdateValues'
           userId:
             type: string
-            description: Id of the user who modified the item.
+            description: ID of the user who modified the item.
           userFirstName:
             type: string
             description: First name of the user who modified the item.
