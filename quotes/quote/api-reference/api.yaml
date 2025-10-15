@@ -1832,7 +1832,7 @@ components:
                     properties:
                       contentType:
                         type: string
-                        description: The content type of the media. For example an `image/jpg`.
+                        description: 'The content type of the media. For example: `image/jpg`.'
                       url:
                         type: string
                         description: The url to the product media.
