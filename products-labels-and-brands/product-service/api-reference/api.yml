@@ -165,7 +165,7 @@ paths:
         - Products
       description: |-
         Creates products in a bulk.
-        Response for a particular product will be returned at the same position (index) at which that price is located in the request body.
+        Response for a particular product is returned at the same position (index) at which that price is located in the request body.
 
         **Required scopes**
 
@@ -238,8 +238,8 @@ paths:
                   value:
                     id: 545b4e3dfaee4c10def3db24
                     yrn: 'urn:yaas:saasag:caasproduct:product:myshop;545b4e3dfaee4c10def3db24'
-                    code: SmartphoneZonyYperiaX21415269949943
-                    name: Smartphone Zony Yperia X2
+                    code: SmartphoneX21415269949943
+                    name: Smartphone X2
                     description: The world's best camera and camcorder in a waterproof smartphone.
                     published: false
                     template:
@@ -280,8 +280,8 @@ paths:
                 BUNDLE Product:
                   value:
                     yrn: 'urn:yaas:saasag:caasproduct:product:myshop;545b4e3dfaee4c10def3db24'
-                    code: SmartphoneZonyYperiaX21415269949943
-                    name: Smartphone Zony Yperia X2 with headset
+                    code: SmartphoneX21415269949943
+                    name: Smartphone X2 with headset
                     description: The world's best camera and camcorder in a waterproof smartphone with headset.
                     published: false
                     template:
@@ -328,8 +328,8 @@ paths:
                   value:
                     id: 545b4e3dfaee4c10def3db24
                     yrn: 'urn:yaas:saasag:caasproduct:product:myshop;545b4e3dfaee4c10def3db24'
-                    code: SmartphoneZonyYperiaX21415269949943
-                    name: Smartphone Zony Yperia X2
+                    code: SmartphoneX21415269949943
+                    name: Smartphone X2
                     description: The world's best camera and camcorder in a waterproof smartphone.
                     published: false
                     taxClasses:
@@ -382,7 +382,7 @@ paths:
                   value:
                     id: 545b4e3dfaee4c10def3db24--545b4e3dfaee4c10def3db25
                     yrn: 'urn:yaas:saasag:caasproduct:product:myshop;545b4e3dfaee4c10def3db24'
-                    code: SmartphoneZonyYperiaX21415269949943
+                    code: SmartphoneX21415269949943
                     name: Smartphone black Zony Yperia X2
                     description: The world's best camera and camcorder in a waterproof smartphone.
                     published: false
@@ -1051,8 +1051,8 @@ components:
               value:
                 - id: 545b4e3dfaee4c10def3db24
                   yrn: 'urn:yaas:saasag:caasproduct:product:myshop;545b4e3dfaee4c10def3db24'
-                  code: SmartphoneZonyYperiaX21415269949943
-                  name: Smartphone Zony Yperia X2
+                  code: SmartphoneX21415269949943
+                  name: Smartphone X2
                   description: The world's best camera and camcorder in a waterproof smartphone.
                   published: false
                   template:
@@ -1094,8 +1094,8 @@ components:
               value:
                 - id: 545b4e3dfaee4c10def3db24
                   yrn: 'urn:yaas:saasag:caasproduct:product:myshop;545b4e3dfaee4c10def3db24'
-                  code: SmartphoneZonyYperiaX21415269949943
-                  name: Smartphone Zony Yperia X2 with headset
+                  code: SmartphoneX21415269949943
+                  name: Smartphone X2 with headset
                   description: The world's best camera and camcorder in a waterproof smartphone.
                   published: false
                   template:
@@ -1142,8 +1142,8 @@ components:
               value:
                 - id: 545b4e3dfaee4c10def3db24
                   yrn: 'urn:yaas:saasag:caasproduct:product:myshop;545b4e3dfaee4c10def3db24'
-                  code: SmartphoneZonyYperiaX21415269949943
-                  name: Smartphone Zony Yperia X2
+                  code: SmartphoneX21415269949943
+                  name: Smartphone X2
                   description: The world's best camera and camcorder in a waterproof smartphone.
                   published: false
                   taxClasses:
@@ -1196,7 +1196,7 @@ components:
               value:
                 - id: 545b4e3dfaee4c10def3db24--545b4e3dfaee4c10def3db25
                   yrn: 'urn:yaas:saasag:caasproduct:product:myshop;545b4e3dfaee4c10def3db24'
-                  code: SmartphoneZonyYperiaX21415269949943
+                  code: SmartphoneX21415269949943
                   name: Smartphone black Zony Yperia X2
                   description: The world's best camera and camcorder in a waterproof smartphone.
                   published: false
@@ -1312,7 +1312,7 @@ components:
           examples:
             BASIC Product Creation:
               value:
-                name: Smartphone Zony Yperia X2
+                name: Smartphone X2
                 code: BASIC001
                 description: The world's best camera and camcorder in a waterproof smartphone.
                 published: false
@@ -1361,7 +1361,7 @@ components:
                     salePricesData: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/salePriceData.json'
             BUNDLE Product Creation:
               value:
-                name: Smartphone Zony Yperia X2 with headset
+                name: Smartphone X2 with headset
                 code: BUNDLE001
                 description: The world's best camera and camcorder in a waterproof smartphone.
                 published: false
@@ -1400,7 +1400,7 @@ components:
                     productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
             PARENT VARIANT Product Creation:
               value:
-                name: Smartphone Zony Yperia X2 with headset
+                name: Smartphone X2 with headset
                 code: PARENT001
                 description: The world's best camera and camcorder in a waterproof smartphone.
                 published: false
@@ -1476,7 +1476,7 @@ components:
           examples:
             BASIC Product Update:
               value:
-                name: Smartphone Zony Yperia X2
+                name: Smartphone X2
                 code: TESTDOC000
                 description: The world's best camera and camcorder in a waterproof smartphone.
                 published: false
@@ -1516,7 +1516,7 @@ components:
                     salePricesData: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/salePriceData.json'
             BUNDLE Product Update:
               value:
-                name: Smartphone Zony Yperia X2 with headset
+                name: Smartphone X2 with headset
                 code: TESTDOC001
                 description: The world's best camera and camcorder in a waterproof smartphone.
                 published: false
@@ -1562,7 +1562,7 @@ components:
                     salePricesData: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/salePriceData.json'
             PARENT VARIANT Product Update:
               value:
-                name: Smartphone Zony Yperia X2
+                name: Smartphone X2
                 code: PARENT001
                 description: The world's best camera and camcorder in a waterproof smartphone.
                 published: false
@@ -1781,7 +1781,7 @@ components:
       properties:
         key:
           type: string
-          description: 'An identifier of the attribute. The key will be used as a field name in a product instance created based on the product template. The key can contain only alphanumeric characters. '
+          description: 'An identifier of the attribute. The key is used as a field name in a product instance created based on the product template. The key can contain only alphanumeric characters. '
         name:
           type: object
           additionalProperties:
@@ -1789,7 +1789,7 @@ components:
           description: Localized resource name in a form of a map of translations.
         type:
           type: string
-          description: 'Attribute type. Correct values: `TEXT`, `NUMBER`, `BOOLEAN`, `DATETIME`. Regardless of the chosen type, the defaultValue and values fields will be validated. The DATETIME values must be compliant with the ISO 8601 standard, for example: 2022-03-31T09:52:15.423Z.'
+          description: 'Attribute type. Correct values: `TEXT`, `NUMBER`, `BOOLEAN`, `DATETIME`. Regardless of the chosen type, the defaultValue and values fields are validated. The DATETIME values must be compliant with the ISO 8601 standard, for example: 2022-03-31T09:52:15.423Z.'
         metadata:
           type: object
           description: Metadata contains additional information about the attribute.
@@ -2690,7 +2690,7 @@ components:
         While sorting by a localised field the following rule is taken into account:
           1. If a localized field contains information about a language, then the language should be used. For example `name.en:ASC`. In that case en language is used for sorting the name property. The language suffix takes precedence over `Accept-Language` header.
           2. If a localized field does not contain information about a language, then the `Accept-Language` header is used. For example `name:ASC` and `Accept-Language: de`. In that case `de` is used for sorting the name property.
-          3. If a localized field does not contain information about language and `Accept-Language` header contains `*`, then the default language from configuration service will be used as a language. For example `name:ASC` and `Accept-Language: *` and default language is pl then pl will be used as a language for name property.
+          3. If a localized field does not contain information about language and `Accept-Language` header contains `*`, then the default language from configuration service is used as a language. For example `name:ASC` and `Accept-Language: *` and default language is pl then pl is used as a language for name property.
           4. If a localized field does not contains information about language and `Accept-Language` header does not exists in the request, then the default language from configuration service is used.  "
     header_content_language:
       name: Content-Language
@@ -2703,9 +2703,9 @@ components:
 
         * If the `Content-Language` header is set to `*`, the localized fields should be provided as maps of translations, where the keys are language codes and values are the fields in their respective languages.
         * If the `Content-Language` header is set to a specific language, the localized fields should be provided as strings.
-        * If the `Content-Language` header is empty, the endpoint will assume that the localized fields are provided in the default language or languages defined in the Configuration Service.
+        * If the `Content-Language` header is empty, the endpoint interprets the localized fields as being provided in the default language or the languages defined in the Configuration Service.
 
-        **Note**: You can provide the localized fields only in languages defined in the Configuration Service. In case the fields are provided in languages that are not defined in the Configuration Service, the request will be rejected.
+        **Note**: You can provide the localized fields only in languages defined in the Configuration Service. In case the fields are provided in languages that are not defined in the Configuration Service, the request is rejected.
     header_accept_language:
       name: Accept-Language
       in: header
@@ -2726,7 +2726,7 @@ components:
       schema:
         type: string
       required: true
-      description: Product’s unique identifier generated when the product is created.
+      description: Product unique identifier generated when the product is created.
     query_q_product:
       name: q
       in: query
@@ -2763,8 +2763,8 @@ components:
       description: |
         | Option  | Description |
         |---|---|
-        | `true` | A partial product update will be performed. |
-        | `false` | A full product replacement will be performed.|
+        | `true` | A partial product update is performed. |
+        | `false` | A full product replacement is performed.|
       schema:
         type: boolean
         default: false
@@ -2776,8 +2776,8 @@ components:
       required: false
       description: |
         Flag indicating whether product variant(s) should include their parent variants' attribute values.
-        * If set to `true`, the result will contain values from both the variant and its parent variant.
-        * If set to `false`, the result will only contain variant values.
+        * If set to `true`, the result contains values from both the variant and its parent variant.
+        * If set to `false`, the result contains only variant values.
     query_expand_search:
       name: expand
       in: query

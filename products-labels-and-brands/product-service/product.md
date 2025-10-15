@@ -19,21 +19,19 @@ This tutorial presents how to create a basic product. To learn more about types 
 
 Take a look at the relationships between prices and other resources in the Emporix Commerce Engine:
 
-<figure><img src="../../static/product/product_diagram.svg" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../static/product/product_diagram.svg" alt=""><figcaption></figcaption><width="300"></figure>
 
 {% hint style="warning" %}
-Countries and regions are predefined in the Emporix API Country Service. You can check which countries and regions are available by sending requests to the following endpoints:
+Countries and regions are predefined in the Emporix API [Country Service](/configuration/country-service/README.md). You can check which countries and regions are available by sending requests to the following endpoints:
 
-* Retrieving all countries
-* Retrieving all regions
+* [Retrieving all countries](https://developer.emporix.io/api-references/api-guides/configuration/country-service/api-reference/countries#get-country-tenant-countries)
+* [Retrieving all regions](https://developer.emporix.io/api-references/api-guides/configuration/country-service/api-reference/regions#get-country-tenant-regions)
 {% endhint %}
 
-Adding your first product is a process made up of two main steps:
+Creating your first product is a process made up of defining sales tax rates, adding the product and adding media files for a product.
 
-1. [Defining sales tax rates](product.md#define-sales-tax-rates).
-2. [Adding products](product.md#add-products).
-3. [Adding media files for a product](product.md#add-media-for-a-product).
-
+{% stepper %}
+{% step %}
 ### Define sales tax rates
 
 Sales tax rates are stored in tax configurations. Each configuration indicates a country and defines tax classes applicable to it.
@@ -44,20 +42,14 @@ You can manage your tax configurations through the Emporix API [Tax Service](../
 For more information, check out the [Tax classes guide](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/taxes-v2).
 {% endhint %}
 
-To define sales tax rates for a country, you need to send a request to the [Creating a new tax configuration](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/tax-service/api-reference/taxes#post-tax-tenant-taxes) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
+To define sales tax rates for a country, send a request to the [Creating a new tax configuration](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/tax-service/api-reference/taxes#post-tax-tenant-taxes) endpoint.
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/tax/{tenant}/taxes' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/tax/{tenant}/taxes' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "location": {
       "countryCode": "DE"
@@ -91,25 +83,20 @@ curl -i -X POST \
     ]
   }'
 ```
-
+{% endstep %}
+{% step %}
 ### Add products
 
-To add a single basic product, you need to send a request to the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../label-service/api-reference/" %}
-[api-reference](../label-service/api-reference/)
-{% endcontent-ref %}
+To add a single basic product, send a request to the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
-    "name": "Smartphone Zony Yperia X2",
+    "name": "Smartphone X2",
     "code": "BASIC001",
     "description": "The world'\''s best camera and camcorder in a waterproof smartphone.",
     "published": false,
@@ -165,20 +152,14 @@ curl -i -X POST \
   }'
 ```
 
-You can also add multiple basic products at the same time. To achieve that, you need to send a request to the [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../label-service/api-reference/" %}
-[api-reference](../label-service/api-reference/)
-{% endcontent-ref %}
+You can also add multiple basic products at the same time. To achieve that, send a request to the [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{ [
     {
         "id": "abc-123",
@@ -201,32 +182,31 @@ curl -i -X POST \
  ]
 }'
 ```
+{% endstep %}
+{% step %}
 
 ### Add media for a product
 
-To add media files, for example images or videos, for a particular product, you can upload them directly to the Emporix database, or link to their location on an external website.\
+To add media files, for example images or videos, for a particular product, you can upload them directly to the Emporix database, or link to their location on an external website.
 In the following example, we are creating a `public` type of an asset that is linked to the product of our choice by sending a request to the Creating an asset endpoint with the `media.asset_manage` scope.
 
 {% hint style="warning" %}
-Sending a json/application request to the Creating an asset endpoint does **not** mean that the asset is uploaded to the database. It is only linked to the resource (category or product).\
-If you want to upload the asset to the database, you need to send a multipart request to the [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint.\
+Sending a json/application request to the Creating an asset endpoint does **not** mean that the asset is uploaded to the database. It is only linked to the resource (category or product).
+If you want to upload the asset to the database, send a multipart request to the [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint.
 For more information, check out the [_Media Management Tutorials_](../../media/media/media.md).
 {% endhint %}
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../../media/media/api-reference/" %}
-[api-reference](../../media/media/api-reference/)
-{% endcontent-ref %}
-
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/media/{tenant}/assets' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: multipart/form-data' \
-  -F 'file=[object Object]' \
+curl -i -X POST 
+  'https://api.emporix.io/media/{tenant}/assets' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: multipart/form-data' 
+  -F 'file=[object Object]' 
   -F 'body=[object Object]'
 ```
+{% endstep %}
+{% endstepper %}
+
 
 ## How to create a bundle of personalized products
 
@@ -240,11 +220,7 @@ To learn more about product bundles and templates, check out the [Products guide
 
 To create personalized products and then group them in a bundle, perform the following steps:
 
-1. [Create a template for your product.](product.md#create-a-product-template)
-2. [Create a product by using a product template.](product.md#create-a-product-by-using-a-product-template)
-3. [Create a bundle of products.](product.md#create-a-bundle-of-products)
-
-### Before you start
+#### Before you start
 
 {% hint style="warning" %}
 The `product.product_publish` scope is only required if you want to publish the product on its creation.
@@ -252,22 +228,18 @@ The `product.product_publish` scope is only required if you want to publish the 
 
 [Ensure that you have defined sales tax rates.](product.md#define-sales-tax-rates)
 
+{% stepper %}
+{% step %}
 ### Create a product template
 
-You can create a product template that contains additional attributes describing your product. To create a new product template, you need to call the [Creating a new product template](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#post-product-tenant-product-templates) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../label-service/api-reference/" %}
-[api-reference](../label-service/api-reference/)
-{% endcontent-ref %}
+You can create a product template that contains additional attributes describing your product. To create a new product template, call the [Creating a new product template](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#post-product-tenant-product-templates) endpoint.
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/product/{tenant}/product-templates' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/product/{tenant}/product-templates' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "id": "545b4e3dfaee4c10def3db24",
     "name": {
@@ -308,11 +280,13 @@ curl -i -X POST \
 
 The `id` from the response is further referred to as \{{product\_template\_Id\}}.
 
+{% endstep %}
+{% step %}
 ### Create a product by using a product template
 
 By applying a product template, you can create a product that contains additional attributes, which are included in the product's `mixins.productTemplateAttributes` field.
 
-To create a new product by applying a product template to it, you need to call the Creating a new product endpoint and provide the template's ID in the request body.
+To create a new product by applying a product template to it, call the Creating a new product endpoint and provide the template's ID in the request body.
 
 {% hint style="warning" %}
 In this example, we assign a template to a product on its creation. The created product can be a standalone one, or contain variants. Here, the product does not contain any variants. For creating a parent variant product with variants, check out the [How to create a parent product with variants](product.md#how-to-create-a-parent-product-with-variants) tutorial.
@@ -322,18 +296,12 @@ In this example, we assign a template to a product on its creation. The created 
 When creating or updating a product of the `PARENT_VARIANT` type, by default, product variants are generated. If you do **not** want to create product variants for the product, set the `skipVariantGeneration` parameter to `true`.
 {% endhint %}
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../label-service/api-reference/" %}
-[api-reference](../label-service/api-reference/)
-{% endcontent-ref %}
-
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
   "name": {
     "en": "T-shirt",
@@ -400,24 +368,21 @@ curl -i -X POST \
 }
 ```
 
+{% endstep %}
+{% step %}
 ### Create a bundle of products
 
-You can group together two or more products that already exist in the system so that they can be sold at one collective price. To achieve that, you need to call the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
+You can group together two or more products that already exist in the system so that they can be sold at one collective price. To achieve that, call the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
-In this example, we will create a bundle of the T-shirt product we created above, and join it with the socks product that already exists.
+In this example, we you see how to create a bundle of the T-shirt product we created above, and join it with the socks product that already exists.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../label-service/api-reference/" %}
-[api-reference](../label-service/api-reference/)
-{% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
   "name": "T-shirt and socks bundle",
   "code": "tshirt_socks_bundle",
@@ -478,6 +443,10 @@ curl -i -X POST \
 ```
 
 The value of the `productId` from the response is the \{{bundle\_Id\}}.
+{% endstep %}
+{% endstepper %}
+
+
 
 ## How to create a parent variant product with variants
 
@@ -486,6 +455,9 @@ Variants are derivatives of the parent variant product. They contain the same at
 {% hint style="warning" %}
 The `product.product_publish` scope is only required if you want to publish the product on its creation.
 {% endhint %}
+
+{% stepper %}
+{% step %}
 
 ### Create a parent variant product
 
@@ -498,23 +470,17 @@ When creating or updating a product of the `PARENT_VARIANT` type, by default, pr
 {% endhint %}
 
 {% hint style="warning" %}
-The product template can contain more attributes and values than are needed to create a parent variant. In the `variantAttributes` field, you need to specify the attributes and values from the product template that are relevant to the particular parent variant product and its variants.
+The product template can contain more attributes and values than are needed to create a parent variant. In the `variantAttributes` field, specify the attributes and values from the product template that are relevant to the particular parent variant product and its variants.
 {% endhint %}
 
-To create a single `parent_variant` type of product with variants, you need to send a request to the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../label-service/api-reference/" %}
-[api-reference](../label-service/api-reference/)
-{% endcontent-ref %}
+To create a single `parent_variant` type of product with variants, send a request to the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
   "name": "T-shirt with variants",
   "code": "PARENT001",
@@ -605,7 +571,8 @@ curl -i -X POST \
   }
 }'
 ```
-
+{% endstep %}
+{% step %}
 If you want to create multiple `parent_variant` products at the same time, send a request to the [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -895,12 +862,17 @@ curl -i -X POST \
 }'
 ```
 
+
+{% endstep %}
+
+{% endstepper %}
+
+
+
+
 ## How to create variants with new attributes and values
 
-If you want to create variants by adding new variant attributes and/or values for a parent variant, you need to perform the following actions:
-
-1. [Update the product template with new variant attributes and values.](product.md#update-a-product-template-with-new-attributes-and-values)
-2. [Update the parent variant product with the newly updated product template.](product.md#update-the-existing-parent-variant-product-with-the-new-product-template)
+If you want to create variants by adding new variant attributes and/or values for a parent variant, perform the following steps.
 
 {% hint style="warning" %}
 You can add new attribute values either by adding them to the product template and then updating the product, or by updating the product with new values under `variantAttributes`, if they already exist in the product template.
@@ -910,28 +882,24 @@ You can add new attribute values either by adding them to the product template a
 The `product.product_publish` scope is only required if you want to publish the product on its creation.
 {% endhint %}
 
+{% stepper %}
+{% step %}
 ### Update a product template with new attributes and values
 
-To specify new attributes for your product's variants, you need to add them in the attributes field by calling the Updating a product template endpoint. Here, we've added a new key `size` to the list of available attributes.
+To specify new attributes for your product's variants, add them in the attributes field by calling the Updating a product template endpoint. Here, we've added a new key `size` to the list of available attributes.
 
 {% hint style="warning" %}
 Each of the attributes has its own metadata element, where you can specify whether the attribute is mandatory, if it can be used as a variant attribute, and what its default value is.
 {% endhint %}
 
-To specify new values for your product's attributes, you need to add them in the `values` field. Here, we've added `PURPLE` to the list of available attribute values.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../label-service/api-reference/" %}
-[api-reference](../label-service/api-reference/)
-{% endcontent-ref %}
+To specify new values for your product's attributes, add them in the `values` field. Here, we've added `PURPLE` to the list of available attribute values.
 
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/product/{tenant}/product-templates/{product-template-id}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X PUT 
+  'https://api.emporix.io/product/{tenant}/product-templates/{product-template-id}' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
   "name": {
     "en": "T-shirt"
@@ -1028,32 +996,27 @@ curl -i -X PUT \
   }
 }'
 ```
-
+{% endstep %}
+{% step %}
 ### Update the existing parent variant product with the new product template
 
-Since updating the product template results in it being assigned a new version, you need to update the parent variant by sending a request to the Partially updating a product endpoint and providing the new `template.version` value.
+Since updating the product template results in it being assigned a new version, update the parent variant by sending a request to the Partially updating a product endpoint and providing the new `template.version` value.
 
 {% hint style="warning" %}
-\
-In the `variantAttributes` field, you need to specify the attributes and attribute values that the variant products will assume. Based on the specified attributes, variant product combinations will be created automatically.
+
+In the `variantAttributes` field, specify the attributes and attribute values that the variant products will assume. Based on the specified attributes, variant product combinations will be created automatically.
 {% endhint %}
 
 {% hint style="warning" %}
 When creating or updating a product of the `PARENT_VARIANT` type, by default, product variants are generated. If you do **not** want to create product variants for the product, set the `skipVariantGeneration` parameter to `true`.
 {% endhint %}
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../label-service/api-reference/" %}
-[api-reference](../label-service/api-reference/)
-{% endcontent-ref %}
-
 ```bash
-curl -i -X PATCH \
-  'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X PATCH 
+  'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "published": true
     "template": {
@@ -1097,6 +1060,9 @@ curl -i -X PATCH \
 ```
 
 As a result, new product variants are created automatically, in combinations that include the newly specified attributes and values.
+{% endstep %}
+{% endstepper %}
+
 
 ## How to override variant attribute values
 
@@ -1106,6 +1072,8 @@ You may choose to update the basic fields of a particular variant, for example `
 The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the product on its update.
 {% endhint %}
 
+{% stepper %}
+{% step %}
 ### Updating a variant with new attribute values
 
 By default, all variant products inherit their attributes from the parent variant. You need to include the name of the attribute in the `metadata.overriden` field to be able to replace the attribute values.
@@ -1121,18 +1089,12 @@ In the following example, we override the following fields:
 * `published`
 * `taxClasses`
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../label-service/api-reference/" %}
-[api-reference](../label-service/api-reference/)
-{% endcontent-ref %}
-
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/product/{tenant}/products/{productId}?partial=false&skipVariantGeneration=false&doIndex=true' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X PUT 
+  'https://api.emporix.io/product/{tenant}/products/{productId}?partial=false&skipVariantGeneration=false&doIndex=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "name": "Blue T-shirt M",
     "code": "VARIANT001",
@@ -1165,29 +1127,25 @@ curl -i -X PUT \
     }
 }'
 ```
+{% endstep %}
+{% endstepper %}
 
 ## How to update multiple products in one operation
 
 If you want to update multiple products, use the bulk update feature to update several products in one operation. Send a request to the [Upserting multiple](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk) products endpoint.
 
 {% hint style="warning" %}
-\
-The `product.product_update` scope is required.\
+
+The `product.product_update` scope is required.
 The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the products on the update.
 {% endhint %}
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../label-service/api-reference/" %}
-[api-reference](../label-service/api-reference/)
-{% endcontent-ref %}
-
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X PUT 
+  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "id": "65492420e492d916983c8431",
     "code": "pa-1",
@@ -1255,7 +1213,7 @@ curl -i -X PUT \
 }'
 ```
 
-When the update request is sent successfully, the response for a particular product is returned at the same position (index) at which it is located in the request body.\
+When the update request is sent successfully, the response for a particular product is returned at the same position (index) at which it is located in the request body.
 The expected response is as follows:
 
 ```xml
