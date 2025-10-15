@@ -19,7 +19,7 @@ This tutorial presents how to create a basic product. To learn more about types 
 
 Take a look at the relationships between prices and other resources in the Emporix Commerce Engine:
 
-<figure><img src="../../static/product/product_diagram.svg" width="300" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../static/product/product_diagram.svg" width="600" alt=""><figcaption></figcaption></figure>
 
 {% hint style="warning" %}
 Countries and regions are predefined in the Emporix API [Country Service](/configuration/country-service/README.md). You can check which countries and regions are available by sending requests to the following endpoints:
@@ -1279,3 +1279,20 @@ When something goes wrong, you might see some error message in the response. See
 ```
 
 `404`: The third product cannot be updated because the product template provided in the payload was not found, check if you have provided the correct data.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+Tax: 
+{% content-ref url="../../prices-and-taxes/tax-service/api-reference/" %}
+[api-reference](../../prices-and-taxes/tax-service/api-reference/)
+{% endcontent-ref %}
+
+Product: 
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+Media:
+{% content-ref url="../../media/media/api-reference/" %}
+[api-reference](../../media/media/api-reference/)
+{% endcontent-ref %}
