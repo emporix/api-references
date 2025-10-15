@@ -151,10 +151,10 @@ The following scope is granted to a customer group:
 The customer can place a quote request on the storefront only if they have created a cart with the requested items beforehand.
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/quote/{tenant}/quotes' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/quote/{tenant}/quotes' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "customerId": "9tt954309b06d46d3cf19fe",
     "employeeId": "9tt954309b06d46d3cf19fa",
