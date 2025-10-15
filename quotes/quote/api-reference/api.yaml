@@ -1422,7 +1422,7 @@ components:
         - tax
     QuoteUpdateStatus:
       type: object
-      description: Quote status
+      description: Quote status.
       properties:
         value:
           type: string
@@ -2108,9 +2108,9 @@ components:
         - $ref: '#/components/schemas/QuoteShipping'
         - $ref: '#/components/schemas/QuoteItemIds'
         - type: string
-          description: Value of the string type
+          description: Value of the string type.
         - type: object
-          description: Mixin request
+          description: Mixin request.
     QuoteHistory:
       type: array
       description: Quote update operation list.
@@ -2169,7 +2169,7 @@ components:
             type: string
           modifiedAt:
             type: string
-            description: Modification date
+            description: Modification date.
     QuoteCreateFromCartRequest:
       type: object
       description: This schema includes the attributes that are required to be provided when creating a quote from the cart.
