@@ -87,7 +87,7 @@ paths:
         - $ref: '#/components/parameters/header_accept_language'
         - $ref: '#/components/parameters/query_expand_product'
         - $ref: '#/components/parameters/query_raw_value_product'
-      summary: Retrieving all of products
+      summary: Retrieving all products
       tags:
         - Products
     post:
@@ -434,7 +434,7 @@ paths:
         '500':
           $ref: '#/components/responses/common_response_InternalServerError_500'
       description: |-
-        Retrieves a specified product's details.
+        Retrieves a specified product details.
         ***
 
         **Required scopes**
@@ -1988,7 +1988,7 @@ components:
       properties:
         pricingMeasurePrice:
           type: number
-          description: Product’s price per specified order unit.
+          description: Product price per specified order unit.
         unitPricingMeasure:
           type: object
           description: Information about the value and measurement unit per one order unit.
@@ -2022,7 +2022,7 @@ components:
             value:
               type: number
               description: |-
-                Quantity of the base price’s measurement unit.
+                Quantity of the base price measurement unit.
 
                 For example, if the base price is calculated for 1 kg, the value should be set to `1`.
             unitCode:
@@ -2043,12 +2043,12 @@ components:
                 For example, if the base price is calculated per 1 kg, the value should be set to `KGM`.
         pricingMeasure:
           type: object
-          description: Information about the product’s price per specified measurement unit.
+          description: Information about the product price per specified measurement unit.
           properties:
             value:
               type: number
               description: |-
-                Quantity of the price’s measurement unit.
+                Quantity of the price measurement unit.
 
                 For example, if the price is calculated for 100 g, the value should be set to `100`.
             unitCode:
@@ -2130,7 +2130,7 @@ components:
               description: Version of the document
     productMetadataGet:
       type: object
-      description: Metadata for GET requests
+      description: Metadata for GET requests.
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productMetadataWithVersion'
@@ -2138,10 +2138,10 @@ components:
           properties:
             createdAt:
               type: string
-              description: creation date in the ISO 8601 standard
+              description: Creation date in the ISO 8601 standard.
             modifiedAt:
               type: string
-              description: modification date in the ISO 8601 standard
+              description: Modification date in the ISO 8601 standard.
     variantProductMetadataGet:
       type: object
       description: Variant metadata response.
@@ -2165,7 +2165,7 @@ components:
                 **Note:**You cannot override the following attributes: `id`, `code`, `template`, `variantAttributes`.
               items:
                 type: string
-                description: 'Name of overridden product''s field, e.g. `published`.'
+                description: 'Name of overridden product field, for example `published`.'
     variantProductMetadataWithVersion:
       type: object
       description: Metadata with the version information.
@@ -2176,7 +2176,7 @@ components:
           properties:
             version:
               type: number
-              description: Version of the document
+              description: Version of the document.
     id:
       type: string
       description: Unique resource identifier.
@@ -2248,12 +2248,12 @@ components:
             $ref: '#/components/schemas/relatedItem'
         brandId:
           type: string
-          description: 'Id of brand.'
+          description: 'ID of brand.'
         labelIds:
           type: array
           items:
             type: string
-          description: 'Collection of label ids.'
+          description: 'Collection of label IDs.'
     basicProduct:
       type: object
       additionalProperties: false
@@ -2265,13 +2265,14 @@ components:
               $ref: '#/components/schemas/productMetadataCore'
             template:
               $ref: '#/components/schemas/template'
-        - required:
+          required:
             - name
             - code
     basicProductCreation:
       type: object
       description: Schema for creating products of the BASIC type.
       allOf:
+        - $ref: '#/components/schemas/basicProduct'
         - type: object
           properties:
             id:
@@ -2280,20 +2281,17 @@ components:
               description: Custom product identifier. If not provided, it is automatically generated.
             productType:
               $ref: '#/components/schemas/productType'
-        - $ref: '#/components/schemas/basicProduct'
     basicProductWithId:
       type: object
       description: Schema for retrieving products of the BASIC type.
       allOf:
+        - $ref: '#/components/schemas/basicProductCreation'
         - type: object
           properties:
             id:
               $ref: '#/components/schemas/id'
             yrn:
               $ref: '#/components/schemas/YRN'
-        - $ref: '#/components/schemas/basicProductCreation'
-        - type: object
-          properties:
             media:
               $ref: '#/components/schemas/productMedia'
             metadata:
@@ -2318,12 +2316,12 @@ components:
       type: object
       description: Schema for updating products of the BASIC type in bulk.
       allOf:
+        - $ref: '#/components/schemas/basicProductUpdate'
         - type: object
           properties:
             id:
               $ref: '#/components/schemas/id'
-        - $ref: '#/components/schemas/basicProductUpdate'
-        - required:
+          required:
             - id
     bundleProduct:
       type: object
@@ -2340,7 +2338,7 @@ components:
               $ref: '#/components/schemas/bundledProducts'
             productType:
               $ref: '#/components/schemas/productTypeUpdate'
-        - required:
+          required:
             - name
             - code
             - bundledProducts
@@ -2349,6 +2347,7 @@ components:
       type: object
       description: Schema for creating products of the BUNDLE type.
       allOf:
+        - $ref: '#/components/schemas/bundleProduct'
         - type: object
           properties:
             id:
@@ -2357,20 +2356,18 @@ components:
               description: Custom product identifier. If not provided, it is automatically generated.
             productType:
               $ref: '#/components/schemas/productType'
-        - $ref: '#/components/schemas/bundleProduct'
     bundleProductWithId:
       type: object
       description: Schema for retrieving products of the BUNDLE type.
+      additionalProperties: false
       allOf:
+        - $ref: '#/components/schemas/bundleProductCreation'
         - type: object
           properties:
             id:
               $ref: '#/components/schemas/id'
             yrn:
               $ref: '#/components/schemas/YRN'
-        - $ref: '#/components/schemas/bundleProductCreation'
-        - type: object
-          properties:
             media:
               $ref: '#/components/schemas/productMedia'
             metadata:
@@ -2392,14 +2389,13 @@ components:
       type: object
       description: Schema for updating products of the BUNDLE type in bulk.
       allOf:
+        - $ref: '#/components/schemas/bundleProductUpdate'
         - type: object
           properties:
             id:
               $ref: '#/components/schemas/id'
-        - $ref: '#/components/schemas/bundleProductUpdate'
-        - required:
+          required:
             - id
-
     parentVariantProduct:
       type: object
       additionalProperties: false
@@ -2413,7 +2409,7 @@ components:
               $ref: '#/components/schemas/template'
             variantAttributes:
               $ref: '#/components/schemas/variantAttributes'
-        - required:
+          required:
             - name
             - code
             - template
@@ -2423,6 +2419,7 @@ components:
       type: object
       description: Schema for creating products of the PARENT_VARIANT type.
       allOf:
+        - $ref: '#/components/schemas/parentVariantProduct'
         - type: object
           properties:
             id:
@@ -2431,20 +2428,18 @@ components:
               description: Custom product identifier. If not provided, it is automatically generated.
             productType:
               $ref: '#/components/schemas/productType'
-        - $ref: '#/components/schemas/parentVariantProduct'
     parentVariantProductWithId:
       type: object
       description: Schema for retrieving products of the PARENT_VARIANT type.
+      additionalProperties: false
       allOf:
+        - $ref: '#/components/schemas/parentVariantProductCreation'
         - type: object
           properties:
             id:
               $ref: '#/components/schemas/id'
             yrn:
               $ref: '#/components/schemas/YRN'
-        - $ref: '#/components/schemas/parentVariantProductCreation'
-        - type: object
-          properties:
             media:
               $ref: '#/components/schemas/productMedia'
             metadata:
@@ -2469,12 +2464,12 @@ components:
       type: object
       description: Schema for updating products of the PARENT_VARIANT type in bulk.
       allOf:
+        - $ref: '#/components/schemas/parentVariantProductUpdate'
         - type: object
           properties:
             id:
               $ref: '#/components/schemas/id'
-        - $ref: '#/components/schemas/parentVariantProductUpdate'
-        - required:
+          required:
             - id
     variantProduct:
       type: object
@@ -2485,7 +2480,7 @@ components:
           properties:
             mixins:
               $ref: '#/components/schemas/productVariantMixins'
-        - required:
+          required:
             - name
             - code
             - productType
@@ -2494,6 +2489,7 @@ components:
       type: object
       description: Schema for creating products of the VARIANT type.
       allOf:
+        - $ref: '#/components/schemas/variantProduct'
         - type: object
           properties:
             id:
@@ -2507,20 +2503,18 @@ components:
               description: Identifier of the PARENT_VARIANT product.
             productType:
               $ref: '#/components/schemas/productType'
-        - $ref: '#/components/schemas/variantProduct'
     variantProductWithId:
       type: object
       description: Schema for retrieving products of the VARIANT type.
+      additionalProperties: false
       allOf:
+        - $ref: '#/components/schemas/variantProductCreation'
         - type: object
           properties:
             id:
               $ref: '#/components/schemas/id'
             yrn:
               $ref: '#/components/schemas/YRN'
-        - $ref: '#/components/schemas/variantProductCreation'
-        - type: object
-          properties:
             media:
               $ref: '#/components/schemas/productMedia'
             metadata:
@@ -2548,12 +2542,12 @@ components:
       type: object
       description: Schema for updating products of the VARIANT type in bulk.
       allOf:
+        - $ref: '#/components/schemas/variantProductUpdate'
         - type: object
           properties:
             id:
               $ref: '#/components/schemas/id'
-        - $ref: '#/components/schemas/variantProductUpdate'
-        - required:
+          required:
             - id
     productPartialUpdate:
       allOf:
@@ -2632,10 +2626,10 @@ components:
         index:
           type: integer
           description: |
-            Index of the processed product, matching the price's position in request body.
+            Index of the processed product, matching the price position in request body.
         id:
           type: string
-          description: Product's unique identifier.
+          description: Product unique identifier.
         code:
           type: integer
           description: HTTP Status Code.
@@ -2659,7 +2653,7 @@ components:
       in: path
       required: true
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: The tenant should always be written in lowercase.
       schema:
@@ -2694,10 +2688,10 @@ components:
         The colon with `sort direction` parameter is redundant and descending order is taken only if it is equal to `desc` or `DESC`.
         Ascending order is considered in any other case.
         While sorting by a localised field the following rule is taken into account:
-          1. If a localized field contains information about a language then the language should be used. For example `name.en:ASC`. In that case en language will be used for sorting the name property. The language suffix takes precedence over `Accept-Language` header.
-          2. If a localized field does not contain information about language then `Accept-Language` header will be used. For example `name:ASC` and `Accept-Language: de`. In that case de will be used for sorting the name property
-          3. If a localized field does not contain information about language and `Accept-Language` header contains `*` then default language from configuration service will be used as a language. For example `name:ASC` and `Accept-Language: *` and default language is pl then pl will be used as a language for name property
-          4. If a localized field does not contains information about language and `Accept-Language` header does not exists in the request then default language from configuration service will  be used.  "
+          1. If a localized field contains information about a language, then the language should be used. For example `name.en:ASC`. In that case en language is used for sorting the name property. The language suffix takes precedence over `Accept-Language` header.
+          2. If a localized field does not contain information about a language, then the `Accept-Language` header is used. For example `name:ASC` and `Accept-Language: de`. In that case `de` is used for sorting the name property.
+          3. If a localized field does not contain information about language and `Accept-Language` header contains `*`, then the default language from configuration service will be used as a language. For example `name:ASC` and `Accept-Language: *` and default language is pl then pl will be used as a language for name property.
+          4. If a localized field does not contains information about language and `Accept-Language` header does not exists in the request, then the default language from configuration service is used.  "
     header_content_language:
       name: Content-Language
       in: header
