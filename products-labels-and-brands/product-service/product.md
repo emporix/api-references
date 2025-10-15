@@ -19,7 +19,7 @@ This tutorial presents how to create a basic product. To learn more about types 
 
 Take a look at the relationships between prices and other resources in the Emporix Commerce Engine:
 
-<figure><img src="../../static/product/product_diagram.svg" alt=""><figcaption></figcaption><width="300"></figure>
+<figure><img src="../../static/product/product_diagram.svg" width="300" alt=""><figcaption></figcaption></figure>
 
 {% hint style="warning" %}
 Countries and regions are predefined in the Emporix API [Country Service](/configuration/country-service/README.md). You can check which countries and regions are available by sending requests to the following endpoints:
@@ -220,13 +220,10 @@ To learn more about product bundles and templates, check out the [Products guide
 
 To create personalized products and then group them in a bundle, perform the following steps:
 
-#### Before you start
-
 {% hint style="warning" %}
-The `product.product_publish` scope is only required if you want to publish the product on its creation.
+* Before you start, ensure you have defined the tax classes.
+* The `product.product_publish` scope is only required if you want to publish the product on its creation.
 {% endhint %}
-
-[Ensure that you have defined sales tax rates.](product.md#define-sales-tax-rates)
 
 {% stepper %}
 {% step %}

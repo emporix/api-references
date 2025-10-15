@@ -383,7 +383,7 @@ paths:
                     id: 545b4e3dfaee4c10def3db24--545b4e3dfaee4c10def3db25
                     yrn: 'urn:yaas:saasag:caasproduct:product:myshop;545b4e3dfaee4c10def3db24'
                     code: SmartphoneX21415269949943
-                    name: Smartphone black Zony Yperia X2
+                    name: Smartphone X2 black
                     description: The world's best camera and camcorder in a waterproof smartphone.
                     published: false
                     taxClasses:
@@ -1197,7 +1197,7 @@ components:
                 - id: 545b4e3dfaee4c10def3db24--545b4e3dfaee4c10def3db25
                   yrn: 'urn:yaas:saasag:caasproduct:product:myshop;545b4e3dfaee4c10def3db24'
                   code: SmartphoneX21415269949943
-                  name: Smartphone black Zony Yperia X2
+                  name: Smartphone X2 black
                   description: The world's best camera and camcorder in a waterproof smartphone.
                   published: false
                   taxClasses:
@@ -1445,7 +1445,7 @@ components:
                     productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
             VARIANT Product Creation:
               value:
-                name: Smartphone black Zony Yperia X2
+                name: Smartphone X2 black
                 code: VARIANT001
                 description: The world's best camera and camcorder in a waterproof smartphone.
                 published: true
@@ -1614,7 +1614,7 @@ components:
                     salePricesData: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/salePriceData.json'
             VARIANT Product Update:
               value:
-                name: Smartphone black Zony Yperia X2
+                name: Smartphone X2 black
                 code: VARIANT001
                 description: The world's best camera and camcorder in a waterproof smartphone.
                 published: true
