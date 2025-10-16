@@ -2222,10 +2222,8 @@ components:
           minLength: 1
           description: 'Unique product identifier, defined by the user.'
         description:
-          allOf:
-            - $ref: '#/components/schemas/localizedValue'
-            - type: object
-              description: Product description.
+          $ref: '#/components/schemas/localizedValue'
+          description: Product description.
         vendor:
           $ref: '#/components/schemas/vendor'
         taxClasses:
