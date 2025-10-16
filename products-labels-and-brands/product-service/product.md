@@ -1282,6 +1282,8 @@ When something goes wrong, you might see some error message in the response. See
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+**Related services:**
+
 Tax: 
 {% content-ref url="../../prices-and-taxes/tax-service/api-reference/" %}
 [api-reference](../../prices-and-taxes/tax-service/api-reference/)

@@ -2432,7 +2432,6 @@ components:
     parentVariantProductWithId:
       type: object
       description: Schema for retrieving products of the PARENT_VARIANT type.
-      additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/parentVariantProductCreation'
         - type: object
@@ -2507,7 +2506,6 @@ components:
     variantProductWithId:
       type: object
       description: Schema for retrieving products of the VARIANT type.
-      additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/variantProductCreation'
         - type: object
