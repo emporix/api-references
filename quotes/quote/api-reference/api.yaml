@@ -159,6 +159,7 @@ paths:
                               en-gb: 'Safety shoes high Reptile RS S3 SRC, black'
                               es: 'Zapatos de seguridad altos Reptile RS S3 SRC, negros'
                             media:
+                              id: '82c30154-dcf7-4bb9-b210-d960fec6c9fd'
                               contentType: image/jpg
                               url: 'https://res.cloudinary.com/saas-ag/image/upload/v1676449882/mrworkerstage/products/82c30154-dcf7-4bb9-b210-d960fec6c9fd.jpg'
                             taxClasses:
@@ -242,6 +243,7 @@ paths:
 
           * `quote.quote_manage` - required for the employee to create a quote
           * `quote.quote_manage_own` - required for the customer to be able to create a quote from cart
+          * `cart.cart_manage_external_prices` - required for external prices
       operationId: POST-quote-create-quote
       parameters:
         - name: tenant
@@ -282,6 +284,7 @@ paths:
                         quantity: 1
                         unitCode: piece
                       price:
+                        type: 'INTERNAL'
                         priceId: 6245aa0a78a8576e338fa9c4
                         unitPrice: 13
                         totalNetValue: 13
@@ -289,7 +292,24 @@ paths:
                           taxClass: STANDARD
                           taxRate: 20
                       product:
+                        type: 'INTERNAL'
                         productId: 7i98542309b06d46d3cf19fe
+                        mixins:
+                          customAttributes:
+                            attribute:
+                              value: 3
+                              unit: kg
+                        metadata:
+                          mixins:
+                            customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
+                      mixins:
+                        customAttributes:
+                          attribute:
+                            value: 2
+                            unit: kg
+                      metadata:
+                        mixins:
+                          customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
                   mixins:
                     customAttributes:
                       attribute:
@@ -700,6 +720,7 @@ paths:
                           quantity: 1
                           unitCode: piece
                         price:
+                          type: 'INTERNAL'
                           priceId: 63ec99a2457e8f7548685fe5
                           unitPrice: 34
                           newUnitPrice: 34
@@ -713,6 +734,7 @@ paths:
                               netValue: 34
                         product:
                           productId: BC10033--BC10033-35
+                          type: 'INTERNAL'
                           name:
                             de: 'Hohe Sicherheitsschuhe Reptile RS S3 SRC, schwarz'
                             ar: حذاء الجريمة المحافظ المرتفع RS S3 SRC ، NERE
@@ -724,16 +746,34 @@ paths:
                             en-gb: 'Safety shoes high Reptile RS S3 SRC, black'
                             es: 'Zapatos de seguridad altos Reptile RS S3 SRC, negros'
                           media:
+                            id: '82c30154-dcf7-4bb9-b210-d960fec6c9fd'
                             contentType: image/jpg
                             url: 'https://res.cloudinary.com/saas-ag/image/upload/v1676449882/mrworkerstage/products/82c30154-dcf7-4bb9-b210-d960fec6c9fd.jpg'
                           taxClasses:
                             DE: STANDARD
                             PL: ZERO
+                          mixins:
+                            customAttributes:
+                              attribute:
+                                value: 1
+                                unit: kg
+                          metadata:
+                            mixins:
+                              customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
+                        mixins:
+                          customAttributes:
+                            attribute:
+                              value: 1
+                              unit: kg
+                        metadata:
+                          mixins:
+                            customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
                       - id: ac16dd14-baa4-4ccb-bad3-756b36b89235
                         quantity:
                           quantity: 3
                           unitCode: piece
                         price:
+                          type: 'INTERNAL'
                           priceId: 63ec9ad0457e8f75486861cf
                           unitPrice: 57
                           newUnitPrice: 57
@@ -745,6 +785,7 @@ paths:
                               grossValue: 188.1
                               netValue: 171
                         product:
+                          type: 'INTERNAL'
                           productId: '0601394000'
                           name:
                             de: GWS 750 - Kabelgebundener Winkelschleifer 750 W 115 mm
@@ -1779,6 +1820,12 @@ components:
                 type: object
                 description: Item price details.
                 properties:
+                  type:
+                    type: string
+                    description: Defines if product is external or internal.
+                    enum:
+                      - INTERNAL
+                      - EXTERNAL
                   priceId:
                     type: string
                     description: The ID of the price that was initially assigned to the item.
@@ -1812,10 +1859,28 @@ components:
                             type: number
                           netValue:
                             type: number
+                  mixins:
+                    type: object
+                    description: Mixins request
+                    additionalProperties: true
+                  metadata:
+                    type: object
+                    description: Metadata request
+                    properties:
+                      mixins:
+                        type: object
+                        description: Links to the mixin schemas.
+                        additionalProperties: true
               product:
                 type: object
                 description: Product details.
                 properties:
+                  type:
+                    type: string
+                    description: Defines if product is external or internal.
+                    enum:
+                      - INTERNAL
+                      - EXTERNAL
                   productId:
                     type: string
                     description: The ID of the product or variant assigned to the quote item.
@@ -1830,6 +1895,9 @@ components:
                     type: object
                     description: This attribute comprises the product media information and is automatically populated upon the creation of the quote.
                     properties:
+                      id:
+                        type: string
+                        description: Id of the media
                       contentType:
                         type: string
                         description: 'The content type of the media. For example: `image/jpg`.'
@@ -1839,6 +1907,18 @@ components:
                   taxClasses:
                     type: object
                     description: Map of key-value pairs that associates tax classes with locations (countries).
+                  mixins:
+                    type: object
+                    description: Mixins request
+                    additionalProperties: true
+                  metadata:
+                    type: object
+                    description: Metadata request
+                    properties:
+                      mixins:
+                        type: object
+                        description: Links to the mixin schemas.
+                        additionalProperties: true
         mixins:
           type: object
           description: Mixins request.
@@ -1981,16 +2061,58 @@ components:
                 required:
                   - productId
                 properties:
+                  type:
+                    type: string
+                    description: Defines if product is external or internal.
+                    enum:
+                      - INTERNAL
+                      - EXTERNAL
                   productId:
                     type: string
                     description: Product or variant ID.
+                  name:
+                    type: object
+                    additionalProperties:
+                      type: string
+                    description: Localized name of a product. Used for `EXTERNAL` products as `INTERNAL` products will be populated from the product catalog data.
+                  media:
+                    type: object
+                    description: Media object that can be provided for an `EXTERNAL` product. `INTERNAL` products have media populated automatically and will override given value.
+                    properties:
+                      id:
+                        type: string
+                        description: Id of the media
+                      contentType:
+                        type: string
+                        description: 'The content type of the media. For example: `image/jpg`.'
+                      url:
+                        type: string
+                        description: The url to the product media.
+                  mixins:
+                    type: object
+                    description: Mixins request
+                    additionalProperties: true
+                  metadata:
+                    type: object
+                    description: Metadata request
+                    properties:
+                      mixins:
+                        type: object
+                        description: Links to the mixin schemas.
+                        additionalProperties: true
               price:
                 type: object
                 description: Matched price of the product.
                 properties:
+                  type:
+                    type: string
+                    description: Defines if price is internal or external.
+                    enum:
+                      - INTERNAL
+                      - EXTERNAL
                   priceId:
                     type: string
-                    description: ID of the matched price.
+                    description: ID of the matched price. Required only for type=`INTERNAL`.
                   priceListId:
                     type: string
                     description: Identifier of price list. The field should be populated only in case when the price belongs to any price list.
@@ -2018,6 +2140,18 @@ components:
                   - unitPrice
                   - totalNetValue
                   - tax
+              mixins:
+                type: object
+                description: Mixins request
+                additionalProperties: true
+              metadata:
+                type: object
+                description: Metadata request
+                properties:
+                  mixins:
+                    type: object
+                    description: Links to the mixin schemas.
+                    additionalProperties: true
             required:
               - product
         mixins:
@@ -2092,6 +2226,10 @@ components:
               - /items
               - '/items/{itemId}'
               - '/items/{itemId}/price'
+              - '/items/{itemId}/mixins/{mixinsPath}'
+              - '/items/{itemId}/metadata/mixins/{mixinsPath}'
+              - '/items/{itemId}/product/mixins/{mixinsPath}'
+              - '/items/{itemId}/product/metadata/mixins/{mixinsPath}'
               - '/mixins/{mixinsPath}'
               - '/metadata/{mixinsPath}'
           value:
@@ -2143,6 +2281,10 @@ components:
               - /items
               - '/items/{itemId}'
               - '/items/{itemId}/price'
+              - '/items/{itemId}/mixins/{mixinsPath}'
+              - '/items/{itemId}/metadata/mixins/{mixinsPath}'
+              - '/items/{itemId}/product/mixins/{mixinsPath}'
+              - '/items/{itemId}/product/metadata/mixins/{mixinsPath}'
               - '/mixins/{mixinsPath}'
               - '/metadata/{mixinsPath}'
             type: string
@@ -2334,7 +2476,7 @@ components:
                   detail:
                     errorcode: keymanagement.service.invalid_access_token
             Unauthorized:
-              value: {}
+              value: { }
     Bad_request_400:
       description: Unsupported language provided.
       content:
