@@ -2379,7 +2379,8 @@ components:
       description: Schema for updating products of the BUNDLE type.
       allOf:
         - $ref: '#/components/schemas/bundleProduct'
-        - properties:
+        - type: object   # explicitly define this inline schema as an object
+          properties:
             metadata:
               $ref: '#/components/schemas/productMetadataWithVersion'
     bundleProductBulkUpdate:
