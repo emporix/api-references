@@ -2215,10 +2215,8 @@ components:
       type: object
       properties:
         name:
-          allOf:
-            - $ref: '#/components/schemas/localizedValue'
-            - type: object
-              description: Product name.
+          $ref: '#/components/schemas/localizedValue'
+          description: Product name.
         code:
           type: string
           minLength: 1
