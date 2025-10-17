@@ -211,6 +211,7 @@ The initial status of a quote request created by a customer is always set to `AW
 {% endhint %}
 {% endstep %}
 {% step %}
+
 ### Create a quote on behalf of a customer
 
 To create a quote request on behalf of a customer, send a request to the [Creating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) endpoint.
@@ -453,3 +454,94 @@ curl -i -X PATCH
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
+
+## External Prices in Quotes
+
+External pricing allows you to supply your own price data directly in quote items, instead of relying on predefined internal price lists in the Emporix system.  
+This is useful when pricing is managed by an external system (for example, ERP) and you want to inject those values into quotes.
+
+By default, all products and prices in Emporix are **internal**, they reference the entities that are stored in Emporix catalog and price lists.  
+However, Quote Service supports **external prices** and **external products** as well, giving you full control over the pricing data you send.
+
+Each price object includes a `type` field that defines whether the object comes from Emporix or from an external source.
+
+| Type | Description |
+|------|--------------|
+| `INTERNAL` | Default behavior. The system looks up for price information using `priceId`. |
+| `EXTERNAL` | Allows you to provide your own price details directly in the quote request. |
+
+When using `EXTERNAL` pricing, you can send complete price details (for example, net and gross values) without storing them in Emporix.
+
+To use external prices, the `cart.cart_manage_external_prices` scope is necessary. Without the scope, quote creation or updates containing external price data are rejected.
+
+Example of an item in a quote request using an external price, where:
+
+* The product is internal - from your Emporix catalog.
+* The price is external - supplied directly in the request.
+* No `priceId` is required, because you are providing all the necessary price details.
+
+```json
+{
+  "product": {
+    "type": "INTERNAL",
+    "productId": "12345"
+  },
+  "price": {
+    "type": "EXTERNAL",
+    "currency": "EUR",
+    "gross": 120.00,
+    "net": 100.00,
+    "tax": {
+      "rate": 0.20
+    }
+  },
+  "quantity": 2
+}
+```
+
+Example of an item in a quote request using an external product and price, where:
+
+* Both the product and price are external.
+* The item exists only within this quote context, it's not a part of your Emporix product catalog.
+
+```json
+{
+  "product": {
+    "type": "EXTERNAL",
+    "name": {
+      "en": "Custom Demo Service"
+    },
+    "media": [
+      {
+        "id": "img001",
+        "contentType": "image/png",
+        "url": "https://example.com/demo.png"
+      }
+    ]
+  },
+  "price": {
+    "type": "EXTERNAL",
+    "currency": "USD",
+    "gross": 500.00,
+    "net": 420.00,
+    "tax": {
+      "rate": 0.19
+    }
+  },
+  "quantity": 1
+}
+```
+
+### Support for mixins and metadata
+
+External prices and products can also include mixins or metadata, which allows passing contextual or custom data through the quote workflow.
+
+For example:
+
+```json
+{
+  "mixins": {
+    "custom.pricing.source": "ERP-System-A"
+  }
+}
+```
