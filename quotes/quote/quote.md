@@ -25,6 +25,49 @@ layout:
 The Emporix API Quote Service is only available to tenants that use the Price v2 API Service.
 {% endhint %}
 
+## Quote statuses
+
+The Quote Service supports the following status values:
+
+| Status | Description | Set By | When Used |
+|--------|-------------|--------|-----------|
+| `CREATING` | Quote is being created (temporary state) | System | During quote creation process |
+| `OPEN` | Quote is ready for customer review | System/Employee | After quote is finalized and sent to customer |
+| `AWAITING` | Waiting for response from customer or employee | Employee/Customer | When one party is waiting for the other's action |
+| `IN_PROGRESS` | Active negotiation/changes are being made | Employee | When employee is modifying the quote |
+| `ACCEPTED` | Customer accepted the quote | Customer | Customer agrees to terms, triggers order creation |
+| `DECLINED` | Customer rejected the quote | Customer | Customer doesn't want to proceed |
+| `DECLINED_BY_MERCHANT` | Employee/merchant rejected the quote | Employee | Merchant cannot fulfill the request |
+| `EXPIRED` | Quote validity period has passed | System | When `validTo` date is exceeded |
+
+### IN_PROGRESS vs AWAITING
+
+| Aspect | IN_PROGRESS | AWAITING |
+|--------|-------------|----------|
+| **Who's working?** | Employee is actively modifying | Waiting for response from other party |
+| **Quote Reason?** | Required (type: CHANGE) | Not required |
+| **When to use?** | Employee adjusting prices/items | Quote sent, waiting for customer or employee action |
+
+Example of how the statuses are used:
+
+```json
+OPEN (quote received)
+  ↓
+AWAITING (waiting for employee to review)
+  ↓
+IN_PROGRESS (employee adjusting prices) ← Requires quote reason
+  ↓
+AWAITING (sent back to customer, waiting for response)
+  ↓
+IN_PROGRESS (employee making final adjustments) ← Requires quote reason
+  ↓
+AWAITING (final offer sent to customer)
+  ↓
+ACCEPTED (customer accepts, order created)
+```
+
+
+
 ## How to configure the Quote Service
 
 The Quote Service allows you to send email notifications to customers every time a new quote is created or updated by the customers themselves or by an employee on their behalf.
@@ -135,9 +178,7 @@ Quote:
 
 A quote request can be created both by a customer directly on your business' storefront, or by an employee on behalf of a customer.
 
-{% stepper %}
-{% step %}
-### Create a quote by a customer
+### Creating a quote by a customer
 
 On the storefront, a customer adds selected products to cart. At checkout, they can proceed to purchasing the items, or requesting a quote.
 If a customer places a quote request, the [Creating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) endpoint is called.
@@ -209,10 +250,8 @@ curl -i -X POST
 {% hint style="warning" %}
 The initial status of a quote request created by a customer is always set to `AWAITING`.
 {% endhint %}
-{% endstep %}
-{% step %}
 
-### Create a quote on behalf of a customer
+### Creating a quote on behalf of a customer
 
 To create a quote request on behalf of a customer, send a request to the [Creating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) endpoint.
 
@@ -281,9 +320,8 @@ curl -i -X POST
 {% hint style="warning" %}
 The initial status of a quote request being created by an employee is always set to `CREATING`, and, subsequently, to `OPEN` when the quote is created.
 {% endhint %}
-{% endstep %}
-{% step %}
-### Update a quote by an employee
+
+### Updating a quote by an employee
 
 There are two scenarios when an employee may need to update a quote:
 
@@ -385,9 +423,8 @@ curl -L
     }
   ]'
 ```
-{% endstep %}
-{% step %}
-### Accept a quote by a customer
+
+### Accepting a quote by a customer
 
 When a customer accepts a quote on the storefront, the following endpoint is called: [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
 
@@ -412,10 +449,8 @@ curl -i -X PATCH
     }
   }'
 ```
-{% endstep %}
-{% step %}
 
-### Decline a quote by a customer
+### Declining a quote by a customer
 
 When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action.\
 On the storefront, when a customer declines the quote, a request to the following endpoint is sent: [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
@@ -445,15 +480,15 @@ curl -i -X PATCH
     }
   }'
 ```
-
-{% endstep %}
-{% endstepper %}
-
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
+
+## Use case scenarios
+
+
 
 ## External Prices in Quotes
 
