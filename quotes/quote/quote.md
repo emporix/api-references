@@ -145,7 +145,7 @@ The Quote Service supports the following status values:
 | `DECLINED` | Customer rejected the quote | Customer | Customer doesn't want to proceed |
 | `DECLINED_BY_MERCHANT` | Employee/merchant rejected the quote | Employee | Merchant cannot fulfill the request |
 | `EXPIRED` | Quote validity period has passed | System | When `validTo` date is exceeded |
-```
+
 The whole quote flow and status representations is visible in the diagram:
 
 ```mermaid
