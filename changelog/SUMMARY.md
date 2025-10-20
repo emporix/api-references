@@ -8,7 +8,7 @@
 
 ## 2025
 
-* [2025-10-20: Quote Service - external prices and mixins support](2025/2025-10-16-quote.md)
+* [2025-10-21: Quote Service - external prices and mixins support](2025/2025-10-21-quote.md)
 * [2025-10-15: Sequential ID Service - removal of deprecated endpoints](2025/2025-10-15-sequential-id.md)
 * [2025-09-30: Media Service - add MODULE media id type](2025/2025-09-30-media.md)
 * [2025-09-29: Category Tree - filter unpublished categories](2025/2025-09-29-category-tree.md)

@@ -1897,7 +1897,7 @@ components:
                     properties:
                       id:
                         type: string
-                        description: Id of the media
+                        description: ID of the media.
                       contentType:
                         type: string
                         description: 'The content type of the media. For example: `image/jpg`.'
@@ -1909,11 +1909,11 @@ components:
                     description: Map of key-value pairs that associates tax classes with locations (countries).
                   mixins:
                     type: object
-                    description: Mixins request
+                    description: Mixins request.
                     additionalProperties: true
                   metadata:
                     type: object
-                    description: Metadata request
+                    description: Metadata request.
                     properties:
                       mixins:
                         type: object
@@ -2074,14 +2074,14 @@ components:
                     type: object
                     additionalProperties:
                       type: string
-                    description: Localized name of a product. Used for `EXTERNAL` products as `INTERNAL` products will be populated from the product catalog data.
+                    description: Localized name of a product. Used for the `EXTERNAL` products as the `INTERNAL` ones are populated from the product catalog data.
                   media:
                     type: object
-                    description: Media object that can be provided for an `EXTERNAL` product. `INTERNAL` products have media populated automatically and will override given value.
+                    description: Media object that can be provided for an `EXTERNAL` product. `INTERNAL` products have media populated automatically and override the given value.
                     properties:
                       id:
                         type: string
-                        description: Id of the media
+                        description: ID of the media.
                       contentType:
                         type: string
                         description: 'The content type of the media. For example: `image/jpg`.'
@@ -2090,11 +2090,11 @@ components:
                         description: The url to the product media.
                   mixins:
                     type: object
-                    description: Mixins request
+                    description: Mixins request.
                     additionalProperties: true
                   metadata:
                     type: object
-                    description: Metadata request
+                    description: Metadata request.
                     properties:
                       mixins:
                         type: object
@@ -2142,11 +2142,11 @@ components:
                   - tax
               mixins:
                 type: object
-                description: Mixins request
+                description: Mixins request.
                 additionalProperties: true
               metadata:
                 type: object
-                description: Metadata request
+                description: Metadata request.
                 properties:
                   mixins:
                     type: object
@@ -2156,11 +2156,11 @@ components:
               - product
         mixins:
           type: object
-          description: Mixins request
+          description: Mixins request.
           additionalProperties: true
         metadata:
           type: object
-          description: Metadata request
+          description: Metadata request.
           properties:
             mixins:
               type: object
