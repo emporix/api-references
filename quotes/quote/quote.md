@@ -145,37 +145,6 @@ The Quote Service supports the following status values:
 | `DECLINED` | Customer rejected the quote | Customer | Customer doesn't want to proceed |
 | `DECLINED_BY_MERCHANT` | Employee/merchant rejected the quote | Employee | Merchant cannot fulfill the request |
 | `EXPIRED` | Quote validity period has passed | System | When `validTo` date is exceeded |
-
-### What's the difference between 'in-progress' and 'awaiting'
-
-| Aspect | IN_PROGRESS | AWAITING |
-|--------|-------------|----------|
-| **Who's working?** | Employee is actively modifying | Waiting for response from other party |
-| **Quote Reason?** | Required (type: CHANGE) | Not required |
-| **When to use?** | Employee adjusting prices/items | Quote sent, waiting for customer or employee action |
-
-Examples of how the statuses are used:
-
-```mermaid
----
-config:
-  layout: fixed
-  theme: base
-  look: classic
-  themeVariables:
-    background: transparent
-    lineColor: "#9CBBE3"
-    arrowheadColor: "#9CBBE3"
-    edgeLabelBackground: "#FFC128" 
-    edgeLabelTextColor: "#4C5359"
----
-flowchart TD
-    A[OPEN<br/>(quote received)] --> B[AWAITING<br/>(waiting for employee to review)]
-    B --> C[IN_PROGRESS<br/>(employee adjusting prices)<br/><i>Requires quote reason</i>]
-    C --> D[AWAITING<br/>(sent back to customer, waiting for response)]
-    D --> E[IN_PROGRESS<br/>(employee making final adjustments)<br/><i>Requires quote reason</i>]
-    E --> F[AWAITING<br/>(final offer sent to customer)]
-    F --> G[ACCEPTED<br/>(customer accepts, order created)]
 ```
 The whole quote flow and status representations is visible in the diagram:
 
@@ -191,44 +160,68 @@ config:
     arrowheadColor: "#9CBBE3"
     edgeLabelBackground: "#FFC128" 
     edgeLabelTextColor: "#4C5359"
+    actorBorder: '#4C5359'
 ---
-flowchart TD
+graph TD
+    CUSTOMER1[CUSTOMER] 
+    PRODUCTS[PRODUCTS]
+    EMPLOYEE1[EMPLOYEE]
+    CART[CART]
+    QUOTE_REQUEST[QUOTE REQUEST]
+    EMPLOYEE2[EMPLOYEE]
+    CUSTOMER2[CUSTOMER]
+    CUSTOMER3[CUSTOMER]
+    
+    CUSTOMER1 -->|Browses for products| PRODUCTS
+    PRODUCTS -->|Contacts a customer<br/>service employee| EMPLOYEE1
+    PRODUCTS -->|Adds products to a cart| CART
+    
+    EMPLOYEE1 -->|The employee creates<br/>a quote on behalf of the customer| CREATING[QUOTE: CREATING]
+    CREATING -->|Quote finalized| OPEN[QUOTE: OPEN]
+    
+    CART -->|Requests a quote| QUOTE_REQUEST
+    QUOTE_REQUEST -->|System creates quote| CREATING
+    
+    QUOTE_REQUEST -->|A notification is sent to an employee| EMPLOYEE2
+    
+    EMPLOYEE2 -->|Starts working on quote| IN_PROGRESS[QUOTE: IN_PROGRESS]
+    IN_PROGRESS -->|Employee finalizes quote| OPEN
+    
+    EMPLOYEE2 -->|Cannot fulfill request| DECLINED_MERCHANT[QUOTE: DECLINED_BY_MERCHANT]
+    DECLINED_MERCHANT -->|Notification sent| CUSTOMER3
+    
+    OPEN -->|Sent to customer| AWAITING_CUSTOMER[QUOTE: AWAITING]
+    AWAITING_CUSTOMER -->|Waiting for customer response| CUSTOMER2
+    
+    CUSTOMER2 -->|Customer needs changes| AWAITING_EMPLOYEE[QUOTE: AWAITING]
+    AWAITING_EMPLOYEE -->|Employee reviews| IN_PROGRESS
+    
+    CUSTOMER2 -->|Approves the quote| ACCEPTED[QUOTE: ACCEPTED]
+    CUSTOMER2 -->|Rejects the quote| DECLINED[QUOTE: DECLINED]
+    
+    AWAITING_CUSTOMER -->|Validity period exceeded| EXPIRED[QUOTE: EXPIRED]
+    
+    ACCEPTED -->|Order creation triggered| ORDER[Order Created]
+    
+    style CREATING fill:#9CBBE3, stroke:#4C5359
+    style OPEN fill:#9CBBE3, stroke:#4C5359
+    style AWAITING_CUSTOMER fill:#9CBBE3, stroke:#4C5359
+    style AWAITING_EMPLOYEE fill:#9CBBE3, stroke:#4C5359
+    style IN_PROGRESS fill:#9CBBE3, stroke:#4C5359
+    style ACCEPTED fill:#9CBBE3, stroke:#4C5359
+    style DECLINED fill:#9CBBE3, stroke:#4C5359
+    style DECLINED_MERCHANT fill:#9CBBE3, stroke:#4C5359
+    style EXPIRED fill:#9CBBE3, stroke:#4C5359
 
-    %% Customer browsing
-    A[Customer] -->|Browses for products| B[Products]
-
-    %% Two main entry paths
-    B -->|Contacts a customer service employee| C[Employee]
-    B -->|Adds products to a cart| D[Cart]
-
-    %% Employee creates quote
-    C -->|Creates a quote on behalf of the customer| E[Quote<br/>Status: CREATING → OPEN]
-
-    %% Customer cart quote request
-    D -->|Requests a quote| F[Quote Request<br/>Status: CREATING]
-    F -->|Notification sent to employee| G[Employee]
-
-    %% Employee actions
-    G -->|Approves quote request| H[Quote<br/>Status: OPEN → AWAITING]
-    G -->|Rejects quote request| I[Quote<br/>Status: DECLINED_BY_MERCHANT]
-
-    %% Customer interaction
-    H -->|Notification sent to customer| J[Customer]
-    I -->|Notification sent to customer| K[Customer]
-
-    %% Negotiation loop
-    J -->|Requests changes| L[Employee<br/>Status: IN_PROGRESS]
-    L -->|Sends updated quote| M[Customer<br/>Status: AWAITING]
-
-    %% Final decision
-    M -->|Approves quote| N[Approved Quote<br/>Status: ACCEPTED]
-    M -->|Rejects quote| O[Rejected Quote<br/>Status: DECLINED]
-
-    %% Timeout path
-    M -->|No response before validTo date| P[Quote Expired<br/>Status: EXPIRED]
+    style CUSTOMER1 fill:#A1BDDC, stroke:#4C5359
+    style CUSTOMER2 fill:#A1BDDC, stroke:#4C5359
+    style CUSTOMER3 fill:#A1BDDC, stroke:#4C5359
+    style EMPLOYEE1 fill:#DDE6EE, stroke:#4C5359
+    style EMPLOYEE2 fill:#DDE6EE, stroke:#4C5359
+    style CART fill:#F2F6FA, stroke:#4C5359
+    style PRODUCTS fill:#F2F6FA, stroke:#4C5359
+    style QUOTE_REQUEST fill:#F2F6FA, stroke:#4C5359
 ```
-
-
 ## How to manage quote requests
 
 A quote request can be created both by a customer directly on your business' storefront, or by an employee on behalf of a customer.
@@ -541,11 +534,7 @@ curl -i -X PATCH
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
-## Use case scenarios
-
-
-
-## External Prices in Quotes
+## External prices and products support
 
 External pricing allows you to supply your own price data directly in quote items, instead of relying on predefined internal price lists in the Emporix system.  
 This is useful when pricing is managed by an external system (for example, ERP) and you want to inject those values into quotes.
@@ -553,12 +542,10 @@ This is useful when pricing is managed by an external system (for example, ERP) 
 By default, all products and prices in Emporix are **internal**, they reference the entities that are stored in Emporix catalog and price lists.  
 However, Quote Service supports **external prices** and **external products** as well, giving you full control over the pricing data you send.
 
-Each price object includes a `type` field that defines whether the object comes from Emporix or from an external source.
+Each price object includes a `type` field that defines whether the object is an internal one, or from an external source.
 
-| Type | Description |
-|------|--------------|
-| `INTERNAL` | Default behavior. The system looks up for price information using `priceId`. |
-| `EXTERNAL` | Allows you to provide your own price details directly in the quote request. |
+* `INTERNAL` - Default behavior, the system looks up for price information using `priceId`. 
+* `EXTERNAL` - Allows you to provide your own price details directly in the quote request. 
 
 When using `EXTERNAL` pricing, you can send complete price details (for example, net and gross values) without storing them in Emporix.
 
@@ -589,10 +576,7 @@ Example of an item in a quote request using an external price, where:
 }
 ```
 
-Example of an item in a quote request using an external product and price, where:
-
-* Both the product and price are external.
-* The item exists only within this quote context, it's not a part of your Emporix product catalog.
+Example of an item in a quote request using an external product and price, where both the product and price are external.
 
 ```json
 {
