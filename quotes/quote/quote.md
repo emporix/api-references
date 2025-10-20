@@ -165,43 +165,38 @@ config:
 graph TD
     CUSTOMER1[CUSTOMER] 
     PRODUCTS[PRODUCTS]
-    EMPLOYEE1[EMPLOYEE]
-    CART[CART]
-    QUOTE_REQUEST[QUOTE REQUEST]
-    EMPLOYEE2[EMPLOYEE]
-    CUSTOMER2[CUSTOMER]
-    CUSTOMER3[CUSTOMER]
     
     CUSTOMER1 -->|Browses for products| PRODUCTS
-    PRODUCTS -->|Contacts a customer<br/>service employee| EMPLOYEE1
-    PRODUCTS -->|Adds products to a cart| CART
     
-    EMPLOYEE1 -->|The employee creates<br/>a quote on behalf of the customer| CREATING[QUOTE: CREATING]
-    CREATING -->|Quote finalized| OPEN[QUOTE: OPEN]
+    PRODUCTS -->|Contacts employee| EMPLOYEE1[EMPLOYEE]
+    PRODUCTS -->|Adds to cart| CART[CART]
     
-    CART -->|Requests a quote| QUOTE_REQUEST
-    QUOTE_REQUEST -->|System creates quote| CREATING
+    EMPLOYEE1 -->|Creates quote| CREATING[QUOTE: CREATING]
+    CART -->|Requests quote| QUOTE_REQUEST[QUOTE REQUEST]
     
-    QUOTE_REQUEST -->|A notification is sent to an employee| EMPLOYEE2
+    QUOTE_REQUEST -->|System creates| CREATING
+    QUOTE_REQUEST -->|Notifies| EMPLOYEE2[EMPLOYEE]
     
-    EMPLOYEE2 -->|Starts working on quote| IN_PROGRESS[QUOTE: IN_PROGRESS]
-    IN_PROGRESS -->|Employee finalizes quote| OPEN
+    CREATING -->|Finalized| OPEN[QUOTE: OPEN]
+    EMPLOYEE2 -->|Starts work| IN_PROGRESS[QUOTE: IN_PROGRESS]
     
-    EMPLOYEE2 -->|Cannot fulfill request| DECLINED_MERCHANT[QUOTE: DECLINED_BY_MERCHANT]
-    DECLINED_MERCHANT -->|Notification sent| CUSTOMER3
+    IN_PROGRESS -->|Finalizes| OPEN
+    EMPLOYEE2 -->|Cannot fulfill| DECLINED_MERCHANT[QUOTE: DECLINED_BY_MERCHANT]
+    
+    DECLINED_MERCHANT -->|Notifies| CUSTOMER3[CUSTOMER]
     
     OPEN -->|Sent to customer| AWAITING_CUSTOMER[QUOTE: AWAITING]
-    AWAITING_CUSTOMER -->|Waiting for customer response| CUSTOMER2
     
-    CUSTOMER2 -->|Customer needs changes| AWAITING_EMPLOYEE[QUOTE: AWAITING]
-    AWAITING_EMPLOYEE -->|Employee reviews| IN_PROGRESS
+    AWAITING_CUSTOMER -->|Response awaited| CUSTOMER2[CUSTOMER]
+    AWAITING_CUSTOMER -->|Validity expired| EXPIRED[QUOTE: EXPIRED]
     
-    CUSTOMER2 -->|Approves the quote| ACCEPTED[QUOTE: ACCEPTED]
-    CUSTOMER2 -->|Rejects the quote| DECLINED[QUOTE: DECLINED]
+    CUSTOMER2 -->|Approves| ACCEPTED[QUOTE: ACCEPTED]
+    CUSTOMER2 -->|Rejects| DECLINED[QUOTE: DECLINED]
+    CUSTOMER2 -->|Needs changes| AWAITING_EMPLOYEE[QUOTE: AWAITING]
     
-    AWAITING_CUSTOMER -->|Validity period exceeded| EXPIRED[QUOTE: EXPIRED]
+    AWAITING_EMPLOYEE -->|Reviews| IN_PROGRESS
     
-    ACCEPTED -->|Order creation triggered| ORDER[Order Created]
+    ACCEPTED -->|Triggers| ORDER[Order Created]
     
     style CREATING fill:#9CBBE3, stroke:#4C5359
     style OPEN fill:#9CBBE3, stroke:#4C5359
@@ -221,6 +216,7 @@ graph TD
     style CART fill:#F2F6FA, stroke:#4C5359
     style PRODUCTS fill:#F2F6FA, stroke:#4C5359
     style QUOTE_REQUEST fill:#F2F6FA, stroke:#4C5359
+    style ORDER fill:#9CBBE3, stroke:#4C5359
 ```
 ## How to manage quote requests
 
@@ -606,16 +602,70 @@ Example of an item in a quote request using an external product and price, where
 }
 ```
 
-### Support for mixins and metadata
+### Support for mixins and metadata 
 
-External prices and products can also include mixins or metadata, which allows passing contextual or custom data through the quote workflow.
+**Mixins** as schema extensions that allow quotes to include custom structured data beyond the standard fields.
 
 For example:
 
 ```json
 {
+  "id": "q-7890",
+  "status": "AWAITING_CUSTOMER_ACTION",
   "mixins": {
-    "custom.pricing.source": "ERP-System-A"
+    "approvalMixin": {
+      "approvedBy": "employee-002",
+      "approvedAt": "2025-10-20T10:15:00Z",
+      "approvalThreshold": 5000
+    },
+    "discountMixin": {
+      "type": "percentage",
+      "value": 10,
+      "reason": "End of quarter discount"
+    }
   }
 }
+```
+
+**Metadata** is a flexible key-value store attached to any quote or sub-resource.
+It’s intended for contextual or audit information, things like who made a change, internal reason codes, timestamps, or workflow notes.
+
+For example:
+
+```json
+{
+  "id": "q-1234",
+  "status": "IN_PROGRESS",
+  "metadata": {
+    "quoteReason": "Customer requested price adjustment",
+    "reviewedBy": "employee-001",
+    "reviewTimestamp": "2025-10-20T09:45:00Z",
+    "sourceChannel": "B2B Portal"
+  }
+}
+```
+
+#### Updating existing quotes
+
+You can use PATCH on quotes to add new mixins or metadata or replace existing values. 
+
+```json
+PATCH /{tenant}/quotes/q-5678
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "status": "IN_PROGRESS",
+  "metadata": {
+    "quoteReason": "Adjusted discount based on approval",
+    "reviewedBy": "employee-002"
+  },
+  "mixins": {
+    "approvalMixin": {
+      "approvedBy": "manager-001",
+      "approvalThreshold": 10000
+    }
+  }
+}
+
 ```
