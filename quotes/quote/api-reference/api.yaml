@@ -2035,7 +2035,7 @@ components:
           $ref: '#/components/schemas/QuoteShipping'
         items:
           type: array
-          description: Quote items
+          description: Quote items.
           items:
             type: object
             properties:
