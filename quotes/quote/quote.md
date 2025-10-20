@@ -25,50 +25,7 @@ layout:
 The Emporix API Quote Service is only available to tenants that use the Price v2 API Service.
 {% endhint %}
 
-## Quote statuses
-
-The Quote Service supports the following status values:
-
-| Status | Description | Set By | When Used |
-|--------|-------------|--------|-----------|
-| `CREATING` | Quote is being created (temporary state) | System | During quote creation process |
-| `OPEN` | Quote is ready for customer review | System/Employee | After quote is finalized and sent to customer |
-| `AWAITING` | Waiting for response from customer or employee | Employee/Customer | When one party is waiting for the other's action |
-| `IN_PROGRESS` | Active negotiation/changes are being made | Employee | When employee is modifying the quote |
-| `ACCEPTED` | Customer accepted the quote | Customer | Customer agrees to terms, triggers order creation |
-| `DECLINED` | Customer rejected the quote | Customer | Customer doesn't want to proceed |
-| `DECLINED_BY_MERCHANT` | Employee/merchant rejected the quote | Employee | Merchant cannot fulfill the request |
-| `EXPIRED` | Quote validity period has passed | System | When `validTo` date is exceeded |
-
-### IN_PROGRESS vs AWAITING
-
-| Aspect | IN_PROGRESS | AWAITING |
-|--------|-------------|----------|
-| **Who's working?** | Employee is actively modifying | Waiting for response from other party |
-| **Quote Reason?** | Required (type: CHANGE) | Not required |
-| **When to use?** | Employee adjusting prices/items | Quote sent, waiting for customer or employee action |
-
-Example of how the statuses are used:
-
-```json
-OPEN (quote received)
-  ↓
-AWAITING (waiting for employee to review)
-  ↓
-IN_PROGRESS (employee adjusting prices) ← Requires quote reason
-  ↓
-AWAITING (sent back to customer, waiting for response)
-  ↓
-IN_PROGRESS (employee making final adjustments) ← Requires quote reason
-  ↓
-AWAITING (final offer sent to customer)
-  ↓
-ACCEPTED (customer accepts, order created)
-```
-
-
-
-## How to configure the Quote Service
+## How to configure the quote service
 
 The Quote Service allows you to send email notifications to customers every time a new quote is created or updated by the customers themselves or by an employee on their behalf.
 
@@ -173,6 +130,104 @@ Quote:
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
+
+## Quote statuses
+
+The Quote Service supports the following status values:
+
+| Status | Description | Set By | When Used |
+|--------|-------------|--------|-----------|
+| `CREATING` | Quote is being created (temporary state) | System | During quote creation process |
+| `OPEN` | Quote is ready for customer review | System/Employee | After quote is finalized and sent to customer |
+| `AWAITING` | Waiting for response from customer or employee | Employee/Customer | When one party is waiting for the other's action |
+| `IN_PROGRESS` | Active negotiation/changes are being made | Employee | When employee is modifying the quote |
+| `ACCEPTED` | Customer accepted the quote | Customer | Customer agrees to terms, triggers order creation |
+| `DECLINED` | Customer rejected the quote | Customer | Customer doesn't want to proceed |
+| `DECLINED_BY_MERCHANT` | Employee/merchant rejected the quote | Employee | Merchant cannot fulfill the request |
+| `EXPIRED` | Quote validity period has passed | System | When `validTo` date is exceeded |
+
+### What's the difference between 'in-progress' and 'awaiting'
+
+| Aspect | IN_PROGRESS | AWAITING |
+|--------|-------------|----------|
+| **Who's working?** | Employee is actively modifying | Waiting for response from other party |
+| **Quote Reason?** | Required (type: CHANGE) | Not required |
+| **When to use?** | Employee adjusting prices/items | Quote sent, waiting for customer or employee action |
+
+Examples of how the statuses are used:
+
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128" 
+    edgeLabelTextColor: "#4C5359"
+---
+flowchart TD
+    A[OPEN<br/>(quote received)] --> B[AWAITING<br/>(waiting for employee to review)]
+    B --> C[IN_PROGRESS<br/>(employee adjusting prices)<br/><i>Requires quote reason</i>]
+    C --> D[AWAITING<br/>(sent back to customer, waiting for response)]
+    D --> E[IN_PROGRESS<br/>(employee making final adjustments)<br/><i>Requires quote reason</i>]
+    E --> F[AWAITING<br/>(final offer sent to customer)]
+    F --> G[ACCEPTED<br/>(customer accepts, order created)]
+```
+The whole quote flow and status representations is visible in the diagram:
+
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128" 
+    edgeLabelTextColor: "#4C5359"
+---
+flowchart TD
+
+    %% Customer browsing
+    A[Customer] -->|Browses for products| B[Products]
+
+    %% Two main entry paths
+    B -->|Contacts a customer service employee| C[Employee]
+    B -->|Adds products to a cart| D[Cart]
+
+    %% Employee creates quote
+    C -->|Creates a quote on behalf of the customer| E[Quote<br/>Status: CREATING → OPEN]
+
+    %% Customer cart quote request
+    D -->|Requests a quote| F[Quote Request<br/>Status: CREATING]
+    F -->|Notification sent to employee| G[Employee]
+
+    %% Employee actions
+    G -->|Approves quote request| H[Quote<br/>Status: OPEN → AWAITING]
+    G -->|Rejects quote request| I[Quote<br/>Status: DECLINED_BY_MERCHANT]
+
+    %% Customer interaction
+    H -->|Notification sent to customer| J[Customer]
+    I -->|Notification sent to customer| K[Customer]
+
+    %% Negotiation loop
+    J -->|Requests changes| L[Employee<br/>Status: IN_PROGRESS]
+    L -->|Sends updated quote| M[Customer<br/>Status: AWAITING]
+
+    %% Final decision
+    M -->|Approves quote| N[Approved Quote<br/>Status: ACCEPTED]
+    M -->|Rejects quote| O[Rejected Quote<br/>Status: DECLINED]
+
+    %% Timeout path
+    M -->|No response before validTo date| P[Quote Expired<br/>Status: EXPIRED]
+```
+
 
 ## How to manage quote requests
 
