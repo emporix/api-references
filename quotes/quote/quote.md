@@ -114,6 +114,22 @@ graph TD
     style QUOTE_REQUEST fill:#F2F6FA, stroke:#4C5359
     style ORDER fill:#F2F6FA, stroke:#4C5359
 ```
+
+## Quote reasons
+
+When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action.
+
+There are four default reasons that your customers and employees can select for the `DECLINED` or `CHANGED` quote statuses:
+
+| Quote status | Reason code                                                                                              |
+| ------------ | -------------------------------------------------------------------------------------------------------- |
+| **DECLINE**  | <ul><li>PRICE_TOO_HIGH</li><li>NO_LONGER_NEEDED</li><li>DELIVERY_TIME_LATE</li><li>OTHER</li></ul>       |
+| **CHANGE**   | <ul><li>WRONG_MATERIAL</li><li>PROVIDED_PRICE_TO_HIGH</li><li>DELIVERY_TIME_LATE</li><li>OTHER</li></ul> |
+
+{% hint style="warning" %}
+The quote reason of the `DECLINE` type can only be used for the `DECLINED` or `DECLINED_BY_MERCHANT` actions, while the `CHANGE` type can only be used for the `IN_PROGRESS` change of status.
+{% endhint %}
+
 ## How to configure the quote service
 
 The following merchant information is necessary for the pdf file with quote to be generated:
@@ -173,18 +189,7 @@ curl -i -X PATCH
 {% step %}
 ### Update available quote status change reasons
 
-When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action.
-
-There are four default reasons that your customers and employees can select for the `DECLINED` or `CHANGED` quote statuses:
-
-| Quote status | Reason code                                                                                              |
-| ------------ | -------------------------------------------------------------------------------------------------------- |
-| **DECLINE**  | <ul><li>PRICE_TOO_HIGH</li><li>NO_LONGER_NEEDED</li><li>DELIVERY_TIME_LATE</li><li>OTHER</li></ul>       |
-| **CHANGE**   | <ul><li>WRONG_MATERIAL</li><li>PROVIDED_PRICE_TO_HIGH</li><li>DELIVERY_TIME_LATE</li><li>OTHER</li></ul> |
-
-{% hint style="warning" %}
-The quote reason of the `DECLINE` type can only be used for the `DECLINED` or `DECLINED_BY_MERCHANT` actions, while the `CHANGE` type can only be used for the `IN_PROGRESS` change of status.
-{% endhint %}
+There are four default reasons that your customers and employees can select for the `DECLINED` or `CHANGED` quote statuses, as mentioned in [Quote Reasons](../quote/quote.md#quote-reasons).
 
 You can create new quote status change reasons, by sending a request to the [Creating a reason for changing the quote status](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-reason#post-quote-tenant-quote-reasons) endpoint.
 
