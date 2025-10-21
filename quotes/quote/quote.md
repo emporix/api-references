@@ -112,7 +112,7 @@ graph TD
     style CART fill:#F2F6FA, stroke:#4C5359
     style PRODUCTS fill:#F2F6FA, stroke:#4C5359
     style QUOTE_REQUEST fill:#F2F6FA, stroke:#4C5359
-    style ORDER fill:#FFFDE7, stroke:#4C5359
+    style ORDER fill:#F2F6FA, stroke:#4C5359
 ```
 ## How to configure the quote service
 
