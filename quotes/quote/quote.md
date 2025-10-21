@@ -44,15 +44,15 @@ The Quote Service supports the following status values:
 
 Possible status transitions:
 
-AWAITING -> OPEN
-AWAITING -> DECLINED_BY_MERCHANT
-CREATING -> OPEN
-EXPIRED -> OPEN
-IN_PROGRESS -> OPEN
-IN_PROGRESS -> DECLINED_BY_MERCHANT
-OPEN -> DECLINED
-OPEN -> ACCEPTED
-OPEN -> IN_PROGRESS 
+* AWAITING -> OPEN
+* AWAITING -> DECLINED_BY_MERCHANT
+* CREATING -> OPEN
+* EXPIRED -> OPEN
+* IN_PROGRESS -> OPEN
+* IN_PROGRESS -> DECLINED_BY_MERCHANT
+* OPEN -> DECLINED
+* OPEN -> ACCEPTED
+* OPEN -> IN_PROGRESS 
 
 * When an employee creates a quote, its status is `CREATING`.
 * When a customer creates a quote, its status is `AWAITING`.
@@ -106,24 +106,70 @@ graph TD
     
     ACCEPTED -->|Triggers| ORDER(Order Created)
     
-    style CREATING fill:#FFFDE7, stroke:#4C5359
-    style OPEN fill:#FFFDE7, stroke:#4C5359
-    style IN_PROGRESS fill:#FFFDE7, stroke:#4C5359
-    style ACCEPTED fill:#FFFDE7, stroke:#4C5359
-    style DECLINED fill:#FFFDE7, stroke:#4C5359
-    style DECLINED_MERCHANT fill:#FFFDE7, stroke:#4C5359
-    style EXPIRED fill:#FFFDE7, stroke:#4C5359
+---
+config:
+  layout: fixed
+  theme: base
+  look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128" 
+    edgeLabelTextColor: "#4C5359"
+    actorBorder: '#4C5359'
+---
+graph TD
+    CUSTOMER1(CUSTOMER)
+    PRODUCTS(PRODUCTS)
+    
+    CUSTOMER1 -->|Browses for products| PRODUCTS
+    
+    PRODUCTS -->|Contacts employee| EMPLOYEE1(EMPLOYEE)
+    PRODUCTS -->|Adds to cart| CART(CART)
+    
+    EMPLOYEE1 -->|Creates quote| CREATING(QUOTE: CREATING)
+    CART -->|Requests quote| QUOTE_REQUEST(QUOTE: AWAITING)
+    
+    QUOTE_REQUEST -->|Notifies| EMPLOYEE2(EMPLOYEE)
+    
+    CREATING -->|Quote created| OPEN(QUOTE: OPEN)
+    
+    
+    IN_PROGRESS -->|Approves| OPEN
+    EMPLOYEE2 -->|Cannot fulfill| DECLINED_MERCHANT(QUOTE: DECLINED_BY_MERCHANT)
+    
+    DECLINED_MERCHANT -->|Notifies| CUSTOMER3(CUSTOMER)
+
+    OPEN -->|Validity expired| EXPIRED(QUOTE: EXPIRED)
+    
+    OPEN -->|Sent to customer| CUSTOMER2(CUSTOMER)
+    
+    CUSTOMER2 -->|Approves| ACCEPTED(QUOTE: ACCEPTED)
+    CUSTOMER2 -->|Rejects| DECLINED(QUOTE: DECLINED)
+    CUSTOMER2 -->|Requests changes| EMPLOYEE3(EMPLOYEE)
+    EMPLOYEE3 -->|Changes| IN_PROGRESS(QUOTE: IN PROGRESS)
+    
+    ACCEPTED -->|Triggers| ORDER(Order Created)
+    
+    style CREATING fill:#F2FAFE, stroke:#4C5359
+    style OPEN fill:#F2FAFE, stroke:#4C5359
+    style IN_PROGRESS fill:#F2FAFE, stroke:#4C5359
+    style ACCEPTED fill:#F2FAFE, stroke:#4C5359
+    style DECLINED fill:#F2FAFE, stroke:#4C5359
+    style DECLINED_MERCHANT fill:#F2FAFE, stroke:#4C5359
+    style EXPIRED fill:#F2FAFE, stroke:#4C5359
 
     style CUSTOMER1 fill:#A1BDDC, stroke:#4C5359
     style CUSTOMER2 fill:#A1BDDC, stroke:#4C5359
     style CUSTOMER3 fill:#A1BDDC, stroke:#4C5359
-    style EMPLOYEE1 fill:#DDE6EE, stroke:#4C5359
-    style EMPLOYEE2 fill:#DDE6EE, stroke:#4C5359
-    style EMPLOYEE3 fill:#DDE6EE, stroke:#4C5359
-    style CART fill:#F2F6FA, stroke:#4C5359
-    style PRODUCTS fill:#F2F6FA, stroke:#4C5359
-    style QUOTE_REQUEST fill:#FFFDE7, stroke:#4C5359
-    style ORDER fill:#F2F6FA, stroke:#4C5359
+    style EMPLOYEE1 fill:#99ACBC, stroke:#4C5359
+    style EMPLOYEE2 fill:#99ACBC, stroke:#4C5359
+    style EMPLOYEE3 fill:#99ACBC, stroke:#4C5359
+    style CART fill:#DDE6EE, stroke:#4C5359
+    style PRODUCTS fill:#DDE6EE, stroke:#4C5359
+    style QUOTE_REQUEST fill:#F2FAFE, stroke:#4C5359
+    style ORDER fill:#DDE6EE, stroke:#4C5359
 ```
 
 ## Quote decision reasons
