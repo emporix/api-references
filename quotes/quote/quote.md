@@ -21,13 +21,101 @@ layout:
 
 # Quote Tutorial
 
+The Quote Service allows you to send email notifications to customers every time a new quote is created or updated by the customers themselves or by an employee on their behalf.
+
 {% hint style="danger" %}
 The Emporix API Quote Service is only available to tenants that use the Price v2 API Service.
 {% endhint %}
 
-## How to configure the quote service
+## Quote statuses
 
-The Quote Service allows you to send email notifications to customers every time a new quote is created or updated by the customers themselves or by an employee on their behalf.
+The Quote Service supports the following status values:
+
+| Status | Description | Set By | When Used |
+|--------|-------------|--------|-----------|
+| `CREATING` | Quote is being created (temporary state) | System | During quote creation process |
+| `OPEN` | Quote is ready for customer review | System/Employee | After quote is finalized and sent to customer |
+| `AWAITING` | Waiting for response from customer or employee | Employee/Customer | When one party is waiting for the other's action |
+| `IN_PROGRESS` | Active negotiation/changes are being made | Employee | When employee is modifying the quote |
+| `ACCEPTED` | Customer accepted the quote | Customer | Customer agrees to terms, triggers order creation |
+| `DECLINED` | Customer rejected the quote | Customer | Customer doesn't want to proceed |
+| `DECLINED_BY_MERCHANT` | Employee/merchant rejected the quote | Employee | Merchant cannot fulfill the request |
+| `EXPIRED` | Quote validity period has passed | System | When `validTo` date is exceeded |
+
+The whole quote flow and status representations is visible in the diagram:
+
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128" 
+    edgeLabelTextColor: "#4C5359"
+    actorBorder: '#4C5359'
+---
+graph TD
+    CUSTOMER1(CUSTOMER)
+    PRODUCTS(PRODUCTS)
+    
+    CUSTOMER1 -->|Browses for products| PRODUCTS
+    
+    PRODUCTS -->|Contacts employee| EMPLOYEE1(EMPLOYEE)
+    PRODUCTS -->|Adds to cart| CART(CART)
+    
+    EMPLOYEE1 -->|Creates quote| CREATING(QUOTE: CREATING)
+    CART -->|Requests quote| QUOTE_REQUEST(QUOTE REQUEST)
+    
+    QUOTE_REQUEST -->|System creates| CREATING
+    QUOTE_REQUEST -->|Notifies| EMPLOYEE2(EMPLOYEE)
+    
+    CREATING -->|Finalized| OPEN(QUOTE: OPEN)
+    EMPLOYEE2 -->|Starts work| IN_PROGRESS(QUOTE: IN_PROGRESS)
+    
+    IN_PROGRESS -->|Finalizes| OPEN
+    EMPLOYEE2 -->|Cannot fulfill| DECLINED_MERCHANT(QUOTE: DECLINED_BY_MERCHANT)
+    
+    DECLINED_MERCHANT -->|Notifies| CUSTOMER3(CUSTOMER)
+    
+    OPEN -->|Sent to customer| AWAITING_CUSTOMER(QUOTE: AWAITING)
+    
+    AWAITING_CUSTOMER -->|Response awaited| CUSTOMER2(CUSTOMER)
+    AWAITING_CUSTOMER -->|Validity expired| EXPIRED(QUOTE: EXPIRED)
+    
+    CUSTOMER2 -->|Approves| ACCEPTED(QUOTE: ACCEPTED)
+    CUSTOMER2 -->|Rejects| DECLINED(QUOTE: DECLINED)
+    CUSTOMER2 -->|Needs changes| AWAITING_EMPLOYEE(QUOTE: AWAITING)
+    
+    AWAITING_EMPLOYEE -->|Reviews| IN_PROGRESS
+    
+    ACCEPTED -->|Triggers| ORDER(Order Created)
+    
+    style CREATING fill:#9CBBE3, stroke:#4C5359
+    style OPEN fill:#9CBBE3, stroke:#4C5359
+    style AWAITING_CUSTOMER fill:#9CBBE3, stroke:#4C5359
+    style AWAITING_EMPLOYEE fill:#9CBBE3, stroke:#4C5359
+    style IN_PROGRESS fill:#9CBBE3, stroke:#4C5359
+    style ACCEPTED fill:#9CBBE3, stroke:#4C5359
+    style DECLINED fill:#9CBBE3, stroke:#4C5359
+    style DECLINED_MERCHANT fill:#9CBBE3, stroke:#4C5359
+    style EXPIRED fill:#9CBBE3, stroke:#4C5359
+
+    style CUSTOMER1 fill:#A1BDDC, stroke:#4C5359
+    style CUSTOMER2 fill:#A1BDDC, stroke:#4C5359
+    style CUSTOMER3 fill:#A1BDDC, stroke:#4C5359
+    style EMPLOYEE1 fill:#DDE6EE, stroke:#4C5359
+    style EMPLOYEE2 fill:#DDE6EE, stroke:#4C5359
+    style CART fill:#F2F6FA, stroke:#4C5359
+    style PRODUCTS fill:#F2F6FA, stroke:#4C5359
+    style QUOTE_REQUEST fill:#F2F6FA, stroke:#4C5359
+    style ORDER fill:#9CBBE3, stroke:#4C5359
+```
+
+## How to configure the quote service
 
 The following merchant information is necessary for the pdf file with quote to be generated:
 
@@ -131,93 +219,6 @@ Quote:
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
-## Quote statuses
-
-The Quote Service supports the following status values:
-
-| Status | Description | Set By | When Used |
-|--------|-------------|--------|-----------|
-| `CREATING` | Quote is being created (temporary state) | System | During quote creation process |
-| `OPEN` | Quote is ready for customer review | System/Employee | After quote is finalized and sent to customer |
-| `AWAITING` | Waiting for response from customer or employee | Employee/Customer | When one party is waiting for the other's action |
-| `IN_PROGRESS` | Active negotiation/changes are being made | Employee | When employee is modifying the quote |
-| `ACCEPTED` | Customer accepted the quote | Customer | Customer agrees to terms, triggers order creation |
-| `DECLINED` | Customer rejected the quote | Customer | Customer doesn't want to proceed |
-| `DECLINED_BY_MERCHANT` | Employee/merchant rejected the quote | Employee | Merchant cannot fulfill the request |
-| `EXPIRED` | Quote validity period has passed | System | When `validTo` date is exceeded |
-
-The whole quote flow and status representations is visible in the diagram:
-
-```mermaid
----
-config:
-  layout: fixed
-  theme: base
-  look: classic
-  themeVariables:
-    background: transparent
-    lineColor: "#9CBBE3"
-    arrowheadColor: "#9CBBE3"
-    edgeLabelBackground: "#FFC128" 
-    edgeLabelTextColor: "#4C5359"
-    actorBorder: '#4C5359'
----
-graph TD
-    CUSTOMER1[CUSTOMER] 
-    PRODUCTS[PRODUCTS]
-    
-    CUSTOMER1 -->|Browses for products| PRODUCTS
-    
-    PRODUCTS -->|Contacts employee| EMPLOYEE1[EMPLOYEE]
-    PRODUCTS -->|Adds to cart| CART[CART]
-    
-    EMPLOYEE1 -->|Creates quote| CREATING[QUOTE: CREATING]
-    CART -->|Requests quote| QUOTE_REQUEST[QUOTE REQUEST]
-    
-    QUOTE_REQUEST -->|System creates| CREATING
-    QUOTE_REQUEST -->|Notifies| EMPLOYEE2[EMPLOYEE]
-    
-    CREATING -->|Finalized| OPEN[QUOTE: OPEN]
-    EMPLOYEE2 -->|Starts work| IN_PROGRESS[QUOTE: IN_PROGRESS]
-    
-    IN_PROGRESS -->|Finalizes| OPEN
-    EMPLOYEE2 -->|Cannot fulfill| DECLINED_MERCHANT[QUOTE: DECLINED_BY_MERCHANT]
-    
-    DECLINED_MERCHANT -->|Notifies| CUSTOMER3[CUSTOMER]
-    
-    OPEN -->|Sent to customer| AWAITING_CUSTOMER[QUOTE: AWAITING]
-    
-    AWAITING_CUSTOMER -->|Response awaited| CUSTOMER2[CUSTOMER]
-    AWAITING_CUSTOMER -->|Validity expired| EXPIRED[QUOTE: EXPIRED]
-    
-    CUSTOMER2 -->|Approves| ACCEPTED[QUOTE: ACCEPTED]
-    CUSTOMER2 -->|Rejects| DECLINED[QUOTE: DECLINED]
-    CUSTOMER2 -->|Needs changes| AWAITING_EMPLOYEE[QUOTE: AWAITING]
-    
-    AWAITING_EMPLOYEE -->|Reviews| IN_PROGRESS
-    
-    ACCEPTED -->|Triggers| ORDER[Order Created]
-    
-    style CREATING fill:#9CBBE3, stroke:#4C5359
-    style OPEN fill:#9CBBE3, stroke:#4C5359
-    style AWAITING_CUSTOMER fill:#9CBBE3, stroke:#4C5359
-    style AWAITING_EMPLOYEE fill:#9CBBE3, stroke:#4C5359
-    style IN_PROGRESS fill:#9CBBE3, stroke:#4C5359
-    style ACCEPTED fill:#9CBBE3, stroke:#4C5359
-    style DECLINED fill:#9CBBE3, stroke:#4C5359
-    style DECLINED_MERCHANT fill:#9CBBE3, stroke:#4C5359
-    style EXPIRED fill:#9CBBE3, stroke:#4C5359
-
-    style CUSTOMER1 fill:#A1BDDC, stroke:#4C5359
-    style CUSTOMER2 fill:#A1BDDC, stroke:#4C5359
-    style CUSTOMER3 fill:#A1BDDC, stroke:#4C5359
-    style EMPLOYEE1 fill:#DDE6EE, stroke:#4C5359
-    style EMPLOYEE2 fill:#DDE6EE, stroke:#4C5359
-    style CART fill:#F2F6FA, stroke:#4C5359
-    style PRODUCTS fill:#F2F6FA, stroke:#4C5359
-    style QUOTE_REQUEST fill:#F2F6FA, stroke:#4C5359
-    style ORDER fill:#9CBBE3, stroke:#4C5359
-```
 ## How to manage quote requests
 
 A quote request can be created both by a customer directly on your business' storefront, or by an employee on behalf of a customer.
@@ -647,25 +648,31 @@ For example:
 
 #### Updating existing quotes
 
-You can use PATCH on quotes to add new mixins or metadata or replace existing values. 
+To add new mixins or metadata or replace existing values in a created quote, send a request to the [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid) endpoint.
 
-```json
-PATCH /{tenant}/quotes/q-5678
-Authorization: Bearer <token>
-Content-Type: application/json
-
-{
-  "status": "IN_PROGRESS",
-  "metadata": {
-    "quoteReason": "Adjusted discount based on approval",
-    "reviewedBy": "employee-002"
-  },
-  "mixins": {
-    "approvalMixin": {
-      "approvedBy": "manager-001",
-      "approvalThreshold": 10000
-    }
-  }
-}
-
+```bash
+curl -L 
+  --request PATCH 
+  --url 'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Content-Type: application/json' 
+  --data '[
+      {
+        "status": "IN_PROGRESS",
+        "metadata": {
+          "quoteReason": "Adjusted discount based on approval",
+          "reviewedBy": "employee-002"
+        },
+        "mixins": {
+          "approvalMixin": {
+            "approvedBy": "manager-001",
+            "approvalThreshold": 10000
+          }
+        }
+      }
 ```
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
