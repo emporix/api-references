@@ -34,13 +34,28 @@ The Quote Service supports the following status values:
 | Status | Description | Set By | When Used |
 |--------|-------------|--------|-----------|
 | `CREATING` | Quote is being created (temporary state) | System | During quote creation process |
-| `OPEN` | Quote is ready for customer review | System/Employee | After quote is finalized and sent to customer |
+| `AWAITING` | Quote is ready for customer review | System/Employee | After quote is finalized and sent to customer |
 | `AWAITING` | Waiting for response from customer or employee | Employee/Customer | When one party is waiting for the other's action |
 | `IN_PROGRESS` | Active negotiation/changes are being made | Employee | When employee is modifying the quote |
 | `ACCEPTED` | Customer accepted the quote | Customer | Customer agrees to terms, triggers order creation |
 | `DECLINED` | Customer rejected the quote | Customer | Customer doesn't want to proceed |
 | `DECLINED_BY_MERCHANT` | Employee/merchant rejected the quote | Employee | Merchant cannot fulfill the request |
 | `EXPIRED` | Quote validity period has passed | System | When `validTo` date is exceeded |
+
+Possible status transitions:
+
+AWAITING -> OPEN
+AWAITING -> DECLINED_BY_MERCHANT
+CREATING -> OPEN
+EXPIRED -> OPEN
+IN_PROGRESS -> AWAITING
+IN_PROGRESS -> DECLINED_BY_MERCHANT
+AWAITING -> DECLINED
+AWAITING -> ACCEPTED
+AWAITING -> IN_PROGRESS 
+
+* When an employee creates a quote, its status is `CREATING`.
+* When a customer creates a quote, its status is `AWAITING`.
 
 The whole quote flow and status representations is visible in the diagram:
 
@@ -68,36 +83,31 @@ graph TD
     PRODUCTS -->|Adds to cart| CART(CART)
     
     EMPLOYEE1 -->|Creates quote| CREATING(QUOTE: CREATING)
-    CART -->|Requests quote| QUOTE_REQUEST(QUOTE REQUEST)
+    CART -->|Requests quote| QUOTE_REQUEST(QUOTE: AWAITING)
     
-    QUOTE_REQUEST -->|System creates| CREATING
     QUOTE_REQUEST -->|Notifies| EMPLOYEE2(EMPLOYEE)
     
-    CREATING -->|Finalized| OPEN(QUOTE: OPEN)
-    EMPLOYEE2 -->|Starts work| IN_PROGRESS(QUOTE: IN_PROGRESS)
+    CREATING -->|Quote created| OPEN(QUOTE: OPEN)
     
-    IN_PROGRESS -->|Finalizes| OPEN
+    
+    IN_PROGRESS -->|Approves| OPEN
     EMPLOYEE2 -->|Cannot fulfill| DECLINED_MERCHANT(QUOTE: DECLINED_BY_MERCHANT)
     
     DECLINED_MERCHANT -->|Notifies| CUSTOMER3(CUSTOMER)
+
+    OPEN -->|Validity expired| EXPIRED(QUOTE: EXPIRED)
     
-    OPEN -->|Sent to customer| AWAITING_CUSTOMER(QUOTE: AWAITING)
-    
-    AWAITING_CUSTOMER -->|Response awaited| CUSTOMER2(CUSTOMER)
-    AWAITING_CUSTOMER -->|Validity expired| EXPIRED(QUOTE: EXPIRED)
+    OPEN -->|Sent to customer| CUSTOMER2(CUSTOMER)
     
     CUSTOMER2 -->|Approves| ACCEPTED(QUOTE: ACCEPTED)
     CUSTOMER2 -->|Rejects| DECLINED(QUOTE: DECLINED)
-    CUSTOMER2 -->|Needs changes| AWAITING_EMPLOYEE(QUOTE: AWAITING)
-    
-    AWAITING_EMPLOYEE -->|Reviews| IN_PROGRESS
+    CUSTOMER2 -->|Requests changes| EMPLOYEE3(EMPLOYEE)
+    EMPLOYEE3 -->|Changes| IN_PROGRESS(QUOTE: IN PROGRESS)
     
     ACCEPTED -->|Triggers| ORDER(Order Created)
     
     style CREATING fill:#FFFDE7, stroke:#4C5359
     style OPEN fill:#FFFDE7, stroke:#4C5359
-    style AWAITING_CUSTOMER fill:#FFFDE7, stroke:#4C5359
-    style AWAITING_EMPLOYEE fill:#FFFDE7, stroke:#4C5359
     style IN_PROGRESS fill:#FFFDE7, stroke:#4C5359
     style ACCEPTED fill:#FFFDE7, stroke:#4C5359
     style DECLINED fill:#FFFDE7, stroke:#4C5359
@@ -109,9 +119,10 @@ graph TD
     style CUSTOMER3 fill:#A1BDDC, stroke:#4C5359
     style EMPLOYEE1 fill:#DDE6EE, stroke:#4C5359
     style EMPLOYEE2 fill:#DDE6EE, stroke:#4C5359
+    style EMPLOYEE3 fill:#DDE6EE, stroke:#4C5359
     style CART fill:#F2F6FA, stroke:#4C5359
     style PRODUCTS fill:#F2F6FA, stroke:#4C5359
-    style QUOTE_REQUEST fill:#F2F6FA, stroke:#4C5359
+    style QUOTE_REQUEST fill:#FFFDE7, stroke:#4C5359
     style ORDER fill:#F2F6FA, stroke:#4C5359
 ```
 
