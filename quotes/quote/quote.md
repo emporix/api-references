@@ -34,8 +34,8 @@ The Quote Service supports the following status values:
 | Status | Description | Set By | When Used |
 |--------|-------------|--------|-----------|
 | `CREATING` | Quote is being created (temporary state) | System | During quote creation process |
-| `AWAITING` | Quote is ready for customer review | System/Employee | After quote is finalized and sent to customer |
-| `AWAITING` | Waiting for response from customer or employee | Employee/Customer | When one party is waiting for the other's action |
+| `AWAITING` | Quote is ready for employee review | System | After quote is created by a customer |
+| `OPEN` | Quote is ready for customer review | Merchant/Employee | When employee sends the quote for customer approval |
 | `IN_PROGRESS` | Active negotiation/changes are being made | Employee | When employee is modifying the quote |
 | `ACCEPTED` | Customer accepted the quote | Customer | Customer agrees to terms, triggers order creation |
 | `DECLINED` | Customer rejected the quote | Customer | Customer doesn't want to proceed |
@@ -93,7 +93,7 @@ graph TD
     CREATING -->|Quote created| OPEN(QUOTE: OPEN)
     
     IN_PROGRESS -->|Approves| OPEN   
-    EMPLOYEE2 -->|Cannot fulfill| DECLINED_MERCHANT(QUOTE: DECLINED_BY_MERCHANT) 
+    EMPLOYEE2 -->|Declines| DECLINED_MERCHANT(QUOTE: DEC_BY_MERCHANT) 
     EMPLOYEE2 -->|Approves| OPEN
     
     DECLINED_MERCHANT -->|Notifies| CUSTOMER3(CUSTOMER)
