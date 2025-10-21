@@ -640,7 +640,11 @@ Example of an item in a quote request using an external product and price, where
 
 ### Support for mixins and metadata 
 
-**Mixins** as schema extensions that allow quotes to include custom structured data beyond the standard fields.
+Mixins and metadata can be added to:
+
+- Quote items
+- Products within quote items
+- Quote level (already supported)
 
 For example:
 
@@ -659,19 +663,6 @@ For example:
       "value": 10,
       "reason": "End of quarter discount"
     }
-  }
-}
-```
-
-**Metadata** is a flexible key-value store attached to any quote or sub-resource.
-It’s intended for contextual or audit information, things like who made a change, internal reason codes, timestamps, or workflow notes.
-
-For example:
-
-```json
-{
-  "id": "q-1234",
-  "status": "IN_PROGRESS",
   "metadata": {
     "quoteReason": "Customer requested price adjustment",
     "reviewedBy": "employee-001",
@@ -680,34 +671,3 @@ For example:
   }
 }
 ```
-
-#### Updating existing quotes
-
-To add new mixins or metadata or replace existing values in a created quote, send a request to the [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid) endpoint.
-
-```bash
-curl -L 
-  --request PATCH 
-  --url 'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
-  --header 'Content-Type: application/json' 
-  --data '[
-      {
-        "status": "IN_PROGRESS",
-        "metadata": {
-          "quoteReason": "Adjusted discount based on approval",
-          "reviewedBy": "employee-002"
-        },
-        "mixins": {
-          "approvalMixin": {
-            "approvedBy": "manager-001",
-            "approvalThreshold": 10000
-          }
-        }
-      }
-```
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
