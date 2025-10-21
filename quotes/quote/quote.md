@@ -56,7 +56,7 @@ Possible status transitions:
 
 {% hint %}
   When an employee creates a quote, its status is `CREATING`.
-  
+
   When a customer creates a quote, its status is `AWAITING`.
 {% endhint %}
 
@@ -82,8 +82,8 @@ graph TD
     
     CUSTOMER1 -->|Browses for products| PRODUCTS
     
+    PRODUCTS -->|Adds to cart| CART(CART)    
     PRODUCTS -->|Contacts employee| EMPLOYEE1(EMPLOYEE)
-    PRODUCTS -->|Adds to cart| CART(CART)
     
     EMPLOYEE1 -->|Creates quote| CREATING(QUOTE: CREATING)
     CART -->|Requests quote| QUOTE_REQUEST(QUOTE: AWAITING)
@@ -92,13 +92,13 @@ graph TD
     
     CREATING -->|Quote created| OPEN(QUOTE: OPEN)
     
-    
-    IN_PROGRESS -->|Approves| OPEN
-    EMPLOYEE2 -->|Cannot fulfill| DECLINED_MERCHANT(QUOTE: DECLINED_BY_MERCHANT)
+    IN_PROGRESS -->|Approves| OPEN   
+    EMPLOYEE2 -->|Cannot fulfill| DECLINED_MERCHANT(QUOTE: DECLINED_BY_MERCHANT) 
+    EMPLOYEE2 -->|Approves| OPEN
     
     DECLINED_MERCHANT -->|Notifies| CUSTOMER3(CUSTOMER)
 
-    OPEN -->|Validity expired| EXPIRED(QUOTE: EXPIRED)
+    CUSTOMER2 -->|Validity expired| EXPIRED(QUOTE: EXPIRED)
     
     OPEN -->|Sent to customer| CUSTOMER2(CUSTOMER)
     
