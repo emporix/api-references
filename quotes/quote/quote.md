@@ -115,7 +115,7 @@ graph TD
     style ORDER fill:#F2F6FA, stroke:#4C5359
 ```
 
-## Quote reasons
+## Quote decision reasons
 
 When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action.
 
@@ -129,6 +129,22 @@ There are four default reasons that your customers and employees can select for 
 {% hint style="warning" %}
 The quote reason of the `DECLINE` type can only be used for the `DECLINED` or `DECLINED_BY_MERCHANT` actions, while the `CHANGE` type can only be used for the `IN_PROGRESS` change of status.
 {% endhint %}
+
+If you need custom quote status change reasons, create them by sending a request to the [Creating a reason for changing the quote status](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-reason#post-quote-tenant-quote-reasons) endpoint.
+
+```bash
+curl -i -X POST 
+  'https://api.emporix.io/quote/{tenant}/quote-reasons' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: de' 
+  -H 'Content-Type: application/json' 
+  -d '{
+    "code": "WRONG_SIZE",
+    "type": "Change",
+    "message": {
+      "en": "The size is wrong",
+    }
+  }'
 
 ## How to configure the quote service
 
