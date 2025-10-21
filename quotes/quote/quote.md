@@ -52,8 +52,8 @@ config:
   look: classic
   themeVariables:
     background: transparent
-    lineColor: "#9CBBE3"
-    arrowheadColor: "#9CBBE3"
+    lineColor: "#FFFDE7"
+    arrowheadColor: "#FFFDE7"
     edgeLabelBackground: "#FFC128" 
     edgeLabelTextColor: "#4C5359"
     actorBorder: '#4C5359'
@@ -94,15 +94,15 @@ graph TD
     
     ACCEPTED -->|Triggers| ORDER(Order Created)
     
-    style CREATING fill:#9CBBE3, stroke:#4C5359
-    style OPEN fill:#9CBBE3, stroke:#4C5359
-    style AWAITING_CUSTOMER fill:#9CBBE3, stroke:#4C5359
-    style AWAITING_EMPLOYEE fill:#9CBBE3, stroke:#4C5359
-    style IN_PROGRESS fill:#9CBBE3, stroke:#4C5359
-    style ACCEPTED fill:#9CBBE3, stroke:#4C5359
-    style DECLINED fill:#9CBBE3, stroke:#4C5359
-    style DECLINED_MERCHANT fill:#9CBBE3, stroke:#4C5359
-    style EXPIRED fill:#9CBBE3, stroke:#4C5359
+    style CREATING fill:#FFFDE7, stroke:#4C5359
+    style OPEN fill:#FFFDE7, stroke:#4C5359
+    style AWAITING_CUSTOMER fill:#FFFDE7, stroke:#4C5359
+    style AWAITING_EMPLOYEE fill:#FFFDE7, stroke:#4C5359
+    style IN_PROGRESS fill:#FFFDE7, stroke:#4C5359
+    style ACCEPTED fill:#FFFDE7, stroke:#4C5359
+    style DECLINED fill:#FFFDE7, stroke:#4C5359
+    style DECLINED_MERCHANT fill:#FFFDE7, stroke:#4C5359
+    style EXPIRED fill:#FFFDE7, stroke:#4C5359
 
     style CUSTOMER1 fill:#A1BDDC, stroke:#4C5359
     style CUSTOMER2 fill:#A1BDDC, stroke:#4C5359
@@ -112,9 +112,8 @@ graph TD
     style CART fill:#F2F6FA, stroke:#4C5359
     style PRODUCTS fill:#F2F6FA, stroke:#4C5359
     style QUOTE_REQUEST fill:#F2F6FA, stroke:#4C5359
-    style ORDER fill:#9CBBE3, stroke:#4C5359
+    style ORDER fill:#FFFDE7, stroke:#4C5359
 ```
-
 ## How to configure the quote service
 
 The following merchant information is necessary for the pdf file with quote to be generated:
