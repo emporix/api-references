@@ -145,6 +145,7 @@ curl -i -X POST
       "en": "The size is wrong",
     }
   }'
+```
 
 ## How to configure the quote service
 
