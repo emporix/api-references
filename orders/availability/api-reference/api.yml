@@ -234,7 +234,7 @@ paths:
       description: |-
         Retrieves all availability information for a specified site.
 
-        **Note**: When a product bundle is retrieved, availability is returned both for its particular products and for the bundle as a whole. The bundle's availability is equal to the lowest availability found in its products.
+        **Note**: When a product bundle is retrieved, availability is returned both for its particular products and for the bundle as a whole. The bundle availability is equal to the lowest availability found in its products.
 
         ***
 
@@ -327,9 +327,9 @@ paths:
     get:
       tags:
         - Availabilities
-      summary: Retrieving a product's availability
+      summary: Retrieving a product availability
       description: |-
-        Retrieves a specified product's availability details.
+        Retrieves a specified product availability details.
         
         ### **Required scopes**
         * No specific scopes are required.
@@ -338,7 +338,7 @@ paths:
         ***
       responses:
         '200':
-          description: The request was successful. The product's availability details are returned.
+          description: The request was successful. The product availability details are returned.
           content:
             application/json:
               schema:
@@ -407,9 +407,9 @@ paths:
         - Availabilities
       summary: Upserting availability information of a product
       description: |-
-        Updates a specified product's availability details, or crates a new availability if it doesn't exist yet. 
+        Updates a specified product availability details, or crates a new availability if it doesn't exist yet. 
 
-        **Note**: There is no possibility to update a product bundle's availability - it is always equal to the lowest availability found in the bundled products.
+        **Note**: There is no possibility to update a product bundle availability - it is always equal to the lowest availability found in the bundled products.
 
         ***
 
@@ -454,9 +454,9 @@ paths:
         - Availabilities
       summary: Deleting availability information of a product
       description: |-
-        Deletes a specified product's availability.
+        Deletes a specified product availability.
 
-        **Note**: There is no possibility to delete a product bundle's availability - it is always equal to the lowest availability found in the bundled products.
+        **Note**: There is no possibility to delete a product bundle availability - it is always equal to the lowest availability found in the bundled products.
 
         ***
 
@@ -487,7 +487,7 @@ components:
       name: tenant
       required: true
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: The tenant name should always be provided in lowercase.
       schema:
@@ -497,7 +497,7 @@ components:
       in: path
       name: productId
       required: true
-      description: 'Product''s unique identifier, generated when the product is created through the Product Service.'
+      description: 'Product unique identifier, generated when the product is created through the Product Service.'
       schema:
         type: string
         example: 5f7c996173fc281cdd412345
@@ -513,14 +513,14 @@ components:
       in: path
       name: location
       required: true
-      description: Location's unique identifier.
+      description: Location unique identifier.
       schema:
         type: string
         example: 'shop1:1234'
     site:
       in: query
       name: site
-      description: "Site code, defined when the site is created. If it's not provided, then availabilites for all sites are returned."
+      description: "Site code, defined when the site is created. If it's not provided, then availabilities for all sites are returned."
       schema:
         type: string
         example: shop1
@@ -722,7 +722,7 @@ components:
         $ref: '#/components/schemas/AvailabilityWithBundle'
     DistributionChannel:
       type: string
-      description: Name of the product's distribution channel.
+      description: Name of the product distribution channel.
       enum:
         - ASSORTMENT
         - HOME_DELIVERY
@@ -838,7 +838,7 @@ components:
           example: 5f7c996173fc281cdd412345
         locations:
           type: array
-          description: List of product's physical locations.
+          description: List of product physical locations.
           items:
             $ref: '#/components/schemas/GenericLocation'
     ProductLocationList:

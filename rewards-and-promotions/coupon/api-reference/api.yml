@@ -973,7 +973,7 @@ components:
       description: Indicates if the coupon is type of referral coupon. This property is read only.
   responses:
     trait_queryable_400:
-      description: Request syntactically incorrect. Any details will be provided within the response payload.
+      description: Request syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -1108,7 +1108,7 @@ components:
                 message: Coupon with code MW2023_72 not found.
     trait_conflict_409:
       description: |
-        Creation failed because there was a conflict with another resource. Any details will be provided within the response payload.
+        Creation failed because there was a conflict with another resource. Details of the error are included in the response payload.
       content:
         application/json:
           schema:

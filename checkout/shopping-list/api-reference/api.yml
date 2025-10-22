@@ -700,7 +700,7 @@ components:
               type: element_resource_non_existing
     trait_yaasAware_409:
       description: |
-        Creation failed because there was a conflict with another resource. Any details will be provided within the response payload.
+        Creation failed because there was a conflict with another resource. Details of the error are included in the response payload.
       content:
         application/json:
           schema:

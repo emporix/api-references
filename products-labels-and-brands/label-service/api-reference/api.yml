@@ -363,7 +363,7 @@ components:
           type: integer
   responses:
     bad_request_400:
-      description: Request was syntactically incorrect. Any details will be provided within the response payload.
+      description: Request was syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
