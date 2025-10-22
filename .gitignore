@@ -1,6 +1,2 @@
 *.zip
-
-#IntelliJ
-.idea/
-*.iml
 .DS_Store
