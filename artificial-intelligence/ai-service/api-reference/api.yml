@@ -222,7 +222,7 @@ components:
       schema:
         type: string
       description: |
-        List of language codes acceptable for the response. You can specify factors that indicate which language should be retrieved if the one with a higher factor was not found in the localized fields.
+        List of language codes acceptable for the response. You can specify factors that indicate which language should be retrieved if the one with a higher factor was not found in the localized fields
 
         * If the header is set to a particular language or a list of languages, all localized fields are retrieved as strings.
         * If the header is set to `*`, all localized fields are retrieved as maps of translations, where the keys are language codes and values are the fields in their respective languages.
