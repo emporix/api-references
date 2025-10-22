@@ -6,7 +6,7 @@ icon: graduation-cap
 
 # AI Tutorials
 
-With Emporix support for AI, you can enhance text for product descriptions and generate AI completions.
+With Emporix support for AI, you can enhance text for product descriptions and generate AI completions. 
 
 ## Before you start
 
