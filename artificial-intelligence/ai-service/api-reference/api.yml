@@ -166,7 +166,6 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves agent jobs.
         
         ### Required scopes
@@ -228,7 +227,6 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Searches for agent jobs based on the provided query.
         
         ### Required scopes
@@ -288,7 +286,6 @@ paths:
         '404':
           $ref: '#/components/responses/404_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves agent job by its ID.
         
         ### Required scopes
@@ -314,7 +311,6 @@ paths:
         '404':
           $ref: '#/components/responses/404_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Deletes job by given ID.
         
         ### Required scopes
@@ -362,7 +358,6 @@ paths:
         '500':
           $ref: '#/components/responses/500_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Allows for communication with Emporix's agents.
 
         ### Required scopes
@@ -409,7 +404,6 @@ paths:
         '500':
           $ref: '#/components/responses/500_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Allows for communication with Emporix's agents in async way.
 
         ### Required scopes
@@ -455,7 +449,6 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves agent templates which can be later use as a base for custom agents.
         
         ### Required scopes
@@ -498,7 +491,6 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Searches for agent templates based on the provided query.
         
         ### Required scopes
@@ -544,7 +536,6 @@ paths:
         '404':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Creates an instance of the agent based of the given agent template.
         
         **Info:** Only active templates can be cloned.
@@ -590,7 +581,6 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves agent templates based on the provided query.
         
         ### Required scopes
@@ -636,7 +626,6 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Searches for agents based on the provided query.
         
         ### Required scopes
@@ -681,7 +670,6 @@ paths:
         '404':
           $ref: '#/components/responses/404_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves the agent by given ID.
         
         ### Required scopes
@@ -720,7 +708,6 @@ paths:
         '409':
           $ref: '#/components/responses/409_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Updates or creates a specified product by replacing all of its existing data with data from the request body.
         If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
         
@@ -749,7 +736,6 @@ paths:
         '404':
           $ref: '#/components/responses/404_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Partially updates a single agent document with given information.
         Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
           - `add` (adding an item to the items list)
@@ -781,7 +767,6 @@ paths:
         '404':
           $ref: '#/components/responses/404_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Deletes agent by given ID.
         
         ### Required scopes
@@ -824,7 +809,6 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves tools based on the provided query.
         
         ### Required scopes
@@ -869,7 +853,6 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Searches for tools based on the provided query.
         
         ### Required scopes
@@ -911,7 +894,6 @@ paths:
         '404':
           $ref: '#/components/responses/404_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves the tool by given ID.
         
         ### Required scopes
@@ -948,7 +930,6 @@ paths:
         '409':
           $ref: '#/components/responses/409_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Updates or creates a specified tool by replacing all of its existing data with data from the request body.
         If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
         
@@ -977,7 +958,6 @@ paths:
         '404':
           $ref: '#/components/responses/404_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Partially updates a single tool document with given information.
         Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
           - `add` (adding an item to the items list)
@@ -1011,7 +991,6 @@ paths:
         '404':
           $ref: '#/components/responses/404_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Deletes tool by given ID.
         
         ***Important***: If tool is being used by an agent then delete operation is not possible without `force` flag set to `true`.
@@ -1055,7 +1034,6 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves tokens based on the provided query.
         
         ### Required scopes
@@ -1099,7 +1077,6 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Searches for tokens based on the provided query.
         
         ### Required scopes
@@ -1140,7 +1117,6 @@ paths:
         '404':
           $ref: '#/components/responses/404_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves the token by given ID.
         
         ### Required scopes
@@ -1177,7 +1153,6 @@ paths:
         '409':
           $ref: '#/components/responses/409_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Updates or creates a specified token by replacing all of its existing data with data from the request body.
         If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
         
@@ -1208,7 +1183,6 @@ paths:
         '404':
           $ref: '#/components/responses/404_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Partially updates a single token document with given information.
         Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
           - `add` (adding an item to the items list)
@@ -1242,7 +1216,6 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Deletes tokens by given ID.
         
         
@@ -1288,7 +1261,6 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves mcp servers based on the provided query.
         
         ### Required scopes
@@ -1333,7 +1305,6 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Searches for MCP servers based on the provided query.
         
         ### Required scopes
@@ -1374,7 +1345,6 @@ paths:
         '404':
           $ref: '#/components/responses/404_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves the mcp server by given ID.
         
         ### Required scopes
@@ -1411,7 +1381,6 @@ paths:
         '409':
           $ref: '#/components/responses/409_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Updates or creates a specified mcp server by replacing all of its existing data with data from the request body.
         If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
 
@@ -1440,7 +1409,6 @@ paths:
         '404':
           $ref: '#/components/responses/404_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Partially updates a single mcp server document with given information.
         Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
           - `add` (adding an item to the items list)
@@ -1474,7 +1442,6 @@ paths:
         '404':
           $ref: '#/components/responses/404_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Deletes mcp server by given ID. 
         
         ***Important***: If mcp server is being used by an agent then delete operation is not possible without `force` flag set to `true`.
@@ -1508,7 +1475,6 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
         Retrieves commerce events available for agents with `COMMERCE_EVENTS` trigger.
         
         ### Required scopes
