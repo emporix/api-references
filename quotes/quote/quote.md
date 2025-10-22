@@ -642,9 +642,9 @@ Example of an item in a quote request using an external product and price, where
 
 Mixins and metadata can be added to:
 
-- Quote level itself
-- Quote items 
-- Products within quote items
+* Quote level itself
+* Quote items 
+* Products within quote items
 
 For example:
 
