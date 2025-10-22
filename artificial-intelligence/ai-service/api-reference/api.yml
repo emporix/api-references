@@ -16,7 +16,7 @@ paths:
         schema:
           type: string
         description: |
-          Your Emporix tenant's name.
+          Your Emporix tenant name.
 
           **Note**: The tenant name should always be provided in lowercase.
     post:
@@ -212,7 +212,7 @@ components:
       schema:
         type: string
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: The tenant name should always be provided in lowercase.
     header_Accept-Language:

@@ -19,7 +19,7 @@ paths:
       tags:
         - Brands
       description: |-
-        Retrieves all brands created by the tenant.
+        Retrieves all brands created in the tenant.
 
         ***
 
@@ -241,7 +241,7 @@ paths:
       tags:
         - Brands
       description: |
-        Partially updates a specified brand by replacing specificed fields from the request body.
+        Partially updates a specified brand by replacing fields provided in the request body.
         ***
 
         **Required scopes**
@@ -504,7 +504,7 @@ components:
       description: Schema for API-specific errors.
   responses:
     trait_400:
-      description: Request syntactically incorrect. Any details will be provided within the response payload.
+      description: Request syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -546,7 +546,7 @@ components:
                 resourceId: 55421f3b6ecea7b1a3b73d26
     trait_409:
       description: |
-        Creation failed because there was a conflict with another resource. Any details will be provided within the response payload.
+        Creation failed because there was a conflict with another resource. Details of the error are included in the response payload.
       content:
         application/json:
           schema:

@@ -13,9 +13,17 @@ layout:
 
 To create a brand with media files and add it to a product created beforehand, follow the process below:
 
-1. [Create a brand](brand.md#create-a-brand)
-2. [Upload brand images](brand.md#upload-an-image)
-3. [Update an existing product with brand information](brand.md#update-an-existing-product-with-brand-information)
+{% stepper %}
+{% step %}
+### [Create a brand](brand.md#create-a-brand)
+{% endstep %}
+{% step %}
+### [Upload brand images](brand.md#upload-an-image)
+{% endstep %}
+{% step %}
+### [Update an existing product with brand information](brand.md#update-an-existing-product-with-brand-information)
+{% endstep %}
+{% endstepper %}
 
 ## Before you start
 
@@ -31,16 +39,16 @@ To create a brand and add media files to it, you need to send a request to the [
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../prices-and-taxes/price-service/api-reference/" %}
-[api-reference](../../prices-and-taxes/price-service/api-reference/)
+{% content-ref url="../brand-service/api-reference/" %}
+[api-reference](../brand-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  https://api.emporix.io/brands \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: en' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  https://api.emporix.io/brands 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: en' 
+  -H 'Content-Type: application/json' 
   -d '{
     "name": "Sample brand",
     "description": "Description of the sample brand.",
@@ -67,10 +75,10 @@ The `brandId` is necessary to provide.
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/media/{tenant}/assets' \
-  --header 'Content-Type: multipart/form-data' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/media/{tenant}/assets' 
+  --header 'Content-Type: multipart/form-data' 
   --data '{
     "file": {
       "externalValue": "https://res.cloudinary.com/saas-ag/image/upload/v1695804155/emporix-logo-white-2f5e621206edefea6015fb4793959376_nswfbz.png"
@@ -100,16 +108,16 @@ To update the existing product with brand information, you need to send a reques
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../label-service/api-reference/" %}
-[api-reference](../label-service/api-reference/)
+{% content-ref url="../product-service/api-reference/" %}
+[api-reference](../product-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PATCH \
-  'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X PATCH 
+  'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "published": true
     "brandId":"123e06ecf0452c2d6c0b81392"

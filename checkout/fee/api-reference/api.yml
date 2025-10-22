@@ -6,7 +6,6 @@ info:
     email: documentation@emporix.com
   title: Fee Service
   version: v1
-  description: The Fee Service allows to manage the fees in the system. The Fees are agreed-upon amounts someone pays for a service or privilege.
 servers:
   - url: 'https://api.emporix.io'
 paths:
@@ -16,7 +15,7 @@ paths:
         - Fee management
       summary: Retrieving fees
       description: |
-        Retrieves all fees for tenant.
+        Retrieves all fees for a tenant.
       operationId: GET-fee-list-all-fees
       responses:
         '200':
@@ -39,9 +38,9 @@ paths:
     post:
       tags:
         - Fee management
-      summary: Creating fee
+      summary: Creating a fee
       description: |
-        Creates a new fee.
+        Creates a new fee within a specified tenant. Fees can be applied to various entities, such as products or payment methods, to manage pricing structures effectively.
         ***
 
         ### Required scopes
@@ -86,10 +85,10 @@ paths:
   '/fee/{tenant}/fees/{id}':
     get:
       description: |
-        Retrieving a fee by given id.
+        Retrieve the details of a fee by id.
       tags:
         - Fee management
-      summary: Retrieving fee by id
+      summary: Retrieving a fee by id
       operationId: GET-fee-retrieve-fee
       responses:
         '200':
@@ -137,7 +136,7 @@ paths:
         - $ref: '#/components/parameters/WithItems'
     put:
       description: |
-        Updates a fee.
+        Update the details of an existing fee.
         ***
 
         ### Required scopes
@@ -205,7 +204,7 @@ paths:
       description: |
         Retrieve all itemFees.
       tags:
-        - Item Fee management
+        - Item fee management
       summary: Retrieve all itemFees
       operationId: GET-fee-list-item-fees
       responses:
@@ -230,15 +229,15 @@ paths:
         - $ref: '#/components/parameters/siteFallback'
     post:
       description: |
-        Creates a new itemFee.
+        Creates a new itemFee. This endpoint allows you to assign one or more predefined fees to a specific item within a tenant. By associating fees with items, you can manage charges such as packaging, handling, or other service fees directly at the item level.
         ***
 
         ### Required scopes
 
           * `fee.item_create`
       tags:
-        - Item Fee management
-      summary: Creating itemFee
+        - Item fee management
+      summary: Creating an itemFee
       operationId: POST-fee-create-item-fee
       requestBody:
         content:
@@ -280,7 +279,7 @@ paths:
       description: |
         Retrieves all item fees for specified itemYRN.
       tags:
-        - Item Fee management
+        - Item fee management
       summary: Retrieving all item fees
       operationId: GET-fee-list-item-fees-itemYRN
       responses:
@@ -340,7 +339,7 @@ paths:
 
           * `fee.item_update`
       tags:
-        - Item Fee management
+        - Item fee management
       summary: Adding a list of fees to an item
       operationId: PUT-fee-add-item-fees-itemYRN
       requestBody:
@@ -368,8 +367,8 @@ paths:
 
           * `fee.item_delete`
       tags:
-        - Item Fee management
-      summary: Deleting item fee with itemYRN
+        - Item fee management
+      summary: Deleting an item fee with itemYRN
       operationId: DELETE-fee-remove-item-fee-with-itemYRN
       responses:
         '204':
@@ -391,7 +390,7 @@ paths:
 
           * `fee.item_delete`
       tags:
-        - Item Fee management
+        - Item fee management
       summary: Deleting a fee from the itemYRN
       operationId: DELETE-fee-remove-item-fee-from-itemYRN
       responses:
@@ -412,7 +411,7 @@ paths:
       description: |
         Retrieve all fees with given productId.
       tags:
-        - Product Fees management
+        - Product fees management
       summary: Retrieving all fees with given productId
       operationId: GET-fee-list-product-fees
       responses:
@@ -472,7 +471,7 @@ paths:
 
           * `fee.item_update`
       tags:
-        - Product Fees management
+        - Product fees management
       summary: Adding a list of fees to a product
       operationId: PUT-fee-add-product-fees
       requestBody:
@@ -503,7 +502,7 @@ paths:
           and/or
           * `fee.item_delete`
       tags:
-        - Product Fees management
+        - Product fees management
       summary: Deleting all fees of an itemYRN
       operationId: DELETE-fee-remove-all-product-fees
       responses:
@@ -528,7 +527,7 @@ paths:
           and/or
           * `fee.item_delete`
       tags:
-        - Product Fees management
+        - Product fees management
       summary: Deleting a fee from the itemYRN
       operationId: DELETE-fee-remove-product-fee
       responses:
@@ -549,7 +548,7 @@ paths:
       description: |
         Search itemFees by product ID.
       tags:
-        - Item Fee search
+        - Item fee search
       summary: Searching itemFees by product ID
       operationId: POST-fee-search-item-fee-by-ProductId
       requestBody:
@@ -583,7 +582,7 @@ paths:
       description: |
         Search itemFees by multiple product IDs.
       tags:
-        - Item Fee search
+        - Item fee search
       summary: Searching itemFees by product IDs
       operationId: POST-fee-search-multiple-item-fees-by-productIds
       requestBody:
@@ -618,7 +617,7 @@ paths:
       description: |
         Checks if the itemYrns in the request have a fee applied to. Responds with the itemYRN and the corresponding fees.
       tags:
-        - Item Fee search
+        - Item fee search
       summary: Checking if a fee has been applied
       operationId: POST-fee-check-item-fee
       requestBody:
@@ -732,13 +731,11 @@ components:
           description: Unique identifier of the fee.
           type: string
         name:
-          allOf:
-            - description: The localized fee name.
-            - $ref: '#/components/schemas/Localized'
+          description: The localized fee name.
+          $ref: '#/components/schemas/Localized'
         description:
-          allOf:
-            - description: The localized fee description.
-            - $ref: '#/components/schemas/Localized'
+          description: The localized fee description.
+          $ref: '#/components/schemas/Localized'
         code:
           maxLength: 100
           description: 'The code-name, unique for the tenant.'
@@ -755,9 +752,8 @@ components:
           description: The fee rate in percentage. Required if feeType is 'PERCENT'.
           type: number
         feeAbsolute:
-          allOf:
-            - description: The fee as an absolute amount. Required if type is 'ABSOLUTE'.
-            - $ref: '#/components/schemas/monetaryAmount'
+          description: The fee as an absolute amount. Required if type is 'ABSOLUTE'.
+          $ref: '#/components/schemas/monetaryAmount'
         itemType:
           description: |-
             The itemtype the fee can belong to. It could be a product or
@@ -971,7 +967,7 @@ components:
           name:
             de : ZACKE Bier
             en : ZACKE Beer
-          code: apple_mackintosh_fee
+          code: apple_packaging_fee
           feeType: ABSOLUTE
           siteCode: main
           feeAbsolute:
@@ -996,8 +992,8 @@ components:
         #       currency: EUR
         #     active: true
         #     taxable: false
-        #   - name: Apple Mackintosh Fee
-        #     code: apple_mackintosh_fee
+        #   - name: Apple Packaging Fee
+        #     code: apple_packaging_fee
         #     feeType: ABSOLUTE
         #     siteCode: main
         #     feeAbsolute:
@@ -1045,8 +1041,8 @@ components:
                 currency: EUR
               active: true
               taxable: false
-            - name: Apple Mackintosh Fee
-              code: apple_mackintosh_fee
+            - name: Apple Packaging Fee
+              code: apple_packaging_fee
               feeType: ABSOLUTE
               siteCode: main
               feeAbsolute:
@@ -1202,7 +1198,7 @@ components:
         type: string
   responses:
     trait_localizedRetrieval_400:
-      description: Request syntactically incorrect. Any details will be provided within the response payload.
+      description: Request syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -1418,7 +1414,7 @@ components:
               - type
     trait_yaasAware_409:
       description: |
-        Creation failed because there was a conflict with another resource. Any details will be provided within the response payload.
+        Creation failed because there was a conflict with another resource. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -1510,7 +1506,7 @@ components:
               $ref: '#/components/examples/ItemFees'
     trait_paged_400:
       description: |
-        Request was syntactically incorrect. Any details will be provided within the response payload.
+        Request was syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -1570,7 +1566,7 @@ components:
               - type
     trait_feeId_not_found_400:
       description: |
-        Request was syntactically incorrect. Any details will be provided within the response payload.
+        Request was syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -1642,9 +1638,9 @@ components:
             fee.item_delete: Needed to delete an item fee
 tags:
   - name: Fee management
-  - name: Item Fee management
-  - name: Product Fees management
-  - name: Item Fee search
+  - name: Item fee management
+  - name: Product fees management
+  - name: Item fee search
 security:
   - OAuth2:
       - fee.fee_create

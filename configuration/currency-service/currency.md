@@ -47,7 +47,20 @@ Your tenant's currency configuration is stored under the `project_curr` key in t
 ```json
 {
   "key": "project_curr",
-  "value": "[{\"id\":\"EUR\",\"label\":\"Euro\",\"default\":true,\"required\":true},{\"id\":\"GBP\",\"label\":\"Pound sterling\",\"default\":false,\"required\":false}]"
+  "value": [
+    {
+      "id": "EUR",
+      "label": "Euro",
+      "default": true,
+      "required": true
+    },
+    {
+      "id": "GBP",
+      "label": "Pound sterling",
+      "default": false,
+      "required": false
+    }
+  ]
 }
 ```
 
@@ -73,13 +86,28 @@ To retrieve your tenant's currency configuration, you need to send a request to 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../country-service/api-reference/" %}
-[api-reference](../country-service/api-reference/)
+{% content-ref url="../configuration-service/api-reference/" %}
+[api-reference](../configuration-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
+curl -L 
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
+  --header 'Accept: */*'
+```
+
+You can also get a list of all the currencies for your tenant by sending a request to the [Retrieving all currencies](https://developer.emporix.io/api-references/api-guides/configuration/currency-service/api-reference/currencies) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../currency-service/api-reference/" %}
+[api-reference](../currency-service/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -L 
+  --url 'https://api.emporix.io/currency/{tenant}/currencies' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
   --header 'Accept: */*'
 ```
 
@@ -93,15 +121,15 @@ The id in the request body must be compliant with the [ISO 4217 standard](https:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../country-service/api-reference/" %}
-[api-reference](../country-service/api-reference/)
+{% content-ref url="../configuration-service/api-reference/" %}
+[api-reference](../configuration-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request PUT \
-  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request PUT 
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
+  --header 'Content-Type: application/json' 
   --data '{
     "key": "project_curr",
     "secured": false,
@@ -122,13 +150,13 @@ To retrieve a particular site's currency configuration, you need to call the [Re
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
+curl -L 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' 
   --header 'Accept: */*'
 ```
 
@@ -142,15 +170,15 @@ The currency code must be compliant with the [ISO 4217 standard](https://en.wiki
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request PATCH \
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request PATCH 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' 
+  --header 'Content-Type: application/json' 
   --data '{
     "defaultLanguage": "en"
     "currency": "PLN"

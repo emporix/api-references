@@ -80,8 +80,7 @@ paths:
       tags:
         - Approvals
       description: |
-        Retrieves a list of approval documents which is assigned to the user. The user needs to be a requestor or the approval giver.
-        Retrieves a list of approval documents which is assigned to the user. The user needs to be a requestor or an approval giver.
+        Retrieves a list of approval documents which is assigned to the user. The user needs to be a *Requestor* or an *Approver*.
         ***
         **Required scopes**
         * `approval.approval_read_own`
@@ -103,7 +102,7 @@ paths:
         - Approvals
       operationId: GET-approval-retrieve-approval
       description: |
-        Retrieves a single approval document which is assigned to the user. The user needs to be a requestor or an approval giver.
+        Retrieves a single approval document which is assigned to the user. The user needs to be a *Requestor* or an *Approver*.
         
         In case of any validation problems, the below `errorCodes` can be returned:
           - **APPROVAL-404001**: Approval does not exist
@@ -127,7 +126,7 @@ paths:
       operationId: PATCH-approval-update-approval
       responses:
         '204':
-          description: No Content
+          description: No Content.
         '400':
           $ref: '#/components/responses/approvals_response_BadRequest_400'
         '401':
@@ -139,7 +138,7 @@ paths:
       tags:
         - Approvals
       description: |
-        Partially updates a single approval document with given information. To update the approval, the user needs to be a requestor or an approval giver. 
+        Partially updates a single approval document with given information. To update the approval, the user needs to be a *Requestor* or an *Approver*. 
         Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
           - `add` (adding an item to the items list)
           - `remove` (removing an item from the items list)
@@ -184,10 +183,10 @@ paths:
         A customer, who has the `approval.approval_manage_own` scope granted and is assigned to the approval as a requestor, can delete an approval. The approval can only be deleted if its status is `PENDING`. The approval status is changed to `CLOSED` during deletion.
 
         In case of any validation problems, the below `errorCodes` can be returned:
-          - **APPROVAL-404001**: Approval does not exist
+          - **APPROVAL-404001**: Approval does not exist.
         
         ***
-        ***Required scopes**
+        **Required scopes**
         * `approval.approval_manage_own`
       security:
         - CustomerAccessToken: []
@@ -206,7 +205,7 @@ paths:
         '403':
           $ref: '#/components/responses/common_response_Forbidden_403'
       description: |
-        Checks the approval for given resource
+        Checks the approval for given resource. The endpoint verifies whether a user is authorized to perform a specific action on a given resource within a tenant.
 
         In case of any validation problems, the below `errorCodes` can be returned:
           - **APPROVAL-400011**: Requested user is not assigned to any company
@@ -227,7 +226,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/path_tenant'
     post:
-      summary: Search for the approver users
+      summary: Search for the users eligible to act as *Approvers*.
       responses:
         '200':
           $ref: '#/components/responses/ApprovalSearchUsersResponse_200'
@@ -241,10 +240,10 @@ paths:
         Search for the users who can be assigned to the approvals.
 
         In case of any validation problem, the below `errorCodes` can be returned:
-          - **APPROVAL-400008**: Requested user has no permissions to the resource
-          - **APPROVAL-400011**: Requested user is not assigned to any company
-          - **APPROVAL-404002**: Provided resource does not exist
-          - **APPROVAL-404003**: Requested user is not assigned to any legal entity
+          - **APPROVAL-400008**: Requested user has no permissions to the resource.
+          - **APPROVAL-400011**: Requested user is not assigned to any company.
+          - **APPROVAL-404002**: Provided resource does not exist.
+          - **APPROVAL-404003**: Requested user is not assigned to any legal entity.
         
         ***
         **Required scopes**
@@ -276,7 +275,7 @@ components:
                   - message: 'resourceType: cannot be null'
                 errorCode: APPROVAL-400001
     approvals_response_NotFound_404:
-      description: 'Resource cannot be found'
+      description: 'Resource cannot be found.'
       content:
         application/json:
           schema:
@@ -289,7 +288,7 @@ components:
                 message: "Approval with id '123456789' does not exist."
                 errorCode: APPROVAL-404001
     common_response_Unauthorized_401:
-      description: Unauthorized
+      description: Unauthorized.
       content:
         application/json:
           schema:
@@ -448,7 +447,7 @@ components:
                   modifiedAt: '2023-04-31T13:18:02.379Z'
                   version: 1
     listOfApprovalsResponse_200:
-      description: Example response
+      description: Example response.
       content:
         application/json:
           schema:
@@ -540,7 +539,7 @@ components:
                     modifiedAt: '2023-04-31T13:18:02.379Z'
                     version: 1
     ApprovalPermittedResponse_200:
-      description: Approval permitted response
+      description: Approval permitted response.
       content:
         application/json:
           schema:
@@ -567,7 +566,7 @@ components:
                 action: CHECKOUT
                 permitted: false
     ApprovalSearchUsersResponse_200:
-      description: Approval permitted response
+      description: Approval permitted response.
       content:
         application/json:
           schema:
@@ -593,9 +592,9 @@ components:
           description: Error message.
         errorCode:
           type: string
-          description: code of the error
+          description: code of the error.
         details:
-          description: Details information
+          description: Details information.
           type: array
           items:
             type: object
@@ -619,18 +618,18 @@ components:
           $ref: '#/components/schemas/approvalAction'
         approver:
           type: object
-          description: User which can approve the approval request
+          description: User who can approve the approval request.
           properties:
             userId:
               type: string
-              description: Identifier of the user
+              description: Identifier of the user.
         comment:
           type: string
-          description: A comment from the requestor to the approver
+          description: A comment from the requestor to the approver.
         details:
           type: object
           title: additional information
-          description: additional information required for approval process
+          description: additional information required for approval process.
           properties:
             shipping:
               $ref: '#/components/schemas/shipping'
@@ -657,7 +656,7 @@ components:
         - approver
     address:
       type: object
-      description: Information about the customer's address.
+      description: Information about the customer address.
       properties:
         contactName:
           type: string
@@ -715,7 +714,7 @@ components:
           description: Shipping net cost.
         shippingTaxCode:
           type: string
-          description: The tax code of the shipping
+          description: The tax code of the shipping.
     payment:
       type: object
       description: Information about the payment.
@@ -764,32 +763,32 @@ components:
       properties:
         userId:
           type: string
-          description: An identifier of the user
+          description: An identifier of the user.
         firstName:
           type: string
-          description: First name of the user
+          description: First name of the user.
         lastName:
           type: string
-          description: Last name of the user
+          description: Last name of the user.
       required:
         - userId
         - firstName
         - lastName
     resourceType:
       title: A type of a resource
-      description: Base schema for an approval resource type
+      description: Base schema for an approval resource type.
       type: string
       enum:
         - CART
     approvalAction:
       title: An approval action
-      description: Base schema for an approval action type
+      description: Base schema for an approval action type.
       type: string
       enum:
         - CHECKOUT
     approvalStatus:
       title: A status of the approval
-      description: Base schema for the approval status
+      description: Base schema for the approval status.
       type: string
       enum:
         - PENDING
@@ -813,7 +812,7 @@ components:
               description: An identifier of the approval document.
             approverComment:
               type: string
-              description: A comment from an approver user
+              description: A comment from an approver user.
             resource:
               $ref: '#/components/schemas/resourceResponse'
             requestor:
@@ -838,21 +837,21 @@ components:
               $ref: '#/components/schemas/approvalStatus'
             permitted:
               type: boolean
-              description: Indicates if the operation is permitted
+              description: Indicates if the operation is permitted.
             approvalId:
               type: string
-              description: Identifier of the approval
+              description: Identifier of the approval.
           required:
             - permitted
             - action
     resourceResponse:
       title: Resource
-      description: Resource of the approval
+      description: Resource of the approval.
       type: object
       properties:
         id:
           type: string
-          description: The identifier of the resource
+          description: The identifier of the resource.
         items:
           type: array
           items:
@@ -865,70 +864,70 @@ components:
           $ref: '#/components/schemas/taxablePrice'
         amount:
           type: number
-          description: Value of the price
+          description: Value of the price.
         siteCode:
           type: string
-          description: Name of the site
+          description: Name of the site.
         deliveryWindow:
           $ref: '#/components/schemas/deliveryWindow'
     resourceItem:
       title: Resource item
-      description: Item of the resource
+      description: Item of the resource.
       type: object
       properties:
         quantity:
           type: number
-          description: Quantity of the given item
+          description: Quantity of the given item.
         itemPrice:
           $ref: '#/components/schemas/price'
         itemYrn:
           type: string
-          description: YRN which identifies the product
+          description: YRN which identifies the product.
     price:
       title: Price value
-      description: Price value with the currency
+      description: Price value with the currency.
       type: object
       properties:
         currency:
           type: string
-          description: Currency of the price
+          description: Currency of the price.
         amount:
           type: number
-          description: Value of the price
+          description: Value of the price.
     taxablePrice:
       title: Taxable price value
-      description: Price value with the currency and tax information
+      description: Price value with the currency and tax information.
       type: object
       properties:
         currency:
           type: string
-          description: Currency of the price
+          description: Currency of the price.
         netValue:
           type: number
-          description: Net value of the price
+          description: Net value of the price.
         grossValue:
           type: number
-          description: Gross value of the price
+          description: Gross value of the price.
         taxValue:
           type: number
-          description: Tax value of the price
+          description: Tax value of the price.
     deliveryWindow:
       title: Delivery Window
-      description: delivery window required for order
+      description: delivery window required for order.
       type: object
       properties:
         id:
           type: string
-          description: Identifier of the delivery window
+          description: Identifier of the delivery window.
         slotId:
           type: string
-          description: Identifier of the slot
+          description: Identifier of the slot.
         deliveryDate:
           type: string
-          description: Delivery date
+          description: Delivery date.
     approvalSearchUsersResponse:
       title: Search approval users response
-      description: Base schema search approval users response
+      description: Base schema search approval users response.
       type: array
       items:
         $ref: '#/components/schemas/user'
@@ -941,10 +940,10 @@ components:
           properties:
             id:
               type: string
-              description: An identifier of the approval document
+              description: An identifier of the approval document.
             resourceId:
               type: string
-              description: An identifier of the approval resource
+              description: An identifier of the approval resource.
     updateApprovalRequest:
       type: array
       description: Approval partial update operation list.
@@ -971,11 +970,11 @@ components:
             anyOf:
               - $ref: '#/components/schemas/approvalStatus'
               - type: string
-                description: Value of the string type
+                description: Value of the string type.
               - type: object
-                description: Any part of the details object
+                description: Any part of the details object.
               - type: object
-                description: Any part of the delivery window object
+                description: Any part of the delivery window object.
         required:
           - op
           - path
@@ -1018,7 +1017,7 @@ components:
           $ref: '#/components/schemas/resourceType'
         resourceId:
           type: string
-          description: An identifier of the resource for approval
+          description: An identifier of the resource for approval.
         action:
           $ref: '#/components/schemas/approvalAction'
       required:
@@ -1033,7 +1032,7 @@ components:
           $ref: '#/components/schemas/resourceType'
         resourceId:
           type: string
-          description: An identifier of the resource for approval
+          description: An identifier of the resource for approval.
         action:
           $ref: '#/components/schemas/approvalAction'
       required:
@@ -1206,7 +1205,7 @@ components:
       in: path
       required: true
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
         **Note**: The tenant name should always be written in lowercase.
       schema:
         pattern: '^[a-z][a-z0-9]+$'
@@ -1247,7 +1246,7 @@ components:
         type: string
         example: 'q=status:APPROVED'
       description: |
-        A standard query parameter is used to search for specific values.
+        A standard query parameter is used to search for the specific values.
 
            + Searching for an item by a string property: `q=status:PENDING`, where `status` is the name of the string field and `PENDING` is its required value.
            + Searching for items by a number-based property:
@@ -1283,4 +1282,4 @@ components:
     CustomerAccessToken:
       type: http
       scheme: bearer
-      description: 'To generate a customer''s access token, go to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.'
+      description: 'To generate a customer access token, go to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.'

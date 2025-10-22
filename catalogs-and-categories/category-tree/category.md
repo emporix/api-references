@@ -39,6 +39,10 @@ If you want to create a root category, choose one from the following:
 
 If you want to create a subcategory, include the `parentId` of the root category in the request body.
 
+{% hint style="info" %}
+When the `X-Version` header is required, use `v2` — otherwise, the header is not necessary.
+{% endhint %}
+
 To create a new category, you need to send a request to the [Creating a new category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint.
 
 {% hint style="danger" %}
