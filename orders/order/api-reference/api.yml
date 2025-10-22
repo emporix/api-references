@@ -2827,7 +2827,7 @@ components:
               - type
     trait_resourceLocation_409:
       description: |
-        Creation failed because there was a conflict with another resource. Any details will be provided within the response payload.
+        Creation failed because there was a conflict with another resource. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -2881,7 +2881,7 @@ components:
               - status
               - type
     trait_billingAware_400:
-      description: Request syntactically incorrect. Any details will be provided within the response payload.
+      description: Request syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
@@ -2940,7 +2940,7 @@ components:
               - type
     trait_paged_400:
       description: |
-        Request was syntactically incorrect. Any details will be provided within the response payload.
+        Request was syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:

@@ -6,7 +6,7 @@ icon: coin-blank
 
 # Fee Service
 
-The Fee Service allows to manage the fees in the system. The fees are agreed-upon amounts someone pays for a service or privilege, for example, package fee, oversize fee, gas fee, and more.
+The Fee Service allows you to manage fees in the system. Fees are agreed-upon amounts someone pays for a service or privilege, for example, package fees, oversize fees, gas fees, and more.
 
 ### Key features and benefits
 

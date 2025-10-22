@@ -757,7 +757,7 @@ components:
       description: 'Unique identifier of a customer, generated when the customer is created through the Customer Service.'
   responses:
     trait_badRequest_400:
-      description: Request syntactically incorrect. Any details will be provided within the response payload.
+      description: Request syntactically incorrect. Details of the error are included in the response payload.
       content:
         application/json:
           schema:
