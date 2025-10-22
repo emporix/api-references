@@ -8,6 +8,8 @@
 
 ## 2025
 
+* [2025-10-22: Webhook - new agentic job events](2025/2025-10-22-webhook.md)
+* [2025-10-22: AI Service - support for AI agents](2025/2025-10-22-ai.md)
 * [2025-10-15: Sequential ID Service - removal of deprecated endpoints](2025/2025-10-15-sequential-id.md)
 * [2025-09-30: Media Service - add MODULE media id type](2025/2025-09-30-media.md)
 * [2025-09-29: Category Tree - filter unpublished categories](2025/2025-09-29-category-tree.md)
