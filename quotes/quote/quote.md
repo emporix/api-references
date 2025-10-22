@@ -532,7 +532,7 @@ curl -i -X PATCH
 
 ### Declining a quote by a customer
 
-When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action.\
+When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action.
 On the storefront, when a customer declines the quote, a request to the following endpoint is sent: [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
 
 {% hint style="warning" %}
@@ -601,7 +601,7 @@ Example of an item in a quote request using an external price, where:
     "gross": 120.00,
     "net": 100.00,
     "tax": {
-      "rate": 0.20
+      "rate": 20
     }
   },
   "quantity": 2
@@ -631,7 +631,7 @@ Example of an item in a quote request using an external product and price, where
     "gross": 500.00,
     "net": 420.00,
     "tax": {
-      "rate": 0.19
+      "rate": 20
     }
   },
   "quantity": 1
@@ -642,32 +642,38 @@ Example of an item in a quote request using an external product and price, where
 
 Mixins and metadata can be added to:
 
-- Quote items
+- Quote level itself
+- Quote items 
 - Products within quote items
-- Quote level (already supported)
 
 For example:
 
-```json
-{
-  "id": "q-7890",
-  "status": "AWAITING_CUSTOMER_ACTION",
-  "mixins": {
-    "approvalMixin": {
-      "approvedBy": "employee-002",
-      "approvedAt": "2025-10-20T10:15:00Z",
-      "approvalThreshold": 5000
-    },
-    "discountMixin": {
-      "type": "percentage",
-      "value": 10,
-      "reason": "End of quarter discount"
-    }
-  "metadata": {
-    "quoteReason": "Customer requested price adjustment",
-    "reviewedBy": "employee-001",
-    "reviewTimestamp": "2025-10-20T09:45:00Z",
-    "sourceChannel": "B2B Portal"
-  }
-}
+```bash
+curl -L 
+  --request PATCH 
+  --url 'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Content-Type: application/json' 
+  --data '[
+    {
+      "op": "ADD",
+      "path": "/items/124dfa8241sd0fas824kfa/price",
+      "mixins": {
+        "approvalMixin": {
+        "approvedBy": "employee-002",
+        "approvedAt": "2025-10-20T10:15:00Z",
+        "approvalThreshold": 5000
+      },
+      "discountMixin": {
+        "type": "percentage",
+        "value": 10,
+        "reason": "End of quarter discount"
+      }
+      "metadata": {
+        "quoteReason": "Customer requested price adjustment",
+        "reviewedBy": "employee-001",
+        "reviewTimestamp": "2025-10-20T09:45:00Z",
+        "sourceChannel": "B2B Portal"
+      }
+  ]'
 ```
