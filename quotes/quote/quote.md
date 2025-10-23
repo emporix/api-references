@@ -92,7 +92,7 @@ graph TD
     
     CREATING -->|Quote created| OPEN(QUOTE: OPEN)
     
-    IN_PROGRESS -->|Approves to send to customer| OPEN   
+    IN_PROGRESS -->|Approves| OPEN   
     EMPLOYEE2 -->|Declines| DECLINED_MERCHANT(QUOTE: DECLINED_BY_MERCHANT) 
     EMPLOYEE2 -->|Approves| OPEN
     
