@@ -962,53 +962,53 @@ paths:
               Add mixin and metadata to a quote item:
                 value:
                   - op: ADD
-                    path: /mixins/design
+                    path: /items/2298854309b06d4c6d3cf1zfe/mixins/design
                     value:
                       product_type: item
                       freezer_number_of_shelves_baskets: 123
                   - op: ADD
-                    path: /metadata/mixins/design
+                    path: /items/2298854309b06d4c6d3cf1zfe/metadata/mixins/design
                     value: 'https://storage.googleapis.com/emporix_mixin/freezers-design.json'
               Replace mixin and metadata in a quote item:
                 value:
                   - op: REPLACE
-                    path: /mixins/quoteCustomAttributes
+                    path: /items/2298854309b06d4c6d3cf1zfe/mixins/quoteCustomAttributes
                     value:
                       itemLevelAttribute: new value
                   - op: REPLACE
-                    path: /metadata/mixins/quoteCustomAttributes
+                    path: /items/2298854309b06d4c6d3cf1zfe/metadata/mixins/quoteCustomAttributes
                     value: 'https://storage.googleapis.com/emporix_mixin/freezers-design.json'
               Remove mixin and metadata from a quote item:
                 value:
                   - op: REMOVE
-                    path: /mixins/quoteCustomAttributes/itemLevelAttribute
+                    path: /items/2298854309b06d4c6d3cf1zfe/mixins/quoteCustomAttributes/itemLevelAttribute
                   - op: REMOVE
-                    path: /metadata/mixins/quoteCustomAttributes
+                    path: /items/2298854309b06d4c6d3cf1zfe/metadata/mixins/quoteCustomAttributes
               Add mixin and metadata to a quote product:
                 value:
                   - op: ADD
-                    path: /mixins/design
+                    path: /items/2298854309b06d4c6d3cf1zfe/product/mixins/design
                     value:
                       product_type: item
                       freezer_number_of_shelves_baskets: 123
                   - op: ADD
-                    path: /metadata/mixins/design
+                    path: /items/2298854309b06d4c6d3cf1zfe/product/metadata/mixins/design
                     value: 'https://storage.googleapis.com/emporix_mixin/freezers-design.json'
               Replace mixin and metadata in a quote product:
                 value:
                   - op: REPLACE
-                    path: /mixins/quoteCustomAttributes
+                    path: /items/2298854309b06d4c6d3cf1zfe/product/mixins/quoteCustomAttributes
                     value:
                       productLevelAttribute: new value
                   - op: REPLACE
-                    path: /metadata/mixins/quoteCustomAttributes
+                    path: /items/2298854309b06d4c6d3cf1zfe/product/metadata/mixins/quoteCustomAttributes
                     value: 'https://storage.googleapis.com/emporix_mixin/freezers-design.json'
               Remove mixin and metadata from a quote product:
                 value:
                   - op: REMOVE
-                    path: /mixins/quoteCustomAttributes/productLevelAttribute
+                    path: /items/2298854309b06d4c6d3cf1zfe/product/mixins/quoteCustomAttributes/productLevelAttribute
                   - op: REMOVE
-                    path: /metadata/mixins/quoteCustomAttributes
+                    path: /items/2298854309b06d4c6d3cf1zfe/product/metadata/mixins/quoteCustomAttributes
               Replace item list of a quote:
                 value:
                   - op: REPLACE

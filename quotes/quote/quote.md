@@ -173,7 +173,8 @@ The following merchant information is necessary for the pdf file with quote to b
   * `merchantZipCode`
 
 {% hint style="warning" %}
-The pdf with quote is sent to the customer in the notification email upon the quote creation or change. It's also available for the customer on the storefront.
+* The pdf with quote is sent to the customer in the notification email upon the quote creation or change. It's also available for the customer on the storefront.
+* If no employee is specified in a quote request, a default employee configured in the site settings is used.
 {% endhint %}
 
 {% stepper %}
@@ -310,9 +311,9 @@ curl -i -X POST
   -H 'Content-Type: application/json' 
   -d '{
     "customerId": "9tt954309b06d46d3cf19fe",
-    "employeeId": "9tt954309b06d46d3cf19fa",
+    "employeeId": "7ytw5533f0mo335mfrwl3336",
     "billingAddressId": "64672a8f9939d331699cbe6e",
-    "shippingAddressId": "64672a8f9939d331699cbe6e",
+    "shippingAddressId": "64672a8f943440ft63j995yh",
     "companyName": "ABC",
     "siteCode": "main",
     "currency": "USD",
@@ -465,7 +466,7 @@ curl -L
     }
   ]'
 ```
-### Accepting a quote by an employee
+### Approving a quote by an employee
 
 When an employee accepts a quote, they approve it to be sent to the customer. Depending on the flow, the quote status changes from 'AWAITING', 'CREATING' or "IN_PROGRESS" to 'OPEN"'.
 
@@ -634,7 +635,7 @@ Mixins and metadata can be added to:
 
 PATCH operations support adding, replacing, and removing mixin values at all these levels.
 
-### Quote pdf generation
+## Quote pdf generation
 
 To generate a quote pdf, send a request to the [Creating a quote PDF](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-pdf) endpoint. 
 The request does not require any body, you only need a tenant name and quote ID.
