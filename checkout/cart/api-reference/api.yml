@@ -2473,7 +2473,7 @@ paths:
         '500':
           $ref: '#/components/responses/trait_500'
       description: |-
-        Refreshes a specified cart and their items. In case the prices assigned to cart's items have been changed then these changes are recognized and reassigned to the cart.
+        Refreshes a specified cart and their items. In case the prices assigned to cart items have been changed then these changes are recognized and reassigned to the cart.
         ***
         ### Required scopes
 
@@ -3756,7 +3756,7 @@ paths:
         required: true
         schema:
           type: string
-        description: Cart unique identifier generated when a cart is created.
+        description: Cart’s unique identifier generated when a cart is created.
       - name: tenant
         in: path
         required: true
@@ -4014,63 +4014,73 @@ components:
                 ***NOTE***
                 This attribute is deprecated. Please use the `deliveryWindow` attribute.
             feeYrnAggregate:
-              $ref: '#/components/schemas/feeAggregate'
-              type: object
-              description: "**This field is deprecated**. Please use `calculatedPrice.totalFees` and `items[].calculatedPrice.fees` instead.
+              allOf:
+                - $ref: '#/components/schemas/feeAggregate'
+                - type: object
+                  description: "**This field is deprecated**. Please use `calculatedPrice.totalFees` and `items[].calculatedPrice.fees` instead.
                             These fields provide the same values with updated functionality."
               deprecated: true 
             totalPrice:
-              $ref: '#/components/schemas/price'
-              type: object
-              description: "**This field is deprecated**. Please use `calculatedPrice.finalPrice` instead.
+              allOf:
+                - $ref: '#/components/schemas/price'
+                - type: object
+                  description: "**This field is deprecated**. Please use `calculatedPrice.finalPrice` instead.
                             The `calculatedPrice.finalPrice` field provides the same value with updated functionality."
               deprecated: true
             subTotalPrice:
-              $ref: '#/components/schemas/price'
-              type: object
-              description: "**This field is deprecated**. Please use `calculatedPrice.price` or `calculatedPrice.discountedPrice` instead.
+              allOf:
+                - $ref: '#/components/schemas/price'
+                - type: object
+                  description: "**This field is deprecated**. Please use `calculatedPrice.price` or `calculatedPrice.discountedPrice` instead.
                             These fields provide the same value with updated functionality."
               deprecated: true
             shipping:
-              $ref: '#/components/schemas/shipping'
-              type: object
-              description: "**This field is deprecated**. Please use `calculatedPrice.totalShipping` instead.
+              allOf:
+                - $ref: '#/components/schemas/shipping'
+                - type: object
+                  description: "**This field is deprecated**. Please use `calculatedPrice.totalShipping` instead.
                             The `unitPrice` field provides the same value with updated functionality."
               deprecated: true
             taxAggregate:
-              $ref: '#/components/schemas/taxAggregate'
-              type: object
-              description: "**This field is deprecated**. Please use `calculatedPrice.finalPrice.taxAggregate` instead.
+              allOf:
+                - $ref: '#/components/schemas/taxAggregate'
+                - type: object
+                  description: "**This field is deprecated**. Please use `calculatedPrice.finalPrice.taxAggregate` instead.
                             The `calculatedPrice.finalPrice.taxAggregate` field provides the same value with updated functionality."
               deprecated: true
             subtotalAggregate:
-              $ref: '#/components/schemas/subtotalAggregate'
-              type: object
-              description: "**This field is deprecated**. Please use `calculatedPrice.price` instead.
+              allOf:
+                - $ref: '#/components/schemas/subtotalAggregate'
+                - type: object
+                  description: "**This field is deprecated**. Please use `calculatedPrice.price` instead.
                             The `calculatedPrice.price` field provides the same value with updated functionality."
               deprecated: true  
             totalDiscount:
-              $ref: '#/components/schemas/price'
-              type: object
-              description: "**This field is deprecated**. Please use `calculatedPrice.totalDiscount` instead.
+              allOf:
+                - $ref: '#/components/schemas/price'
+                - type: object
+                  description: "**This field is deprecated**. Please use `calculatedPrice.totalDiscount` instead.
                             The `calculatedPrice.totalDiscount` field provides the same value with updated functionality."
               deprecated: true
             itemFeesTotal:
-              $ref: '#/components/schemas/total'
-              type: object
-              description: "**This field is deprecated**. Please use `calculatedPrice.totalFee` instead.
+              allOf:
+                - $ref: '#/components/schemas/total'
+                - type: object
+                  description: "**This field is deprecated**. Please use `calculatedPrice.totalFee` instead.
                             The `unitPrice` field provides the same value with updated functionality."
               deprecated: true
             paymentFeesTotal:
-              $ref: '#/components/schemas/total'
-              type: object
-              description: "**This field is deprecated**. Please use `calculatedPrice.paymentFees` instead.
+              allOf:
+                - $ref: '#/components/schemas/total'
+                - type: object
+                  description: "**This field is deprecated**. Please use `calculatedPrice.paymentFees` instead.
                             The `calculatedPrice.paymentFees` field provides the same value with updated functionality."              
               deprecated: true
             totalAuthorizedAmount:
-              $ref: '#/components/schemas/price'
-              type: object
-              description: "**This field is deprecated**. Please use `calculatedPrice.upliftValue` instead.
+              allOf:
+                - $ref: '#/components/schemas/price'
+                - type: object
+                  description: "**This field is deprecated**. Please use `calculatedPrice.upliftValue` instead.
                             The `calculatedPrice.upliftValue` field provides an information how much final price should be increased for card authorization."
               deprecated: true
     cartDTRestrictions:
@@ -4096,9 +4106,10 @@ components:
           description: "Indicates that products are maintained as individual entries in the cart, rather than being consolidated. 
             When identical products are added multiple times, each addition creates a new line item instead of increasing the quantity of an existing one."
         product:
-          $ref: '#/components/schemas/product'
-          type: object
-          description: Product details. This field is required when itemType is EXTERNAL and product does not exist in Emporix system.
+          allOf:
+            - $ref: '#/components/schemas/product'
+            - type: object
+              description: Product details. This field is required when itemType is EXTERNAL and product does not exist in Emporix system.
         itemYrn:
           type: string
           title: YRN
@@ -4114,9 +4125,10 @@ components:
           items:
             $ref: '#/components/schemas/externalDiscount'
         itemType:
-          $ref: '#/components/schemas/itemType'
-          type: object
-          description: Optional field which allows fetching external prices if set to EXTERNAL.
+          allOf:
+            - $ref: '#/components/schemas/itemType'
+            - type: object
+              description: Optional field which allows fetching external prices if set to EXTERNAL.
         taxCode:
           description: Tax code. Tax indicated in this field overrides the site's default tax value.
           type: string
@@ -4128,9 +4140,10 @@ components:
         price:
           $ref: '#/components/schemas/priceRowItem'
         tax:
-          $ref: '#/components/schemas/taxValue'
-          type: object
-          description: Tax information per unit. This field is only required when itemType is EXTERNAL and request contains external price. It's optional for the `INTERNAL` itemType.'
+          allOf:
+            - $ref: '#/components/schemas/taxValue'
+            - type: object
+              description: Tax information per unit. This field is only required when itemType is EXTERNAL and request contains external price. It's optional for the `INTERNAL` itemType.'
         linePrice:
           description: Externally calculated total line price (`unit price × quantity`). When provided, this overrides internal calculations.
           properties:
@@ -4147,7 +4160,8 @@ components:
             - originalAmount
             - currency
         lineTax:
-          $ref: '#/components/schemas/taxValue'
+          allOf:
+            - $ref: '#/components/schemas/taxValue'
           description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`. 
           required:
             - netValue
@@ -4201,9 +4215,10 @@ components:
           type: string
           description: Unique identifier of the fee.
         name:
-          $ref: '#/components/schemas/localizedValue'
-          type: object
-          description: Fee name.
+          allOf:
+            - $ref: '#/components/schemas/localizedValue'
+            - type: object
+              description: Fee name.
         yrn:
           type: string
           description: Unique identifier of the fee.
@@ -4376,8 +4391,7 @@ components:
                 - originalAmount
                 - currency
             lineTax:
-              allOf:
-                - $ref: '#/components/schemas/taxValueWithQuantity'
+              $ref: '#/components/schemas/taxValueWithQuantity'
               description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`. 
               required:
                 - netValue
@@ -4385,15 +4399,17 @@ components:
                 - rate
                 - quantity
             couponDiscounts:
-              $ref: '#/components/schemas/couponDiscounts'
-              type: object
-              description: "**This field is deprecated**. Please use `calculatedPrice.totalDiscounts.appliedDiscounts` instead.
+              allOf:
+                - $ref: '#/components/schemas/couponDiscounts'
+                - type: object
+                  description: "**This field is deprecated**. Please use `calculatedPrice.totalDiscounts.appliedDiscounts` instead.
                             The `calculatedPrice.totalDiscount.appliedDiscounts` field provides the same value with updated functionality."
               deprecated: true
             itemPrice:
-              $ref: '#/components/schemas/price'
-              type: object
-              description: "**This field is deprecated**. Please use `unitPrice` instead.
+              allOf:
+                - $ref: '#/components/schemas/price'
+                - type: object
+                  description: "**This field is deprecated**. Please use `unitPrice` instead.
                             The `unitPrice` field provides the same value with updated functionality."
               deprecated: true
             itemTaxInfo:
@@ -4403,21 +4419,24 @@ components:
               items:
                 $ref: '#/components/schemas/taxValue'
             fees:
-              $ref: '#/components/schemas/feeAggregate'
-              type: object
-              description: "**This field is deprecated**. Please use `calculatedPrice.fees` instead.
+              allOf:
+                - $ref: '#/components/schemas/feeAggregate'
+                - type: object
+                  description: "**This field is deprecated**. Please use `calculatedPrice.fees` instead.
                             The `calculatedPrice.fees` field provides the same value with updated functionality."
               deprecated: true
             authorizedAmount:
-              $ref: '#/components/schemas/price'
-              type: object
-              description: "**This field is deprecated**. Please use `calculatedPrice.upliftValue` instead.
+              allOf:
+                - $ref: '#/components/schemas/price'
+                - type: object
+                  description: "**This field is deprecated**. Please use `calculatedPrice.upliftValue` instead.
                             The `calculatedPrice.upliftValue` field how much should be payment authorization increased for given item."
               deprecated: true
             totalDiscount:
-              $ref: '#/components/schemas/price'
-              type: object
-              description: "**This field is deprecated**. Please use `calculatedPrice.totalDiscount` instead.
+              allOf:
+                - $ref: '#/components/schemas/price'
+                - type: object
+                  description: "**This field is deprecated**. Please use `calculatedPrice.totalDiscount` instead.
                             The `calculatedPrice.totalDiscount` field provides the same value with updated functionality."
               deprecated: true
             externalFees:
@@ -4687,8 +4706,7 @@ components:
         yrn:
           $ref: '#/components/schemas/YRN'
         name:
-          allOf:
-            - $ref: '#/components/schemas/localizedValue'
+          $ref: '#/components/schemas/localizedValue'
         taxCode:
           type: string
         amount:
