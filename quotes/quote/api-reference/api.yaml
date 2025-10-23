@@ -320,7 +320,6 @@ paths:
                       customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
               Create quote from cart:
                 value:
-                  employeeId: 9tt954309b06d46d3cf19fa
                   cartId: 4472v8d2309b06d46d3cf19fe
                   billingAddressId: 4472v8d2309b06d46d3cf19dd
                   shippingAddressId: 4472v8d2309b06d46d3cf19dd
