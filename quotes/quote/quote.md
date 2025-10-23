@@ -633,3 +633,16 @@ Mixins and metadata can be added to:
 * Products within quote items
 
 PATCH operations support adding, replacing, and removing mixin values at all these levels.
+
+### Quote pdf generation
+
+To generate a quote pdf, send a request to the [Creating a quote PDF](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-pdf) endpoint. 
+The request does not require any body, you only need a tenant name and quote ID.
+
+```bash
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}/pdf' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Accept: */*'
+```
