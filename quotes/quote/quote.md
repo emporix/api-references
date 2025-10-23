@@ -92,8 +92,8 @@ graph TD
     
     CREATING -->|Quote created| OPEN(QUOTE: OPEN)
     
-    IN_PROGRESS -->|Approves| OPEN   
-    EMPLOYEE2 -->|Declines| DECLINED_MERCHANT(QUOTE: DEC_BY_MERCHANT) 
+    IN_PROGRESS -->|Approves to send to customer| OPEN   
+    EMPLOYEE2 -->|Declines| DECLINED_MERCHANT(QUOTE: DECLINED_BY_MERCHANT) 
     EMPLOYEE2 -->|Approves| OPEN
     
     DECLINED_MERCHANT -->|Notifies| CUSTOMER3(CUSTOMER)
@@ -277,54 +277,16 @@ curl -i -X POST
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'Content-Type: application/json' 
   -d '{
-    "customerId": "9tt954309b06d46d3cf19fe",
-    "employeeId": "9tt954309b06d46d3cf19fa",
-    "billingAddressId": "64672a8f9939d331699cbe6e",
-    "shippingAddressId": "64672a8f9939d331699cbe6e",
-    "companyName": "ABC",
-    "siteCode": "main",
-    "currency": "USD",
-    "validTo": "2022-04-01T04:37:04.301Z",
+    "cartId": "4472v8d2309b06d46d3cf19fe",
     "shipping": {
-      "value": 10,
-      "methodId": "fedex-2dayground",
-      "zoneId": "63440460ceeaa26d794fcbbb",
-      "shippingTaxCode": "STANDARD"
-    },
-    "items": [
-      {
-        "quantity": {
-          "quantity": 1,
-          "unitCode": "piece"
-        },
-        "price": {
-          "priceId": "6245aa0a78a8576e338fa9c4",
-          "unitPrice": 13,
-          "totalNetValue": 13,
-          "tax": {
-            "taxClass": "STANDARD",
-            "taxRate": 20
-          }
-        },
-        "product": {
-          "productId": "7i98542309b06d46d3cf19fe"
-        }
-      }
-    ],
-    "mixins": {
-      "customAttributes": {
-        "attribute": {
-          "value": 1,
-          "unit": "kg"
-        }
-      }
-    },
-    "metadata": {
-      "mixins": {
-        "customAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json"
-      }
-    }
-  }'
+          "value": 10,
+          "methodId": "dhl",
+          "zoneId": "Zone1",
+          "shippingTaxCode": "STANDARD"
+      },
+      "shippingAddressId": "642c7f7d7fd3eb46339e80c4",
+      "billingAddressId": "642c7f7d7fd3eb46339e80c4"
+  }
 ```
 
 {% hint style="warning" %}
@@ -503,13 +465,37 @@ curl -L
     }
   ]'
 ```
+### Accepting a quote by an employee
+
+When an employee accepts a quote, they approve it to be sent to the customer. Depending on the flow, the quote status changes from 'AWAITING', 'CREATING' or "IN_PROGRESS" to 'OPEN"'.
+
+{% hint style="warning" %}
+The following scope is required:
+
+`quote.quote_manage`
+{% endhint %}
+
+```bash
+curl -i -X PATCH 
+  'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
+  -d '{
+    "op": "replace",
+    "path": "/status",
+    "value": {
+      "value": "OPEN",
+      "comment": "new comment"
+    }
+  }
+```
 
 ### Accepting a quote by a customer
 
 When a customer accepts a quote on the storefront, the following endpoint is called: [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
 
 {% hint style="warning" %}
-The following scope is granted to the customer group:
+The following scope is required:
 
 `quote.quote_manage_own`
 {% endhint %}
@@ -646,34 +632,4 @@ Mixins and metadata can be added to:
 * Quote items 
 * Products within quote items
 
-For example:
-
-```bash
-curl -L 
-  --request PATCH 
-  --url 'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
-  --header 'Content-Type: application/json' 
-  --data '[
-    {
-      "op": "ADD",
-      "path": "/items/124dfa8241sd0fas824kfa/price",
-      "mixins": {
-        "approvalMixin": {
-        "approvedBy": "employee-002",
-        "approvedAt": "2025-10-20T10:15:00Z",
-        "approvalThreshold": 5000
-      },
-      "discountMixin": {
-        "type": "percentage",
-        "value": 10,
-        "reason": "End of quarter discount"
-      }
-      "metadata": {
-        "quoteReason": "Customer requested price adjustment",
-        "reviewedBy": "employee-001",
-        "reviewTimestamp": "2025-10-20T09:45:00Z",
-        "sourceChannel": "B2B Portal"
-      }
-  ]'
-```
+PATCH operations support adding, replacing, and removing mixin values at all these levels.
