@@ -4391,7 +4391,8 @@ components:
                 - originalAmount
                 - currency
             lineTax:
-              $ref: '#/components/schemas/taxValueWithQuantity'
+              allOf:
+                - $ref: '#/components/schemas/taxValueWithQuantity'
               description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`. 
               required:
                 - netValue
@@ -6019,9 +6020,10 @@ components:
           format: double
           description: The calculated value of the discount.
         price:
-            $ref: '#/components/schemas/calculatedPrice'
-            type: object
-            description: Applied discount's price. When discount is applied before tax the value equals `price.netValue` and `price.grossValue` for discount applied after tax.
+          allOf:
+            - $ref: '#/components/schemas/calculatedPrice'
+            - type: object
+              description: Applied discount's price. When discount is applied before tax the value equals `price.netValue` and `price.grossValue` for discount applied after tax.
         discountType:
           type: string
           enum:
