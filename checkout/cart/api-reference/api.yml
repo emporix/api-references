@@ -4177,7 +4177,7 @@ components:
           type: boolean
           deprecated: true
           description: |
-            Deprecated, use product's `weightDependent` attribute that is stored in the database. 
+            Deprecated, use product `weightDependent` attribute that is stored in the database. 
             If set to `true`, the storefront displays a hint that the total price of the product may vary depending on the product’s actual weight.
       required:
         - quantity
@@ -4342,11 +4342,11 @@ components:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'
             - type: object
-              description: Product's unit price with tax values
+              description: Product unit price with tax values
         totalTax:
           type: number
           minimum: 0
-          description: Product's total tax amount.
+          description: Product total tax amount.
           format: double
         metadata:
           $ref: '#/components/schemas/metadataRequest'
@@ -4995,7 +4995,7 @@ components:
               $ref: '#/components/schemas/vendor'
     vendor:
       type: object
-      description: Product's vendor information, autopopulated based on product catalog information.
+      description: Product vendor information, autopopulated based on product catalog information.
       properties:
         id:
           type: string
