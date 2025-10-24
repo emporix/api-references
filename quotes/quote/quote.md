@@ -174,7 +174,7 @@ The following merchant information is necessary for the pdf file with quote to b
 
 {% hint style="warning" %}
 * The pdf with quote is sent to the customer in the notification email upon the quote creation or change. It's also available for the customer on the storefront.
-* If no employee is specified in a quote request, a default employee configured in the site settings is used.
+* If no employee is specified in a quote request, a default employee configured in the tenant settings is used.
 {% endhint %}
 
 {% stepper %}
@@ -311,7 +311,7 @@ curl -i -X POST
   -H 'Content-Type: application/json' 
   -d '{
     "customerId": "9tt954309b06d46d3cf19fe",
-    "employeeId": "7ytw5533f0mo335mfrwl3336",
+    "employeeId": "7ytw5533f0mo335mfr0l3336",
     "billingAddressId": "64672a8f9939d331699cbe6e",
     "shippingAddressId": "64672a8f943440ft63j995yh",
     "companyName": "ABC",
