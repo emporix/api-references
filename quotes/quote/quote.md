@@ -44,15 +44,15 @@ The Quote Service supports the following status values:
 
 Possible status transitions:
 
-* AWAITING -> OPEN
-* AWAITING -> DECLINED_BY_MERCHANT
-* CREATING -> OPEN
-* EXPIRED -> OPEN
-* IN_PROGRESS -> OPEN
-* IN_PROGRESS -> DECLINED_BY_MERCHANT
-* OPEN -> DECLINED
-* OPEN -> ACCEPTED
-* OPEN -> IN_PROGRESS 
+* `AWAITING` -> `OPEN`
+* `AWAITING` -> `DECLINED_BY_MERCHANT`
+* `CREATING` -> `OPEN`
+* `EXPIRED` -> `OPEN`
+* `IN_PROGRESS` -> `OPEN`
+* `IN_PROGRESS` -> `DECLINED_BY_MERCHANT`
+* `OPEN` -> `DECLINED`
+* `OPEN` -> `ACCEPTED`
+* `OPEN `-> `IN_PROGRESS `
 
 {% hint %}
   When an employee creates a quote, its status is `CREATING`.
