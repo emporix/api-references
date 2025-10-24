@@ -1663,12 +1663,13 @@ paths:
                         keepAsSeparateLineItem: true
                         type: INTERNAL
                         product:
-                          id: mobile-phone-s24-gross
-                          sku: Mobile Phone s24 gross
-                          code: Mobile Phone s24 gross
-                          name: Mobile Phone s24 gross
+                          id: mobile-phone-s27-gross
+                          sku: mobile-phone-s27-gross
+                          code: mobile-phone-s27-gross
+                          name: mobile-phone-s27-gross
                           localizedName:
-                            en: Mobile Phone s24 gross
+                            en: mobile-phone-s27-gross
+                          description: mobile-phone-s27-gross
                           images:
                             - id: 67169928ceaab717e17f3734
                               url: http://res.cloudinary.com/saas-ag/image/upload/v1729534248/b2b2cstage/media/67169928ceaab717e17f3734
