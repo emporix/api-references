@@ -159,6 +159,7 @@ paths:
                               en-gb: 'Safety shoes high Reptile RS S3 SRC, black'
                               es: 'Zapatos de seguridad altos Reptile RS S3 SRC, negros'
                             media:
+                              id: '82c30154-dcf7-4bb9-b210-d960fec6c9fd'
                               contentType: image/jpg
                               url: 'https://res.cloudinary.com/saas-ag/image/upload/v1676449882/mrworkerstage/products/82c30154-dcf7-4bb9-b210-d960fec6c9fd.jpg'
                             taxClasses:
@@ -242,6 +243,7 @@ paths:
 
           * `quote.quote_manage` - required for the employee to create a quote
           * `quote.quote_manage_own` - required for the customer to be able to create a quote from cart
+          * `cart.cart_manage_external_prices` - required for external prices
       operationId: POST-quote-create-quote
       parameters:
         - name: tenant
@@ -282,6 +284,7 @@ paths:
                         quantity: 1
                         unitCode: piece
                       price:
+                        type: 'INTERNAL'
                         priceId: 6245aa0a78a8576e338fa9c4
                         unitPrice: 13
                         totalNetValue: 13
@@ -289,7 +292,24 @@ paths:
                           taxClass: STANDARD
                           taxRate: 20
                       product:
+                        type: 'INTERNAL'
                         productId: 7i98542309b06d46d3cf19fe
+                        mixins:
+                          customAttributes:
+                            attribute:
+                              value: 3
+                              unit: kg
+                        metadata:
+                          mixins:
+                            customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
+                      mixins:
+                        customAttributes:
+                          attribute:
+                            value: 2
+                            unit: kg
+                      metadata:
+                        mixins:
+                          customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
                   mixins:
                     customAttributes:
                       attribute:
@@ -300,7 +320,6 @@ paths:
                       customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
               Create quote from cart:
                 value:
-                  employeeId: 9tt954309b06d46d3cf19fa
                   cartId: 4472v8d2309b06d46d3cf19fe
                   billingAddressId: 4472v8d2309b06d46d3cf19dd
                   shippingAddressId: 4472v8d2309b06d46d3cf19dd
@@ -700,6 +719,7 @@ paths:
                           quantity: 1
                           unitCode: piece
                         price:
+                          type: 'INTERNAL'
                           priceId: 63ec99a2457e8f7548685fe5
                           unitPrice: 34
                           newUnitPrice: 34
@@ -713,6 +733,7 @@ paths:
                               netValue: 34
                         product:
                           productId: BC10033--BC10033-35
+                          type: 'INTERNAL'
                           name:
                             de: 'Hohe Sicherheitsschuhe Reptile RS S3 SRC, schwarz'
                             ar: حذاء الجريمة المحافظ المرتفع RS S3 SRC ، NERE
@@ -724,16 +745,34 @@ paths:
                             en-gb: 'Safety shoes high Reptile RS S3 SRC, black'
                             es: 'Zapatos de seguridad altos Reptile RS S3 SRC, negros'
                           media:
+                            id: '82c30154-dcf7-4bb9-b210-d960fec6c9fd'
                             contentType: image/jpg
                             url: 'https://res.cloudinary.com/saas-ag/image/upload/v1676449882/mrworkerstage/products/82c30154-dcf7-4bb9-b210-d960fec6c9fd.jpg'
                           taxClasses:
                             DE: STANDARD
                             PL: ZERO
+                          mixins:
+                            customAttributes:
+                              attribute:
+                                value: 1
+                                unit: kg
+                          metadata:
+                            mixins:
+                              customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
+                        mixins:
+                          customAttributes:
+                            attribute:
+                              value: 1
+                              unit: kg
+                        metadata:
+                          mixins:
+                            customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
                       - id: ac16dd14-baa4-4ccb-bad3-756b36b89235
                         quantity:
                           quantity: 3
                           unitCode: piece
                         price:
+                          type: 'INTERNAL'
                           priceId: 63ec9ad0457e8f75486861cf
                           unitPrice: 57
                           newUnitPrice: 57
@@ -745,6 +784,7 @@ paths:
                               grossValue: 188.1
                               netValue: 171
                         product:
+                          type: 'INTERNAL'
                           productId: '0601394000'
                           name:
                             de: GWS 750 - Kabelgebundener Winkelschleifer 750 W 115 mm
@@ -882,7 +922,7 @@ paths:
                         productId: 74698542309b06dc46d3cf19fe
                   - op: REMOVE
                     path: /items/124dfa82410fas824kfa
-              Add item to quote:
+              Add item to a quote:
                 value:
                   - op: ADD
                     path: /items
@@ -900,7 +940,7 @@ paths:
                             taxRate: 20
                         product:
                           productId: 74698542309b06dc46d3cf19fe
-              Add mixin to the quote:
+              Add mixin to a quote:
                 value:
                   - op: ADD
                     path: /mixins/customAttributes
@@ -910,16 +950,66 @@ paths:
                   - op: ADD
                     path: /metadata/mixins/newAttributes
                     value: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
-              Replace mixin value in the quote:
+              Replace mixin value in a quote:
                 value:
                   - op: REPLACE
                     path: /mixins/customAttributes/unit
                     value: kg
-              Remove mixin value from the quote:
+              Remove mixin value from a quote:
                 value:
                   - op: REMOVE
                     path: /mixins/customAttributes/unit
-              Replace item list of the quote:
+              Add mixin and metadata to a quote item:
+                value:
+                  - op: ADD
+                    path: /items/2298854309b06d4c6d3cf1zfe/mixins/design
+                    value:
+                      product_type: item
+                      freezer_number_of_shelves_baskets: 123
+                  - op: ADD
+                    path: /items/2298854309b06d4c6d3cf1zfe/metadata/mixins/design
+                    value: 'https://storage.googleapis.com/emporix_mixin/freezers-design.json'
+              Replace mixin and metadata in a quote item:
+                value:
+                  - op: REPLACE
+                    path: /items/2298854309b06d4c6d3cf1zfe/mixins/quoteCustomAttributes
+                    value:
+                      itemLevelAttribute: new value
+                  - op: REPLACE
+                    path: /items/2298854309b06d4c6d3cf1zfe/metadata/mixins/quoteCustomAttributes
+                    value: 'https://storage.googleapis.com/emporix_mixin/freezers-design.json'
+              Remove mixin and metadata from a quote item:
+                value:
+                  - op: REMOVE
+                    path: /items/2298854309b06d4c6d3cf1zfe/mixins/quoteCustomAttributes/itemLevelAttribute
+                  - op: REMOVE
+                    path: /items/2298854309b06d4c6d3cf1zfe/metadata/mixins/quoteCustomAttributes
+              Add mixin and metadata to a quote product:
+                value:
+                  - op: ADD
+                    path: /items/2298854309b06d4c6d3cf1zfe/product/mixins/design
+                    value:
+                      product_type: item
+                      freezer_number_of_shelves_baskets: 123
+                  - op: ADD
+                    path: /items/2298854309b06d4c6d3cf1zfe/product/metadata/mixins/design
+                    value: 'https://storage.googleapis.com/emporix_mixin/freezers-design.json'
+              Replace mixin and metadata in a quote product:
+                value:
+                  - op: REPLACE
+                    path: /items/2298854309b06d4c6d3cf1zfe/product/mixins/quoteCustomAttributes
+                    value:
+                      productLevelAttribute: new value
+                  - op: REPLACE
+                    path: /items/2298854309b06d4c6d3cf1zfe/product/metadata/mixins/quoteCustomAttributes
+                    value: 'https://storage.googleapis.com/emporix_mixin/freezers-design.json'
+              Remove mixin and metadata from a quote product:
+                value:
+                  - op: REMOVE
+                    path: /items/2298854309b06d4c6d3cf1zfe/product/mixins/quoteCustomAttributes/productLevelAttribute
+                  - op: REMOVE
+                    path: /items/2298854309b06d4c6d3cf1zfe/product/metadata/mixins/quoteCustomAttributes
+              Replace item list of a quote:
                 value:
                   - op: REPLACE
                     path: /items
@@ -937,7 +1027,7 @@ paths:
                             taxRate: 20
                         product:
                           productId: 74698542309b06dc46d3cf19fe
-              Replace item in quote:
+              Replace item in a quote:
                 value:
                   - op: REPLACE
                     path: /items/2s298854309b06d46d3cf19fe
@@ -954,18 +1044,18 @@ paths:
                           taxRate: 20
                       product:
                         productId: 74698542309b06dc46d3cf19fe
-              Delete item in quote:
+              Delete item from a quote:
                 value:
                   - op: REMOVE
                     path: /items/124dfa8241sd0fas824kfa
-              Delete items in quote:
+              Delete items from a quote:
                 value:
                   - op: REMOVE
                     path: /items
                     value:
                       - itemId: 124dfa8241sd0fas824kfa
                       - itemId: 124dfa8241sd0fas824k7b
-              Delete company name in quote:
+              Delete company name in a quote:
                 value:
                   - op: REMOVE
                     path: /companyName
@@ -989,7 +1079,7 @@ paths:
                   - op: REPLACE
                     path: /validTo
                     value: '2024-04-02T13:06:15.280Z'
-              Change quantity of the item:
+              Change quantity of an item:
                 value:
                   - op: REPLACE
                     path: /items/124dfa8241sd0fas824kfa
@@ -1006,38 +1096,38 @@ paths:
                           taxRate: 20
                       product:
                         productId: 74698542309b06dc46d3cf19fe
-              Change price of the item:
+              Change price of an item:
                 value:
                   - op: REPLACE
                     path: /items/124dfa8241sd0fas824kfa/price
                     value:
                       totalNetValue: 13
-              Set comment to the quote:
+              Set comment to a quote:
                 value:
                   - op: REPLACE
                     path: /comment
                     value: Comment to add
-              Change shipping address of the quote:
+              Change shipping address of a quote:
                 value:
                   - op: REPLACE
                     path: /shippingAddressId
                     value: 74698542309b06dc46d3cf19fa
-              Change billing address of the quote:
+              Change billing address of a quote:
                 value:
                   - op: REPLACE
                     path: /billingAddressId
                     value: 74698542309b06dc46d3cf19fa
-              Change company name of the quote:
+              Change company name of a quote:
                 value:
                   - op: REPLACE
                     path: /companyName
                     value: new the best company name
-              Change customer of the quote:
+              Change customer of a quote:
                 value:
                   - op: REPLACE
                     path: /customerId
                     value: C12345678
-              Change shipping of the quote:
+              Change shipping of a quote:
                 value:
                   - op: REPLACE
                     path: /shipping
@@ -1758,7 +1848,7 @@ components:
                 type: string
         items:
           type: array
-          description: A list of quote items
+          description: A list of quote items.
           items:
             type: object
             properties:
@@ -1779,6 +1869,12 @@ components:
                 type: object
                 description: Item price details.
                 properties:
+                  type:
+                    type: string
+                    description: Defines if product is external or internal. If the product is internal, it's taken from the Emporix Product Service. If the price is external, it's a custom product from external system.
+                    enum:
+                      - INTERNAL
+                      - EXTERNAL
                   priceId:
                     type: string
                     description: The ID of the price that was initially assigned to the item.
@@ -1812,10 +1908,28 @@ components:
                             type: number
                           netValue:
                             type: number
+                  mixins:
+                    type: object
+                    description: Mixins request.
+                    additionalProperties: true
+                  metadata:
+                    type: object
+                    description: Metadata request.
+                    properties:
+                      mixins:
+                        type: object
+                        description: Links to the mixin schemas.
+                        additionalProperties: true
               product:
                 type: object
                 description: Product details.
                 properties:
+                  type:
+                    type: string
+                    description: Defines if product is external or internal. If the product is internal, it's taken from the Emporix Product Service. If the price is external, it's a custom product from external system.
+                    enum:
+                      - INTERNAL
+                      - EXTERNAL
                   productId:
                     type: string
                     description: The ID of the product or variant assigned to the quote item.
@@ -1830,6 +1944,9 @@ components:
                     type: object
                     description: This attribute comprises the product media information and is automatically populated upon the creation of the quote.
                     properties:
+                      id:
+                        type: string
+                        description: ID of the media.
                       contentType:
                         type: string
                         description: 'The content type of the media. For example: `image/jpg`.'
@@ -1839,13 +1956,25 @@ components:
                   taxClasses:
                     type: object
                     description: Map of key-value pairs that associates tax classes with locations (countries).
+                  mixins:
+                    type: object
+                    description: Mixins request.
+                    additionalProperties: true
+                  metadata:
+                    type: object
+                    description: Metadata request.
+                    properties:
+                      mixins:
+                        type: object
+                        description: Links to the mixin schemas.
+                        additionalProperties: true
         mixins:
           type: object
           description: Mixins request.
           additionalProperties: true
         metadata:
           type: object
-          description: Quote metadata details
+          description: Quote metadata details.
           properties:
             mixins:
               type: object
@@ -1955,7 +2084,7 @@ components:
           $ref: '#/components/schemas/QuoteShipping'
         items:
           type: array
-          description: Quote items
+          description: Quote items.
           items:
             type: object
             properties:
@@ -1981,16 +2110,58 @@ components:
                 required:
                   - productId
                 properties:
+                  type:
+                    type: string
+                    description: Defines if product is external or internal. If the product is internal, it's taken from the Emporix Product Service. If the price is external, it's a custom product from external system.
+                    enum:
+                      - INTERNAL
+                      - EXTERNAL
                   productId:
                     type: string
                     description: Product or variant ID.
+                  name:
+                    type: object
+                    additionalProperties:
+                      type: string
+                    description: Localized name of a product. Used for the `EXTERNAL` products as the `INTERNAL` ones are populated from the product catalog data.
+                  media:
+                    type: object
+                    description: Media object that can be provided for an `EXTERNAL` product. `INTERNAL` products have media populated automatically and override the given value.
+                    properties:
+                      id:
+                        type: string
+                        description: ID of the media.
+                      contentType:
+                        type: string
+                        description: 'The content type of the media. For example: `image/jpg`.'
+                      url:
+                        type: string
+                        description: The url to the product media.
+                  mixins:
+                    type: object
+                    description: Mixins request.
+                    additionalProperties: true
+                  metadata:
+                    type: object
+                    description: Metadata request.
+                    properties:
+                      mixins:
+                        type: object
+                        description: Links to the mixin schemas.
+                        additionalProperties: true
               price:
                 type: object
                 description: Matched price of the product.
                 properties:
+                  type:
+                    type: string
+                    description: Defines if price is internal or external. If the price is internal, it's taken from the Emporix Price Service. If the price is external, it's a custom price from external system.
+                    enum:
+                      - INTERNAL
+                      - EXTERNAL
                   priceId:
                     type: string
-                    description: ID of the matched price.
+                    description: ID of the matched price. Required only for type=`INTERNAL`.
                   priceListId:
                     type: string
                     description: Identifier of price list. The field should be populated only in case when the price belongs to any price list.
@@ -2018,15 +2189,27 @@ components:
                   - unitPrice
                   - totalNetValue
                   - tax
+              mixins:
+                type: object
+                description: Mixins request.
+                additionalProperties: true
+              metadata:
+                type: object
+                description: Metadata request.
+                properties:
+                  mixins:
+                    type: object
+                    description: Links to the mixin schemas.
+                    additionalProperties: true
             required:
               - product
         mixins:
           type: object
-          description: Mixins request
+          description: Mixins request.
           additionalProperties: true
         metadata:
           type: object
-          description: Metadata request
+          description: Metadata request.
           properties:
             mixins:
               type: object
@@ -2092,6 +2275,10 @@ components:
               - /items
               - '/items/{itemId}'
               - '/items/{itemId}/price'
+              - '/items/{itemId}/mixins/{mixinsPath}'
+              - '/items/{itemId}/metadata/mixins/{mixinsPath}'
+              - '/items/{itemId}/product/mixins/{mixinsPath}'
+              - '/items/{itemId}/product/metadata/mixins/{mixinsPath}'
               - '/mixins/{mixinsPath}'
               - '/metadata/{mixinsPath}'
           value:
@@ -2143,6 +2330,10 @@ components:
               - /items
               - '/items/{itemId}'
               - '/items/{itemId}/price'
+              - '/items/{itemId}/mixins/{mixinsPath}'
+              - '/items/{itemId}/metadata/mixins/{mixinsPath}'
+              - '/items/{itemId}/product/mixins/{mixinsPath}'
+              - '/items/{itemId}/product/metadata/mixins/{mixinsPath}'
               - '/mixins/{mixinsPath}'
               - '/metadata/{mixinsPath}'
             type: string
@@ -2334,7 +2525,7 @@ components:
                   detail:
                     errorcode: keymanagement.service.invalid_access_token
             Unauthorized:
-              value: {}
+              value: { }
     Bad_request_400:
       description: Unsupported language provided.
       content:
