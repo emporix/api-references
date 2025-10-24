@@ -65,7 +65,7 @@ paths:
             schema:
               $ref: '#/components/schemas/createCart'
             examples:
-              Anonymous customer's cart:
+              Anonymous customer cart:
                 value:
                   siteCode: main
                   currency: EUR
@@ -74,7 +74,7 @@ paths:
                     name: storefront
                     source: 'https://your-storefront.com/'
                   sessionValidated: true
-              Logged in customer's cart:
+              Logged in customer cart:
                 value:
                   customerId: '87413250'
                   siteCode: main
@@ -98,7 +98,7 @@ paths:
           in: header
           name: session-id
           description: |
-            Anonymous customer's unique session identifier.
+            Anonymous customer unique session identifier.
 
             **Note**: The `session-id` is only required if you want to create a cart for an anonymous customer.
         - schema:
@@ -805,7 +805,7 @@ paths:
                     nonDelivery:
                       - '5'
                       - '6'
-                Anonymous customer's cart:
+                Anonymous customer cart:
                   value:
                     id: 6128cf97330cc7035fa1484c
                     yrn: 'urn:yaas:hybris:cart:cart:saastest2;6128cf97330cc7035fa1484c'
@@ -852,9 +852,9 @@ paths:
           in: query
           name: sessionId
           description: |
-            Customer's unique session identifier.
+            Customer unique session identifier.
 
-            **Note**: The `sessionId` is only required if you want to retrieve an anonymous customer's cart.
+            **Note**: The `sessionId` is only required if you want to retrieve an anonymous customer cart.
         - schema:
             type: string
           in: query
@@ -3937,7 +3937,7 @@ components:
           description: Cart type.
         zipCode:
           type: string
-          description: Customer's address - zip code.
+          description: Customer address - zip code.
         countryCode:
           type: string
           description: 'Two-letter country code, compliant with the ISO 3166 standard.'
@@ -3958,7 +3958,7 @@ components:
           description: Total number of items added to the cart.
           format: double
         sessionId:
-          description: Customer's unique session identifier.
+          description: Customer unique session identifier.
           type: string
         metadata:
           $ref: '#/components/schemas/metadataResponse'
@@ -4009,7 +4009,7 @@ components:
               type: string
               deprecated: true
               description: |-
-                Delivery window's unique identifier, as defined in the Shipping Service.
+                Delivery window unique identifier, as defined in the Shipping Service.
                 
                 ***NOTE***
                 This attribute is deprecated. Please use the `deliveryWindow` attribute.
@@ -4523,7 +4523,7 @@ components:
           description: ID of the delivery window.
         slotId:
           type: string
-          description: ID of the Delivery Time Slot.
+          description: ID of the delivery time slot.
         deliveryDate:
           type: string
           format: date-time
@@ -4968,7 +4968,7 @@ components:
           type: string
           description: Product name.
         localizedName:
-          description: 'A product''s name represented as a map, with language as the key and the corresponding translated name as the value'
+          description: 'A product name represented as a map, with language as the key and the corresponding translated name as the value'
           type: object
           additionalProperties:
             type: string
@@ -5159,7 +5159,7 @@ components:
         zipCode:
           maxLength: 9
           type: string
-          description: Customer's address - zip code.
+          description: Customer address - zip code.
         countryCode:
           type: string
           pattern: '[a-zA-Z]{2}'
@@ -5168,7 +5168,7 @@ components:
           maxLength: 2
         orderId:
           type: string
-          description: Order’s unique identifier generated when a checkout is triggered through the Checkout Service.
+          description: Order unique identifier generated when a checkout is triggered through the Checkout Service.
         status:
           type: string
           description: Cart status.
@@ -5262,7 +5262,7 @@ components:
           type: string
           description: Product name.
         localizedName:
-          description: A product''s name represented as a map, with language as the key and the corresponding translated name as the value
+          description: A product name represented as a map, with language as the key and the corresponding translated name as the value
           type: object
           additionalProperties:
             type: string
@@ -5682,12 +5682,12 @@ components:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'
             - type: object
-              description: The calculated fee price
+              description: The calculated fee price.
         discountedPrice:
           allOf:
             - $ref: '#/components/schemas/calculatedPriceWithDiscounts'
             - type: object
-              description: The discounted fee value
+              description: The discounted fee value.
     calculatedPaymentFee:
       type: object
       properties:
@@ -6040,7 +6040,7 @@ components:
     calculatedTotalDiscount:
       title: calculatedTotalDiscount
       type: object
-      description: The total combined value of all applied discounts
+      description: The total combined value of all applied discounts.
       properties:
         calculationType:
           type: string
