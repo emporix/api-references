@@ -788,7 +788,7 @@ paths:
                               taxValue: 53.677
                               taxCode: STANDARD
                               taxRate: 19
-                'Logged in customer''s cart ':
+                'Logged in customer cart ':
                   value:
                     id: 612c9ae63cff1d66f699b691
                     yrn: 'urn:yaas:hybris:cart:cart:saastest2;612c9ae63cff1d66f699b691'
