@@ -358,13 +358,6 @@ curl -L
             "value": 10.00,
             "discountCalculationType": "TOTAL",
             "sequence": 1
-        },
-        {
-            "id": "ext-cart-discount-002",
-            "discountType": "ABSOLUTE",
-            "value": 5.00,
-            "discountCalculationType": "SUBTOTAL",
-            "sequence": 2
         }
     ]
   }'

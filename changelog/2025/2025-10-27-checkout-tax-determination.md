@@ -52,8 +52,7 @@ If no matching address is found in the checkout request:
 
 If no legal entity address is found:
 
-* The system checks if the customer is logged in
-* If logged in, the system retrieves the customer's addresses
+* If the checkout is done for known customer, the system retrieves the customer's addresses
 * The system looks for the default address with the matching type
 * If no default address exists with the required type, the first address matching the type is used
 * If found, the customer address's country code is used
