@@ -44,7 +44,7 @@ paths:
       description: |-
         Retrieves a list of customer profiles.
         
-        `customer.customer_read_own` scope allows customers to read profiles from another customers within the same company.
+        The `customer.customer_read_own` scope allows customers to read profiles of other customers within the same company.
         
         ***
         ### Required scopes
@@ -170,7 +170,7 @@ paths:
       description: |-
         Searches for customer profiles.
         
-        `customer.customer_read_own` scope allows customers to read profiles from another customers within the same company.
+        The `customer.customer_read_own` scope allows customers to read profiles of other customers within the same company.
         
         ***
         ### Required scopes

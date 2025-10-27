@@ -8,6 +8,10 @@
 
 ## 2025
 
+* [2025-10-22: Schema Service - references](2025/2025-10-30-schema.md)
+* [2025-10-22: Customer Service - new search endpoint](2025/2025-10-30-customer.md)
+* [2025-10-22: Order Service - new search endpoint](2025/2025-10-30-order.md)
+* [2025-10-30: Media Service - support for custom schema types in reference type](2025/2025-10-30-media.md)
 * [2025-10-22: Webhook - new agentic job events](2025/2025-10-22-webhook.md)
 * [2025-10-22: AI Service - support for AI agents](2025/2025-10-22-ai.md)
 * [2025-10-15: Sequential ID Service - removal of deprecated endpoints](2025/2025-10-15-sequential-id.md)
