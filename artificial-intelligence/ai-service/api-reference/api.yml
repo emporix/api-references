@@ -1336,7 +1336,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/McpServerResponse'
               examples:
-                Tool Response:
+                MCP Server Response:
                   $ref: '#/components/examples/McpServerResponse'
         '401':
           $ref: '#/components/responses/401_resp_common'
@@ -1357,6 +1357,8 @@ paths:
         - MCP Server
     put:
       summary: Upserting MCP server
+      parameters:
+        - $ref: '#/components/parameters/force'
       operationId: PUT-ai-upsert-mcp-server
       responses:
         '201':
@@ -1383,6 +1385,8 @@ paths:
       description: |-
         Updates or creates a specified mcp server by replacing all of its existing data with data from the request body.
         If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
+        
+        ***Important***: If MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Then the agent and MCP server will be disabled
 
         ### Required scopes
 
@@ -1396,6 +1400,8 @@ paths:
         - MCP Server
     patch:
       summary: Partially updating MCP server
+      parameters:
+        - $ref: '#/components/parameters/force'
       operationId: PATCH-ai-update-mcp-server
       responses:
         '204':
@@ -1414,6 +1420,8 @@ paths:
           - `add` (adding an item to the items list)
           - `remove` (removing an item from the items list)
           - `replace` (replacing an item with given ID with new definition)
+        
+        ***Important***: If MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Then the agent and MCP server will be disabled
 
         ### Required scopes
 
@@ -1674,6 +1682,9 @@ components:
         name:
           type: string
           description: Name of the MCP server.
+        enabled:
+          type: boolean
+          description: Whether the MCP server is enabled.
         transport:
           $ref: '#/components/schemas/CustomMcpServerTransportType'
     McpServerRequest:
@@ -1686,6 +1697,7 @@ components:
             metadata:
               $ref: '#/components/schemas/MetadataRequest'
           required:
+            - enabled
             - name
             - transport
             - config
@@ -2415,6 +2427,13 @@ components:
       name: force
       example: false
       description: Allows you to remove a given entity even if it is used as a dependency in other entries. In that case, the removed entity is unassigned from other entries.
+    forceDisable:
+      schema:
+        type: boolean
+      in: query
+      name: force
+      example: false
+      description: Allows you to disable a given entity even if it is used as a dependency in other entries. In that case, cascade disable will be performed.
   responses:
     401_resp_common:
       description: The authorization token is invalid or has expired.
@@ -2696,6 +2715,7 @@ components:
       value:
         id: mcp-custom
         name: Custom MCP Server
+        enabled: true
         transport: sse
         config:
           url: 'http://localhost:7900'
@@ -2705,6 +2725,7 @@ components:
       value:
         - id: mcp-custom
           name: Custom MCP Server
+          enabled: true
           transport: sse
           config:
             url: 'http://localhost:7900'
@@ -2811,6 +2832,7 @@ components:
       value:
         name: Custom MCP Server
         transport: sse
+        enabled: true
         config:
           url: 'http://localhost:7900'
           authorizationHeaderName: Authorization
