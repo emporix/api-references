@@ -8,7 +8,7 @@
 
 ## 2025
 
-* [2025-10-22: Schema Service - references](2025/2025-10-30-schema.md)
+* [2025-10-30: Schema Service - references](2025/2025-10-30-schema.md)
 * [2025-10-22: Customer Service - new search endpoint](2025/2025-10-30-customer.md)
 * [2025-10-22: Order Service - new search endpoint](2025/2025-10-30-order.md)
 * [2025-10-30: Media Service - support for custom schema types in reference type](2025/2025-10-30-media.md)
