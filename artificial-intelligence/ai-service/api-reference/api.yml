@@ -906,6 +906,8 @@ paths:
         - Tool
     put:
       summary: Upserting tool
+      parameters:
+        - $ref: '#/components/parameters/forceDisable'
       operationId: PUT-ai-upsert-tool
       responses:
         '201':
@@ -945,6 +947,8 @@ paths:
         - Tool
     patch:
       summary: Partially updating tool
+      parameters:
+        - $ref: '#/components/parameters/forceDisable'
       operationId: PATCH-ai-update-tool
       responses:
         '204':
@@ -1358,7 +1362,7 @@ paths:
     put:
       summary: Upserting MCP server
       parameters:
-        - $ref: '#/components/parameters/force'
+        - $ref: '#/components/parameters/forceDisable'
       operationId: PUT-ai-upsert-mcp-server
       responses:
         '201':
@@ -1589,6 +1593,10 @@ components:
         name:
           type: string
           description: Name of the tool.
+        enabled:
+          type: boolean
+          description: Whether the tool is enabled.
+          default: false
       required:
         - type
         - name
@@ -1685,6 +1693,7 @@ components:
         enabled:
           type: boolean
           description: Whether the MCP server is enabled.
+          default: false
         transport:
           $ref: '#/components/schemas/CustomMcpServerTransportType'
     McpServerRequest:
@@ -1697,7 +1706,6 @@ components:
             metadata:
               $ref: '#/components/schemas/MetadataRequest'
           required:
-            - enabled
             - name
             - transport
             - config
@@ -2750,6 +2758,7 @@ components:
       value:
         id: "slack-1"
         name: Slack Native Tool
+        enabled: true
         type: slack
         config:
           teamId: "12345"
@@ -2757,6 +2766,7 @@ components:
       value:
         - id: "slack-1"
           name: Slack Native Tool
+          enabled: true
           type: slack
           config:
             teamId: "12345"
@@ -2844,6 +2854,7 @@ components:
     SlackNativeToolRequest:
       value:
         name: Slack Native Tool
+        enabled: true
         type: slack
         config:
           teamId: "12345"
