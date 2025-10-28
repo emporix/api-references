@@ -428,20 +428,11 @@ components:
           description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
         shipping:
           $ref: '#/components/schemas/shipping.json'
-        deliveryWindowId:
-          type: string
-          description: |
-            ***DEPRECATED***
-            This attribute is deprecated, please use the `deliveryWindow` attribute in cart service to setup the delivery window which will be used for the checkout.
-
-
-            Delivery window's unique identifier.
-          deprecated: true
         addresses:
           type: array
           uniqueItems: true
-          minItems: 1
-          description: List of addresses associated with the order.
+          minItems: 2
+          description: List of addresses associated with the order. There must be at least one address of type `SHIPPING` and one address of type `BILLING`.
           items:
             $ref: '#/components/schemas/address.json'
         customer:

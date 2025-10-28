@@ -39,7 +39,7 @@ Each address can include the following properties:
 
 When addresses are not explicitly provided in the request, the Cart Service automatically populates them based on the following priority order:
 
-1. **Legal Entity Address** - If the cart is associated with a legal entity, the first location with both `country` and `zip-code` is used (origin: `LEGAL_ENTITY`)
+1. **Legal Entity Address** - If the cart is associated with a legal entity, the first location with both `country`,`zip-code` and required address type is used (origin: `LEGAL_ENTITY`)
 2. **Customer Address** - If the cart has a logged-in customer, the default address matching the required type is used (origin: `CUSTOMER`)
 3. **Site Homebase Address** - If neither of the above is available, the site's homebase address is used (origin: `SITE`)
 
