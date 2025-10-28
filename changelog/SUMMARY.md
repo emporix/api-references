@@ -8,6 +8,8 @@
 
 ## 2025
 
+* [2025-10-30: Category Service - new search endpoint and query parameter](2025/2025-10-30-category.md)
+* [2025-10-30: Price Service - new search endpoint for price lists](2025/2025-10-30-price.md)
 * [2025-10-30: Schema Service - references](2025/2025-10-30-schema.md)
 * [2025-10-30: Customer Service - new search endpoint](2025/2025-10-30-customer.md)
 * [2025-10-30: Order Service - new search endpoint](2025/2025-10-30-order.md)

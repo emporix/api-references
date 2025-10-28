@@ -1892,7 +1892,7 @@ components:
         
         For `ENUM` type, the value represents one of the allowed enum values.
         
-        For `REFERENCE` type, the value represents the reference type (e.g., `PRODUCT`, `ORDER`, `CART`, `PRICE`, `CUSTOMER`, `COMPANY`, `MEDIA`, or any custom schema type).
+        For `REFERENCE` type, the value represents the reference type (e.g., `PRODUCT`, `ORDER`, `CART`, `PRICE`, `CUSTOMER`, `COMPANY`, `MEDIA`, `PRICE_LIST`, `CUSTOMER_SEGMENT`, `CATEGORY`, or any custom schema type).
       properties:
         value:
           type: string
