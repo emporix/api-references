@@ -4554,11 +4554,6 @@ components:
             Site unique identifier. A site is a specific shop.
 
             If the tenant owns only one shop, the value should be set to `main`.
-        externalDiscounts:
-          type: array
-          description: External discounts that should be applied to this cart. Requires `cart.cart_manage_external_prices` scope
-          items:
-            $ref: '#/components/schemas/externalCartDiscount'
         type:
           type: string
           description: 'Cart type. You can use this field if your store offers different types of carts, such as shopping carts and wishlists.'

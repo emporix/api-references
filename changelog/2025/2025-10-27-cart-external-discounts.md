@@ -41,7 +41,6 @@ Applying external discounts to a cart requires the `cart.cart_manage_external_pr
 
 | Endpoint                                                                                                                                                                   | Description                                                            |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
-| [Creating a new cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts)                    | The `externalDiscounts` attribute has been added.  |
 | [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid)                    | The `externalDiscounts` attribute has been added.  |
 | [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid)                      | The `externalDiscounts` attribute is included in the response.  |
 
