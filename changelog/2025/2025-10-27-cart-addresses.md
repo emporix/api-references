@@ -45,6 +45,8 @@ When addresses are not explicitly provided in the request, the Cart Service auto
 
 Addresses provided in the request are marked with origin `REQUEST` in the response.
 
+For backward compatibility the legal entity address population has to be enabled in the tenant settings: enableLegalEntityAddressFallbackInCart. It is enabled by default for all new tenants.
+
 ## Address usage
 
 The addresses specified on the cart are used for:
