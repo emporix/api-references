@@ -340,7 +340,7 @@ To apply external discounts to a cart, you need the `cart.cart_manage_external_p
 
 {% stepper %}
 {% step %}
-To apply an external discount to a cart, use the `externalDiscounts` attribute when creating or updating a cart. Send a request to the [Creating a new cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts) or [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
+To apply an external discount to a cart, use the `externalDiscounts` attribute when creating or updating a cart. Send a request to the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
