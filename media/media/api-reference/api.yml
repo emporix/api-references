@@ -397,13 +397,8 @@ components:
       properties:
         type:
           type: string
-          description: Reference type.
-          enum:
-            - BRAND
-            - CATEGORY
-            - LABEL
-            - PRODUCT
-            - MODULE
+          description: |
+            Reference type. Can be one of the predefined types: `BRAND`, `CATEGORY`, `LABEL`, `PRODUCT`, `MODULE` or any custom schema type.
         id:
           type: string
           description: Reference Id.

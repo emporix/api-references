@@ -952,6 +952,7 @@ paths:
       summary: Creating a custom instance
       parameters:
         - $ref: '#/components/parameters/trait_contentLanguage_header'
+        - $ref: '#/components/parameters/trait_validateReferences'
       description: |
         Creates a custom instance entity associated with given custom schema type.
         
@@ -966,22 +967,31 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CustomInstanceCreation'
-            example:
-              id: '123'
-              name: {
-                "en": "Report"
-              }
-              mixins: {
-                productCustomAttributes: {
-                  inStock: true,
-                  popularity: 1
-                }
-              }
-              metadata: {
-                mixins: {
-                  "productCustomAttributes": 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
-                }
-              }
+            examples:
+              Basic custom instance:
+                value:
+                  id: '123'
+                  name:
+                    en: Report
+                  mixins:
+                    productCustomAttributes:
+                      inStock: true
+                      popularity: 1
+                  metadata:
+                    mixins:
+                      productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+              Custom instance with reference:
+                value:
+                  name:
+                    en: Report
+                  mixins:
+                    order_reference:
+                      order:
+                        emporixReferenceType: ORDER
+                        id: EON1007
+                  metadata:
+                    mixins:
+                      order_reference: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata2/tenant/order_reference_v1.json'
       responses:
         '201':
           description: Custom instance was successfully created.
@@ -1039,32 +1049,92 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomInstancesResponse'
-              example:
-                - id: '123'
-                  name: {
-                    "en": "Report"
-                  }
-                  type: CUSTOM_DOCUMENT
-                  mixins:
-                    mixins:
-                      productCustomAttributes:
-                        inStock: true
-                        populatirty: 1
-                  metadata:
-                    mixins:
-                      productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
-                    createdAt: '2025-04-17T13:00:00.000Z'
-                    modifiedAt: '2025-05-14T13:00:00.000Z'
-                    version: 3
-                - id: '456'
-                  name: {
-                    "en": "Manual"
-                  }
-                  type: CUSTOM_DOCUMENT
-                  metadata:
-                    createdAt: '2025-04-17T13:00:00.000Z'
-                    modifiedAt: '2025-04-17T13:00:00.000Z'
-                    version: 1
+              examples:
+                Basic response:
+                  value:
+                    - id: '123'
+                      name:
+                        en: Report
+                      type: CUSTOM_DOCUMENT
+                      mixins:
+                        productCustomAttributes:
+                          inStock: true
+                          populatirty: 1
+                      media:
+                        - media_id_1
+                        - media_id_2
+                      metadata:
+                        mixins:
+                          productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                        createdAt: '2025-04-17T13:00:00.000Z'
+                        modifiedAt: '2025-05-14T13:00:00.000Z'
+                        version: 3
+                    - id: '456'
+                      name:
+                        en: Manual
+                      type: CUSTOM_DOCUMENT
+                      media:
+                        - media_id_3
+                      metadata:
+                        createdAt: '2025-04-17T13:00:00.000Z'
+                        modifiedAt: '2025-04-17T13:00:00.000Z'
+                        version: 1
+                Response with expanded references:
+                  value:
+                    - id: '68fe97bb616cd70336cde7ee'
+                      name:
+                        en: Report
+                      type: CUSTOM_DOCUMENT
+                      mixins:
+                        customAttributes:
+                          references:
+                            product_reference:
+                              emporixReferenceType: PRODUCT
+                              id: '68fe97af4e412504678a4fd7'
+                              yrn: 'urn:yaas:saasag:caasproduct:product:tenant;68fe97af4e412504678a4fd7'
+                              code: hammer1
+                              name:
+                                en: Hammer
+                              productType: BASIC
+                              published: true
+                              metadata:
+                                version: 1
+                                createdAt: '2025-10-26T21:50:39.097Z'
+                                modifiedAt: '2025-10-26T21:50:39.097Z'
+                              expandStatus: SUCCESS
+                            customers_array:
+                              - emporixReferenceType: CUSTOMER
+                                id: '79474954'
+                                title: MR
+                                firstName: John
+                                lastName: Doe
+                                preferredCurrency: EUR
+                                type: CUSTOMER
+                                metadata:
+                                  version: 0
+                                customerNumber: '79474954'
+                                contactEmail: john.doe@email.com
+                                active: true
+                                onHold: false
+                                metadataCreatedAt: '2025-10-26T21:49:41.440Z'
+                                businessModel: B2C
+                                expandStatus: SUCCESS
+                              - emporixReferenceType: CUSTOMER
+                                id: '16229890'
+                                expandStatus: FAILURE
+                                error:
+                                  message: Entity not found
+                                  details:
+                                    - "Entity with id: '16229890' was not found for type: 'CUSTOMER'"
+                      media:
+                        - media_id_1
+                        - media_id_2
+                      metadata:
+                        version: 2
+                        createdAt: '2025-10-26T21:50:51.702Z'
+                        modifiedAt: '2025-10-26T21:51:16.434Z'
+                        mixins:
+                          customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata2/tenant/customAttributes_v2.json'
         '400':
           $ref: '#/components/responses/Bad_request_400'
         '401':
@@ -1080,6 +1150,7 @@ paths:
         - $ref: '#/components/parameters/trait_q_param'
         - $ref: '#/components/parameters/trait_fields'
         - $ref: '#/components/parameters/trait_acceptLanguage_header'
+        - $ref: '#/components/parameters/trait_expand_references'
 
   '/schema/{tenant}/custom-entities/{type}/instances/{id}':
     parameters:
@@ -1090,6 +1161,7 @@ paths:
       summary: Retrieving a custom instance
       parameters:
         - $ref: '#/components/parameters/trait_acceptLanguage_header'
+        - $ref: '#/components/parameters/trait_expand_references'
       description: |-
         Retrieves a single custom instance by id.
         
@@ -1107,22 +1179,82 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomInstanceResponse'
-              example:
-                id: "123"
-                name: {
-                  "en": "Report"
-                }
-                type: CUSTOM_DOCUMENT
-                mixins:
-                  productCustomAttributes:
-                    inStock: true
-                    populatirty: 1
-                metadata:
-                  mixins:
-                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
-                  createdAt: '2025-04-17T13:00:00.000Z'
-                  modifiedAt: '2025-05-14T13:00:00.000Z'
-                  version: 3
+              examples:
+                Basic response:
+                  value:
+                    id: "123"
+                    name:
+                      en: Report
+                    type: CUSTOM_DOCUMENT
+                    mixins:
+                      productCustomAttributes:
+                        inStock: true
+                        populatirty: 1
+                    media:
+                      - media_id_1
+                      - media_id_2
+                    metadata:
+                      mixins:
+                        productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                      createdAt: '2025-04-17T13:00:00.000Z'
+                      modifiedAt: '2025-05-14T13:00:00.000Z'
+                      version: 3
+                Response with expanded references:
+                  value:
+                    id: '68fe97bb616cd70336cde7ee'
+                    name:
+                      en: Report
+                    type: CUSTOM_DOCUMENT
+                    mixins:
+                      customAttributes:
+                        references:
+                          product_reference:
+                            emporixReferenceType: PRODUCT
+                            id: '68fe97af4e412504678a4fd7'
+                            yrn: 'urn:yaas:saasag:caasproduct:product:tenant;68fe97af4e412504678a4fd7'
+                            code: hammer1
+                            name:
+                              en: Hammer
+                            productType: BASIC
+                            published: true
+                            metadata:
+                              version: 1
+                              createdAt: '2025-10-26T21:50:39.097Z'
+                              modifiedAt: '2025-10-26T21:50:39.097Z'
+                            expandStatus: SUCCESS
+                          customers_array:
+                            - emporixReferenceType: CUSTOMER
+                              id: '79474954'
+                              title: MR
+                              firstName: John
+                              lastName: Doe
+                              preferredCurrency: EUR
+                              type: CUSTOMER
+                              metadata:
+                                version: 0
+                              customerNumber: '79474954'
+                              contactEmail: john.doe@email.com
+                              active: true
+                              onHold: false
+                              metadataCreatedAt: '2025-10-26T21:49:41.440Z'
+                              businessModel: B2C
+                              expandStatus: SUCCESS
+                            - emporixReferenceType: CUSTOMER
+                              id: '16229890'
+                              expandStatus: FAILURE
+                              error:
+                                message: Entity not found
+                                details:
+                                  - "Entity with id: '16229890' was not found for type: 'CUSTOMER'"
+                    media:
+                      - media_id_1
+                      - media_id_2
+                    metadata:
+                      version: 2
+                      createdAt: '2025-10-26T21:50:51.702Z'
+                      modifiedAt: '2025-10-26T21:51:16.434Z'
+                      mixins:
+                        customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata2/tenant/customAttributes_v2.json'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -1156,6 +1288,7 @@ paths:
       summary: Upserting a custom instance
       parameters:
         - $ref: '#/components/parameters/trait_contentLanguage_header'
+        - $ref: '#/components/parameters/trait_validateReferences'
       description: |-
         Performs the `UPSERT` operation. If a custom instance with specified ID exists in the system, then it is updated. If it doesn't exist, a new custom instance is created.
         
@@ -1220,6 +1353,7 @@ paths:
       summary: Patching a custom instance
       parameters:
         - $ref: '#/components/parameters/trait_contentLanguage_header'
+        - $ref: '#/components/parameters/trait_validateReferences'
       description: |-
         The patch request consists of set of operation, that should be defined according to [RFC-6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.
         
@@ -1301,23 +1435,82 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomInstancesResponse'
-              example:
-                - id: '123'
-                  name: {
-                    "en": "Report"
-                  }
-                  type: CUSTOM_DOCUMENT
-                  mixins:
-                    mixins:
-                      productCustomAttributes:
-                        inStock: true
-                        populatirty: 1
-                  metadata:
-                    mixins:
-                      productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
-                    createdAt: '2025-04-17T13:00:00.000Z'
-                    modifiedAt: '2025-05-14T13:00:00.000Z'
-                    version: 3
+              examples:
+                Basic response:
+                  value:
+                    - id: '123'
+                      name:
+                        en: Report
+                      type: CUSTOM_DOCUMENT
+                      mixins:
+                        productCustomAttributes:
+                          inStock: true
+                          populatirty: 1
+                      media:
+                        - media_id_1
+                        - media_id_2
+                      metadata:
+                        mixins:
+                          productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                        createdAt: '2025-04-17T13:00:00.000Z'
+                        modifiedAt: '2025-05-14T13:00:00.000Z'
+                        version: 3
+                Response with expanded references:
+                  value:
+                    - id: '68fe97bb616cd70336cde7ee'
+                      name:
+                        en: Report
+                      type: CUSTOM_DOCUMENT
+                      mixins:
+                        customAttributes:
+                          references:
+                            product_reference:
+                              emporixReferenceType: PRODUCT
+                              id: '68fe97af4e412504678a4fd7'
+                              yrn: 'urn:yaas:saasag:caasproduct:product:tenant;68fe97af4e412504678a4fd7'
+                              code: hammer1
+                              name:
+                                en: Hammer
+                              productType: BASIC
+                              published: true
+                              metadata:
+                                version: 1
+                                createdAt: '2025-10-26T21:50:39.097Z'
+                                modifiedAt: '2025-10-26T21:50:39.097Z'
+                              expandStatus: SUCCESS
+                            customers_array:
+                              - emporixReferenceType: CUSTOMER
+                                id: '79474954'
+                                title: MR
+                                firstName: John
+                                lastName: Doe
+                                preferredCurrency: EUR
+                                type: CUSTOMER
+                                metadata:
+                                  version: 0
+                                customerNumber: '79474954'
+                                contactEmail: john.doe@email.com
+                                active: true
+                                onHold: false
+                                metadataCreatedAt: '2025-10-26T21:49:41.440Z'
+                                businessModel: B2C
+                                expandStatus: SUCCESS
+                              - emporixReferenceType: CUSTOMER
+                                id: '16229890'
+                                expandStatus: FAILURE
+                                error:
+                                  message: Entity not found
+                                  details:
+                                    - "Entity with id: '16229890' was not found for type: 'CUSTOMER'"
+                      media:
+                        - media_id_1
+                        - media_id_2
+                      metadata:
+                        version: 2
+                        createdAt: '2025-10-26T21:50:51.702Z'
+                        modifiedAt: '2025-10-26T21:51:16.434Z'
+                        mixins:
+                          customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata2/tenant/customAttributes_v2.json'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -1330,6 +1523,7 @@ paths:
         - $ref: '#/components/parameters/trait_sort'
         - $ref: '#/components/parameters/trait_acceptLanguage_header'
         - $ref: '#/components/parameters/trait_fields'
+        - $ref: '#/components/parameters/trait_expand_references'
   '/schema/{tenant}/custom-entities/{type}/instances/bulk':
     parameters:
       - $ref: '#/components/parameters/tenant'
@@ -1346,6 +1540,8 @@ paths:
           * `schema.custominstance_manage` - required for creating custom instances
       tags:
         - Custom Instance
+      parameters:
+        - $ref: '#/components/parameters/trait_validateReferences_bulk'
       requestBody:
         content:
           application/json:
@@ -1405,6 +1601,8 @@ paths:
           * `schema.custominstance_manage` - required for upserting custom instances
       tags:
         - Custom Instance
+      parameters:
+        - $ref: '#/components/parameters/trait_validateReferences_bulk'
       requestBody:
         content:
           application/json:
@@ -1664,8 +1862,11 @@ components:
         $ref: '#/components/schemas/SchemaType'
     SchemaAttributeType:
       type: string
-      description: Type of the attribute.
-      enum: [TEXT, NUMBER, DECIMAL, BOOLEAN, DATE, TIME, DATE_TIME, ENUM, ARRAY, OBJECT]
+      description: |
+        Type of the attribute.
+        
+        **Note**: The `REFERENCE` type is only available for custom schema types.
+      enum: [TEXT, NUMBER, DECIMAL, BOOLEAN, DATE, TIME, DATE_TIME, ENUM, ARRAY, OBJECT, REFERENCE]
     Localized:
       type: boolean
       description: Whether the attribute is localized or not. Only attributes of 'TEXT' type can be localized.
@@ -1686,7 +1887,12 @@ components:
           description: Whether the attribute could accept null or not.
     SchemaAttributeValue:
       type: object
-      description: Value of the attribute. Valid only for `ENUM` types.
+      description: |
+        Value of the attribute. Valid for `ENUM` and `REFERENCE` types.
+        
+        For `ENUM` type, the value represents one of the allowed enum values.
+        
+        For `REFERENCE` type, the value represents the reference type (e.g., `PRODUCT`, `ORDER`, `CART`, `PRICE`, `CUSTOMER`, `COMPANY`, `MEDIA`, `PRICE_LIST`, `CUSTOMER_SEGMENT`, `CATEGORY`, or any custom schema type).
       properties:
         value:
           type: string
@@ -1703,7 +1909,7 @@ components:
           $ref: '#/components/schemas/SchemaAttributeMetadata'
         values:
           type: array
-          description: List of available values for the attribute. Only valid for `ENUM` type.
+          description: List of available values for the attribute. Only valid for `ENUM` and `REFERENCE` types.
           items:
             $ref: '#/components/schemas/SchemaAttributeValue'
     SchemaAttribute:
@@ -1725,7 +1931,7 @@ components:
           $ref: '#/components/schemas/SchemaAttributeMetadata'
         values:
           type: array
-          description: List of available values for the attribute. Only valid for `ENUM` type.
+          description: List of available values for the attribute. Only valid for `ENUM` and `REFERENCE` type.
           items:
             $ref: '#/components/schemas/SchemaAttributeValue'
         attributes:
@@ -1741,7 +1947,7 @@ components:
               $ref: '#/components/schemas/SchemaAttributeType'
             values:
               type: array
-              description: List of available values for the attribute. Only valid for `ENUM` type.
+              description: List of available values for the attribute. Only valid for `ENUM` and `REFERENCE` type.
               items:
                 $ref: '#/components/schemas/SchemaAttributeValue'
             localized:
@@ -1990,6 +2196,11 @@ components:
         mixins:
           type: string
           description: A key-value map of additional attributes.
+        media:
+          type: array
+          description: List of media IDs assigned to the custom instance.
+          items:
+            type: string
         metadata:
           allOf:
             - $ref: '#/components/schemas/CustomInstanceMetadata'
@@ -2069,6 +2280,24 @@ components:
             schema.schema_manage: ''
             schema.schema_read: ''
   parameters:
+    trait_validateReferences:
+      name: validateReferences
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: true
+      description: |
+        When set to true, references are validated if the provided resources exist. If set to false, validation is skipped.
+    trait_validateReferences_bulk:
+      name: validateReferences
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: |
+        When set to true, references are validated if the provided resources exist. If set to false, validation is skipped.
     type:
       name: type
       in: path
@@ -2173,6 +2402,20 @@ components:
       schema:
         default: false
         type: boolean
+    trait_expand_references:
+      name: expand
+      in: query
+      required: false
+      schema:
+        type: string
+      description: |
+        Fetches data about expanded references. You can provide full path to the reference, use wildcard character `*`, or provide a specific index (starting with 0) in array of references. Multiple paths can be specified by separating them with commas.
+        
+        **Examples:**
+        * `customAttributes.references.product_reference` - expands a specific reference
+        * `*` - expands all references
+        * `customAttributes.*` - expands all references within customAttributes
+        * `customAttributes.references.customers_array.0` - expands the first element in an array of references
     trait_q_param:
       name: q
       in: query
