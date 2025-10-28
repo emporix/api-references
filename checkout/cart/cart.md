@@ -2154,13 +2154,20 @@ See the sections below for shipping, payment fee, tax and discounts calculations
 
 ## How to calculate shipping cost at cart level
 
-The shipping calculation depends on the stage at which it is done.
+The shipping calculation depends on the stage at which it is performed.
 
-* In the cart, where delivery method, and zone are not available yet, the calculation uses the minimum shipping estimation. At this stage,  `sites.homeBase.Address` is used as the `shipFromAddress`.
-* The `shipToAddress` is determined in a following way:
-  * cart's address with origin `REQUEST` and type `SHIPPING`
-  * cart's `countryCode` and `zipCode` - kept for backward compatibility when it was not possible to define addresses on a cart level.
-  * cart's address other with origin `LELGAL_ENTITY`, `CUSTOMER`, `SITE` and type `SHIPPING`
+* In the cart, where the delivery method and zone are not yet available, the calculation uses the minimum shipping estimate. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`.
+* The `shipToAddress` is determined in the following way:
+  * cart address with origin `REQUEST` and type `SHIPPING`
+  * cart `countryCode` and `zipCode` — kept for backward compatibility from when it was not possible to define addresses at the cart level
+  * cart address with origin `LEGAL_ENTITY`, `CUSTOMER`, or `SITE`, and type `SHIPPING`
+
+  When an address is not explicitly provided in the request, the Cart Service automatically populates it based on the following priority order:
+
+  1. **Legal Entity Address** — If the cart is associated with a legal entity, the first location containing both `country`, `zipCode`, and the required address type is used (origin: `LEGAL_ENTITY`).
+  2. **Customer Address** — If the cart has a logged-in customer, the default address matching the required type is used (origin: `CUSTOMER`).
+  3. **Site Homebase Address** — If none of the above are available, the site's homebase address is used (origin: `SITE`).
+   
     See the [Calculating the minimum shipping costs](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) endpoint.
 * In the checkout, where information about the delivery window and zone is already available, the calculation uses the following endpoints: [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote), or [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) accordingly.
 

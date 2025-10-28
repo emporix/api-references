@@ -35,34 +35,34 @@ Each address can include the following properties:
 * `city` - city name
 * `country` - two-letter country code (ISO 3166)
 
-## Address auto-population
+### Address auto-population
 
 When addresses are not explicitly provided in the request, the Cart Service automatically populates them based on the following priority order:
 
-1. **Legal Entity Address** - If the cart is associated with a legal entity, the first location with both `country`,`zip-code` and required address type is used (origin: `LEGAL_ENTITY`)
-2. **Customer Address** - If the cart has a logged-in customer, the default address matching the required type is used (origin: `CUSTOMER`)
-3. **Site Homebase Address** - If neither of the above is available, the site's homebase address is used (origin: `SITE`)
+1. **Legal Entity Address** - If the cart is associated with a legal entity, the first location with both `country`,`zip-code` and required address type is used (origin: `LEGAL_ENTITY`).
+2. **Customer Address** - If the cart has a logged-in customer, the default address matching the required type is used (origin: `CUSTOMER`).
+3. **Site Homebase Address** - If neither of the above is available, the site's homebase address is used (origin: `SITE`).
 
 Addresses provided in the request are marked with origin `REQUEST` in the response.
 
-For backward compatibility the legal entity address population has to be enabled in the tenant settings: enableLegalEntityAddressFallbackInCart. It is enabled by default for all new tenants.
+For backward compatibility the legal entity address population has to be enabled in the tenant settings: `enableLegalEntityAddressFallbackInCart`. It is enabled by default for all new tenants.
 
-## Address usage
+### Address usage
 
 The addresses specified on the cart are used for:
 
-* **Tax determination** - The appropriate tax country is determined based on the billing or shipping address, as configured in the site's `taxDeterminationBasedOn` setting
-* **Shipping cost calculation** - The shipping address is used to calculate accurate shipping costs based on the destination
+* **Tax determination** - The appropriate tax country is determined based on the billing or shipping address, as configured in the site's `taxDeterminationBasedOn` setting.
+* **Shipping cost calculation** - The shipping address is used to calculate accurate shipping costs based on the destination.
 
 For more details, see:
 * [How to determine a tax country at cart level](https://developer.emporix.io/api-references/api-guides/checkout/cart/cart#how-to-determine-a-tax-country-at-cart-level)
 * [How to calculate shipping cost at cart level](https://developer.emporix.io/api-references/api-guides/checkout/cart/cart#how-to-calculate-shipping-cost-at-cart-level)
 
-## Backward compatibility
+### Backward compatibility
 
 The existing `countryCode` and `zipCode` parameters at the cart level are still supported for backward compatibility. However, the new `addresses` array provides a more comprehensive and flexible approach to address management.
 
-## Updated endpoints
+### Updated endpoints
 
 | Endpoint                                                                                                                                                                   | Description                                                            |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
