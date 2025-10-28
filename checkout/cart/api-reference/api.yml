@@ -3948,12 +3948,12 @@ components:
         addresses:
           type: array
           description: |-
-            A list of addresses used in the cart. The list will contain one `BILLING` and one `SHIPPING` address `type`.
-            if one of the addresses `types` has not been provided in the request, it will be autopopulated in the following order:
-            * if cart has legal entity, get first location of a legal entity that has both `country`, `zip-code` and has required `type`. The address will have origin=`LEGAL_ENTITY`
-            * otherwise if that cart has logged in customer, find `default` address that has both `country`, `zip-code` and has required `type`,  If there is no matching default address with required information use the first one from customer addresses that meet the criteria. The address will have origin=`CUSTOMER`
-            * otherwise use site's homebase address. The address will have origin=`SITE`
-            These addresses will be used in the tax country code determination [How to determine a tax country at cart levelHow to determine a tax country at cart level](https://developer.emporix.io/api-references/api-guides/checkout/cart/cart#how-to-determine-a-tax-country-at-cart-level) and shipping cost calculation [How to calculate shipping cost at cart level](https://developer.emporix.io/api-references/api-guides/checkout/cart/cart#how-to-calculate-shipping-cost-at-cart-level)
+            A list of addresses used in the cart. The list contains one `BILLING` and one `SHIPPING` address `type`.
+            If one of the address `types` is not provided in the request, it is automatically populated in the following order:
+            * If the cart has a legal entity, it gets the first location of the legal entity that has both `country` and `zipCode`, and matches the required `type` - then the address has origin=`LEGAL_ENTITY`.
+            * Otherwise, if the cart has a logged-in customer, it finds the `default` address that has both `country` and `zipCode`, and matches the required `type`. If there is no matching default address with the required information, it uses the first customer address that meets the criteria. The address has origin=`CUSTOMER`.
+            * Otherwise, the cart uses the site homebase address. Then the address has origin=`SITE`.
+            These addresses are used in the tax country code determination [How to determine a tax country at cart level](https://developer.emporix.io/api-references/api-guides/checkout/cart/cart#how-to-determine-a-tax-country-at-cart-level) and shipping cost calculation [How to calculate shipping cost at cart level](https://developer.emporix.io/api-references/api-guides/checkout/cart/cart#how-to-calculate-shipping-cost-at-cart-level).
           items:
             $ref: '#/components/schemas/addressResponse'
         channel:
@@ -3967,7 +3967,7 @@ components:
             $ref: '#/components/schemas/discountResponse'
         externalDiscounts:
           type: array
-          description: External discounts that should be applied to this cart. Requires `cart.cart_manage_external_prices` scope
+          description: External discounts that should be applied to this cart. Requires the `cart.cart_manage_external_prices` scope.
           items:
             $ref: '#/components/schemas/externalCartDiscount'
         totalUnitsCount:
@@ -4179,11 +4179,12 @@ components:
         lineTax:
           allOf:
             - $ref: '#/components/schemas/taxValue'
+            - type: object
+              required:
+                - netValue
+                - grossValue
+                - rate
           description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`.
-          required:
-            - netValue
-            - grossValue
-            - rate
         metadata:
           $ref: '#/components/schemas/metadataRequest'
         mixins:
@@ -4335,7 +4336,11 @@ components:
             - PERCENT
             - ABSOLUTE
             - FREE_SHIPPING
-          description: PERCENT for percentage discounts, ABSOLUTE for monetary amount and FREE_SHIPPING is shipping is fully discounted.
+          description: |-
+            Indicates the type of discount applied:
+            * `PERCENT` — a percentage-based discount
+            * `ABSOLUTE` — a fixed monetary amount
+            * `FREE_SHIPPING` — shipping is fully discounted
         value:
           type: number
           format: double
@@ -4562,8 +4567,8 @@ components:
         addresses:
           type: array
           description: List of addresses that should be associated with the cart and used for tax determination and shipping cost. 
-            There can be one address of type `BILLING` and one of type `SHIPPING` - others will be ignored.
-            These addresses will be returned with the origin `REQUEST` in the cart response.
+            There can be one address of type `BILLING` and one of type `SHIPPING` - others are ignored.
+            These addresses are returned with the origin `REQUEST` in the cart response.
           items:
             $ref: '#/components/schemas/addressRequest'
         metadata:
@@ -4595,31 +4600,31 @@ components:
           description: 'Delivery date. It has to be of "yyyy-MM-dd''T''HH:mm:ss.SSS''Z''" format.'
     addressRequest:
       type: object
-      description: Information about the cart's address that can be provided in the request
+      description: Information about the cart address that can be provided in the request.
       additionalProperties: false
       properties:
         contactName:
           type: string
           minLength: 0
-          description: Contact name
+          description: Contact name.
         companyName:
           type: string
-          description: Company name
+          description: Company name.
         street:
           type: string
           minLength: 0
-          description: Street
+          description: Street.
         streetNumber:
           type: string
-          description: Street number
+          description: Street number.
         streetAppendix:
           type: string
-          description: Street appendix
+          description: Street appendix.
         zipCode:
           type: string
           maxLength: 11
           minLength: 0
-          description: zip code
+          description: Zip code.
         city:
           type: string
           minLength: 0
@@ -4629,13 +4634,13 @@ components:
           pattern: '[a-zA-Z]{2}'
           minLength: 2
           maxLength: 2
-          description: Country
+          description: Country.
         state:
           type: string
-          description: State
+          description: State.
         contactPhone:
           type: string
-          description: Contact phone
+          description: Contact phone.
         type:
           type: string
           enum:
@@ -4647,11 +4652,11 @@ components:
           $ref: '#/components/schemas/metadataRequest'
         mixins:
           type: object
-          description: Mixins object
+          description: Mixins object.
           additionalProperties: true
     addressResponse:
       type: object
-      description: Information about the carts's address used for shipping and tax determination.
+      description: Information about the carts address used for shipping and tax determination.
       additionalProperties: false
       properties:
         origin:
@@ -4661,12 +4666,12 @@ components:
             - LEGAL_ENTITY
             - CUSTOMER
             - SITE
-          description: >
+          description: |-
             Holds information about the origin of the address. Possible values:
               * `REQUEST` - provided in create/update cart request
-              * `LEGAL_ENTITY` - auto populated from from cart's legal entity location
-              * `CUSTOMER` - auto populated from fetched from customer addresses
-              * `SITE` - auto populated from sites base address
+              * `LEGAL_ENTITY` - automatically populated from from cart's legal entity location
+              * `CUSTOMER` - automatically populated from fetched from customer addresses
+              * `SITE` - automatically populated from sites base address
         siteCode:
           type: string
           description: Site unique identifier. A site is a specific shop.
@@ -4682,47 +4687,47 @@ components:
         contactName:
           type: string
           minLength: 0
-          description: Contact name
+          description: Contact name.
         companyName:
           type: string
-          description: Company name
+          description: Company name.
         street:
           type: string
           minLength: 0
-          description: Street
+          description: Street.
         streetNumber:
           type: string
-          description: Street number
+          description: Street number.
         streetAppendix:
           type: string
-          description: Street appendix
+          description: Street appendix.
         zipCode:
           type: string
           maxLength: 11
           minLength: 0
-          description: zip code
+          description: Zip code.
         city:
           type: string
           minLength: 0
-          description: City
+          description: City.
         country:
           type: string
           pattern: '[a-zA-Z]{2}'
           minLength: 2
           maxLength: 2
-          description: Country
+          description: Country.
         state:
           type: string
-          description: State
+          description: State.
         contactPhone:
           type: string
-          description: Contact phone
+          description: Contact phone.
         type:
           type: string
           enum:
             - BILLING
             - SHIPPING
-          description: 'Type of the address data'
+          description: Type of the address data.
         metadata:
           $ref: '#/components/schemas/metadataRequest'
         mixins:
@@ -4746,7 +4751,7 @@ components:
       properties:
         itemId:
           type: string
-          description: Cart item's unique identifier.
+          description: Cart item unique identifier.
         yrn:
           $ref: '#/components/schemas/YRN'
       required:
@@ -4760,7 +4765,7 @@ components:
       properties:
         id:
           type: string
-          description: Discount's unique identifier.
+          description: Discount unique identifier.
         couponYrn:
           $ref: '#/components/schemas/YRN'
         code:
@@ -4781,7 +4786,7 @@ components:
           format: double
         name:
           maxLength: 150
-          description: Discount's displayed name.
+          description: Discount displayed name.
           type: string
         discountRate:
           type: number
@@ -5386,8 +5391,8 @@ components:
         addresses:
           type: array
           description: List of addresses that should be associated with the cart and used for tax determination and shipping cost.
-            There can be one address of type `BILLING` and one of type `SHIPPING` - others will be ignored.
-            These addresses will be returned with the origin `REQUEST` in the cart response.
+            There can be one address of type `BILLING` and one of type `SHIPPING` - others are ignored.
+            These addresses are returned with the origin `REQUEST` in the cart response.
           items:
             $ref: '#/components/schemas/addressRequest'
         metadata:
