@@ -118,112 +118,6 @@ curl -i -X POST
 [api-reference](../../prices-and-taxes/tax-service/api-reference/)
 {% endcontent-ref %}
 
-## How to determine a tax country at checkout level
-
-The Checkout Service uses a priority-based approach to determine the correct tax country code for accurate tax calculations. Understanding this logic ensures that the correct tax rules are applied to your orders.
-
-The tax country determination follows a specific order, checking multiple sources until a valid country code is found.
-
-### Tax determination priority order
-
-#### Step 1: Check site settings for address type
-
-First, the system checks your site's `taxDeterminationBasedOn` setting to determine which address type should be used for tax determination:
-
-* `SHIPPING_ADDRESS` - use the shipping address for tax calculations
-* `BILLING_ADDRESS` - use the billing address for tax calculations
-
-This setting is configured in your site settings and determines which address will be prioritized for tax country determination.
-
-#### Step 2: Check checkout request addresses
-
-The system looks for an address with the matching type in the `addresses` array provided in your checkout request:
-
-* If the configured address type (e.g., `SHIPPING`) is found in the checkout request, its `country` field is used
-* **Important fallback**: If the primary address type is not found and `SHIPPING_ADDRESS` was configured, the system automatically falls back to checking for a `BILLING` address
-* This ensures tax calculation can proceed even if only one address type is provided
-
-#### Step 3: Check legal entity addresses
-
-If no matching address is found in the checkout request:
-
-* The system checks if the cart has a `legalEntityId` associated with it
-* If a legal entity is found, the system retrieves all addresses associated with that legal entity
-* The system searches for an address matching the type specified in the site settings
-* If found, the legal entity's address country code is used for tax determination
-
-#### Step 4: Check customer addresses
-
-If no legal entity address is found and the checkout is done for a known customer:
-
-* The system retrieves the customer's saved addresses
-* The system looks for the default address with the matching type
-* If no default address exists with the required type, the first address of that type is used
-* If found, the customer address's country code is used
-
-### Example: Tax determination with checkout addresses
-
-When you provide addresses in your checkout request, ensure you include the correct country codes:
-
-```json
-{
-  "cartId": "9b36757a-5ea1-4689-9ed3-fb630eb5048c",
-  "addresses": [
-    {
-      "contactName": "John Doe",
-      "street": "Fritz-Elsaas",
-      "streetNumber": "20",
-      "zipCode": "70173",
-      "city": "Stuttgart",
-      "country": "DE",
-      "type": "SHIPPING"
-    },
-    {
-      "contactName": "John Doe",
-      "street": "Main Street",
-      "streetNumber": "100",
-      "zipCode": "10001",
-      "city": "New York",
-      "country": "US",
-      "type": "BILLING"
-    }
-  ],
-  "paymentMethods": [...],
-  "shipping": {...}
-}
-```
-
-**Tax determination examples:**
-
-* If your site's `taxDeterminationBasedOn` is set to `SHIPPING_ADDRESS`, the system uses `DE` (Germany) for tax calculations
-* If set to `BILLING_ADDRESS`, the system uses `US` (United States) for tax calculations
-* If only a billing address is provided but `SHIPPING_ADDRESS` is configured, the system falls back to the billing address country
-
-### Best practices
-
-1. **Always provide both address types** - Include both `SHIPPING` and `BILLING` addresses in your checkout request when possible
-2. **Ensure country codes are correct** - Use valid ISO 3166-1 alpha-2 country codes (e.g., "DE", "US", "FR")
-3. **Configure tax rules for all markets** - Make sure you have tax configurations for all countries you operate in
-4. **Test fallback scenarios** - Verify that tax calculation works correctly when only one address type is provided
-
-### Comparison with Cart tax determination
-
-While both Cart and Checkout services determine tax country, they use different approaches:
-
-**Checkout Service** checks addresses in this order:
-1. Checkout request addresses
-2. Legal entity addresses
-3. Customer addresses
-
-**Cart Service** has a more complex priority with origin tracking:
-1. Cart's address with origin `REQUEST`
-2. Cart's `countryCode` (backward compatibility)
-3. Legal entity addresses
-4. Customer addresses
-5. Site homebase address
-
-For more information about cart tax determination, see [How to determine a tax country at cart level](https://developer.emporix.io/api-references/api-guides/checkout/cart/cart#how-to-determine-a-tax-country-at-cart-level).
-
 ### Define the delivery zone, method, and time
 
 Delivery zone is the area where you ship your goods to. You can define a country, or a zip code that you operate within.
@@ -364,12 +258,31 @@ curl -i -X POST
 Send the request to the [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Language: string' 
-  -H 'Content-Type: application/json' 
-  -d '{}'
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/product/{tenant}/products/bulk' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Content-Type: application/json' 
+  --data '[
+    {
+      "id": "abc-123",
+      "code": "532432412331",
+      "name": "Product 1",
+      "productType": "BASIC"
+    },
+    {
+      "id": "abc-124",
+      "code": "532432412332",
+      "name": "Product 2",
+      "productType": "BASIC"
+    },
+    {
+      "id": "abc-125",
+      "code": "532432412333",
+      "name": "Product 3",
+      "productType": "BASIC"
+    }
+  ]'
 ```
 {% endstep %}
 {% endstepper %}
