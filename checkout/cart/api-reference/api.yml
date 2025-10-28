@@ -4628,7 +4628,7 @@ components:
         city:
           type: string
           minLength: 0
-          description: City
+          description: City.
         country:
           type: string
           pattern: '[a-zA-Z]{2}'
