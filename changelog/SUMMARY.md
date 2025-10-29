@@ -8,7 +8,7 @@
 
 ## 2025
 
-* [2025-10-24: Quote Service - external prices and mixins support](2025/2025-10-24-quote.md)
+* [2025-10-29: Quote Service - external prices and mixins support](2025/2025-10-29-quote.md)
 * [2025-10-22: Webhook - new agentic job events](2025/2025-10-22-webhook.md)
 * [2025-10-22: AI Service - support for AI agents](2025/2025-10-22-ai.md)
 * [2025-10-15: Sequential ID Service - removal of deprecated endpoints](2025/2025-10-15-sequential-id.md)
