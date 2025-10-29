@@ -385,7 +385,7 @@ Payload example for [Adding a product to cart](https://developer.emporix.io/api-
 
 ```bash
 {
-    "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross",
+    "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s24-gross",
     "keepAsSeparateLineItem": true,
     "itemType": "EXTERNAL",
     "price": {
@@ -812,12 +812,12 @@ This calculation method provides a comprehensive breakdown of prices, including 
             "keepAsSeparateLineItem": true,
             "type": "INTERNAL",
             "product": {
-                "id": "samsung-galaxy-s24-gross",
-                "sku": "Samsung Galaxy s24 gross",
-                "code": "Samsung Galaxy s24 gross",
-                "name": "Samsung Galaxy s24 gross",
+                "id": "mobile-phone-s24-gross",
+                "sku": "Mobile Phone s24 gross",
+                "code": "Mobile Phone s24 gross",
+                "name": "Mobile Phone s24 gross",
                 "localizedName": {
-                    "en": "Samsung Galaxy s24 gross"
+                    "en": "Mobile Phone s24 gross"
                 },
                 "images": [
                     {
@@ -826,7 +826,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
                     }
                 ]
             },
-            "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross",
+            "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s24-gross",
             "quantity": 2.0,
             "effectiveQuantity": 2.0,
             "price": {
@@ -1188,16 +1188,16 @@ This calculation method provides a comprehensive breakdown of prices, including 
             "keepAsSeparateLineItem": true,
             "type": "INTERNAL",
             "product": {
-                "id": "samsung-galaxy-s27-gross",
-                "sku": "samsung-galaxy-s27-gross",
-                "code": "samsung-galaxy-s27-gross",
-                "name": "samsung-galaxy-s27-gross",
+                "id": "mobile-phone-s27-gross",
+                "sku": "mobile-phone-s27-gross",
+                "code": "mobile-phone-s27-gross",
+                "name": "mobile-phone-s27-gross",
                 "localizedName": {
-                    "en": "samsung-galaxy-s27-gross"
+                    "en": "mobile-phone-s27-gross"
                 },
-                "description": "samsung-galaxy-s27-gross"
+                "description": "mobile-phone-s27-gross"
             },
-            "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s27-gross",
+            "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s27-gross",
             "quantity": 2.0,
             "effectiveQuantity": 2.0,
             "price": {
@@ -2276,7 +2276,7 @@ By default, all items are grouped into a single line in the cart. This behavior 
 
 ```json
 {
-    "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross",
+    "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s24-gross",
     "keepAsSeparateLineItem":true,
     "price": {
         "priceId": "679ca63dbcdefe5b380c98bc",

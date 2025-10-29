@@ -65,7 +65,7 @@ paths:
             schema:
               $ref: '#/components/schemas/createCart'
             examples:
-              Anonymous customer's cart:
+              Anonymous customer cart:
                 value:
                   siteCode: main
                   currency: EUR
@@ -74,7 +74,7 @@ paths:
                     name: storefront
                     source: 'https://your-storefront.com/'
                   sessionValidated: true
-              Logged in customer's cart:
+              Logged in customer cart:
                 value:
                   customerId: '87413250'
                   siteCode: main
@@ -98,7 +98,7 @@ paths:
           in: header
           name: session-id
           description: |
-            Anonymous customer's unique session identifier.
+            Anonymous customer unique session identifier.
 
             **Note**: The `session-id` is only required if you want to create a cart for an anonymous customer.
         - schema:
@@ -106,7 +106,7 @@ paths:
           in: header
           name: saas-token
           description: |
-            Customer’s `saasToken` generated when the customer token is generated. 
+            Customer `saasToken` generated when the customer token is generated. 
 
             **Note**: The `saas-token` is only required if you want to create a cart for a logged in customer.
       summary: Creating a new cart
@@ -137,16 +137,16 @@ paths:
                         keepAsSeparateLineItem: true
                         type: INTERNAL
                         product:
-                          id: samsung-galaxy-s24-gross
-                          sku: Samsung Galaxy s24 gross
-                          code: Samsung Galaxy s24 gross
-                          name: Samsung Galaxy s24 gross
+                          id: mobile-phone-s24-gross
+                          sku: Mobile Phone s24 gross
+                          code: Mobile Phone s24 gross
+                          name: Mobile Phone s24 gross
                           localizedName:
-                            en: Samsung Galaxy s24 gross
+                            en: Mobile Phone s24 gross
                           images:
                             - id: 67169928ceaab717e17f3734
                               url: http://res.cloudinary.com/saas-ag/image/upload/v1729534248/b2b2cstage/media/67169928ceaab717e17f3734
-                        itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross
+                        itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s24-gross
                         quantity: 2
                         effectiveQuantity: 2
                         price:
@@ -417,14 +417,14 @@ paths:
                         keepAsSeparateLineItem: true
                         type: INTERNAL
                         product:
-                          id: samsung-galaxy-s27-gross
-                          sku: samsung-galaxy-s27-gross
-                          code: samsung-galaxy-s27-gross
-                          name: samsung-galaxy-s27-gross
+                          id: mobile-phone-s27-gross
+                          sku: mobile-phone-s27-gross
+                          code: mobile-phone-s27-gross
+                          name: mobile-phone-s27-gross
                           localizedName:
-                            en: samsung-galaxy-s27-gross
-                          description: samsung-galaxy-s27-gross
-                        itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s27-gross
+                            en: mobile-phone-s27-gross
+                          description: mobile-phone-s27-gross
+                        itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s27-gross
                         quantity: 2
                         effectiveQuantity: 2
                         price:
@@ -788,7 +788,7 @@ paths:
                               taxValue: 53.677
                               taxCode: STANDARD
                               taxRate: 19
-                'Logged in customer''s cart ':
+                'Logged in customer cart ':
                   value:
                     id: 612c9ae63cff1d66f699b691
                     yrn: 'urn:yaas:hybris:cart:cart:saastest2;612c9ae63cff1d66f699b691'
@@ -805,7 +805,7 @@ paths:
                     nonDelivery:
                       - '5'
                       - '6'
-                Anonymous customer's cart:
+                Anonymous customer cart:
                   value:
                     id: 6128cf97330cc7035fa1484c
                     yrn: 'urn:yaas:hybris:cart:cart:saastest2;6128cf97330cc7035fa1484c'
@@ -852,15 +852,15 @@ paths:
           in: query
           name: sessionId
           description: |
-            Customer's unique session identifier.
+            Customer unique session identifier.
 
-            **Note**: The `sessionId` is only required if you want to retrieve an anonymous customer's cart.
+            **Note**: The `sessionId` is only required if you want to retrieve an anonymous customer cart.
         - schema:
             type: string
           in: query
           name: customerId
           description: |
-            Customer’s unique identifier generated when a customer’s account is created.
+            Customer unique identifier generated when a customer account is created.
 
             **Note**: The `customerId` is only required if you want to create a cart for a logged in customer.
         - schema:
@@ -869,7 +869,7 @@ paths:
           name: siteCode
           required: true
           description: |
-            Site’s unique identifier. A site is a specific shop. 
+            Site unique identifier. A site is a specific shop. 
 
             If the tenant owns only one shop, the value should be set to `main`.
         - schema:
@@ -878,7 +878,7 @@ paths:
           name: legalEntityId
           required: false
           description: |
-            Id of the legal entity to which customer is assigned. Should not be provided for B2C business model. 
+            ID of the legal entity to which customer is assigned. Should not be provided for B2C business model. 
             
             **Note**: The query param is optional, but if not provided, the cart without legalEntity assigned is returned.
         - schema:
@@ -953,16 +953,16 @@ paths:
                           keepAsSeparateLineItem: true
                           type: INTERNAL
                           product:
-                            id: samsung-galaxy-s24-gross
-                            sku: Samsung Galaxy s24 gross
-                            code: Samsung Galaxy s24 gross
-                            name: Samsung Galaxy s24 gross
+                            id: mobile-phone-s24-gross
+                            sku: Mobile Phone s24 gross
+                            code: Mobile Phone s24 gross
+                            name: Mobile Phone s24 gross
                             localizedName:
-                              en: Samsung Galaxy s24 gross
+                              en: Mobile Phone s24 gross
                             images:
                               - id: 67169928ceaab717e17f3734
                                 url: http://res.cloudinary.com/saas-ag/image/upload/v1729534248/b2b2cstage/media/67169928ceaab717e17f3734
-                          itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross
+                          itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s24-gross
                           quantity: 2
                           effectiveQuantity: 2
                           price:
@@ -1233,14 +1233,14 @@ paths:
                           keepAsSeparateLineItem: true
                           type: INTERNAL
                           product:
-                            id: samsung-galaxy-s27-gross
-                            sku: samsung-galaxy-s27-gross
-                            code: samsung-galaxy-s27-gross
-                            name: samsung-galaxy-s27-gross
+                            id: mobile-phone-s27-gross
+                            sku: mobile-phone-s27-gross
+                            code: mobile-phone-s27-gross
+                            name: mobile-phone-s27-gross
                             localizedName:
-                              en: samsung-galaxy-s27-gross
-                            description: samsung-galaxy-s27-gross
-                          itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s27-gross
+                              en: mobile-phone-s27-gross
+                            description: mobile-phone-s27-gross
+                          itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s27-gross
                           quantity: 2
                           effectiveQuantity: 2
                           price:
@@ -1663,16 +1663,17 @@ paths:
                         keepAsSeparateLineItem: true
                         type: INTERNAL
                         product:
-                          id: samsung-galaxy-s24-gross
-                          sku: Samsung Galaxy s24 gross
-                          code: Samsung Galaxy s24 gross
-                          name: Samsung Galaxy s24 gross
+                          id: mobile-phone-s27-gross
+                          sku: mobile-phone-s27-gross
+                          code: mobile-phone-s27-gross
+                          name: mobile-phone-s27-gross
                           localizedName:
-                            en: Samsung Galaxy s24 gross
+                            en: mobile-phone-s27-gross
+                          description: mobile-phone-s27-gross
                           images:
                             - id: 67169928ceaab717e17f3734
                               url: http://res.cloudinary.com/saas-ag/image/upload/v1729534248/b2b2cstage/media/67169928ceaab717e17f3734
-                        itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross
+                        itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s24-gross
                         quantity: 2
                         effectiveQuantity: 2
                         price:
@@ -1943,14 +1944,14 @@ paths:
                         keepAsSeparateLineItem: true
                         type: INTERNAL
                         product:
-                          id: samsung-galaxy-s27-gross
-                          sku: samsung-galaxy-s27-gross
-                          code: samsung-galaxy-s27-gross
-                          name: samsung-galaxy-s27-gross
+                          id: mobile-phone-s27-gross
+                          sku: mobile-phone-s27-gross
+                          code: mobile-phone-s27-gross
+                          name: mobile-phone-s27-gross
                           localizedName:
-                            en: samsung-galaxy-s27-gross
-                          description: samsung-galaxy-s27-gross
-                        itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s27-gross
+                            en: mobile-phone-s27-gross
+                          description: mobile-phone-s27-gross
+                        itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s27-gross
                         quantity: 2
                         effectiveQuantity: 2
                         price:
@@ -2473,7 +2474,7 @@ paths:
         '500':
           $ref: '#/components/responses/trait_500'
       description: |-
-        Refreshes a specified cart and their items. In case the prices assigned to cart's items have been changed then these changes are recognized and reassigned to the cart.
+        Refreshes a specified cart and their items. In case the prices assigned to cart items have been changed then these changes are recognized and reassigned to the cart.
         ***
         ### Required scopes
 
@@ -2599,7 +2600,7 @@ paths:
         required: true
         schema:
           type: string
-        description: Cart’s unique identifier generated when a cart is created.
+        description: Cart unique identifier generated when a cart is created.
       - name: tenant
         in: path
         required: true
@@ -2775,16 +2776,16 @@ paths:
                       keepAsSeparateLineItem: true
                       type: INTERNAL
                       product:
-                        id: samsung-galaxy-s24-gross
-                        sku: Samsung Galaxy s24 gross
-                        code: Samsung Galaxy s24 gross
-                        name: Samsung Galaxy s24 gross
+                        id: mobile-phone-s24-gross
+                        sku: Mobile Phone s24 gross
+                        code: Mobile Phone s24 gross
+                        name: Mobile Phone s24 gross
                         localizedName:
-                          en: Samsung Galaxy s24 gross
+                          en: Mobile Phone s24 gross
                         images:
                           - id: 67169928ceaab717e17f3734
                             url: http://res.cloudinary.com/saas-ag/image/upload/v1729534248/b2b2cstage/media/67169928ceaab717e17f3734
-                      itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross
+                      itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s24-gross
                       quantity: 2
                       effectiveQuantity: 2
                       price:
@@ -3061,7 +3062,7 @@ paths:
                   quantity: 5
               External line price and line tax example:
                 value:
-                  itemYrn: "urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross"
+                  itemYrn: "urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s24-gross"
                   keepAsSeparateLineItem: true
                   itemType: "EXTERNAL"
                   price:
@@ -3140,7 +3141,7 @@ paths:
           in: query
           name: siteCode
           description: |
-            Site’s unique identifier. A site is a specific shop. 
+            Site unique identifier. A site is a specific shop. 
 
             If the tenant owns only one shop, the value should be set to `main`.
           required: true
@@ -3198,16 +3199,16 @@ paths:
                     keepAsSeparateLineItem: true
                     type: INTERNAL
                     product:
-                      id: samsung-galaxy-s24-gross
-                      sku: Samsung Galaxy s24 gross
-                      code: Samsung Galaxy s24 gross
-                      name: Samsung Galaxy s24 gross
+                      id: mobile-phone-s24-gross
+                      sku: Mobile Phone s24 gross
+                      code: Mobile Phone s24 gross
+                      name: Mobile Phone s24 gross
                       localizedName:
-                        en: Samsung Galaxy s24 gross
+                        en: Mobile Phone s24 gross
                       images:
                         - id: 67169928ceaab717e17f3734
                           url: http://res.cloudinary.com/saas-ag/image/upload/v1729534248/b2b2cstage/media/67169928ceaab717e17f3734
-                    itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross
+                    itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s24-gross
                     quantity: 2
                     effectiveQuantity: 2
                     price:
@@ -3909,15 +3910,15 @@ components:
       properties:
         id:
           type: string
-          description: Cart’s unique identifier generated when a cart is created.
+          description: Cart unique identifier generated when a cart is created.
         yrn:
           $ref: '#/components/schemas/YRN'
         customerId:
           type: string
-          description: Customer’s unique identifier generated when a customer’s account is created through the Customer Service.
+          description: Customer unique identifier generated when a customer account is created through the Customer Service.
         legalEntityId:
           type: string
-          description: Id of the legal entity to which customer is assigned.
+          description: ID of the legal entity to which customer is assigned.
         orderId:
           type: string
           description: The identifier of an order generated from this cart.
@@ -3931,13 +3932,13 @@ components:
           $ref: '#/components/schemas/deliveryWindow'
         siteCode:
           type: string
-          description: Site’s unique identifier. A site is a specific shop.
+          description: Site unique identifier. A site is a specific shop.
         type:
           type: string
           description: Cart type.
         zipCode:
           type: string
-          description: Customer's address - zip code.
+          description: Customer address - zip code.
         countryCode:
           type: string
           description: 'Two-letter country code, compliant with the ISO 3166 standard.'
@@ -3958,7 +3959,7 @@ components:
           description: Total number of items added to the cart.
           format: double
         sessionId:
-          description: Customer's unique session identifier.
+          description: Customer unique session identifier.
           type: string
         metadata:
           $ref: '#/components/schemas/metadataResponse'
@@ -4009,7 +4010,7 @@ components:
               type: string
               deprecated: true
               description: |-
-                Delivery window's unique identifier, as defined in the Shipping Service.
+                Delivery window unique identifier, as defined in the Shipping Service.
                 
                 ***NOTE***
                 This attribute is deprecated. Please use the `deliveryWindow` attribute.
@@ -4177,7 +4178,7 @@ components:
           type: boolean
           deprecated: true
           description: |
-            Deprecated, use product's `weightDependent` attribute that is stored in the database. 
+            Deprecated, use product `weightDependent` attribute that is stored in the database. 
             If set to `true`, the storefront displays a hint that the total price of the product may vary depending on the product’s actual weight.
       required:
         - quantity
@@ -4187,7 +4188,7 @@ components:
       properties:
         couponId:
           type: string
-          description: Id of coupon.
+          description: ID of coupon.
         value:
           type: number
           description: Absolute value indicating how much given coupon lowered the price of given item.
@@ -4342,11 +4343,11 @@ components:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'
             - type: object
-              description: Product's unit price with tax values
+              description: Product unit price with tax values
         totalTax:
           type: number
           minimum: 0
-          description: Product's total tax amount.
+          description: Product total tax amount.
           format: double
         metadata:
           $ref: '#/components/schemas/metadataRequest'
@@ -4455,7 +4456,7 @@ components:
       properties:
         siteCode:
           type: string
-          description: Site’s unique identifier. A site is a specific shop.
+          description: Site unique identifier. A site is a specific shop.
       required:
         - siteCode
     channel:
@@ -4474,7 +4475,7 @@ components:
         customerId:
           maxLength: 200
           type: string
-          description: Customer’s unique identifier generated when a customer’s account is created through the Customer Service.
+          description: Customer unique identifier generated when a customer account is created through the Customer Service.
         currency:
           type: string
           pattern: '[A-Z]{3}'
@@ -4483,7 +4484,7 @@ components:
           description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
         legalEntityId:
           type: string
-          description: Id of the legal entity to which customer is assigned.
+          description: ID of the legal entity to which customer is assigned.
         deliveryWindowId:
           type: string
           description: 'Delivery window''s unique identifier, as defined in the Shipping Service.'
@@ -4493,7 +4494,7 @@ components:
           default: default
           type: string
           description: |-
-            Site’s unique identifier. A site is a specific shop.
+            Site unique identifier. A site is a specific shop.
 
             If the tenant owns only one shop, the value should be set to `main`.
         type:
@@ -4509,9 +4510,9 @@ components:
         sessionValidated:
           default: false
           description: |-
-            If set to `true`, endpoints will validate whether the `session-id` used to create the cart matches the `session-id` passed in the request header.
+            If set to `true`, endpoints validate whether the `session-id` used to create the cart matches the `session-id` passed in the request header.
 
-            **Note**: The `sessionValidated` parameter only applies to anonymous customers’ carts.
+            **Note**: The `sessionValidated` parameter only applies to anonymous customer carts.
           type: boolean
       required:
         - currency
@@ -4520,10 +4521,10 @@ components:
       properties:
         id:
           type: string
-          description: Id of the delivery window
+          description: ID of the delivery window.
         slotId:
           type: string
-          description: ID of the Delivery Time Slot
+          description: ID of the delivery time slot.
         deliveryDate:
           type: string
           format: date-time
@@ -4707,8 +4708,7 @@ components:
         yrn:
           $ref: '#/components/schemas/YRN'
         name:
-          allOf:
-            - $ref: '#/components/schemas/localizedValue'
+          $ref: '#/components/schemas/localizedValue'
         taxCode:
           type: string
         amount:
@@ -4969,7 +4969,7 @@ components:
           type: string
           description: Product name.
         localizedName:
-          description: 'A product''s name represented as a map, with language as the key and the corresponding translated name as the value'
+          description: 'A product name represented as a map, with language as the key and the corresponding translated name as the value'
           type: object
           additionalProperties:
             type: string
@@ -4996,7 +4996,7 @@ components:
               $ref: '#/components/schemas/vendor'
     vendor:
       type: object
-      description: Product's vendor information, autopopulated based on product catalog information.
+      description: Product vendor information, autopopulated based on product catalog information.
       properties:
         id:
           type: string
@@ -5139,7 +5139,7 @@ components:
       properties:
         customerId:
           type: string
-          description: Customer’s unique identifier generated when a customer’s account is created through the Customer Service.
+          description: Customer unique identifier generated when a customer account is created through the Customer Service.
         currency:
           type: string
           description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
@@ -5148,10 +5148,10 @@ components:
           pattern: '[A-Z]{3}'
         legalEntityId:
           type: string
-          description: Id of the legal entity to which customer is assigned.
+          description: ID of the legal entity to which customer is assigned.
         deliveryWindowId:
           type: string
-          description: 'Delivery window''''s unique identifier, as defined in the Shipping Service.'
+          description: 'Delivery window unique identifier, as defined in the Shipping Service.'
         deliveryWindow:
           $ref: '#/components/schemas/deliveryWindow'
         type:
@@ -5160,7 +5160,7 @@ components:
         zipCode:
           maxLength: 9
           type: string
-          description: Customer's address - zip code.
+          description: Customer address - zip code.
         countryCode:
           type: string
           pattern: '[a-zA-Z]{2}'
@@ -5169,7 +5169,7 @@ components:
           maxLength: 2
         orderId:
           type: string
-          description: Order’s unique identifier generated when a checkout is triggered through the Checkout Service.
+          description: Order unique identifier generated when a checkout is triggered through the Checkout Service.
         status:
           type: string
           description: Cart status.
@@ -5263,7 +5263,7 @@ components:
           type: string
           description: Product name.
         localizedName:
-          description: A product''s name represented as a map, with language as the key and the corresponding translated name as the value
+          description: A product name represented as a map, with language as the key and the corresponding translated name as the value
           type: object
           additionalProperties:
             type: string
@@ -5683,12 +5683,12 @@ components:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'
             - type: object
-              description: The calculated fee price
+              description: The calculated fee price.
         discountedPrice:
           allOf:
             - $ref: '#/components/schemas/calculatedPriceWithDiscounts'
             - type: object
-              description: The discounted fee value
+              description: The discounted fee value.
     calculatedPaymentFee:
       type: object
       properties:
@@ -6015,7 +6015,7 @@ components:
       properties:
         id:
           type: string
-          description: The id of the applied discount.
+          description: The ID of the applied discount.
         value:
           type: number
           format: double
@@ -6041,7 +6041,7 @@ components:
     calculatedTotalDiscount:
       title: calculatedTotalDiscount
       type: object
-      description: The total combined value of all applied discounts
+      description: The total combined value of all applied discounts.
       properties:
         calculationType:
           type: string
@@ -6258,7 +6258,7 @@ components:
       required: true
       schema:
         type: string
-      description: Cart’s unique identifier generated when a cart is created.
+      description: Cart unique identifier generated when a cart is created.
     Content-Language:
       name: Content-Language
       in: header
