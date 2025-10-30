@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2025-10-27: Cart Service - address management
+# 2025-10-30: Cart Service - address management
 
 ## Overview
 

@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2025-10-27: Cart Service - external discounts on cart level
+# 2025-10-30: Cart Service - external discounts on cart level
 
 ## Overview
 
