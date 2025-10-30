@@ -66,11 +66,11 @@ paths:
                     - id: 123e061110acd223133333345
               Create a subsidiary:
                 value:
-                  name: ABC2 Company
+                  name: ABC Subsidiary
                   type: SUBSIDIARY
                   parentId: 627e06ecf0452c2d6c0b81391
                   legalInfo:
-                    legalName: ABC2 Company
+                    legalName: ABC Subsidiary
                     registrationDate: '2022-03-31T13:18:02.379Z'
                     registrationAgency: Sub reg agency
                     registrationId: 627e06ecf0452c2d6c0b81391
@@ -290,14 +290,14 @@ paths:
             examples:
               Update the legal entity:
                 value:
-                  name: ABC2 Company
+                  name: ABC Subsidiary
                   type: SUBSIDIARY
                   parentId: 627e06ecf0452c2d6c0b81391
                   accountLimit:
                     currency: EUR
                     value: 1000.99
                   legalInfo:
-                    legalName: ABC2 Company
+                    legalName: ABC Subsidiary
                     registrationDate: '2022-03-31T13:18:02.379Z'
                     registrationAgency: Sub reg agency
                     registrationId: 627e06ecf0452c2d6c0b81391
@@ -1529,14 +1529,14 @@ components:
                     modifiedAt: '2022-03-31T13:18:02.379Z'
                     version: 1
                 - id: 123e06ecf0452c2d6c0b12391
-                  name: ABC2 Company
+                  name: ABC Subsidiary
                   type: SUBSIDIARY
                   parentId: 627e06ecf0452c2d6c0b81391
                   accountLimit:
                     currency: EUR
                     value: 1000.99
                   legalInfo:
-                    legalName: ABC2 Company
+                    legalName: ABC Subsidiary
                     registrationDate: '2022-03-31T13:18:02.379Z'
                     taxRegistrationNumber: '4311'
                     registrationAgency: Sub reg agency
@@ -1701,14 +1701,14 @@ components:
                 - id: 627e06ecf0452c2d6c0b81391
                   legalEntity:
                     id: 123e06ecf0452c2d6c0b12391
-                    name: ABC2 Company
+                    name: ABC Subsidiary
                     type: SUBSIDIARY
                     parentId: 627e06ecf0452c2d6c0b81391
                     accountLimit:
                       currency: EUR
                       value: 1000.99
                     legalInfo:
-                      legalName: ABC2 Company
+                      legalName: ABC Subsidiary
                       registrationDate: '2022-03-31T13:18:02.379Z'
                       taxRegistrationNumber: '4311'
                       registrationAgency: Sub reg agency

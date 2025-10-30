@@ -175,10 +175,10 @@ curl -i -X POST
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'Content-Type: application/json' 
   -d '{
-    "name": "ABC2 Company",
+    "name": "ABC Subsidiary",
     "type": "SUBSIDIARY",
     "legalInfo": {
-      "legalName": "ABC2 Company",
+      "legalName": "ABC Subsidiary",
       "registrationDate": "2022-03-31T13:18:02.379Z",
       "registrationAgency": "Comp reg agency",
       "registrationId": "627e06ecf0452c2d6c0b81391",
