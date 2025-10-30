@@ -5,7 +5,7 @@ info:
   contact:
     email: documentation@emporix.com
   description: |-
-    High performance, extensible cart that holds products for a later checkout. 
+    High performance, extensible cart that holds products for a later checkout.
 tags:
   - name: Carts
     description: Manage Carts
@@ -3922,6 +3922,9 @@ components:
         orderId:
           type: string
           description: The identifier of an order generated from this cart.
+        quoteId:
+          type: string
+          description: Identifier of a quote created from this cart.
         currency:
           type: string
           description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
@@ -3945,6 +3948,17 @@ components:
           minLength: 2
           maxLength: 2
           pattern: '[A-Z]{2}'
+        addresses:
+          type: array
+          description: |-
+            A list of addresses used in the cart. The list contains one `BILLING` and one `SHIPPING` address `type`.
+            If one of the address `types` is not provided in the request, it is automatically populated in the following order:
+            * If the cart has a legal entity, it gets the first location of the legal entity that has both `country` and `zipCode`, and matches the required `type` - then the address has origin=`LEGAL_ENTITY`.
+            * Otherwise, if the cart has a logged-in customer, it finds the `default` address that has both `country` and `zipCode`, and matches the required `type`. If there is no matching default address with the required information, it uses the first customer address that meets the criteria. The address has origin=`CUSTOMER`.
+            * Otherwise, the cart uses the site homebase address. Then the address has origin=`SITE`.
+            These addresses are used in the tax country code determination [How to determine a tax country at cart level](https://developer.emporix.io/api-references/api-guides/checkout/cart/cart#how-to-determine-a-tax-country-at-cart-level) and shipping cost calculation [How to calculate shipping cost at cart level](https://developer.emporix.io/api-references/api-guides/checkout/cart/cart#how-to-calculate-shipping-cost-at-cart-level).
+          items:
+            $ref: '#/components/schemas/addressResponse'
         channel:
           $ref: '#/components/schemas/channel'
         calculatedPrice:
@@ -3954,6 +3968,11 @@ components:
           description: Discounts applied to the cart.
           items:
             $ref: '#/components/schemas/discountResponse'
+        externalDiscounts:
+          type: array
+          description: External discounts that should be applied to this cart. Requires the `cart.cart_manage_external_prices` scope.
+          items:
+            $ref: '#/components/schemas/externalCartDiscount'
         totalUnitsCount:
           type: number
           description: Total number of items added to the cart.
@@ -4020,7 +4039,7 @@ components:
                 - type: object
                   description: "**This field is deprecated**. Please use `calculatedPrice.totalFees` and `items[].calculatedPrice.fees` instead.
                             These fields provide the same values with updated functionality."
-              deprecated: true 
+              deprecated: true
             totalPrice:
               allOf:
                 - $ref: '#/components/schemas/price'
@@ -4055,7 +4074,7 @@ components:
                 - type: object
                   description: "**This field is deprecated**. Please use `calculatedPrice.price` instead.
                             The `calculatedPrice.price` field provides the same value with updated functionality."
-              deprecated: true  
+              deprecated: true
             totalDiscount:
               allOf:
                 - $ref: '#/components/schemas/price'
@@ -4075,7 +4094,7 @@ components:
                 - $ref: '#/components/schemas/total'
                 - type: object
                   description: "**This field is deprecated**. Please use `calculatedPrice.paymentFees` instead.
-                            The `calculatedPrice.paymentFees` field provides the same value with updated functionality."              
+                            The `calculatedPrice.paymentFees` field provides the same value with updated functionality."
               deprecated: true
             totalAuthorizedAmount:
               allOf:
@@ -4163,11 +4182,12 @@ components:
         lineTax:
           allOf:
             - $ref: '#/components/schemas/taxValue'
-          description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`. 
-          required:
-            - netValue
-            - grossValue
-            - rate
+            - type: object
+              required:
+                - netValue
+                - grossValue
+                - rate
+          description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`.
         metadata:
           $ref: '#/components/schemas/metadataRequest'
         mixins:
@@ -4306,6 +4326,46 @@ components:
         - id
         - discountType
         - value
+    externalCartDiscount:
+      type: object
+      description: External discount that can be applied to cart items.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the external discount.
+        discountType:
+          type: string
+          enum:
+            - PERCENT
+            - ABSOLUTE
+            - FREE_SHIPPING
+          description: |-
+            Indicates the type of discount applied:
+            * `PERCENT` — a percentage-based discount
+            * `ABSOLUTE` — a fixed monetary amount
+            * `FREE_SHIPPING` — shipping is fully discounted
+        value:
+          type: number
+          format: double
+          minimum: 0.0
+          maximum: 100.0
+          description: Value of the discount (percentage e.g 15.00 -> 15% or absolute amount e.g 10.00 -> 10 EUR depending on the discountType).
+        discountCalculationType:
+          type: string
+          enum:
+            - TOTAL
+            - SUBTOTAL
+          description: |- 
+            Determines whether the discount is applied to the total or subtotal value of the order.
+            * `TOTAL` - discount is spread across products with product fees and shipping cost.
+            * `SUBTOTAL` - discount is spread across products without fees
+        sequence:
+          type: integer
+          description: Sequence number determining the order in which discounts are applied. The lowest sequence number is applied first.
+      required:
+        - id
+        - discountType
+        - value
     baseCartItemResponse:
       type: object
       properties:
@@ -4394,7 +4454,7 @@ components:
             lineTax:
               allOf:
                 - $ref: '#/components/schemas/taxValueWithQuantity'
-              description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`. 
+              description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`.
               required:
                 - netValue
                 - grossValue
@@ -4502,6 +4562,13 @@ components:
           description: 'Cart type. You can use this field if your store offers different types of carts, such as shopping carts and wishlists.'
         channel:
           $ref: '#/components/schemas/channel'
+        addresses:
+          type: array
+          description: List of addresses that should be associated with the cart and used for tax determination and shipping cost. 
+            There can be one address of type `BILLING` and one of type `SHIPPING` - others are ignored.
+            These addresses are returned with the origin `REQUEST` in the cart response.
+          items:
+            $ref: '#/components/schemas/addressRequest'
         metadata:
           $ref: '#/components/schemas/metadataRequest'
         mixins:
@@ -4529,6 +4596,142 @@ components:
           type: string
           format: date-time
           description: 'Delivery date. It has to be of "yyyy-MM-dd''T''HH:mm:ss.SSS''Z''" format.'
+    addressRequest:
+      type: object
+      description: Information about the cart address that can be provided in the request.
+      additionalProperties: false
+      properties:
+        contactName:
+          type: string
+          minLength: 0
+          description: Contact name.
+        companyName:
+          type: string
+          description: Company name.
+        street:
+          type: string
+          minLength: 0
+          description: Street.
+        streetNumber:
+          type: string
+          description: Street number.
+        streetAppendix:
+          type: string
+          description: Street appendix.
+        zipCode:
+          type: string
+          maxLength: 11
+          minLength: 0
+          description: Zip code.
+        city:
+          type: string
+          minLength: 0
+          description: City.
+        country:
+          type: string
+          pattern: '[a-zA-Z]{2}'
+          minLength: 2
+          maxLength: 2
+          description: Country.
+        state:
+          type: string
+          description: State.
+        contactPhone:
+          type: string
+          description: Contact phone.
+        type:
+          type: string
+          enum:
+            - BILLING
+            - SHIPPING
+          description: 'Type of the address data'
+          minLength: 0
+        metadata:
+          $ref: '#/components/schemas/metadataRequest'
+        mixins:
+          type: object
+          description: Mixins object.
+          additionalProperties: true
+    addressResponse:
+      type: object
+      description: Information about the carts address used for shipping and tax determination.
+      additionalProperties: false
+      properties:
+        origin:
+          type: string
+          enum:
+            - REQUEST
+            - LEGAL_ENTITY
+            - CUSTOMER
+            - SITE
+          description: |-
+            Holds information about the origin of the address. Possible values:
+              * `REQUEST` - provided in create/update cart request
+              * `LEGAL_ENTITY` - automatically populated from from cart's legal entity location
+              * `CUSTOMER` - automatically populated from fetched from customer addresses
+              * `SITE` - automatically populated from sites base address
+        siteCode:
+          type: string
+          description: Site unique identifier. A site is a specific shop.
+        legalEntityId:
+          type: string
+          description: ID of the legal entity to which customer is assigned.
+        legalEntityLocationId:
+          type: string
+          description: ID of the legal entity location.
+        customerAddressId:
+          type: string
+          description: ID of the customer address.
+        contactName:
+          type: string
+          minLength: 0
+          description: Contact name.
+        companyName:
+          type: string
+          description: Company name.
+        street:
+          type: string
+          minLength: 0
+          description: Street.
+        streetNumber:
+          type: string
+          description: Street number.
+        streetAppendix:
+          type: string
+          description: Street appendix.
+        zipCode:
+          type: string
+          maxLength: 11
+          minLength: 0
+          description: Zip code.
+        city:
+          type: string
+          minLength: 0
+          description: City.
+        country:
+          type: string
+          pattern: '[a-zA-Z]{2}'
+          minLength: 2
+          maxLength: 2
+          description: Country.
+        state:
+          type: string
+          description: State.
+        contactPhone:
+          type: string
+          description: Contact phone.
+        type:
+          type: string
+          enum:
+            - BILLING
+            - SHIPPING
+          description: Type of the address data.
+        metadata:
+          $ref: '#/components/schemas/metadataRequest'
+        mixins:
+          type: object
+          description: Mixins object
+          additionalProperties: true
     createdCart:
       type: object
       properties:
@@ -4546,7 +4749,7 @@ components:
       properties:
         itemId:
           type: string
-          description: Cart item's unique identifier.
+          description: Cart item unique identifier.
         yrn:
           $ref: '#/components/schemas/YRN'
       required:
@@ -4560,7 +4763,7 @@ components:
       properties:
         id:
           type: string
-          description: Discount's unique identifier.
+          description: Discount unique identifier.
         couponYrn:
           $ref: '#/components/schemas/YRN'
         code:
@@ -4581,7 +4784,7 @@ components:
           format: double
         name:
           maxLength: 150
-          description: Discount's displayed name.
+          description: Discount displayed name.
           type: string
         discountRate:
           type: number
@@ -5170,6 +5373,9 @@ components:
         orderId:
           type: string
           description: Order unique identifier generated when a checkout is triggered through the Checkout Service.
+        quoteId:
+          type: string
+          description: Quote unique identifier generated when a quote is created through the Quote Service out of a cart.
         status:
           type: string
           description: Cart status.
@@ -5178,6 +5384,18 @@ components:
             - CLOSED
         channel:
           $ref: '#/components/schemas/channel'
+        externalDiscounts:
+          type: array
+          description: External discounts that should be applied to this cart. Requires `cart.cart_manage_external_prices` scope
+          items:
+            $ref: '#/components/schemas/externalCartDiscount'
+        addresses:
+          type: array
+          description: List of addresses that should be associated with the cart and used for tax determination and shipping cost.
+            There can be one address of type `BILLING` and one of type `SHIPPING` - others are ignored.
+            These addresses are returned with the origin `REQUEST` in the cart response.
+          items:
+            $ref: '#/components/schemas/addressRequest'
         metadata:
           $ref: '#/components/schemas/metadataRequest'
         mixins:
@@ -5237,7 +5455,7 @@ components:
         lineTax:
           allOf:
             - $ref: '#/components/schemas/taxValue'
-          description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`. 
+          description: Externally calculated total tax for the item line. Only allowed when `itemType = EXTERNAL`.
           required:
             - netValue
             - grossValue
@@ -5560,7 +5778,7 @@ components:
                             description: Value of the discount that was applied.
                           discountType:
                             type: string
-                            enum: 
+                            enum:
                               - PERCENT
                               - ABSOLUTE
                               - FREE_SHIPPING
