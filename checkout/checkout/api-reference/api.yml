@@ -517,12 +517,12 @@ components:
           additionalProperties: true
     requestCheckout:
       type: object
-      description: Schema for triggering a checkout.
+      description: Schema for triggering a checkout with customer ID.
       additionalProperties: false
       properties:
         cartId:
           type: string
-          description: Customer cart’s unique identifier generated when a cart is created.
+          description: Customer cart unique identifier generated when a cart is created.
           minLength: 0
         paymentMethods:
           description: Methods chosen to process the payment for the order.
@@ -560,12 +560,12 @@ components:
         - paymentMethods
     requestGuestCheckout:
       type: object
-      description: Schema for triggering a checkout.
+      description: Schema for triggering a checkout for a guest customer.
       additionalProperties: false
       properties:
         cartId:
           type: string
-          description: Customer's cart unique identifier generated when a cart is created.
+          description: Customer cart unique identifier generated when a cart is created.
           minLength: 0
         paymentMethods:
           description: Methods chosen to process the payment for the order.
