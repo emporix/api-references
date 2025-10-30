@@ -1,5 +1,5 @@
 ---
-icon: wand-sparkles
+icon: sparkles
 layout:
   title:
     visible: true
