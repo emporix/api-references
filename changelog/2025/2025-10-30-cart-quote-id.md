@@ -19,7 +19,7 @@ layout:
 
 A new attribute `quoteId` has been added to the cart object. This field contains the ID of the quote associated with the cart. 
 
-When a quote is created from a cart using the [Creating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) endpoint, the cart will be automatically closed and the `quoteId` will be set on that cart. This ensures proper traceability between carts and their corresponding quotes.
+When a quote is created from a cart using the [Creating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) endpoint, the cart is automatically closed and the `quoteId` is set on that cart. This ensures proper traceability between carts and their corresponding quotes.
 
 ## Modified endpoints
 

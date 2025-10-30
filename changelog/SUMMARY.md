@@ -8,8 +8,8 @@
 
 ## 2025
 
-* [2025-10-30: Cart Service - quoteId added](2025/2025-10-30-cart-quote-id.md)
 * [2025-10-30: Checkout Service - tax country determination](2025/2025-10-27-checkout-tax-determination.md)
+* [2025-10-30: Cart Service - quoteId added](2025/2025-10-30-cart-quote-id.md)
 * [2025-10-30: Cart Service - external discounts on cart level](2025/2025-10-27-cart-external-discounts.md)
 * [2025-10-30: Cart Service - address management](2025/2025-10-27-cart-addresses.md)
 * [2025-10-29: Quote Service - external prices and mixins support](2025/2025-10-29-quote.md)
