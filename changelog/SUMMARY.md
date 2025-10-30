@@ -8,8 +8,10 @@
 
 ## 2025
 
-* [2025-10-27: Cart Service - external discounts on cart level](2025/2025-10-27-cart-external-discounts.md)
-* [2025-10-27: Cart Service - address management](2025/2025-10-27-cart-addresses.md)
+* [2025-10-30: Cart Service - quoteId added](2025/2025-10-30-cart-quote-id.md)
+* [2025-10-30: Cart Service - external discounts on cart level](2025/2025-10-27-cart-external-discounts.md)
+* [2025-10-30: Cart Service - address management](2025/2025-10-27-cart-addresses.md)
+* [2025-10-29: Quote Service - external prices and mixins support](2025/2025-10-29-quote.md)
 * [2025-10-22: Webhook - new agentic job events](2025/2025-10-22-webhook.md)
 * [2025-10-22: AI Service - support for AI agents](2025/2025-10-22-ai.md)
 * [2025-10-15: Sequential ID Service - removal of deprecated endpoints](2025/2025-10-15-sequential-id.md)

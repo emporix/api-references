@@ -3922,6 +3922,9 @@ components:
         orderId:
           type: string
           description: The identifier of an order generated from this cart.
+        quoteId:
+          type: string
+          description: Identifier of a quote created from this cart.
         currency:
           type: string
           description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
@@ -5370,6 +5373,9 @@ components:
         orderId:
           type: string
           description: Order unique identifier generated when a checkout is triggered through the Checkout Service.
+        quoteId:
+          type: string
+          description: Quote unique identifier generated when a quote is created through the Quote Service out of a cart.
         status:
           type: string
           description: Cart status.
