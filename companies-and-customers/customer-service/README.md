@@ -10,7 +10,7 @@ icon: users
 Create, manage, and delete customer profiles.
 
 {% hint style="info" %}
-This part of the Customer Service is managed by tenant's employees on behalf of the customers. Actions can be performed in Emporix Management Dashboard directly, or by integrating the Emporix API Customer Service with a third-party application.
+This part of the Customer Service is managed in the tenant by employees on behalf of the customers. Actions can be performed in Emporix Management Dashboard directly, or by integrating the Emporix API Customer Service with a third-party application.
 {% endhint %}
 
 ### Key Features and benefits

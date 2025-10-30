@@ -52,7 +52,7 @@ paths:
                         companyRegistrationId: 123-456-789
                         legalEntities:
                           - id: D165356
-                            name: BMW
+                            name: Emporix
                             contactAssignmentId: D436432
           headers:
             Count:
@@ -68,7 +68,7 @@ paths:
       description: |-
         Retrieves a list of customer profiles.
         
-        `customer.customer_read_own` scope allows customers to read profiles from another customers within the same company.
+        The `customer.customer_read_own` scope allows customers to read profiles from another customers within the same company.
         
         ***
         ### Required scopes
@@ -281,7 +281,7 @@ paths:
                       companyRegistrationId: 123-456-789
                       legalEntities:
                         - id: D165356
-                          name: BMW
+                          name: Emporix
                           contactAssignmentId: D436432
         '400':
           $ref: '#/components/responses/400_bad_request'

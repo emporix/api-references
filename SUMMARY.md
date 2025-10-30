@@ -174,7 +174,7 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/approval-service/approval-api-reference/api.yml)
   * [Customer Management](companies-and-customers/client-management/README.md)
-    * [Customer Management Tutorial](companies-and-customers/customer-service/customer-management.md)
+    * [Customer Management Tutorial](companies-and-customers/client-management/customer-management.md)
     * [API Reference](companies-and-customers/client-management/api-reference/README.md)
       * ```yaml
         props:
