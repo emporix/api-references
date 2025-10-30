@@ -294,6 +294,10 @@ curl -i -X POST
 The initial status of a quote request created by a customer is always set to `AWAITING`.
 {% endhint %}
 
+{% hint style="info" %}
+When a quote is created from a cart, the cart `status` is automatically changed to `CLOSED` and the `quoteId` is set on that cart. This ensures proper traceability between carts and their corresponding quotes.
+{% endhint %}
+
 ### Creating a quote on behalf of a customer
 
 To create a quote request on behalf of a customer, send a request to the [Creating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) endpoint.

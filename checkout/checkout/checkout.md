@@ -118,7 +118,6 @@ curl -i -X POST
 [api-reference](../../prices-and-taxes/tax-service/api-reference/)
 {% endcontent-ref %}
 
-
 ### Define the delivery zone, method, and time
 
 Delivery zone is the area where you ship your goods to. You can define a country, or a zip code that you operate within.
@@ -259,12 +258,31 @@ curl -i -X POST
 Send the request to the [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Language: string' 
-  -H 'Content-Type: application/json' 
-  -d '{}'
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/product/{tenant}/products/bulk' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Content-Type: application/json' 
+  --data '[
+    {
+      "id": "abc-123",
+      "code": "532432412331",
+      "name": "Product 1",
+      "productType": "BASIC"
+    },
+    {
+      "id": "abc-124",
+      "code": "532432412332",
+      "name": "Product 2",
+      "productType": "BASIC"
+    },
+    {
+      "id": "abc-125",
+      "code": "532432412333",
+      "name": "Product 3",
+      "productType": "BASIC"
+    }
+  ]'
 ```
 {% endstep %}
 {% endstepper %}
