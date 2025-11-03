@@ -34,9 +34,9 @@ paths:
         '403':
           $ref: '#/components/responses/403_forbidden'
       description: |
-        Updates a customer's profile.
+        Updates a customer profile.
 
-        **Note**: The request needs to be authorized with a customer's access token.
+        **Note**: The request needs to be authorized with a customer access token.
         ***
         ### Required scopes
         No specific scopes are required.
@@ -68,7 +68,7 @@ paths:
         required: false
       security:
         - CustomerAccessToken: []
-      summary: Updating a customer's profile
+      summary: Updating a customer profile
       tags:
         - Account and profile
     get:
@@ -121,9 +121,9 @@ paths:
         '403':
           $ref: '#/components/responses/403_forbidden'
       description: |-
-        Retrieves a customer's profile.
+        Retrieves a customer profile.
 
-        **Note**: The request needs to be authorized with a customer's access token or an anonymous access token.
+        **Note**: The request needs to be authorized with a customer access token or an anonymous access token.
         ***
         ### Required scopes
         No specific scopes are required.
@@ -131,7 +131,7 @@ paths:
       security:
         - CustomerAccessToken: []
         - AnonymousAccessToken: []
-      summary: Retrieving a customer's profile
+      summary: Retrieving a customer profile
       parameters:
         - $ref: '#/components/parameters/expand'
       tags:
@@ -149,9 +149,9 @@ paths:
         '403':
           $ref: '#/components/responses/403_forbidden'
       description: |-
-        Deletes a customer's profile and the account associated with it.
+        Deletes a customer profile and the account associated with it.
 
-        **Note**: The request needs to be authorized with a customer's access token.
+        **Note**: The request needs to be authorized with a customer access token.
         ***
         ### Required scopes
         No specific scopes are required.
@@ -160,7 +160,7 @@ paths:
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/token'
-      summary: Deleting a customer's profile
+      summary: Deleting a customer profile
       tags:
         - Account and profile
     parameters:
@@ -186,9 +186,9 @@ paths:
         '403':
           $ref: '#/components/responses/403_forbidden'
       description: |-
-        Adds an address to a customer's profile.
+        Adds an address to a customer profile.
 
-        **Note**: The request needs to be authorized with a customer's access token.
+        **Note**: The request needs to be authorized with a customer access token.
         ***
         ### Required scopes
         No specific scopes are required.
@@ -265,14 +265,14 @@ paths:
       description: |-
         Retrieves a list of addresses for a customer.
 
-        **Note**: The request needs to be authorized with a customer's access token.
+        **Note**: The request needs to be authorized with a customer access token.
         ***
         ### Required scopes
         No specific scopes are required.
       operationId: GET-customer-list-customer-addresses
       security:
         - CustomerAccessToken: []
-      summary: Retrieving a customer's addresses
+      summary: Retrieving a customer addresses
       tags:
         - Addresses
     parameters:
@@ -293,7 +293,7 @@ paths:
       description: |
         Updates a specified customer address.
 
-        **Note**: The request needs to be authorized with a customer's access token.
+        **Note**: The request needs to be authorized with a customer access token.
         ***
         ### Required scopes
         No specific scopes are required.
@@ -327,7 +327,7 @@ paths:
         required: false
       security:
         - CustomerAccessToken: []
-      summary: Updating a customer's address
+      summary: Updating a customer address
       tags:
         - Addresses
     get:
@@ -371,14 +371,14 @@ paths:
       description: |-
         Retrieves a specified customer address and its details.
 
-        **Note**: The request needs to be authorized with a customer's access token.
+        **Note**: The request needs to be authorized with a customer access token.
         ***
         ### Required scopes
         No specific scopes are required.
       operationId: GET-customer-retrieve-address-by-id
       security:
         - CustomerAccessToken: []
-      summary: Retrieving a customer's address
+      summary: Retrieving a customer address
       tags:
         - Addresses
     delete:
@@ -396,14 +396,14 @@ paths:
       description: |-
         Deletes a specified customer address and accounts associated with it.
 
-        **Note**: The request needs to be authorized with a customer's access token.
+        **Note**: The request needs to be authorized with a customer access token.
         ***
         ### Required scopes
         No specific scopes are required.
       operationId: DELETE-customer-remove-customer-address-by-id
       security:
         - CustomerAccessToken: []
-      summary: Deleting a customer's address
+      summary: Deleting a customer address
       tags:
         - Addresses
     parameters:
@@ -414,7 +414,7 @@ paths:
       - $ref: '#/components/parameters/tenant'
       - $ref: '#/components/parameters/addressId'
     post:
-      summary: Adding tags to a customer's address
+      summary: Adding tags to a customer address
       operationId: POST-customer-add-address-tags
       responses:
         '204':
@@ -436,12 +436,12 @@ paths:
       description: |-
         Adds tags to a specified customer address.
 
-        **Note**: The request needs to be authorized with a customer's access token.
+        **Note**: The request needs to be authorized with a customer access token.
         ***
         ### Required scopes
         No specific scopes are required.
     delete:
-      summary: Deleting tags from a customer's address
+      summary: Deleting tags from a customer address
       operationId: DELETE-customer-remove-address-tags
       responses:
         '204':
@@ -463,13 +463,13 @@ paths:
       description: |-
         Deletes tags from a specified customer address.
 
-        **Note**: The request needs to be authorized with a customer's access token.
+        **Note**: The request needs to be authorized with a customer access token.
         ***
         ### Required scopes
         No specific scopes are required.
   '/customer/{tenant}/me/accounts/internal':
     post:
-      summary: Assigning an account to a customer's profile
+      summary: Assigning an account to a customer profile
       operationId: POST-customer-assign-customer-account
       responses:
         '201':
@@ -504,7 +504,7 @@ paths:
                   password: password123
         description: ''
       description: |
-        Assigns a customer account to the customer's profile.
+        Assigns a customer account to the customer profile.
         ***
         ### Required scopes
         * `customer.customer_update` or `customer.customer_manage`
@@ -528,9 +528,9 @@ paths:
         '403':
           $ref: '#/components/responses/403_forbidden'
       description: |
-        Sends a request to change a customer's email address. As a result, the customer receives a unique token through email.
+        Sends a request to change a customer email address. As a result, the customer receives a unique token through email.
 
-        **Note**: The request needs to be authorized with a customer's access token.
+        **Note**: The request needs to be authorized with a customer access token.
         ***
         ### Required scopes
         No specific scopes are required.
@@ -554,7 +554,7 @@ paths:
         required: false
       security:
         - CustomerAccessToken: []
-      summary: Sending a request to update a customer's email address
+      summary: Sending a request to update a customer email address
       tags:
         - Credentials
     parameters:
@@ -571,7 +571,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_forbidden'
       description: |-
-        Updates a customer's email address using the token received through email.
+        Updates a customer email address using the token received through email.
 
         **Note**: The request needs to be authorized with a anonymous access token.
         ***
@@ -592,7 +592,7 @@ paths:
         - AnonymousAccessToken: []
       tags:
         - Credentials
-      summary: Updating a customer's email address
+      summary: Updating a customer email address
     parameters:
       - name: tenant
         in: path
@@ -612,7 +612,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_forbidden'
       description: |
-        Sends a request to reset a Customer's account password. As a result, the customer receives a unique token through email.
+        Sends a request to reset a Customer account password. As a result, the customer receives a unique token through email.
 
         **Note**: The request needs to be authorized with a anonymous access token.
         ***
@@ -631,7 +631,7 @@ paths:
         required: false
       security:
         - AnonymousAccessToken: []
-      summary: Sending a request to reset a customer's password
+      summary: Sending a request to reset a customer password
       tags:
         - Credentials
     parameters:
@@ -648,7 +648,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_forbidden'
       description: |-
-        Resets a customer's password using the token received through email and sets a new password.
+        Resets a customer password using the token received through email and sets a new password.
 
         **Note**: The request needs to be authorized with a anonymous access token.
         ***
@@ -670,7 +670,7 @@ paths:
         - AnonymousAccessToken: []
       tags:
         - Credentials
-      summary: Resetting a customer's password
+      summary: Resetting a customer password
     parameters:
       - $ref: '#/components/parameters/tenant'
   '/customer/{tenant}/password/change':
@@ -685,9 +685,9 @@ paths:
         '403':
           $ref: '#/components/responses/403_forbidden'
       description: |-
-        Changes a Customer's account password.
+        Changes a Customer account password.
 
-        **Note**: The request needs to be authorized with a customer's access token.
+        **Note**: The request needs to be authorized with a customer access token.
         ***
         ### Required scopes
         No specific scopes are required.
@@ -707,7 +707,7 @@ paths:
         - CustomerAccessToken: []
       tags:
         - Credentials
-      summary: Changing a customer's password
+      summary: Changing a customer password
     parameters:
       - $ref: '#/components/parameters/tenant'
   '/customer/{tenant}/signup':
@@ -966,7 +966,7 @@ paths:
       description: |-
         Logs out a customer and invalidates their customer token.
 
-        **Note**: The request needs to be authorized with a customer's access token.
+        **Note**: The request needs to be authorized with a customer access token.
         ***
         ### Required scopes
         No specific scopes are required.
@@ -977,7 +977,7 @@ paths:
         - name: accessToken
           in: query
           required: true
-          description: Customer's access token to be invalidated.
+          description: Customer access token to be invalidated.
           schema:
             type: string
       tags:
@@ -1028,7 +1028,7 @@ paths:
           example: "{tenant}"
         - name: Authorization
           in: header
-          description: Customer's access token generated when the customer token is
+          description: Customer access token generated when the customer token is
             created.
           required: true
           schema:
@@ -1036,7 +1036,7 @@ paths:
           example: "Bearer {customer_access_token}"
         - name: refreshToken
           in: query
-          description: Customer's refresh token generated when a customer token is requested.
+          description: Customer refresh token generated when a customer token is requested.
           required: true
           schema:
             type: string
@@ -1071,7 +1071,7 @@ paths:
           example: "{tenant}"
         - name: Authorization
           in: header
-          description: Customer's access token generated upon the customer token creation.
+          description: Customer access token generated upon the customer token creation.
           required: true
           schema:
             type: string
@@ -1224,7 +1224,7 @@ paths:
             type: string
           in: header
           name: session-id
-          description: Anonymous customer's unique session identifier.
+          description: Anonymous customer unique session identifier.
           required: false
         - schema:
             type: string
@@ -1261,20 +1261,20 @@ components:
       properties:
         id:
           type: string
-          description: Customer's email address.
+          description: Customer email address.
         providerId:
           type: string
           description: |-
-            Customer account's unique identifier generated by an external identity provider.
+            Customer account unique identifier generated by an external identity provider.
 
             **Note**: This field is only applicable if the user has been registered through social login.
     Address:
       type: object
-      description: Customer's address information.
+      description: Customer address information.
       properties:
         id:
           type: string
-          description: Customer address' unique identifier generated when the address is added to the customer's account.
+          description: Customer address' unique identifier generated when the address is added to the customer account.
         contactName:
           type: string
         companyName:
@@ -1308,7 +1308,7 @@ components:
         isDefault:
           type: boolean
           default: false
-          description: Flag indicating whether the address is the customer's default address.
+          description: Flag indicating whether the address is the customer default address.
         tags:
           type: array
           description: ''
@@ -1320,7 +1320,6 @@ components:
           type: object
           description: Customer address' additional properties.
           additionalProperties: true
-
       required:
         - contactName
     AddressCommonDto:
@@ -1382,10 +1381,10 @@ components:
         - properties:
             id:
               type: string
-              description: Customer address' unique identifier generated when the address is added to the customer's account.
+              description: Customer address' unique identifier generated when the address is added to the customer account.
             isDefault:
               type: boolean
-              description: Flag indicating whether the address is the customer's default address.
+              description: Flag indicating whether the address is the customer default address.
           type: object
     AddressUpdateDto:
       allOf:
@@ -1394,7 +1393,7 @@ components:
           properties:
             isDefault:
               type: boolean
-              description: Flag indicating whether the address is the customer's default address.
+              description: Flag indicating whether the address is the customer default address.
     AnonymousAccessToken:
       type: object
       properties:
@@ -1415,27 +1414,27 @@ components:
       properties:
         email:
           type: string
-          description: Customer's email address currently used for logging in.
+          description: Customer email address currently used for logging in.
         password:
           type: string
-          description: Customer's account password.
+          description: Customer account password.
         newEmail:
           type: string
-          description: Customer's new email address.
+          description: Customer new email address.
         syncContactEmail:
           type: boolean
           default: false
           description: Flag indicating whether the `contactEmail` should be changed to the new email address.
     Customer:
       type: object
-      description: Customer's profile.
+      description: Customer profile.
       properties:
         id:
           type: string
-          description: Customer's unique identifier generated when the customer's profile is created.
+          description: Customer unique identifier generated when the customer profile is created.
         customerNumber:
           type: string
-          description: Customer's unique number generated when the customer's profile is created.
+          description: Customer unique number generated when the customer profile is created.
         title:
           type: string
         firstName:
@@ -1453,7 +1452,7 @@ components:
         preferredLanguage:
           type: string
           default: en_US
-          description: Customer's preferred language.
+          description: Customer preferred language.
         preferredCurrency:
           type: string
           default: USD
@@ -1463,19 +1462,19 @@ components:
         preferredSite:
           type: string
           default: main
-          description: Customer's preferred site.
+          description: Customer preferred site.
         accounts:
           type: array
-          description: List of accounts associated with the customer's profile.
+          description: List of accounts associated with the customer profile.
           items:
             $ref: '#/components/schemas/AccountId'
         addresses:
           type: array
-          description: List of customer's addresses.
+          description: List of customer addresses.
           items:
-            $ref: '#/components/schemas/Address'
+            $ref: '#/components/schemas/Address
         defaultAddress:
-          $ref: '#/components/schemas/Address'
+          $ref: '#/components/schemas/Address
         businessModel:
           type: string
           enum: [B2B, B2C]
@@ -1484,7 +1483,7 @@ components:
           $ref: '#/components/schemas/B2BGet'
         mixins:
           type: object
-          description: Customer account's additional properties.
+          description: Customer account additional properties.
           additionalProperties: true
         metadata:
           $ref: '#/components/schemas/DefaultDtoMetadata'
@@ -1511,7 +1510,7 @@ components:
         preferredLanguage:
           type: string
           default: en_US
-          description: Customer's preferred language.
+          description: Customer preferred language.
         preferredCurrency:
           type: string
           default: USD
@@ -1521,42 +1520,42 @@ components:
         preferredSite:
           type: string
           default: main
-          description: Customer's preferred site.
+          description: Customer preferred site.
         b2b:
           $ref: '#/components/schemas/B2BCreate'
         metadata:
           $ref: '#/components/schemas/DefaultDtoMetadata'
         mixins:
           type: object
-          description: Customer account's additional properties.
+          description: Customer account additional properties.
           additionalProperties: true
     B2BCreate:
       type: object
-      description: Additional properties for B2B customer. If property is provided, additional validation for address and customer details is executing.
+      description: Additional properties for B2B customer. If the `companyRegistrationId` property is provided, an additional validation for address and customer details is executing - `firstName`, `lastName` and `company` values have to be provided.
       properties:
         companyRegistrationId:
           type: string
-          description: registration number of the company
+          description: Registration number of the company.
     B2BGet:
       type: object
-      description: Additional properties for B2B customer. If property is provided, additional validation for address and customer details is executing.
+      description: Additional properties for B2B customer. If the `companyRegistrationId` property is provided, an additional validation for address and customer details is executing - `firstName`, `lastName` and `company` values have to be provided.
       properties:
         companyRegistrationId:
           type: string
-          description: registration number of the company
+          description: Registration number of the company.
         legalEntities:
           type: array
           items:
             properties:
               id:
                 type: string
-                description: Id of legal entity.
+                description: ID of legal entity.
               name:
                 type: string
                 description: Name of legal entity.
               contactAssignmentId:
                 type: string
-                description: Id of contact assignment.
+                description: ID of contact assignment.
     CustomerSignup:
       type: object
       properties:
@@ -1564,13 +1563,14 @@ components:
           minLength: 1
           example: john.doe@emporix.com
           type: string
-          description: Customer's email address.
+          description: Customer email address.
         password:
           minLength: 1
           type: string
-          description: Customer's account password.
+          description: Customer account password.
         customerDetails:
           $ref: '#/components/schemas/CustomerUpdateDto'
+          description: If customer details are provided, the 'contactEmail' value has to be the same as in the 'email' property of the contact. 
         customerAddress:
           $ref: '#/components/schemas/Address'
         signup:
@@ -1707,11 +1707,11 @@ components:
         email:
           minLength: 1
           type: string
-          description: Customer's email address.
+          description: Customer email address.
         password:
           minLength: 6
           type: string
-          description: Customer's account password.
+          description: Customer account password.
       required:
         - email
         - password
@@ -1720,10 +1720,10 @@ components:
       properties:
         currentPassword:
           type: string
-          description: Customer's current account password.
+          description: Customer current account password.
         newPassword:
           type: string
-          description: Customer's new account password.
+          description: Customer new account password.
       required:
         - currentPassword
         - newPassword
@@ -1732,7 +1732,7 @@ components:
       properties:
         email:
           type: string
-          description: Customer's email address.
+          description: Customer email address.
         site:
           type: string
           description: Site from which password reset request was sent
@@ -1746,7 +1746,7 @@ components:
           description: Token received by the customer through email.
         password:
           type: string
-          description: Customer's new account password.
+          description: Customer new account password.
       required:
         - token
         - password
@@ -1755,7 +1755,7 @@ components:
       properties:
         email:
           type: string
-          description: Customer's email address.
+          description: Customer email address.
       required:
         - email
     ResourceLocation:
@@ -1798,7 +1798,7 @@ components:
           description: Customer email used to login (generate the token).
         legalEntityId:
           type: string
-          description: Legal Entity Id.
+          description: Legal Entity ID.
   responses:
     409_conflict:
       description: ''
@@ -1882,7 +1882,7 @@ components:
       in: path
       required: true
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
         
         **Note**: The tenant should always be written in lowercase.
       schema:
@@ -1897,7 +1897,7 @@ components:
       schema:
         type: string
         minLength: 1
-      description: Address' unique identifier generated when the address is added to a customer's profile.
+      description: Address unique identifier generated when the address is added to a customer profile.
     tags:
       name: tags
       in: query
