@@ -927,9 +927,11 @@ paths:
           $ref: '#/components/responses/400_bad_request'
         '401':
           $ref: '#/components/responses/401_unauthorized'
-      description: |-
-        Logs in a customer and sends an authentication request. Returns\
-        \ two customer tokens: \n    - Customer access token.\n    - Customer SaaS token.
+    description: |-
+      Logs in a customer and sends an authentication request.  
+      Returns two customer tokens:
+        - Customer access token
+        - Customer SaaS token
 
         **Note**: The request needs to be authorized with an anonymous access token.
         ***
@@ -1531,14 +1533,14 @@ components:
           additionalProperties: true
     B2BCreate:
       type: object
-      description: Additional properties for B2B customer. If the `companyRegistrationId` property is provided, an additional validation for address and customer details is executing - `firstName`, `lastName` and `company` values have to be provided.
+      description: Additional properties for B2B customer. If the `companyRegistrationId` property is provided, an additional validation for customer details executes - `firstName`, `lastName` and `company` values have to be provided.
       properties:
         companyRegistrationId:
           type: string
           description: Registration number of the company.
     B2BGet:
       type: object
-      description: Additional properties for B2B customer. If the `companyRegistrationId` property is provided, an additional validation for address and customer details is executing - `firstName`, `lastName` and `company` values have to be provided.
+      description: Additional properties for B2B customer. If the `companyRegistrationId` property is provided, an additional validation for customer details executes - `firstName`, `lastName` and `company` values have to be provided.
       properties:
         companyRegistrationId:
           type: string
@@ -1570,7 +1572,7 @@ components:
           description: Customer account password.
         customerDetails:
           $ref: '#/components/schemas/CustomerUpdateDto'
-          description: If customer details are provided, the 'contactEmail' value has to be the same as in the 'email' property of the contact. 
+          description: If customer details are provided, the `contactEmail` value has to be the same as in the `email` property of the contact. 
         customerAddress:
           $ref: '#/components/schemas/Address'
         signup:
