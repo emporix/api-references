@@ -272,7 +272,7 @@ paths:
       operationId: GET-customer-list-customer-addresses
       security:
         - CustomerAccessToken: []
-      summary: Retrieving a customer addresses
+      summary: Retrieving customer addresses
       tags:
         - Addresses
     parameters:
