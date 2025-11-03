@@ -1472,9 +1472,9 @@ components:
           type: array
           description: List of customer addresses.
           items:
-            $ref: '#/components/schemas/Address
+            $ref: '#/components/schemas/Address'
         defaultAddress:
-          $ref: '#/components/schemas/Address
+          $ref: '#/components/schemas/Address'
         businessModel:
           type: string
           enum: [B2B, B2C]
