@@ -2347,6 +2347,7 @@ components:
             - TO_CREATE
             - ENABLED
             - DISABLED
+            - EXISTS
     JobIdResponse:
       type: object
       properties:
