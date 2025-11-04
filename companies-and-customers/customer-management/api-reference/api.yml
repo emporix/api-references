@@ -778,7 +778,7 @@ paths:
                     tags:
                       - BILLING
                       - SHIPPING
-              Create account with separate sign up:
+              Create account with separate sign-up credentials:
                 value:
                   email: example@customer.com
                   password: password123
