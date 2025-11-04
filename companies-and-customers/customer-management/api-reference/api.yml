@@ -1611,7 +1611,7 @@ components:
           $ref: '#/components/schemas/Address'
         signup:
           $ref: '#/components/schemas/PasswordAuthentication'
-          description: Customer email and password used for separate login credentials to the frontend. Use these if you want to create a login that is independent from the main account.
+          description: Customer email and password used for separate login credentials to the frontend. Use these if you want to log in with a different email than the main contact email.
       required:
         - email
         - password
