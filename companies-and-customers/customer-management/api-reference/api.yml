@@ -745,7 +745,7 @@ paths:
             schema:
               $ref: '#/components/schemas/CustomerSignup'
             examples:
-              Request example:
+              Create account:
                 value:
                   email: example@customer.com
                   password: password123
@@ -770,8 +770,6 @@ paths:
                     streetAppendix: ''
                     extraLine1: ''
                     extraLine2: ''
-                    extraLine3: ''
-                    extraLine4: ''
                     zipCode: '11011'
                     city: Berlin
                     country: DE
@@ -780,6 +778,42 @@ paths:
                     tags:
                       - BILLING
                       - SHIPPING
+              Create account with separate sign up:
+                value:
+                  email: example@customer.com
+                  password: password123
+                  customerDetails:
+                    title: MR
+                    firstName: Jane
+                    middleName: ''
+                    lastName: Doe
+                    contactEmail: example@customer.com
+                    contactPhone: '123456789'
+                    company: Emporix
+                    preferredLanguage: en_US
+                    preferredCurrency: EUR
+                    preferredSite: main
+                    b2b:
+                      companyRegistrationId: 123-456-789
+                  customerAddress:
+                    contactName: Jane Doe
+                    companyName: Emporix
+                    street: Platz der Republik
+                    streetNumber: '1'
+                    streetAppendix: ''
+                    extraLine1: ''
+                    extraLine2: ''
+                    zipCode: '11011'
+                    city: Berlin
+                    country: DE
+                    state: Berlin
+                    contactPhone: '123456789'
+                    tags:
+                      - BILLING
+                      - SHIPPING
+                  signup:
+                    email: signup-example@customer.com
+                    password: password1234
         required: false
         description: ''
       security:
@@ -1577,6 +1611,7 @@ components:
           $ref: '#/components/schemas/Address'
         signup:
           $ref: '#/components/schemas/PasswordAuthentication'
+          description: Customer email and password used for separate login credentials to the frontend. Use these if you want to create a login that is independent from the main account.
       required:
         - email
         - password
