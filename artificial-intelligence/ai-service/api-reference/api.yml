@@ -16,6 +16,8 @@ tags:
     description: Manage Agent Templates
   - name: Commerce Events
     description: Read Commerce Events
+  - name: Export/Import
+    description: Export & Import Agents
   - name: AI Completions
     description: AI Completions
   - name: Job
@@ -145,6 +147,7 @@ paths:
                       status: success
                       sessionId: 123e4567-e89b-12d3-a456-426614174000
                       agentType: complaint
+                      type: AGENT_CHAT
                       agentId: complaint-agent
                       commerceEvent: product.product-updated
                       message: |-
@@ -204,6 +207,7 @@ paths:
                       status: success
                       sessionId: 123e4567-e89b-12d3-a456-426614174000
                       agentType: complaint
+                      type: AGENT_CHAT
                       agentId: complaint-agent
                       commerceEvent: product.product-updated
                       message: |-
@@ -264,6 +268,7 @@ paths:
                     status: success
                     sessionId: 123e4567-e89b-12d3-a456-426614174000
                     agentType: complaint
+                    type: AGENT_CHAT
                     agentId: complaint-agent
                     commerceEvent: product.product-updated
                     message: |-
@@ -1497,6 +1502,78 @@ paths:
             - ai.agent_read
       tags:
         - Commerce Events
+  '/ai-service/{tenant}/agentic/agents/export':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    post:
+      summary: Exporting agents
+      operationId: GET-ai-export-agents
+      requestBody:
+        $ref: '#/components/requestBodies/exportRequestBody'
+      responses:
+        '200':
+          description: The exported agents with components.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportResponse'
+              examples:
+                Import Response:
+                  $ref: '#/components/examples/ExportResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        Exports the agents by ids.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Export/Import
+  '/ai-service/{tenant}/agentic/agents/import':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    post:
+      parameters:
+        - $ref: '#/components/parameters/header_Accept-Language'
+      summary: Importing agents
+      operationId: GET-ai-import-agents
+      requestBody:
+        $ref: '#/components/requestBodies/importRequestBody'
+      responses:
+        '200':
+          description: A single agent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportResponse'
+              examples:
+                Import Response:
+                  $ref: '#/components/examples/ImportResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        Imports the agents from the base64 encoded data.
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      tags:
+        - Export/Import
 components:
   schemas:
     ErrorMessage:
@@ -2007,7 +2084,6 @@ components:
               properties:
                 events:
                   type: string
-                  minItems: 1
                   description: List of events that trigger the agent
               required:
                 - events
@@ -2189,6 +2265,10 @@ components:
       type: string
       enum: [ in_progress,success,failure ]
       description: Status of the job.
+    JobType:
+      type: string
+      enum: [ IMPORT,EXPORT,AGENT_CHAT ]
+      description: Type of the job.
     Job:
       type: object
       description: Contains information about the job's result - whether it was successful or not, what was the agent's output etc.
@@ -2200,6 +2280,12 @@ components:
           $ref: '#/components/schemas/AgentType'
         status:
           $ref: '#/components/schemas/JobStatus'
+        type:
+          $ref: '#/components/schemas/JobType'
+        exportResult:
+          $ref: '#/components/schemas/ExportResult'
+        importResult:
+          $ref: '#/components/schemas/ImportResult'
         sessionId:
           type: string
           description: Unique identifier of the session.
@@ -2214,13 +2300,59 @@ components:
           description: Commerce event which triggered the job
         metadata:
           $ref: '#/components/schemas/MetadataResponse'
+    ImportResult:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Short summary of the import
+        summary:
+          type: object
+          description: Summary of the import
+          properties:
+            agents:
+              type: array
+              items:
+                $ref: '#/components/schemas/ImportedEntiy'
+            tools:
+              type: array
+              items:
+                $ref: '#/components/schemas/ImportedEntiy'
+            mcpServers:
+              type: array
+              items:
+                $ref: '#/components/schemas/ImportedEntiy'
+    ExportResult:
+      type: object
+      properties:
+        data:
+          type: string
+          description: base64 encoded JSON value of the exported agents with related tools and MCP servers
+        checksum:
+          type: string
+          description: Checksum calculated based on JSON value. Validates if importing JSON is exactly the same as exported one.
+    ImportedEntiy:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the imported entity
+        name:
+          type: string
+          description: Name of the imported entity
+        state:
+          type: string
+          description: State of the imported entity
+          enum:
+            - TO_CREATE
+            - ENABLED
+            - DISABLED
     JobIdResponse:
       type: object
       properties:
         jobId:
           type: string
           description: Identifier of the job.
-
     ChatResponse:
       type: object
       properties:
@@ -2323,6 +2455,57 @@ components:
         required:
           - op
           - path
+    ExportResponse:
+      allOf:
+        - $ref: '#/components/schemas/DataWithChecksum'
+        - type: object
+          properties:
+            exportedAt:
+              description: Date of the export process
+              type: string
+              format: date-time
+            jobId:
+              description: Id of the Job
+              type: string
+    DataWithChecksum:
+      type: object
+      properties:
+        data:
+          description: base64 encoded JSON value of the exported agents with related tools and MCP servers
+          type: string
+        checksum:
+          description: Checksum calculated based on decoded `data` value. Validates if importing JSON is exactly the same as exported one.
+          type: string
+    ExportRequest:
+      type: object
+      required:
+        - agentIds
+      properties:
+        agentIds:
+          description: List of the agents ids
+          type: array
+          minimum: 0
+          maximum: 100
+          items:
+            type: string
+    ImportResponse:
+      allOf:
+        - $ref: '#/components/schemas/ImportResult'
+        - type: object
+          properties:
+            importedAt:
+              description: Date of the import process
+              type: string
+              format: date-time
+            jobId:
+              description: Id of the Job
+              type: string
+    ImportRequest:
+      allOf:
+        - $ref: '#/components/schemas/DataWithChecksum'
+      required:
+        - data
+        - checksum
   securitySchemes:
     OAuth2:
       type: oauth2
@@ -2690,6 +2873,24 @@ components:
                 - op: REPLACE
                   path: /name
                   value: New slack name
+    exportRequestBody:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/ExportRequest'
+          examples:
+            Export Agent:
+              $ref: '#/components/examples/ExportRequest'
+    importRequestBody:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '#/components/schemas/ImportRequest'
+          examples:
+            Export Agent:
+              $ref: '#/components/examples/ImportRequest'
   examples:
     IdResponse:
       value:
@@ -2889,3 +3090,35 @@ components:
               - get-order
         nativeTools:
           - id: slack-1
+    ExportResponse:
+      value:
+        jobId: job-id-of-export-job
+        exportedAt: "2025-11-04T11:15:25.903913Z"
+        checksum: de56cd0c62c234033eced948645c7b458962eaa11611bd1066ef52a61e1b4cb2
+        data: ewogICJhZ2VudHMiIDogWyB7CiAgICAiaWQiIDogInByb2R1Y3QtY3JlYXRlZCIsCiAgICAibmFtZSIgOiB7CiAgICAgICJlbiIgOiAicHJvZHVjdC1jcmVhdGVkIgogICAgfSwKICAgICJkZXNjcmlwdGlvbiIgOiB7CiAgICAgICJlbiIgOiAicHJvZHVjdC1jcmVhdGVkIgogICAgfSwKICAgICJyZXF1aXJlZFNjb3BlcyIgOiBbIF0sCiAgICAidXNlclByb21wdCIgOiAiWW91IGFyZSBhbiBhZ2VudCB3aGljaCBoYW5kbGUgcHJvZHVjdCBjcmVhdGlvbiBwcm9jZXNzLlxuQXQgZmlyc3QgZ2V0IHRoZSB3aG9sZSBwcm9kdWN0IG9iamVjdCBmcm9tIHRoZSBhcGkgYW5kIHJldHVybiBpdCBhcyBhIEpTT04iLAogICAgInRyaWdnZXJzIiA6IFsgewogICAgICAidHlwZSIgOiAiZW5kcG9pbnQiCiAgICB9IF0sCiAgICAibGxtQ29uZmlnIiA6IHsKICAgICAgIm1vZGVsIiA6ICJjbGF1ZGUtMy01LWhhaWt1LTIwMjQxMDIyIiwKICAgICAgInRlbXBlcmF0dXJlIiA6IDAuMSwKICAgICAgIm1heFRva2VucyIgOiA0MDAwLAogICAgICAicHJvdmlkZXIiIDogImFudGhyb3BpYyIsCiAgICAgICJ0b2tlbiIgOiB7CiAgICAgICAgImlkIiA6ICJhbnRocm9waWMtdG9rZW4iCiAgICAgIH0KICAgIH0sCiAgICAibWNwU2VydmVycyIgOiBbIHsKICAgICAgInR5cGUiIDogInByZWRlZmluZWQiLAogICAgICAiZG9tYWluIiA6ICJwcm9kdWN0IiwKICAgICAgInRvb2xzIiA6IFsgImdldC1wcm9kdWN0IiBdCiAgICB9IF0sCiAgICAibmF0aXZlVG9vbHMiIDogWyBdLAogICAgImFnZW50Q29sbGFib3JhdGlvbnMiIDogWyBdLAogICAgIm1heFJlY3Vyc2lvbkxpbWl0IiA6IDIwLAogICAgImVuYWJsZU1lbW9yeSIgOiB0cnVlLAogICAgImljb24iIDogInJvYm90IiwKICAgICJ0YWdzIiA6IFsgXSwKICAgICJ0eXBlIiA6ICJnZW5lcmljIgogIH0gXQp9
+    ExportRequest:
+      value:
+        agentIds:
+          - complaint-agent-id
+    ImportResponse:
+      value:
+        importedAt: '2025-11-04T11:56:55.296335Z'
+        summary:
+          agents:
+            - id: 346cefda-19be-4603-a471-5d2e990566ba--import-1762257415296
+              name: complaint-demo
+              state: DISABLED
+          tools:
+            - id: 80171fb9-a3cc-4441-8235-ced7edd0635d2
+              name: Slack Tool
+              state: TO_CREATE
+          mcpServers:
+            - id: 80171fb9-a3cc-4441-8235-ced7edd0635d3
+              name: Custom MCP Server
+              state: ENABLED
+        message: "Successfully imported 1 agents, 0 tools, and 1 MCP servers."
+        jobId: 6909ea07e0527f327fdead3e
+    ImportRequest:
+      value:
+        checksum: de56cd0c62c234033eced948645c7b458962eaa11611bd1066ef52a61e1b4cb2
+        data: ewogICJhZ2VudHMiIDogWyB7CiAgICAiaWQiIDogInByb2R1Y3QtY3JlYXRlZCIsCiAgICAibmFtZSIgOiB7CiAgICAgICJlbiIgOiAicHJvZHVjdC1jcmVhdGVkIgogICAgfSwKICAgICJkZXNjcmlwdGlvbiIgOiB7CiAgICAgICJlbiIgOiAicHJvZHVjdC1jcmVhdGVkIgogICAgfSwKICAgICJyZXF1aXJlZFNjb3BlcyIgOiBbIF0sCiAgICAidXNlclByb21wdCIgOiAiWW91IGFyZSBhbiBhZ2VudCB3aGljaCBoYW5kbGUgcHJvZHVjdCBjcmVhdGlvbiBwcm9jZXNzLlxuQXQgZmlyc3QgZ2V0IHRoZSB3aG9sZSBwcm9kdWN0IG9iamVjdCBmcm9tIHRoZSBhcGkgYW5kIHJldHVybiBpdCBhcyBhIEpTT04iLAogICAgInRyaWdnZXJzIiA6IFsgewogICAgICAidHlwZSIgOiAiZW5kcG9pbnQiCiAgICB9IF0sCiAgICAibGxtQ29uZmlnIiA6IHsKICAgICAgIm1vZGVsIiA6ICJjbGF1ZGUtMy01LWhhaWt1LTIwMjQxMDIyIiwKICAgICAgInRlbXBlcmF0dXJlIiA6IDAuMSwKICAgICAgIm1heFRva2VucyIgOiA0MDAwLAogICAgICAicHJvdmlkZXIiIDogImFudGhyb3BpYyIsCiAgICAgICJ0b2tlbiIgOiB7CiAgICAgICAgImlkIiA6ICJhbnRocm9waWMtdG9rZW4iCiAgICAgIH0KICAgIH0sCiAgICAibWNwU2VydmVycyIgOiBbIHsKICAgICAgInR5cGUiIDogInByZWRlZmluZWQiLAogICAgICAiZG9tYWluIiA6ICJwcm9kdWN0IiwKICAgICAgInRvb2xzIiA6IFsgImdldC1wcm9kdWN0IiBdCiAgICB9IF0sCiAgICAibmF0aXZlVG9vbHMiIDogWyBdLAogICAgImFnZW50Q29sbGFib3JhdGlvbnMiIDogWyBdLAogICAgIm1heFJlY3Vyc2lvbkxpbWl0IiA6IDIwLAogICAgImVuYWJsZU1lbW9yeSIgOiB0cnVlLAogICAgImljb24iIDogInJvYm90IiwKICAgICJ0YWdzIiA6IFsgXSwKICAgICJ0eXBlIiA6ICJnZW5lcmljIgogIH0gXQp9
