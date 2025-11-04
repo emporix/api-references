@@ -111,7 +111,7 @@ paths:
       description: |-
         Creates a new customer.
         
-        `customer.customer_manage_own` scope allow customers to create a new customer. Such customer will be automatically assigned to the customer's company.
+        `customer.customer_manage_own` scope allow customers to create a new customer. Such customer will be automatically assigned to the customer company.
         
         ***
         ### Required scopes
@@ -174,9 +174,9 @@ paths:
         '409':
           $ref: '#/components/responses/409_conflict'
       description: |
-        Updates a specified customer's profile or creates a new one if it doesn't exist yet.
+        Updates a specified customer profile or creates a new one if it doesn't exist yet.
 
-        `customer.customer_manage_own` scope allows to update customer's profiles from the same company.
+        `customer.customer_manage_own` scope allows to update customer profiles from the same company.
 
         ***
         ### Required scopes
@@ -218,9 +218,9 @@ paths:
         '404':
           $ref: '#/components/responses/404_customer'
       description: |
-        Updates a specified customer's profile.
+        Updates a specified customer profile.
         
-        `customer.customer_manage_own` scope allows to update customer's profiles from the same company.
+        `customer.customer_manage_own` scope allows to update customer profiles from the same company.
         
         ***
         ### Required scopes
@@ -292,7 +292,7 @@ paths:
         '404':
           $ref: '#/components/responses/404_customer'
       description: |-
-        Retrieves a specified customer's profile.
+        Retrieves a specified customer profile.
         ***
         `customer.customer_read_own` scope allows customers to read the specified profiles from another customers within the same company.
         
@@ -323,7 +323,7 @@ paths:
         '404':
           $ref: '#/components/responses/404_customer'
       description: |
-        Deletes a specified customer's profile and accounts associated with it.
+        Deletes a specified customer profile and accounts associated with it.
         ***
         
         `customer.customer_manage_own` scope allows customers to delete a customer only if the customer has been assigned to the same company.
@@ -380,7 +380,7 @@ paths:
               properties:
                 email:
                   type: string
-                  description: Customer's email address.
+                  description: Customer email address.
               required:
                 - email
             examples:
@@ -398,7 +398,7 @@ paths:
       - $ref: '#/components/parameters/tenant'
   '/customer/{tenant}/customers/{customerNumber}/addresses':
     get:
-      summary: Retrieving a customer's addresses
+      summary: Retrieving customer addresses
       responses:
         '200':
           description: OK
@@ -474,7 +474,7 @@ paths:
         '409':
           $ref: '#/components/responses/409_conflict'
       description: |
-        Adds an address to a specified customer's profile.
+        Adds an address to a specified customer profile.
         ***
         ### Required scopes
         * `customer.customer_manage`
@@ -540,9 +540,9 @@ paths:
         '403':
           $ref: '#/components/responses/403_forbidden'
         '404':
-          $ref: '#/components/responses/404_address'
+          $ref: '#/components/responses/404_address
       description: |
-        Updates a specified customer's address or creates a new one if it doesn't exist yet.
+        Updates a specified customer address or creates a new one if it doesn't exist yet.
         ***
         ### Required scopes
         * `customer.customer_manage`
@@ -593,7 +593,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_forbidden'
         '404':
-          $ref: '#/components/responses/404_address'
+          $ref: '#/components/responses/404_address
       description: |
         Updates a specified customer address.
         ***
@@ -672,7 +672,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_forbidden'
         '404':
-          $ref: '#/components/responses/404_address'
+          $ref: '#/components/responses/404_address
       description: |
         Retrieves a specified customer address and its details.
         ***
@@ -697,7 +697,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_forbidden'
         '404':
-          $ref: '#/components/responses/404_address'
+          $ref: '#/components/responses/404_address
       description: |
         Deletes a specified customer address.
         ***
@@ -729,7 +729,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_forbidden'
         '404':
-          $ref: '#/components/responses/404_address'
+          $ref: '#/components/responses/404_address
       description: |
         Adds tags to a specified customer address.
         ***
@@ -752,7 +752,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_forbidden'
         '404':
-          $ref: '#/components/responses/404_address'
+          $ref: '#/components/responses/404_address
       description: |
         Deletes tags from a specified customer address.
         ***
@@ -815,20 +815,20 @@ components:
       properties:
         id:
           type: string
-          description: Customer's email address.
+          description: Customer email address.
         providerId:
           type: string
           description: |-
-            Customer account's unique identifier generated by an external identity provider.
+            Customer account unique identifier generated by an external identity provider.
 
             **Note**: This field is only applicable if the user has been registered through social login.
     Address:
       type: object
-      description: Customer's address information.
+      description: Customer address information.
       properties:
         id:
           type: string
-          description: Customer address' unique identifier generated when the address is added to the customer's account.
+          description: Customer address unique identifier generated when the address is added to the customer account.
         contactName:
           type: string
         companyName:
@@ -862,7 +862,7 @@ components:
         isDefault:
           type: boolean
           default: false
-          description: Flag indicating whether the address is the customer's default address.
+          description: Flag indicating whether the address is the customer default address.
         tags:
           type: array
           description: ''
@@ -872,7 +872,7 @@ components:
           $ref: '#/components/schemas/DefaultDtoMetadata'
         mixins:
           type: object
-          description: Customer address' additional properties.
+          description: Customer address additional properties.
           additionalProperties: true
       required:
         - contactName
@@ -918,7 +918,7 @@ components:
           $ref: '#/components/schemas/DefaultDtoMetadata'
         mixins:
           type: object
-          description: Customer address' additional properties.
+          description: Customer address additional properties.
           additionalProperties: true
     AddressUpdateDto:
       allOf:
@@ -927,17 +927,17 @@ components:
           properties:
             isDefault:
               type: boolean
-              description: Flag indicating whether the address is the customer's default address.
+              description: Flag indicating whether the address is the customer default address.
             contactName:
               type: string
-              description: required if address does not exist and should be created in upsert operation.
+              description: Required if address does not exist and should be created in upsert operation.
     B2BCreate:
       type: object
       description: Additional properties for B2B customer.
       properties:
         companyRegistrationId:
           type: string
-          description: registration number of the company
+          description: Registration number of the company.
     B2BGet:
       allOf:
         - $ref: '#/components/schemas/B2BCreate'
@@ -948,13 +948,13 @@ components:
             properties:
               id:
                 type: string
-                description: Id of legal entity.
+                description: ID of legal entity.
               name:
                 type: string
                 description: Name of legal entity.
               contactAssignmentId:
                 type: string
-                description: Id of contact assignment.
+                description: ID of contact assignment.
     CustomerCreateDto:
       title: CustomerCommonDto
       type: object
@@ -974,17 +974,17 @@ components:
         preferredLanguage:
           type: string
           default: en_US
-          description: Customer's preferred language.
+          description: Customer preferred language.
         preferredCurrency:
           type: string
           default: USD
-          description: 'Customer''s preferred currency, compliant with the ISO 4217 standard.'
+          description: 'Customer preferred currency, compliant with the ISO 4217 standard.'
           minLength: 3
           maxLength: 3
         preferredSite:
           type: string
           default: main
-          description: Customer's preferred site.
+          description: Customer preferred site.
         type:
           type: string
           description: 'User type. Supported values are: `CUSTOMER` and `CONTACT`. If the field is empty then the user is considered as a customer.'
@@ -1016,33 +1016,33 @@ components:
           properties:
             customerNumber:
               type: string
-              description: Customer's unique number generated when the customer's profile is created.
+              description: Customer unique number generated when the customer profile is created.
             id:
               type: string
-              description: Customer's unique identifier generated when the customer's profile is created.
+              description: Customer unique identifier generated when the customer profile is created.
             defaultAddress:
               $ref: '#/components/schemas/Address'
             accounts:
               type: array
-              description: List of accounts associated with the customer's profile.
+              description: List of accounts associated with the customer profile.
               items:
                 $ref: '#/components/schemas/AccountId'
             addresses:
               type: array
-              description: List of customer's addresses.
+              description: List of customer addresses.
               items:
                 $ref: '#/components/schemas/Address'
             contactEmail:
               type: string
             active:
               type: boolean
-              description: Flag indicating whether the customer's profile is active.
+              description: Flag indicating whether the customer profile is active.
             onHold:
               type: boolean
-              description: Flag indicating whether the customer's profile is suspended.
+              description: Flag indicating whether the customer profile is suspended.
             email:
               type: string
-              description: Customer's email address.
+              description: Customer email address.
             b2b:
               allOf:
                 - $ref: '#/components/schemas/B2BGet'
@@ -1164,7 +1164,7 @@ components:
       properties:
         id:
           type: string
-          description: Custom customer's address identifier. If not provided, it is automatically generated.
+          description: Custom customer address identifier. If not provided, it is automatically generated.
         contactName:
           type: string
         companyName:
@@ -1198,7 +1198,7 @@ components:
         isDefault:
           type: boolean
           default: false
-          description: Flag indicating whether the address is the customer's default address.
+          description: Flag indicating whether the address is the customer default address.
         tags:
           type: array
           description: ''
@@ -1214,7 +1214,7 @@ components:
               additionalProperties: true
         mixins:
           type: object
-          description: Customer address' additional properties.
+          description: Customer address additional properties.
           additionalProperties: true
       required:
         - contactName
@@ -1325,7 +1325,7 @@ components:
                 type: application/json
                 message: Customer not Found
                 details:
-                  - message: 'Couldn''t find a customer with customerNumber ''{customerNumber}'''
+                  - message: "Couldn't find a customer with customerNumber '{customerNumber}'"
     404_address:
       description: The requested resource does not exist.
       content:
@@ -1408,7 +1408,7 @@ components:
         example: 'contactEmail:{email}'
     tenant:
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: The tenant should always be written in lowercase.
       name: tenant
@@ -1423,8 +1423,8 @@ components:
         Possible values to be passed in this parameter are:
         * `addresses`
         * `accounts`
-        *`mixin:*`
-        Order of the attributes has no influence on the response.
+        * `mixin``
+        * The order of the attributes has no influence on the response.
       in: query
       required: false
       schema:
@@ -1435,14 +1435,14 @@ components:
       required: true
       schema:
         type: string
-      description: Customer's unique identifier generated when the customer's profile is created.
+      description: Customer unique identifier generated when the customer profile is created.
     addressId:
       name: addressId
       in: path
       required: true
       schema:
         type: string
-      description: Address' unique identifier generated when the address is added to a customer's profile.
+      description: Address unique identifier generated when the address is added to a customer profile.
     tags:
       name: tags
       in: query
@@ -1465,7 +1465,7 @@ components:
       in: path
       required: true
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: The tenant should always be written in lowercase.
       schema:
