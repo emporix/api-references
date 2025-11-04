@@ -2275,15 +2275,15 @@ If the fee is taxable and has a tax code, the gross value is calculated. Otherwi
 ## How to determine a tax country at cart level
 
 The tax country code is determined based on the following rules:
-First of we need to decide what `type` of the address should be used for tax determination. Based on site’s setting `taxDeterminationBasedOn`:
+First, we need to decide what `type` of the address should be used for tax determination. Based on site's setting `taxDeterminationBasedOn`:
 * SHIPPING_ADDRESS - use the address that is tagged with `SHIPPING`
 * BILLING_ADDRESS - use the address that is tagged with `BILLING`
 
 * Use an address of origin `REQUEST` and matching `type`
 * Use the country code that is set on the cart directly - backward compatibility.
-* Use ad address of origin `LELGAL_ENTITY` and matching `type`
-* Use ad address of origin `CUSTOMER` and matching `type`
-* Use ad address of origin `SITE` and matching `type`
+* Use an address of origin `LEGAL_ENTITY` and matching `type`
+* Use an address of origin `CUSTOMER` and matching `type`
+* Use an address of origin `SITE` and matching `type`
 
 ## How to apply discounts at cart level
 
