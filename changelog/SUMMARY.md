@@ -8,6 +8,8 @@
 
 ## 2025
 
+* [2025-10-30: Coupon Service - removal of deprecated endpoints](2025/2025-11-05-referral-coupon.md)
+* [2025-10-30: Coupon Service - removal of deprecated endpoints](2025/2025-11-05-coupon.md)
 * [2025-10-30: Cart Service - quoteId added](2025/2025-10-30-cart-quote-id.md)
 * [2025-10-30: Cart Service - external discounts on cart level](2025/2025-10-30-cart-external-discounts.md)
 * [2025-10-30: Cart Service - address management](2025/2025-10-30-cart-addresses.md)
