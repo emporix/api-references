@@ -8,6 +8,7 @@
 
 ## 2025
 
+* [2025-11-10: AI Service - Export/Import agents](2025/2025-11-10-ai.md)
 * [2025-10-30: Cart Service - quoteId added](2025/2025-10-30-cart-quote-id.md)
 * [2025-10-30: Cart Service - external discounts on cart level](2025/2025-10-30-cart-external-discounts.md)
 * [2025-10-30: Cart Service - address management](2025/2025-10-30-cart-addresses.md)
