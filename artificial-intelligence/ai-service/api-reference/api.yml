@@ -1507,7 +1507,7 @@ paths:
       - $ref: '#/components/parameters/path_tenant'
     post:
       summary: Exporting agents
-      operationId: GET-ai-export-agents
+      operationId: POST-ai-export-agents
       requestBody:
         $ref: '#/components/requestBodies/exportRequestBody'
       responses:
@@ -1544,7 +1544,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/header_Accept-Language'
       summary: Importing agents
-      operationId: GET-ai-import-agents
+      operationId: PSOT-ai-import-agents
       requestBody:
         $ref: '#/components/requestBodies/importRequestBody'
       responses:
