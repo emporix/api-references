@@ -23,12 +23,11 @@ paths:
         - Unit management
       summary: Adding a new unit
       description: |-
-        Creates a new unit. After successful creation, unit will be visible and executable for other parts of the system after 5 minutes.
+        Creates a new unit. After successful creation, the unit is visible and executable for other parts of the system after 5 minutes.
         * If the `Content-Language` is set to `*`
         the request body payload should contain localized fields not as a string,
         but as a map in format: `key:value`, where the `key` is the language code and `value` is the translation.
 
-        Please see the example (Unit with name as a map) in Request body section.
         ***
 
         ### Required scopes
@@ -129,8 +128,8 @@ paths:
       summary: Deleting units in bulk by codes
       description: |-
         Deletes the units with the given codes. After successful deletion, units will not be visible and executable for other parts of the system after 5 minutes.
-        ### The codes are defined in the request body as an array of strings.
-        #### Example: `["g", "kg", "dag", "test"]`
+        * The codes are defined in the request body as an array of strings.
+        * Example: `["g", "kg", "dag", "test"]`
         ***
 
         ### Required scopes
@@ -170,7 +169,7 @@ paths:
     get:
       tags:
         - Unit management
-      summary: Retrieving unit by code
+      summary: Retrieving a unit by code
       description: |-
         Retrieves the unit with the given code.
 
@@ -218,7 +217,7 @@ paths:
         - Unit management
       summary: Deleting a specific unit
       description: |-
-        Deletes the unit with the given code. After successful deletion, unit will not be visible and executable for other parts of the system after 5 minutes.
+        Deletes a unit with a given code. After a successful deletion, the unit is not visible and executable for other parts of the system after 5 minutes.
         ***
 
         ### Required scopes
@@ -243,15 +242,14 @@ paths:
     put:
       tags:
         - Unit management
-      summary: Update unit
+      summary: Updating a unit
       description: |-
         Updates an existing unit. Optimistic locking is applied to prevent update races when unit in
-        the payload contains the optional version field. After successful update, unit will be visible and executable for other parts of the system after 5 minutes.
+        the payload contains the optional version field. After successful update, the unit is visible and executable for other parts of the system after 5 minutes.
         * If the `Content-Language` is set to `*`
         the request body payload should contain localized fields not as a string,
         but as a map in format: `key:value`, where the `key` is the language code and `value` is the translation.
 
-        Please see the example (Unit with name as a map) in Request body section.
         ***
 
         ### Required scopes
@@ -501,10 +499,11 @@ components:
       name: params
       required: false
       description: |-
-        ### Note: params is not a name of query param. Any API model field can be taken as a filtering parameter.
+        **Note**: params is not a name of query param. Any API model field can be taken as a filtering parameter.
 
         Filtering can be done by each field available in API. Filtering by multiple fields is also allowed. In that case, fields are aggregated with `AND` logic operator.
-        In the case of string values, the `contains` approach is taken (filtering by substrings). In the case of boolean and number fields, the `equals` approach is taken.
+        * In a case of string values, the `contains` approach is taken (filtering by substrings). 
+        * In a case of boolean and number fields, the `equals` approach is taken.
 
         Filtering query params examples:
         * `type=mass` - all units with `type` that contains `mass` are returned. For example, in that case all mass units will be returned.
@@ -514,14 +513,13 @@ components:
         * `type=mass&name=gram` - all units with `type` that contains `mass` AND `name` that contains `gram` are returned. For example, in that case `kilogram`, `gram`, `decagram` units are returned.
 
         Filtering by localized fields:
-        * Filtering by localized fields without language key is possible only when `Accept-Language` header with correct language is provided or when it is not set at all (in that case default language is taken).
-        For example, when `Accept-Language' is set to 'en', the request with parameter `name=meter` returns all units with `name` that contains `meter` in English. For example, in that case `meter`, `kilometer` and `millimeter` units are returned.
+        * Filtering by localized fields without language key is possible only when `Accept-Language` header with correct language is provided or when it is not set at all (in that case the default language is taken).
+        For example, when `Accept-Language` is set to 'en', the request with parameter `name=meter` returns all units with `name` that contains `meter` in English. For example, in that case `meter`, `kilometer` and `millimeter` units are returned.
 
-        * When `Accept-Language` header is set to `*` filtering by localized fields is possible only when fields contains language key.
+        * When `Accept-Language` header is set to `*` filtering by localized fields is possible only when fields contains a language key.
         For example, when `Accept-Language` is set to '*', the request with parameter `name.en=meter` returns all units with `name.en` that contains `meter` in English. For example, in that case `meter`, `kilometer` and `millimeter` units are returned.
       schema:
         type: string
-        example: ' '
     pageNumber:
       in: query
       name: pageNumber
@@ -545,8 +543,9 @@ components:
       description: |-
         Fields to sort the response data by following order of the parameters from left to right.
         Can contain multiple fields in format: `field name`:`sort direction` separated by a comma.
-        The colon with `sort direction` parameter is redundant and descending order is taken only
-        if it is equal to `desc` or `DESC`. Ascending order is considered in any other case.
+        * The colon with `sort direction` parameter is redundant and descending order is taken only
+        if it's equal to `desc` or `DESC`.
+        * Ascending order is considered in any other case.
         Sorting by `name` parameter works properly only if the `Accept-Language` header is set to
         a specific language or is empty with default language specified in the configuration service.
       schema:
@@ -556,7 +555,7 @@ components:
       in: header
       name: X-Total-Count
       required: false
-      description: Total count flag. If set to true X-Total-Count header is returned.
+      description: Total count flag. If set to true, the X-Total-Count header is returned.
       schema:
         type: string
         example: 'true'
@@ -585,7 +584,7 @@ components:
           description: The unit code.
           example: g
         name:
-          description: 'The name of the unit in the form of map (language, value) or string.'
+          description: 'The name of the unit in the form of a map (language, value) or string.'
           oneOf:
             - type: string
             - type: object
@@ -593,11 +592,11 @@ components:
                 type: string
         type:
           type: string
-          description: The type of unit.
+          description: The type of a unit.
           example: mass
         symbol:
           type: string
-          description: The symbol of unit.
+          description: The symbol of a unit.
           example: °C
         baseUnit:
           type: boolean
@@ -652,7 +651,7 @@ components:
           description: The version of the document.
           example: 1
     ConversionFactorInput:
-      description: The input payload.
+      description: The input is the conversion parameters object containing the source unit code, target unit code, and the amount to convert (amount required for convert-unit, optional for conversion-factor).
       type: object
       properties:
         sourceUnitAmount:
@@ -669,7 +668,7 @@ components:
         - sourceUnit
         - targetUnit
     ConversionInput:
-      description: The input payload.
+      description: The input payload for conversion. Contains the source unit code, target unit code, and optionally the source unit amount to convert.
       type: object
       properties:
         sourceUnitAmount:
@@ -695,7 +694,7 @@ components:
           description: The conversion factor.
           example: 0.001
     ConversionOutput:
-      description: Output payload.
+      description: Output payload. Contains the computed result of a conversion factor - conversionFactor (number) and unit conversion - targetUnitAmount (number) and targetUnit (string).
       properties:
         targetUnitAmount:
           type: number
@@ -709,6 +708,7 @@ components:
       type: object
       properties:
         commandUuid:
+          description: Optional client-generated identifier used to correlate a conversion command across request, response, and logs.
           type: string
         input:
           $ref: '#/components/schemas/ConversionFactorInput'
@@ -754,14 +754,14 @@ components:
         message:
           type: string
           description: Error message.
-          example: There is a validation error. Please check the details.
+          example: There is a validation error.
         details:
           type: array
           description: Error message details.
           items:
             type: string
           example:
-            - Required field missing. Check API documentation.
+            - Required field missing. 
     BadRequestNoBody400:
       properties:
         message:
@@ -1061,24 +1061,24 @@ components:
         unitCode: g
         code: 404
         status: Not Found
-        message: The unit with code g has not been found
+        message: The unit with code g has not been found.
     UnitConflict409:
       value:
         code: 409
         status: Conflict
-        message: The unit with given code already exists
+        message: The unit with given code already exists.
     UnitNameFieldNotSpecified400:
       value:
         code: 400
         status: Bad Request
-        message: There is a validation error. Please check the details.
+        message: There is a validation error. 
         details:
           - The unit name must be specified
     UnitCodeNotSpecified400:
       value:
         code: 400
         status: Bad Request
-        message: There is a validation error. Please check the details.
+        message: There is a validation error.
         details:
           - The unit code must be specified
   securitySchemes:
