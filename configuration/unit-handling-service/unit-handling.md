@@ -10,11 +10,9 @@ layout:
 
 # Unit Handling Tutorial
 
-### What is Unit Handling?
-
 Unit handling defines, localizes, and converts measurement units (metric, imperial, USC, and custom) used across your catalog and calculations. It is tenant-scoped and acts as the source of truth for unit codes, names/symbols, base units, and conversion factors.
 
-### Where is it used?
+### Where is unit handling used?
 
 - Product Service: product data (for example, `unitPricingMeasure`, `unitPricingBaseMeasure`, `orderUnit`).
 - Price Service: measurement-based pricing and normalization.
@@ -26,64 +24,7 @@ Unit handling defines, localizes, and converts measurement units (metric, imperi
 
 Changes to units propagate across the platform within ~5 minutes after create/update/delete.
 
-### Example: Handling units during checkout
-
-This example shows how to sum item weights in the cart, convert them to a target shipping unit, and then use the result for shipping-rate calculations.
-
-1) Sum item weights in the cart (application logic)
-
-- Assume your products store weight in grams (`g`). When items are added to the cart, compute the total weight in grams: `totalWeightG = sum(itemWeightG * quantity)`.
-
-2) Convert cart total to the shipping unit (API call)
-
-- If the shipping provider expects kilograms (`kg`), convert the total from `g` ➜ `kg` using the convert endpoint.
-
-```bash
-curl -L \
-  --request PUT \
-  --url 'https://api.emporix.io/unit-handling/{tenant}/units/convert-unit-commands' \
-  --header 'Content-Type: application/json' \
-  --data '{
-    "commandUuid": "83ddc478-89d7-48e1-8b6c-527f4c67fb56",
-    "input": {
-      "sourceUnitAmount": 3250,
-      "sourceUnit": "g",
-      "targetUnit": "kg"
-    }
-  }'
-```
-
-Response contains the converted amount:
-
-```json
-{
-  "commandUuid": "83ddc478-89d7-48e1-8b6c-527f4c67fb56",
-  "input": { "sourceUnitAmount": 3250, "sourceUnit": "g", "targetUnit": "kg" },
-  "output": { "targetUnitAmount": 3.25, "targetUnit": "kg" }
-}
-```
-
-3) Use the converted weight to calculate shipping rates
-
-- Pass `3.25 kg` to your shipping rate logic or provider integration. If the UI needs localized unit names, use `Accept-Language` when reading units (or store localized labels) and display accordingly.
-
-Optional: If you only need the factor (for example, to convert multiple values in-app), fetch it once and apply locally:
-
-```bash
-curl -L \
-  --request PUT \
-  --url 'https://api.emporix.io/unit-handling/{tenant}/units/conversion-factor-commands' \
-  --header 'Content-Type: application/json' \
-  --data '{
-    "input": { "sourceUnit": "g", "targetUnit": "kg" }
-  }'
-```
-
-{% content-ref url="../../checkout/cart/api-reference/" %}
-[api-reference](../../checkout/cart/api-reference/)
-{% endcontent-ref %}
-
-### How to add a new unit
+## How to add a new unit
 
 To add a new measurement unit to your configuration, you need to send a request to the [Adding a new unit](https://developer.emporix.io/api-references/api-guides/configuration/unit-handling-service/api-reference/unit-management#post-unit-handling-tenant-units) endpoint.
 
@@ -115,7 +56,7 @@ curl -L
   }'
 ```
 
-### How to convert units
+## How to convert units
 
 You can convert between any measurement units that share the same base unit, such as kilograms to grams, or centimeters to meters.
 
@@ -141,7 +82,7 @@ To convert between units, you need to send a request to the [Converting units ](
   }'
 </code></pre>
 
-### Using unit handling with product service
+## Using unit handling with product service
 
 Unit handling is the source for measurement units used in product data.
 * Define units and their localized names/symbols here; product payloads reference unit codes (for example, `unitPricingMeasure`, `unitPricingBaseMeasure`, `orderUnit`).
@@ -169,12 +110,11 @@ curl -L
 [api-reference](../unit-handling-service/api-reference/)
 {% endcontent-ref %}
 
-### Using unit handling with price service
+## Using unit handling with price service
 
-Price Service references the same unit codes for measurement-based pricing (for example, per kg, per l).
+The Price Service uses the same unit codes for measurement-based pricing (e.g., per kg, per L).
 
-* Keep unit codes consistent across services by managing them in Unit Handling.
-* For per-unit price displays or normalization, use Unit Handling to compute a conversion factor or convert amounts before calculating or showing prices.
+When displaying or normalizing per-unit prices, use the unit handling to calculate conversion factors or to convert quantities before computing or presenting prices.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
