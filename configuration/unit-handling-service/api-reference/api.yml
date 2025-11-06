@@ -76,8 +76,6 @@ paths:
         * The `Accept-Language` can contain the priority list of languages which should be returned. Always one language is returned as a single string field. Example: 'fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7'
         * If the `Accept-Language` header is empty default language defined in the `Configuration service` is taken.
         * If the unit name matches none of the specified languages, an empty string is returned in the name field.
-
-        Please, see the examples below.
       security:
         - OAuth2: []
       parameters:
@@ -177,8 +175,6 @@ paths:
         * The `Accept-Language` can contain the priority list of languages which should be returned. Always one language is returned as a single string field.
         * If the `Accept-Language` header is empty default language defined in the `Configuration service` is taken.
         * If the unit name matches none of the specified languages, an empty string is returned in the name field.
-
-        Please, see the examples below.
       security:
         - OAuth2: []
       parameters:
