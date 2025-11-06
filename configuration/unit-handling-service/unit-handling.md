@@ -136,3 +136,200 @@ curl -L
 {% content-ref url="../unit-handling-service/api-reference/" %}
 [api-reference](../unit-handling-service/api-reference/)
 {% endcontent-ref %}
+
+### Validating units in price models (price-v2)
+
+When creating or updating a price model, the `unitCode` in the `measurementUnit` field must exist in Unit Handling. The Price Service validates this by checking if the unit exists.
+
+**Example: Creating a price model with unit validation**
+
+Before creating a price model with `unitCode: "kg"`, verify the unit exists:
+
+```bash
+# Step 1: Validate the unit exists
+curl -L 
+  --request GET 
+  --url 'https://api.emporix.io/unit-handling/{tenant}/units/kg'
+```
+
+If the unit exists (200 response), proceed with creating the price model:
+
+```json
+{
+  "name": "Tiered pricing - per kilogram",
+  "measurementUnit": {
+    "quantity": 1,
+    "unitCode": "kg"
+  },
+  "tierDefinition": {
+    "tierType": "TIERED",
+    "tiers": [
+      {
+        "minQuantity": {
+          "quantity": 0,
+          "unitCode": "kg"
+        }
+      }
+    ]
+  }
+}
+```
+
+If the unit doesn't exist (404 response), create it first using the Unit Handling Service.
+
+### Converting units in price matching (price-v2)
+
+When matching prices, if the requested `unitCode` differs from the price model's unit, the system uses Unit Handling to convert the price to the requested unit.
+
+**Example: Matching prices with unit conversion**
+
+Request a price match for 10 kg, but the price model uses grams:
+
+```json
+{
+  "targetCurrency": "EUR",
+  "siteCode": "1111",
+  "targetLocation": {
+    "countryCode": "DE"
+  },
+  "items": [
+    {
+      "itemId": {
+        "itemType": "PRODUCT",
+        "id": "5f5a3a365bac380024b93c45"
+      },
+      "quantity": {
+        "quantity": 10,
+        "unitCode": "kg"
+      }
+    }
+  ]
+}
+```
+
+If the price model's `measurementUnit.unitCode` is `"g"` but you request `"kg"`, the Price Service internally calls:
+
+```bash
+curl -L 
+  --request PUT 
+  --url 'https://api.emporix.io/unit-handling/{tenant}/units/convert-unit-commands' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "commandUuid": "83ddc478-89d7-48e1-8b6c-527f4c67fb56",
+    "input": {
+      "sourceUnitAmount": 10,
+      "sourceUnit": "kg",
+      "targetUnit": "g"
+    }
+  }'
+```
+
+The matched price response includes the converted quantity:
+
+```json
+{
+  "quantity": {
+    "quantity": 10000,
+    "unitCode": "g"
+  },
+  "originalValue": 13.55,
+  "effectiveValue": 13.55
+}
+```
+
+{% content-ref url="../../prices-and-taxes/price-service/api-reference/" %}
+[api-reference](../../prices-and-taxes/price-service/api-reference/)
+{% endcontent-ref %}
+
+### Validating units in cart items
+
+When adding or updating cart items, the `unitCode` in `item.unitPrice.measurementUnit.unitCode` must exist in Unit Handling. The Cart Service validates this by checking if the unit exists.
+
+**Example: Adding a cart item with unit validation**
+
+Before adding a cart item with a unit price, verify the unit exists:
+
+```bash
+# Step 1: Validate the unit exists (list units and filter by code)
+curl -L 
+  --request GET 
+  --url 'https://api.emporix.io/unit-handling/{tenant}/units?code=kg'
+```
+
+Or retrieve the specific unit:
+
+```bash
+curl -L 
+  --request GET 
+  --url 'https://api.emporix.io/unit-handling/{tenant}/units/kg'
+```
+
+If the unit exists (200 response), proceed with adding the cart item:
+
+```json
+{
+  "product": {
+    "id": "5f5a3a365bac380024b93c45"
+  },
+  "quantity": 2,
+  "price": {
+    "priceId": "6245aa0a78a8576e338fa9c4",
+    "originalAmount": 10.50,
+    "effectiveAmount": 10.50,
+    "currency": "EUR",
+    "measurementUnit": {
+      "quantity": 1,
+      "unitCode": "kg"
+    }
+  }
+}
+```
+
+If the unit doesn't exist (404 response), create it first using the Unit Handling Service.
+
+### Calculating unit prices in cart (cart-v2)
+
+When calculating item unit prices, the Cart Service may need to convert prices to match the item's unit. This uses Unit Handling's conversion endpoint.
+
+**Example: Converting unit price for cart item**
+
+If a product's price is defined per kilogram (`kg`), but the cart item needs the price per gram (`g`), convert the unit price:
+
+```bash
+# Convert price from per kg to per g
+curl -L 
+  --request PUT 
+  --url 'https://api.emporix.io/unit-handling/{tenant}/units/convert-unit-commands' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "commandUuid": "83ddc478-89d7-48e1-8b6c-527f4c67fb56",
+    "input": {
+      "sourceUnitAmount": 10.50,
+      "sourceUnit": "kg",
+      "targetUnit": "g"
+    }
+  }'
+```
+
+Response:
+
+```json
+{
+  "commandUuid": "83ddc478-89d7-48e1-8b6c-527f4c67fb56",
+  "input": {
+    "sourceUnitAmount": 10.50,
+    "sourceUnit": "kg",
+    "targetUnit": "g"
+  },
+  "output": {
+    "targetUnitAmount": 0.0105,
+    "targetUnit": "g"
+  }
+}
+```
+
+Use the converted `targetUnitAmount` (0.0105) as the unit price per gram in the cart item's `unitPrice.measurementUnit`.
+
+{% content-ref url="../../checkout/cart/api-reference/" %}
+[api-reference](../../checkout/cart/api-reference/)
+{% endcontent-ref %}
