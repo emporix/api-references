@@ -272,7 +272,7 @@ If the unit exists (200 response), proceed with adding the cart item:
 
 If the unit doesn't exist (404 response), create it first using the Unit Handling Service.
 
-### Calculating unit prices in cart (cart-v2)
+### Calculating unit prices in cart
 
 When calculating item unit prices, the Cart Service may need to convert prices to match the item's unit. This uses Unit Handling's conversion endpoint.
 
