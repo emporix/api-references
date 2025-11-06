@@ -12,26 +12,30 @@ layout:
 
 Unit handling defines, localizes, and converts measurement units (metric, imperial, USC, and custom) used across your catalog and calculations. It is tenant-scoped and acts as the source of truth for unit codes, names/symbols, base units, and conversion factors.
 
-### Where is unit handling used?
+## Where is unit handling used?
 
-- Product Service: product data (for example, `unitPricingMeasure`, `unitPricingBaseMeasure`, `orderUnit`).
-- Price Service: measurement-based pricing and normalization.
-- Checkout and Cart: weight/volume-based fees and totals.
-- Shipping and Delivery: parcel weight/dimensions and rate calculations.
-- Orders and Pick-Pack: item/package weights and dimensions.
-- Returns: weight-dependent items and adjustments.
-- Search/Indexing: filtering and sorting on size/weight fields.
+Unit handling integrates with the following services:
 
-Changes to units propagate across the platform within ~5 minutes after create/update/delete.
+- **Product Service**: Product data references unit codes (for example, `unitPricingMeasure`, `unitPricingBaseMeasure`, `orderUnit`). Unit names and symbols are retrieved from Unit Handling for display.
+- **Price Service**: 
+  - Validates unit codes when creating or updating price models.
+  - Converts units during price matching when the requested unit differs from the price model's unit.
+- **Cart Service**: 
+  - Validates unit codes when adding or updating cart items.
+  - Calculates item unit prices by converting between units when needed.
+
+{% hint style="success" %}
+Changes to units propagate across the platform within ~5 minutes after create/update/delete operations.
+{% endhint %}
 
 ## How to add a new unit
 
-To add a new measurement unit to your configuration, you need to send a request to the [Adding a new unit](https://developer.emporix.io/api-references/api-guides/configuration/unit-handling-service/api-reference/unit-management#post-unit-handling-tenant-units) endpoint.
+To add a new measurement unit to your configuration, send a request to the [Adding a new unit](https://developer.emporix.io/api-references/api-guides/configuration/unit-handling-service/api-reference/unit-management#post-unit-handling-tenant-units) endpoint.
 
 {% hint style="warning" %}
 Unit names are localized. When creating a new unit, you can specify the unit name in two different ways — in one language or in multiple languages.
 
-Looking for more info on localization? Check out [_Standard practices_](../../standard-practices/translations.md).
+If you need more info on localization, see the [_Standard practices_](../../standard-practices/translations.md) documentation.
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -60,7 +64,7 @@ curl -L
 
 You can convert between any measurement units that share the same base unit, such as kilograms to grams, or centimeters to meters.
 
-To convert between units, you need to send a request to the [Converting units ](https://developer.emporix.io/api-references/api-guides/~/changes/115/api-guides-and-references/configuration/unit-handling-service/api-reference/unit-conversion)endpoint.
+To convert between units, send a request to the [Converting units ](https://developer.emporix.io/api-references/api-guides/configuration/unit-handling-service/api-reference/unit-conversion#put-unit-handling-tenant-units-convert-unit-commands)endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -73,7 +77,7 @@ To convert between units, you need to send a request to the [Converting units ](
 </strong>  --url 'https://api.emporix.io/unit-handling/{tenant}/units/convert-unit-commands' 
   --header 'Content-Type: application/json' 
   --data '{
-    "commandUuid": "text",
+    "commandUuid": "550e8400-e29b-41d4-a716-446655440000",
     "input": {
       "sourceUnitAmount": 100,
       "sourceUnit": "g",
@@ -82,37 +86,9 @@ To convert between units, you need to send a request to the [Converting units ](
   }'
 </code></pre>
 
-## Using unit handling with product service
-
-Unit handling is the source for measurement units used in product data.
-* Define units and their localized names/symbols here; product payloads reference unit codes (for example, `unitPricingMeasure`, `unitPricingBaseMeasure`, `orderUnit`).
-* After you create or update a unit, allow ~5 minutes for changes to propagate before they appear in the products.
-* To display product values in another unit, request a conversion from Unit Handling and render the converted amount and localized unit name.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-```bash
-# Example: convert a product's weight from g to kg for display
-curl -L 
-  --request PUT 
-  --url 'https://api.emporix.io/unit-handling/{tenant}/units/convert-unit-commands' 
-  --header 'Content-Type: application/json' 
-  --data '{
-    "commandUuid": "83ddc478-89d7-48e1-8b6c-527f4c67fb56",
-    "input": {
-      "sourceUnitAmount": 100,
-      "sourceUnit": "g",
-      "targetUnit": "kg"
-    }
-  }'
-```
-{% content-ref url="../unit-handling-service/api-reference/" %}
-[api-reference](../unit-handling-service/api-reference/)
-{% endcontent-ref %}
-
 ## Using unit handling with price service
 
-The Price Service uses the same unit codes for measurement-based pricing (e.g., per kg, per L).
+The Price Service uses unit codes for measurement-based pricing, for example, per kg, per L.
 
 When displaying or normalizing per-unit prices, use the unit handling to calculate conversion factors or to convert quantities before computing or presenting prices.
 
@@ -143,41 +119,48 @@ When creating or updating a price model, the `unitCode` in the `measurementUnit`
 
 **Example: Creating a price model with unit validation**
 
-Before creating a price model with `unitCode: "kg"`, verify the unit exists:
+Before creating a price model with `unitCode: "kg"`, first verify if the unit exists, by sending a request to the [Finding units by filters with sorting and paging](https://developer.emporix.io/api-references/api-guides/configuration/unit-handling-service/api-reference/unit-management#get-unit-handling-tenant-units) endpoint.
 
 ```bash
-# Step 1: Validate the unit exists
 curl -L 
-  --request GET 
-  --url 'https://api.emporix.io/unit-handling/{tenant}/units/kg'
+  --url 'https://api.emporix.io/unit-handling/{tenant}/units' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Accept: */*'
 ```
 
 If the unit exists (200 response), proceed with creating the price model:
 
-```json
-{
-  "name": "Tiered pricing - per kilogram",
-  "measurementUnit": {
-    "quantity": 1,
-    "unitCode": "kg"
-  },
-  "tierDefinition": {
-    "tierType": "TIERED",
-    "tiers": [
-      {
-        "minQuantity": {
-          "quantity": 0,
-          "unitCode": "kg"
+```
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/price/{tenant}/priceModels' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "includesTax": true,
+    "includesMarkup": true,
+    "name": "Tiered pricing - per kilogram",
+    "measurementUnit": {
+      "quantity": 1,
+      "unitCode": "kg"
+    },
+    "tierDefinition": {
+      "tierType": "TIERED",
+      "tiers": [
+        {
+          "minQuantity": {
+            "quantity": 0,
+            "unitCode": "kg"
+          }
         }
-      }
-    ]
-  }
-}
+      ]
+    }
+  }'
 ```
 
 If the unit doesn't exist (404 response), create it first using the Unit Handling Service.
 
-### Converting units in price matching (price-v2)
+### Converting units in price matching
 
 When matching prices, if the requested `unitCode` differs from the price model's unit, the system uses Unit Handling to convert the price to the requested unit.
 
@@ -207,7 +190,7 @@ Request a price match for 10 kg, but the price model uses grams:
 }
 ```
 
-If the price model's `measurementUnit.unitCode` is `"g"` but you request `"kg"`, the Price Service internally calls:
+If the price model's `measurementUnit.unitCode` is `g` but you request `kg`, the Price Service internally calls the [Converting a unit](https://api.emporix.io/unit-handling/{tenant}/units/convert-unit-commands) enpoint:
 
 ```bash
 curl -L 
@@ -224,7 +207,7 @@ curl -L
   }'
 ```
 
-The matched price response includes the converted quantity:
+Where the matched price response includes the converted quantity:
 
 ```json
 {
@@ -247,13 +230,15 @@ When adding or updating cart items, the `unitCode` in `item.unitPrice.measuremen
 
 **Example: Adding a cart item with unit validation**
 
-Before adding a cart item with a unit price, verify the unit exists:
+Before adding a cart item with a unit price, verify the unit exists.
+
+You can either retrieve the units list and filter by code:
 
 ```bash
-# Step 1: Validate the unit exists (list units and filter by code)
 curl -L 
-  --request GET 
-  --url 'https://api.emporix.io/unit-handling/{tenant}/units?code=kg'
+  --url 'https://api.emporix.io/unit-handling/{tenant}/units' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Accept: */*'
 ```
 
 Or retrieve the specific unit:
@@ -293,10 +278,9 @@ When calculating item unit prices, the Cart Service may need to convert prices t
 
 **Example: Converting unit price for cart item**
 
-If a product's price is defined per kilogram (`kg`), but the cart item needs the price per gram (`g`), convert the unit price:
+If a product's price is defined per kilogram `kg`, but the cart item needs the price per gram `g`, convert the unit price:
 
 ```bash
-# Convert price from per kg to per g
 curl -L 
   --request PUT 
   --url 'https://api.emporix.io/unit-handling/{tenant}/units/convert-unit-commands' 
@@ -328,7 +312,7 @@ Response:
 }
 ```
 
-Use the converted `targetUnitAmount` (0.0105) as the unit price per gram in the cart item's `unitPrice.measurementUnit`.
+Then, use the converted `targetUnitAmount` (0.0105) as the unit price per gram in the cart item's `unitPrice.measurementUnit`.
 
 {% content-ref url="../../checkout/cart/api-reference/" %}
 [api-reference](../../checkout/cart/api-reference/)
