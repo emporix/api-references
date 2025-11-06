@@ -485,7 +485,6 @@ components:
       description: The tenant name.
       schema:
         type: string
-        example: testtenant
     unit-code:
       in: path
       name: unitCode
