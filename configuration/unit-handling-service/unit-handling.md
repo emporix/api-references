@@ -12,17 +12,16 @@ layout:
 
 Unit handling defines, localizes, and converts measurement units (metric, imperial, USC, and custom) used across your catalog and calculations. It is tenant-scoped and acts as the source of truth for unit codes, names/symbols, base units, and conversion factors.
 
-## Where is unit handling used?
-
 Unit handling integrates with the following services:
 
-- **Product Service**: Product data references unit codes (for example, `unitPricingMeasure`, `unitPricingBaseMeasure`, `orderUnit`). Unit names and symbols are retrieved from Unit Handling for display.
 - **Price Service**: 
   - Validates unit codes when creating or updating price models.
   - Converts units during price matching when the requested unit differs from the price model's unit.
 - **Cart Service**: 
   - Validates unit codes when adding or updating cart items.
   - Calculates item unit prices by converting between units when needed.
+- **Product Service**: 
+  - Product data references unit codes, for example, `unitPricingMeasure`, `unitPricingBaseMeasure`, `orderUnit`. Unit names and symbols are retrieved from Unit Handling for display.
 
 {% hint style="success" %}
 Changes to units propagate across the platform within ~5 minutes after create/update/delete operations.
@@ -273,11 +272,11 @@ If the unit doesn't exist, create it first using the Unit Handling Service.
 
 ### Calculating unit prices in cart
 
-When calculating item unit prices, the Cart Service may need to convert prices to match the item's unit. This uses Unit Handling's conversion endpoint.
+When calculating item unit prices, the Cart Service may need to convert prices to match the item unit. This uses Unit Handling conversion endpoint.
 
 **Example: Converting unit price for cart item**
 
-If a product's price is defined per kilogram `kg`, but the cart item needs the price per gram `g`, convert the unit price:
+If a product price is defined per kilogram `kg`, but the cart item needs the price per gram `g`, use the [Converting a unit](https://api.emporix.io/unit-handling/{tenant}/units/convert-unit-commands) enpoint:
 
 ```bash
 curl -L 
