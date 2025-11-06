@@ -90,12 +90,11 @@ To convert between units, send a request to the [Converting units ](https://deve
 
 The Price Service uses unit codes for measurement-based pricing, for example, per kg, per L.
 
-When displaying or normalizing per-unit prices, use the unit handling to calculate conversion factors or to convert quantities before computing or presenting prices.
+When displaying per-unit prices, use the Unit Handling to calculate conversion factors or to convert quantities before computing or presenting prices.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-# Example: fetch a conversion factor to normalize prices (lb ➜ kg)
 curl -L 
   --request PUT 
   --url 'https://api.emporix.io/unit-handling/{tenant}/units/conversion-factor-commands' 
@@ -113,7 +112,7 @@ curl -L
 [api-reference](../unit-handling-service/api-reference/)
 {% endcontent-ref %}
 
-### Validating units in price models (price-v2)
+### Validating units in price models 
 
 When creating or updating a price model, the `unitCode` in the `measurementUnit` field must exist in Unit Handling. The Price Service validates this by checking if the unit exists.
 
@@ -128,9 +127,9 @@ curl -L
   --header 'Accept: */*'
 ```
 
-If the unit exists (200 response), proceed with creating the price model:
+If the unit exists, proceed with creating the price model:
 
-```
+```bash
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/price/{tenant}/priceModels' 
@@ -158,7 +157,7 @@ curl -L
   }'
 ```
 
-If the unit doesn't exist (404 response), create it first using the Unit Handling Service.
+If the unit doesn't exist, create it first using the Unit Handling Service.
 
 ### Converting units in price matching
 
@@ -249,7 +248,7 @@ curl -L
   --url 'https://api.emporix.io/unit-handling/{tenant}/units/kg'
 ```
 
-If the unit exists (200 response), proceed with adding the cart item:
+If the unit exists, proceed with adding the cart item:
 
 ```json
 {
@@ -270,7 +269,7 @@ If the unit exists (200 response), proceed with adding the cart item:
 }
 ```
 
-If the unit doesn't exist (404 response), create it first using the Unit Handling Service.
+If the unit doesn't exist, create it first using the Unit Handling Service.
 
 ### Calculating unit prices in cart
 
