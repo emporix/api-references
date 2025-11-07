@@ -465,7 +465,7 @@ Price lists are site-specific. You can restrict a price list to particular group
 
 Prices in a list can be expressed in a different currency than originally defined for the list's products.
 
-To create a new price list, you need to send a request to the [Creating a new price list](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/price-lists#post-price-tenant-price-lists) endpoint.
+To create a new price list with a customer group assigned, send a request to the [Creating a new price list](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/price-lists#post-price-tenant-price-lists) endpoint.
 
 {% hint style="danger" %}
 Make sure to set a value for the `currency` field in the request body. Otherwise, the endpoint will respond with a `400` error.
@@ -478,11 +478,11 @@ Make sure to set a value for the `currency` field in the request body. Otherwise
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/price/{tenant}/price-lists' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/price/{tenant}/price-lists' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "name": {
       "en": "Germany price list"
@@ -501,6 +501,35 @@ curl -i -X POST \
     }
   }'
 ```
+
+Price lists can also be assigned to specific legal entities. When a price list is assigned to a legal entity, it automatically applies to all its subsidiaries as well. You can do the assignment using the `legalEntityId` attribute in the request.
+
+{% hint style="warning" %}
+If a price list is assigned to a legal entity, it cannot use the customer groups.
+{% endhint %}
+
+To create a new price list with a legal entity, send a request to the [Creating a new price list](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/price-lists#post-price-tenant-price-lists) endpoint.
+
+```bash
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/price/{tenant}/price-lists' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "name": {
+      "en": "Price List Legal Entity"
+    },
+    "currency": "EUR",
+    "legalEntityId": "legal-entity-1",
+    "siteCode": "example-site-1",
+    "validity": {
+      "from": "2022-05-01T00:00:00.000Z",
+      "to": "2025-05-01T00:00:00.000Z"
+    }
+  }'
+  ```
+
 
 ### Create a price in the list
 
