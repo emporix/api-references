@@ -21,7 +21,7 @@ Unit handling integrates with the following services:
   - Validates unit codes when adding or updating cart items.
   - Calculates item unit prices by converting between units when needed.
 - **Product Service**: 
-  - Product data references unit codes, for example, `unitPricingMeasure`, `unitPricingBaseMeasure`, `orderUnit`. Unit names and symbols are retrieved from Unit Handling for display.
+  - Product data references unit codes, unit names and symbols are retrieved from Unit Handling for display.
 
 {% hint style="success" %}
 Changes to units propagate across the platform within ~5 minutes after create/update/delete operations.
@@ -89,27 +89,7 @@ To convert between units, send a request to the [Converting units ](https://deve
 
 The Price Service uses unit codes for measurement-based pricing, for example, per kg, per L.
 
-When displaying per-unit prices, use the Unit Handling to calculate conversion factors or to convert quantities before computing or presenting prices.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-```bash
-curl -L 
-  --request PUT 
-  --url 'https://api.emporix.io/unit-handling/{tenant}/units/conversion-factor-commands' 
-  --header 'Content-Type: application/json' 
-  --data '{
-    "commandUuid": "83ddc478-89d7-48e1-8b6c-527f4c67fb56",
-    "input": {
-      "sourceUnitAmount": 1,
-      "sourceUnit": "g",
-      "targetUnit": "kg"
-    }
-  }'
-```
-{% content-ref url="../unit-handling-service/api-reference/" %}
-[api-reference](../unit-handling-service/api-reference/)
-{% endcontent-ref %}
+When displaying per-unit prices, the Unit Handling is used to calculate conversion factors or to convert quantities before computing or presenting prices.
 
 ### Validating units in price models 
 
@@ -205,7 +185,7 @@ curl -L
   }'
 ```
 
-Where the matched price response includes the converted quantity:
+The matched price response includes the converted quantity:
 
 ```json
 {
@@ -222,7 +202,7 @@ Where the matched price response includes the converted quantity:
 [api-reference](../../prices-and-taxes/price-service/api-reference/)
 {% endcontent-ref %}
 
-### Validating units in cart items
+## Validating units in cart items
 
 When adding or updating cart items, the `unitCode` in `item.unitPrice.measurementUnit.unitCode` must exist in Unit Handling. The Cart Service validates this by checking if the unit exists.
 
