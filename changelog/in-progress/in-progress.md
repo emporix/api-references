@@ -55,7 +55,7 @@ These announcements are intended to keep you informed about ongoing work and pot
 <tbody>
   <tr>
     <td class="tg-0pky" rowspan="5">VSM</td>
-    <td class="tg-0pky" rowspan="5">Improvements to the product functionality</td>
+    <td class="tg-0pky" rowspan="5">Improvements of features</td>
   </tr>
   <tr>
     <td class="tg-0pky" rowspan="5"><br>Schema Service</br> <br>Product Service</br><br>Category Service</br></td>
