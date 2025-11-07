@@ -19,7 +19,6 @@ Unit handling integrates with the following services:
   - Converts units during price matching when the requested unit differs from the price model's unit.
 - **Cart Service**: 
   - Validates unit codes when adding or updating cart items.
-  - Calculates item unit prices by converting between units when needed.
 - **Product Service**: 
   - Product data references unit codes, unit names and symbols are retrieved from Unit Handling for display.
 
