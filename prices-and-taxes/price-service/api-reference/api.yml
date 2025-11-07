@@ -1464,8 +1464,10 @@ paths:
             schema:
               $ref: '#/components/schemas/priceListCreation'
             examples:
-              Create Price List:
-                $ref: '#/components/examples/priceLists_post_requestBody'
+              Price list with a customer group:
+                $ref: '#/components/examples/priceLists_post_requestBody' 
+              Price list with a legal entity:
+                $ref: '#/components/examples/priceLists_post_requestBody_legalEntity'
       responses:
         '201':
           description: The request was successful. The price list has been created.
@@ -3751,6 +3753,16 @@ components:
         customerGroups:
           - customer-group-1
           - customer-group-2
+        siteCode: example-site-1
+        validity:
+          from: '2022-05-01T00:00:00.000Z'
+          to: '2025-05-01T00:00:00.000Z'
+    priceLists_post_requestBody_legalEntity:
+      value:
+        name:
+          en: Example Price List 1
+        currency: EUR
+        legalEntityId: legal-entity-1
         siteCode: example-site-1
         validity:
           from: '2022-05-01T00:00:00.000Z'
