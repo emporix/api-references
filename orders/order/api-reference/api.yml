@@ -126,6 +126,52 @@ paths:
         - $ref: '#/components/parameters/trait_queryable_q'
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
+  '/order-v2/{tenant}/salesorders/search':
+    post:
+        tags:
+          - Orders (tenant-managed)
+        summary: Searching for orders
+        description: |
+          Searches for tenant's orders for administrative purposes. To be used by tenant's employees.
+          ### Required scopes
+          *  `order.order_read`
+          *  `order.order_read_by_vendor` - for reading orders by vendor
+          *  `order.order_manage_by_vendor` - for reading orders by vendor
+        operationId: POST-order-tenant-orders-search
+        requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/searchRequest'
+              examples:
+                search for products:
+                  value:
+                    q: "id:EON1007"
+        responses:
+          '200':
+            description: |
+              The request was successful. List of orders with details are returned.
+            content:
+              application/json:
+                examples:
+                  Order list example:
+                    $ref: '#/components/examples/salesOrders'
+                schema:
+                  $ref: '#/components/schemas/salesOrders'
+          '400':
+            $ref: '#/components/responses/trait_paged_400'
+          '403':
+            $ref: '#/components/responses/trait_restricted_403'
+          '500':
+            $ref: '#/components/responses/trait_500'
+        security:
+          - OAuth2: []
+        parameters:
+          - $ref: '#/components/parameters/trait_sortable_sort'
+          - $ref: '#/components/parameters/trait_paged_pageNumber'
+          - $ref: '#/components/parameters/trait_paged_pageSize'
+          - $ref: '#/components/parameters/trait_fields'
+          - $ref: '#/components/parameters/trait_tenant'
   '/order-v2/{tenant}/salesorders/{orderId}':
     get:
       tags:
@@ -529,6 +575,7 @@ paths:
         - $ref: '#/components/parameters/trait_paged_pageSize'
         - $ref: '#/components/parameters/trait_queryable_q'
         - $ref: '#/components/parameters/trait_fields'
+        - $ref: '#/components/parameters/trait_tenant'
   '/order-v2/{tenant}/orders/{orderId}':
     get:
       tags:
@@ -1749,6 +1796,15 @@ components:
               description: Identifier of the quote from which the order has been created
               type: string
         - $ref: '#/components/schemas/orderCreationDto'
+    searchRequest:
+      type: object
+      properties:
+        q:
+          type: string
+          description:  |
+            A standard query parameter is used to search for specific values. 
+            
+            See: [Standard practises - Query parameter](https://developer.emporix.io/api-references/standard-practices/q-param)
     orderCreationDto:
       title: Order Creation DTO
       allOf:

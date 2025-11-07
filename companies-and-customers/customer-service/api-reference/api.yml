@@ -29,31 +29,7 @@ paths:
                   $ref: '#/components/schemas/CustomerForSellerDto'
               examples:
                 Response example:
-                  value:
-                    - title: MR
-                      firstName: John
-                      lastName: Doe
-                      contactPhone: '123456789'
-                      company: Emporix
-                      preferredLanguage: en_US
-                      preferredCurrency: EUR
-                      preferredSite: main
-                      mixins: {}
-                      metadata:
-                        mixins: {}
-                        version: 6
-                      customerNumber: '13869000'
-                      id: '13869000'
-                      contactEmail: example@customer.com
-                      active: true
-                      onHold: false
-                      businessModel: B2B
-                      b2b:
-                        companyRegistrationId: 123-456-789
-                        legalEntities:
-                          - id: D165356
-                            name: Emporix
-                            contactAssignmentId: D436432
+                  $ref: '#/components/examples/CustomerResponseExample'
           headers:
             Count:
               schema:
@@ -68,7 +44,7 @@ paths:
       description: |-
         Retrieves a list of customer profiles.
         
-        The `customer.customer_read_own` scope allows customers to read profiles from another customers within the same company.
+        The `customer.customer_read_own` scope allows customers to read profiles of other customers within the same company.
         
         ***
         ### Required scopes
@@ -149,6 +125,71 @@ paths:
         - Account and profile
     parameters:
       - $ref: '#/components/parameters/Api_Tenant'
+  '/customer/{tenant}/customers/search':
+    post:
+      summary: Searching for customers
+      requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  q:
+                    type: string
+                    description:  |
+                      A standard query parameter is used to search for specific values. 
+                      
+                      See: [Standard practises - Query parameter](https://developer.emporix.io/api-references/standard-practices/q-param)
+              examples:
+                search for products:
+                  value:
+                    q: "firstName:John"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerForSellerDto'
+              examples:
+                Response example:
+                  $ref: '#/components/examples/CustomerResponseExample'
+          headers:
+            Count:
+              schema:
+                type: integer
+              description: Number of retrieved customers.
+        '400':
+          $ref: '#/components/responses/400_bad_request'
+        '401':
+          $ref: '#/components/responses/401_unauthorized'
+        '403':
+          $ref: '#/components/responses/403_forbidden'
+      description: |-
+        Searches for customer profiles.
+        
+        The `customer.customer_read_own` scope allows customers to read profiles of other customers within the same company.
+        
+        ***
+        ### Required scopes
+        * `customer.customer_read`
+        * `customer.customer_read_own`
+      operationId: POST-customer-tenant-search
+      parameters:
+        - $ref: '#/components/parameters/query_q'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/expand'
+        - $ref: '#/components/parameters/tenant'
+      security:
+        - OAuth2:
+            - customer.customer_read
+            - customer.customer_read_own
+      tags:
+        - Account and profile
   '/customer/{tenant}/customers/{customerNumber}':
     put:
       summary: Upserting a customer profile
@@ -1485,5 +1526,32 @@ components:
             customer.customer_manage: Needed to manage customer profiles.
             customer.customer_manage_own: Needed by customer to manage customer profiles from the same company.
           tokenUrl: 'https://api.emporix.io/oauth/token'
+  examples:
+    CustomerResponseExample:
+      value:
+        - title: MR
+          firstName: John
+          lastName: Doe
+          contactPhone: '123456789'
+          company: Emporix
+          preferredLanguage: en_US
+          preferredCurrency: EUR
+          preferredSite: main
+          mixins: {}
+          metadata:
+            mixins: {}
+            version: 6
+          customerNumber: '13869000'
+          id: '13869000'
+          contactEmail: example@customer.com
+          active: true
+          onHold: false
+          businessModel: B2B
+          b2b:
+            companyRegistrationId: 123-456-789
+            legalEntities:
+              - id: D165356
+                name: Emporix
+                contactAssignmentId: D436432
 security:
   - OAuth2: []

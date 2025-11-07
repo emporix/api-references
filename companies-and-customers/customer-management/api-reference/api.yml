@@ -102,7 +102,7 @@ paths:
                       companyRegistrationId: 123-456-789
                       legalEntities:
                         - id: D165356
-                          name: BMW
+                          name: Emporix
                           contactAssignmentId: D436432
                 Anonymous customer:
                   value:
