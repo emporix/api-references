@@ -1541,8 +1541,6 @@ paths:
     parameters:
       - $ref: '#/components/parameters/path_tenant'
     post:
-      parameters:
-        - $ref: '#/components/parameters/header_Accept-Language'
       summary: Importing agents
       operationId: POST-ai-import-agents
       requestBody:
@@ -2313,15 +2311,15 @@ components:
             agents:
               type: array
               items:
-                $ref: '#/components/schemas/ImportedEntiy'
+                $ref: '#/components/schemas/ImportedEntity'
             tools:
               type: array
               items:
-                $ref: '#/components/schemas/ImportedEntiy'
+                $ref: '#/components/schemas/ImportedEntity'
             mcpServers:
               type: array
               items:
-                $ref: '#/components/schemas/ImportedEntiy'
+                $ref: '#/components/schemas/ImportedEntity'
     ExportResult:
       type: object
       properties:
@@ -2331,7 +2329,7 @@ components:
         checksum:
           type: string
           description: Checksum calculated based on JSON value. Validates if importing JSON is exactly the same as exported one.
-    ImportedEntiy:
+    ImportedEntity:
       type: object
       properties:
         id:
@@ -2878,8 +2876,7 @@ components:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: '#/components/schemas/ExportRequest'
+            $ref: '#/components/schemas/ExportRequest'
           examples:
             Export Agent:
               $ref: '#/components/examples/ExportRequest'
@@ -2887,8 +2884,7 @@ components:
       content:
         application/json:
           schema:
-            oneOf:
-              - $ref: '#/components/schemas/ImportRequest'
+            $ref: '#/components/schemas/ImportRequest'
           examples:
             Export Agent:
               $ref: '#/components/examples/ImportRequest'
