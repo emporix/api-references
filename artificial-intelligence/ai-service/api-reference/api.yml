@@ -16,8 +16,8 @@ tags:
     description: Manage Agent Templates
   - name: Commerce Events
     description: Read Commerce Events
-  - name: Export/Import
-    description: Export & Import Agents
+  - name: Import/Export
+    description: Import & Export Agents
   - name: AI Completions
     description: AI Completions
   - name: Job
@@ -1536,7 +1536,7 @@ paths:
         - OAuth2:
             - ai.agent_read
       tags:
-        - Export/Import
+        - Import/Export
   '/ai-service/{tenant}/agentic/agents/import':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -1571,7 +1571,7 @@ paths:
         - OAuth2:
             - ai.agent_manage
       tags:
-        - Export/Import
+        - Import/Export
 components:
   schemas:
     ErrorMessage:
