@@ -47,7 +47,7 @@ You can generate the text by sending a request based on a provided prompt. To se
 
 ```bash
 curl -i -X POST 
-  'http://api.emporix.io/ai-service/{tenant}/texts' 
+  'https://api.emporix.io/ai-service/{tenant}/texts' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -72,7 +72,7 @@ To generate the AI completion, send the request using the [AI Completions](https
 
 ```bash
 curl -i -X POST 
-  'http://api.emporix.io/ai-service/{tenant}/completions' 
+  'https://api.emporix.io/ai-service/{tenant}/completions' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'Content-Type: application/json' 
   -d '{

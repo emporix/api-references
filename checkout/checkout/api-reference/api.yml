@@ -102,7 +102,6 @@ paths:
               oneOf:
                 - $ref: '#/components/schemas/requestCheckout'
                 - $ref: '#/components/schemas/requestFromQuoteCheckout'
-                - $ref: '#/components/schemas/requestGuestCheckout'
             examples:
               Request checkout example:
                 value:
@@ -349,112 +348,7 @@ components:
           type: boolean
           description: Indicates if the checkout is done by an anonymous customer (if true) or logged in customer (if false). Required only for guest checkout.
       required:
-        - id
         - email
-    guestAddress.json:
-      type: object
-      description: Information about the guest's address.
-      additionalProperties: false
-      properties:
-        contactName:
-          type: string
-          minLength: 0
-          description: Contact name
-        companyName:
-          type: string
-          description: Company name
-        street:
-          type: string
-          minLength: 0
-          description: Street
-        streetNumber:
-          type: string
-          description: Street number
-        streetAppendix:
-          type: string
-          description: Street appendix
-        zipCode:
-          type: string
-          maxLength: 11
-          minLength: 0
-          description: zip code
-        city:
-          type: string
-          minLength: 0
-          description: City
-        country:
-          type: string
-          pattern: '[a-zA-Z]{2}'
-          minLength: 2
-          maxLength: 2
-          description: Country
-        state:
-          type: string
-          description: State
-        contactPhone:
-          type: string
-          description: Contact phone
-        type:
-          type: string
-          description: 'Type of the address data, for example `BILLING` or `SHIPPING`.'
-          minLength: 0
-        metadata:
-          $ref: '#/components/schemas/mixinMetadata.json'
-        mixins:
-          type: object
-          description: Mixins object
-          additionalProperties: true
-      required:
-        - contactName
-        - street
-        - zipCode
-        - city
-        - country
-        - type
-    guestCustomer.json:
-      type: object
-      description: Information about the guest.
-      minProperties: 1
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-          description: Name
-        title:
-          type: string
-          description: Title
-        firstName:
-          type: string
-          description: First name. Providing either `firstName` or `lastName` is required.
-        middleName:
-          type: string
-          description: Middle name
-        lastName:
-          type: string
-          description: Last name. Providing either `firstName` or `lastName` is required.
-        contactPhone:
-          type: string
-          description: Contact phone
-        email:
-          type: string
-          format: email
-          minLength: 0
-          description: Email
-        company:
-          type: string
-          description: Company name
-        metadata:
-          $ref: '#/components/schemas/mixinMetadata.json'
-        mixins:
-          type: object
-          description: Mixins object
-          additionalProperties: true
-        guest:
-          type: boolean
-          description: Indicates if the checkout is done by an anonymous customer (if true) or logged in customer (if false). Required only for guest checkout.
-      required:
-        - email
-        - guest
     errorMessage:
       title: ''
       description: Schema for API-specific errors.
@@ -534,20 +428,11 @@ components:
           description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
         shipping:
           $ref: '#/components/schemas/shipping.json'
-        deliveryWindowId:
-          type: string
-          description: |
-            ***DEPRECATED***
-            This attribute is deprecated, please use the `deliveryWindow` attribute in cart service to setup the delivery window which will be used for the checkout.
-
-
-            Delivery window's unique identifier.
-          deprecated: true
         addresses:
           type: array
           uniqueItems: true
-          minItems: 1
-          description: List of addresses associated with the order.
+          minItems: 2
+          description: List of addresses associated with the order. There must be at least one address of type `SHIPPING` and one address of type `BILLING`.
           items:
             $ref: '#/components/schemas/address.json'
         customer:
@@ -557,49 +442,6 @@ components:
         - customer
         - shipping
         - addresses
-        - paymentMethods
-    requestGuestCheckout:
-      type: object
-      description: Schema for triggering a checkout.
-      additionalProperties: false
-      properties:
-        cartId:
-          type: string
-          description: Customer's cart unique identifier generated when a cart is created.
-          minLength: 0
-        paymentMethods:
-          description: Methods chosen to process the payment for the order.
-          type: array
-          items:
-            $ref: '#/components/schemas/requestPaymentMethod.json'
-        currency:
-          type: string
-          description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
-        shipping:
-          $ref: '#/components/schemas/shipping.json'
-        deliveryWindowId:
-          type: string
-          description: |
-            ***DEPRECATED***
-            This attribute is deprecated, please use the `deliveryWindow` attribute in cart service to setup the delivery window which will be used for the checkout.
-
-
-            Delivery window's unique identifier.
-          deprecated: true
-        addresses:
-          type: array
-          uniqueItems: true
-          minItems: 1
-          description: List of addresses associated with the order.
-          items:
-            $ref: '#/components/schemas/guestAddress.json'
-        customer:
-          $ref: '#/components/schemas/guestCustomer.json'
-      required:
-        - cartId
-        - addresses
-        - customer
-        - shipping
         - paymentMethods
     requestFromQuoteCheckout:
       type: object
