@@ -2332,7 +2332,7 @@ components:
           type: string
           description: |-
             Legal entity for which price lists are included in the price match.
-            **Note**: Price lists for parent legal entities are also included.
+            **Note**: Price lists for the entity's parent legal entities are also included.
       required:
         - targetCurrency
         - siteCode
@@ -2877,7 +2877,7 @@ components:
             type: string
         customerGroups:
           description: |-
-            List of customer groups ids for which the price list is valid. If not specified, the price list will be applicable to all customer groups.
+            List of customer groups IDs for which the price list is valid. If not specified, the price list is applicable to all customer groups.
 
             **Note**: Customer groups cannot be provided if there is a legal entity specified for the price list.
 
@@ -2889,8 +2889,8 @@ components:
             type: string
         legalEntityId:
           description: |-
-            Id of the legal entity to which the price list applies.
-            **Note**: Price list assigned to legal entity will also be applicable for all the subsidiaries.
+            ID of the legal entity to which the price list applies.
+            **Note**: Price list assigned to legal entity is also applicable for all the subsidiaries.
           type: string
         siteCode:
           description: Code of the site to which the price list applies.

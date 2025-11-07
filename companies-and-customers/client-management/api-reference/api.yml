@@ -382,7 +382,7 @@ paths:
     get:
       summary: Retrieving a legal entity with parent hierarchy
       description: |-
-        Retrieves provided legal entity and all parent legal entities.
+        Retrieves the provided legal entity and all its parent legal entities.
 
         ***
 
