@@ -54,24 +54,20 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr></thead>
 <tbody>
   <tr>
-    <td class="tg-0pky" rowspan="5">Order Service<br> Quote Service</td>
-    <td class="tg-0pky" rowspan="5">Improvements to the services functionality</td>
+    <td class="tg-0pky" rowspan="5">VSM</td>
+    <td class="tg-0pky" rowspan="5">Improvements to the product functionality</td>
   </tr>
   <tr>
-    <td class="tg-0pky" rowspan="5">Cart Service </td>
-    <td class="tg-0pky" rowspan="5">Improvements in cart functionality</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky" rowspan="5">Schema Service </td>
-    <td class="tg-0pky" rowspan="5">Improvements in custom entity functionality</td>
+    <td class="tg-0pky" rowspan="5"><br>Schema Service</br> <br>Product Service</br><br>Category Service</br></td>
+    <td class="tg-0pky" rowspan="5">Classification categories</td>
   </tr>
   <tr>
     <td class="tg-0pky" rowspan="5">Product Service </td>
-    <td class="tg-0pky" rowspan="5">Improvements in product functionality</td>
+    <td class="tg-0pky" rowspan="5">Product variants</td>
   </tr>
   <tr>
-    <td class="tg-0pky" rowspan="5">Customer Service</td>
-    <td class="tg-0pky" rowspan="5">Improvements in customer management functionality</td>
+    <td class="tg-0pky" rowspan="5">AI Service </td>
+    <td class="tg-0pky" rowspan="5">Agentic improvements</td>
   </tr>
 </tbody>
 </table>
