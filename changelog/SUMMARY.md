@@ -10,6 +10,12 @@
 
 * [2025-11-13: Client Management Service - parent hierarchy endpoint added](2025/2025-11-13-client-management.md)
 * [2025-11-13: Price Service - legal entity support added](2025/2025-11-13-price.md)
+* [2025-11-07: Category Service - new search endpoint and query parameter](2025/2025-11-07-category.md)
+* [2025-11-07: Price Service - new search endpoint for price lists](2025/2025-11-07-price.md)
+* [2025-11-07: Schema Service - references](2025/2025-11-07-schema.md)
+* [2025-11-07: Customer Service - new search endpoint](2025/2025-11-07-customer.md)
+* [2025-11-07: Order Service - new search endpoint](2025/2025-11-07-order.md)
+* [2025-11-07: Media Service - support for custom schema types in reference type](2025/2025-11-07-media.md)
 * [2025-10-30: Cart Service - quoteId added](2025/2025-10-30-cart-quote-id.md)
 * [2025-10-30: Cart Service - external discounts on cart level](2025/2025-10-30-cart-external-discounts.md)
 * [2025-10-30: Cart Service - address management](2025/2025-10-30-cart-addresses.md)

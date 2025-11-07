@@ -1487,6 +1487,61 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+  '/price/{tenant}/price-lists/search':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    post:
+      tags:
+        - Price lists
+      summary: Searching for price lists
+      description: |-
+        Searching for price lists assigned to the tenant.
+
+         ### Required scopes
+        * `price.pricelist_read`
+      security:
+        - OAuth2:
+            - price.pricelist_read
+      parameters:
+        - $ref: '#/components/parameters/header_acceptLanguageV2'
+        - $ref: '#/components/parameters/trait_paged_pageNumber'
+        - $ref: '#/components/parameters/trait_paged_pageSize'
+        - $ref: '#/components/parameters/trait_sort'
+        - $ref: '#/components/parameters/trait_XTotalCount_header'
+      requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/searchRequest'
+              examples:
+                search for products:
+                  value:
+                    q: "id:example-id-1"
+      responses:
+        '200':
+          description: The request was successful. A list of price lists is returned.
+          headers:
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of retrieved price lists.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/priceList'
+              examples:
+                Response example:
+                  $ref: '#/components/examples/priceLists_get_200_responseBody'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+      operationId: POST-price-search-price-lists
   '/price/{tenant}/price-lists/{priceListId}':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -3129,6 +3184,15 @@ components:
           default: ALL_PRICES
       required:
         - itemIds
+    searchRequest:
+      type: object
+      properties:
+        q:
+          type: string
+          description:  |
+            A standard query parameter is used to search for specific values. 
+            
+            See: [Standard practises - Query parameter](https://developer.emporix.io/api-references/standard-practices/q-param)
     priceMetadata:
       allOf:
         - $ref: '#/components/schemas/metadata'
