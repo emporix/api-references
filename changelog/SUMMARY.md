@@ -8,6 +8,8 @@
 
 ## 2025
 
+* [2025-10-30: Client Management Service - parent hierarchy endpoint added](2025/2025-11-13-client-management.md)
+* [2025-10-30: Price Service - legal entity support added](2025/2025-11-13-price.md)
 * [2025-10-30: Cart Service - quoteId added](2025/2025-10-30-cart-quote-id.md)
 * [2025-10-30: Cart Service - external discounts on cart level](2025/2025-10-30-cart-external-discounts.md)
 * [2025-10-30: Cart Service - address management](2025/2025-10-30-cart-addresses.md)

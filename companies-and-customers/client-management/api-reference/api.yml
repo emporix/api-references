@@ -375,6 +375,36 @@ paths:
       operationId: DELETE-customer-mgmt-remove-legal-entity
       tags:
         - Legal Entities
+  '/{tenant}/legal-entities/{legalEntityId}/parent-hierarchy':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_legalEntity_id_path'
+    get:
+      summary: Retrieving a legal entity with parent hierarchy
+      description: |-
+        Retrieves provided legal entity and all parent legal entities.
+
+        ***
+
+         ### Required scopes
+        * `customermanagement.legalentity_read`
+        * `customermanagement.legalentity_manage`
+      security:
+        - OAuth2:
+            - customermanagement.legalentity_read
+            - customermanagement.legalentity_manage
+      responses:
+        '200':
+          $ref: '#/components/responses/GetParentHierarchy'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+      operationId: GET-customer-mgmt-retrieve-legal-entity-parent-hierarchy
+      tags:
+        - Legal Entities
   '/{tenant}/contact-assignments':
     parameters:
       - name: tenant
@@ -1595,6 +1625,41 @@ components:
                     createdAt: '2022-03-31T13:18:02.379Z'
                     modifiedAt: '2022-04-31T13:18:02.379Z'
                     version: 2
+    GetParentHierarchy:
+      description: The request was successful. A list of legal entities is returned.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/legalEntity'
+          examples:
+            List of legal entities:
+              value:
+                - id: company_c
+                  name: Company C
+                  type: SUBSIDIARY
+                  parentId: company_b
+                  metadata:
+                    createdAt: '2022-03-31T13:18:02.379Z'
+                    modifiedAt: '2022-03-31T13:18:02.379Z'
+                    version: 1
+                - id: company_b
+                  name: Company B
+                  type: SUBSIDIARY
+                  parentId: company_a
+                  metadata:
+                    createdAt: '2022-03-18T14:22:07.321Z'
+                    modifiedAt: '2022-03-18T14:22:07.321Z'
+                    version: 1
+                - id: company_a
+                  name: Company A
+                  type: COMPANY
+                  metadata:
+                    createdAt: '2022-03-31T13:18:02.379Z'
+                    modifiedAt: '2022-03-31T13:18:02.379Z'
+                    version: 1
+                
     GetContactAssignment:
       description: The request was successful. The requested customer assignment is returned.
       content:
