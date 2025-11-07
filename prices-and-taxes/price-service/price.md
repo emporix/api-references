@@ -41,11 +41,11 @@ To add a new entry to your configuration of currencies, you need to send a reque
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/currency/{tenant}/currencies' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: de' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/currency/{tenant}/currencies' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: de' 
+  -H 'Content-Type: application/json' 
   -d '{
   "code": "EUR",
   "name": {
@@ -67,16 +67,16 @@ To create a new price model, you need to send a request to the [Creating a new p
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/price/{tenant}/priceModels' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/price/{tenant}/priceModels' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
       "includesTax": true,
       "includesMarkup": false,
@@ -117,14 +117,14 @@ Price models that use the basic pricing strategy have one tier. To retrieve its 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET \
-  'https://api.emporix.io/price/{tenant}/priceModels/{priceModelId}' \
-  -H 'Accept-Language: string' \
+curl -i -X GET 
+  'https://api.emporix.io/price/{tenant}/priceModels/{priceModelId}' 
+  -H 'Accept-Language: string' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
@@ -136,16 +136,16 @@ To define a new price for a product, you need to send a request to the [Creating
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/price/{tenant}/prices' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/price/{tenant}/prices' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "id": "6245aa0a78a8576e338fa9c4",
     "itemId": {
@@ -175,7 +175,7 @@ curl -i -X POST \
 ## How to implement different pricing strategies
 
 {% hint style="warning" %}
-To learn more about pricing strategies available in the Emporix Commerce Engine, check out the \[Pricing guide]\((https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/pricing/pricing-v2#price-models).
+To learn more about pricing strategies available in the Emporix Commerce Engine, check out the [Pricing guide](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/pricing/pricing-v2#price-models).
 {% endhint %}
 
 Implementing any pricing strategy is a process made up of three steps:
@@ -397,7 +397,7 @@ Here's an example of a request body for a tiered and volume-based price:
 
 Take a look at the relationship between prices and customers in the Emporix Commerce Engine:
 
-<figure><img src="../../static/price/price_customer.svg" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../static/price/price_customer.svg" alt="" width="400"><figcaption></figcaption></figure>
 
 To make a price valid only for specific customers, you need to add their IDs to the `principals` array inside an applicable `Price` object.
 
@@ -473,8 +473,8 @@ Make sure to set a value for the `currency` field in the request body. Otherwise
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../price=service/api-reference/" %}
-[api-reference](../price=service/api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -543,15 +543,15 @@ To create a new list-specific price, you need to send a request to the [Adding a
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/price/{tenant}/price-lists/{priceListId}/prices' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/price/{tenant}/price-lists/{priceListId}/prices' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
   "itemId": {
     "itemType": "PRODUCT",
@@ -644,11 +644,11 @@ Create a sample product through the [Creating a new product](https://developer.e
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "name": {
       "en": "Bananas"
@@ -719,16 +719,16 @@ Start with defining a price model with [Creating a price model](https://develope
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/price/{tenant}/priceModels' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/price/{tenant}/priceModels' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "includesTax": true,
     "includesMarkup": false,
@@ -762,14 +762,14 @@ Now, retrieve the automatically-generated ID of the pricing tier, use the [Retri
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET \
-  'https://api.emporix.io/price/{tenant}/priceModels/{priceModelId}' \
-  -H 'Accept-Language: string' \
+curl -i -X GET 
+  'https://api.emporix.io/price/{tenant}/priceModels/{priceModelId}' 
+  -H 'Accept-Language: string' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
@@ -777,16 +777,16 @@ Once you know the tier ID, define a price for the bananas, use the [Creating a n
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/price/{tenant}/prices' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/price/{tenant}/prices' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "id": "6245aa0a78a8576e338fa9c4",
     "itemId": {
@@ -814,18 +814,12 @@ curl -i -X POST \
 
 Then, define a price model where the price per kilogram changes based on the ordered quantity:
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
-{% endcontent-ref %}
-
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/price/{tenant}/priceModels' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/price/{tenant}/priceModels' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "name": {
       "en": "Bananas - volume pricing"
@@ -867,33 +861,21 @@ curl -i -X POST \
 
 Now, retrieve the automatically-generated IDs of the pricing tiers, use the [Retrieve a price model](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/price-models#get-price-tenant-pricemodels-pricemodelid) endpoint
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
-{% endcontent-ref %}
-
 ```bash
-curl -i -X GET \
-  'https://api.emporix.io/price/{tenant}/priceModels/{priceModelId}' \
-  -H 'Accept-Language: string' \
+curl -i -X GET 
+  'https://api.emporix.io/price/{tenant}/priceModels/{priceModelId}' 
+  -H 'Accept-Language: string' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
 Once you know the tier IDs, define another price for the bananas, use the [Creating a new price](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
-{% endcontent-ref %}
-
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/price/{tenant}/prices' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/price/{tenant}/prices' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "id": "6245aa0a78a8576e338fa9c4",
     "itemId": {
@@ -935,15 +917,15 @@ Check the best price for both one kilogram and ten kilograms of bananas:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/price/{tenant}/match-prices' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/price/{tenant}/match-prices' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "targetCurrency": "EUR",
     "siteCode": "main",
@@ -1001,16 +983,16 @@ Define sales tax rates for the desired country by sending a request to the [Crea
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../users-and-permissions/iam/api-reference/" %}
-[api-reference](../../users-and-permissions/iam/api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/tax/{tenant}/taxes' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/tax/{tenant}/taxes' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
   "location": {
     "countryCode": "AT"
@@ -1061,16 +1043,16 @@ To update a product with applicable tax classes, send a request to the [Partiall
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../products-labels-and-brands/label-service/api-reference/" %}
-[api-reference](../../products-labels-and-brands/label-service/api-reference/)
+{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
+[api-reference](../../products-labels-and-brands/product-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PATCH \
-  'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X PATCH 
+  'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
    "published": true,
    "taxClasses": {
@@ -1087,15 +1069,15 @@ To calculate a gross price between countries, send a request to the [Matching pr
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/price/{tenant}/match-prices' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/price/{tenant}/match-prices' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "targetCurrency": "EUR",
     "siteCode": "main",
@@ -1135,16 +1117,16 @@ Add the currency in which the price will be retrieved to your configuration of c
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/unit-handling-service/api-reference/" %}
-[api-reference](../../configuration/unit-handling-service/api-reference/)
+{% content-ref url="../../configuration/currency-service/api-reference/" %}
+[api-reference](../../configuration/currency-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/currency/{tenant}/currencies' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: de' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/currency/{tenant}/currencies' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: de' 
+  -H 'Content-Type: application/json' 
   -d '{
   "code": "USD",
   "name": {
@@ -1169,15 +1151,15 @@ To define a new exchange rate, send a request to the [Creating a new exchange ra
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/unit-handling-service/api-reference/" %}
-[api-reference](../../configuration/unit-handling-service/api-reference/)
+{% content-ref url="../../configuration/currency-service/api-reference/" %}
+[api-reference](../../configuration/currency-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/currency/{tenant}/exchanges' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/currency/{tenant}/exchanges' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "sourceCurrency": "EUR",
     "targetCurrency": "USD",
@@ -1191,15 +1173,15 @@ To retrieve a price in the desired currency, send a request to the [Matching pri
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../tax-service/api-reference/" %}
-[api-reference](../tax-service/api-reference/)
+{% content-ref url="../price-service/api-reference/" %}
+[api-reference](../price-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/price/{tenant}/match-prices' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/price/{tenant}/match-prices' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "targetCurrency": "USD",
     "siteCode": "main",
@@ -1245,15 +1227,15 @@ To add or update the `includesTax` field in your site's settings, you need to se
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/indexing-service/api-reference/" %}
-[api-reference](../../configuration/indexing-service/api-reference/)
+{% content-ref url="../../configuration/site-settings-service/api-reference/" %}
+[api-reference](../../configuration/site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PATCH \
-  'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X PATCH 
+  'https://api.emporix.io/site/{tenant}/sites/{siteCode}' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
   "defaultLanguage": "en",
   "includesTax": true
