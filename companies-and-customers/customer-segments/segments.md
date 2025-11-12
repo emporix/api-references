@@ -25,16 +25,16 @@ Create a customer segment by sending a request to the the [Creating a customer s
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../approval-service/approval-api-reference/" %}
-[approval-api-reference](../approval-service/approval-api-reference/)
+{% content-ref url="../customer-segments/api-reference/" %}
+[api-reference](../customer-segments/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/customer-segment/{tenant}/segments' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST
+  'https://api.emporix.io/customer-segment/{tenant}/segments'
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Content-Language: string'
+  -H 'Content-Type: application/json'
   -d '{
     "id": "628cd20c6e8b2432b6346ca6",
     "name": {
@@ -61,15 +61,15 @@ Connect the segment with specific products and/or categories for more customized
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../approval-service/approval-api-reference/" %}
-[approval-api-reference](../approval-service/approval-api-reference/)
+{% content-ref url="../customer-segments/api-reference/" %}
+[api-reference](../customer-segments/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/items/{type}/{itemId}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X PUT
+  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/items/{type}/{itemId}'
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Content-Type: application/json'
   -d '{
     "mixins": {
       "segmentAttributes": {
@@ -88,15 +88,15 @@ curl -i -X PUT \
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../approval-service/approval-api-reference/" %}
-[approval-api-reference](../approval-service/approval-api-reference/)
+{% content-ref url="../customer-segments/api-reference/" %}
+[api-reference](../customer-segments/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/items/{type}/bulk' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X PUT
+  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/items/{type}/bulk'
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Content-Type: application/json'
   -d '{}'
 ```
 
@@ -112,15 +112,15 @@ Now, add customers to the segment. Depending on your setup and purpose, you can 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../approval-service/approval-api-reference/" %}
-[approval-api-reference](../approval-service/approval-api-reference/)
+{% content-ref url="../customer-segments/api-reference/" %}
+[api-reference](../customer-segments/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/customers/{customerId}/{legalEntityId}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X PUT
+  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/customers/{customerId}/{legalEntityId}'
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Content-Type: application/json'
   -d '{
     "mixins": {
       "segmentAttributes": {
@@ -139,15 +139,15 @@ curl -i -X PUT \
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../approval-service/approval-api-reference/" %}
-[approval-api-reference](../approval-service/approval-api-reference/)
+{% content-ref url="../customer-segments/api-reference/" %}
+[api-reference](../customer-segments/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/customers/{customerId}/{legalEntityId}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X PUT
+  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/customers/{customerId}/{legalEntityId}'
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Content-Type: application/json'
   -d '{
     "mixins": {
       "segmentAttributes": {
@@ -166,15 +166,15 @@ curl -i -X PUT \
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../approval-service/approval-api-reference/" %}
-[approval-api-reference](../approval-service/approval-api-reference/)
+{% content-ref url="../customer-segments/api-reference/" %}
+[api-reference](../customer-segments/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/customers/bulk' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X PUT
+  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/customers/bulk'
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Content-Type: application/json'
   -d '{}'
 ```
 
@@ -190,17 +190,17 @@ To search for a segment, you need the `customersegment.segment_read` scope to re
 
 You can use the search API to find a segment of your interest that match a specific criteria. Send the request to the [Searching with parameters for customer segments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments-search) endpoint.
 
-{% content-ref url="../approval-service/approval-api-reference/" %}
-[approval-api-reference](../approval-service/approval-api-reference/)
+{% content-ref url="../customer-segments/api-reference/" %}
+[api-reference](../customer-segments/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/customer-segment/{tenant}/segments/search?pageSize=string&pageNumber=string&sort=string&fields=string&legalEntityId=string' \
-  -H 'Accept-Language: string' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -H 'X-Total-Count: true' \
+curl -i -X POST
+  'https://api.emporix.io/customer-segment/{tenant}/segments/search?pageSize=string&pageNumber=string&sort=string&fields=string&legalEntityId=string'
+  -H 'Accept-Language: string'
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Content-Type: application/json'
+  -H 'X-Total-Count: true'
   -d '{
     "q": "siteCode:main"
   }'
@@ -220,10 +220,10 @@ To create a coupon that is valid only for a specific segment, send the request t
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/coupon/{tenant}/coupons' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST
+  'https://api.emporix.io/coupon/{tenant}/coupons'
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Content-Type: application/json'
   -d '{
     "code": "ENG2OC0",
     "name": "Winter Sale 2018",
@@ -269,15 +269,15 @@ Send the request to the [Retrieving all items assignments for all customer segme
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../approval-service/approval-api-reference/" %}
-[approval-api-reference](../approval-service/approval-api-reference/)
+{% content-ref url="../customer-segments/api-reference/" %}
+[api-reference](../customer-segments/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET \
-  'https://api.emporix.io/customer-segment/{tenant}/segments/items?q=string&pageSize=string&pageNumber=string&sort=string&fields=string&legalEntityId=string&siteCode=string&onlyActive=false' \
-  -H 'Accept-Language: string' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+curl -i -X GET
+  'https://api.emporix.io/customer-segment/{tenant}/segments/items?q=string&pageSize=string&pageNumber=string&sort=string&fields=string&legalEntityId=string&siteCode=string&onlyActive=false'
+  -H 'Accept-Language: string'
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
   -H 'X-Total-Count: true'
 ```
 
@@ -290,14 +290,14 @@ Send the request to the [Retrieving category trees for a customer segments](http
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../approval-service/approval-api-reference/" %}
-[approval-api-reference](../approval-service/approval-api-reference/)
+{% content-ref url="../customer-segments/api-reference/" %}
+[api-reference](../customer-segments/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET \
-  'https://api.emporix.io/customer-segment/{tenant}/segments/items/category-trees?legalEntityId=string&siteCode=string' \
-  -H 'Accept-Language: string' \
+curl -i -X GET
+  'https://api.emporix.io/customer-segment/{tenant}/segments/items/category-trees?legalEntityId=string&siteCode=string'
+  -H 'Accept-Language: string'
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
@@ -312,12 +312,12 @@ To filter products that belong to a category that is assigned to a particular se
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET 
-'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments?assignmentType=PRODUCT\&ref.localizedName=Twix\&ref.id=5c3348bda9812100098ffaa3\&showUnpublished=true\&withSubcategories=true\&segmentsIds=segmentId1%2CsegmentId2\&pageNumber=1\&pageSize=60\&sort={fieldName}%3AASC%2C{fieldName2}%3ADESC\&hideUnpublishedProducts=false' 
--H 'Accept-Language: \`\*\`, \`en\`, \`en,de,fr\`, \`en-EN\`, \`fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7\`' 
--H 'Authorization: Bearer ' 
--H 'X-Total-Count: true' 
--H 'X-Version: v2'
+curl -i -X GET
+  'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments?assignmentType=PRODUCT&ref.localizedName=Twix&ref.id=5c3348bda9812100098ffaa3&showUnpublished=true&withSubcategories=true&segmentsIds=segmentId1%2CsegmentId2&pageNumber=1&pageSize=60&sort={fieldName}%3AASC%2C{fieldName2}%3ADESC&hideUnpublishedProducts=false'
+  -H 'Accept-Language: \`\*\`, \`en\`, \`en,de,fr\`, \`en-EN\`, \`fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7\`'
+  -H 'Authorization: Bearer '
+  -H 'X-Total-Count: true'
+  -H 'X-Version: v2'
 ```
 
 Specify the segment id in the request.

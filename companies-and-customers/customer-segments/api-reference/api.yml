@@ -1582,7 +1582,7 @@ components:
       in: path
       required: true
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: Always write the tenant name in lowercase.
       schema:
