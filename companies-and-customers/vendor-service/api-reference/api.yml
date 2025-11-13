@@ -28,6 +28,7 @@ paths:
          ### Required scopes
         * `vendor.vendor_manage`
       security:
+        - {}
         - OAuth2:
             - vendor.vendor_manage
       requestBody:
@@ -90,6 +91,7 @@ paths:
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
       security:
+        - {}
         - OAuth2:
             - vendor.vendor_read
             - vendor.vendor_manage
@@ -136,6 +138,7 @@ paths:
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
       security:
+        - {}
         - OAuth2:
             - vendor.vendor_read
             - vendor.vendor_manage
@@ -201,6 +204,7 @@ paths:
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
       security:
+        - {}
         - OAuth2:
             - vendor.vendor_read
             - vendor.vendor_manage
@@ -230,6 +234,7 @@ paths:
          ### Required scopes
         * `vendor.vendor_manage`
       security:
+        - {}
         - OAuth2:
             - vendor.vendor_manage
       requestBody:
@@ -297,6 +302,7 @@ paths:
          ### Required scopes
         * `vendor.vendor_manage`
       security:
+        - {}
         - OAuth2:
             - vendor.vendor_manage
       responses:
@@ -328,6 +334,7 @@ paths:
          ### Required scopes
         * `vendor.vendor_manage`
       security:
+        - {}
         - OAuth2:
             - vendor.vendor_manage
       requestBody:
@@ -393,6 +400,7 @@ paths:
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
       security:
+        - {}
         - OAuth2:
             - vendor.vendor_read
             - vendor.vendor_manage
@@ -443,6 +451,7 @@ paths:
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
       security:
+        - {}
         - OAuth2:
             - vendor.vendor_read
             - vendor.vendor_manage
@@ -472,6 +481,7 @@ paths:
          ### Required scopes
         * `vendor.vendor_manage`
       security:
+        - {}
         - OAuth2:
             - vendor.vendor_manage
       requestBody:
@@ -542,6 +552,7 @@ paths:
          ### Required scopes
         * `vendor.vendor_manage`
       security:
+        - {}
         - OAuth2:
             - vendor.vendor_manage
       responses:
