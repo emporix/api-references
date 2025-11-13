@@ -52,7 +52,7 @@ Possible status transitions:
 * `IN_PROGRESS` -> `DECLINED_BY_MERCHANT`
 * `OPEN` -> `DECLINED`
 * `OPEN` -> `ACCEPTED`
-* `OPEN `-> `IN_PROGRESS `
+* `OPEN`-> `IN_PROGRESS`
 
 {% hint %}
   When an employee creates a quote, its status is `CREATING`.
