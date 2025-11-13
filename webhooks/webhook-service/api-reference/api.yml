@@ -558,7 +558,7 @@ components:
           description: Indicates which provider should be used.
     EmptyConfiguration:
       type: object
-      description: SVIX_SHARED - empty config
+      description: SVIX_SHARED config
     SvixConfig:
       type: object
       properties:
@@ -697,7 +697,7 @@ components:
                     description: List of key-value pairs which can decorate outgoing HTTP POST request as headers.
     ConfigCode:
       type: string
-      description: Unique identifier of webhook configuration
+      description: Unique identifier of webhook configuration.
     Provider:
       type: string
       enum:
@@ -1134,7 +1134,7 @@ components:
       schema:
         type: string
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: The tenant name should always be provided in lowercase.
     path_code:
