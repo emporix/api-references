@@ -1066,8 +1066,8 @@ paths:
                       metadata:
                         mixins:
                           productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
-                        createdAt: '2025-04-17T13:00:00.000Z'
-                        modifiedAt: '2025-05-14T13:00:00.000Z'
+                        createdAt: '2016-04-17T13:00:00.000Z'
+                        modifiedAt: '2016-05-14T13:00:00.000Z'
                         version: 3
                     - id: '456'
                       name:
@@ -1076,8 +1076,8 @@ paths:
                       media:
                         - media_id_3
                       metadata:
-                        createdAt: '2025-04-17T13:00:00.000Z'
-                        modifiedAt: '2025-04-17T13:00:00.000Z'
+                        createdAt: '2016-04-17T13:00:00.000Z'
+                        modifiedAt: '2016-04-17T13:00:00.000Z'
                         version: 1
                 Response with expanded references:
                   value:
@@ -1099,8 +1099,8 @@ paths:
                               published: true
                               metadata:
                                 version: 1
-                                createdAt: '2025-10-26T21:50:39.097Z'
-                                modifiedAt: '2025-10-26T21:50:39.097Z'
+                                createdAt: '2016-10-26T21:50:39.097Z'
+                                modifiedAt: '2016-10-26T21:50:39.097Z'
                               expandStatus: SUCCESS
                             customers_array:
                               - emporixReferenceType: CUSTOMER
@@ -1116,7 +1116,7 @@ paths:
                                 contactEmail: john.doe@email.com
                                 active: true
                                 onHold: false
-                                metadataCreatedAt: '2025-10-26T21:49:41.440Z'
+                                metadataCreatedAt: '2016-10-26T21:49:41.440Z'
                                 businessModel: B2C
                                 expandStatus: SUCCESS
                               - emporixReferenceType: CUSTOMER
@@ -1131,8 +1131,8 @@ paths:
                         - media_id_2
                       metadata:
                         version: 2
-                        createdAt: '2025-10-26T21:50:51.702Z'
-                        modifiedAt: '2025-10-26T21:51:16.434Z'
+                        createdAt: '2016-10-26T21:50:51.702Z'
+                        modifiedAt: '2016-10-26T21:51:16.434Z'
                         mixins:
                           customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata2/tenant/customAttributes_v2.json'
         '400':
@@ -1196,8 +1196,8 @@ paths:
                     metadata:
                       mixins:
                         productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
-                      createdAt: '2025-04-17T13:00:00.000Z'
-                      modifiedAt: '2025-05-14T13:00:00.000Z'
+                      createdAt: '2016-04-17T13:00:00.000Z'
+                      modifiedAt: '2016-05-14T13:00:00.000Z'
                       version: 3
                 Response with expanded references:
                   value:
@@ -1219,8 +1219,8 @@ paths:
                             published: true
                             metadata:
                               version: 1
-                              createdAt: '2025-10-26T21:50:39.097Z'
-                              modifiedAt: '2025-10-26T21:50:39.097Z'
+                              createdAt: '2016-10-26T21:50:39.097Z'
+                              modifiedAt: '2016-10-26T21:50:39.097Z'
                             expandStatus: SUCCESS
                           customers_array:
                             - emporixReferenceType: CUSTOMER
@@ -1236,7 +1236,7 @@ paths:
                               contactEmail: john.doe@email.com
                               active: true
                               onHold: false
-                              metadataCreatedAt: '2025-10-26T21:49:41.440Z'
+                              metadataCreatedAt: '2016-10-26T21:49:41.440Z'
                               businessModel: B2C
                               expandStatus: SUCCESS
                             - emporixReferenceType: CUSTOMER
@@ -1251,8 +1251,8 @@ paths:
                       - media_id_2
                     metadata:
                       version: 2
-                      createdAt: '2025-10-26T21:50:51.702Z'
-                      modifiedAt: '2025-10-26T21:51:16.434Z'
+                      createdAt: '2016-10-26T21:50:51.702Z'
+                      modifiedAt: '2016-10-26T21:51:16.434Z'
                       mixins:
                         customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata2/tenant/customAttributes_v2.json'
         '401':
@@ -1452,8 +1452,8 @@ paths:
                       metadata:
                         mixins:
                           productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
-                        createdAt: '2025-04-17T13:00:00.000Z'
-                        modifiedAt: '2025-05-14T13:00:00.000Z'
+                        createdAt: '2016-04-17T13:00:00.000Z'
+                        modifiedAt: '2016-05-14T13:00:00.000Z'
                         version: 3
                 Response with expanded references:
                   value:
@@ -1475,8 +1475,8 @@ paths:
                               published: true
                               metadata:
                                 version: 1
-                                createdAt: '2025-10-26T21:50:39.097Z'
-                                modifiedAt: '2025-10-26T21:50:39.097Z'
+                                createdAt: '2016-10-26T21:50:39.097Z'
+                                modifiedAt: '2016-10-26T21:50:39.097Z'
                               expandStatus: SUCCESS
                             customers_array:
                               - emporixReferenceType: CUSTOMER
@@ -1492,7 +1492,7 @@ paths:
                                 contactEmail: john.doe@email.com
                                 active: true
                                 onHold: false
-                                metadataCreatedAt: '2025-10-26T21:49:41.440Z'
+                                metadataCreatedAt: '2016-10-26T21:49:41.440Z'
                                 businessModel: B2C
                                 expandStatus: SUCCESS
                               - emporixReferenceType: CUSTOMER
@@ -1507,8 +1507,8 @@ paths:
                         - media_id_2
                       metadata:
                         version: 2
-                        createdAt: '2025-10-26T21:50:51.702Z'
-                        modifiedAt: '2025-10-26T21:51:16.434Z'
+                        createdAt: '2016-10-26T21:50:51.702Z'
+                        modifiedAt: '2016-10-26T21:51:16.434Z'
                         mixins:
                           customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata2/tenant/customAttributes_v2.json'
         '401':
