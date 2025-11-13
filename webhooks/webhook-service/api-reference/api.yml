@@ -703,24 +703,24 @@ components:
         - SVIX
         - HTTP
     WebhookConfigUpdate:
-      type: object
       allOf:
         - $ref: '#/components/schemas/AbstractWebhookConfig'
-      required:
-        - provider
-      properties:
-        configuration:
-          $ref: '#/components/schemas/Configuration'
+        - type: object
+          required:
+            - provider
+          properties:
+            configuration:
+              $ref: '#/components/schemas/Configuration'
     WebhookConfigCreation:
-      type: object
       allOf:
         - $ref: '#/components/schemas/WebhookConfigUpdate'
-      required:
-        - code
-      properties:
-        code:
-          allOf:
-            - $ref: '#/components/schemas/ConfigCode'
+        - type: object
+          required:
+            - code
+          properties:
+            code:
+              allOf:
+                - $ref: '#/components/schemas/ConfigCode'
     WebhookEvent:
       title: Webhook event
       type: object
@@ -917,16 +917,14 @@ components:
       content:
         application/json:
           schema:
-            type: object
             allOf:
               - $ref: '#/components/schemas/AbstractWebhookConfig'
-            properties:
-              code:
-                allOf:
-                  - $ref: '#/components/schemas/ConfigCode'
-              configuration:
-                allOf:
-                  - $ref: '#/components/schemas/ConfigurationGet'
+              - type: object
+                properties:
+                  code:
+                    $ref: '#/components/schemas/ConfigCode'
+                  configuration:
+                    $ref: '#/components/schemas/ConfigurationGet'
           examples:
             WebhookConfigExample:
               $ref: '#/components/examples/WebhookConfigExample'
@@ -939,13 +937,12 @@ components:
             items:
               allOf:
                 - $ref: '#/components/schemas/AbstractWebhookConfig'
-              properties:
-                code:
-                  allOf:
-                    - $ref: '#/components/schemas/ConfigCode'
-                configuration:
-                  allOf:
-                    - $ref: '#/components/schemas/ConfigurationGet'
+                - type: object
+                  properties:
+                    code:
+                      $ref: '#/components/schemas/ConfigCode'
+                    configuration:
+                      $ref: '#/components/schemas/ConfigurationGet'
           examples:
             WebhookConfigsExample:
               $ref: '#/components/examples/WebhookConfigsExample'
