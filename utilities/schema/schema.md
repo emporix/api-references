@@ -1,7 +1,6 @@
 ---
 seo:
   title: Schema Service Tutorials
-  description: Schema Management
 icon: graduation-cap
 layout:
   width: wide
@@ -395,12 +394,47 @@ See the example JSON file that defines fields of different types:
 ### Create a reference
 
 To use the schema in Emporix Commerce Engine, send a request to the [Creating a reference](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/reference#post-schema-tenant-references) endpoint. This action creates a reference to your schema so that you use the extended type.
-
-Result: The schema reference is used to create or edit product objects.
+The schema reference is used to create or edit product objects.
 
 {% hint style="warning" %}
 Note that the fields of types that are not supported by default are not displayed in the Management Dashboard. You can edit them by API requests.
 {% endhint %}
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+CURL request example:
+
+```bash
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/schema/{tenant}/references' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Content-Type: multipart/form-data' 
+  --form 'file=[object Object]' 
+  --form 'body=[object Object]'
+```
+
+JSON example:
+
+```json
+{
+  "file": {
+    "externalValue": "https://res.cloudinary.com/saas-ag/raw/upload/schemata2/saastest2/653a30c0951b2b0665884f89_v1.json"
+  },
+  "body": {
+    "name": {
+      "en": "Product Custom Attributes"
+    },
+    "types": [
+      "PRODUCT"
+    ]
+  }
+}
+```
 
 ### Create a product
 
