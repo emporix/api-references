@@ -21,7 +21,7 @@ paths:
           content:
             application/json:
               example:
-                - name: testSchema
+                - name: Schema
                   schemaType: orderNoSequence
                   active: true
                   preText: C-__year__-__month__-
@@ -71,8 +71,11 @@ paths:
           description: ''
           content:
             application/json:
+              example:
+                id: 6915e2eb3b4c2e6c7c80711b
               schema:
                 type: string
+                description: ID of the created sequence schema.
         '400':
           $ref: '#/components/responses/trait_yaasAware_400'
         '401':
@@ -92,7 +95,7 @@ paths:
         content:
           application/json:
             example:
-              name: testSchema
+              name: Schema
               schemaType: orderNoSequence
               preText: C-__year__-__month__-
               postText: '-D'
@@ -133,7 +136,7 @@ paths:
           content:
             application/json:
               example:
-                name: testSchema
+                name: Schema
                 schemaType: orderNoSequence
                 active: true
                 preText: C-__year__-__month__-
@@ -222,7 +225,7 @@ paths:
           content:
             application/json:
               example:
-                - name: testSchema
+                - name: Schema
                   schemaType: orderNoSequence
                   active: true
                   preText: C-__year__-__month__-
@@ -312,8 +315,8 @@ paths:
           $ref: '#/components/responses/trait_yaasAware_404'
       summary: Creating a nextId for schema type
       description: |-
-        Creates and returns the nextId according to the specified sequence.
-        If you specify the `sequenceKey` in request body, the nextId number is generated for this sequence, otherwise default pool is used.
+        Creates and returns the `nextId` according to the specified sequence.
+        If you specify the `sequenceKey` in request body, the `nextId` number is generated for this sequence, otherwise default pool is used.
 
 
         ***
@@ -325,9 +328,9 @@ paths:
         content:
           application/json:
             example:
-              sequenceKey: 2016-05
+              sequenceKey: 2024-05
               placeholders:
-                __year__: '2016'
+                __year__: '2024'
                 __month__: '05'
             schema:
               $ref: '#/components/schemas/NextIdCommandRequest'
@@ -360,10 +363,10 @@ paths:
           content:
             application/json:
               example:
-                testSchema:
+                Schema:
                   ids:
-                    - C-2016-05-0000000045-D
-                    - C-2016-05-0000000045-D
+                    - C-2024-05-0000000045-D
+                    - C-2024-05-0000000045-D
               schema:
                 $ref: '#/components/schemas/SchemaBatchNextIdResponse'
         '400':
@@ -374,8 +377,8 @@ paths:
           $ref: '#/components/responses/trait_yaasAware_403'
       summary: Creating nextIds for schema types
       description: |-
-        Creates and returns the nextId for the specified sequence schemas.
-        If you specify the `sequenceKey` in request body, the nextId number is generated for this sequence, otherwise default pool is used.
+        Creates and returns multiple `nextIds` for the specified sequence schemas.
+        If you specify the `sequenceKey` in request body, the `nextIds` numbers are generated for this sequence, otherwise default pool is used.
         ***
 
          ### Required scopes
@@ -387,12 +390,12 @@ paths:
         content:
           application/json:
             example:
-              testSchema:
-                sequenceKey: 2016-05
+              Schema:
+                sequenceKey: 2024-05
                 placeholders:
-                  __year__: '2016'
+                  __year__: '2024'
                   __month__: '05'
-              testSchema2:
+              Schema2:
                 numberOfIds: 2
                 placeholders:
                   '--prefix--': C-

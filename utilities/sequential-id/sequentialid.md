@@ -36,10 +36,10 @@ To create a schema for sequential IDs creation, send the request to the [Creatin
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/sequential-id/{tenant}/schemas' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/sequential-id/{tenant}/schemas' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "name": "testSchema",
     "schemaType": "orderNoSequence",
@@ -77,8 +77,8 @@ To get the created schema details, make a call to the [Retrieving a schema](http
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET \
-  'https://api.emporix.io/sequential-id/{tenant}/schemas/{schemaId}' \
+curl -i -X GET 
+  'https://api.emporix.io/sequential-id/{tenant}/schemas/{schemaId}' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
@@ -95,8 +95,8 @@ Activate the schema to apply it in the system so that the order numbers follow t
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/sequential-id/{tenant}/schemas/{schemaId}/setActive' \
+curl -i -X POST 
+  'https://api.emporix.io/sequential-id/{tenant}/schemas/{schemaId}/setActive' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
@@ -113,10 +113,10 @@ Now, you can generate the order IDs that follow the new schema. To create a sequ
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-'https://api.emporix.io/sequential-id/{tenant}/schemas/types/{schemaType}/nextId?siteCode=string' \
--H 'Authorization: Bearer ' \
--H 'Content-Type: application/json' \
+curl -i -X POST 
+'https://api.emporix.io/sequential-id/{tenant}/schemas/types/{schemaType}/nextId?siteCode=string' 
+-H 'Authorization: Bearer ' 
+-H 'Content-Type: application/json' 
 -d '{
 "sequenceKey": "2016-05",
 "placeholders": {
