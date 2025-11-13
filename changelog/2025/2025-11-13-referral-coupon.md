@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2025-11-06: Referral Coupon Service - removal of deprecated endpoints
+# 2025-11-13: Referral Coupon Service - removal of deprecated endpoints
 
 ## Overview
 
