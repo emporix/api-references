@@ -255,7 +255,13 @@ The job entity contains information about the request and response from the agen
 
 ## How to export and import AI agents
 
-Exporting lets you back up or migrate enabled agents (together with their dependent tools and MCP servers). Importing restores those exports in another tenant or environment.
+Exporting AI agents lets you migrate your agents configuration together with their dependent tools and MCP servers. 
+
+You can use the export and import to:
+* Back up agents for disaster recovery
+* Migrate agents from development to production
+* Share agents across different tenants
+* Clone agents for testing
 
 {% stepper %}
 {% step %}
@@ -300,7 +306,18 @@ curl -L \
   }'
   ```
   
-  The response summarizes what was imported and returns a `jobId`. If the imported entities rely on tools or MCP servers that already exist, the service resolves them automatically; otherwise, new instances are created in the disabled state so that you can review and enable them after import.
+  The response summarizes what was imported and returns a `jobId`. 
+
+  * If imported tools or MCP servers already exist in the target tenant, they're reused.
+  * If they don't exist, new instances are created in a **disabled state** for your review.
+  * Imported agents are also disabled by default as a safety measure.
+
 {% endstep %}
 {% endstepper %}
+
+{% hint style="info" %}
+  
+After importing the agent, review the entities in the response summary and check if any required API tokens or credentials need to be configured before enabling the agent.
+
+{% endhint %}
 
