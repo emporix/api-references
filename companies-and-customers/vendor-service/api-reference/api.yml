@@ -21,8 +21,7 @@ paths:
       summary: Creating a vendor
       description: |-
         Creates a new vendor for the tenant. A vendor represents a supplier or a business partner in the system.
-        
-
+    
         ***
 
          ### Required scopes
@@ -1311,7 +1310,3 @@ components:
           scopes:
             vendor.vendor_read: Needed to read vendors and locations
             vendor.vendor_manage: Needed to manage vendors and locations
-security:
- - OAuth2:
-   - vendor.vendor_read
-   - vendor.vendor_manage
