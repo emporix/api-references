@@ -554,17 +554,18 @@ components:
           type: boolean
           description: Indicates whether a given configuration is active. Only one configuration can be active.
         provider:
-          allOf:
-            - $ref: '#/components/schemas/Provider'
+          $ref: '#/components/schemas/Provider'
           description: Indicates which provider should be used.
     EmptyConfiguration:
       type: object
+      description: SVIX_SHARED - empty config
     SvixConfig:
       type: object
       properties:
         apiKey:
           type: string
           description: 'API Key for connecting to SVIX. This API Key will be then used in `Authorization` header while sending requests to SVIX, so the value should include `Bearer` prefix if necessary.'
+      description: SVIX config
     EventConfiguration:
       type: object
       properties:
@@ -609,6 +610,7 @@ components:
           description: List of key-value pairs which can decorate outgoing HTTP POST request as headers. The size limit for this list is `10`.
         eventsConfiguration:
           $ref: '#/components/schemas/EventConfiguration'
+      description: HTTP config
     Configuration:
       type: object
       oneOf:
