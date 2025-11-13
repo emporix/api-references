@@ -328,9 +328,9 @@ paths:
         content:
           application/json:
             example:
-              sequenceKey: 2024-05
+              sequenceKey: 2025-05
               placeholders:
-                __year__: '2024'
+                __year__: '2025'
                 __month__: '05'
             schema:
               $ref: '#/components/schemas/NextIdCommandRequest'
@@ -365,8 +365,8 @@ paths:
               example:
                 Schema:
                   ids:
-                    - C-2024-05-0000000045-D
-                    - C-2024-05-0000000045-D
+                    - C-2025-05-0000000045-D
+                    - C-2025-05-0000000045-D
               schema:
                 $ref: '#/components/schemas/SchemaBatchNextIdResponse'
         '400':
@@ -391,9 +391,9 @@ paths:
           application/json:
             example:
               Schema:
-                sequenceKey: 2024-05
+                sequenceKey: 2025-05
                 placeholders:
-                  __year__: '2024'
+                  __year__: '2025'
                   __month__: '05'
               Schema2:
                 numberOfIds: 2

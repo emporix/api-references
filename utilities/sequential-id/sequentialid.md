@@ -118,9 +118,9 @@ curl -i -X POST
 -H 'Authorization: Bearer ' 
 -H 'Content-Type: application/json' 
 -d '{
-"sequenceKey": "2016-05",
+"sequenceKey": "2025-05",
 "placeholders": {
-"__year__": "2016",
+"__year__": "2025",
 "__month__": "05"
 }
 }'
