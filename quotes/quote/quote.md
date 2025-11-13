@@ -52,7 +52,7 @@ Possible status transitions:
 * `IN_PROGRESS` -> `DECLINED_BY_MERCHANT`
 * `OPEN` -> `DECLINED`
 * `OPEN` -> `ACCEPTED`
-* `OPEN` -> `IN_PROGRESS`
+* `OPEN `-> `IN_PROGRESS `
 
 {% hint %}
   When an employee creates a quote, its status is `CREATING`.
@@ -221,7 +221,7 @@ curl -i -X PATCH
 {% step %}
 ### Update available quote status change reasons
 
-There are four default reasons that your customers and employees can select for the `DECLINED` or `CHANGED` quote statuses, as mentioned in [Quote decision reasons](#quote-decision-reasons).
+There are four default reasons that your customers and employees can select for the `DECLINED` or `CHANGED` quote statuses, as mentioned in [Quote Reasons](../quote/quote.md#quote-reasons).
 
 You can create new quote status change reasons, by sending a request to the [Creating a reason for changing the quote status](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-reason#post-quote-tenant-quote-reasons) endpoint.
 
@@ -295,7 +295,7 @@ The initial status of a quote request created by a customer is always set to `AW
 {% endhint %}
 
 {% hint style="info" %}
-When a quote is created from a cart, the cart `status` is automatically changed to `CLOSED` and the `quoteId` is set on that cart. This ensures proper traceability between carts and their corresponding quotes.
+When a quote is created from a cart, the cart is automatically closed and the `quoteId` field is set on that cart. This ensures traceability between carts and quotes.
 {% endhint %}
 
 ### Creating a quote on behalf of a customer
