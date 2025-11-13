@@ -27,9 +27,6 @@ paths:
 
          ### Required scopes
         * `vendor.vendor_manage`
-      security:
-        - OAuth2:
-            - vendor.vendor_manage
       requestBody:
         content:
           application/json:
@@ -89,10 +86,6 @@ paths:
          ### Required scopes
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
-      security:
-        - OAuth2:
-            - vendor.vendor_read
-            - vendor.vendor_manage
       parameters:
         - $ref: '#/components/parameters/trait_paged_pageNumber'
         - $ref: '#/components/parameters/trait_paged_pageSize'
@@ -135,10 +128,6 @@ paths:
          ### Required scopes
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
-      security:
-        - OAuth2:
-            - vendor.vendor_read
-            - vendor.vendor_manage
       parameters:
         - $ref: '#/components/parameters/trait_paged_pageNumber'
         - $ref: '#/components/parameters/trait_paged_pageSize'
@@ -200,10 +189,6 @@ paths:
          ### Required scopes
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
-      security:
-        - OAuth2:
-            - vendor.vendor_read
-            - vendor.vendor_manage
       responses:
         '200':
           $ref: '#/components/responses/GetVendor'
@@ -229,9 +214,6 @@ paths:
 
          ### Required scopes
         * `vendor.vendor_manage`
-      security:
-        - OAuth2:
-            - vendor.vendor_manage
       requestBody:
         content:
           application/json:
@@ -296,9 +278,6 @@ paths:
 
          ### Required scopes
         * `vendor.vendor_manage`
-      security:
-        - OAuth2:
-            - vendor.vendor_manage
       responses:
         '204':
           description: The vendor has been deleted successfully.
@@ -327,9 +306,6 @@ paths:
 
          ### Required scopes
         * `vendor.vendor_manage`
-      security:
-        - OAuth2:
-            - vendor.vendor_manage
       requestBody:
         content:
           application/json:
@@ -392,10 +368,6 @@ paths:
          ### Required scopes
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
-      security:
-        - OAuth2:
-            - vendor.vendor_read
-            - vendor.vendor_manage
       parameters:
         - $ref: '#/components/parameters/trait_paged_pageNumber'
         - $ref: '#/components/parameters/trait_paged_pageSize'
@@ -442,10 +414,6 @@ paths:
          ### Required scopes
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
-      security:
-        - OAuth2:
-            - vendor.vendor_read
-            - vendor.vendor_manage
       responses:
         '200':
           $ref: '#/components/responses/GetLocation'
@@ -471,9 +439,6 @@ paths:
 
          ### Required scopes
         * `vendor.vendor_manage`
-      security:
-        - OAuth2:
-            - vendor.vendor_manage
       requestBody:
         content:
           application/json:
@@ -541,9 +506,6 @@ paths:
 
          ### Required scopes
         * `vendor.vendor_manage`
-      security:
-        - OAuth2:
-            - vendor.vendor_manage
       responses:
         '204':
           description: The location has been deleted successfully.
@@ -1311,3 +1273,7 @@ components:
           scopes:
             vendor.vendor_read: Needed to read vendors and locations
             vendor.vendor_manage: Needed to manage vendors and locations
+security:
+  - OAuth2:
+      - vendor.vendor_read
+      - vendor.vendor_manage
