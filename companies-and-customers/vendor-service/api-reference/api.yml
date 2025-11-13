@@ -27,7 +27,7 @@ paths:
          ### Required scopes
         * `vendor.vendor_manage`
       security:
-        - OAuth2:
+        - OAuth2_Manage:
             - vendor.vendor_manage
       requestBody:
         content:
@@ -89,8 +89,9 @@ paths:
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
       security:
-        - OAuth2:
+        - OAuth2_Read: 
             - vendor.vendor_read
+        - OAuth2_Manage:
             - vendor.vendor_manage
       parameters:
         - $ref: '#/components/parameters/trait_paged_pageNumber'
@@ -135,8 +136,9 @@ paths:
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
       security:
-        - OAuth2:
+        - OAuth2_Read: 
             - vendor.vendor_read
+        - OAuth2_Manage:
             - vendor.vendor_manage
       parameters:
         - $ref: '#/components/parameters/trait_paged_pageNumber'
@@ -200,8 +202,9 @@ paths:
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
       security:
-        - OAuth2:
+        - OAuth2_Read: 
             - vendor.vendor_read
+        - OAuth2_Manage:
             - vendor.vendor_manage
       responses:
         '200':
@@ -229,7 +232,7 @@ paths:
          ### Required scopes
         * `vendor.vendor_manage`
       security:
-        - OAuth2:
+        - OAuth2_Manage:
             - vendor.vendor_manage
       requestBody:
         content:
@@ -296,7 +299,7 @@ paths:
          ### Required scopes
         * `vendor.vendor_manage`
       security:
-        - OAuth2:
+        - OAuth2_Manage:
             - vendor.vendor_manage
       responses:
         '204':
@@ -327,7 +330,7 @@ paths:
          ### Required scopes
         * `vendor.vendor_manage`
       security:
-        - OAuth2:
+        - OAuth2_Manage:
             - vendor.vendor_manage
       requestBody:
         content:
@@ -392,8 +395,9 @@ paths:
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
       security:
-        - OAuth2:
+        - OAuth2_Read: 
             - vendor.vendor_read
+        - OAuth2_Manage:
             - vendor.vendor_manage
       parameters:
         - $ref: '#/components/parameters/trait_paged_pageNumber'
@@ -442,8 +446,9 @@ paths:
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
       security:
-        - OAuth2:
+        - OAuth2_Read: 
             - vendor.vendor_read
+        - OAuth2_Manage:
             - vendor.vendor_manage
       responses:
         '200':
@@ -471,7 +476,7 @@ paths:
          ### Required scopes
         * `vendor.vendor_manage`
       security:
-        - OAuth2:
+        - OAuth2_Manage:
             - vendor.vendor_manage
       requestBody:
         content:
@@ -541,7 +546,7 @@ paths:
          ### Required scopes
         * `vendor.vendor_manage`
       security:
-        - OAuth2:
+        - OAuth2_Manage:
             - vendor.vendor_manage
       responses:
         '204':
@@ -1302,16 +1307,18 @@ components:
       description: |
         The country code of the contact details of the location.
   securitySchemes:
-    OAuth2:
+    OAuth2_Read:
       type: oauth2
       flows:
         clientCredentials:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
             vendor.vendor_read: Needed to read vendors and locations
+
+    OAuth2_Manage:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://api.emporix.io/oauth/token'
+          scopes:
             vendor.vendor_manage: Needed to manage vendors and locations
-security:
- - OAuth2:
-   - vendor.vendor_read
- - OAuth2:
-   - vendor.vendor_manage
