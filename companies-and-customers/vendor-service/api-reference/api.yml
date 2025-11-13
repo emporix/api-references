@@ -1310,3 +1310,8 @@ components:
           scopes:
             vendor.vendor_read: Needed to read vendors and locations
             vendor.vendor_manage: Needed to manage vendors and locations
+security:
+ - OAuth2:
+   - vendor.vendor_read
+ - OAuth2:
+   - vendor.vendor_manage
