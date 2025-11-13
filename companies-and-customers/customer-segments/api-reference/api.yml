@@ -1093,8 +1093,8 @@ paths:
       description: |
         
         Removes multiple customer segments item assignments.
-        ### The IDs of items should be defined in the request body as an array of strings.
-        #### Example: `["firstItemId", "secondItemId", "thirdItemId"]`
+        * The IDs of items should be defined in the request body as an array of strings.
+        Example: `["firstItemId", "secondItemId", "thirdItemId"]`
         ### Required scopes
         *  `customersegment.segment_manage` - required to delete item assignments
       responses:
@@ -1582,7 +1582,7 @@ components:
       in: path
       required: true
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: Always write the tenant name in lowercase.
       schema:
