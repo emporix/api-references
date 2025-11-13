@@ -97,7 +97,7 @@ curl -L
   }'
 ```
 
- Request result is the new schema ID - "id": "6915ec3c047dc4456d86a26f"
+ Request result is the new schema ID - "id": "6915ec3c047dc4456d86a26f".
 
 ### Retrieve a schema
 
@@ -190,8 +190,8 @@ In the response, you can see the URL link to cloudinary repository, where the sc
   ],
   "metadata": {
     "version": 1,
-    "createdAt": "2016-11-13T14:33:32.059Z",
-    "modifiedAt": "2016-11-13T14:33:32.059Z",
+    "createdAt": "2025-11-13T14:33:32.059Z",
+    "modifiedAt": "2025-11-13T14:33:32.059Z",
     "url": "https://res.cloudinary.com/saas-ag/raw/upload/schemata2/featuredemo/6915ec3c047dc4456d86a26f_v1.json"
   }
 }
