@@ -253,3 +253,46 @@ curl -X 'GET' \
 
 The job entity contains information about the request and response from the agent.
 
+## How to export and import AI agents
+
+Exporting lets you back up or migrate enabled agents (together with their dependent tools and MCP servers). Importing restores those exports in another tenant or environment.
+
+{% stepper %}
+{% step %}
+### Export agents
+Collect the `agentIds` you want to export, then call the [Exporting agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/export) endpoint.
+
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/export' \
+  --header 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "agentIds": [
+      "complaint-agent-id"
+    ]
+  }'The response contains:
+
+* `data`: a Base64-encoded JSON payload with the exported agents, tools, and MCP servers.
+* `checksum`: a hash of the decoded `data` string.
+* `jobId`: the export job identifier (you can poll the [Retrieving agent job by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/jobs) endpoint if you need job status updates).
+
+Store both `data` and `checksum`. You will need them when importing.
+{% endstep %}
+
+{% step %}
+### Import agents
+Use the payload obtained during export and call the [Importing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/import) endpoint. Import requires the `ai.agent_manage` scope.
+
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/import' \
+  --header 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "data": "<BASE64_PAYLOAD_FROM_EXPORT>",
+    "checksum": "<CHECKSUM_FROM_EXPORT>"
+  }'The response summarizes what was imported and returns a `jobId`. If the imported entities rely on tools or MCP servers that already exist, the service resolves them automatically; otherwise, new instances are created in the disabled state so that you can review and enable them after import.
+{% endstep %}
+{% endstepper %}
+
