@@ -22,10 +22,6 @@ paths:
       description: |-
         Creates a new vendor for the tenant. A vendor represents a supplier or a business partner in the system.
     
-        ***
-
-         ### Required scopes
-        * `vendor.vendor_manage`
       security:
         - OAuth2_Manage:
             - vendor.vendor_manage
@@ -83,15 +79,10 @@ paths:
       description: |-
         Retrieves all vendors. You can filter, sort and paginate the results with query parameters.
 
-        ***
 
-         ### Required scopes
-        * `vendor.vendor_read`
-        * `vendor.vendor_manage`
       security:
-        - OAuth2_Read: 
+        - OAuth2_ReadOrManage:
             - vendor.vendor_read
-        - OAuth2_Manage:
             - vendor.vendor_manage
       parameters:
         - $ref: '#/components/parameters/trait_paged_pageNumber'
@@ -130,16 +121,10 @@ paths:
       description: |-
         Retrieves all vendors that match the provided criteria.
 
-        ***
-
-         ### Required scopes
-        * `vendor.vendor_read`
-        * `vendor.vendor_manage`
       security:
-        - OAuth2_Read: 
-            - vendor.vendor_read
-        - OAuth2_Manage:
-            - vendor.vendor_manage
+      - OAuth2_ReadOrManage:
+          - vendor.vendor_read
+          - vendor.vendor_manage
       parameters:
         - $ref: '#/components/parameters/trait_paged_pageNumber'
         - $ref: '#/components/parameters/trait_paged_pageSize'
@@ -195,16 +180,9 @@ paths:
         - $ref: '#/components/parameters/trait_fields'
       description: |-
         Retrieves a vendor by the specified unique identifier.
-
-        ***
-
-         ### Required scopes
-        * `vendor.vendor_read`
-        * `vendor.vendor_manage`
       security:
-        - OAuth2_Read: 
+        - OAuth2_ReadOrManage:
             - vendor.vendor_read
-        - OAuth2_Manage:
             - vendor.vendor_manage
       responses:
         '200':
@@ -227,10 +205,6 @@ paths:
       description: |-
         Updates or creates a vendor with a given vendor ID. You can omit the `metadata.version`, but then optimistic locking is not enabled.
 
-        ***
-
-         ### Required scopes
-        * `vendor.vendor_manage`
       security:
         - OAuth2_Manage:
             - vendor.vendor_manage
@@ -294,10 +268,6 @@ paths:
       description: |-
         Deletes a vendor.
 
-        ***
-
-         ### Required scopes
-        * `vendor.vendor_manage`
       security:
         - OAuth2_Manage:
             - vendor.vendor_manage
@@ -325,10 +295,6 @@ paths:
       description: |-
         Creates a new location for the tenant. A location represents address information for a vendor.
 
-        ***
-
-         ### Required scopes
-        * `vendor.vendor_manage`
       security:
         - OAuth2_Manage:
             - vendor.vendor_manage
@@ -389,16 +355,10 @@ paths:
       description: |-
         Retrieves all locations assigned to the tenant. You can filter, sort and paginate the results with query parameters.
 
-        ***
-
-         ### Required scopes
-        * `vendor.vendor_read`
-        * `vendor.vendor_manage`
       security:
-        - OAuth2_Read: 
-            - vendor.vendor_read
-        - OAuth2_Manage:
-            - vendor.vendor_manage
+      - OAuth2_ReadOrManage:
+          - vendor.vendor_read
+          - vendor.vendor_manage
       parameters:
         - $ref: '#/components/parameters/trait_paged_pageNumber'
         - $ref: '#/components/parameters/trait_paged_pageSize'
@@ -440,15 +400,9 @@ paths:
       description: |-
         Retrieves a location by the specified unique identifier.
 
-        ***
-
-         ### Required scopes
-        * `vendor.vendor_read`
-        * `vendor.vendor_manage`
       security:
-        - OAuth2_Read: 
+        - OAuth2_ReadOrManage:
             - vendor.vendor_read
-        - OAuth2_Manage:
             - vendor.vendor_manage
       responses:
         '200':
@@ -471,10 +425,6 @@ paths:
       description: |-
         Updates or creates a location with a given location ID. You can omit the `metadata.version`, but then optimistic locking is not enabled.
 
-        ***
-
-         ### Required scopes
-        * `vendor.vendor_manage`
       security:
         - OAuth2_Manage:
             - vendor.vendor_manage
@@ -540,11 +490,6 @@ paths:
       summary: Delete a location
       description: |-
         Deletes a location.
-
-        ***
-
-         ### Required scopes
-        * `vendor.vendor_manage`
       security:
         - OAuth2_Manage:
             - vendor.vendor_manage
@@ -1321,4 +1266,13 @@ components:
         clientCredentials:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
+            vendor.vendor_manage: Needed to manage vendors and locations
+
+    OAuth2_ReadOrManage:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://api.emporix.io/oauth/token'
+          scopes:
+            vendor.vendor_read: Needed to read vendors and locations
             vendor.vendor_manage: Needed to manage vendors and locations
