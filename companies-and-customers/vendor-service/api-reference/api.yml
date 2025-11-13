@@ -27,7 +27,6 @@ paths:
 
          ### Required scopes
         * `vendor.vendor_manage`
-      security: []
       security:
         - OAuth2:
             - vendor.vendor_manage
@@ -90,7 +89,6 @@ paths:
          ### Required scopes
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
-      security: []
       security:
         - OAuth2:
             - vendor.vendor_read
@@ -137,7 +135,6 @@ paths:
          ### Required scopes
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
-      security: []
       security:
         - OAuth2:
             - vendor.vendor_read
@@ -203,7 +200,6 @@ paths:
          ### Required scopes
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
-      security: []
       security:
         - OAuth2:
             - vendor.vendor_read
@@ -233,7 +229,6 @@ paths:
 
          ### Required scopes
         * `vendor.vendor_manage`
-      security: []
       security:
         - OAuth2:
             - vendor.vendor_manage
@@ -301,7 +296,6 @@ paths:
 
          ### Required scopes
         * `vendor.vendor_manage`
-      security: []
       security:
         - OAuth2:
             - vendor.vendor_manage
@@ -333,7 +327,6 @@ paths:
 
          ### Required scopes
         * `vendor.vendor_manage`
-      security: []
       security:
         - OAuth2:
             - vendor.vendor_manage
@@ -399,7 +392,6 @@ paths:
          ### Required scopes
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
-      security: []
       security:
         - OAuth2:
             - vendor.vendor_read
@@ -450,7 +442,6 @@ paths:
          ### Required scopes
         * `vendor.vendor_read`
         * `vendor.vendor_manage`
-      security: []
       security:
         - OAuth2:
             - vendor.vendor_read
@@ -480,7 +471,6 @@ paths:
 
          ### Required scopes
         * `vendor.vendor_manage`
-      security: []
       security:
         - OAuth2:
             - vendor.vendor_manage
@@ -551,7 +541,6 @@ paths:
 
          ### Required scopes
         * `vendor.vendor_manage`
-      security: []
       security:
         - OAuth2:
             - vendor.vendor_manage
@@ -1322,8 +1311,3 @@ components:
           scopes:
             vendor.vendor_read: Needed to read vendors and locations
             vendor.vendor_manage: Needed to manage vendors and locations
-security: []
-      security:
-  - OAuth2:
-      - vendor.vendor_read
-      - vendor.vendor_manage 
