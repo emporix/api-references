@@ -262,6 +262,7 @@ Exporting lets you back up or migrate enabled agents (together with their depend
 ### Export agents
 Collect the `agentIds` you want to export, then call the [Exporting agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/export) endpoint.
 
+```bash
 curl -L \
   --request POST \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/export' \
@@ -271,7 +272,10 @@ curl -L \
     "agentIds": [
       "complaint-agent-id"
     ]
-  }'The response contains:
+  }'
+```
+
+The response contains:
 
 * `data`: a Base64-encoded JSON payload with the exported agents, tools, and MCP servers.
 * `checksum`: a hash of the decoded `data` string.
@@ -284,6 +288,7 @@ Store both `data` and `checksum`. You will need them when importing.
 ### Import agents
 Use the payload obtained during export and call the [Importing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/import) endpoint. Import requires the `ai.agent_manage` scope.
 
+```bash
 curl -L \
   --request POST \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/import' \
@@ -292,7 +297,10 @@ curl -L \
   --data '{
     "data": "<BASE64_PAYLOAD_FROM_EXPORT>",
     "checksum": "<CHECKSUM_FROM_EXPORT>"
-  }'The response summarizes what was imported and returns a `jobId`. If the imported entities rely on tools or MCP servers that already exist, the service resolves them automatically; otherwise, new instances are created in the disabled state so that you can review and enable them after import.
+  }'
+  ```
+  
+  The response summarizes what was imported and returns a `jobId`. If the imported entities rely on tools or MCP servers that already exist, the service resolves them automatically; otherwise, new instances are created in the disabled state so that you can review and enable them after import.
 {% endstep %}
 {% endstepper %}
 
