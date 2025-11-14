@@ -23,7 +23,7 @@ A new endpoint has been added to retrieve a legal entity along with all of its p
 
 | Endpoint                                                                                                                                                                                                                                                      | Description                                                                                            |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
-| [Retrieving a legal entity with parent hierarchy](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/legal-entities#get-customer-management-tenant-legal-entities-legalentityid-parent-hierarchy) | New endpoint that retrieves the specified legal entity and all parent legal entities in the hierarchy. |
+| [Retrieving a legal entity with parent hierarchy](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/legal-entities#get-tenant-legal-entities-legalentityid-parent-hierarchy) | New endpoint that retrieves the specified legal entity and all parent legal entities in the hierarchy. |
 
 ## Known problems
 
