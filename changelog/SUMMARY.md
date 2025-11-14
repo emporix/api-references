@@ -8,6 +8,7 @@
 
 ## 2025
 
+* [2025-11-14: Category Service - classification categories](2025/2025-11-14-category.md)
 * [2025-11-13: Coupon Service - removal of deprecated endpoints](2025/2025-11-13-referral-coupon.md)
 * [2025-11-13: Coupon Service - removal of deprecated endpoints](2025/2025-11-13-coupon.md)
 * [2025-11-07: Category Service - new search endpoint and query parameter](2025/2025-11-07-category.md)
