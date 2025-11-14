@@ -135,3 +135,29 @@ In this case, the subsequent order ID looks like this:
 ```
 ORDER-2025-03-27-14-03-22-DE0002-N
 ```
+
+### Vendor-specific invoice numbering
+
+You can define vendor-specific, separate number ranges with consecutive numbering for invoice IDs. Each vendor maintains their own sequential numbering sequence, ensuring that invoice IDs are unique and properly sequenced per vendor. The following example demonstrates how to create an invoice sequence schema that includes the vendor name in the ID pattern:
+
+```bash
+curl -i -X POST 
+  https://api.emporix.io/sequential-id/sequenceSchemas 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
+  -d '{
+    "name": "invoiceNoSequence",
+    "schemaType": "invoiceNoSequence",
+    "preText": "meinMAKLERstore-__vendorName__",
+    "postText":"-__year__-__month__
+
+    "maxValue": 999999999,
+    "numberOfDigits": 6,
+    "startValue": 10000,
+    "placeholders": {
+      "__vendorName__": {
+        "required": true
+      }
+    }
+  }'
+```
