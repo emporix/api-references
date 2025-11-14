@@ -8,11 +8,40 @@ info:
     url: https://emporix.com
     email: documentation@emporix.com
 tags:
+  - name: Reindex
+    description: Invoke Reindex
   - name: Metadata
     description: Manage Metadata
 servers:
   - url: https://api.emporix.io
 paths:
+  '/ai-rag-indexer/{tenant}/{type}/reindex':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/path_type'
+    post:
+      summary: Reindexing the entities of given type.
+      operationId: GET-ai-rag-indexer-reindex
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        Triggers a full reindexing process for the selected entity type. The process retrieves all entities of the given type, generates embeddings for each of them, and updates the corresponding records in the Vector Database.
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      tags:
+        - Reindex
   '/ai-rag-indexer/{tenant}/{type}/rag-metadata':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -205,7 +234,7 @@ components:
       in: path
       required: true
       name: type
-      description: Rag Entity Type for which fields should be returned.
+      description: Rag Entity Type.
   responses:
     401_resp_common:
       description: The authorization token is invalid or has expired.
