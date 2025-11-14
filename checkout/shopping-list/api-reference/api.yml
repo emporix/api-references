@@ -23,7 +23,7 @@ paths:
 
         ### Additional scope info
 
-          * `shoppinglist.shoppinglist_manage` - required for the employee to create a shopping list for a provided customer. If the scope is not present, then the customerId is resolved from the token.
+          * `shoppinglist.shoppinglist_manage` - Required only for the employee to create a shopping list for a provided customer. If the scope is not present, then the customerId is resolved from the token.
       operationId: POST-shopping-list-create-shopping-list
       parameters:
         - name: tenant
@@ -96,9 +96,9 @@ paths:
         Gets shopping list by name or defaults to all shopping lists if name is not provided.
         When scope is provided then all shopping lists are returned. If scope is not provided, then only own shopping list is returned.
         
-        ### Required scopes
+        ### Additional scope info
 
-        * `shoppinglist.shoppinglist_read` - required for the employee to read shopping lists. If scope is not present, then the customerId is resolved from the token.
+        * `shoppinglist.shoppinglist_read` - Required only for the employee to read shopping lists. If scope is not present, then the customerId is resolved from the token.
       security:
         - OAuth2:
             - shoppinglist.shoppinglist_read
@@ -160,9 +160,9 @@ paths:
         Updates a shopping list.
         ***
 
-        ### Scopes
+        ### Additional scope info
 
-          * `shoppinglist.shoppinglist_manage` - required for the employee to update a shopping list. If the scope is not present, then the operation is allowed for customer to update his own shopping list.
+          * `shoppinglist.shoppinglist_manage` - Required only for the employee to update a shopping list. If the scope is not present, then the operation is allowed for customer to update his own shopping list.
       operationId: PUT-shopping-list-update-customer-shopping-list
       parameters:
         - name: tenant
