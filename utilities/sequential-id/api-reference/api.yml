@@ -150,7 +150,7 @@ paths:
           $ref: '#/components/responses/trait_yaasAware_403'
       summary: Retrieving a sequence schema
       description: |-
-        Gets a sequence schema by its id.
+        Gets a sequence schema by its ID.
       operationId: GET-sequential-id-retrieve-schema
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
