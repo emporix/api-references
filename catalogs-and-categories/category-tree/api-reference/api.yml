@@ -534,6 +534,14 @@ paths:
           schema:
             type: string
             example: '2022-01-28'
+        - name: q
+          in: query
+          description:  |
+            A standard query parameter is used to search for specific values. 
+            
+            See: [Standard practises - Query parameter](https://developer.emporix.io/api-references/standard-practices/q-param)
+          schema:
+            type: string
         - name: Accept-Language
           in: header
           description: |
@@ -811,6 +819,181 @@ paths:
                     status: Conflict
                     message: Duplicated ECN value - given ECN is already assigned to another category.'
                     details: []
+      security:
+        - OAuth2: []
+  /category/{tenant}/categories/search:
+    post:
+      tags:
+        - Category Resources
+      summary: Searching for categories
+      description: |
+        Searches for categories for a given tenant.
+        ***
+
+        ### Required scopes
+
+          * `category.category_read_unpublished`
+
+            **Note:** Only required if the response should contain unpublished categories.
+      operationId: POST-category-tree-search-categories
+      parameters:
+        - name: tenant
+          in: path
+          description: |
+            Your Emporix tenant name.
+
+            **Note**: The tenant should always be written in lowercase.
+          required: true
+          schema:
+            type: string
+            example: saasdev2
+        - name: showRoots
+          in: query
+          description: |
+            If set to `true`, only root categories (categories without parents) are retrieved.
+            Possible values:
+            * `true`
+            * `false`
+          schema:
+            type: boolean
+            example: true
+            default: false
+        - name: showUnpublished
+          in: query
+          description: |
+            If set to `true`, not published categories are retrieved as well.
+            Possible values:
+            * `true`
+            * `false`
+            
+            **Note**: To get unpublished categories you need to have `category.category_read_unpublished` scope.
+          schema:
+            type: boolean
+            example: true
+            default: false
+        - name: pageNumber
+          in: query
+          description: |
+            Page number to be retrieved. The number of the first page is 1.
+            **Note**: If the `pageNumber` parameter is passed, size of the pages must be specified in the `pageSize` parameter.
+          schema:
+            minimum: 1
+            type: integer
+            format: int32
+            default: 1
+        - name: pageSize
+          in: query
+          description: |
+            Number of export files to be retrieved per page.
+          schema:
+            minimum: 1
+            type: integer
+            format: int32
+            default: 60
+        - name: sort
+          in: query
+          description: |
+            List of properties used to sort the results, separated by commas. This list is validated against available fields. Sorting by deprecated field is forbidden.
+            Possible values:
+            * `{fieldName}:ASC`
+            * `{fieldName}:DESC`
+            * `{fieldName}:ASC,{fieldName2}:DESC`
+            * `{internationalizedFieldName.en}:ASC` - contains localized field name and extension. Valid only if Accepted-language header contains this extension and it is supported by configuration of the tenant. If all language are accepted (Accept-language='*') then extension must exist in tenant configuration. No other sorting are allowed for this specific internationalized field.
+            * `{internationalizedFieldName}:ASC` - contains only localized field name. Extension will be deducted based on Accept-language header. If all language are accepted (Accept-language='*') then extension is taken from tenant configuration and is equal to default language. In other case the language with highest priority is taken. No other sorting are allowed for this specific localized field.
+          schema:
+            type: string
+            example: '{fieldName}:ASC,{fieldName2}:DESC'
+        - name: Accept-Language
+          in: header
+          description: |
+            List of properties used to project and sort the results, separated by commas.
+            Possible values:
+            * `*` - each internationalized field is returned as a map containing all available (specified in tenant configuration) translations. This is also the default behaviour if the header is not set.
+            * `en`, `en,de` - each internationalized field is returned as a map containing translation specified by a header value. If translation is not supported by tenant configuration then exception is thrown. First language is the one with highest priority.
+            * `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5` - each internationalized field is returned as a map containing translation specified by a header value. If translation is not supported by tenant configuration then exception is thrown.
+          schema:
+            type: string
+            example: '`*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`'
+            default: '*'
+        - name: X-Total-Count
+          in: header
+          description: |
+            The header value indicates if the total count of entities should be returned.
+            Possible values:
+            * `true`
+            * `false`
+            Default value: `false`
+          schema:
+            type: boolean
+            example: true
+            default: false
+      requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchRequest'
+              examples:
+                search for products:
+                  value:
+                    q: "id:0310086a-d9d6-44bc-9199-ee4381bc9e4e"
+      responses:
+        '200':
+          description: The request was successful. The categories are returned.
+          headers:
+            X-Total-Count:
+              description: Total amount of categories.
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryList'
+        '400':
+          description: Request was syntactically incorrect. Details will be provided in the response payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    code: 400
+                    status: Bad Request
+                    message: Accept-Language validation failed.
+                    details:
+                      - 'Following languages are not supported: ''ru'''
+        '403':
+          description: Permission denied due to insufficient rights. This may happen when request does not contain sufficient scopes for given query values.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    code: 403
+                    status: Forbidden
+                    message: You need a scope for this action.
+                    details:
+                      - 'Required scope(s): category.category_read_unpublished'
+        '404':
+          description: Category with the specified categoryId does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    resourceId: 084bcaf6-66b8-4ddd-9489-65c5f6449e94
+                    code: 404
+                    status: Not Found
+                    message: Error while getting category
+                    details:
+                      - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
       security:
         - OAuth2: []
   /category/{tenant}/categories/categoryTree:
@@ -3833,6 +4016,15 @@ components:
         - $ref: '#/components/schemas/MetadataUpdate'
     Object:
       type: object
+    SearchRequest:
+      type: object
+      properties:
+        q:
+          type: string
+          description:  |
+            A standard query parameter is used to search for specific values. 
+            
+            See: [Standard practises - Query parameter](https://developer.emporix.io/api-references/standard-practices/q-param)
     Reference:
       required:
         - id

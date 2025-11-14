@@ -102,7 +102,7 @@ paths:
                       companyRegistrationId: 123-456-789
                       legalEntities:
                         - id: D165356
-                          name: BMW
+                          name: Emporix
                           contactAssignmentId: D436432
                 Anonymous customer:
                   value:
@@ -961,15 +961,15 @@ paths:
           $ref: '#/components/responses/400_bad_request'
         '401':
           $ref: '#/components/responses/401_unauthorized'
-    description: |-
-      Logs in a customer and sends an authentication request.  
-      Returns two customer tokens:
-        - Customer access token
-        - Customer SaaS token
+      description: |-
+        Logs in a customer and sends an authentication request.  
+        Returns two customer tokens:
+          - Customer access token
+          - Customer SaaS token
 
-        **Note**: The request needs to be authorized with an anonymous access token.
-        ***
-        ### Required scopes
+          **Note**: The request needs to be authorized with an anonymous access token.
+          ***
+          ### Required scopes
         No specific scopes are required.
       operationId: POST-customer-authenticate-customer
       requestBody:

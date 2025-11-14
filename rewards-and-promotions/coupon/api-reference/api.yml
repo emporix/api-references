@@ -40,8 +40,6 @@ paths:
           $ref: '#/components/responses/trait_internal_500'
       description: |
         Retrieves a list of coupons by the specified criteria. Supports sorting and paging.
-        
-        ![Deprecated](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1743499897/internal/deprecated.png) The endpoint was previously available under the `/coupon-v2/` base path.
         ***
 
         ### Required scopes
@@ -88,9 +86,6 @@ paths:
         Creates a coupon.
         
         By default, the coupon code is saved in uppercase. To ensure that the code is saved both in upper and lower case, set the `enableCouponCodeCaseSensitivity` configuration to true in the configuration service or System Preferences.
-        
-        
-        ![Deprecated](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1743499897/internal/deprecated.png) The endpoint was previously available under the `/coupon-v2/` base path.
         ***
 
         ### Required scopes
@@ -137,9 +132,6 @@ paths:
           $ref: '#/components/responses/trait_internal_500'
       description: |
         Retrieves coupon details.
-        
-        
-        ![Deprecated](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1743499897/internal/deprecated.png) The endpoint was previously available under the `/coupon-v2/` base path.
         ***
 
         ### Required scopes
@@ -170,9 +162,6 @@ paths:
           $ref: '#/components/responses/trait_internal_500'
       description: |
         Updates an existing coupon.
-        
-        
-        ![Deprecated](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1743499897/internal/deprecated.png) The endpoint was previously available under the `/coupon-v2/` base path.
         ***
 
         ### Required scopes
@@ -213,9 +202,6 @@ paths:
           $ref: '#/components/responses/trait_internal_500'
       description: |
         Partially updates an existing coupon.
-        
-        
-        ![Deprecated](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1743499897/internal/deprecated.png) The endpoint was previously available under the `/coupon-v2/` base path.
         ***
 
         ### Required scopes
@@ -252,9 +238,6 @@ paths:
           $ref: '#/components/responses/trait_internal_500'
       description: |
         Deletes an existing coupon.
-        
-        
-        ![Deprecated](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1743499897/internal/deprecated.png) The endpoint was previously available under the `/coupon-v2/` base path.
         ***
 
         ### Required scopes
@@ -288,9 +271,6 @@ paths:
       description: |
         Checks whether the coupon can be successfully redeemed. Performs all checks that are executed during actual
         redemption, but does not result in a redeemed coupon. Only the status of the validation is reported.
-        
-        
-        ![Deprecated](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1743499897/internal/deprecated.png) The endpoint was previously available under the `/coupon-v2/` base path.
         ***
 
         ### Required scopes
@@ -342,9 +322,6 @@ paths:
           $ref: '#/components/responses/trait_internal_500'
       description: |
         Retrieves a list of redemptions by the specified criteria. Supports sorting and paging.
-        
-        
-        ![Deprecated](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1743499897/internal/deprecated.png) The endpoint was previously available under the `/coupon-v2/` base path.
         ***
 
         ### Required scopes
@@ -389,9 +366,6 @@ paths:
       description: |
         Invalidate the coupon based on its validity scope. Redemption is not possible when the coupon has exceeded its maximum
         number allowed redemptions. To be redeemed a coupon needs to be already valid and not expired yet.
-        
-        
-        ![Deprecated](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1743499897/internal/deprecated.png) The endpoint was previously available under the `/coupon-v2/` base path.
         ***
 
         ### Required scopes
@@ -438,9 +412,6 @@ paths:
           $ref: '#/components/responses/trait_internal_500'
       description: |
         Retrieves a single redemption.
-        
-        
-        ![Deprecated](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1743499897/internal/deprecated.png) The endpoint was previously available under the `/coupon-v2/` base path.
         ***
 
         ### Required scopes
@@ -472,9 +443,6 @@ paths:
           $ref: '#/components/responses/trait_internal_500'
       description: |
         Deletes a previously created redemption.
-        
-        
-        ![Deprecated](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1743499897/internal/deprecated.png) The endpoint was previously available under the `/coupon-v2/` base path.
         ***
 
         ### Required scopes
@@ -519,9 +487,6 @@ paths:
         Retrieves the referral coupon of a given customer in the database.
         
         When the existing customer shares the referral code with a potential customer, the referred customer can benefit from the discount in a form of a fixed monetary amount.
-        
-        
-        ![Deprecated](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1743499897/internal/deprecated.png) The endpoint was previously available under the `/coupon/ReferralCouponCode/{customerId}` path.
       operationId: GET-coupon-retrieve-referral-coupon
       security:
         - OAuth2: []
@@ -553,8 +518,6 @@ paths:
         **Note**: There can only be one referral coupon generated per customer.
         
         When the existing customer shares the referral code with a potential customer, the referred customer can benefit from the discount in a form of a fixed monetary amount.
-        
-        ![Deprecated](https://res.cloudinary.com/saas-ag/image/upload/c_scale,h_20/v1743499897/internal/deprecated.png) The endpoint was previously available under the `/coupon/ReferralCouponCode/{customerId}` path.
       operationId: POST-coupon-create-referral-coupon-code
       security:
         - OAuth2: []
