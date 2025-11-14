@@ -2070,13 +2070,13 @@ components:
     SchemaResponse:
       allOf:
         - $ref: '#/components/schemas/AbstractSchemaResponse'
-      type: object
-      properties:
-        attributes:
-          type: array
-          description: List of attributes related to the schema.
-          items:
-            $ref: '#/components/schemas/SchemaAttribute'
+        - type: object
+          properties:
+            attributes:
+              type: array
+              description: List of attributes related to the schema.
+              items:
+                $ref: '#/components/schemas/SchemaAttribute'
     SchemasResponse:
       type: array
       items:
@@ -2311,7 +2311,7 @@ components:
       in: path
       required: true
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: Always write the tenant name in lowercase.
       schema:
