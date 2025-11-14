@@ -554,17 +554,18 @@ components:
           type: boolean
           description: Indicates whether a given configuration is active. Only one configuration can be active.
         provider:
-          allOf:
-            - $ref: '#/components/schemas/Provider'
+          $ref: '#/components/schemas/Provider'
           description: Indicates which provider should be used.
     EmptyConfiguration:
       type: object
+      description: SVIX_SHARED config
     SvixConfig:
       type: object
       properties:
         apiKey:
           type: string
           description: 'API Key for connecting to SVIX. This API Key will be then used in `Authorization` header while sending requests to SVIX, so the value should include `Bearer` prefix if necessary.'
+      description: SVIX config
     EventConfiguration:
       type: object
       properties:
@@ -609,6 +610,7 @@ components:
           description: List of key-value pairs which can decorate outgoing HTTP POST request as headers. The size limit for this list is `10`.
         eventsConfiguration:
           $ref: '#/components/schemas/EventConfiguration'
+      description: HTTP config
     Configuration:
       type: object
       oneOf:
@@ -695,7 +697,7 @@ components:
                     description: List of key-value pairs which can decorate outgoing HTTP POST request as headers.
     ConfigCode:
       type: string
-      description: Unique identifier of webhook configuration
+      description: Unique identifier of webhook configuration.
     Provider:
       type: string
       enum:
@@ -703,24 +705,24 @@ components:
         - SVIX
         - HTTP
     WebhookConfigUpdate:
-      type: object
       allOf:
         - $ref: '#/components/schemas/AbstractWebhookConfig'
-      required:
-        - provider
-      properties:
-        configuration:
-          $ref: '#/components/schemas/Configuration'
+        - type: object
+          required:
+            - provider
+          properties:
+            configuration:
+              $ref: '#/components/schemas/Configuration'
     WebhookConfigCreation:
-      type: object
       allOf:
         - $ref: '#/components/schemas/WebhookConfigUpdate'
-      required:
-        - code
-      properties:
-        code:
-          allOf:
-            - $ref: '#/components/schemas/ConfigCode'
+        - type: object
+          required:
+            - code
+          properties:
+            code:
+              allOf:
+                - $ref: '#/components/schemas/ConfigCode'
     WebhookEvent:
       title: Webhook event
       type: object
@@ -917,16 +919,14 @@ components:
       content:
         application/json:
           schema:
-            type: object
             allOf:
               - $ref: '#/components/schemas/AbstractWebhookConfig'
-            properties:
-              code:
-                allOf:
-                  - $ref: '#/components/schemas/ConfigCode'
-              configuration:
-                allOf:
-                  - $ref: '#/components/schemas/ConfigurationGet'
+              - type: object
+                properties:
+                  code:
+                    $ref: '#/components/schemas/ConfigCode'
+                  configuration:
+                    $ref: '#/components/schemas/ConfigurationGet'
           examples:
             WebhookConfigExample:
               $ref: '#/components/examples/WebhookConfigExample'
@@ -939,13 +939,12 @@ components:
             items:
               allOf:
                 - $ref: '#/components/schemas/AbstractWebhookConfig'
-              properties:
-                code:
-                  allOf:
-                    - $ref: '#/components/schemas/ConfigCode'
-                configuration:
-                  allOf:
-                    - $ref: '#/components/schemas/ConfigurationGet'
+                - type: object
+                  properties:
+                    code:
+                      $ref: '#/components/schemas/ConfigCode'
+                    configuration:
+                      $ref: '#/components/schemas/ConfigurationGet'
           examples:
             WebhookConfigsExample:
               $ref: '#/components/examples/WebhookConfigsExample'
@@ -1135,7 +1134,7 @@ components:
       schema:
         type: string
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: The tenant name should always be provided in lowercase.
     path_code:
