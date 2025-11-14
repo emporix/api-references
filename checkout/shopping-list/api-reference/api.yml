@@ -218,10 +218,6 @@ paths:
       description: |
         Retrieves a shopping list based on the customer number. This endpoint is valid only for the employee.
         ***
-
-      security:
-        - OAuth2:
-            - shoppinglist.shoppinglist_read
       operationId: GET-shopping-list-retrieve-customer-shopping-list
       parameters:
         - name: tenant
@@ -249,6 +245,8 @@ paths:
             type: string
       security:
         - CustomerAccessToken: []
+        - OAuth2:
+            - shoppinglist.shoppinglist_read
       responses:
         '200':
           description: shopping list successfully retrieved.
