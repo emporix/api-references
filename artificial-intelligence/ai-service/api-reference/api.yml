@@ -760,6 +760,8 @@ paths:
     delete:
       summary: Deleting agent
       operationId: DELETE-ai-delete-agent
+      parameters:
+        - $ref: '#/components/parameters/force'
       responses:
         '204':
           description: Given agent has been deleted.
@@ -774,6 +776,8 @@ paths:
       description: |-
         Deletes agent by given ID.
         
+        ***Important***: If an agent is being used by another agent as collaboration agent then delete operation is not possible without `force` flag set to `true`.
+
         ### Required scopes
 
         * `ai.agent_manage`
