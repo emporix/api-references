@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2025-11-13: Client Management Service – parent hierarchy endpoint added
+# 2025-11-14: Client Management Service – parent hierarchy endpoint added
 
 ## Overview
 
