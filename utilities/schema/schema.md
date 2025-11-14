@@ -1,7 +1,6 @@
 ---
 seo:
   title: Schema Service Tutorials
-  description: Schema Management
 icon: graduation-cap
 layout:
   width: wide
@@ -19,13 +18,184 @@ This tutorial explains how to add custom fields for a product entity.
 
 ### Create a schema
 
-To extend the product entity in Management Dashboard with some industry-specific fields, create a schema that defines the required fields and generates JSON file representation by sending a request to the Creating a schema endpoint.
+To extend the product entity in Management Dashboard with some industry-specific fields, create a schema that defines the required fields and generates JSON file representation by sending a request to the [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/schema/{tenant}/schemas' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "name": {
+      "en": "Product Custom Attributes"
+    },
+    "types": [
+      "PRODUCT"
+    ],
+    "attributes": [
+      {
+        "key": "weight",
+        "name": {
+          "en": "Weight of a product"
+        },
+        "description": {
+          "en": "The exact weight of a product in grams."
+        },
+        "type": "TEXT",
+        "metadata": {
+          "readOnly": true,
+          "required": true
+        }
+      },
+      {
+        "key": "size",
+        "name": {
+          "en": "Size of a product"
+        },
+        "description": {
+          "en": "The exact size of a product. Possible values are S, M, L."
+        },
+        "type": "ENUM",
+        "metadata": {
+          "readOnly": true,
+          "required": true
+        },
+        "values": [
+          {
+            "value": "S"
+          },
+          {
+            "value": "M"
+          },
+          {
+            "value": "L"
+          }
+        ]
+      },
+      {
+        "key": "advertisement",
+        "name": {
+          "en": "Advertisement of a product"
+        },
+        "description": {
+          "en": "A localized advertisement of a product."
+        },
+        "type": "TEXT",
+        "metadata": {
+          "localized": true,
+          "required": true
+        }
+      }
+    ]
+  }'
+```
+
+ Request result is the new schema ID - "id": "6915ec3c047dc4456d86a26f".
 
 ### Retrieve a schema
 
-Retrieve the created schema to get the schema URL by calling the Retrieving a schema endpoint.
+Retrieve the created schema to get the schema URL by calling the [Retrieving a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-id) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -L 
+  --url 'https://api.emporix.io/schema/{tenant}/schemas/{id}' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Accept: */*'
+```
 
 In the response, you can see the URL link to cloudinary repository, where the schema for the product type has been uploaded.
+
+```json
+{
+  "id": "6915ec3c047dc4456d86a26f",
+  "name": {
+    "en": "Product Custom Attributes"
+  },
+  "attributes": [
+    {
+      "key": "weight",
+      "name": {
+        "en": "Weight of a product"
+      },
+      "description": {
+        "en": "The exact weight of a product in grams."
+      },
+      "type": "TEXT",
+      "metadata": {
+        "readOnly": true,
+        "localized": false,
+        "required": true,
+        "nullable": false
+      }
+    },
+    {
+      "key": "size",
+      "name": {
+        "en": "Size of a product"
+      },
+      "description": {
+        "en": "The exact size of a product. Possible values are S, M, L."
+      },
+      "type": "ENUM",
+      "metadata": {
+        "readOnly": true,
+        "localized": false,
+        "required": true,
+        "nullable": false
+      },
+      "values": [
+        {
+          "value": "S"
+        },
+        {
+          "value": "M"
+        },
+        {
+          "value": "L"
+        }
+      ]
+    },
+    {
+      "key": "advertisement",
+      "name": {
+        "en": "Advertisement of a product"
+      },
+      "description": {
+        "en": "A localized advertisement of a product."
+      },
+      "type": "TEXT",
+      "metadata": {
+        "readOnly": false,
+        "localized": true,
+        "required": true,
+        "nullable": false
+      }
+    }
+  ],
+  "types": [
+    "PRODUCT"
+  ],
+  "metadata": {
+    "version": 1,
+    "createdAt": "2025-11-13T14:33:32.059Z",
+    "modifiedAt": "2025-11-13T14:33:32.059Z",
+    "url": "https://res.cloudinary.com/saas-ag/raw/upload/schemata2/featuredemo/6915ec3c047dc4456d86a26f_v1.json"
+  }
+}
+```
 
 {% hint style="warning" %}
 When you create a product, the validation mechanism runs against the schema stored under the mentioned cloudinary URL.
@@ -33,28 +203,30 @@ When you create a product, the validation mechanism runs against the schema stor
 
 ### Create a product
 
-Now, create a product that contains additional fields by sending a request to Creating a new product endpoint.
+Now, create a product that contains additional fields by sending a request to [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 The product should contain "metadata.mixins.\{{id\}}: \{{cloudinaryUrl\}}", where `id` is the schema URL you retrieved with `GET` operation in the previous step.
 
-For example, you created a schema with **size** attribute and it got assigned an id: `652d12399ffeb27c5a3b6d02`. When creating or editing a product, provide the schema `id` and `URL` details in the payload of the `POST` request:
+For example, you created a schema with **size** attribute and it got assigned a schema id: `6915ec3c047dc4456d86a26f`. When creating or editing a product, provide the schema `id` and `URL` details in the payload of the `POST` request:
 
 ```json
 {
   "mixins": {
-    "652d12399ffeb27c5a3b6d02": {
+    "6915ec3c047dc4456d86a26f": {
       "size": 6557
     }
   },
   "metadata": {
     "mixins": {
-      "652d12399ffeb27c5a3b6d02": "https://res.cloudinary.com/saas-ag/raw/upload/schemata2/{{tenant}}/652d12399ffeb27c5a3b6d02_v1.json"
+      "6915ec3c047dc4456d86a26f": "https://res.cloudinary.com/saas-ag/raw/upload/schemata2/featuredemo/6915ec3c047dc4456d86a26f_v1.json"
     }
   }
 }
 ```
 
-The product you created has already the custom fields added in the separate "Product Custom Attributes" tab.
+
+
+The product you created has already the custom fields added in the separate **Product Custom Attributes** tab.
 
 ## How to create a more complex schema
 
@@ -221,17 +393,52 @@ See the example JSON file that defines fields of different types:
 
 ### Create a reference
 
-To use the schema in Emporix Commerce Engine, send a request to the Creating a reference endpoint. This action creates a reference to your schema so that you use the extended type.
-
-Result: The schema reference is used to create or edit product objects.
+To use the schema in Emporix Commerce Engine, send a request to the [Creating a reference](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/reference#post-schema-tenant-references) endpoint. This action creates a reference to your schema so that you use the extended type.
+The schema reference is used to create or edit product objects.
 
 {% hint style="warning" %}
 Note that the fields of types that are not supported by default are not displayed in the Management Dashboard. You can edit them by API requests.
 {% endhint %}
 
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+CURL request example:
+
+```bash
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/schema/{tenant}/references' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Content-Type: multipart/form-data' 
+  --form 'file=[object Object]' 
+  --form 'body=[object Object]'
+```
+
+JSON example:
+
+```json
+{
+  "file": {
+    "externalValue": "https://res.cloudinary.com/saas-ag/raw/upload/schemata2/saastest2/653a30c0951b2b0665884f89_v1.json"
+  },
+  "body": {
+    "name": {
+      "en": "Product Custom Attributes"
+    },
+    "types": [
+      "PRODUCT"
+    ]
+  }
+}
+```
+
 ### Create a product
 
-Now, create a product and provide values for the customized fields by sending a request to Creating a new product endpoint.
+Now, create a product and provide values for the customized fields by sending a request to [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 See the example payload for creating a product basing on the schema from the previous step:
 
@@ -239,18 +446,18 @@ See the example payload for creating a product basing on the schema from the pre
 {
     "productType": "BASIC",
     "published": true,
-    "id": "iphone-15-pro-blue-1",
-    "code": "iphone-15-pro-blue-1",
+    "id": "mobile-15-pro-blue-1",
+    "code": "mobile-15-pro-blue-1",
     "name": {
-        "de": "Apple iPhone 15 Pro Blue",
-        "ar": "Apple iPhone 15 Pro Blue",
-        "en": "Apple iPhone 15 Pro Blue",
-        "fr": "Apple iPhone 15 Pro Blue"
+        "de": "Mobile Phone 15 Pro Blue",
+        "ar": "Mobile Phone 15 Pro Blue",
+        "en": "Mobile Phone 15 Pro Blue",
+        "fr": "Mobile Phone 15 Pro Blue"
     },
     "description": {
         "de": "",
         "ar": "",
-        "en": "iPhone 15 Pro. Titanium becomes Pro.\n\nThe iPhone 15 Pro. Forged from titanium, with the all-changing A17 Pro chip, a customizable action button and an even more versatile camera system.\n\nFORGED FROM TITANIUM - The iPhone 15 Pro has a durable and lightweight space-age titanium design with a textured matte glass back. It also has a Ceramic Shield front that can withstand more than any smartphone glass. And it'\''s protected from water and dust.\n\nADVANCED DISPLAY - The 6.1\" Super Retina XDR Display2 with ProMotion boosts the refresh rate to 120 Hz when you need extra graphics power. Dynamic Island brings notifications and live activity to the front. And with Always On Display, the lock screen always shows your most important info without you having to tap it.\n\nEVERYTHING CHANGING A17 PRO CHIP - A Pro GPU makes gaming an immersive experience, with detailed environments and realistic characters. The A17 Pro is incredibly efficient and helps ensure you have battery power for the whole day.\n\nPOWERFUL PRO CAMERA SYSTEM - Incredible framing flexibility as if you had 7 Pro lenses. Take super high-resolution photos with more colour and detail with the 48 MP main camera. And with the 3x telephoto camera in iPhone 15 Pro, you'\''ll get razor-sharp close-ups from further away.\n\nADJUSTABLE ACTION BUTTON - The Action Button takes you straight to your favourite feature. Just set it to silent mode, camera, voice memo, shortcut or any other feature. Then all you have to do is press and hold the Action Button to start it.\n\nPRO CONNECTIVITY - With the new USB C port, you can charge your Mac or iPad with the same cable as your iPhone 15 Pro. With USB 3, you get a huge leap in data transfer. And you can charge files up to 2x faster with Wi-Fi 6E.\n\nIMPORTANT SAFETY FEATURES - If you need to contact emergency services but have no network or Wi-Fi, you can use Emergency SOS via satellite. With Accident Detection, iPhone can detect a serious car accident and call for help if you can'\''t.\n\nMADE TO MAKE A DIFFERENCE - iPhone comes with privacy features that ensure you stay in control of your data. It'\''s made from more recycled materials to minimise its environmental impact. And it has built-in features that make iPhone more accessible to everyone.\n\nCOMES WITH APPLECARE WARRANTY - Every iPhone comes with a one-year manufacturer'\''s warranty and up to 90 days of free technical support. Get AppleCare+ or AppleCare+ with theft and loss to extend your protection.\n\niPhone 15, iPhone 15 Plus, iPhone 15 Pro and iPhone 15 Pro Max are protected from water and dust and have been tested under controlled laboratory conditions. They are rated IP68 to IEC standard 60529 (up to 6 metres for up to 30 minutes). Protection from water and dust is not permanent and may diminish over time as a result of normal wear and tear. Do not charge a wet iPhone. Cleaning and drying instructions are provided in the user manual. The warranty does not cover damage caused by liquids.",
+        "en": "Mobile 15 Pro. Titanium becomes Pro.\n\nThe Mobile 15 Pro. Forged from titanium, with the all-changing A17 Pro chip, a customizable action button and an even more versatile camera system.\n\nFORGED FROM TITANIUM - The Mobile 15 Pro has a durable and lightweight space-age titanium design with a textured matte glass back. It also has a Ceramic Shield front that can withstand more than any smartphone glass. And it'\''s protected from water and dust.\n\nADVANCED DISPLAY - The 6.1\" Super Retina XDR Display2 with ProMotion boosts the refresh rate to 120 Hz when you need extra graphics power. Dynamic Island brings notifications and live activity to the front. And with Always On Display, the lock screen always shows your most important info without you having to tap it.\n\nEVERYTHING CHANGING A17 PRO CHIP - A Pro GPU makes gaming an immersive experience, with detailed environments and realistic characters. The A17 Pro is incredibly efficient and helps ensure you have battery power for the whole day.\n\nPOWERFUL PRO CAMERA SYSTEM - Incredible framing flexibility as if you had 7 Pro lenses. Take super high-resolution photos with more colour and detail with the 48 MP main camera. And with the 3x telephoto camera in Mobile 15 Pro, you'\''ll get razor-sharp close-ups from further away.\n\nADJUSTABLE ACTION BUTTON - The Action Button takes you straight to your favourite feature. Just set it to silent mode, camera, voice memo, shortcut or any other feature. Then all you have to do is press and hold the Action Button to start it.\n\nPRO CONNECTIVITY - With the new USB C port, you can charge your Mac or iPad with the same cable as your Mobile 15 Pro. With USB 3, you get a huge leap in data transfer. And you can charge files up to 2x faster with Wi-Fi 6E.\n\nIMPORTANT SAFETY FEATURES - If you need to contact emergency services but have no network or Wi-Fi, you can use Emergency SOS via satellite. With Accident Detection, Mobile can detect a serious car accident and call for help if you can'\''t.\n\nMADE TO MAKE A DIFFERENCE - Mobile comes with privacy features that ensure you stay in control of your data. It'\''s made from more recycled materials to minimise its environmental impact. And it has built-in features that make Mobile more accessible to everyone.\n\nCOMES WITH APPLECARE WARRANTY - Every Mobile comes with a one-year manufacturer'\''s warranty and up to 90 days of free technical support. Get AppleCare+ or AppleCare+ with theft and loss to extend your protection.\n\nMobile 15, Mobile 15 Plus, Mobile 15 Pro and Mobile 15 Pro Max are protected from water and dust and have been tested under controlled laboratory conditions. They are rated IP68 to IEC standard 60529 (up to 6 metres for up to 30 minutes). Protection from water and dust is not permanent and may diminish over time as a result of normal wear and tear. Do not charge a wet Mobile. Cleaning and drying instructions are provided in the user manual. The warranty does not cover damage caused by liquids.",
         "fr": ""
     },
     "mixins": {
@@ -274,7 +481,7 @@ See the example payload for creating a product basing on the schema from the pre
             },
             "externalLinks": "https://shop.eno.de/de/datasheets/product/view/sku/150728",
             "maxOrderQuantity": 3,
-            "contactDetails": "info@apple.com",
+            "contactDetails": "info@example.com",
             "specifications": [
                 {
                     "name": "5G (sub‑6 GHz and mmWave)",

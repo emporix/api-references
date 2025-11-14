@@ -1464,8 +1464,10 @@ paths:
             schema:
               $ref: '#/components/schemas/priceListCreation'
             examples:
-              Create Price List:
-                $ref: '#/components/examples/priceLists_post_requestBody'
+              Price list with a customer group:
+                $ref: '#/components/examples/priceLists_post_requestBody' 
+              Price list with a legal entity:
+                $ref: '#/components/examples/priceLists_post_requestBody_legalEntity'
       responses:
         '201':
           description: The request was successful. The price list has been created.
@@ -2383,6 +2385,11 @@ components:
             If no price that matches the criteria is found for the specified site, the price matching functionality will try to find the best price for the `main` site. To enable this option, this field needs to be set to `true`.
 
             **Note**: Using the fallback mechanism may impact the performance as the price matching has to run a second time. If the fallback mechanism is used, the response's `siteCode` field will be set to `main`.
+        legalEntityId:
+          type: string
+          description: |-
+            Legal entity for which price lists are included in the price match.
+            **Note**: Price lists for the entity's parent legal entities are also included.
       required:
         - targetCurrency
         - siteCode
@@ -2927,9 +2934,9 @@ components:
             type: string
         customerGroups:
           description: |-
-            List of customer groups' ids for whom the price list is valid.
+            List of customer groups IDs for which the price list is valid. If not specified, the price list is applicable to all customer groups.
 
-            **Note**: If not specified, the price list will be applicable to all customer groups.
+            **Note**: Customer groups cannot be provided if there is a legal entity specified for the price list.
 
             **Note**: This is a preview field - the system does not fully operate on the customer groups concept yet.
           type: array
@@ -2937,6 +2944,11 @@ components:
             allOf:
               - {}
             type: string
+        legalEntityId:
+          description: |-
+            ID of the legal entity to which the price list applies.
+            **Note**: Price list assigned to legal entity is also applicable for all the subsidiaries.
+          type: string
         siteCode:
           description: Code of the site to which the price list applies.
           type: string
@@ -3741,6 +3753,16 @@ components:
         customerGroups:
           - customer-group-1
           - customer-group-2
+        siteCode: example-site-1
+        validity:
+          from: '2022-05-01T00:00:00.000Z'
+          to: '2025-05-01T00:00:00.000Z'
+    priceLists_post_requestBody_legalEntity:
+      value:
+        name:
+          en: Example Price List 1
+        currency: EUR
+        legalEntityId: legal-entity-1
         siteCode: example-site-1
         validity:
           from: '2022-05-01T00:00:00.000Z'

@@ -8,6 +8,10 @@
 
 ## 2025
 
+* [2025-11-14: Client Management Service - parent hierarchy endpoint added](2025/2025-11-14-client-management.md)
+* [2025-11-14: Price Service - legal entity support added](2025/2025-11-14-price.md)
+* [2025-11-13: Coupon Service - removal of deprecated endpoints](2025/2025-11-13-referral-coupon.md)
+* [2025-11-13: Coupon Service - removal of deprecated endpoints](2025/2025-11-13-coupon.md)
 * [2025-11-07: Category Service - new search endpoint and query parameter](2025/2025-11-07-category.md)
 * [2025-11-07: Price Service - new search endpoint for price lists](2025/2025-11-07-price.md)
 * [2025-11-07: Schema Service - references](2025/2025-11-07-schema.md)
