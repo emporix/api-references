@@ -23,13 +23,13 @@ paths:
 
         ### Required scopes
 
-          * `shoppinglist.shoppinglist_manage` - required for the employee to create a shopping list for a provided customer. If scope is not present, then the customerId is resolved from the token.
+          * `shoppinglist.shoppinglist_manage` - required for the employee to create a shopping list for a provided customer. If the cope is not present, then the customerId is resolved from the token.
       operationId: POST-shopping-list-create-shopping-list
       parameters:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant name should always be written in lowercase.
           required: true
@@ -104,7 +104,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant name should always be written in lowercase.
           required: true
@@ -165,7 +165,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant name should always be written in lowercase.
           required: true
@@ -224,7 +224,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant name should always be written in lowercase.
           required: true
@@ -294,7 +294,7 @@ paths:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant name should always be written in lowercase.
           required: true
@@ -838,7 +838,7 @@ components:
     CustomerAccessToken:
       type: http
       scheme: bearer
-      description: 'To generate a customer''s access token, go to the [Logging in a customer](?urls.primaryName=Customer/Customer%20authentication%20and%20authorization/POST_tenant-login) endpoint.'
+      description: 'To generate a customer access token, go to the [Logging in a customer](https://developer.emporix.io/api-references-1/readme/api-reference-11/authentication-and-authorization#post-customer-tenant-login) endpoint.'
     OAuth2:
       type: oauth2
       flows:
