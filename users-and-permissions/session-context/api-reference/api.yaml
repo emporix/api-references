@@ -10,7 +10,7 @@ servers:
   - url: 'https://api.emporix.io'
 paths:
   '/session-context/{tenant}/context/{sessionId}':
-    description: 'The session-context resource. Required scopes: `session_context.context_manage`.'
+    description: 'The session-context resource.'
     get:
       tags:
         - Session management
@@ -19,12 +19,6 @@ paths:
       description: |-
         Retrieves a specified session context.
         Recommended for performing calls on the management side.
-
-        ***
-
-        **Required scopes**
-
-        * `session_context.context_manage`
       responses:
         '200':
           $ref: '#/components/responses/200_get_session'
@@ -45,12 +39,6 @@ paths:
         Recommended for performing calls on the management side.
 
         **Note**: To update a session context, you need to provide its current `metadata.version` value in the request body.
-
-        ***
-
-        **Required scopes**
-
-        * `session_context.context_manage`
       parameters:
         - $ref: '#/components/parameters/query_upsert'
         - $ref: '#/components/parameters/header_saas-token'
@@ -70,7 +58,7 @@ paths:
       - $ref: '#/components/parameters/path_tenant'
       - $ref: '#/components/parameters/path_sessionId'
   '/session-context/{tenant}/context/{sessionId}/attributes/{attributeName}':
-    description: 'The session-context resource. Required scopes: `session_context.context_manage`.'
+    description: 'The session-context resource.'
     delete:
       tags:
         - Session context modification
@@ -81,11 +69,6 @@ paths:
         Recommended for performing calls on the management side. 
 
         **Note**: Optimistic locking is not taken into account here.
-        ***
-
-        **Required scopes**
-
-          * `session_context.context_manage`
       responses:
         '204':
           $ref: '#/components/responses/204_DELETE_attributeName'
@@ -101,7 +84,7 @@ paths:
       - $ref: '#/components/parameters/path_sessionId'
       - $ref: '#/components/parameters/path_attributeName'
   '/session-context/{tenant}/context/{sessionId}/attributes':
-    description: 'The session-context resource. Required scopes: `session_context.context_manage`.'
+    description: 'The session-context resource.'
     post:
       tags:
         - Session context modification
@@ -112,11 +95,6 @@ paths:
         Recommended for performing calls on the management side.
 
         **Note**: Optimistic locking is not taken into account here.
-        ***
-
-        **Required scopes**
-
-        * `session_context.context_manage`
       responses:
         '204':
           $ref: '#/components/responses/204_POST_attributes'
@@ -231,7 +209,7 @@ components:
       name: tenant
       in: path
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: The tenant name should always be provided in lowercase.
       schema:
@@ -245,7 +223,7 @@ components:
       in: path
       schema:
         type: string
-      description: Customer's session ID.
+      description: Customer session ID.
       required: true
     path_attributeName:
       name: attributeName
@@ -372,7 +350,7 @@ components:
         customerId:
           type: string
           description: |-
-            Customer's unique identifier.
+            Customer unique identifier.
 
             **Note**: This field is only applicable to logged-in customers.
           example: C87362407845
@@ -446,31 +424,13 @@ components:
             description: Name of the created attribute.
           examples:
             Attribute created:
-              value: attr1
+              value: attribute name
     200_get_session:
       description: The request was successful. Session context details are returned.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/SessionContext_GET'
-          examples:
-            Session context details:
-              value:
-                sessionId: 62528895-b561-4518-bfdc-2cbf52a07845
-                customerId: C87362407845
-                siteCode: main
-                currency: EUR
-                targetLocation: DE
-                cartId: 61079711ce0eb90861357045
-                context:
-                  property1:
-                    property3: propertyValue
-                  property2:
-                    property3: propertyValue
-                metadata:
-                  version: 1
-                  createdAt: '2022-09-20T12:33:52.456Z'
-                  modifiedAt: '2022-09-20T12:33:52.456Z'
     204_update_session:
       description: The request was successful. The session context has been updated.
     404_session:
@@ -510,30 +470,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/SessionContext_PUT'
-          examples:
-            Update of a session context:
-              value:
-                sessionId: 62528895-b561-4518-bfdc-2cbf52a07845
-                customerId: C87362407845
-                siteCode: main
-                currency: EUR
-                cartId: 512950192-b561-4518-bfdc-2cbf52a07845
-                targetLocation: DE
-                metadata:
-                  version: 1
     sessionId_PATCH:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/SessionContext_PUT'
-          examples:
-            Update of a session context:
-              value:
-                siteCode: main
-                currency: EUR
-                targetLocation: DE
-                metadata:
-                  version: 1
     attributes_POST:
       content:
         application/json:
