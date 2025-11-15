@@ -283,23 +283,6 @@ components:
         - key
         - value
     SessionContext_GET:
-      example:
-        Session context:
-          sessionId: 62528895-b561-4518-bfdc-2cbf52a07845
-          customerId: C87362407845
-          siteCode: main
-          currency: EUR
-          targetLocation: DE
-          cartId: 61079711ce0eb90861357045
-          context:
-            property1:
-              property3: propertyValue
-            property2:
-              property3: propertyValue
-          metadata:
-            version: 1
-            createdAt: '2022-09-20T12:33:52.456Z'
-            modifiedAt: '2022-09-20T12:33:52.456Z'
       allOf:
         - $ref: '#/components/schemas/SessionContextBase'
         - type: object
@@ -319,16 +302,6 @@ components:
               $ref: '#/components/schemas/MetadataUpdate'
           required:
             - metadata
-      example:
-        Update of a session context:
-          sessionId: 62528895-b561-4518-bfdc-2cbf52a07845
-          customerId: C87362407845
-          siteCode: main
-          currency: EUR
-          cartId: 512950192-b561-4518-bfdc-2cbf52a07845
-          targetLocation: DE
-          metadata:
-            version: 1
     ErrorMessage:
       type: object
       properties:
@@ -480,16 +453,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ContextAttribute'
-          examples:
-            Custom attribute as a string:
-              value:
-                key: additional attribute name
-                value: 61079711ce0eb90861357045
-            Custom attribute as an object:
-              value:
-                key: additional attribute name
-                value:
-                  property: any
 security:
   - OAuth2: []
 tags:
