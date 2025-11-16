@@ -26,8 +26,8 @@ To create indexing configuration, send a request to the [Creating new configurat
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../catalogs-and-categories/catalog/api-reference/" %}
-[api-reference](../../catalogs-and-categories/catalog/api-reference/)
+{% content-ref url="../indexing-service/api-reference/" %}
+[api-reference](../indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -52,8 +52,8 @@ Send the request to the [Get configuration by provider name](https://developer.e
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../catalogs-and-categories/catalog/api-reference/" %}
-[api-reference](../../catalogs-and-categories/catalog/api-reference/)
+{% content-ref url="../indexing-service/api-reference/" %}
+[api-reference](../indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -66,8 +66,8 @@ To change configuration, make a call to the [Update configuration by provider na
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../catalogs-and-categories/catalog/api-reference/" %}
-[api-reference](../../catalogs-and-categories/catalog/api-reference/)
+{% content-ref url="../indexing-service/api-reference/" %}
+[api-reference](../indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -95,8 +95,8 @@ You can run the reindex without the need to update all your resource data by sen
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../catalogs-and-categories/catalog/api-reference/" %}
-[api-reference](../../catalogs-and-categories/catalog/api-reference/)
+{% content-ref url="../indexing-service/api-reference/" %}
+[api-reference](../indexing-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
