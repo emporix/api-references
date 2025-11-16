@@ -659,7 +659,7 @@ components:
         - $ref: '#/components/schemas/basicReturn'
     basicEmployeeReturn:
       title: A return request created on behalf of a customer.
-      description: Base schema for returns.
+      description: Base schema for returns on behalf of a customer.
       allOf:
         - $ref: '#/components/schemas/basicReturn'
         - type: object
@@ -720,7 +720,7 @@ components:
             - submitter
     employeeReturnForAnonymousOrder:
       title: A return request created on behalf of a customer for anonymous order.
-      description: Base schema for a return requested by a customer.
+      description: Base schema for a return requested by a customer. Related to an anonymous order.
       allOf:
         - $ref: '#/components/schemas/basicReturn'
         - type: object
