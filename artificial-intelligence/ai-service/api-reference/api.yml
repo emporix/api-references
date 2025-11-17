@@ -1670,7 +1670,7 @@ components:
           description: Name of the tool.
         enabled:
           type: boolean
-          description: Whether the tool is enabled.
+          description: An indicator whether the tool is enabled.
           default: false
       required:
         - type
