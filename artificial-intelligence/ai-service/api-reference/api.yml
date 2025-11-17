@@ -2269,7 +2269,7 @@ components:
       description: Type of the job.
     Job:
       type: object
-      description: Contains information about the job's result - whether it was successful or not, what was the agent's output etc.
+      description: Contains information about the job result - whether it was successful or not, what was the agent output etc.
       properties:
         id:
           type: string
