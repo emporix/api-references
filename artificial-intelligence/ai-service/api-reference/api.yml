@@ -2464,7 +2464,7 @@ components:
               type: string
               format: date-time
             jobId:
-              description: Id of the Job
+              description: ID of the job.
               type: string
     DataWithChecksum:
       type: object
