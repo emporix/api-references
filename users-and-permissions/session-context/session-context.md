@@ -29,8 +29,8 @@ In the following scenario, we are going to perform the following actions from th
 
 1. Create one of the following user sessions (these requests are normally sent on the storefront, but are here for illustrative purposes):
 
-* [Anonymous session](session-context.md#create-an-anonymous-user-session)
-* [(Logged) customer session](session-context.md#create-a-customer-session)
+  * [Anonymous session](session-context.md#create-an-anonymous-user-session)
+  * [(Logged) customer session](session-context.md#create-a-customer-session)
 
 2. [Retrieve the session context attributes and values of a particular user session.](session-context.md#retrieve-a-session-context-by-using-a-session-id)
 3. [Add or remove custom attributes from the session context.](session-context.md#add-new-attributes-to-the-session-context)
@@ -50,7 +50,7 @@ An anonymous user session is created every time a non-logged user enters the sto
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET \
+curl -i -X GET 
   'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id={client_id}'
 ```
 
@@ -86,10 +86,10 @@ The session Id and session context remain the same.
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/customer/{tenant}/login' \
-  -H 'Authorization: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/customer/{tenant}/login' 
+  -H 'Authorization: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "email": "customer@emporix.com",
     "password": "Qwurmdch673;'\''"
@@ -123,8 +123,8 @@ Retrieve the session context values by sending a request to the [Retrieving a se
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET \
-  'https://api.emporix.io/session-context/{tenant}/context/{sessionId}' \
+curl -i -X GET 
+  'https://api.emporix.io/session-context/{tenant}/context/{sessionId}' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
@@ -132,15 +132,16 @@ curl -i -X GET \
 
 If you want to personalize user experience on your website, you can add custom attributes to selected session contexts. Your attributes are not validated, as they are only stored in the Emporix Commerce Engine and can be deleted at any time. However, you can make the data actionable by incorporating a solution of your choice.
 
-success Example\
-If we want to suggest products on the storefront that are relevant to the weather conditions near our user's location, we can add two new attributes: `latitude` and `longitude` to the session context.\
-The data can be collected on the storefront every time a user enters your website, and it will be kept in the Emporix Commerce Engine.\
+Example:
+
+If you want to suggest products on the storefront that are relevant to the weather conditions near the user's location, you can add two new attributes: `latitude` and `longitude` to the session context.
+The data can be collected on the storefront every time a user enters your website, and it will be kept in the Emporix Commerce Engine.
 You can then implement a mechanism that uses the collected data, for example to display relevant products first, according to the weather.
 
 For example, it's raining in the user's location, so the list of suggested products on the storefront prioritizes umbrellas and other rain equipment.
 
 {% hint style="warning" %}
-You can also implement a mechanism allowing users to manage and modify their own sessions and session contexts by calling the Adding a new attribute to a session context] endpoint on the storefront.
+You can also implement a mechanism allowing users to manage and modify their own sessions and session contexts by calling the [Adding a new attribute to a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-context-modification#post-session-context-tenant-context-sessionid-attributes) endpoint on the storefront.
 {% endhint %}
 
 In the following example, we add an attribute by sending a request to the [Adding a new attribute to a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/own-session-context-modification#post-session-context-tenant-me-context-attributes) endpoint with the `session_context.context_manage` scope.
@@ -152,10 +153,10 @@ In the following example, we add an attribute by sending a request to the [Addin
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/session-context/{tenant}/context/{sessionId}/attributes' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/session-context/{tenant}/context/{sessionId}/attributes' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "key": "additional attribute name",
     "value": "61079711ce0eb90861357045"

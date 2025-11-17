@@ -16,6 +16,8 @@ tags:
     description: Manage Agent Templates
   - name: Commerce Events
     description: Read Commerce Events
+  - name: Import/Export
+    description: Import & Export Agents
   - name: AI Completions
     description: AI Completions
   - name: Job
@@ -145,6 +147,7 @@ paths:
                       status: success
                       sessionId: 123e4567-e89b-12d3-a456-426614174000
                       agentType: complaint
+                      type: AGENT_CHAT
                       agentId: complaint-agent
                       commerceEvent: product.product-updated
                       message: |-
@@ -204,6 +207,7 @@ paths:
                       status: success
                       sessionId: 123e4567-e89b-12d3-a456-426614174000
                       agentType: complaint
+                      type: AGENT_CHAT
                       agentId: complaint-agent
                       commerceEvent: product.product-updated
                       message: |-
@@ -264,6 +268,7 @@ paths:
                     status: success
                     sessionId: 123e4567-e89b-12d3-a456-426614174000
                     agentType: complaint
+                    type: AGENT_CHAT
                     agentId: complaint-agent
                     commerceEvent: product.product-updated
                     message: |-
@@ -329,7 +334,7 @@ paths:
           format: uuid
         name: session-id
         in: header
-        description: Unique session's identifier which allows for storing the context of the chat. If not provided, the system generates it.
+        description: Unique session identifier which allows for storing the context of the chat. If not provided, the system generates it.
     post:
       summary: Starting agent chat
       operationId: POST-ai-agents-chat
@@ -358,7 +363,7 @@ paths:
         '500':
           $ref: '#/components/responses/500_resp_common'
       description: |-
-        Allows for communication with Emporix's agents.
+        Allows for communication with Emporix agents.
 
         ### Required scopes
 
@@ -378,7 +383,7 @@ paths:
           format: uuid
         name: session-id
         in: header
-        description: Unique session's identifier which allows for storing the context of the chat. If not provided, the system generates it.
+        description: Unique session identifier which allows for storing the context of the chat. If not provided, the system generates it.
     post:
       summary: Starting agent async chat
       operationId: POST-ai-agents-chat-async
@@ -404,7 +409,7 @@ paths:
         '500':
           $ref: '#/components/responses/500_resp_common'
       description: |-
-        Allows for communication with Emporix's agents in async way.
+        Allows for communication with Emporix agents in async way.
 
         ### Required scopes
 
@@ -906,6 +911,8 @@ paths:
         - Tool
     put:
       summary: Upserting tool
+      parameters:
+        - $ref: '#/components/parameters/forceDisable'
       operationId: PUT-ai-upsert-tool
       responses:
         '201':
@@ -945,6 +952,8 @@ paths:
         - Tool
     patch:
       summary: Partially updating tool
+      parameters:
+        - $ref: '#/components/parameters/forceDisable'
       operationId: PATCH-ai-update-tool
       responses:
         '204':
@@ -1219,7 +1228,7 @@ paths:
         Deletes tokens by given ID.
         
         
-        ***Important***: If token is being used by an agent or by an mcp server then delete operation is not possible without `force` flag set to `true`.
+        ***Important***: If a token is being used by an agent or by an MCP server, then delete operation is not possible without `force` flag set to `true`.
         
         ### Required scopes
 
@@ -1244,7 +1253,7 @@ paths:
       operationId: GET-ai-list-mcp-servers
       responses:
         '200':
-          description: List of mcp servers.
+          description: List of MCP servers.
           content:
             application/json:
               schema:
@@ -1261,7 +1270,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        Retrieves mcp servers based on the provided query.
+        Retrieves MCP servers based on the provided query.
         
         ### Required scopes
 
@@ -1336,7 +1345,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/McpServerResponse'
               examples:
-                Tool Response:
+                MCP Server Response:
                   $ref: '#/components/examples/McpServerResponse'
         '401':
           $ref: '#/components/responses/401_resp_common'
@@ -1345,7 +1354,7 @@ paths:
         '404':
           $ref: '#/components/responses/404_resp_common'
       description: |-
-        Retrieves the mcp server by given ID.
+        Retrieves the MCP server by a given ID.
         
         ### Required scopes
 
@@ -1357,10 +1366,12 @@ paths:
         - MCP Server
     put:
       summary: Upserting MCP server
+      parameters:
+        - $ref: '#/components/parameters/forceDisable'
       operationId: PUT-ai-upsert-mcp-server
       responses:
         '201':
-          description: ID of created mcp server.
+          description: ID of created MCP server.
           content:
             application/json:
               schema:
@@ -1381,8 +1392,10 @@ paths:
         '409':
           $ref: '#/components/responses/409_resp_common'
       description: |-
-        Updates or creates a specified mcp server by replacing all of its existing data with data from the request body.
-        If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
+        Updates or creates a specified MCP server by replacing all of its existing data with data from the request body.
+        If the `metadata.version` is provided, then optimistic locking is enabled and version must match the version in the database.
+        
+        ***Important***: If MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Only then the agent and MCP server are disabled.
 
         ### Required scopes
 
@@ -1396,6 +1409,8 @@ paths:
         - MCP Server
     patch:
       summary: Partially updating MCP server
+      parameters:
+        - $ref: '#/components/parameters/force'
       operationId: PATCH-ai-update-mcp-server
       responses:
         '204':
@@ -1414,6 +1429,8 @@ paths:
           - `add` (adding an item to the items list)
           - `remove` (removing an item from the items list)
           - `replace` (replacing an item with given ID with new definition)
+        
+        ***Important***: If an MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Only then the agent and MCP server are disabled.
 
         ### Required scopes
 
@@ -1442,9 +1459,9 @@ paths:
         '404':
           $ref: '#/components/responses/404_resp_common'
       description: |-
-        Deletes mcp server by given ID. 
+        Deletes MCP server by given ID. 
         
-        ***Important***: If mcp server is being used by an agent then delete operation is not possible without `force` flag set to `true`.
+        ***Important***: If MCP server is being used by an agent then delete operation is not possible without `force` flag set to `true`.
         
         ### Required scopes
 
@@ -1485,6 +1502,76 @@ paths:
             - ai.agent_read
       tags:
         - Commerce Events
+  '/ai-service/{tenant}/agentic/agents/export':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    post:
+      summary: Exporting agents
+      operationId: POST-ai-export-agents
+      requestBody:
+        $ref: '#/components/requestBodies/exportRequestBody'
+      responses:
+        '200':
+          description: The exported agents with components.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportResponse'
+              examples:
+                Import Response:
+                  $ref: '#/components/examples/ExportResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        Exports the agents by IDs.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Import/Export
+  '/ai-service/{tenant}/agentic/agents/import':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    post:
+      summary: Importing agents
+      operationId: POST-ai-import-agents
+      requestBody:
+        $ref: '#/components/requestBodies/importRequestBody'
+      responses:
+        '200':
+          description: A single agent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportResponse'
+              examples:
+                Import Response:
+                  $ref: '#/components/examples/ImportResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        Imports the agents from the base64 encoded data.
+        
+        ### Required scopes
+
+        * `ai.agent_manage`
+      security:
+        - OAuth2:
+            - ai.agent_manage
+      tags:
+        - Import/Export
 components:
   schemas:
     ErrorMessage:
@@ -1581,6 +1668,10 @@ components:
         name:
           type: string
           description: Name of the tool.
+        enabled:
+          type: boolean
+          description: An indicator whether the tool is enabled.
+          default: false
       required:
         - type
         - name
@@ -1674,6 +1765,10 @@ components:
         name:
           type: string
           description: Name of the MCP server.
+        enabled:
+          type: boolean
+          description: An indicator whether the MCP server is enabled.
+          default: false
         transport:
           $ref: '#/components/schemas/CustomMcpServerTransportType'
     McpServerRequest:
@@ -1821,7 +1916,7 @@ components:
           description: Url of the self-hosted LLM.
         authorizationHeaderName:
           type: string
-          description: Name of the header required for authorization e.g. `Authorization`
+          description: Name of the header required for authorization e.g. `Authorization`.
         authorizationHeaderToken:
           type: object
           properties:
@@ -1911,7 +2006,7 @@ components:
       properties:
         name:
           type: string
-          description: Name of the token
+          description: Name of the token.
       required:
         - name
     TokenRequest:
@@ -1987,8 +2082,7 @@ components:
               properties:
                 events:
                   type: string
-                  minItems: 1
-                  description: List of events that trigger the agent
+                  description: List of events that trigger the agent.
               required:
                 - events
           required:
@@ -1998,7 +2092,7 @@ components:
 
     HandOff:
       type: boolean
-      description: Whether the agent is handOff or not. HandOff agents are special types of agents which can be called by other agents through `agentCollaborations` property and their configuration is hidden.
+      description: Indicates whether the agent is handOff or not. HandOff agents are special types of agents which can be called by other agents through `agentCollaborations` property and their configuration is hidden.
 
     BaseForAgentAndTemplateAndHandOff:
       type: object
@@ -2023,7 +2117,7 @@ components:
               description: LLM Prompt which describes how agent should work in a detailed way, which tools it could use to solve problems etc; it can contain examples and step by step guidance.
             icon:
               type: string
-              description: fa class of react icon.
+              description: The fa class of react icon.
             tags:
               type: array
               items:
@@ -2031,7 +2125,7 @@ components:
                 description: Markers that allow you to categorize the agent.
             enabled:
               type: boolean
-              description: Whether the agent is enabled.
+              description: Indicates whether the agent is enabled.
               default: false
           required:
             - name
@@ -2169,9 +2263,13 @@ components:
       type: string
       enum: [ in_progress,success,failure ]
       description: Status of the job.
+    JobType:
+      type: string
+      enum: [ IMPORT,EXPORT,AGENT_CHAT ]
+      description: Type of the job.
     Job:
       type: object
-      description: Contains information about the job's result - whether it was successful or not, what was the agent's output etc.
+      description: Contains information about the job result - whether it was successful or not, what was the agent output etc.
       properties:
         id:
           type: string
@@ -2180,6 +2278,12 @@ components:
           $ref: '#/components/schemas/AgentType'
         status:
           $ref: '#/components/schemas/JobStatus'
+        type:
+          $ref: '#/components/schemas/JobType'
+        exportResult:
+          $ref: '#/components/schemas/ExportResult'
+        importResult:
+          $ref: '#/components/schemas/ImportResult'
         sessionId:
           type: string
           description: Unique identifier of the session.
@@ -2188,19 +2292,66 @@ components:
           description: Unique identifier of the agent.
         message:
           type: string
-          description: Agent's message.
+          description: Agent message.
         commerceEvent:
           type: string
-          description: Commerce event which triggered the job
+          description: Commerce event which triggered the job.
         metadata:
           $ref: '#/components/schemas/MetadataResponse'
+    ImportResult:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Short summary of the import.
+        summary:
+          type: object
+          description: Summary of the import.
+          properties:
+            agents:
+              type: array
+              items:
+                $ref: '#/components/schemas/ImportedEntity'
+            tools:
+              type: array
+              items:
+                $ref: '#/components/schemas/ImportedEntity'
+            mcpServers:
+              type: array
+              items:
+                $ref: '#/components/schemas/ImportedEntity'
+    ExportResult:
+      type: object
+      properties:
+        data:
+          type: string
+          description: The base64 encoded JSON value of the exported agents with related tools and MCP servers.
+        checksum:
+          type: string
+          description: Checksum calculated based on JSON value. Validates if importing JSON is exactly the same as the exported one.
+    ImportedEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the imported entity.
+        name:
+          type: string
+          description: Name of the imported entity.
+        state:
+          type: string
+          description: State of the imported entity.
+          enum:
+            - TO_CREATE
+            - ENABLED
+            - DISABLED
+            - EXISTS
     JobIdResponse:
       type: object
       properties:
         jobId:
           type: string
           description: Identifier of the job.
-
     ChatResponse:
       type: object
       properties:
@@ -2214,7 +2365,7 @@ components:
           description: Unique identifier of the session.
         message:
           type: string
-          description: Agent's message.
+          description: Agent message.
 
     GenerationResponse:
       title: GenerationResponse
@@ -2303,6 +2454,57 @@ components:
         required:
           - op
           - path
+    ExportResponse:
+      allOf:
+        - $ref: '#/components/schemas/DataWithChecksum'
+        - type: object
+          properties:
+            exportedAt:
+              description: Date of the export process.
+              type: string
+              format: date-time
+            jobId:
+              description: ID of the job.
+              type: string
+    DataWithChecksum:
+      type: object
+      properties:
+        data:
+          description: The base64 encoded JSON value of the exported agents with related tools and MCP servers.
+          type: string
+        checksum:
+          description: Checksum calculated based on decoded `data` value. Validates if importing JSON is exactly the same as the exported one.
+          type: string
+    ExportRequest:
+      type: object
+      required:
+        - agentIds
+      properties:
+        agentIds:
+          description: List of the agents IDs.
+          type: array
+          minimum: 0
+          maximum: 100
+          items:
+            type: string
+    ImportResponse:
+      allOf:
+        - $ref: '#/components/schemas/ImportResult'
+        - type: object
+          properties:
+            importedAt:
+              description: Date of the import process.
+              type: string
+              format: date-time
+            jobId:
+              description: ID of the job.
+              type: string
+    ImportRequest:
+      allOf:
+        - $ref: '#/components/schemas/DataWithChecksum'
+      required:
+        - data
+        - checksum
   securitySchemes:
     OAuth2:
       type: oauth2
@@ -2348,7 +2550,7 @@ components:
 
         * If the header is set to `*`, the localized fields should be provided as maps of translations, where the keys are language codes and values are the fields in their respective languages.
         * If the header is set to a specific language, the localized fields should be provided as strings.
-        * If the header is empty, the endpoint will assume that the localized fields are provided in the default language defined in the Configuration Service.
+        * If the header is empty, the endpoint assumes that the localized fields are provided in the default language defined in the Configuration Service.
 
         **Note**: You can provide the localized fields only in languages defined in the Configuration Service. In case the fields are provided in languages that are not defined in the Configuration Service, the request is rejected.
     header_xTotalCount:
@@ -2415,6 +2617,13 @@ components:
       name: force
       example: false
       description: Allows you to remove a given entity even if it is used as a dependency in other entries. In that case, the removed entity is unassigned from other entries.
+    forceDisable:
+      schema:
+        type: boolean
+      in: query
+      name: force
+      example: false
+      description: Allows you to disable a given entity even if it is used as a dependency in other entries. In that case, cascade disable is performed.
   responses:
     401_resp_common:
       description: The authorization token is invalid or has expired.
@@ -2663,6 +2872,22 @@ components:
                 - op: REPLACE
                   path: /name
                   value: New slack name
+    exportRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ExportRequest'
+          examples:
+            Export Agent:
+              $ref: '#/components/examples/ExportRequest'
+    importRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ImportRequest'
+          examples:
+            Export Agent:
+              $ref: '#/components/examples/ImportRequest'
   examples:
     IdResponse:
       value:
@@ -2696,6 +2921,7 @@ components:
       value:
         id: mcp-custom
         name: Custom MCP Server
+        enabled: true
         transport: sse
         config:
           url: 'http://localhost:7900'
@@ -2705,6 +2931,7 @@ components:
       value:
         - id: mcp-custom
           name: Custom MCP Server
+          enabled: true
           transport: sse
           config:
             url: 'http://localhost:7900'
@@ -2729,6 +2956,7 @@ components:
       value:
         id: "slack-1"
         name: Slack Native Tool
+        enabled: true
         type: slack
         config:
           teamId: "12345"
@@ -2736,6 +2964,7 @@ components:
       value:
         - id: "slack-1"
           name: Slack Native Tool
+          enabled: true
           type: slack
           config:
             teamId: "12345"
@@ -2811,6 +3040,7 @@ components:
       value:
         name: Custom MCP Server
         transport: sse
+        enabled: true
         config:
           url: 'http://localhost:7900'
           authorizationHeaderName: Authorization
@@ -2822,6 +3052,7 @@ components:
     SlackNativeToolRequest:
       value:
         name: Slack Native Tool
+        enabled: true
         type: slack
         config:
           teamId: "12345"
@@ -2856,3 +3087,35 @@ components:
               - get-order
         nativeTools:
           - id: slack-1
+    ExportResponse:
+      value:
+        jobId: job-id-of-export-job
+        exportedAt: "2025-11-04T11:15:25.903913Z"
+        checksum: de56cd0c62c234033eced948645c7b458962eaa11611bd1066ef52a61e1b4cb2
+        data: ewogICJhZ2VudHMiIDogWyB7CiAgICAiaWQiIDogInByb2R1Y3QtY3JlYXRlZCIsCiAgICAibmFtZSIgOiB7CiAgICAgICJlbiIgOiAicHJvZHVjdC1jcmVhdGVkIgogICAgfSwKICAgICJkZXNjcmlwdGlvbiIgOiB7CiAgICAgICJlbiIgOiAicHJvZHVjdC1jcmVhdGVkIgogICAgfSwKICAgICJyZXF1aXJlZFNjb3BlcyIgOiBbIF0sCiAgICAidXNlclByb21wdCIgOiAiWW91IGFyZSBhbiBhZ2VudCB3aGljaCBoYW5kbGUgcHJvZHVjdCBjcmVhdGlvbiBwcm9jZXNzLlxuQXQgZmlyc3QgZ2V0IHRoZSB3aG9sZSBwcm9kdWN0IG9iamVjdCBmcm9tIHRoZSBhcGkgYW5kIHJldHVybiBpdCBhcyBhIEpTT04iLAogICAgInRyaWdnZXJzIiA6IFsgewogICAgICAidHlwZSIgOiAiZW5kcG9pbnQiCiAgICB9IF0sCiAgICAibGxtQ29uZmlnIiA6IHsKICAgICAgIm1vZGVsIiA6ICJjbGF1ZGUtMy01LWhhaWt1LTIwMjQxMDIyIiwKICAgICAgInRlbXBlcmF0dXJlIiA6IDAuMSwKICAgICAgIm1heFRva2VucyIgOiA0MDAwLAogICAgICAicHJvdmlkZXIiIDogImFudGhyb3BpYyIsCiAgICAgICJ0b2tlbiIgOiB7CiAgICAgICAgImlkIiA6ICJhbnRocm9waWMtdG9rZW4iCiAgICAgIH0KICAgIH0sCiAgICAibWNwU2VydmVycyIgOiBbIHsKICAgICAgInR5cGUiIDogInByZWRlZmluZWQiLAogICAgICAiZG9tYWluIiA6ICJwcm9kdWN0IiwKICAgICAgInRvb2xzIiA6IFsgImdldC1wcm9kdWN0IiBdCiAgICB9IF0sCiAgICAibmF0aXZlVG9vbHMiIDogWyBdLAogICAgImFnZW50Q29sbGFib3JhdGlvbnMiIDogWyBdLAogICAgIm1heFJlY3Vyc2lvbkxpbWl0IiA6IDIwLAogICAgImVuYWJsZU1lbW9yeSIgOiB0cnVlLAogICAgImljb24iIDogInJvYm90IiwKICAgICJ0YWdzIiA6IFsgXSwKICAgICJ0eXBlIiA6ICJnZW5lcmljIgogIH0gXQp9
+    ExportRequest:
+      value:
+        agentIds:
+          - complaint-agent-id
+    ImportResponse:
+      value:
+        importedAt: '2025-11-04T11:56:55.296335Z'
+        summary:
+          agents:
+            - id: 346cefda-19be-4603-a471-5d2e990566ba--import-1762257415296
+              name: complaint-demo
+              state: DISABLED
+          tools:
+            - id: 80171fb9-a3cc-4441-8235-ced7edd0635d2
+              name: Slack Tool
+              state: TO_CREATE
+          mcpServers:
+            - id: 80171fb9-a3cc-4441-8235-ced7edd0635d3
+              name: Custom MCP Server
+              state: ENABLED
+        message: "Successfully imported 1 agents, 0 tools, and 1 MCP servers."
+        jobId: 6909ea07e0527f327fdead3e
+    ImportRequest:
+      value:
+        checksum: de56cd0c62c234033eced948645c7b458962eaa11611bd1066ef52a61e1b4cb2
+        data: ewogICJhZ2VudHMiIDogWyB7CiAgICAiaWQiIDogInByb2R1Y3QtY3JlYXRlZCIsCiAgICAibmFtZSIgOiB7CiAgICAgICJlbiIgOiAicHJvZHVjdC1jcmVhdGVkIgogICAgfSwKICAgICJkZXNjcmlwdGlvbiIgOiB7CiAgICAgICJlbiIgOiAicHJvZHVjdC1jcmVhdGVkIgogICAgfSwKICAgICJyZXF1aXJlZFNjb3BlcyIgOiBbIF0sCiAgICAidXNlclByb21wdCIgOiAiWW91IGFyZSBhbiBhZ2VudCB3aGljaCBoYW5kbGUgcHJvZHVjdCBjcmVhdGlvbiBwcm9jZXNzLlxuQXQgZmlyc3QgZ2V0IHRoZSB3aG9sZSBwcm9kdWN0IG9iamVjdCBmcm9tIHRoZSBhcGkgYW5kIHJldHVybiBpdCBhcyBhIEpTT04iLAogICAgInRyaWdnZXJzIiA6IFsgewogICAgICAidHlwZSIgOiAiZW5kcG9pbnQiCiAgICB9IF0sCiAgICAibGxtQ29uZmlnIiA6IHsKICAgICAgIm1vZGVsIiA6ICJjbGF1ZGUtMy01LWhhaWt1LTIwMjQxMDIyIiwKICAgICAgInRlbXBlcmF0dXJlIiA6IDAuMSwKICAgICAgIm1heFRva2VucyIgOiA0MDAwLAogICAgICAicHJvdmlkZXIiIDogImFudGhyb3BpYyIsCiAgICAgICJ0b2tlbiIgOiB7CiAgICAgICAgImlkIiA6ICJhbnRocm9waWMtdG9rZW4iCiAgICAgIH0KICAgIH0sCiAgICAibWNwU2VydmVycyIgOiBbIHsKICAgICAgInR5cGUiIDogInByZWRlZmluZWQiLAogICAgICAiZG9tYWluIiA6ICJwcm9kdWN0IiwKICAgICAgInRvb2xzIiA6IFsgImdldC1wcm9kdWN0IiBdCiAgICB9IF0sCiAgICAibmF0aXZlVG9vbHMiIDogWyBdLAogICAgImFnZW50Q29sbGFib3JhdGlvbnMiIDogWyBdLAogICAgIm1heFJlY3Vyc2lvbkxpbWl0IiA6IDIwLAogICAgImVuYWJsZU1lbW9yeSIgOiB0cnVlLAogICAgImljb24iIDogInJvYm90IiwKICAgICJ0YWdzIiA6IFsgXSwKICAgICJ0eXBlIiA6ICJnZW5lcmljIgogIH0gXQp9
