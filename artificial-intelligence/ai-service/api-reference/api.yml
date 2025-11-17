@@ -1767,7 +1767,7 @@ components:
           description: Name of the MCP server.
         enabled:
           type: boolean
-          description: Whether the MCP server is enabled.
+          description: An indicator whether the MCP server is enabled.
           default: false
         transport:
           $ref: '#/components/schemas/CustomMcpServerTransportType'
