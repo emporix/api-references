@@ -388,7 +388,7 @@ Once your schema is ready, send a request to the [Creating a site mixin](https:/
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' 
-  --header 'Content-Type: application/json' \
+  --header 'Content-Type: application/json' 
     "testMixin": {
     "active": true,
     "metadata": {
