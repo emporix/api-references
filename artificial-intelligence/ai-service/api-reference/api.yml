@@ -2337,7 +2337,7 @@ components:
           description: Id of the imported entity.
         name:
           type: string
-          description: Name of the imported entity
+          description: Name of the imported entity.
         state:
           type: string
           description: State of the imported entity
