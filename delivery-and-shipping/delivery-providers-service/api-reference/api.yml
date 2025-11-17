@@ -83,7 +83,7 @@ paths:
     get:
       summary: Retrieving an order
       description: |
-        Get order by given orderId and tenant
+        Get order by a given orderId and tenant.
       parameters:
         - name: tenant
           in: path
@@ -150,7 +150,7 @@ paths:
     post:
       summary: Creating orders for delivery provider
       description: |
-        Push given orders to delivery provider for the given tenant. In case of an unsuccessful route planning for given order (eg. due to invalid address) an email to the Merchant will be send.
+        Pushes the specified orders to the delivery provider for the given tenant. If route planning fails for an order (e.g., due to an invalid address), an email is sent to the merchant.
       parameters:
         - name: tenant
           in: path
