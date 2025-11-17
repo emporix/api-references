@@ -2481,7 +2481,7 @@ components:
         - agentIds
       properties:
         agentIds:
-          description: List of the agents ids
+          description: List of the agents IDs.
           type: array
           minimum: 0
           maximum: 100
