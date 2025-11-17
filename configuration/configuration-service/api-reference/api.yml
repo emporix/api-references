@@ -241,9 +241,6 @@ paths:
           name: keys
       description: |-
         Retrieves a list of configurations.
-        ***
-        ### Required scopes
-        * `configuration.configuration_view`
     post:
       summary: Creating configurations
       operationId: POST-configuration-create-config
@@ -326,9 +323,6 @@ paths:
             - configuration.configuration_manage
       description: |-
         Creates new configurations.
-        ***
-        ### Required scopes
-        * `configuration.configuration_manage`
       tags:
         - Tenant configurations
   '/configuration/{tenant}/configurations/{propertyKey}':
@@ -361,9 +355,6 @@ paths:
             - configuration.configuration_view
       description: |-
         Retrieves a specified configuration.
-        ***
-        ### Required scopes
-        * `configuration.configuration_view`
     put:
       summary: Updating a configuration
       operationId: PUT-configuration-update-config
@@ -433,9 +424,6 @@ paths:
                   version: 1
       description: |-
         Updates a specified configuration.
-        ***
-        ### Required scopes
-        * `configuration.configuration_manage`
       tags:
         - Tenant configurations
     delete:
@@ -463,9 +451,6 @@ paths:
             - configuration.configuration_manage
       description: |-
         Deletes a specified configuration.
-        ***
-        ### Required scopes
-        * `configuration.configuration_manage`
       tags:
         - Tenant configurations
   '/configuration/{tenant}/clients':
@@ -498,9 +483,6 @@ paths:
             - configuration.configuration_view
       description: |-
         Retrieves a list of clients for a specified tenant.
-        ***
-        ### Required scopes
-        * `configuration.configuration_view`
   '/configuration/{tenant}/clients/{client}/configurations':
     parameters:
       - $ref: '#/components/parameters/tenant'
@@ -542,9 +524,6 @@ paths:
           name: keys
       description: |-
         Retrieves a list of configurations for a specified client.
-        ***
-        ### Required scopes
-        * `configuration.configuration_view`
     post:
       summary: Creating client configurations
       operationId: POST-configuration-create-client-config
@@ -609,9 +588,6 @@ paths:
         description: ''
       description: |-
         Creates a new client configuration.
-        ***
-        ### Required scopes
-        * `configuration.configuration_manage`
       tags:
         - Client configurations
   '/configuration/{tenant}/clients/{client}/configurations/{propertyKey}':
@@ -622,7 +598,7 @@ paths:
         schema:
           type: string
         description: |
-          Your Emporix tenant's name.
+          Your Emporix tenant name.
 
           **Note**: The tenant should always be written in lowercase.
       - $ref: '#/components/parameters/client'
@@ -656,9 +632,6 @@ paths:
             - configuration.configuration_view
       description: |-
         Retrieves a specified client configuration.
-        ***
-        ### Required scopes
-        * `configuration.configuration_view`
     put:
       summary: Updating a client configuration
       operationId: PUT-configuration-update-client-config
@@ -672,9 +645,9 @@ paths:
               examples:
                 Response example:
                   value:
-                    _id: test_client_test_key
-                    client: test_client
-                    key: test_key
+                    _id: example_client_example_key
+                    client: example_client
+                    key: example_key
                     value: false
         '400':
           description: Bad Request
@@ -719,9 +692,9 @@ paths:
             examples:
               Request example:
                 value:
-                  id: test_client_test_key
-                  client: test_client
-                  key: test_key
+                  _id: example_client_example_key
+                  client: example_client
+                  key: example_key
                   value: false
       security:
         - OAuth2:
@@ -730,9 +703,6 @@ paths:
         - Client configurations
       description: |-
         Updates a specified client configuration.
-        ***
-        ### Required scopes
-        * `configuration.configuration_manage`
     delete:
       summary: Deleting a client configuration
       operationId: DELETE-configuration-remove-client-config
@@ -772,9 +742,6 @@ paths:
         - Client configurations
       description: |-
         Deletes a specified client configuration.
-        ***
-        ### Required scopes
-        * `configuration.configuration_manage`
 components:
   schemas:
     Configuration:
@@ -783,10 +750,10 @@ components:
       properties:
         key:
           type: string
-          description: Configuration's key.
+          description: Configuration key.
           minLength: 1
         value:
-          description: Client configuration's value. It can be any valid JSON object.
+          description: Client configuration value. It can be any valid JSON object.
           oneOf:
             - type: object
             - type: string
@@ -796,7 +763,7 @@ components:
             - type: boolean
         version:
           type: integer
-          description: Configuration's version.
+          description: Configuration version.
         secured:
           type: boolean
           description: Flag indicating whether the configuration should be encrypted.
@@ -807,7 +774,7 @@ components:
       properties:
         id:
           type: string
-          description: Client configuration's unique identifier.
+          description: Client configuration unique identifier.
           minLength: 1
         client:
           type: string
@@ -815,10 +782,10 @@ components:
           minLength: 1
         key:
           type: string
-          description: Client configuration's key.
+          description: Client configuration key.
           minLength: 1
         value:
-          description: Client configuration's value. It can be any valid JSON object.
+          description: Client configuration value. It can be any valid JSON object.
           oneOf:
             - type: object
             - type: string
@@ -891,7 +858,7 @@ components:
       schema:
         type: string
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: The tenant should always be written in lowercase.
     propertyKey:
@@ -900,7 +867,7 @@ components:
       required: true
       schema:
         type: string
-      description: Desired configuration's key.
+      description: Desired configuration key.
     client:
       name: client
       in: path
