@@ -2082,7 +2082,7 @@ components:
               properties:
                 events:
                   type: string
-                  description: List of events that trigger the agent
+                  description: List of events that trigger the agent.
               required:
                 - events
           required:
