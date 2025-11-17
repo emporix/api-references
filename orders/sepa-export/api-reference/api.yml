@@ -15,7 +15,7 @@ paths:
     get:
       tags:
         - Files
-      summary: Get SEPA Export file by id for tenant
+      summary: Get SEPA Export file by ID for tenant
       description: |-
         Downloads a specified SEPA Export file.
       operationId: GET-sepa-export-download-file
