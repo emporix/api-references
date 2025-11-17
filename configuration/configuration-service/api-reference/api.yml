@@ -692,7 +692,7 @@ paths:
             examples:
               Request example:
                 value:
-                  _id: example_client_example_key
+                  id: example_client_example_key
                   client: example_client
                   key: example_key
                   value: false
