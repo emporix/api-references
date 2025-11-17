@@ -14,12 +14,12 @@ tags:
     description: Chat With Agents
   - name: Agent Template
     description: Manage Agent Templates
+  - name: AI Completions
+    description: AI Completions
   - name: Commerce Events
     description: Read Commerce Events
   - name: Import/Export
     description: Import & Export Agents
-  - name: AI Completions
-    description: AI Completions
   - name: Job
     description: Manage Jobs
   - name: MCP Server
