@@ -2306,7 +2306,7 @@ components:
           description: Short summary of the import.
         summary:
           type: object
-          description: Summary of the import
+          description: Summary of the import.
           properties:
             agents:
               type: array
