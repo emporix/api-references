@@ -1,8 +1,8 @@
 openapi: 3.0.1
 info:
-  title: Sepa Export
+  title: SEPA Export
   version: ''
-  description: Sepa Export API
+  description: SEPA Export API
   contact:
     email: documentation@emporix.com
 tags:
@@ -15,14 +15,9 @@ paths:
     get:
       tags:
         - Files
-      summary: Get Sepa Export file by id for tenant
+      summary: Get SEPA Export file by id for tenant
       description: |-
-        Downloads a specified Sepa Export file.
-        
-        ***
-        
-        ### Required scopes
-        * `sepaexport.media_view`
+        Downloads a specified SEPA Export file.
       operationId: GET-sepa-export-download-file
       parameters:
         - name: tenant
@@ -36,14 +31,14 @@ paths:
           example: ""
         - name: fileId
           in: path
-          description: Sepa Export file's unique identifier.
+          description: SEPA Export file's unique identifier.
           required: true
           schema:
             type: string
           example: ""
       responses:
         "200":
-          description: Sepa Export file
+          description: SEPA Export file
           content:
             text/plain:
               schema:
@@ -64,7 +59,7 @@ paths:
         - Jobs
       summary: Retrieving a list of export jobs
       description: |-
-        Retrieves a list of Sepa Export jobs.
+        Retrieves a list of SEPA Export jobs.
         
         ***
         ### Required scopes
@@ -141,7 +136,7 @@ paths:
         - Jobs
       summary: Creating a new export job
       description: |-
-        Creates a new Sepa Export job.
+        Creates a new SEPA Export job.
         
         ***
         ### Required scopes
@@ -360,6 +355,6 @@ components:
         clientCredentials:
           tokenUrl: https://api.emporix.io/oauth/token
           scopes:
-            sepaexport.job_view: View Sepa export job
-            sepaexport.job_manage: Manage Sepa export job
-            sepaexport.media_view: View output from Sepa export
+            sepaexport.job_view: View SEPA export job
+            sepaexport.job_manage: Manage SEPA export job
+            sepaexport.media_view: View output from SEPA export
