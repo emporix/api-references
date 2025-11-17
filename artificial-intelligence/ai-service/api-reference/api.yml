@@ -2295,7 +2295,7 @@ components:
           description: Agent's message.
         commerceEvent:
           type: string
-          description: Commerce event which triggered the job
+          description: Commerce event which triggered the job.
         metadata:
           $ref: '#/components/schemas/MetadataResponse'
     ImportResult:
