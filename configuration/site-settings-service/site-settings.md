@@ -20,10 +20,10 @@ To create a new site, you need to send a request to the [Creating a site](https:
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/site/{tenant}/sites' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/site/{tenant}/sites' \
+  --header 'Content-Type: application/json' \
   --data '{
     "code": "example",
     "name": "ExampleName",
@@ -62,9 +62,9 @@ To update the `shipToCountries` list, you need to send a request to the [Partial
 
 ```bash
 curl -L \
-  --request PATCH 
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' 
-  --header 'Content-Type: application/json' 
+  --request PATCH \
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
+  --header 'Content-Type: application/json' \
   --data '{
     "defaultLanguage": "en"
     "shipToCountries": [
@@ -95,8 +95,8 @@ First, check if the `orderProcessSettings` mixin has already been configured by 
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' 
+curl -L \
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' \
   --header 'Accept: */*'
 ```
 
@@ -111,10 +111,10 @@ In this case, to enable specific payment methods, you need to send a request to 
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' \
+  --header 'Content-Type: application/json' \
   --data '{
     "testMixin": {
     "active": true,
@@ -145,10 +145,10 @@ In this case, to enable specific payment methods, you need to send a request to 
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request PATCH 
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' \
+  --header 'Content-Type: application/json' \
   --data '{
     "active": true,
   "paymentSettings": {
@@ -179,8 +179,8 @@ First, check if the `merchantInfo` mixin has already been configured by sending 
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' 
+curl -L \
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' \
   --header 'Accept: */*'
 ```
 
@@ -193,10 +193,10 @@ If your site's `merchantInfo` has never been configured before or has been delet
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' \
+  --header 'Content-Type: application/json' \
   --data '{
     "testMixin": {
     "active": true,
@@ -239,10 +239,10 @@ If you need to update your `merchantInfo`, you need to send a request to the [Pa
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request PATCH 
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' \
+  --header 'Content-Type: application/json' \
   --data '{
     "active": true,
   "merchantName": " ",
@@ -267,10 +267,10 @@ Settings for direct debit payments are stored in the `debitSettings` mixin. To c
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' \
+  --header 'Content-Type: application/json' \
   --data '{
     "testMixin": {
     "active": true,
@@ -314,10 +314,10 @@ Your business's SEPA Creditor ID is stored in your tenant's `sepaCreditor` confi
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/configuration/{tenant}/configurations' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations' \
+  --header 'Content-Type: application/json' \
   --data '[
     {
       "key": "sepaCreditor",
@@ -385,10 +385,11 @@ Once your schema is ready, send a request to the [Creating a site mixin](https:/
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' \
+  --header 'Content-Type: application/json' \
+  --data '{
     "testMixin": {
     "active": true,
     "metadata": {
