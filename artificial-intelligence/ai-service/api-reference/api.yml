@@ -1430,7 +1430,7 @@ paths:
           - `remove` (removing an item from the items list)
           - `replace` (replacing an item with given ID with new definition)
         
-        ***Important***: If MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Then the agent and MCP server will be disabled
+        ***Important***: If an MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Only then the agent and MCP server are disabled.
 
         ### Required scopes
 
@@ -1527,7 +1527,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        Exports the agents by ids.
+        Exports the agents by IDs.
         
         ### Required scopes
 
