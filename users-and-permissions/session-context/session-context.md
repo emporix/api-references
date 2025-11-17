@@ -133,6 +133,7 @@ curl -i -X GET
 If you want to personalize user experience on your website, you can add custom attributes to selected session contexts. Your attributes are not validated, as they are only stored in the Emporix Commerce Engine and can be deleted at any time. However, you can make the data actionable by incorporating a solution of your choice.
 
 Example:
+
 If you want to suggest products on the storefront that are relevant to the weather conditions near the user's location, you can add two new attributes: `latitude` and `longitude` to the session context.
 The data can be collected on the storefront every time a user enters your website, and it will be kept in the Emporix Commerce Engine.
 You can then implement a mechanism that uses the collected data, for example to display relevant products first, according to the weather.
