@@ -2493,7 +2493,7 @@ components:
         - type: object
           properties:
             importedAt:
-              description: Date of the import process
+              description: Date of the import process.
               type: string
               format: date-time
             jobId:
