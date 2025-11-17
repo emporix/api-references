@@ -8,6 +8,7 @@
 
 ## 2025
 
+* [2025-11-17: AI Service - Export/Import agents](2025/2025-11-17-ai.md)
 * [2025-11-14: Client Management Service - parent hierarchy endpoint added](2025/2025-11-14-client-management.md)
 * [2025-11-14: Price Service - legal entity support added](2025/2025-11-14-price.md)
 * [2025-11-13: Referral Coupon Service - removal of deprecated endpoints](2025/2025-11-13-referral-coupon.md)
