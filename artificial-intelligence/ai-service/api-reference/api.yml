@@ -2460,7 +2460,7 @@ components:
         - type: object
           properties:
             exportedAt:
-              description: Date of the export process
+              description: Date of the export process.
               type: string
               format: date-time
             jobId:
