@@ -2623,7 +2623,7 @@ components:
       in: query
       name: force
       example: false
-      description: Allows you to disable a given entity even if it is used as a dependency in other entries. In that case, cascade disable will be performed.
+      description: Allows you to disable a given entity even if it is used as a dependency in other entries. In that case, cascade disable is performed.
   responses:
     401_resp_common:
       description: The authorization token is invalid or has expired.
