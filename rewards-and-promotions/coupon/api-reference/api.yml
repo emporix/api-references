@@ -40,11 +40,6 @@ paths:
           $ref: '#/components/responses/trait_internal_500'
       description: |
         Retrieves a list of coupons by the specified criteria. Supports sorting and paging.
-        ***
-
-        ### Required scopes
-        * `coupon.coupon_manage`
-        * `coupon.coupon_read`
       operationId: GET-coupon-list-specified-coupons
       parameters:
         - $ref: '#/components/parameters/trait_sortable_sort'
@@ -86,10 +81,6 @@ paths:
         Creates a coupon.
         
         By default, the coupon code is saved in uppercase. To ensure that the code is saved both in upper and lower case, set the `enableCouponCodeCaseSensitivity` configuration to true in the configuration service or System Preferences.
-        ***
-
-        ### Required scopes
-        * `coupon.coupon_manage`
       operationId: POST-coupon-create-coupon
       requestBody:
         content:
@@ -134,7 +125,7 @@ paths:
         Retrieves coupon details.
         ***
 
-        ### Required scopes
+        ### Additional scopes info
         * `coupon.coupon_redeem_on_behalf` - needed only if the service should use the customer identification specified in the request query (`customerNumber` attribute) instead of the one associated with current authentication token.
       operationId: GET-coupon-retrieve-coupon
       parameters:
@@ -162,10 +153,6 @@ paths:
           $ref: '#/components/responses/trait_internal_500'
       description: |
         Updates an existing coupon.
-        ***
-
-        ### Required scopes
-        * `coupon.coupon_manage`
       operationId: PUT-coupon-update-coupon
       requestBody:
         content:
@@ -202,10 +189,6 @@ paths:
           $ref: '#/components/responses/trait_internal_500'
       description: |
         Partially updates an existing coupon.
-        ***
-
-        ### Required scopes
-        * `coupon.coupon_manage`
       operationId: PATCH-coupon-update-coupon
       requestBody:
         content:
@@ -238,10 +221,6 @@ paths:
           $ref: '#/components/responses/trait_internal_500'
       description: |
         Deletes an existing coupon.
-        ***
-
-        ### Required scopes
-        * `coupon.coupon_manage`
       operationId: DELETE-coupon-remove-coupon
       security:
         - OAuth2:
@@ -273,7 +252,7 @@ paths:
         redemption, but does not result in a redeemed coupon. Only the status of the validation is reported.
         ***
 
-        ### Required scopes
+        ### Additional scopes info
         * `coupon.coupon_redeem_on_behalf` - needed only if the service should use the customer identification
         specified in the request body (`customerNumber` attribute) instead of the one associated with current
         authentication token.
@@ -322,10 +301,6 @@ paths:
           $ref: '#/components/responses/trait_internal_500'
       description: |
         Retrieves a list of redemptions by the specified criteria. Supports sorting and paging.
-        ***
-
-        ### Required scopes
-        * `coupon.coupon_manage`
       operationId: GET-coupon-list-coupon-redemptions
       parameters:
         - $ref: '#/components/parameters/trait_sortable_sort'
@@ -368,7 +343,7 @@ paths:
         number allowed redemptions. To be redeemed a coupon needs to be already valid and not expired yet.
         ***
 
-        ### Required scopes
+        ### Additional scopes info
         * `coupon.coupon_redeem_on_behalf` - needed only if the service should use the customer identification specified in the request body (`customerNumber` attribute) instead of the one associated with current authentication token.
       operationId: POST-coupon-invalidate-coupon
       requestBody:
@@ -414,7 +389,7 @@ paths:
         Retrieves a single redemption.
         ***
 
-        ### Required scopes
+        ### Additional scopes info
         * `coupon.coupon_manage` for accessing any redemption.
         * `coupon.coupon_redeem` for accessing only redemption created by current user.
         * `coupon.coupon_redeem_on_behalf` - needed only if the service should use the customer identification specified in the request body (`customerNumber`attribute) instead of the one associated with current authentication token.
@@ -443,10 +418,6 @@ paths:
           $ref: '#/components/responses/trait_internal_500'
       description: |
         Deletes a previously created redemption.
-        ***
-
-        ### Required scopes
-        * `coupon.coupon_manage`
       operationId: DELETE-coupon-remove-coupon-redemption
       security:
         - OAuth2:
@@ -1187,14 +1158,14 @@ components:
       required: true
       schema:
         type: string
-      description: Code of a coupon
+      description: Code of a coupon.
     customer_number_path:
       name: customerNumber
       in: path
       required: true
       schema:
         type: string
-      description: Customer number (ID) of customer
+      description: Customer number (ID) of customer.
     customer_number:
       name: customerNumber
       in: query
