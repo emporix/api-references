@@ -1392,10 +1392,10 @@ paths:
         '409':
           $ref: '#/components/responses/409_resp_common'
       description: |-
-        Updates or creates a specified mcp server by replacing all of its existing data with data from the request body.
+        Updates or creates a specified MCP server by replacing all of its existing data with data from the request body.
         If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
         
-        ***Important***: If MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Then the agent and MCP server will be disabled
+        ***Important***: If MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Only then the agent and MCP server are disabled.
 
         ### Required scopes
 
