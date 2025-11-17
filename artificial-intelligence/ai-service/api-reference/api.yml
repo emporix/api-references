@@ -2340,7 +2340,7 @@ components:
           description: Name of the imported entity.
         state:
           type: string
-          description: State of the imported entity
+          description: State of the imported entity.
           enum:
             - TO_CREATE
             - ENABLED
