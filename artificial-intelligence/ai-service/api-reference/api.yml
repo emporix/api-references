@@ -1430,7 +1430,7 @@ paths:
           - `remove` (removing an item from the items list)
           - `replace` (replacing an item with given ID with new definition)
         
-        ***Important***: If MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Only then the agent and MCP server are disabled.
+        ***Important***: If an MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Only then the agent and MCP server are disabled.
 
         ### Required scopes
 
@@ -1670,7 +1670,7 @@ components:
           description: Name of the tool.
         enabled:
           type: boolean
-          description: Whether the tool is enabled.
+          description: An indicator whether the tool is enabled.
           default: false
       required:
         - type
@@ -1767,7 +1767,7 @@ components:
           description: Name of the MCP server.
         enabled:
           type: boolean
-          description: Whether the MCP server is enabled.
+          description: An indicator whether the MCP server is enabled.
           default: false
         transport:
           $ref: '#/components/schemas/CustomMcpServerTransportType'
@@ -2269,7 +2269,7 @@ components:
       description: Type of the job.
     Job:
       type: object
-      description: Contains information about the job's result - whether it was successful or not, what was the agent's output etc.
+      description: Contains information about the job result - whether it was successful or not, what was the agent output etc.
       properties:
         id:
           type: string
@@ -2328,7 +2328,7 @@ components:
           description: The base64 encoded JSON value of the exported agents with related tools and MCP servers.
         checksum:
           type: string
-          description: Checksum calculated based on JSON value. Validates if importing JSON is exactly the same as exported one.
+          description: Checksum calculated based on JSON value. Validates if importing JSON is exactly the same as the exported one.
     ImportedEntity:
       type: object
       properties:
@@ -2470,10 +2470,10 @@ components:
       type: object
       properties:
         data:
-          description: The base64 encoded JSON value of the exported agents with related tools and MCP servers
+          description: The base64 encoded JSON value of the exported agents with related tools and MCP servers.
           type: string
         checksum:
-          description: Checksum calculated based on decoded `data` value. Validates if importing JSON is exactly the same as exported one.
+          description: Checksum calculated based on decoded `data` value. Validates if importing JSON is exactly the same as the exported one.
           type: string
     ExportRequest:
       type: object
