@@ -2470,7 +2470,7 @@ components:
       type: object
       properties:
         data:
-          description: base64 encoded JSON value of the exported agents with related tools and MCP servers
+          description: The base64 encoded JSON value of the exported agents with related tools and MCP servers.
           type: string
         checksum:
           description: Checksum calculated based on decoded `data` value. Validates if importing JSON is exactly the same as exported one.
