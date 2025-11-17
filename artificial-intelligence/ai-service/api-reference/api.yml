@@ -2303,7 +2303,7 @@ components:
       properties:
         message:
           type: string
-          description: Short summary of the import
+          description: Short summary of the import.
         summary:
           type: object
           description: Summary of the import
