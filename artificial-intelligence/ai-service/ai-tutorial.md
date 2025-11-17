@@ -309,7 +309,7 @@ curl -L \
   The response summarizes what was imported and returns a `jobId`. 
 
   * If imported tools or MCP servers already exist in the target tenant, they're reused.
-  * If they don't exist, new instances are created in a **disabled state** for your review.
+  * If they don't exist, new instances are created. If a token is required, they get a **disabled state** for your review, if no token is required, they get **enabled** state.
   * Imported agents are also disabled by default as a safety measure.
 
 {% endstep %}
