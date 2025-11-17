@@ -2334,7 +2334,7 @@ components:
       properties:
         id:
           type: string
-          description: Id of the imported entity
+          description: Id of the imported entity.
         name:
           type: string
           description: Name of the imported entity
