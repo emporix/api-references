@@ -1271,7 +1271,7 @@ paths:
       description: |
         Retrieves users assignments for a specified group.
 
-        `iam.user_read_own` scope allows customer to retrieve only users assignments from a specified group but only from the same company assignment
+        The `iam.user_read_own` scope allows customer to retrieve only users assignments from a specified group but only from the same company assignment
       operationId: GET-iam-list-group-users
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -1347,11 +1347,11 @@ paths:
         - Group Assignments
       summary: Adding a user to a group
       description: |
-        Assigns a user to a specified group. The user will gain all access controls (scopes) specified for this group.
+        Assigns a user to a specified group. The user gains all access controls (scopes) specified for this group.
         
         Groups assigned to employee users must share the same vendor identifier.
 
-        `iam.assignment_create_own` scope allows customer to assign a user to a specified group only if the user is assigned to the same company.
+        The `iam.assignment_create_own` scope allows customer to assign a user to a specified group only if the user is assigned to the same company.
       operationId: POST-iam-add-user-to-group
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -1929,7 +1929,7 @@ paths:
       description: |
         Retrieves all roles available for a specific tenant. You can filter the results by using query parameters. 
 
-        Each role contains a `permissions` list, and each permission is combined with the `applicablePermissionResources`field. This field allows you to whitelist resources that the permission is applicable to. The field can only contain resources specified in the permission document under `applicableResources`.
+        Each role contains a `permissions` list, and each permission is combined with the `applicablePermissionResources`field. This field allows you to allowlist resources that the permission is applicable to. The field can only contain resources specified in the permission document under `applicableResources`.
       operationId: GET-iam-list-tenant-roles
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -2814,7 +2814,7 @@ paths:
                 Employee list with extended groups:
                   value:
                     - id: 00u4ukrqkmEP1opFf417
-                      firstName: John 2
+                      firstName: John
                       lastName: Doe
                       backofficeUserNumber: 00u4ukrqkmEP1opFf417
                       preferredSite: main
@@ -3513,7 +3513,7 @@ components:
             type: string
         userType:
           type: string
-          description: 'The type of the group. Possible values: ''CUSTOMER'', ''EMPLOYEE''. Default value ''EMPLOYEE'' if not provided'
+          description: 'The type of the group. Possible values: ''CUSTOMER'', ''EMPLOYEE''. Default value ''EMPLOYEE'' if not provided'.
           example: CUSTOMER
           default: EMPLOYEE
           enum:
@@ -3528,11 +3528,11 @@ components:
             type: string
         b2b:
           type: object
-          description: additional properties for B2B
+          description: Additional properties for B2B.
           properties:
             legalEntityId:
               type: string
-              description: identifier of the assigned legal entity
+              description: Identifier of the assigned legal entity.
       required:
         - name
     GroupUpdateRequest:
@@ -3847,7 +3847,7 @@ components:
         applicablePermissionResources:
           type: array
           description: |
-            Allows you to whitelist resources that the permission is applicable to. Can only contain resources specified in the permission document under `applicableResources`.
+            Allows you to allowlist resources that the permission is applicable to. Can only contain resources specified in the permission document under `applicableResources`.
           items:
             type: string
         id:
@@ -4131,7 +4131,7 @@ components:
       in: path
       required: true
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: The tenant name should always be written in lowercase.
       schema:
@@ -4228,7 +4228,7 @@ components:
       schema:
         type: string
       description: |
-        Search by the name of a given resource. The value will be conformed against all of the specified accepted languages.
+        Search by the name of a given resource. The value is conformed against all of the specified accepted languages.
     trait_q_query_param:
       name: q
       in: query
@@ -4268,14 +4268,14 @@ components:
       required: false
       schema:
         type: string
-      description: 'Search by the description of the the given resource, it will be conformed against all of the specified accepted-languages.'
+      description: 'Search by the description of the the given resource, it is conformed against all of the specified accepted-languages.'
     userId:
       name: userId
       in: path
       required: true
       schema:
         type: string
-      description: 'User''s unique identifier, generated when the user is created.'
+      description: 'User unique identifier, generated when the user is created.'
     groupId:
       name: groupId
       in: path
