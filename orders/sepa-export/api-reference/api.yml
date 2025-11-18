@@ -23,7 +23,7 @@ paths:
         - name: tenant
           in: path
           description: |-
-            Your Emporix tenan name.
+            Your Emporix tenant name.
             **Note**: The `tenant` should always be written in lowercase.
           required: true
           schema:
