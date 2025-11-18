@@ -428,7 +428,7 @@ components:
       type: object
       properties:
         file:
-          type: string
+          type: object
           format: binary
           description: Content of the file. The max file size is 10MB.
         body:
