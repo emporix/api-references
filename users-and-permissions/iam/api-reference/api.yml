@@ -1351,7 +1351,7 @@ paths:
         
         Groups assigned to employee users must share the same vendor identifier.
 
-        The `iam.assignment_create_own` scope allows customer to assign a user to a specified group only if the user is assigned to the same company.
+        The `iam.assignment_create_own` scope allows a customer to assign a user to a specified group only if the user is assigned to the same company.
       operationId: POST-iam-add-user-to-group
       parameters:
         - $ref: '#/components/parameters/tenant'
