@@ -36,8 +36,8 @@ To add a new entry to your configuration of currencies, you need to send a reque
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/unit-handling-service/api-reference/" %}
-[api-reference](../../configuration/unit-handling-service/api-reference/)
+{% content-ref url="../../configuration/currency-service/api-reference" %}
+[api-reference](../../configuration/currency-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -175,7 +175,7 @@ curl -i -X POST
 ## How to implement different pricing strategies
 
 {% hint style="warning" %}
-To learn more about pricing strategies available in the Emporix Commerce Engine, check out the [Pricing guide](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/pricing/pricing-v2#price-models).
+To learn more about pricing strategies available in the Emporix Commerce Engine, check out the [Pricing guide](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/pricing/pricing-v2#price-models).
 {% endhint %}
 
 Implementing any pricing strategy is a process made up of three steps:
@@ -639,8 +639,8 @@ Create a sample product through the [Creating a new product](https://developer.e
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../products-labels-and-brands/label-service/api-reference/" %}
-[api-reference](../../products-labels-and-brands/label-service/api-reference/)
+{% content-ref url="../../products-labels-and-brands/product-service/api-reference/" %}
+[api-reference](../../products-labels-and-brands/product-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1241,5 +1241,3 @@ curl -i -X PATCH
   "includesTax": true
 }'
 ```
-
-***
