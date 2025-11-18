@@ -46,7 +46,7 @@ curl -i -X POST
 
 ## Set up the Sequential ID service
 
-This configuration is used to set up the format of invoice numbers. Set up the numbers by invoking the sequential id service with the [Creating a new sequencial schema](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas) endpoint.
+This configuration is used to set up the format of invoice numbers. Set up the numbers by invoking the sequential id service with the [Creating a new sequential schema](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
