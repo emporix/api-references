@@ -26,10 +26,10 @@ In the following example, we are changing the expiration date offset to 14 days.
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X PUT 
+  'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "key": "return.defaultExpiryDate",
     "secured": false,
@@ -79,11 +79,11 @@ The `returns.returns_read` and `returns.returns_manage` scopes are only required
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/return/{tenant}/returns' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -H 'saas-token: string' \
+curl -i -X POST 
+  'https://api.emporix.io/return/{tenant}/returns' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
+  -H 'saas-token: string' 
   -d '{
     "orders": [
       {
@@ -145,11 +145,11 @@ The `returns.returns_read_own` and `returns.returns_manage_own` scopes are only 
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/return/{tenant}/returns' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -H 'saas-token: string' \
+curl -i -X POST 
+  'https://api.emporix.io/return/{tenant}/returns' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
+  -H 'saas-token: string' 
   -d '{
     "orders": [
       {
@@ -200,10 +200,10 @@ Customers can update their return request only when the approval status of the r
 {% hint style="warning" %}
 The following set of scopes is granted to a customer group:
 
-```
-returns.returns_read_own returns.returns_manage_own
- 
-```
+
+* `returns.returns_read_own` 
+* `returns.returns_manage_own`
+
 
 The `returns.returns_read` and `returns.returns_manage` scopes are only required for employee groups.
 {% endhint %}
@@ -217,11 +217,11 @@ In this scenario, the customer updates the reason for the return.
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/return/{tenant}/returns/{returnId}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -H 'saas-token: string' \
+curl -i -X PUT 
+  'https://api.emporix.io/return/{tenant}/returns/{returnId}' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
+  -H 'saas-token: string' 
   -d '{
     "id": "6369140c5c6de75d9e84c97f",
     "orders": [
@@ -281,11 +281,11 @@ In this scenario, the employee updates the approval status of the return request
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/return/{tenant}/returns/{returnId}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -H 'saas-token: string' \
+curl -i -X PUT 
+  'https://api.emporix.io/return/{tenant}/returns/{returnId}' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
+  -H 'saas-token: string' 
   -d '{
     "id": "6369140c5c6de75d9e84c97f",
     "orders": [

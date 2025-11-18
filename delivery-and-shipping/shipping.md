@@ -77,11 +77,11 @@ Shipping zones are countries that your business delivers products to. You can cr
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/shipping/{tenant}/{site}/zones' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: fr' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/shipping/{tenant}/{site}/zones' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: fr' 
+  -H 'Content-Type: application/json' 
   -d '{
     "shipTo": [
       {

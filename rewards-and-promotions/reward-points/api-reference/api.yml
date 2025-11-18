@@ -13,11 +13,6 @@ paths:
         Retrieves a detailed summary of added and redeemed reward points for all customers of a given tenant. The tenant name is selected based on the access token. 
 
         **Note:** Only employees are authorized to perform this action.
-
-        ***
-
-        **Required scopes** 
-        * `rewardspoints.rewardpoints_view`
       operationId: GET-reward-points-retrieve-rewards-summary
       tags:
         - Reward Points Management
@@ -92,11 +87,6 @@ paths:
         Fetches the number of reward points for a particular customer of a given tenant. The tenant name is retrieved from the access token. 
 
         **Note:** Only employees are authorized to perform this action.
-
-        ***
-
-        **Required scopes** 
-        * `rewardspoints.rewardpoints_view`
       operationId: GET-reward-points-fetch-customer-reward-points
       tags:
         - Reward Points Management
@@ -125,11 +115,6 @@ paths:
     post:
       description: |
         Creates a new reward points entry for a particular customer of a given tenant. The tenant name is retrieved from the access token. 
-
-        ***
-
-        **Required scopes** 
-        * `rewardspoints.rewardpoints_manage`
       operationId: POST-reward-points-create-customer-reward-entry
       tags:
         - Reward Points Management
@@ -176,11 +161,6 @@ paths:
     delete:
       description: |-
         Deletes a reward points entry of a specified customer for a given tenant. The tenant name is retrieved from the access token. 
-
-        ***
-
-        **Required scopes** 
-        * `rewardspoints.rewardpoints_manage`
       operationId: DELETE-reward-points-remove-customer-reward-entry
       tags:
         - Reward Points Management
@@ -206,11 +186,6 @@ paths:
         Retrieves a detailed summary of added and redeemed reward points of a single specified customer for a given tenant. The tenant name is retrieved from the access token. 
 
         **Note:** Only employees are authorized to perform this action.
-
-        ***
-
-        **Required scopes** 
-        * `rewardspoints.rewardpoints_view`
       operationId: GET-reward-points-retrieve-customer-reward-summary
       tags:
         - Reward Points Management
@@ -275,11 +250,6 @@ paths:
         Adds reward points to a specific customer's account for a given tenant. The tenant name is retrieved from the access token. 
 
         **Note:** Only employees are authorized to perform this action.
-
-        ***
-
-        **Required scopes** 
-        * `rewardspoints.rewardpoints_manage`
       operationId: POST-reward-points-add-customer-reward-points
       tags:
         - Reward Points Management
@@ -326,11 +296,6 @@ paths:
         Redeems reward points for a specified customer for a given tenant without generating a coupon. The tenant name is retrieved from the access token. 
 
         **Note:** Only employees are authorized to perform this action.
-
-        ***
-
-        **Required scopes** 
-        * `rewardspoints.rewardpoints_manage`
       operationId: POST-reward-points-redeem-customer-points
       tags:
         - Reward Points Management
@@ -464,8 +429,6 @@ paths:
 
         **Note**: Only employees have the authority to configure the redemption options.
 
-        **Required scopes** 
-        * `rewardspoints.rewardpoints_manage`
       operationId: POST-reward-points-create-redeem-options
       tags:
         - Redeem Options Management
@@ -522,6 +485,8 @@ paths:
                     status: VALID
       security:
         - CustomerAccessToken: []
+        - OAuth2:
+            - rewardspoints.rewardpoints_manage
       summary: Creating redemption options
     get:
       summary: Retrieving redemption options
@@ -582,9 +547,6 @@ paths:
         Deletes a reward points redemption option for a given tenant.
 
         **Note**: Only employees have the authority to delete the redemption options.
-
-        **Required scopes** 
-        * `rewardspoints.rewardpoints_manage`
       operationId: DELETE-reward-points-remove-redeem-option
       tags:
         - Redeem Options Management
@@ -618,9 +580,6 @@ paths:
         Updates a reward points redemption option for a given tenant.
 
         **Note**: Only employees have the authority to update the redemption options.
-
-        **Required scopes** 
-        * `rewardspoints.rewardpoints_manage`
       operationId: PUT-reward-points-update-redeem-option
       tags:
         - Redeem Options Management
@@ -684,6 +643,8 @@ paths:
                     version: 1
       security:
         - CustomerAccessToken: []
+        - OAuth2:
+            - rewardspoints.rewardpoints_manage
       summary: Updating redemption options
   '/reward-points/public/customer/redeem':
     post:

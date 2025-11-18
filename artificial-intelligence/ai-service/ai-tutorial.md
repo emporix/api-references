@@ -253,3 +253,71 @@ curl -X 'GET' \
 
 The job entity contains information about the request and response from the agent.
 
+## How to export and import AI agents
+
+Exporting AI agents lets you migrate your agents configuration together with their dependent tools and MCP servers. 
+
+You can use the export and import to:
+* Back up agents for disaster recovery
+* Migrate agents from development to production
+* Share agents across different tenants
+* Clone agents for testing
+
+{% stepper %}
+{% step %}
+### Export agents
+Collect the `agentIds` you want to export, then call the [Exporting agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/export) endpoint.
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/export' \
+  --header 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "agentIds": [
+      "complaint-agent-id"
+    ]
+  }'
+```
+
+The response contains:
+
+* `data`: a Base64-encoded JSON payload with the exported agents, tools, and MCP servers.
+* `checksum`: a hash of the decoded `data` string.
+* `jobId`: the export job identifier (you can poll the [Retrieving agent job by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/jobs) endpoint if you need job status updates).
+
+Store both `data` and `checksum`. You will need them when importing.
+{% endstep %}
+
+{% step %}
+### Import agents
+Use the payload obtained during export and call the [Importing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/import) endpoint. Import requires the `ai.agent_manage` scope.
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/import' \
+  --header 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "data": "<BASE64_PAYLOAD_FROM_EXPORT>",
+    "checksum": "<CHECKSUM_FROM_EXPORT>"
+  }'
+  ```
+  
+  The response summarizes what was imported and returns a `jobId`. 
+
+  * If imported tools or MCP servers already exist in the target tenant, they're reused.
+  * If they don't exist, new instances are created. If a token is required, they get a **disabled state** for your review, if no token is required, they get **enabled** state.
+  * Imported agents are also disabled by default as a safety measure.
+
+{% endstep %}
+{% endstepper %}
+
+{% hint style="info" %}
+  
+After importing the agent, review the entities in the response summary and check if any required API tokens or credentials need to be configured before enabling the agent.
+
+{% endhint %}
+

@@ -23,15 +23,15 @@ To create a new label, send the request to the [Creating a label](https://develo
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../brand-service/api-reference/" %}
-[api-reference](../brand-service/api-reference/)
+{% content-ref url="../label-service/api-reference/" %}
+[api-reference](../label-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  https://api.emporix.io/label/labels \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  https://api.emporix.io/label/labels 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "name": "Worldwide Shipment",
     "description": "<p>Worldwide Shipment</p>"
@@ -52,10 +52,10 @@ The `labelId` is necessary to provide.
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/media/{tenant}/assets' \
-  --header 'Content-Type: multipart/form-data' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/media/{tenant}/assets' 
+  --header 'Content-Type: multipart/form-data' 
   --data '{
     "file": {
       "externalValue": "https://res.cloudinary.com/saas-ag/image/upload/v1695804155/emporix-logo-white-2f5e621206edefea6015fb4793959376_nswfbz.png"
@@ -85,16 +85,16 @@ To specify a brand for a product, you need to provide the `labelId` field on pro
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../product-service/api-reference/" %}
+[api-reference](../product-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PATCH \
-  'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X PATCH 
+  'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '{
     "published": true
     "labelIds": ["66fe65e83132e30001e6be29"]

@@ -38,15 +38,15 @@ To assign specific access control level to a group, first you need to retrieve a
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../session-context/api-reference/" %}
-[api-reference](../session-context/api-reference/)
+{% content-ref url="../iam/api-reference/" %}
+[api-reference](../iam/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET \
-  'https://api.emporix.io/iam/{tenant}/access-controls?pageNumber=1&pageSize=60&metadataModifiedAt=2022-01-01&roleId=1rl5e52e-6e27-4ac5-9471-2467d3fb7503&resourceId=string&expand=role%2Cresource' \
-  -H 'Accept-Language: string' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+curl -i -X GET 
+  'https://api.emporix.io/iam/{tenant}/access-controls?pageNumber=1&pageSize=60&metadataModifiedAt=2022-01-01&roleId=1rl5e52e-6e27-4ac5-9471-2467d3fb7503&resourceId=string&expand=role%2Cresource' 
+  -H 'Accept-Language: string' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'X-Total-Count: true'
 ```
 
@@ -60,16 +60,16 @@ The user type in the `userType` parameter can be specified as `CUSTOMER` or `EMP
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../session-context/api-reference/" %}
-[api-reference](../session-context/api-reference/)
+{% content-ref url="../iam/api-reference/" %}
+[api-reference](../iam/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/iam/{tenant}/groups' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: de' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/iam/{tenant}/groups' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: de' 
+  -H 'Content-Type: application/json' 
   -d '{
     "name": {
       "en": "Catalog managers",
@@ -103,15 +103,15 @@ The user type in the `userType` parameter can be specified as `customer` or `emp
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../session-context/api-reference/" %}
-[api-reference](../session-context/api-reference/)
+{% content-ref url="../iam/api-reference/" %}
+[api-reference](../iam/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/iam/{tenant}/groups/{groupId}/users' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/iam/{tenant}/groups/{groupId}/users' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "userId": " ",
     "userType": "EMPLOYEE"

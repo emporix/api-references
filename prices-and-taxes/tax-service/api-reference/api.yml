@@ -17,11 +17,6 @@ paths:
       summary: Creating a new tax configuration
       description: |
         Creates a new tax configuration.
-
-        ***
-
-        ### Required scopes
-        * `tax.tax_manage`
       security:
         - OAuth2:
             - tax.tax_manage
@@ -97,11 +92,6 @@ paths:
       summary: Retrieving all tax configurations
       description: |-
         Retrieves all tax configurations assigned to the tenant. You can filter the results with query parameters.
-
-        ***
-
-        ### Required scopes
-        * `tax.tax_read`
       security:
         - OAuth2:
             - tax.tax_read
@@ -233,11 +223,6 @@ paths:
       summary: Retrieving a tax configuration
       description: |-
         Retrieves a tax configuration for a specified location.
-
-        ***
-
-        ### Required scopes
-        * `tax.tax_read`
       security:
         - OAuth2:
             - tax.tax_read
@@ -315,11 +300,6 @@ paths:
         Updates a tax configuration based on the specified location code.
 
         **Note**: The tax configuration's identifier - the country code - is immutable and cannot be changed using this endpoint.
-
-        ***
-
-        ### Required scopes
-        * `tax.tax_manage`
       security:
         - OAuth2:
             - tax.tax_manage
@@ -398,11 +378,6 @@ paths:
       summary: Deleting a tax configuration
       description: |-
         Deletes a tax configuration based on the specified location code.
-
-        ***
-
-        ### Required scopes
-        * `tax.tax_manage`
       security:
         - OAuth2:
             - tax.tax_manage
@@ -425,7 +400,7 @@ paths:
         name: locationCode
         in: path
         required: true
-        description: 'Location''s country code, defined when the tax configuration is created.'
+        description: 'Location country code, defined when the tax configuration is created.'
   '/tax/{tenant}/taxes/calculation-commands':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -531,7 +506,6 @@ paths:
 
         **Note**: This endpoint calculates net and gross values for prices based on existing tax configurations. To use this endpoint, you need to create tax configurations first.
           * To calculate gross values beetween countries, you need to create tax configurations for both countries.
-
       tags:
         - Tax calculation
       security:
@@ -894,7 +868,7 @@ components:
       in: path
       required: true
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: The tenant should always be written in lowercase.
       schema:
