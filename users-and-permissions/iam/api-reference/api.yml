@@ -3513,7 +3513,7 @@ components:
             type: string
         userType:
           type: string
-          description: 'The type of the group. Possible values: ''CUSTOMER'', ''EMPLOYEE''. Default value ''EMPLOYEE'' if not provided'.
+          description: 'The type of the group. Possible values: ''CUSTOMER'', ''EMPLOYEE''. Default value ''EMPLOYEE'' if not provided.'
           example: CUSTOMER
           default: EMPLOYEE
           enum:
