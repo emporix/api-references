@@ -91,7 +91,7 @@ curl -L
 To change your tenant language configuration, send a request to the [Updating a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint with updated language information in the request body.
 
 {% hint style="warning" %}
-The id in the request body must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
+The ID in the request body must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
