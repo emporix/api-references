@@ -603,6 +603,10 @@ paths:
         * If requested site's `includesTax` field is not specified:
           * If the `includesTax` field in the price model associated with the price is set to `true`, the matched price is returned as a gross value.
           * If the `includesTax` field in the price model associated with the price is set to `false`, the matched price is returned as a net value.
+      security:
+        - OAuth2:
+            - price.price_read
+            - price.price_manage
       responses:
         '200':
           description: OK
@@ -727,10 +731,6 @@ paths:
         description: ''
       tags:
         - Price matching
-      security:
-        - OAuth2:
-            - price.price_manage
-            - price.price_read
       operationId: POST-price-match-prices
   '/price/{tenant}/match-prices-by-context':
     parameters:
@@ -3575,6 +3575,7 @@ components:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
             price.price_manage: Needed to manage prices.
+            price.price_read: Needed to retrieve prices.
             price.price_own: Needed to calculate product prices (legacy).
             price.prod_price_calculate: Needed to calculate prices and synchronize sale prices (legacy).
             price.price_delete_all: Needed to delete all prices at once (legacy).
