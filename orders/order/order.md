@@ -14,6 +14,20 @@ The Order Service is divided into two categories based on who manages the orders
 * **Tenant-Managed Orders** – This refers to the management of customer orders. Customers create the orders, which are then accessible to your employees for processing, status updates, and data modifications.
 * **Customer-Managed Orders** – These are orders submitted by your customers. When logged into their account, customers can view and access their order history.
 
+Scopes neccessary to work with orders are:
+* order.order_post: Needed to create new order as a customer.
+* order.order_read: Needed to read order.
+* order.order_read_le: Needed to read legal entity orders.
+* order.order_update: Needed to update an order.
+* order.order_update_completed: Needed to update an order with a `completed` status.
+* order.order_create: Needed to create new order by merchant.
+* order.order_delete: Needed to delete an order.
+* order.history_view: Needed to view order when logged as a customer.
+* order.order_readascustomer: Needed to read an order as a customer.
+* order.order_updateascustomer: Needed to update an order as a customer.
+* order.order_read_by_vendor: The scope allows vendor to read order with assigned vendor.
+* order.order_manage_by_vendor: The scope allows vendor to manage order with assigned vendor.
+
 As Emporix offers full commerce functionality, order calculations and management can be handled end-to-end by our Commerce Orchestration Platform services. However, to support integrations with other systems, we have also introduced other capabilities. Order management with external systems can be approached using three different models:
 
 * asynchronous calculation
