@@ -131,7 +131,7 @@ paths:
       description: |-
         Retrieves all prices assigned to the tenant. You can filter the results with query parameters.
 
-        ** Additional scopes info**
+        **Additional scopes info**
         No specific scopes are required.
         The `price.price_read_by_vendor` scope allows to fetch just the prices belonging to the vendor.
       security:
@@ -1312,7 +1312,7 @@ paths:
 
         **Important**: If you want to delete a price model that has prices assigned to it, you need to set the `forceDelete` query parameter to `true`. In this case, all prices assigned to the price model will be deleted as well, in an asynchronous manner.
 
-        ** Additional scopes info**
+        **Additional scopes info**
         The `price.pricemodel_manage_admin` scope is only required if you want to delete a price model that has prices assigned to it.
       parameters:
         - schema:
@@ -3888,8 +3888,6 @@ components:
           code: 204
           status: No Content
   requestBodies: {}
-security:
-  - OAuth2: []
 tags:
   - name: Price lists
   - name: Price matching
