@@ -544,6 +544,14 @@ paths:
       summary: Deleting a price
       tags:
         - Prices
+      parameters:
+        - name: priceId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Price's unique identifier, generated when the price is created.
+        - $ref: '#/components/parameters/trait_tenant'
       responses:
         '204':
           description: The request was successful. The price has been updated.
@@ -564,14 +572,7 @@ paths:
             - price.price_manage
             - price.price_manage_by_vendor
       operationId: DELETE-price-remove-price
-    parameters:
-      - name: priceId
-        in: path
-        required: true
-        schema:
-          type: string
-        description: 'Price''s unique identifier, generated when the price is created.'
-      - $ref: '#/components/parameters/trait_tenant'
+
   '/price/{tenant}/match-prices':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -980,9 +981,9 @@ paths:
                   useFallback: false
                   searchMode: ALL_PRICES
         required: false
-    parameters:
-      - $ref: '#/components/parameters/trait_tenant'
-      - $ref: '#/components/parameters/query_pricesearch_expand'
+      parameters:
+        - $ref: '#/components/parameters/trait_tenant'
+        - $ref: '#/components/parameters/query_pricesearch_expand'
   '/price/{tenant}/priceModels':
     post:
       summary: Creating a new price model
