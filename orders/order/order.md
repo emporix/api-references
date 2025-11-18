@@ -275,8 +275,8 @@ You have to register your listener in the Emporix Webhook Service so that the li
     "cartId": "68481e9e8bf22744fc578572",
     "entries": [
         {
-            "id": "0_SLI_samsung-galaxy-s24-gross",
-            "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross",
+            "id": "0_SLI_mobile-phone-s24-gross",
+            "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s24-gross",
             "keepAsSeparateLineItem": true,
             "type": "INTERNAL",
             "amount": 2,
@@ -290,11 +290,11 @@ You have to register your listener in the Emporix Webhook Service so that the li
                 "taxRate": 19.0
             },
             "product": {
-                "id": "samsung-galaxy-s24-gross",
-                "sku": "Samsung Galaxy s24 gross",
-                "name": "Samsung Galaxy s24 gross",
+                "id": "mobile-phone-s24-gross",
+                "sku": "Mobile Phone s24 gross",
+                "name": "Mobile Phone s24 gross",
                 "localizedName": {
-                    "en": "Samsung Galaxy s24 gross"
+                    "en": "Mobile Phone s24 gross"
                 },
                 "published": true,
                 "images": [
@@ -589,8 +589,8 @@ You have to register your listener in the Emporix Webhook Service so that the li
             }
         },
         {
-            "id": "2_SLI_samsung-galaxy-s27-gross",
-            "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s27-gross",
+            "id": "2_SLI_mobile-phone-s27-gross",
+            "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s27-gross",
             "keepAsSeparateLineItem": true,
             "type": "INTERNAL",
             "amount": 2,
@@ -604,13 +604,13 @@ You have to register your listener in the Emporix Webhook Service so that the li
                 "taxRate": 7.0
             },
             "product": {
-                "id": "samsung-galaxy-s27-gross",
-                "sku": "samsung-galaxy-s27-gross",
-                "name": "samsung-galaxy-s27-gross",
+                "id": "mobile-phone-s27-gross",
+                "sku": "mobile-phone-s27-gross",
+                "name": "mobile-phone-s27-gross",
                 "localizedName": {
-                    "en": "samsung-galaxy-s27-gross"
+                    "en": "mobile-phone-s27-gross"
                 },
-                "description": "[en:samsung-galaxy-s27-gross]",
+                "description": "[en:mobile-phone-s27-gross]",
                 "published": true,
                 "images": [],
                 "productType": "BASIC"
@@ -1341,7 +1341,7 @@ curl -L
 
 ## Order splitting
 
-To enable order splitting, the Order Service works directly with the [Vendor Service](../../api-guides-and-references/companies-and-customers/vendor-service/).
+To enable order splitting, the Order Service works directly with the [Vendor Service](../../companies-and-customers/vendor-service/api-reference/).
 
 When a customer completes checkout, a single order is created containing all the selected products. Each order entry includes vendor information, making it a standard order with additional vendor details.
 
@@ -1366,5 +1366,5 @@ To support this functionality, the following order attributes are introduced:
 * `subOrders` - list of suborders that were created after splitting the master order
 
 {% hint style="info" %}
-To check the end to end story for order splitting, see the [Vendor Tutorial - Order Split](../../api-guides-and-references/companies-and-customers/vendor-service/vendor/#how-does-vendor-work-with-order-splitting) example.
+To check the end to end story for order splitting, see the [Vendor Tutorial - Order Split](../../companies-and-customers/vendor-service/vendor.md#order-split-example) example.
 {% endhint %}
