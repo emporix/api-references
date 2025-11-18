@@ -57,8 +57,8 @@ paths:
         - Invoice Jobs
       description: |
         Endpoint for creating a job that triggers invoice creation. There are two types of jobs: manual and automatic.
-        1. Manual - takes orderIds from which the invoices should be created. The orderIds come from the request payload.
-        2. Automatic - performs a query to find orders that are ready for invoice generation based on configured parameters. The query parameters are defined in configuration service.
+        * Manual - takes `orderIds` from which the invoices should be created. The `orderIds` come from the request payload.
+        * Automatic - performs a query to find orders that are ready for invoice generation based on configured parameters. The query parameters are defined in configuration service.
       operationId: POST-invoice-create-job
       requestBody:
         content:
