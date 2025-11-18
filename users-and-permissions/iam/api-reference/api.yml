@@ -1495,7 +1495,7 @@ paths:
       description: |
         Removes a specified user from a specified group. 
         
-        The `iam.assignment_delete_own` scope allows customer to remove user from a specified group only if the user is assigned to the same company.
+        The `iam.assignment_delete_own` scope allows a customer to remove user from a specified group only if the user is assigned to the same company.
       operationId: DELETE-iam-remove-user-from-group
       parameters:
         - $ref: '#/components/parameters/tenant'
