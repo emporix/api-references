@@ -634,16 +634,15 @@ components:
     GetPrivateAsset:
       description: This is a successful response when requesting a PRIVATE BLOB asset.
       content:
-        application/octet-stream:
+        text/plain:
           schema:
             type: string
-            format: binary
+            format: byte
       headers:
         ETag:
           schema:
             type: string
           description: Version identifier of the resource, necessary for caching.
-
     Redirect:
       description: This is a successful response when requesting for a PUBLIC access asset.
       headers:
