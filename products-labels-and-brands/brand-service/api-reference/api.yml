@@ -19,13 +19,7 @@ paths:
       tags:
         - Brands
       description: |-
-        Retrieves all brands created in the tenant.
-
-        ***
-
-        **Required scopes**
-
-        No specific scopes are required.
+        Retrieves all brands created in the tenant. No specific scopes are required.
       operationId: GET-brand-list-brands
       parameters:
         - $ref: '#/components/parameters/query_q'
@@ -87,12 +81,6 @@ paths:
         - Brands
       description: |-
         Creates a new brand.
-
-        ***
-
-        **Required scopes**
-
-           * `brand.brand_manage`
       operationId: POST-brand-create-brand
       parameters:
         - $ref: '#/components/parameters/header_content_language'
@@ -141,13 +129,7 @@ paths:
       tags:
         - Brands
       description: |-
-        Retrieves details of a specified brand.
-
-        ***
-
-        **Required scopes**
-
-        No specific scopes are required.
+        Retrieves details of a specified brand. No specific scopes are required.
       operationId: GET-brand-retrieve-brand
       parameters:
         - $ref: '#/components/parameters/header_accept_language'
@@ -188,11 +170,6 @@ paths:
         - Brands
       description: |
         Updates a specified brand by replacing all of its existing data with data from the request body.
-        ***
-
-        **Required scopes**
-
-        * `brand.brand_manage`
       operationId: PUT-brand-update-brand
       parameters:
         - $ref: '#/components/parameters/header_content_language'
@@ -242,11 +219,6 @@ paths:
         - Brands
       description: |
         Partially updates a specified brand by replacing fields provided in the request body.
-        ***
-
-        **Required scopes**
-
-        * `brand.brand_manage`
       operationId: PATCH-brand-update-brand
       parameters:
         - $ref: '#/components/parameters/header_content_language'
@@ -301,12 +273,6 @@ paths:
         - Brands
       description: |
         Deletes a specified brand.
-
-        ***
-
-        **Required scopes**
-
-        * `brand.brand_manage`
       operationId: DELETE-brand-remove-brand
       security:
         - OAuth2:
