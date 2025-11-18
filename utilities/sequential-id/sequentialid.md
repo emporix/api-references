@@ -9,7 +9,7 @@ layout:
 
 # Sequential-id Tutorial
 
-The Sequential ID Service serves for generating subsequential unique IDs for such objects as orders, invoices, quotes, pick-packs, or similar.\
+The Sequential ID Service serves for generating subsequential unique IDs for such objects as orders, invoices, quotes, pick-packs, or similar.
 Define a pattern how such IDs should look like in a schema for specific objects, use placeholders for computing certain values dynamically, and the Sequential ID Service takes care of following the defined sequence.
 
 To add your custom sequence ID schema, make sure you provide the correct `schemaType`. The `schemaType` field has to correspond to the schema used in the Emporix system for a particular entity:
