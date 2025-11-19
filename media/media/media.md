@@ -17,8 +17,8 @@ Currently, it is possible to assign assets to categories and products only.
 
 ## How to manage public and internal assets
 
-The assets can either be linked to an external website where they are stored, or uploaded in the form of blob data by using a multipart/form-data request.\
-You can also specify the access types of the uploaded files - the public assets are files that will be visible on your business' storefront, and the private access files will be accessible only to your tenant's employees.
+The assets can either be linked to an external website where they are stored, or uploaded in the form of blob data by using a multipart/form-data request.
+You can also specify the access types of the uploaded files - the public assets are files that are visible on your business' storefront, and the private access files are accessible only to your tenant employees.
 
 In the following scenario, we are going to create public and private assets for an already existing category.
 
@@ -28,7 +28,7 @@ Before you begin, ensure that a category with a category ID already exists. For 
 
 ### Create private assets by link
 
-To add an asset for a category, you need to send a request to the Creating an asset endpoint with the `media.asset_manage` scope.\
+To add an asset for a category, you need to send a request to the [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint with the `media.asset_manage` scope.
 In the following example, we are creating a `private` type of an asset.
 
 {% hint style="warning" %}

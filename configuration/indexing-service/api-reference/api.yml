@@ -4,7 +4,7 @@ info:
   version: v1
   description: |
     The indexing service allows you to manage indexing configuration. Currently supported index providers:
-      * Algolia (https://www.algolia.com/)
+      * Algolia - https://www.algolia.com
   contact:
     email: documentation@emporix.com
 servers:
@@ -15,7 +15,7 @@ paths:
       summary: Create a new configuration
       description: |-
         Creates a new index configuration. Currently supported providers:
-        * ALGOLIA (https://www.algolia.com)
+        * Algolia - https://www.algolia.com
 
         Identifier of a newly created configuration is a provider name.
       security:
@@ -102,7 +102,7 @@ paths:
       summary: Get configuration by provider name
       description: |-
         Retrieves a single configuration by a provider name. Currently supported providers:
-        * ALGOLIA
+        * Algolia - https://www.algolia.com
       security:
         - OAuth2:
             - indexing.search_view
@@ -259,7 +259,7 @@ paths:
       operationId: GET-indexing-retrieve-public-config
       description: |-
         Retrieves a single public configuration by a provider name. Currently supported providers:
-        * ALGOLIA
+        * Algolia - https://www.algolia.com
       security:
         - OAuth2: []
   '/indexing/{tenant}/reindex':
@@ -284,8 +284,7 @@ paths:
       tags:
         - Reindex
       description: |-
-        Triggers indexing process of products for the tenant. The reindex works with the following modes:
-        * `FULL` - all products will be reindexed
+        Triggers indexing process of products for the tenant. The reindex works with a `FULL` mode - all products are reindexed.
       security:
         - OAuth2:
             - indexing.search_manage
@@ -334,7 +333,7 @@ components:
           description: Identifier of an index.
         provider:
           type: string
-          description: 'Index provider name. Supported providers: ALGOLIA'
+          description: 'Index provider name. Supported providers: Algolia - https://www.algolia.com'
           enum:
             - ALGOLIA
         active:

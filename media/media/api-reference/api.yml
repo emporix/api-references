@@ -21,12 +21,6 @@ paths:
         Creates a new asset for the tenant. An asset represents a digital (max 10MB) object in the system, for example a video, image, or a document.
         - To create an asset of the `BLOB` type, use the `multipart/form-data` request body. 
         - To create an asset of the `LINK` type, use the `application/json` request body.
-
-        ***
-
-         ### Required scopes
-        * `media.asset_manage`
-        * `media.asset_manage_by_vendor` - allows to create an asset for products which belong to the vendor
       security:
         - OAuth2:
             - media.asset_manage
@@ -147,12 +141,6 @@ paths:
       summary: Retrieving all assets
       description: |-
         Retrieves all assets assigned to the tenant. You can filter, sort, and paginate the results with query parameters.
-
-        ***
-
-         ### Required scopes
-        * `media.asset_read`
-        * `media.asset_read_by_vendor` - allows to read assets which belong to the vendor
       security:
         - OAuth2:
             - media.asset_read
@@ -185,12 +173,6 @@ paths:
       summary: Retrieving an asset
       description: |-
         Retrieves an asset by its unique identifier.
-
-        ***
-
-         ### Required scopes
-        * `media.asset_read`
-        * `media.asset_read_by_vendor` - allows to read an asset which belongs to the vendor
       security:
         - OAuth2:
             - media.asset_read
@@ -216,12 +198,6 @@ paths:
         Updates a given asset. The `type` and `access` properties are immutable. Accepts files of up to 10MB.
         - To update an asset of the `BLOB` type, use `multipart/form-data` request body. 
         - To update an asset of the `LINK` type, use `application/json` request body.
-
-        ***
-
-         ### Required scopes
-        * `media.asset_manage`
-        * `media.asset_manage_by_vendor` - allows to update an asset which belong to the vendor
       security:
         - OAuth2:
             - media.asset_manage
@@ -285,10 +261,6 @@ paths:
       summary: Deleting an asset
       description: |-
         Deletes an asset.
-
-         ### Required scopes
-        * `media.asset_manage`
-        * `media.asset_manage_by_vendor` - allows to delete an asset which belong to the vendor
       security:
         - OAuth2:
             - media.asset_manage
@@ -313,12 +285,6 @@ paths:
       summary: Downloading an asset
       description: |-
         Downloads an asset by its unique identifier.
-
-        ***
-
-         ### Required scopes
-        * `media.asset_read`
-        * `media.asset_read_by_vendor` - allows to download an asset which belongs to the vendor
       security:
         - OAuth2:
             - media.asset_read
@@ -466,9 +432,9 @@ components:
           format: binary
           description: Content of the file. The max file size is 10MB.
         body:
+          description: Asset JSON creation payload.
           allOf:
             - $ref: '#/components/schemas/AssetCreateBlob'
-          description: Asset Json creation payload
       required:
         - file
         - body
@@ -514,29 +480,29 @@ components:
         - access
     GetAsset:
       title: Get Asset
-      type: object
       allOf:
         - $ref: '#/components/schemas/Asset'
-      properties:
-        id:
-          type: string
-          description: Unique identifier of an asset.
-        type:
-          type: string
-          enum:
-            - BLOB
-            - LINK
-          description: Asset type. This property is immutable.
-        vendorId:
-          type: string
-          description: Id of a vendor to which the asset belongs.
-        url:
-          type: string
-          description: Resource link.
-        details:
-          $ref: '#/components/schemas/AssetDetailsGet'
-        metadata:
-          $ref: '#/components/schemas/MetadataGet'
+        - type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier of an asset.
+            type:
+              type: string
+              enum:
+                - BLOB
+                - LINK
+              description: Asset type. This property is immutable.
+            vendorId:
+              type: string
+              description: Id of a vendor to which the asset belongs.
+            url:
+              type: string
+              description: Resource link.
+            details:
+              $ref: '#/components/schemas/AssetDetailsGet'
+            metadata:
+              $ref: '#/components/schemas/MetadataGet'
     GetAssetLink:
       title: Get Asset Link
       type: object
@@ -618,30 +584,30 @@ components:
           examples:
             Assets:
               value:
-                - id: 123e06ecf0452c2d6c0b81390
+                - id: "123e06ecf0452c2d6c0b81390"
                   type: BLOB
                   access: PUBLIC
-                  url: 'https://api.emporix/tenant/id/download'
+                  url: "https://api.emporix/tenant/id/download"
                   details:
                     filename: public.txt
                     mimeType: text/plain
                   refIds:
-                    - id: 123e06ecf0452c2d6c0b81392
+                    - id: "123e06ecf0452c2d6c0b81392"
                       type: CATEGORY
                   metadata:
-                    createdAt: '2022-03-31T13:18:02.379Z'
-                    modifiedAt: '2022-03-31T13:18:02.379Z'
+                    createdAt: "2022-03-31T13:18:02.379Z"
+                    modifiedAt: "2022-03-31T13:18:02.379Z"
                     version: 1
-                - id: 123e06ecf0452c2d6c0b81390
+                - id: "123e06ecf0452c2d6c0b81390"
                   type: LINK
                   access: PUBLIC
-                  url: 'https://emporix.io/docs/index.html'
+                  url: "https://emporix.io/docs/index.html"
                   metadata:
-                    createdAt: '2022-03-31T13:18:02.379Z'
-                    modifiedAt: '2022-03-31T13:18:02.379Z'
+                    createdAt: "2022-03-31T13:18:02.379Z"
+                    modifiedAt: "2022-03-31T13:18:02.379Z"
                     version: 1
                   refIds:
-                    - id: 123e06ecf0452c2d6c0b81392
+                    - id: "123e06ecf0452c2d6c0b81392"
                       type: CATEGORY
     GetAsset:
       description: The request was successful. The requested asset is returned.
@@ -666,21 +632,17 @@ components:
                   modifiedAt: '2022-03-31T13:18:02.379Z'
                   version: 1
     GetPrivateAsset:
-      description: This is a successful response when requesting for a PRIVATE access asset of the BLOB type.
+      description: This is a successful response when requesting a PRIVATE BLOB asset.
       content:
         text/plain:
           schema:
             type: string
             format: byte
       headers:
-        Content-Type:
-          schema:
-            type: string
-          description: Content type of the file.
         ETag:
           schema:
             type: string
-          description: 'Version identifier of the resource, necessary for the cache purposes.'
+          description: Version identifier of the resource, necessary for caching.
     Redirect:
       description: This is a successful response when requesting for a PUBLIC access asset.
       headers:
@@ -923,3 +885,5 @@ security:
   - OAuth2:
       - media.asset_read
       - media.asset_manage
+      - media.asset_read_by_vendor - allows to read assets which belong to the vendor
+      - media.asset_manage_by_vendor - allows to create an asset for products which belong to the vendor
