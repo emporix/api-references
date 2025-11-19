@@ -9,7 +9,7 @@ layout:
 
 # Sequential-id Tutorial
 
-The Sequential ID Service serves for generating subsequential unique IDs for such objects as orders, invoices, quotes, pick-packs, or similar.\
+The Sequential ID Service serves for generating subsequential unique IDs for such objects as orders, invoices, quotes, pick-packs, or similar.
 Define a pattern how such IDs should look like in a schema for specific objects, use placeholders for computing certain values dynamically, and the Sequential ID Service takes care of following the defined sequence.
 
 To add your custom sequence ID schema, make sure you provide the correct `schemaType`. The `schemaType` field has to correspond to the schema used in the Emporix system for a particular entity:
@@ -36,10 +36,10 @@ To create a schema for sequential IDs creation, send the request to the [Creatin
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/sequential-id/{tenant}/schemas' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/sequential-id/{tenant}/schemas' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "name": "testSchema",
     "schemaType": "orderNoSequence",
@@ -77,8 +77,8 @@ To get the created schema details, make a call to the [Retrieving a schema](http
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET \
-  'https://api.emporix.io/sequential-id/{tenant}/schemas/{schemaId}' \
+curl -i -X GET 
+  'https://api.emporix.io/sequential-id/{tenant}/schemas/{schemaId}' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
@@ -95,8 +95,8 @@ Activate the schema to apply it in the system so that the order numbers follow t
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/sequential-id/{tenant}/schemas/{schemaId}/setActive' \
+curl -i -X POST 
+  'https://api.emporix.io/sequential-id/{tenant}/schemas/{schemaId}/setActive' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
@@ -113,14 +113,14 @@ Now, you can generate the order IDs that follow the new schema. To create a sequ
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST \
-'https://api.emporix.io/sequential-id/{tenant}/schemas/types/{schemaType}/nextId?siteCode=string' \
--H 'Authorization: Bearer ' \
--H 'Content-Type: application/json' \
+curl -i -X POST 
+'https://api.emporix.io/sequential-id/{tenant}/schemas/types/{schemaType}/nextId?siteCode=string' 
+-H 'Authorization: Bearer ' 
+-H 'Content-Type: application/json' 
 -d '{
-"sequenceKey": "2016-05",
+"sequenceKey": "2025-05",
 "placeholders": {
-"__year__": "2016",
+"__year__": "2025",
 "__month__": "05"
 }
 }'
@@ -134,4 +134,30 @@ In this case, the subsequent order ID looks like this:
 
 ```
 ORDER-2025-03-27-14-03-22-DE0002-N
+```
+
+### Vendor-specific invoice numbering
+
+You can define vendor-specific, separate number ranges with consecutive numbering for invoice IDs. Each vendor maintains their own sequential numbering sequence, ensuring that invoice IDs are unique and properly sequenced per vendor. The following example demonstrates how to create an invoice sequence schema that includes the vendor name in the ID pattern:
+
+```bash
+curl -i -X POST 
+  https://api.emporix.io/sequential-id/sequenceSchemas 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
+  -d '{
+    "name": "invoiceNoSequence",
+    "schemaType": "invoiceNoSequence",
+    "preText": "meinMAKLERstore-__vendorName__",
+    "postText":"-__year__-__month__
+
+    "maxValue": 999999999,
+    "numberOfDigits": 6,
+    "startValue": 10000,
+    "placeholders": {
+      "__vendorName__": {
+        "required": true
+      }
+    }
+  }'
 ```

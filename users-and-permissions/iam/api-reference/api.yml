@@ -315,12 +315,6 @@ paths:
       summary: Retrieving an access control
       description: |
         Retrieves details of a specified access control. You can expand the result by resolving the role and resource references.
-
-        ***
-
-        ### Required scopes
-
-          * `iam.access_read`
       operationId: GET-iam-retrieve-access-control
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -538,13 +532,8 @@ paths:
       description: |
         Retrieves all groups of the tenant. You can filter the results by using query parameters.
 
-        `iam.group_read_own` scope allows customers to retrieve only groups of `CUSTOMER` type.
-        ***
+        The `iam.group_read_own` scope allows customers to retrieve only groups of `CUSTOMER` type.
 
-        ### Required scopes
-
-          * `iam.group_read`
-          * `iam.group_read_own`
       operationId: GET-iam-list-tenant-user-groups
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -639,12 +628,6 @@ paths:
       summary: Creating a new group
       description: |
         Creates a new group. When a group is created, you can assign particular users to it. Based on the group's access controls list, you can grant members specific system access.
-
-        ***
-
-        ### Required scopes
-
-          * `iam.group_manage`
       operationId: POST-iam-create-user-group
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -732,11 +715,6 @@ paths:
       summary: Retrieving a group
       description: |
         Retrieves a specified group's details.
-        ***
-
-        ### Required scopes
-
-          * `iam.group_read`
       operationId: GET-iam-retrieve-users-group
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -798,13 +776,7 @@ paths:
       description: |
         Deletes a specified group.
 
-        ***Important***: If you want to delete a group that has users assigned to it, you need to set the `forceDelete` query parameter to `true`. In this case, all user group assignments will be deleted as well. The force flag requires the `iam.assignment_manage` scope.
-
-        ### Required scopes
-
-          * `iam.group_manage`
-          * `iam.assignment_manage` if forceDelete is used
-            **Note**: The `iam.assignment_manage` scope is only required if you want to delete a group that has users assigned to it.
+        ***Important***: If you want to delete a group that has users assigned to it, you need to set the `forceDelete` query parameter to `true`. In this case, all user group assignments are deleted as well. The force flag requires the `iam.assignment_manage` scope. The `iam.assignment_manage` scope is only required if you want to delete a group that has users assigned to it.
       operationId: DELETE-iam-remove-user-group
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -865,12 +837,6 @@ paths:
       summary: Upserting a group
       description: |
         Updates a user group, or creates a new one if a group with a specified if doesn't exist yet. If you provide the `metadata.version`, the optimistic locking is enabled and version is validated.
-
-        ***
-
-        ### Required scopes
-
-          * `iam.group_manage`
       operationId: PUT-iam-update-user-group
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -963,11 +929,6 @@ paths:
       summary: Retrieving all access controls assigned to a group
       description: |
         Retrieves all access controls assigned to a specified group. Based on that list all users assigned to this group will receive specific system access. You can expand the result by resolving the role and resource references.
-        ***
-
-        ### Required scopes
-
-        * `iam.access_read`
       operationId: GET-iam-list-group-access-controls
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -1310,12 +1271,7 @@ paths:
       description: |
         Retrieves users assignments for a specified group.
 
-        `iam.user_read_own` scope allows customer to retrieve only users assignments from a specified group but only from the same company assignment
-
-        ### Required scopes
-
-          * `iam.user_read`
-          * `iam.user_read_own`
+        The `iam.user_read_own` scope allows customer to retrieve only users assignments from a specified group but only from the same company assignment
       operationId: GET-iam-list-group-users
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -1391,18 +1347,11 @@ paths:
         - Group Assignments
       summary: Adding a user to a group
       description: |
-        Assigns a user to a specified group. The user will gain all access controls (scopes) specified for this group.
+        Assigns a user to a specified group. The user gains all access controls (scopes) specified for this group.
         
         Groups assigned to employee users must share the same vendor identifier.
 
-        `iam.assignment_create_own` scope allows customer to assign a user to a specified group only if the user is assigned to the same company.
-
-        ***
-
-        ### Required scopes
-
-          * `iam.assignment_manage`
-          * `iam.assignment_create_own`
+        The `iam.assignment_create_own` scope allows a customer to assign a user to a specified group only if the user is assigned to the same company.
       operationId: POST-iam-add-user-to-group
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -1462,12 +1411,6 @@ paths:
       summary: Removing all users from a group
       description: |
         Removes all users from a specified group.
-
-        ***
-
-        ### Required scopes
-
-          * `iam.assignment_manage`
       operationId: DELETE-iam-remove-all-users
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -1495,12 +1438,6 @@ paths:
         In case the assignment already exists, nothing happens as the type of assignment cannot be changed.
         
         Groups assigned to employee users must share the same vendor identifier
-
-        ***
-
-        ### Required scopes
-
-          * `iam.assignment_manage`
       operationId: PUT-iam-update-user-to-group
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -1556,15 +1493,9 @@ paths:
         - Group Assignments
       summary: Removing a user from a group
       description: |
-        Removes a specified user from a specified group.
-
-        `iam.assignment_delete_own` scope allows customer to remove user from a specified group only if the user is assigned to the same company.
-        ***
-
-        ### Required scopes
-
-          * `iam.assignment_manage`
-          * `iam.assignment_delete_own`
+        Removes a specified user from a specified group. 
+        
+        The `iam.assignment_delete_own` scope allows a customer to remove user from a specified group only if the user is assigned to the same company.
       operationId: DELETE-iam-remove-user-from-group
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -1592,11 +1523,6 @@ paths:
       summary: Retrieving all permissions
       description: |
         Retrieves all permissions available for the tenant. You can filter the results by using query parameters.
-        ***
-
-        ### Required scopes
-
-          * `iam.permission_read`
       operationId: GET-iam-list-all-tenant-permissions
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -1661,12 +1587,6 @@ paths:
       summary: Retrieving a permission
       description: |
         Retrieves details of a specified permission.
-
-        ***
-
-        ### Required scopes
-
-          * `iam.permission_read`
       operationId: GET-iam-retrieve-permission-by-permissionId
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -1731,11 +1651,6 @@ paths:
       summary: Retrieving all resources
       description: |
         Retrieves all resources of a given tenant. You can filter the results by using query parameters.
-        ***
-
-        ### Required scopes
-
-          * `iam.resource_read`
       operationId: GET-iam-list-tenant-resources
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -1807,11 +1722,6 @@ paths:
       summary: Retrieving a resource
       description: |
         Retrieves details of a specified resource.
-        ***
-
-        ### Required scopes
-
-          * `iam.resource_read`
       operationId: GET-iam-retrieve-resource
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -1871,11 +1781,6 @@ paths:
       summary: Retrieving all access control templates
       description: |
         Retrieves all access controls templates available for the tenant. A template contains a list of the most popular access controls combined together in order to provide convenient access to the system.
-        ***
-
-        ### Required scopes
-
-          * `iam.template_read`
       operationId: GET-iam-list-access-control-templates
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -2024,12 +1929,7 @@ paths:
       description: |
         Retrieves all roles available for a specific tenant. You can filter the results by using query parameters. 
 
-        Each role contains a `permissions` list, and each permission is combined with the `applicablePermissionResources`field. This field allows you to whitelist resources that the permission is applicable to. The field can only contain resources specified in the permission document under `applicableResources`.
-        ***
-
-        ### Required scopes
-
-          * `iam.role_read`
+        Each role contains a `permissions` list, and each permission is combined with the `applicablePermissionResources`field. This field allows you to allowlist resources that the permission is applicable to. The field can only contain resources specified in the permission document under `applicableResources`.
       operationId: GET-iam-list-tenant-roles
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -2095,11 +1995,6 @@ paths:
       summary: Retrieving a role
       description: |
         Retrieves details of a specified role.
-        ***
-
-        ### Required scopes
-
-          * `iam.role_read`
       operationId: GET-iam-retrieve-role-by-roleId
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -2146,11 +2041,6 @@ paths:
       summary: Retrieving all access controls assigned to a user
       description: |
         Retrieves all access controls assigned to a specified user. You can expand the result by resolving the role and resource references.
-        ***
-
-        ### Required scopes
-
-          * `iam.access_read`
       operationId: GET-iam-list-user-access-controls
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -2220,11 +2110,6 @@ paths:
       summary: Retrieving user access controls for a resource
       description: |
         Retrieves a specified user's access controls for a specified resource.
-        ***
-
-        ### Required scopes
-
-          * `iam.access_read`
       operationId: GET-iam-retrieve-user-resource-access-controls
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -2559,11 +2444,6 @@ paths:
       summary: Retrieving all groups to which a user is assigned
       description: |
         Retrieves all groups to which a specified user is assigned.
-        ***
-
-        ### Required scopes
-
-          * `iam.group_read`
       operationId: GET-iam-retrieve-user-groups
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -2623,11 +2503,6 @@ paths:
       summary: Removing a user from all groups
       description: |
         Removes a specified user from all groups.
-        ***
-
-        ### Required scopes
-
-          * `iam.assignment_manage`
       operationId: DELETE-iam-remove-user-from-all-groups
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -2664,11 +2539,6 @@ paths:
       summary: Retrieving user group info
       description: |
         Retrieves user specific group.
-        ***
-
-        ### Required scopes
-
-          * `iam.group_read`
       operationId: GET-iam-retrieve-user-group
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -2735,11 +2605,6 @@ paths:
       summary: Retrieving user permissions for a resource
       description: |
         Retrieves a specified user's permissions for a specific resource. The permissions are calculated based on the user's group assignments and the access control lists of those groups.
-        ***
-
-        ### Required scopes
-
-          * `iam.permission_read`
       operationId: GET-iam-retrieve-user-resource-permissions
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -2795,12 +2660,6 @@ paths:
       summary: Retrieving scopes of a specific user
       description: |
         Retrieves all scopes granted to a user specified by id. Those are calculated based on user group assignments. For each particular group all access controls are resolved to scopes based on defined role(s) and resource(s).
-
-        ***
-
-        ### Required scopes
-
-          * `iam.scope_read`
       operationId: GET-iam-retrieve-user-scopes
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -2955,7 +2814,7 @@ paths:
                 Employee list with extended groups:
                   value:
                     - id: 00u4ukrqkmEP1opFf417
-                      firstName: John 2
+                      firstName: John
                       lastName: Doe
                       backofficeUserNumber: 00u4ukrqkmEP1opFf417
                       preferredSite: main
@@ -3070,11 +2929,6 @@ paths:
       operationId: GET-iam-list-users-with-groups
       description: |-
         Retrieves all users for the given tenant with the assigned groups. The user type can be specified as `EMPLOYEE` or `CUSTOMER`.
-        ***
-
-        ### Required scopes
-
-          * `iam.user_read`
       parameters:
         - schema:
             type: string
@@ -3142,13 +2996,7 @@ paths:
                     status: Not Found
                     message: Error while getting groups provided in request.
       description: |
-        Creates a new Management Dashboard user for a given tenant. The user will be able to log in to the Management Dashboard right after they confirm their email and set up a password. If a user with a given email already exists in the system, the assignment will be created and no further steps are needed.
-
-        ***
-
-        ### Required scopes
-
-          * `iam.user_create`
+        Creates a new Management Dashboard user for a given tenant. The user will be able to log in to the Management Dashboard right after they confirm their email and set up a password. If a user with a given email already exists in the system, the assignment is created and no further steps are needed.
       security:
         - OAuth2:
             - iam.user_create
@@ -3254,11 +3102,6 @@ paths:
       operationId: GET-iam-retrieve-user-and-groups
       description: |-
         For a specific tenant, retrieves user by ID along with the groups this user belongs to. The user type can be specified as `EMPLOYEE` or `CUSTOMER`.
-        ***
-
-        ### Required scopes
-
-          * `iam.user_read`
       parameters:
         - schema:
             type: string
@@ -3321,13 +3164,7 @@ paths:
         required: true
         description: User creation sample
       description: |
-        Updating a user of the `EMPLOYEE` type. The user will be deleted from all groups and assigned to a given group list based on the `groupIds` field.
-
-        ***
-
-        ### Required scopes
-
-          * `iam.user_update`
+        Updating a user of the `EMPLOYEE` type. The user is deleted from all groups and assigned to a given group list based on the `groupIds` field.
       security:
         - OAuth2:
             - iam.user_update
@@ -3345,11 +3182,6 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
       description: |-
         Removes a specified user from all groups. This operation blocks user access to Management Dashboard, but the Developer Portal account access remains the same.
-        ***
-
-        ### Required scopes
-
-          * `iam.user_delete`
       security:
         - OAuth2:
             - iam.user_delete
@@ -3473,11 +3305,6 @@ paths:
       operationId: GET-iam-list-users-with-groups-vendor
       description: |-
         Retrieves all users for the given vendor with the assigned groups.
-        ***
-
-        ### Required scopes
-
-          * `iam.user_read`
       security:
         - OAuth2:
             - iam.user_read
@@ -3686,7 +3513,7 @@ components:
             type: string
         userType:
           type: string
-          description: 'The type of the group. Possible values: ''CUSTOMER'', ''EMPLOYEE''. Default value ''EMPLOYEE'' if not provided'
+          description: 'The type of the group. Possible values: ''CUSTOMER'', ''EMPLOYEE''. Default value ''EMPLOYEE'' if not provided.'
           example: CUSTOMER
           default: EMPLOYEE
           enum:
@@ -3701,11 +3528,11 @@ components:
             type: string
         b2b:
           type: object
-          description: additional properties for B2B
+          description: Additional properties for B2B.
           properties:
             legalEntityId:
               type: string
-              description: identifier of the assigned legal entity
+              description: Identifier of the assigned legal entity.
       required:
         - name
     GroupUpdateRequest:
@@ -4020,7 +3847,7 @@ components:
         applicablePermissionResources:
           type: array
           description: |
-            Allows you to whitelist resources that the permission is applicable to. Can only contain resources specified in the permission document under `applicableResources`.
+            Allows you to allowlist resources that the permission is applicable to. Can only contain resources specified in the permission document under `applicableResources`.
           items:
             type: string
         id:
@@ -4304,7 +4131,7 @@ components:
       in: path
       required: true
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: The tenant name should always be written in lowercase.
       schema:
@@ -4401,7 +4228,7 @@ components:
       schema:
         type: string
       description: |
-        Search by the name of a given resource. The value will be conformed against all of the specified accepted languages.
+        Search by the name of a given resource. The value is conformed against all of the specified accepted languages.
     trait_q_query_param:
       name: q
       in: query
@@ -4441,14 +4268,14 @@ components:
       required: false
       schema:
         type: string
-      description: 'Search by the description of the the given resource, it will be conformed against all of the specified accepted-languages.'
+      description: 'Search by the description of the the given resource, it is conformed against all of the specified accepted-languages.'
     userId:
       name: userId
       in: path
       required: true
       schema:
         type: string
-      description: 'User''s unique identifier, generated when the user is created.'
+      description: 'User unique identifier, generated when the user is created.'
     groupId:
       name: groupId
       in: path
