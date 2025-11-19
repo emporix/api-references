@@ -507,7 +507,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       description: |-
-        Updates a specified price's details by priceId, or creates a new one with if a price with the given id doesn't exist yet.
+        Updates a specified price's details by priceId, or creates a new one with if a price with the given ID doesn't exist yet.
       requestBody:
         content:
           application/json:
@@ -1311,7 +1311,7 @@ paths:
       description: |-
         Deletes a specified price model by priceModel Id.
 
-        **Important**: If you want to delete a price model that has prices assigned to it, you need to set the `forceDelete` query parameter to `true`. In this case, all prices assigned to the price model will be deleted as well, in an asynchronous manner.
+        **Important**: If you want to delete a price model that has prices assigned to it, you need to set the `forceDelete` query parameter to `true`. In this case, all prices assigned to the price model are deleted as well, in an asynchronous manner.
 
         **Additional scopes info**
         The `price.pricemodel_manage_admin` scope is only required if you want to delete a price model that has prices assigned to it.
@@ -1531,7 +1531,7 @@ paths:
       operationId: PUT-price-update-price-list
       summary: Upserting a price list
       description: |-
-        Updates a specified price list by priceListId, or creates a new one if a price list with the specified id doesn't exist yet.
+        Updates a specified price list by priceListId, or creates a new one if a price list with the specified ID doesn't exist yet.
       security:
         - OAuth2:
             - price.pricelist_manage
@@ -1774,7 +1774,7 @@ paths:
       description: |-
         Creates multiple prices for a specified price list.
 
-        Response for a particular price will be returned at the same position (index) at which that price is located in the request body.
+        Response for a particular price is returned at the same position (index) at which that price is located in the request body.
       security:
         - OAuth2:
             - price.pricelist_manage
