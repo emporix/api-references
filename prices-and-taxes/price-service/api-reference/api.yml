@@ -1583,7 +1583,7 @@ paths:
       description: |-
         Deletes a specified price list by priceListId.
 
-        **Important**: All prices assigned to the price list will be deleted as well, in an asynchronous manner.
+        **Important**: All prices assigned to the price list are deleted as well, in an asynchronous manner.
       security:
         - OAuth2:
             - price.pricelist_manage
