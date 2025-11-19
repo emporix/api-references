@@ -323,7 +323,7 @@ paths:
       description: |-
         Updates or creates multiple prices. The maximum batch size is 200.
 
-        Response for a particular price will be returned at the same position (index) at which that price is located in the request body.
+        Response for a particular price is returned at the same position (index) at which that price is located in the request body.
       operationId: PUT-price-update-multiple-prices
       requestBody:
         content:
