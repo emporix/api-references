@@ -1254,7 +1254,7 @@ paths:
     put:
       summary: Upserting a price model
       description: |
-        Updates a specified price model's details by priceModelId, or creates a new one if a price model with the specified id doesn't exist yet.
+        Updates a specified price model's details by priceModelId, or creates a new one if a price model with the specified ID doesn't exist yet.
       operationId: PUT-price-update-price-model
       security:
         - OAuth2:
