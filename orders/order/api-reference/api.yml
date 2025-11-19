@@ -9,15 +9,15 @@ info:
 servers:
   - url: 'https://api.emporix.io'
 tags:
-  - name: Orders (Tenant Managed)
+  - name: Orders (Tenant-managed)
     description: Manage tenant orders.
-  - name: Orders (Customer Managed)
+  - name: Orders (Customer-managed)
     description: Manage customer orders.
 paths:
   '/order-v2/{tenant}/salesorders':
     get:
       tags:
-        - Orders (Tenant Managed)
+        - Orders (Tenant-managed)
       summary: Retrieving orders
       description: |
         Retrieves tenant orders for administrative purposes. To be used by tenant employees.
@@ -52,7 +52,7 @@ paths:
         - $ref: '#/components/parameters/trait_fields'
     post:
       tags:
-        - Orders (Tenant Managed)
+        - Orders (Tenant-managed)
       summary: Creating a new order
       description: |
         Creates an order by the tenant employee, on behalf of a customer. 
@@ -92,7 +92,7 @@ paths:
         required: false
     head:
       tags:
-        - Orders (Tenant Managed)
+        - Orders (Tenant-managed)
       summary: Retrieving the number of orders
       description: |
         Retrieves the number of orders for the specified query and siteCode. To be used by tenant employees.
@@ -124,7 +124,7 @@ paths:
   '/order-v2/{tenant}/salesorders/search':
     post:
         tags:
-          - Orders (Tenant Managed)
+          - Orders (Tenant-managed)
         summary: Searching for orders
         description: |
           Searches for tenant orders for administrative purposes. To be used by tenant employees.
@@ -169,7 +169,7 @@ paths:
   '/order-v2/{tenant}/salesorders/{orderId}':
     get:
       tags:
-        - Orders (Tenant Managed)
+        - Orders (Tenant-managed)
       summary: Retrieving a specific order by ID
       description: |
         Retrieves a specific order by order ID. To be used by tenant employees.
@@ -200,7 +200,7 @@ paths:
           $ref: '#/components/responses/trait_500'
     put:
       tags:
-        - Orders (Tenant Managed)
+        - Orders (Tenant-managed)
       summary: Updating an order
       description: |
         Updates an order with the specified order ID. To be used by tenant employees.
@@ -236,7 +236,7 @@ paths:
         - $ref: '#/components/parameters/trait_recalculate'
     patch:
       tags:
-        - Orders (Tenant Managed)
+        - Orders (Tenant-managed)
       summary: Partially updating an order
       description: |
         Updates partially an order with the specified order ID. To be used by tenant employees.
@@ -272,7 +272,7 @@ paths:
         - $ref: '#/components/parameters/trait_recalculate'
     delete:
       tags:
-        - Orders (Tenant Managed)
+        - Orders (Tenant-managed)
       summary: Deleting an order
       description: |
         Deletes order with the specified ID. To be used by tenant employees.
@@ -297,7 +297,7 @@ paths:
   '/order-v2/{tenant}/salesorders/{orderId}/transitions':
     get:
       tags:
-        - Orders (Tenant Managed)
+        - Orders (Tenant-managed)
       summary: Retrieving status transitions for an order
       description: |
         Retrieves all possible status transitions for a specific order. To be used by tenant employees.
@@ -329,7 +329,7 @@ paths:
           $ref: '#/components/responses/trait_500'
     post:
       tags:
-        - Orders (Tenant Managed)
+        - Orders (Tenant-managed)
       summary: Updating order status
       description: |
         Updates the status of a specific order. To be used by tenant employees.
@@ -365,7 +365,7 @@ paths:
   '/order-v2/{tenant}/salesorders/{orderId}/calculations':
     post:
       tags:
-        - Orders (Tenant Managed)
+        - Orders (Tenant-managed)
       summary: Recalculating number of entries
       description: |
         Updates the number of entries in the specific order and recalculates it. To be used by tenant employees.
@@ -400,7 +400,7 @@ paths:
   '/order-v2/{tenant}/salesorders/{orderId}/entries':
     post:
       tags:
-        - Orders (Tenant Managed)
+        - Orders (Tenant-managed)
       summary: Adding entries to an order
       description: |
         Updates the entries in the specific order and recalculates it. If provided entry is already assigned to the order then quantity of this entry is updated. If you want to remove entry from order then set quantity to 0.
@@ -465,7 +465,7 @@ paths:
   '/order-v2/{tenant}/salesorders/{orderId}/split':
     post:
       tags:
-        - Orders (Tenant Managed)
+        - Orders (Tenant-managed)
       summary: Splitting order
       description: |
         Splits order into suborders based on the given criteria. It works for:
@@ -518,7 +518,7 @@ paths:
   '/order-v2/{tenant}/orders':
     get:
       tags:
-        - Orders (Customer Managed)
+        - Orders (Customer-managed)
       summary: Retrieving a list of orders
       description: |
         Retrieves a list of orders for a customer. To be used by customers on the storefront. The `order.history_view` scope is for logged in customers only.
@@ -553,7 +553,7 @@ paths:
   '/order-v2/{tenant}/orders/{orderId}':
     get:
       tags:
-        - Orders (Customer Managed)
+        - Orders (Customer-managed)
       summary: Retrieving order details
       description: |
         Retrieves details of an order. To be used by customers on the storefront. The `order.history_view` scope is for logged in customers only.
@@ -586,7 +586,7 @@ paths:
   '/order-v2/{tenant}/orders/{orderId}/transitions':
     get:
       tags:
-        - Orders (Customer Managed)
+        - Orders (Customer-managed)
       summary: Retrieving status transitions for a specific order
       description: |
         Retrieves possible status transitions for a specific order. To be used by customers on the storefront.
@@ -615,7 +615,7 @@ paths:
         - $ref: '#/components/parameters/trait_saas_token'
     post:
       tags:
-        - Orders (Customer Managed)
+        - Orders (Customer-managed)
       summary: Updating order status
       description: |
         Updates the status of a specific order. To be used by customers on the storefront.
@@ -656,7 +656,7 @@ paths:
     get:
       summary: Retrieving legal entity orders
       tags:
-        - Orders (Customer Managed)
+        - Orders (Customer-managed)
       responses:
         '200':
           description: The request was successful. List of legal entity orders with details are returned.
@@ -696,7 +696,7 @@ paths:
     get:
       summary: Retrieving a legal entity order
       tags:
-        - Orders (Customer Managed)
+        - Orders (Customer-managed)
       responses:
         '200':
           description: The request was successful. The legal entity order with details is returned.

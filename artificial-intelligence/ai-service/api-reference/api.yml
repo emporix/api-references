@@ -68,11 +68,6 @@ paths:
         If you don't provide your own OpenAI token, the Emporix one is used with the following limits: 3 mln input tokens and 1 mln output tokens. When you reach the limit, the next requests are rejected and you have to provide your own OpenAI token.
         Emporix uses the gpt-4o-mini model by default.
         If you want to use your own OpenAI account with a different AI model please contact our [Emporix Support Team](mailto:support@emporix.com) to negotiate the model and usage.
-        ***
-
-        **Required scopes**
-
-        * `ai.text_manage`
       security:
         - OAuth2:
             - ai.text_manage
@@ -107,11 +102,6 @@ paths:
         
         If you don't provide your own OpenAI token, the Emporix one is used with the following limits: 3 mln input tokens and 1 mln output tokens. When you reach the limit, the next requests are rejected and you have to provide your own OpenAI token. 
         Emporix uses the gpt-4o-mini model by default. If you want to use your own OpenAI account with a different AI model, please contact our [Emporix Support Team](mailto:support@emporix.com) to negotiate the model and usage.
-        ***
-
-        **Required scopes**
-
-        * `ai.completion_manage`
       security:
         - OAuth2:
             - ai.completion_manage
@@ -170,10 +160,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Retrieves agent jobs.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -232,10 +218,6 @@ paths:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
         Searches for agent jobs based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -292,10 +274,6 @@ paths:
           $ref: '#/components/responses/404_resp_common'
       description: |-
         Retrieves agent job by its ID.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -317,10 +295,6 @@ paths:
           $ref: '#/components/responses/404_resp_common'
       description: |-
         Deletes job by given ID.
-        
-        ### Required scopes
-
-        * `ai.agent_manage`
       security:
         - OAuth2:
             - ai.agent_manage
@@ -364,10 +338,6 @@ paths:
           $ref: '#/components/responses/500_resp_common'
       description: |-
         Allows for communication with Emporix agents.
-
-        ### Required scopes
-
-        * `ai.completion_manage`
       security:
         - OAuth2:
             - ai.completion_manage
@@ -410,10 +380,6 @@ paths:
           $ref: '#/components/responses/500_resp_common'
       description: |-
         Allows for communication with Emporix agents in async way.
-
-        ### Required scopes
-
-        * `ai.completion_manage`
       security:
         - OAuth2:
             - ai.completion_manage
@@ -455,10 +421,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Retrieves agent templates which can be later use as a base for custom agents.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -497,10 +459,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Searches for agent templates based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -544,10 +502,6 @@ paths:
         Creates an instance of the agent based of the given agent template.
         
         **Info:** Only active templates can be cloned.
-        
-        ### Required scopes
-
-        * `ai.agent_manage`
       security:
         - OAuth2:
             - ai.agent_manage
@@ -587,10 +541,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Retrieves agent templates based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -632,10 +582,6 @@ paths:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
         Searches for agents based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -676,10 +622,6 @@ paths:
           $ref: '#/components/responses/404_resp_common'
       description: |-
         Retrieves the agent by given ID.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -715,10 +657,6 @@ paths:
       description: |-
         Updates or creates a specified product by replacing all of its existing data with data from the request body.
         If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
-        
-        ### Required scopes
-
-        * `ai.agent_manage`
       security:
         - OAuth2:
             - ai.agent_manage
@@ -746,10 +684,6 @@ paths:
           - `add` (adding an item to the items list)
           - `remove` (removing an item from the items list)
           - `replace` (replacing an item with given ID with new definition)
-        
-        ### Required scopes
-
-        * `ai.agent_manage`
       security:
         - OAuth2:
             - ai.agent_manage
@@ -777,10 +711,6 @@ paths:
         Deletes agent by given ID.
         
         ***Important***: If an agent is being used by another agent as collaboration agent then delete operation is not possible without `force` flag set to `true`.
-
-        ### Required scopes
-
-        * `ai.agent_manage`
       security:
         - OAuth2:
             - ai.agent_manage
@@ -819,10 +749,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Retrieves tools based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -863,10 +789,6 @@ paths:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
         Searches for tools based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -904,10 +826,6 @@ paths:
           $ref: '#/components/responses/404_resp_common'
       description: |-
         Retrieves the tool by given ID.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -942,11 +860,7 @@ paths:
           $ref: '#/components/responses/409_resp_common'
       description: |-
         Updates or creates a specified tool by replacing all of its existing data with data from the request body.
-        If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
-        
-        ### Required scopes
-
-        * `ai.agent_manage`
+        If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.`
       security:
         - OAuth2:
             - ai.agent_manage
@@ -976,10 +890,6 @@ paths:
           - `add` (adding an item to the items list)
           - `remove` (removing an item from the items list)
           - `replace` (replacing an item with given ID with new definition)
-        
-        ### Required scopes
-
-        * `ai.agent_manage`
       security:
         - OAuth2:
             - ai.agent_manage
@@ -1007,10 +917,6 @@ paths:
         Deletes tool by given ID.
         
         ***Important***: If tool is being used by an agent then delete operation is not possible without `force` flag set to `true`.
-        
-        ### Required scopes
-
-        * `ai.agent_manage`
       security:
         - OAuth2:
             - ai.agent_manage
@@ -1048,10 +954,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Retrieves tokens based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1091,10 +993,6 @@ paths:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
         Searches for tokens based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1131,10 +1029,6 @@ paths:
           $ref: '#/components/responses/404_resp_common'
       description: |-
         Retrieves the token by given ID.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1170,10 +1064,6 @@ paths:
         If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
         
         **Important**: The `value` field cannot be updated, once created token cannot change `value` field.
-        
-        ### Required scopes
-
-        * `ai.agent_manage`
       security:
         - OAuth2:
             - ai.agent_manage
@@ -1203,10 +1093,6 @@ paths:
           - `replace` (replacing an item with given ID with new definition)
         
         **Important**: The `value` field cannot be updated, once created token cannot change `value` field.
-        
-        ### Required scopes
-
-        * `ai.agent_manage`
       security:
         - OAuth2:
             - ai.agent_manage
@@ -1233,10 +1119,6 @@ paths:
         
         
         ***Important***: If a token is being used by an agent or by an MCP server, then delete operation is not possible without `force` flag set to `true`.
-        
-        ### Required scopes
-
-        * `ai.agent_manage`
       security:
         - OAuth2:
             - ai.agent_manage
@@ -1275,10 +1157,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Retrieves MCP servers based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1319,10 +1197,6 @@ paths:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
         Searches for MCP servers based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1359,10 +1233,6 @@ paths:
           $ref: '#/components/responses/404_resp_common'
       description: |-
         Retrieves the MCP server by a given ID.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1400,10 +1270,6 @@ paths:
         If the `metadata.version` is provided, then optimistic locking is enabled and version must match the version in the database.
         
         ***Important***: If MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Only then the agent and MCP server are disabled.
-
-        ### Required scopes
-
-        * `ai.agent_manage`
       security:
         - OAuth2:
             - ai.agent_manage
@@ -1435,10 +1301,6 @@ paths:
           - `replace` (replacing an item with given ID with new definition)
         
         ***Important***: If an MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Only then the agent and MCP server are disabled.
-
-        ### Required scopes
-
-        * `ai.agent_manage`
       security:
         - OAuth2:
             - ai.agent_manage
@@ -1466,10 +1328,6 @@ paths:
         Deletes MCP server by given ID. 
         
         ***Important***: If MCP server is being used by an agent then delete operation is not possible without `force` flag set to `true`.
-        
-        ### Required scopes
-
-        * `ai.agent_manage`
       security:
         - OAuth2:
             - ai.agent_manage
@@ -1497,10 +1355,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Retrieves commerce events available for agents with `COMMERCE_EVENTS` trigger.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1532,10 +1386,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Exports the agents by IDs.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1567,10 +1417,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Imports the agents from the base64 encoded data.
-        
-        ### Required scopes
-
-        * `ai.agent_manage`
       security:
         - OAuth2:
             - ai.agent_manage
