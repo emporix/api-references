@@ -1867,7 +1867,7 @@ paths:
       operationId: PUT-price-update-price-in-price-list
       summary: Upserting a price in a price list
       description: |-
-        Updates a specified price list's price, or creates a new price in a price list if a price with the specified id doesn't exist yet.
+        Updates a specified price list's price, or creates a new price in a price list if a price with the specified ID doesn't exist yet.
       security:
         - OAuth2:
             - price.pricelist_manage
