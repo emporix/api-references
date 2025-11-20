@@ -310,6 +310,34 @@ curl -i -X POST
 
 Once desired employees are added to appropriate customer groups, you can — for example — create personalized price lists for them. For instructions, check out [_How to configure a price list_](../../prices-and-taxes/price-service/price.md#how-to-configure-a-price-list) in the _Price Service guide_.
 
+## How to retrieve a company hierarchy
+
+You can retrieve a legal entity along with all of its parent entities in the hierarchy to view the complete organizational structure.
+
+### Before you start
+
+Make sure you have already finished the [How to set up business customer information](customer-management.md#how-to-set-up-business-customer-information) tutorial and have created at least one subsidiary.
+
+### Retrieve a legal entity with its parent hierarchy
+
+To retrieve a legal entity along with all its parent legal entities, send a request to the [Retrieving a legal entity with parent hierarchy](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/legal-entities#get-customer-management-tenant-legal-entities-legalentityid-parent-hierarchy) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../customer-management/api-reference/" %}
+[api-reference](../customer-management/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/customer-management/{tenant}/legal-entities/{legalEntityId}/parent-hierarchy' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
+
+The response includes an array of legal entities, starting with the specified legal entity and followed by each parent legal entity up to the root company. For example, if you request the hierarchy for Company C (a subsidiary of Company B, which is a subsidiary of Company A), the response includes Company C, Company B, and Company A in that order.
+
+***
+
 ## Customer assignment rules
 
 Emporix platform enforces rules when assigning customers to predefined groups to ensure role assignments remain valid and avoid conflicts. Within a single company, a user can belong to only one predefined group.
