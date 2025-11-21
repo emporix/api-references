@@ -33,10 +33,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Triggers a full reindexing process for the selected entity type. The process retrieves all entities of the given type, generates embeddings for each of them, and updates the corresponding records in the Vector Database.
-        
-        ### Required scopes
-
-        * `ai.agent_manage`
       security:
         - OAuth2:
             - ai.agent_manage
@@ -85,10 +81,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Returns list of fields that can be used to create embeddings for RAG search.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -129,10 +121,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Retrieves list of fields which can be used for vector search filtering. Filtering is applied before RAG retrieval stage.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read

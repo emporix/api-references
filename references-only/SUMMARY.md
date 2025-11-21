@@ -12,7 +12,7 @@
             kind: openapi
             spec: ai-api
       ```
-  * [AI RAG Indexer](artificial-intelligence/ai-rag-indexer/README.md)
+  * [AI RAG Indexer](../artificial-intelligence/ai-rag-indexer/api-reference/README.md)
     * ```yaml
       props:
         models: true
@@ -21,7 +21,7 @@
         spec:
           ref:
             kind: openapi
-            spec: ai-rag-indexer-api
+            spec: rag-redo
       ```
   * [Approval](../companies-and-customers/approval-service/approval-api-reference/README.md)
     * ```yaml
