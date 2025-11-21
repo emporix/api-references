@@ -10,9 +10,11 @@ You can use the AI RAG Indexer Service to keep your vector database in sync with
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../artificial-intelligence/api-reference/" %}
-[api-reference](../ai-rag-indexer/api-reference/)
+{% content-ref url="../artificial-intelligence/ai-rag-indexer/api-reference/" %}
+[api-reference](../../artificial-intelligence/ai-rag-indexer/api-reference/)
 {% endcontent-ref %}
+
+## How to prepare RAG indexing
 
 {% stepper %}
 {% step %}
@@ -89,5 +91,5 @@ For this reason, perform reindexing only when truly necessary - for example, aft
 {% endstepper %}
 
 {% hint style="success" %}
-As a next step, use the RAG Tool within an AI Agent to enable it to retrieve search results enhanced with RAG embeddings. For more information, see the [AI Tutorial](../ai-service/ai-tutorial.md)
+As a next step, use the RAG Tool within an AI Agent to enable it to retrieve search results enhanced with RAG embeddings. For more information, see the [AI Tutorial](../ai-service/ai-tutorial.md).
 {% endhint %}
