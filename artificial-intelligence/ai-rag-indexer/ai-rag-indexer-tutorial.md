@@ -17,7 +17,7 @@ You can use the AI RAG Indexer Service to keep your vector database in sync with
 {% stepper %}
 {% step %}
 ### Discover RAG fields
-Call the [Listing fields for RAG search](https://developer.emporix.io/api-references/api-guides/api-guides-and-references/artificial-intelligence/ai-rag-indexer/api-reference/ai-rag-indexer-tenant-type-rag-metadata) endpoint to list the fields that can be embedded for RAG search results. The request reuires the `ai.agent_read` scope. This helps you align your prompts and downstream ranking logic.
+Call the [Listing fields for RAG search](https://developer.emporix.io/api-references/api-guides/api-guides-and-references/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-tenant-type-rag-metadata) endpoint to list the fields that can be embedded for RAG search results. The request reuires the `ai.agent_read` scope. This helps you align your prompts and downstream ranking logic.
 
 ```bash
 curl -L \
@@ -45,7 +45,7 @@ The returned values are the field paths that match your product schema. Use the 
 {% step %}
 ### Discover filterable fields
 
-When you need pre-retrieval filtering (for example, only published products or specific segments), call the [Listing fields for vector search filtering](https://developer.emporix.io/api-references/api-guides/api-guides-and-references/artificial-intelligence/ai-rag-indexer/api-reference/ai-rag-indexer-tenant-type-filter-metadata) endpoint.
+When you need pre-retrieval filtering (for example, only published products or specific segments), call the [Listing fields for vector search filtering](https://developer.emporix.io/api-references/api-guides/api-guides-and-references/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-tenant-type-filter-metadata) endpoint.
 
 ```bash
 curl -L \
@@ -68,7 +68,7 @@ Example payload:
 
 {% step %}
 ### Trigger a reindex job
-After you understand the metadata, run a [Reindexing the entities of given type](https://developer.emporix.io/api-references/api-guides/api-guides-and-references/artificial-intelligence/ai-rag-indexer/api-reference#POST-ai-rag-indexer-tenant-type-reindex) endpoint to regenerate embeddings for the selected entity type. The reindex endpoint currently performs a full rebuild.
+After you understand the metadata, run a [Reindexing the entities of given type](https://developer.emporix.io/api-references/api-guides/api-guides-and-references/artificial-intelligence/ai-rag-indexer/api-reference/reindex#POST-ai-rag-indexer-tenant-type-reindex) endpoint to regenerate embeddings for the selected entity type. The reindex endpoint currently performs a full rebuild.
 
 ```bash
 curl -L \
