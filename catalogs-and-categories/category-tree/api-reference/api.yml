@@ -794,7 +794,7 @@ paths:
                   published: true
                   ownClassificationMixins: [
                     {
-                      "name": "testName",
+                      "name": "Classification Mixin",
                       "schemaUrl": "https://res.cloudinary.com/saas-ag/raw/upload/schemata2/mrworkerdev/toolsClassification_v1.json",
                       "required": false
                     }
@@ -3249,19 +3249,19 @@ components:
       properties:
         name:
           type: string
-          description: Name of the mixin
+          description: Name of the mixin.
           pattern: '^[a-zA-Z0-9]\S*$'
         schemaUrl:
           type: string
-          description: URL of the mixin schema
+          description: URL of the mixin schema.
           pattern: '^https?://[^\s/$.?#].\S*$'
         required:
           type: boolean
-          description: Indicates whether the mixin is required
+          description: Indicates whether the mixin is required.
       required:
         - name
         - schemaUrl
-      description: Classification mixin defined for given category.
+      description: Classification mixin defined for a given category.
     ClassificationMixin:
       type: object
       properties:
@@ -3275,10 +3275,10 @@ components:
           pattern: '^https?://[^\s/$.?#].\S*$'
         required:
           type: boolean
-          description: Indicates whether the mixin is required
+          description: Indicates whether the mixin is required.
         sourceCategoryId:
           type: string
-          description: Unique identifier of the category from which the mixin comes from. Can be this category id or one of the parent categories ids
+          description: Unique identifier of the category from which the mixin comes from. Can be this category ID or one of the parent categories IDs.
       required:
         - name
         - schemaUrl
@@ -3518,14 +3518,14 @@ components:
           published: true
           ownClassificationMixins: [
             {
-              name: "testName",
+              name: "Classification Mixin",
               schemaUrl: "https://res.cloudinary.com/saas-ag/raw/upload/schemata2/mrworkerdev/toolsClassification_v1.json",
               required: false
             }
           ]
           classificationMixins: [
             {
-              name: "testName",
+              name: "Classification Mixin",
               schemaUrl: "https://res.cloudinary.com/saas-ag/raw/upload/schemata2/mrworkerdev/garageTools_v1.json",
               required: false,
               sourceCategoryId: "4901acd1-5dad-4c7b-b4f0-32d0198621fx"
