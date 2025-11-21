@@ -14,6 +14,20 @@ The Order Service is divided into two categories based on who manages the orders
 * **Tenant-Managed Orders** – This refers to the management of customer orders. Customers create the orders, which are then accessible to your employees for processing, status updates, and data modifications.
 * **Customer-Managed Orders** – These are orders submitted by your customers. When logged into their account, customers can view and access their order history.
 
+Scopes neccessary to work with orders are:
+* `order.order_post`: Needed to create new order as a customer.
+* `order.order_read`: Needed to read order.
+* `order.order_read_le`: Needed to read legal entity orders.
+* `order.order_update`: Needed to update an order.
+* `order.order_update_completed`: Needed to update an order with a `completed` status.
+* `order.order_create`: Needed to create new order by merchant.
+* `order.order_delete`: Needed to delete an order.
+* `order.history_view`: Needed to view order when logged as a customer.
+* `order.order_readascustomer`: Needed to read an order as a customer.
+* `order.order_updateascustomer`: Needed to update an order as a customer.
+* `order.order_read_by_vendor`: The scope allows vendor to read order with assigned vendor.
+* `order.order_manage_by_vendor`: The scope allows vendor to manage order with assigned vendor.
+
 As Emporix offers full commerce functionality, order calculations and management can be handled end-to-end by our Commerce Orchestration Platform services. However, to support integrations with other systems, we have also introduced other capabilities. Order management with external systems can be approached using three different models:
 
 * asynchronous calculation
@@ -275,8 +289,8 @@ You have to register your listener in the Emporix Webhook Service so that the li
     "cartId": "68481e9e8bf22744fc578572",
     "entries": [
         {
-            "id": "0_SLI_samsung-galaxy-s24-gross",
-            "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross",
+            "id": "0_SLI_mobile-phone-s24-gross",
+            "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s24-gross",
             "keepAsSeparateLineItem": true,
             "type": "INTERNAL",
             "amount": 2,
@@ -290,11 +304,11 @@ You have to register your listener in the Emporix Webhook Service so that the li
                 "taxRate": 19.0
             },
             "product": {
-                "id": "samsung-galaxy-s24-gross",
-                "sku": "Samsung Galaxy s24 gross",
-                "name": "Samsung Galaxy s24 gross",
+                "id": "mobile-phone-s24-gross",
+                "sku": "Mobile Phone s24 gross",
+                "name": "Mobile Phone s24 gross",
                 "localizedName": {
-                    "en": "Samsung Galaxy s24 gross"
+                    "en": "Mobile Phone s24 gross"
                 },
                 "published": true,
                 "images": [
@@ -589,8 +603,8 @@ You have to register your listener in the Emporix Webhook Service so that the li
             }
         },
         {
-            "id": "2_SLI_samsung-galaxy-s27-gross",
-            "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s27-gross",
+            "id": "2_SLI_mobile-phone-s27-gross",
+            "itemYrn": "urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s27-gross",
             "keepAsSeparateLineItem": true,
             "type": "INTERNAL",
             "amount": 2,
@@ -604,13 +618,13 @@ You have to register your listener in the Emporix Webhook Service so that the li
                 "taxRate": 7.0
             },
             "product": {
-                "id": "samsung-galaxy-s27-gross",
-                "sku": "samsung-galaxy-s27-gross",
-                "name": "samsung-galaxy-s27-gross",
+                "id": "mobile-phone-s27-gross",
+                "sku": "mobile-phone-s27-gross",
+                "name": "mobile-phone-s27-gross",
                 "localizedName": {
-                    "en": "samsung-galaxy-s27-gross"
+                    "en": "mobile-phone-s27-gross"
                 },
-                "description": "[en:samsung-galaxy-s27-gross]",
+                "description": "[en:mobile-phone-s27-gross]",
                 "published": true,
                 "images": [],
                 "productType": "BASIC"
@@ -1341,7 +1355,7 @@ curl -L
 
 ## Order splitting
 
-To enable order splitting, the Order Service works directly with the [Vendor Service](../../api-guides-and-references/companies-and-customers/vendor-service/).
+To enable order splitting, the Order Service works directly with the [Vendor Service](../../companies-and-customers/vendor-service/api-reference/).
 
 When a customer completes checkout, a single order is created containing all the selected products. Each order entry includes vendor information, making it a standard order with additional vendor details.
 
@@ -1366,5 +1380,5 @@ To support this functionality, the following order attributes are introduced:
 * `subOrders` - list of suborders that were created after splitting the master order
 
 {% hint style="info" %}
-To check the end to end story for order splitting, see the [Vendor Tutorial - Order Split](../../api-guides-and-references/companies-and-customers/vendor-service/vendor/#how-does-vendor-work-with-order-splitting) example.
+To check the end to end story for order splitting, see the [Vendor Tutorial - Order Split](../../companies-and-customers/vendor-service/vendor.md#order-split-example) example.
 {% endhint %}

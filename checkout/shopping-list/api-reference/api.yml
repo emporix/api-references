@@ -21,15 +21,15 @@ paths:
         Creates a shopping list.
         ***
 
-        ### Required scopes
+        ### Additional scope info
 
-          * `shoppinglist.shoppinglist_manage` - required for the employee to create a shopping list for a provided customer. If scope is not present, then the customerId is resolved from the token.
+          * `shoppinglist.shoppinglist_manage` - Required only for the employee to create a shopping list for a provided customer. If the scope is not present, then the customerId is resolved from the token.
       operationId: POST-shopping-list-create-shopping-list
       parameters:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant name should always be written in lowercase.
           required: true
@@ -96,15 +96,18 @@ paths:
         Gets shopping list by name or defaults to all shopping lists if name is not provided.
         When scope is provided then all shopping lists are returned. If scope is not provided, then only own shopping list is returned.
         
-        ### Required scopes
+        ### Additional scope info
 
-        * `shoppinglist.shoppinglist_read` - required for the employee to read shopping lists. If scope is not present, then the customerId is resolved from the token.
+        * `shoppinglist.shoppinglist_read` - Required only for the employee to read shopping lists. If scope is not present, then the customerId is resolved from the token.
+      security:
+        - OAuth2:
+            - shoppinglist.shoppinglist_read
       operationId: GET-shopping-list-retrieve-shopping-list
       parameters:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant name should always be written in lowercase.
           required: true
@@ -157,15 +160,15 @@ paths:
         Updates a shopping list.
         ***
 
-        ### Required scopes
+        ### Additional scope info
 
-          * `shoppinglist.shoppinglist_manage` - required for the employee to update a shopping list. If scope is not present, then the operation is allowed for customer to update his own shopping list.
+          * `shoppinglist.shoppinglist_manage` - Required only for the employee to update a shopping list. If the scope is not present, then the operation is allowed for customer to update his own shopping list.
       operationId: PUT-shopping-list-update-customer-shopping-list
       parameters:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant name should always be written in lowercase.
           required: true
@@ -215,16 +218,12 @@ paths:
       description: |
         Retrieves a shopping list based on the customer number. This endpoint is valid only for the employee.
         ***
-
-        ### Required scopes
-
-          * `shoppinglist.shoppinglist_read`
       operationId: GET-shopping-list-retrieve-customer-shopping-list
       parameters:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant name should always be written in lowercase.
           required: true
@@ -246,6 +245,8 @@ paths:
             type: string
       security:
         - CustomerAccessToken: []
+        - OAuth2:
+            - shoppinglist.shoppinglist_read
       responses:
         '200':
           description: shopping list successfully retrieved.
@@ -286,15 +287,15 @@ paths:
         Deletes a shopping list.
         ***
 
-        ### Required scopes
+        ### Additional scope info
 
-          * `shoppinglist.shoppinglist_manage` - required for the employee to delete a shopping list. If scope is not present, then the operation is allowed for customer to delete his own shopping list.
+          * `shoppinglist.shoppinglist_manage` - Required only for the employee to delete a shopping list. If the scope is not present, then the operation is allowed for customer to delete his own shopping list.
       operationId: DELETE-shopping-list-remove-customer-shopping-list
       parameters:
         - name: tenant
           in: path
           description: |
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
 
             **Note**: The tenant name should always be written in lowercase.
           required: true
@@ -838,7 +839,7 @@ components:
     CustomerAccessToken:
       type: http
       scheme: bearer
-      description: 'To generate a customer''s access token, go to the [Logging in a customer](?urls.primaryName=Customer/Customer%20authentication%20and%20authorization/POST_tenant-login) endpoint.'
+      description: 'To generate a customer access token, go to the [Logging in a customer](https://developer.emporix.io/api-references-1/readme/api-reference-11/authentication-and-authorization#post-customer-tenant-login) endpoint.'
     OAuth2:
       type: oauth2
       flows:

@@ -42,15 +42,15 @@ Then, send a request to the [Calculating net and gross values for prices](https:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../users-and-permissions/iam/api-reference/" %}
-[api-reference](../../users-and-permissions/iam/api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/tax/{tenant}/taxes/calculation-commands' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X PUT 
+  'https://api.emporix.io/tax/{tenant}/taxes/calculation-commands' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "input": {
       "targetLocation": {
@@ -86,15 +86,16 @@ Then, send a request to the [Calculating net and gross values for prices](https:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../users-and-permissions/iam/api-reference/" %}
-[api-reference](../../users-and-permissions/iam/api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
+
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/tax/{tenant}/taxes/calculation-commands' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X PUT 
+  'https://api.emporix.io/tax/{tenant}/taxes/calculation-commands' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "input": {
       "targetLocation": {
@@ -152,15 +153,16 @@ Then, send a request to the [Calculating net and gross values for prices](https:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../users-and-permissions/iam/api-reference/" %}
-[api-reference](../../users-and-permissions/iam/api-reference/)
+{% content-ref url="../tax-service/api-reference/" %}
+[api-reference](../tax-service/api-reference/)
 {% endcontent-ref %}
 
+
 ```bash
-curl -i -X PUT \
-  'https://api.emporix.io/tax/{tenant}/taxes/calculation-commands' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
+curl -i -X PUT 
+  'https://api.emporix.io/tax/{tenant}/taxes/calculation-commands' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "input": {
       "sourceLocation": {

@@ -17,7 +17,7 @@ paths:
       tags:
         - Label
       summary: Retrieving labels
-      description: Retrieves all tenant's labels.
+      description: Retrieves all tenant labels.
       operationId: GET-label-list-labels
       parameters:
         - in: query
@@ -63,8 +63,6 @@ paths:
       summary: Creating a label
       description: |
         Creates a new label.
-        ### Required scopes
-        *  `label.label_manage`
       operationId: POST-label-create-label
       requestBody:
         content:
@@ -130,8 +128,6 @@ paths:
       summary: Updating a label
       description: |
         Updates a label with the specified label ID.
-        ### Required scopes
-        *  `label.label_manage`
       operationId: PUT-label-update-label
       requestBody:
         content:
@@ -170,8 +166,6 @@ paths:
       summary: Partially updating a label
       description: |
         Partially updates a label with the specified label ID.
-        ### Required scopes
-        *  `label.label_manage`
       operationId: PATCH-label-update-label
       requestBody:
         content:
@@ -209,8 +203,6 @@ paths:
       summary: Deleting a label
       description: |
         Deletes a label with the specified label ID.
-        ### Required scopes
-        *  `label.label_manage`
       operationId: DELETE-label-remove-label
       responses:
         '204':

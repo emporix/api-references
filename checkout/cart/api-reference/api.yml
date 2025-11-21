@@ -2605,7 +2605,7 @@ paths:
         in: path
         required: true
         description: |
-          Your Emporix tenant's name.
+          Your Emporix tenant name.
 
           **Note**: The tenant should always be written in lowercase.
         schema:
@@ -3762,7 +3762,7 @@ paths:
         in: path
         required: true
         description: |
-          Your Emporix tenant's name.
+          Your Emporix tenant name.
 
           **Note**: The tenant should always be written in lowercase.
         schema:
@@ -4547,7 +4547,7 @@ components:
           description: ID of the legal entity to which customer is assigned.
         deliveryWindowId:
           type: string
-          description: 'Delivery window''s unique identifier, as defined in the Shipping Service.'
+          description: 'Delivery window unique identifier, as defined in the Shipping Service.'
         deliveryWindow:
           $ref: '#/components/schemas/deliveryWindow'
         siteCode:
@@ -6432,7 +6432,7 @@ components:
       in: path
       required: true
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: The tenant should always be written in lowercase.
       schema:
