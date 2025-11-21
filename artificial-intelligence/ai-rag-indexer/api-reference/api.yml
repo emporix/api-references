@@ -20,7 +20,7 @@ paths:
       - $ref: '#/components/parameters/path_tenant'
       - $ref: '#/components/parameters/path_type'
     post:
-      summary: Reindexing the entities of given type.
+      summary: Reindexing the entities of given type
       operationId: GET-ai-rag-indexer-reindex
       responses:
         '204':
@@ -47,7 +47,7 @@ paths:
       - $ref: '#/components/parameters/path_tenant'
       - $ref: '#/components/parameters/path_type'
     get:
-      summary: Listing fields for RAG search.
+      summary: Listing fields for RAG search
       operationId: GET-ai-rag-indexer-retrieve-rag-metadata
       responses:
         '200':
@@ -99,7 +99,7 @@ paths:
       - $ref: '#/components/parameters/path_tenant'
       - $ref: '#/components/parameters/path_type'
     get:
-      summary: Listing fields for vector search filtering.
+      summary: Listing fields for vector search filtering
       operationId: GET-ai-rag-indexer-retrieve-filter-metadata
       responses:
         '200':
