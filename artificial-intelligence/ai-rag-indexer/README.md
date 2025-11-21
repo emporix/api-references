@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: magnifying-glass-arros-rotate
+icon: magnifying-glass-arrows-rotate
 ---
 
 # AI RAG Indexer
