@@ -11,6 +11,42 @@ layout:
 
 To prepare your tenant for invoice generation, you have to set up the Configuration, Sequential ID and Site Settings services.
 
+Authorization for inovice service:
+
+To gain the access token we have to execute POST request with parameters:
+
+- **URL**: https://api.emporix.io/oauth/token
+- **CLIENT_ID**: `{SET_ME}`
+- **CLIENT_SECRET**: `{SET_ME}`
+- **SCOPES**: `{SET_ME}`
+
+The required scopes can be found in the description of each endpoint, each client gets their individual *CLIENT_ID* and *CLIENT_SECRET*
+
+Example request:
+
+```bash
+curl --location --request POST 'https://api.emporix.io/oauth/token' 
+--header 'Content-Type: application/x-www-form-urlencoded' 
+--data-urlencode 'grant_type=client_credentials' 
+--data-urlencode 'client_id={SET_ME}' 
+--data-urlencode 'client_secret={SET_ME}' 
+--data-urlencode 'scope={SET_ME}'
+```
+
+Response:
+
+```json
+{
+  "refresh_token": "",
+  "refresh_token_expires_in": 0,
+  "session_idle_time": 120,
+  "token_type": "Bearer",
+  "access_token": "{TOKEN}",
+  "expires_in": 14399,
+  "scope": "{SCOPES}"
+}
+```
+
 ## Set up invoice configuration in the Configuration service
 
 Use the parameters for an order query in case of an automatic job type:

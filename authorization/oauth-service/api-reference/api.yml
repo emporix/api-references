@@ -25,11 +25,11 @@ paths:
         required: true
         schema: 
           type: string
-          example: application/json
+          example: application/x-www-form-urlencoded
       requestBody:
         description: ""
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/AccessTokenRequest'
             examples:
