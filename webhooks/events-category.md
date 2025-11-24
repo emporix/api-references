@@ -37,7 +37,7 @@ description: Webhook events related to the creation, update, and deletion of a c
   "publish": {
     "published": "Boolean"
   },
-  "classificationMixins": []
+  "classificationMixins": [],
   "mixins": "Map",
   "metadata": {
     "version": "Number",
