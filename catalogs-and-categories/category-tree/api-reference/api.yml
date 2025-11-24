@@ -795,7 +795,7 @@ paths:
                   ownClassificationMixins: [
                     {
                       "name": "Classification Mixin",
-                      "schemaUrl": "https://res.cloudinary.com/saas-ag/raw/upload/schemata2/mrworkerdev/toolsClassification_v1.json",
+                      "schemaUrl": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/toolsClassification_v1.json",
                       "required": false
                     }
                   ]
@@ -3519,14 +3519,14 @@ components:
           ownClassificationMixins: [
             {
               name: "Classification Mixin",
-              schemaUrl: "https://res.cloudinary.com/saas-ag/raw/upload/schemata2/mrworkerdev/toolsClassification_v1.json",
+              schemaUrl: "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/toolsClassification_v1.json",
               required: false
             }
           ]
           classificationMixins: [
             {
               name: "Classification Mixin",
-              schemaUrl: "https://res.cloudinary.com/saas-ag/raw/upload/schemata2/mrworkerdev/garageTools_v1.json",
+              schemaUrl: "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/garageTools_v1.json",
               required: false,
               sourceCategoryId: "4901acd1-5dad-4c7b-b4f0-32d0198621fx"
             }
