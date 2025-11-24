@@ -577,7 +577,7 @@ components:
               additionalProperties:
                 type: string
               example:
-                productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
+                productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
     coupon:
       allOf:
         - $ref: '#/components/schemas/base-coupon'
@@ -682,7 +682,7 @@ components:
               additionalProperties:
                 type: string
               example:
-                productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
+                productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
       required:
         - name
     segmentRestricted:
