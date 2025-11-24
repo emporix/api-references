@@ -8,6 +8,7 @@
 
 ## 2025
 
+* [2025-11-25: AI Service - Agent Logs](2025/2025-11-25-ai.md)
 * [2025-11-17: AI Service - Export/Import agents](2025/2025-11-17-ai.md)
 * [2025-11-14: Client Management Service - parent hierarchy endpoint added](2025/2025-11-14-client-management.md)
 * [2025-11-14: Price Service - legal entity support added](2025/2025-11-14-price.md)
@@ -37,6 +38,9 @@
 * [2025-08-29: Price Service - vendor handling added](2025/2025-08-29-price.md)
 * [2025-08-29: Media Service - vendor handling added](2025/2025-08-29-media.md)
 * [2025-08-29: Availability Service - vendor handling added](2025/2025-08-29-availability.md)
+=======
+* [2025-08-30: AI Service - support for AI agents](2025/2025-08-30-ai.md)
+>>>>>>> Stashed changes
 * [2025-08-04: Webhook Service - new Vendor events](2025/2025-08-04-webhook.md)
 * [2025-08-04: Price Service - q param support](2025/2025-08-04-price.md)
 * [2025-07-30: Cart Service - vendor added](2025/2025-07-30-cart-vendor.md)
