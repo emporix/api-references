@@ -3508,7 +3508,7 @@ components:
             createdAt: "2024-08-28T14:00:17.353Z"
             modifiedAt: "2024-08-28T14:00:17.353Z"
         - id: "0720b75e-ee1c-4d76-9f53-eb3af3927e13"
-          type: "CLASSIFICATION""
+          type: "CLASSIFICATION"
           parentId: "7d2b0d76-3628-46b3-ac92-34c903f5c3cb"
           localizedName:
             en: "CORDED POWERTOOLS"
