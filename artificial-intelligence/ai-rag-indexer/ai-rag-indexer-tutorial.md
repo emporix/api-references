@@ -70,7 +70,7 @@ Example payload:
 
 {% step %}
 ### Trigger a reindex job
-After you understand the metadata, run a [Reindexing the entities of given type](https://developer.emporix.io/api-references/api-guides/api-guides-and-references/artificial-intelligence/ai-rag-indexer/api-reference/reindex#POST-ai-rag-indexer-tenant-type-reindex) endpoint to regenerate embeddings for the selected entity type. The reindex endpoint currently performs a full rebuild.
+After you understand the metadata, call a [Reindexing the entities of given type](https://developer.emporix.io/api-references/api-guides/api-guides-and-references/artificial-intelligence/ai-rag-indexer/api-reference/reindex#POST-ai-rag-indexer-tenant-type-reindex) endpoint to regenerate embeddings for the selected entity type. The reindex endpoint currently performs a full rebuild.
 
 ```bash
 curl -L \
