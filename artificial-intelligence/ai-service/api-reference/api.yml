@@ -12,6 +12,8 @@ tags:
     description: Manage Agents
   - name: Agent Chat
     description: Chat With Agents
+  - name: Agent Logs
+    description: Read Agent Logs
   - name: Agent Template
     description: Manage Agent Templates
   - name: AI Completions
@@ -1422,6 +1424,204 @@ paths:
             - ai.agent_manage
       tags:
         - Import/Export
+  '/ai-service/{tenant}/agentic/logs/requests':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/qParam'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/header_xTotalCount'
+    get:
+      summary: Listing agent requests
+      operationId: GET-ai-list-requests
+      responses:
+        '200':
+          $ref: '#/components/responses/200_resp_GET_agent_requests'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        Retrieves agent requests based on the provided query.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Agent Logs
+  '/ai-service/{tenant}/agentic/logs/requests/{requestId}':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - schema:
+          type: string
+        name: requestId
+        in: path
+        required: true
+    get:
+      parameters:
+        - $ref: '#/components/parameters/fields'
+      summary: Retrieving agent request by ID
+      operationId: GET-ai-retrieve-request
+      responses:
+        '200':
+          $ref: '#/components/responses/200_resp_GET_agent_request'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        Retrieves the agent request by given ID.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Agent Logs
+  '/ai-service/{tenant}/agentic/logs/requests/search':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    post:
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/header_xTotalCount'
+      summary: Searching agent requests
+      operationId: POST-ai-search-requests
+      responses:
+        '200':
+          $ref: '#/components/responses/200_resp_GET_agent_requests'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      requestBody:
+        $ref: '#/components/requestBodies/QParamSearchBody'
+      description: |-
+        Searches for agent requests based on the provided query.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Agent Logs
+  '/ai-service/{tenant}/agentic/logs/sessions':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/qParam'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/header_xTotalCount'
+    get:
+      summary: Listing agent sessions
+      operationId: GET-ai-list-sessions
+      responses:
+        '200':
+          $ref: '#/components/responses/200_resp_GET_agent_sessions'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        Retrieves agent sessions based on the provided query.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Agent Logs
+  '/ai-service/{tenant}/agentic/logs/sessions/{sessionId}':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - schema:
+          type: string
+        name: sessionId
+        in: path
+        required: true
+    get:
+      parameters:
+        - $ref: '#/components/parameters/fields'
+      summary: Retrieving agent session by ID
+      operationId: GET-ai-retrieve-session
+      responses:
+        '200':
+          $ref: '#/components/responses/200_resp_GET_agent_session'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+      description: |-
+        Retrieves the agent session by given ID.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Agent Logs
+  '/ai-service/{tenant}/agentic/logs/sessions/search':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    post:
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/header_xTotalCount'
+      summary: Searching agent sessions
+      operationId: POST-ai-search-sessions
+      responses:
+        '200':
+          $ref: '#/components/responses/200_resp_GET_agent_sessions'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      requestBody:
+        $ref: '#/components/requestBodies/QParamSearchBody'
+      description: |-
+        Searches for agent sessions based on the provided query.
+        
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Agent Logs
 components:
   schemas:
     ErrorMessage:
@@ -2217,6 +2417,96 @@ components:
           type: string
           description: Agent message.
 
+    # Agent Logs:
+    LogSeverity:
+      type: string
+      enum:
+        - INFO
+        - WARNING
+        - ERROR
+      description: Severity level of the log entry.
+    AgentLogMessageResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp when the log message was created.
+        severity:
+          $ref: '#/components/schemas/LogSeverity'
+        message:
+          type: string
+          description: The log message content.
+        agentId:
+          type: string
+          description: Unique identifier of the agent that generated the log.
+        requestId:
+          type: string
+          description: Unique identifier of the request associated with the log.
+        isBusinessLog:
+          type: boolean
+          description: Whether this is a business log entry.
+    AgentRequestResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the request log.
+        sessionId:
+          type: string
+          description: Unique identifier of the session.
+        requestId:
+          type: string
+          description: Unique identifier of the request.
+        triggerAgentId:
+          type: string
+          description: Unique identifier of the agent that triggered the request.
+        collaborationAgents:
+          type: array
+          items:
+            type: string
+          description: List of agent IDs that collaborated in this request.
+        severity:
+          $ref: '#/components/schemas/LogSeverity'
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentLogMessageResponse'
+          description: List of log messages associated with this request.
+        duration:
+          type: integer
+          format: int64
+          description: Duration of the request in seconds.
+        metadata:
+          $ref: '#/components/schemas/MetadataResponse'
+    AgentSessionResponse:
+      type: object
+      properties:
+        sessionId:
+          type: string
+          description: Unique identifier of the session.
+        triggerAgentId:
+          type: string
+          description: Unique identifier of the agent that triggered the session.
+        severity:
+          $ref: '#/components/schemas/LogSeverity'
+        agents:
+          type: array
+          items:
+            type: string
+          description: List of agent IDs that participated in this session.
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentLogMessageResponse'
+          description: List of log messages associated with this session.
+        duration:
+          type: integer
+          format: int64
+          description: Duration of the session in seconds.
+        metadata:
+          $ref: '#/components/schemas/MetadataResponse'
+
     GenerationResponse:
       title: GenerationResponse
       type: object
@@ -2572,6 +2862,144 @@ components:
               value:
                 id: en
                 result: 'Mini pipe cutters are small cutting tools that are designed to precisely and effectively cut through pipes ranging in size from 3 to 16 millimeters. Unlike some larger pipe cutters, these mini versions are conveniently small and light enough to be carried around easily and used in places where a standard-sized cutter may not be able to fit. They are typically made of hardened steel and are designed to work on most types of tubing and thin-walled plastic piping. The continuous interlocking jaws hold the pipe securely while the cutting blade smoothly and accurately creates a precise and neat cutting edge. Mini pipe cutters are the perfect tool for plumbers and those tackling smaller scale pipe work in hard-to-reach places.'
+    200_resp_GET_agent_requests:
+      description: List of agent requests.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/AgentRequestResponse'
+          examples:
+            Agent Requests:
+              value:
+                - id: req-123e4567-e89b-12d3-a456-426614174000
+                  sessionId: sess-123e4567-e89b-12d3-a456-426614174000
+                  requestId: req-123e4567-e89b-12d3-a456-426614174000
+                  triggerAgentId: complaint-agent
+                  collaborationAgents:
+                    - support-agent
+                  severity: INFO
+                  messages:
+                    - timestamp: '2025-01-15T10:30:27.167Z'
+                      severity: INFO
+                      message: Agent started processing request
+                      agentId: complaint-agent
+                      requestId: req-123e4567-e89b-12d3-a456-426614174000
+                      isBusinessLog: false
+                    - timestamp: '2025-01-15T10:30:28.234Z'
+                      severity: INFO
+                      message: Retrieved order details successfully
+                      agentId: complaint-agent
+                      requestId: req-123e4567-e89b-12d3-a456-426614174000
+                      isBusinessLog: true
+                  duration: 45
+                  metadata:
+                    version: 1
+                    createdAt: '2025-01-15T10:30:27.167Z'
+                    modifiedAt: '2025-01-15T10:30:28.234Z'
+    200_resp_GET_agent_request:
+      description: A single agent request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AgentRequestResponse'
+          examples:
+            Agent Request:
+              value:
+                id: req-123e4567-e89b-12d3-a456-426614174000
+                sessionId: sess-123e4567-e89b-12d3-a456-426614174000
+                requestId: req-123e4567-e89b-12d3-a456-426614174000
+                triggerAgentId: complaint-agent
+                collaborationAgents:
+                  - support-agent
+                severity: INFO
+                messages:
+                  - timestamp: '2025-01-15T10:30:28.234Z'
+                    severity: INFO
+                    message: Retrieved order details successfully
+                    agentId: complaint-agent
+                    requestId: req-123e4567-e89b-12d3-a456-426614174000
+                    isBusinessLog: true
+                  - timestamp: '2025-01-15T10:30:29.456Z'
+                    severity: WARNING
+                    message: Order status check returned unexpected value
+                    agentId: complaint-agent
+                    requestId: req-123e4567-e89b-12d3-a456-426614174000
+                    isBusinessLog: false
+                duration: 45
+                metadata:
+                  version: 1
+                  createdAt: '2025-01-15T10:30:27.167Z'
+                  modifiedAt: '2025-01-15T10:30:29.456Z'
+    200_resp_GET_agent_sessions:
+      description: List of agent sessions.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/AgentSessionResponse'
+          examples:
+            Agent Sessions:
+              value:
+                - sessionId: sess-123e4567-e89b-12d3-a456-426614174000
+                  triggerAgentId: complaint-agent
+                  severity: INFO
+                  agents:
+                    - complaint-agent
+                    - support-agent
+                  messages:
+                    - timestamp: '2025-01-15T10:30:27.167Z'
+                      severity: INFO
+                      message: Session started
+                      agentId: complaint-agent
+                      requestId: req-123e4567-e89b-12d3-a456-426614174000
+                      isBusinessLog: false
+                    - timestamp: '2025-01-15T10:30:28.234Z'
+                      severity: INFO
+                      message: Handed off to support agent
+                      agentId: complaint-agent
+                      requestId: req-123e4567-e89b-12d3-a456-426614174000
+                      isBusinessLog: true
+                  duration: 120
+                  metadata:
+                    version: 1
+                    createdAt: '2025-01-15T10:30:27.167Z'
+                    modifiedAt: '2025-01-15T10:30:29.234Z'
+    200_resp_GET_agent_session:
+      description: A single agent session.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AgentSessionResponse'
+          examples:
+            Agent Session:
+              value:
+                sessionId: sess-123e4567-e89b-12d3-a456-426614174000
+                triggerAgentId: complaint-agent
+                severity: INFO
+                agents:
+                  - complaint-agent
+                  - support-agent
+                messages:
+                  - timestamp: '2025-01-15T10:30:28.234Z'
+                    severity: INFO
+                    message: Retrieved order details successfully
+                    agentId: complaint-agent
+                    requestId: req-123e4567-e89b-12d3-a456-426614174000
+                    isBusinessLog: true
+                  - timestamp: '2025-01-15T10:30:30.789Z'
+                    severity: INFO
+                    message: Support agent processing request
+                    agentId: support-agent
+                    requestId: req-123e4567-e89b-12d3-a456-426614174000
+                    isBusinessLog: false
+                duration: 120
+                metadata:
+                  version: 1
+                  createdAt: '2025-01-15T10:30:27.167Z'
+                  modifiedAt: '2025-01-15T10:30:30.789Z'
   requestBodies:
     TextGeneration:
       content:
