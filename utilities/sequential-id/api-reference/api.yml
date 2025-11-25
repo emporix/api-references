@@ -21,7 +21,7 @@ paths:
           content:
             application/json:
               example:
-                - name: testSchema
+                - name: Schema
                   schemaType: orderNoSequence
                   active: true
                   preText: C-__year__-__month__-
@@ -51,14 +51,9 @@ paths:
           $ref: '#/components/responses/Unauthorized_401'
         '403':
           $ref: '#/components/responses/trait_yaasAware_403'
-      summary: Retrieving all schemas
+      summary: Retrieving all sequence schemas
       description: |-
         Gets all sequence schemas.
-
-        ***
-
-         ### Required scopes
-        * `sequentialid.schema_view`
       operationId: GET-sequential-id-retrieve-tenant-schemas
       security:
         - OAuth2:
@@ -71,28 +66,26 @@ paths:
           description: ''
           content:
             application/json:
+              example:
+                id: 6915e2eb3b4c2e6c7c80711b
               schema:
                 type: string
+                description: ID of the created sequence schema.
         '400':
           $ref: '#/components/responses/trait_yaasAware_400'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
           $ref: '#/components/responses/trait_yaasAware_403'
-      summary: Creating a schema
+      summary: Creating a sequence schema
       description: |-
         Creates a new sequence schema.
-
-        ***
-
-         ### Required scopes
-        * `sequentialid.schema_manage`
       operationId: POST-sequential-id-create-tenant-schema
       requestBody:
         content:
           application/json:
             example:
-              name: testSchema
+              name: Schema
               schemaType: orderNoSequence
               preText: C-__year__-__month__-
               postText: '-D'
@@ -133,7 +126,7 @@ paths:
           content:
             application/json:
               example:
-                name: testSchema
+                name: Schema
                 schemaType: orderNoSequence
                 active: true
                 preText: C-__year__-__month__-
@@ -155,14 +148,9 @@ paths:
           $ref: '#/components/responses/Unauthorized_401'
         '403':
           $ref: '#/components/responses/trait_yaasAware_403'
-      summary: Retrieving a schema
+      summary: Retrieving a sequence schema
       description: |-
-        Gets a sequence schema by its id.
-
-        ***
-
-         ### Required scopes
-        * `sequentialid.schema_view`
+        Gets a sequence schema by its ID.
       operationId: GET-sequential-id-retrieve-schema
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -191,14 +179,9 @@ paths:
           $ref: '#/components/responses/trait_yaasAware_403'
         '404':
           $ref: '#/components/responses/trait_yaasAware_404'
-      summary: Activating a schema
+      summary: Activating a sequence schema
       description: |-
         Sets the schema as active in the system.
-
-        ***
-
-         ### Required scopes
-        * `sequentialid.schema_manage`
       operationId: POST-sequential-id-activate-schema
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -222,7 +205,7 @@ paths:
           content:
             application/json:
               example:
-                - name: testSchema
+                - name: Schema
                   schemaType: orderNoSequence
                   active: true
                   preText: C-__year__-__month__-
@@ -252,14 +235,9 @@ paths:
           $ref: '#/components/responses/Unauthorized_401'
         '403':
           $ref: '#/components/responses/trait_yaasAware_403'
-      summary: Retrieving all schema types
+      summary: Retrieving all sequence schema types
       description: |-
         Gets all sequence schemas.
-
-        ***
-
-         ### Required scopes
-        * `sequentialid.schema_view`
       operationId: GET-sequential-id-retrieve-schema-types
       security:
         - OAuth2:
@@ -310,24 +288,18 @@ paths:
           $ref: '#/components/responses/trait_yaasAware_403'
         '404':
           $ref: '#/components/responses/trait_yaasAware_404'
-      summary: Creating a nextId for schema type
+      summary: Creating a nextId for a sequence schema type
       description: |-
-        Creates and returns the nextId according to the specified sequence.
-        If you specify the `sequenceKey` in request body, the nextId number is generated for this sequence, otherwise default pool is used.
-
-
-        ***
-
-         ### Required scopes
-        * `sequentialid.schema_view`
+        Creates and returns the `nextId` according to the specified sequence.
+        If you specify the `sequenceKey` in request body, the `nextId` number is generated for this sequence, otherwise default pool is used.
       operationId: POST-sequential-id-create-schema-type-nextId
       requestBody:
         content:
           application/json:
             example:
-              sequenceKey: 2016-05
+              sequenceKey: 2025-05
               placeholders:
-                __year__: '2016'
+                __year__: '2025'
                 __month__: '05'
             schema:
               $ref: '#/components/schemas/NextIdCommandRequest'
@@ -360,10 +332,10 @@ paths:
           content:
             application/json:
               example:
-                testSchema:
+                Schema:
                   ids:
-                    - C-2016-05-0000000045-D
-                    - C-2016-05-0000000045-D
+                    - C-2025-05-0000000045-D
+                    - C-2025-05-0000000045-D
               schema:
                 $ref: '#/components/schemas/SchemaBatchNextIdResponse'
         '400':
@@ -372,14 +344,10 @@ paths:
           $ref: '#/components/responses/Unauthorized_401'
         '403':
           $ref: '#/components/responses/trait_yaasAware_403'
-      summary: Creating nextIds for schema types
+      summary: Creating nextIds for sequence schema types
       description: |-
-        Creates and returns the nextId for the specified sequence schemas.
-        If you specify the `sequenceKey` in request body, the nextId number is generated for this sequence, otherwise default pool is used.
-        ***
-
-         ### Required scopes
-        * `sequentialid.schema_view`
+        Creates and returns multiple `nextIds` for the specified sequence schemas.
+        If you specify the `sequenceKey` in request body, the `nextIds` numbers are generated for this sequence, otherwise default pool is used.
       parameters:
         - $ref: '#/components/parameters/trait_siteCode'
       operationId: POST-sequential-id-create-schema-types-nextIds
@@ -387,12 +355,12 @@ paths:
         content:
           application/json:
             example:
-              testSchema:
-                sequenceKey: 2016-05
+              Schema:
+                sequenceKey: 2025-05
                 placeholders:
-                  __year__: '2016'
+                  __year__: '2025'
                   __month__: '05'
-              testSchema2:
+              Schema2:
                 numberOfIds: 2
                 placeholders:
                   '--prefix--': C-

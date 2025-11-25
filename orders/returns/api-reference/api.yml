@@ -14,7 +14,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/path_tenant'
     post:
-      summary: Creating a single return entity
+      summary: Creating a single return
       responses:
         '201':
           description: |
@@ -39,14 +39,11 @@ paths:
           $ref: '#/components/responses/common_response_InternalServerError_500'
       description: |
         Creates a single return document with given information.
-        If a return is being created by a customer directly, then the `returns.returns_manage_own` scope is required.
-        If a return is being created by a tenant employee on behalf of a customer, then the `returns.returns_manage` scope is required.
+        If a return is created by a customer directly, then the `returns.returns_manage_own` scope is required.
+        If a return is created by a tenant employee on behalf of a customer, then the `returns.returns_manage` scope is required.
+
         **Note**: Depending on a case, a different set of fields is required and allowed.
 
-        ***
-        **Required scopes (one of)**
-        * `returns.returns_manage`
-        * `returns.returns_manage_own`
       operationId: POST-returns-create-return
       requestBody:
         $ref: '#/components/requestBodies/returnCreateBody'
@@ -73,10 +70,6 @@ paths:
         - Returns
       description: |
         Retrieves a list of return documents.
-        ***
-        **Required scopes (one of)**
-        * `returns.returns_read`
-        * `returns.returns_read_own`
       parameters:
         - $ref: '#/components/parameters/x_total_count_header'
         - $ref: '#/components/parameters/page_size_query_param'
@@ -98,10 +91,6 @@ paths:
       operationId: GET-returns-retrieve-return
       description: |
         Retrieves a single return document.
-        ***
-        **Required scopes (one of)**
-        * `returns.returns_read`
-        * `returns.returns_read_own`
       responses:
         '200':
           $ref: '#/components/responses/singleReturnResponse_200'
@@ -135,15 +124,12 @@ paths:
         - Returns
       description: |
         Updates a single return document with given information.
-        If a return is being updated by a customer directly, then the `returns.returns_manage_own` scope is required.
-        If a return is being updated by a tenant employee on behalf of a customer, then the `returns.returns_manage` scope is required.
-        **Note**: Depending on a case, a different set of fields is required and allowed.
-        A customer can change a return only when the return approval status is `PENDING`.
+        If a return is updated by a customer directly, then the `returns.returns_manage_own` scope is required.
+        If a return is updated by a tenant employee on behalf of a customer, then the `returns.returns_manage` scope is required.
 
-        ***
-        **Required scopes (one of)**
-        * `returns.returns_manage`
-        * `returns.returns_manage_own`
+        **Note**: Depending on a case, a different set of fields is required and allowed.
+
+        A customer can change a return only when the return approval status is `PENDING`.
       requestBody:
         $ref: '#/components/requestBodies/returnUpdateBody'
       security:
@@ -171,11 +157,6 @@ paths:
       description: |-
         Deletes a single return document.
         The return can be deleted completely only by an employee, that is a user who has the `returns.returns_manage` scope granted. A customer, who has the `returns.returns_manage_own` scope granted, can delete a return only if the return status is `PENDING`. The return status is changed to `CLOSED` during the delete operation.
-
-        ***
-        ***Required scopes (one of)**
-        * `returns.returns_manage`
-        * `returns.returns_manage_own`
       security:
         - OAuth2:
             - returns.returns_manage
@@ -183,7 +164,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/saasToken'
     patch:
-      summary: Partial updating a single return
+      summary: Partially updating a single return
       operationId: PATCH-returns-update-return
       responses:
         '204':
@@ -202,17 +183,14 @@ paths:
         - Returns
       description: |
         Parial update of a single return document with given information.
-        If a return is being updated by a customer directly, then the `returns.returns_manage_own` and `returns.returns_read_own` scope is required.
-        If a return is being updated by a tenant employee on behalf of a customer, then the `returns.returns_manage` and `returns.returns_read` scope is required.
+        If a return is updated by a customer directly, then the `returns.returns_manage_own` and `returns.returns_read_own` scope is required.
+        If a return is updated by a tenant employee on behalf of a customer, then the `returns.returns_manage` and `returns.returns_read` scope is required.
+
         **Note**: Depending on a case, a different set of fields is allowed.
+
         A customer can change a return only when the return approval status is `PENDING`.
 
         The patch request consists of set of operation, that should be defined according to [RFC-6902](https://datatracker.ietf.org/doc/html/rfc6902) standard
-
-        ***
-        **Required scopes (one of)**
-        * `returns.returns_manage`
-        * `returns.returns_manage_own`
       security:
         - OAuth2:
             - returns.returns_manage
@@ -603,8 +581,9 @@ components:
               description: Unique identifier of a return.
         - $ref: '#/components/schemas/coreErrorMessage'
     metadataCore:
+      title: metadataCore
+      description: 'Core metadata fields shared across multiple objects.'
       type: object
-      description: Metadata request.
       properties:
         mixins:
           type: object
@@ -614,6 +593,8 @@ components:
           example:
             productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
     metadataUpdate:
+      title: metadataUpdate
+      description: 'Metadata fields required when updating an existing object.'
       allOf:
         - $ref: '#/components/schemas/metadataCore'
       type: object
@@ -626,6 +607,11 @@ components:
           example: 1
           minimum: 1
     metadataResponse:
+      title: metadataResponse
+      description: |
+        Metadata fields returned by the API.  
+        Extends `metadataUpdate` with timestamps indicating when the object
+        was created and last modified.
       allOf:
         - $ref: '#/components/schemas/metadataUpdate'
         - type: object
@@ -673,11 +659,11 @@ components:
         - $ref: '#/components/schemas/basicReturn'
     basicEmployeeReturn:
       title: A return request created on behalf of a customer.
-      description: Base schema for returns.
+      description: Base schema for returns on behalf of a customer.
       allOf:
         - $ref: '#/components/schemas/basicReturn'
         - type: object
-          properties:
+          properties: 
             requestor:
               type: object
               description: 'Indicates who requested the return. The field can be set and updated only by an employee, that is a person who has a `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.'
@@ -734,7 +720,7 @@ components:
             - submitter
     employeeReturnForAnonymousOrder:
       title: A return request created on behalf of a customer for anonymous order.
-      description: Base schema for a return requested by a customer.
+      description: Base schema for a return requested by a customer. Related to an anonymous order.
       allOf:
         - $ref: '#/components/schemas/basicReturn'
         - type: object
@@ -875,6 +861,8 @@ components:
             - requestor
             - submitter
     fullCustomerReturn:
+      title: A customer return object.
+      description: 'Schema for retrieving returns by a customer.'
       allOf:
         - type: object
           properties:
@@ -998,7 +986,7 @@ components:
                   description: 'Identifier of a user or a user group, depending on the `type` value.'
     order:
       type: object
-      description: Represents the order which is being (fully or partially) returned.
+      description: 'Represents the order which is being (fully or partially) returned.'
       properties:
         id:
           type: string
@@ -1017,7 +1005,7 @@ components:
                 description: 'Quantity of the items in the order. In the order entity, the field is called `order.entries[].amount`.'
               reason:
                 type: object
-                description: A reason why the item needs to be returned.
+                description: 'A reason why the item needs to be returned.'
                 properties:
                   code:
                     type: string
@@ -1243,7 +1231,7 @@ components:
       in: path
       required: true
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
         **Note**: The tenant name should always be written in lowercase.
       schema:
         pattern: '^[a-z][a-z0-9]+$'
@@ -1329,9 +1317,9 @@ components:
         clientCredentials:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
-            returns.returns_read: Needed for reading returns by a tenant employee (All tenant's returns).
-            returns.returns_manage: Needed to manage returns by a tenant employee (All tenant's returns).
-            returns.returns_read_own: Needed for reading returns by a customer (Only customer's own returns).
-            returns.returns_manage_own: Needed to manage returns by a customer (Only customer's own returns).
+            returns.returns_read: Needed for reading returns by a tenant employee (all tenant returns).
+            returns.returns_manage: Needed to manage returns by a tenant employee (all tenant returns).
+            returns.returns_read_own: Needed for reading returns by a customer (only customer's own returns).
+            returns.returns_manage_own: Needed to manage returns by a customer (only customer's own returns).
 security:
   - OAuth2: []
