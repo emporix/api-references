@@ -1424,6 +1424,15 @@ paths:
             - ai.agent_manage
       tags:
         - Import/Export
+  '/ai-service/{tenant}/agentic/logs/requests':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/qParam'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/header_xTotalCount'
     get:
       summary: Listing agent requests
       operationId: GET-ai-list-requests
