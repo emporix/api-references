@@ -3049,6 +3049,17 @@ paths:
             type: boolean
             example: true
             default: false
+        - name: categoryIds
+          in: query
+          description: |
+            List of category IDs. If provided, the response returns only the category trees that include at least one of the specified categories.
+          schema:
+            type: array
+            items:
+              type: string
+            example:
+              - d9e4fdd0-e671-4968-9ba1-a5533a7f3b02
+              - 0f1056cc-b4b4-488b-9f95-245f6b542702
         - name: X-Version
           in: header
           description: |
@@ -3083,6 +3094,85 @@ paths:
                     message: You need a scope for this action.
                     details:
                       - 'Required scope(s): category.category_read_unpublished'
+      security:
+        - OAuth2: []
+  /category/{tenant}/category-trees/search:
+    post:
+      tags:
+        - Category Tree Resources
+      summary: Searching for category trees
+      description: |
+        Searches for category trees.
+        ***
+        ### Required scopes
+        * `category.category_read_unpublished`
+          **Note:** Only required if the response should contain unpublished categories.
+      operationId: POST-category-tree-search-category-trees
+      parameters:
+        - name: tenant
+          in: path
+          description: |
+            Your Emporix tenant name.
+
+            **Note**: The tenant should always be written in lowercase.
+          required: true
+          schema:
+            type: string
+            example: saasdev2
+        - name: showUnpublished
+          in: query
+          description: |
+            If set to `true`, not published categories are retrieved as well.
+            Possible values:
+            * `true`
+            * `false`
+            
+            **Note**: To get unpublished categories you need to have `category.category_read_unpublished` scope.
+          schema:
+            type: boolean
+            example: true
+            default: false
+        - name: X-Version
+          in: header
+          description: |
+            To use this endpoint you have to add `X-Version` header with proper value to your request.
+
+            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
+          required: true
+          schema:
+            pattern: '^v[1-9][0-9]?$'
+            type: string
+            example: v2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryTreeSearchRequest'
+        required: true
+      responses:
+        '200':
+          description: The request was successful. The category tree is returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryTree'
+        '400':
+          description: Request was syntactically incorrect. Details will be provided in the response payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    message: There is a validation error. Please check the details.
+                    code: 400
+                    status: Bad Request
+                    details:
+                      - field: 'searchCategoryTree.searchRequest.categoryIds'
+                        message: 'searchRequest.categoryIds: must not be null'
       security:
         - OAuth2: []
   /category/{tenant}/category-trees/{categoryId}:
@@ -4025,6 +4115,20 @@ components:
             A standard query parameter is used to search for specific values. 
             
             See: [Standard practises - Query parameter](https://developer.emporix.io/api-references/standard-practices/q-param)
+    CategoryTreeSearchRequest:
+      required:
+        - categoryIds
+      type: object
+      properties:
+        categoryIds:
+          type: array
+          items:
+            type: string
+          description: List of category IDs. If provided, the response returns only the category trees that include at least one of the specified categories.
+      example:
+        categoryIds:
+          - d9e4fdd0-e671-4968-9ba1-a5533a7f3b02
+          - 0f1056cc-b4b4-488b-9f95-245f6b542702
     Reference:
       required:
         - id
