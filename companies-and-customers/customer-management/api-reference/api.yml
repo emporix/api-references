@@ -1956,11 +1956,12 @@ components:
       description: |
         List of additional attributes to be retrieved, separated by commas.
         Possible value to be passed in this parameter is `addresses`.
+        To expand mixins, use the `*` character: `mixin:*`.
       in: query
       required: false
       schema:
         type: string
-        example: addresses
+        example: addresses,mixin:*
   securitySchemes:
     CustomerAccessToken:
       type: http
