@@ -17,7 +17,7 @@ layout:
 
 ## Overview
 
-Category tree endpoints now support filtering by category IDs. When category IDs are provided, only category trees that include at least one of the specified categories are returned.
+Category tree endpoints now support filtering by category IDs. When the category IDs are provided, only category trees that include at least one of the specified categories are returned.
 
 ## Modified endpoints
 
