@@ -18,7 +18,11 @@ tags:
   - name: Category Tree Resources
     description: Read Category Trees
 security:
-  - OAuth2: []
+  - OAuth2:
+      - category.category_manage
+      - category.category_read_unpublished
+      - category.category_publish
+      - category.category_unpublish
 paths:
   /category/{tenant}/assignments/references/{referenceId}:
     get:
@@ -4109,7 +4113,6 @@ components:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
             category.category_manage: Manage a category
-            category.category_delete_all: Delete all categories
             category.category_read_unpublished: Read unpublished categories
             category.category_publish: Publish a category
             category.category_unpublish: Unpublish a category
