@@ -28,12 +28,10 @@ paths:
       description: |
         Retrieves a list of categories for which the reference id is assigned.
         ***
-
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-            **Note:** Only required if the category has not been published.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the category has not been published.
+        
       operationId: GET-category-tree-list-categories-by-reference-id
       parameters:
         - name: tenant
@@ -215,11 +213,6 @@ paths:
       summary: Deleting all assignments by referenceId
       description: |
         Deletes all assignments for a specified referenceId, e.g. all assignments for a given productId.
-        ***
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: DELETE-category-tree-remove-all-assignments
       parameters:
         - name: tenant
@@ -300,11 +293,6 @@ paths:
       summary: Updating assignment of resources to a category
       description: |
         Assigns resources (such as products) to a specified category in bulk. Creates new assignments if they do not exist and updates existing ones. 
-        ***
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: PUT-category-tree-update-category-assignments
       parameters:
         - name: tenant
@@ -405,11 +393,9 @@ paths:
         Retrieves a list of categories for a given tenant.
         ***
 
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-            **Note:** Only required if the response should contain unpublished categories.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the response should contain unpublished categories.
       operationId: GET-category-tree-list-categories
       parameters:
         - name: tenant
@@ -645,13 +631,10 @@ paths:
         Creates a new category.
         Creating category as a root may be achieved by adding the 'parentId' field with a 'root' value or by not providing the 'parentId' in the payload.
         ***
+        ### Additional scope info
+        
+        * `category.category_publish` - Only required if you want to publish the category when creating it.
 
-        ### Required scopes
-
-          * `category.category_manage`
-          * `category.category_publish`
-
-            **Note:** The `category.category_publish` scope is only required if you want to publish the category when creating it.
       operationId: POST-category-tree-create-category
       parameters:
         - name: tenant
@@ -830,11 +813,9 @@ paths:
         Searches for categories for a given tenant.
         ***
 
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-            **Note:** Only required if the response should contain unpublished categories.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the response should contain unpublished categories.
       operationId: POST-category-tree-search-categories
       parameters:
         - name: tenant
@@ -1005,9 +986,6 @@ paths:
         Retrieves a category tree.
 
         **Note**: By default, only published categories are retrieved.
-        ***
-        ### Required scopes:
-        No specific scopes are required.
       operationId: GET-category-tree-retrieve-category-tree-deprecated
       responses:
         '200':
@@ -1141,11 +1119,9 @@ paths:
         **Note**: If you want to retrieve the category details using the `code`, you can do this by using the [GET endpoint for retrieving a list of categories](/openapi/category/#operation/categories) with the `code` query parameter.
         ***
 
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-            **Note:** Only required if the response should contain unpublished categories.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the response should contain unpublished categories.
       operationId: GET-category-tree-retrieve-category
       parameters:
         - name: tenant
@@ -1267,14 +1243,11 @@ paths:
         Version specified in the `metadata` field must be the same as in the database. The version can be omitted but then optimistic locking is not be enabled.
         Category-to-root promotion may be achieved by adding the `parentId` field with the `root` value or by excluding the `parentId` from the payload.
         ***
+        ### Additional scope info
+        
+        * `category.category_publish` - Only required if you want to publish the category when updating it.
+        * `category.category_unpublish` - Only required if you want to unpublish the category when updating it.
 
-        ### Required scopes
-
-          * `category.category_manage`
-          * `category.category_publish`
-            **Note:** The `category.category_publish` scope is only required if you want to publish the category when updating it.
-          * `category.category_unpublish`
-            **Note:** Only required if you want to unpublish the category when updating it.
       operationId: PUT-category-tree-update-category
       parameters:
         - name: tenant
@@ -1489,10 +1462,6 @@ paths:
       summary: Deleting a category
       description: |
         Deletes a specified category.
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: DELETE-category-tree-remove-category
       parameters:
         - name: tenant
@@ -1602,14 +1571,10 @@ paths:
         Partially updates a specified category.
         Version specified in the 'metadata' field must be the same as in the database. Category-to-root promotion may be achieved by adding 'parentId' field with the 'root' value.
         ***
-
-        ### Required scopes
-
-          * `category.category_manage`
-          * `category.category_publish`
-            **Note:** The `category.category_publish` scope is only required if you want to publish the category when creating it.
-          * `category.category_unpublish`
-            **Note:** Only required if you want to unpublish the category when updating it.
+        ### Additional scope info
+        
+        * `category.category_publish` - Only required if you want to publish the category when updating it.
+        * `category.category_unpublish` - Only required if you want to unpublish the category when updating it.
       operationId: PATCH-category-tree-update-category
       parameters:
         - name: tenant
@@ -1774,11 +1739,6 @@ paths:
       summary: Assigning resources to a category
       description: |
         Assigns resources (such as products) to a specified category.
-        ***
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: POST-category-tree-assign-category-resources
       parameters:
         - name: tenant
@@ -1881,11 +1841,9 @@ paths:
         Retrieves resources (such as products) assigned to a specified category. The localizedName field contains the resource (product) name. This information is attached to the assignment asynchronously and is visible in the response when retrieved.
         ***
 
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-            **Note:** Only required if the category has not been published.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the category has not been published.
       operationId: GET-category-tree-retrieve-category-assignments
       parameters:
         - name: tenant
@@ -2115,11 +2073,6 @@ paths:
       summary: Assigning a resource to a category
       description: |
         Assigns a resource to a specified category.
-        ***
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: POST-category-tree-assign-resource
       parameters:
         - name: tenant
@@ -2219,11 +2172,6 @@ paths:
       summary: Deleting all category assignments
       description: |
         Deletes all assignments for a specified category.
-        ***
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: DELETE-category-tree-remove-all-category-assignments
       parameters:
         - name: tenant
@@ -2311,11 +2259,6 @@ paths:
       summary: Deleting a category assignment by id
       description: |
         Deletes an assignment from a specified category.
-        ***
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: DELETE-category-tree-remove-category-assignment
       parameters:
         - name: tenant
@@ -2419,11 +2362,6 @@ paths:
       description: |
         Creates or updates an assignment of a resource to a specified category.
         If any assignment with given categoryId and referenceId does not exist then a new assignment is created. 
-        ***
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: PUT-category-tree-assign-resource
       parameters:
         - name: tenant
@@ -2535,11 +2473,6 @@ paths:
       summary: Deleting a category assignment by reference id
       description: |
         Deletes an assignment from a specified category.
-        ***
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: DELETE-category-tree-remove-category-assignment-by-reference-id
       parameters:
         - name: tenant
@@ -2647,11 +2580,9 @@ paths:
         unpublished category parents are omitted in the response.
         ***
 
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-            **Note:** Only required if the response should contain unpublished categories.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the response should contain unpublished categories.
       operationId: GET-category-tree-retrieve-category-parents
       parameters:
         - name: tenant
@@ -2828,11 +2759,9 @@ paths:
         parameter is used, only subcategories up to the last published subcategory are shown.
         ***
 
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-            **Note:** Only required if the response should contain unpublished categories.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the response should contain unpublished categories.
       operationId: GET-category-tree-list-subcategories
       parameters:
         - name: tenant
@@ -3019,11 +2948,9 @@ paths:
         Retrieves the category trees.
         ***
 
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-            **Note:** Only required if the response should contain unpublished categories.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the response should contain unpublished categories.
       operationId: GET-category-tree-retrieve-category-tree
       parameters:
         - name: tenant
@@ -3104,9 +3031,9 @@ paths:
       description: |
         Searches for category trees.
         ***
-        ### Required scopes
-        * `category.category_read_unpublished`
-          **Note:** Only required if the response should contain unpublished categories.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the response should contain unpublished categories.
       operationId: POST-category-tree-search-category-trees
       parameters:
         - name: tenant
@@ -3186,12 +3113,9 @@ paths:
         **Note:** You can retrieve a category tree only for a root category. It is not possible to get a category tree for a category that lies lower in the hierarchy.
         ***
 
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-
-            **Note:** Only required if the response should contain unpublished categories.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the response should contain unpublished categories.
       operationId: GET-category-tree-retrieve-category-tree-by-id
       parameters:
         - name: tenant
