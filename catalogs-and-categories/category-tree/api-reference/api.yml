@@ -630,8 +630,7 @@ paths:
                     message: Error while getting category
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
-      security:
-        - OAuth2: []
+      security: []
     post:
       tags:
         - Category Resources
@@ -986,8 +985,7 @@ paths:
                     message: Error while getting category
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
-      security:
-        - OAuth2: []
+      security: []
   /category/{tenant}/categories/categoryTree:
     get:
       tags:
@@ -1104,8 +1102,7 @@ paths:
                     status: 500
                     message: Something went wrong while processing the request. The error has been logged under code 20210819_095055_677_vwurkrl.
       deprecated: true
-      security:
-        - OAuth2: []
+      security: []
     parameters:
       - name: tenant
         in: path
@@ -1243,8 +1240,7 @@ paths:
                     message: Error while getting category
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
-      security:
-        - OAuth2: []
+      security: []
     put:
       tags:
         - Category Resources
@@ -2084,8 +2080,7 @@ paths:
                     message: Error while getting category
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
-      security:
-        - OAuth2: []
+      security: []
     post:
       tags:
         - Category Assignment Resources
@@ -2769,8 +2764,7 @@ paths:
                     message: Error while getting category parents
                     details:
                       - Parents for category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' for tenant 'tenantName' not found
-      security:
-        - OAuth2: []
+      security: []
   /category/{tenant}/categories/{categoryId}/subcategories:
     get:
       tags:
@@ -2961,8 +2955,7 @@ paths:
                     message: Error while getting category subcategories
                     details:
                       - Subcategories for category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' for tenant 'tenantName' not found
-      security:
-        - OAuth2: []
+      security: []
   /category/{tenant}/category-trees:
     get:
       tags:
@@ -3045,8 +3038,7 @@ paths:
                     message: You need a scope for this action.
                     details:
                       - 'Required scope(s): category.category_read_unpublished'
-      security:
-        - OAuth2: []
+      security: []
   /category/{tenant}/category-trees/search:
     post:
       tags:
@@ -3124,8 +3116,7 @@ paths:
                     details:
                       - field: 'searchCategoryTree.searchRequest.categoryIds'
                         message: 'searchRequest.categoryIds: must not be null'
-      security:
-        - OAuth2: []
+      security: []
   /category/{tenant}/category-trees/{categoryId}:
     get:
       tags:
@@ -3224,8 +3215,7 @@ paths:
                     message: Error while getting category tree
                     details:
                       - Category tree for category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
-      security:
-        - OAuth2: []
+      security: []
 components:
   schemas:
     AssignmentDeprecated:
