@@ -18,7 +18,11 @@ tags:
   - name: Category Tree Resources
     description: Read Category Trees
 security:
-  - OAuth2: []
+  - OAuth2:
+      - category.category_manage
+      - category.category_read_unpublished
+      - category.category_publish
+      - category.category_unpublish
 paths:
   /category/{tenant}/assignments/references/{referenceId}:
     get:
@@ -28,12 +32,10 @@ paths:
       description: |
         Retrieves a list of categories for which the reference id is assigned.
         ***
-
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-            **Note:** Only required if the category has not been published.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the category has not been published.
+        
       operationId: GET-category-tree-list-categories-by-reference-id
       parameters:
         - name: tenant
@@ -208,18 +210,14 @@ paths:
                     details:
                       - Categories for assignment reference with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
       security:
-        - OAuth2: []
+        - OAuth2:
+          - category.category_read_unpublished
     delete:
       tags:
         - Assignment Resources
       summary: Deleting all assignments by referenceId
       description: |
         Deletes all assignments for a specified referenceId, e.g. all assignments for a given productId.
-        ***
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: DELETE-category-tree-remove-all-assignments
       parameters:
         - name: tenant
@@ -292,7 +290,8 @@ paths:
                     details:
                       - 'Reference id 3123asf-123faewr-124fa not found '
       security:
-        - OAuth2: []
+        - OAuth2:
+          - category.category_manage
   /category/{tenant}/categories/{categoryId}/assignments/references/bulk:
     put:
       tags:
@@ -300,11 +299,6 @@ paths:
       summary: Updating assignment of resources to a category
       description: |
         Assigns resources (such as products) to a specified category in bulk. Creates new assignments if they do not exist and updates existing ones. 
-        ***
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: PUT-category-tree-update-category-assignments
       parameters:
         - name: tenant
@@ -382,7 +376,7 @@ paths:
                     details:
                       - 'Required scope(s): category.category_manage'
         '404':
-          description: Category with the specified categoryId does not exist
+          description: Category with the specified categoryId does not exist.
           content:
             application/json:
               schema:
@@ -396,6 +390,9 @@ paths:
                     message: Error while getting category
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
+      security:
+        - OAuth2:
+          - category.category_manage
   /category/{tenant}/categories:
     get:
       tags:
@@ -405,11 +402,9 @@ paths:
         Retrieves a list of categories for a given tenant.
         ***
 
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-            **Note:** Only required if the response should contain unpublished categories.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the response should contain unpublished categories.
       operationId: GET-category-tree-list-categories
       parameters:
         - name: tenant
@@ -635,8 +630,7 @@ paths:
                     message: Error while getting category
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
-      security:
-        - OAuth2: []
+      security: []
     post:
       tags:
         - Category Resources
@@ -645,13 +639,10 @@ paths:
         Creates a new category.
         Creating category as a root may be achieved by adding the 'parentId' field with a 'root' value or by not providing the 'parentId' in the payload.
         ***
+        ### Additional scope info
+        
+        * `category.category_publish` - Only required if you want to publish the category when creating it.
 
-        ### Required scopes
-
-          * `category.category_manage`
-          * `category.category_publish`
-
-            **Note:** The `category.category_publish` scope is only required if you want to publish the category when creating it.
       operationId: POST-category-tree-create-category
       parameters:
         - name: tenant
@@ -820,7 +811,9 @@ paths:
                     message: Duplicated ECN value - given ECN is already assigned to another category.'
                     details: []
       security:
-        - OAuth2: []
+        - OAuth2:
+          - category.category_manage
+          - category.category_publish
   /category/{tenant}/categories/search:
     post:
       tags:
@@ -830,11 +823,9 @@ paths:
         Searches for categories for a given tenant.
         ***
 
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-            **Note:** Only required if the response should contain unpublished categories.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the response should contain unpublished categories.
       operationId: POST-category-tree-search-categories
       parameters:
         - name: tenant
@@ -994,8 +985,7 @@ paths:
                     message: Error while getting category
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
-      security:
-        - OAuth2: []
+      security: []
   /category/{tenant}/categories/categoryTree:
     get:
       tags:
@@ -1005,9 +995,6 @@ paths:
         Retrieves a category tree.
 
         **Note**: By default, only published categories are retrieved.
-        ***
-        ### Required scopes:
-        No specific scopes are required.
       operationId: GET-category-tree-retrieve-category-tree-deprecated
       responses:
         '200':
@@ -1115,8 +1102,7 @@ paths:
                     status: 500
                     message: Something went wrong while processing the request. The error has been logged under code 20210819_095055_677_vwurkrl.
       deprecated: true
-      security:
-        - OAuth2: []
+      security: []
     parameters:
       - name: tenant
         in: path
@@ -1141,11 +1127,9 @@ paths:
         **Note**: If you want to retrieve the category details using the `code`, you can do this by using the [GET endpoint for retrieving a list of categories](/openapi/category/#operation/categories) with the `code` query parameter.
         ***
 
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-            **Note:** Only required if the response should contain unpublished categories.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the response should contain unpublished categories.
       operationId: GET-category-tree-retrieve-category
       parameters:
         - name: tenant
@@ -1256,8 +1240,7 @@ paths:
                     message: Error while getting category
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
-      security:
-        - OAuth2: []
+      security: []
     put:
       tags:
         - Category Resources
@@ -1267,14 +1250,11 @@ paths:
         Version specified in the `metadata` field must be the same as in the database. The version can be omitted but then optimistic locking is not be enabled.
         Category-to-root promotion may be achieved by adding the `parentId` field with the `root` value or by excluding the `parentId` from the payload.
         ***
+        ### Additional scope info
+        
+        * `category.category_publish` - Only required if you want to publish the category when updating it.
+        * `category.category_unpublish` - Only required if you want to unpublish the category when updating it.
 
-        ### Required scopes
-
-          * `category.category_manage`
-          * `category.category_publish`
-            **Note:** The `category.category_publish` scope is only required if you want to publish the category when updating it.
-          * `category.category_unpublish`
-            **Note:** Only required if you want to unpublish the category when updating it.
       operationId: PUT-category-tree-update-category
       parameters:
         - name: tenant
@@ -1482,17 +1462,16 @@ paths:
                     message: Duplicated ECN value - given ECN is already assigned to another category.'
                     details: []
       security:
-        - OAuth2: []
+        - OAuth2: 
+          - category.category_publish
+          - category.category_unpublish
+          - category.category_manage
     delete:
       tags:
         - Category Resources
       summary: Deleting a category
       description: |
         Deletes a specified category.
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: DELETE-category-tree-remove-category
       parameters:
         - name: tenant
@@ -1593,7 +1572,8 @@ paths:
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
       security:
-        - OAuth2: []
+        - OAuth2:
+          - category.category_manage
     patch:
       tags:
         - Category Resources
@@ -1602,14 +1582,10 @@ paths:
         Partially updates a specified category.
         Version specified in the 'metadata' field must be the same as in the database. Category-to-root promotion may be achieved by adding 'parentId' field with the 'root' value.
         ***
-
-        ### Required scopes
-
-          * `category.category_manage`
-          * `category.category_publish`
-            **Note:** The `category.category_publish` scope is only required if you want to publish the category when creating it.
-          * `category.category_unpublish`
-            **Note:** Only required if you want to unpublish the category when updating it.
+        ### Additional scope info
+        
+        * `category.category_publish` - Only required if you want to publish the category when updating it.
+        * `category.category_unpublish` - Only required if you want to unpublish the category when updating it.
       operationId: PATCH-category-tree-update-category
       parameters:
         - name: tenant
@@ -1766,7 +1742,10 @@ paths:
                     message: Duplicated ECN value - given ECN is already assigned to another category.'
                     details: []
       security:
-        - OAuth2: []
+        - OAuth2:
+          - category.category_manage
+          - category.category_publish
+          - category.category_unpublish
   /category/{tenant}/categories/{categoryId}/assignments/bulk:
     post:
       tags:
@@ -1774,11 +1753,6 @@ paths:
       summary: Assigning resources to a category
       description: |
         Assigns resources (such as products) to a specified category.
-        ***
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: POST-category-tree-assign-category-resources
       parameters:
         - name: tenant
@@ -1871,7 +1845,8 @@ paths:
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
       security:
-        - OAuth2: []
+        - OAuth2:
+          - category.category_manage
   /category/{tenant}/categories/{categoryId}/assignments:
     get:
       tags:
@@ -1881,11 +1856,9 @@ paths:
         Retrieves resources (such as products) assigned to a specified category. The localizedName field contains the resource (product) name. This information is attached to the assignment asynchronously and is visible in the response when retrieved.
         ***
 
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-            **Note:** Only required if the category has not been published.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the category has not been published.
       operationId: GET-category-tree-retrieve-category-assignments
       parameters:
         - name: tenant
@@ -2107,19 +2080,13 @@ paths:
                     message: Error while getting category
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
-      security:
-        - OAuth2: []
+      security: []
     post:
       tags:
         - Category Assignment Resources
       summary: Assigning a resource to a category
       description: |
         Assigns a resource to a specified category.
-        ***
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: POST-category-tree-assign-resource
       parameters:
         - name: tenant
@@ -2212,18 +2179,14 @@ paths:
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
       security:
-        - OAuth2: []
+        - OAuth2:
+          - category.category_manage
     delete:
       tags:
         - Category Assignment Resources
       summary: Deleting all category assignments
       description: |
         Deletes all assignments for a specified category.
-        ***
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: DELETE-category-tree-remove-all-category-assignments
       parameters:
         - name: tenant
@@ -2303,7 +2266,8 @@ paths:
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
       security:
-        - OAuth2: []
+        - OAuth2: 
+          - category.category_manage
   /category/{tenant}/categories/{categoryId}/assignments/{assignmentId}:
     delete:
       tags:
@@ -2311,11 +2275,6 @@ paths:
       summary: Deleting a category assignment by id
       description: |
         Deletes an assignment from a specified category.
-        ***
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: DELETE-category-tree-remove-category-assignment
       parameters:
         - name: tenant
@@ -2410,7 +2369,8 @@ paths:
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
       security:
-        - OAuth2: []
+        - OAuth2: 
+          - category.category_manage
   /category/{tenant}/categories/{categoryId}/assignments/references/{referenceId}:
     put:
       tags:
@@ -2419,11 +2379,6 @@ paths:
       description: |
         Creates or updates an assignment of a resource to a specified category.
         If any assignment with given categoryId and referenceId does not exist then a new assignment is created. 
-        ***
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: PUT-category-tree-assign-resource
       parameters:
         - name: tenant
@@ -2528,18 +2483,14 @@ paths:
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
       security:
-        - OAuth2: [ ]
+        - OAuth2:
+          - category.category_manage
     delete:
       tags:
         - Category Assignment Resources
       summary: Deleting a category assignment by reference id
       description: |
         Deletes an assignment from a specified category.
-        ***
-
-        ### Required scopes
-
-          * `category.category_manage`
       operationId: DELETE-category-tree-remove-category-assignment-by-reference-id
       parameters:
         - name: tenant
@@ -2634,7 +2585,8 @@ paths:
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
       security:
-        - OAuth2: []
+        - OAuth2:
+          - category.category_manage
   /category/{tenant}/categories/{categoryId}/parents:
     get:
       tags:
@@ -2647,11 +2599,9 @@ paths:
         unpublished category parents are omitted in the response.
         ***
 
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-            **Note:** Only required if the response should contain unpublished categories.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the response should contain unpublished categories.
       operationId: GET-category-tree-retrieve-category-parents
       parameters:
         - name: tenant
@@ -2814,8 +2764,7 @@ paths:
                     message: Error while getting category parents
                     details:
                       - Parents for category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' for tenant 'tenantName' not found
-      security:
-        - OAuth2: []
+      security: []
   /category/{tenant}/categories/{categoryId}/subcategories:
     get:
       tags:
@@ -2828,11 +2777,9 @@ paths:
         parameter is used, only subcategories up to the last published subcategory are shown.
         ***
 
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-            **Note:** Only required if the response should contain unpublished categories.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the response should contain unpublished categories.
       operationId: GET-category-tree-list-subcategories
       parameters:
         - name: tenant
@@ -3008,8 +2955,7 @@ paths:
                     message: Error while getting category subcategories
                     details:
                       - Subcategories for category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' for tenant 'tenantName' not found
-      security:
-        - OAuth2: []
+      security: []
   /category/{tenant}/category-trees:
     get:
       tags:
@@ -3019,12 +2965,92 @@ paths:
         Retrieves the category trees.
         ***
 
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-            **Note:** Only required if the response should contain unpublished categories.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the response should contain unpublished categories.
       operationId: GET-category-tree-retrieve-category-tree
+      parameters:
+        - name: tenant
+          in: path
+          description: |
+            Your Emporix tenant name.
+
+            **Note**: The tenant should always be written in lowercase.
+          required: true
+          schema:
+            type: string
+            example: saasdev2
+        - name: showUnpublished
+          in: query
+          description: |
+            If set to `true`, not published categories are retrieved as well.
+            Possible values:
+            * `true`
+            * `false`
+            
+            **Note**: To get unpublished categories you need to have `category.category_read_unpublished` scope.
+          schema:
+            type: boolean
+            example: true
+            default: false
+        - name: categoryIds
+          in: query
+          description: |
+            List of category IDs. If provided, the response returns only the category trees that include at least one of the specified categories.
+          schema:
+            type: array
+            items:
+              type: string
+            example:
+              - d9e4fdd0-e671-4968-9ba1-a5533a7f3b02
+              - 0f1056cc-b4b4-488b-9f95-245f6b542702
+        - name: X-Version
+          in: header
+          description: |
+            To use this endpoint you have to add `X-Version` header with proper value to your request.
+
+            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
+          required: true
+          schema:
+            pattern: '^v[1-9][0-9]?$'
+            type: string
+            example: v2
+      responses:
+        '200':
+          description: The request was successful. The category tree is returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CategoryTree'
+        '403':
+          description: Permission denied due to insufficient rights. This may happen when request does not contain sufficient scopes for given query values.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    code: 403
+                    status: Forbidden
+                    message: You need a scope for this action.
+                    details:
+                      - 'Required scope(s): category.category_read_unpublished'
+      security: []
+  /category/{tenant}/category-trees/search:
+    post:
+      tags:
+        - Category Tree Resources
+      summary: Searching for category trees
+      description: |
+        Searches for category trees.
+        ***
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the response should contain unpublished categories.
+      operationId: POST-category-tree-search-category-trees
       parameters:
         - name: tenant
           in: path
@@ -3060,6 +3086,12 @@ paths:
             pattern: '^v[1-9][0-9]?$'
             type: string
             example: v2
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryTreeSearchRequest'
+        required: true
       responses:
         '200':
           description: The request was successful. The category tree is returned.
@@ -3069,8 +3101,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CategoryTree'
-        '403':
-          description: Permission denied due to insufficient rights. This may happen when request does not contain sufficient scopes for given query values.
+        '400':
+          description: Request was syntactically incorrect. Details will be provided in the response payload.
           content:
             application/json:
               schema:
@@ -3078,13 +3110,13 @@ paths:
               examples:
                 example:
                   value:
-                    code: 403
-                    status: Forbidden
-                    message: You need a scope for this action.
+                    message: There is a validation error. Please check the details.
+                    code: 400
+                    status: Bad Request
                     details:
-                      - 'Required scope(s): category.category_read_unpublished'
-      security:
-        - OAuth2: []
+                      - field: 'searchCategoryTree.searchRequest.categoryIds'
+                        message: 'searchRequest.categoryIds: must not be null'
+      security: []
   /category/{tenant}/category-trees/{categoryId}:
     get:
       tags:
@@ -3096,12 +3128,9 @@ paths:
         **Note:** You can retrieve a category tree only for a root category. It is not possible to get a category tree for a category that lies lower in the hierarchy.
         ***
 
-        ### Required scopes
-
-          * `category.category_read_unpublished`
-
-
-            **Note:** Only required if the response should contain unpublished categories.
+        ### Additional scope info
+        
+        * `category.category_read_unpublished` - Only required if the response should contain unpublished categories.
       operationId: GET-category-tree-retrieve-category-tree-by-id
       parameters:
         - name: tenant
@@ -3186,8 +3215,7 @@ paths:
                     message: Error while getting category tree
                     details:
                       - Category tree for category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
-      security:
-        - OAuth2: []
+      security: []
 components:
   schemas:
     AssignmentDeprecated:
@@ -4025,6 +4053,20 @@ components:
             A standard query parameter is used to search for specific values. 
             
             See: [Standard practises - Query parameter](https://developer.emporix.io/api-references/standard-practices/q-param)
+    CategoryTreeSearchRequest:
+      required:
+        - categoryIds
+      type: object
+      properties:
+        categoryIds:
+          type: array
+          items:
+            type: string
+          description: List of category IDs. If provided, the response returns only the category trees that include at least one of the specified categories.
+      example:
+        categoryIds:
+          - d9e4fdd0-e671-4968-9ba1-a5533a7f3b02
+          - 0f1056cc-b4b4-488b-9f95-245f6b542702
     Reference:
       required:
         - id
@@ -4061,7 +4103,6 @@ components:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
             category.category_manage: Manage a category
-            category.category_delete_all: Delete all categories
             category.category_read_unpublished: Read unpublished categories
             category.category_publish: Publish a category
             category.category_unpublish: Unpublish a category

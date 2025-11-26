@@ -8,6 +8,8 @@
 
 ## 2025
 
+* [2025-11-26: Category Tree – filtering category trees by category IDs](2025/2025-11-26-category-tree.md)
+* [2025-11-26: Product Service – category and customer segment IDs in product response](2025/2025-11-26-product.md)
 * [2025-11-25: AI Service - Agent Logs](2025/2025-11-25-ai.md)
 * [2025-11-17: AI Service - Export/Import agents](2025/2025-11-17-ai.md)
 * [2025-11-14: Client Management Service - parent hierarchy endpoint added](2025/2025-11-14-client-management.md)
