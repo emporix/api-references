@@ -3086,7 +3086,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/CategoryTree'
         '400':
-          description: Request was syntactically incorrect. Details will be provided in the response payload
+          description: Request was syntactically incorrect. Details will be provided in the response payload.
           content:
             application/json:
               schema:
