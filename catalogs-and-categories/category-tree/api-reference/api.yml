@@ -206,7 +206,8 @@ paths:
                     details:
                       - Categories for assignment reference with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
       security:
-        - OAuth2: []
+        - OAuth2:
+          - category.category_read_unpublished
     delete:
       tags:
         - Assignment Resources
@@ -285,7 +286,8 @@ paths:
                     details:
                       - 'Reference id 3123asf-123faewr-124fa not found '
       security:
-        - OAuth2: []
+        - OAuth2:
+          - category.category_manage
   /category/{tenant}/categories/{categoryId}/assignments/references/bulk:
     put:
       tags:
@@ -370,7 +372,7 @@ paths:
                     details:
                       - 'Required scope(s): category.category_manage'
         '404':
-          description: Category with the specified categoryId does not exist
+          description: Category with the specified categoryId does not exist.
           content:
             application/json:
               schema:
@@ -384,6 +386,9 @@ paths:
                     message: Error while getting category
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
+      security:
+        - OAuth2:
+          - category.category_manage
   /category/{tenant}/categories:
     get:
       tags:
@@ -803,7 +808,9 @@ paths:
                     message: Duplicated ECN value - given ECN is already assigned to another category.'
                     details: []
       security:
-        - OAuth2: []
+        - OAuth2:
+          - category.category_manage
+          - category.category_publish
   /category/{tenant}/categories/search:
     post:
       tags:
@@ -1455,7 +1462,10 @@ paths:
                     message: Duplicated ECN value - given ECN is already assigned to another category.'
                     details: []
       security:
-        - OAuth2: []
+        - OAuth2: 
+          - category.category_publish
+          - category.category_unpublish
+          - category.category_manage
     delete:
       tags:
         - Category Resources
@@ -1562,7 +1572,8 @@ paths:
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
       security:
-        - OAuth2: []
+        - OAuth2:
+          - category.category_manage
     patch:
       tags:
         - Category Resources
@@ -1731,7 +1742,10 @@ paths:
                     message: Duplicated ECN value - given ECN is already assigned to another category.'
                     details: []
       security:
-        - OAuth2: []
+        - OAuth2:
+          - category.category_manage
+          - category.category_publish
+          - category.category_unpublish
   /category/{tenant}/categories/{categoryId}/assignments/bulk:
     post:
       tags:
@@ -1831,7 +1845,8 @@ paths:
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
       security:
-        - OAuth2: []
+        - OAuth2:
+          - category.category_manage
   /category/{tenant}/categories/{categoryId}/assignments:
     get:
       tags:
@@ -2165,7 +2180,8 @@ paths:
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
       security:
-        - OAuth2: []
+        - OAuth2:
+          - category.category_manage
     delete:
       tags:
         - Category Assignment Resources
@@ -2251,7 +2267,8 @@ paths:
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
       security:
-        - OAuth2: []
+        - OAuth2: 
+          - category.category_manage
   /category/{tenant}/categories/{categoryId}/assignments/{assignmentId}:
     delete:
       tags:
@@ -2353,7 +2370,8 @@ paths:
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
       security:
-        - OAuth2: []
+        - OAuth2: 
+          - category.category_manage
   /category/{tenant}/categories/{categoryId}/assignments/references/{referenceId}:
     put:
       tags:
@@ -2466,7 +2484,8 @@ paths:
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
       security:
-        - OAuth2: [ ]
+        - OAuth2:
+          - category.category_manage
     delete:
       tags:
         - Category Assignment Resources
@@ -2567,7 +2586,8 @@ paths:
                     details:
                       - Category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
       security:
-        - OAuth2: []
+        - OAuth2:
+          - category.category_manage
   /category/{tenant}/categories/{categoryId}/parents:
     get:
       tags:
