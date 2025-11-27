@@ -6,7 +6,12 @@ icon: graduation-cap
 
 # Shopping List Tutorial
 
+The Shopping List Service allows you to convienently manage a customer's frequently purchased items in a reusable shopping lists. 
+
+## How to create and use a shopping list
+
 Follow these steps to authenticate, impersonate a customer, and manage shopping lists with the Shopping List Service.
+
 
 {% stepper %}
 {% step %}
@@ -112,7 +117,7 @@ curl -L \
   --data '{
     "name": "holiday-menu",
     "customAttributes": {
-      "occasion": "XMAS24"
+      "occasion": "XMAS25"
     },
     "items": [
       {
