@@ -6,7 +6,7 @@ icon: graduation-cap
 
 # Shopping List Tutorial
 
-The Shopping List Service allows you to convienently manage a customer's frequently purchased items in a reusable shopping lists. 
+The Shopping List Service allows you to convienently organize the customers frequently purchased items into reusable and manageable shopping lists. 
 
 ## How to create and use a shopping list
 
