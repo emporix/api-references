@@ -27,7 +27,7 @@ Use the OAuth client credentials flow with a technical client that has `shopping
 
 ```bash
 curl -L 
-  --request POST \
+  --request POST 
   --url 'https://api.emporix.io/oauth/token' 
   --header 'Content-Type: application/x-www-form-urlencoded' 
   --data 'grant_type=client_credentials&client_id={CLIENT_ID}&client_secret={CLIENT_SECRET}&scope=shoppinglist.shoppinglist_manage shoppinglist.shoppinglist_read'
