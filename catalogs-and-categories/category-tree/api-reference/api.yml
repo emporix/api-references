@@ -3272,10 +3272,10 @@ components:
           pattern: '^[a-zA-Z0-9]\S*$'
         mixinPath:
           type: string
-          description: The mixins path that should be used when defining attributes on a product It's built based od following patter `class_<sourceCategory.code>_<name>`
+          description: The mixins path that should be used when defining attributes on a product. It's built based on the following pattern - `class_<sourceCategory.code>_<name>`.
         schemaUrl:
           type: string
-          description: URL of the mixin schema
+          description: URL of the mixin schema.
           pattern: '^https?://[^\s/$.?#].\S*$'
         required:
           type: boolean
