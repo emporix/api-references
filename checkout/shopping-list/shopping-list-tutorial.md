@@ -26,10 +26,10 @@ Use the OAuth client credentials flow with a technical client that has `shopping
 {% endcontent-ref %}
 
 ```bash
-curl -L \
+curl -L 
   --request POST \
-  --url 'https://api.emporix.io/oauth/token' \
-  --header 'Content-Type: application/x-www-form-urlencoded' \
+  --url 'https://api.emporix.io/oauth/token' 
+  --header 'Content-Type: application/x-www-form-urlencoded' 
   --data 'grant_type=client_credentials&client_id={CLIENT_ID}&client_secret={CLIENT_SECRET}&scope=shoppinglist.shoppinglist_manage shoppinglist.shoppinglist_read'
 ```
 
@@ -48,11 +48,11 @@ With the employee token, call the [Creating a shopping list](https://developer.e
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/shoppinglist/{tenant}/shopping-lists' \
-  --header 'Authorization: Bearer {EMPLOYEE_TOKEN}' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/shoppinglist/{tenant}/shopping-lists' 
+  --header 'Authorization: Bearer {EMPLOYEE_TOKEN}' 
+  --header 'Content-Type: application/json' 
   --data '{
     "customerId": "C120043",
     "name": "weekly-delivery",
@@ -84,10 +84,10 @@ To let a customer manage their own lists, exchange their storefront credentials 
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/customer/{tenant}/login' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/customer/{tenant}/login' 
+  --header 'Content-Type: application/json' 
   --data '{
     "username": "alice@example.com",
     "password": "{CUSTOMER_PASSWORD}"
@@ -109,11 +109,11 @@ Authenticate with the `CustomerAccessToken` from the previous step and call the 
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/shoppinglist/{tenant}/shopping-lists' \
-  --header 'Authorization: Bearer {CUSTOMER_TOKEN}' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/shoppinglist/{tenant}/shopping-lists' 
+  --header 'Authorization: Bearer {CUSTOMER_TOKEN}' 
+  --header 'Content-Type: application/json' 
   --data '{
     "name": "holiday-menu",
     "customAttributes": {
@@ -150,9 +150,9 @@ Use the [Retrieving a shopping list](https://developer.emporix.io/api-references
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request GET \
-  --url 'https://api.emporix.io/shoppinglist/{tenant}/shopping-lists' \
+curl -L 
+  --request GET 
+  --url 'https://api.emporix.io/shoppinglist/{tenant}/shopping-lists' 
   --header 'Authorization: Bearer {ACCESS_TOKEN}'
 ```
 
@@ -171,11 +171,11 @@ To edit a customer’s list, call the [Updating a customer shopping list](https:
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request PUT \
-  --url 'https://api.emporix.io/shoppinglist/{tenant}/shopping-lists/{customerId}?name=holiday-menu' \
-  --header 'Authorization: Bearer {ACCESS_TOKEN}' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request PUT 
+  --url 'https://api.emporix.io/shoppinglist/{tenant}/shopping-lists/{customerId}?name=holiday-menu' 
+  --header 'Authorization: Bearer {ACCESS_TOKEN}' 
+  --header 'Content-Type: application/json' 
   --data '{
     "name": "holiday-menu",
     "items": [
