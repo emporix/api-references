@@ -8,6 +8,7 @@
 
 ## 2025
 
+* [2025-11-27: Product Service - classification mixins support](2025/2025-11-27-product-classification.md)
 * [2025-11-27: Category Service - classification categories](2025/2025-11-27-category.md)
 * [2025-11-27: Webhook Service - update category event schema](2025/2025-11-27-webhook.md)
 * [2025-11-26: Category Tree – filtering category trees by category IDs](2025/2025-11-26-category-tree.md)
