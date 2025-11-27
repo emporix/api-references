@@ -41,17 +41,17 @@ The `classificationMixins` array aggregates all classification mixins from:
 - The category to which the product is directly assigned
 - All parent categories in the category hierarchy that are classification categories
 
-## Affected endpoints
+## Modified endpoints
 
 All product retrieval endpoints now include the `classificationMixins` field in the product metadata:
 
 | Endpoint | Description |
 |----------|-------------|
-| [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-resources#get-product-tenant-products-productid) | Response now includes `classificationMixins` in the metadata for products assigned to classification categories |
-| [Retrieving all products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-resources#get-product-tenant-products) | Response now includes `classificationMixins` in the metadata for products assigned to classification categories |
-| [Searching for products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-resources#post-product-search-products) | Response now includes `classificationMixins` in the metadata for products assigned to classification categories |
+| [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-resources#get-product-tenant-products-productid) | Response now includes `classificationMixins` in the metadata for products assigned to classification categories. |
+| [Retrieving all products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-resources#get-product-tenant-products) | Response now includes `classificationMixins` in the metadata for products assigned to classification categories. |
+| [Searching for products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-resources#post-product-search-products) | Response now includes `classificationMixins` in the metadata for products assigned to classification categories. |
 
-## Example usage
+## Usage example
 
 ### Product response with classification mixins
 
@@ -111,11 +111,11 @@ When retrieving a product that is assigned to a classification category, the res
 ### Using classification mixins for product attributes
 
 The `classificationMixins` field helps you understand:
-1. Which classification schemas are available for the product based on its category assignment
-2. The correct `mixinPath` to use when defining classification attributes
-3. Whether a classification mixin is required
-4. Which category in the hierarchy each classification mixin originates from
-5. If the product is using an outdated version of a classification schema
+- Which classification schemas are available for the product based on its category assignment
+- The correct `mixinPath` to use when defining classification attributes
+- Whether a classification mixin is required
+- Which category in the hierarchy each classification mixin originates from
+- If the product is using an outdated version of a classification schema
 
 ## Known problems
 
