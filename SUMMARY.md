@@ -146,6 +146,7 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/checkout/payment-gateway/api-reference/api.yml)
   * [Shopping List](checkout/shopping-list/README.md)
+    * [Shopping List Tutorial](checkout/shopping-list/shopping-list-tutorial.md)
     * [API Reference](checkout/shopping-list/api-reference/README.md)
       * ```yaml
         props:
