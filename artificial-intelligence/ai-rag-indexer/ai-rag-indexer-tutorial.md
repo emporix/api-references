@@ -79,6 +79,12 @@ curl --location --globoff --request PUT 'https://api.emporix.io/ai-service/{tena
 }'
 ```
 
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../artificial-intelligence/ai-service/api-reference/" %}
+[api-reference](../../artificial-intelligence/ai-service/api-reference/)
+{% endcontent-ref %}
+
 {% endstep %}
 
 {% step %}
@@ -102,7 +108,3 @@ For this reason, perform reindexing only when truly necessary - for example, aft
 
 {% endstep %}
 {% endstepper %}
-
-{% hint style="success" %}
-As a next step, use the RAG Tool within an AI Agent to enable it to retrieve search results enhanced with RAG embeddings. For more information, see the [AI Tutorial](../ai-service/ai-tutorial.md).
-{% endhint %}
