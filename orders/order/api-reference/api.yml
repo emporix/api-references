@@ -3362,7 +3362,7 @@ components:
                   total: 0
               metadata:
                 mixins:
-                  fees: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
+                  fees: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json'
               mixins:
                 fees:
                   total:
@@ -3472,10 +3472,10 @@ components:
           currency: EUR
           metadata:
             mixins:
-              payments: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
-              deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryTimeMixIn.v2.json'
-              generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/orderGeneralAttributesMixIn.v9.json'
-              payment: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/paymentMixIn.v3.json'
+              payments: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json'
+              deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/deliveryTimeMixIn.v2.json'
+              generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/orderGeneralAttributesMixIn.v9.json'
+              payment: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/paymentMixIn.v3.json'
             version: 1
           mixins:
             payments:
@@ -3676,7 +3676,7 @@ components:
                   total: 0
               metadata:
                 mixins:
-                  fees: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
+                  fees: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json'
               mixins:
                 fees:
                   total:
@@ -3786,10 +3786,10 @@ components:
           currency: EUR
           metadata:
             mixins:
-              payments: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
-              deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryTimeMixIn.v2.json'
-              generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/orderGeneralAttributesMixIn.v9.json'
-              payment: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/paymentMixIn.v3.json'
+              payments: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json'
+              deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/deliveryTimeMixIn.v2.json'
+              generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/orderGeneralAttributesMixIn.v9.json'
+              payment: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/paymentMixIn.v3.json'
             version: 1
           mixins:
             payments:
@@ -4025,10 +4025,10 @@ components:
         currency: EUR
         metadata:
           mixins:
-            payments: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
-            deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryTimeMixIn.v2.json'
-            generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/orderGeneralAttributesMixIn.v9.json'
-            payment: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/paymentMixIn.v3.json'
+            payments: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json'
+            deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/deliveryTimeMixIn.v2.json'
+            generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/orderGeneralAttributesMixIn.v9.json'
+            payment: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/paymentMixIn.v3.json'
           version: 1
         mixins:
           payments:
@@ -4212,7 +4212,7 @@ components:
                 total: 0
             metadata:
               mixins:
-                fees: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
+                fees: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json'
             mixins:
               fees:
                 total:
@@ -4322,10 +4322,10 @@ components:
           currency: EUR
           metadata:
             mixins:
-              payments: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
-              deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryTimeMixIn.v2.json'
-              generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/orderGeneralAttributesMixIn.v9.json'
-              payment: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/paymentMixIn.v3.json'
+              payments: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json'
+              deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/deliveryTimeMixIn.v2.json'
+              generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/orderGeneralAttributesMixIn.v9.json'
+              payment: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/paymentMixIn.v3.json'
             version: 1
           mixins:
             payments:
@@ -4540,7 +4540,7 @@ components:
                 total: 3.08
             metadata:
               mixins:
-                fees: https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json
+                fees: https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json
             mixins:
               fees:
                 elements:
@@ -4699,8 +4699,8 @@ components:
             product:
               metadata:
                 mixins:
-                  productTemplateAttributes: https://res.cloudinary.com/saas-ag/raw/upload/schemata/b2b2cstage/6818bfed8844a34a391a566e-templateAttributes_v1.json
-                  productVariantAttributes: https://res.cloudinary.com/saas-ag/raw/upload/schemata/b2b2cstage/6818bfed8844a34a391a566e-variantAttributes_v1.json
+                  productTemplateAttributes: https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/6818bfed8844a34a391a566e-templateAttributes_v1.json
+                  productVariantAttributes: https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/6818bfed8844a34a391a566e-variantAttributes_v1.json
               id: shirt--301722c1-23e8-42b4-a4d8-1a5480fe3ea5
               sku: shirt--red
               name: shirt
@@ -4747,7 +4747,7 @@ components:
                 total: 0
             metadata:
               mixins:
-                fees: https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json
+                fees: https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json
             mixins:
               fees:
                 total:
@@ -4880,7 +4880,7 @@ components:
                 total: 3.08
             metadata:
               mixins:
-                fees: https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json
+                fees: https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json
             mixins:
               fees:
                 elements:
@@ -5093,8 +5093,8 @@ components:
         currency: EUR
         metadata:
           mixins:
-            payments: https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json
-            generalAttributes: https://res.cloudinary.com/saas-ag/raw/upload/schemata/orderGeneralAttributesMixIn.v9.json
+            payments: https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json
+            generalAttributes: https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/orderGeneralAttributesMixIn.v9.json
           version: 1
         mixins:
           payments:
@@ -5395,10 +5395,10 @@ components:
         currency: EUR
         metadata:
           mixins:
-            payments: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
-            deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryTimeMixIn.v2.json'
-            generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/orderGeneralAttributesMixIn.v9.json'
-            payment: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/paymentMixIn.v3.json'
+            payments: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json'
+            deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/deliveryTimeMixIn.v2.json'
+            generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/orderGeneralAttributesMixIn.v9.json'
+            payment: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/paymentMixIn.v3.json'
           version: 1
         mixins:
           payments:
@@ -5582,7 +5582,7 @@ components:
                   total: 0
               metadata:
                 mixins:
-                  fees: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
+                  fees: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json'
               mixins:
                 fees:
                   total:
@@ -5692,10 +5692,10 @@ components:
           currency: EUR
           metadata:
             mixins:
-              payments: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
-              deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryTimeMixIn.v2.json'
-              generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/orderGeneralAttributesMixIn.v9.json'
-              payment: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/paymentMixIn.v3.json'
+              payments: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json'
+              deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/deliveryTimeMixIn.v2.json'
+              generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/orderGeneralAttributesMixIn.v9.json'
+              payment: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/paymentMixIn.v3.json'
             version: 1
           mixins:
             payments:
@@ -5890,7 +5890,7 @@ components:
                   total: 0
               metadata:
                 mixins:
-                  fees: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
+                  fees: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json'
               mixins:
                 fees:
                   total:
@@ -6000,10 +6000,10 @@ components:
           currency: EUR
           metadata:
             mixins:
-              payments: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
-              deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryTimeMixIn.v2.json'
-              generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/orderGeneralAttributesMixIn.v9.json'
-              payment: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/paymentMixIn.v3.json'
+              payments: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json'
+              deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/deliveryTimeMixIn.v2.json'
+              generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/orderGeneralAttributesMixIn.v9.json'
+              payment: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/paymentMixIn.v3.json'
             version: 1
           mixins:
             payments:
@@ -6198,7 +6198,7 @@ components:
                   total: 0
               metadata:
                 mixins:
-                  fees: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
+                  fees: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json'
               mixins:
                 fees:
                   total:
@@ -6308,10 +6308,10 @@ components:
           currency: EUR
           metadata:
             mixins:
-              payments: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
-              deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryTimeMixIn.v2.json'
-              generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/orderGeneralAttributesMixIn.v9.json'
-              payment: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/paymentMixIn.v3.json'
+              payments: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json'
+              deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/deliveryTimeMixIn.v2.json'
+              generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/orderGeneralAttributesMixIn.v9.json'
+              payment: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/paymentMixIn.v3.json'
             version: 1
           mixins:
             payments:
@@ -6514,7 +6514,7 @@ components:
                 total: 0
             metadata:
               mixins:
-                fees: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
+                fees: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json'
             mixins:
               fees:
                 total:
@@ -6624,10 +6624,10 @@ components:
         currency: EUR
         metadata:
           mixins:
-            payments: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json'
-            deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryTimeMixIn.v2.json'
-            generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/orderGeneralAttributesMixIn.v9.json'
-            payment: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/paymentMixIn.v3.json'
+            payments: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/fees_checkout-mashup.json'
+            deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/deliveryTimeMixIn.v2.json'
+            generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/orderGeneralAttributesMixIn.v9.json'
+            payment: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/paymentMixIn.v3.json'
           version: 1
         mixins:
           payments:
