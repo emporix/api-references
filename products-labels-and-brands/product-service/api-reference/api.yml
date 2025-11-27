@@ -2251,6 +2251,24 @@ components:
           items:
             type: string
           description: 'Collection of label IDs.'
+        customerSegmentIds:
+          type: array
+          description: |-
+            Customer segment IDs assigned to the product.
+
+            **NOTE**: This is a preview field and it is not fully operational yet.
+          readOnly: true
+          items:
+            type: string
+        categoryIds:
+          type: array
+          description: |-
+            Category IDs assigned to the product.
+
+            **NOTE**: This is a preview field and it is not fully operational yet.
+          readOnly: true
+          items:
+            type: string
     basicProduct:
       type: object
       additionalProperties: false

@@ -27,6 +27,10 @@ Make sure you created a product. For more information, check out [_How to add yo
 
 ### Create the `Availability` object
 
+{% hint style="warning" %}
+We recommend not to create a new product availability for a `main` sitecode. A site named `main` works as an aggregator of availability data from other sites. It's not possible to later retrieve availability for a single site when it's called `main`. Use a different sitecode for creating product availabilities.
+{% endhint %}
+
 To add availability-related information for a specific product, you need to send a request to the [Creating a new availability for a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}

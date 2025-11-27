@@ -10,6 +10,9 @@
 
 * [2025-11-27: Category Service - classification categories](2025/2025-11-27-category.md)
 * [2025-11-27: Webhook Service - update category event schema](2025/2025-11-27-webhook.md)
+* [2025-11-26: Category Tree – filtering category trees by category IDs](2025/2025-11-26-category-tree.md)
+* [2025-11-26: Product Service – category and customer segment IDs in product response](2025/2025-11-26-product.md)
+* [2025-11-25: AI Service - Agent Logs](2025/2025-11-25-ai.md)
 * [2025-11-17: AI Service - Export/Import agents](2025/2025-11-17-ai.md)
 * [2025-11-14: Client Management Service - parent hierarchy endpoint added](2025/2025-11-14-client-management.md)
 * [2025-11-14: Price Service - legal entity support added](2025/2025-11-14-price.md)
