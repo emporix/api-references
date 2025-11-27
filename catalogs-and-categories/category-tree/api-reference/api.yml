@@ -773,6 +773,7 @@ paths:
               Classification category:
                 value:
                   type: CLASSIFICATION
+                  code: 3A001
                   parentId: root
                   localizedName:
                     en: Floor Care
@@ -3269,6 +3270,9 @@ components:
           type: string
           description: Name of the mixin
           pattern: '^[a-zA-Z0-9]\S*$'
+        mixinPath:
+          type: string
+          description: The mixins path that should be used when defining attributes on a product It's built based od following patter `class_<sourceCategory.code>_<name>`
         schemaUrl:
           type: string
           description: URL of the mixin schema
@@ -3622,7 +3626,7 @@ components:
             type: string
         code:
           type: string
-          description: 'Unique category identifier, defined by the tenant.'
+          description: 'Unique category identifier, defined by the tenant. Required for category of type `CLASSIFICATION`.'
           nullable: true
         validity:
           type: object
@@ -3924,7 +3928,7 @@ components:
             type: string
         code:
           type: string
-          description: 'Unique category identifier, defined by the tenant.'
+          description: 'Unique category identifier, defined by the tenant. Required for category of type `CLASSIFICATION`.'
           nullable: true
         validity:
           type: object
