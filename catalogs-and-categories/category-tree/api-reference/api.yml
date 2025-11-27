@@ -3541,6 +3541,7 @@ components:
             modifiedAt: "2024-08-28T14:00:17.353Z"
         - id: "0720b75e-ee1c-4d76-9f53-eb3af3927e13"
           type: "CLASSIFICATION"
+          code: "XA04"
           parentId: "7d2b0d76-3628-46b3-ac92-34c903f5c3cb"
           localizedName:
             en: "CORDED POWERTOOLS"
@@ -3557,7 +3558,8 @@ components:
           ]
           classificationMixins: [
             {
-              name: "Classification Mixin",
+              name: "garageTools",
+              mixinPath: "class_XA04_garageTools",
               schemaUrl: "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/garageTools_v1.json",
               required: false,
               sourceCategoryId: "4901acd1-5dad-4c7b-b4f0-32d0198621fx"
