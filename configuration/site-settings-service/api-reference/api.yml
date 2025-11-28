@@ -818,6 +818,9 @@ components:
     AddressDto:
       title: Address
       type: object
+      required:
+        - country
+        - zipCode
       properties:
         street:
           type: string
@@ -861,6 +864,8 @@ components:
     HomeBaseDto:
       title: HomeBase
       type: object
+      required:
+        - address
       properties:
         address:
           $ref: '#/components/schemas/AddressDto'
@@ -897,6 +902,13 @@ components:
       title: Site
       type: object
       description: Information about the site.
+      required:
+        - defaultLanguage
+        - languages
+        - currency
+        - homeBase
+        - shipToCountries
+        - taxDeterminationBasedOn
       properties:
         code:
           type: string
