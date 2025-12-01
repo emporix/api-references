@@ -58,24 +58,27 @@ curl --location --globoff --request PUT 'https://api.emporix.io/ai-service/{tena
   "name": "Product Search RAG Tool",
   "type": "rag_emporix",
   "config": {
-    "entityType": "product",
-    "prompt": "You are a search tool for searching products.",
-    "indexedFields": [
-      {
-        "name": "",
-        "key": "code"
-      },
-      {
-        "name": "",
-        "key": "name.en"
-      },
-      {
-        "name": "",
-        "key": "description.en"
-      }
-    ]
-  },
-  "enabled": true
+        "entityType": "product",
+        "embeddingConfig": {
+            "provider": "emporix_openai"
+        },
+        "prompt": "You are a search tool for searching products",
+        "indexedFields": [
+            {
+                "name": "",
+                "key": "code"
+            },
+                        {
+                "name": "",
+                "key": "name.en"
+            },
+                        {
+                "name": "",
+                "key": "description.en"
+            }
+        ]
+    },
+    "enabled": true
 }'
 ```
 
