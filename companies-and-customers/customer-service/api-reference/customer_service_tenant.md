@@ -18,8 +18,8 @@ Firstly, obtain a relevant access token to be able to perform operations as an e
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../authorization/oauth-service/api-reference/" %}
-[api-reference](../../authorization/oauth-service/api-reference/)
+{% content-ref url="../../../authorization/oauth-service/api-reference/" %}
+[api-reference](../../../authorization/oauth-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -40,8 +40,8 @@ Crete a new customer by calling the [Creating a customer](https://developer.empo
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../companies-and-customers/customer-service/api-reference/" %}
-[api-reference](../../companies-and-customers/customer-service/api-reference/)
+{% content-ref url="../../../companies-and-customers/customer-service/api-reference/" %}
+[api-reference](../../../companies-and-customers/customer-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -116,11 +116,13 @@ curl -X POST "https://api.emporix.io/customer/{tenant}/customers/{customerNumber
 ```
 
 Response (`201 Created`):
+
 ```
 {
   "id": "e6eae2c789"
 }
 ```
+
 {% endstep %}
 
 {% step %}
@@ -132,21 +134,21 @@ To add any tags to the address for better visibility, send the request to the [A
 curl -X POST "https://api.emporix.io/customer/{tenant}/customers/{customerNumber}/addresses/{addressId}/tags?tags=PRIMARY_CONTACT" \
   -H "Authorization: Bearer YOUR_OAUTH2_TOKEN"
 ```
+
 {% hint style="info" %}
-To remove a tags later, call the same path with `DELETE` operation.
+To remove tags later, call the same path with `DELETE` operation.
 {% endhint%}
 
 {% endstep %}
 
 {% step %}
-
 ### Assign an account to the profile
 You can assign the created customer's account to an existing profile in the database. Send the request to the [Assigning an account to an existing customer profile](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#post-customer-tenant-customers-customernumber-accounts-internal) endpoint with the customer email address in the body.
 
 ```bash
-curl -X POST "https://api.emporix.io/customer/{tenant}}/customers/{customerNumber}/accounts/internal" \
-  -H "Authorization: Bearer YOUR_OAUTH2_TOKEN" \
-  -H "Content-Type: application/json" \
+curl -X POST "https://api.emporix.io/customer/{tenant}}/customers/{customerNumber}/accounts/internal" 
+  -H "Authorization: Bearer YOUR_OAUTH2_TOKEN" 
+  -H "Content-Type: application/json" 
   -d '{
     "email": "john.doe@emporix.com"
   }'
@@ -168,18 +170,20 @@ curl -X PATCH "https://api.emporix.io/customer/{tenant}/customers/{customerNumbe
     "onHold": false
   }'
 ```
-{% step %}
+{% endstep %}
 
+{% step %}
 ### Retrieve the customer's profile
 Verify the customer's details assigned to their profile by calling the [Retrieving a customer profile](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#get-customer-tenant-customers-customernumber) endpoint.
 
 ```bash
-curl -X GET "https://api.emporix.io/customer/{tenant}/customers/{customerNimber}?expand=addresses,accounts" \
+curl -X GET "https://api.emporix.io/customer/{tenant}/customers/{customerNimber}?expand=addresses,accounts" 
   -H "Authorization: Bearer YOUR_OAUTH2_TOKEN"
 ```
 
 Example successful response includes all the assigned details:
-```
+
+```bash
 {
   "title": "MR",
   "firstName": "John",
