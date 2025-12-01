@@ -903,6 +903,8 @@ components:
       type: object
       description: Information about the site.
       required:
+        - code
+        - name
         - defaultLanguage
         - languages
         - currency
