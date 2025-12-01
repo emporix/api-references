@@ -22,10 +22,10 @@ You can use the AI RAG Indexer Service to keep your vector database in sync with
 Call the [Listing fields for RAG search](https://developer.emporix.io/api-references/api-guides/api-guides-and-references/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-tenant-type-rag-metadata) endpoint to list the fields that can be embedded for RAG search results. The request requires the `ai.agent_read` scope. This helps you align your prompts and downstream ranking logic.
 
 ```bash
-curl -L \
-  --request GET \
-  --url 'https://api.emporix.io/ai-rag-indexer/{tenant}/{type}/rag-metadata' \
-  --header 'Authorization: Bearer <ACCESS_TOKEN>' \
+curl -L 
+  --request GET 
+  --url 'https://api.emporix.io/ai-rag-indexer/{tenant}/{type}/rag-metadata' 
+  --header 'Authorization: Bearer <ACCESS_TOKEN>' 
   --header 'Accept: application/json'
 ```
 
@@ -50,9 +50,9 @@ The returned values are the field paths that match your product schema. Use the 
 When you already know which fields you can index, call the [Listing fields for vector search filtering](https://developer.emporix.io/api-references/api-guides/api-guides-and-references/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) endpoint to create a RAG AI tool.
 
 ```bash
-curl --location --globoff --request PUT 'https://api.emporix.io/ai-service/{tenant}/agentic/tools/{toolId}' \
---header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' \
---header 'Content-Type: application/json' \
+curl --location --globoff --request PUT 'https://api.emporix.io/ai-service/{tenant}/agentic/tools/{toolId}' 
+--header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+--header 'Content-Type: application/json' 
 --data '{
   "id": "rag-product",
   "name": "Product Search RAG Tool",
@@ -95,10 +95,10 @@ curl --location --globoff --request PUT 'https://api.emporix.io/ai-service/{tena
 When the tool is ready, call the [Reindexing the entities of given type](https://developer.emporix.io/api-references/api-guides/api-guides-and-references/artificial-intelligence/ai-rag-indexer/api-reference/reindex#POST-ai-rag-indexer-tenant-type-reindex) endpoint to regenerate embeddings for the selected entity type. The reindex endpoint currently performs a full rebuild.
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/ai-rag-indexer/{tenant}/{type}/reindex' \
-  --header 'Authorization: Bearer <ACCESS_TOKEN>' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/ai-rag-indexer/{tenant}/{type}/reindex' 
+  --header 'Authorization: Bearer <ACCESS_TOKEN>' 
   --header 'Accept: */*'
 ```
 
