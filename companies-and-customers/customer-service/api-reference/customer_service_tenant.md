@@ -157,7 +157,7 @@ curl -X POST "https://api.emporix.io/customer/{tenant}}/customers/{customerNumbe
 {% step %}
 ### Activate the customer
 
-To update a customer's activation status, use the `PATCH` endpoint for [Updating a customer profile](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#patch-customer-tenant-customers-customernumber).
+As the customer's account preparation is complete, activate their account. To do so, update the customer status using the `PATCH` endpoint for [Updating a customer profile](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#patch-customer-tenant-customers-customernumber).
 
 ```bash
 curl -X PATCH "https://api.emporix.io/customer/{tenant}/customers/{customerNumber}" 
