@@ -1858,8 +1858,10 @@ components:
       description: Type of the MCP server. The `custom` type allows you to integrate with your own MCP server instance, while the `predefined` type allows you to integrate with one of the instances provided by Emporix.
     CustomMcpServerTransportType:
       type: string
-      enum: [ sse ]
-      description: Type of the communication between the agent and the MCP server. For now, only `sse` is supported.
+      enum:
+        - sse
+        - streamable_http
+      description: Type of the communication between the agent and the MCP server. For now, only `sse` and `streamable_http` are supported.
     BaseAgentMcpServer:
       type: object
       properties:
@@ -3202,7 +3204,7 @@ components:
         enabled: true
         transport: sse
         config:
-          url: 'http://localhost:7900'
+          url: 'http://localhost:7900/sse'
           authorizationHeaderName: Authorization
           authorizationHeaderTokenId: token-id
     McpServersResponse:
@@ -3210,9 +3212,9 @@ components:
         - id: mcp-custom
           name: Custom MCP Server
           enabled: true
-          transport: sse
+          transport: streamable_http
           config:
-            url: 'http://localhost:7900'
+            url: 'http://localhost:7900/mcp'
             authorizationHeaderName: Authorization
             authorizationHeaderTokenId: token-id
     CommerceEventsResponse:
