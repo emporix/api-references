@@ -64,12 +64,6 @@ paths:
           $ref: '#/components/responses/InternalServiceError_500'
       description: |-
         Creates a new price for a specified product.
-
-        *** 
-
-        ### Required scopes
-        * `price.price_manage`
-        * `price.price_manage_by_vendor` - allows to create prices for products belonging to the vendor
       operationId: POST-price-create-price
       requestBody:
         content:
@@ -113,6 +107,7 @@ paths:
       security:
         - OAuth2:
             - price.price_manage
+            - price.price_manage_by_vendor
     get:
       summary: Retrieving all prices
       tags:
@@ -136,11 +131,9 @@ paths:
       description: |-
         Retrieves all prices assigned to the tenant. You can filter the results with query parameters.
 
-        ***
-
-        ### Required scopes
+        **Additional scopes info**
         No specific scopes are required.
-        Scope `price.price_read_by_vendor` allows to fetch just the prices belonging to the vendor.
+        The `price.price_read_by_vendor` scope allows to fetch just the prices belonging to the vendor.
       security:
         - OAuth2: []
       parameters:
@@ -223,13 +216,7 @@ paths:
       description: |-
         Creates multiple prices. The maximum batch size is 200.
 
-        Response for a particular price will be returned at the same position (index) at which that price is located in the request body.
-
-        ***
-
-        ### Required scopes
-        * `price.price_manage`
-        * `price.price_manage_by_vendor` - allows to create prices for products belonging to the vendor
+        Response for a particular price is returned at the same position (index) at which that price is located in the request body.
       operationId: POST-price-create-multiple-prices
       requestBody:
         content:
@@ -299,6 +286,7 @@ paths:
       security:
         - OAuth2:
             - price.price_manage
+            - price.price_manage_by_vendor
     put:
       summary: Upserting multiple prices
       tags:
@@ -335,13 +323,7 @@ paths:
       description: |-
         Updates or creates multiple prices. The maximum batch size is 200.
 
-        Response for a particular price will be returned at the same position (index) at which that price is located in the request body.
-
-        ***
-
-        ### Required scopes
-        * `price.price_manage`
-        * `price.price_manage_by_vendor` - allows to update prices belonging to the vendor
+        Response for a particular price is returned at the same position (index) at which that price is located in the request body.
       operationId: PUT-price-update-multiple-prices
       requestBody:
         content:
@@ -423,6 +405,7 @@ paths:
       security:
         - OAuth2:
             - price.price_manage
+            - price.price_manage_by_vendor
     parameters:
       - name: tenant
         in: path
@@ -491,12 +474,10 @@ paths:
       description: |-
         Retrieves a specified price's details by priceId.
 
-        ***
-
-        ### Required scopes
+        ### Additional scopes info
         No specific scopes are required.
         
-        Scope `price.price_read_by_vendor` allows to fetch just the prices belonging to the vendor.
+        The `price.price_read_by_vendor` scope allows to fetch just the prices belonging to the vendor.
       security:
         - OAuth2: []
       operationId: GET-price-retrieve-price
@@ -526,13 +507,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       description: |-
-        Updates a specified price's details by priceId, or creates a new one with if a price with the given id doesn't exist yet.
-
-        ***
-
-        ### Required scopes
-        * `price.price_manage`
-        * `price.price_manage_by_vendor` - allows to update prices belonging to the vendor
+        Updates a specified price's details by priceId, or creates a new one with if a price with the given ID doesn't exist yet.
       requestBody:
         content:
           application/json:
@@ -563,11 +538,20 @@ paths:
       security:
         - OAuth2:
             - price.price_manage
+            - price.price_manage_by vendor
       operationId: PUT-price-update-price
     delete:
       summary: Deleting a price
       tags:
         - Prices
+      parameters:
+        - name: priceId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Price's unique identifier, generated when the price is created.
+        - $ref: '#/components/parameters/trait_tenant'
       responses:
         '204':
           description: The request was successful. The price has been updated.
@@ -583,24 +567,12 @@ paths:
           $ref: '#/components/responses/InternalServiceError_500'
       description: |-
         Deletes a specified price by priceId.
-
-        ***
-
-        ### Required scopes
-        * `price.price_manage`
-        * `price.price_manage_by_vendor` - allows to delete prices belonging to the vendor
       security:
         - OAuth2:
             - price.price_manage
+            - price.price_manage_by_vendor
       operationId: DELETE-price-remove-price
-    parameters:
-      - name: priceId
-        in: path
-        required: true
-        schema:
-          type: string
-        description: 'Price''s unique identifier, generated when the price is created.'
-      - $ref: '#/components/parameters/trait_tenant'
+
   '/price/{tenant}/match-prices':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -609,12 +581,12 @@ paths:
       description: |-
         Finds the best price based on specified criteria.
 
-        In simplification, the price matching algorithm is made up of the following steps:
-          1. All prices that match the specified criteria are fetched.
-          2. A unified `originalValue` is calculated for each price.
-          3. The price with the lowest `effectiveValue` is returned.
+        To simplify, the price matching algorithm is made up of the following steps:
+          * All prices that match the specified criteria are fetched.
+          * A unified `originalValue` is calculated for each price.
+          * The price with the lowest `effectiveValue` is returned.
 
-        To use the price matching functionality, you need to define appropriate tax classes in the Tax Service and then assign them to products for which prices will be matched through the Product Service.
+        To use the price matching functionality, you need to define appropriate tax classes in the Tax Service and then assign them to products for which prices are matched through the Product Service.
 
         Special cases:
         * If the matched price currency is different than the requested currency, the price is calculated based on exchange rates.
@@ -631,12 +603,10 @@ paths:
         * If requested site's `includesTax` field is not specified:
           * If the `includesTax` field in the price model associated with the price is set to `true`, the matched price is returned as a gross value.
           * If the `includesTax` field in the price model associated with the price is set to `false`, the matched price is returned as a net value.
-
-        ***
-
-        ### Required scopes
-        * `price.price_manage`
-        * `price.price_read`
+      security:
+        - OAuth2:
+            - price.price_read
+            - price.price_manage
       responses:
         '200':
           description: OK
@@ -761,9 +731,6 @@ paths:
         description: ''
       tags:
         - Price matching
-      security:
-        - OAuth2:
-            - price.price_manage
       operationId: POST-price-match-prices
   '/price/{tenant}/match-prices-by-context':
     parameters:
@@ -990,11 +957,6 @@ paths:
           $ref: '#/components/responses/InternalServiceError_500'
       description: |-
         Retrieves prices (or a single price) for a list of products.
-
-        ### Required scopes
-        * `price.price_read`
-        
-        * `price.price_manage`
       security:
         - OAuth2:
             - price.price_read
@@ -1019,9 +981,9 @@ paths:
                   useFallback: false
                   searchMode: ALL_PRICES
         required: false
-    parameters:
-      - $ref: '#/components/parameters/trait_tenant'
-      - $ref: '#/components/parameters/query_pricesearch_expand'
+      parameters:
+        - $ref: '#/components/parameters/trait_tenant'
+        - $ref: '#/components/parameters/query_pricesearch_expand'
   '/price/{tenant}/priceModels':
     post:
       summary: Creating a new price model
@@ -1035,8 +997,6 @@ paths:
         * Volume pricing, where the price per unit depends on the ordered quantity.
         * Tiered pricing, where the price per unit depends on the tiers that the ordered quantity falls into.
 
-         ### Required scopes
-        * `price.pricemodel_manage`
       security:
         - OAuth2:
             - price.pricemodel_manage
@@ -1148,9 +1108,6 @@ paths:
         Retrieves all price models assigned to the tenant. You can filter the results with query parameters.
 
         A price model can be defined as a repeatable way to sell products in a market with the intention of making a profit. Price models define basic structures for prices.
-
-         ### Required scopes
-        * `price.pricemodel_read`
       security:
         - OAuth2:
             - price.pricemodel_read
@@ -1226,9 +1183,6 @@ paths:
         Retrieves a specified price model's details by priceModelId.
 
         A price model can be defined as a repeatable way to sell products in a market with the intention of making a profit. Price models define basic structures for prices.
-
-         ### Required scopes
-        * `price.pricemodel_read`
       security:
         - OAuth2:
             - price.pricemodel_read
@@ -1300,10 +1254,7 @@ paths:
     put:
       summary: Upserting a price model
       description: |
-        Updates a specified price model's details by priceModelId, or creates a new one if a price model with the specified id doesn't exist yet.
-
-         ### Required scopes
-        * `price.pricemodel_manage`
+        Updates a specified price model's details by priceModelId, or creates a new one if a price model with the specified ID doesn't exist yet.
       operationId: PUT-price-update-price-model
       security:
         - OAuth2:
@@ -1360,13 +1311,10 @@ paths:
       description: |-
         Deletes a specified price model by priceModel Id.
 
-        **Important**: If you want to delete a price model that has prices assigned to it, you need to set the `forceDelete` query parameter to `true`. In this case, all prices assigned to the price model will be deleted as well, in an asynchronous manner.
+        **Important**: If you want to delete a price model that has prices assigned to it, you need to set the `forceDelete` query parameter to `true`. In this case, all prices assigned to the price model are deleted as well, in an asynchronous manner.
 
-         ### Required scopes
-        * `price.pricemodel_manage`
-        * `price.pricemodel_manage_admin`
-
-          **Note**: The `price.pricemodel_manage_admin` scope is only required if you want to delete a price model that has prices assigned to it.
+        **Additional scopes info**
+        The `price.pricemodel_manage_admin` scope is only required if you want to delete a price model that has prices assigned to it.
       parameters:
         - schema:
             type: boolean
@@ -1380,6 +1328,7 @@ paths:
       security:
         - OAuth2:
             - price.pricemodel_manage
+            - price.pricemodel_manage_admin
       responses:
         '204':
           description: The request was successful. The price model has been deleted.
@@ -1398,9 +1347,6 @@ paths:
       summary: Retrieving all price lists
       description: |-
         Retrieves all price lists assigned to the tenant. You can filter the results with query parameters.
-
-         ### Required scopes
-        * `price.pricelist_read`
       security:
         - OAuth2:
             - price.pricelist_read
@@ -1448,9 +1394,6 @@ paths:
         - Price lists
       description: |-
         Creates a new price list.
-
-        ### Required scopes
-        * `price.pricelist_manage`
       security:
         - OAuth2:
             - price.pricelist_manage
@@ -1464,8 +1407,10 @@ paths:
             schema:
               $ref: '#/components/schemas/priceListCreation'
             examples:
-              Create Price List:
-                $ref: '#/components/examples/priceLists_post_requestBody'
+              Price list with a customer group:
+                $ref: '#/components/examples/priceLists_post_requestBody' 
+              Price list with a legal entity:
+                $ref: '#/components/examples/priceLists_post_requestBody_legalEntity'
       responses:
         '201':
           description: The request was successful. The price list has been created.
@@ -1487,6 +1432,58 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+  '/price/{tenant}/price-lists/search':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    post:
+      tags:
+        - Price lists
+      summary: Searching for price lists
+      description: |-
+        Searching for price lists assigned to the tenant.
+      security:
+        - OAuth2:
+            - price.pricelist_read
+      parameters:
+        - $ref: '#/components/parameters/header_acceptLanguageV2'
+        - $ref: '#/components/parameters/trait_paged_pageNumber'
+        - $ref: '#/components/parameters/trait_paged_pageSize'
+        - $ref: '#/components/parameters/trait_sort'
+        - $ref: '#/components/parameters/trait_XTotalCount_header'
+      requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/searchRequest'
+              examples:
+                search for products:
+                  value:
+                    q: "id:example-id-1"
+      responses:
+        '200':
+          description: The request was successful. A list of price lists is returned.
+          headers:
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of retrieved price lists.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/priceList'
+              examples:
+                Response example:
+                  $ref: '#/components/examples/priceLists_get_200_responseBody'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+      operationId: POST-price-search-price-lists
   '/price/{tenant}/price-lists/{priceListId}':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -1498,9 +1495,6 @@ paths:
       summary: Retrieving a price list
       description: |-
         Retrieves a specified price list's details by priceListId.
-
-         ### Required scopes
-        * `price.pricelist_read`
       security:
         - OAuth2:
             - price.pricelist_read
@@ -1537,10 +1531,7 @@ paths:
       operationId: PUT-price-update-price-list
       summary: Upserting a price list
       description: |-
-        Updates a specified price list by priceListId, or creates a new one if a price list with the specified id doesn't exist yet.
-
-         ### Required scopes
-        * `price.pricelist_manage`
+        Updates a specified price list by priceListId, or creates a new one if a price list with the specified ID doesn't exist yet.
       security:
         - OAuth2:
             - price.pricelist_manage
@@ -1592,10 +1583,7 @@ paths:
       description: |-
         Deletes a specified price list by priceListId.
 
-        **Important**: All prices assigned to the price list will be deleted as well, in an asynchronous manner.
-
-        ### Required scopes
-        * `price.pricelist_manage`
+        **Important**: All prices assigned to the price list are deleted as well, in an asynchronous manner.
       security:
         - OAuth2:
             - price.pricelist_manage
@@ -1610,9 +1598,6 @@ paths:
       summary: Retrieving all prices assigned to a price list
       description: |-
         Retrieves all prices assigned to a specified price list. You can filter the results with query parameters.
-
-         ### Required scopes
-        * `price.pricelist_read`
       security:
         - OAuth2:
             - price.pricelist_read
@@ -1668,9 +1653,6 @@ paths:
         - Prices assigned to price lists
       description: |-
         Creates a new price for a specified price list.
-
-        ### Required scopes
-        * `price.pricelist_manage`
       security:
         - OAuth2:
             - price.pricelist_manage
@@ -1743,9 +1725,6 @@ paths:
         Deletes multiple prices from a specified price list.
 
         To indicate which prices should be deleted from the price list, you need to put their IDs in an array of strings and send it through the request body. The request body should look like this: `["exampleID1", "exampleID2"]`
-
-        ### Required scopes
-        * `price.pricelist_manage`
       security:
         - OAuth2:
             - price.pricelist_manage
@@ -1795,10 +1774,7 @@ paths:
       description: |-
         Creates multiple prices for a specified price list.
 
-        Response for a particular price will be returned at the same position (index) at which that price is located in the request body.
-
-        ### Required scopes
-        * `price.pricelist_manage`
+        Response for a particular price is returned at the same position (index) at which that price is located in the request body.
       security:
         - OAuth2:
             - price.pricelist_manage
@@ -1810,10 +1786,7 @@ paths:
       description: |-
         Updates or creates multiple prices in a specified price list.
 
-        Response for a particular price will be returned at the same position (index) at which that price is located in the request body.
-
-        ### Required scopes
-        * `price.pricelist_manage`
+        Response for a particular price is returned at the same position (index) at which that price is located in the request body.
       security:
         - OAuth2:
             - price.pricelist_manage
@@ -1858,9 +1831,6 @@ paths:
       summary: Retrieving a price list's price details
       description: |-
         Retrieves details for a specified price that belongs to a price list.
-
-         ### Required scopes
-        * `price.pricelist_read`
       security:
         - OAuth2:
             - price.pricelist_read
@@ -1897,10 +1867,7 @@ paths:
       operationId: PUT-price-update-price-in-price-list
       summary: Upserting a price in a price list
       description: |-
-        Updates a specified price list's price, or creates a new price in a price list if a price with the specified id doesn't exist yet.
-
-         ### Required scopes
-        * `price.pricelist_manage`
+        Updates a specified price list's price, or creates a new price in a price list if a price with the specified ID doesn't exist yet.
       security:
         - OAuth2:
             - price.pricelist_manage
@@ -1951,9 +1918,6 @@ paths:
           $ref: '#/components/responses/InternalServiceError_500'
       description: |-
         Deletes a specified price list's price.
-
-        ### Required scopes
-        * `price.pricelist_manage`
       security:
         - OAuth2:
             - price.pricelist_manage
@@ -2328,6 +2292,11 @@ components:
             If no price that matches the criteria is found for the specified site, the price matching functionality will try to find the best price for the `main` site. To enable this option, this field needs to be set to `true`.
 
             **Note**: Using the fallback mechanism may impact the performance as the price matching has to run a second time. If the fallback mechanism is used, the response's `siteCode` field will be set to `main`.
+        legalEntityId:
+          type: string
+          description: |-
+            Legal entity for which price lists are included in the price match.
+            **Note**: Price lists for the entity's parent legal entities are also included.
       required:
         - targetCurrency
         - siteCode
@@ -2872,9 +2841,9 @@ components:
             type: string
         customerGroups:
           description: |-
-            List of customer groups' ids for whom the price list is valid.
+            List of customer groups IDs for which the price list is valid. If not specified, the price list is applicable to all customer groups.
 
-            **Note**: If not specified, the price list will be applicable to all customer groups.
+            **Note**: Customer groups cannot be provided if there is a legal entity specified for the price list.
 
             **Note**: This is a preview field - the system does not fully operate on the customer groups concept yet.
           type: array
@@ -2882,6 +2851,11 @@ components:
             allOf:
               - {}
             type: string
+        legalEntityId:
+          description: |-
+            ID of the legal entity to which the price list applies.
+            **Note**: Price list assigned to legal entity is also applicable for all the subsidiaries.
+          type: string
         siteCode:
           description: Code of the site to which the price list applies.
           type: string
@@ -3119,6 +3093,15 @@ components:
           default: ALL_PRICES
       required:
         - itemIds
+    searchRequest:
+      type: object
+      properties:
+        q:
+          type: string
+          description:  |
+            A standard query parameter is used to search for specific values. 
+            
+            See: [Standard practises - Query parameter](https://developer.emporix.io/api-references/standard-practices/q-param)
     priceMetadata:
       allOf:
         - $ref: '#/components/schemas/metadata'
@@ -3592,12 +3575,14 @@ components:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
             price.price_manage: Needed to manage prices.
+            price.price_read: Needed to retrieve prices.
             price.price_own: Needed to calculate product prices (legacy).
             price.prod_price_calculate: Needed to calculate prices and synchronize sale prices (legacy).
             price.price_delete_all: Needed to delete all prices at once (legacy).
             price.price_match_own: Needed to use the price matching functionality based on information from the session context.
             price.pricemodel_manage: Needed to manage price models.
             price.pricemodel_read: Needed to retrieve price models.
+            price.price_manage_by_vendor: Needed to manage prices belonging to the vendor.
     CustomerAccessToken:
       type: http
       scheme: bearer
@@ -3677,6 +3662,16 @@ components:
         customerGroups:
           - customer-group-1
           - customer-group-2
+        siteCode: example-site-1
+        validity:
+          from: '2022-05-01T00:00:00.000Z'
+          to: '2025-05-01T00:00:00.000Z'
+    priceLists_post_requestBody_legalEntity:
+      value:
+        name:
+          en: Example Price List 1
+        currency: EUR
+        legalEntityId: legal-entity-1
         siteCode: example-site-1
         validity:
           from: '2022-05-01T00:00:00.000Z'
@@ -3895,8 +3890,6 @@ components:
           code: 204
           status: No Content
   requestBodies: {}
-security:
-  - OAuth2: []
 tags:
   - name: Price lists
   - name: Price matching

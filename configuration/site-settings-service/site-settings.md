@@ -15,15 +15,15 @@ To create a new site, you need to send a request to the [Creating a site](https:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/site/{tenant}/sites' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/site/{tenant}/sites' 
+  --header 'Content-Type: application/json' 
   --data '{
     "code": "example",
     "name": "ExampleName",
@@ -56,15 +56,15 @@ To update the `shipToCountries` list, you need to send a request to the [Partial
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
 curl -L \
-  --request PATCH \
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' \
-  --header 'Content-Type: application/json' \
+  --request PATCH 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' 
+  --header 'Content-Type: application/json' 
   --data '{
     "defaultLanguage": "en"
     "shipToCountries": [
@@ -90,13 +90,13 @@ First, check if the `orderProcessSettings` mixin has already been configured by 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' \
+curl -L 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' 
   --header 'Accept: */*'
 ```
 
@@ -106,15 +106,15 @@ In this case, to enable specific payment methods, you need to send a request to 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' 
+  --header 'Content-Type: application/json' 
   --data '{
     "testMixin": {
     "active": true,
@@ -140,15 +140,15 @@ In this case, to enable specific payment methods, you need to send a request to 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request PATCH \
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request PATCH 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' 
+  --header 'Content-Type: application/json' 
   --data '{
     "active": true,
   "paymentSettings": {
@@ -174,13 +174,13 @@ First, check if the `merchantInfo` mixin has already been configured by sending 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' \
+curl -L 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' 
   --header 'Accept: */*'
 ```
 
@@ -188,15 +188,15 @@ If your site's `merchantInfo` has never been configured before or has been delet
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' 
+  --header 'Content-Type: application/json' 
   --data '{
     "testMixin": {
     "active": true,
@@ -234,15 +234,15 @@ If you need to update your `merchantInfo`, you need to send a request to the [Pa
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request PATCH \
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request PATCH 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' 
+  --header 'Content-Type: application/json' 
   --data '{
     "active": true,
   "merchantName": " ",
@@ -262,15 +262,15 @@ Settings for direct debit payments are stored in the `debitSettings` mixin. To c
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../catalogs-and-categories/catalog/api-reference/" %}
-[api-reference](../../catalogs-and-categories/catalog/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' 
+  --header 'Content-Type: application/json' 
   --data '{
     "testMixin": {
     "active": true,
@@ -309,15 +309,15 @@ Your business's SEPA Creditor ID is stored in your tenant's `sepaCreditor` confi
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../country-service/api-reference/" %}
-[api-reference](../country-service/api-reference/)
+{% content-ref url="../configuration-service/api-reference/" %}
+[api-reference](../configuration-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/configuration/{tenant}/configurations' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations' 
+  --header 'Content-Type: application/json' 
   --data '[
     {
       "key": "sepaCreditor",
@@ -380,16 +380,15 @@ Once your schema is ready, send a request to the [Creating a site mixin](https:/
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' \
-  --header 'Content-Type: application/json' \
-  --data '{
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' 
+  --header 'Content-Type: application/json' 
     "testMixin": {
     "active": true,
     "metadata": {
@@ -409,4 +408,33 @@ curl -L \
     }
   }
 }'
+```
+
+### Add or modify mixins when updating a site
+
+You can also add or modify mixins when partially updating a site by sending a request to the [Partially updating a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode) endpoint. This approach allows you to update both the mixin schema reference in `metadata.mixins` and the mixin data in `mixins` in a single request.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -L 
+  --request PATCH 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "metadata": {
+      "mixins": {
+        "exampleMixin": "https://res.cloudinary.com/saas-ag/raw/upload/v1764338354/emporix-docs/test3_v1.json"
+      }
+    },
+    "mixins": {
+      "exampleMixin": {
+        "field3": "value3"
+      }
+    }
+  }'
 ```

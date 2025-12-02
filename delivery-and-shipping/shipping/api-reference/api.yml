@@ -41,9 +41,6 @@ paths:
         Retrieves delivery windows for the specified delivery area and cart. 
 
         **Note**: You can filter out delivery windows before the store's cutoff time using the `afterCutOffTime` query parameter.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/deliveryAreaId'
@@ -99,9 +96,6 @@ paths:
         Retrieves actual delivery windows for the specified cart.
         
         **NOTE:** In order to properly retrieve delivery windows, the cart must have `countryCode` and `zipCode` specified.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/cartId'
@@ -152,7 +146,7 @@ paths:
         in: path
         required: true
         description: |
-          Your Emporix tenant's name.
+          Your Emporix tenant name.
 
           **Note**: The tenant should always be written in lowercase.
         schema:
@@ -191,9 +185,6 @@ paths:
         - **VALIDATION-DELIVERY-WINDOW-400004**: Lack of required `zoneId` property in the request
         - **VALIDATION-DELIVERY-WINDOW-500001**: Internal problem with the service
 
-        ***
-        ### Required scopes
-        No specific scopes are required.
       requestBody:
         content:
           application/json:
@@ -210,9 +201,6 @@ paths:
         - Sites
       description: |-
         Retrieves a list of sites with zones where the postal code matches the `postalCode` passed in the request body.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       requestBody:
         content:
           application/json:
@@ -400,9 +388,6 @@ paths:
       operationId: POST-shipping-create-shipping-zone
       description: |-
         Creates a new shipping zone for the specified site.
-        ***
-        ### Required scopes
-        *  `shipping.shipping_manage`
       requestBody:
         content:
           application/json:
@@ -449,9 +434,6 @@ paths:
       operationId: GET-shipping-list-shipping-zones
       description: |-
         Retrieves shipping zones for the specified site.
-        ***
-        ### Required scopes
-        No specific scopes required.
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -489,9 +471,6 @@ paths:
       operationId: GET-shipping-retrieve-shipping-zone
       description: |-
         Retrieves the specified shipping zone's details.
-        ***
-        ### Required scopes
-        No specific scopes required.
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -528,9 +507,6 @@ paths:
       operationId: PUT-shipping-update-shipping-zone
       description: |-
         Fully updates the specified shipping zone.
-        ***
-        ### Required scopes
-        *  `shipping.shipping_manage`
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -569,9 +545,6 @@ paths:
       operationId: PATCH-shipping-update-shipping-zone
       description: |-
         Partially updates the specified shipping zone.
-        ***
-        ### Required scopes
-        *  `shipping.shipping_manage`
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -611,9 +584,6 @@ paths:
       operationId: DELETE-shipping-remove-shipping-zone
       description: |-
         Deletes the specified shipping zone.
-        ***
-        ### Required scopes
-        *  `shipping.shipping_manage`
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -658,8 +628,6 @@ paths:
         - **VALIDATION-DELIVERY-WINDOW-400004**: Lack of required `zoneId` property in the request
         - **VALIDATION-DELIVERY-WINDOW-500001**: Internal problem with the service
 
-        ### Required scopes
-        No specific scopes are required.
       responses:
         '200':
           description: Resource successfully validated.
@@ -698,9 +666,6 @@ paths:
       operationId: POST-shipping-create-shipping-method
       description: |-
         Creates a new shipping method for the specified site and shipping zone.
-        ***
-        ### Required scopes
-        * `shipping.shipping_manage`
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -748,9 +713,6 @@ paths:
       operationId: GET-shipping-list-all-shipping-methods
       description: |-
         Retrieves shipping methods for the specified site and shipping zone.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -792,9 +754,6 @@ paths:
       operationId: GET-shipping-retrieve-shipping-method
       description: |-
         Retrieves the specified shipping method's details.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -830,9 +789,6 @@ paths:
       operationId: PUT-shipping-update-shipping-method
       description: |-
         Fully updates the specified shipping method.
-        ***
-        ### Required scopes
-        * `shipping.shipping_manage`
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -872,9 +828,6 @@ paths:
       operationId: PATCH-shipping-update-shipping-method
       description: |-
         Partially updates the specified shipping method.
-        ***
-        ### Required scopes
-        * `shipping.shipping_manage`
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -915,9 +868,6 @@ paths:
       operationId: DELETE-shipping-remove-shipping-method
       description: |-
         Deletes the specified shipping method.
-        ***
-        ### Required scopes
-        * `shipping.shipping_manage`
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -948,9 +898,7 @@ paths:
       summary: Calculating the final shipping cost
       operationId: POST-shipping-calculate-shipping-cost
       description: |-
-        The endpoint will return shipping methods, which contain the matching fee for all zones.
-        ### Required scopes
-        No specific scopes are required.
+        The endpoint returns shipping methods, which contain the matching fee for all zones.
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -988,9 +936,6 @@ paths:
       operationId: POST-shipping-calculate-min-shipping-cost
       description: |-
         Retrieves the minimum shipping cost.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -1029,10 +974,7 @@ paths:
       summary: Calculating the shipping cost for a given slot
       operationId: POST-shipping-calculate-slot-shipping-cost
       description: |-
-        Retrieves the minimum slot shipping cost.
-        ***
-        ### Required scopes
-        No specific scopes are required.
+        Retrieves the minimum shipping cost related to a particular slot.
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -1072,9 +1014,6 @@ paths:
       operationId: POST-shipping-create-shipping-group
       description: |-
         Creates a new shipping group for the specified site.
-        ***
-        ### Required scopes
-        * `shipping.shipping_manage`
       requestBody:
         content:
           application/json:
@@ -1118,10 +1057,7 @@ paths:
       summary: Retrieving shipping groups
       operationId: GET-shipping-list-shipping-groups
       description: |-
-        Retrieves a list of shipping groups for the specified site.
-        ***
-        ### Required scopes
-        No specific scopes required.
+        Retrieves a list of shipping groups for a specified site.
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -1154,10 +1090,7 @@ paths:
       summary: Retrieving a shipping group
       operationId: GET-shipping-retrieve-shipping-group
       description: |-
-        Retrieves the specified shipping group's details.
-        ***
-        ### Required scopes
-        No specific scopes required.
+        Retrieves the specified shipping group details.
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -1190,9 +1123,6 @@ paths:
       operationId: PUT-shipping-update-shipping-group
       description: |-
         Fully updates the specified shipping group.
-        ***
-        ### Required scopes
-        * `shipping.shipping_manage`
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -1231,9 +1161,6 @@ paths:
       operationId: DELETE-shipping-remove-shipping-group
       description: |-
         Deletes the specified shipping group.
-        ***
-        ### Required scopes
-        * `shipping.shipping_manage`
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -1262,9 +1189,6 @@ paths:
       operationId: POST-shipping-create-customer-group-relation
       description: |-
         Creates a new customer-group relation for the specified site.
-        ***
-        ### Required scopes
-        * `shipping.shipping_manage`
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -1308,9 +1232,6 @@ paths:
       operationId: GET-shipping-list-customer-group-relations
       description: |-
         Retrieves a list of customer-group relations for the specified site.
-        ***
-        ### Required scopes
-        No specific scopes required
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -1341,9 +1262,6 @@ paths:
       operationId: GET-shipping-retrieve-customer-group-relations
       description: |-
         Retrieves customer-group relations for the specified customer.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -1371,9 +1289,6 @@ paths:
       operationId: PUT-shipping-update-customer-group-relations
       description: |-
         Updates the customer-group relation for the specified customer.
-        ***
-        ### Required scopes
-        * `shipping.shipping_manage`
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -1407,9 +1322,6 @@ paths:
       operationId: DELETE-shipping-remove-customer-group-relation
       description: |-
         Deletes the customer-group relation for the specified customer.
-        ***
-        ### Required scopes
-        * `shipping.shipping_manage`
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/site'
@@ -1511,8 +1423,6 @@ paths:
         In case of any validation problem, the below `errorCodes` can be returned:
         - **DELIVERY-TIME-500001**: Internal problem with the service
 
-        ### Required scopes
-        *  `shipping.shipping_read`
       security:
         - oAuth2:
             - shipping.shipping_read
@@ -1582,8 +1492,6 @@ paths:
         - **DELIVERY-TIME-SLOT-400005**: The slot cut off day is set when the delivery time date or period is set
         - **DELIVERY-TIME-SLOT-400006**: The slot cut off day is set when the delivery day shift is set
 
-        ### Required scopes
-        *  `shipping.shipping_manage`
       security:
         - oAuth2:
             - shipping.shipping_manage
@@ -1767,8 +1675,6 @@ paths:
         - **DELIVERY-TIME-SLOT-400005**: The slot cut off day is set when the delivery time date or period is set
         - **DELIVERY-TIME-SLOT-400006**: The slot cut off day is set when the delivery day shift is set
 
-        ### Required scopes
-        *  `shipping.shipping_manage`
       requestBody:
         content:
           application/json:
@@ -1885,8 +1791,6 @@ paths:
         - **DELIVERY-TIME-404002**: Delivery time with given id does not exist in the system
         - **DELIVERY-TIME-500001**: Internal problem with the service
 
-        ### Required scopes
-        *  `shipping.shipping_read`
       security:
         - oAuth2:
             - shipping.shipping_read
@@ -1951,8 +1855,6 @@ paths:
         - **DELIVERY-TIME-SLOT-400005**: The slot cut off day is set when the delivery time date or period is set
         - **DELIVERY-TIME-SLOT-400006**: The slot cut off day is set when the delivery day shift is set
 
-        ### Required scopes
-        *  `shipping.shipping_manage`
       requestBody:
         content:
           application/json:
@@ -2090,8 +1992,6 @@ paths:
         - **DELIVERY-TIME-SLOT-400005**: The slot cut off day is set when the delivery time date or period is set
         - **DELIVERY-TIME-SLOT-400006**: The slot cut off day is set when the delivery day shift is set        
 
-        ### Required scopes
-        *  `shipping.shipping_manage`
       requestBody:
         content:
           application/json:
@@ -2128,8 +2028,6 @@ paths:
         - **DELIVERY-TIME-404002**: Delivery time with given id does not exist in the system
         - **DELIVERY-TIME-500001**: Internal problem with the service
 
-        ### Required scopes
-        *  `shipping.shipping_manage`
       security:
         - oAuth2:
             - shipping.shipping_manage
@@ -2187,8 +2085,6 @@ paths:
         - **DELIVERY-TIME-404002**: Delivery time with given id does not exist
         - **DELIVERY-TIME-500001**: Internal problem with the service
 
-        ### Required scopes
-        *  `shipping.shipping_read`
       security:
         - oAuth2:
             - shipping.shipping_read
@@ -2245,8 +2141,6 @@ paths:
         - **DELIVERY-TIME-SLOT-400005**: The slot cut off day is set when the delivery time date or period is set
         - **DELIVERY-TIME-SLOT-400006**: The slot cut off day is set when the delivery day shift is set
 
-        ### Required scopes
-        *  `shipping.shipping_manage`
       requestBody:
         content:
           application/json:
@@ -2290,8 +2184,6 @@ paths:
         - **DELIVERY-TIME-404002**: Delivery time with given id does not exist
         - **DELIVERY-TIME-500001**: Internal problem with the service
 
-        ### Required scopes
-        *  `shipping.shipping_manage`
       security:
         - oAuth2:
             - shipping.shipping_manage
@@ -2353,8 +2245,6 @@ paths:
         - **DELIVERY-TIME-404002**: Delivery time with given id doesn't exists in the system
         - **DELIVERY-TIME-SLOT-404001**: Slot with provided id doesn't exists in the given delivery time
 
-        ### Required scopes
-        *  `shipping.shipping_read`
       security:
         - oAuth2:
             - shipping.shipping_read
@@ -2405,8 +2295,6 @@ paths:
         - **DELIVERY-TIME-SLOT-400005**: The slot cut off day is set when the delivery time date or period is set
         - **DELIVERY-TIME-SLOT-400006**: The slot cut off day is set when the delivery day shift is set
 
-        ### Required scopes
-        *  `shipping.shipping_manage`
       requestBody:
         content:
           application/json:
@@ -2473,8 +2361,6 @@ paths:
         - **DELIVERY-TIME-SLOT-400005**: The slot cut off day is set when the delivery time date or period is set
         - **DELIVERY-TIME-SLOT-400006**: The slot cut off day is set when the delivery day shift is set
 
-        ### Required scopes
-        *  `shipping.shipping_manage`
       requestBody:
         content:
           application/json:
@@ -2513,8 +2399,6 @@ paths:
         - **DELIVERY-TIME-500001**: Internal problem with the service
         - **DELIVERY-TIME-SLOT-404001**: Slot with provided id doesn't exists in the given delivery time
 
-        ### Required scopes
-        *  `shipping.shipping_manage`
       security:
         - oAuth2:
             - shipping.shipping_manage
@@ -2548,8 +2432,6 @@ paths:
       description: |-
         Generates a delivery cycle.
 
-        ### Required scopes
-        *  `shipping.shipping_manage`
       requestBody:
         content:
           application/json:
@@ -2825,7 +2707,7 @@ components:
       type: object
       properties:
         id:
-          description: Site’s unique identifier.
+          description: Site unique identifier.
           type: string
         defaultZoneId:
           description: Default shippingzone’s unique identifier. A shipping zone is an area where shipments can be delivered.
@@ -2924,7 +2806,7 @@ components:
         minOrderValue:
           $ref: '#/components/schemas/MonetaryAmount'
         shippingGroupId:
-          description: Shipping group's unique identifier.
+          description: Shipping group unique identifier.
           type: string
       required:
         - cost
@@ -2982,7 +2864,7 @@ components:
       type: object
       properties:
         customerId:
-          description: Customer's unique identifier.
+          description: Customer unique identifier.
           type: string
         cartTotal:
           description: Total amount for the given cart.
@@ -3012,7 +2894,7 @@ components:
       type: object
       properties:
         customerId:
-          description: Customer's unique identifier.
+          description: Customer unique identifier.
           type: string
         cartTotal:
           description: Total amount for the given cart.
@@ -3135,7 +3017,7 @@ components:
       description: Shipping groups can be used for customer grouping with use customer group relations.
       properties:
         id:
-          description: Delivery group's unique identifier.
+          description: Delivery group unique identifier.
           type: string
         description:
           $ref: '#/components/schemas/LocalizedValue'
@@ -3153,7 +3035,7 @@ components:
       type: object
       properties:
         customerId:
-          description: Customer's unique identifier.
+          description: Customer unique identifier.
           type: string
         groupId:
           description: Group's unique identifier.
@@ -3489,7 +3371,7 @@ components:
   parameters:
     site:
       description: |
-        Site’s unique identifier. A site is a specific shop.
+        Site unique identifier. A site is a specific shop.
 
         If the tenant owns only one shop, the value should be set to `main`.
       name: site
@@ -3589,7 +3471,7 @@ components:
       in: path
       required: true
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: The tenant should always be written in lowercase.
       schema:
@@ -3632,14 +3514,14 @@ components:
         type: number
         minimum: 0
     groupId:
-      description: Delivery group's unique identifier.
+      description: Delivery group unique identifier.
       name: groupId
       in: path
       required: true
       schema:
         type: string
     customerId:
-      description: Customer's unique identifier generated when the customer's account is created through the Customer Service.
+      description: Customer unique identifier generated when the customer's account is created through the Customer Service.
       name: customerId
       in: path
       required: true

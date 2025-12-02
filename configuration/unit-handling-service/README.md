@@ -10,10 +10,13 @@ Defines and manages various unit systems, including metric, imperial, USC, and c
 
 ### Key features and benefits
 
-* Creates unit types for length, mass, quantity, and volume
-* Creates and manages units per type and defines the conversion between them
-* Converts units
-* Handles Unicode unit symbols and localized names
-* Provides a highly flexible unit management system that supports widely used unit systems such as metric, imperial, or USC
-* Allows unit systems to exist in four different types: length, mass, quantity, and volume
-* Enables products to be sold flexibly by defined units rather than by piece only — for example, 50 meters of a steel tube, 250 liters of liquid lubricants, or 250 grams of fresh-cut cheese
+* Defines unit types for length, mass, quantity, and volume  
+* Creates and manages units for each type, and defines the conversions between them  
+* Performs unit conversions  
+* Manages unit code symbols and localized names  
+* Provides a flexible unit management system that supports widely used measurement systems such as metric, imperial, and US customary  
+* Enables flexible product sales by defined units rather than by piece only — for example:  
+  * 50 meters of steel tubing  
+  * 250 liters of lubricant  
+  * 250 grams of fresh-cut cheese
+

@@ -8,6 +8,23 @@
 
 ## 2025
 
+* [2025-11-26: Category Tree – filtering category trees by category IDs](2025/2025-11-26-category-tree.md)
+* [2025-11-26: Product Service – category and customer segment IDs in product response](2025/2025-11-26-product.md)
+* [2025-11-25: AI Service - Agent Logs](2025/2025-11-25-ai.md)
+* [2025-11-17: AI Service - Export/Import agents](2025/2025-11-17-ai.md)
+* [2025-11-14: Client Management Service - parent hierarchy endpoint added](2025/2025-11-14-client-management.md)
+* [2025-11-14: Price Service - legal entity support added](2025/2025-11-14-price.md)
+* [2025-11-13: Referral Coupon Service - removal of deprecated endpoints](2025/2025-11-13-referral-coupon.md)
+* [2025-11-13: Coupon Service - removal of deprecated endpoints](2025/2025-11-13-coupon.md)
+* [2025-11-07: Category Service - new search endpoint and query parameter](2025/2025-11-07-category.md)
+* [2025-11-07: Price Service - new search endpoint for price lists](2025/2025-11-07-price.md)
+* [2025-11-07: Schema Service - references](2025/2025-11-07-schema.md)
+* [2025-11-07: Customer Service - new search endpoint](2025/2025-11-07-customer.md)
+* [2025-11-07: Order Service - new search endpoint](2025/2025-11-07-order.md)
+* [2025-11-07: Media Service - support for custom schema types in reference type](2025/2025-11-07-media.md)
+* [2025-10-30: Cart Service - quoteId added](2025/2025-10-30-cart-quote-id.md)
+* [2025-10-30: Cart Service - external discounts on cart level](2025/2025-10-30-cart-external-discounts.md)
+* [2025-10-30: Cart Service - address management](2025/2025-10-30-cart-addresses.md)
 * [2025-10-29: Quote Service - external prices and mixins support](2025/2025-10-29-quote.md)
 * [2025-10-22: Webhook - new agentic job events](2025/2025-10-22-webhook.md)
 * [2025-10-22: AI Service - support for AI agents](2025/2025-10-22-ai.md)

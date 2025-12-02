@@ -160,6 +160,7 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/checkout/payment-gateway/api-reference/api.yml)
   * [Shopping List](checkout/shopping-list/README.md)
+    * [Shopping List Tutorial](checkout/shopping-list/shopping-list-tutorial.md)
     * [API Reference](checkout/shopping-list/api-reference/README.md)
       * ```yaml
         props:
@@ -188,7 +189,7 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/approval-service/approval-api-reference/api.yml)
   * [Customer Management](companies-and-customers/client-management/README.md)
-    * [Customer Management Tutorial](companies-and-customers/customer-service/customer-management.md)
+    * [Customer Management Tutorial](companies-and-customers/client-management/customer-management.md)
     * [API Reference](companies-and-customers/client-management/api-reference/README.md)
       * ```yaml
         props:
@@ -201,20 +202,6 @@
               spec: customer-client-management-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/client-management/api-reference/api.yml)
-  * [Customer Segments](companies-and-customers/customer-segments/README.md)
-    * [Segments Tutorial](companies-and-customers/customer-segments/segments.md)
-    * [API Reference](companies-and-customers/customer-segments/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: segments-api
-        ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/customer-segments/api-reference/api.yml)
   * [Customer Service (Customer Managed)](companies-and-customers/customer-management/README.md)
     * [API Reference](companies-and-customers/customer-management/api-reference/README.md)
       * ```yaml
@@ -241,6 +228,20 @@
               spec: customer-tenant-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/customer-service/api-reference/api.yml)
+  * [Customer Segments](companies-and-customers/customer-segments/README.md)
+    * [Segments Tutorial](companies-and-customers/customer-segments/segments.md)
+    * [API Reference](companies-and-customers/customer-segments/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: segments-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/customer-segments/api-reference/api.yml)
   * [Vendor Service](companies-and-customers/vendor-service/README.md)
     * [Vendor Tutorial](companies-and-customers/vendor-service/vendor.md)
     * [API Reference](companies-and-customers/vendor-service/api-reference/README.md)
