@@ -115,7 +115,7 @@ curl -X POST "https://api.emporix.io/customer/{tenant}/customers/{customerNumber
   }'
 ```
 
-Response (`201 Created`):
+The response (`201 Created`) returns the id of the created address, for example:
 
 ```
 {
@@ -128,7 +128,7 @@ Response (`201 Created`):
 {% step %}
 
 ### Add tags to customer addresses
-To add any tags to the address for better visibility, send the request to the [Adding tags to a customer address](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/addresses#post-customer-tenant-customers-customernumber-addresses-addressid-tags) endpoint.
+To add any tags to the address for easier address management, send the request to the [Adding tags to a customer address](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/addresses#post-customer-tenant-customers-customernumber-addresses-addressid-tags) endpoint.
 
 ```bash
 curl -X POST "https://api.emporix.io/customer/{tenant}/customers/{customerNumber}/addresses/{addressId}/tags?tags=PRIMARY_CONTACT" \
@@ -209,11 +209,6 @@ Example successful response includes all the assigned details:
       "contactPhone": "123456789",
       "tags": ["BILLING", "SHIPPING", "PRIMARY_CONTACT"],
       "isDefault": true
-    }
-  ],
-  "accounts": [
-    {
-      "id": "john.doe@emporix.com"
     }
   ]
 }
