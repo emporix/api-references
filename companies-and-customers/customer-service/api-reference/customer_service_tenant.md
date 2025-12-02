@@ -140,22 +140,6 @@ To remove tags later, call the same path with `DELETE` operation.
 {% endhint%}
 
 {% endstep %}
-
-{% step %}
-### Assign an account to the profile
-You can assign the created customer's account to an existing profile in the database. Send the request to the [Assigning an account to an existing customer profile](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#post-customer-tenant-customers-customernumber-accounts-internal) endpoint with the customer email address in the body.
-
-```bash
-curl -X POST "https://api.emporix.io/customer/{tenant}}/customers/{customerNumber}/accounts/internal" 
-  -H "Authorization: Bearer YOUR_OAUTH2_TOKEN" 
-  -H "Content-Type: application/json" 
-  -d '{
-    "email": "john.doe@emporix.com"
-  }'
-```
-
-{% endstep %}
-
 {% step %}
 ### Activate the customer
 
