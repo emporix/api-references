@@ -17,7 +17,6 @@ Defines and manages various unit systems, including metric, imperial, USC, and c
 * Performs unit conversions  
 * Manages unit code symbols and localized names  
 * Provides a flexible unit management system that supports widely used measurement systems such as metric, imperial, and US customary  
-* Supports four unit system types: length, mass, quantity, and volume  
 * Enables flexible product sales by defined units rather than by piece only — for example:  
   * 50 meters of steel tubing  
   * 250 liters of lubricant  
