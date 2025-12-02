@@ -10,8 +10,6 @@ Defines and manages various unit systems, including metric, imperial, USC, and c
 
 ### Key features and benefits
 
-### Unit Management Features
-
 * Defines unit types for length, mass, quantity, and volume  
 * Creates and manages units for each type, and defines the conversions between them  
 * Performs unit conversions  
