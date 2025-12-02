@@ -21,7 +21,7 @@
         spec:
           ref:
             kind: openapi
-            spec: rag-redo
+            spec: ai-rag-indexer-api
       ```
   * [Approval](../companies-and-customers/approval-service/approval-api-reference/README.md)
     * ```yaml
