@@ -62,14 +62,14 @@ paths:
                         storefrontUrl: ''
                       metadata:
                         mixins:
-                          productSettings: 'https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/productSettingsSiteMixIn.v1'
-                          generalShopSettings: 'https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/generalShopSettingsSiteMixIn.v10'
-                          customerSettings: 'https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/customerSettingsSiteMixIn.v3'
-                          orderProcessSettings: 'https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/orderProcessSettingsSiteMixIn.v7'
-                          couponSettings: 'https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/couponSettingsSiteMixIn.v4'
-                          feeService: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/siteFeeService.json'
-                          imageSize: 'https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/imageSize.v6'
-                          merchantInfo: 'https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/merchantAddressMixin.v10'
+                          productSettings: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productSettingsSiteMixIn.v1'
+                          generalShopSettings: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/generalShopSettingsSiteMixIn.v10'
+                          customerSettings: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/customerSettingsSiteMixIn.v3'
+                          orderProcessSettings: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/orderProcessSettingsSiteMixIn.v7'
+                          couponSettings: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/couponSettingsSiteMixIn.v4'
+                          feeService: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/siteFeeService.json'
+                          imageSize: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/imageSize.v6'
+                          merchantInfo: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/merchantAddressMixin.v10'
                         version: 14
                       default: true
           headers:
@@ -399,11 +399,11 @@ paths:
                         orderValueToRewardPointsFactor: 1
                       sendReferralCoupon: true
                       metadata:
-                        schema: 'https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/couponSettingsSiteMixIn.v4'
+                        schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/couponSettingsSiteMixIn.v4'
                     merchantInfo:
                       merchantName: Emporix
                       metadata:
-                        schema: 'https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/merchantAddressMixin.v10'
+                        schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/merchantAddressMixin.v10'
                     customerSettings:
                       regExSettings:
                         mail: '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
@@ -412,7 +412,7 @@ paths:
                         bic: '^((.{8})|(.{11}))$'
                         accountOwner: '^[a-zA-Z0-9'':?,()\-. +/ÄäÜüÖöß&]{0,70}$'
                       metadata:
-                        schema: 'https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/customerSettingsSiteMixIn.v3'
+                        schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/customerSettingsSiteMixIn.v3'
                     imageSize:
                       productTileSizes:
                         default: 214x160
@@ -430,12 +430,12 @@ paths:
                         tablet: 960x320
                         mobile: 379x133
                       metadata:
-                        schema: 'https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/imageSize.v6'
+                        schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/imageSize.v6'
                     feeService:
                       serviceUrl: 'https://api.emporix.io/fee'
                       active: true
                       metadata:
-                        schema: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/siteFeeService.json'
+                        schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/siteFeeService.json'
                     orderProcessSettings:
                       checkoutSettings:
                         minimumOrderValue: 20
@@ -474,7 +474,7 @@ paths:
                         paymentByCash: false
                         paymentByCredit: false
                       metadata:
-                        schema: 'https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/orderProcessSettingsSiteMixIn.v7'
+                        schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/orderProcessSettingsSiteMixIn.v7'
                     generalShopSettings:
                       footerLogoUrl: saas-storefront/images/tenant/tenant_logo.png
                       confirmationPageImageUrl: saas-storefront/images/misc/Example_neutral_700.png
@@ -493,7 +493,7 @@ paths:
                       regionName: Stuttgart
                       zoneId: Europe/Berlin
                       metadata:
-                        schema: 'https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/generalShopSettingsSiteMixIn.v10'
+                        schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/generalShopSettingsSiteMixIn.v10'
                     productSettings:
                       serviceOptionsConfiguration:
                         cuttingOptions:
@@ -594,7 +594,7 @@ paths:
                           - displayText: lose
                             id: loose
                       metadata:
-                        schema: 'https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/productSettingsSiteMixIn.v1'
+                        schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productSettingsSiteMixIn.v1'
         '400':
           $ref: '#/components/responses/400_invalid_tenant'
         '401':
@@ -716,7 +716,7 @@ paths:
                       bic: '^((.{8})|(.{11}))$'
                       accountOwner: '^[a-zA-Z0-9'':?,()\\-. +/ÄäÜüÖöß&]{0,70}$'
                     metadata:
-                      schema: 'https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/customerSettingsSiteMixIn.v3'
+                      schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/customerSettingsSiteMixIn.v3'
         '400':
           $ref: '#/components/responses/400_invalid_tenant'
         '401':
