@@ -30,10 +30,6 @@ paths:
         * Changing the order status to `packed`
         * Deleting all assignees
         * Sending an order confirmation email
-
-        ***
-        ### Required scopes
-          * `pickpack.pickpack_manage`
       responses:
         '200':
           $ref: '#/components/responses/successResponse'
@@ -60,10 +56,6 @@ paths:
         - Order cycles
       description: |
         Extracts all order delivery dates from the current time onwards.
-
-        ***
-        ### Required scopes
-          * `pickpack.pickpack_view`
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
         - $ref: '#/components/parameters/trait_site_code'
@@ -98,10 +90,6 @@ paths:
         Retrieves a packlist for the specified delivery date.
 
         **Note**: If an order has the `packingStatus` set to `CANCELLED`, it will not be retrieved.
-
-        ***
-        ### Required scopes
-          * `pickpack.pickpack_view`
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
         - $ref: '#/components/parameters/trait_site_code'
@@ -134,10 +122,6 @@ paths:
           $ref: '#/components/responses/InternalServiceError_500'
       description: |-
         Retrieves a specified order's details.
-
-        ***
-        ### Required scopes
-          * `pickpack.pickpack_view`
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
         - $ref: '#/components/parameters/orderId'
@@ -173,10 +157,6 @@ paths:
         Updates a specified order's status.
 
         **Note**: If the order has the `packingStatus` set to `CANCELLED`, it is not possible to do any further operations on that order.
-
-        ***
-        ### Required scopes
-          * `pickpack.pickpack_manage`
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
         - $ref: '#/components/parameters/trait_saas_token'
@@ -219,10 +199,6 @@ paths:
         Adds an assignee to a specified order.
 
         **Note**: If the order has the `packingStatus` set to `CANCELLED`, it is not possible to modify the assignee for that order.
-
-        ***
-        ### Required scopes
-          * `pickpack.pickpack_manage`
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
         - $ref: '#/components/parameters/orderId'
@@ -254,10 +230,6 @@ paths:
           $ref: '#/components/responses/InternalServiceError_500'
       description: |
         Deletes a specified assignee from a specified order.
-
-        ***
-        ### Required scopes
-          * `pickpack.pickpack_manage`
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
         - $ref: '#/components/parameters/orderId'
@@ -301,10 +273,6 @@ paths:
                 $ref: '#/components/schemas/PackagingProductsChange'
       description: |
         Updates packaging products for a specified order.
-
-        ***
-        ### Required scopes
-          * `pickpack.pickpack_manage`
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
         - $ref: '#/components/parameters/trait_saas_token'
@@ -335,10 +303,6 @@ paths:
         Creates a new packing event.
 
         **Note**: If the order has the `packingStatus` set to `CANCELLED`, it is not possible to create any new packing events for that order.
-
-        ***
-        ### Required scopes
-          * `pickpack.pickpack_manage`
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
         - $ref: '#/components/parameters/trait_saas_token'
@@ -368,10 +332,6 @@ paths:
           $ref: '#/components/responses/InternalServiceError_500'
       description: |-
         Retrieves all events after a specified timestamp.
-
-        ***
-        ### Required scopes
-          * `pickpack.pickpack_view`
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
         - name: timestamp
@@ -422,10 +382,6 @@ paths:
           $ref: '#/components/responses/InternalServiceError_500'
       description: |
         Triggers order recalculation for a specified order list.
-
-        ***
-        ### Required scopes
-          * `pickpack.pickpack_manage`
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
       requestBody:
@@ -464,10 +420,6 @@ paths:
           $ref: '#/components/responses/InternalServiceError_500'
       description: |
         Retrieves a specified job.
-
-        ***
-        ### Required scopes
-          * `pickpack.pickpack_view`
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
         - name: jobId
@@ -1127,8 +1079,8 @@ components:
           example: MANUAL
           description: |-
             The recalculation job types. Possible values:
-            - `MANUAL` - it will recalculate all orders provided in the orderIds attribute
-            - `AUTOMATIC` - it will find orders that need recalculation and trigger recalculation for them
+            - `MANUAL` - recalculates all orders provided in the `orderIds` attribute
+            - `AUTOMATIC` - finds orders that need recalculation and triggers recalculation for them
       required:
         - jobType
     errorMessage:
@@ -1216,7 +1168,7 @@ components:
       in: path
       required: true
       description: |
-        Your Emporix tenant's name.
+        Your Emporix tenant name.
 
         **Note**: The tenant name should always be written in lowercase.
       schema:

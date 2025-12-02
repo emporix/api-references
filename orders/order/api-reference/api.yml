@@ -9,22 +9,23 @@ info:
 servers:
   - url: 'https://api.emporix.io'
 tags:
-  - name: Orders (tenant-managed)
-    description: Manage tenant orders
-  - name: Orders (customer-managed)
-    description: Manage customer orders
+  - name: Orders (Tenant-managed)
+    description: Manage tenant orders.
+  - name: Orders (Customer-managed)
+    description: Manage customer orders.
 paths:
   '/order-v2/{tenant}/salesorders':
     get:
       tags:
-        - Orders (tenant-managed)
+        - Orders (Tenant-managed)
       summary: Retrieving orders
       description: |
-        Retrieves tenant's orders for administrative purposes. To be used by tenant's employees.
-        ### Required scopes
-        *  `order.order_read`
-        *  `order.order_read_by_vendor` - for reading orders by vendor
-        *  `order.order_manage_by_vendor` - for reading orders by vendor
+        Retrieves tenant orders for administrative purposes. To be used by tenant employees.
+      security:
+        - OAuth2:
+            - order.order_read
+            - order.order_read_by_vendor
+            - order.order_manage_by_vendor
       operationId: GET-order-retrieve-tenant-orders
       responses:
         '200':
@@ -43,8 +44,6 @@ paths:
           $ref: '#/components/responses/trait_restricted_403'
         '500':
           $ref: '#/components/responses/trait_500'
-      security:
-        - OAuth2: []
       parameters:
         - $ref: '#/components/parameters/trait_sortable_sort'
         - $ref: '#/components/parameters/trait_paged_pageNumber'
@@ -53,15 +52,15 @@ paths:
         - $ref: '#/components/parameters/trait_fields'
     post:
       tags:
-        - Orders (tenant-managed)
+        - Orders (Tenant-managed)
       summary: Creating a new order
       description: |
-        Creates an order by the tenant's employee, on behalf of a customer. 
+        Creates an order by the tenant employee, on behalf of a customer. 
 
         **Note:** The `entries.originalAmount` is DEPRECATED. Use the `entries.originalPrice` field instead.
-
-        ### Required scopes
-        *  `order.order_create`
+      security:
+        - OAuth2:
+            - order.order_create
       operationId: POST-order-create-order-employee
       responses:
         '201':
@@ -91,19 +90,17 @@ paths:
             schema:
               $ref: '#/components/schemas/salesOrderCreationDto'
         required: false
-      security:
-        - OAuth2: []
     head:
       tags:
-        - Orders (tenant-managed)
+        - Orders (Tenant-managed)
       summary: Retrieving the number of orders
       description: |
-        Retrieves the number of orders for the specified query and siteCode. To be used by tenant's employees.
-
-        ### Required scopes
-        *  `order.order_read`
-        *  `order.order_read_by_vendor` - for reading orders by vendor
-        *  `order.order_manage_by_vendor` - for reading orders by vendor
+        Retrieves the number of orders for the specified query and siteCode. To be used by tenant employees.
+      security:
+        - OAuth2:
+            - order.order_read
+            - order.order_read_by_vendor
+            - order.order_manage_by_vendor
       operationId: GET-order-retrieve-specific-orders
       responses:
         '200':
@@ -120,24 +117,67 @@ paths:
           $ref: '#/components/responses/trait_restricted_403'
         '500':
           $ref: '#/components/responses/trait_500'
-      security:
-        - OAuth2: []
       parameters:
         - $ref: '#/components/parameters/trait_queryable_q'
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
+  '/order-v2/{tenant}/salesorders/search':
+    post:
+        tags:
+          - Orders (Tenant-managed)
+        summary: Searching for orders
+        description: |
+          Searches for tenant orders for administrative purposes. To be used by tenant employees.
+        security:
+          - OAuth2:
+            - order.order_read
+            - order.order_read_by_vendor
+            - order.order_manage_by_vendor
+        operationId: POST-order-tenant-orders-search
+        requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/searchRequest'
+              examples:
+                search for products:
+                  value:
+                    q: "id:EON1007"
+        responses:
+          '200':
+            description: |
+              The request was successful. List of orders with details are returned.
+            content:
+              application/json:
+                examples:
+                  Order list example:
+                    $ref: '#/components/examples/salesOrders'
+                schema:
+                  $ref: '#/components/schemas/salesOrders'
+          '400':
+            $ref: '#/components/responses/trait_paged_400'
+          '403':
+            $ref: '#/components/responses/trait_restricted_403'
+          '500':
+            $ref: '#/components/responses/trait_500'
+        parameters:
+          - $ref: '#/components/parameters/trait_sortable_sort'
+          - $ref: '#/components/parameters/trait_paged_pageNumber'
+          - $ref: '#/components/parameters/trait_paged_pageSize'
+          - $ref: '#/components/parameters/trait_fields'
+          - $ref: '#/components/parameters/trait_tenant'
   '/order-v2/{tenant}/salesorders/{orderId}':
     get:
       tags:
-        - Orders (tenant-managed)
+        - Orders (Tenant-managed)
       summary: Retrieving a specific order by ID
       description: |
-        Retrieves a specific order by order ID. To be used by tenant's employees.
-
-        ### Required scopes
-        *  `order.order_read`
-        *  `order.order_read_by_vendor` - for reading orders by vendor
-        *  `order.order_manage_by_vendor` - for reading orders by vendor
+        Retrieves a specific order by order ID. To be used by tenant employees.
+      security:
+        - OAuth2:
+          - order.order_read
+          - order.order_read_by_vendor
+          - order.order_manage_by_vendor
       operationId: GET-order-retrieve-order-employee
       responses:
         '200':
@@ -158,19 +198,17 @@ paths:
           $ref: '#/components/responses/trait_order_404'
         '500':
           $ref: '#/components/responses/trait_500'
-      security:
-        - OAuth2: []
     put:
       tags:
-        - Orders (tenant-managed)
+        - Orders (Tenant-managed)
       summary: Updating an order
       description: |
-        Updates an order with the specified order ID. To be used by tenant's employees.
-
-        ### Required scopes
-        *  `order.order_update`
-        *  `order.order_manage_by_vendor` - for updating orders by vendor
-        *  `order.order_update_completed` - for updating orders with a `completed` status
+        Updates an order with the specified order ID. To be used by tenant employees.
+      security:
+        - OAuth2:
+          - order.order_update
+          - order.order_update_completed
+          - order.order_manage_by_vendor
       operationId: PUT-order-update-order
       responses:
         '204':
@@ -194,21 +232,19 @@ paths:
             schema:
               $ref: '#/components/schemas/orderUpdateDto'
         required: false
-      security:
-        - OAuth2: []
       parameters:
         - $ref: '#/components/parameters/trait_recalculate'
     patch:
       tags:
-        - Orders (tenant-managed)
+        - Orders (Tenant-managed)
       summary: Partially updating an order
       description: |
-        Updates partially an order with the specified order ID. To be used by tenant's employees.
-
-        ### Required scopes
-        *  `order.order_update`
-        *  `order.order_manage_by_vendor` - for updating orders by vendor
-        *  `order.order_update_completed` - for updating orders with a `completed` status
+        Updates partially an order with the specified order ID. To be used by tenant employees.
+      security:
+        - OAuth2:
+          - order.order_update
+          - order.order_update_completed
+          - order.order_manage_by_vendor
       operationId: PATCH-order-partial-update-order
       responses:
         '204':
@@ -232,19 +268,17 @@ paths:
             schema:
               $ref: '#/components/schemas/orderUpdateDto'
         required: false
-      security:
-        - OAuth2: []
       parameters:
         - $ref: '#/components/parameters/trait_recalculate'
     delete:
       tags:
-        - Orders (tenant-managed)
+        - Orders (Tenant-managed)
       summary: Deleting an order
       description: |
-        Deletes order with the specified ID. To be used by tenant's employees.
-
-        ### Required scopes
-        *  `order.order_delete`
+        Deletes order with the specified ID. To be used by tenant employees.
+      security:
+        - OAuth2:
+          - order.order_delete
       operationId: DELETE-order-remove-order
       responses:
         '204':
@@ -257,25 +291,23 @@ paths:
           $ref: '#/components/responses/trait_order_404'
         '500':
           $ref: '#/components/responses/trait_500'
-      security:
-        - OAuth2: []
     parameters:
       - $ref: '#/components/parameters/trait_orderId'
       - $ref: '#/components/parameters/trait_tenant'
   '/order-v2/{tenant}/salesorders/{orderId}/transitions':
     get:
       tags:
-        - Orders (tenant-managed)
+        - Orders (Tenant-managed)
       summary: Retrieving status transitions for an order
       description: |
-        Retrieves all possible status transitions for a specific order. To be used by tenant's employees.
-
-        ### Required scopes
-        *  `order.order_read`
-        *  `order.order_update`
-        *  `order.order_read_by_vendor` - for reading orders by vendor
-        *  `order.order_manage_by_vendor` - for reading orders by vendor
-        *  `order.order_update_completed` - for orders with a `completed` status
+        Retrieves all possible status transitions for a specific order. To be used by tenant employees.
+      security:
+        - OAuth2:
+          - order.order_read
+          - order.order_update
+          - order.order_read_by_vendor
+          - order.order_manage_by_vendor
+          - order.order_update_completed
       operationId: GET-order-retrieve-order-transitions
       responses:
         '200':
@@ -295,19 +327,17 @@ paths:
           $ref: '#/components/responses/trait_order_404'
         '500':
           $ref: '#/components/responses/trait_500'
-      security:
-        - OAuth2: []
     post:
       tags:
-        - Orders (tenant-managed)
+        - Orders (Tenant-managed)
       summary: Updating order status
       description: |
-        Updates the status of a specific order. To be used by tenant's employees.
-
-        ### Required scopes
-        *  `order.order_update`
-        *  `order.order_manage_by_vendor` - for updating orders by vendor
-        *  `order.order_update_completed` - for updating orders with a `completed` status
+        Updates the status of a specific order. To be used by tenant employees.
+      security:
+        - OAuth2:
+          - order.order_update
+          - order.order_manage_by_vendor
+          - order.order_update_completed
       operationId: POST-order-update-order-transition-employee
       responses:
         '204':
@@ -329,22 +359,20 @@ paths:
             schema:
               $ref: '#/components/schemas/transition'
         required: false
-      security:
-        - OAuth2: []
     parameters:
       - $ref: '#/components/parameters/trait_orderId'
       - $ref: '#/components/parameters/trait_tenant'
   '/order-v2/{tenant}/salesorders/{orderId}/calculations':
     post:
       tags:
-        - Orders (tenant-managed)
+        - Orders (Tenant-managed)
       summary: Recalculating number of entries
       description: |
-        Updates the number of entries in the specific order and recalculates it. To be used by tenant's employees.
-
-        ### Required scopes
-        *  `order.order_update`
-        *  `order.order_update_completed` - for updating orders with a `completed` status
+        Updates the number of entries in the specific order and recalculates it. To be used by tenant employees.
+      security:
+        - OAuth2:
+          - order.order_update
+          - order.order_update_completed
       operationId: POST-order-calculate-order-entries-employees
       responses:
         '200':
@@ -366,22 +394,20 @@ paths:
             schema:
               $ref: '#/components/schemas/orderCalculationDto'
         required: true
-      security:
-        - OAuth2: []
     parameters:
       - $ref: '#/components/parameters/trait_orderId'
       - $ref: '#/components/parameters/trait_tenant'
   '/order-v2/{tenant}/salesorders/{orderId}/entries':
     post:
       tags:
-        - Orders (tenant-managed)
+        - Orders (Tenant-managed)
       summary: Adding entries to an order
       description: |
         Updates the entries in the specific order and recalculates it. If provided entry is already assigned to the order then quantity of this entry is updated. If you want to remove entry from order then set quantity to 0.
-
-        ### Required scopes
-        *  `order.order_update`
-        *  `order.order_manage_by_vendor` - for reading orders by vendor
+      security:
+        - OAuth2:
+          - order.order_update
+          - order.order_manage_by_vendor
       operationId: POST-order-update-order-entries
       responses:
         '200':
@@ -426,8 +452,6 @@ paths:
             schema:
               $ref: '#/components/schemas/orderEntriesDto'
         required: true
-      security:
-        - OAuth2: []
     parameters:
       - $ref: '#/components/parameters/trait_orderId'
       - $ref: '#/components/parameters/trait_tenant'
@@ -441,15 +465,16 @@ paths:
   '/order-v2/{tenant}/salesorders/{orderId}/split':
     post:
       tags:
-        - Orders (tenant-managed)
+        - Orders (Tenant-managed)
       summary: Splitting order
       description: |
         Splits order into suborders based on the given criteria. It works for:
         - orders with `CREATED` status
         - orders where `orderType` = null, meaning that the order has not been split and there are not suborders of a master order.
         - orders without discounts, the ones with included discounts are not supported
-          ### Required scopes
-        *  `order.order_update`
+      security:
+        - OAuth2:
+          - order.order_update
       operationId: POST-order-split
       responses:
         '200':
@@ -487,22 +512,19 @@ paths:
             schema:
               $ref: '#/components/schemas/orderSplitRequest'
         required: true
-      security:
-        - OAuth2: [ ]
     parameters:
       - $ref: '#/components/parameters/trait_orderId'
       - $ref: '#/components/parameters/trait_tenant'
   '/order-v2/{tenant}/orders':
     get:
       tags:
-        - Orders (customer-managed)
+        - Orders (Customer-managed)
       summary: Retrieving a list of orders
       description: |
-        Retrieves a list of orders for a customer. To be used by customers on the storefront.
-
-        ### Required scopes
-        *  `order.history_view` for logged in customers only.
-      operationId: GET-order-list-orders
+        Retrieves a list of orders for a customer. To be used by customers on the storefront. The `order.history_view` scope is for logged in customers only.
+      security:
+        - OAuth2:
+          - order.history_view
       responses:
         '200':
           description: |
@@ -520,8 +542,6 @@ paths:
           $ref: '#/components/responses/trait_yaasAware_403'
         '500':
           $ref: '#/components/responses/trait_500'
-      security:
-        - OAuth2: []
       parameters:
         - $ref: '#/components/parameters/trait_saas_token'
         - $ref: '#/components/parameters/trait_sortable_sort'
@@ -529,16 +549,17 @@ paths:
         - $ref: '#/components/parameters/trait_paged_pageSize'
         - $ref: '#/components/parameters/trait_queryable_q'
         - $ref: '#/components/parameters/trait_fields'
+        - $ref: '#/components/parameters/trait_tenant'
   '/order-v2/{tenant}/orders/{orderId}':
     get:
       tags:
-        - Orders (customer-managed)
+        - Orders (Customer-managed)
       summary: Retrieving order details
       description: |
-        Retrieves details of an order. To be used by customers on the storefront.
-
-        ### Required scopes
-        *  `order.history_view` for logged in customers only.
+        Retrieves details of an order. To be used by customers on the storefront. The `order.history_view` scope is for logged in customers only.
+      security:
+        - OAuth2:
+          - order.history_view
       operationId: GET-order-retrieve-order-storefront
       responses:
         '200':
@@ -559,21 +580,19 @@ paths:
           $ref: '#/components/responses/trait_500'
       parameters:
         - $ref: '#/components/parameters/trait_saas_token'
-      security:
-        - OAuth2: []
     parameters:
       - $ref: '#/components/parameters/trait_orderId'
       - $ref: '#/components/parameters/trait_tenant'
   '/order-v2/{tenant}/orders/{orderId}/transitions':
     get:
       tags:
-        - Orders (customer-managed)
+        - Orders (Customer-managed)
       summary: Retrieving status transitions for a specific order
       description: |
         Retrieves possible status transitions for a specific order. To be used by customers on the storefront.
-
-        ### Required scopes
-        *  `order.order_updateascustomer`
+      security:
+        - OAuth2:
+          - order.order_updateascustomer
       operationId: GET-order-retrieve-transitions
       responses:
         '200':
@@ -592,20 +611,18 @@ paths:
           $ref: '#/components/responses/trait_order_404'
         '500':
           $ref: '#/components/responses/trait_500'
-      security:
-        - OAuth2: []
       parameters:
         - $ref: '#/components/parameters/trait_saas_token'
     post:
       tags:
-        - Orders (customer-managed)
+        - Orders (Customer-managed)
       summary: Updating order status
       description: |
         Updates the status of a specific order. To be used by customers on the storefront.
         **Note**: Customers can only change the order status from `CREATED` to `DECLINED`.
-
-        ### Required scopes
-        * `order.order_updateascustomer`
+      security:
+        - OAuth2:
+          - order.order_updateascustomer
       operationId: POST-order-update-order-transition-storefront
       responses:
         '204':
@@ -627,8 +644,6 @@ paths:
             schema:
               $ref: '#/components/schemas/transition'
         required: false
-      security:
-        - OAuth2: []
       parameters:
         - $ref: '#/components/parameters/trait_saas_token'
     parameters:
@@ -641,7 +656,7 @@ paths:
     get:
       summary: Retrieving legal entity orders
       tags:
-        - Orders (customer-managed)
+        - Orders (Customer-managed)
       responses:
         '200':
           description: The request was successful. List of legal entity orders with details are returned.
@@ -663,9 +678,6 @@ paths:
       operationId: GET-order-retrieve-legal-entity-orders
       description: |
         Retrieves a list of orders related to a particular legal entity for a customer. To be used by B2B customers on the storefront.
-
-        ### Required scopes
-        *  `order.order_read_le`
       parameters:
         - $ref: '#/components/parameters/trait_sortable_sort'
         - $ref: '#/components/parameters/trait_paged_pageNumber'
@@ -682,9 +694,9 @@ paths:
       - $ref: '#/components/parameters/trait_legal_entity'
       - $ref: '#/components/parameters/trait_orderId'
     get:
-      summary: Retrieving legal entity order
+      summary: Retrieving a legal entity order
       tags:
-        - Orders (customer-managed)
+        - Orders (Customer-managed)
       responses:
         '200':
           description: The request was successful. The legal entity order with details is returned.
@@ -704,9 +716,6 @@ paths:
       operationId: GET-order-retrieve-legal-entity-order
       description: |
         Retrieves an order related to a particular legal entity for a customer. To be used by B2B customers on the storefront.
-
-        ### Required scopes
-        *  `order.order_read_le`
       parameters:
         - $ref: '#/components/parameters/trait_saas_token'
       security:
@@ -1749,6 +1758,15 @@ components:
               description: Identifier of the quote from which the order has been created
               type: string
         - $ref: '#/components/schemas/orderCreationDto'
+    searchRequest:
+      type: object
+      properties:
+        q:
+          type: string
+          description:  |
+            A standard query parameter is used to search for specific values. 
+            
+            See: [Standard practises - Query parameter](https://developer.emporix.io/api-references/standard-practices/q-param)
     orderCreationDto:
       title: Order Creation DTO
       allOf:
@@ -4447,8 +4465,8 @@ components:
           source: https://your-storefront.com/
         cartId: 68481e9e8bf22744fc578572
         entries:
-          - id: 0_SLI_samsung-galaxy-s24-gross
-            itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s24-gross
+          - id: 0_SLI_mobile-phone-s24-gross
+            itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s24-gross
             keepAsSeparateLineItem: true
             type: INTERNAL
             amount: 2
@@ -4466,11 +4484,11 @@ components:
             totalPrice: 700
             authorizedAmount: 700
             product:
-              id: samsung-galaxy-s24-gross
-              sku: Samsung Galaxy s24 gross
-              name: Samsung Galaxy s24 gross
+              id: mobile-phone-s24-gross
+              sku: Mobile Phone s24 gross
+              name: Mobile Phone s24 gross
               localizedName:
-                en: Samsung Galaxy s24 gross
+                en: Mobile Phone s24 gross
               published: true
               images:
                 - id: 67169928ceaab717e17f3734
@@ -4792,8 +4810,8 @@ components:
               taxCode: REDUCED
               taxRate: 7
               taxCountry: DE
-          - id: 2_SLI_samsung-galaxy-s27-gross
-            itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;samsung-galaxy-s27-gross
+          - id: 2_SLI_mobile-phone-s27-gross
+            itemYrn: urn:yaas:saasag:caasproduct:product:b2b2cstage;mobile-phone-s27-gross
             keepAsSeparateLineItem: true
             type: INTERNAL
             amount: 2
@@ -4811,12 +4829,12 @@ components:
             totalPrice: 110
             authorizedAmount: 143
             product:
-              id: samsung-galaxy-s27-gross
-              sku: samsung-galaxy-s27-gross
-              name: samsung-galaxy-s27-gross
+              id: mobile-phone-s27-gross
+              sku: mobile-phone-s27-gross
+              name: mobile-phone-s27-gross
               localizedName:
-                en: samsung-galaxy-s27-gross
-              description: "[en:samsung-galaxy-s27-gross]"
+                en: mobile-phone-s27-gross
+              description: "[en:mobile-phone-s27-gross]"
               published: true
               images: [ ]
               productType: BASIC
@@ -6773,8 +6791,8 @@ components:
             order.history_view: Needed to view order when logged as a customer.
             order.order_readascustomer: Needed to read an order as a customer.
             order.order_updateascustomer: Needed to update an order as a customer.
-            order.order_read_by_vendor: The scope allows vendor to read order with assigned vendor
-            order.order_manage_by_vendor: The scope allows vendor to manage order with assigned vendor
+            order.order_read_by_vendor: The scope allows vendor to read order with assigned vendor.
+            order.order_manage_by_vendor: The scope allows vendor to manage order with assigned vendor.
   links: {}
   callbacks: {}
 security:

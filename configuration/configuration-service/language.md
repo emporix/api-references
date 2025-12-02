@@ -72,32 +72,32 @@ Check out the following tutorials to learn more about language configuration wit
 
 ### How to check which languages are configured for your tenant
 
-To retrieve your tenant's language configuration, you need to send a request to the [Retrieving a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey) endpoint.
+To retrieve your tenant's language configuration, send a request to the [Retrieving a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../country-service/api-reference/" %}
-[api-reference](../country-service/api-reference/)
+{% content-ref url="../configuration-service/api-reference/" %}
+[api-reference](../configuration-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -L \
+curl -L 
   --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
   --header 'Accept: */*'
 ```
 
-### How to change your tenant's language configuration
+### How to change your tenant language configuration
 
-To change your tenant's language configuration, you need to send a request to the [Updating a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint with updated language information in the request body.
+To change your tenant language configuration, send a request to the [Updating a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint with updated language information in the request body.
 
 {% hint style="warning" %}
-The id in the request body must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
+The ID in the request body must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../country-service/api-reference/" %}
-[api-reference](../country-service/api-reference/)
+{% content-ref url="../configuration-service/api-reference/" %}
+[api-reference](../configuration-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -115,12 +115,12 @@ curl -L
 
 ### How to check which languages are configured for a particular site
 
-To retrieve a particular site's language configuration, you need to send a request to the [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) endpoint. The language configuration will be returned in the the `defaultLanguage` and `language` fields in the response body.
+To retrieve a particular site's language configuration, send a request to the [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) endpoint. The language configuration will be returned in the the `defaultLanguage` and `language` fields in the response body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -131,7 +131,7 @@ curl -L
 
 ### How to change a particular site's language configuration
 
-To change a particular site's language configuration, you need to call the [Partially updating a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode) endpoint with language configuration of your choice in the request body.
+To change a particular site's language configuration, call the [Partially updating a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode) endpoint with language configuration of your choice in the request body.
 
 {% hint style="warning" %}
 The currency code must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).
@@ -139,8 +139,8 @@ The currency code must be compliant with the [ISO 4217 standard](https://en.wiki
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../indexing-service/api-reference/" %}
-[api-reference](../indexing-service/api-reference/)
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash

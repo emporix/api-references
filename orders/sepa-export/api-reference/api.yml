@@ -1,8 +1,8 @@
 openapi: 3.0.1
 info:
-  title: Sepa Export
+  title: SEPA Export
   version: ''
-  description: Sepa Export API
+  description: SEPA Export API
   contact:
     email: documentation@emporix.com
 tags:
@@ -15,20 +15,15 @@ paths:
     get:
       tags:
         - Files
-      summary: Get Sepa Export file by id for tenant
+      summary: Get SEPA Export file by ID for tenant
       description: |-
-        Downloads a specified Sepa Export file.
-        
-        ***
-        
-        ### Required scopes
-        * `sepaexport.media_view`
+        Downloads a specified SEPA Export file.
       operationId: GET-sepa-export-download-file
       parameters:
         - name: tenant
           in: path
           description: |-
-            Your Emporix tenant's name.
+            Your Emporix tenant name.
             **Note**: The `tenant` should always be written in lowercase.
           required: true
           schema:
@@ -36,14 +31,14 @@ paths:
           example: ""
         - name: fileId
           in: path
-          description: Sepa Export file's unique identifier.
+          description: SEPA Export file unique identifier.
           required: true
           schema:
             type: string
           example: ""
       responses:
         "200":
-          description: Sepa Export file
+          description: SEPA export file.
           content:
             text/plain:
               schema:
@@ -64,11 +59,7 @@ paths:
         - Jobs
       summary: Retrieving a list of export jobs
       description: |-
-        Retrieves a list of Sepa Export jobs.
-        
-        ***
-        ### Required scopes
-        * `sepaexport.job_view`
+        Retrieves a list of SEPA Export jobs.
       operationId: GET-sepa-export-list-jobs
       parameters:
         - name: tenant
@@ -141,11 +132,7 @@ paths:
         - Jobs
       summary: Creating a new export job
       description: |-
-        Creates a new Sepa Export job.
-        
-        ***
-        ### Required scopes
-        * `sepaexport.job_manage`
+        Creates a new SEPA Export job.
       operationId: POST-sepa-export-create-job
       parameters:
         - name: tenant
@@ -168,7 +155,7 @@ paths:
         required: true
       responses:
         '201':
-          description: New job id
+          description: New job ID.
           content:
             application/json:
               schema:
@@ -199,10 +186,12 @@ components:
       properties:
         jobId:
           type: string
+          example: 884cf047-94a2-42ae-8a89-7084c3259ef2
         status:
           type: string
         siteCode:
           type: string
+          example: main
         fileId:
           type: string
         active:
@@ -360,6 +349,6 @@ components:
         clientCredentials:
           tokenUrl: https://api.emporix.io/oauth/token
           scopes:
-            sepaexport.job_view: View Sepa export job
-            sepaexport.job_manage: Manage Sepa export job
-            sepaexport.media_view: View output from Sepa export
+            sepaexport.job_view: View SEPA export job
+            sepaexport.job_manage: Manage SEPA export job
+            sepaexport.media_view: View output from SEPA export

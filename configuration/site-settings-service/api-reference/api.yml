@@ -88,10 +88,8 @@ paths:
         Retrieves a list of site configurations.
         ***
 
-        ### Required scopes
-        * `site.site_manage`
-
-          **Note:** The `site.site_manage` scope is only required if you want to retrieve inactive sites.
+        ### Additional scopes info
+        * The `site.site_manage` scope is only required if you want to retrieve inactive sites.
       security:
         - OAuth2: []
       parameters:
@@ -115,7 +113,7 @@ paths:
               example:
                 Response example:
                   value:
-                    id: test
+                    id: mixin
         '400':
           $ref: '#/components/responses/400_invalid_tenant'
         '401':
@@ -127,10 +125,6 @@ paths:
             - site.site_manage
       description: |-
         Creates a new site configuration.
-        ***
-
-        ### Required scopes
-        * `site.site_manage`
       requestBody:
         content:
           application/json:
@@ -186,12 +180,7 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
       operationId: GET-site-settings-retrieve-site-config
       description: |-
-        Retrieves a specified site's configuration.
-        ***
-
-        ### Required scopes
-        * `site.site_manage`
-
+        Retrieves a specified site configuration.
           **Note:** The `site.site_manage` scope is only required if you want to retrieve an inactive site.
       security:
         - OAuth2: []
@@ -216,7 +205,7 @@ paths:
         '500':
           description: Internal Server Error
       description: |-
-        Fully updates a specified site's configuration.
+        Fully updates a specified site configuration.
 
         You can also use this endpoint to update the configuration of the following services:
         * `payment`
@@ -224,10 +213,6 @@ paths:
         * `tax`
 
         **Note**: To update an inactive service configuration, you need to use the `expand` query parameter.
-        ***
-
-        ### Required scopes
-        * `site.site_manage`
       security:
         - OAuth2:
             - site.site_manage
@@ -279,11 +264,7 @@ paths:
       description: |-
         Deletes a specified site.
 
-        **Important**: You cannot delete a site whose `default` property is set to `true`.
-        ***
-
-        ### Required scopes
-        * `site.site_manage`
+        **Important**: You cannot delete a site for which the `default` property is set to `true`.
       security:
         - OAuth2:
             - site.site_manage
@@ -308,10 +289,7 @@ paths:
         '500':
           description: Internal Server Error
       description: |-
-        Partially updates a specified site's configuration.
-
-        ### Required scopes
-        * `site.site_manage`
+        Partially updates a specified site configuration.
       requestBody:
         content:
           application/json:
@@ -321,6 +299,14 @@ paths:
               Patch Site:
                 value:
                   defaultLanguage: en
+              Adding and modifying mixin:
+                value:
+                  metadata:
+                    mixins:
+                      exampleMixin: 'https://res.cloudinary.com/saas-ag/raw/upload/v1764338354/emporix-docs/test3_v1.json'
+                  mixins:
+                    exampleMixin:
+                      field3: value3
       security:
         - OAuth2:
             - site.site_manage
@@ -374,14 +360,12 @@ paths:
         Retrieves a list of site codes.
         ***
 
-        ### Required scopes
-        * `site.site_read`
-        * `site.site_manage`
-
-          **Note:** The `site.site_manage` scope is only required if you want to retrieve inactive sites.
+        ### Additional scopes info
+        * The `site.site_manage` scope is only required if you want to retrieve inactive sites.
       security:
         - OAuth2:
             - site.site_read
+            - site.site_manage
   '/site/{tenant}/sites/{siteCode}/mixins':
     parameters:
       - $ref: '#/components/parameters/tenant'
@@ -624,10 +608,6 @@ paths:
       parameters: []
       description: |-
         Retrieves all mixins for a specified site.
-        ***
-
-        ### Required scopes
-        * `site.site_manage`
     post:
       summary: Creating a site mixin
       operationId: POST-site-settings-create-site-mixin
@@ -703,10 +683,6 @@ paths:
         description: ''
       description: |-
         Creates a mixin for a specified site.
-        ***
-
-        ### Required scopes
-        * `site.site_manage`
       tags:
         - Mixins
   '/site/{tenant}/sites/{siteCode}/mixins/{mixinName}':
@@ -752,10 +728,6 @@ paths:
       operationId: GET-site-settings-retrieve-site-mixin
       description: |-
         Retrieves a specified site mixin.
-        ***
-
-        ### Required scopes
-        * `site.site_manage`
       security:
         - OAuth2:
             - site.site_manage
@@ -775,9 +747,6 @@ paths:
           $ref: '#/components/responses/404_mixinNotFound'
       description: |-
         Deletes a specified site mixin.
-
-        ### Required scopes
-        * `site.site_manage`
       security:
         - OAuth2:
             - site.site_manage
@@ -799,10 +768,6 @@ paths:
           $ref: '#/components/responses/404_mixinNotFound'
       description: |-
         Fully updates a specified site mixin.
-        ***
-
-        ### Required scopes
-        * `site.site_manage`
       security:
         - OAuth2:
             - site.site_manage
@@ -834,10 +799,6 @@ paths:
           $ref: '#/components/responses/403_insufficient_permissions'
       description: |-
         Partially updates a specified site mixin.
-        ***
-
-        ### Required scopes
-        * `site.site_manage`
       security:
         - OAuth2:
             - site.site_manage
@@ -857,6 +818,9 @@ components:
     AddressDto:
       title: Address
       type: object
+      required:
+        - country
+        - zipCode
       properties:
         street:
           type: string
@@ -880,7 +844,7 @@ components:
           type: string
         state:
           type: string
-      description: Site's address.
+      description: Site address.
     CurrencyDto:
       type: string
       description: 'Currency used by the site, compliant with the ISO 4217 standard.'
@@ -900,6 +864,8 @@ components:
     HomeBaseDto:
       title: HomeBase
       type: object
+      required:
+        - address
       properties:
         address:
           $ref: '#/components/schemas/AddressDto'
@@ -908,7 +874,7 @@ components:
         timezone:
           type: string
           description: |
-            The timezone of the site's home base location. Must be a valid IANA timezone identifier.
+            The timezone of the site home base location. Must be a valid IANA timezone identifier.
             
             If not specified, no timezone will be set. When specified, the value must be a valid timezone ID as defined in the IANA Time Zone Database.
             
@@ -920,7 +886,7 @@ components:
             
             Invalid timezone values (e.g., "Europe/Xp") will result in a 400 Bad Request response.
           example: "Europe/Paris"
-      description: Site's location.
+      description: Site location.
     LocationDto:
       title: Location
       type: object
@@ -931,15 +897,24 @@ components:
         longitude:
           type: number
           format: double
-      description: Site's geographical location.
+      description: Site geographical location.
     SiteDto:
       title: Site
       type: object
       description: Information about the site.
+      required:
+        - code
+        - name
+        - defaultLanguage
+        - languages
+        - currency
+        - homeBase
+        - shipToCountries
+        - taxDeterminationBasedOn
       properties:
         code:
           type: string
-          description: Site's unique identifier.
+          description: Site unique identifier.
         name:
           type: string
           description: Site name.
@@ -948,7 +923,7 @@ components:
           description: Flag indicating whether the site is active.
         default:
           type: boolean
-          description: Flag indicating whether the site is the tenant's default site.
+          description: Flag indicating whether the site is the  tenant default site.
         includesTax:
           type: boolean
           description: 'Indicates whether prices for the site should be returned in gross (when includesTax=true) or net (when includesTax=false). '
@@ -1014,7 +989,7 @@ components:
           $ref: '#/components/schemas/taxDeterminationBasedOn'
         mixins:
           type: object
-          description: Site's additional properties.
+          description: Site additional properties.
           additionalProperties: true
         cartCalculationScale:
           type: integer
@@ -1120,7 +1095,7 @@ components:
       schema:
         type: string
       description: |
-        Your Emporix tenant's name.
+        Your Emporix  tenant name.
 
         **Note:** The tenant name should always be provided in lowercase.
     siteCode:
@@ -1216,8 +1191,7 @@ components:
         * `active`
         * `none`
 
-        For retrieving `mixin`, use the following value:
-        * `*`
+        For retrieving `mixin`, use the following value: `*`
     expandWithMixins:
       name: expand
       description: |

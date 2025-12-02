@@ -41,10 +41,10 @@ paths:
             examples:
               Create a company:
                 value:
-                  name: Company name
+                  name: ABC Company
                   type: COMPANY
                   legalInfo:
-                    legalName: Some company name
+                    legalName: ABC Company
                     registrationDate: '2022-03-31T13:18:02.379Z'
                     registrationAgency: Comp reg agency
                     registrationId: 627e06ecf0452c2d6c0b81391
@@ -66,11 +66,11 @@ paths:
                     - id: 123e061110acd223133333345
               Create a subsidiary:
                 value:
-                  name: Subsidiary name
+                  name: ABC Subsidiary
                   type: SUBSIDIARY
                   parentId: 627e06ecf0452c2d6c0b81391
                   legalInfo:
-                    legalName: Some subsidiary name
+                    legalName: ABC Subsidiary
                     registrationDate: '2022-03-31T13:18:02.379Z'
                     registrationAgency: Sub reg agency
                     registrationId: 627e06ecf0452c2d6c0b81391
@@ -118,8 +118,8 @@ paths:
       description: |-
         Retrieves all legal entities. You can filter, sort and paginate the results with query parameters.
 
-        If the `customermanagement.legalentity_read` scope is used, then all legal entities assigned to the tenant are returned. 
-        If the `customermanagement.legalentity_read_own` scope is used, then all legal entities assigned to the customer are returned. 
+        * If the `customermanagement.legalentity_read` scope is used, then all legal entities assigned to the tenant are returned. 
+        * If the `customermanagement.legalentity_read_own` scope is used, then all legal entities assigned to the customer are returned. 
 
 
         ***
@@ -290,14 +290,14 @@ paths:
             examples:
               Update the legal entity:
                 value:
-                  name: Subsidiary name
+                  name: ABC Subsidiary
                   type: SUBSIDIARY
                   parentId: 627e06ecf0452c2d6c0b81391
                   accountLimit:
                     currency: EUR
                     value: 1000.99
                   legalInfo:
-                    legalName: Some subsidiary name
+                    legalName: ABC Subsidiary
                     registrationDate: '2022-03-31T13:18:02.379Z'
                     registrationAgency: Sub reg agency
                     registrationId: 627e06ecf0452c2d6c0b81391
@@ -373,6 +373,36 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       operationId: DELETE-customer-mgmt-remove-legal-entity
+      tags:
+        - Legal Entities
+  '/{tenant}/legal-entities/{legalEntityId}/parent-hierarchy':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_legalEntity_id_path'
+    get:
+      summary: Retrieving a legal entity with parent hierarchy
+      description: |-
+        Retrieves the provided legal entity and all its parent legal entities.
+
+        ***
+
+         ### Required scopes
+        * `customermanagement.legalentity_read`
+        * `customermanagement.legalentity_manage`
+      security:
+        - OAuth2:
+            - customermanagement.legalentity_read
+            - customermanagement.legalentity_manage
+      responses:
+        '200':
+          $ref: '#/components/responses/GetParentHierarchy'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+      operationId: GET-customer-mgmt-retrieve-legal-entity-parent-hierarchy
       tags:
         - Legal Entities
   '/{tenant}/contact-assignments':
@@ -1413,10 +1443,10 @@ components:
             Requested legal entity:
               value:
                 id: 123e06ecf0452c2d6c0b81390
-                name: Company name
+                name: ABC Company
                 type: COMPANY
                 legalInfo:
-                  legalName: Some company name
+                  legalName: ABC Company
                   registrationDate: '2022-03-31T13:18:02.379Z'
                   registrationAgency: Comp reg agency
                   registrationId: 627e06ecf0452c2d6c0b81391
@@ -1515,10 +1545,10 @@ components:
             List of legal entities:
               value:
                 - id: 123e06ecf0452c2d6c0b81390
-                  name: Company name
+                  name: ABC Company
                   type: COMPANY
                   legalInfo:
-                    legalName: Some company name
+                    legalName: ABC Company
                     registrationDate: '2022-03-31T13:18:02.379Z'
                     registrationAgency: Comp reg agency
                     registrationId: 627e06ecf0452c2d6c0b81391
@@ -1529,14 +1559,14 @@ components:
                     modifiedAt: '2022-03-31T13:18:02.379Z'
                     version: 1
                 - id: 123e06ecf0452c2d6c0b12391
-                  name: Subsidiary name
+                  name: ABC Subsidiary
                   type: SUBSIDIARY
                   parentId: 627e06ecf0452c2d6c0b81391
                   accountLimit:
                     currency: EUR
                     value: 1000.99
                   legalInfo:
-                    legalName: Some subsidiary name
+                    legalName: ABC Subsidiary
                     registrationDate: '2022-03-31T13:18:02.379Z'
                     taxRegistrationNumber: '4311'
                     registrationAgency: Sub reg agency
@@ -1595,6 +1625,41 @@ components:
                     createdAt: '2022-03-31T13:18:02.379Z'
                     modifiedAt: '2022-04-31T13:18:02.379Z'
                     version: 2
+    GetParentHierarchy:
+      description: The request was successful. A list of legal entities is returned.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/legalEntity'
+          examples:
+            List of legal entities:
+              value:
+                - id: company_c
+                  name: Company C
+                  type: SUBSIDIARY
+                  parentId: company_b
+                  metadata:
+                    createdAt: '2022-03-31T13:18:02.379Z'
+                    modifiedAt: '2022-03-31T13:18:02.379Z'
+                    version: 1
+                - id: company_b
+                  name: Company B
+                  type: SUBSIDIARY
+                  parentId: company_a
+                  metadata:
+                    createdAt: '2022-03-18T14:22:07.321Z'
+                    modifiedAt: '2022-03-18T14:22:07.321Z'
+                    version: 1
+                - id: company_a
+                  name: Company A
+                  type: COMPANY
+                  metadata:
+                    createdAt: '2022-03-31T13:18:02.379Z'
+                    modifiedAt: '2022-03-31T13:18:02.379Z'
+                    version: 1
+                
     GetContactAssignment:
       description: The request was successful. The requested customer assignment is returned.
       content:
@@ -1607,10 +1672,10 @@ components:
                 id: 627e06ecf0452c2d6c0b81391
                 legalEntity:
                   id: 123e06ecf0452c2d6c0b81390
-                  name: Company name
+                  name: ABC Company
                   type: COMPANY
                   legalInfo:
-                    legalName: Some company name
+                    legalName: ABC Company
                     registrationDate: '2022-03-31T13:18:02.379Z'
                     registrationAgency: Comp reg agency
                     registrationId: 627e06ecf0452c2d6c0b81391
@@ -1701,14 +1766,14 @@ components:
                 - id: 627e06ecf0452c2d6c0b81391
                   legalEntity:
                     id: 123e06ecf0452c2d6c0b12391
-                    name: Subsidiary name
+                    name: ABC Subsidiary
                     type: SUBSIDIARY
                     parentId: 627e06ecf0452c2d6c0b81391
                     accountLimit:
                       currency: EUR
                       value: 1000.99
                     legalInfo:
-                      legalName: Some subsidiary name
+                      legalName: ABC Subsidiary
                       registrationDate: '2022-03-31T13:18:02.379Z'
                       taxRegistrationNumber: '4311'
                       registrationAgency: Sub reg agency
@@ -1732,10 +1797,10 @@ components:
                 - id: 627e06ecf0452c2d6c0b81311
                   legalEntity:
                     id: 123e06ecf0452c2d6c0b81390
-                    name: Company name
+                    name: ABC Company
                     type: COMPANY
                     legalInfo:
-                      legalName: Some company name
+                      legalName: ABC Company
                       registrationDate: '2022-03-31T13:18:02.379Z'
                       registrationAgency: Comp reg agency
                       registrationId: 627e06ecf0452c2d6c0b81391

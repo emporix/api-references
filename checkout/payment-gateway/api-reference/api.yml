@@ -39,10 +39,6 @@ paths:
         * Payment methods supported by Spreedly: https://docs.spreedly.com/reference/supported-gateways/
         * Saferpay: https://docs.saferpay.com/home/interfaces/payment-api
         * Unzer Invoice: https://docs.unzer.com/payment-methods/unzer-invoice-upl/
-
-        ***
-        **Required scopes**
-        * `payment-gateway.paymentmodes_manage`
       operationId: POST-payment-gateway-create-payment-mode
       security:
         - OAuth2:
@@ -84,9 +80,6 @@ paths:
         - Payment mode
       description: |
         Retrieves a list of configured payment modes for a given tenant. 
-        ***
-        **Required scopes**
-        * `payment-gateway.paymentmodes_read`
       security:
         - OAuth2:
             - payment-gateway.paymentmodes_read
@@ -112,9 +105,6 @@ paths:
       operationId: GET-payment-gateway-retrieve-payment-mode
       description: |
         Retrieves a single payment mode configuration for a given tenant based on a payment mode identifier. 
-        ***
-        **Required scopes**
-        * `payment-gateway.paymentmodes_read`
       security:
         - OAuth2:
             - payment-gateway.paymentmodes_read
@@ -136,10 +126,6 @@ paths:
           $ref: '#/components/responses/common_response_InternalServerError_500'
       description: |
         Updates a single payment mode for a given tenant based on a unique mode identifier. 
-
-        ***
-        **Required scopes**
-        * `payment-gateway.paymentmodes_manage`
       security:
         - OAuth2:
             - payment-gateway.paymentmodes_manage
@@ -179,10 +165,6 @@ paths:
           $ref: '#/components/responses/common_response_InternalServerError_500'
       description: |
         Deletes a single payment mode for a given tenant based on a unique mode identifier. 
-
-        ***
-        **Required scopes**
-        * `payment-gateway.paymentmodes_manage`
       security:
         - OAuth2:
             - payment-gateway.paymentmodes_manage
@@ -204,10 +186,7 @@ paths:
       description: |
         Retrieves a list of configured payment modes for a given tenant with publicly available properties (excluding all secrets, signatures etc). 
         The endpoint should be used by a frontend application to fetch all the possible payment methods configured for a particular tenant. 
-
-        ***
-        **Required scopes**
-        * No scope is required
+        No scope is required.
   '/payment-gateway/{tenant}/paymentmodes/frontend/{id}':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -227,10 +206,7 @@ paths:
       description: |
         Retrieves a single payment mode for a given tenant with publicly available properties (excluding all secrets, signatures etc). 
         The endpoint should be used by a frontend application to fetch a payment method configuration for a particular tenant. 
-
-        ***
-        **Required scopes**
-        * No scope is required
+        No scope is required.
   '/payment-gateway/{tenant}/payment/authorize':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -252,10 +228,6 @@ paths:
         - Payment
       description: |
         Authorizes a given payment. 
-
-        ***
-        **Required scopes**
-        * `payment-gateway.authorize_manage`
       security:
         - OAuth2:
             - payment-gateway.authorize_manage
@@ -298,10 +270,6 @@ paths:
         - Payment
       description: |
         Creates a flow to capture a given payment transaction. The capture operation requires transactionId, thus it can be invoked only if the payment had been previously authorized. 
-
-        ***
-        **Required scopes**
-        * `payment-gateway.capture_manage`
       requestBody:
         content:
           application/json:
@@ -339,10 +307,6 @@ paths:
         - Payment
       description: |
         Creates a flow to return a given payment. The refund operation requires transactionId, thus it can be invoked only if the payment has been authorized and captured previously. 
-
-        ***
-        **Required scopes**
-        * `payment-gateway.refund_manage`
       security:
         - OAuth2:
             - payment-gateway.refund_manage
@@ -381,9 +345,9 @@ paths:
       description: |
         Creates a flow to cancel a given payment transaction. The cancel operation requires transactionId, thus it can be invoked only if the payment has been authorized previously. 
 
-        ***
-        **Required scopes**
-        * `payment-gateway.cancel_manage`
+      security:
+        - OAuth2:
+            - payment-gateway.cancel_manage
   '/payment-gateway/{tenant}/payment/frontend/initialize':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -405,10 +369,7 @@ paths:
         - Payment - frontend
       description: |
         Initializes a payment by accepting a request sent from the frontend.
-        
-        ***
-        **Required scopes**
-        * No scope is required
+        No scope is required.
       requestBody:
         content:
           application/json:
@@ -435,10 +396,7 @@ paths:
         - Payment - frontend
       description: |
         Authorize a payment by accepting a request sent from the frontend.
-        
-        ***
-        **Required scopes**
-        * No scope is required
+        No scope is required.
       requestBody:
         content:
           application/json:
@@ -463,10 +421,6 @@ paths:
       operationId: GET-payment-gateway-list-transactions
       description: |
         Retrieves many payment transactions. A particular transaction contains all transactions' events attached as an entries of the response body.  
-
-        ***
-        **Required scopes**
-        * `payment-gateway.paymenttransactions_read`
       security:
         - OAuth2:
             - payment-gateway.paymenttransactions_read
@@ -500,10 +454,6 @@ paths:
             - payment-gateway.paymenttransactions_read
       description: |
         Retrieves a single payment transaction. The transaction contains all the transaction's events attached as an entries of the response body.  
-
-        ***
-        **Required scopes**
-        * `payment-gateway.paymenttransactions_read`
 components:
   responses:
     common_response_Unauthorized_401:
@@ -1316,32 +1266,32 @@ components:
           type: string
           description: 'Indicates a payment method token, usually generated on a frontend site, when an user provides a credit card information.'
     authorizeFrontendPaymentRequest:
+      title: authorizeFrontendPaymentRequest
       allOf:
         - $ref: '#/components/schemas/initializePaymentRequest'
-      title: authorizePaymentRequest
-      type: object
-      properties:
-        threeDSToken:
-          type: string
-          description: Contains a token generated during the 3DS authentication process.
-        browserInfo:
-          type: string
-          description: Holds information related to the user's web browser.
-        clientIP:
-          type: string
-          description: Stores the Internet Protocol (IP) address of the client or user making a request or transaction.
+        - type: object
+          properties:
+            threeDSToken:
+              type: string
+              description: Contains a token generated during the 3DS authentication process.
+            browserInfo:
+              type: string
+              description: Holds information related to the user's web browser.
+            clientIP:
+              type: string
+              description: Stores the IP address of the client or user making the request.
     authorizePaymentRequest:
+      title: authorizePaymentRequest
       allOf:
         - $ref: '#/components/schemas/authorizeFrontendPaymentRequest'
-      title: authorizePaymentRequest
-      type: object
-      properties:
-        amountToAuthorize:
-          type: number
-          description: Amount that should be authorized.
-        currency:
-          type: string
-          description: Currency for the amount that should be authorized.
+        - type: object
+          properties:
+            amountToAuthorize:
+              type: number
+              description: Amount that should be authorized.
+            currency:
+              type: string
+              description: Currency for the amount that should be authorized.
     initializePaymentResponse:
       title: initializePaymentResponse
       type: object
@@ -1367,14 +1317,14 @@ components:
             type: string
           description: 'Map of additional parameters that may be needed in order to complete the authorization flow. '
     authorizePaymentResponse:
+      title: authorizePaymentResponse
       allOf:
         - $ref: '#/components/schemas/initializePaymentResponse'
-      title: authorizePaymentResponse
-      type: object
-      properties:
-        requiresExternalPayment:
-          type: boolean
-          description: 'Indicates if a redirect to an external site is required in order to finish the authorization flow.'
+        - type: object
+          properties:
+            requiresExternalPayment:
+              type: boolean
+              description: Indicates if a redirect to an external site is required in order to finish the authorization flow.
     captureRequest:
       title: captureRequest
       type: object
@@ -1416,50 +1366,50 @@ components:
           type: string
           description: A unique identifier of a payment transaction.
         provider:
-          allOf:
-            - $ref: '#/components/schemas/provider'
-          description: 'Indicates which provider should be used.'
+          $ref: '#/components/schemas/provider'
+          description: Indicates which provider should be used.
         paymentInformation:
           type: object
-          description: An information related to a payment mode
+          description: Information related to a payment mode.
           properties:
             paymentMode:
               type: string
-              description: A unique identifier of a payment mode configured for the given tenant in the payment-gateway service.
+              description: A unique identifier of a payment mode configured for the tenant.
             creditCardToken:
               type: string
-              description: A token of the credit card.
+              description: Token of the credit card.
             cardHolderName:
               type: string
-              description: A name of the holder of the card.
+              description: Name of the card holder.
             payByLinkURL:
               type: string
-              description: Holds the URL associated with a payment-by-link feature. Payment by link typically refers to a method where a customer can make a payment by clicking on a unique URL provided to them.
+              description: URL for pay-by-link payment flow.
             iban:
               type: string
-              description: Contains information about International Bank Account Number (IBAN).
+              description: International Bank Account Number.
             bic:
               type: string
-              description: Contains information about Bank Identifier Code (BIC), also known as SWIFT code.
+              description: Bank Identifier Code (SWIFT).
             sepaMandateReference:
               type: string
-              description: Contains information about the reference associated with a Single Euro Payments Area (SEPA) mandate.
+              description: SEPA mandate reference.
         entries:
           type: array
-          description: 'List of transaction entries. Each entry represents single payment transaction action, like authorization, authorization callback (for offsite payments), capture, refund or cancel.'
+          description: List of transaction entries representing payment events.
           items:
             type: object
             properties:
               id:
                 type: string
-                description: 'A unique identifier of a of payment transaction entry. The value is autogenerated. '
+                description: Unique identifier of a payment transaction entry.
               createdDate:
                 type: string
-                description: 'A timestamp when the event happened. '
-                example: '2023-07-04 22:08:05.465Z'
+                format: date-time
+                description: Timestamp when the event happened.
+                example: "2023-07-04T22:08:05.465Z"
               type:
                 type: string
-                description: 'Event type. '
+                description: Event type.
                 enum:
                   - INITIALIZATION
                   - AUTHORIZATION
@@ -1470,32 +1420,33 @@ components:
                   - AUTHORIZATION_CALLBACK
               successful:
                 type: boolean
-                description: Indicates whether a given payment event finished with success or not.
+                description: Indicates if the event completed successfully.
               amount:
                 type: object
                 properties:
                   amount:
                     type: number
-                    description: Amount of authorization/capture/refund depending on Payment event type.
+                    description: Amount related to the event.
                   currency:
                     type: string
-                    description: ISO code of a currency related to the amount.
-                    example: 'EUR, USD'
+                    description: ISO currency code.
+                    example: EUR
               summary:
                 type: string
-                description: 'A short summary of a given event. In case of success operation the field usually has `Succeeded!` value. In case of operation that failed the field may contain additional details about errors. '
+                description: Summary of the event.
               remoteRequest:
                 type: string
-                description: Serialized value of a request body sent to payment provider.
+                description: Serialized request body sent to payment provider.
               remoteResponse:
                 type: string
-                description: Serialized value of a response body from payment provider.
+                description: Serialized response body from payment provider.
               remoteToken:
                 type: string
                 description: Remote token returned by payment provider.
               additionalInfo:
                 type: object
                 description: Additional info about the transaction.
+                additionalProperties: true
   requestBodies: {}
   parameters:
     path_tenant:

@@ -330,6 +330,60 @@ curl -i -X POST
 [Cart API Reference](api-reference/)
 {% endcontent-ref %}
 
+### How to apply an external discount on a cart level
+
+External discounts can be applied to the entire cart, allowing external systems (like ERP or pricing engines) to manage cart-wide promotions and discounts.
+
+{% hint style="warning" %}
+To apply external discounts to a cart, you need the `cart.cart_manage_external_prices` scope. This scope serves as the authorization token for the API calls.
+{% endhint %}
+
+{% stepper %}
+{% step %}
+To apply an external discount to a cart, use the `externalDiscounts` attribute when creating or updating a cart. Send a request to the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L 
+  --request PUT 
+  --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}' 
+  --header 'Authorization: Bearer YOUR_SECRET_TOKEN' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "externalDiscounts": [
+        {
+            "id": "ext-cart-discount-001",
+            "discountType": "PERCENT",
+            "value": 10.00,
+            "discountCalculationType": "TOTAL",
+            "sequence": 1
+        }
+    ]
+  }'
+```
+{% endstep %}
+{% endstepper %}
+
+**External cart discount attributes:**
+
+* `id` - unique identifier of the external discount
+* `discountType` - type of discount:
+  * `PERCENT` - percentage discount (e.g., 15.00 for 15%)
+  * `ABSOLUTE` - monetary amount discount (e.g., 10.00 for 10 EUR)
+  * `FREE_SHIPPING` - fully discounts the shipping cost
+* `value` - the discount value (percentage or absolute amount depending on discountType)
+* `discountCalculationType` - determines how the discount is applied:
+  * `TOTAL` - discount is spread across products, product fees, and shipping cost
+  * `SUBTOTAL` - discount is spread across products only, without fees or shipping
+* `sequence` - defines the order in which multiple discounts are applied (lower numbers are applied first)
+
+The external discounts applied at cart level appear in the `calculatedPrice.totalDiscount.appliedDiscounts` array with `origin: "EXTERNAL"`.
+
+{% content-ref url="api-reference/" %}
+[Cart API Reference](api-reference/)
+{% endcontent-ref %}
+
 ### How to apply an external discount on an item level
 
 Adding an external discount to an item in a cart is done with the `cart.cart_manage_external_prices` scope. 
@@ -2100,10 +2154,21 @@ See the sections below for shipping, payment fee, tax and discounts calculations
 
 ## How to calculate shipping cost at cart level
 
-The shipping calculation depends on the stage at which it is done.
+The shipping calculation depends on the stage at which it is performed.
 
-* In the cart, where the address, delivery method, and zone are not available yet, the calculation uses the minimum shipping estimation. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`, and the `shipToAddress` is created based on the cart’s `countryCode` and `zipCode`.
-  See the [Calculating the minimum shipping costs](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) endpoint.
+* In the cart, where the delivery method and zone are not yet available, the calculation uses the minimum shipping estimate. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`.
+* The `shipToAddress` is determined in the following way:
+  * cart address with origin `REQUEST` and type `SHIPPING`
+  * cart `countryCode` and `zipCode` — kept for backward compatibility from when it was not possible to define addresses at the cart level
+  * cart address with origin `LEGAL_ENTITY`, `CUSTOMER`, or `SITE`, and type `SHIPPING`
+
+  When an address is not explicitly provided in the request, the Cart Service automatically populates it based on the following priority order:
+
+  1. **Legal Entity Address** — If the cart is associated with a legal entity, the first location containing both `country`, `zipCode`, and the required address type is used (origin: `LEGAL_ENTITY`).
+  2. **Customer Address** — If the cart has a logged-in customer, the default address matching the required type is used (origin: `CUSTOMER`).
+  3. **Site Homebase Address** — If none of the above are available, the site's homebase address is used (origin: `SITE`).
+   
+    See the [Calculating the minimum shipping costs](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) endpoint.
 * In the checkout, where information about the delivery window and zone is already available, the calculation uses the following endpoints: [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote), or [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) accordingly.
 
 {% hint style="danger" %}
@@ -2115,7 +2180,7 @@ Always make sure that your site’s `homeBase.address` has the `country` and `zi
 Shipping costs are typically calculated during checkout, and not automatically on the cart object alone.
 {% endhint %}
 
-To get the shipping costs calculated and shown at the cart level, update the cart with shipping information. That means, you have to set the shipping address with the `countryCode` and `zipCode` and then assign a valid shipping method to the cart so that it can trigger the shipping cost calculation.
+To get the shipping costs calculated and shown at the cart level, update the cart with shipping information. That means, provide an address of type `SHIPPING` to the cart and then assign a valid shipping method to the cart so that it can trigger the shipping cost calculation.
 
 {% stepper %}
 {% step %}
@@ -2209,15 +2274,16 @@ If the fee is taxable and has a tax code, the gross value is calculated. Otherwi
 
 ## How to determine a tax country at cart level
 
-Since the shipping address is not set in the cart, determine the country to find the `taxRate` for a fee that has a `taxCode` only.
-Ways to find the country data:
+The tax country code is determined based on the following rules:
+First, we need to decide what `type` of the address should be used for tax determination. Based on site's setting `taxDeterminationBasedOn`:
+* SHIPPING_ADDRESS - use the address that is tagged with `SHIPPING`
+* BILLING_ADDRESS - use the address that is tagged with `BILLING`
 
-* Use the country code that is set on the cart
-* If the cart has a customer, check the customer addresses, based on site’s setting `taxDeterminationBasedOn`:
-  * SHIPPING_ADDRESS - use the address that is tagged with `SHIPPING`, select the default address or the first match.
-  * BILLING_ADDRESS - use the address that is tagged with `BILLING`, select the default address or the first match.
-    If the matching address is not found, return an error.
-* Get country code from site’s `homeBase.address.country`.
+* Use an address of origin `REQUEST` and matching `type`
+* Use the country code that is set on the cart directly - backward compatibility.
+* Use an address of origin `LEGAL_ENTITY` and matching `type`
+* Use an address of origin `CUSTOMER` and matching `type`
+* Use an address of origin `SITE` and matching `type`
 
 ## How to apply discounts at cart level
 
