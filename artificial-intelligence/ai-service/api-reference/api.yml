@@ -1733,6 +1733,11 @@ components:
               description: Name of the token.
             metadata:
               $ref: '#/components/schemas/MetadataResponse'
+    ExpandableTokenResponse:
+      oneOf:
+        - $ref: '#/components/schemas/InnerTokenResponse'
+        - $ref: '#/components/schemas/ExpandedTokenResponse'
+      description: The full response representing token. If the `expand=token` is **not** used, then only `id` field is returned, otherwise all fields are returned.
 
     # Native Tools:
     NativeToolType:
@@ -1777,16 +1782,15 @@ components:
         - type: object
           properties:
             token:
-              oneOf:
-                - $ref: '#/components/schemas/InnerTokenResponse'
-                - $ref: '#/components/schemas/ExpandedTokenResponse'
-              description: The full response representing token. If the `expand=token` is **not** used, then only `id` field is returned, otherwise all fields are returned.
+              $ref: '#/components/schemas/ExpandableTokenResponse'
     RagCustomDatabaseType:
       type: string
       enum: [ qdrant ]
+      description: Type of the database.
     RagEntityType:
       type: string
       enum: [ product ]
+      description: Type of the entity which is stored in the given collection.
     RagCustomDatabaseNativeToolConfig:
       type: object
       properties:
@@ -1796,11 +1800,9 @@ components:
         type:
           allOf:
             - $ref: '#/components/schemas/RagCustomDatabaseType'
-          description: Type of the database.
         entityType:
           allOf:
             - $ref: '#/components/schemas/RagEntityType'
-          description: Type of the entity which is stored in the given collection.
         collectionName:
           type: string
           description: Name of the database collection.
@@ -1824,10 +1826,7 @@ components:
         - type: object
           properties:
             token:
-              oneOf:
-                - $ref: '#/components/schemas/InnerTokenResponse'
-                - $ref: '#/components/schemas/ExpandedTokenResponse'
-              description: The full response representing token. If the `expand=token` is **not** used, then only `id` field is returned, otherwise all fields are returned.
+              $ref: '#/components/schemas/ExpandableTokenResponse'
     RagCustomNativeToolConfig:
       type: object
       properties:
@@ -1908,10 +1907,7 @@ components:
         - type: object
           properties:
             token:
-              oneOf:
-                - $ref: '#/components/schemas/InnerTokenResponse'
-                - $ref: '#/components/schemas/ExpandedTokenResponse'
-              description: The full response representing token. If the `expand=token` is **not** used, then only `id` field is returned, otherwise all fields are returned.
+              $ref: '#/components/schemas/ExpandableTokenResponse'
     SelfHostedOllamaRagEmporixEmbeddingNativeToolConfig:
       type: object
       properties:
@@ -1929,7 +1925,7 @@ components:
           maximum: 4096
         url:
           type: string
-          description: Base URL where Ollama is hosted. 
+          description: Base URL where Ollama is hosted.
       required:
         - provider
         - model
@@ -1950,10 +1946,7 @@ components:
         - type: object
           properties:
             token:
-              oneOf:
-                - $ref: '#/components/schemas/InnerTokenResponse'
-                - $ref: '#/components/schemas/ExpandedTokenResponse'
-              description: The full response representing token. If the `expand=token` is **not** used, then only `id` field is returned, otherwise all fields are returned.
+              $ref: '#/components/schemas/ExpandableTokenResponse'
     RagEmporixNativeToolConfig:
       type: object
       properties:
@@ -1963,7 +1956,6 @@ components:
         entityType:
           allOf:
             - $ref: '#/components/schemas/RagEntityType'
-          description: Type of the entity which is stored in the given collection.
         indexedFields:
           type: array
           description: This field specifies the fields of the given entityType that are used for generating embeddings. The provided values are then concatenated and converted to embeddings.
@@ -2144,10 +2136,7 @@ components:
         - type: object
           properties:
             authorizationHeaderToken:
-              oneOf:
-                - $ref: '#/components/schemas/InnerTokenResponse'
-                - $ref: '#/components/schemas/ExpandedTokenResponse'
-              description: The full response representing token. If the `expand=token` is **not** used, then only `id` field is returned, otherwise all fields are returned.
+              $ref: '#/components/schemas/ExpandableTokenResponse'
     BaseMcpServer:
       type: object
       description: An object representing customer's own implementation of the MCP server.
@@ -2322,10 +2311,7 @@ components:
         - type: object
           properties:
             authorizationHeaderToken:
-              oneOf:
-                - $ref: '#/components/schemas/InnerTokenResponse'
-                - $ref: '#/components/schemas/ExpandedTokenResponse'
-              description: The full response representing token. If the `expand=token` is **not** used, then only `id` field is returned, otherwise all fields are returned.
+              $ref: '#/components/schemas/ExpandableTokenResponse'
     SelfHostedLlm:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
@@ -2386,10 +2372,7 @@ components:
         - type: object
           properties:
             token:
-              oneOf:
-                - $ref: '#/components/schemas/InnerTokenResponse'
-                - $ref: '#/components/schemas/ExpandedTokenResponse'
-              description: The full response representing token. If the `expand=token` is **not** used, then only `id` field is returned, otherwise all fields are returned.
+              $ref: '#/components/schemas/ExpandableTokenResponse'
 
     ## Token:
     BaseToken:
