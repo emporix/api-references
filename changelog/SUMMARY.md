@@ -8,6 +8,8 @@
 
 ## 2025
 
+* [2025-12-03: AI RAG Indexer - new endpoints for configuring RAG Search Functionality](2025/2025-12-03-ai-rag-indexer.md)
+* [2025-12-03: AI Service - RAG_CUSTOM and RAG_EMPORIX new tool types](2025/2025-12-03-ai.md)
 * [2025-11-26: Category Tree – filtering category trees by category IDs](2025/2025-11-26-category-tree.md)
 * [2025-11-26: Product Service – category and customer segment IDs in product response](2025/2025-11-26-product.md)
 * [2025-11-25: AI Service - Agent Logs](2025/2025-11-25-ai.md)
