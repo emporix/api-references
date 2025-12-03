@@ -23,9 +23,9 @@ Introduced new endpoints in `ai-rag-indexer` service which are necessary for con
 
 | Endpoint                                                                                                                                                                            | Description                                                                |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
-| [Reindex](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/reindex#GET-ai-rag-indexer-reindex)                           | Endpoint for triggering reindexing process.                                |
-| [RAG Metadata](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-retrieve-rag-metadata)       | Endpoint for retrieving possible fields destined for computing embeddings. |
-| [Filter Metadata](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-retrieve-filter-metadata) | Endpoint for retrieving fields destined to filtering database entries.     |
+| [Reindexing the entities of given type](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/reindex#GET-ai-rag-indexer-tenant-type-reindex)                           | Endpoint for triggering reindexing process.                                |
+| [Listing fields for RAG search](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-tenant-type-rag-metadata)       | Endpoint for retrieving possible fields destined for computing embeddings. |
+| [Listing fields for vector search filtering](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-tenant-type-filter-metadata) | Endpoint for retrieving fields destined to filtering database entries.     |
 
 ## Known problems
 

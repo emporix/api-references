@@ -1714,7 +1714,7 @@ components:
       properties:
         id:
           type: string
-          description: Id of the token
+          description: ID of the token.
       required:
         - id
     InnerTokenResponse:
@@ -1722,7 +1722,7 @@ components:
       properties:
         id:
           type: string
-          description: Id of the token
+          description: ID of the token.
     ExpandedTokenResponse:
       allOf:
         - $ref: '#/components/schemas/InnerTokenResponse'
@@ -1730,7 +1730,7 @@ components:
           properties:
             name:
               type: string
-              description: Name of the token
+              description: Name of the token.
             metadata:
               $ref: '#/components/schemas/MetadataResponse'
 
@@ -1792,7 +1792,7 @@ components:
       properties:
         url:
           type: string
-          description: Url of the database.
+          description: URL of the database.
         type:
           allOf:
             - $ref: '#/components/schemas/RagCustomDatabaseType'
@@ -1833,11 +1833,11 @@ components:
       properties:
         prompt:
           type: string
-          description: The prompt for an agent. It should contain information when and why this tool should be called.
+          description: The prompt for an agent. It should define when and why this tool is to be called.
         maxResults:
           type: integer
           default: 5
-          description: The maximum number of found results in the Vector Database.
+          description: The maximum number of results found in the Vector Database.
       required:
         - prompt
     RagCustomNativeToolConfigRequest:
@@ -1871,7 +1871,7 @@ components:
         provider:
           allOf:
             - $ref: '#/components/schemas/RagLlmProvider'
-          description: For this type it should be set to 'emporix_openai'.
+          description: For this type, it should be set to 'emporix_openai'.
       required:
         - provider
     OpenAiRagEmporixEmbeddingNativeToolConfig:
@@ -1880,10 +1880,10 @@ components:
         provider:
           allOf:
             - $ref: '#/components/schemas/RagLlmProvider'
-          description: For this type it should be set to 'emporix_openai'.
+          description: For this type, it should be set to 'emporix_openai'.
         model:
           type: string
-          description: OpenAI LLM model which should be used for generating embeddings for indexed products and user's input query.
+          description: OpenAI LLM model to be used for generating embeddings for indexed products and user's input query.
         dimensions:
           type: integer
           description: Number of dimensions of embedding.
@@ -1918,10 +1918,10 @@ components:
         provider:
           allOf:
             - $ref: '#/components/schemas/RagLlmProvider'
-          description: For this type it should be set to 'self_hosted_ollama'.
+          description: For this type, it should be set to 'self_hosted_ollama'.
         model:
           type: string
-          description: Ollama LLM model which should be used for generating embeddings for indexed products and user's input query.
+          description: Ollama LLM model to be used for generating embeddings for indexed products and user's input query.
         dimensions:
           type: integer
           description: Number of dimensions of embedding.
@@ -1929,7 +1929,7 @@ components:
           maximum: 4096
         url:
           type: string
-          description: Url where Ollama is hosted. Should be base url.
+          description: Base URL where Ollama is hosted. 
       required:
         - provider
         - model
@@ -1959,23 +1959,23 @@ components:
       properties:
         prompt:
           type: string
-          description: The prompt for an agent. It should contain information when and why this tool should be called.
+          description: The prompt for an agent. It should define when and why this tool is to be called.
         entityType:
           allOf:
             - $ref: '#/components/schemas/RagEntityType'
           description: Type of the entity which is stored in the given collection.
         indexedFields:
           type: array
-          description: This field is used to choose which entityType's fields should be used for generating embeddings. The provided values are then concatenated and converted to embeddings.
+          description: This field specifies the fields of the given entityType that are used for generating embeddings. The provided values are then concatenated and converted to embeddings.
           items:
             type: object
             properties:
               name:
                 type: string
-                description: It can act as an alias for field's key. For example, if 'name.en' key is provided then its alias could be 'English Name' and that value will be used in embedding's input.
+                description: It can act as an alias for the field key. For example, if the 'name.en' key is provided then its alias could be 'English Name' and that value is used in embedding input.
               key:
                 type: string
-                description: Unique value which represents entityType's key.
+                description: Unique value representing the entityType key.
             required:
               - key
       required:
@@ -2058,7 +2058,7 @@ components:
         - type: object
           properties:
             type:
-              description: For RagCustomNativeTool it has to be set to `rag_custom`.
+              description: For `RagCustomNativeTool`, it has to be set to `rag_custom`.
               example: rag_custom
             config:
               $ref: '#/components/schemas/RagCustomNativeToolConfigRequest'
@@ -2075,7 +2075,7 @@ components:
               type: string
               description: Unique identifier of the tool.
             type:
-              description: For RagCustomNativeTool it has to be set to `rag_custom`.
+              description: For `RagCustomNativeTool`, it has to be set to `rag_custom`.
               example: rag_custom
             config:
               $ref: '#/components/schemas/RagCustomNativeToolConfigResponse'
@@ -2087,7 +2087,7 @@ components:
         - type: object
           properties:
             type:
-              description: For RagEmporixNativeTool it has to be set to `rag_emporix`.
+              description: For `RagEmporixNativeTool`, it has to be set to `rag_emporix`.
               example: rag_emporix
             config:
               $ref: '#/components/schemas/RagEmporixNativeToolConfigRequest'
@@ -2104,7 +2104,7 @@ components:
               type: string
               description: Unique identifier of the tool.
             type:
-              description: For RagEmporixNativeTool it has to be set to `rag_emporix`.
+              description: For `RagEmporixNativeTool`, it has to be set to `rag_emporix`.
               example: rag_emporix
             config:
               $ref: '#/components/schemas/RagEmporixNativeToolConfigResponse'
