@@ -13,6 +13,18 @@ label: Tutorials
 icon: graduation-cap
 layout:
   width: wide
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
 ---
 
 # Delivery and Shipping Tutorial
@@ -21,23 +33,18 @@ layout:
 Names and/or descriptions of shipping zones, methods, and groups are localized. When creating a new shipping zone, method, or group, you can specify its name and/or description in one or multiple languages.
 
 Looking for more info on localization? Check out [Standard practices](../standard-practices/translations.md).
-
 {% endhint %}
 
 ## How does Delivery Cycle work?
 
-A Delivery Cycle defines the structured schedule and availability of delivery options within the shipping domain of the Emporix Commerce platform. It is a core concept that governs how delivery times and delivery slots are organized, managed, and exposed through APIs to facilitate precise control over shipping logistics. 
+A Delivery Cycle defines the structured schedule and availability of delivery options within the shipping domain of the Emporix Commerce platform. It is a core concept that governs how delivery times and delivery slots are organized, managed, and exposed through APIs to facilitate precise control over shipping logistics.
 
 * Delivery Times: Configurable time ranges (for example days of the week, business hours) during which deliveries are operationally feasible. These are scoped according to shipping zones or regions and form the upper-level availability constraints.
-
 * Delivery Slots: Smaller time intervals nested within Delivery Times, representing granular windows customers can select for order fulfillment. Slots enable scheduling precision and enhance customer choice.
-
 * Delivery Windows: Combinations of delivery times and slots filtered dynamically based on factors such as postal code, cart contents, and business rules, used to present valid delivery options during checkout.
 
 {% hint style="success" %}
-
-To see how Delivery Cycle Management works in practice, check the [Delivery Cycle Management](http://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/delivery-cycle-management) user guides.
-
+To see how Delivery Cycle Management works in practice, check the [Delivery Cycle Management](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/delivery-cycle-management) user guides.
 {% endhint %}
 
 ## How to configure delivery and shipping settings
@@ -66,14 +73,14 @@ A customer account can be created by the employee themselves or from your Empori
 
 {% stepper %}
 {% step %}
-### Create a shipping zone
+#### Create a shipping zone
 
 Shipping zones are countries that your business delivers products to. You can create a shipping zone by calling the [Creating a shipping zone](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-zones#post-shipping-tenant-site-zones) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+{% include "../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
-[api-reference](../delivery-and-shipping/shipping/api-reference/)
+{% content-ref url="shipping/api-reference/" %}
+[api-reference](shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -96,13 +103,12 @@ curl -i -X POST
 ```
 {% endstep %}
 
-{%step %}
-### Create a shipping group
+{% step %}
+#### Create a shipping group
 
 You can set up shipping groups for customers and define different shipping methods and costs for these groups. To create a shipping group, you need to call the [Creating a shipping group](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-groups#post-shipping-tenant-site-groups) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
+{% include "../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
 curl -i -X POST 
@@ -121,15 +127,14 @@ curl -i -X POST
 {% endstep %}
 
 {% step %}
-### Assign customers to shipping groups
+#### Assign customers to shipping groups
 
-By adding customers to shipping groups, you can offer them different shipping methods and costs.
-Assign customers to shipping groups by calling the [Creating a customer-group relation](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/customer-group-relations#post-shipping-tenant-site-cgrelations) endpoint.
+By adding customers to shipping groups, you can offer them different shipping methods and costs. Assign customers to shipping groups by calling the [Creating a customer-group relation](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/customer-group-relations#post-shipping-tenant-site-cgrelations) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+{% include "../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
-[api-reference](../delivery-and-shipping/shipping/api-reference/)
+{% content-ref url="shipping/api-reference/" %}
+[api-reference](shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -145,14 +150,14 @@ curl -i -X POST
 {% endstep %}
 
 {% step %}
-### Add shipping methods and define fees
+#### Add shipping methods and define fees
 
 Add shipping methods and configure shipping fees by calling the [Creating a shipping method](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-methods#post-shipping-tenant-site-zones-zoneid-methods) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+{% include "../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
-[api-reference](../delivery-and-shipping/shipping/api-reference/)
+{% content-ref url="shipping/api-reference/" %}
+[api-reference](shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -208,16 +213,16 @@ curl -i -X POST
 {% endstep %}
 
 {% step %}
-### Add delivery times
+#### Add delivery times
 
 Delivery times specify days of the week and hours of the day on which orders can be delivered. They are defined for particular shipping zones.
 
 Add delivery times by calling the [Creating a delivery time](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/delivery-times-management#post-shipping-tenant-delivery-times) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+{% include "../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
-[api-reference](../delivery-and-shipping/shipping/api-reference/)
+{% content-ref url="shipping/api-reference/" %}
+[api-reference](shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -273,16 +278,16 @@ curl -i -X POST
 {% endstep %}
 
 {% step %}
-### Add delivery slots
+#### Add delivery slots
 
 Delivery slots specify periods during the day, when the delivery can take place. You can create multiple slots for every day.
 
 Add delivery time slots by calling the [Creating a delivery time slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/delivery-times-slots-management#post-shipping-tenant-delivery-times-deliverytimeid-slots) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+{% include "../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
-[api-reference](../delivery-and-shipping/shipping/api-reference/)
+{% content-ref url="shipping/api-reference/" %}
+[api-reference](shipping/api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -307,8 +312,8 @@ curl -i -X POST
 {% endstep %}
 {% endstepper %}
 
-{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
-[Shipping API Reference](../delivery-and-shipping/shipping/api-reference/)
+{% content-ref url="shipping/api-reference/" %}
+[api-reference](shipping/api-reference/)
 {% endcontent-ref %}
 
 ## How to manage delivery and shipping information upon checkout
@@ -323,18 +328,17 @@ You need to retrieve available delivery windows to be able to estimate the deliv
 
 1. Ensure that you have already finished the [How to configure delivery and shipping settings](shipping.md#how-to-configure-delivery-and-shipping-settings) tutorial.
 2. Ensure that you have created at least one customer.
-3. Ensure that you have configured payment options. For more information on payments, check out [How to enable payment methods](../../configuration/site-settings-service/site-settings.md#how-to-enable-payment-methods).
-4. Ensure that the order settings are configured. For more information, check out the [Order Service API Reference](../../orders/order/).
+3. Ensure that you have configured payment options. For more information on payments, check out [How to enable payment methods](../configuration/site-settings-service/site-settings.md#how-to-enable-payment-methods).
+4. Ensure that the order settings are configured. For more information, check out the [Order Service API Reference](../orders/order/).
 {% endhint %}
 
 {% stepper %}
 {% step %}
-### Retrieve available delivery windows for a particular postal code and cart
+#### Retrieve available delivery windows for a particular postal code and cart
 
-Shipping times for particular postal codes are automatically calculated based on the business' shipping configuration, for example shipping capacity, or cut-off time.
-Retrieve delivery windows by calling the [Retrieving delivery windows by cart](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/delivery-windows#get-shipping-tenant-actualdeliverywindows-cartid) endpoint.
+Shipping times for particular postal codes are automatically calculated based on the business' shipping configuration, for example shipping capacity, or cut-off time. Retrieve delivery windows by calling the [Retrieving delivery windows by cart](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/delivery-windows#get-shipping-tenant-actualdeliverywindows-cartid) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+{% include "../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
 curl -i -X GET 
@@ -344,11 +348,11 @@ curl -i -X GET
 {% endstep %}
 
 {% step %}
-### Update the cart with delivery information
+#### Update the cart with delivery information
 
 Add the delivery information to the cart by calling the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+{% include "../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
 curl -i -X PUT 
@@ -389,7 +393,6 @@ curl -i -X PUT
 {% endstep %}
 {% endstepper %}
 
-{% content-ref url="/delivery-and-shipping/shipping/api-reference/" %}
-[Shipping API Reference](../delivery-and-shipping/shipping/api-reference/)
+{% content-ref url="shipping/api-reference/" %}
+[api-reference](shipping/api-reference/)
 {% endcontent-ref %}
-
