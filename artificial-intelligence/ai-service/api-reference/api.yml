@@ -727,6 +727,7 @@ paths:
       - $ref: '#/components/parameters/sort'
       - $ref: '#/components/parameters/fields'
       - $ref: '#/components/parameters/header_xTotalCount'
+      - $ref: '#/components/parameters/expandTool'
     get:
       summary: Listing tools
       operationId: GET-ai-list-tools
@@ -738,8 +739,7 @@ paths:
               schema:
                 type: array
                 items:
-                  oneOf:
-                    - $ref: '#/components/schemas/SlackNativeToolResponse'
+                  $ref: '#/components/schemas/NativeToolsResponse'
               examples:
                 Tools Response:
                   $ref: '#/components/examples/SlackNativeToolsResponse'
@@ -766,6 +766,7 @@ paths:
         - $ref: '#/components/parameters/sort'
         - $ref: '#/components/parameters/fields'
         - $ref: '#/components/parameters/header_xTotalCount'
+        - $ref: '#/components/parameters/expandTool'
       summary: Searching tools
       operationId: POST-ai-search-tools
       responses:
@@ -776,8 +777,7 @@ paths:
               schema:
                 type: array
                 items:
-                  oneOf:
-                    - $ref: '#/components/schemas/SlackNativeToolResponse'
+                  $ref: '#/components/schemas/NativeToolsResponse'
               examples:
                 Tools Response:
                   $ref: '#/components/examples/SlackNativeToolsResponse'
@@ -807,6 +807,7 @@ paths:
     get:
       parameters:
         - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/expandTool'
       summary: Retrieving tool by ID
       operationId: GET-ai-retrieve-tool
       responses:
@@ -817,6 +818,8 @@ paths:
               schema:
                 oneOf:
                   - $ref: '#/components/schemas/SlackNativeToolResponse'
+                  - $ref: '#/components/schemas/RagCustomNativeToolResponse'
+                  - $ref: '#/components/schemas/RagEmporixNativeToolResponse'
               examples:
                 Tool Response:
                   $ref: '#/components/examples/SlackNativeToolResponse'
@@ -1705,10 +1708,41 @@ components:
           type: string
           description: Identifier of the resource.
 
+    # Tokens:
+    InnerTokenRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the token.
+      required:
+        - id
+    InnerTokenResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the token.
+    ExpandedTokenResponse:
+      allOf:
+        - $ref: '#/components/schemas/InnerTokenResponse'
+        - type: object
+          properties:
+            name:
+              type: string
+              description: Name of the token.
+            metadata:
+              $ref: '#/components/schemas/MetadataResponse'
+    ExpandableTokenResponse:
+      oneOf:
+        - $ref: '#/components/schemas/InnerTokenResponse'
+        - $ref: '#/components/schemas/ExpandedTokenResponse'
+      description: The full response representing token. If the `expand=token` is **not** used, then only `id` field is returned, otherwise all fields are returned.
+
     # Native Tools:
     NativeToolType:
       type: string
-      enum: [ slack ]
+      enum: [ slack, rag_custom, rag_emporix ]
       description: Type of the native tool.
     BaseNativeTool:
       type: object
@@ -1725,6 +1759,244 @@ components:
       required:
         - type
         - name
+    RagCustomEmbeddingNativeToolConfig:
+      type: object
+      properties:
+        model:
+          type: string
+          description: Name of the OpenAI LLM model which should be used to create embedding of user's input in order to perform search operation.
+      required:
+        - model
+    RagCustomEmbeddingNativeToolConfigRequest:
+      allOf:
+        - $ref: '#/components/schemas/RagCustomEmbeddingNativeToolConfig'
+        - type: object
+          properties:
+            token:
+              $ref: '#/components/schemas/InnerTokenRequest'
+          required:
+            - token
+    RagCustomEmbeddingNativeToolConfigResponse:
+      allOf:
+        - $ref: '#/components/schemas/RagCustomEmbeddingNativeToolConfig'
+        - type: object
+          properties:
+            token:
+              $ref: '#/components/schemas/ExpandableTokenResponse'
+    RagCustomDatabaseType:
+      type: string
+      enum: [ qdrant ]
+      description: Type of the database.
+    RagEntityType:
+      type: string
+      enum: [ product ]
+      description: Type of the entity which is stored in the given collection.
+    RagCustomDatabaseNativeToolConfig:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL of the database.
+        type:
+          allOf:
+            - $ref: '#/components/schemas/RagCustomDatabaseType'
+        entityType:
+          allOf:
+            - $ref: '#/components/schemas/RagEntityType'
+        collectionName:
+          type: string
+          description: Name of the database collection.
+      required:
+        - url
+        - type
+        - entityType
+        - collectionName
+    RagCustomDatabaseNativeToolConfigRequest:
+      allOf:
+        - $ref: '#/components/schemas/RagCustomDatabaseNativeToolConfig'
+        - type: object
+          properties:
+            token:
+              $ref: '#/components/schemas/InnerTokenRequest'
+          required:
+            - token
+    RagCustomDatabaseNativeToolConfigResponse:
+      allOf:
+        - $ref: '#/components/schemas/RagCustomDatabaseNativeToolConfig'
+        - type: object
+          properties:
+            token:
+              $ref: '#/components/schemas/ExpandableTokenResponse'
+    RagCustomNativeToolConfig:
+      type: object
+      properties:
+        prompt:
+          type: string
+          description: The prompt for an agent. It should define when and why this tool is to be called.
+        maxResults:
+          type: integer
+          default: 5
+          description: The maximum number of results found in the Vector Database.
+      required:
+        - prompt
+    RagCustomNativeToolConfigRequest:
+      allOf:
+        - $ref: '#/components/schemas/RagCustomNativeToolConfig'
+        - type: object
+          properties:
+            databaseConfig:
+              $ref: '#/components/schemas/RagCustomDatabaseNativeToolConfigRequest'
+            embeddingConfig:
+              $ref: '#/components/schemas/RagCustomEmbeddingNativeToolConfigRequest'
+          required:
+            - databaseConfig
+            - embeddingConfig
+    RagCustomNativeToolConfigResponse:
+      allOf:
+        - $ref: '#/components/schemas/RagCustomNativeToolConfig'
+        - type: object
+          properties:
+            databaseConfig:
+              $ref: '#/components/schemas/RagCustomDatabaseNativeToolConfigResponse'
+            embeddingConfig:
+              $ref: '#/components/schemas/RagCustomEmbeddingNativeToolConfigResponse'
+
+    RagLlmProvider:
+      type: string
+      enum: [ emporix_openai, openai, self_hosted_ollama ]
+    EmporixOpenAiRagEmporixEmbeddingNativeToolConfig:
+      type: object
+      properties:
+        provider:
+          allOf:
+            - $ref: '#/components/schemas/RagLlmProvider'
+          description: For this type, it should be set to 'emporix_openai'.
+      required:
+        - provider
+    OpenAiRagEmporixEmbeddingNativeToolConfig:
+      type: object
+      properties:
+        provider:
+          allOf:
+            - $ref: '#/components/schemas/RagLlmProvider'
+          description: For this type, it should be set to 'emporix_openai'.
+        model:
+          type: string
+          description: OpenAI LLM model to be used for generating embeddings for indexed products and user's input query.
+        dimensions:
+          type: integer
+          description: Number of dimensions of embedding.
+          minimum: 128
+          maximum: 4096
+      required:
+        - provider
+        - model
+        - dimensions
+    OpenAiRagEmporixEmbeddingNativeToolConfigRequest:
+      allOf:
+        - $ref: '#/components/schemas/OpenAiRagEmporixEmbeddingNativeToolConfig'
+        - type: object
+          properties:
+            token:
+              $ref: '#/components/schemas/InnerTokenRequest'
+          required:
+            - token
+    OpenAiRagEmporixEmbeddingNativeToolConfigResponse:
+      allOf:
+        - $ref: '#/components/schemas/OpenAiRagEmporixEmbeddingNativeToolConfig'
+        - type: object
+          properties:
+            token:
+              $ref: '#/components/schemas/ExpandableTokenResponse'
+    SelfHostedOllamaRagEmporixEmbeddingNativeToolConfig:
+      type: object
+      properties:
+        provider:
+          allOf:
+            - $ref: '#/components/schemas/RagLlmProvider'
+          description: For this type, it should be set to 'self_hosted_ollama'.
+        model:
+          type: string
+          description: Ollama LLM model to be used for generating embeddings for indexed products and user's input query.
+        dimensions:
+          type: integer
+          description: Number of dimensions of embedding.
+          minimum: 128
+          maximum: 4096
+        url:
+          type: string
+          description: Base URL where Ollama is hosted.
+      required:
+        - provider
+        - model
+        - dimensions
+        - url
+    SelfHostedOllamaRagEmporixEmbeddingNativeToolConfigRequest:
+      allOf:
+        - $ref: '#/components/schemas/SelfHostedOllamaRagEmporixEmbeddingNativeToolConfig'
+        - type: object
+          properties:
+            token:
+              $ref: '#/components/schemas/InnerTokenRequest'
+          required:
+            - token
+    SelfHostedOllamaRagEmporixEmbeddingNativeToolConfigResponse:
+      allOf:
+        - $ref: '#/components/schemas/SelfHostedOllamaRagEmporixEmbeddingNativeToolConfig'
+        - type: object
+          properties:
+            token:
+              $ref: '#/components/schemas/ExpandableTokenResponse'
+    RagEmporixNativeToolConfig:
+      type: object
+      properties:
+        prompt:
+          type: string
+          description: The prompt for an agent. It should define when and why this tool is to be called.
+        entityType:
+          allOf:
+            - $ref: '#/components/schemas/RagEntityType'
+        indexedFields:
+          type: array
+          description: This field specifies the fields of the given entityType that are used for generating embeddings. The provided values are then concatenated and converted to embeddings.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: It can act as an alias for the field key. For example, if the 'name.en' key is provided then its alias could be 'English Name' and that value is used in embedding input.
+              key:
+                type: string
+                description: Unique value representing the entityType key.
+            required:
+              - key
+      required:
+        - prompt
+        - entityType
+        - indexedFields
+    RagEmporixNativeToolConfigRequest:
+      allOf:
+        - $ref: '#/components/schemas/RagEmporixNativeToolConfig'
+        - type: object
+          properties:
+            embeddingConfig:
+              oneOf:
+                - $ref: '#/components/schemas/EmporixOpenAiRagEmporixEmbeddingNativeToolConfig'
+                - $ref: '#/components/schemas/OpenAiRagEmporixEmbeddingNativeToolConfigRequest'
+                - $ref: '#/components/schemas/SelfHostedOllamaRagEmporixEmbeddingNativeToolConfigRequest'
+          required:
+            - embeddingConfig
+    RagEmporixNativeToolConfigResponse:
+      allOf:
+        - $ref: '#/components/schemas/RagEmporixNativeToolConfig'
+        - type: object
+          properties:
+            embeddingConfig:
+              oneOf:
+                - $ref: '#/components/schemas/EmporixOpenAiRagEmporixEmbeddingNativeToolConfig'
+                - $ref: '#/components/schemas/OpenAiRagEmporixEmbeddingNativeToolConfigResponse'
+                - $ref: '#/components/schemas/SelfHostedOllamaRagEmporixEmbeddingNativeToolConfigResponse'
+
     SlackNativeToolConfigResponse:
       type: object
       properties:
@@ -1772,15 +2044,75 @@ components:
               $ref: '#/components/schemas/SlackNativeToolConfigResponse'
             metadata:
               $ref: '#/components/schemas/MetadataResponse'
+    RagCustomNativeToolRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseNativeTool'
+        - type: object
+          properties:
+            type:
+              description: For `RagCustomNativeTool`, it has to be set to `rag_custom`.
+              example: rag_custom
+            config:
+              $ref: '#/components/schemas/RagCustomNativeToolConfigRequest'
+            metadata:
+              $ref: '#/components/schemas/MetadataRequest'
+          required:
+            - config
+    RagCustomNativeToolResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseNativeTool'
+        - type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier of the tool.
+            type:
+              description: For `RagCustomNativeTool`, it has to be set to `rag_custom`.
+              example: rag_custom
+            config:
+              $ref: '#/components/schemas/RagCustomNativeToolConfigResponse'
+            metadata:
+              $ref: '#/components/schemas/MetadataResponse'
+    RagEmporixNativeToolRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseNativeTool'
+        - type: object
+          properties:
+            type:
+              description: For `RagEmporixNativeTool`, it has to be set to `rag_emporix`.
+              example: rag_emporix
+            config:
+              $ref: '#/components/schemas/RagEmporixNativeToolConfigRequest'
+            metadata:
+              $ref: '#/components/schemas/MetadataRequest'
+          required:
+            - config
+    RagEmporixNativeToolResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseNativeTool'
+        - type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier of the tool.
+            type:
+              description: For `RagEmporixNativeTool`, it has to be set to `rag_emporix`.
+              example: rag_emporix
+            config:
+              $ref: '#/components/schemas/RagEmporixNativeToolConfigResponse'
+            metadata:
+              $ref: '#/components/schemas/MetadataResponse'
     NativeToolsResponse:
       type: array
       description: List of native tools which agents should have access to.
       items:
         oneOf:
           - $ref: '#/components/schemas/SlackNativeToolResponse'
+          - $ref: '#/components/schemas/RagCustomNativeToolResponse'
+          - $ref: '#/components/schemas/RagEmporixNativeToolResponse'
 
     # MCP Servers:
-    McpServerConfigRequest:
+    McpServerConfig:
       type: object
       properties:
         url:
@@ -1789,25 +2121,22 @@ components:
         authorizationHeaderName:
           type: string
           description: Name of the header required for authorization, e.g. `Authorization`.
-        authorizationHeaderToken:
-          type: object
-          properties:
-            id:
-              type: string
-              description: ID of the token which stores the secret for authorization header.
-          required:
-            - id
       required:
         - url
-    McpServerConfigResponse:
+    McpServerConfigRequest:
       allOf:
-        - $ref: '#/components/schemas/McpServerConfigRequest'
+        - $ref: '#/components/schemas/McpServerConfig'
         - type: object
           properties:
             authorizationHeaderToken:
-              allOf:
-                - $ref: '#/components/schemas/TokenResponse'
-                - description: The full response representing token. If the `expand=token` is **not** used, then only `id` field is returned, otherwise all fields are returned.
+              $ref: '#/components/schemas/InnerTokenRequest'
+    McpServerConfigResponse:
+      allOf:
+        - $ref: '#/components/schemas/McpServerConfig'
+        - type: object
+          properties:
+            authorizationHeaderToken:
+              $ref: '#/components/schemas/ExpandableTokenResponse'
     BaseMcpServer:
       type: object
       description: An object representing customer's own implementation of the MCP server.
@@ -1958,7 +2287,7 @@ components:
               example: emporix_openai
           required:
             - provider
-    SelfHostedParamsRequest:
+    SelfHostedParams:
       type: object
       properties:
         url:
@@ -1967,25 +2296,22 @@ components:
         authorizationHeaderName:
           type: string
           description: Name of the header required for authorization e.g. `Authorization`.
-        authorizationHeaderToken:
-          type: object
-          properties:
-            id:
-              type: string
-              description: ID of the token which stores the secret for authorization header.
-          required:
-            - id
       required:
         - url
+    SelfHostedParamsRequest:
+      allOf:
+        - $ref: '#/components/schemas/SelfHostedParams'
+        - type: object
+        - properties:
+            authorizationHeaderToken:
+              $ref: '#/components/schemas/InnerTokenRequest'
     SelfHostedParamsResponse:
       allOf:
-        - $ref: '#/components/schemas/SelfHostedParamsRequest'
+        - $ref: '#/components/schemas/SelfHostedParams'
         - type: object
           properties:
             authorizationHeaderToken:
-              allOf:
-                - $ref: '#/components/schemas/TokenResponse'
-                - description: The full response representing token. If the `expand=token` is **not** used, then only `id` field is returned, otherwise all fields are returned.
+              $ref: '#/components/schemas/ExpandableTokenResponse'
     SelfHostedLlm:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
@@ -2022,33 +2348,31 @@ components:
         - google
         - anthropic
       example: openai
-    ApiKeyLlmRequest:
+    ApiKeyLlm:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
         - type: object
           properties:
             provider:
               $ref: '#/components/schemas/ApiKeyLlmProvider'
-            token:
-              type: object
-              properties:
-                id:
-                  type: string
-                  description: ID of the token which stores the secret representing API key.
-              required:
-                - id
           required:
             - provider
-            - token
-    ApiKeyLlmResponse:
+    ApiKeyLlmRequest:
       allOf:
-        - $ref: '#/components/schemas/ApiKeyLlmRequest'
+        - $ref: '#/components/schemas/ApiKeyLlm'
         - type: object
           properties:
             token:
-              allOf:
-                - $ref: '#/components/schemas/TokenResponse'
-                - description: The full response representing token. If the `expand=token` is **not** used then only `id` field is returned, otherwise all fields are returned.
+              $ref: '#/components/schemas/InnerTokenRequest'
+          required:
+            - token
+    ApiKeyLlmResponse:
+      allOf:
+        - $ref: '#/components/schemas/ApiKeyLlm'
+        - type: object
+          properties:
+            token:
+              $ref: '#/components/schemas/ExpandableTokenResponse'
 
     ## Token:
     BaseToken:
@@ -2750,6 +3074,14 @@ components:
       in: query
       name: expand
       description: Fields to be expanded in the response. It means that instead of the object IDs, the whole objects are returned in the response.
+    expandTool:
+      schema:
+        type: string
+        enum:
+          - token
+      in: query
+      name: expand
+      description: Fields to be expanded in the response. It means that instead of the object IDs, the whole objects are returned in the response.
     force:
       schema:
         type: boolean
@@ -3128,6 +3460,8 @@ components:
           schema:
             oneOf:
               - $ref: '#/components/schemas/SlackNativeToolRequest'
+              - $ref: '#/components/schemas/RagCustomNativeToolRequest'
+              - $ref: '#/components/schemas/RagEmporixNativeToolRequest'
           examples:
             Create Slack Tool:
               $ref: '#/components/examples/SlackNativeToolRequest'
