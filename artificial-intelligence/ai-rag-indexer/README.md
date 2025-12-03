@@ -1,10 +1,10 @@
 ---
 layout:
   width: wide
-icon: robot-astromech
+icon: magnifying-glass-arrows-rotate
 ---
 
-# AI Rag Indexer
+# AI RAG Indexer
 
 The service creates embeddings for vector search.
 

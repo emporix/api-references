@@ -45,6 +45,20 @@
               spec: ai-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/artificial-intelligence/ai-service/api-reference/api.yml)
+  * [AI RAG Indexer](artificial-intelligence/ai-rag-indexer/README.md)
+    * [AI RAG Indexer Tutorial](artificial-intelligence/ai-rag-indexer/ai-rag-indexer-tutorial.md)
+    * [API Reference](artificial-intelligence/ai-rag-indexer/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: ai-rag-indexer-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/artificial-intelligence/ai-rag-indexer/api-reference/api.yml)
 * [Authorization](authorization/README.md)
   * [OAuth Service](authorization/oauth-service/README.md)
     * [API Reference](authorization/oauth-service/api-reference/README.md)
