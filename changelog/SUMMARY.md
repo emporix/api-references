@@ -8,6 +8,8 @@
 
 ## 2025
 
+* [2025-12-04: AI Service - Deprecation of SSE transport protocol](2025/2025-12-04-ai-deprecations.md)
+* [2025-12-04: AI Service - Streamable HTTP MCP servers](2025/2025-12-04-ai.md)
 * [2025-11-26: Category Tree – filtering category trees by category IDs](2025/2025-11-26-category-tree.md)
 * [2025-11-26: Product Service – category and customer segment IDs in product response](2025/2025-11-26-product.md)
 * [2025-11-25: AI Service - Agent Logs](2025/2025-11-25-ai.md)

@@ -3322,7 +3322,7 @@ components:
         transport: streamable_http
         enabled: true
         config:
-          url: 'http://localhost:7900/cmp'
+          url: 'http://localhost:7900/mcp'
           authorizationHeaderName: Authorization
           authorizationHeaderTokenId: token-id
     TokenRequest:
