@@ -31,16 +31,16 @@ The Emporix API Quote Service is only available to tenants that use the Price v2
 
 The Quote Service supports the following status values:
 
-| Status | Description | Set By | When Used |
-|--------|-------------|--------|-----------|
-| `CREATING` | Quote is being created (temporary state) | System | During quote creation process |
-| `AWAITING` | Quote is ready for employee review | System | After quote is created by a customer |
-| `OPEN` | Quote is ready for customer review | Merchant/Employee | When employee sends the quote for customer approval |
-| `IN_PROGRESS` | Active negotiation/changes are being made | Employee | When employee is modifying the quote |
-| `ACCEPTED` | Customer accepted the quote | Customer | Customer agrees to terms, triggers order creation |
-| `DECLINED` | Customer rejected the quote | Customer | Customer doesn't want to proceed |
-| `DECLINED_BY_MERCHANT` | Employee/merchant rejected the quote | Employee | Merchant cannot fulfill the request |
-| `EXPIRED` | Quote validity period has passed | System | When `validTo` date is exceeded |
+| Status                 | Description                               | Set By            | When Used                                           |
+| ---------------------- | ----------------------------------------- | ----------------- | --------------------------------------------------- |
+| `CREATING`             | Quote is being created (temporary state)  | System            | During quote creation process                       |
+| `AWAITING`             | Quote is ready for employee review        | System            | After quote is created by a customer                |
+| `OPEN`                 | Quote is ready for customer review        | Merchant/Employee | When employee sends the quote for customer approval |
+| `IN_PROGRESS`          | Active negotiation/changes are being made | Employee          | When employee is modifying the quote                |
+| `ACCEPTED`             | Customer accepted the quote               | Customer          | Customer agrees to terms, triggers order creation   |
+| `DECLINED`             | Customer rejected the quote               | Customer          | Customer doesn't want to proceed                    |
+| `DECLINED_BY_MERCHANT` | Employee/merchant rejected the quote      | Employee          | Merchant cannot fulfill the request                 |
+| `EXPIRED`              | Quote validity period has passed          | System            | When `validTo` date is exceeded                     |
 
 Possible status transitions:
 
@@ -54,10 +54,10 @@ Possible status transitions:
 * `OPEN` -> `ACCEPTED`
 * `OPEN` -> `IN_PROGRESS`
 
-{% hint %}
-  When an employee creates a quote, its status is `CREATING`.
+{% hint style="info" %}
+When an employee creates a quote, its status is `CREATING`.
 
-  When a customer creates a quote, its status is `AWAITING`.
+When a customer creates a quote, its status is `AWAITING`.
 {% endhint %}
 
 The whole quote flow and status representations is visible in the diagram:
@@ -173,13 +173,13 @@ The following merchant information is necessary for the pdf file with quote to b
   * `merchantZipCode`
 
 {% hint style="warning" %}
-* The pdf with quote is sent to the customer in the notification email upon the quote creation or change. It's also available for the customer on the storefront.
-* If no employee is specified in a quote request, a default employee configured in the tenant settings is used.
+- The pdf with quote is sent to the customer in the notification email upon the quote creation or change. It's also available for the customer on the storefront.
+- If no employee is specified in a quote request, a default employee configured in the tenant settings is used.
 {% endhint %}
 
 {% stepper %}
 {% step %}
-### Retrieve your site's mixins
+#### Retrieve your site's mixins
 
 First, you need to check the current site mixin configuration for the `merchantInfo` parameter by sending a request to the [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
 
@@ -195,9 +195,9 @@ curl -i -X GET
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 {% endstep %}
-{% step %}
 
-### Update merchant information
+{% step %}
+#### Update merchant information
 
 Update the merchant information for your tenant's site by sending a request to the [Partially updating a site mixin](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#patch-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
 
@@ -216,12 +216,12 @@ curl -i -X PATCH
     "active": true
   }'
 ```
-
 {% endstep %}
-{% step %}
-### Update available quote status change reasons
 
-There are four default reasons that your customers and employees can select for the `DECLINED` or `CHANGED` quote statuses, as mentioned in [Quote decision reasons](#quote-decision-reasons).
+{% step %}
+#### Update available quote status change reasons
+
+There are four default reasons that your customers and employees can select for the `DECLINED` or `CHANGED` quote statuses, as mentioned in [Quote decision reasons](quote.md#quote-decision-reasons).
 
 You can create new quote status change reasons, by sending a request to the [Creating a reason for changing the quote status](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-reason#post-quote-tenant-quote-reasons) endpoint.
 
@@ -246,11 +246,13 @@ curl -i -X POST
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 Site Settings:
+
 {% content-ref url="../../configuration/site-settings-service/api-reference/" %}
 [api-reference](../../configuration/site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 Quote:
+
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
@@ -261,8 +263,7 @@ A quote request can be created both by a customer directly on your business' sto
 
 ### Creating a quote by a customer
 
-On the storefront, a customer adds selected products to cart. At checkout, they can proceed to purchasing the items, or requesting a quote.
-If a customer places a quote request, the [Creating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) endpoint is called.
+On the storefront, a customer adds selected products to cart. At checkout, they can proceed to purchasing the items, or requesting a quote. If a customer places a quote request, the [Creating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) endpoint is called.
 
 {% hint style="warning" %}
 The following scope is granted to a customer group:
@@ -470,9 +471,10 @@ curl -L
     }
   ]'
 ```
+
 ### Approving a quote by an employee
 
-When an employee accepts a quote, they approve it to be sent to the customer. Depending on the flow, the quote status changes from 'AWAITING', 'CREATING' or "IN_PROGRESS" to 'OPEN"'.
+When an employee accepts a quote, they approve it to be sent to the customer. Depending on the flow, the quote status changes from 'AWAITING', 'CREATING' or "IN\_PROGRESS" to 'OPEN"'.
 
 {% hint style="warning" %}
 The following scope is required:
@@ -523,8 +525,7 @@ curl -i -X PATCH
 
 ### Declining a quote by a customer
 
-When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action.
-On the storefront, when a customer declines the quote, a request to the following endpoint is sent: [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
+When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action. On the storefront, when a customer declines the quote, a request to the following endpoint is sent: [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
 
 {% hint style="warning" %}
 The following scope is granted to the customer group:
@@ -551,6 +552,7 @@ curl -i -X PATCH
     }
   }'
 ```
+
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
@@ -559,16 +561,16 @@ curl -i -X PATCH
 
 ## External prices and products support
 
-External pricing allows you to supply your own price data directly in quote items, instead of relying on predefined internal price lists in the Emporix system.  
+External pricing allows you to supply your own price data directly in quote items, instead of relying on predefined internal price lists in the Emporix system.\
 This is useful when pricing is managed by an external system (for example, ERP) and you want to inject those values into quotes.
 
-By default, all products and prices in Emporix are **internal**, they reference the entities that are stored in Emporix catalog and price lists.  
+By default, all products and prices in Emporix are **internal**, they reference the entities that are stored in Emporix catalog and price lists.\
 However, Quote Service supports **external prices** and **external products** as well, giving you full control over the pricing data you send.
 
 Each price object includes a `type` field that defines whether the object is an internal one, or from an external source.
 
-* `INTERNAL` - Default behavior, the system looks up for price information using `priceId`. 
-* `EXTERNAL` - Allows you to provide your own price details directly in the quote request. 
+* `INTERNAL` - Default behavior, the system looks up for price information using `priceId`.
+* `EXTERNAL` - Allows you to provide your own price details directly in the quote request.
 
 When using `EXTERNAL` pricing, you can send complete price details (for example, net and gross values) without storing them in Emporix.
 
@@ -629,20 +631,19 @@ Example of an item in a quote request using an external product and price, where
 }
 ```
 
-### Support for mixins and metadata 
+### Support for mixins and metadata
 
 Mixins and metadata can be added to:
 
 * Quote level itself
-* Quote items 
+* Quote items
 * Products within quote items
 
 PATCH operations support adding, replacing, and removing mixin values at all these levels.
 
 ## Quote pdf generation
 
-To generate a quote pdf, send a request to the [Creating a quote PDF](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-pdf) endpoint. 
-The request does not require any body, you only need a tenant name and quote ID.
+To generate a quote pdf, send a request to the [Creating a quote PDF](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-pdf) endpoint. The request does not require any body, you only need a tenant name and quote ID.
 
 ```bash
 curl -L 

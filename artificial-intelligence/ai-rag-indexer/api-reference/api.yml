@@ -20,7 +20,7 @@ paths:
       - $ref: '#/components/parameters/path_tenant'
       - $ref: '#/components/parameters/path_type'
     post:
-      summary: Reindexing the entities of given type.
+      summary: Reindexing the entities of given type
       operationId: GET-ai-rag-indexer-reindex
       responses:
         '204':
@@ -33,10 +33,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Triggers a full reindexing process for the selected entity type. The process retrieves all entities of the given type, generates embeddings for each of them, and updates the corresponding records in the Vector Database.
-        
-        ### Required scopes
-
-        * `ai.agent_manage`
       security:
         - OAuth2:
             - ai.agent_manage
@@ -47,7 +43,7 @@ paths:
       - $ref: '#/components/parameters/path_tenant'
       - $ref: '#/components/parameters/path_type'
     get:
-      summary: Listing fields for RAG search.
+      summary: Listing fields for RAG search
       operationId: GET-ai-rag-indexer-retrieve-rag-metadata
       responses:
         '200':
@@ -84,11 +80,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        Returns list of fields that can be used to create embeddings for RAG search.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
+        Returns a list of fields that can be used to create embeddings for RAG search.
       security:
         - OAuth2:
             - ai.agent_read
@@ -99,7 +91,7 @@ paths:
       - $ref: '#/components/parameters/path_tenant'
       - $ref: '#/components/parameters/path_type'
     get:
-      summary: Listing fields for vector search filtering.
+      summary: Listing fields for vector search filtering
       operationId: GET-ai-rag-indexer-retrieve-filter-metadata
       responses:
         '200':
@@ -128,11 +120,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        Retrieves list of fields which can be used for vector search filtering. Filtering is applied before RAG retrieval stage.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
+        Retrieves alist of fields which can be used for vector search filtering. Filtering is applied before RAG retrieval stage.
       security:
         - OAuth2:
             - ai.agent_read
@@ -154,7 +142,7 @@ components:
           description: Description of the field.
         type:
           type: string
-          description: Type of the field
+          description: Type of the field.
           enum:
             - string
             - integer

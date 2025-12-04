@@ -12,6 +12,17 @@
             kind: openapi
             spec: ai-api
       ```
+  * [AI RAG Indexer](../artificial-intelligence/ai-rag-indexer/api-reference/README.md)
+    * ```yaml
+      props:
+        models: true
+      type: builtin:openapi
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: ai-rag-indexer-api
+      ```
   * [Approval](../companies-and-customers/approval-service/approval-api-reference/README.md)
     * ```yaml
       props:

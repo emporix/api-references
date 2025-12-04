@@ -7,6 +7,18 @@ seo:
 icon: graduation-cap
 layout:
   width: wide
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
 ---
 
 # Product Tutorial
@@ -19,10 +31,10 @@ This tutorial presents how to create a basic product. To learn more about types 
 
 Take a look at the relationships between prices and other resources in the Emporix Commerce Engine:
 
-<figure><img src="../../static/product/product_diagram.svg" width="700" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/product_diagram.svg" alt="" width="700"><figcaption></figcaption></figure>
 
 {% hint style="warning" %}
-Countries and regions are predefined in the Emporix API [Country Service](/configuration/country-service/README.md). You can check which countries and regions are available by sending requests to the following endpoints:
+Countries and regions are predefined in the Emporix API [Country Service](../../configuration/country-service/). You can check which countries and regions are available by sending requests to the following endpoints:
 
 * [Retrieving all countries](https://developer.emporix.io/api-references/api-guides/configuration/country-service/api-reference/countries#get-country-tenant-countries)
 * [Retrieving all regions](https://developer.emporix.io/api-references/api-guides/configuration/country-service/api-reference/regions#get-country-tenant-regions)
@@ -32,7 +44,7 @@ Creating your first product is a process made up of defining sales tax rates, ad
 
 {% stepper %}
 {% step %}
-### Define sales tax rates
+#### Define sales tax rates
 
 Sales tax rates are stored in tax configurations. Each configuration indicates a country and defines tax classes applicable to it.
 
@@ -84,8 +96,9 @@ curl -i -X POST
   }'
 ```
 {% endstep %}
+
 {% step %}
-### Add products
+#### Add products
 
 To add a single basic product, send a request to the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
@@ -183,17 +196,14 @@ curl -i -X POST
 }'
 ```
 {% endstep %}
+
 {% step %}
+#### Add media for a product
 
-### Add media for a product
-
-To add media files, for example images or videos, for a particular product, you can upload them directly to the Emporix database, or link to their location on an external website.
-In the following example, we are creating a `public` type of an asset that is linked to the product of our choice by sending a request to the Creating an asset endpoint with the `media.asset_manage` scope.
+To add media files, for example images or videos, for a particular product, you can upload them directly to the Emporix database, or link to their location on an external website. In the following example, we are creating a `public` type of an asset that is linked to the product of our choice by sending a request to the Creating an asset endpoint with the `media.asset_manage` scope.
 
 {% hint style="warning" %}
-Sending a json/application request to the Creating an asset endpoint does **not** mean that the asset is uploaded to the database. It is only linked to the resource (category or product).
-If you want to upload the asset to the database, send a multipart request to the [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint.
-For more information, check out the [_Media Management Tutorials_](../../media/media/media.md).
+Sending a json/application request to the Creating an asset endpoint does **not** mean that the asset is uploaded to the database. It is only linked to the resource (category or product). If you want to upload the asset to the database, send a multipart request to the [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint. For more information, check out the [_Media Management Tutorials_](../../media/media/media.md).
 {% endhint %}
 
 ```bash
@@ -206,7 +216,6 @@ curl -i -X POST
 ```
 {% endstep %}
 {% endstepper %}
-
 
 ## How to create a bundle of personalized products
 
@@ -227,7 +236,7 @@ To create personalized products and then group them in a bundle, perform the fol
 
 {% stepper %}
 {% step %}
-### Create a product template
+#### Create a product template
 
 You can create a product template that contains additional attributes describing your product. To create a new product template, call the [Creating a new product template](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#post-product-tenant-product-templates) endpoint.
 
@@ -276,10 +285,10 @@ curl -i -X POST
 ```
 
 The `id` from the response is further referred to as \{{product\_template\_Id\}}.
-
 {% endstep %}
+
 {% step %}
-### Create a product by using a product template
+#### Create a product by using a product template
 
 By applying a product template, you can create a product that contains additional attributes, which are included in the product's `mixins.productTemplateAttributes` field.
 
@@ -364,15 +373,14 @@ curl -i -X POST
   }
 }
 ```
-
 {% endstep %}
+
 {% step %}
-### Create a bundle of products
+#### Create a bundle of products
 
 You can group together two or more products that already exist in the system so that they can be sold at one collective price. To achieve that, call the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 In this example, we you see how to create a bundle of the T-shirt product we created above, and join it with the socks product that already exists.
-
 
 ```bash
 curl -i -X POST 
@@ -443,8 +451,6 @@ The value of the `productId` from the response is the \{{bundle\_Id\}}.
 {% endstep %}
 {% endstepper %}
 
-
-
 ## How to create a parent variant product with variants
 
 Variants are derivatives of the parent variant product. They contain the same attributes as their parent variant, but assume different attribute values.
@@ -455,8 +461,7 @@ The `product.product_publish` scope is only required if you want to publish the 
 
 {% stepper %}
 {% step %}
-
-### Create a parent variant product
+#### Create a parent variant product
 
 Variants are created automatically whenever their parent variant product is created or updated. The combinations of variants are created based on the attributes defined in the product template applied to the parent variant, and the attributes and values specified in the `variantAttributes` field of the parent variant.
 
@@ -569,14 +574,11 @@ curl -i -X POST
 }'
 ```
 {% endstep %}
+
 {% step %}
 If you want to create multiple `parent_variant` products at the same time, send a request to the [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../label-service/api-reference/" %}
-[api-reference](../label-service/api-reference/)
-{% endcontent-ref %}
 
 ```bash
 curl -i -X POST \
@@ -858,14 +860,8 @@ curl -i -X POST \
 ]
 }'
 ```
-
-
 {% endstep %}
-
 {% endstepper %}
-
-
-
 
 ## How to create variants with new attributes and values
 
@@ -881,7 +877,7 @@ The `product.product_publish` scope is only required if you want to publish the 
 
 {% stepper %}
 {% step %}
-### Update a product template with new attributes and values
+#### Update a product template with new attributes and values
 
 To specify new attributes for your product's variants, add them in the attributes field by calling the Updating a product template endpoint. Here, we've added a new key `size` to the list of available attributes.
 
@@ -994,13 +990,13 @@ curl -i -X PUT
 }'
 ```
 {% endstep %}
+
 {% step %}
-### Update the existing parent variant product with the new product template
+#### Update the existing parent variant product with the new product template
 
 Since updating the product template results in it being assigned a new version, update the parent variant by sending a request to the Partially updating a product endpoint and providing the new `template.version` value.
 
 {% hint style="warning" %}
-
 In the `variantAttributes` field, specify the attributes and attribute values that the variant products will assume. Based on the specified attributes, variant product combinations will be created automatically.
 {% endhint %}
 
@@ -1060,7 +1056,6 @@ As a result, new product variants are created automatically, in combinations tha
 {% endstep %}
 {% endstepper %}
 
-
 ## How to override variant attribute values
 
 You may choose to update the basic fields of a particular variant, for example `name`, `description`, or `relatedItems`.
@@ -1071,7 +1066,7 @@ The `product.product_publish` and `product.product_unpublish` scopes are only re
 
 {% stepper %}
 {% step %}
-### Updating a variant with new attribute values
+#### Updating a variant with new attribute values
 
 By default, all variant products inherit their attributes from the parent variant. You need to include the name of the attribute in the `metadata.overriden` field to be able to replace the attribute values.
 
@@ -1132,9 +1127,7 @@ curl -i -X PUT
 If you want to update multiple products, use the bulk update feature to update several products in one operation. Send a request to the [Upserting multiple](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk) products endpoint.
 
 {% hint style="warning" %}
-
-The `product.product_update` scope is required.
-The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the products on the update.
+The `product.product_update` scope is required. The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the products on the update.
 {% endhint %}
 
 ```bash
@@ -1210,8 +1203,7 @@ curl -i -X PUT
 }'
 ```
 
-When the update request is sent successfully, the response for a particular product is returned at the same position (index) at which it is located in the request body.
-The expected response is as follows:
+When the update request is sent successfully, the response for a particular product is returned at the same position (index) at which it is located in the request body. The expected response is as follows:
 
 ```xml
 [
@@ -1284,17 +1276,20 @@ When something goes wrong, you might see some error message in the response. See
 
 **Related services:**
 
-Tax: 
+Tax:
+
 {% content-ref url="../../prices-and-taxes/tax-service/api-reference/" %}
 [api-reference](../../prices-and-taxes/tax-service/api-reference/)
 {% endcontent-ref %}
 
-Product: 
+Product:
+
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
 Media:
+
 {% content-ref url="../../media/media/api-reference/" %}
 [api-reference](../../media/media/api-reference/)
 {% endcontent-ref %}
