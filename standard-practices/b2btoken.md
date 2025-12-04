@@ -8,10 +8,25 @@ tocMaxDepth: 2
 editPage:
   disable: true
 label: B2B Customers - Legal Entity
+description: >-
+  The B2B Token embeds a customer’s selected legal entity in their authorization
+  token, enabling consistent access control and data visibility without
+  re-login.
 icon: business-time
 layout:
   width: wide
-description: The B2B Token embeds a customer’s selected legal entity in their authorization token, enabling consistent access control and data visibility without re-login.
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
 ---
 
 # B2B Token
@@ -38,9 +53,8 @@ The token approach ensures a consistent user experience, and centralized securit
 
 1. The B2B customer logs in and chooses the legal entity they represent.
 2. The Customer Service verifies the user's assignment to the selected legal entity.
-3. A new `refreshToken` is issued to a customer by the [Customer Service](../companies-and-customers/customer-management/api-reference), embedding the selected legal entity.
-4. In the case the customer changes the legal entity, the storefront triggers the [Refreshing a customer token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken) endpoint to generate a new token based on the previous one but with the changed `legalEntityId` information.
-Thanks to that the customer isn't forced to log in again.
+3. A new `refreshToken` is issued to a customer by the [Customer Service](../companies-and-customers/customer-service/api-reference/), embedding the selected legal entity.
+4. In the case the customer changes the legal entity, the storefront triggers the [Refreshing a customer token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken) endpoint to generate a new token based on the previous one but with the changed `legalEntityId` information. Thanks to that the customer isn't forced to log in again.
 5. The token with the selected legal entity is passed to other services to determine the right scopes for the user.
 
 The diagram shows how the legal entity information is fetched and passed:
@@ -67,5 +81,5 @@ sequenceDiagram
 ```
 
 {% hint style="warning" %}
-Find out more about the Customer Service and token generation in the API reference [Customer Service (Customer Managed)](../companies-and-customers/customer-management/api-reference) documentation.
+Find out more about the Customer Service and token generation in the API reference [Customer Service (Customer Managed)](../companies-and-customers/customer-service/api-reference/) documentation.
 {% endhint %}

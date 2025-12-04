@@ -1,12 +1,24 @@
 ---
+icon: graduation-cap
 layout:
   width: wide
-icon: graduation-cap
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
 ---
 
 # AI Tutorials
 
-With Emporix support for AI, you can enhance text for product descriptions and generate AI completions. 
+With Emporix support for AI, you can enhance text for product descriptions and generate AI completions.
 
 ## Before you start
 
@@ -41,8 +53,8 @@ You can generate the text by sending a request based on a provided prompt. To se
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../artificial-intelligence/ai-service/api-reference/" %}
-[api-reference](../../artificial-intelligence/ai-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -59,15 +71,12 @@ curl -i -X POST
 
 ## How to generate an AI completion
 
-Completion is generated based on chat history. It's a generated response or continuation of a conversation, crafted by the AI to address the given input in context.
-It can include answering questions, providing suggestions, or completing a sentence or thought.
-The currently supported AI engine for the completion is [OpenAI](https://platform.openai.com/).
-To generate the AI completion, send the request using the [AI Completions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/ai-completions) endpoint.
+Completion is generated based on chat history. It's a generated response or continuation of a conversation, crafted by the AI to address the given input in context. It can include answering questions, providing suggestions, or completing a sentence or thought. The currently supported AI engine for the completion is [OpenAI](https://platform.openai.com/). To generate the AI completion, send the request using the [AI Completions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/ai-completions) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../artificial-intelligence/ai-service/api-reference/" %}
-[api-reference](../../artificial-intelligence/ai-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -94,10 +103,10 @@ To see some more examples of using AI at Emporix, check our guides for Managemen
 
 Create an AI agent using one of Emporix agent template.
 
-{% stepper %}
-{% step %}
-### Get the agent template ID 
+#### Get the agent template ID
+
 To create an agent, you'll need a template ID.
+
 * Either, retrieve all the available agent templates by calling the [Listing available agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template) endpoint.
 
 ```bash
@@ -105,6 +114,7 @@ curl -L \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/templates' \
   --header 'Accept: */*'
 ```
+
 * Use the [Searching agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template) endpoint to find the specific agent template.
 
 ```bash
@@ -116,11 +126,11 @@ curl -L \
     "q": "name:~Support"
   }'
 ```
-Copy and note down the template ID of your interest.
-{% endstep %}
 
-{% step %}
-### Create an agent
+Copy and note down the template ID of your interest.
+
+#### Create an agent
+
 Call the [Creating agent instance based on the template](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template) endpoint to add an agent to your system. In the path parameter, provide the `templateID` you have copied.
 
 ```bash
@@ -139,13 +149,11 @@ curl -L \
   }'
 ```
 
-{% endstep %}
-
 ## How to search for the AI Agents
 
 When you want to add a trigger for an enabled AI agent through API, for example as a part of a digital process or from an external system, you need to fetch the specific agent details.
 
-* Use the [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/search) endpoint to pass a query parameter against the agents in your system. 
+* Use the [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/search) endpoint to pass a query parameter against the agents in your system.
 
 For example, to find agents of `Complaint` type:
 
@@ -159,7 +167,7 @@ curl -L \
   }'
 ```
 
-* If you know the agent's ID, you can use the [Retrieving the agent by ID]() endpoint.
+* If you know the agent's ID, you can use the [Retrieving the agent by ID](ai-tutorial.md) endpoint.
 
 ```bash
 curl -L \
@@ -169,7 +177,7 @@ curl -L \
 
 You can use the retrieved details to establish the required connections and triggers for the AI Agent.
 
-## How to communicate with an Agent 
+## How to communicate with an Agent
 
 For some Agents, it is convenient to trigger their actions by API calls. To allow communication with the selected agent, you can use the dedicated endpoints.
 
@@ -220,8 +228,7 @@ In the above example, the German Translation Agent is triggered. The Agent acts 
 }
 ```
 
-* When it is more pragmatic to wait for the agent's response, for example, when the agent needs to process more data which takes more time, or the agent needs to wait for another task to be completed, use the asynchronous communication. 
-Send the request to the agent using the [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/chat-async).
+* When it is more pragmatic to wait for the agent's response, for example, when the agent needs to process more data which takes more time, or the agent needs to wait for another task to be completed, use the asynchronous communication. Send the request to the agent using the [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/chat-async).
 
 ```bash
 curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-async' \
@@ -243,6 +250,7 @@ In async requests, the response contains the `jobId` parameter, for example:
     "jobId": "68e3a593b2cb061e36630849"
 }
 ```
+
 Use the `jobId` to check details of the job through the [Retrieving agent job by its ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/jobs) endpoint. For example:
 
 ```bash
@@ -255,9 +263,10 @@ The job entity contains information about the request and response from the agen
 
 ## How to export and import AI agents
 
-Exporting AI agents lets you migrate your agents configuration together with their dependent tools and MCP servers. 
+Exporting AI agents lets you migrate your agents configuration together with their dependent tools and MCP servers.
 
 You can use the export and import to:
+
 * Back up agents for disaster recovery
 * Migrate agents from development to production
 * Share agents across different tenants
@@ -265,7 +274,8 @@ You can use the export and import to:
 
 {% stepper %}
 {% step %}
-### Export agents
+#### Export agents
+
 Collect the `agentIds` you want to export, then call the [Exporting agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/export) endpoint.
 
 ```bash
@@ -291,7 +301,8 @@ Store both `data` and `checksum`. You will need them when importing.
 {% endstep %}
 
 {% step %}
-### Import agents
+#### Import agents
+
 Use the payload obtained during export and call the [Importing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/import) endpoint. Import requires the `ai.agent_manage` scope.
 
 ```bash
@@ -304,20 +315,16 @@ curl -L \
     "data": "<BASE64_PAYLOAD_FROM_EXPORT>",
     "checksum": "<CHECKSUM_FROM_EXPORT>"
   }'
-  ```
-  
-  The response summarizes what was imported and returns a `jobId`. 
+```
 
-  * If imported tools or MCP servers already exist in the target tenant, they're reused.
-  * If they don't exist, new instances are created. If a token is required, they get a **disabled state** for your review, if no token is required, they get **enabled** state.
-  * Imported agents are also disabled by default as a safety measure.
+The response summarizes what was imported and returns a `jobId`.
 
+* If imported tools or MCP servers already exist in the target tenant, they're reused.
+* If they don't exist, new instances are created. If a token is required, they get a **disabled state** for your review, if no token is required, they get **enabled** state.
+* Imported agents are also disabled by default as a safety measure.
 {% endstep %}
 {% endstepper %}
 
 {% hint style="info" %}
-  
 After importing the agent, review the entities in the response summary and check if any required API tokens or credentials need to be configured before enabling the agent.
-
 {% endhint %}
-

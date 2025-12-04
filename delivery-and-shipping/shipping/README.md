@@ -1,7 +1,19 @@
 ---
+icon: person-carry-box
 layout:
   width: wide
-icon: person-carry-box
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
 ---
 
 # Shipping Service
@@ -21,5 +33,5 @@ Defines shipping zones & delivery windows.
 * Better organizes delivery routes
 * Minimizes costs for shipping and delivery, for example, by creating zones that align with truck routes
 * Validates date combinations, for example:
-    * Delivery on a single date 22/12/2023 and non-delivery on the same single date 22/12/2023 is not possible 
-    * Delivery on a single date 22/12/2023 which overrides a non-delivery period 21-28/12/2023 is possible 
+  * Delivery on a single date 22/12/2023 and non-delivery on the same single date 22/12/2023 is not possible&#x20;
+  * Delivery on a single date 22/12/2023 which overrides a non-delivery period 21-28/12/2023 is possible&#x20;

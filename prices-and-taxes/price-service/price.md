@@ -5,6 +5,18 @@ seo:
 icon: graduation-cap
 layout:
   width: wide
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
 ---
 
 # Price Tutorials
@@ -13,7 +25,7 @@ layout:
 
 Take a look at the relationships between prices and other resources in the Emporix Commerce Engine.
 
-<figure><img src="../../static/price/pricing_class_diagram.svg" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/pricing_class_diagram.svg" alt=""><figcaption></figcaption></figure>
 
 This tutorial will walk you through the following steps:
 
@@ -36,7 +48,7 @@ To add a new entry to your configuration of currencies, you need to send a reque
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../configuration/currency-service/api-reference" %}
+{% content-ref url="../../configuration/currency-service/api-reference/" %}
 [api-reference](../../configuration/currency-service/api-reference/)
 {% endcontent-ref %}
 
@@ -67,8 +79,8 @@ To create a new price model, you need to send a request to the [Creating a new p
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../price-service/api-reference/" %}
-[api-reference](../price-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -117,8 +129,8 @@ Price models that use the basic pricing strategy have one tier. To retrieve its 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../price-service/api-reference/" %}
-[api-reference](../price-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -136,8 +148,8 @@ To define a new price for a product, you need to send a request to the [Creating
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../price-service/api-reference/" %}
-[api-reference](../price-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -397,7 +409,7 @@ Here's an example of a request body for a tiered and volume-based price:
 
 Take a look at the relationship between prices and customers in the Emporix Commerce Engine:
 
-<figure><img src="../../static/price/price_customer.svg" alt="" width="400"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/price_customer.svg" alt="" width="400"><figcaption></figcaption></figure>
 
 To make a price valid only for specific customers, you need to add their IDs to the `principals` array inside an applicable `Price` object.
 
@@ -446,7 +458,7 @@ Price lists allow you to create personalized sets of prices for selected product
 
 Take a look at the relationships between price lists and other resources in the Emporix Commerce Engine.
 
-<figure><img src="../../static/price/price_list_dependencies.svg" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/price_list_dependencies.svg" alt=""><figcaption></figcaption></figure>
 
 {% hint style="warning" %}
 Countries and regions are predefined in the Emporix API Country Service. You can check which countries and regions are available by sending requests to the following endpoints:
@@ -473,8 +485,8 @@ Make sure to set a value for the `currency` field in the request body. Otherwise
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../price-service/api-reference/" %}
-[api-reference](../price-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -528,8 +540,7 @@ curl -L
       "to": "2025-05-01T00:00:00.000Z"
     }
   }'
-  ```
-
+```
 
 ### Create a price in the list
 
@@ -543,8 +554,8 @@ To create a new list-specific price, you need to send a request to the [Adding a
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../price-service/api-reference/" %}
-[api-reference](../price-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -615,7 +626,7 @@ The process shown in the flowchart is repeated for each product indicated in the
 
 To find out how the price matching functionality works in detail, check out the flowchart.
 
-<figure><img src="../../static/price/price_matching2.svg" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/price_matching2.svg" alt=""><figcaption></figcaption></figure>
 
 {% hint style="warning" %}
 To check out the flowchart for the _Look for the best price in price lists_ subprocess, check out the [Influence of price lists on price matching](price.md#influence-of-price-lists-on-price-matching) section.
@@ -719,8 +730,8 @@ Start with defining a price model with [Creating a price model](https://develope
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../price-service/api-reference/" %}
-[api-reference](../price-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -762,8 +773,8 @@ Now, retrieve the automatically-generated ID of the pricing tier, use the [Retri
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../price-service/api-reference/" %}
-[api-reference](../price-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -777,8 +788,8 @@ Once you know the tier ID, define a price for the bananas, use the [Creating a n
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../price-service/api-reference/" %}
-[api-reference](../price-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -917,8 +928,8 @@ Check the best price for both one kilogram and ten kilograms of bananas:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../price-service/api-reference/" %}
-[api-reference](../price-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1069,8 +1080,8 @@ To calculate a gross price between countries, send a request to the [Matching pr
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../price-service/api-reference/" %}
-[api-reference](../price-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -1173,8 +1184,8 @@ To retrieve a price in the desired currency, send a request to the [Matching pri
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../price-service/api-reference/" %}
-[api-reference](../price-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash

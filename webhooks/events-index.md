@@ -52,7 +52,7 @@ icon: webhook
 {% hint style="info" %}
 **Learn about the `index.item-updated` event's specific behavior**
 
-####
+
 
 The `index.item-updated` webhook event is emitted whenever there is a change on an item in the system - the index is updated with the new information.\
 For the event to be triggered, a product must have at least one defined **price**, as it is the price that determines products indexing on a specific site.\
