@@ -25,3 +25,4 @@ This part of the Customer Service is managed by the customers on the storefront.
 * Generates proper authorization tokens:
     * Anonymous token - Used by the storefront to access public resources with read-only permissions; it allows customers to browse products, view prices, and add products to the cart and is not associated with any specific customer
     * SaaS (customer) token - A JSON Web Token (JWT) containing encrypted customer data; it functions similarly to the anonymous token, but is tied to a specific customer
+ 

@@ -29,4 +29,4 @@ To add item as a separate line, specify `keepAsSeparateLine` property in the `Ad
 
 ## Known problems
 
-Quotes do not support separate line items yet.
+Quotes do not support separate line items yet. 

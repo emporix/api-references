@@ -1382,3 +1382,4 @@ To support this functionality, the following order attributes are introduced:
 {% hint style="info" %}
 To check the end to end story for order splitting, see the [Vendor Tutorial - Order Split](../../companies-and-customers/vendor-service/vendor.md#order-split-example) example.
 {% endhint %}
+ 

@@ -15,3 +15,4 @@ The Emporix API Returns Service allows you to manage your returns.
 * Supports updates to individual return details by return ID
 * Facilitates partial updates for specific return attributes
 * Enables deletion of specific return entries when necessary
+ 

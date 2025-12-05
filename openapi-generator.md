@@ -58,3 +58,4 @@ mvn clean compile
 **Result:** This command generates the code out of API reference documentation in the `target` directory. You can see the generated classes under `/target/generated-sources/openapi/src/`.
 
 ![Generated classes](.gitbook/assets/openapi_gen.png)
+ 

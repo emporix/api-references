@@ -158,3 +158,4 @@ curl -i -X PATCH
 {% hint style="warning" %}
 The Catalog Service automatically checks for any category-deleted events. Every time a root category is deleted, it is automatically removed from all catalogs it belonged to.
 {% endhint %}
+ 

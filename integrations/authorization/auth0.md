@@ -15,3 +15,4 @@ Auth0 is a popular and widely used platform that provides tools to add authentic
 ## Auth0 configuration flow with social login diagram
 
 <figure><img src="../../.gitbook/assets/auth_diagram.svg" alt=""><figcaption></figcaption></figure>
+ 

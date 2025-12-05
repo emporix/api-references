@@ -31,3 +31,4 @@ A new attribute `vendor` has been added to the cart item's product. The value is
 ## Known problems
 
 There are no known problems.
+ 

@@ -17,3 +17,4 @@ Collect reward points and exchange them for coupons.
 * Increases customer loyalty
 * Provides possibility to reward customers for their spending
 * Encourages increased customer spending
+ 

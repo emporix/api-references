@@ -6,3 +6,4 @@ icon: cash-register
 
 # Checkout
 
+ 

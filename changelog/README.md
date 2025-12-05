@@ -15,3 +15,4 @@ Find out what has been recently changed in the Emporix system.
 <img src="../static/icons/minorChange.png" alt="" data-size="line"> - minor change
 
 <img src="../static/icons/deprecation.png" alt="" data-size="line"> - deprecation 
+ 

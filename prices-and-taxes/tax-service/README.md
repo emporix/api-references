@@ -23,3 +23,4 @@ Creates, manages and updates tax (VAT, Sales Tax, MWst) and tax classes.
 * Calculates tax correctly based on where a product is shipped
 * Charges no additional costs for subscribing to an external tax calculation provider (for more complex tax requirements, an external tax service calculator is recommended)
 * Supports an unlimited number of tax classes
+ 

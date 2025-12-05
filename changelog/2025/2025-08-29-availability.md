@@ -37,3 +37,4 @@ New field `vendorId` was added to the availability response. Vendor employees ca
 ## Known problems
 
 There are no known problems.
+ 

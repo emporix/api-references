@@ -17,3 +17,4 @@ The OAuth Service allows you to generate a service token type.
 The tokens related to the customer, anonymous or SaaS, are generated with the Customer Service. Refer to [Customer Service (Customer Managed)](../../companies-and-customers/customer-service/api-reference/) for more information.
 
 {% endhint %}
+ 
