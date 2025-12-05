@@ -4,7 +4,7 @@ icon: arrows-rotate-reverse
 
 # Changelog
 
-Find out what has been recently changed in the Emporix system.
+Find out what has been recently changed in the Emporix system. 
 
 <img src="../static/icons/newFeature.png" alt="" data-size="line"> - new feature
 
