@@ -18,3 +18,4 @@ Holds and manages a list of currencies available for the tenant.
 * Optionally exchanges currencies, for example, if your PSP processes prices in USD only
 * Sets prices for different markets (for more information, see the Price Service)
 * Supports an unlimited number of currencies
+ 

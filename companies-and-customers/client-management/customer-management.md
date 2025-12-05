@@ -344,3 +344,4 @@ As a part of the group assignment you can decide how the contact assignments are
 * **DISABLED**: Contacts remain only in the company where they were assigned, with no propagation.
 
 Propagation happens only at the moment of assignment - creating the contact in the selected company also creates corresponding contacts in related companies according to the chosen direction.
+ 

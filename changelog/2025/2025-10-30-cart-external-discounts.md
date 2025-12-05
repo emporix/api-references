@@ -48,3 +48,4 @@ Applying external discounts to a cart requires the `cart.cart_manage_external_pr
 
 There are no known problems.
 
+ 

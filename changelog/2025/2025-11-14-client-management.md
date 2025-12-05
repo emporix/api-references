@@ -29,3 +29,4 @@ A new endpoint has been added to retrieve a legal entity along with all of its p
 
 There are no known problems.
 
+ 

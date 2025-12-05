@@ -50,3 +50,4 @@ Request example:
 ## Keycloak configuration flow with social login diagram
 
 <figure><img src="../../.gitbook/assets/keycloak_diagram.svg" alt=""><figcaption></figcaption></figure>
+ 

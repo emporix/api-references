@@ -2472,3 +2472,4 @@ When you add the same product first as an internal one and then as an external, 
   item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false 
   item0: productA, external, priceY, qty:1, keepAsSeparateLineItem=false
 ```
+ 

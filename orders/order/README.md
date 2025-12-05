@@ -19,3 +19,4 @@ Creates an order from cart.
 * Built for high volume/throughput
 * Eliminates order queues and virtual waiting queues
 * Benefits from automatic/elastic scaling to cope easily with peak order volumes
+ 

@@ -37,3 +37,4 @@ Manages customer enquiries as quotes that can be converted into orders.
 * Generates PDFs within Management Dashboard
 * Allows for managing quote reasons - the configurable status codes that be can used for customers within the business storefront
 * Provides time restrictions for quotes&#x20;
+ 

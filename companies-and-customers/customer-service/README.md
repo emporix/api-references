@@ -22,3 +22,4 @@ This part of the Customer Service is managed in the tenant by employees on behal
 * Provides convenient login and removes login barriers with SSO for social logins
 * Captures data important for the business to serve customers better
 * Ensures secure login for customers to access their profiles
+ 

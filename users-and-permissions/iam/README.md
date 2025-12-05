@@ -20,3 +20,4 @@ With Identity and Access Management (IAM) you can ensure that only users with th
 * Reduces notifications by freeing up inboxes with fewer individual permission requests
 * Prevents data leaks by ensuring that only specific user groups have access to sensitive data
 * Provides a seamless user experience, offering a holistic access experience across APIs and the dashboard
+ 
