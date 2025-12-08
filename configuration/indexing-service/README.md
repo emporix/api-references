@@ -12,3 +12,4 @@ Allows management of indexing configuration.
 
 * Supports the following index provider:
   * [Algolia](https://www.algolia.com/)
+ 

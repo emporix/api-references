@@ -146,3 +146,4 @@ You can use your Emporix tenant ID as application ID in Svix.
 To receive notifications about the events you subscribed to in [_Subscribe to events_](webhooks-tutorial.md#subscribe-to-events), on the Event Gateway, you need to configure endpoints that relate to those events.
 
 To configure endpoints by using the APIs, since we are currently using the Svix platform for this purpose, check out the "Add webhook endpoints/Using the API" section in the [official Svix documentation](https://docs.svix.com/quickstart).
+ 

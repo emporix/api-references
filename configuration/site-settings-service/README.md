@@ -18,3 +18,4 @@ Sites are used as virtual entities within a tenant. Sites can represent a web st
 * Creates sites specific to a brand, a customer, or a market
 * Runs stores within your store
 * Creates a virtual representation of your physical stores, warehouses, or other locations
+ 

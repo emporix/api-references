@@ -520,3 +520,4 @@ curl -i -X GET
 'https://api.emporix.io/coupon/{tenant}/referral-coupons/{customerNumber}'
 -H 'Authorization: Bearer '
 ```
+ 

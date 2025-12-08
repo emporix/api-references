@@ -41,4 +41,4 @@ Ensure that your systems and applications are configured to use the following ci
 &emsp;ciphers:
 &emsp;&emsp;&emsp;TLS_AKE_WITH_AES_128_GCM_SHA256 (ecdh_x25519)
 &emsp;&emsp;&emsp;TLS_AKE_WITH_AES_256_GCM_SHA384 (ecdh_x25519)
-&emsp;&emsp;&emsp;TLS_AKE_WITH_CHACHA20_POLY1305_SHA256 (ecdh_x25519)
+&emsp;&emsp;&emsp;TLS_AKE_WITH_CHACHA20_POLY1305_SHA256 (ecdh_x25519) 

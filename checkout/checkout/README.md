@@ -20,3 +20,4 @@ Converts a cart into a sales order by executing a number of checkout steps in se
 * Offers customers a wide range of payment options
 * Minimizes administrative costs by instantly informing customers whether their order has been accepted
 * Reduces the number of abandoned carts for occasional or first-time buyers
+ 

@@ -356,3 +356,4 @@ To learn more about the approval groups, see the [Approvals](https://developer.e
 
 To see an end-to-end flow from the storefront perspective, see the [User Management and Approvals](https://developer.emporix.io/ce/customer-use-cases/scenarios-introduction/right-roles#requesting-an-approval) use case.
 {% endhint %}
+ 

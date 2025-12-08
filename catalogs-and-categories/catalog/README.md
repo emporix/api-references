@@ -19,3 +19,4 @@ The Catalog Management gives you the tools required to structure your product of
   * Displays a list of catalogs holding a particular category
   * Views catalog details
 * Localizes your content
+ 

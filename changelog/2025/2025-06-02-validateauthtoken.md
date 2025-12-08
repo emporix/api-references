@@ -29,4 +29,4 @@ The [Validate a token](https://developer.emporix.io/api-references/api-guides/co
 
 ## Known problems
 
-There are no known problems.
+There are no known problems. 

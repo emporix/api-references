@@ -621,3 +621,4 @@ The product template functionality makes it possible to define a set of attribut
 **Known problems**
 
 The product templates functionality is in preview mode, which means the new endpoints may not be fully operational yet. When particular endpoints become available, they will be announced in [Release Notes](https://developer.emporix.io/releases?tag=all).
+ 
