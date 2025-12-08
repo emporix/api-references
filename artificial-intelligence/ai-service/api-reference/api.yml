@@ -2322,7 +2322,7 @@ components:
             provider:
               type: string
               description: Type of the LLM Provider. The self-hosted LLM allows you to provide your own LLMs. When using this providers, the `selfHostedParams.url` property cannot be omitted.
-              enum: [ self_hosted_ollama ]
+              enum: [ self_hosted_ollama, self_hosted_vllm ]
               example: self_hosted_ollama
           required:
             - provider

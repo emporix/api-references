@@ -8,6 +8,7 @@
 
 ## 2025
 
+* [2025-12-08: AI Service - support for vLLM provider](2025/2025-12-08-ai.md)
 * [2025-12-04: AI Service - Deprecation of SSE transport protocol](2025/2025-12-04-ai-deprecations.md)
 * [2025-12-04: AI Service - Streamable HTTP MCP servers](2025/2025-12-04-ai.md)
 * [2025-12-03: AI RAG Indexer - new endpoints for configuring RAG Search Functionality](2025/2025-12-03-ai-rag-indexer.md)
