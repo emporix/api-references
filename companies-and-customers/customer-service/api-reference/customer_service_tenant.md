@@ -12,6 +12,7 @@ Manage your customers conveniently using the Emporix API.
 
 The steps described in this tutorial demonstrate how you, as an employee, can manage the accounts of your customers on their behalf. 
 
+
 {% stepper %}
 {% step %}
 ### Get an employee access token
