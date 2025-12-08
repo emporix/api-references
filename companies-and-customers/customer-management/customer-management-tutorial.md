@@ -1,5 +1,5 @@
 ---
-description: customer authentication, customer login, customer signup, anonymous token, customer token, social login
+description:  
 icon: graduation-cap
 layout:
   width: wide
@@ -7,7 +7,7 @@ layout:
 
 # Customer Service (Customer Managed) Tutorial
 
-The Customer Service (Customer Managed) allows you to create, manage, and delete customer profiles. It enables you to generate relevant access tokens to log in anonymous or registered customers on a storefront.
+The Customer Service (Customer Managed) allows you to create, manage, and delete customer profiles from your commerce frontend perspective. You might use the Customer Service endpoints when implementing the custom storefront. It enables you to generate relevant access tokens to log in anonymous or registered customers on a storefront.
 
 This tutorial guides you through the process of managing customer authentication, including creating customer accounts, logging in customers, and managing authentication tokens.
 
@@ -24,11 +24,12 @@ When a user enters your storefront, before they choose to log in, an anonymous u
 Get an anonymous access token by sending a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-login) endpoint.
 
 ```bash
-curl -i -X GET \
-  'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id={client_id}'
+curl -i -X GET 
+  'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id={client_id_storefront}'
 ```
+Pass the Storefront Client ID in the request.
 
-**Response example:**
+Sample response returns relevant access credentials:
 
 ```json
 {
@@ -42,7 +43,7 @@ curl -i -X GET \
 }
 ```
 
-{% hint style="info" %}
+{% hint style="warning" %}
 The anonymous token is valid for one hour. After that time, it should be refreshed to keep the same session ID associated.
 {% endhint %}
 {% endstep %}
@@ -50,15 +51,13 @@ The anonymous token is valid for one hour. After that time, it should be refresh
 {% step %}
 ### Create a new customer
 
-To create a new customer account, send a request to the [Creating a new customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-signup) endpoint.
-
-**Note**: The request needs to be authorized with an anonymous access token.
+To create a new customer account, send a request to the [Creating a new customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-signup) endpoint. Authorize the request with the anonymous access token.
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/customer/{tenant}/signup' \
-  -H 'Authorization: Bearer {anonymous_access_token}' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/customer/{tenant}/signup' 
+  -H 'Authorization: Bearer {anonymous_access_token}' 
+  -H 'Content-Type: application/json' 
   -d '{
     "email": "example@customer.com",
     "password": "password123",
@@ -95,16 +94,10 @@ curl -i -X POST \
   }'
 ```
 
-**Response example:**
-
-```json
-{
-  "id": "13730481"
-}
-```
+The response returns the ID of the created customer.
 
 {% hint style="info" %}
-If you want to use separate sign-up credentials (different email for login than the main contact email), you can include a `signup` object with `email` and `password` fields in the request.
+If you want to use separate sign-up credentials (different email for login than the main contact email), you can include the `signup` object with `email` and `password` fields in the request.
 {% endhint %}
 {% endstep %}
 
@@ -113,15 +106,14 @@ If you want to use separate sign-up credentials (different email for login than 
 
 After creating a customer account, customers can log in using their email and password. This operation returns both a customer access token and a SaaS token.
 
-Send an authorization request to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.
+Send an authorization request to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint, passing the anonymous access token as authorization method.
 
-**Note**: The request needs to be authorized with an anonymous access token.
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/customer/{tenant}/login' \
-  -H 'Authorization: Bearer {anonymous_access_token}' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/customer/{tenant}/login' 
+  -H 'Authorization: Bearer {anonymous_access_token}' 
+  -H 'Content-Type: application/json' 
   -d '{
     "email": "customer@customer.com",
     "password": "password123"
