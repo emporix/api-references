@@ -6,9 +6,11 @@ icon: rectangle-terminal
 
 # Customer Service (Tenant Managed) Tutorial
 
-The steps described in this tutorial demonstrate how you, as a merchant, can manage the accounts of your customers on their behalf. 
+Manage your customers conveniently using the Emporix API.
 
 ## How to manage a customer's profile
+
+The steps described in this tutorial demonstrate how you, as an employee, can manage the accounts of your customers on their behalf. 
 
 {% stepper %}
 {% step %}
