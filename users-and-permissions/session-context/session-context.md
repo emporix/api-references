@@ -166,3 +166,4 @@ curl -i -X POST
 {% hint style="warning" %}
 The changes introduced to the session context are automatically applied to the user session to which the session context belongs.
 {% endhint %}
+ 

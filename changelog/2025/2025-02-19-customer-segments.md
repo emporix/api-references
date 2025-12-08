@@ -27,4 +27,4 @@ From now on, the response of the "Retrieving category trees for a customer segme
 
 ## Known problems
 
-There are no known problems.
+There are no known problems. 

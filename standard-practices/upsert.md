@@ -31,3 +31,4 @@ The API response returns an HTTP status of 201 when an entity is created and 204
 Upsert is available for some services only.\
 When a service supports the upsert operation, its endpoints are named to reflect this functionality, for example, "Upserting a product".
 {% endhint %}
+ 

@@ -17,3 +17,4 @@ The Category Service allows you to manage your store's categories and resources 
 * Manages the order of categories
 
 
+ 

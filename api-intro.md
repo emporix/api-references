@@ -110,4 +110,4 @@ If you want to send a request to an endpoint that requires a different set of sc
 
 ### Explore the Emporix API
 
-You're all set! You can now interact with the Emporix API.
+You're all set! You can now interact with the Emporix API. 

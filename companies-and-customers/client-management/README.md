@@ -16,3 +16,4 @@ The Customer Management service allows you to manage customers in your system.
 * Facilitates legal entity management
 * Provides search functionality for legal entities based on customizable parameters
 * Streamlines the handling of customer data, ensuring efficient customer management processes
+ 

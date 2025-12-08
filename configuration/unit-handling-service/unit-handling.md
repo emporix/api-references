@@ -203,3 +203,4 @@ The matched price response includes the converted quantity:
 ## Validating units in cart items
 
 When adding or updating cart items, the `unitCode` in `item.unitPrice.measurementUnit.unitCode` must exist in Unit Handling. The Cart Service validates this by checking if the unit exists.
+ 

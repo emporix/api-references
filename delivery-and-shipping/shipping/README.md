@@ -35,3 +35,4 @@ Defines shipping zones & delivery windows.
 * Validates date combinations, for example:
   * Delivery on a single date 22/12/2023 and non-delivery on the same single date 22/12/2023 is not possible&#x20;
   * Delivery on a single date 22/12/2023 which overrides a non-delivery period 21-28/12/2023 is possible&#x20;
+ 

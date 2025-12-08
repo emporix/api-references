@@ -15,3 +15,4 @@ Manages shopping lists for customers.
 * Facilitates the ability to update shopping lists by customer ID
 * Provides quick retrieval of a customer's shopping list based on their unique identifier
 * Allows for the complete removal of a customer's shopping list when needed
+ 

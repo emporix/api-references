@@ -2187,8 +2187,10 @@ components:
       description: Type of the MCP server. The `custom` type allows you to integrate with your own MCP server instance, while the `predefined` type allows you to integrate with one of the instances provided by Emporix.
     CustomMcpServerTransportType:
       type: string
-      enum: [ sse ]
-      description: Type of the communication between the agent and the MCP server. For now, only `sse` is supported.
+      enum:
+        - streamable_http
+        - sse
+      description: Type of the communication between the agent and the MCP server. The `streamable_http` protocol is recommended, since the `sse` protocol is deprecated.
     BaseAgentMcpServer:
       type: object
       properties:
@@ -2320,7 +2322,7 @@ components:
             provider:
               type: string
               description: Type of the LLM Provider. The self-hosted LLM allows you to provide your own LLMs. When using this providers, the `selfHostedParams.url` property cannot be omitted.
-              enum: [ self_hosted_ollama ]
+              enum: [ self_hosted_ollama, self_hosted_vllm ]
               example: self_hosted_ollama
           required:
             - provider
@@ -3534,9 +3536,9 @@ components:
         id: mcp-custom
         name: Custom MCP Server
         enabled: true
-        transport: sse
+        transport: streamable_http
         config:
-          url: 'http://localhost:7900'
+          url: 'http://localhost:7900/mcp'
           authorizationHeaderName: Authorization
           authorizationHeaderTokenId: token-id
     McpServersResponse:
@@ -3544,9 +3546,9 @@ components:
         - id: mcp-custom
           name: Custom MCP Server
           enabled: true
-          transport: sse
+          transport: streamable_http
           config:
-            url: 'http://localhost:7900'
+            url: 'http://localhost:7900/mcp'
             authorizationHeaderName: Authorization
             authorizationHeaderTokenId: token-id
     CommerceEventsResponse:
@@ -3651,10 +3653,10 @@ components:
     McpServerRequest:
       value:
         name: Custom MCP Server
-        transport: sse
+        transport: streamable_http
         enabled: true
         config:
-          url: 'http://localhost:7900'
+          url: 'http://localhost:7900/mcp'
           authorizationHeaderName: Authorization
           authorizationHeaderTokenId: token-id
     TokenRequest:

@@ -35,4 +35,4 @@ Having the attribute available directly on the product level, the corresponding 
 
 ## Known problems
 
-There are no known problems.
+There are no known problems. 

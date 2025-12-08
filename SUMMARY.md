@@ -217,6 +217,7 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/customer-management/api-reference/api.yml)
   * [Customer Service (Tenant Managed)](companies-and-customers/customer-service/README.md)
+    * [Customer Service (Tenant Managed) Tutorial](companies-and-customers/customer-service/api-reference/customer_service_tenant.md)
     * [API Reference](companies-and-customers/customer-service/api-reference/README.md)
       * ```yaml
         props:
@@ -674,3 +675,4 @@
     * [Events - Schema](webhooks/events-schema.md)
     * [Events - Site](webhooks/events-site.md)
     * [Events - Vendor](webhooks/events-vendor.md)
+ 

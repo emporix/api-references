@@ -18,3 +18,4 @@ Manage price information for products.
 * Displays prices either with tax included or excluded, depending on the customer
 * Adds an extra service level by selling products not only by the piece, but also in exactly the required quantity — by weight, length, or other measurement units
 * Sells products with approximate prices/indicative prices
+ 
