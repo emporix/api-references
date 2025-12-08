@@ -137,3 +137,4 @@ curl -i -X PATCH
     "brandId":"123e06ecf0452c2d6c0b81392"
   }'
 ```
+ 

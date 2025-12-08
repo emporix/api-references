@@ -13,3 +13,4 @@ The service creates embeddings for vector search.
 * Creates embeddings for vector search
 * Provides metadata endpoints for verifying list of indexed fields
 
+ 

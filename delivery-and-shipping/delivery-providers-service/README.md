@@ -19,3 +19,4 @@ Configures Onfleet as route management system or Veloce as logistics provider.
 {% hint style="info" %}
 To configure Veloce or Onfleet delivery provider please contact with Team Emporix
 {% endhint %}
+ 

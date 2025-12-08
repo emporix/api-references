@@ -16,3 +16,4 @@ The Emporix API Approval Service allows you to manage approval requests related 
 * Defines clear scopes, resulting in better process transparency
 * Enhances collaboration among people within an organization
 * Enables cost control with a simplified process
+ 
