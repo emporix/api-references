@@ -27,15 +27,15 @@ This enhancement works in conjunction with the Category Service's classification
 
 When retrieving product details, the product metadata now includes a `classificationMixins` field that contains:
 
-| Field | Description |
-|-------|-------------|
-| `name` | Name of the mixin (pattern: `^[a-zA-Z0-9]\S*$`) |
+| Field | Description                                                                                                                                                |
+|-------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name` | Name of the mixin (pattern: `^[a-zA-Z0-9_]\S*$`)                                                                                                           |
 | `mixinPath` | The mixins path that should be used when defining attributes on a product. It's built based on the following pattern: `class_<sourceCategory.code>_<name>` |
-| `schemaUrl` | URL of the mixin schema defined on the category level (pattern: `^https?://[^\s/$.?#].\S*$`) |
-| `usedSchemaUrl` | If the mixin has been already used in the product, this field contains the URL of the used mixin schema |
-| `obsoleteSchemaUrlUsed` | Boolean indicating whether the used mixin schema is obsolete (when `usedSchemaUrl` differs from `schemaUrl`) |
-| `required` | Boolean indicating whether the mixin is required |
-| `sourceCategoryId` | Unique identifier of the category from which the mixin originates (can be the product's category or one of its parent categories) |
+| `schemaUrl` | URL of the mixin schema defined on the category level (pattern: `^https?://[^\s/$.?#].\S*$`)                                                               |
+| `usedSchemaUrl` | If the mixin has been already used in the product, this field contains the URL of the used mixin schema                                                    |
+| `obsoleteSchemaUrlUsed` | Boolean indicating whether the used mixin schema is obsolete (when `usedSchemaUrl` differs from `schemaUrl`)                                               |
+| `required` | Boolean indicating whether the mixin is required                                                                                                           |
+| `sourceCategoryId` | Unique identifier of the category from which the mixin originates (can be the product's category or one of its parent categories)                          |
 
 The `classificationMixins` array aggregates all classification mixins from:
 - The category to which the product is directly assigned
