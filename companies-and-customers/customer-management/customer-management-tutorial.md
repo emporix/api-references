@@ -7,7 +7,7 @@ layout:
 
 # Customer Service (Customer Managed) Tutorial
 
-The Customer Service (Customer Managed) allows you to create, manage, and delete customer profiles from your commerce frontend perspective. You might use the Customer Service endpoints when implementing the custom storefront. It enables you to generate relevant access tokens to log in anonymous or registered customers on a storefront.
+The Customer Service (Customer Managed) allows you to create, manage, and delete customer profiles from your commerce frontend perspective. You might use the Customer Service endpoints when implementing your custom commerce storefront. It enables you to generate relevant access tokens to log in anonymous or registered customers on the storefront.
 
 This tutorial guides you through the process of managing customer authentication, including creating customer accounts, logging in customers, and managing authentication tokens.
 
@@ -590,7 +590,7 @@ To add tags to an existing address, send a request to the [Adding tags to a cust
 
 ```bash
 curl -i -X POST 
-  'https://api.emporix.io/customer/{tenant}/me/addresses/{addressId}/tags?tags=BILLING,SHIPPING' 
+  'https://api.emporix.io/customer/{tenant}/me/addresses/{addressId}/tags?tags=BILLING,SHIPPING,CUSTOM' 
   -H 'Authorization: Bearer {customer_access_token}'
 ```
 
@@ -621,7 +621,7 @@ Deleting an address also removes any accounts associated with it.
 To assign a customer account (email and password) to an existing customer profile, send a request to the [Assigning an account to a customer profile](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/account-and-profile#post-customer-tenant-me-accounts-internal) endpoint.
 
 {% hint style="warning" %}
-Authorize the request with a customer access token. Requires scope `customer.customer_update` or `customer.customer_manage`.
+Authorize the request with a customer access token. The request requires the `customer.customer_update` or `customer.customer_manage` scope.
 {% endhint %}
 
 ```bash
@@ -778,7 +778,7 @@ Set `syncContactEmail` to `true` if you want the `contactEmail` field in the cus
 {% step %}
 ### Confirm an email change
 
-After the customer receives the confirmation token via email at their new email address, they can confirm the email change. Send a request to the [Updating a customer email address](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/credentials#post-customer-tenant-me-accounts-internal-email-change-confirm) endpoint.
+After the customer receives the confirmation token by email at their new email address, they can confirm the email change. Send a request to the [Updating a customer email address](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/credentials#post-customer-tenant-me-accounts-internal-email-change-confirm) endpoint.
 
 {% hint style="warning" %}
 Authorize the request with an anonymous access token.
