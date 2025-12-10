@@ -211,3 +211,4 @@ curl -i -X GET
   https://api.emporix.io/reward-points/public/customer/summary 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
+ 

@@ -152,3 +152,4 @@ The standard invoice service flow is:
 3. Payment capture - charges the credit card.
 4. Creation of a PDF file with invoice.
 5. Sending email to the customer with the invoice file.
+ 

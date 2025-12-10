@@ -19,3 +19,4 @@ The Emporix API Payment-Gateway Service allows you to manage your payment method
 * Reacts quickly to market needs and integrates with any payment provider
 * Gives customers the choice of their preferred payment methods
 * Provides an overview of transaction history
+ 

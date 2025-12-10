@@ -15,3 +15,4 @@ Manages detailed brand information about products.
 * Associates media and other information with a brand
 * Creates brand-specific sites
 * Finds products by brand
+ 

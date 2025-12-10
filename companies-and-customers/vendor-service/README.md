@@ -17,4 +17,4 @@ Allows you to manage vendors and their employees in your system. Vendor employee
 * Enables management of locations, including creation, retrieval, updates, and deletion of location data
 * Provides search functionality for vendors based on customizable parameters
 * Streamlines the handling of vendor data, ensuring efficient vendor processes
-    
+     

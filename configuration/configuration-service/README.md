@@ -16,3 +16,4 @@ Stores tenant-specific information.
   * Global configurations — associated with all services across all tenants
 * Stores tenant-specific, JSON-formatted information such as redirects or custom error/information messages
 * Provides an easy-access store for undefined information
+ 

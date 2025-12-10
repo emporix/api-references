@@ -83,3 +83,4 @@ sequenceDiagram
 {% hint style="warning" %}
 Find out more about the Customer Service and token generation in the API reference [Customer Service (Customer Managed)](../companies-and-customers/customer-service/api-reference/) documentation.
 {% endhint %}
+ 

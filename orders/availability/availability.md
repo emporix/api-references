@@ -141,3 +141,4 @@ curl -i -X GET \
 ```
 
 The response includes both the availability information of the bundle as a whole, as well as the bundled products.
+ 

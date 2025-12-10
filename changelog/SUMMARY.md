@@ -8,6 +8,8 @@
 
 ## 2025
 
+* [2025-12-10: Customer Segments Service - customerId query parameter](2025/2025-12-10-customer-segment.md)
+* [2025-12-08: AI Service - support for vLLM provider](2025/2025-12-08-ai.md)
 * [2025-12-04: AI Service - Deprecation of SSE transport protocol](2025/2025-12-04-ai-deprecations.md)
 * [2025-12-04: AI Service - Streamable HTTP MCP servers](2025/2025-12-04-ai.md)
 * [2025-12-03: AI RAG Indexer - new endpoints for configuring RAG Search Functionality](2025/2025-12-03-ai-rag-indexer.md)
@@ -115,3 +117,4 @@
 * [Changelog 2024](archive/2024/changelog-2024.md)
 * [Changelog 2023](archive/2023/changelog-2023.md)
 * [Changelog 2022](archive/2022/changelog-2022.md)
+ 

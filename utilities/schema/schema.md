@@ -525,3 +525,4 @@ See the example payload for creating a product basing on the schema from the pre
     }
 }
 ```
+ 

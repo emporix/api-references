@@ -32,3 +32,4 @@ The Media Service allows you to manage assets associated with your tenant. The a
 * Supports setting the following access types:&#x20;
   * Public - from GCS &#x20;
   * Private - from Cloudinary
+ 

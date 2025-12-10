@@ -94,6 +94,7 @@ paths:
         - $ref: '#/components/parameters/xTotalCount'
         - $ref: '#/components/parameters/acceptLanguage'
         - $ref: '#/components/parameters/legalEntityId'
+        - $ref: '#/components/parameters/customerId'
   '/customer-segment/{tenant}/segments/search':
     parameters:
       - $ref: '#/components/parameters/tenant'
@@ -142,6 +143,7 @@ paths:
         - $ref: '#/components/parameters/xTotalCount'
         - $ref: '#/components/parameters/acceptLanguage'
         - $ref: '#/components/parameters/legalEntityId'
+        - $ref: '#/components/parameters/customerId'
   '/customer-segment/{tenant}/segments/{segmentId}':
     parameters:
       - $ref: '#/components/parameters/tenant'
@@ -1691,6 +1693,16 @@ components:
       required: false
       description: |
         The parameter is utilized for filtering items which belong only to `active` segments. The parameter is always `true` for users with `customersegment.segment_read_own` scope.
+    customerId:
+      schema:
+        type: string
+      in: query
+      name: customerId
+      required: false
+      description: |
+        The parameter is utilized for retrieving customer segments for a provided customer.
+        
+        **NOTE**: This parameter can only be used with `customersegment.segment_read` scope.
   examples:
     Response_BadRequest_400:
       value:

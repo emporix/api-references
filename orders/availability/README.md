@@ -25,3 +25,4 @@ Manages the availability and physical location of a product.
 * Provides buyers with stock information before they buy
 * Shows stock levels/availability based on stores, for example, nearby to a customer
 * Offers customers accurate information about the availability of a product in a store, for example, when a customer chooses Click & Collect
+ 

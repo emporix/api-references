@@ -16,4 +16,4 @@ Manages the picking and packing process in-store or in a warehouse.
 * Runs efficient and streamlined pick-pack processes
 * Packs goods in the best way to deliver to customers
 * Boosts picking performance with wave picking, reaching up to 800 picks per hour per person
-* Lays the foundation to increase last-mile performance by aggregating all orders of a delivery cycle
+* Lays the foundation to increase last-mile performance by aggregating all orders of a delivery cycle 

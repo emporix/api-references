@@ -239,3 +239,4 @@ The response contains the details of the fee applied to the payment for a given 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
+ 
