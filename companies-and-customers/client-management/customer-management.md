@@ -7,6 +7,18 @@ seo:
 icon: graduation-cap
 layout:
   width: wide
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
 ---
 
 # Customer Management Tutorial
@@ -15,7 +27,7 @@ layout:
 
 Take a look at the relationships between objects in the Customer Management Service and other resources in the Emporix Commerce Engine. Click the diagram to enlarge it:
 
-<figure><img src="../../static/customer-management/customer-service.svg" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/customer-service.svg" alt=""><figcaption></figcaption></figure>
 
 ## How to set up business customer information
 
@@ -229,7 +241,7 @@ When added to a subsidiary customer group, the employee is also automatically as
 
 Make sure the following requirements are fulfilled:
 
-* You have already finished the [How to set up business customer information](./customer-management.md#how-to-set-up-business-customer-information) tutorial.
+* You have already finished the [How to set up business customer information](customer-management.md#how-to-set-up-business-customer-information) tutorial.
 * The employee has their customer account set up.
 
 {% hint style="warning" %}
@@ -282,8 +294,7 @@ The `id` from the response is further referred to as `customerId`.
 
 ### Assign the contact to the company
 
-A contact represents an employee of one or more business customers.
-To assign a contact to a legal entity (in this case, the desired company), send a request to the [Creating a new contact assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/contact-assignments#post-tenant-contact-assignments) endpoint and provide `legalEntityId` and `customerId` in the request body.
+A contact represents an employee of one or more business customers. To assign a contact to a legal entity (in this case, the desired company), send a request to the [Creating a new contact assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/contact-assignments#post-tenant-contact-assignments) endpoint and provide `legalEntityId` and `customerId` in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -312,26 +323,25 @@ Once desired employees are added to appropriate customer groups, you can — for
 
 ## Customer assignment rules
 
-Emporix platform enforces rules when assigning customers to predefined groups to ensure role assignments remain valid and avoid conflicts. Within a single company, a user can belong to only one predefined group.
-Validation applies within the scope of a single company (legal entity) only. It does not extend across different companies or any subsidiaries.
+Emporix platform enforces rules when assigning customers to predefined groups to ensure role assignments remain valid and avoid conflicts. Within a single company, a user can belong to only one predefined group. Validation applies within the scope of a single company (legal entity) only. It does not extend across different companies or any subsidiaries.
 
-Examples: 
+Examples:
 
 * If a customer is already assigned to one predefined group (for example, Emporix Admin Group), then it's not possible to assign that same customer to another predefined group within the same company.
-* If a customer is assigned to an *Admin* group in one company (for example, Company A), then the same customer may also be assigned to an *Admin* group in another company (for example, Company B).
-* If a customer is assigned to an *Admin* group in a parent company (for example, Company A), then that same customer may also be assigned to another role such as *Buyer* in the parent company’s subsidiary.
+* If a customer is assigned to an _Admin_ group in one company (for example, Company A), then the same customer may also be assigned to an _Admin_ group in another company (for example, Company B).
+* If a customer is assigned to an _Admin_ group in a parent company (for example, Company A), then that same customer may also be assigned to another role such as _Buyer_ in the parent company’s subsidiary.
 
 {% hint style="success" %}
-
-The exception is the *Contact* group, which can always be assigned.
-
+The exception is the _Contact_ group, which can always be assigned.
 {% endhint %}
 
 ### Company Contact Propagation
+
 As a part of the group assignment you can decide how the contact assignments are shared within a company hierarchy. You can choose from the following options:
 
 * **UPWARD**: Contacts assigned to a subsidiary are also visible at the parent company level. This is a default setting.
-* **DOWNWARD**: Contacts assigned to a parent company are also visible in all subsidiaries.  
-* **DISABLED**: Contacts remain only in the company where they were assigned, with no propagation. 
+* **DOWNWARD**: Contacts assigned to a parent company are also visible in all subsidiaries.
+* **DISABLED**: Contacts remain only in the company where they were assigned, with no propagation.
 
 Propagation happens only at the moment of assignment - creating the contact in the selected company also creates corresponding contacts in related companies according to the chosen direction.
+ 

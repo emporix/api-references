@@ -409,3 +409,33 @@ curl -L
   }
 }'
 ```
+
+### Add or modify mixins when updating a site
+
+You can also add or modify mixins when partially updating a site by sending a request to the [Partially updating a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode) endpoint. This approach allows you to update both the mixin schema reference in `metadata.mixins` and the mixin data in `mixins` in a single request.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../site-settings-service/api-reference/" %}
+[api-reference](../site-settings-service/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -L 
+  --request PATCH 
+  --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "metadata": {
+      "mixins": {
+        "exampleMixin": "https://res.cloudinary.com/saas-ag/raw/upload/v1764338354/emporix-docs/test3_v1.json"
+      }
+    },
+    "mixins": {
+      "exampleMixin": {
+        "field3": "value3"
+      }
+    }
+  }'
+```
+ 

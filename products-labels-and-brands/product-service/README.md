@@ -20,4 +20,4 @@ Manages structured product information.
 * Uses rich media to present and demo products better online
 * Uses correct product attribute names rather than reusing existing names that may not be accurate or are generic placeholders
 * Creates localized content, such as warnings/legal information or different configurations (for example, supported power plugs)
-* Fully internationalizes product information without duplicating a product record
+* Fully internationalizes product information without duplicating a product record 

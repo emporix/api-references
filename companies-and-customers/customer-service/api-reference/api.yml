@@ -43,13 +43,6 @@ paths:
           $ref: '#/components/responses/403_forbidden'
       description: |-
         Retrieves a list of customer profiles.
-        
-        The `customer.customer_read_own` scope allows customers to read profiles of other customers within the same company.
-        
-        ***
-        ### Required scopes
-        * `customer.customer_read`
-        * `customer.customer_read_own`
       operationId: GET-customer-tenant-list-customers
       parameters:
         - $ref: '#/components/parameters/query_q'
@@ -86,13 +79,6 @@ paths:
           $ref: '#/components/responses/409_conflict'
       description: |-
         Creates a new customer.
-        
-        `customer.customer_manage_own` scope allow customers to create a new customer. Such customer will be automatically assigned to the customer company.
-        
-        ***
-        ### Required scopes
-        * `customer.customer_manage`
-        * `customer.customer_manage_own`
       operationId: POST-customer-tenant-create-customer
       requestBody:
         content:
@@ -169,13 +155,6 @@ paths:
           $ref: '#/components/responses/403_forbidden'
       description: |-
         Searches for customer profiles.
-        
-        The `customer.customer_read_own` scope allows customers to read profiles of other customers within the same company.
-        
-        ***
-        ### Required scopes
-        * `customer.customer_read`
-        * `customer.customer_read_own`
       operationId: POST-customer-tenant-search
       parameters:
         - $ref: '#/components/parameters/query_q'
@@ -216,12 +195,6 @@ paths:
           $ref: '#/components/responses/409_conflict'
       description: |
         Updates a specified customer profile or creates a new one if it doesn't exist yet.
-
-        `customer.customer_manage_own` scope allows to update customer profiles from the same company.
-
-        ***
-        ### Required scopes
-        * `customer.customer_manage` or `customer.customer_manage_own`
       operationId: PUT-customer-tenant-update-customer
       requestBody:
         content:
@@ -260,13 +233,6 @@ paths:
           $ref: '#/components/responses/404_customer'
       description: |
         Updates a specified customer profile.
-        
-        `customer.customer_manage_own` scope allows to update customer profiles from the same company.
-        
-        ***
-        ### Required scopes
-        * `customer.customer_manage`
-        * `customer.customer_manage_own`
       operationId: PATCH-customer-tenant-update-customer
       requestBody:
         content:
@@ -334,13 +300,6 @@ paths:
           $ref: '#/components/responses/404_customer'
       description: |-
         Retrieves a specified customer profile.
-        ***
-        `customer.customer_read_own` scope allows customers to read the specified profiles from another customers within the same company.
-        
-        ***
-        ### Required scopes
-        * `customer.customer_read`
-        * `customer.customer_read_own`
       operationId: GET-customer-tenant-retrieve-customer
       parameters:
         - $ref: '#/components/parameters/expand'
@@ -364,14 +323,7 @@ paths:
         '404':
           $ref: '#/components/responses/404_customer'
       description: |
-        Deletes a specified customer profile and accounts associated with it.
-        ***
-        
-        `customer.customer_manage_own` scope allows customers to delete a customer only if the customer has been assigned to the same company.
-        
-        ### Required scopes
-        * `customer.customer_manage`
-        * `customer.customer_manage_own`
+        Deletes a specified customer profile and accounts associated with it.     
       operationId: DELETE-customer-tenant-remove-customer
       parameters: []
       security:
@@ -409,9 +361,6 @@ paths:
           $ref: '#/components/responses/409_conflict'
       description: |
         Assigns a customer account to an existing customer profile.
-        ***
-        ### Required scopes
-        * `customer.customer_manage`
       operationId: POST-customer-tenant-assign-customer-account
       requestBody:
         content:
@@ -481,9 +430,6 @@ paths:
           description: Not Found
       description: |-
         Retrieves a list of addresses for a specified customer.
-        ***
-        ### Required scopes
-        * `customer.customer_read`
       operationId: GET-customer-tenant-list-customer-addresses
       parameters: []
       tags:
@@ -516,9 +462,6 @@ paths:
           $ref: '#/components/responses/409_conflict'
       description: |
         Adds an address to a specified customer profile.
-        ***
-        ### Required scopes
-        * `customer.customer_manage`
       operationId: POST-customer-tenant-add-customer-address
       parameters: []
       tags:
@@ -526,8 +469,6 @@ paths:
       security:
         - OAuth2:
             - customer.customer_manage
-        - OAuth2:
-            - customer.consent_manage
       requestBody:
         content:
           application/json:
@@ -584,9 +525,6 @@ paths:
           $ref: '#/components/responses/404_address'
       description: |
         Updates a specified customer address or creates a new one if it doesn't exist yet.
-        ***
-        ### Required scopes
-        * `customer.customer_manage`
       operationId: PUT-customer-tenant-update-customer-address
       requestBody:
         content:
@@ -637,9 +575,6 @@ paths:
           $ref: '#/components/responses/404_address'
       description: |
         Updates a specified customer address.
-        ***
-        ### Required scopes
-        * `customer.customer_manage`
       operationId: PATCH-customer-tenant-update-customer-address
       requestBody:
         content:
@@ -716,9 +651,6 @@ paths:
           $ref: '#/components/responses/404_address'
       description: |
         Retrieves a specified customer address and its details.
-        ***
-        ### Required scopes
-        * `customer.customer_read`
       operationId: GET-customer-tenant-retrieve-customer-address-by-id
       parameters: []
       tags:
@@ -741,9 +673,6 @@ paths:
           $ref: '#/components/responses/404_address'
       description: |
         Deletes a specified customer address.
-        ***
-        ### Required scopes
-        * `customer.customer_manage`
       operationId: DELETE-customer-tenant-remove-customer-address
       parameters: []
       tags:
@@ -751,8 +680,6 @@ paths:
       security:
         - OAuth2:
             - customer.customer_manage
-        - OAuth2:
-            - customer.consent_manage
     parameters:
       - $ref: '#/components/parameters/addressId'
       - $ref: '#/components/parameters/customerNumber'
@@ -773,9 +700,6 @@ paths:
           $ref: '#/components/responses/404_address'
       description: |
         Adds tags to a specified customer address.
-        ***
-        ### Required scopes
-        * `customer.customer_manage`
       operationId: POST-customer-tenant-add-address-tags
       parameters:
         - $ref: '#/components/parameters/tags'
@@ -796,9 +720,6 @@ paths:
           $ref: '#/components/responses/404_address'
       description: |
         Deletes tags from a specified customer address.
-        ***
-        ### Required scopes
-        * `customer.customer_manage`
       operationId: DELETE-customer-tenant-remove-address-tags
       parameters:
         - $ref: '#/components/parameters/tags'

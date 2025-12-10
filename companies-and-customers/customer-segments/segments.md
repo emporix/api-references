@@ -321,3 +321,4 @@ curl -i -X GET
 ```
 
 Specify the segment id in the request.
+ 

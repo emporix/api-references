@@ -5,6 +5,18 @@ seo:
 icon: graduation-cap
 layout:
   width: wide
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
 ---
 
 # Availability Tutorial
@@ -19,7 +31,7 @@ Information about a specific product's availability, popularity, and stock level
 
 Take a look at the relationships between the `Availability` object and other resources in the Emporix Commerce Engine:
 
-<figure><img src="../../static/availability/availability.svg" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/availability.svg" alt=""><figcaption></figcaption></figure>
 
 ### Before you start
 
@@ -129,3 +141,4 @@ curl -i -X GET \
 ```
 
 The response includes both the availability information of the bundle as a whole, as well as the bundled products.
+ 

@@ -299,6 +299,14 @@ paths:
               Patch Site:
                 value:
                   defaultLanguage: en
+              Adding and modifying mixin:
+                value:
+                  metadata:
+                    mixins:
+                      exampleMixin: 'https://res.cloudinary.com/saas-ag/raw/upload/v1764338354/emporix-docs/test3_v1.json'
+                  mixins:
+                    exampleMixin:
+                      field3: value3
       security:
         - OAuth2:
             - site.site_manage
@@ -810,6 +818,9 @@ components:
     AddressDto:
       title: Address
       type: object
+      required:
+        - country
+        - zipCode
       properties:
         street:
           type: string
@@ -853,6 +864,8 @@ components:
     HomeBaseDto:
       title: HomeBase
       type: object
+      required:
+        - address
       properties:
         address:
           $ref: '#/components/schemas/AddressDto'
@@ -889,6 +902,15 @@ components:
       title: Site
       type: object
       description: Information about the site.
+      required:
+        - code
+        - name
+        - defaultLanguage
+        - languages
+        - currency
+        - homeBase
+        - shipToCountries
+        - taxDeterminationBasedOn
       properties:
         code:
           type: string
@@ -1169,8 +1191,7 @@ components:
         * `active`
         * `none`
 
-        For retrieving `mixin`, use the following value:
-        * `*`
+        For retrieving `mixin`, use the following value: `*`
     expandWithMixins:
       name: expand
       description: |

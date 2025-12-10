@@ -12,4 +12,4 @@ The Fee Service allows you to manage fees in the system. Fees are agreed-upon am
 
 * Allows management of fees, enabling the creation, updating, retrieval, and deletion of fees across the system
 * Supports item fee management, allowing fees to be associated with specific items or products
-* Enables product fee management, providing the ability to add, remove, or retrieve fees tied to individual products
+* Enables product fee management, providing the ability to add, remove, or retrieve fees tied to individual products 

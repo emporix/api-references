@@ -5,6 +5,18 @@ seo:
 icon: graduation-cap
 layout:
   width: wide
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
 ---
 
 # Brand Tutorial
@@ -15,13 +27,15 @@ To create a brand with media files and add it to a product created beforehand, f
 
 {% stepper %}
 {% step %}
-### [Create a brand](brand.md#create-a-brand)
+#### [Create a brand](brand.md#create-a-brand)
 {% endstep %}
+
 {% step %}
-### [Upload brand images](brand.md#upload-an-image)
+#### [Upload brand images](brand.md#upload-an-image)
 {% endstep %}
+
 {% step %}
-### [Update an existing product with brand information](brand.md#update-an-existing-product-with-brand-information)
+#### [Update an existing product with brand information](brand.md#update-an-existing-product-with-brand-information)
 {% endstep %}
 {% endstepper %}
 
@@ -39,8 +53,8 @@ To create a brand and add media files to it, you need to send a request to the [
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../brand-service/api-reference/" %}
-[api-reference](../brand-service/api-reference/)
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
 {% endcontent-ref %}
 
 ```bash
@@ -123,3 +137,4 @@ curl -i -X PATCH
     "brandId":"123e06ecf0452c2d6c0b81392"
   }'
 ```
+ 

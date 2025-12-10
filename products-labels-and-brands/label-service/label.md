@@ -102,3 +102,4 @@ curl -i -X PATCH
 ```
 
 As a result, the product is marked with a new label.
+ 

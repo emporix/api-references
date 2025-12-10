@@ -156,3 +156,4 @@ curl -L
 ```
 
 In the request parameters, for the `propertyKey` choose `indexing_siteAwareFieldsStrategy`. In the request body, pass the chosen strategy value.Please remain patient as propagating changes to the index strategy may take up to 1 hour, so you might not be able to see the changes instantly.
+ 

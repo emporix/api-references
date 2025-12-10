@@ -29,4 +29,4 @@ The [Logging in a customer](https://developer.emporix.io/api-references/api-guid
 
 ## Known problems
 
-There are no known problems.
+There are no known problems. 

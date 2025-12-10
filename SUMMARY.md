@@ -45,6 +45,20 @@
               spec: ai-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/artificial-intelligence/ai-service/api-reference/api.yml)
+  * [AI RAG Indexer](artificial-intelligence/ai-rag-indexer/README.md)
+    * [AI RAG Indexer Tutorial](artificial-intelligence/ai-rag-indexer/ai-rag-indexer-tutorial.md)
+    * [API Reference](artificial-intelligence/ai-rag-indexer/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: ai-rag-indexer-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/artificial-intelligence/ai-rag-indexer/api-reference/api.yml)
 * [Authorization](authorization/README.md)
   * [OAuth Service](authorization/oauth-service/README.md)
     * [API Reference](authorization/oauth-service/api-reference/README.md)
@@ -146,6 +160,7 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/checkout/payment-gateway/api-reference/api.yml)
   * [Shopping List](checkout/shopping-list/README.md)
+    * [Shopping List Tutorial](checkout/shopping-list/shopping-list-tutorial.md)
     * [API Reference](checkout/shopping-list/api-reference/README.md)
       * ```yaml
         props:
@@ -201,6 +216,7 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/customer-management/api-reference/api.yml)
   * [Customer Service (Tenant Managed)](companies-and-customers/customer-service/README.md)
+    * [Customer Service (Tenant Managed) Tutorial](companies-and-customers/customer-service/api-reference/customer_service_tenant.md)
     * [API Reference](companies-and-customers/customer-service/api-reference/README.md)
       * ```yaml
         props:
@@ -658,3 +674,4 @@
     * [Events - Schema](webhooks/events-schema.md)
     * [Events - Site](webhooks/events-site.md)
     * [Events - Vendor](webhooks/events-vendor.md)
+ 

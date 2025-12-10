@@ -14,3 +14,4 @@ Manage the customers' browser session context.
 * Retrieves and manages current session properties
 * Manages custom attributes for particular sessions
 * Applies contextual pricing based on a user's session
+ 

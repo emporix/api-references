@@ -1,7 +1,19 @@
 ---
+icon: photo-film-music
 layout:
   width: wide
-icon: photo-film-music
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
 ---
 
 # Media Service
@@ -15,8 +27,9 @@ The Media Service allows you to manage assets associated with your tenant. The a
 * Provides the ability to download assets from the system
 * Ensures efficient organization and access to important media for business operations
 * Supports creation of assets of the following link types:
-    * `BLOB`
-    * `LINK`
-* Supports setting the following access types: 
-    * Public - from GCS  
-    * Private - from Cloudinary
+  * `BLOB`
+  * `LINK`
+* Supports setting the following access types:&#x20;
+  * Public - from GCS &#x20;
+  * Private - from Cloudinary
+ 

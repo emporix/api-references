@@ -16,3 +16,4 @@ Create sequentially unique IDs for orders, invoices, customers or similar.
 * Enables customizable prefixes and suffixes
 * Safely creates unique IDs
 * Ensures tax compliance with unique invoice IDs
+ 
