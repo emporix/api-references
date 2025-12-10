@@ -10,10 +10,12 @@ layout:
 
 With the Schema Service you can easily create and manage customized/industry-specific fields for different types in Management Dashboard. The new fields appear in a separate tab when you create an instance of the extended type.
 
-It is possible to create mixin schemas through API for the following entities: `cart`, `category`, `company`, `coupon`, `customer`, `customer.address`, `custom_entity`, `order`, `price_list`, `product`, `quote`, `return`, `site`, and `vendor`.
+## Supported entity types for schema creation
+
+When creating a mixin schema through the Schema Service API, you can select from the following entity types: `cart`, `category`, `company`, `coupon`, `customer`, `customer.address`, `custom_entity`, `order`, `price_list`, `product`, `quote`, `return`, `site`, and `vendor`.
 
 {% hint style="info" %}
-**Note:** While the Schema Service API supports creating mixin schemas for the entities listed above, many other services in the Emporix API also support mixins in their data models (such as availability, checkout, shopping list, customer segments, and more). For entities not listed above, you can still use mixins by creating a reference with a manually defined JSON schema, as described in the [How to create a more complex schema](#how-to-create-a-more-complex-schema) section below.
+**Important distinction:** The list above shows which entity types support mixin schema creation through the Schema Service API. However, many additional APIs accept mixins in their requests and responses even though you cannot create schemas for them through this service. For example, the Order API, Checkout API, Availability API, and Shopping List API all support mixins, but you need to create mixin schemas manually (as JSON schemas) and reference them when using those APIs. See the [Mixins standard practices](../../standard-practices/mixins.md) page for a complete list of APIs that support mixins.
 {% endhint %}
 
 ## How to add custom fields for an entity
