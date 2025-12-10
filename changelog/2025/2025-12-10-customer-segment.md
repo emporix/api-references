@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2025-12-09: Customer Segments Service - customerId query parameter
+# 2025-12-10: Customer Segments Service - customerId query parameter
 
 ## Overview
 
