@@ -8,6 +8,7 @@
 
 ## 2025
 
+* [2025-12-10: Customer Segments Service - customerId query parameter](2025/2025-12-10-customer-segment.md)
 * [2025-12-08: AI Service - support for vLLM provider](2025/2025-12-08-ai.md)
 * [2025-12-04: AI Service - Deprecation of SSE transport protocol](2025/2025-12-04-ai-deprecations.md)
 * [2025-12-04: AI Service - Streamable HTTP MCP servers](2025/2025-12-04-ai.md)
