@@ -2331,10 +2331,11 @@ components:
             productType:
               $ref: '#/components/schemas/productTypeUpdate'
     basicProductBulkUpdate:
+      type: object
+      description: Updating products of the BASIC type in bulk.
       allOf:
         - $ref: '#/components/schemas/basicProductUpdate'
         - type: object
-          description: Updating products of the BASIC type in bulk.
           properties:
             id:
               $ref: '#/components/schemas/id'
