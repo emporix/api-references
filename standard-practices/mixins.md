@@ -37,9 +37,8 @@ These entities support mixin schema creation through the [Schema Service API](..
 - **Return** - Returns Service
 - **Cart** - Cart Service
 - **Site** - Site Settings Service
-- **Custom Entity** - Schema Service
 - **Vendor** - Vendor Service
-- **Custom Instances** - Instances of Custom Entities 
+- **Custom Entities** and **Custom Instances**
 
 ### Additional mixin support 
 These services accept mixins in their API requests and responses, but require manually created JSON schemas (not supported through Schema Service schema creation):
