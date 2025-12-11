@@ -2214,7 +2214,7 @@ components:
             type: object
     productCore:
       type: object
-      description: Schema for retrieving products.
+      description: Products.
       properties:
         name:
           $ref: '#/components/schemas/localizedValue'
@@ -2273,7 +2273,7 @@ components:
             type: string
     basicProduct:
       type: object
-      description: Schema for retrieving products of the BASIC type.
+      description: Products of the BASIC type.
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productCore'
@@ -2288,7 +2288,7 @@ components:
             - code
     basicProductCreation:
       type: object
-      description: Schema for creating products of the BASIC type.
+      description: Creating products of the BASIC type.
       allOf:
         - $ref: '#/components/schemas/basicProduct'
         - type: object
@@ -2301,7 +2301,7 @@ components:
               $ref: '#/components/schemas/productType'
     basicProductWithId:
       type: object
-      description: Schema for retrieving products of the BASIC type.
+      description: Products of the BASIC type.
       allOf:
         - $ref: '#/components/schemas/basicProductCreation'
         - type: object
@@ -2321,7 +2321,7 @@ components:
         $ref: '#/components/schemas/basicProductWithId'
     basicProductUpdate:
       type: object
-      description: Schema for updating products of the BASIC type.
+      description: Updating products of the BASIC type.
       allOf:
         - $ref: '#/components/schemas/basicProduct'
         - type: object
@@ -2334,7 +2334,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/basicProductUpdate'
         - type: object
-          description: Schema for updating products of the BASIC type in bulk.
+          description: Updating products of the BASIC type in bulk.
           properties:
             id:
               $ref: '#/components/schemas/id'
@@ -2343,7 +2343,7 @@ components:
           additionalProperties: false
     bundleProduct:
       type: object
-      description: Schema for retrieving products of the BUNDLE type.
+      description: Products of the BUNDLE type.
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productCore'
@@ -2364,7 +2364,7 @@ components:
             - productType
     bundleProductCreation:
       type: object
-      description: Schema for creating products of the BUNDLE type.
+      description: Creating products of the BUNDLE type.
       allOf:
         - $ref: '#/components/schemas/bundleProduct'
         - type: object
@@ -2377,7 +2377,7 @@ components:
               $ref: '#/components/schemas/productType'
     bundleProductWithId:
       type: object
-      description: Schema for retrieving products of the BUNDLE type.
+      description: Products of the BUNDLE type.
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/bundleProductCreation'
@@ -2398,7 +2398,7 @@ components:
         $ref: '#/components/schemas/bundleProductWithId'
     bundleProductUpdate:
       type: object
-      description: Schema for updating products of the BUNDLE type.
+      description: Updating products of the BUNDLE type.
       allOf:
         - $ref: '#/components/schemas/bundleProduct'
         - type: object   # explicitly define this inline schema as an object
@@ -2407,7 +2407,7 @@ components:
               $ref: '#/components/schemas/productMetadataWithVersion'
     bundleProductBulkUpdate:
       type: object
-      description: Schema for updating products of the BUNDLE type in bulk.
+      description: Updating products of the BUNDLE type in bulk.
       allOf:
         - $ref: '#/components/schemas/bundleProductUpdate'
         - type: object
@@ -2418,7 +2418,7 @@ components:
             - id
     parentVariantProduct:
       type: object
-      description: Schema for retrieving products of the PARENT_VARIANT type.
+      description: Products of the PARENT_VARIANT type.
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productCore'
@@ -2438,7 +2438,7 @@ components:
             - variantAttributes
     parentVariantProductCreation:
       type: object
-      description: Schema for creating products of the PARENT_VARIANT type.
+      description: Creating products of the PARENT_VARIANT type.
       allOf:
         - $ref: '#/components/schemas/parentVariantProduct'
         - type: object
@@ -2451,7 +2451,7 @@ components:
               $ref: '#/components/schemas/productType'
     parentVariantProductWithId:
       type: object
-      description: Schema for retrieving products of the PARENT_VARIANT type.
+      description: Products of the PARENT_VARIANT type.
       allOf:
         - $ref: '#/components/schemas/parentVariantProductCreation'
         - type: object
@@ -2471,7 +2471,7 @@ components:
         $ref: '#/components/schemas/parentVariantProductWithId'
     parentVariantProductUpdate:
       type: object
-      description: Schema for updating products of the PARENT_VARIANT type.
+      description: Updating products of the PARENT_VARIANT type.
       allOf:
         - $ref: '#/components/schemas/parentVariantProduct'
         - type: object
@@ -2482,7 +2482,7 @@ components:
               $ref: '#/components/schemas/productTypeUpdate'
     parentVariantProductBulkUpdate:
       type: object
-      description: Schema for updating products of the PARENT_VARIANT type in bulk.
+      description: Updating products of the PARENT_VARIANT type in bulk.
       allOf:
         - $ref: '#/components/schemas/parentVariantProductUpdate'
         - type: object
@@ -2493,7 +2493,7 @@ components:
             - id
     variantProduct:
       type: object
-      description: Schema for retrieving products of the VARIANT type.
+      description: Products of the VARIANT type.
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productCore'
@@ -2508,7 +2508,7 @@ components:
             - parentVariantId
     variantProductCreation:
       type: object
-      description: Schema for creating products of the VARIANT type.
+      description: Creating products of the VARIANT type.
       allOf:
         - $ref: '#/components/schemas/variantProduct'
         - type: object
@@ -2526,7 +2526,7 @@ components:
               $ref: '#/components/schemas/productType'
     variantProductWithId:
       type: object
-      description: Schema for retrieving products of the VARIANT type.
+      description: Products of the VARIANT type.
       allOf:
         - $ref: '#/components/schemas/variantProductCreation'
         - type: object
@@ -2546,7 +2546,7 @@ components:
         $ref: '#/components/schemas/variantProductWithId'
     variantProductUpdate:
       type: object
-      description: Schema for updating products of the VARIANT type.
+      description: Updating products of the VARIANT type.
       allOf:
         - $ref: '#/components/schemas/variantProduct'
         - type: object
@@ -2560,7 +2560,7 @@ components:
               description: Identifier of the PARENT_VARIANT product.
     variantProductBulkUpdate:
       type: object
-      description: Schema for updating products of the VARIANT type in bulk.
+      description: Updating products of the VARIANT type in bulk.
       allOf:
         - $ref: '#/components/schemas/variantProductUpdate'
         - type: object
