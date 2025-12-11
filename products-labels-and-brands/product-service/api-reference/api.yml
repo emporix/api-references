@@ -1643,6 +1643,7 @@ components:
           example:
             published: true
     productBulkUpdateBody:
+      description: A list of product update requests.
       content:
         application/json:
           schema:
@@ -1656,22 +1657,22 @@ components:
           examples:
             Update multiple products in bulk:
               value:
-                - id: abc-123
-                  code: '532432412331'
-                  name: Product 1
+                - id: "abc-123"
+                  code: "532432412331"
+                  name: "Product 1"
                   metadata:
                     version: 1
-                - id: abc-124
-                  code: '532432412332'
-                  name: Product 2
+                - id: "abc-124"
+                  code: "532432412332"
+                  name: "Product 2"
                   metadata:
                     version: 1
-                - id: abc-125
-                  code: '532432412333'
-                  name: Product 3
+                - id: "abc-125"
+                  code: "532432412333"
+                  name: "Product 3"
                   metadata:
                     version: 1
-      description: A list of product update requests
+
     productBulkCreateBody:
       content:
         application/json:
