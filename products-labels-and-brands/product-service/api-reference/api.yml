@@ -2331,17 +2331,16 @@ components:
             productType:
               $ref: '#/components/schemas/productTypeUpdate'
     basicProductBulkUpdate:
-      type: object
-      description: Schema for updating products of the BASIC type in bulk.
       allOf:
         - $ref: '#/components/schemas/basicProductUpdate'
         - type: object
+          description: Schema for updating products of the BASIC type in bulk.
           properties:
             id:
               $ref: '#/components/schemas/id'
           required:
             - id
-      additionalProperties: false
+          additionalProperties: false
     bundleProduct:
       type: object
       description: Schema for retrieving products of the BUNDLE type.
