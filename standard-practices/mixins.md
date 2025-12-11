@@ -25,9 +25,11 @@ The following APIs and services support mixins in their data models:
 
 ### Core entities (with Schema Service support)
 These entities support mixin schema creation through the [Schema Service API](../utilities/schema/):
+- **Cart** - Cart Service
 - **Category** - Category Tree Service
 - **Company** - Client Management Service  
 - **Coupon** - Coupon Service
+- **Custom Entities** and **Custom Instances**
 - **Customer** - Customer Service / Customer Management Service
 - **Customer Address** - Customer Service
 - **Order** - Order Service
@@ -35,22 +37,20 @@ These entities support mixin schema creation through the [Schema Service API](..
 - **Product** - Product Service
 - **Quote** - Quote Service
 - **Return** - Returns Service
-- **Cart** - Cart Service
 - **Site** - Site Settings Service
 - **Vendor** - Vendor Service
-- **Custom Entities** and **Custom Instances**
 
 ### Additional mixin support 
 These services accept mixins in their API requests and responses, but require manually created JSON schemas (not supported through Schema Service schema creation):
 - **Availability** - Availability Service
-- **Shopping List** - Shopping List Service
-- **Customer Segments** - Customer Segments Service
-- **Locations and Contact Assignment** - Client Management Service 
 - **Customer and Item Assignments** - Customer Segments Service
+- **Customer Segments** - Customer Segments Service
+- **Groups** - IAM Service (supports `mixins` field directly, without `metadata.mixins`)
+- **Locations** - Vendor Service
+- **Locations and Contact Assignment** - Client Management Service 
 - **Prices** - Price Service
 - **Returns** - Returns Service
-- **Locations** - Vendor Service
-- **Groups** - IAM Service (supports `mixins` field directly, without `metadata.mixins`)
+- **Shopping List** - Shopping List Service
 
 
 {% hint style="warning" %}
