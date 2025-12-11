@@ -2339,6 +2339,7 @@ components:
               $ref: '#/components/schemas/id'
           required:
             - id
+      additionalProperties: false
     bundleProduct:
       type: object
       additionalProperties: false
