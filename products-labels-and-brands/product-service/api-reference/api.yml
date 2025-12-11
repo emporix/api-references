@@ -2307,8 +2307,6 @@ components:
               description: Custom product identifier. If not provided, it is automatically generated.
             productType:
               $ref: '#/components/schemas/productType'
-          required:
-            - productType
     basicProductWithId:
       type: object
       description: Products of the BASIC type.
