@@ -2223,7 +2223,6 @@ components:
             type: object
     productCore:
       type: object
-      description: Core product schema.
       properties:
         name:
           $ref: '#/components/schemas/localizedValue'
@@ -2308,6 +2307,8 @@ components:
               description: Custom product identifier. If not provided, it is automatically generated.
             productType:
               $ref: '#/components/schemas/productType'
+          required:
+            - productType
     basicProductWithId:
       type: object
       description: Products of the BASIC type.
@@ -2350,7 +2351,6 @@ components:
               $ref: '#/components/schemas/id'
           required:
             - id
-          additionalProperties: false
     bundleProduct:
       type: object
       description: Products of the BUNDLE type.
