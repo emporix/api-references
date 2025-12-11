@@ -2214,6 +2214,7 @@ components:
             type: object
     productCore:
       type: object
+      description: Schema for retrieving products.
       properties:
         name:
           $ref: '#/components/schemas/localizedValue'
@@ -2272,6 +2273,7 @@ components:
             type: string
     basicProduct:
       type: object
+      description: Schema for retrieving products of the BASIC type.
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productCore'
@@ -2342,6 +2344,7 @@ components:
       additionalProperties: false
     bundleProduct:
       type: object
+      description: Schema for retrieving products of the BUNDLE type.
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productCore'
@@ -2416,6 +2419,7 @@ components:
             - id
     parentVariantProduct:
       type: object
+      description: Schema for retrieving products of the PARENT_VARIANT type.
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productCore'
@@ -2490,6 +2494,7 @@ components:
             - id
     variantProduct:
       type: object
+      description: Schema for retrieving products of the VARIANT type.
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productCore'
@@ -2566,6 +2571,9 @@ components:
           required:
             - id
     productPartialUpdate:
+      type: object
+      description: Schema for partially updating a product.
+      additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productCore'
         - type: object
