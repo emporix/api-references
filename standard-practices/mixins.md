@@ -40,12 +40,18 @@ These entities support mixin schema creation through the [Schema Service API](..
 - **Custom Entity** - Schema Service
 - **Vendor** - Vendor Service
 
-### Additional services (mixins supported, manual schema required)
+### Additional mixin support 
 These services accept mixins in their API requests and responses, but require manually created JSON schemas (not supported through Schema Service schema creation):
 - **Availability** - Availability Service
-- **Checkout** - Checkout Service
 - **Shopping List** - Shopping List Service
 - **Customer Segments** - Customer Segments Service
+- **Locations** - Client Management Service (locations and contact assignments)
+- **Customer and Item Assignments** - Customer Segments Service
+- **Prices** - Price Service
+- **Returns** - Returns Service
+- **Locations** - Vendor Service
+- **Groups** - IAM Service (supports `mixins` field directly, without `metadata.mixins`)
+- **Custom Instances** - Instances of Custom Entities 
 
 {% hint style="warning" %}
 **Note:** For services that don't support schema creation through the Schema Service API, you need to manually create and host your JSON schema, then reference it in the `metadata.mixins` field when using mixins with those APIs. See the [Schema Service tutorial](../utilities/schema/schema.md#how-to-create-a-more-complex-schema) for details on creating references with manually defined JSON schemas.
