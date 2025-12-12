@@ -326,4 +326,10 @@ curl -L
     }
   }'
 ```
- 
+
+## Classification
+
+Classification categories allow you to organize products with consistent attributes across your catalog. By defining reusable attribute schemas that are automatically inherited by products assigned to those categories, you can ensure data quality and consistency while reducing manual work.
+
+To learn how to implement classification in your B2B commerce platform, check out the [Classification tutorial](../../e2e-flows/classification.md).
+

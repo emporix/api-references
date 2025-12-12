@@ -27,6 +27,10 @@
   * [Workflow Automation](integrations/workflow-automation/README.md)
     * [Emporix and Make](integrations/workflow-automation/emporix-and-make.md)
 
+## E2E Flows
+
+* [Classification](e2e-flows/classification.md)
+
 ## API Guides
 
 * [API Tutorials and References](api-guides-and-references/README.md)
