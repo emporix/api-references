@@ -2410,8 +2410,8 @@ paths:
                     source: 'https://your-storefront.com/'
                   metadata:
                     mixins:
-                      generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/orderGeneralAttributesMixIn.v9.json'
-                      deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryTimeMixIn.v2.json'
+                      generalAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/orderGeneralAttributesMixIn.v9.json'
+                      deliveryTime: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/deliveryTimeMixIn.v2.json'
                   mixins:
                     deliveryTime:
                       deliveryDate: '2021-06-08T12:00:00.000Z'

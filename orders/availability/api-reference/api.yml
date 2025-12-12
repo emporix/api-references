@@ -587,7 +587,7 @@ components:
               additionalProperties:
                 type: string
               example:
-                productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
+                productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
     Availability:
       description: Availability details.
       type: object
@@ -638,7 +638,7 @@ components:
               additionalProperties:
                 type: string
               example:
-                productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
+                productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
             createdAt:
               type: string
               format: date-time
@@ -701,7 +701,7 @@ components:
               additionalProperties:
                 type: string
               example:
-                productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
+                productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
             createdAt:
               type: string
               format: date-time
@@ -1030,7 +1030,7 @@ components:
         distributionChannel: ASSORTMENT
         metadata:
           mixins:
-            productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
+            productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
         mixins:
           productCustomAttributes:
             minOrderQuantity: 2
@@ -1045,7 +1045,7 @@ components:
         distributionChannel: ASSORTMENT
         metadata:
           mixins:
-            productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
+            productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
           createdAt: '2022-02-22T02:02:02.222Z'
           modifiedAt: '2022-02-22T02:02:02.222Z'
         mixins:
@@ -1062,7 +1062,7 @@ components:
         distributionChannel: ASSORTMENT
         metadata:
           mixins:
-            productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
+            productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
           createdAt: '2022-02-22T02:02:02.222Z'
           modifiedAt: '2022-02-22T02:02:02.222Z'
         mixins:
@@ -1078,7 +1078,7 @@ components:
             distributionChannel: ASSORTMENT
             metadata:
               mixins:
-                productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
+                productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
               createdAt: '2022-02-22T02:02:02.222Z'
               modifiedAt: '2022-02-22T02:02:02.222Z'
             mixins:
@@ -1095,7 +1095,7 @@ components:
           distributionChannel: ASSORTMENT
           metadata:
             mixins:
-              productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
+              productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
             createdAt: '2022-02-22T02:02:02.222Z'
             modifiedAt: '2022-02-22T02:02:02.222Z'
           mixins:
@@ -1112,7 +1112,7 @@ components:
           distributionChannel: ASSORTMENT
           metadata:
             mixins:
-              productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
+              productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
             createdAt: '2022-02-22T02:02:02.222Z'
             modifiedAt: '2022-02-22T02:02:02.222Z'
           mixins:

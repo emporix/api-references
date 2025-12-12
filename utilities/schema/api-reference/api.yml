@@ -518,7 +518,7 @@ paths:
               Reference:
                 value:
                   file:
-                    externalValue: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata2/saastest2/653a30c0951b2b0665884f89_v1.json'
+                    externalValue: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/653a30c0951b2b0665884f89_v1.json'
                   body:
                     name:
                       en: Product Custom Attributes
@@ -684,7 +684,7 @@ paths:
               Reference:
                 value:
                   file:
-                    externalValue: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata2/saastest2/653a30c0951b2b0665884f89_v1.json'
+                    externalValue: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/653a30c0951b2b0665884f89_v1.json'
                   body:
                     name:
                       en: Product Custom Attributes
@@ -979,7 +979,7 @@ paths:
                       popularity: 1
                   metadata:
                     mixins:
-                      productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                      productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
               Custom instance with reference:
                 value:
                   name:
@@ -1065,7 +1065,7 @@ paths:
                         - media_id_2
                       metadata:
                         mixins:
-                          productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                          productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
                         createdAt: '2025-04-17T13:00:00.000Z'
                         modifiedAt: '2025-05-14T13:00:00.000Z'
                         version: 3
@@ -1195,7 +1195,7 @@ paths:
                       - media_id_2
                     metadata:
                       mixins:
-                        productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                        productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
                       createdAt: '2025-04-17T13:00:00.000Z'
                       modifiedAt: '2025-05-14T13:00:00.000Z'
                       version: 3
@@ -1313,7 +1313,7 @@ paths:
               }
               metadata: {
                 mixins: {
-                  "productCustomAttributes": 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                  "productCustomAttributes": 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
                 },
                 version: 1
               }
@@ -1451,7 +1451,7 @@ paths:
                         - media_id_2
                       metadata:
                         mixins:
-                          productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                          productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
                         createdAt: '2025-04-17T13:00:00.000Z'
                         modifiedAt: '2025-05-14T13:00:00.000Z'
                         version: 3
@@ -1562,7 +1562,7 @@ paths:
                 }
                 metadata: {
                   mixins: {
-                    "productCustomAttributes": 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                    "productCustomAttributes": 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
                   }
                 }
               - id: '456'
@@ -1631,7 +1631,7 @@ paths:
                 }
                 metadata: {
                   mixins: {
-                    "productCustomAttributes": 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                    "productCustomAttributes": 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
                   }
                 }
               - id: '456'
@@ -1728,7 +1728,7 @@ components:
           version: 1
           createdAt: "2023-08-09T09:21:42.693Z"
           modifiedAt: "2023-08-09T09:21:42.693Z"
-          url: "https://res.cloudinary.com/saas-ag/raw/upload/schemata2/saastest2/64d35aa7fa54121ca47db657_v1.json"
+          url: "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/64d35aa7fa54121ca47db657_v1.json"
     SchemasResponse:
       value:
         - id: 64d35aa7fa54121ca47db657
@@ -1751,7 +1751,7 @@ components:
             version: 1
             createdAt: "2023-08-09T09:21:42.693Z"
             modifiedAt: "2023-08-09T09:21:42.693Z"
-            url: "https://res.cloudinary.com/saas-ag/raw/upload/schemata2/saastest2/64d35aa7fa54121ca47db657_v1.json"
+            url: "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/64d35aa7fa54121ca47db657_v1.json"
     ReferenceResponse:
       value:
         id: 64d35aa7fa54121ca47db657
@@ -1763,7 +1763,7 @@ components:
           version: 1
           createdAt: "2023-08-09T09:21:42.693Z"
           modifiedAt: "2023-08-09T09:21:42.693Z"
-          url: "https://res.cloudinary.com/saas-ag/raw/upload/schemata2/saastest2/64d35aa7fa54121ca47db657_v1.json"
+          url: "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/64d35aa7fa54121ca47db657_v1.json"
     ReferencesResponse:
       value:
         - id: 64d35aa7fa54121ca47db657
@@ -1775,7 +1775,7 @@ components:
             version: 1
             createdAt: "2023-08-09T09:21:42.693Z"
             modifiedAt: "2023-08-09T09:21:42.693Z"
-            url: "https://res.cloudinary.com/saas-ag/raw/upload/schemata2/saastest2/64d35aa7fa54121ca47db657_v1.json"
+            url: "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/64d35aa7fa54121ca47db657_v1.json"
     TypesResponse:
       value:
         - ORDER
