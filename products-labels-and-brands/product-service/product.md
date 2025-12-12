@@ -1293,4 +1293,10 @@ Media:
 {% content-ref url="../../media/media/api-reference/" %}
 [api-reference](../../media/media/api-reference/)
 {% endcontent-ref %}
- 
+
+## Classification
+
+Classification categories allow you to organize products with consistent attributes across your catalog. By assigning products to classification categories, they automatically receive reusable attribute schemas that ensure data quality and consistency while reducing manual work.
+
+To learn how to implement classification for your products, check out the [Classification tutorial](../../e2e-flows/classification.md).
+
