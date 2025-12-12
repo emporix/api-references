@@ -203,6 +203,7 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/client-management/api-reference/api.yml)
   * [Customer Service (Customer Managed)](companies-and-customers/customer-management/README.md)
+    * [Customer Management (Customer Managed) Tutorial](companies-and-customers/customer-management/customer-management-tutorial.md)
     * [API Reference](companies-and-customers/customer-management/api-reference/README.md)
       * ```yaml
         props:
