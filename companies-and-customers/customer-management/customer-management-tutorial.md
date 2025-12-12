@@ -584,7 +584,7 @@ Set the `isDefault` to `true` to mark the address as the default address for the
 {% endstep %}
 
 {% step %}
-### Add tags to a customer address
+### Adding tags to a customer address
 
 To add tags to an existing address, send a request to the [Adding tags to a customer address](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/addresses#post-customer-tenant-me-addresses-addressid-tags) endpoint.
 
