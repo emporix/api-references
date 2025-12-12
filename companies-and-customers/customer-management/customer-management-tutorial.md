@@ -670,6 +670,10 @@ Deleting a customer profile permanently removes the profile and all associated a
 
 Customers may need to change their email address or reset their password. This section covers the complete flow for managing customer credentials, including password reset and email change processes.
 
+{% hint style="info" %}
+Note that to properly handle customer notifications, you need to have a mailing service configured first. For more information see [Customer Communication Integrations](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/integrations/communication-integration)
+{% endhint %}
+
 {% stepper %}
 {% step %}
 ### Requesting a password reset
