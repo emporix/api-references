@@ -2137,6 +2137,37 @@ components:
         - $ref: '#/components/schemas/productMetadataWithVersion'
         - type: object
           properties:
+            classificationMixins:
+              type: array
+              description: List of mixin schemas used for classification.
+              items:
+                type: object
+                description: Mixin schema.
+                properties:
+                  name:
+                    type: string
+                    description: Name of the mixin
+                    pattern: '^[a-zA-Z0-9_]\S*$'
+                  mixinPath:
+                    type: string
+                    description: The mixins path that should be used when defining attributes on a product. It's built based on the following pattern - `class_<sourceCategory.code>_<name>`.
+                  schemaUrl:
+                    type: string
+                    description: URL of the mixin schema defined on the category level.
+                    pattern: '^https?://[^\s/$.?#].\S*$'
+                  usedSchemaUrl:
+                    type: string
+                    description: If given mixin has been already used in the product, then this field contains the URL of the used mixin schema.
+                    pattern: '^https?://[^\s/$.?#].\S*$'
+                  obsoleteSchemaUrlUsed:
+                    type: boolean
+                    description: Indicates whether the used mixin schema is obsolete - `usedSchemaUrl` differs from `schemaUrl`.
+                  required:
+                    type: boolean
+                    description: Indicates whether the mixin is required.
+                  sourceCategoryId:
+                    type: string
+                    description: Unique identifier of the category from which the mixin comes from. Can be this category ID or one of the parent categories IDs.
             createdAt:
               type: string
               description: Creation date in the ISO 8601 standard.
