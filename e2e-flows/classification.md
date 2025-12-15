@@ -1,7 +1,7 @@
 ---
 icon: folder-closed
-description: 
-layout: Learn how to configure classification within product and categories.
+description: Learn how to configure classification within product and categories.
+layout: 
   width: wide
 ---
 
