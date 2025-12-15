@@ -13,6 +13,7 @@ description: Webhook events related to the creation, update, and deletion of a c
 <table><thead><tr><th>Event type</th><th>Event schema</th></tr></thead><tbody><tr><td>category.created</td><td><pre class="language-json"><code class="lang-json">{
   "id": "String",
   "parentId": "String",
+  "type": "String",
   "name": {
     "name" : "Map"
   },
@@ -37,6 +38,7 @@ description: Webhook events related to the creation, update, and deletion of a c
   "publish": {
     "published": "Boolean"
   },
+  "classificationMixins": [],
   "mixins": "Map",
   "metadata": {
     "version": "Number",
@@ -47,6 +49,7 @@ description: Webhook events related to the creation, update, and deletion of a c
 </code></pre></td></tr><tr><td>category.updated</td><td><pre class="language-json"><code class="lang-json">{
   "id": "String",
   "parentId": "String",
+  "type": "String",
   "name": {
     "name" : "Map"
   },
@@ -71,6 +74,8 @@ description: Webhook events related to the creation, update, and deletion of a c
   "publish": {
     "published": "Boolean"
   },
+  "classificationMixinsBefore": [],
+  "classificationMixinsAfter": [],
   "mixins": "Map",
   "metadata": {
     "version": "Number",

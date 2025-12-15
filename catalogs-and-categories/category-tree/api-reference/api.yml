@@ -761,6 +761,37 @@ paths:
                   position: 5
                   published: true
                   mixins: {}
+              Classification category:
+                value:
+                  type: CLASSIFICATION
+                  code: 3A001
+                  parentId: root
+                  localizedName:
+                    en: Floor Care
+                    de: Bodenpflege
+                  localizedDescription:
+                    en: Floor Care
+                    de: Bodenpflege
+                  localizedSlug:
+                    en: Floor-Care
+                    de: Bodenpflege
+                  ecn:
+                    - AX6784
+                    - '123078'
+                    - SJUIOKM
+                  validity:
+                    from: '2022-01-05T12:44:51.871Z'
+                    to: '2022-12-05T23:59:59.000Z'
+                  position: 5
+                  published: true
+                  ownClassificationMixins: [
+                    {
+                      "name": "Classification Mixin",
+                      "schemaUrl": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/toolsClassification_v1.json",
+                      "required": false
+                    }
+                  ]
+                  mixins: { }
         required: true
       responses:
         '201':
@@ -3242,6 +3273,48 @@ components:
               description: Resource URL generated when the resource is created.
           description: Reference to the resource.
       description: Assignment of a resource (such as a product) to a category.
+    OwnClassificationMixin:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the mixin.
+          pattern: '^[a-zA-Z0-9_]\S*$'
+        schemaUrl:
+          type: string
+          description: URL of the mixin schema.
+          pattern: '^https?://[^\s/$.?#].\S*$'
+        required:
+          type: boolean
+          description: Indicates whether the mixin is required.
+      required:
+        - name
+        - schemaUrl
+      description: Classification mixin defined for a given category.
+    ClassificationMixin:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the mixin
+          pattern: '^[a-zA-Z0-9_]\S*$'
+        mixinPath:
+          type: string
+          description: The mixins path that should be used when defining attributes on a product. It's built based on the following pattern - `class_<sourceCategory.code>_<name>`.
+        schemaUrl:
+          type: string
+          description: URL of the mixin schema.
+          pattern: '^https?://[^\s/$.?#].\S*$'
+        required:
+          type: boolean
+          description: Indicates whether the mixin is required.
+        sourceCategoryId:
+          type: string
+          description: Unique identifier of the category from which the mixin comes from. Can be this category ID or one of the parent categories IDs.
+      required:
+        - name
+        - schemaUrl
+      description: Classification mixin with source category information.
     BulkAssignmentResponse:
       type: array
       items:
@@ -3408,6 +3481,16 @@ components:
           description: IDs of supercategories.
           items:
             type: string
+        ownClassificationMixins:
+          type: array
+          description: List of classification mixins defined for this category.
+          items:
+            $ref: '#/components/schemas/OwnClassificationMixin'
+        classificationMixins:
+          type: array
+          description: Combined list of classification mixins from parent categories and category's ownClassification mixins.
+          items:
+            $ref: '#/components/schemas/ClassificationMixin'
         mixins:
           type: object
           description: Custom category attributes included directly in the mixins object.
@@ -3444,6 +3527,7 @@ components:
         $ref: '#/components/schemas/Category'
       example:
         - id: "0310086a-d9d6-44bc-9199-ee4381bc9e4e"
+          type: "STANDARD"
           parentId: "4901acd1-5dad-4c7b-b4f0-32d0198621fc"
           localizedName:
             en: "CORDLESS IMPACT DRIVERS"
@@ -3456,6 +3540,8 @@ components:
             createdAt: "2024-08-28T14:00:17.353Z"
             modifiedAt: "2024-08-28T14:00:17.353Z"
         - id: "0720b75e-ee1c-4d76-9f53-eb3af3927e13"
+          type: "CLASSIFICATION"
+          code: "XA04"
           parentId: "7d2b0d76-3628-46b3-ac92-34c903f5c3cb"
           localizedName:
             en: "CORDED POWERTOOLS"
@@ -3463,6 +3549,22 @@ components:
           validity: {}
           position: 0
           published: true
+          ownClassificationMixins: [
+            {
+              name: "Classification Mixin",
+              schemaUrl: "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/toolsClassification_v1.json",
+              required: false
+            }
+          ]
+          classificationMixins: [
+            {
+              name: "garageTools",
+              mixinPath: "class_XA04_garageTools",
+              schemaUrl: "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/garageTools_v1.json",
+              required: false,
+              sourceCategoryId: "4901acd1-5dad-4c7b-b4f0-32d0198621fx"
+            }
+          ]
           metadata:
             version: 0
             createdAt: "2024-08-28T14:00:13.181Z"
@@ -3520,6 +3622,12 @@ components:
         id:
           type: string
           description: Custom category identifier. If not provided, it is automatically generated
+        type:
+          type: string
+          enum:
+            - CLASSIFICATION
+            - STANDARD
+          description: Category type, by default it is `STANDARD`.
         localizedName:
           minItems: 1
           type: object
@@ -3548,7 +3656,7 @@ components:
             type: string
         code:
           type: string
-          description: 'Unique category identifier, defined by the tenant.'
+          description: 'Unique category identifier, defined by the tenant. Required for category of type `CLASSIFICATION`.'
           nullable: true
         validity:
           type: object
@@ -3565,6 +3673,11 @@ components:
         published:
           type: boolean
           description: Flag indicating whether the category has been published or not.
+        ownClassificationMixins:
+          type: array
+          description: List of classification mixins defined by this category.
+          items:
+            $ref: '#/components/schemas/OwnClassificationMixin'
         mixins:
           type: object
           additionalProperties: true
@@ -3845,7 +3958,7 @@ components:
             type: string
         code:
           type: string
-          description: 'Unique category identifier, defined by the tenant.'
+          description: 'Unique category identifier, defined by the tenant. Required for category of type `CLASSIFICATION`.'
           nullable: true
         validity:
           type: object

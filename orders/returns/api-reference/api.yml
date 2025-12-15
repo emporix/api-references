@@ -220,7 +220,7 @@ paths:
                   - op: add
                     path: /metadata/mixins
                     value:
-                      customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
+                      customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
               Update a status:
                 value:
                   - op: replace
@@ -591,7 +591,7 @@ components:
           additionalProperties:
             type: string
           example:
-            productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
+            productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
     metadataUpdate:
       title: metadataUpdate
       description: 'Metadata fields required when updating an existing object.'
@@ -1105,7 +1105,7 @@ components:
                     attr1: value1
                 metadata:
                   mixins:
-                    customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
+                    customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
             A return requested on behalf of a customer:
               value:
                 orders:
