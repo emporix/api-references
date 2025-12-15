@@ -25,7 +25,11 @@ In B2B commerce, classification is essential for organizing and managing product
 
 By leveraging classification categories, you can ensure consistency, improve data quality, and simplify product management in your B2B commerce platform.
 
+{% hint style="info" %}
+
 This tutorial uses the [Category Service](../catalogs-and-categories/category-tree/README.md) and [Product Service](../products-labels-and-brands/product-service/README.md) to manage classification categories and products.
+
+{% endhint %}
 
 ## Understanding classification categories
 
