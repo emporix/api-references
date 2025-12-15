@@ -1298,5 +1298,145 @@ Media:
 
 Classification categories allow you to organize products with consistent attributes across your catalog. By assigning products to classification categories, they automatically receive reusable attribute schemas that ensure data quality and consistency while reducing manual work.
 
-To learn how to implement classification for your products, check out the [Classification tutorial](../../e2e-flows/classification.md).
+### Creating a product with classification mixins
+
+To create a product with classification mixins, create the product assigned to a classification category, then update it with classification mixin attributes.
+
+{% stepper %}
+{% step %}
+#### Create the product and assign to classification category
+
+Create a product and assign it to a classification category in a single request using the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint. Include the classification category ID in the `categoryIds` field:
+
+```bash
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/product/{tenant}/products' 
+  --header 'X-Version: v2' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "name": "Cordless Drill",
+    "code": "DRILL-001",
+    "productType": "BASIC",
+    "published": true,
+    "categoryIds": ["0720b75e-ee1c-4d76-9f53-eb3af3927e13"],
+    "mixins": {
+      "productCustomAttributes": {
+        "orderUnit": "H87",
+        "minOrderQuantity": 1
+      }
+    }
+  }'
+```
+{% endstep %}
+
+{% step %}
+#### Update product with classification mixin attributes
+
+Update the product with classification mixin attributes using the [Partially updating a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint. Use the `mixinPath` from the classification category's `classificationMixins` field:
+
+```bash
+curl -L 
+  --request PATCH 
+  --url 'https://api.emporix.io/product/{tenant}/products/product-123' 
+  --header 'X-Version: v2' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "mixins": {
+      "productCustomAttributes": {
+        "orderUnit": "H87",
+        "minOrderQuantity": 1
+      },
+      "class_EA673_toolsClassification": {
+        "powerSource": "battery",
+        "voltage": "18V"
+      },
+      "class_EA677_cordedToolsClassification": {
+        "chuckSize": "13mm",
+        "maxTorque": "50Nm"
+      }
+    },
+    "metadata": {
+      "version": 1
+    }
+  }'
+```
+
+{% hint style="info" %}
+When updating a product with classification mixins, you don't need to provide the schema URL in `metadata.mixins` for classification mixins. The system automatically populates these schema URLs based on the product's category assignments.
+{% endhint %}
+{% endstep %}
+{% endstepper %}
+
+### Product response with classification mixins
+
+To retrieve a product that is assigned to a classification category, send a request to the [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint. The response includes the `classificationMixins` field in the metadata:
+
+```bash
+curl -L 
+  --request GET 
+  --url 'https://api.emporix.io/product/{tenant}/products/product-123' 
+  --header 'X-Version: v2' 
+  --header 'Content-Type: application/json'
+```
+
+The response includes the `classificationMixins` field:
+
+```json
+{
+  "id": "product-123",
+  "name": "Cordless Drill",
+  "code": "DRILL-001",
+  "productType": "BASIC",
+  "published": true,
+  "categoryIds": ["0720b75e-ee1c-4d76-9f53-eb3af3927e13"],
+   "mixins": {
+    "productCustomAttributes": {
+      "orderUnit": "H87",
+      "minOrderQuantity": 1
+    },
+    "class_EA673_toolsClassification": {
+      "powerSource": "battery",
+      "voltage": "18V"
+    },
+    "class_EA677_cordedToolsClassification": {
+      "chuckSize": "13mm",
+      "maxTorque": "50Nm"
+    }
+  },
+  "metadata": {
+    "version": 1,
+    "createdAt": "2024-11-27T10:00:00.000Z",
+    "modifiedAt": "2024-11-27T10:00:00.000Z",
+    "classificationMixins": [
+      {
+        "name": "toolsClassification",
+        "mixinPath": "class_EA673_toolsClassification",
+        "schemaUrl": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/toolsClassification_v1.json",
+        "required": false,
+        "sourceCategoryId": "7d2b0d76-3628-46b3-ac92-34c903f5c3cb"
+      },
+      {
+        "name": "cordedToolsClassification",
+        "mixinPath": "class_EA677_cordedToolsClassification",
+        "schemaUrl": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/cordedTools_v1.json",
+        "required": false,
+        "sourceCategoryId": "0720b75e-ee1c-4d76-9f53-eb3af3927e13"
+      }
+    ],
+    "mixins": {
+      "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json",
+      "class_EA673_toolsClassification": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/toolsClassification_v1.json",
+      "class_EA677_cordedToolsClassification": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/cordedTools_v1.json"
+    }
+  } 
+}
+```
+
+{% hint style="info" %}
+
+To learn about the end-to-end flow for implementing classification in your B2B commerce platform, along with the category service , see the [Classification tutorial](../../catalogs-and-categories/category-tree/classification.md).
+
+{% endhint %}
+
 

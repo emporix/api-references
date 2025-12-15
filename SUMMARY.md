@@ -27,10 +27,6 @@
   * [Workflow Automation](integrations/workflow-automation/README.md)
     * [Emporix and Make](integrations/workflow-automation/emporix-and-make.md)
 
-## E2E Flows
-
-* [Classification](e2e-flows/classification.md)
-
 ## API Guides
 
 * [API Tutorials and References](api-guides-and-references/README.md)
@@ -93,7 +89,8 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/catalogs-and-categories/catalog/api-reference/api.yml)
   * [Category Service](catalogs-and-categories/category-tree/README.md)
-    * [Category Tutorials](catalogs-and-categories/category-tree/category.md)
+    * [Category Tutorial](catalogs-and-categories/category-tree/category.md)
+    * [Classification Tutorial](catalogs-and-categories/category-tree/classification.md)
     * [API Reference](catalogs-and-categories/category-tree/api-reference/README.md)
       * ```yaml
         props:

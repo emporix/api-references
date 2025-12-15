@@ -51,73 +51,12 @@ All product retrieval endpoints now include the `classificationMixins` field in 
 | [Retrieving all products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-resources#get-product-tenant-products) | Response now includes `classificationMixins` in the metadata for products assigned to classification categories. |
 | [Searching for products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-resources#post-product-search-products) | Response now includes `classificationMixins` in the metadata for products assigned to classification categories. |
 
-## Usage example
-
-### Product response with classification mixins
-
-When retrieving a product that is assigned to a classification category, the response includes the `classificationMixins` field:
-
-```json
-{
-  "id": "product-123",
-  "name": "Cordless Drill",
-  "code": "DRILL-001",
-  "productType": "BASIC",
-  "published": true,
-  "categoryIds": ["0720b75e-ee1c-4d76-9f53-eb3af3927e13"],
-   "mixins": {
-    "productCustomAttributes": {
-      "orderUnit": "H87",
-      "minOrderQuantity": 1
-    },
-    "class_EA673_toolsClassification": {
-      "powerSource": "battery",
-      "voltage": "18V"
-    },
-    "class_EA677_cordedToolsClassification": {
-      "chuckSize": "13mm",
-      "maxTorque": "50Nm"
-    }
-  },
-  "metadata": {
-    "version": 1,
-    "createdAt": "2024-11-27T10:00:00.000Z",
-    "modifiedAt": "2024-11-27T10:00:00.000Z",
-    "classificationMixins": [
-      {
-        "name": "toolsClassification",
-        "mixinPath": "class_EA673_toolsClassification",
-        "schemaUrl": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/toolsClassification_v1.json",
-        "required": false,
-        "sourceCategoryId": "7d2b0d76-3628-46b3-ac92-34c903f5c3cb"
-      },
-      {
-        "name": "cordedToolsClassification",
-        "mixinPath": "class_EA677_cordedToolsClassification",
-        "schemaUrl": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/cordedTools_v1.json",
-        "required": false,
-        "sourceCategoryId": "0720b75e-ee1c-4d76-9f53-eb3af3927e13"
-      }
-    ],
-    "mixins": {
-      "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json",
-      "class_EA673_toolsClassification": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/toolsClassification_v1.json",
-      "class_EA677_cordedToolsClassification": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/cordedTools_v1.json"
-    }
-  } 
-}
-```
-
-### Using classification mixins for product attributes
-
-The `classificationMixins` field helps you understand:
-- Which classification schemas are available for the product based on its category assignment
-- The correct `mixinPath` to use when defining classification attributes
-- Whether a classification mixin is required
-- Which category in the hierarchy each classification mixin originates from
-- If the product is using an outdated version of a classification schema
-
 ## Known problems
 
 There are no known problems.
+
+## Links
+
+- [Product Tutorial](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/product-labels-and-brands/product-service/product)
+- [Classification Tutorial](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/catalogs-and-categories/category-tree/classification)
 
