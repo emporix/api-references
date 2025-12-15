@@ -397,7 +397,7 @@ For each required mixin, the system validates that:
 
 If a required mixin is missing or doesn't contain all required fields from the schema, the update/partial update request fails with a validation error.
 
-**Example** - Required mixin validation
+### Example - Required mixin validation
 
 Consider a category with a required classification mixin where the schema also defines required fields:
 
@@ -476,7 +476,7 @@ The request fails with:
 }
 ```
 
-**Example** - Successful update with required mixin
+### Example - Successful update with required mixin
 
 To successfully update a product with a required classification mixin, you must provide all required fields defined in the schema:
 
