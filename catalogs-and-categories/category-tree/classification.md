@@ -33,8 +33,6 @@ This tutorial uses the [Category Service](../category-tree/README.md) and [Produ
 
 {% endhint %}
 
-## Understanding classification categories
-
 Classification categories are special categories that define classification mixins - reusable schemas that specify what attributes the products inside a category should have. Unlike standard categories, classification categories can define their own classification mixins and inherit mixins from parent classification categories.
 
 Categories can be one of two types:
@@ -56,7 +54,7 @@ To create a classification category, send a request to the [Creating a new categ
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/category/{tenant}/categories' 
-  --header 'X-Version: v2' \
+  --header 'X-Version: v2' 
   --header 'Content-Type: application/json' 
   --data '{
     "type": "CLASSIFICATION",
@@ -84,7 +82,7 @@ Each classification mixin in `ownClassificationMixins` includes:
 | `schemaUrl` | URL of the mixin schema (pattern: `^https?://[^\s/$.?#].\S*$`) | Yes |
 | `required` | Boolean indicating if the mixin is required for products in this category | No (defaults to `false`) |
 
-#### Multiple classification mixins
+### Multiple classification mixins
 
 You can define multiple classification mixins for a single category:
 
@@ -132,11 +130,11 @@ Power Tools (CLASSIFICATION)
 If you create a classification category "Corded Power Tools" as a child of "Power Tools" with the following request:
 
 ```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/category/{tenant}/categories' \
-  --header 'X-Version: v2' \
-  --header 'Content-Type: application/json' \
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/category/{tenant}/categories' 
+  --header 'X-Version: v2' 
+  --header 'Content-Type: application/json' 
   --data '{
     "type": "CLASSIFICATION",
     "parentId": "7d2b0d76-3628-46b3-ac92-34c903f5c3cb",
@@ -210,7 +208,7 @@ Send a request to the [Assigning a resource to a category](https://developer.emp
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' 
-  --header 'X-Version: v2' \
+  --header 'X-Version: v2' 
   --header 'Content-Type: application/json' 
   --data '{
     "ref": {
@@ -358,16 +356,12 @@ After the update, the product response includes the automatically populated sche
 
 ## Required classification mixins
 
-### Understanding required mixins
-
 Validation for required classification mixins occurs when both of the following conditions are met:
 
 1. The classification mixin on the category has `required: true`
 2. The mixin schema itself defines required fields
 
 When both conditions are met, the system validates that the mixin data in the request contains all required fields defined in the schema. This validation happens automatically even if you don't explicitly provide the classification mixin data in the request, as long as the product is assigned to a category that has that mixin marked as required.
-
-### Validation rules
 
 The validation process:
 
@@ -401,13 +395,11 @@ For each required mixin, the system validates that:
 - Present in the variant's own `mixins` object with all schema-required fields, OR
 - Inherited from the parent variant's `mixins` object (the parent variant must have all schema-required fields)
 
-If a required mixin is missing or doesn't contain all required fields from the schema, the update/partial update request will fail with a validation error.
+If a required mixin is missing or doesn't contain all required fields from the schema, the update/partial update request fails with a validation error.
 
-### Example: required mixin validation
+**Example** - Required mixin validation
 
 Consider a category with a required classification mixin where the schema also defines required fields:
-
-**Category definition:**
 
 ```json
 {
@@ -423,7 +415,7 @@ Consider a category with a required classification mixin where the schema also d
 }
 ```
 
-**Schema at `https://example.com/schema.json`:**
+Schema at `https://example.com/schema.json`:
 
 ```json
 {
@@ -484,7 +476,7 @@ The request fails with:
 }
 ```
 
-### Example: successful update with required mixin
+**Example** - Successful update with required mixin
 
 To successfully update a product with a required classification mixin, you must provide all required fields defined in the schema:
 
@@ -515,7 +507,7 @@ In such cases, the system will check if the mixin exists in the database (for va
 
 For variant products, if the parent variant has a required classification mixin with all schema-required fields, the variant can inherit it:
 
-**Parent variant:**
+Parent variant:
 
 ```json
 {
@@ -529,7 +521,7 @@ For variant products, if the parent variant has a required classification mixin 
 }
 ```
 
-**Child variant:**
+Child variant:
 
 ```json
 {
