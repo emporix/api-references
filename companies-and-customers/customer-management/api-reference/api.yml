@@ -491,7 +491,9 @@ paths:
         '409':
           $ref: '#/components/responses/409_conflict'
       security:
-        - CustomerAccessToken: []
+        - CustomerAccessToken: 
+          - customer.customer_update
+          - customer.customer_manage
       requestBody:
         content:
           application/json:
@@ -505,9 +507,6 @@ paths:
         description: ''
       description: |
         Assigns a customer account to the customer profile.
-        ***
-        ### Required scopes
-        * `customer.customer_update` or `customer.customer_manage`
       tags:
         - Account and profile
     parameters:

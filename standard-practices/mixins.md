@@ -19,6 +19,44 @@ description: Mixins let you extend business resources with custom properties by 
 Mixins are custom properties that you can use to describe your business resources in more details. Mixins can be applied to most objects in the Emporix API.\
 Learn more about mixin schemas in [Schema Service](../utilities/schema/).
 
+## APIs that support mixins
+
+The following APIs and services support mixins in their data models:
+
+### Core entities (with Schema Service support)
+These entities support mixin schema creation through the [Schema Service API](../utilities/schema/):
+- **Cart** - Cart Service
+- **Category** - Category Tree Service
+- **Company** - Client Management Service  
+- **Coupon** - Coupon Service
+- **Custom Entities** and **Custom Instances**
+- **Customer** - Customer Service / Customer Management Service
+- **Customer Address** - Customer Service
+- **Order** - Order Service
+- **Price List** - Price Service
+- **Product** - Product Service
+- **Quote** - Quote Service
+- **Return** - Returns Service
+- **Site** - Site Settings Service
+- **Vendor** - Vendor Service
+
+### Additional mixin support 
+These services accept mixins in their API requests and responses, but require manually created JSON schemas (not supported through Schema Service schema creation):
+- **Availability** - Availability Service
+- **Customer and Item Assignments** - Customer Segments Service
+- **Customer Segments** - Customer Segments Service
+- **Groups** - IAM Service (supports `mixins` field directly, without `metadata.mixins`)
+- **Locations** - Vendor Service
+- **Locations and Contact Assignment** - Client Management Service 
+- **Prices** - Price Service
+- **Returns** - Returns Service
+- **Shopping List** - Shopping List Service
+
+
+{% hint style="warning" %}
+**Note:** For services that don't support schema creation through the Schema Service API, you need to manually create and host your JSON schema, then reference it in the `metadata.mixins` field when using mixins with those APIs. See the [Schema Service tutorial](../utilities/schema/schema.md#how-to-create-a-more-complex-schema) for details on creating references with manually defined JSON schemas.
+{% endhint %}
+
 ## Schemas
 
 To apply a mixin to a resource, you need to define the mixin schema in the form of a JSON Schema object. Mixin schemas need to be uploaded to a hosting service and then referenced in a resource's mixin metadata.
