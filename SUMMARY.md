@@ -29,7 +29,6 @@
 
 ## E2E Flows
 
-* [E2E Flows](e2e-flows/README.md) 
 * [Classification](e2e-flows/classification.md)
 
 ## API Guides
