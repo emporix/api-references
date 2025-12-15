@@ -93,6 +93,7 @@ You can define multiple classification mixins for a single category:
    "localizedName": {
       "en": "Electronics"
    },
+   "published": true,
    "ownClassificationMixins": [
       {
          "name": "technicalSpecs",
