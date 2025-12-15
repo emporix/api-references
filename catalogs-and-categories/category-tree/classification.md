@@ -29,15 +29,13 @@ By leveraging classification categories, you can ensure consistency, improve dat
 
 {% hint style="info" %}
 
-This tutorial uses the [Category Service](../catalogs-and-categories/category-tree/README.md) and [Product Service](../products-labels-and-brands/product-service/README.md) to manage classification categories and products.
+This tutorial uses the [Category Service](../category-tree/README.md) and [Product Service](../../products-labels-and-brands/product-service/README.md) for the end-to-end classification flow.
 
 {% endhint %}
 
 ## Understanding classification categories
 
 Classification categories are special categories that define classification mixins - reusable schemas that specify what attributes the products inside a category should have. Unlike standard categories, classification categories can define their own classification mixins and inherit mixins from parent classification categories.
-
-### Category types
 
 Categories can be one of two types:
 
@@ -52,7 +50,7 @@ The `code` field is mandatory for classification categories. It's used to constr
 
 ### Basic classification category
 
-To create a classification category, send a reqest to the [Creating a new category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint, set the `type` field to `"CLASSIFICATION"`, provide a `code`, and define `ownClassificationMixins`.
+To create a classification category, send a request to the [Creating a new category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint, set the `type` field to `"CLASSIFICATION"`, provide a `code`, and define `ownClassificationMixins`.
 
 ```bash
 curl -L 
@@ -77,8 +75,6 @@ curl -L
     ]
   }'
 ```
-
-#### Classification mixin structure
 
 Each classification mixin in `ownClassificationMixins` includes:
 
@@ -114,18 +110,16 @@ You can define multiple classification mixins for a single category:
 }
 ```
 
-## Classification inheritance
+## Classification inheritance and matching
 
-**Important**: Classification mixins are inherited through the category hierarchy. When you assign a product to a category, it receives all classification mixins from:
+Classification mixins are inherited through the category hierarchy. When you assign a product to a category, it receives all classification mixins from:
 
 - The classification category to which the product is directly assigned.
 - All parent categories in the category hierarchy that are of the `CLASSIFICTION` type.
 
-### Category type matching requirement
+When creating a subcategory or assigning a parent category, both categories must be of the same type. If a parent category is CLASSIFICATION, the child category must also be CLASSIFICATION. Similarly, if a parent is STANDARD, the child must be STANDARD.
 
-**Important**: When creating a subcategory or assigning a parent category, both categories must be of the same type. If a parent category is CLASSIFICATION, the child category must also be CLASSIFICATION. Similarly, if a parent is STANDARD, the child must be STANDARD.
-
-### Example: inheritance chain
+For example:
 
 Consider this category hierarchy:
 
@@ -283,8 +277,6 @@ Then, when you retrieve a product assigned to a classification category with the
 }
 ```
 
-#### Understanding classification mixin fields
-
 The `classificationMixins` array in product metadata provides:
 
 | Field | Description |
@@ -297,9 +289,9 @@ The `classificationMixins` array in product metadata provides:
 | `required` | Boolean indicating if the mixin is required |
 | `sourceCategoryId` | ID of the category where the mixin originates |
 
-## Using classification mixins in product updates
+### Using classification mixins in product updates
 
-### Important: schema URL autopopulation
+Schema URL autopopulation:
 
 When updating or partially updating a product, you do not need to provide the `metadata.mixins.<mixinPath>` schema URL for classification mixins. The system automatically populates these schema URLs based on the product's category assignments.
 
