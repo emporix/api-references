@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2025-11-27: Product Service - classification mixins support
+# 2025-12-17: Product Service - classification mixins support
 
 ## Overview
 
