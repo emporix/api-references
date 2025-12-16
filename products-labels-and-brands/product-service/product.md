@@ -1300,37 +1300,11 @@ Classification categories allow you to organize products with consistent attribu
 
 ### Creating a product with classification mixins
 
-To create a product with classification mixins, create the product, assign it to a classification category, then update it with classification mixin attributes.
+To create a product with classification mixins, assign it first to a classification category and then update it with classification mixin attributes.
 
 {% stepper %}
 {% step %}
-### Create the product
-
-Create the product using the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint:
-
-```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/product/{tenant}/products' 
-  --header 'X-Version: v2' 
-  --header 'Content-Type: application/json' 
-  --data '{
-    "name": "Cordless Drill",
-    "code": "DRILL-001",
-    "productType": "BASIC",
-    "published": true,
-    "mixins": {
-      "productCustomAttributes": {
-        "orderUnit": "H87",
-        "minOrderQuantity": 1
-      }
-    }
-  }'
-```
-{% endstep %}
-
-{% step %}
-### Assign product to classification category
+### Assign your product to classification category
 
 Assign the product to a classification category using the [Assigning a resource to a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#post-category-tenant-categories-categoryid-assignments) endpoint:
 
