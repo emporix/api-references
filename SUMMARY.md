@@ -7,6 +7,7 @@
 * [Emporix API](api-intro.md)
 * [List of API Services](list-of-api-services.md)
 * [OpenAPI Generator](openapi-generator.md)
+* [Emporix Terraform Provider](quickstart/emporix-terraform-provider.md)
 
 ## Standard Practices
 
@@ -675,4 +676,3 @@
     * [Events - Schema](webhooks/events-schema.md)
     * [Events - Site](webhooks/events-site.md)
     * [Events - Vendor](webhooks/events-vendor.md)
- 
