@@ -7,6 +7,7 @@
 * [Emporix API](api-intro.md)
 * [List of API Services](list-of-api-services.md)
 * [OpenAPI Generator](openapi-generator.md)
+* [Emporix Terraform Provider](quickstart/emporix-terraform-provider.md)
 
 ## Standard Practices
 
@@ -203,6 +204,7 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/client-management/api-reference/api.yml)
   * [Customer Service (Customer Managed)](companies-and-customers/customer-management/README.md)
+    * [Customer Management (Customer Managed) Tutorial](companies-and-customers/customer-management/customer-management-tutorial.md)
     * [API Reference](companies-and-customers/customer-management/api-reference/README.md)
       * ```yaml
         props:
@@ -674,4 +676,3 @@
     * [Events - Schema](webhooks/events-schema.md)
     * [Events - Site](webhooks/events-site.md)
     * [Events - Vendor](webhooks/events-vendor.md)
- 
