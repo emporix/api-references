@@ -1300,13 +1300,13 @@ Classification categories allow you to organize products with consistent attribu
 
 ### Creating a product with classification mixins
 
-To create a product with classification mixins, create the product assigned to a classification category, then update it with classification mixin attributes.
+To create a product with classification mixins, create the product, assign it to a classification category, then update it with classification mixin attributes.
 
 {% stepper %}
 {% step %}
-#### Create the product and assign to classification category
+### Create the product
 
-Create a product and assign it to a classification category in a single request using the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint. Include the classification category ID in the `categoryIds` field:
+Create the product using the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint:
 
 ```bash
 curl -L 
@@ -1319,7 +1319,6 @@ curl -L
     "code": "DRILL-001",
     "productType": "BASIC",
     "published": true,
-    "categoryIds": ["0720b75e-ee1c-4d76-9f53-eb3af3927e13"],
     "mixins": {
       "productCustomAttributes": {
         "orderUnit": "H87",
@@ -1331,7 +1330,27 @@ curl -L
 {% endstep %}
 
 {% step %}
-#### Update product with classification mixin attributes
+### Assign product to classification category
+
+Assign the product to a classification category using the [Assigning a resource to a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#post-category-tenant-categories-categoryid-assignments) endpoint:
+
+```bash
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/category/{tenant}/categories/0720b75e-ee1c-4d76-9f53-eb3af3927e13/assignments' 
+  --header 'X-Version: v2' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "ref": {
+      "id": "product-123",
+      "type": "PRODUCT"
+    }
+  }'
+```
+{% endstep %}
+
+{% step %}
+### Update product with classification mixin attributes
 
 Update the product with classification mixin attributes using the [Partially updating a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint. Use the `mixinPath` from the classification category's `classificationMixins` field:
 
@@ -1413,13 +1432,17 @@ The response includes the `classificationMixins` field:
         "name": "toolsClassification",
         "mixinPath": "class_EA673_toolsClassification",
         "schemaUrl": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/toolsClassification_v1.json",
+        "usedSchemaUrl": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/toolsClassification_v1.json",
+        "obsoleteSchemaUrlUsed": false,
         "required": false,
         "sourceCategoryId": "7d2b0d76-3628-46b3-ac92-34c903f5c3cb"
       },
       {
         "name": "cordedToolsClassification",
         "mixinPath": "class_EA677_cordedToolsClassification",
-        "schemaUrl": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/cordedTools_v1.json",
+        "schemaUrl": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/cordedTools_v2.json",
+        "usedSchemaUrl": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/toolsClassification_v1.json",
+        "obsoleteSchemaUrlUsed": true,
         "required": false,
         "sourceCategoryId": "0720b75e-ee1c-4d76-9f53-eb3af3927e13"
       }
