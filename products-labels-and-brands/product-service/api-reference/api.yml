@@ -1659,22 +1659,13 @@ components:
                 - id: "abc-123"
                   code: "532432412331"
                   name: "Product 1"
-                - id: "abc-123"
-                  code: "532432412331"
-                  name: "Product 1"
                   metadata:
                     version: 1
                 - id: "abc-124"
                   code: "532432412332"
                   name: "Product 2"
-                - id: "abc-124"
-                  code: "532432412332"
-                  name: "Product 2"
                   metadata:
                     version: 1
-                - id: "abc-125"
-                  code: "532432412333"
-                  name: "Product 3"
                 - id: "abc-125"
                   code: "532432412333"
                   name: "Product 3"
@@ -2579,7 +2570,7 @@ components:
             - id
     productPartialUpdate:
       type: object
-      description: Schema for partially updating a product.
+      description: Partially updating a product.
       additionalProperties: false
       allOf:
         - $ref: '#/components/schemas/productCore'
