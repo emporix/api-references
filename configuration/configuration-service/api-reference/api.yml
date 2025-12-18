@@ -781,7 +781,7 @@ components:
           description: Describes purpose of the configuration.
         secured:
           type: boolean
-          description: Flag indicating whether the configuration should be encrypted.
+          description: Flag indicating whether the configuration should be encrypted. It works only if `value` field is of `string` type.
           default: false
         restricted:
           type: boolean
