@@ -785,7 +785,7 @@ components:
           default: false
         restricted:
           type: boolean
-          description: Flag indicating whether the configuration should be restricted. When configuration is rectricted then it cannot be deleted.
+          description: Flag indicating whether the configuration should be restricted. When configuration is rectricted then it cannot be deleted. When this property is set to `true` then it cannot be unset.
           default: false
         readOnly:
           type: boolean
