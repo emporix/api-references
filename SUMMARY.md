@@ -90,7 +90,8 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/catalogs-and-categories/catalog/api-reference/api.yml)
   * [Category Service](catalogs-and-categories/category-tree/README.md)
-    * [Category Tutorials](catalogs-and-categories/category-tree/category.md)
+    * [Category Tutorial](catalogs-and-categories/category-tree/category.md)
+    * [Classification Tutorial](catalogs-and-categories/category-tree/classification.md)
     * [API Reference](catalogs-and-categories/category-tree/api-reference/README.md)
       * ```yaml
         props:

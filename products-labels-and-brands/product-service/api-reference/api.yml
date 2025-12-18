@@ -272,9 +272,9 @@ paths:
                       version: 1
                       createdAt: '2022-03-31T09:52:15.423Z'
                       modifiedAt: '2022-03-31T09:52:15.423Z'
-                      schema: 'https://res.cloudinary.com/saas-ag/raw/upload/v123456789/schemata/CAAS/product.v2'
+                      schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/product.v2'
                       mixins:
-                        productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                        productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
                         productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-templateAttributes_v1.json'
                         productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
                 BUNDLE Product:
@@ -320,9 +320,9 @@ paths:
                       version: 1
                       createdAt: '2022-03-31T09:52:15.423Z'
                       modifiedAt: '2022-03-31T09:52:15.423Z'
-                      schema: 'https://res.cloudinary.com/saas-ag/raw/upload/v123456789/schemata/CAAS/product.v2'
+                      schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/product.v2'
                       mixins:
-                        productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                        productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
                         productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-templateAttributes_v1.json'
                         productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
                 PARENT VARIANT Product:
@@ -374,9 +374,9 @@ paths:
                       version: 1
                       createdAt: '2022-03-31T09:52:15.423Z'
                       modifiedAt: '2022-03-31T09:52:15.423Z'
-                      schema: 'https://res.cloudinary.com/saas-ag/raw/upload/v123456789/schemata/CAAS/product.v2'
+                      schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/product.v2'
                       mixins:
-                        productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                        productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
                         productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-templateAttributes_v1.json'
                         productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
                 VARIANT Product:
@@ -421,9 +421,9 @@ paths:
                         - name
                       createdAt: '2022-03-31T09:52:15.423Z'
                       modifiedAt: '2022-03-31T09:52:15.423Z'
-                      schema: 'https://res.cloudinary.com/saas-ag/raw/upload/v123456789/schemata/CAAS/product.v2'
+                      schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/product.v2'
                       mixins:
-                        productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                        productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
                         productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-templateAttributes_v1.json'
                         productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
         '401':
@@ -1086,9 +1086,9 @@ components:
                     version: 1
                     createdAt: '2022-03-31T09:52:15.423Z'
                     modifiedAt: '2022-03-31T09:52:15.423Z'
-                    schema: 'https://res.cloudinary.com/saas-ag/raw/upload/v123456789/schemata/CAAS/product.v2'
+                    schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/product.v2'
                     mixins:
-                      productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                      productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
                       productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-templateAttributes_v1.json'
                       productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
             BUNDLE Product:
@@ -1134,9 +1134,9 @@ components:
                     version: 1
                     createdAt: '2022-03-31T09:52:15.423Z'
                     modifiedAt: '2022-03-31T09:52:15.423Z'
-                    schema: 'https://res.cloudinary.com/saas-ag/raw/upload/v123456789/schemata/CAAS/product.v2'
+                    schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/product.v2'
                     mixins:
-                      productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                      productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
                       productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-templateAttributes_v1.json'
                       productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
             PARENT VARIANT Product:
@@ -1188,9 +1188,9 @@ components:
                     version: 1
                     createdAt: '2022-03-31T09:52:15.423Z'
                     modifiedAt: '2022-03-31T09:52:15.423Z'
-                    schema: 'https://res.cloudinary.com/saas-ag/raw/upload/v123456789/schemata/CAAS/product.v2'
+                    schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/product.v2'
                     mixins:
-                      productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                      productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
                       productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-templateAttributes_v1.json'
                       productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
             VARIANT Product:
@@ -1235,9 +1235,9 @@ components:
                       - name
                     createdAt: '2022-03-31T09:52:15.423Z'
                     modifiedAt: '2022-03-31T09:52:15.423Z'
-                    schema: 'https://res.cloudinary.com/saas-ag/raw/upload/v123456789/schemata/CAAS/product.v2'
+                    schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/product.v2'
                     mixins:
-                      productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/productCustomAttributesMixIn-v38.json'
+                      productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
                       productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-templateAttributes_v1.json'
                       productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
     product_NotFound_404:
@@ -1358,8 +1358,8 @@ components:
                     defaultOrderQuantity: 5
                 metadata:
                   mixins:
-                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
-                    salePricesData: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/salePriceData.json'
+                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
+                    salePricesData: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/salePriceData.json'
             BUNDLE Product Creation:
               value:
                 name: Smartphone X2 with headset
@@ -1398,7 +1398,7 @@ components:
                     defaultOrderQuantity: 5
                 metadata:
                   mixins:
-                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
+                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
             PARENT VARIANT Product Creation:
               value:
                 name: Smartphone X2 with headset
@@ -1443,7 +1443,7 @@ components:
                     defaultOrderQuantity: 5
                 metadata:
                   mixins:
-                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
+                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
             VARIANT Product Creation:
               value:
                 name: Smartphone X2 black
@@ -1513,8 +1513,8 @@ components:
                 metadata:
                   version: 1
                   mixins:
-                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
-                    salePricesData: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/salePriceData.json'
+                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
+                    salePricesData: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/salePriceData.json'
             BUNDLE Product Update:
               value:
                 name: Smartphone X2 with headset
@@ -1559,8 +1559,8 @@ components:
                 metadata:
                   version: 1
                   mixins:
-                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
-                    salePricesData: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/salePriceData.json'
+                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
+                    salePricesData: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/salePriceData.json'
             PARENT VARIANT Product Update:
               value:
                 name: Smartphone X2
@@ -1611,8 +1611,8 @@ components:
                 metadata:
                   version: 1
                   mixins:
-                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json'
-                    salePricesData: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/salePriceData.json'
+                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
+                    salePricesData: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/salePriceData.json'
             VARIANT Product Update:
               value:
                 name: Smartphone X2 black
@@ -2138,6 +2138,37 @@ components:
         - $ref: '#/components/schemas/productMetadataWithVersion'
         - type: object
           properties:
+            classificationMixins:
+              type: array
+              description: List of mixin schemas used for classification.
+              items:
+                type: object
+                description: Mixin schema.
+                properties:
+                  name:
+                    type: string
+                    description: Name of the mixin
+                    pattern: '^[a-zA-Z0-9_]\S*$'
+                  mixinPath:
+                    type: string
+                    description: The mixins path that should be used when defining attributes on a product. It's built based on the following pattern - `class_<sourceCategory.code>_<name>`.
+                  schemaUrl:
+                    type: string
+                    description: URL of the mixin schema defined on the category level.
+                    pattern: '^https?://[^\s/$.?#].\S*$'
+                  usedSchemaUrl:
+                    type: string
+                    description: If given mixin has been already used in the product, then this field contains the URL of the used mixin schema.
+                    pattern: '^https?://[^\s/$.?#].\S*$'
+                  obsoleteSchemaUrlUsed:
+                    type: boolean
+                    description: Indicates whether the used mixin schema is obsolete - `usedSchemaUrl` differs from `schemaUrl`.
+                  required:
+                    type: boolean
+                    description: Indicates whether the mixin is required.
+                  sourceCategoryId:
+                    type: string
+                    description: Unique identifier of the category from which the mixin comes from. Can be this category ID or one of the parent categories IDs.
             createdAt:
               type: string
               description: Creation date in the ISO 8601 standard.

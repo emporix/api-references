@@ -326,4 +326,93 @@ curl -L
     }
   }'
 ```
- 
+
+## Classification
+
+Classification categories allow you to organize products with consistent attributes across your catalog. By defining reusable attribute schemas that are automatically inherited by products assigned to those categories, you can ensure data quality and consistency while reducing manual work.
+
+### Creating a classification category
+
+To create a classification category, send a request to the [Creating a new category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint with the `type` field set to `"CLASSIFICATION"` and define `ownClassificationMixins`.
+
+```bash
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/category/{tenant}/categories' 
+  --header 'X-Version: v2' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "type": "CLASSIFICATION",
+    "parentId": "root",
+    "localizedName": {
+      "en": "Power Tools"
+    },
+    "localizedDescription": {
+      "en": "Professional power tools"
+    },
+    "localizedSlug": {
+      "en": "power-tools"
+    },
+    "position": 5,
+    "published": true,
+    "ownClassificationMixins": [
+      {
+        "name": "toolsClassification",
+        "schemaUrl": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/toolsClassification_v1.json",
+        "required": false
+      }
+    ],
+    "mixins": {}
+  }'
+```
+
+### Response with inherited mixins
+
+When retrieving a classification category that has parent classification categories, the `classificationMixins` field contains the combined list:
+
+```json
+{
+  "id": "0720b75e-ee1c-4d76-9f53-eb3af3927e13",
+  "type": "CLASSIFICATION",
+  "parentId": "7d2b0d76-3628-46b3-ac92-34c903f5c3cb",
+  "localizedName": {
+    "en": "Corded Power Tools"
+  },
+  "position": 0,
+  "published": true,
+  "ownClassificationMixins": [
+    {
+      "name": "cordedToolsClassification",
+      "schemaUrl": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/cordedTools_v1.json",
+      "required": false
+    }
+  ],
+  "classificationMixins": [
+    {
+      "name": "toolsClassification",
+      "mixinPath": "class_EA673_toolsClassification",
+      "schemaUrl": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/toolsClassification_v1.json",
+      "required": false,
+      "sourceCategoryId": "7d2b0d76-3628-46b3-ac92-34c903f5c3cb"
+    },
+    {
+      "name": "cordedToolsClassification", 
+      "mixinPath": "class_EA677_cordedToolsClassification",
+      "schemaUrl": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/cordedTools_v1.json",
+      "required": false,
+      "sourceCategoryId": "0720b75e-ee1c-4d76-9f53-eb3af3927e13"
+    }
+  ],
+  "metadata": {
+    "version": 0,
+    "createdAt": "2024-08-28T14:00:13.181Z",
+    "modifiedAt": "2024-08-28T14:00:13.181Z"
+  }
+}
+```
+
+{% hint style="info" %}
+
+To learn about the end-to-end flow for implementing classification in your B2B commerce platform, along with the product service, see [Classification Tutorial](../category-tree/classification.md).
+
+{% endhint %}
