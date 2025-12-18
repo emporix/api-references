@@ -69,6 +69,10 @@ These announcements are intended to keep you informed about ongoing work and pot
     <td class="tg-0pky" rowspan="5">AI Service </td>
     <td class="tg-0pky" rowspan="5">Agents</td>
   </tr>
+    <tr>
+    <td class="tg-0pky" rowspan="5">Value Stream Modeller </td>
+    <td class="tg-0pky" rowspan="5">Improvements</td>
+  </tr>
 </tbody>
 </table>
  
