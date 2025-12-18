@@ -432,6 +432,18 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+              examples:
+                Bad Request:
+                  value:
+                    message: Invalid tenant supplied without proper authorization
+                    status: 400
+                    type: application/json
         '404':
           description: Not Found
           content:
@@ -722,7 +734,7 @@ paths:
                     status: 400
                     type: application/json
         '404':
-          description: Conflict
+          description: Not found
           content:
             application/json:
               schema:
@@ -744,8 +756,8 @@ paths:
         Deletes a specified client configuration.
 components:
   schemas:
-    Configuration:
-      title: Configuration
+    BaseConfiguration:
+      title: BaseConfiguration
       type: object
       properties:
         key:
@@ -753,7 +765,7 @@ components:
           description: Configuration key.
           minLength: 1
         value:
-          description: Client configuration value. It can be any valid JSON object.
+          description: Configuration value. It can be any valid JSON object.
           oneOf:
             - type: object
             - type: string
@@ -764,35 +776,56 @@ components:
         version:
           type: integer
           description: Configuration version.
+        description:
+          type: string
+          description: Describes purpose of the configuration.
         secured:
           type: boolean
           description: Flag indicating whether the configuration should be encrypted.
           default: false
+        restricted:
+          type: boolean
+          description: Flag indicating whether the configuration should be restricted. When configuration is rectricted then it cannot be deleted.
+          default: false
+        readOnly:
+          type: boolean
+          description: Flag indicating whether the configuration should be readOnly. When configuration is readOnly then it cannot be updated.
+          default: false
+        schemaUrl:
+          type: string
+          format: uri
+          description: 'URL of Json Schema for validation purpose. When configuration is created this value can be provided and then each update operation will be validated against this schema. This property cannot be updated so once set it cannot be unset. The Json Schema should contain one root property named `value` in order to work correctly. An example of a valid schema:
+            `{
+              "$schema": "http://json-schema.org/draft-07/schema#",
+              "type": "object",
+              "required": ["value"],
+              "properties": {
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }`
+            '
+      required:
+        - key
+        - value
+    Configuration:
+      allOf:
+        - $ref: '#/components/schemas/BaseConfiguration'
+        - type: object
     ClientConfiguration:
-      title: ClientConfiguration
-      type: object
-      properties:
-        id:
-          type: string
-          description: Client configuration unique identifier.
-          minLength: 1
-        client:
-          type: string
-          description: The client to which the configuration applies.
-          minLength: 1
-        key:
-          type: string
-          description: Client configuration key.
-          minLength: 1
-        value:
-          description: Client configuration value. It can be any valid JSON object.
-          oneOf:
-            - type: object
-            - type: string
-            - type: array
-              items:
-                type: object
-            - type: boolean
+      allOf:
+        - $ref: '#/components/schemas/BaseConfiguration'
+        - type: object
+          properties:
+            id:
+              type: string
+              description: Client configuration unique identifier.
+              minLength: 1
+            client:
+              type: string
+              description: The client to which the configuration applies.
+              minLength: 1
     ErrorMessage:
       title: error
       description: Schema for API-specific errors.
