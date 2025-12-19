@@ -57,6 +57,6 @@ There are no known problems.
 
 ## Links
 
-- [Product Tutorial](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/d4POTWomuSS7d3dnh4Dg/api-guides/products-labels-and-brands/product-service/product#classification)
-- [Classification Tutorial](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/d4POTWomuSS7d3dnh4Dg/api-guides/catalogs-and-categories/category-tree/classification)
+- [Product Tutorial](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/products-labels-and-brands/product-service/product#classification)
+- [Classification Tutorial](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/catalogs-and-categories/category-tree/classification)
 
