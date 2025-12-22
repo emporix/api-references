@@ -1,6 +1,8 @@
 ---
 description: Manage Emporix resources and configuration with the Terraform provider.
 icon: t
+layout:
+  width: wide
 ---
 
 # Emporix Terraform Provider
