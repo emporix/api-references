@@ -914,6 +914,7 @@ components:
       properties:
         code:
           type: string
+          pattern: ^[^\s#]+$
           description: Site unique identifier.
         name:
           type: string
