@@ -214,7 +214,7 @@ curl -L
       "sepaCreditorId": " "
     },
     "metadata": {
-      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/merchantAddressMixin.v10"
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/merchantAddressMixin.v10"
     }
   }
 }
@@ -297,7 +297,7 @@ curl -L
       "pmtInfId": "PMT-IDO-"
     },
     "metadata": {
-      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/debitSettingsSiteMixIn.v3"
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/debitSettingsSiteMixIn.v3"
     }
   }
 }

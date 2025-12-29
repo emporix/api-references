@@ -333,7 +333,7 @@ curl -i -X POST
         "redemptionCodeValue": 5
       },
       "metadata": {
-        "schema": "https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/couponSettingsSiteMixIn.v4"
+        "schema": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/couponSettingsSiteMixIn_2.v4"
       }
     }
   }'
