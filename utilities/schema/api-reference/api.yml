@@ -991,7 +991,7 @@ paths:
                         id: EON1007
                   metadata:
                     mixins:
-                      order_reference: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata2/tenant/order_reference_v1.json'
+                      order_reference: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/order_reference_v1.json'
       responses:
         '201':
           description: Custom instance was successfully created.
