@@ -700,7 +700,7 @@ paths:
                             - key: RED
                       metadata:
                         variantAttributesSchema: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/testTenant/634cea2740033d7c2e7b03a8-variantAttributes_v1.json'
-                        templateAttributesSchema: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/saastest2/634cea2740033d7c2e7b03a8-templateAttributes_v1.json'
+                        templateAttributesSchema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/634cea2740033d7c2e7b03a8-templateAttributes_v1.json'
                         createdAt: '2022-03-31T09:52:15.423Z'
                         modifiedAt: '2022-03-31T09:52:15.423Z'
                         version: 1
@@ -834,7 +834,7 @@ paths:
                           - key: RED
                     metadata:
                       variantAttributesSchema: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/testTenant/634cea2740033d7c2e7b03a8-variantAttributes_v1.json'
-                      templateAttributesSchema: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/saastest2/634cea2740033d7c2e7b03a8-templateAttributes_v1.json'
+                      templateAttributesSchema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/634cea2740033d7c2e7b03a8-templateAttributes_v1.json'
                       createdAt: '2022-03-31T09:52:15.423Z'
                       modifiedAt: '2022-03-31T09:52:15.423Z'
                       version: 1
