@@ -130,7 +130,7 @@ curl -i -X POST
 "testMixin": {
 "active": true,
 "metadata": {
-"schema": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/testMixin.json"
+"schema": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695388d813fd4242de135807_testMixin_v1.json"
 }
 }
 }'

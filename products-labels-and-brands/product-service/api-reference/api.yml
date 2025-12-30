@@ -275,8 +275,8 @@ paths:
                       schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/product.v2'
                       mixins:
                         productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
-                        productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-templateAttributes_v1.json'
-                        productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
+                        productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_templateAttributes_v1.json'
+                        productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_variantAttributes_v1.json'
                 BUNDLE Product:
                   value:
                     name: Smartphone X2 with headset
@@ -323,8 +323,8 @@ paths:
                       schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/product.v2'
                       mixins:
                         productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
-                        productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-templateAttributes_v1.json'
-                        productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
+                        productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_templateAttributes_v1.json'
+                        productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_variantAttributes_v1.json'
                 PARENT VARIANT Product:
                   value:
                     name: Smartphone X2
@@ -377,8 +377,8 @@ paths:
                       schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/product.v2'
                       mixins:
                         productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
-                        productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-templateAttributes_v1.json'
-                        productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
+                        productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_templateAttributes_v1.json'
+                        productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_variantAttributes_v1.json'
                 VARIANT Product:
                   value:
                     name: Smartphone X2 black
@@ -424,8 +424,8 @@ paths:
                       schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/product.v2'
                       mixins:
                         productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
-                        productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-templateAttributes_v1.json'
-                        productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
+                        productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_templateAttributes_v1.json'
+                        productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_variantAttributes_v1.json'
         '401':
           $ref: '#/components/responses/common_response_Unauthorized_401'
         '403':
@@ -699,8 +699,8 @@ paths:
                             - key: GREEN
                             - key: RED
                       metadata:
-                        variantAttributesSchema: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/testTenant/634cea2740033d7c2e7b03a8-variantAttributes_v1.json'
-                        templateAttributesSchema: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/saastest2/634cea2740033d7c2e7b03a8-templateAttributes_v1.json'
+                        variantAttributesSchema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/634cea2740033d7c2e7b03a8-variantAttributes_v1.json'
+                        templateAttributesSchema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/634cea2740033d7c2e7b03a8-templateAttributes_v1.json'
                         createdAt: '2022-03-31T09:52:15.423Z'
                         modifiedAt: '2022-03-31T09:52:15.423Z'
                         version: 1
@@ -833,8 +833,8 @@ paths:
                           - key: GREEN
                           - key: RED
                     metadata:
-                      variantAttributesSchema: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/testTenant/634cea2740033d7c2e7b03a8-variantAttributes_v1.json'
-                      templateAttributesSchema: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/saastest2/634cea2740033d7c2e7b03a8-templateAttributes_v1.json'
+                      variantAttributesSchema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/634cea2740033d7c2e7b03a8-variantAttributes_v1.json'
+                      templateAttributesSchema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/634cea2740033d7c2e7b03a8-templateAttributes_v1.json'
                       createdAt: '2022-03-31T09:52:15.423Z'
                       modifiedAt: '2022-03-31T09:52:15.423Z'
                       version: 1
@@ -1089,8 +1089,8 @@ components:
                     schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/product.v2'
                     mixins:
                       productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
-                      productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-templateAttributes_v1.json'
-                      productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
+                      productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_templateAttributes_v1.json'
+                      productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_variantAttributes_v1.json'
             BUNDLE Product:
               value:
                 - id: 545b4e3dfaee4c10def3db24
@@ -1137,8 +1137,8 @@ components:
                     schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/product.v2'
                     mixins:
                       productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
-                      productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-templateAttributes_v1.json'
-                      productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
+                      productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_templateAttributes_v1.json'
+                      productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_variantAttributes_v1.json'
             PARENT VARIANT Product:
               value:
                 - id: 545b4e3dfaee4c10def3db24
@@ -1191,8 +1191,8 @@ components:
                     schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/product.v2'
                     mixins:
                       productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
-                      productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-templateAttributes_v1.json'
-                      productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
+                      productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_templateAttributes_v1.json'
+                      productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_variantAttributes_v1.json'
             VARIANT Product:
               value:
                 - id: 545b4e3dfaee4c10def3db24--545b4e3dfaee4c10def3db25
@@ -1238,8 +1238,8 @@ components:
                     schema: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/product.v2'
                     mixins:
                       productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
-                      productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-templateAttributes_v1.json'
-                      productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/tenant/633d774f37937d425ce5570f-variantAttributes_v1.json'
+                      productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_templateAttributes_v1.json'
+                      productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_variantAttributes_v1.json'
     product_NotFound_404:
       description: Resource has not been found.
       content:

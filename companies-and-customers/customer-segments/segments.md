@@ -78,7 +78,7 @@ curl -i -X PUT
     },
     "metadata": {
       "mixins": {
-        "segmentAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/v1600077014/schemata/segmentAttributes_v1.json"
+        "segmentAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/69537caeb3fd5d378296ae42_segmentAttributes.json"
       }
     }
   }'
@@ -129,7 +129,7 @@ curl -i -X PUT
     },
     "metadata": {
       "mixins": {
-        "segmentAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/v1600077014/schemata/segmentAttributes_v1.json"
+        "segmentAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/69537caeb3fd5d378296ae42_segmentAttributes.json"
       }
     }
   }'
@@ -156,7 +156,7 @@ curl -i -X PUT
     },
     "metadata": {
       "mixins": {
-        "segmentAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/v1600077014/schemata/segmentAttributes_v1.json"
+        "segmentAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/69537caeb3fd5d378296ae42_segmentAttributes.json"
       }
     }
   }'
