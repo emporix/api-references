@@ -8,6 +8,7 @@
 
 ## 2025
 
+* [2025-12-18: Configuration Service - New properties for configurations](2025/2025-12-18-configuration.md)
 * [2025-12-17: Product Service - classification mixins support](2025/2025-12-17-product-classification.md)
 * [2025-12-17: Category Service - classification categories](2025/2025-12-17-category.md)
 * [2025-12-17: Webhook Service - update category event schema](2025/2025-12-17-webhook.md)
