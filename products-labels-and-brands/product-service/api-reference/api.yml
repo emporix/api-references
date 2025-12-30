@@ -2283,24 +2283,6 @@ components:
           items:
             type: string
           description: 'Collection of label IDs.'
-        customerSegmentIds:
-          type: array
-          description: |-
-            Customer segment IDs assigned to the product.
-
-            **NOTE**: This is a preview field and it is not fully operational yet.
-          readOnly: true
-          items:
-            type: string
-        categoryIds:
-          type: array
-          description: |-
-            Category IDs assigned to the product.
-
-            **NOTE**: This is a preview field and it is not fully operational yet.
-          readOnly: true
-          items:
-            type: string
     basicProduct:
       type: object
       description: Products of the BASIC type.
@@ -2344,6 +2326,22 @@ components:
               $ref: '#/components/schemas/productMedia'
             metadata:
               $ref: '#/components/schemas/productMetadataGet'
+            customerSegmentIds:
+              type: array
+              description: |-
+                Customer segment IDs assigned to the product.
+
+                **NOTE**: This is a preview field and it is not fully operational yet.
+              items:
+                type: string
+            categoryIds:
+              type: array
+              description: |-
+                Category IDs assigned to the product.
+
+                **NOTE**: This is a preview field and it is not fully operational yet.
+              items:
+                type: string
     basicProductsArray:
       type: array
       description: List of products of the BASIC type.
@@ -2421,6 +2419,22 @@ components:
               $ref: '#/components/schemas/productMedia'
             metadata:
               $ref: '#/components/schemas/productMetadataGet'
+            customerSegmentIds:
+              type: array
+              description: |-
+                Customer segment IDs assigned to the product.
+
+                **NOTE**: This is a preview field and it is not fully operational yet.
+              items:
+                type: string
+            categoryIds:
+              type: array
+              description: |-
+                Category IDs assigned to the product.
+
+                **NOTE**: This is a preview field and it is not fully operational yet.
+              items:
+                type: string
     bundleProductsArray:
       type: array
       description: List of products of the BUNDLE type.
@@ -2494,6 +2508,22 @@ components:
               $ref: '#/components/schemas/productMedia'
             metadata:
               $ref: '#/components/schemas/productMetadataGet'
+            customerSegmentIds:
+              type: array
+              description: |-
+                Customer segment IDs assigned to the product.
+
+                **NOTE**: This is a preview field and it is not fully operational yet.
+              items:
+                type: string
+            categoryIds:
+              type: array
+              description: |-
+                Category IDs assigned to the product.
+
+                **NOTE**: This is a preview field and it is not fully operational yet.
+              items:
+                type: string
     parentVariantProductsArray:
       type: array
       description: List of products of the PARENT_VARIANT type.
@@ -2569,6 +2599,22 @@ components:
               $ref: '#/components/schemas/productMedia'
             metadata:
               $ref: '#/components/schemas/variantProductMetadataGet'
+            customerSegmentIds:
+              type: array
+              description: |-
+                Customer segment IDs assigned to the product.
+
+                **NOTE**: This is a preview field and it is not fully operational yet.
+              items:
+                type: string
+            categoryIds:
+              type: array
+              description: |-
+                Category IDs assigned to the product.
+
+                **NOTE**: This is a preview field and it is not fully operational yet.
+              items:
+                type: string
     variantProductsArray:
       type: array
       description: List of products of the VARIANT type.
