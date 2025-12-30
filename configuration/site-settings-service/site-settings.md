@@ -119,7 +119,7 @@ curl -L
     "testMixin": {
     "active": true,
     "metadata": {
-      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/testMixin.json"
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695388d813fd4242de135807_testMixin_v1.json"
     }
   },
   "orderProcessSettings": {
@@ -201,7 +201,7 @@ curl -L
     "testMixin": {
     "active": true,
     "metadata": {
-      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/testMixin.json"
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695388d813fd4242de135807_testMixin_v1.json"
     }
   },
   "merchantInfo": {
@@ -275,7 +275,7 @@ curl -L
     "testMixin": {
     "active": true,
     "metadata": {
-      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/testMixin.json"
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695388d813fd4242de135807_testMixin_v1.json"
     }
   },
   "debitSettings": {
@@ -392,7 +392,7 @@ curl -L
     "testMixin": {
     "active": true,
     "metadata": {
-      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/testMixin.json"
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695388d813fd4242de135807_testMixin_v1.json"
     }
   },
   "customerSettings": {
