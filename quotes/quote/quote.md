@@ -359,7 +359,7 @@ curl -i -X POST
     },
     "metadata": {
       "mixins": {
-        "customAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695297f5b3fd5d378296ae41_customAttributes_v1.json"
+        "customAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695297f5b3fd5d378296ae41_customAttributes_v2.json"
       }
     }
   }'
