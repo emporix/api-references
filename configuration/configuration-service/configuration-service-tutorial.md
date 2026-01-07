@@ -22,52 +22,66 @@ The Configuration Service manages three types of configurations:
   * Tax and packaging configurations
   * Storefront settings
 
-* **Client configurations** — Associated with particular services. Use client configurations for service-specific settings, such as:
-  * Indexing service configurations
-  * Service-specific feature flags
-  * Service-specific parameters
+* **Client configurations** — Associated with particular services. Use client configurations for service-specific settings, such as Indexing Service configurations
+
 
 * **Global configurations** — Read-only configurations associated with all services across all tenants.
 
-## Common tenant configuration keys
+### Configuration structure
 
-The Configuration Service supports various configuration keys for different purposes. Here are some of the most commonly used ones:
+All configurations follow this structure:
 
-### Customer-related configurations
+```json
+{
+  "key": "configuration_key",
+  "secured": false,
+  "value": "configuration_value",
+  "version": 1
+}
+```
 
-* `customer.passwordreset.redirecturl` — URL to redirect customers when resetting their password
-* `customer.changeemail.redirecturl` — URL to redirect customers when changing their email address
-* `cust.notification.email.from` — Email address used as the sender for customer notifications
-* `customer.deletion.redirecturl` — URL to redirect customers after account deletion
+* `key` — The configuration key identifier
+* `secured` — Whether the configuration is secured (boolean)
+* `value` — The configuration value (can be a string, number, boolean, object, or array)
+* `version` — The version number of the configuration (incremented on each update)
 
-### Business settings
+The Client configurations include:
 
-* `project_country` — Default country for your tenant (see [Country Service tutorial](../country-service/country.md))
-* `project_curr` — Default currencies for your tenant (see [Currency Service tutorial](../currency-service/currency.md))
-* `project_lang` — Default languages for your tenant (see [Language Configuration Tutorials](./language.md))
+```json
+{
+  "_id": "client_key_identifier",
+  "client": "client_name",
+  "key": "configuration_key",
+  "value": "configuration_value"
+}
+```
 
-### Tax configuration
+* `_id` — Unique identifier combining client and key
+* `client` — The client/service name
+* `key` — The configuration key identifier
+* `value` — The configuration value
 
-* `taxConfiguration` — tax classes and rates configuration
+## Common configuration keys
 
-### Packaging configuration
+The Configuration Service supports various configuration keys for different purposes:
 
-* `packagingConf` — packaging groups and position options
+| Configuration Key | Description |
+|-------------------|-------------|
+| `customer.passwordreset.redirecturl` | URL to redirect customers when resetting their password. |
+| `customer.changeemail.redirecturl` | URL to redirect customers when changing their email address. |
+| `cust.notification.email.from` | Email address used as the sender for customer notifications. |
+| `customer.deletion.redirecturl` | URL to redirect customers after account deletion. |
+| `project_country` | Default country for your tenant (see [Country Service Tutorial](../country-service/country.md)). |
+| `project_curr` | Default currencies for your tenant (see [Currency Service Tutorial](../currency-service/currency.md)). |
+| `project_lang` | Default languages for your tenant (see [Language Tutorial](./language.md)). |
+| `taxConfiguration` | Tax classes and rates configuration. |
+| `packagingConf` | Packaging groups and position options. |
+| `storefront.host` | Hostname for your storefront. |
+| `storefront.htmlPage` | Default HTML page for your storefront. |
+| `unitConf` | Unit conversion configurations. |
+| `invoiceSettings` | Invoice generation thresholds and statuses. |
 
-### Storefront settings
-
-* `storefront.host` — hostname for your storefront
-* `storefront.htmlPage` — default HTML page for your storefront
-
-### Unit configuration
-
-* `unitConf` — unit conversion configurations
-
-### Invoice settings
-
-* `invoiceSettings` — invoice generation thresholds and statuses
-
-## Managing tenant configurations through Emporix API
+## Managing tenant configurations 
 
 ### How to retrieve all tenant configurations
 
@@ -121,7 +135,7 @@ curl -L
   --header 'Accept: */*'
 ```
 
-The example resposne looks like:
+The example response looks like:
 
 ```json
 {
@@ -338,7 +352,7 @@ curl -L
   --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN'
 ```
 
-## Managing client configurations through Emporix API
+## Managing client configurations 
 
 Client configurations are service-specific settings that apply to particular services rather than the entire tenant.
 
@@ -564,62 +578,4 @@ curl -L
 {% hint style="info" %}
 Global configurations are read-only and cannot be created, updated, or deleted through the API. They are managed by the Emporix system and provide default values that can be overridden by tenant configurations.
 {% endhint %}
-
-## Configuration structure
-
-### Configuration object
-
-All configurations follow this structure:
-
-```json
-{
-  "key": "configuration_key",
-  "secured": false,
-  "value": "configuration_value",
-  "version": 1
-}
-```
-
-* `key` — The configuration key identifier
-* `secured` — Whether the configuration is secured (boolean)
-* `value` — The configuration value (can be a string, number, boolean, object, or array)
-* `version` — The version number of the configuration (incremented on each update)
-
-### Client configuration object
-
-Client configurations have a slightly different structure:
-
-```json
-{
-  "_id": "client_key_identifier",
-  "client": "client_name",
-  "key": "configuration_key",
-  "value": "configuration_value"
-}
-```
-
-* `_id` — Unique identifier combining client and key
-* `client` — The client/service name
-* `key` — The configuration key identifier
-* `value` — The configuration value
-
-## Best practices
-
-### Security considerations
-
-* Use the `secured` flag to mark sensitive configurations that should be protected
-* Never store sensitive information like passwords or API keys in unsecured configurations
-* Consider using environment variables or secure storage for highly sensitive data
-
-### Version management
-
-* Always include the current `version` number when updating configurations to prevent conflicts
-* The version number is automatically incremented after each successful update
-* If you receive a conflict error, retrieve the configuration again to get the latest version number
-
-### JSON value formatting
-
-* Configuration values can be strings, numbers, booleans, objects, or arrays
-* When storing JSON objects or arrays as string values, make sure to properly escape the JSON
-* For complex configurations, consider using structured JSON objects rather than escaped strings
 
