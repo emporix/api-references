@@ -22,7 +22,7 @@ The Configuration Service manages three types of configurations:
   * Tax and packaging configurations
   * Storefront settings
 
-* **Client configurations** — Associated with particular services. Use client configurations for service-specific settings, such as Indexing Service configurations
+* **Client configurations** — Associated with particular services. Use client configurations for service-specific settings, such as indexing configurations
 
 
 * **Global configurations** — Read-only configurations associated with all services across all tenants.
@@ -71,9 +71,9 @@ The Configuration Service supports various configuration keys for different purp
 | `customer.changeemail.redirecturl` | URL to redirect customers when changing their email address. |
 | `cust.notification.email.from` | Email address used as the sender for customer notifications. |
 | `customer.deletion.redirecturl` | URL to redirect customers after account deletion. |
-| `project_country` | Default country for your tenant (see [Country Service Tutorial](../country-service/country.md)). |
-| `project_curr` | Default currencies for your tenant (see [Currency Service Tutorial](../currency-service/currency.md)). |
-| `project_lang` | Default languages for your tenant (see [Language Tutorial](./language.md)). |
+| `project_country` | Default country for your tenant. |
+| `project_curr` | Default currencies for your tenant. |
+| `project_lang` | Default languages for your tenant. |
 | `taxConfiguration` | Tax classes and rates configuration. |
 | `packagingConf` | Packaging groups and position options. |
 | `storefront.host` | Hostname for your storefront. |
@@ -100,11 +100,11 @@ curl -L
   --header 'Accept: */*'
 ```
 
-You can also filter configurations by specific keys using the `keys` query parameter:
+You can also filter configurations by specific keys using the `keys` query parameter, for example:
 
 ```bash
 curl -L 
-  --url 'https://api.emporix.io/configuration/{tenant}/configurations?keys=project_lang,project_curr' 
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations?keys=project_lang' 
   --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
   --header 'Accept: */*'
 ```
