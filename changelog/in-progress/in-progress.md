@@ -54,20 +54,24 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr></thead>
 <tbody>
   <tr>
-    <td class="tg-0pky" rowspan="5">VSM</td>
-    <td class="tg-0pky" rowspan="5">Improvements of features</td>
-  </tr>
-  <tr>
     <td class="tg-0pky" rowspan="5"><br>Schema Service</br> <br>Product Service</br><br>Category Service</br></td>
     <td class="tg-0pky" rowspan="5">Classification categories</td>
   </tr>
-  <tr>
-    <td class="tg-0pky" rowspan="5">Product Service </td>
-    <td class="tg-0pky" rowspan="5">Product variants</td>
+    <tr>
+    <td class="tg-0pky" rowspan="5"><br>IAM Service</br> <br>Configuration Service</br><br>Site Settings Service</br></td>
+    <td class="tg-0pky" rowspan="5">Site Permissions</td>
+  </tr>
+    <tr>
+    <td class="tg-0pky" rowspan="5">Product Service</td>
+    <td class="tg-0pky" rowspan="5">Segments</td>
   </tr>
   <tr>
     <td class="tg-0pky" rowspan="5">AI Service </td>
-    <td class="tg-0pky" rowspan="5">Agentic improvements</td>
+    <td class="tg-0pky" rowspan="5">Agents</td>
+  </tr>
+    <tr>
+    <td class="tg-0pky" rowspan="5">Value Stream Modeller </td>
+    <td class="tg-0pky" rowspan="5">Improvements</td>
   </tr>
 </tbody>
 </table>
