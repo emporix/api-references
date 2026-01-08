@@ -17,7 +17,7 @@ layout:
 
 ## Overview
 
-Extended `Configuration` and `Client Configuration` objects with following properties:
+The `Configuration` and `Client Configuration` objects were extended with following properties:
 
 - `readOnly`
 - `restricted`
