@@ -1939,7 +1939,7 @@ components:
             membershipStatus: PREMIUM
         metadata:
           mixins:
-            segmentAttributes: https://res.cloudinary.com/saas-ag/raw/upload/v1600077014/schemata/segmentAttributes_v1.json
+            segmentAttributes: https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/69537caeb3fd5d378296ae42_segmentAttributes.json
     ItemAssignmentUpsert:
       value:
         *mixins
@@ -1951,7 +1951,7 @@ components:
               membershipStatus: PREMIUM
           metadata:
             mixins:
-              segmentAttributes: https://res.cloudinary.com/saas-ag/raw/upload/v1600077014/schemata/segmentAttributes_v1.json
+              segmentAttributes: https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/69537caeb3fd5d378296ae42_segmentAttributes.json
         - id: "12849186"
           metadata:
             version: 2
@@ -2013,7 +2013,7 @@ components:
               membershipStatus: PREMIUM
           metadata:
             mixins:
-              segmentAttributes: https://res.cloudinary.com/saas-ag/raw/upload/v1600077014/schemata/segmentAttributes_v1.json
+              segmentAttributes: https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/69537caeb3fd5d378296ae42_segmentAttributes.json
         - customerId: "18249883"
           legalEntityId: 628cd20c6e8b2432b6346ca6
           metadata:
