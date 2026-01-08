@@ -3310,8 +3310,8 @@ components:
               product:
                 metadata:
                   mixins:
-                    productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-templateAttributes_v1.json'
-                    productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-variantAttributes_v1.json'
+                    productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-templateAttributes_v1.json'
+                    productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-variantAttributes_v1.json'
                 id: BC10033--BC10033-43
                 sku: '8033546091234'
                 name: 'Safety shoes high Reptile RS S3 SRC, black'
@@ -3624,8 +3624,8 @@ components:
               product:
                 metadata:
                   mixins:
-                    productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-templateAttributes_v1.json'
-                    productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-variantAttributes_v1.json'
+                    productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-templateAttributes_v1.json'
+                    productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-variantAttributes_v1.json'
                 id: BC10033--BC10033-43
                 sku: '8033546091234'
                 name: 'Safety shoes high Reptile RS S3 SRC, black'
@@ -3935,8 +3935,8 @@ components:
             product:
               metadata:
                 mixins:
-                  productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-templateAttributes_v1.json'
-                  productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-variantAttributes_v1.json'
+                  productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-templateAttributes_v1.json'
+                  productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-variantAttributes_v1.json'
               id: BC10033--BC10033-43
               sku: '8033546091234'
               name: 'Safety shoes high Reptile RS S3 SRC, black'
@@ -4160,8 +4160,8 @@ components:
             product:
               metadata:
                 mixins:
-                  productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-templateAttributes_v1.json'
-                  productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-variantAttributes_v1.json'
+                  productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-templateAttributes_v1.json'
+                  productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-variantAttributes_v1.json'
               id: BC10033--BC10033-43
               sku: '8033546091234'
               name: 'Safety shoes high Reptile RS S3 SRC, black'
@@ -5305,8 +5305,8 @@ components:
             product:
               metadata:
                 mixins:
-                  productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-templateAttributes_v1.json'
-                  productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-variantAttributes_v1.json'
+                  productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-templateAttributes_v1.json'
+                  productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-variantAttributes_v1.json'
               id: BC10033--BC10033-43
               sku: '8033546091234'
               name: 'Safety shoes high Reptile RS S3 SRC, black'
@@ -5530,8 +5530,8 @@ components:
               product:
                 metadata:
                   mixins:
-                    productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-templateAttributes_v1.json'
-                    productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-variantAttributes_v1.json'
+                    productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-templateAttributes_v1.json'
+                    productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-variantAttributes_v1.json'
                 id: BC10033--BC10033-43
                 sku: '8033546091234'
                 name: 'Safety shoes high Reptile RS S3 SRC, black'
@@ -5838,8 +5838,8 @@ components:
               product:
                 metadata:
                   mixins:
-                    productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-templateAttributes_v1.json'
-                    productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-variantAttributes_v1.json'
+                    productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-templateAttributes_v1.json'
+                    productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-variantAttributes_v1.json'
                 id: BC10033--BC10033-43
                 sku: '8033546091234'
                 name: 'Safety shoes high Reptile RS S3 SRC, black'
@@ -6146,8 +6146,8 @@ components:
               product:
                 metadata:
                   mixins:
-                    productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-templateAttributes_v1.json'
-                    productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-variantAttributes_v1.json'
+                    productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-templateAttributes_v1.json'
+                    productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-variantAttributes_v1.json'
                 id: BC10033--BC10033-43
                 sku: '8033546091234'
                 name: 'Safety shoes high Reptile RS S3 SRC, black'
@@ -6462,8 +6462,8 @@ components:
             product:
               metadata:
                 mixins:
-                  productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-templateAttributes_v1.json'
-                  productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/test/63ec98500522b25c90b9e632-variantAttributes_v1.json'
+                  productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-templateAttributes_v1.json'
+                  productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/63ec98500522b25c90b9e632-variantAttributes_v1.json'
               id: BC10033--BC10033-43
               sku: '8033546091234'
               name: 'Safety shoes high Reptile RS S3 SRC, black'
