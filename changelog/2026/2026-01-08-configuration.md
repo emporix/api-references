@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2025-12-18: Configuration Service - New properties for configurations
+# 2026-01-08: Configuration Service - New properties for configurations
 
 ## Overview
 
