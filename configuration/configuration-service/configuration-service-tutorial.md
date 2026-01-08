@@ -22,14 +22,13 @@ The Configuration Service manages three types of configurations:
   * Tax and packaging configurations
   * Storefront settings
 
-* **Client configurations** — Associated with particular services. Use client configurations for service-specific settings, such as indexing configurations
-
+* **Client configurations** — Associated with particular services. Use client configurations for service-specific settings, such as indexing configurations.
 
 * **Global configurations** — Read-only configurations associated with all services across all tenants.
 
 ### Configuration structure
 
-All configurations follow this structure:
+**Tenant configurations**:
 
 ```json
 {
@@ -45,7 +44,7 @@ All configurations follow this structure:
 * `value` — The configuration value (can be a string, number, boolean, object, or array)
 * `version` — The version number of the configuration (incremented on each update)
 
-The Client configurations include:
+**Client configurations**:
 
 ```json
 {
@@ -59,7 +58,7 @@ The Client configurations include:
 * `_id` — Unique identifier combining client and key
 * `client` — The client/service name
 * `key` — The configuration key identifier
-* `value` — The configuration value
+* `value` — The configuration value (can be a string, number, boolean, object, or array)
 
 ## Common configuration keys
 
@@ -488,8 +487,6 @@ To create new client configurations, send a request to the [Creating client conf
 [api-reference](./api-reference/)
 {% endcontent-ref %}
 
-**Example:** Creating a client configuration
-
 ```bash
 curl -L 
   --request POST 
@@ -503,6 +500,39 @@ curl -L
       "value": true
     }
   ]'
+```
+**Example:** Creating a client configuration
+
+```bash
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/configuration/{tenant}/clients/client_one/configurations' 
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Content-Type: application/json' 
+  --data '[
+    {
+      "client": "example_client",
+      "key": "example_key",
+      "value": true
+    }
+  ]'
+```
+
+The response looks like: 
+
+```json
+{
+  "_id": "client_one_example_key",
+  "client": "client_one",
+  "key": "example_key",
+  "value": true,
+  "description": null,
+  "schemaUrl": null,
+  "version": 0,
+  "secured": false,
+  "restricted": false,
+  "readOnly": false
+}
 ```
 
 ### How to update a client configuration
