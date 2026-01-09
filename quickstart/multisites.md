@@ -17,6 +17,8 @@ Emporix's multi-site architecture allows you to manage multiple webshops, brands
 
 ## Core concepts
 
+First, get familiar with the concepts used across this article.
+
 ### Site
 
 **Definition:** A Site represents a single country or country/brand combination. It serves as a virtual entity that can represent:
@@ -31,7 +33,7 @@ Emporix's multi-site architecture allows you to manage multiple webshops, brands
 - Configurable: Sites can override or augment tenant-specific configurations.
 
 **Example site codes:**
-- `NL` - Single country site
+- `Netherlands` - Single country site
 - `ThermoBrand_DE` - Country/brand combination (Germany, ThermoBrand brand)
 - `WarmTech_DE` - Country/brand combination (Germany, WarmTech brand)
 
@@ -119,45 +121,45 @@ Understanding the relationships between these concepts is crucial for effective 
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                     PRODUCT (Global)                         │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │  Single product instance                              │  │
-│  │  - Not site-aware                                     │  │
-│  │  - Can be used across all sites                       │  │
-│  └──────────────────────────────────────────────────────┘  │
+│                     PRODUCT (Global)                        │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │  Single product instance                             │   │
+│  │  - Not site-aware                                    │   │
+│  │  - Can be used across all sites                      │   │
+│  └──────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
                           │
                           │ assigned to
                           ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                  CATEGORY (Global)                          │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │  Category tree structure                              │  │
-│  │  - Not site-aware                                     │  │
-│  │  - Root category per brand                            │  │
-│  │  - Products assigned to categories                    │  │
-│  └──────────────────────────────────────────────────────┘  │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │  Category tree structure                             │   │
+│  │  - Not site-aware                                    │   │
+│  │  - Root category per brand                           │   │
+│  │  - Products assigned to categories                   │   │
+│  └──────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
                           │
                           │ assigned to (through categoryIds)
                           ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                    CATALOG (Site-aware)                     │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │  - Manages categories per site                       │  │
-│  │  - publishedSites: ["Site1", "Site2"]                │  │
-│  │  - categoryIds: ["cat1", "cat2"]                     │  │
-│  └──────────────────────────────────────────────────────┘  │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │  - Manages categories per site                       │   │
+│  │  - publishedSites: ["Site1", "Site2"]                │   │
+│  │  - categoryIds: ["cat1", "cat2"]                     │   │
+│  └──────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
                           │
                           │ published to
                           ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                      SITE                                   │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │  - Represents country or country/brand               │  │
-│  │  - Has its own configuration                         │  │
-│  └──────────────────────────────────────────────────────┘  │
+│  ┌──────────────────────────────────────────────────────┐   │
+│  │  - Represents country or country/brand               │   │
+│  │  - Has its own configuration                         │   │
+│  └──────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────┘
                           │
         ┌─────────────────┴─────────────────┐
@@ -184,26 +186,26 @@ Understanding the relationships between these concepts is crucial for effective 
 
 ### Key relationships
 
-**Site ↔ Catalog:**
+**Site ↔ Catalog**
 - One catalog is typically published to one site (one-to-one relationship).
 - A catalog can be published to multiple sites if needed (one-to-many).
 - The catalog determines which categories are available on the site.
 
-**Category ↔ Catalog:**
+**Category ↔ Catalog**
 - Multiple categories can be assigned to one catalog (many-to-one).
 - The same category can be assigned to multiple catalogs (many-to-many).
 - Categories are assigned by the root category IDs.
 
-**Product ↔ Category:**
+**Product ↔ Category**
 - Products are assigned to categories (many-to-many).
 - A product can belong to multiple categories.
 - A category can contain multiple products.
 
-**Product ↔ Availability:**
+**Product ↔ Availability**
 - Each product can have multiple availability records (one per site).
 - Availability is site-specific and controls visibility independently.
 
-**Product/Category ↔ Segments:**
+**Product/Category ↔ Segments**
 - Segments can control visibility of both products and categories.
 - Segments are site-specific.
 - Customers are assigned to segments, which determines what they see.
@@ -260,7 +262,7 @@ Segments:
 
 **Use case:** Multiple sites, each dedicated to a specific brand.
 
-**Example: Germany Setup**
+**Example: Germany setup**
 
 ```
 Sites:
@@ -357,35 +359,40 @@ P(CATEGORY: WarmTech)
 R(AVAILABILITY: WarmTech_DE)
 S(SEGMENT: DE_WarmTech_Installer)
 
-
-B-->J
-J-->K
-K-->M
-B-->L
-B-->N
-L-.->M
-N-.->K
-N-.->M
-
-C-->O
-C-->R
-C-->S
-O-->P
-P-->G
-R-->G
-S-.->P
-S-.->M
-
-A-->D
-A-.->H
-A-->I
-D-->F
-D-->E
-E-->M
-F-->G
-H-.->F
-I-->G
+subgraph c [Netherlands]
+A-->D;
+A-.->H;
+A-->I;
+D-->F;
+D-->E;
+E-->M;
+F-->G;
+H-.->F;
+I-->G;
 H-.->G
+end
+
+subgraph a [ThermoBrand_DE]
+B-->J;
+J-->K;
+K-->M;
+B-->L;
+B-->N;
+L-.->M;
+N-.->K;
+N-.->M
+end
+
+subgraph b [WarmTech_DE]
+C-->O;
+C-->R;
+C-->S;
+O-->P;
+P-->G;
+R-->G;
+S-.->P;
+S-.->M
+end
 
 A:::1
 B:::1
@@ -422,18 +429,16 @@ classDef 6 fill:#FAFBFC, stroke:#4C5359, stroke-dasharray: 5
 
 Create the Netherlands site by sending a request to the [Creating a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites) endpoint.
 
-{% hint style="success" %}
-To test the endpoint, open the API reference or check the examples of the curl requests below that refer to different confgis.
-{% endhint %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
+{% content-ref url="../configuration/site-settings-service/api-reference/" %}
 [api-reference](../configuration/site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -X POST 'https://api.emporix.io/site/{tenant}/sites' \
-  -H 'Authorization: Bearer <TOKEN>' \
-  -H 'Content-Type: application/json' \
+curl -X POST 'https://api.emporix.io/site/{tenant}/sites' 
+  -H 'Authorization: Bearer <TOKEN>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "code": "NL",
     "name": "Netherlands",
@@ -465,21 +470,19 @@ Create root categories for each brand you sell. These categories can be used acr
 
 Call the [Creating a new category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint to create two root categories.
 
-{% hint style="success" %}
-To test the endpoint, open the API reference or check the examples of the curl requests below that refer to different confgis.
-{% endhint %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
+{% content-ref url="../catalogs-and-categories/category-tree/api-reference/" %}
 [api-reference](../catalogs-and-categories/category-tree/api-reference/)
 {% endcontent-ref %}
 
 * `ThermoBrand`:
 
 ```bash
-curl -X POST 'https://api.emporix.io/category/{tenant}/categories' \
-  -H 'Authorization: Bearer <TOKEN>' \
-  -H 'X-Version: v2' \
-  -H 'Content-Type: application/json' \
+curl -X POST 'https://api.emporix.io/category/{tenant}/categories' 
+  -H 'Authorization: Bearer <TOKEN>' 
+  -H 'X-Version: v2' 
+  -H 'Content-Type: application/json' 
   -d '{
     "parentId": "root",
     "localizedName": {
@@ -491,10 +494,10 @@ curl -X POST 'https://api.emporix.io/category/{tenant}/categories' \
 * `WarmTech`:
 
 ```bash
-curl -X POST 'https://api.emporix.io/category/{tenant}/categories' \
-  -H 'Authorization: Bearer <TOKEN>' \
-  -H 'X-Version: v2' \
-  -H 'Content-Type: application/json' \
+curl -X POST 'https://api.emporix.io/category/{tenant}/categories' 
+  -H 'Authorization: Bearer <TOKEN>' 
+  -H 'X-Version: v2' 
+  -H 'Content-Type: application/json' 
   -d '{
     "parentId": "root",
     "localizedName": {
@@ -513,18 +516,16 @@ Copy the IDs of the created categories.
 
 Create a catalog for the Netherlands site and assign the brand category trees to it by passing the IDs of the created categories.
 
-{% hint style="success" %}
-To test the endpoint, open the API reference or check the examples of the curl requests below that refer to different confgis.
-{% endhint %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
+{% content-ref url="../catalogs-and-categories/catalog/api-reference/" %}
 [api-reference](../catalogs-and-categories/catalog/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs' \
-  -H 'Authorization: Bearer <TOKEN>' \
-  -H 'Content-Type: application/json' \
+curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs' 
+  -H 'Authorization: Bearer <TOKEN>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "name": {
       "en": "Netherlands Catalog"
@@ -548,19 +549,17 @@ curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs' \
 
 Call the [Assigning a resource to a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#post-category-tenant-categories-categoryid-assignments) endpoint to assign selected products to the Thermobrand and WarmTech categories. Pass the respective `categoryId` as the path parameter.
 
-{% hint style="success" %}
-To test the endpoint, open the API reference or check the examples of the curl requests below that refer to different confgis.
-{% endhint %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
+{% content-ref url="../catalogs-and-categories/category-tree/api-reference/" %}
 [api-reference](../catalogs-and-categories/category-tree/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -X POST 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' \
-  -H 'Authorization: Bearer <TOKEN>' \
-  -H 'X-Version: v2' \
-  -H 'Content-Type: application/json' \
+curl -X POST 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' 
+  -H 'Authorization: Bearer <TOKEN>' 
+  -H 'X-Version: v2' 
+  -H 'Content-Type: application/json' 
   -d '{
     "ref": {
       "id": "<product-id>",
@@ -576,18 +575,16 @@ curl -X POST 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/a
 
 Create availability records for the products on the Netherlands site to control visibility and stock levels. Send the request to the [Creating a new availability for a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site) endpoint passing the relevant `productId` and the `site` as the path parameters. 
 
-{% hint style="success" %}
-To test the endpoint, open the API reference or check the examples of the curl requests below that refer to different confgis.
-{% endhint %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
+{% content-ref url="../orders/availability/api-reference/" %}
 [api-reference](../orders/availability/api-reference/)
 {% endcontent-ref %}
 
 ```bash
-curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{productId}/NL' \
-  -H 'Authorization: Bearer <TOKEN>' \
-  -H 'Content-Type: application/json' \
+curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{productId}/NL' 
+  -H 'Authorization: Bearer <TOKEN>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "stockLevel": 100,
     "available": true,
@@ -605,20 +602,18 @@ curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{product
 
 Create separate sites for each brand in Germany so that each brand has its own dedicated site.
 
-{% hint style="success" %}
-To test the endpoint, open the API reference or check the examples of the curl requests below that refer to different confgis.
-{% endhint %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
+{% content-ref url="../configuration/site-settings-service/api-reference/" %}
 [api-reference](../configuration/site-settings-service/api-reference/)
 {% endcontent-ref %}
 
 * Create `ThermoBrand_DE` site:
 
 ```bash
-curl -X POST 'https://api.emporix.io/site/{tenant}/sites' \
-  -H 'Authorization: Bearer <TOKEN>' \
-  -H 'Content-Type: application/json' \
+curl -X POST 'https://api.emporix.io/site/{tenant}/sites' 
+  -H 'Authorization: Bearer <TOKEN>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "code": "ThermoBrand_DE",
     "name": "ThermoBrand Germany",
@@ -645,9 +640,9 @@ curl -X POST 'https://api.emporix.io/site/{tenant}/sites' \
 * Create `WarmTech_DE` site:
 
 ```bash
-curl -X POST 'https://api.emporix.io/site/{tenant}/sites' \
-  -H 'Authorization: Bearer <TOKEN>' \
-  -H 'Content-Type: application/json' \
+curl -X POST 'https://api.emporix.io/site/{tenant}/sites' 
+  -H 'Authorization: Bearer <TOKEN>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "code": "WarmTech_DE",
     "name": "WarmTech Germany",
@@ -677,20 +672,18 @@ curl -X POST 'https://api.emporix.io/site/{tenant}/sites' \
 
 Create a dedicated catalog for each site and assign only the relevant brand's category tree to each catalog.
 
-{% hint style="success" %}
-To test the endpoint, open the API reference or check the examples of the curl requests below that refer to different confgis.
-{% endhint %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
+{% content-ref url="../catalogs-and-categories/catalog/api-reference/" %}
 [api-reference](../catalogs-and-categories/catalog/api-reference/)
 {% endcontent-ref %}
 
 * Create `ThermoBrand_DE` catalog:
 
 ```bash
-curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs' \
-  -H 'Authorization: Bearer <TOKEN>' \
-  -H 'Content-Type: application/json' \
+curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs' 
+  -H 'Authorization: Bearer <TOKEN>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "name": {
       "en": "ThermoBrand Germany Catalog"
@@ -708,9 +701,9 @@ curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs' \
 * Create `WarmTech_DE` catalog:
 
 ```bash
-curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs' \
-  -H 'Authorization: Bearer <TOKEN>' \
-  -H 'Content-Type: application/json' \
+curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs' 
+  -H 'Authorization: Bearer <TOKEN>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "name": {
       "en": "WarmTech Germany Catalog"
@@ -731,20 +724,18 @@ curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs' \
 
 Create availability records for products on each site to control visibility and stock levels independently.
 
-{% hint style="success" %}
-To test the endpoint, open the API reference or check the examples of the curl requests below that refer to different confgis.
-{% endhint %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
+{% content-ref url="../orders/availability/api-reference/" %}
 [api-reference](../orders/availability/api-reference/)
 {% endcontent-ref %}
 
 * Availability for `ThermoBrand_DE` site:
 
 ```bash
-curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{productId}/ThermoBrand_DE' \
-  -H 'Authorization: Bearer <TOKEN>' \
-  -H 'Content-Type: application/json' \
+curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{productId}/ThermoBrand_DE' 
+  -H 'Authorization: Bearer <TOKEN>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "stockLevel": 50,
     "available": true
@@ -754,9 +745,9 @@ curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{product
 * Availability for `WarmTech_DE` site:
 
 ```bash
-curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{productId}/WarmTech_DE' \
-  -H 'Authorization: Bearer <TOKEN>' \
-  -H 'Content-Type: application/json' \
+curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{productId}/WarmTech_DE' 
+  -H 'Authorization: Bearer <TOKEN>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "stockLevel": 30,
     "available": true
@@ -769,20 +760,18 @@ curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{product
 
 Create customer segments for each site to control visibility based on customer roles and IDP roles. Use the [Creating a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments) endpoint.
 
-{% hint style="success" %}
-To test the endpoint, open the API reference or check the examples of the curl requests below that refer to different confgis.
-{% endhint %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
+{% content-ref url="../companies-and-customers/customer-segments/api-reference/" %}
 [api-reference](../companies-and-customers/customer-segments/api-reference/)
 {% endcontent-ref %}
 
 * Create segment for `ThermoBrand_DE`:
 
 ```bash
-curl -X POST 'https://api.emporix.io/customer-segment/{tenant}/segments' \
-  -H 'Authorization: Bearer <TOKEN>' \
-  -H 'Content-Type: application/json' \
+curl -X POST 'https://api.emporix.io/customer-segment/{tenant}/segments' 
+  -H 'Authorization: Bearer <TOKEN>' 
+  -H 'Content-Type: application/json' 
   -d '{
     "name": {
       "en": "ThermoBrand Premium Customers"
@@ -797,29 +786,29 @@ Once the specific segments are created, you can assign relevant products and/or 
 {% endstep %}
 {% endstepper %}
 
-### Key advantages of this architecture
+#### Key advantages of this architecture
 
-#### Catalog advantages
+##### Catalog advantages
 - **Dynamic category assignment:** Easily add or remove categories from sites without recreating structures.
 - **Flexible organization:** Mix and match categories across different sites.
 - **Site-specific control:** Each site can have its own catalog with different category combinations.
 
-#### Site advantages
+##### Site advantages
 - **Multi-market support:** Run different webshops per country or country/brand.
 - **Independent configuration:** Each site can have different payment methods, shipping options, and settings.
 - **Brand separation:** Maintain distinct brand identities across different sites.
 
-#### Category advantages
+##### Category advantages
 - **Global structure:** Create category trees once, use them across multiple sites.
 - **Less maintenance:** Update category structure in one place, changes reflect everywhere.
 - **Brand-specific organization:** Each brand can have its own category tree while sharing the same product catalog.
 
-#### Availability advantages
+##### Availability advantages
 - **Granular control:** Manage product visibility on a per-site basis.
 - **Independent from categories:** Control product visibility regardless of category assignments.
 - **Stock management:** Track different stock levels for the same product across different sites.
 
-#### Segments advantages
+##### Segments advantages
 - **Role-based visibility:** Control what customers see based on their roles and segments.
 - **Site-specific targeting:** Create different customer experiences per site.
 - **Flexible access control:** Restrict or enhance product/category visibility for specific customer groups.
@@ -855,6 +844,11 @@ The below recommendations can help you with consistency and organization within 
 ## Common use cases
 
 These are some common examples how you can implement your storefront sites.
+
+<table data-view="cards"><thead><tr><th align="center"></th><th align="center"></th><th align="center"></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td align="center"><i class="fa-gear">:gear:</i></td><td align="center"><strong>Regional product availability</strong></td><td align="center">**Scenario:** You have a poduct that you want to be available in certain countries due to regulations.</td><td align="center">**Solution:**
+Create availability records only for the sites where the product should be available. The product won't appear on sites without availability records.</td></tr><tr><td align="center"><i class="fa-robot-astromech">:robot-astromech:</i></td><td align="center"><strong>Brand-specific storefronts</strong></td><td align="center">**Scenario:** Each brand needs its own dedicated storefront with brand-specific categories.</td><td>**Solution:**
+Create separate sites for each brand (e.g., `ThermoBrand_DE`, `WarmTech_DE`). Create separate catalogs for each site and assign only the relevant brand's category tree to each catalog.</td></tr><tr><td align="center"><i class="fa-books">:books:</i></td><td align="center"><strong>Premium customer access</strong></td><td align="center">**Scenario:** You want certain products to only be visible to premium customers.</td><td>**Solution:**
+Create a segment for premium customers on the relevant site. Assign premium products to the segment and assign premium customers to the segment. The products will only be visible to customers in the segment.</td></tr></tbody></table>
 
 ### Regional product availability
 **Scenario:** You have a poduct that you want to be available in certain countries due to regulations.
