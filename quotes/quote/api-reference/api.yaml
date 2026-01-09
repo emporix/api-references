@@ -161,7 +161,7 @@ paths:
                             media:
                               id: '82c30154-dcf7-4bb9-b210-d960fec6c9fd'
                               contentType: image/jpg
-                              url: 'https://res.cloudinary.com/saas-ag/image/upload/v1676449882/mrworkerstage/products/82c30154-dcf7-4bb9-b210-d960fec6c9fd.jpg'
+                              url: 'https://res.cloudinary.com/saas-ag/image/upload/emporix-docs/82c30154-dcf7-4bb9-b210-d960fec6c9fd.jpg'
                             taxClasses:
                               DE: STANDARD
                               PL: ZERO
@@ -194,7 +194,7 @@ paths:
                               es: GWS 750 - Amoladora angular con cable 750 W 115 mm
                             media:
                               contentType: image/jpg
-                              url: 'https://res.cloudinary.com/saas-ag/image/upload/v1676450433/mrworkerstage/products/937b1491-e099-46f2-b31a-f7c2f7945f7a.jpg'
+                              url: 'https://res.cloudinary.com/saas-ag/image/upload/emporix-docs/937b1491-e099-46f2-b31a-f7c2f7945f7a.jpg'
                             taxClasses:
                               DE: STANDARD
                               PL: ZERO
@@ -205,7 +205,7 @@ paths:
                             unit: kg
                       metadata:
                         mixins:
-                          customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
+                          customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695297f5b3fd5d378296ae41_customAttributes_v2.json'
                         version: 1
                         createdAt: '2023-02-23T09:36:55.929Z'
                         modifiedAt: '2023-02-23T09:38:49.196Z'
@@ -301,7 +301,7 @@ paths:
                               unit: kg
                         metadata:
                           mixins:
-                            customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
+                            customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695297f5b3fd5d378296ae41_customAttributes_v2.json'
                       mixins:
                         customAttributes:
                           attribute:
@@ -309,7 +309,7 @@ paths:
                             unit: kg
                       metadata:
                         mixins:
-                          customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
+                          customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695297f5b3fd5d378296ae41_customAttributes_v2.json'
                   mixins:
                     customAttributes:
                       attribute:
@@ -317,7 +317,7 @@ paths:
                         unit: kg
                   metadata:
                     mixins:
-                      customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
+                      customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695297f5b3fd5d378296ae41_customAttributes_v2.json'
               Create quote from cart:
                 value:
                   cartId: 4472v8d2309b06d46d3cf19fe
@@ -747,7 +747,7 @@ paths:
                           media:
                             id: '82c30154-dcf7-4bb9-b210-d960fec6c9fd'
                             contentType: image/jpg
-                            url: 'https://res.cloudinary.com/saas-ag/image/upload/v1676449882/mrworkerstage/products/82c30154-dcf7-4bb9-b210-d960fec6c9fd.jpg'
+                            url: 'https://res.cloudinary.com/saas-ag/image/upload/emporix-docs/82c30154-dcf7-4bb9-b210-d960fec6c9fd.jpg'
                           taxClasses:
                             DE: STANDARD
                             PL: ZERO
@@ -758,7 +758,7 @@ paths:
                                 unit: kg
                           metadata:
                             mixins:
-                              customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
+                              customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695297f5b3fd5d378296ae41_customAttributes_v2.json'
                         mixins:
                           customAttributes:
                             attribute:
@@ -766,7 +766,7 @@ paths:
                               unit: kg
                         metadata:
                           mixins:
-                            customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
+                            customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695297f5b3fd5d378296ae41_customAttributes_v2.json'
                       - id: ac16dd14-baa4-4ccb-bad3-756b36b89235
                         quantity:
                           quantity: 3
@@ -798,7 +798,7 @@ paths:
                             es: GWS 750 - Amoladora angular con cable 750 W 115 mm
                           media:
                             contentType: image/jpg
-                            url: 'https://res.cloudinary.com/saas-ag/image/upload/v1676450433/mrworkerstage/products/937b1491-e099-46f2-b31a-f7c2f7945f7a.jpg'
+                            url: 'https://res.cloudinary.com/saas-ag/image/upload/emporix-docs/937b1491-e099-46f2-b31a-f7c2f7945f7a.jpg'
                           taxClasses:
                             DE: STANDARD
                             PL: ZERO
@@ -809,7 +809,7 @@ paths:
                           unit: kg
                     metadata:
                       mixins:
-                        customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
+                        customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695297f5b3fd5d378296ae41_customAttributes_v2.json'
                       version: 1
                       createdAt: '2023-02-23T09:36:55.929Z'
                       modifiedAt: '2023-02-23T09:38:49.196Z'
@@ -949,7 +949,7 @@ paths:
                       unit: kg
                   - op: ADD
                     path: /metadata/mixins/newAttributes
-                    value: 'https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/customAttributes.json'
+                    value: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695297f5b3fd5d378296ae41_customAttributes_v2.json'
               Replace mixin value in a quote:
                 value:
                   - op: REPLACE
@@ -2462,7 +2462,7 @@ components:
         * Searching for items by a date-based property: All number-based property queries are also valid for dates. In that case, the date should be placed within double quotes: `q=metadataCreatedAt:(>="2021-05-18T07:27:27.455Z" AND <"2021-05-20T07:27:27.455Z")`
         * Searching for items by a boolean-based property: `q=description.multiLanguage:true`, where `description.multiLanguage` is the boolean field name, and `true` is its desired value.
         * Searching for items with a nonexistent or empty property: `q=description.en:null`, where `description.en` is the field that has its value set to `null`.
-        * Searching for items with an existing property: `q=mixin:exists`, where `mixin` is the field that has a non-empty value.
+        * Searching for items with an existing property: `q=mixins.mixinName:exists`, where the specific mixin named `mixinName` exists in the database.
         * Searching for items by multiple specific values: `q=id:(5c3325baa9812100098ff48f,5c3325d1a9812100098ff494)`, where `id` is the field name, and strings within the bracket are the desired values.
         * Searching for items by multiple fields: `q=id:5c3325baa9812100098ff48f siteCode:main` where `id` and `siteCode` are field names. All objects that contain the specified values are returned. Multiple fields (separated by space) can be specified. Multiple values for each field can also be specified in the format presented earlier.
         * Searching for items with string-based properties conforming to a regex: `q=siteCode:~ain` or `q=code:(~U PL)` - in case of searching for strings with space, where `siteCode` is the name of the field, and `ain` or `U PL` is its querying regex.

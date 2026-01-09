@@ -119,7 +119,7 @@ curl -L
     "testMixin": {
     "active": true,
     "metadata": {
-      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/testMixin.json"
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695388d813fd4242de135807_testMixin_v1.json"
     }
   },
   "orderProcessSettings": {
@@ -201,7 +201,7 @@ curl -L
     "testMixin": {
     "active": true,
     "metadata": {
-      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/testMixin.json"
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695388d813fd4242de135807_testMixin_v1.json"
     }
   },
   "merchantInfo": {
@@ -214,7 +214,7 @@ curl -L
       "sepaCreditorId": " "
     },
     "metadata": {
-      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/merchantAddressMixin.v10"
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/merchantAddressMixin.v10"
     }
   }
 }
@@ -275,7 +275,7 @@ curl -L
     "testMixin": {
     "active": true,
     "metadata": {
-      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/testMixin.json"
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695388d813fd4242de135807_testMixin_v1.json"
     }
   },
   "debitSettings": {
@@ -297,7 +297,7 @@ curl -L
       "pmtInfId": "PMT-IDO-"
     },
     "metadata": {
-      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/hybris_schema/debitSettingsSiteMixIn.v3"
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/debitSettingsSiteMixIn.v3"
     }
   }
 }
@@ -392,7 +392,7 @@ curl -L
     "testMixin": {
     "active": true,
     "metadata": {
-      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/testMixin.json"
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695388d813fd4242de135807_testMixin_v1.json"
     }
   },
   "customerSettings": {
