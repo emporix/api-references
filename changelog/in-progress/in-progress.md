@@ -71,7 +71,7 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr>
     <tr>
     <td class="tg-0pky" rowspan="5">Value Stream Modeller </td>
-    <td class="tg-0pky" rowspan="5"><br>Purchase Order Automation</br><br>Branching and Looping</br></td>
+    <td class="tg-0pky" rowspan="5">Purchase Order Automation<br>Branching and Looping</br></td>
   </tr>
     </tr>
     <tr>
