@@ -66,12 +66,17 @@ These announcements are intended to keep you informed about ongoing work and pot
     <td class="tg-0pky" rowspan="5">Segments</td>
   </tr>
   <tr>
-    <td class="tg-0pky" rowspan="5">AI Service </td>
-    <td class="tg-0pky" rowspan="5">Agents</td>
+    <td class="tg-0pky" rowspan="5">Agentic </td>
+    <td class="tg-0pky" rowspan="5">Frontend Agent</td>
   </tr>
     <tr>
     <td class="tg-0pky" rowspan="5">Value Stream Modeller </td>
-    <td class="tg-0pky" rowspan="5">Improvements</td>
+    <td class="tg-0pky" rowspan="5"><br>Purchase Order Automation</br><br>Branching and Looping</br></td>
+  </tr>
+    </tr>
+    <tr>
+    <td class="tg-0pky" rowspan="5">Java SDK </td>
+    <td class="tg-0pky" rowspan="5"><br>Package 1 - Authorization, Catalog, Category, Product, Brand, Configuration, Price and Tax Services</br><br>Package 2 - Delivery, Shipping and Session-context Services</br></td>
   </tr>
 </tbody>
 </table>
