@@ -262,6 +262,7 @@
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/vendor-service/api-reference/api.yml)
 * [Configuration](configuration/README.md)
   * [Configuration Service](configuration/configuration-service/README.md)
+    * [Configuration Service Tutorial](configuration/configuration-service/configuration-service-tutorial.md)
     * [Language Tutorials](configuration/configuration-service/language.md)
     * [API Reference](configuration/configuration-service/api-reference/README.md)
       * ```yaml
