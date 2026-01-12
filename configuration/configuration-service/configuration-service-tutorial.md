@@ -66,19 +66,19 @@ The Configuration Service supports various configuration keys for different purp
 
 | Configuration Key | Description |
 |-------------------|-------------|
-| `customer.passwordreset.redirecturl` | URL to redirect customers when resetting their password. |
-| `customer.changeemail.redirecturl` | URL to redirect customers when changing their email address. |
-| `cust.notification.email.from` | Email address used as the sender for customer notifications. |
-| `customer.deletion.redirecturl` | URL to redirect customers after account deletion. |
-| `project_country` | Default country for your tenant. |
-| `project_curr` | Default currencies for your tenant. |
-| `project_lang` | Default languages for your tenant. |
-| `taxConfiguration` | Tax classes and rates configuration. |
-| `packagingConf` | Packaging groups and position options. |
-| `storefront.host` | Hostname for your storefront. |
-| `storefront.htmlPage` | Default HTML page for your storefront. |
-| `unitConf` | Unit conversion configurations. |
-| `invoiceSettings` | Invoice generation thresholds and statuses. |
+| `customer.passwordreset.redirecturl` | URL to redirect customers when resetting their password |
+| `customer.changeemail.redirecturl` | URL to redirect customers when changing their email address |
+| `cust.notification.email.from` | Email address used as the sender for customer notifications |
+| `customer.deletion.redirecturl` | URL to redirect customers after account deletion |
+| `project_country` | Default country for your tenant |
+| `project_curr` | Default currencies for your tenant |
+| `project_lang` | Default languages for your tenant |
+| `taxConfiguration` | Tax classes and rates configuration |
+| `packagingConf` | Packaging groups and position options |
+| `storefront.host` | Hostname for your storefront |
+| `storefront.htmlPage` | Default HTML page for your storefront|
+| `unitConf` | Unit conversion configurations|
+| `invoiceSettings` | Invoice generation thresholds and statuses |
 
 ## Managing tenant configurations 
 
