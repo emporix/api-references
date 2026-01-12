@@ -54,11 +54,11 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr></thead>
 <tbody>
   <tr>
-    <td class="tg-0pky" rowspan="5"><br>Schema Service</br> <br>Product Service</br><br>Category Service</br></td>
+    <td class="tg-0pky" rowspan="5">Schema Service<br>Product Service<br>Category Service</td>
     <td class="tg-0pky" rowspan="5">Classification categories</td>
   </tr>
     <tr>
-    <td class="tg-0pky" rowspan="5"><br>IAM Service</br> <br>Configuration Service</br><br>Site Settings Service</br></td>
+    <td class="tg-0pky" rowspan="5">IAM Service <br>Configuration Service<br>Site Settings Service</td>
     <td class="tg-0pky" rowspan="5">Site Permissions</td>
   </tr>
     <tr>
@@ -66,12 +66,17 @@ These announcements are intended to keep you informed about ongoing work and pot
     <td class="tg-0pky" rowspan="5">Segments</td>
   </tr>
   <tr>
-    <td class="tg-0pky" rowspan="5">AI Service </td>
-    <td class="tg-0pky" rowspan="5">Agents</td>
+    <td class="tg-0pky" rowspan="5">Agentic </td>
+    <td class="tg-0pky" rowspan="5">Frontend Agent</td>
   </tr>
     <tr>
     <td class="tg-0pky" rowspan="5">Value Stream Modeller </td>
-    <td class="tg-0pky" rowspan="5">Improvements</td>
+    <td class="tg-0pky" rowspan="5">Purchase Order Automation<br>Branching and Looping</td>
+  </tr>
+    </tr>
+    <tr>
+    <td class="tg-0pky" rowspan="5">Java SDK </td>
+    <td class="tg-0pky" rowspan="5">Package 1 - Authorization, Catalog, Category, Product, Brand, Configuration, Price and Tax Services<br>Package 2 - Delivery, Shipping and Session-context Services</td>
   </tr>
 </tbody>
 </table>
