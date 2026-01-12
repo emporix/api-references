@@ -8,7 +8,7 @@
 * [List of API Services](quickstart/list-of-api-services.md)
 * [OpenAPI Generator](quickstart/openapi-generator.md)
 * [Emporix Terraform Provider](quickstart/emporix-terraform-provider.md) 
-* [Multi-Site Architecture Tutorial](quickstart/multisites.md)
+* [Multi-Site Architecture](quickstart/multisites.md)
 
 ## Standard Practices
 
