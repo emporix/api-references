@@ -366,12 +366,6 @@ Segments:
 | Easy to manage shared resources. | Independent site configurations (payment, shipping, etc.). |
 | | Better for brand-specific marketing and promotions. |
 
-### Common use cases
-
-These are some common examples how you can implement your storefront sites.
-
-<table data-card-size="large" data-view="cards"><thead><tr><th align="center"></th><th align="center"></th><th align="center"></th><th></th><th align="center"></th><th></th></tr></thead><tbody><tr><td align="center"><i class="fa-warehouse-full">:warehouse-full:</i></td><td align="center"><h4>Regional product availability</h4></td><td align="center"><strong>Scenario</strong></td><td>You have a product that you want to be available in certain countries due to regulations.</td><td align="center"><strong>Solution</strong></td><td>Create availability records only for the sites where the product should be available. The product won't appear on sites without availability records.</td></tr><tr><td align="center"><i class="fa-store">:store:</i></td><td align="center"><h4>Brand-specific storefronts</h4></td><td align="center"><strong>Scenario</strong></td><td>Each brand needs its own dedicated storefront with brand-specific categories.</td><td align="center"><strong>Solution</strong></td><td>Create separate sites for each brand (e.g., <code>ThermoBrand_DE</code>, <code>WarmTech_DE</code>). Create separate catalogs for each site and assign only the relevant brand's category tree to each catalog.</td></tr><tr><td align="center"><i class="fa-wreath">:wreath:</i></td><td align="center"><h4>Premium customer access</h4></td><td align="center"><strong>Scenario</strong></td><td>You want certain products to only be visible to premium customers.</td><td align="center"><strong>Solution</strong></td><td>Create a segment for premium customers on the relevant site. Assign premium products to the segment and assign premium customers to the segment. The products will only be visible to customers in the segment.</td></tr><tr><td align="center"><i class="fa-grid-dividers">:grid-dividers:</i></td><td align="center"><h4>Multi-brand on a single site</h4></td><td align="center"><strong>Scenario</strong></td><td>Multiple brands need to co-exist on the same storefront.</td><td align="center"><strong>Solution</strong></td><td>Create one site for all brands and one catalog for the site. Assign all brand category trees to the catalog. Organize products under their respective brand categories.</td></tr></tbody></table>
-
 ## Practical examples
 
 ```mermaid
@@ -870,6 +864,40 @@ Once the specific segments are created, you can assign relevant products and/or 
 - **Role-based visibility:** Control what customers see based on their roles and segments.
 - **Site-specific targeting:** Create different customer experiences per site.
 - **Flexible access control:** Restrict or enhance product/category visibility for specific customer groups.
+
+## Common use cases
+
+These are some common examples how you can implement your storefront sites.
+
+<table data-card-size="large" data-view="cards"><thead><tr><th align="center"></th><th align="center"></th><th align="center"></th><th></th><th align="center"></th><th></th></tr></thead><tbody><tr><td align="center"><i class="fa-warehouse-full">:warehouse-full:</i></td><td align="center"><h4>Regional product availability</h4></td><td align="center"><strong>Scenario</strong></td><td>You have a product that you want to be available in certain countries due to regulations.</td><td align="center"><strong>Solution</strong></td><td>Create availability records only for the sites where the product should be available. The product won't appear on sites without availability records.</td></tr><tr><td align="center"><i class="fa-store">:store:</i></td><td align="center"><h4>Brand-specific storefronts</h4></td><td align="center"><strong>Scenario</strong></td><td>Each brand needs its own dedicated storefront with brand-specific categories.</td><td align="center"><strong>Solution</strong></td><td>Create separate sites for each brand (e.g., <code>ThermoBrand_DE</code>, <code>WarmTech_DE</code>). Create separate catalogs for each site and assign only the relevant brand's category tree to each catalog.</td></tr><tr><td align="center"><i class="fa-wreath">:wreath:</i></td><td align="center"><h4>Premium customer access</h4></td><td align="center"><strong>Scenario</strong></td><td>You want certain products to only be visible to premium customers.</td><td align="center"><strong>Solution</strong></td><td>Create a segment for premium customers on the relevant site. Assign premium products to the segment and assign premium customers to the segment. The products will only be visible to customers in the segment.</td></tr><tr><td align="center"><i class="fa-grid-dividers">:grid-dividers:</i></td><td align="center"><h4>Multi-brand on a single site</h4></td><td align="center"><strong>Scenario</strong></td><td>Multiple brands need to co-exist on the same storefront.</td><td align="center"><strong>Solution</strong></td><td>Create one site for all brands and one catalog for the site. Assign all brand category trees to the catalog. Organize products under their respective brand categories.</td></tr></tbody></table>
+
+## Best practices
+
+The below recommendations can help you with consistency and organization within your resources and sites.
+
+### Catalog organization
+- **One catalog per site:** For clarity and easier management, create one catalog per site.
+- **Root category assignment:** Only assign root categories to catalogs, not subcategories.
+- **Category reuse:** Reuse category trees across multiple catalogs when appropriate.
+
+### Site naming
+- **Clear naming convention:** Use descriptive site codes (e.g., `ThermoBrand_DE` instead of `site1`).
+- **Consistent patterns:** Follow a consistent naming pattern across all sites.
+- **Country/brand format:** Use `Country` or `Brand_Country` format for clarity.
+
+### Category structure
+- **Brand-specific roots:** Create separate root categories for each brand.
+- **Hierarchical organization:** Use subcategories to organize products within brand trees.
+- **Global categories:** Remember categories are global - design them to work across sites.
+
+### Availability management
+- **Site-specific records:** Create availability records for each site where products should be visible.
+- **Stock synchronization:** Keep stock levels synchronized across sites if needed.
+- **Visibility control:** Use availability to control product visibility independently from categories.
+
+### Segment
+- **Role-based access:** Use segments to implement role-based product/category visibility
+- **Customer assignment:** Assign customers to segments based on business rules.
 
 
 {% hint style="info" %}
