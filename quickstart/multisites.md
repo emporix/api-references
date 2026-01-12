@@ -119,60 +119,127 @@ First, get familiar with the concepts used across this article.
 
 Understanding the relationships between these concepts is crucial for effective multi-site management:
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     PRODUCT (Global)                        │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │  Single product instance                             │   │
-│  │  - Not site-aware                                    │   │
-│  │  - Can be used across all sites                      │   │
-│  └──────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
-                          │
-                          │ assigned to
-                          ▼
-┌─────────────────────────────────────────────────────────────┐
-│                  CATEGORY (Global)                          │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │  Category tree structure                             │   │
-│  │  - Not site-aware                                    │   │
-│  │  - Root category per brand                           │   │
-│  │  - Products assigned to categories                   │   │
-│  └──────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
-                          │
-                          │ assigned to (through categoryIds)
-                          ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    CATALOG (Site-aware)                     │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │  - Manages categories per site                       │   │
-│  │  - publishedSites: ["Site1", "Site2"]                │   │
-│  │  - categoryIds: ["cat1", "cat2"]                     │   │
-│  └──────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
-                          │
-                          │ published to
-                          ▼
-┌─────────────────────────────────────────────────────────────┐
-│                      SITE                                   │
-│  ┌──────────────────────────────────────────────────────┐   │
-│  │  - Represents country or country/brand               │   │
-│  │  - Has its own configuration                         │   │
-│  └──────────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
-                          │
-        ┌─────────────────┴─────────────────┐
-        │                                   │
-        ▼                                   ▼
-┌──────────────────┐            ┌──────────────────┐
-│  AVAILABILITY    │            │    SEGMENTS      │
-│  (Site-aware)    │            │   (Site-aware)   │
-│  - Controls      │            │  - Controls      │
-│    product       │            │    visibility    │
-│    visibility    │            │    by role       │
-│    per site      │            │                  │
-└──────────────────┘            └──────────────────┘
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+---
+
+erDiagram
+  direction TB
+
+  CATEGORY {
+    string id
+    string parentId
+    boolean published
+  }
+
+SUBCATEGORY {
+    string id
+    string parentId
+    boolean published
+  }
+
+  CATALOG {
+    string id
+    string categoryIds
+    string publishedSites
+  }
+
+  SITE {
+    string id
+    boolean active
+    boolean isDefault
+  }
+
+  PRODUCT {
+    string id
+    boolean published
+  }
+
+  CATEGORY_ASSIGNMENT {
+    string id
+    string categoryId
+    string ref_id
+  }
+
+  AVAILABILITY {
+    string id
+    string site
+    string productId
+  }
+
+  PRICE {
+    string id
+    string itemId
+    string restrictions_siteCodes
+  }
+
+  SEGMENTS {
+    string id
+    string name
+  }
+
+  SEGMENT_ITEM_ASSIGNMENT {
+    string id
+    string segmentId
+    string type
+    string itemId
+  }
+
+  SEGMENT_CUSTOMER_ASSIGNMENT {
+    string id
+    string segmentId
+    string customerId
+  }
+
+  CUSTOMER {
+    string id
+    boolean active
+  }
+
+  %% Relationships
+
+  CATEGORY ||--o{ SUBCATEGORY : parent
+  CATEGORY }o--o{ CATALOG : assigned_to
+
+  CATEGORY ||--o{ CATEGORY_ASSIGNMENT : has
+  PRODUCT ||--o{ CATEGORY_ASSIGNMENT : assigned_by
+
+  PRODUCT ||--o{ AVAILABILITY : has
+  SITE ||--o{ AVAILABILITY : defines
+
+  SITE }o--o{ CATALOG : publishes
+
+  SITE }o--o{ PRICE : defines
+
+  PRODUCT ||--o{ PRICE : has
+
+  SEGMENTS ||--o{ SEGMENT_ITEM_ASSIGNMENT : defines
+  SEGMENTS ||--o{ SEGMENT_CUSTOMER_ASSIGNMENT : maps
+
+  CUSTOMER ||--o{ SEGMENT_CUSTOMER_ASSIGNMENT : assigned_to
+  PRODUCT ||--o{ SEGMENT_ITEM_ASSIGNMENT : belongs_to
+
+  style CATEGORY fill:#F2F6FA, stroke:#4C5359
+  style SUBCATEGORY fill:#F2F6FA, stroke:#4C5359
+  style CATALOG fill:#F2F6FA, stroke:#4C5359
+  style SITE fill:#F2F6FA, stroke:#4C5359
+  style AVAILABILITY fill:#F2F6FA, stroke:#4C5359
+  style PRICE fill:#F2F6FA, stroke:#4C5359
+  style PRODUCT fill:#F2F6FA, stroke:#4C5359
+  style CATEORY_ASSIGNMENT fill:#F2F6FA, stroke:#4C5359
+  style SEGMENTS fill:#F2F6FA, stroke:#4C5359
+  style CUSTOMER fill:#F2F6FA, stroke:#4C5359
+  style CATEGORY_ASSIGNMENT fill:#F2F6FA, stroke:#4C5359
+  style SEGMENT_ITEM_ASSIGNMENT fill:#F2F6FA, stroke:#4C5359
+  style SEGMENT_CUSTOMER_ASSIGNMENT fill:#F2F6FA, stroke:#4C5359
 ```
 
 ### Connection flow
@@ -246,18 +313,6 @@ Segments:
   └─ Site-specific segments control visibility by customer role
 ```
 
-<!-- **How it works:**
-- All brands share the same site (`Netherlands`).
-- One catalog contains all brand category trees.
-- Products from different brands are organized under their respective category trees.
-- Availability controls which products are visible on the Netherlands site.
-- Segments can further restrict visibility based on customer roles.
-
-**Advantages:**
-- Simple setup for single-country operations.
-- All brands accessible from one storefront.
-- Easy to manage shared resources. -->
-
 ### Pattern 2: Multi-site, segmented brands
 
 **Use case:** Multiple sites, each dedicated to a specific brand.
@@ -295,19 +350,6 @@ Segments:
   └─ Segments for WarmTech_DE site
 ```
 
-<!-- **How it works:**
-- Each brand has its own dedicated site.
-- Each site has its own catalog.
-- Each catalog contains only the relevant brand's category tree.
-- Products are made available on specific sites via availability records.
-- Segments work independently per site.
-
-**Advantages:**
-- Brand separation and independence.
-- Different customer experiences per brand.
-- Independent site configurations (payment, shipping, etc.).
-- Better for brand-specific marketing and promotions. -->
-
 ### Single site vs multi-sites patterns comparison
 
 | **Single site** | **Multi-sites** |
@@ -344,7 +386,7 @@ A(SITE: Netherlands)
 B(SITE: Germany - ThermoBrand_DE)
 C(SITE: Germany - WarmTech_DE)
 D(CATALOG: Netherlands)
-E(CATEGORY: ThermoBrand)
+E(CATEGORY: ComfortHeat)
 F(CATEGORY: WarmTech)
 G(PRODUCT: WarmTech FrostGuard Pro 2000)
 H(SEGMENT: NL_WarmTech_Installer)
@@ -357,22 +399,29 @@ N(SEGMENT: DE_ThermoBrand_Wholesaler)
 O(CATALOG: WarmTech Germany Catalog)
 P(CATEGORY: WarmTech)
 R(AVAILABILITY: WarmTech_DE)
-S(SEGMENT: DE_WarmTech_Installer)
+S(SEGMENT: DE_WarmTech_Wholesaler)
+T(PRODUCT: ComfortHeat Thermalux Pro)
 
-subgraph c [Netherlands]
+subgraph d [**Products**]
+G;
+M;
+T;
+end
+
+subgraph c [**Netherlands**]
 A-->D;
 A-.->H;
 A-->I;
 D-->F;
 D-->E;
-E-->M;
+E-->T;
 F-->G;
 H-.->F;
 I-->G;
 H-.->G
 end
 
-subgraph a [ThermoBrand_DE]
+subgraph a [**ThermoBrand_DE**]
 B-->J;
 J-->K;
 K-->M;
@@ -383,7 +432,7 @@ N-.->K;
 N-.->M
 end
 
-subgraph b [WarmTech_DE]
+subgraph b [**WarmTech_DE**]
 C-->O;
 C-->R;
 C-->S;
@@ -391,7 +440,7 @@ O-->P;
 P-->G;
 R-->G;
 S-.->P;
-S-.->M
+S-.->G;
 end
 
 A:::1
@@ -412,11 +461,12 @@ R:::5
 H:::6
 N:::6
 S:::6
+T:::4
 
 classDef 1 fill:#A1BDDC, stroke:#4C5359
 classDef 2 fill:#DDE6EE, stroke:#4C5359
 classDef 3 fill:#F2F6FA, stroke:#4C5359
-classDef 4 fill:#3B73BB, stroke:#4C5359
+classDef 4 fill:#4DB1FD, stroke:#4C5359, color: #ffffff
 classDef 5 fill:#FFC128, stroke:#4C5359, stroke-dasharray: 5
 classDef 6 fill:#FAFBFC, stroke:#4C5359, stroke-dasharray: 5
 ```
@@ -476,7 +526,7 @@ Call the [Creating a new category](https://developer.emporix.io/api-references/a
 [api-reference](../catalogs-and-categories/category-tree/api-reference/)
 {% endcontent-ref %}
 
-* `ThermoBrand`:
+* `ComfortHeat`:
 
 ```bash
 curl -X POST 'https://api.emporix.io/category/{tenant}/categories' 
@@ -486,7 +536,7 @@ curl -X POST 'https://api.emporix.io/category/{tenant}/categories'
   -d '{
     "parentId": "root",
     "localizedName": {
-      "en": "ThermoBrand"
+      "en": "ComfortHeat"
     },
     "published": true
   }'
@@ -508,6 +558,8 @@ curl -X POST 'https://api.emporix.io/category/{tenant}/categories'
 ```
 
 Copy the IDs of the created categories.
+
+The same way, create subcategories for each root brand category, for example: `Heaters`, `Boilers` or similar, providing the relevant `parent` id in the request.
 
 {% endstep %}
 
@@ -537,7 +589,7 @@ curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs'
     },
     "publishedSites": ["Netherlands"],
     "categoryIds": [
-      "<thermobrand-root-category-id>",
+      "<comfortheat-root-category-id>",
       "<warmtech-root-category-id>"
     ]
   }'
@@ -774,7 +826,7 @@ curl -X POST 'https://api.emporix.io/customer-segment/{tenant}/segments'
   -H 'Content-Type: application/json' 
   -d '{
     "name": {
-      "en": "ThermoBrand Premium Customers"
+      "en": "ThermoBrand Wholesaler"
     },
     "status": "ACTIVE",
     "siteCode": "ThermoBrand_DE"
@@ -813,42 +865,15 @@ Once the specific segments are created, you can assign relevant products and/or 
 - **Site-specific targeting:** Create different customer experiences per site.
 - **Flexible access control:** Restrict or enhance product/category visibility for specific customer groups.
 
-## Best practices
-
-The below recommendations can help you with consistency and organization within your resources and sites.
-
-### Catalog organization
-- **One catalog per site:** For clarity and easier management, create one catalog per site.
-- **Root category assignment:** Only assign root categories to catalogs, not subcategories.
-- **Category reuse:** Reuse category trees across multiple catalogs when appropriate.
-
-### Site naming
-- **Clear naming convention:** Use descriptive site codes (e.g., `ThermoBrand_DE` instead of `site1`).
-- **Consistent patterns:** Follow a consistent naming pattern across all sites.
-- **Country/brand format:** Use `Country` or `Brand_Country` format for clarity.
-
-### Category structure
-- **Brand-specific roots:** Create separate root categories for each brand.
-- **Hierarchical organization:** Use subcategories to organize products within brand trees.
-- **Global categories:** Remember categories are global - design them to work across sites.
-
-### Availability management
-- **Site-specific records:** Create availability records for each site where products should be visible.
-- **Stock synchronization:** Keep stock levels synchronized across sites if needed.
-- **Visibility control:** Use availability to control product visibility independently from categories.
-
-### Segment
-- **Role-based access:** Use segments to implement role-based product/category visibility
-- **Customer assignment:** Assign customers to segments based on business rules.
 
 ## Common use cases
 
 These are some common examples how you can implement your storefront sites.
 
-<table data-view="cards"><thead><tr><th align="center"></th><th align="center"></th><th align="center"></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td align="center"><i class="fa-gear">:gear:</i></td><td align="center"><strong>Regional product availability</strong></td><td align="center">**Scenario:** You have a poduct that you want to be available in certain countries due to regulations.</td><td align="center">**Solution:**
-Create availability records only for the sites where the product should be available. The product won't appear on sites without availability records.</td></tr><tr><td align="center"><i class="fa-robot-astromech">:robot-astromech:</i></td><td align="center"><strong>Brand-specific storefronts</strong></td><td align="center">**Scenario:** Each brand needs its own dedicated storefront with brand-specific categories.</td><td>**Solution:**
-Create separate sites for each brand (e.g., `ThermoBrand_DE`, `WarmTech_DE`). Create separate catalogs for each site and assign only the relevant brand's category tree to each catalog.</td></tr><tr><td align="center"><i class="fa-books">:books:</i></td><td align="center"><strong>Premium customer access</strong></td><td align="center">**Scenario:** You want certain products to only be visible to premium customers.</td><td>**Solution:**
-Create a segment for premium customers on the relevant site. Assign premium products to the segment and assign premium customers to the segment. The products will only be visible to customers in the segment.</td></tr></tbody></table>
+<table data-view="cards"><thead><tr><th align="center"></th><th align="center"></th><th align="center"></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td align="center"><i class="fa-warehouse-full">:warehouse-full:</i></td><td align="center"><strong>Regional product availability</strong></td><td align="center"><strong>Scenario</strong></td><td align="center">You have a poduct that you want to be available in certain countries due to regulations.</td><td align="center"><strong>Solution</strong></td><td>Create availability records only for the sites where the product should be available. The product won't appear on sites without availability records.</td></tr>
+<tr><td align="center"><i class="fa-wreath">:wreath:</i></td><td align="center"><strong>Brand-specific storefronts</strong></td><td align="center"><strong>Scenario</strong></td><td>Each brand needs its own dedicated storefront with brand-specific categories.</td><td align="center"><strong>Solution</strong>Create separate sites for each brand (e.g., `ThermoBrand_DE`, `WarmTech_DE`). Create separate catalogs for each site and assign only the relevant brand's category tree to each catalog.</td></tr>
+<tr><td align="center"><i class="fa-user-magnifying-glass">:user-magnifying-glass:</i></td><td align="center"><strong>Premium customer access</strong></td><td align="center"><strong>>Scenario</strong></td><td align="center">You want certain products to only be visible to premium customers.</td><td align="center"><strong>Solution</strong></td><td align="center">Create a segment for premium customers on the relevant site. Assign premium products to the segment and assign premium customers to the segment. The products will only be visible to customers in the segment.</td></tr>
+<tr><td align="center"><i class="fa-grid-4">:grid-4:</i></td><td align="center"><strong>Multi-brand on a single site</strong></td><td align="center"><strong>>Scenario</strong></td><td align="center">Multiple brands need to co-exist on the same storefront.</td><td align="center"><strong>Solution</strong></td><td align="center">Create one site for all brands and one catalog for the site. Assign all brand category trees to the catalog. Organize products under their respective brand categories.</td></tr></tbody></table>
 
 ### Regional product availability
 **Scenario:** You have a poduct that you want to be available in certain countries due to regulations.
