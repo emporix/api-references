@@ -54,11 +54,11 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr></thead>
 <tbody>
   <tr>
-    <td class="tg-0pky" rowspan="5">Schema Service<br>Product Service</br><br>Category Service</br></td>
+    <td class="tg-0pky" rowspan="5">Schema Service<br>Product Service<br>Category Service</br></td>
     <td class="tg-0pky" rowspan="5">Classification categories</td>
   </tr>
     <tr>
-    <td class="tg-0pky" rowspan="5">IAM Service <br>Configuration Service</br><br>Site Settings Service</br></td>
+    <td class="tg-0pky" rowspan="5">IAM Service <br>Configuration Service<br>Site Settings Service</br></td>
     <td class="tg-0pky" rowspan="5">Site Permissions</td>
   </tr>
     <tr>
