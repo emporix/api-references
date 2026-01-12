@@ -466,7 +466,7 @@ T:::4
 classDef 1 fill:#A1BDDC, stroke:#4C5359
 classDef 2 fill:#DDE6EE, stroke:#4C5359
 classDef 3 fill:#F2F6FA, stroke:#4C5359
-classDef 4 fill:#4DB1FD, stroke:#4C5359, color: #ffffff
+classDef 4 fill:#3B73BB, stroke:#4C5359, color: #ffffff
 classDef 5 fill:#FFC128, stroke:#4C5359, stroke-dasharray: 5
 classDef 6 fill:#FAFBFC, stroke:#4C5359, stroke-dasharray: 5
 ```
@@ -559,7 +559,7 @@ curl -X POST 'https://api.emporix.io/category/{tenant}/categories'
 
 Copy the IDs of the created categories.
 
-The same way, create subcategories for each root brand category, for example: `Heaters`, `Boilers` or similar, providing the relevant `parent` id in the request.
+The same way, create subcategories for each root brand category, for example: `Heaters`, `Boilers` or similar, providing the relevant `parentid` in the request.
 
 {% endstep %}
 
@@ -870,12 +870,9 @@ Once the specific segments are created, you can assign relevant products and/or 
 
 These are some common examples how you can implement your storefront sites.
 
-<table data-view="cards"><thead><tr><th align="center"></th><th align="center"></th><th align="center"></th><th data-hidden data-card-target data-type="content-ref"></th></tr></thead><tbody><tr><td align="center"><i class="fa-warehouse-full">:warehouse-full:</i></td><td align="center"><strong>Regional product availability</strong></td><td align="center"><strong>Scenario</strong></td><td align="center">You have a poduct that you want to be available in certain countries due to regulations.</td><td align="center"><strong>Solution</strong></td><td>Create availability records only for the sites where the product should be available. The product won't appear on sites without availability records.</td></tr>
-<tr><td align="center"><i class="fa-wreath">:wreath:</i></td><td align="center"><strong>Brand-specific storefronts</strong></td><td align="center"><strong>Scenario</strong></td><td>Each brand needs its own dedicated storefront with brand-specific categories.</td><td align="center"><strong>Solution</strong>Create separate sites for each brand (e.g., `ThermoBrand_DE`, `WarmTech_DE`). Create separate catalogs for each site and assign only the relevant brand's category tree to each catalog.</td></tr>
-<tr><td align="center"><i class="fa-user-magnifying-glass">:user-magnifying-glass:</i></td><td align="center"><strong>Premium customer access</strong></td><td align="center"><strong>>Scenario</strong></td><td align="center">You want certain products to only be visible to premium customers.</td><td align="center"><strong>Solution</strong></td><td align="center">Create a segment for premium customers on the relevant site. Assign premium products to the segment and assign premium customers to the segment. The products will only be visible to customers in the segment.</td></tr>
-<tr><td align="center"><i class="fa-grid-4">:grid-4:</i></td><td align="center"><strong>Multi-brand on a single site</strong></td><td align="center"><strong>>Scenario</strong></td><td align="center">Multiple brands need to co-exist on the same storefront.</td><td align="center"><strong>Solution</strong></td><td align="center">Create one site for all brands and one catalog for the site. Assign all brand category trees to the catalog. Organize products under their respective brand categories.</td></tr></tbody></table>
+<table data-card-size="large" data-view="cards"><thead><tr><th align="center"></th><th align="center"></th><th align="center"></th><th></th><th align="center"></th><th></th></tr></thead><tbody><tr><td align="center"><i class="fa-warehouse-full">:warehouse-full:</i></td><td align="center"><h4>Regional product availability</h4></td><td align="center"><strong>Scenario</strong></td><td>You have a product that you want to be available in certain countries due to regulations.</td><td align="center"><strong>Solution</strong></td><td>Create availability records only for the sites where the product should be available. The product won't appear on sites without availability records.</td></tr><tr><td align="center"><i class="fa-store">:store:</i></td><td align="center"><h4>Brand-specific storefronts</h4></td><td align="center"><strong>Scenario</strong></td><td>Each brand needs its own dedicated storefront with brand-specific categories.</td><td align="center"><strong>Solution</strong></td><td>Create separate sites for each brand (e.g., <code>ThermoBrand_DE</code>, <code>WarmTech_DE</code>). Create separate catalogs for each site and assign only the relevant brand's category tree to each catalog.</td></tr><tr><td align="center"><i class="fa-wreath">:wreath:</i></td><td align="center"><h4>Premium customer access</h4></td><td align="center"><strong>Scenario</strong></td><td>You want certain products to only be visible to premium customers.</td><td align="center"><strong>Solution</strong></td><td>Create a segment for premium customers on the relevant site. Assign premium products to the segment and assign premium customers to the segment. The products will only be visible to customers in the segment.</td></tr><tr><td align="center"><i class="fa-grid-dividers">:grid-dividers:</i></td><td align="center"><h4>Multi-brand on a single site</h4></td><td align="center"><strong>Scenario</strong></td><td>Multiple brands need to co-exist on the same storefront.</td><td align="center"><strong>Solution</strong></td><td>Create one site for all brands and one catalog for the site. Assign all brand category trees to the catalog. Organize products under their respective brand categories.</td></tr></tbody></table>
 
-### Regional product availability
+<!-- ### Regional product availability
 **Scenario:** You have a poduct that you want to be available in certain countries due to regulations.
 
 **Solution:**
@@ -897,7 +894,7 @@ Create a segment for premium customers on the relevant site. Assign premium prod
 **Scenario:** Multiple brands need to co-exist on the same storefront.
 
 **Solution:**
-Create one site for all brands and one catalog for the site. Assign all brand category trees to the catalog. Organize products under their respective brand categories.
+Create one site for all brands and one catalog for the site. Assign all brand category trees to the catalog. Organize products under their respective brand categories. -->
 
 {% hint style="info" %}
 
