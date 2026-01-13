@@ -108,7 +108,8 @@ Assign products to categories and categories to catalogs. Then, publish catalogs
 
 Understanding the relationships between these concepts is crucial for effective multi-site management:
 
-<figure><img src="../../.gitbook/assets/multisites.png" alt="Mutli-sites architecture"><figcaption>Mutli-sites architecture</figcaption></figure>
+<figure><img src="../.gitbook/assets/multisites.png" alt="Mutli-sites architecture"><figcaption>Mutli-sites architecture</figcaption></figure>
+
 
 <!-- 
 ```mermaid
@@ -362,9 +363,10 @@ The multi-site architecture pattern is most relevant when you want to run differ
 
 ## Practical examples
 
-<figure><img src="../../.gitbook/assets/multisites_example.png" alt="Example architecture"><figcaption>Example architecture</figcaption></figure>
+<figure><img src="../.gitbook/assets/multisites_example.png" alt="Example architecture"><figcaption>Example architecture</figcaption></figure>
 
-<!-- 
+
+<!-- {% code %}
 ```mermaid
 ---
 config:
@@ -467,7 +469,9 @@ classDef 4 fill:#3B73BB, stroke:#4C5359, color: #ffffff
 classDef 5 fill:#FFC128, stroke:#4C5359, stroke-dasharray: 5
 classDef 6 fill:#FAFBFC, stroke:#4C5359, stroke-dasharray: 5
 ``` 
--->
+{% endcode %} -->
+
+
 
 ### Example 1: Setting up Netherlands (single site, multi-brands)
 
