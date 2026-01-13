@@ -363,6 +363,8 @@ The multi-site architecture pattern is most relevant when you want to run differ
 
 ## Practical examples
 
+<!-- mermaid included as a file -->
+
 <figure><img src="../.gitbook/assets/multisites_example.png" alt="Example architecture"><figcaption>Example architecture</figcaption></figure>
 
 
