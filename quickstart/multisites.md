@@ -366,113 +366,6 @@ The multi-site architecture pattern is most relevant when you want to run differ
 <figure><img src="../.gitbook/assets/multisites_example.png" alt="Example architecture"><figcaption>Example architecture</figcaption></figure>
 
 
-<!-- {% code %}
-```mermaid
----
-config:
-  layout: fixed
-  theme: base
-  look: classic
-  themeVariables:
-    background: transparent
-    lineColor: "#9CBBE3"
-    arrowheadColor: "#9CBBE3"
-    edgeLabelBackground: "#FFC128" 
-    edgeLabelTextColor: "#4C5359"
----
-flowchart TB
-A(SITE: Netherlands)
-B(SITE: Germany - ThermoBrand_DE)
-C(SITE: Germany - WarmTech_DE)
-D(CATALOG: Netherlands)
-E(CATEGORY: ComfortHeat)
-F(CATEGORY: WarmTech)
-G(PRODUCT: WarmTech FrostGuard Pro 2000)
-H(SEGMENT: NL_WarmTech_Installer)
-I(AVAILABILITY: Netherlands)
-J(CATALOG: ThermoBrand Germany Catalog)
-K(CATEGORY: ThermoBrand)
-L(AVAILABILITY: ThermoBrand_DE)
-M(PRODUCT: ThermoBrand AquaCore Boiler X500)
-N(SEGMENT: DE_ThermoBrand_Wholesaler)
-O(CATALOG: WarmTech Germany Catalog)
-P(CATEGORY: WarmTech)
-R(AVAILABILITY: WarmTech_DE)
-S(SEGMENT: DE_WarmTech_Wholesaler)
-T(PRODUCT: ComfortHeat Thermalux Pro)
-
-subgraph d [**Products**]
-G;
-M;
-T;
-end
-
-subgraph c [**Netherlands**]
-A-->D;
-A-.->H;
-A-->I;
-D-->F;
-D-->E;
-E-->T;
-F-->G;
-H-.->F;
-I-->G;
-H-.->G
-end
-
-subgraph a [**ThermoBrand_DE**]
-B-->J;
-J-->K;
-K-->M;
-B-->L;
-B-->N;
-L-.->M;
-N-.->K;
-N-.->M
-end
-
-subgraph b [**WarmTech_DE**]
-C-->O;
-C-->R;
-C-->S;
-O-->P;
-P-->G;
-R-->G;
-S-.->P;
-S-.->G;
-end
-
-A:::1
-B:::1
-C:::1
-D:::2
-J:::2
-O:::2
-E:::3
-F:::3
-K:::3
-P:::3
-G:::4
-M:::4
-I:::5
-L:::5
-R:::5
-H:::6
-N:::6
-S:::6
-T:::4
-
-classDef 1 fill:#A1BDDC, stroke:#4C5359
-classDef 2 fill:#DDE6EE, stroke:#4C5359
-classDef 3 fill:#F2F6FA, stroke:#4C5359
-classDef 4 fill:#3B73BB, stroke:#4C5359, color: #ffffff
-classDef 5 fill:#FFC128, stroke:#4C5359, stroke-dasharray: 5
-classDef 6 fill:#FAFBFC, stroke:#4C5359, stroke-dasharray: 5
-``` 
-{% endcode %} -->
-
-
-
 ### Example 1: Setting up Netherlands (single site, multi-brands)
 
 {% stepper %}
@@ -848,7 +741,7 @@ These are some common examples how you can implement your storefront sites.
 
 ## Best practices
 
-<table data-full-width="false"><thead><tr><th>Practice</th><th>Description</th></tr></thead><tbody><tr><td colspan="2"><strong>Catalog organization</strong></td></tr><tr><td>One catalog per site</td><td>For clarity and easier management, create one catalog per site.</td></tr><tr><td>Root category assignment</td><td>Only assign root categories to catalogs, not subcategories.</td></tr><tr><td>Category reuse</td><td>Reuse category trees across multiple catalogs when appropriate.</td></tr><tr><td colspan="2"><strong>Site naming</strong></td></tr><tr><td>Clear naming convention</td><td>Use descriptive site codes (e.g., <code>ThermoBrand_DE</code> instead of <code>site1</code>).</td></tr><tr><td>Consistent patterns</td><td>Follow a consistent naming pattern across all sites.</td></tr><tr><td>Country/brand format</td><td>Use <code>Country</code> or <code>Brand_Country</code> format for clarity.</td></tr><tr><td colspan="2"><strong>Category structure</strong></td></tr><tr><td>Brand-specific roots</td><td>Create separate root categories for each brand.</td></tr><tr><td>Hierarchical organization</td><td>Use subcategories to organize products within brand trees.</td></tr><tr><td>Global categories</td><td>Remember categories are global - design them to work across sites.</td></tr><tr><td colspan="2"><strong>Availability management</strong></td></tr><tr><td>Site-specific records</td><td>Create availability records for each site where products should be visible.</td></tr><tr><td>Stock synchronization</td><td>Keep stock levels synchronized across sites if needed.</td></tr><tr><td>Visibility control</td><td>Use availability to control product visibility independently from categories.</td></tr><tr><td colspan="2"><strong>Segment</strong></td></tr><tr><td>Role-based access</td><td>Use segments to implement role-based product/category visibility.</td></tr><tr><td>Customer assignment</td><td>Assign customers to segments based on business rules.</td></tr></tbody></table>
+<table data-full-width="false"><thead><tr><th>Category</th><th>Recommendation</th></tr></thead><tbody><tr><td colspan="2"><strong>Catalog organization</strong></td></tr><tr><td>One catalog per site</td><td>For clarity and easier management, create one catalog per site.</td></tr><tr><td>Root category assignment</td><td>Only assign root categories to catalogs, not subcategories.</td></tr><tr><td>Category reuse</td><td>Reuse category trees across multiple catalogs when appropriate.</td></tr><tr><td colspan="2"><strong>Site naming</strong></td></tr><tr><td>Clear naming convention</td><td>Use descriptive site codes (e.g., <code>ThermoBrand_DE</code> instead of <code>site1</code>).</td></tr><tr><td>Consistent patterns</td><td>Follow a consistent naming pattern across all sites.</td></tr><tr><td>Country/brand format</td><td>Use <code>Country</code> or <code>Brand_Country</code> format for clarity.</td></tr><tr><td colspan="2"><strong>Category structure</strong></td></tr><tr><td>Brand-specific roots</td><td>Create separate root categories for each brand.</td></tr><tr><td>Hierarchical organization</td><td>Use subcategories to organize products within brand trees.</td></tr><tr><td>Global categories</td><td>Remember categories are global - design them to work across sites.</td></tr><tr><td colspan="2"><strong>Availability management</strong></td></tr><tr><td>Site-specific records</td><td>Create availability records for each site where products should be visible.</td></tr><tr><td>Stock synchronization</td><td>Keep stock levels synchronized across sites if needed.</td></tr><tr><td>Visibility control</td><td>Use availability to control product visibility independently from categories.</td></tr><tr><td colspan="2"><strong>Segment</strong></td></tr><tr><td>Role-based access</td><td>Use segments to implement role-based product/category visibility.</td></tr><tr><td>Customer assignment</td><td>Assign customers to segments based on business rules.</td></tr></tbody></table>
 
 
 {% hint style="info" %}
