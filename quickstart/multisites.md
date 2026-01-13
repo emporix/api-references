@@ -1,17 +1,12 @@
 ---
-seo:
-  title: Multi-Site Architecture
-  description: Understanding sites, catalogs, categories, availability, products, and segments in Emporix
+title: Multi-Site Architecture
+description: Learn how to achieve multi-site architecture with Emporix. Find out the core concepts and how they connect together to enable flexible commerce operations across multiple countries, brands, and customer segments.
 icon: graduation-cap
 layout:
   width: wide
 ---
 
 # Multi-Site Architecture
-
-This tutorial explains how Emporix's multi-site architecture works, covering the core concepts and how they connect together to enable flexible commerce operations across multiple countries, brands, and customer segments.
-
-## Introduction
 
 Emporix's multi-site architecture allows you to manage multiple webshops, brands, and markets from a single platform. Understanding how sites, catalogs, categories, products, availability, and segments work together is essential for building scalable commerce solutions.
 
@@ -21,16 +16,12 @@ First, get familiar with the concepts used across this article.
 
 ### Site
 
-**Definition:** A Site represents a single country or country/brand combination. It serves as a virtual entity that can represent:
-- A web store
-- A physical store
-- A branded store
-- A store for a specific market
+**Definition:** A Site represents a single country or country/brand combination. It serves as a virtual entity that can represent a web store, a physical store, a branded store, or a store for a specific market.
 
 **Key characteristics:**
-- Site-aware: Each site can have its own configuration, payment methods, shipping options, and customer targeting
-- Independent: Sites operate independently but can share underlying resources like products and categories.
-- Configurable: Sites can override or augment tenant-specific configurations.
+- **Site-aware**: Each site can have its own configuration, payment methods, shipping options, and customer targeting
+- **Independent**: Sites operate independently but can share underlying resources like products and categories.
+- **Configurable**: Sites can override or augment tenant-specific configurations.
 
 **Example site codes:**
 - `Netherlands` - Single country site
@@ -39,7 +30,7 @@ First, get familiar with the concepts used across this article.
 
 ### Catalog
 
-**Definition:** A Catalog is site-aware and manages categories for one or more sites. It acts as a container that organizes which categories are available on which sites.
+**Definition:** A catalog is site-aware and manages categories for one or more sites. It acts as a container that organizes which categories are available on which sites.
 
 **Key characteristics:**
 - **Site-aware:** Each catalog is published to specific sites through the `publishedSites` field.
@@ -54,10 +45,10 @@ First, get familiar with the concepts used across this article.
 
 ### Category
 
-**Definition:** Categories represent the hierarchical structure of products. They are **not site-aware** - a single category tree exists globally and can be used across multiple sites.
+**Definition:** Categories represent the hierarchical structure of products. 
 
 **Key characteristics:**
-- **Not site-aware:** Categories exist independently of sites - they're global resources.
+- **Not site-aware:** Categories and category trees exist independently of sites - they're global resources.
 - **Hierarchical structure:** Categories form trees with root categories and subcategories.
 - **Product organization:** Products are assigned to categories to organize them.
 - **Reusable:** The same category structure can be used across multiple sites and catalogs.
@@ -79,11 +70,9 @@ First, get familiar with the concepts used across this article.
 - **Category assignments:** Products are assigned to categories (which are then assigned to catalogs).
 
 **How products become site-specific:**
-- Products are assigned to categories
-- Categories are assigned to catalogs
-- Catalogs are published to sites
-- Availability controls product visibility per site
-- Prices are site-specific (determines which sites a product appears on)
+
+While products are not site-aware, you can make them bear site-specific information. 
+Assign products to categories and categories to catalogs. Then, publish catalogs to specific sites. To make the products visible on the storefront, define the availability for each site. Prices are site-specific, so define the product prices per each site the products appear on.
 
 ### Availability
 
@@ -119,6 +108,9 @@ First, get familiar with the concepts used across this article.
 
 Understanding the relationships between these concepts is crucial for effective multi-site management:
 
+<figure><img src="../../.gitbook/assets/multisites.png" alt="Mutli-sites architecture"><figcaption>Mutli-sites architecture</figcaption></figure>
+
+<!-- 
 ```mermaid
 ---
 config:
@@ -240,7 +232,8 @@ SUBCATEGORY {
   style CATEGORY_ASSIGNMENT fill:#F2F6FA, stroke:#4C5359
   style SEGMENT_ITEM_ASSIGNMENT fill:#F2F6FA, stroke:#4C5359
   style SEGMENT_CUSTOMER_ASSIGNMENT fill:#F2F6FA, stroke:#4C5359
-```
+``` 
+-->
 
 ### Connection flow
 
@@ -349,6 +342,7 @@ Segments:
   ├─ Segments for ThermoBrand_DE site
   └─ Segments for WarmTech_DE site
 ```
+The multi-site architecture pattern is most relevant when you want to run different webshops per country or country/brand combination. It provides multi-market support and brand separation, along with operational efficiency through reduced maintenance and flexibility (independent configuration, granular control).
 
 ### Single site vs multi-sites patterns comparison
 
@@ -368,6 +362,9 @@ Segments:
 
 ## Practical examples
 
+<figure><img src="../../.gitbook/assets/multisites_example.png" alt="Example architecture"><figcaption>Example architecture</figcaption></figure>
+
+<!-- 
 ```mermaid
 ---
 config:
@@ -469,7 +466,8 @@ classDef 3 fill:#F2F6FA, stroke:#4C5359
 classDef 4 fill:#3B73BB, stroke:#4C5359, color: #ffffff
 classDef 5 fill:#FFC128, stroke:#4C5359, stroke-dasharray: 5
 classDef 6 fill:#FAFBFC, stroke:#4C5359, stroke-dasharray: 5
-```
+``` 
+-->
 
 ### Example 1: Setting up Netherlands (single site, multi-brands)
 
@@ -566,7 +564,7 @@ The same way, create subcategories for each root brand category, for example: `H
 {% step %}
 #### Create the catalog and assign categories
 
-Create a catalog for the Netherlands site and assign the brand category trees to it by passing the IDs of the created categories.
+Create a catalog for the Netherlands site and assign the brand category trees to it by passing the IDs of the created categories. Send the request to the [Creating a catalog](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/catalog/api-reference/catalog-management#post-catalog-tenant-catalogs) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -652,7 +650,7 @@ curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{product
 {% step %}
 #### Create sites
 
-Create separate sites for each brand in Germany so that each brand has its own dedicated site.
+Create separate sites for each brand in Germany so that each brand has its own dedicated site. Use the [Creating a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -722,7 +720,7 @@ curl -X POST 'https://api.emporix.io/site/{tenant}/sites'
 {% step %}
 #### Create catalogs for each site
 
-Create a dedicated catalog for each site and assign only the relevant brand's category tree to each catalog.
+Create a dedicated catalog for each site and assign only the relevant brand's category tree to each catalog. Call the [Creating a catalog](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/catalog/api-reference/catalog-management#post-catalog-tenant-catalogs) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -774,7 +772,7 @@ curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs'
 {% step %}
 #### Create site-specific availability
 
-Create availability records for products on each site to control visibility and stock levels independently.
+Create availability records for products on each site to control visibility and stock levels independently. Call the [Creating a new availability for a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site) endpoint passing the relevant `productId` and the `site` as the path parameters. 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -838,33 +836,6 @@ Once the specific segments are created, you can assign relevant products and/or 
 {% endstep %}
 {% endstepper %}
 
-#### Key advantages of this architecture
-
-##### Catalog advantages
-- **Dynamic category assignment:** Easily add or remove categories from sites without recreating structures.
-- **Flexible organization:** Mix and match categories across different sites.
-- **Site-specific control:** Each site can have its own catalog with different category combinations.
-
-##### Site advantages
-- **Multi-market support:** Run different webshops per country or country/brand.
-- **Independent configuration:** Each site can have different payment methods, shipping options, and settings.
-- **Brand separation:** Maintain distinct brand identities across different sites.
-
-##### Category advantages
-- **Global structure:** Create category trees once, use them across multiple sites.
-- **Less maintenance:** Update category structure in one place, changes reflect everywhere.
-- **Brand-specific organization:** Each brand can have its own category tree while sharing the same product catalog.
-
-##### Availability advantages
-- **Granular control:** Manage product visibility on a per-site basis.
-- **Independent from categories:** Control product visibility regardless of category assignments.
-- **Stock management:** Track different stock levels for the same product across different sites.
-
-##### Segments advantages
-- **Role-based visibility:** Control what customers see based on their roles and segments.
-- **Site-specific targeting:** Create different customer experiences per site.
-- **Flexible access control:** Restrict or enhance product/category visibility for specific customer groups.
-
 ## Common use cases
 
 These are some common examples how you can implement your storefront sites.
@@ -873,31 +844,7 @@ These are some common examples how you can implement your storefront sites.
 
 ## Best practices
 
-The below recommendations can help you with consistency and organization within your resources and sites.
-
-### Catalog organization
-- **One catalog per site:** For clarity and easier management, create one catalog per site.
-- **Root category assignment:** Only assign root categories to catalogs, not subcategories.
-- **Category reuse:** Reuse category trees across multiple catalogs when appropriate.
-
-### Site naming
-- **Clear naming convention:** Use descriptive site codes (e.g., `ThermoBrand_DE` instead of `site1`).
-- **Consistent patterns:** Follow a consistent naming pattern across all sites.
-- **Country/brand format:** Use `Country` or `Brand_Country` format for clarity.
-
-### Category structure
-- **Brand-specific roots:** Create separate root categories for each brand.
-- **Hierarchical organization:** Use subcategories to organize products within brand trees.
-- **Global categories:** Remember categories are global - design them to work across sites.
-
-### Availability management
-- **Site-specific records:** Create availability records for each site where products should be visible.
-- **Stock synchronization:** Keep stock levels synchronized across sites if needed.
-- **Visibility control:** Use availability to control product visibility independently from categories.
-
-### Segment
-- **Role-based access:** Use segments to implement role-based product/category visibility
-- **Customer assignment:** Assign customers to segments based on business rules.
+<table data-full-width="false"><thead><tr><th>Practice</th><th>Description</th></tr></thead><tbody><tr><td colspan="2"><strong>Catalog organization</strong></td></tr><tr><td>One catalog per site</td><td>For clarity and easier management, create one catalog per site.</td></tr><tr><td>Root category assignment</td><td>Only assign root categories to catalogs, not subcategories.</td></tr><tr><td>Category reuse</td><td>Reuse category trees across multiple catalogs when appropriate.</td></tr><tr><td colspan="2"><strong>Site naming</strong></td></tr><tr><td>Clear naming convention</td><td>Use descriptive site codes (e.g., <code>ThermoBrand_DE</code> instead of <code>site1</code>).</td></tr><tr><td>Consistent patterns</td><td>Follow a consistent naming pattern across all sites.</td></tr><tr><td>Country/brand format</td><td>Use <code>Country</code> or <code>Brand_Country</code> format for clarity.</td></tr><tr><td colspan="2"><strong>Category structure</strong></td></tr><tr><td>Brand-specific roots</td><td>Create separate root categories for each brand.</td></tr><tr><td>Hierarchical organization</td><td>Use subcategories to organize products within brand trees.</td></tr><tr><td>Global categories</td><td>Remember categories are global - design them to work across sites.</td></tr><tr><td colspan="2"><strong>Availability management</strong></td></tr><tr><td>Site-specific records</td><td>Create availability records for each site where products should be visible.</td></tr><tr><td>Stock synchronization</td><td>Keep stock levels synchronized across sites if needed.</td></tr><tr><td>Visibility control</td><td>Use availability to control product visibility independently from categories.</td></tr><tr><td colspan="2"><strong>Segment</strong></td></tr><tr><td>Role-based access</td><td>Use segments to implement role-based product/category visibility.</td></tr><tr><td>Customer assignment</td><td>Assign customers to segments based on business rules.</td></tr></tbody></table>
 
 
 {% hint style="info" %}
