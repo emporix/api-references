@@ -1074,6 +1074,10 @@ By default, all variant products inherit their attributes from the parent varian
 You cannot override the following attributes: `id`, `code`, `template`, `variantAttributes`.
 {% endhint %}
 
+{% hint style="warning" %}
+The `parentVariantId` field cannot be updated. It can only be set when creating a new variant product. When updating an existing variant, this field should be omitted or will be ignored if included.
+{% endhint %}
+
 Update a specific variant product by sending a request to the [Upserting a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint.
 
 In the following example, we override the following fields:
@@ -1097,7 +1101,6 @@ curl -i -X PUT
         "PL": "STANDARD"
     },
     "productType": "VARIANT",
-    "parentVariantId": "214cah2245033d9d2a2b17f1",
     "relatedItems": [
         {
         "refId": "634cea2740033d7c2e7b03a9",

@@ -445,6 +445,18 @@ paths:
             type: string
             example: "787323"
           example: ""
+        - name: Accept-Language
+          in: header
+          description: |
+            List of language codes acceptable for the response.
+            Possible values:
+            * `*` - each internationalized field is returned as a map containing all available translations
+            * `en`, `en,de` - each internationalized field is returned as a map containing translation specified by a header value. If translation is not supported by tenant configuration then exception is thrown. First language is the one with highest priority.
+            * `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5` - each internationalized field is returned as a map containing translation specified by a header value. If translation is not available exception is thrown.
+          schema:
+            type: string
+            example: "*, 'en', 'en,de,fr', 'en-EN', 'fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5'"
+            default: '*'
       responses:
         "200":
           description: Catalog was successfully retrieved.
@@ -805,12 +817,10 @@ components:
           pattern: ^[a-zA-Z0-9_-]$
         name:
           $ref: '#/components/schemas/Object'
-          description: Name of the catalog must be a string if the Content-Language
-                header is set or a map of translations if the header is missing.
+          description: Name of the catalog. Must be provided as a map of language codes to translations.
         description:
           $ref: '#/components/schemas/Object'
-          description: Description of the catalog must be a string if the Content-Language
-                header is set or a map of translations if the header is missing.
+          description: Description of the catalog. Must be provided as a map of language codes to translations.
         visibility:
           $ref: '#/components/schemas/VisibilityInformation'
         publishedSites:
@@ -892,8 +902,7 @@ components:
           format: date-time
     Object:
       type: object
-      description: Name of the catalog must be a string if the Content-Language header
-        is set or a map of translations if the header is missing.
+      description: Localized field that must be provided as a map of language codes to translations.
       oneOf:
         - type: string
         - type: object
@@ -915,12 +924,10 @@ components:
       properties:
         name:
           $ref: '#/components/schemas/Object'
-          description: Name of the catalog must be a string if the Content-Language
-                header is set or a map of translations if the header is missing.
+          description: Name of the catalog. Must be provided as a map of language codes to translations.
         description:
           $ref: '#/components/schemas/Object'
-          description: Description of the catalog must be a string if the Content-Language
-                header is set or a map of translations if the header is missing.
+          description: Description of the catalog. Must be provided as a map of language codes to translations.
         visibility:
           $ref: '#/components/schemas/VisibilityInformation'
         publishedSites:
@@ -959,12 +966,10 @@ components:
       properties:
         name:
           $ref: '#/components/schemas/Object'
-          description: Name of the catalog must be a string if the Content-Language
-                header is set or a map of translations if the header is missing.
+          description: Name of the catalog. Must be provided as a map of language codes to translations.
         description:
           $ref: '#/components/schemas/Object'
-          description: Description of the catalog must be a string if the Content-Language
-                header is set or a map of translations if the header is missing.
+          description: Description of the catalog. Must be provided as a map of language codes to translations.
         visibility:
           $ref: '#/components/schemas/VisibilityInformation'
         publishedSites:

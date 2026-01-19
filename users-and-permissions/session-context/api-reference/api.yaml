@@ -298,6 +298,8 @@ components:
         - $ref: '#/components/schemas/SessionContextBase'
         - type: object
           properties:
+            context:
+              $ref: '#/components/schemas/Context'
             metadata:
               $ref: '#/components/schemas/MetadataUpdate'
           required:

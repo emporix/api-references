@@ -2585,9 +2585,6 @@ components:
               $ref: '#/components/schemas/variantProductMetadataWithVersion'
             productType:
               $ref: '#/components/schemas/productTypeUpdate'
-            parentVariantId:
-              type: string
-              description: Identifier of the PARENT_VARIANT product.
     variantProductBulkUpdate:
       type: object
       description: Updating products of the VARIANT type in bulk.
@@ -2945,11 +2942,11 @@ components:
         message: Validation problem with request body.
     product_post_Created_201:
       value:
-        productId: 631b4bfe61f5e1663c745ffd
+        id: 631b4bfe61f5e1663c745ffd
         yrn: 'urn:yaas:saasag:caasproduct:product:apistage;631b4bfe61f5e1663c745ffd'
     variant_post_Created_201:
       value:
-        productId: 5c335acea9812100098ffde0--631b4bfe61f5e1663c745ffd
+        id: 5c335acea9812100098ffde0--631b4bfe61f5e1663c745ffd
         yrn: 'urn:yaas:saasag:caasproduct:product:apistage;5c335acea9812100098ffde0--631b4bfe61f5e1663c745ffd'
     product_NotFound_404:
       value:

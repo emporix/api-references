@@ -150,7 +150,12 @@ paths:
     post:
       summary: Creating orders for delivery provider
       description: |
-        Pushes the specified orders to the delivery provider for the given tenant. If route planning fails for an order (e.g., due to an invalid address), an email is sent to the merchant.
+        Pushes the specified orders to the delivery provider for route planning. The request body must contain:
+        * `siteCode` - The site code where the orders belong
+        * `orderIds` - An array of order IDs to be planned for delivery
+        * `orderStatus` - The order status to filter orders (optional)
+        
+        If route planning fails for an order (e.g., due to an invalid address), an email is sent to the merchant. The response contains only orders that failed to be planned, with their error messages. Successfully planned orders are not included in the response.
       parameters:
         - name: tenant
           in: path
@@ -170,17 +175,21 @@ paths:
               $ref: '#/components/schemas/PlanRouteCommand'
       responses:
         '200':
-          description: Route planning executed. Returned body only for unsuccessfully planned orders (QAC6GQEF in this example). Returned empty body for successfully planned orders (B7016709).
+          description: Route planning executed. The response contains an array of orders that failed to be planned, each with error details. If all orders are successfully planned, an empty array is returned.
           content:
             application/json:
               examples:
-                Response example:
+                All orders successfully planned:
+                  value: []
+                Some orders failed:
                   value:
-                    orderId: QAC6GQEF
-                    deliveryProvider: ONFLEET
-                    errorMessage: completeBefore must not be before creation time
+                    - orderId: QAC6GQEF
+                      deliveryProvider: ONFLEET
+                      errorMessage: completeBefore must not be before creation time
               schema:
-                $ref: '#/components/schemas/PlanRouteResponse'
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlanRouteResponse'
         '400':
           $ref: '#/components/responses/BadRequest_400'
         '401':
