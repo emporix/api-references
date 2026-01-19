@@ -13,7 +13,7 @@ security:
   - OAuth2: []
 tags:
   - name: Catalog management
-    description: Manage catalogs
+    description: Retrieve lists of catalogs and manage catalog details.
 paths:
   '/catalog/{tenant}/catalogs':
     post:
@@ -109,10 +109,10 @@ paths:
     get:
       tags:
         - Catalog management
-      summary: Getting the filtered and sorted list of catalogs
+      summary: Retrieving the filtered and sorted list of catalogs
       description: |
         Get the filtered list of catalogs for the specified tenant. Also, sorting and paging options are available.
-        If none are given, default values will be used.
+        If none are given, default values are used.
       operationId: GET-catalog-list-catalogs
       parameters:
         - name: tenant
