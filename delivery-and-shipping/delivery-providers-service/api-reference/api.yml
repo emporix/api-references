@@ -186,6 +186,17 @@ paths:
                     - orderId: QAC6GQEF
                       deliveryProvider: ONFLEET
                       errorMessage: completeBefore must not be before creation time
+                Orders with wrong route planning:
+                  value:
+                    - orderId: B7016709
+                      deliveryProvider: ONFLEET
+                      errorMessage: Invalid address: Unable to geocode delivery address
+                    - orderId: QAC6GQEF
+                      deliveryProvider: ONFLEET
+                      errorMessage: completeBefore must not be before creation time
+                    - orderId: ORD12345
+                      deliveryProvider: VELOCE
+                      errorMessage: Route planning failed: Delivery time window is outside provider operating hours
               schema:
                 type: array
                 items:
