@@ -12,8 +12,6 @@ servers:
 security:
   - OAuth2: []
 tags:
-  - name: List catalogs
-    description: Retrieve lists of catalogs
   - name: Catalog management
     description: Manage catalogs
 paths:
@@ -110,7 +108,7 @@ paths:
         - OAuth2: []
     get:
       tags:
-        - List catalogs
+        - Catalog management
       summary: Getting the filtered and sorted list of catalogs
       description: |
         Get the filtered list of catalogs for the specified tenant. Also, sorting and paging options are available.
@@ -292,7 +290,7 @@ paths:
   '/catalog/{tenant}/catalogs/categories/{categoryId}':
     get:
       tags:
-        - List catalogs
+        - Catalog management
       summary: Retrieving all catalogs for category
       description: |
         Get all catalogs with the specified category that belong to the tenant.
@@ -418,7 +416,7 @@ paths:
   '/catalog/{tenant}/catalogs/{catalogId}':
     get:
       tags:
-        - List catalogs
+        - Catalog management
       summary: Retrieving a catalog by id
       description: |
         Get the catalog with the specified unique id that belongs to the tenant.

@@ -405,10 +405,10 @@ The scopes `catalog.catalog_update`, `catalog.catalog_create` and `catalog.catal
 
 | Endpoint                                                                                           | Description                                                                  |
 | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [Creating a new catalog](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/catalog/api-reference/list-catalogs#post-catalog-tenant-catalogs)                    | The endpoint requires a new `catalog.catalog_manage` scope, as the `catalog.catalog_create` scope is deprecated.|
-| [Upserting a catalog](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/catalog/api-reference/list-catalogs#put-catalog-tenant-catalogs-catalogid)               | The endpoint requires a new `catalog.catalog_manage` scope, as the `catalog.catalog_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing catalog id creates a new catalog with the given id.|
-| [Partially updating a catalog](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/catalog/api-reference/list-catalogs#patch-catalog-tenant-catalogs-catalogid)  | The endpoint requires a new `catalog.catalog_manage` scope, as the `catalog.catalog_update` scope is deprecated.|
-| [Removing a catalog](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/catalog/api-reference/list-catalogs#delete-catalog-tenant-catalogs-catalogid)                        | The endpoint requires a new `catalog.catalog_manage` scope, as the `catalog.catalog_delete` scope is deprecated.|
+| [Creating a new catalog](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/catalog/api-reference/catalog-management#post-catalog-tenant-catalogs)                    | The endpoint requires a new `catalog.catalog_manage` scope, as the `catalog.catalog_create` scope is deprecated.|
+| [Upserting a catalog](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/catalog/api-reference/catalog-management#put-catalog-tenant-catalogs-catalogid)               | The endpoint requires a new `catalog.catalog_manage` scope, as the `catalog.catalog_update` scope is deprecated. Sending a request to the upsert endpoint with a non-existing catalog id creates a new catalog with the given id.|
+| [Partially updating a catalog](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/catalog/api-reference/catalog-management#patch-catalog-tenant-catalogs-catalogid)  | The endpoint requires a new `catalog.catalog_manage` scope, as the `catalog.catalog_update` scope is deprecated.|
+| [Removing a catalog](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/catalog/api-reference/catalog-management#delete-catalog-tenant-catalogs-catalogid)                        | The endpoint requires a new `catalog.catalog_manage` scope, as the `catalog.catalog_delete` scope is deprecated.|
 
 
 **Known problems**
@@ -804,7 +804,7 @@ If the ID is already in use, the service will return a 409 status code.
 
 | Endpoint                                                                                   | Description                                    |
 | ------------------------------------------------------------------------------------------ | ---------------------------------------------- |
-| [Creating a new catalog](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/catalog/api-reference/list-catalogs#post-catalog-tenant-catalogs)                  | The `id` field added. |
+| [Creating a new catalog](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/catalog/api-reference/catalog-management#post-catalog-tenant-catalogs)                  | The `id` field added. |
 
 
 **Known problems**
