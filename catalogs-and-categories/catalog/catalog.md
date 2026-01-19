@@ -12,11 +12,14 @@ layout:
 ## How to localize your catalog
 
 The name and the description attribute of a catalog support localization. This means that you can provide values in multiple languages and also retrieve those values either localized, or all together, as you choose.\
-Localization is controlled via the Accept-Language header:
+Localization is controlled by the Content-Language and Accept-Language headers:
 
+* Content-Language - this is used to specify which languages can be used in the request payload when creating or updating catalogs. The Content-Language request HTTP header defines language(s) that can be used in the payload. Request body may contain only translations that are matching the languages specified in the header. Possible values:
+  * `*` - request body may contain translations for all languages specified in tenant configuration. This is also the default behaviour if the header is not set.
+  * `en`, `en,de`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5` - request body may contain only translations for languages specified in the header (if they are available in tenant configuration).
 * Accept-Language - this is used to specify how to retrieve catalogs. If a value is provided, then the resources will be returned in that locale. If '\*' is provided as a value, or the header is missing, all locales saved on a resource will be returned for that resource.
 
-**Note**: When creating or updating catalogs, you must always provide localized fields (such as `name` and `description`) as maps of language codes to values, regardless of any headers.
+**Note**: When creating or updating catalogs, you must always provide localized fields (such as `name` and `description`) as maps of language codes to values, regardless of the Content-Language header value.
 
 ## How to create a catalog and assign a category to it
 
