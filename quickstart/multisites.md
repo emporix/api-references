@@ -1,6 +1,6 @@
 ---
 title: Multi-Site Architecture
-description: Learn how to achieve multi-site architecture with Emporix. Find out the core concepts and how they connect together to enable flexible commerce operations across multiple countries, brands, and customer segments.
+description: Learn how to build multi-site architecture with Emporix. Discover the core concepts and how they connect to enable flexible commerce across countries, brands, and customer segments.
 icon: graduation-cap
 layout:
   width: wide
