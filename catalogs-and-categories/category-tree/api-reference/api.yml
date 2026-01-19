@@ -1535,6 +1535,18 @@ paths:
             type: boolean
             example: true
             default: false
+        - name: Content-Language
+          in: header
+          description: |
+            The Content-Language request HTTP header defines language(s) that can be used in the payload. Request body may contain only translations that are matching the languages specified in the header. Possible values:
+            * `*` - request body may contain translations for all languages specified in tenant configuration. This is also the default behaviour if the header is not set.
+            * `en`, `en,de`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5` - request body may contain only translations for languages specified in the header (if they are available in tenant configuration).
+            
+            **Note**: For category requests, localized fields (such as `localizedName`, `localizedDescription`, `localizedSlug`) must always be provided as maps of language codes to values, regardless of the Content-Language header value.
+          schema:
+            type: string
+            example: '`*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`'
+            default: '*'
         - name: X-Version
           in: header
           description: |
@@ -3097,6 +3109,18 @@ paths:
             type: boolean
             example: true
             default: false
+        - name: Content-Language
+          in: header
+          description: |
+            The Content-Language request HTTP header defines language(s) that can be used in the payload. Request body may contain only translations that are matching the languages specified in the header. Possible values:
+            * `*` - request body may contain translations for all languages specified in tenant configuration. This is also the default behaviour if the header is not set.
+            * `en`, `en,de`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5` - request body may contain only translations for languages specified in the header (if they are available in tenant configuration).
+            
+            **Note**: For category requests, localized fields (such as `localizedName`, `localizedDescription`, `localizedSlug`) must always be provided as maps of language codes to values, regardless of the Content-Language header value.
+          schema:
+            type: string
+            example: '`*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`'
+            default: '*'
         - name: X-Version
           in: header
           description: |
@@ -3190,6 +3214,18 @@ paths:
             type: boolean
             example: true
             default: false
+        - name: Content-Language
+          in: header
+          description: |
+            The Content-Language request HTTP header defines language(s) that can be used in the payload. Request body may contain only translations that are matching the languages specified in the header. Possible values:
+            * `*` - request body may contain translations for all languages specified in tenant configuration. This is also the default behaviour if the header is not set.
+            * `en`, `en,de`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5` - request body may contain only translations for languages specified in the header (if they are available in tenant configuration).
+            
+            **Note**: For category requests, localized fields (such as `localizedName`, `localizedDescription`, `localizedSlug`) must always be provided as maps of language codes to values, regardless of the Content-Language header value.
+          schema:
+            type: string
+            example: '`*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`'
+            default: '*'
         - name: X-Version
           in: header
           description: |
