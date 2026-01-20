@@ -115,21 +115,21 @@ paths:
     post:
       summary: Searching for customers
       requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  q:
-                    type: string
-                    description:  |
-                      A standard query parameter is used to search for specific values. 
-                      
-                      See: [Standard practises - Query parameter](https://developer.emporix.io/api-references/standard-practices/q-param)
-              examples:
-                search for products:
-                  value:
-                    q: "firstName:John"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                q:
+                  type: string
+                  description:  |
+                    A standard query parameter is used to search for specific values. 
+                    
+                    See: [Standard practises - Query parameter](https://developer.emporix.io/api-references/standard-practices/q-param)
+            examples:
+              search for products:
+                value:
+                  q: "firstName:John"
       responses:
         '200':
           description: OK
@@ -211,7 +211,7 @@ paths:
         required: false
         description: ''
       parameters:
-          - $ref: '#/components/parameters/sendPasswordResetNotifications'
+        - $ref: '#/components/parameters/sendPasswordResetNotifications'
       security:
         - OAuth2:
             - customer.customer_manage
@@ -917,8 +917,25 @@ components:
               contactAssignmentId:
                 type: string
                 description: ID of contact assignment.
+    Restriction:
+      type: string
+      nullable: true
+      description: |
+        Access control identifier that determines who can view or manage the customer.
+        
+        **Purpose**: Restricts customer visibility based on scope permissions. Only users/applications 
+        with matching restriction scopes can access customers with a specific restriction value.
+        
+        **Access Control**:
+        - *Reading*: Users can only query and view customers whose `restriction` value matches one of their authorized restrictions
+        - *Modifying*: Requires special `restriction.restriction_manage` scope permission to create or update this field
+        
+        **Validation**: The value must exist in the tenant's configured list of valid restrictions.
+        
+        **Site Synchronization**: When enabled via tenant configuration (`enableSyncBetweenRestrictionsAndSiteCodes` property), 
+        this field automatically syncs with the `preferredSite` value if not explicitly set.
+      example: "DE"
     CustomerCreateDto:
-      title: CustomerCommonDto
       type: object
       properties:
         title:
@@ -962,6 +979,8 @@ components:
           type: object
           description: 'Customer account''s additional properties. The property is not returned by default. In order to return the mixins property use `expand=mixin:*` query param.'
           additionalProperties: true
+        restriction:
+          $ref: '#/components/schemas/Restriction'
     CustomerCommonDto:
       type: object
       allOf:
