@@ -91,12 +91,12 @@ Assign products to categories and categories to catalogs. Then, publish catalogs
 
 ### Segments
 
-**Definition:** Segments are **site-aware** and manage visibility of products and/or categories based on customer roles.
+**Definition:** Segments are **site-aware** and manage visibility of products and/or categories based on the customers assignments to particular segment(s).
 
 **Key characteristics:**
 - **Site-aware:** Segments are created per site (through the `siteCode` field).
-- **Role-based:** Control visibility based on customer roles.
-- **Product and category visibility:** you can control visibility of both individual products and entire categories.
+- **Role-based:** Control visibility based on customer assignments.
+- **Product and category visibility:** You can control visibility of both individual products and entire categories.
 - **Customer targeting:** Customers are assigned to segments, which determines what they can see.
 
 **Use cases:**
@@ -360,6 +360,7 @@ The multi-site architecture pattern is most relevant when you want to run differ
 | All brands accessible from one storefront. | Different customer experiences per brand. |
 | Easy to manage shared resources. | Independent site configurations (payment, shipping, etc.). |
 | | Better for brand-specific marketing and promotions. |
+| | Site-aware carts and orders help avoid mixed-brand orders and enable brand identification. |
 
 ## Practical examples
 
