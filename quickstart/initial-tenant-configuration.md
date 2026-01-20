@@ -1,34 +1,134 @@
-# Tenant Configuration for Checkout - Tutorial Plan and Outline
-
-## Overview
-
-This tutorial will guide users through configuring a fresh Emporix tenant to enable checkout functionality in the storefront. The tutorial is designed to be run on a brand new tenant, and after completion, the Emporix Showcase checkout should work successfully.
-
-## Target Audience
-
-- Developers setting up a new Emporix tenant
-- Teams preparing a tenant for storefront integration
-- Users who need a complete, step-by-step guide for tenant configuration
-
-## Tutorial Structure
-
-The tutorial is organized into three main parts:
-
-1. **Configuration** - Basic tenant and site settings
-2. **Data Import** - Catalog, products, and pricing setup
-3. **Customer Setup** - Test customer and address configuration
-
+---
+description: Start configuring a fresh tenant to enable your online store quickly and efficiently.
+icon: 
+layout:
+  width: wide
 ---
 
-## Part 1: Configuration
+# Tenant Configuration Tutorial
 
-### 1.1 Prerequisites
-- **Objective**: Ensure users have what they need before starting
-- **Content**:
-  - Emporix tenant created
-  - API credentials (OAuth 2.0 client credentials or access token)
-  - Basic understanding of REST APIs
-  - Tools for making API calls (curl, Postman, etc.)
+This tutorial guides developers through configuration steps of a fresh Emporix tenant with the aim to enable checkout functionality in the storefront. Start with a brand new tenant to set up and enable all the required features from scratch.
+
+The steps take you through the following paths:
+
+* **Tenant setup** - Basic tenant and site settings
+* **Data import** - Catalog, products, and pricing setup
+* **Customer setup** - Test customer and address configuration
+
+## Prerequisites
+
+To get started, make sure you have:
+
+* **Emporix Account** - an active Emporix tenant created
+* **API keys** - credentials to make relevant API calls
+
+{% stepper %}
+{% step %}
+### Get authorisation token
+To obtain proper access, send the quthorization request to the [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authorization/oauth-service/api-reference/service-access-token) endpoint.
+
+```bash
+curl --location 'https://api.emporix.io/oauth/token' 
+--header 'Content-Type: application/x-www-form-urlencoded' 
+--data-urlencode 'grant_type=client_credentials' 
+--data-urlencode 'client_id={{client_id}}' 
+--data-urlencode 'client_secret={{client_secret}}'
+```
+{% endstep %}
+{% endstepper %}
+
+## How to configure a fresh tenant
+
+Follow these steps to provide basic configuration for your tenant, such as payment, site, language, currency, tax, and shipping zones & method. 
+
+{% hint style="success" %}
+There is also a convenient alternative way for initial tenant configuration. You can use the [Emporix Terraform Provider](/quickstart/emporix-terraform-provider.md) to automate the process. 
+{% endhint %}
+
+{% stepper %}
+{% step %}
+### Configure payment method
+To create an `invoice` payment method, call the [Creating a single payment mode entity](https://developer.emporix.io/api-references/api-guides/checkout/payment-gateway/api-reference/payment-mode#post-payment-gateway-tenant-paymentmodes-config) endpoint.
+
+```bash
+curl 'https://api.emporix.io/payment-gateway/{tenant}/paymentmodes/config' 
+  --request POST 
+  --header 'Content-Type: application/json' 
+  --data '{
+  "code": "invoice",
+  "active": true,
+  "provider": "INVOICE",
+  "configuration": {
+      
+    }
+}'
+```
+
+{% endstep %}
+
+{% step %}
+### Activate a country, currency and language
+You need to activate countries where you want to operate, as well as add relevant currency and language.
+
+Activate country with the [Updating a country](https://developer.emporix.io/api-references/api-guides/configuration/country-service/api-reference/countries#patch-country-tenant-countries-countrycode) request, for example Poland:
+
+```bash
+curl 'https://api.emporix.io/country/{tenant}/countries/PL' 
+  --request PATCH 
+  --header 'X-Version: v2' 
+  --header 'Content-Type: application/json' 
+  --data '{
+  "active": true,
+  "metadata": {
+    "version": 1
+  }
+}'
+```
+
+Create a `Polish Zloty` currency with the [Creating a new currency](https://developer.emporix.io/api-references/api-guides/configuration/currency-service/api-reference/currencies#post-currency-tenant-currencies) endpoint:
+
+```bash
+curl 'https://api.emporix.io/currency/{tenant}/currencies' 
+  --request POST 
+  --header 'Content-Type: application/json' 
+  --data '{
+  "code": "PLN",
+  "name": {
+    "en": "Polish Zloty"
+  }
+}'
+```
+
+To activate `Polish` and `English` as project languages, use the [Updating a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint:
+
+```bash
+curl 'https://api.emporix.io/configuration/{tenant}/configurations/project_lang' 
+  --request PUT 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "key": "project_lang",
+    "value": "[{\"id\":\"en\",\"label\":\"English\",\"default\":true,\"required\":true},{\"id\":\"pl\",\"label\":\"Polish\",\"default\":false}]"
+}'
+```
+
+{% endstep %}
+
+{% step %}
+### Add relevant tax calculation configuration
+Tax 
+{% endstep %}
+
+{% step %}
+### Create a site
+
+{% endstep %}
+
+{% step %}
+### Configure a shipping zone, method and delivery times
+
+{% endstep %}
+
+
 
 ### 1.2 Site Configuration
 - **Objective**: Create and configure a site (virtual store entity)
