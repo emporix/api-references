@@ -256,7 +256,7 @@ paths:
                         en: This is a catalog
                       description:
                         en: This catalog is used as an example
-                      status: VISIBLE
+                      status: visible
                       visibility:
                         visible: true
                         from: 2022-02-24T20:44:43.169Z
@@ -925,8 +925,8 @@ components:
         \ the request is handled. It answers the question 'Is the catalog visible\
         \ now?'"
       enum:
-        - NOT_VISIBLE
-        - VISIBLE
+        - not_visible
+        - visible
     UpdateCatalog:
       required:
         - name
