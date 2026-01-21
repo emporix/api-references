@@ -123,49 +123,49 @@ paths:
       - $ref: '#/components/parameters/trait_tenant'
   '/order-v2/{tenant}/salesorders/search':
     post:
-        tags:
-          - Orders (Tenant-managed)
-        summary: Searching for orders
-        description: |
-          Searches for tenant orders for administrative purposes. To be used by tenant employees.
-        security:
-          - OAuth2:
+      tags:
+        - Orders (Tenant-managed)
+      summary: Searching for orders
+      description: |
+        Searches for tenant orders for administrative purposes. To be used by tenant employees.
+      security:
+        - OAuth2:
             - order.order_read
             - order.order_read_by_vendor
             - order.order_manage_by_vendor
-        operationId: POST-order-tenant-orders-search
-        requestBody:
+      operationId: POST-order-tenant-orders-search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/searchRequest'
+            examples:
+              search for products:
+                value:
+                  q: "id:EON1007"
+      responses:
+        '200':
+          description: |
+            The request was successful. List of orders with details are returned.
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/searchRequest'
               examples:
-                search for products:
-                  value:
-                    q: "id:EON1007"
-        responses:
-          '200':
-            description: |
-              The request was successful. List of orders with details are returned.
-            content:
-              application/json:
-                examples:
-                  Order list example:
-                    $ref: '#/components/examples/salesOrders'
-                schema:
-                  $ref: '#/components/schemas/salesOrders'
-          '400':
-            $ref: '#/components/responses/trait_paged_400'
-          '403':
-            $ref: '#/components/responses/trait_restricted_403'
-          '500':
-            $ref: '#/components/responses/trait_500'
-        parameters:
-          - $ref: '#/components/parameters/trait_sortable_sort'
-          - $ref: '#/components/parameters/trait_paged_pageNumber'
-          - $ref: '#/components/parameters/trait_paged_pageSize'
-          - $ref: '#/components/parameters/trait_fields'
-          - $ref: '#/components/parameters/trait_tenant'
+                Order list example:
+                  $ref: '#/components/examples/salesOrders'
+              schema:
+                $ref: '#/components/schemas/salesOrders'
+        '400':
+          $ref: '#/components/responses/trait_paged_400'
+        '403':
+          $ref: '#/components/responses/trait_restricted_403'
+        '500':
+          $ref: '#/components/responses/trait_500'
+      parameters:
+        - $ref: '#/components/parameters/trait_sortable_sort'
+        - $ref: '#/components/parameters/trait_paged_pageNumber'
+        - $ref: '#/components/parameters/trait_paged_pageSize'
+        - $ref: '#/components/parameters/trait_fields'
+        - $ref: '#/components/parameters/trait_tenant'
   '/order-v2/{tenant}/salesorders/{orderId}':
     get:
       tags:
@@ -175,9 +175,9 @@ paths:
         Retrieves a specific order by order ID. To be used by tenant employees.
       security:
         - OAuth2:
-          - order.order_read
-          - order.order_read_by_vendor
-          - order.order_manage_by_vendor
+            - order.order_read
+            - order.order_read_by_vendor
+            - order.order_manage_by_vendor
       operationId: GET-order-retrieve-order-employee
       responses:
         '200':
@@ -206,9 +206,9 @@ paths:
         Updates an order with the specified order ID. To be used by tenant employees.
       security:
         - OAuth2:
-          - order.order_update
-          - order.order_update_completed
-          - order.order_manage_by_vendor
+            - order.order_update
+            - order.order_update_completed
+            - order.order_manage_by_vendor
       operationId: PUT-order-update-order
       responses:
         '204':
@@ -242,9 +242,9 @@ paths:
         Updates partially an order with the specified order ID. To be used by tenant employees.
       security:
         - OAuth2:
-          - order.order_update
-          - order.order_update_completed
-          - order.order_manage_by_vendor
+            - order.order_update
+            - order.order_update_completed
+            - order.order_manage_by_vendor
       operationId: PATCH-order-partial-update-order
       responses:
         '204':
@@ -278,7 +278,7 @@ paths:
         Deletes order with the specified ID. To be used by tenant employees.
       security:
         - OAuth2:
-          - order.order_delete
+            - order.order_delete
       operationId: DELETE-order-remove-order
       responses:
         '204':
@@ -303,11 +303,11 @@ paths:
         Retrieves all possible status transitions for a specific order. To be used by tenant employees.
       security:
         - OAuth2:
-          - order.order_read
-          - order.order_update
-          - order.order_read_by_vendor
-          - order.order_manage_by_vendor
-          - order.order_update_completed
+            - order.order_read
+            - order.order_update
+            - order.order_read_by_vendor
+            - order.order_manage_by_vendor
+            - order.order_update_completed
       operationId: GET-order-retrieve-order-transitions
       responses:
         '200':
@@ -335,9 +335,9 @@ paths:
         Updates the status of a specific order. To be used by tenant employees.
       security:
         - OAuth2:
-          - order.order_update
-          - order.order_manage_by_vendor
-          - order.order_update_completed
+            - order.order_update
+            - order.order_manage_by_vendor
+            - order.order_update_completed
       operationId: POST-order-update-order-transition-employee
       responses:
         '204':
@@ -371,8 +371,8 @@ paths:
         Updates the number of entries in the specific order and recalculates it. To be used by tenant employees.
       security:
         - OAuth2:
-          - order.order_update
-          - order.order_update_completed
+            - order.order_update
+            - order.order_update_completed
       operationId: POST-order-calculate-order-entries-employees
       responses:
         '200':
@@ -406,8 +406,8 @@ paths:
         Updates the entries in the specific order and recalculates it. If provided entry is already assigned to the order then quantity of this entry is updated. If you want to remove entry from order then set quantity to 0.
       security:
         - OAuth2:
-          - order.order_update
-          - order.order_manage_by_vendor
+            - order.order_update
+            - order.order_manage_by_vendor
       operationId: POST-order-update-order-entries
       responses:
         '200':
@@ -474,7 +474,7 @@ paths:
         - orders without discounts, the ones with included discounts are not supported
       security:
         - OAuth2:
-          - order.order_update
+            - order.order_update
       operationId: POST-order-split
       responses:
         '200':
@@ -524,7 +524,7 @@ paths:
         Retrieves a list of orders for a customer. To be used by customers on the storefront. The `order.history_view` scope is for logged in customers only.
       security:
         - OAuth2:
-          - order.history_view
+            - order.history_view
       responses:
         '200':
           description: |
@@ -559,7 +559,7 @@ paths:
         Retrieves details of an order. To be used by customers on the storefront. The `order.history_view` scope is for logged in customers only.
       security:
         - OAuth2:
-          - order.history_view
+            - order.history_view
       operationId: GET-order-retrieve-order-storefront
       responses:
         '200':
@@ -592,7 +592,7 @@ paths:
         Retrieves possible status transitions for a specific order. To be used by customers on the storefront.
       security:
         - OAuth2:
-          - order.order_updateascustomer
+            - order.order_updateascustomer
       operationId: GET-order-retrieve-transitions
       responses:
         '200':
@@ -622,7 +622,7 @@ paths:
         **Note**: Customers can only change the order status from `CREATED` to `DECLINED`.
       security:
         - OAuth2:
-          - order.order_updateascustomer
+            - order.order_updateascustomer
       operationId: POST-order-update-order-transition-storefront
       responses:
         '204':
@@ -723,6 +723,24 @@ paths:
             - order.order_read_le
 components:
   schemas:
+    restriction:
+      type: string
+      nullable: true
+      description: |
+        Access control identifier that determines who can view or manage the order.
+        
+        **Purpose**: Restricts order visibility based on scope permissions. Only users/applications 
+        with matching restriction scopes can access orders with a specific restriction value.
+        
+        **Access Control**:
+        - *Reading*: Users can only query and view orders whose `restriction` value matches one of their authorized restrictions
+        - *Modifying*: Requires special `restriction.restriction_manage` scope permission to create or update this field
+        
+        **Validation**: The value must exist in the tenant's configured list of valid restrictions.
+        
+        **Site Synchronization**: When enabled via tenant configuration (`enableSyncBetweenRestrictionsAndSiteCodes` property), 
+        this field automatically syncs with the `site` value if not explicitly set.
+      example: "DE"
     localizedValue:
       description: Localized value which can have different structure which depends on provided `Content-Language` header.
       oneOf:
@@ -1589,6 +1607,8 @@ components:
       description: 'The base order fields. This object is inherited by all of other order objects as Order Creation DTO, Order Update DTO etc.'
       type: object
       properties:
+        restriction:
+          $ref: '#/components/schemas/restriction'
         feeYrnAggregate:
           allOf:
             - $ref: '#/components/schemas/aggregateFee'
@@ -2000,7 +2020,7 @@ components:
                 taxValue:
                   type: number
                   format: double
-                  description: The difference between `grossValue` and `netValue`. 
+                  description: The difference between `grossValue` and `netValue`.
                 taxCode:
                   type: string
                   description: Tax code applied to the discounted price, a tax code is a country's set of tax rules. If all fees have the same taxRate, then the value is present. Otherwise, the field is not returned.
