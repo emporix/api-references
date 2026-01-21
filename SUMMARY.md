@@ -349,19 +349,6 @@
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/configuration/unit-handling-service/api-reference/api.yml)
 * [Delivery and Shipping](delivery-and-shipping/README.md)
   * [Delivery and Shipping Tutorial](delivery-and-shipping/shipping.md)
-  * [Delivery Providers Service](delivery-and-shipping/delivery-providers-service/README.md)
-    * [API Reference](delivery-and-shipping/delivery-providers-service/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: delivery-api
-        ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/delivery-and-shipping/delivery-providers-service/api-reference/api.yml)
   * [Shipping Service](delivery-and-shipping/shipping/README.md)
     * [API Reference](delivery-and-shipping/shipping/api-reference/README.md)
       * ```yaml
