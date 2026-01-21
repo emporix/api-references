@@ -613,7 +613,6 @@ curl -i -X DELETE
 {% hint style="warning" %}
 Deleting an address also removes any accounts associated with it.
 {% endhint %}
-{% endstep %}
 
 {% endstep %}
 
