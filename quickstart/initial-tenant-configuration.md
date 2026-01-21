@@ -392,7 +392,35 @@ curl https://api.emporix.io/catalog/{tenant}/catalogs
 
 {% step %}
 ### Create a product
-Add a product to the database [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products)
+Add a product to the database with the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
+
+```bash 
+curl 'https://api.emporix.io/product/{tenant}/products' 
+  --request POST 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "productType": "BASIC",
+    "mixins": {},
+    "metadata": {
+        "mixins": {}
+    },
+    "published": true,
+    "id": "screwdriver",
+    "code": "screwdriver",
+    "name": {
+        "en": "Screwdriver",
+        "pl": "Screwdriver"
+    },
+    "description": {
+        "en": "Screwdriver",
+        "pl": "Screwdriver"
+    },
+    "template": {},
+    "taxClasses": {
+        "PL": "STANDARD"
+    }
+}'
+```
 
 {% endstep %}
 
