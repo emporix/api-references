@@ -70,7 +70,7 @@ curl 'https://api.emporix.io/payment-gateway/{tenant}/paymentmodes/config'
 ### Activate a country, currency and language
 You need to activate countries where you want to operate, as well as add relevant currency and language.
 
-Activate country with the [Updating a country](https://developer.emporix.io/api-references/api-guides/configuration/country-service/api-reference/countries#patch-country-tenant-countries-countrycode) request, for example Poland:
+* Activate a country with the [Updating a country](https://developer.emporix.io/api-references/api-guides/configuration/country-service/api-reference/countries#patch-country-tenant-countries-countrycode) request, for example Poland:
 
 ```bash
 curl 'https://api.emporix.io/country/{tenant}/countries/PL' 
@@ -85,6 +85,7 @@ curl 'https://api.emporix.io/country/{tenant}/countries/PL'
 }'
 ```
 
+* You need to activate currencies relevant for the countries where your business operates or relevant to your business model. Ensure currency codes are ISO 4217 compliant. 
 Create a `Polish Zloty` currency with the [Creating a new currency](https://developer.emporix.io/api-references/api-guides/configuration/currency-service/api-reference/currencies#post-currency-tenant-currencies) endpoint:
 
 ```bash
@@ -99,7 +100,8 @@ curl 'https://api.emporix.io/currency/{tenant}/currencies'
 }'
 ```
 
-To activate `Polish` and `English` as project languages, use the [Updating a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint:
+* Specify the languages that your business communicates with suppliers and customers. Emporix supports all existing languages, including regional language variants. The tenant's language configuration is stored under the `project_lang` key, while site-specific language configuration is stored in the `defaultLanguage` and `languages` fields, inside the `Site` object.
+To set `Polish` and `English` as project languages, use the [Updating a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint:
 
 ```bash
 curl 'https://api.emporix.io/configuration/{tenant}/configurations/project_lang' 
@@ -115,79 +117,296 @@ curl 'https://api.emporix.io/configuration/{tenant}/configurations/project_lang'
 
 {% step %}
 ### Add relevant tax calculation configuration
-Tax 
+Tax rates define proper checkout calculation relevant for a given country.
+Create tax classes with rates applicable in Poland using the [Creating a new tax configuration](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/tax-service/api-reference/taxes#post-tax-tenant-taxes) endpoint.
+
+```bash
+curl 'https://api.emporix.io/tax/{tenant}/taxes' 
+  --request POST 
+  --header 'Content-Language: ' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "location": {
+        "countryCode": "PL"
+    },
+    "taxClasses": [
+        {
+            "rate": 23,
+            "code": "STANDARD",
+            "name": {
+                "en": "STANDARD"
+            },
+            "description": {
+                "en": "STANDARD"
+            }
+        },
+        {
+            "rate": 8,
+            "code": "REDUCED_8",
+            "name": {
+                "en": "REDUCED_8"
+            },
+            "description": {
+                "en": "REDUCED_8"
+            }
+        },
+        {
+            "rate": 5,
+            "code": "REDUCED_5",
+            "name": {
+                "en": "REDUCED_5"
+            },
+            "description": {
+                "en": "REDUCED_5"
+            }
+        },
+        {
+            "rate": 0,
+            "code": "ZERO",
+            "name": {
+                "en": "ZERO"
+            },
+            "description": {
+                "en": "ZERO"
+            }
+        }
+    ]
+}'
+```
+
 {% endstep %}
 
 {% step %}
 ### Create a site
+A site can be determined by a country or a brand you want to sell in your store. 
+Create a `PL` site for Polish market by sending a requst to the [Creating a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites) endpoint. Include the `homeBase` address country which is required for shipping calculations.
+
+```bash
+curl 'https://api.emporix.io/site/{tenant}/sites' 
+  --request POST 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "active": true,
+    "name": {
+        "en": "Inpost",
+        "pl": "Inpost"
+    },
+    "id": "inpost",
+    "fees": [
+        {
+            "minOrderValue": {
+                "amount": 0,
+                "currency": "PLN"
+            },
+            "cost": {
+                "amount": 0,
+                "currency": "PLN"
+            }
+        }
+    ],
+    "shippingTaxCode": "STANDARD",
+    "maxOrderValue": {
+        "amount": 999999,
+        "currency": "PLN"
+    }
+}'
+```
 
 {% endstep %}
 
 {% step %}
 ### Configure a shipping zone, method and delivery times
+Define where you want to ship your goods and how. 
+
+* First, set the ship-to location for the site using the [Creating a shipping zone](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-zones#post-shipping-tenant-site-zones). Set as the default zone if needed.
+
+```bash
+curl 'https://api.emporix.io/shipping/{tenant}/PL/zones' 
+  --request POST 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "default": true,
+    "shipTo": [
+        {
+            "country": "PL",
+            "postalCode": "*"
+        }
+    ],
+    "name": {
+        "en": "Inpost Poland",
+        "pl": "Inpost Poland"
+    },
+    "id": "inpost-poland"
+}'
+```
+
+* Then, configure a shipping method with the [Creating a shipping method](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-methods#post-shipping-tenant-site-zones-zoneid-methods) endpoint.
+
+```bash
+curl 'https://api.emporix.io/shipping/{tenant}/PL/zones/{zoneId}/methods' 
+  --request POST 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "active": true,
+    "name": {
+        "en": "Inpost",
+        "pl": "Inpost"
+    },
+    "id": "inpost",
+    "fees": [
+        {
+            "minOrderValue": {
+                "amount": 0,
+                "currency": "PLN"
+            },
+            "cost": {
+                "amount": 0,
+                "currency": "PLN"
+            }
+        }
+    ],
+    "shippingTaxCode": "STANDARD",
+    "maxOrderValue": {
+        "amount": 999999,
+        "currency": "PLN"
+    }
+}'
+```
+
+* Define the delivery times and connect them with the shipping information. Use the [Creating a delivery time](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/delivery-times-management#post-shipping-tenant-delivery-times) endpoint. The `validateOverlap` flag enables checks if the delivery time ranges from slots of the same shipping method overlap each other.
+
+```bash
+curl 'https://api.emporix.io/shipping/{tenant}/delivery-times/bulk?validateOverlap=true' 
+  --request POST 
+  --header 'Content-Type: application/json' 
+  --data '[
+    {
+        "name": "inpost-weekday",
+        "siteCode": "PL",
+        "isDeliveryDay": true,
+        "day": {
+            "weekday": "SUNDAY"
+        },
+        "isForAllZones": false,
+        "timeZoneId": "Europe/Warsaw",
+        "deliveryDayShift": 0,
+        "zoneId": "inpost-poland",
+        "slots": [
+            {
+                "shippingMethod": "inpost",
+                "deliveryTimeRange": {
+                    "timeFrom": "08:00",
+                    "timeTo": "16:00"
+                },
+                "cutOffTime": {
+                    "deliveryCycleName": "inpost-weekday",
+                    "time": "2025-12-09T05:00:00.000Z",
+                    "cutOffDayShift": 0
+                },
+                "capacity": 100,
+                "id": "88d8ea13-2751-40cd-82b1-6478cc8e4139"
+            }
+        ]
+    }
+]'
+```
 
 {% endstep %}
 
+## How to import data
 
+Once your tenant and site are ready, it's time to import and organize the project data. Follow the steps to create a structure for your products that are to be visible in your store.
 
-### 1.2 Site Configuration
-- **Objective**: Create and configure a site (virtual store entity)
-- **Steps**:
-  1. Create a new site
-     - Site code, name, default language
-     - Currency configuration
-     - Home base address (required for shipping calculations)
-  2. Configure site languages
-  3. Configure site currency
-  4. Set ship-to countries
-  5. Configure site home base address (critical for shipping)
+{% stepper %}
+{% step %}
+### Create a category
+Define a category or a category hierarchy to make it easier for customers to find the products.
+Create a `Tools` category by sending a request to the [Creating a new category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint.
 
-### 1.3 Currency Configuration
-- **Objective**: Set up currencies for the tenant and site
-- **Steps**:
-  1. Configure tenant-level currencies
-  2. Verify site currency matches tenant configuration
-  3. Ensure currency codes are ISO 4217 compliant
+```bash
+curl https://api.emporix.io/category/{tenant}/categories?publish=true 
+  --request POST 
+  --header 'X-Version: v2' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "published": true,
+    "navigation": false,
+    "index": false,
+    "metadata": {
+        "version": 0
+    },
+    "id": "tools",
+    "code": "Tools",
+    "localizedName": {
+        "en": "Tools",
+        "pl": "Narzedzia"
+    },
+    "localizedSlug": {
+        "en": "Tools",
+        "pl": "Narzedzia"
+    },
+    "localizedDescription": {
+        "en": "Tools",
+        "pl": "Narzedzia"
+    },
+    "ecn": [
+        "tools"
+    ]
+}'
+```
 
-### 1.4 Country Configuration
-- **Objective**: Configure countries for business operations
-- **Steps**:
-  1. Set tenant-level country configuration
-  2. Configure site home base country
-  3. Ensure country codes are ISO 3166-1 alpha-2 compliant
+{% endstep %}
 
-### 1.5 Tax Configuration
-- **Objective**: Set up tax rules for checkout calculations
-- **Steps**:
-  1. Create tax configuration for target country
-  2. Define tax classes (e.g., STANDARD, REDUCED, ZERO)
-  3. Set tax rates for each class
-  4. Mark default tax class
+{% step %}
+### Create a catalog
+Catalog determines which categories are available on your site or sites.
+Create a `Home` catalog and pubish it on the `PL` site. Use the [Creating a catalog](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/catalog/api-reference/catalog-management#post-catalog-tenant-catalogs) request.
 
-### 1.6 Shipping Configuration
-- **Objective**: Configure delivery zones, methods, and times
-- **Steps**:
-  1. Create shipping zone
-     - Define ship-to locations (country, postal codes)
-     - Set as default zone if needed
-  2. Create shipping method
-     - Link to shipping zone
-     - Configure fees (absolute or percentage-based)
-     - Set order value thresholds
-  3. Create delivery time (optional but recommended)
-     - Link to shipping zone and method
-     - Configure delivery windows and slots
+```bash
+curl https://api.emporix.io/catalog/{tenant}/catalogs 
+  --request POST 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "visibility": {
+        "visible": true
+    },
+    "id": "Home",
+    "name": {
+        "en": "Home",
+        "pl": "Home"
+    },
+    "description": {
+        "en": "Home",
+        "pl": "Home"
+    },
+    "categoryIds": [
+        "{{category_id}}"
+    ],
+    "publishedSites": [
+        "PL"
+    ]
+}'
+```
 
-### 1.7 Payment Methods Configuration
-- **Objective**: Enable payment methods for the site
-- **Steps**:
-  1. Check existing orderProcessSettings mixin
-  2. Enable payment methods (Invoice, Credit Card, Direct Debit, Cash)
-  3. Configure payment gateway settings (if applicable)
+{% endstep %}
 
----
+{% step %}
+### Create a product
+Add a product to the database [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products)
 
-## Part 2: Data Import
+{% endstep %}
+
+{% step %}
+### Configure a price
+
+{% endstep %}
+
+{% step %}
+### Assign a category
+
+{% endstep %}
+{% endstepper %}
+
 
 ### 2.1 Catalog Setup
 - **Objective**: Create a catalog to organize products
