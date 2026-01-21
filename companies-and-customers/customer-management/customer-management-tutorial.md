@@ -615,9 +615,6 @@ Deleting an address also removes any accounts associated with it.
 {% endhint %}
 {% endstep %}
 
-{% hint style="info" %}
-This endpoint allows you to add login credentials to a customer profile that was created without an account initially.
-{% endhint %}
 {% endstep %}
 
 {% step %}
