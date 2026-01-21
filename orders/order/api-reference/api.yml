@@ -106,7 +106,7 @@ paths:
         '200':
           description: The request was successful. Number of orders returned in header.
           headers:
-            hybris-count:
+            X-Total-Count:
               schema:
                 type: number
               description: |
