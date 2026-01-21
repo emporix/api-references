@@ -467,54 +467,6 @@ paths:
         ***
         ### Required scopes
         No specific scopes are required.
-  '/customer/{tenant}/me/accounts/internal':
-    post:
-      summary: Assigning an account to a customer profile
-      operationId: POST-customer-assign-customer-account
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResourceLocation'
-              examples:
-                Response example:
-                  value:
-                    id: '13869000'
-        '400':
-          $ref: '#/components/responses/400_bad_request'
-        '401':
-          $ref: '#/components/responses/401_unauthorized'
-        '403':
-          $ref: '#/components/responses/403_forbidden'
-        '409':
-          $ref: '#/components/responses/409_conflict'
-      security:
-        - CustomerAccessToken: 
-          - customer.customer_update
-          - customer.customer_manage
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PasswordAuthentication'
-            examples:
-              Request example:
-                value:
-                  email: john.doe@example.com
-                  password: password123
-        description: ''
-      description: |
-        Assigns a customer account to the customer profile.
-      tags:
-        - Account and profile
-    parameters:
-      - schema:
-          type: string
-        name: tenant
-        in: path
-        required: true
   '/customer/{tenant}/me/accounts/internal/email/change':
     post:
       responses:

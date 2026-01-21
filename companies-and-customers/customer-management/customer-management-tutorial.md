@@ -615,34 +615,6 @@ Deleting an address also removes any accounts associated with it.
 {% endhint %}
 {% endstep %}
 
-{% step %}
-### Assigning an account to a customer profile
-
-To assign a customer account (email and password) to an existing customer profile, send a request to the [Assigning an account to a customer profile](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/account-and-profile#post-customer-tenant-me-accounts-internal) endpoint.
-
-{% hint style="warning" %}
-Authorize the request with a customer access token. The request requires the `customer.customer_update` or `customer.customer_manage` scope.
-{% endhint %}
-
-```bash
-curl -i -X POST 
-  'https://api.emporix.io/customer/{tenant}/me/accounts/internal' 
-  -H 'Authorization: Bearer {customer_access_token}' 
-  -H 'Content-Type: application/json' 
-  -d '{
-    "email": "john.doe@example.com",
-    "password": "password123"
-  }'
-```
-
-The response returns the customer ID:
-
-```json
-{
-  "id": "13869000"
-}
-```
-
 {% hint style="info" %}
 This endpoint allows you to add login credentials to a customer profile that was created without an account initially.
 {% endhint %}
