@@ -3881,6 +3881,24 @@ paths:
         - Carts
 components:
   schemas:
+    restriction:
+      type: string
+      nullable: true
+      description: |
+        Access control identifier that determines who can view or manage the cart.
+        
+        **Purpose**: Restricts cart visibility based on scope permissions. Only users/applications 
+        with matching restriction scopes can access carts with a specific restriction value.
+        
+        **Access Control**:
+        - *Reading*: Users can only query and view carts whose `restriction` value matches one of their authorized restrictions
+        - *Modifying*: Requires special `restriction.restriction_manage` scope permission to create or update this field
+        
+        **Validation**: The value must exist in the tenant's configured list of valid restrictions.
+        
+        **Site Synchronization**: When enabled via tenant configuration (`enableSyncBetweenRestrictionsAndSiteCodes` property), 
+        this field automatically syncs with the `siteCode` value if not explicitly set.
+      example: "DE"
     appliedDiscount:
       type: object
       properties:
@@ -3913,6 +3931,8 @@ components:
           description: Cart unique identifier generated when a cart is created.
         yrn:
           $ref: '#/components/schemas/YRN'
+        restriction:
+          $ref: '#/components/schemas/restriction'
         customerId:
           type: string
           description: Customer unique identifier generated when a customer account is created through the Customer Service.
@@ -4355,7 +4375,7 @@ components:
           enum:
             - TOTAL
             - SUBTOTAL
-          description: |- 
+          description: |-
             Determines whether the discount is applied to the total or subtotal value of the order.
             * `TOTAL` - discount is spread across products with product fees and shipping cost.
             * `SUBTOTAL` - discount is spread across products without fees
@@ -4536,6 +4556,8 @@ components:
           maxLength: 200
           type: string
           description: Customer unique identifier generated when a customer account is created through the Customer Service.
+        restriction:
+          $ref: '#/components/schemas/restriction'
         currency:
           type: string
           pattern: '[A-Z]{3}'
@@ -4564,7 +4586,7 @@ components:
           $ref: '#/components/schemas/channel'
         addresses:
           type: array
-          description: List of addresses that should be associated with the cart and used for tax determination and shipping cost. 
+          description: List of addresses that should be associated with the cart and used for tax determination and shipping cost.
             There can be one address of type `BILLING` and one of type `SHIPPING` - others are ignored.
             These addresses are returned with the origin `REQUEST` in the cart response.
           items:
@@ -5343,6 +5365,8 @@ components:
         customerId:
           type: string
           description: Customer unique identifier generated when a customer account is created through the Customer Service.
+        restriction:
+          $ref: '#/components/schemas/restriction'
         currency:
           type: string
           description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
