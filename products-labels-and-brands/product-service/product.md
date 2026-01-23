@@ -98,73 +98,9 @@ curl -i -X POST
 {% endstep %}
 
 {% step %}
-#### Create a product template (optional)
-
-You can create a product template that contains additional attributes describing your product. Templates are optional but useful for organizing product attributes consistently across your catalog.
-
-To create a new product template, call the [Creating a new product template](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#post-product-tenant-product-templates) endpoint.
-
-```bash
-curl -i -X POST 
-  'https://api.emporix.io/product/{tenant}/product-templates' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Language: string' 
-  -H 'Content-Type: application/json' 
-  -d '{
-    "id": "545b4e3dfaee4c10def3db24",
-    "name": {
-      "en": "T-shirt"
-    },
-    "attributes": [
-      {
-        "key": "size",
-        "name": {
-          "en": "Size",
-          "pl": "Rozmiar"
-        },
-        "type": "TEXT",
-        "metadata": {
-          "mandatory": false,
-          "variantAttribute": true,
-          "defaultValue": null
-        },
-        "values": [
-          {
-            "key": "XS"
-          },
-          {
-            "key": "S"
-          },
-          {
-            "key": "M"
-          },
-          {
-            "key": "L"
-          },
-          {
-            "key": "XL"
-          }
-        ]
-      }
-    ]
-  }'
-```
-
-The `id` from the response is the product template ID that you can use when creating products.
-
-{% hint style="info" %}
-Product templates are optional. You can create products without templates, or you can create a template first and then apply it to your products for consistent attribute management.
-{% endhint %}
-{% endstep %}
-
-{% step %}
 #### Add products
 
 To add a single basic product, send a request to the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
-
-{% hint style="info" %}
-In this example, we show how to create a product with an optional template. If you don't have a template, you can omit the `template` field - only `name` and `code` are required.
-{% endhint %}
 
 ```bash
 curl -i -X POST 
@@ -180,11 +116,7 @@ curl -i -X POST
     "taxClasses": {
       "EN": "STANDARD"
     },
-    "productType": "BASIC",
-    "template": {
-      "id": "634cea2740033d7c2e7b03a8",
-      "version": 1
-    }
+    "productType": "BASIC"
   }'
 ```
 
@@ -235,6 +167,101 @@ curl -i -X POST
   -H 'Content-Type: multipart/form-data' 
   -F 'file=[object Object]' 
   -F 'body=[object Object]'
+```
+{% endstep %}
+{% endstepper %}
+
+## How to create a basic product with a template
+
+You can create a product template that contains additional attributes describing your product, and then create products using that template. Templates are optional but useful for organizing product attributes consistently across your catalog.
+
+{% stepper %}
+{% step %}
+#### Create a product template
+
+To create a new product template, call the [Creating a new product template](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#post-product-tenant-product-templates) endpoint.
+
+```bash
+curl -i -X POST 
+  'https://api.emporix.io/product/{tenant}/product-templates' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
+  -d '{
+    "id": "545b4e3dfaee4c10def3db24",
+    "name": {
+      "en": "T-shirt"
+    },
+    "attributes": [
+      {
+        "key": "size",
+        "name": {
+          "en": "Size",
+          "pl": "Rozmiar"
+        },
+        "type": "TEXT",
+        "metadata": {
+          "mandatory": false,
+          "variantAttribute": true,
+          "defaultValue": null
+        },
+        "values": [
+          {
+            "key": "XS"
+          },
+          {
+            "key": "S"
+          },
+          {
+            "key": "M"
+          },
+          {
+            "key": "L"
+          },
+          {
+            "key": "XL"
+          }
+        ]
+      }
+    ]
+  }'
+```
+
+The `id` from the response is the product template ID that you can use when creating products.
+{% endstep %}
+
+{% step %}
+#### Create a product using the template
+
+By applying a product template, you can create a product that contains additional attributes, which are included in the product's `mixins.productTemplateAttributes` field.
+
+To create a new product by applying a product template to it, call the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint and provide the template's ID in the request body.
+
+```bash
+curl -i -X POST 
+  'https://api.emporix.io/product/{tenant}/products' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
+  -d '{
+    "name": "Smartphone X2",
+    "code": "BASIC001",
+    "description": "The world'\''s best camera and camcorder in a waterproof smartphone.",
+    "published": false,
+    "taxClasses": {
+      "EN": "STANDARD"
+    },
+    "productType": "BASIC",
+    "template": {
+      "id": "{{product_template_Id}}",
+      "version": 1
+    },
+    "mixins": {
+      "productTemplateAttributes": {
+        "size": "L"
+      }
+    }
+  }'
 ```
 {% endstep %}
 {% endstepper %}
