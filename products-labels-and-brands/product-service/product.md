@@ -242,7 +242,7 @@ In this example, we create a bundle containing a T-shirt product and a socks pro
 
 ```bash
 curl -i -X POST 
-  'https://api.emporix.io/product/{tenant}/products?doIndex=true' 
+  'https://api.emporix.io/product/{tenant}/products' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
