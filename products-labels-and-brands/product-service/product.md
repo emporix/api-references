@@ -93,7 +93,7 @@ curl -i -X POST
         "rate": 0
       }
     ]
-  }'
+  }
 ```
 {% endstep %}
 
@@ -102,22 +102,23 @@ curl -i -X POST
 
 To add a single basic product, send a request to the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
+**Simple product example:**
+
 ```bash
 curl -i -X POST 
-  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' 
+  'https://api.emporix.io/product/{tenant}/products' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
     "name": "Smartphone X2",
     "code": "BASIC001",
-    "description": "The world'\''s best camera and camcorder in a waterproof smartphone.",
+    "description": "The world best camera and camcorder in a waterproof smartphone.",
     "published": false,
     "taxClasses": {
       "EN": "STANDARD"
     },
     "productType": "BASIC"
-  }'
+  }
 ```
 
 You can also add multiple basic products at the same time. To achieve that, send a request to the [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
@@ -202,7 +203,7 @@ curl -i -X POST
         "type": "TEXT",
         "metadata": {
           "mandatory": false,
-          "variantAttribute": true,
+          "variantAttribute": false,
           "defaultValue": null
         },
         "values": [
@@ -224,10 +225,14 @@ curl -i -X POST
         ]
       }
     ]
-  }'
+  }
 ```
 
 The `id` from the response is the product template ID that you can use when creating products.
+
+{% hint style="warning" %}
+When creating a product template for a basic product, do not set `variantAttribute` to `true` in the attribute metadata. Variant attributes are only for PARENT_VARIANT and VARIANT product types.
+{% endhint %}
 {% endstep %}
 
 {% step %}
@@ -246,7 +251,7 @@ curl -i -X POST
   -d '{
     "name": "Smartphone X2",
     "code": "BASIC001",
-    "description": "The world'\''s best camera and camcorder in a waterproof smartphone.",
+    "description": "The world best camera and camcorder in a waterproof smartphone.",
     "published": false,
     "taxClasses": {
       "EN": "STANDARD"
@@ -261,7 +266,7 @@ curl -i -X POST
         "size": "L"
       }
     }
-  }'
+  }
 ```
 {% endstep %}
 {% endstepper %}
@@ -347,6 +352,69 @@ The `product.product_publish` scope is only required if you want to publish the 
 
 {% stepper %}
 {% step %}
+### Create a product template with variant attributes
+
+Create a product template that defines the variant attributes (for example, `color` and `size`) and their allowed values. Set `variantAttribute` to `true` in the attribute metadata so they can be used for variant generation.
+
+Call the [Creating a new product template](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#post-product-tenant-product-templates) endpoint.
+
+```bash
+curl -i -X POST 
+  'https://api.emporix.io/product/{tenant}/product-templates' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
+  -d '{
+    "name": {
+      "en": "T-shirt with variants"
+    },
+    "attributes": [
+      {
+        "key": "color",
+        "name": {
+          "en": "Color",
+          "pl": "Kolor"
+        },
+        "type": "TEXT",
+        "metadata": {
+          "mandatory": false,
+          "variantAttribute": true,
+          "defaultValue": null
+        },
+        "values": [
+          { "key": "RED" },
+          { "key": "GREEN" },
+          { "key": "BLUE" }
+        ]
+      },
+      {
+        "key": "size",
+        "name": {
+          "en": "Size",
+          "pl": "Rozmiar"
+        },
+        "type": "TEXT",
+        "metadata": {
+          "mandatory": false,
+          "variantAttribute": true,
+          "defaultValue": null
+        },
+        "values": [
+          { "key": "XS" },
+          { "key": "S" },
+          { "key": "M" },
+          { "key": "L" },
+          { "key": "XL" }
+        ]
+      }
+    ]
+  }
+```
+
+The `id` from the response is the product template ID. Use it as `{{product_template_Id}}` in the next step.
+{% endstep %}
+
+{% step %}
 ### Create a parent variant product
 
 Variants are created automatically whenever their parent variant product is created or updated. The combinations of variants are created based on the attributes defined in the product template applied to the parent variant, and the attributes and values specified in the `variantAttributes` field of the parent variant.
@@ -379,44 +447,30 @@ curl -i -X POST
   },
   "productType": "PARENT_VARIANT",
   "template": {
-    "id": "634cea2740033d7c2e7b03a8",
+    "id": "{{product_template_Id}}",
     "version": 1
   },
   "variantAttributes": {
     "color": [
-      {
-        "key": "RED"
-      },
-      {
-        "key": "GREEN"
-      },
-      {
-        "key": "BLUE"
-      }
+      { "key": "RED" },
+      { "key": "GREEN" },
+      { "key": "BLUE" }
     ],
     "size": [
-      {
-        "key": "XS"
-      },
-      {
-        "key": "S"
-      },
-      {
-        "key": "M"
-      },
-      {
-        "key": "L"
-      },
-      {
-        "key": "XL"
-      }
+      { "key": "XS" },
+      { "key": "S" },
+      { "key": "M" },
+      { "key": "L" },
+      { "key": "XL" }
     ]
   }
-}'
+}
 ```
 {% endstep %}
 
 {% step %}
+### Create multiple parent variant products (optional)
+
 If you want to create multiple `parent_variant` products at the same time, send a request to the [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -788,7 +842,7 @@ curl -i -X PUT
   "metadata": {
     "version": 1
   }
-}'
+}
 ```
 {% endstep %}
 
@@ -850,7 +904,7 @@ curl -i -X PATCH
       }
     ]
   }
-}'
+}
 ```
 
 As a result, new product variants are created automatically, in combinations that include the newly specified attributes and values.
@@ -918,7 +972,7 @@ curl -i -X PUT
         "size": "M"
         }
     }
-}'
+}
 ```
 {% endstep %}
 {% endstepper %}
@@ -1001,7 +1055,7 @@ curl -i -X PUT
       }
     },
     "published": true
-}'
+}
 ```
 
 When the update request is sent successfully, the response for a particular product is returned at the same position (index) at which it is located in the request body. The expected response is as follows:
@@ -1120,7 +1174,7 @@ curl -L
       "id": "product-123",
       "type": "PRODUCT"
     }
-  }'
+  }
 ```
 {% endstep %}
 
@@ -1153,7 +1207,7 @@ curl -L
     "metadata": {
       "version": 1
     }
-  }'
+  }
 ```
 
 {% hint style="info" %}
