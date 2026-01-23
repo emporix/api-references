@@ -98,9 +98,73 @@ curl -i -X POST
 {% endstep %}
 
 {% step %}
+#### Create a product template (optional)
+
+You can create a product template that contains additional attributes describing your product. Templates are optional but useful for organizing product attributes consistently across your catalog.
+
+To create a new product template, call the [Creating a new product template](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#post-product-tenant-product-templates) endpoint.
+
+```bash
+curl -i -X POST 
+  'https://api.emporix.io/product/{tenant}/product-templates' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
+  -d '{
+    "id": "545b4e3dfaee4c10def3db24",
+    "name": {
+      "en": "T-shirt"
+    },
+    "attributes": [
+      {
+        "key": "size",
+        "name": {
+          "en": "Size",
+          "pl": "Rozmiar"
+        },
+        "type": "TEXT",
+        "metadata": {
+          "mandatory": false,
+          "variantAttribute": true,
+          "defaultValue": null
+        },
+        "values": [
+          {
+            "key": "XS"
+          },
+          {
+            "key": "S"
+          },
+          {
+            "key": "M"
+          },
+          {
+            "key": "L"
+          },
+          {
+            "key": "XL"
+          }
+        ]
+      }
+    ]
+  }'
+```
+
+The `id` from the response is the product template ID that you can use when creating products.
+
+{% hint style="info" %}
+Product templates are optional. You can create products without templates, or you can create a template first and then apply it to your products for consistent attribute management.
+{% endhint %}
+{% endstep %}
+
+{% step %}
 #### Add products
 
 To add a single basic product, send a request to the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
+
+{% hint style="info" %}
+In this example, we show how to create a product with an optional template. If you don't have a template, you can omit the `template` field - only `name` and `code` are required.
+{% endhint %}
 
 ```bash
 curl -i -X POST 
@@ -120,47 +184,6 @@ curl -i -X POST
     "template": {
       "id": "634cea2740033d7c2e7b03a8",
       "version": 1
-    },
-    "relatedItems": [
-      {
-        "refId": "634cea2740033d7c2e7b03a9",
-        "type": "CONSUMABLE"
-      }
-    ],
-    "mixins": {
-      "salePricesData": [
-        {
-          "salePriceStart": "2021-07-20T22:00:00.000+0000",
-          "salePriceAmount": 6.7,
-          "salePriceEnd": "2021-07-25T21:59:59.000+0000",
-          "enabled": false
-        }
-      ],
-      "productCustomAttributes": {
-        "pricingMeasurePrice": 13,
-        "unitPricingMeasure": {
-          "value": 133,
-          "unitCode": "GRM"
-        },
-        "unitPricingBaseMeasure": {
-          "value": 100,
-          "unitCode": "GRM"
-        },
-        "pricingMeasure": {
-          "value": 100,
-          "unitCode": "GRM"
-        },
-        "orderUnit": "H87",
-        "minOrderQuantity": 2,
-        "maxOrderQuantity": 10,
-        "defaultOrderQuantity": 5
-      }
-    },
-    "metadata": {
-      "mixins": {
-        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json",
-        "salePricesData": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/salePriceData.json"
-      }
     }
   }'
 ```
