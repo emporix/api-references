@@ -10,9 +10,9 @@ servers:
   - url: 'https://api.emporix.io'
 tags:
   - name: Products
-    description: Manage Products
+    description: Manage products. Supported product types include BASIC (standalone products), BUNDLE (groups of products sold together), PARENT_VARIANT (products with automatically generated variants), and VARIANT (individual variants of a parent variant product).
   - name: Product Templates
-    description: Manage Product Templates
+    description: Manage product templates. Product templates define a set of attributes which are common for all product instances based on that template.
 paths:
   /product/{tenant}/products/search:
     parameters:

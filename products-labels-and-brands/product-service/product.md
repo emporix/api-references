@@ -44,7 +44,7 @@ Creating your first product is a process made up of defining sales tax rates, ad
 
 {% stepper %}
 {% step %}
-#### Define sales tax rates
+### Define sales tax rates
 
 Sales tax rates are stored in tax configurations. Each configuration indicates a country and defines tax classes applicable to it.
 
@@ -98,7 +98,7 @@ curl -i -X POST
 {% endstep %}
 
 {% step %}
-#### Add products
+### Add products
 
 To add a single basic product, send a request to the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
@@ -152,7 +152,7 @@ curl -i -X POST
 {% endstep %}
 
 {% step %}
-#### Add media for a product
+### Add media for a product
 
 To add media files, for example images or videos, for a particular product, you can upload them directly to the Emporix database, or link to their location on an external website. In the following example, we are creating a `public` type of an asset that is linked to the product of our choice by sending a request to the Creating an asset endpoint with the `media.asset_manage` scope.
 
@@ -177,7 +177,7 @@ You can create a product template that contains additional attributes describing
 
 {% stepper %}
 {% step %}
-#### Create a product template
+### Create a product template
 
 To create a new product template, call the [Creating a new product template](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#post-product-tenant-product-templates) endpoint.
 
@@ -231,7 +231,7 @@ The `id` from the response is the product template ID that you can use when crea
 {% endstep %}
 
 {% step %}
-#### Create a product using the template
+### Create a product using the template
 
 By applying a product template, you can create a product that contains additional attributes, which are included in the product's `mixins.productTemplateAttributes` field.
 
@@ -284,7 +284,7 @@ To create a product bundle, perform the following steps:
 
 {% stepper %}
 {% step %}
-#### Create a bundle of products
+### Create a bundle of products
 
 You can group together two or more products that already exist in the system so that they can be sold at one collective price. To achieve that, call the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
@@ -347,7 +347,7 @@ The `product.product_publish` scope is only required if you want to publish the 
 
 {% stepper %}
 {% step %}
-#### Create a parent variant product
+### Create a parent variant product
 
 Variants are created automatically whenever their parent variant product is created or updated. The combinations of variants are created based on the attributes defined in the product template applied to the parent variant, and the attributes and values specified in the `variantAttributes` field of the parent variant.
 
@@ -678,7 +678,7 @@ The `product.product_publish` scope is only required if you want to publish the 
 
 {% stepper %}
 {% step %}
-#### Update a product template with new attributes and values
+### Update a product template with new attributes and values
 
 To specify new attributes for your product's variants, add them in the attributes field by calling the Updating a product template endpoint. Here, we've added a new key `size` to the list of available attributes.
 
@@ -793,7 +793,7 @@ curl -i -X PUT
 {% endstep %}
 
 {% step %}
-#### Update the existing parent variant product with the new product template
+### Update the existing parent variant product with the new product template
 
 Since updating the product template results in it being assigned a new version, update the parent variant by sending a request to the Partially updating a product endpoint and providing the new `template.version` value.
 
@@ -867,7 +867,7 @@ The `product.product_publish` and `product.product_unpublish` scopes are only re
 
 {% stepper %}
 {% step %}
-#### Updating a variant with new attribute values
+### Updating a variant with new attribute values
 
 By default, all variant products inherit their attributes from the parent variant. You need to include the name of the attribute in the `metadata.overridden` field to be able to replace the attribute values.
 
