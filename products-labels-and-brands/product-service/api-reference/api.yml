@@ -1386,9 +1386,6 @@ components:
                 template:
                   id: 634cea2740033d7c2e7b03a8
                   version: 1
-                relatedItems:
-                  - refId: 634cea2740033d7c2e7b03a9
-                    type: CONSUMABLE
                 variantAttributes:
                   color:
                     - key: RED
@@ -1400,25 +1397,6 @@ components:
                     - key: M
                     - key: L
                     - key: XL
-                mixins:
-                  productCustomAttributes:
-                    pricingMeasurePrice: 13
-                    unitPricingMeasure:
-                      value: 133
-                      unitCode: GRM
-                    unitPricingBaseMeasure:
-                      value: 100
-                      unitCode: GRM
-                    pricingMeasure:
-                      value: 100
-                      unitCode: GRM
-                    orderUnit: H87
-                    minOrderQuantity: 2
-                    maxOrderQuantity: 10
-                    defaultOrderQuantity: 5
-                metadata:
-                  mixins:
-                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
             VARIANT Product Creation:
               value:
                 name: Smartphone X2 black
@@ -1517,9 +1495,6 @@ components:
                 template:
                   id: 634cea2740033d7c2e7b03a8
                   version: 1
-                relatedItems:
-                  - refId: 634cea2740033d7c2e7b03a9
-                    type: CONSUMABLE
                 productType: PARENT_VARIANT
                 variantAttributes:
                   color:
@@ -1532,32 +1507,8 @@ components:
                     - key: M
                     - key: L
                     - key: XL
-                mixins:
-                  salePricesData:
-                    - salePriceStart: '2021-07-20T22:00:00.000+0000'
-                      salePriceAmount: 6.7
-                      salePriceEnd: '2021-07-25T21:59:59.000+0000'
-                      enabled: false
-                  productCustomAttributes:
-                    pricingMeasurePrice: 13
-                    unitPricingMeasure:
-                      value: 133
-                      unitCode: GRM
-                    unitPricingBaseMeasure:
-                      value: 100
-                      unitCode: GRM
-                    pricingMeasure:
-                      value: 100
-                      unitCode: GRM
-                    orderUnit: H87
-                    minOrderQuantity: 2
-                    maxOrderQuantity: 10
-                    defaultOrderQuantity: 5
                 metadata:
                   version: 1
-                  mixins:
-                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
-                    salePricesData: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/salePriceData.json'
             VARIANT Product Update:
               value:
                 name: Smartphone X2 black

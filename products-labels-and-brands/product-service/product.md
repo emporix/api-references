@@ -332,12 +332,6 @@ curl -i -X POST
     "id": "634cea2740033d7c2e7b03a8",
     "version": 1
   },
-  "relatedItems": [
-    {
-      "refId": "634cea2740033d7c2e7b03a9",
-      "type": "CONSUMABLE"
-    }
-  ],
   "variantAttributes": {
     "color": [
       {
@@ -367,45 +361,6 @@ curl -i -X POST
         "key": "XL"
       }
     ]
-  },
-  "mixins": {
-    "productCustomAttributes": {
-      "pricingMeasurePrice": 13,
-      "unitPricingMeasure": {
-        "value": 133,
-        "unitCode": "GRM"
-      },
-      "unitPricingBaseMeasure": {
-        "value": 100,
-        "unitCode": "GRM"
-      },
-      "pricingMeasure": {
-        "value": 100,
-        "unitCode": "GRM"
-      },
-      "orderUnit": "H87",
-      "minOrderQuantity": 2,
-      "maxOrderQuantity": 10,
-      "defaultOrderQuantity": 5
-    },
-    "productTemplateAttributes": {
-      "color": [
-        {
-          "key": "RED"
-        },
-        {
-          "key": "GREEN"
-        },
-        {
-          "key": "BLUE"
-        }
-      ]
-    }
-  },
-  "metadata": {
-    "mixins": {
-      "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
-    }
   }
 }'
 ```
@@ -492,19 +447,6 @@ curl -i -X POST \
         "minOrderQuantity": 2,
         "maxOrderQuantity": 10,
         "defaultOrderQuantity": 5
-      },
-      "productTemplateAttributes": {
-        "color": [
-          {
-            "key": "RED"
-          },
-          {
-            "key": "BLUE"
-          },
-          {
-            "key": "YELLOW"
-          }
-        ]
       }
     },
     "metadata": {
@@ -582,19 +524,6 @@ curl -i -X POST \
         "minOrderQuantity": 2,
         "maxOrderQuantity": 10,
         "defaultOrderQuantity": 5
-      },
-      "productTemplateAttributes": {
-        "color": [
-          {
-            "key": "RED"
-          },
-          {
-            "key": "BLUE"
-          },
-          {
-            "key": "YELLOW"
-          }
-        ]
       }
     },
     "metadata": {
@@ -672,19 +601,6 @@ curl -i -X POST \
         "minOrderQuantity": 2,
         "maxOrderQuantity": 10,
         "defaultOrderQuantity": 5
-      },
-      "productTemplateAttributes": {
-        "color": [
-          {
-            "key": "RED"
-          },
-          {
-            "key": "BLUE"
-          },
-          {
-            "key": "YELLOW"
-          }
-        ]
       }
     },
     "metadata": {
