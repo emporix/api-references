@@ -173,7 +173,7 @@ curl -i -X POST
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
-  -d '{ [
+  -d '[
     {
         "id": "abc-123",
         "code": "532432412331",
@@ -192,8 +192,7 @@ curl -i -X POST
         "name": "Product 3",
         "productType": "BASIC"
     }
- ]
-}'
+]'
 ```
 {% endstep %}
 
@@ -423,7 +422,7 @@ curl -i -X POST \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
   -H 'Content-Language: string' \
   -H 'Content-Type: application/json' \
-  -d '{[
+  -d '[
   {
     "id": "abc-123",
     "code": "532432412331",
@@ -694,8 +693,7 @@ curl -i -X POST \
       }
     }
   }
-]
-}'
+]'
 ```
 {% endstep %}
 {% endstepper %}
@@ -848,7 +846,7 @@ curl -i -X PATCH
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
-    "published": true
+    "published": true,
     "template": {
     "id": "634cea2740033d7c2e7b03a8",
     "version": 2
@@ -905,7 +903,7 @@ The `product.product_publish` and `product.product_unpublish` scopes are only re
 {% step %}
 #### Updating a variant with new attribute values
 
-By default, all variant products inherit their attributes from the parent variant. You need to include the name of the attribute in the `metadata.overriden` field to be able to replace the attribute values.
+By default, all variant products inherit their attributes from the parent variant. You need to include the name of the attribute in the `metadata.overridden` field to be able to replace the attribute values.
 
 {% hint style="warning" %}
 You cannot override the following attributes: `id`, `code`, `template`, `variantAttributes`.
