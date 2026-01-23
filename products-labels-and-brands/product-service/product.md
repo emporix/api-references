@@ -125,9 +125,8 @@ You can also add multiple basic products at the same time. To achieve that, send
 
 ```bash
 curl -i -X POST 
-  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' 
+  'https://api.emporix.io/product/{tenant}/products/bulk' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '[
     {
@@ -246,7 +245,6 @@ To create a new product by applying a product template to it, call the [Creating
 curl -i -X POST 
   'https://api.emporix.io/product/{tenant}/products' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
     "name": "Smartphone X2",
@@ -299,7 +297,6 @@ In this example, we create a bundle containing a T-shirt product and a socks pro
 curl -i -X POST 
   'https://api.emporix.io/product/{tenant}/products' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
   "name": "T-shirt and socks bundle",
@@ -493,70 +490,22 @@ curl -i -X POST \
       "EN": "STANDARD"
     },
     "template": {
-      "id": "908cdv2740033d7c2e7b03b9",
+      "id": "{{product_template_Id}}",
       "version": 1
     },
-    "relatedItems": [
-      {
-        "refId": "908cea2740033d7c2e7b03a9",
-        "type": "CONSUMABLE"
-      }
-    ],
     "variantAttributes": {
       "color": [
-        {
-          "key": "RED"
-        },
-        {
-          "key": "BLUE"
-        },
-        {
-          "key": "YELLOW"
-        }
+        { "key": "RED" },
+        { "key": "GREEN" },
+        { "key": "BLUE" }
       ],
       "size": [
-        {
-          "key": "XS"
-        },
-        {
-          "key": "S"
-        },
-        {
-          "key": "M"
-        },
-        {
-          "key": "L"
-        },
-        {
-          "key": "XL"
-        }
+        { "key": "XS" },
+        { "key": "S" },
+        { "key": "M" },
+        { "key": "L" },
+        { "key": "XL" }
       ]
-    },
-    "mixins": {
-      "productCustomAttributes": {
-        "pricingMeasurePrice": 13,
-        "unitPricingMeasure": {
-          "value": 133,
-          "unitCode": "GRM"
-        },
-        "unitPricingBaseMeasure": {
-          "value": 100,
-          "unitCode": "GRM"
-        },
-        "pricingMeasure": {
-          "value": 100,
-          "unitCode": "GRM"
-        },
-        "orderUnit": "H87",
-        "minOrderQuantity": 2,
-        "maxOrderQuantity": 10,
-        "defaultOrderQuantity": 5
-      }
-    },
-    "metadata": {
-      "mixins": {
-        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
-      }
     }
   },
   {
@@ -570,70 +519,22 @@ curl -i -X POST \
       "EN": "STANDARD"
     },
     "template": {
-      "id": "908cdv2740033d7c2e7b03b9",
+      "id": "{{product_template_Id}}",
       "version": 1
     },
-    "relatedItems": [
-      {
-        "refId": "908cea2740033d7c2e7b03a9",
-        "type": "CONSUMABLE"
-      }
-    ],
     "variantAttributes": {
       "color": [
-        {
-          "key": "RED"
-        },
-        {
-          "key": "BLUE"
-        },
-        {
-          "key": "YELLOW"
-        }
+        { "key": "RED" },
+        { "key": "GREEN" },
+        { "key": "BLUE" }
       ],
       "size": [
-        {
-          "key": "XS"
-        },
-        {
-          "key": "S"
-        },
-        {
-          "key": "M"
-        },
-        {
-          "key": "L"
-        },
-        {
-          "key": "XL"
-        }
+        { "key": "XS" },
+        { "key": "S" },
+        { "key": "M" },
+        { "key": "L" },
+        { "key": "XL" }
       ]
-    },
-    "mixins": {
-      "productCustomAttributes": {
-        "pricingMeasurePrice": 13,
-        "unitPricingMeasure": {
-          "value": 133,
-          "unitCode": "GRM"
-        },
-        "unitPricingBaseMeasure": {
-          "value": 100,
-          "unitCode": "GRM"
-        },
-        "pricingMeasure": {
-          "value": 100,
-          "unitCode": "GRM"
-        },
-        "orderUnit": "H87",
-        "minOrderQuantity": 2,
-        "maxOrderQuantity": 10,
-        "defaultOrderQuantity": 5
-      }
-    },
-    "metadata": {
-      "mixins": {
-        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
-      }
     }
   },
   {
@@ -647,70 +548,22 @@ curl -i -X POST \
       "EN": "STANDARD"
     },
     "template": {
-      "id": "908cdv2740033d7c2e7b03c7",
+      "id": "{{product_template_Id}}",
       "version": 1
     },
-    "relatedItems": [
-      {
-        "refId": "908cea2740033d7c2e7b03a9",
-        "type": "CONSUMABLE"
-      }
-    ],
     "variantAttributes": {
       "color": [
-        {
-          "key": "RED"
-        },
-        {
-          "key": "BLUE"
-        },
-        {
-          "key": "YELLOW"
-        }
+        { "key": "RED" },
+        { "key": "GREEN" },
+        { "key": "BLUE" }
       ],
       "size": [
-        {
-          "key": "XS"
-        },
-        {
-          "key": "S"
-        },
-        {
-          "key": "M"
-        },
-        {
-          "key": "L"
-        },
-        {
-          "key": "XL"
-        }
+        { "key": "XS" },
+        { "key": "S" },
+        { "key": "M" },
+        { "key": "L" },
+        { "key": "XL" }
       ]
-    },
-    "mixins": {
-      "productCustomAttributes": {
-        "pricingMeasurePrice": 13,
-        "unitPricingMeasure": {
-          "value": 133,
-          "unitCode": "GRM"
-        },
-        "unitPricingBaseMeasure": {
-          "value": 100,
-          "unitCode": "GRM"
-        },
-        "pricingMeasure": {
-          "value": 100,
-          "unitCode": "GRM"
-        },
-        "orderUnit": "H87",
-        "minOrderQuantity": 2,
-        "maxOrderQuantity": 10,
-        "defaultOrderQuantity": 5
-      }
-    },
-    "metadata": {
-      "mixins": {
-        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
-      }
     }
   }
 ]'
@@ -734,13 +587,11 @@ The `product.product_publish` scope is only required if you want to publish the 
 {% step %}
 ### Update a product template with new attributes and values
 
-To specify new attributes for your product's variants, add them in the attributes field by calling the Updating a product template endpoint. Here, we've added a new key `size` to the list of available attributes.
+To add new variant attribute values to your product template, update the template by calling the [Updating a product template](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#put-product-tenant-product-templates-product-template-id) endpoint. In this example, we add `PURPLE` to the existing `color` attribute values.
 
 {% hint style="warning" %}
 Each of the attributes has its own metadata element, where you can specify whether the attribute is mandatory, if it can be used as a variant attribute, and what its default value is.
 {% endhint %}
-
-To specify new values for your product's attributes, add them in the `values` field. Here, we've added `PURPLE` to the list of available attribute values.
 
 ```bash
 curl -i -X PUT 
@@ -868,40 +719,22 @@ curl -i -X PATCH
   -d '{
     "published": true,
     "template": {
-    "id": "634cea2740033d7c2e7b03a8",
-    "version": 2
-  },
+      "id": "{{product_template_Id}}",
+      "version": 2
+    },
   "variantAttributes": {
     "color": [
-      {
-        "key": "GREEN"
-      },
-      {
-        "key": "RED"
-      },
-      {
-        "key": "BLUE"
-      },
-      {
-        "key": "PURPLE"
-      }
+      { "key": "GREEN" },
+      { "key": "RED" },
+      { "key": "BLUE" },
+      { "key": "PURPLE" }
     ],
     "size": [
-      {
-        "key": "XS"
-      },
-      {
-        "key": "S"
-      },
-      {
-        "key": "M"
-      },
-      {
-        "key": "L"
-      },
-      {
-        "key": "XL"
-      }
+      { "key": "XS" },
+      { "key": "S" },
+      { "key": "M" },
+      { "key": "L" },
+      { "key": "XL" }
     ]
   }
 }
@@ -953,12 +786,6 @@ curl -i -X PUT
     },
     "productType": "VARIANT",
     "parentVariantId": "214cah2245033d9d2a2b17f1",
-    "relatedItems": [
-        {
-        "refId": "634cea2740033d7c2e7b03a9",
-        "type": "CONSUMABLE"
-        }
-    ],
     "metadata": {
         "version": 1,
         "overridden": [
@@ -968,7 +795,7 @@ curl -i -X PUT
     },
     "mixins": {
         "productVariantAttributes": {
-        "color": "Blue",
+        "color": "BLUE",
         "size": "M"
         }
     }
