@@ -1369,14 +1369,11 @@ components:
                 taxClasses:
                   EN: STANDARD
                 bundledProducts:
-                  - id: 53a358901b2e9dd2718b5c12
+                  - productId: 53a358901b2e9dd2718b5c12
                     amount: 1
-                  - id: 53a358901b2e9dd2718b5c13
+                  - productId: 53a358901b2e9dd2718b5c13
                     amount: 1
                 productType: BUNDLE
-                template:
-                  id: 634cea2740033d7c2e7b03a8
-                  version: 1
                 relatedItems:
                   - refId: 634cea2740033d7c2e7b03a9
                     type: CONSUMABLE
@@ -1525,13 +1522,10 @@ components:
                   EN: STANDARD
                 productType: BUNDLE
                 bundledProducts:
-                  - id: 53a358901b2e9dd2718b5c12
+                  - productId: 53a358901b2e9dd2718b5c12
                     amount: 1
-                  - id: 53a358901b2e9dd2718b5c13
+                  - productId: 53a358901b2e9dd2718b5c13
                     amount: 1
-                template:
-                  id: 634cea2740033d7c2e7b03a8
-                  version: 1
                 relatedItems:
                   - refId: 634cea2740033d7c2e7b03a9
                     type: CONSUMABLE
@@ -1621,7 +1615,7 @@ components:
                 published: true
                 taxClasses:
                   EN: STANDARD
-                peoductType: VARIANT
+                productType: VARIANT
                 parentVariantId: 214cah2245033d9d2a2b17f1
                 relatedItems:
                   - refId: 634cea2740033d7c2e7b03a9
