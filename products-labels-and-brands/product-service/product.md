@@ -217,174 +217,33 @@ curl -i -X POST
 {% endstep %}
 {% endstepper %}
 
-## How to create a bundle of personalized products
+## How to create a product bundle
 
-With Emporix API, you can group together two or more products that already exist in the system so that they can be sold at one collective price.
-
-You can also personalize your products by using the Emporix-provided templates, or by creating your own ones. The values of the template's attributes are specified in the product's `mixins.productTemplateAttributes` field.
+With Emporix API, you can group together two or more products that already exist in the system so that they can be sold at one collective price. Product bundles do not require product templates or variant generation.
 
 {% hint style="warning" %}
-To learn more about product bundles and templates, check out the [Products guide](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/product-user-guide).
+To learn more about product bundles, check out the [Products guide](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/product-user-guide).
 {% endhint %}
 
-To create personalized products and then group them in a bundle, perform the following steps:
+To create a product bundle, perform the following steps:
 
 {% hint style="warning" %}
 * Before you start, ensure you have defined the tax classes.
+* The products you want to bundle must already exist in the system.
 * The `product.product_publish` scope is only required if you want to publish the product on its creation.
 {% endhint %}
 
 {% stepper %}
 {% step %}
-#### Create a product template
-
-You can create a product template that contains additional attributes describing your product. To create a new product template, call the [Creating a new product template](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#post-product-tenant-product-templates) endpoint.
-
-```bash
-curl -i -X POST 
-  'https://api.emporix.io/product/{tenant}/product-templates' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Language: string' 
-  -H 'Content-Type: application/json' 
-  -d '{
-    "id": "545b4e3dfaee4c10def3db24",
-    "name": {
-      "en": "T-shirt"
-    },
-    "attributes": [
-    {
-      "key": "size",
-      "name": {
-        "en": "Size",
-        "pl": "Rozmiar"
-      },
-      "type": "BOOLEAN",
-      "metadata": {
-        "mandatory": false,
-        "variantAttribute": true,
-        "defaultValue": true
-      },
-      "values": [
-        {
-          "key": "XS"
-        },
-        {
-          "key": "S"
-        },
-        {
-          "key": "M"
-        },
-        {
-          "key": "L"
-        },
-        {
-          "key": "XL"
-        }
-      ]
-  }'
-```
-
-The `id` from the response is further referred to as \{{product\_template\_Id\}}.
-{% endstep %}
-
-{% step %}
-#### Create a product by using a product template
-
-By applying a product template, you can create a product that contains additional attributes, which are included in the product's `mixins.productTemplateAttributes` field.
-
-To create a new product by applying a product template to it, call the Creating a new product endpoint and provide the template's ID in the request body.
-
-{% hint style="warning" %}
-In this example, we assign a template to a product on its creation. The created product can be a standalone one, or contain variants. Here, the product does not contain any variants. For creating a parent variant product with variants, check out the [How to create a parent product with variants](product.md#how-to-create-a-parent-product-with-variants) tutorial.
-{% endhint %}
-
-{% hint style="warning" %}
-When creating or updating a product of the `PARENT_VARIANT` type, by default, product variants are generated. If you do **not** want to create product variants for the product, set the `skipVariantGeneration` parameter to `true`.
-{% endhint %}
-
-```bash
-curl -i -X POST 
-  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Language: string' 
-  -H 'Content-Type: application/json' 
-  -d '{
-  "name": {
-    "en": "T-shirt",
-    "de": "T-shirt"
-  },
-  "code": "tshirt01",
-  "description": "Cotton T-shirt",
-  "published": false,
-  "taxClasses": {
-    "EN": "STANDARD",
-    "DE": "STANDARD"
-  },
-  "productType": "BASIC",
-  "template": {
-    "id": "{{product_template_Id}}",
-    "version": "1"
-  },
-  "relatedItems": [
-    {
-      "refId": "634cea2740033d7c2e7b03a9",
-      "type": "CONSUMABLE"
-    }
-  ],
-  "mixins": {
-    "salePricesData": [
-      {
-        "salePriceStart": "2021-07-20T22:00:00.000+0000",
-        "salePriceAmount": 6.7,
-        "salePriceEnd": "2021-07-25T21:59:59.000+0000",
-        "enabled": false
-      }
-    ],
-    "productCustomAttributes": {
-      "pricingMeasurePrice": 13,
-      "unitPricingMeasure": {
-        "value": 133,
-        "unitCode": "GRM"
-      },
-      "unitPricingBaseMeasure": {
-        "value": 100,
-        "unitCode": "GRM"
-      },
-      "pricingMeasure": {
-        "value": 100,
-        "unitCode": "GRM"
-      },
-      "orderUnit": "H87",
-      "minOrderQuantity": 2,
-      "maxOrderQuantity": 10,
-      "defaultOrderQuantity": 5
-    },
-    "productTemplateAttributes": {
-      "color": "GREEN",
-      "size": "L",
-      "discount": 30
-    }
-  },
-  "metadata": {
-    "mixins": {
-      "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json",
-      "salePricesData": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/salePriceData.json"
-    }
-  }
-}
-```
-{% endstep %}
-
-{% step %}
 #### Create a bundle of products
 
 You can group together two or more products that already exist in the system so that they can be sold at one collective price. To achieve that, call the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
-In this example, we you see how to create a bundle of the T-shirt product we created above, and join it with the socks product that already exists.
+In this example, we create a bundle containing a T-shirt product and a socks product that already exist in the system.
 
 ```bash
 curl -i -X POST 
-  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' 
+  'https://api.emporix.io/product/{tenant}/products?doIndex=true' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
@@ -399,55 +258,33 @@ curl -i -X POST
   },
   "bundledProducts": [
     {
-      "id": "{{bundled_product_1_Id}}",
+      "productId": "{{bundled_product_1_Id}}",
       "amount": 1
     },
     {
-      "id": "{{bundled_product_2_Id}}",
+      "productId": "{{bundled_product_2_Id}}",
       "amount": 2
     }
   ],
-  "productType": "BUNDLE",
-  "template": {
-    "id": "634cea2740033d7c2e7b03a8",
-    "version": 1
-  },
-  "relatedItems": [
-    {
-      "refId": "634cea2740033d7c2e7b03a9",
-      "type": "CONSUMABLE"
-    }
-  ],
-  "mixins": {
-    "productCustomAttributes": {
-      "pricingMeasurePrice": 1,
-      "unitPricingMeasure": {
-        "value": 1350,
-        "unitCode": "H87"
-      },
-      "unitPricingBaseMeasure": {
-        "value": 1,
-        "unitCode": "H87"
-      },
-      "pricingMeasure": {
-        "value": 1,
-        "unitCode": "H87"
-      },
-      "orderUnit": "H87",
-      "minOrderQuantity": 1,
-      "maxOrderQuantity": 10,
-      "defaultOrderQuantity": 1
-    }
-  },
-  "metadata": {
-    "mixins": {
-      "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
-    }
-  }
+  "productType": "BUNDLE"
 }
 ```
 
 The value of the `productId` from the response is the \{{bundle\_Id\}}.
+
+**Required fields for bundles:**
+- `name`: Product name
+- `code`: Unique product identifier
+- `bundledProducts`: Array of products to include in the bundle (each with `productId` and `amount`)
+- `productType`: Must be set to `"BUNDLE"`
+
+**Optional fields:**
+- `template`: Product templates are optional for bundles
+- `description`: Product description
+- `taxClasses`: Tax class configuration
+- `published`: Publication status
+- `mixins`: Additional product attributes
+
 {% endstep %}
 {% endstepper %}
 
@@ -593,7 +430,7 @@ curl -i -X POST \
     "name": "Dress 1 with variants",
     "productType": "PARENT_VARIANT",
     "description": "Plain cotton dress",
-    "published": "false",
+    "published": false,
     "taxClasses": {
       "EN": "STANDARD"
     },
@@ -683,7 +520,7 @@ curl -i -X POST \
     "name": "Dress 2 with variants",
     "productType": "PARENT_VARIANT",
     "description": "Pleaded cotton dress",
-    "published": "false",
+    "published": false,
     "taxClasses": {
       "EN": "STANDARD"
     },
@@ -773,7 +610,7 @@ curl -i -X POST \
     "name": "Dress 3 with variants",
     "productType": "PARENT_VARIANT",
     "description": "Cotton dress with lace",
-    "published": "false",
+    "published": false,
     "taxClasses": {
       "EN": "STANDARD"
     },
