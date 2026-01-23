@@ -1311,6 +1311,15 @@ components:
               - $ref: '#/components/schemas/parentVariantProductCreation'
               - $ref: '#/components/schemas/variantProductCreation'
           examples:
+            BASIC product - simple:
+              value:
+                name: Smartphone X2
+                code: BASIC001
+                description: The world best camera and camcorder in a waterproof smartphone.
+                published: false
+                taxClasses:
+                  EN: STANDARD
+                productType: BASIC
             BASIC Product Creation:
               value:
                 name: Smartphone X2
@@ -1418,15 +1427,6 @@ components:
                   productVariantAttributes:
                     color: RED
                     size: XS
-            BASIC product - simple:
-              value:
-                name: Smartphone X2
-                code: BASIC001
-                description: The world best camera and camcorder in a waterproof smartphone.
-                published: false
-                taxClasses:
-                  EN: STANDARD
-                productType: BASIC
     productUpdateBody:
       content:
         application/json:
