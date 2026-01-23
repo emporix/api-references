@@ -1311,7 +1311,7 @@ components:
               - $ref: '#/components/schemas/parentVariantProductCreation'
               - $ref: '#/components/schemas/variantProductCreation'
           examples:
-            BASIC product - simple:
+            BASIC Product Creation - simple:
               value:
                 name: Smartphone X2
                 code: BASIC001
@@ -1320,7 +1320,7 @@ components:
                 taxClasses:
                   EN: STANDARD
                 productType: BASIC
-            BASIC Product Creation:
+            BASIC Product Creation - wtih additional attributes:
               value:
                 name: Smartphone X2
                 code: BASIC001
