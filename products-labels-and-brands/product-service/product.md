@@ -206,21 +206,11 @@ curl -i -X POST
           "defaultValue": null
         },
         "values": [
-          {
-            "key": "XS"
-          },
-          {
-            "key": "S"
-          },
-          {
-            "key": "M"
-          },
-          {
-            "key": "L"
-          },
-          {
-            "key": "XL"
-          }
+          { "key": "XS" },
+          { "key": "S" },
+          { "key": "M" },
+          { "key": "L" },
+          { "key": "XL" }
         ]
       }
     ]
@@ -617,18 +607,10 @@ curl -i -X PUT
         "defaultValue": null
       },
       "values": [
-        {
-          "key": "GREEN"
-        },
-        {
-          "key": "RED"
-        },
-        {
-          "key": "BLUE"
-        },
-        {
-          "key": "PURPLE"
-        }
+        { "key": "GREEN" },
+        { "key": "RED" },
+        { "key": "BLUE" },
+        { "key": "PURPLE" }
       ]
     },
     {
@@ -642,21 +624,11 @@ curl -i -X PUT
         "defaultValue": 0
       },
       "values": [
-        {
-          "key": 0
-        },
-        {
-          "key": 30
-        },
-        {
-          "key": 40
-        },
-        {
-          "key": 50
-        },
-        {
-          "key": 60
-        }
+        { "key": 0 },
+        { "key": 30 },
+        { "key": 40 },
+        { "key": 50 },
+        { "key": 60 }
       ]
     },
     {
@@ -672,21 +644,11 @@ curl -i -X PUT
         "defaultValue": null
       },
       "values": [
-        {
-          "key": "XS"
-        },
-        {
-          "key": "S"
-        },
-        {
-          "key": "M"
-        },
-        {
-          "key": "L"
-        },
-        {
-          "key": "XL"
-        }
+        { "key": "XS" },
+        { "key": "S" },
+        { "key": "M" },
+        { "key": "L" },
+        { "key": "XL" }
       ]
     }
   ],
