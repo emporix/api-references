@@ -188,17 +188,6 @@
             kind: openapi
             spec: segments-api
       ```
-  * [Delivery Providers](../delivery-and-shipping/delivery-providers-service/api-reference/README.md)
-    * ```yaml
-      props:
-        models: true
-      type: builtin:openapi
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: delivery-api
-      ```
   * [Fee](../checkout/fee/api-reference/README.md)
     * ```yaml
       props:
