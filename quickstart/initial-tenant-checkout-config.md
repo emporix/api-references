@@ -349,6 +349,7 @@ curl 'https://api.emporix.io/shipping/{{tenant}}/delivery-times/bulk?validateOve
 ```
 
 {% endstep %}
+{% endstepper %}
 
 ## How to import data
 
@@ -647,6 +648,7 @@ curl 'https://api.emporix.io/customer/{{tenant}}/customers/{{customerNumber}}/ad
 }'
 ```
 {% endstep %}
+{% endstepper %}
 
 ### Storefront checkout flow
 
@@ -873,23 +875,18 @@ curl -L \
   --header 'saas-token: text' \
   --header 'Accept: */*'
 ```
+{% endstep %}
 {% endstepper %}
 
-
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../cart/api-reference/" %}
-[api-reference](../cart/api-reference/)
-{% endcontent-ref %}
-
 ### Common pitfalls
-- Missing home base address (breaks shipping calculations)
-- Currency mismatch between tenant and site
-- Tax configuration missing for target country
-- Shipping zone not matching customer address
-- Products without prices
-- Sites not linked to catalogs
+| Pitfall | Recommendation |
+| --- | --- |
+| Missing home base address | Set `homeBase.country` on the site to match the site country so shipping calculations succeed. |
+| Currency mismatch between tenant and site | Ensure the site currency is active and matches the currency used in prices and carts. |
+| Tax configuration missing for target country | Create a tax configuration for the target country and use matching tax class codes on products and shipping. |
+| Shipping zone not matching customer address | Add the customer’s country/postal range to the shipping zone or set the correct default zone. |
+| Products without prices | Create a price model and price for each product and site before checkout. |
+| Sites not linked to catalogs | Publish the catalog to the site and include the relevant category ids. |
 
 
 {% hint style="info" %}
