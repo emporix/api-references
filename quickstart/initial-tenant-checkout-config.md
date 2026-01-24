@@ -66,7 +66,7 @@ curl --location 'https://api.emporix.io/oauth/token'
 {% endstep %}
 {% endstepper %}
 
-## How to configure a fresh tenant
+## Configure a fresh tenant
 
 Follow these steps to provide basic configuration for your tenant, such as payment, site, language, currency, tax, and shipping zones and methods. 
 
@@ -351,7 +351,7 @@ curl 'https://api.emporix.io/shipping/{{tenant}}/delivery-times/bulk?validateOve
 {% endstep %}
 {% endstepper %}
 
-## How to import data
+## Import data
 
 Once your tenant and site are ready, it's time to import and organize the project data. Follow the steps to create a basic structure for your products that are to be visible in your store.
 
@@ -567,7 +567,7 @@ curl https://api.emporix.io/availability/{{tenant}}/availability/{{productId}}/P
 {% endstep %}
 {% endstepper %}
 
-### Customer setup
+## Customer setup
 
 The tenant and products are ready, so it's time to add customers who can test out the checkout functionality.
 
@@ -650,7 +650,7 @@ curl 'https://api.emporix.io/customer/{{tenant}}/customers/{{customerNumber}}/ad
 {% endstep %}
 {% endstepper %}
 
-### Storefront checkout flow
+## Storefront checkout flow
 
 The tenant setup is prepared to handle checkout functionality. Now, ensure that your storefront setup (or the Emporix Commerce Frontend) is able to process the data and pass it to the relevant API endpoints. The example checkout flow on the storefront side includes the following steps.
 
@@ -878,7 +878,7 @@ curl -L \
 {% endstep %}
 {% endstepper %}
 
-### Common pitfalls
+## Common pitfalls
 | Pitfall | Recommendation |
 | --- | --- |
 | Missing home base address | Set `homeBase.country` on the site to match the site country so shipping calculations succeed. |
