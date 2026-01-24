@@ -1,6 +1,6 @@
 ---
 description: Start configuring a fresh tenant to enable your online store quickly and efficiently.
-icon: 
+icon: store
 layout:
   width: wide
 ---
