@@ -63,10 +63,18 @@ curl --location 'https://api.emporix.io/oauth/token'
 --data-urlencode 'client_id={{client_id}}' 
 --data-urlencode 'client_secret={{client_secret}}'
 ```
+
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../authorization/oauth-service/api-reference/" %}
+[api-reference](../authorization/oauth-service/api-reference/)
+{% endcontent-ref %}
 {% endstep %}
 {% endstepper %}
 
-## Configure a fresh tenant
+## How to enable checkout functionality
+
+### Configure a fresh tenant
 
 Follow these steps to provide basic configuration for your tenant, such as payment, site, language, currency, tax, and shipping zones and methods. 
 
@@ -94,6 +102,12 @@ curl 'https://api.emporix.io/payment-gateway/{{tenant}}/paymentmodes/config' \
 }'
 ```
 
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../checkout/payment-gateway/api-reference/" %}
+[api-reference](../checkout/payment-gateway/api-reference/)
+{% endcontent-ref %}
+
 {% endstep %}
 
 {% step %}
@@ -115,6 +129,12 @@ curl 'https://api.emporix.io/country/{{tenant}}/countries/PL' \
 }'
 ```
 
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../configuration/country-service/api-reference/" %}
+[api-reference](../configuration/country-service/api-reference/)
+{% endcontent-ref %}
+
 * You need to activate currencies relevant for the countries where your business operates or relevant to your business model. Ensure currency codes are ISO 4217 compliant.
 Create a `Polish Zloty` currency with the [Creating a new currency](https://developer.emporix.io/api-references/api-guides/configuration/currency-service/api-reference/currencies#post-currency-tenant-currencies) endpoint:
 
@@ -130,6 +150,12 @@ curl 'https://api.emporix.io/currency/{{tenant}}/currencies' \
 }'
 ```
 
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../configuration/currency-service/api-reference/" %}
+[api-reference](../configuration/currency-service/api-reference/)
+{% endcontent-ref %}
+
 * Specify the languages that your business communicates with suppliers and customers. Emporix supports all existing languages, including regional language variants. The tenant's language configuration is stored under the `project_lang` key, while site-specific language configuration is stored in the `defaultLanguage` and `languages` fields, inside the `Site` object.
 To set `Polish` and `English` as project languages, use the [Updating a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint:
 
@@ -142,6 +168,12 @@ curl 'https://api.emporix.io/configuration/{{tenant}}/configurations/project_lan
     "value": "[{\"id\":\"en\",\"label\":\"English\",\"default\":true,\"required\":true},{\"id\":\"pl\",\"label\":\"Polish\",\"default\":false}]"
 }'
 ```
+
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../configuration/configuration-service/api-reference/" %}
+[api-reference](../configuration/configuration-service/api-reference/)
+{% endcontent-ref %}
 
 {% endstep %}
 
@@ -205,6 +237,12 @@ curl 'https://api.emporix.io/tax/{{tenant}}/taxes' \
 }'
 ```
 
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../prices-and-taxes/tax-service/api-reference/" %}
+[api-reference](../prices-and-taxes/tax-service/api-reference/)
+{% endcontent-ref %}
+
 {% endstep %}
 
 {% step %}
@@ -246,6 +284,12 @@ curl 'https://api.emporix.io/site/{{tenant}}/sites' \
 }'
 ```
 
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../configuration/site-settings-service/api-reference/" %}
+[api-reference](../configuration/site-settings-service/api-reference/)
+{% endcontent-ref %}
+
 {% endstep %}
 
 {% step %}
@@ -274,6 +318,12 @@ curl 'https://api.emporix.io/shipping/{{tenant}}/PL/zones' \
     "id": "inpost-poland"
 }'
 ```
+
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
+{% endcontent-ref %}
 
 * Then, configure a shipping method with the [Creating a shipping method](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-methods#post-shipping-tenant-site-zones-zoneid-methods) endpoint.
 Save the `id` from the response for the checkout step.
@@ -308,6 +358,12 @@ curl 'https://api.emporix.io/shipping/{{tenant}}/PL/zones/{{zoneId}}/methods' \
     }
 }'
 ```
+
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
+{% endcontent-ref %}
 
 * Define the delivery times and connect them with the shipping information. Use the [Creating a delivery time](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/delivery-times-management#post-shipping-tenant-delivery-times) endpoint. The `validateOverlap` flag enables checks to see whether delivery time ranges for slots of the same shipping method overlap each other.
 The `deliveryWindowId` and `slotId` used later in cart creation come from this response.
@@ -348,10 +404,16 @@ curl 'https://api.emporix.io/shipping/{{tenant}}/delivery-times/bulk?validateOve
 ]'
 ```
 
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../delivery-and-shipping/shipping/api-reference/" %}
+[api-reference](../delivery-and-shipping/shipping/api-reference/)
+{% endcontent-ref %}
+
 {% endstep %}
 {% endstepper %}
 
-## Import data
+### Import data
 
 Once your tenant and site are ready, it's time to import and organize the project data. Follow the steps to create a basic structure for your products that are to be visible in your store.
 
@@ -394,6 +456,12 @@ curl https://api.emporix.io/category/{{tenant}}/categories?publish=true \
 }'
 ```
 
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../catalogs-and-categories/category-tree/api-reference/" %}
+[api-reference](../catalogs-and-categories/category-tree/api-reference/)
+{% endcontent-ref %}
+
 {% endstep %}
 
 {% step %}
@@ -427,6 +495,12 @@ curl https://api.emporix.io/catalog/{{tenant}}/catalogs \
     ]
 }'
 ```
+
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../catalogs-and-categories/catalog/api-reference/" %}
+[api-reference](../catalogs-and-categories/catalog/api-reference/)
+{% endcontent-ref %}
 
 {% endstep %}
 
@@ -462,6 +536,12 @@ curl 'https://api.emporix.io/product/{{tenant}}/products' \
     }
 }'
 ```
+
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../products-labels-and-brands/product-service/api-reference/" %}
+[api-reference](../products-labels-and-brands/product-service/api-reference/)
+{% endcontent-ref %}
 
 {% endstep %}
 
@@ -499,6 +579,12 @@ curl 'https://api.emporix.io/price/{{tenant}}/priceModels' \
   }'
 ```
 
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../prices-and-taxes/price-service/api-reference/" %}
+[api-reference](../prices-and-taxes/price-service/api-reference/)
+{% endcontent-ref %}
+
 * Create a price for the product on the `PL` site and connect it with the price model by sending a request to the [Creating a new price](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint.
 Save the returned price `id`.
 
@@ -529,6 +615,12 @@ curl 'https://api.emporix.io/price/{{tenant}}/prices' \
 }'
 ```
 
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../prices-and-taxes/price-service/api-reference/" %}
+[api-reference](../prices-and-taxes/price-service/api-reference/)
+{% endcontent-ref %}
+
 {% endstep %}
 
 {% step %}
@@ -548,6 +640,12 @@ curl 'https://api.emporix.io/category/{{tenant}}/categories/{{categoryId}}/assig
 }'
 ```
 
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../catalogs-and-categories/category-tree/api-reference/" %}
+[api-reference](../catalogs-and-categories/category-tree/api-reference/)
+{% endcontent-ref %}
+
 {% endstep %}
 
 {% step %}
@@ -564,10 +662,16 @@ curl https://api.emporix.io/availability/{{tenant}}/availability/{{productId}}/P
   }'
 ```
 
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../orders/availability/api-reference/" %}
+[api-reference](../orders/availability/api-reference/)
+{% endcontent-ref %}
+
 {% endstep %}
 {% endstepper %}
 
-## Customer setup
+### Set up customer
 
 The tenant and products are ready, so it's time to add customers who can test out the checkout functionality.
 
@@ -614,6 +718,12 @@ curl 'https://api.emporix.io/customer/{{tenant}}/customers' \
 }'
 ```
 
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../companies-and-customers/customer-service/api-reference/" %}
+[api-reference](../companies-and-customers/customer-service/api-reference/)
+{% endcontent-ref %}
+
 {% endstep %}
 
 {% step %}
@@ -647,6 +757,12 @@ curl 'https://api.emporix.io/customer/{{tenant}}/customers/{{customerNumber}}/ad
     "id": "A0001"
 }'
 ```
+
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../companies-and-customers/customer-service/api-reference/" %}
+[api-reference](../companies-and-customers/customer-service/api-reference/)
+{% endcontent-ref %}
 {% endstep %}
 {% endstepper %}
 
@@ -664,6 +780,12 @@ Get an anonymous access token with the [Requesting an anonymous token](https://d
 curl -i -X GET \
   'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={{tenant}}&client_id={{storefront_client_id}}'
 ```
+
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../companies-and-customers/customer-management/api-reference/" %}
+[api-reference](../companies-and-customers/customer-management/api-reference/)
+{% endcontent-ref %}
 
 This request creates a new session-context document. The anonymous token is valid for one hour. After that time, refresh it to keep the same session ID associated.
 
@@ -684,6 +806,12 @@ curl -L \
     "password": "P@ssword123"
   }'
 ```
+
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../companies-and-customers/customer-management/api-reference/" %}
+[api-reference](../companies-and-customers/customer-management/api-reference/)
+{% endcontent-ref %}
 
 {% hint style="warning" %}
 It is also possible for customers to continue to checkout as guest customers, without logging in, so this step can be optional.
@@ -728,6 +856,12 @@ curl -i -X POST
   }'
 ```
 
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../checkout/cart/api-reference/" %}
+[api-reference](../checkout/cart/api-reference/)
+{% endcontent-ref %}
+
 {% endstep %}
 
 {% step %}
@@ -751,6 +885,12 @@ curl -i -X POST \
     "quantity": 10
   }'
 ```
+
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../checkout/cart/api-reference/" %}
+[api-reference](../checkout/cart/api-reference/)
+{% endcontent-ref %}
 {% endstep %}
 
 {% step %}
@@ -776,6 +916,12 @@ curl 'https://api.emporix.io/price/{{tenant}}/match-prices-by-context' \
   ]
 }'
 ```
+
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../prices-and-taxes/price-service/api-reference/" %}
+[api-reference](../prices-and-taxes/price-service/api-reference/)
+{% endcontent-ref %}
 {% endstep %}
 
 {% step %}
@@ -862,6 +1008,12 @@ curl -i -X POST \
     }
   }'
 ```
+
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../checkout/checkout/api-reference/" %}
+[api-reference](../checkout/checkout/api-reference/)
+{% endcontent-ref %}
 {% endstep %}
 
 {% step %}
@@ -875,6 +1027,12 @@ curl -L \
   --header 'saas-token: text' \
   --header 'Accept: */*'
 ```
+
+{% include "../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../orders/order/api-reference/" %}
+[api-reference](../orders/order/api-reference/)
+{% endcontent-ref %}
 {% endstep %}
 {% endstepper %}
 
