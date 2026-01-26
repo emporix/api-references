@@ -671,7 +671,7 @@ curl https://api.emporix.io/availability/{{tenant}}/availability/{{productId}}/P
 {% endstep %}
 {% endstepper %}
 
-### Set up customer
+### Set up a customer
 
 The tenant and products are ready, so it's time to add customers who can test out the checkout functionality.
 
