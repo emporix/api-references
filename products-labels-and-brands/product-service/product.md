@@ -456,18 +456,18 @@ curl -i -X POST
 {% endstep %}
 
 {% step %}
-### Create multiple parent variant products (optional)
+### Optional: Create multiple parent variant products 
 
 If you want to create multiple `parent_variant` products at the same time, send a request to the [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -i -X POST \
-  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Language: string' \
-  -H 'Content-Type: application/json' \
+curl -i -X POST 
+  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
   -d '[
   {
     "id": "abc-123",
@@ -662,7 +662,7 @@ curl -i -X PUT
 {% step %}
 ### Update the existing parent variant product with the new product template
 
-Since updating the product template results in it being assigned a new version, update the parent variant by sending a request to the Partially updating a product endpoint and providing the new `template.version` value.
+Since updating the product template results in it being assigned a new version, update the parent variant by sending a request to the [Partially updating a product endpoint](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) and providing the new `template.version` value.
 
 {% hint style="warning" %}
 In the `variantAttributes` field, specify the attributes and attribute values that the variant products will assume. Based on the specified attributes, variant product combinations will be created automatically.
