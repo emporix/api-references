@@ -2583,6 +2583,9 @@ components:
               $ref: '#/components/schemas/variantProductMetadataWithVersion'
             productType:
               $ref: '#/components/schemas/productTypeUpdate'
+            parentVariantId:
+              type: string
+              description: Identifier of the PARENT_VARIANT product.
     variantProductBulkUpdate:
       type: object
       description: Updating products of the VARIANT type in bulk.
