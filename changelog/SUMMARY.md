@@ -8,6 +8,7 @@
 
 ## 2026
 
+* [2026-01-30: Product Service – category and customer segment IDs no longer in preview](2026/2026-01-30-product.md)
 * [2026-01-08: Configuration Service - New properties for configurations](2026/2026-01-08-configuration.md)
 
 ## Archive
