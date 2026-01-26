@@ -225,7 +225,7 @@ When creating a product template for a basic product, do not set `variantAttribu
 {% endstep %}
 
 {% step %}
-### Create a product using the template
+### Create a product using a template
 
 By applying a product template, you can create a product that contains additional attributes, which are included in the product's `mixins.productTemplateAttributes` field.
 
@@ -281,7 +281,7 @@ To create a product bundle, perform the following steps:
 
 You can group together two or more products that already exist in the system so that they can be sold at one collective price. To achieve that, call the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
-In this example, we create a bundle containing a T-shirt product and a socks product that already exist in the system.
+In this example, we create a bundle containing a T-shirt product and socks product that already exist in the system.
 
 ```bash
 curl -i -X POST 
