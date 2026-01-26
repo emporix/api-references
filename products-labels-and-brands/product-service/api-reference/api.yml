@@ -2534,8 +2534,6 @@ components:
           required:
             - name
             - code
-            - productType
-            - parentVariantId
     variantProductCreation:
       type: object
       description: Creating products of the VARIANT type.
