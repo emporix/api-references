@@ -377,15 +377,12 @@ components:
     Context:
       title: Context
       type: object
+      additionalProperties:
+        type: object
       example:
         CustomSessionAttributes:
           property1: {}
           property2: {}
-      properties:
-        propertyKey:
-          oneOf:
-            - type: object
-            - type: string
   responses:
     204_POST_attributes:
       description: The request was successful. The attribute was added to the session context.
