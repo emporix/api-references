@@ -157,7 +157,6 @@ paths:
         Searches for customer profiles.
       operationId: POST-customer-tenant-search
       parameters:
-        - $ref: '#/components/parameters/query_q'
         - $ref: '#/components/parameters/sort'
         - $ref: '#/components/parameters/pageNumber'
         - $ref: '#/components/parameters/pageSize'

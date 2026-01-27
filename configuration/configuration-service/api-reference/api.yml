@@ -818,9 +818,9 @@ components:
         - $ref: '#/components/schemas/BaseConfiguration'
         - type: object
           properties:
-            id:
+            _id:
               type: string
-              description: Client configuration unique identifier.
+              description: The client configuration unique identifier.
               minLength: 1
             client:
               type: string
