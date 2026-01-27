@@ -11,12 +11,15 @@ layout:
 
 ## How to localize your catalog
 
-The name and the description attribute of a catalog support localization. This means that you can provide values in a specific locale and also retrieve those values either localized, or all together, as you choose.\
-Localization is controlled via two headers:
+The name and the description attribute of a catalog support localization. This means that you can provide values in multiple languages and also retrieve those values either localized, or all together, as you choose.\
+Localization is controlled by the Content-Language and Accept-Language headers:
 
+* Content-Language - this is used to specify which languages can be used in the request payload when creating or updating catalogs. The Content-Language request HTTP header defines language(s) that can be used in the payload. Request body may contain only translations that are matching the languages specified in the header. Possible values:
+  * `*` - request body may contain translations for all languages specified in tenant configuration. This is also the default behaviour if the header is not set.
+  * `en`, `en,de`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5` - request body may contain only translations for languages specified in the header (if they are available in tenant configuration).
 * Accept-Language - this is used to specify how to retrieve catalogs. If a value is provided, then the resources will be returned in that locale. If '\*' is provided as a value, or the header is missing, all locales saved on a resource will be returned for that resource.
-* Content-Language - this header is used to specify if the data that will be stored for this request has a particular locale or you are providing all the desired locales.\
-  You can see detailed examples for the requests affected by this bellow.
+
+**Note**: When creating or updating catalogs, you must always provide localized fields (such as `name` and `description`) as maps of language codes to values, regardless of the Content-Language header value.
 
 ## How to create a catalog and assign a category to it
 
@@ -25,7 +28,7 @@ You can assign categories to a catalog when creating or updating the catalog. Th
 ### Create a catalog
 
 {% hint style="warning" %}
-Catalog names and descriptions are localized. When creating a new catalog, you can specify the catalog name and description in two different ways — in one language or in multiple languages.
+Catalog names and descriptions are localized. When creating a new catalog, you must provide the catalog name and description as maps of language codes to values.
 
 Looking for more info on localization? Check out [_Standard practices_](../../standard-practices/translations.md).
 {% endhint %}
