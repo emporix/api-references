@@ -1884,7 +1884,7 @@ components:
     productTypeUpdate:
       type: string
       description: |
-        Indicates the product type, which is immutable. This property is taken into account only for insert operation.
+        Indicates the product type, which is immutable. This property is taken into account only for insert operations.
       default: BASIC
       enum:
         - BASIC
