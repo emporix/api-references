@@ -2585,7 +2585,7 @@ components:
               $ref: '#/components/schemas/productTypeUpdate'
             parentVariantId:
               type: string
-              description: Identifier of the PARENT_VARIANT product.
+              description: Identifier of the PARENT_VARIANT product. This property is taken into account only for insert operations.
     variantProductBulkUpdate:
       type: object
       description: Updating products of the VARIANT type in bulk.
