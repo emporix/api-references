@@ -3358,6 +3358,9 @@ components:
           description: A list of resolved scopes for a particular access control.
           items:
             type: string
+        restrictionAware:
+          type: boolean
+          description: Determines whether this access control generates scopes with restriction suffixes when assigned to a group that has restrictions defined. When `true`, the generated scopes will include restrictions (e.g. order.`order_manage--DE`) based on the group's restrictions list. When `false`, scopes are generated without restriction suffixes regardless of the group's restrictions.
     TemplateQueryDocument:
       type: object
       properties:
