@@ -1577,6 +1577,12 @@ paths:
       operationId: DELETE-price-remove-price-list
       tags:
         - Price lists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       responses:
         '204':
           description: The request was successful. The price list has been deleted.
