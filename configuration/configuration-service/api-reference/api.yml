@@ -429,6 +429,12 @@ paths:
     delete:
       summary: Deleting a configuration
       operationId: DELETE-configuration-remove-config
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       responses:
         '204':
           description: No Content
@@ -718,6 +724,12 @@ paths:
     delete:
       summary: Deleting a client configuration
       operationId: DELETE-configuration-remove-client-config
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       responses:
         '204':
           description: No Content

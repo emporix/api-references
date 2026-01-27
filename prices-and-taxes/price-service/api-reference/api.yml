@@ -550,6 +550,12 @@ paths:
       summary: Deleting a price
       tags:
         - Prices
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       parameters:
         - name: priceId
           in: path
@@ -1321,6 +1327,12 @@ paths:
 
         **Additional scopes info**
         The `price.pricemodel_manage_admin` scope is only required if you want to delete a price model that has prices assigned to it.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       parameters:
         - schema:
             type: boolean
@@ -1737,6 +1749,19 @@ paths:
         Deletes multiple prices from a specified price list.
 
         To indicate which prices should be deleted from the price list, you need to put their IDs in an array of strings and send it through the request body. The request body should look like this: `["exampleID1", "exampleID2"]`
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+            examples:
+              Example:
+                value:
+                  - "exampleID1"
+                  - "exampleID2"
+        required: true
       security:
         - OAuth2:
             - price.pricelist_manage
@@ -1919,6 +1944,12 @@ paths:
       operationId: DELETE-price-remove-price-from-price-list
       tags:
         - Prices assigned to price lists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       responses:
         '204':
           description: The request was successful. The price has been deleted from the price list.

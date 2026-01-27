@@ -310,6 +310,12 @@ paths:
         - Account and profile
     delete:
       summary: Deleting a customer profile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       responses:
         '202':
           description: Accepted
@@ -608,6 +614,12 @@ paths:
             - customer.customer_read
     delete:
       summary: Deleting a customer address
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       responses:
         '204':
           description: No Content

@@ -561,6 +561,12 @@ paths:
       tags:
         - Products
     delete:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       responses:
         '204':
           description: |
@@ -925,6 +931,12 @@ paths:
     delete:
       summary: Deleting a product template
       operationId: DELETE-product-remove-template
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       responses:
         '204':
           description: No Content
