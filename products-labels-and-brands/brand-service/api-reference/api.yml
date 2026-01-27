@@ -14,7 +14,7 @@ tags:
   - name: Media
     description: Manage brands media
 paths:
-  '/brands':
+  '/brand/brands':
     get:
       tags:
         - Brands
@@ -124,7 +124,7 @@ paths:
         '500':
           $ref: '#/components/responses/trait_500'
       summary: Adding a new brand
-  '/brands/{brandId}':
+  '/brand/brands/{brandId}':
     get:
       tags:
         - Brands
