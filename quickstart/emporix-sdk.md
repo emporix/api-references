@@ -732,7 +732,7 @@ Emporix **requires** an anonymous token when logging in customers. The SDK provi
 
 **Typical Flow:**
 
-```mermaid fullWidth="false"
+```mermaid
 ---
 config:
   layout: fixed
@@ -746,16 +746,30 @@ config:
     edgeLabelTextColor: "#4C5359"
 ---
 flowchart LR
-    A["User opens page"] --> B["Get anonymous token<br/>(session created with cart)"]
-    B --> C["User browses"]
-    C --> D["Use anonymous token"]
-    D --> E["User clicks login"]
-    E --> F["Use THAT anonymous token<br/>to authenticate"]
-    F --> G["Session context preserved<br/>(cart, preferences, etc.)"]
-    B:::TokenNode
-    D:::TokenNode
-    F:::TokenNode
-    classDef TokenNode fill:#F2F6FA, stroke:#E86C07
+    A[User opens page] --> B[Get anonymous token<br/>(session created with cart)]
+    B --> C[User browses]
+    C --> D[Use anonymous token]
+    D --> E[User clicks login]
+    E --> F[Use THAT anonymous token<br/>to authenticate]
+    F --> G[Session context preserved<br/>(cart, preferences, etc.)]
+    A@{ shape: rounded}
+    B@{ shape: rounded}
+    C@{ shape: rounded}
+    D@{ shape: rounded}
+    E@{ shape: rounded}
+    F@{ shape: rounded}
+    G@{ shape: rounded}
+    A:::Class_04
+    C:::Class_04
+    E:::Class_04
+    G:::Class_04
+    B:::Class_01
+    D:::Class_01
+    F:::Class_01
+    classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#DDE6EE
+    classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#A1BDDC
+    classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#3b73bb, fill:#3b73bb
+    classDef Class_04 fill:#F2F6FA, stroke:#4C5359
 ```
 
 ```java
