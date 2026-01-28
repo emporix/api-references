@@ -429,6 +429,12 @@ paths:
     delete:
       summary: Deleting a configuration
       operationId: DELETE-configuration-remove-config
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       responses:
         '204':
           description: No Content
@@ -718,6 +724,12 @@ paths:
     delete:
       summary: Deleting a client configuration
       operationId: DELETE-configuration-remove-client-config
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       responses:
         '204':
           description: No Content
@@ -818,9 +830,9 @@ components:
         - $ref: '#/components/schemas/BaseConfiguration'
         - type: object
           properties:
-            id:
+            _id:
               type: string
-              description: Client configuration unique identifier.
+              description: The client configuration unique identifier.
               minLength: 1
             client:
               type: string
@@ -953,7 +965,7 @@ components:
             $ref: '#/components/schemas/ErrorMessage'
           example:
             details:
-              - message: 'Missing required scopes ''[configuration.configuration_view, hybris.configuration_view]'''
+              - message: 'Missing required scopes ''[configuration.configuration_view]'''
             message: User not authorized.
             status: 403
             type: Forbidden

@@ -12,7 +12,8 @@ tags:
   - name: Orders (Tenant-managed)
     description: Manage tenant orders.
   - name: Orders (Customer-managed)
-    description: Manage customer orders.
+    description: |
+      Manage customer orders. **Authentication:** Standard is customer token (Bearer). Alternatively, use access token (client credentials) together with the `saas-token` header.
 paths:
   '/order-v2/{tenant}/salesorders':
     get:
@@ -521,10 +522,13 @@ paths:
         - Orders (Customer-managed)
       summary: Retrieving a list of orders
       description: |
-        Retrieves a list of orders for a customer. To be used by customers on the storefront. The `order.history_view` scope is for logged in customers only.
+        Retrieves a list of orders for a customer. To be used by customers on the storefront.
+
+        **Authentication:** Standard is customer token. Alternatively, use access token (client credentials) with `saas-token` header. Scope `order.history_view` applies when using client credentials.
       security:
+        - CustomerAccessToken: []
         - OAuth2:
-          - order.history_view
+            - order.history_view
       responses:
         '200':
           description: |
@@ -556,10 +560,13 @@ paths:
         - Orders (Customer-managed)
       summary: Retrieving order details
       description: |
-        Retrieves details of an order. To be used by customers on the storefront. The `order.history_view` scope is for logged in customers only.
+        Retrieves details of an order. To be used by customers on the storefront.
+
+        **Authentication:** Standard is customer token. Alternatively, use access token (client credentials) with `saas-token` header. Scope `order.history_view` applies when using client credentials.
       security:
+        - CustomerAccessToken: []
         - OAuth2:
-          - order.history_view
+            - order.history_view
       operationId: GET-order-retrieve-order-storefront
       responses:
         '200':
@@ -590,9 +597,12 @@ paths:
       summary: Retrieving status transitions for a specific order
       description: |
         Retrieves possible status transitions for a specific order. To be used by customers on the storefront.
+
+        **Authentication:** Standard is customer token. Alternatively, use access token (client credentials) with `saas-token` header. Scope `order.order_updateascustomer` applies when using client credentials.
       security:
+        - CustomerAccessToken: []
         - OAuth2:
-          - order.order_updateascustomer
+            - order.order_updateascustomer
       operationId: GET-order-retrieve-transitions
       responses:
         '200':
@@ -619,10 +629,14 @@ paths:
       summary: Updating order status
       description: |
         Updates the status of a specific order. To be used by customers on the storefront.
+
         **Note**: Customers can only change the order status from `CREATED` to `DECLINED`.
+
+        **Authentication:** Standard is customer token. Alternatively, use access token (client credentials) with `saas-token` header. Scope `order.order_updateascustomer` applies when using client credentials.
       security:
+        - CustomerAccessToken: []
         - OAuth2:
-          - order.order_updateascustomer
+            - order.order_updateascustomer
       operationId: POST-order-update-order-transition-storefront
       responses:
         '204':
@@ -678,6 +692,8 @@ paths:
       operationId: GET-order-retrieve-legal-entity-orders
       description: |
         Retrieves a list of orders related to a particular legal entity for a customer. To be used by B2B customers on the storefront.
+
+        **Authentication:** Standard is customer token. Alternatively, use access token (client credentials) with `saas-token` header. Scope `order.order_read_le` applies when using client credentials.
       parameters:
         - $ref: '#/components/parameters/trait_sortable_sort'
         - $ref: '#/components/parameters/trait_paged_pageNumber'
@@ -686,6 +702,7 @@ paths:
         - $ref: '#/components/parameters/trait_fields'
         - $ref: '#/components/parameters/trait_saas_token'
       security:
+        - CustomerAccessToken: []
         - OAuth2:
             - order.order_read_le
   '/order-v2/{tenant}/legal-entity-orders/{legalEntityId}/{orderId}':
@@ -716,9 +733,12 @@ paths:
       operationId: GET-order-retrieve-legal-entity-order
       description: |
         Retrieves an order related to a particular legal entity for a customer. To be used by B2B customers on the storefront.
+
+        **Authentication:** Standard is customer token. Alternatively, use access token (client credentials) with `saas-token` header. Scope `order.order_read_le` applies when using client credentials.
       parameters:
         - $ref: '#/components/parameters/trait_saas_token'
       security:
+        - CustomerAccessToken: []
         - OAuth2:
             - order.order_read_le
 components:
@@ -1677,6 +1697,7 @@ components:
 
             ***NOTE***
             This attribute is DEPRECATED, please use the `deliveryWindow.deliveryCycle` attribute
+          deprecated: true
           type: string
         deliveryWindowId:
           description: |-
@@ -1685,6 +1706,7 @@ components:
             ***NOTE***
             This attribute is DEPRECATED, please use the `deliveryWindow.id` attribute
           type: string
+          deprecated: true
         deliveryWindow:
           $ref: '#/components/schemas/deliveryWindow'
         metadata:
@@ -3205,9 +3227,10 @@ components:
     trait_saas_token:
       name: saas-token
       in: header
-      required: true
+      required: false
       description: |
-        Token used to identify logged-in users. This token has an expiry date and is signed with a passphrase.
+        Required only when using **access token (client credentials)**. Not used with customer token.
+        Token used to identify the logged-in user; has an expiry and is signed with a passphrase.
       schema:
         type: string
     trait_sortable_sort:
@@ -6775,6 +6798,11 @@ components:
   requestBodies: {}
   headers: {}
   securitySchemes:
+    CustomerAccessToken:
+      type: http
+      scheme: bearer
+      description: |
+        Customer access token.
     OAuth2:
       type: oauth2
       flows:

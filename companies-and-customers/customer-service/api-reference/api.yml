@@ -157,7 +157,6 @@ paths:
         Searches for customer profiles.
       operationId: POST-customer-tenant-search
       parameters:
-        - $ref: '#/components/parameters/query_q'
         - $ref: '#/components/parameters/sort'
         - $ref: '#/components/parameters/pageNumber'
         - $ref: '#/components/parameters/pageSize'
@@ -311,6 +310,12 @@ paths:
         - Account and profile
     delete:
       summary: Deleting a customer profile
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       responses:
         '202':
           description: Accepted
@@ -609,6 +614,12 @@ paths:
             - customer.customer_read
     delete:
       summary: Deleting a customer address
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       responses:
         '204':
           description: No Content
