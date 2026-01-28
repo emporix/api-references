@@ -145,7 +145,7 @@ Result: You're ready to use the SDK.
 
 The SDK is configured through `application.yml`, `application.properties`, or environment variables.
 
-### Complete configuration example
+**Complete configuration example:**
 
 ```yaml
 emporix:
@@ -209,7 +209,7 @@ emporix:
     enabled: true  # Enable global exception handling
 ```
 
-### Property details
+**Property details**
 
 | Property                                       | Required | Default                  | Description                                                                        |
 |------------------------------------------------|----------|--------------------------|------------------------------------------------------------------------------------|
@@ -230,7 +230,7 @@ emporix:
 | `emporix.cache.max-lifetime-seconds`           | No       | `3600`                   | Maximum lifetime for any cached token in seconds (Caffeine expireAfterWrite).      |
 | `emporix.exception-handler.enabled`            | No       | `false`                  | Enable automatic exception handling for Emporix API errors.                        |
 
-{% hint style="info" %}
+{% hint style="success" %}
 The SDK supports both **kebab-case** (e.g., `client-id`, `connect-timeout-ms`) and **camelCase** (e.g., `clientId`, `connectTimeoutMs`) property names for backward compatibility. Kebab-case is recommended for YAML files.
 {% endhint %}
 
@@ -255,7 +255,7 @@ export EMPORIX_API_CREDENTIALS_CUSTOM_INTEGRATION_SECRET=integration-secret
 export EMPORIX_EXCEPTION_HANDLER_ENABLED=true
 ```
 
-{% hint style="info" %}
+{% hint style="success" %}
 Environment variables take precedence over `application.yml` values.
 {% endhint %}
 
@@ -498,18 +498,18 @@ each method). You obtain tokens using `EmporixTokenService` and pass them to cli
 {% step %}
 ### Obtain a token
 
-Use `EmporixTokenService`.
+Get the token using `EmporixTokenService`.
 {% endstep %}
 
 {% step %}
 ### Get the Bearer token
 
-Ushe `token.bearerAccessToken()` (null-safe and idempotent).
+Get the token using `token.bearerAccessToken()` (null-safe and idempotent).
 {% endstep %}
 
 {% step %}
 ### Pass the Bearer token to the client method
-Typically as the last parameter.
+Typically it's passed as the last parameter.
 {% endstep %}
 {% endstepper %}
 
@@ -522,7 +522,7 @@ String authorization = token.bearerAccessToken();  // "Bearer {access_token}"
 productClient.getProducts(..., authorization);
 ```
 
-### Using service tokens (backend operations)
+### Using service tokens - backend operations
 
 Service tokens are used for backend/administrative operations and are automatically cached by the SDK.
 
@@ -533,7 +533,7 @@ Service tokens are used for backend/administrative operations and are automatica
 - `getServiceToken(String credentialName)` - Get token with **custom credentials** and all scopes
 - `getServiceToken(Set<String> scopes, String credentialName)` - Get token with **custom credentials and specific scopes**
 
-#### Example: Service token usage
+**Example:** Service token usage
 
 ```java
 import io.emporix.auth.service.EmporixTokenService;
@@ -732,10 +732,27 @@ Emporix **requires** an anonymous token when logging in customers. The SDK provi
 
 **Typical Flow:**
 
-1. User opens page → Get anonymous token (session created with cart)
-2. User browses → Use anonymous token
-3. User clicks login → Use THAT anonymous token to authenticate
-4. Session context preserved (cart, preferences, etc.)
+```mermaid fullWidth="false"
+---
+config:
+  layout: fixed
+  theme: base
+  look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128" 
+    edgeLabelTextColor: "#4C5359"
+---
+flowchart LR
+    A["User opens page"] --> B["Get anonymous token<br/>(session created with cart)"]
+    B --> C["User browses"]
+    C --> D["Use anonymous token"]
+    D --> E["User clicks login"]
+    E --> F["Use THAT anonymous token<br/>to authenticate"]
+    F --> G["Session context preserved<br/>(cart, preferences, etc.)"]
+```
 
 ```java
 import io.emporix.auth.dto.CustomerTokenResponse;
