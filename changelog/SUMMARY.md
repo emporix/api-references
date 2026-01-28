@@ -8,7 +8,6 @@
 
 ## 2026
 
-* [2026-01-28: Order Service - Deprecation of deliveryWindowId and orderCycle](2026/2026-01-28-order-deprecations.md)
 * [2026-01-08: Configuration Service - New properties for configurations](2026/2026-01-08-configuration.md)
 
 ## Archive
