@@ -6802,7 +6802,7 @@ components:
       type: http
       scheme: bearer
       description: |
-        Customer access token (standard). Obtain via Customer Service (e.g. login, anonymous token).
+        Customer access token.
     OAuth2:
       type: oauth2
       flows:
