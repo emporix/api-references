@@ -22,9 +22,9 @@ The Emporix SDK provides:
 
 Before you begin, ensure you have the following installed and configured:
 
-- **Java 21** or higher
-- **Spring Boot 3.x**
-- **Gradle 8.5+** or **Maven 3.9+**
+- Java 21 or higher
+- Spring Boot 3.x
+- Gradle 8.5+ or Maven 3.9+
 
 ## Quick start
 
@@ -32,7 +32,7 @@ Get up and running in 5 minutes!
 
 {% stepper %}
 {% step %}
-Add the dependency to your project.
+### Add the dependency to your project.
 
 **Gradle:**
 
@@ -54,7 +54,7 @@ dependencies {
 {% endstep %}
 
 {% step %}
-Enable the SDK by adding the annotation to your Spring Boot application:
+### Enable the SDK by adding the annotation to your Spring Boot application:
 
 ```java
 import io.emporix.config.EnableEmporixAutoConfiguration;
@@ -73,9 +73,9 @@ public class MyApplication {
 {% endstep %}
 
 {% step %}
-Configure your credentials.
+### Configure your credentials.
 
-**Use environment variables (recommended):**
+**Recommended**: Use environment variables
 
 ```bash
 export EMPORIX_TENANT=your-tenant-id
@@ -85,7 +85,7 @@ export EMPORIX_API_CREDENTIALS_STOREFRONT_CLIENT_ID=your-storefront-client-id
 export EMPORIX_API_CREDENTIALS_STOREFRONT_SECRET=your-storefront-secret
 ```
 
-**Alternatively, use application.yml:**
+Alternatively, use application.yml:
 
 ```yaml
 emporix:
@@ -102,7 +102,7 @@ emporix:
 {% endstep %}
 
 {% step %}
-Use the SDK in your code:
+### Use the SDK in your code.
 
 ```java
 import io.emporix.auth.service.EmporixTokenService;
@@ -137,17 +137,15 @@ public class ProductService {
 }
 ```
 
-That's it! You're ready to use the SDK.
+Result: You're ready to use the SDK.
 {% endstep %}
 {% endstepper %}
 
 ## Configuration
 
-### Configuration properties
-
 The SDK is configured through `application.yml`, `application.properties`, or environment variables.
 
-#### Complete configuration example
+### Complete configuration example
 
 ```yaml
 emporix:
@@ -211,7 +209,7 @@ emporix:
     enabled: true  # Enable global exception handling
 ```
 
-#### Property details
+### Property details
 
 | Property                                       | Required | Default                  | Description                                                                        |
 |------------------------------------------------|----------|--------------------------|------------------------------------------------------------------------------------|
@@ -236,7 +234,7 @@ emporix:
 The SDK supports both **kebab-case** (e.g., `client-id`, `connect-timeout-ms`) and **camelCase** (e.g., `clientId`, `connectTimeoutMs`) property names for backward compatibility. Kebab-case is recommended for YAML files.
 {% endhint %}
 
-#### Environment variables
+### Environment variables
 
 All properties can be set via environment variables (recommended for production):
 
@@ -263,13 +261,13 @@ Environment variables take precedence over `application.yml` values.
 
 ## Enabling the SDK
 
-The SDK provides two usage modes:
+The SDK provides two usage modesL DTOs only and full SDK.
 
-### 1. DTOs only (no configuration)
+### DTOs only with no configuration
 
 Simply add the SDK as a dependency to use the data transfer objects (DTOs). No additional configuration needed.
 
-### 2. Full SDK with auto-configuration
+### Full SDK with auto-configuration
 
 To enable API clients and authentication services, add the annotation:
 
@@ -295,7 +293,9 @@ This automatically configures:
 - Exception handling (EmporixErrorHandler)
 - All required Spring beans
 
-**Without this annotation**, only DTOs are available. Clients will not be auto-configured.
+{% hint style="warning" %}
+Without this annotation, only DTOs are available. Clients will not be auto-configured.
+{% endhint %}
 
 ## Available services
 
@@ -411,14 +411,17 @@ The SDK provides type-safe clients for the following Emporix services:
 
 The SDK provides comprehensive token management through `EmporixTokenService` and direct client invocation patterns.
 
-**Important:** All client methods accept an optional authorization header parameter (typically the last parameter).
-You must obtain tokens using `EmporixTokenService` and pass them to client methods using the convenient `bearerAccessToken()` method, which
-formats the token as `"Bearer {token}"` and is null-safe and idempotent.
+{% hint style="warning" %}
+All client methods accept an optional authorization header parameter (typically the last parameter). You must obtain tokens using `EmporixTokenService` and pass them to client methods using the convenient `bearerAccessToken()` method, which formats the token as `"Bearer {token}"` and is null-safe and idempotent.
+{% endhint %}
 
 ### Scope constants
 
-All API clients provide scope constants through a nested `Scopes` interface. **Always use these constants** instead of hardcoded strings for
-type safety and IDE autocomplete support.
+All API clients provide scope constants through a nested `Scopes` interface. 
+
+{% hint style="danger" %}
+Always use these constants instead of hardcoded strings for type safety and IDE autocomplete support.
+{% endhint %}
 
 **Example:**
 
@@ -471,7 +474,9 @@ Emporix supports several token types:
 | **Anonymous Token**      | Guest browsing, public access           | `storefront` credentials | `tokenService.getAnonymousToken()`                               |
 | **B2B Token**            | Business customer operations            | `storefront` credentials | `tokenService.getB2bToken(customerToken, legalEntityId)`         |
 
-**Important:** Customer token requires an `anonymousToken` parameter - Emporix returns an error if omitted.
+{% hint style="warning" %}
+Customer token requires an `anonymousToken` parameter - Emporix returns an error if omitted.
+{% endhint %}
 
 ### Token caching
 
@@ -489,9 +494,24 @@ each method). You obtain tokens using `EmporixTokenService` and pass them to cli
 
 ### Basic token flow
 
-1. **Obtain a token** using `EmporixTokenService`
-2. **Get Bearer token** using `token.bearerAccessToken()` (null-safe and idempotent)
-3. **Pass to client method**
+{% stepper %}
+{% step %}
+### Obtain a token
+
+Use `EmporixTokenService`.
+{% endstep %}
+
+{% step %}
+### Get the Bearer token
+
+Ushe `token.bearerAccessToken()` (null-safe and idempotent).
+{% endstep %}
+
+{% step %}
+### Pass the Bearer token to the client method
+Typically as the last parameter.
+{% endstep %}
+{% endstepper %}
 
 **Example:**
 
@@ -655,7 +675,7 @@ emporix:
           secret: partner-secret
 ```
 
-### Using anonymous tokens (guest browsing)
+### Using anonymous tokens - guest browsing
 
 Anonymous tokens are used for public/guest browsing sessions.
 
@@ -694,13 +714,15 @@ public class PublicProductService {
 }
 ```
 
-### Using customer tokens (authenticated users)
+### Using customer tokens - authenticated users
 
 Customer tokens are for authenticated user operations. The SDK automatically preserves shopping sessions when logging in.
 
-**IMPORTANT: Anonymous Token and Session Context**
+{% hint style="warning" %}
+**Anonymous token and session context:**
 
 Emporix **requires** an anonymous token when logging in customers. The SDK provides convenience by automatically fetching a new anonymous token if you don't provide one. However, **this creates a NEW session** and you lose the user's cart, preferences, and browsing context.
+{% endhint %}
 
 **Available Methods:**
 
@@ -1370,7 +1392,7 @@ public class ProductService {
 
 Choose the right method based on your security requirements:
 
-**For specific operations (recommended - least privilege):**
+Recommended: For specific operations (least privilege):
 
 ```java
 import static io.emporix.product.ProductClient.Scopes.*;
@@ -1380,15 +1402,14 @@ ServiceTokenResponse token = tokenService.getServiceToken(
     Set.of(PRODUCT_READ_UNPUBLISHED)
 );
 ```
-
-**For full backend access (simpler, when you need multiple operations):**
+For full backend access (simpler, when you need multiple operations):
 
 ```java
 // Get token with all available scopes (fine for backend services)
 ServiceTokenResponse token = tokenService.getServiceToken();
 ```
 
-**Avoid (requesting all scopes when you only need one):**
+Avoid requesting all scopes when you only need one:
 
 ```java
 // Don't use getServiceToken() if you only perform read operations
@@ -1396,7 +1417,7 @@ ServiceTokenResponse token = tokenService.getServiceToken();
 ServiceTokenResponse token = tokenService.getServiceToken();
 ```
 
-**When to use each:**
+When to use each:
 
 - Use `getServiceToken()` for internal backend services that perform multiple operations
 - Use `getServiceToken(Set.of(SCOPES))` for external integrations or when following strict least-privilege security
@@ -1405,7 +1426,7 @@ ServiceTokenResponse token = tokenService.getServiceToken();
 
 Always pass the anonymous token when logging in customers to preserve shopping cart and session:
 
-**Recommended:**
+Recommended:
 
 ```java
 // Get the user's existing anonymous token (from their browsing session)
@@ -1416,8 +1437,7 @@ CustomerTokenResponse customerToken = tokenService.getCustomerToken(
     email, password, anonymousToken
 );
 ```
-
-**Avoid (loses session context):**
+Avoid (loses session context):
 
 ```java
 // Works but creates a NEW session - user's cart and preferences are lost!
@@ -1430,7 +1450,7 @@ CustomerTokenResponse customerToken = tokenService.getCustomerToken(
 
 Service tokens are automatically cached by the SDK. Reuse the same `EmporixTokenService` instance:
 
-**Recommended:**
+Recommended:
 
 ```java
 @Service
@@ -1454,7 +1474,7 @@ public class ProductService {
 
 Always handle API exceptions appropriately:
 
-**Recommended:**
+Recommended:
 
 ```java
 public ProductResponse getProduct(String id) {
@@ -1477,7 +1497,7 @@ public ProductResponse getProduct(String id) {
 
 Leverage custom credentials (separate OAuth2 clients configured in Emporix) for integrations, partners, or systems with limited permissions:
 
-**Recommended:**
+Recommended:
 
 ```java
 // Integration OAuth2 client with full access to granted scopes
@@ -1499,7 +1519,7 @@ Each custom credential corresponds to an OAuth2 client created in your Emporix t
 
 The SDK does NOT cache customer tokens. Store them securely in your application:
 
-**Recommended:**
+Recommended:
 
 ```java
 // Store in HTTP session
@@ -1516,7 +1536,7 @@ redisTemplate.opsForValue().set(
 String jwt = jwtService.createToken(customerToken);
 ```
 
-**Recommended:**
+Recommended:
 
 ```java
 // Authorization is always the last parameter
@@ -1542,7 +1562,9 @@ emporix:
 
 ## Troubleshooting
 
-### Issue: "Bean of type ProductClient could not be found"
+Check the solution for common issues.
+
+### "Bean of type ProductClient could not be found"
 
 **Cause:** SDK auto-configuration is not enabled.
 
@@ -1556,7 +1578,7 @@ public class MyApplication { ...
 }
 ```
 
-### Issue: "401 Unauthorized"
+### "401 Unauthorized"
 
 **Possible Causes:**
 
@@ -1581,7 +1603,7 @@ public class MyApplication { ...
    productClient.getProducts(..., authorization);
    ```
 
-### Issue: "Tenant must be configured"
+### "Tenant must be configured"
 
 **Cause:** Missing tenant configuration.
 
@@ -1598,7 +1620,7 @@ emporix:
   tenant: your-tenant-id
 ```
 
-### Issue: "Custom credentials 'xxx' not found"
+### "Custom credentials 'xxx' not found"
 
 **Cause:** Requesting a token with custom credential name that doesn't exist in configuration.
 
@@ -1623,7 +1645,7 @@ emporix:
 
 **Important:** The OAuth2 client must also be created in your Emporix tenant with appropriate scopes assigned.
 
-### Issue: "403 Forbidden" or "Insufficient Scopes"
+### "403 Forbidden" or "Insufficient Scopes"
 
 **Cause:** Token doesn't have required OAuth2 scopes for the operation.
 
@@ -1646,18 +1668,18 @@ emporix:
    // Or request all available scopes
    ServiceTokenResponse token = tokenService.getServiceToken();
    ```
-2. Verify credentials in Emporix Portal have the required scopes
-3. Check if you need to use custom credentials with different scope permissions
+2. Verify credentials in Emporix Portal have the required scopes.
+3. Check if you need to use custom credentials with different scope permissions.
 
-### Issue: Token caching not working
+### Token caching not working
 
 **Symptom:** Every request creates a new token.
 
 **Solution:** Service tokens are automatically cached. If you're seeing new tokens:
 
-1. Check if you're requesting different scopes (each scope set gets its own cache entry)
-2. Check if you're using different credential names
-3. Customer and anonymous tokens are NOT cached by design
+1. Check if you're requesting different scopes (each scope set gets its own cache entry).
+2. Check if you're using different credential names.
+3. Customer and anonymous tokens are NOT cached by design.
 
 ### Debugging tips
 
