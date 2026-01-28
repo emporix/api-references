@@ -12,7 +12,7 @@ layout:
 The Order Service is divided into two categories based on who manages the orders:
 
 * **Tenant-Managed Orders** – This refers to the management of customer orders. Customers create the orders, which are then accessible to your employees for processing, status updates, and data modifications.
-* **Customer-Managed Orders** – These are orders submitted by your customers. When logged into their account, customers can view and access their order history. **Authentication:** Standard is customer token (Bearer). Alternatively, you can use an access token from client credentials together with the `saas-token` header.
+* **Customer-Managed Orders** – These are orders submitted by your customers. When logged into their account, customers can view and access their order history.
 
 Scopes necessary to work with orders are:
 * `order.order_post`: Needed to create new order as a customer.
@@ -1276,15 +1276,15 @@ curl 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}'
 **Standard (customer token):**
 
 ```bash
-curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
+curl 'https://api.emporix.io/order-v2/{tenant}/orders' 
   --header 'Authorization: Bearer YOUR_CUSTOMER_TOKEN'
 ```
 
 **Alternatively (access token from client credentials + saas-token):**
 
 ```bash
-curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
-  --header 'Authorization: Bearer YOUR_ACCESS_TOKEN' \
+curl 'https://api.emporix.io/order-v2/{tenant}/orders' 
+  --header 'Authorization: Bearer YOUR_ACCESS_TOKEN' 
   --header 'saas-token: YOUR_SAAS_TOKEN'
 ```
 
@@ -1319,21 +1319,21 @@ curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/saleso
 **Standard (customer token):**
 
 ```bash
-curl -L --request POST \
-  'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
-  --header 'Authorization: Bearer YOUR_CUSTOMER_TOKEN' \
-  --header 'Content-Type: application/json' \
+curl -L --request POST 
+  'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' 
+  --header 'Authorization: Bearer YOUR_CUSTOMER_TOKEN' 
+  --header 'Content-Type: application/json' 
   --data '{"status": "DECLINED"}'
 ```
 
 **Alternatively (access token from client credentials + saas-token):**
 
 ```bash
-curl -L --request POST \
-  'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
-  --header 'Authorization: Bearer YOUR_ACCESS_TOKEN' \
-  --header 'saas-token: YOUR_SAAS_TOKEN' \
-  --header 'Content-Type: application/json' \
+curl -L --request POST 
+  'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' 
+  --header 'Authorization: Bearer YOUR_ACCESS_TOKEN' 
+  --header 'saas-token: YOUR_SAAS_TOKEN' 
+  --header 'Content-Type: application/json' 
   --data '{"status": "DECLINED"}'
 ```
 
