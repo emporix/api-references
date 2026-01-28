@@ -2588,9 +2588,6 @@ paths:
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
-        - $ref: '#/components/parameters/Accept-Language'
-        - $ref: '#/components/parameters/Content-Language'
-        - $ref: '#/components/parameters/languages'
       summary: Changing a cart currency
       tags:
         - Carts
