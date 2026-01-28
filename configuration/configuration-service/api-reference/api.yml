@@ -965,7 +965,7 @@ components:
             $ref: '#/components/schemas/ErrorMessage'
           example:
             details:
-              - message: 'Missing required scopes ''[configuration.configuration_view, hybris.configuration_view]'''
+              - message: 'Missing required scopes ''[configuration.configuration_view]'''
             message: User not authorized.
             status: 403
             type: Forbidden

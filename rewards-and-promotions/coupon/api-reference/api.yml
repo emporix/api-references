@@ -21,8 +21,6 @@ paths:
           headers:
             Items-Count:
               $ref: '#/components/headers/Total-Count'
-            Hybris-Count:
-              $ref: '#/components/headers/Total-Count'
           content:
             application/json:
               schema:
