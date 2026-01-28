@@ -745,13 +745,14 @@ config:
     edgeLabelBackground: "#FFC128" 
     edgeLabelTextColor: "#4C5359"
 ---
-flowchart LR
-    A[User opens page] --> B[Get anonymous token<br/>(session created with cart)]
-    B --> C[User browses]
+lowchart LR
+    A[User opens page] --> B[Get anonymous token 
+- session created with cart]
+    A --> C[User browses]
     C --> D[Use anonymous token]
-    D --> E[User clicks login]
-    E --> F[Use THAT anonymous token<br/>to authenticate]
-    F --> G[Session context preserved<br/>(cart, preferences, etc.)]
+    C --> E[User clicks login]
+    E --> F[Use THAT anonymous token to authenticate]
+    E --> G[Session context preserved - cart, preferences, etc]
       A@{ shape: rounded}
       B@{ shape: rounded}
       C@{ shape: rounded}
@@ -766,7 +767,7 @@ flowchart LR
       D:::Class_01
       F:::Class_01
     classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#A1BDDC
-    classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#3b73bb, fill:#3b73bb
+    classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#DDE6EE
 ```
 
 ```java
