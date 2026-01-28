@@ -9,6 +9,7 @@
 * [OpenAPI Generator](quickstart/openapi-generator.md)
 * [Emporix Terraform Provider](quickstart/emporix-terraform-provider.md) 
 * [Multi-Site Architecture](quickstart/multisites.md)
+* [Initial Tenant Checkout Configuration](quickstart/initial-tenant-checkout-config.md)
 
 ## Standard Practices
 
