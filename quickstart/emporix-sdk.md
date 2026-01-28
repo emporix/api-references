@@ -759,6 +759,7 @@ lowchart LR
       D@{ shape: rounded}
       E@{ shape: rounded}
       F@{ shape: rounded}
+      G@{ shape: rounded}
       A:::Class_03
       C:::Class_03
       E:::Class_03
