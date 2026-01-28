@@ -32,7 +32,7 @@ This quick start shows how to add the Emporix SDK to your Spring Boot project, e
 
 {% stepper %}
 {% step %}
-### Add the dependency to your project.
+### Add the dependency to your project
 
 **Gradle:**
 
@@ -54,7 +54,7 @@ dependencies {
 {% endstep %}
 
 {% step %}
-### Enable the SDK by adding the annotation to your Spring Boot application:
+### Enable the SDK by adding the annotation to your Spring Boot application
 
 ```java
 import io.emporix.config.EnableEmporixAutoConfiguration;
@@ -73,7 +73,7 @@ public class MyApplication {
 {% endstep %}
 
 {% step %}
-### Configure your credentials.
+### Configure your credentials
 
 **Recommended**: Use environment variables
 
@@ -102,7 +102,7 @@ emporix:
 {% endstep %}
 
 {% step %}
-### Use the SDK in your code.
+### Use the SDK in your code
 
 ```java
 import io.emporix.auth.service.EmporixTokenService;
@@ -1392,7 +1392,7 @@ public class ProductService {
 
 Choose the right method based on your security requirements:
 
-Recommended: For specific operations (least privilege):
+**Recommended:** For specific operations (least privilege):
 
 ```java
 import static io.emporix.product.ProductClient.Scopes.*;
@@ -1409,7 +1409,7 @@ For full backend access (simpler, when you need multiple operations):
 ServiceTokenResponse token = tokenService.getServiceToken();
 ```
 
-Avoid requesting all scopes when you only need one:
+**Avoid:** requesting all scopes when you only need one:
 
 ```java
 // Don't use getServiceToken() if you only perform read operations
@@ -1426,7 +1426,7 @@ When to use each:
 
 Always pass the anonymous token when logging in customers to preserve shopping cart and session:
 
-Recommended:
+**Recommended:**
 
 ```java
 // Get the user's existing anonymous token (from their browsing session)
@@ -1437,7 +1437,7 @@ CustomerTokenResponse customerToken = tokenService.getCustomerToken(
     email, password, anonymousToken
 );
 ```
-Avoid (loses session context):
+**Avoid:** (loses session context):
 
 ```java
 // Works but creates a NEW session - user's cart and preferences are lost!
@@ -1450,7 +1450,7 @@ CustomerTokenResponse customerToken = tokenService.getCustomerToken(
 
 Service tokens are automatically cached by the SDK. Reuse the same `EmporixTokenService` instance:
 
-Recommended:
+**Recommended:**
 
 ```java
 @Service
@@ -1474,7 +1474,7 @@ public class ProductService {
 
 Always handle API exceptions appropriately:
 
-Recommended:
+**Recommended:**
 
 ```java
 public ProductResponse getProduct(String id) {
@@ -1497,7 +1497,7 @@ public ProductResponse getProduct(String id) {
 
 Leverage custom credentials (separate OAuth2 clients configured in Emporix) for integrations, partners, or systems with limited permissions:
 
-Recommended:
+**Recommended:**
 
 ```java
 // Integration OAuth2 client with full access to granted scopes
@@ -1519,7 +1519,7 @@ Each custom credential corresponds to an OAuth2 client created in your Emporix t
 
 The SDK does NOT cache customer tokens. Store them securely in your application:
 
-Recommended:
+**Recommended:**
 
 ```java
 // Store in HTTP session
@@ -1536,7 +1536,7 @@ redisTemplate.opsForValue().set(
 String jwt = jwtService.createToken(customerToken);
 ```
 
-Recommended:
+**Recommended:**
 
 ```java
 // Authorization is always the last parameter
