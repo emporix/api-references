@@ -137,7 +137,7 @@ public class ProductService {
 }
 ```
 
-Result: You're ready to use the SDK.
+**Result:** You're ready to use the SDK.
 {% endstep %}
 {% endstepper %}
 
@@ -752,6 +752,10 @@ flowchart LR
     D --> E["User clicks login"]
     E --> F["Use THAT anonymous token<br/>to authenticate"]
     F --> G["Session context preserved<br/>(cart, preferences, etc.)"]
+    B:::TokenNode
+    D:::TokenNode
+    F:::TokenNode
+    classDef TokenNode fill:#F2F6FA, stroke:#E86C07
 ```
 
 ```java
@@ -1599,21 +1603,21 @@ public class MyApplication { ...
 
 **Possible Causes:**
 
-1. Invalid credentials
-2. Missing or malformed authorization header
-3. Expired token
-4. Token with insufficient scopes
+* Invalid credentials
+* Missing or malformed authorization header
+* Expired token
+* Token with insufficient scopes
 
 **Solutions:**
 
-1. Verify credentials in Emporix Portal
-2. Check environment variables are set correctly:
+* Verify credentials in Emporix Portal
+* Check environment variables are set correctly:
    ```bash
    echo $EMPORIX_TENANT
    echo $EMPORIX_API_CREDENTIALS_BACKEND_CLIENT_ID
    echo $EMPORIX_API_CREDENTIALS_BACKEND_SECRET
    ```
-3. Ensure you're passing the authorization header:
+* Ensure you're passing the authorization header:
    ```java
    ServiceTokenResponse token = tokenService.getServiceToken();
    String authorization = token.bearerAccessToken();  // ← Don't forget!
@@ -1668,7 +1672,7 @@ emporix:
 
 **Solutions:**
 
-1. Request token with appropriate scopes:
+* Request token with appropriate scopes:
    ```java
    import static io.emporix.product.ProductClient.Scopes.*;
    
@@ -1685,8 +1689,8 @@ emporix:
    // Or request all available scopes
    ServiceTokenResponse token = tokenService.getServiceToken();
    ```
-2. Verify credentials in Emporix Portal have the required scopes.
-3. Check if you need to use custom credentials with different scope permissions.
+* Verify credentials in Emporix Portal have the required scopes.
+* Check if you need to use custom credentials with different scope permissions.
 
 ### Token caching not working
 
@@ -1694,9 +1698,9 @@ emporix:
 
 **Solution:** Service tokens are automatically cached. If you're seeing new tokens:
 
-1. Check if you're requesting different scopes (each scope set gets its own cache entry).
-2. Check if you're using different credential names.
-3. Customer and anonymous tokens are NOT cached by design.
+* Check if you're requesting different scopes (each scope set gets its own cache entry).
+* Check if you're using different credential names.
+* Customer and anonymous tokens are NOT cached by design.
 
 ### Debugging tips
 
