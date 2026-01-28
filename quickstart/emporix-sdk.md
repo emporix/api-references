@@ -28,7 +28,7 @@ Before you begin, ensure you have the following installed and configured:
 
 ## Quick start
 
-Get up and running in 5 minutes!
+This quick start shows how to add the Emporix SDK to your Spring Boot project, enable auto-configuration, set up credentials, and run a first API call.
 
 {% stepper %}
 {% step %}
