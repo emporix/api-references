@@ -12,9 +12,9 @@ layout:
 The Order Service is divided into two categories based on who manages the orders:
 
 * **Tenant-Managed Orders** – This refers to the management of customer orders. Customers create the orders, which are then accessible to your employees for processing, status updates, and data modifications.
-* **Customer-Managed Orders** – These are orders submitted by your customers. When logged into their account, customers can view and access their order history.
+* **Customer-Managed Orders** – These are orders submitted by your customers. When logged into their account, customers can view and access their order history. **Authentication:** Standard is customer token (Bearer). Alternatively, you can use an access token from client credentials together with the `saas-token` header.
 
-Scopes neccessary to work with orders are:
+Scopes necessary to work with orders are:
 * `order.order_post`: Needed to create new order as a customer.
 * `order.order_read`: Needed to read order.
 * `order.order_read_le`: Needed to read legal entity orders.
@@ -1273,9 +1273,19 @@ curl 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}'
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
+**Standard (customer token):**
+
 ```bash
-curl 'https://api.emporix.io/order-v2/{tenant}/orders' 
-  --header 'Saas-Token: '
+curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
+  --header 'Authorization: Bearer YOUR_CUSTOMER_TOKEN'
+```
+
+**Alternatively (access token from client credentials + saas-token):**
+
+```bash
+curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
+  --header 'Authorization: Bearer YOUR_ACCESS_TOKEN' \
+  --header 'saas-token: YOUR_SAAS_TOKEN'
 ```
 
 ### Change the order status
@@ -1298,7 +1308,7 @@ curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/saleso
   }'
 ```
 
-* As a customer, you can only change the order status from `CREATED` to `DECLINED` if for any reason you need to cancel the order. To decline the order, send the quest to the [Updating order status](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders-orderid-transitions) endpoint.
+* As a customer, you can only change the order status from `CREATED` to `DECLINED` if for any reason you need to cancel the order. To decline the order, send the request to the [Updating order status](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders-orderid-transitions) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -1306,16 +1316,25 @@ curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/saleso
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
+**Standard (customer token):**
+
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
-  --header 'saas-token: text' 
-  --header 'Content-Type: application/json' 
-  --data '{
-    "status": "DECLINED"
-  }'
+curl -L --request POST \
+  'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
+  --header 'Authorization: Bearer YOUR_CUSTOMER_TOKEN' \
+  --header 'Content-Type: application/json' \
+  --data '{"status": "DECLINED"}'
+```
+
+**Alternatively (access token from client credentials + saas-token):**
+
+```bash
+curl -L --request POST \
+  'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
+  --header 'Authorization: Bearer YOUR_ACCESS_TOKEN' \
+  --header 'saas-token: YOUR_SAAS_TOKEN' \
+  --header 'Content-Type: application/json' \
+  --data '{"status": "DECLINED"}'
 ```
 
 ### Check the status transitions
@@ -1345,12 +1364,19 @@ curl -L
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
+**Standard (customer token):**
+
 ```bash
-curl -L 
-  --url 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
-  --header 'saas-token: text' 
-  --header 'Accept: */*'
+curl -L 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
+  --header 'Authorization: Bearer YOUR_CUSTOMER_TOKEN'
+```
+
+**Alternatively (access token from client credentials + saas-token):**
+
+```bash
+curl -L 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
+  --header 'Authorization: Bearer YOUR_ACCESS_TOKEN' \
+  --header 'saas-token: YOUR_SAAS_TOKEN'
 ```
 
 ## Order splitting
