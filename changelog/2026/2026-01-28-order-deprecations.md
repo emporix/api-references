@@ -13,11 +13,11 @@ layout:
     visible: true
 ---
 
-# 2026-01-28: Order Service - Deprecation of deliveryWindowId and orderCycle
+# 2026-01-28: Order Service - Deprecation of `deliveryWindowId` and `orderCycle`
 
 ## Overview
 
-Two order-level fields have been deprecated in favor of the `deliveryWindow` object. Use the nested properties instead.
+Two order-level fields have been deprecated. Use the other properties instead.
 
 ### Deprecated fields
 
