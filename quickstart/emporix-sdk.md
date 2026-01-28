@@ -745,7 +745,7 @@ config:
     edgeLabelBackground: "#FFC128" 
     edgeLabelTextColor: "#4C5359"
 ---
-lowchart LR
+flowchart LR
     A[User opens page] --> B[Get anonymous token 
 - session created with cart]
     A --> C[User browses]
@@ -767,6 +767,7 @@ lowchart LR
       B:::Class_01
       D:::Class_01
       F:::Class_01
+      G:::Class_01
     classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#A1BDDC
     classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#DDE6EE
 ```
