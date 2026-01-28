@@ -436,22 +436,22 @@ curl https://api.emporix.io/category/{{tenant}}/categories?publish=true \
     "metadata": {
         "version": 0
     },
-    "id": "tools",
-    "code": "Tools",
+    "id": "heatingboilers",
+    "code": "HeatingBoilers",
     "localizedName": {
-        "en": "Tools",
-        "pl": "Narzędzia"
+        "en": "Heating Boilers",
+        "pl": "Kotły Grzewcze"
     },
     "localizedSlug": {
-        "en": "Tools",
-        "pl": "Narzędzia"
+        "en": "Heating Boilers",
+        "pl": "Kotły Grzewcze"
     },
     "localizedDescription": {
-        "en": "Tools",
-        "pl": "Narzędzia"
+        "en": "Heating Boilers",
+        "pl": "NarzędzKotły Grzewczeia"
     },
     "ecn": [
-        "tools"
+        "heatingboilers"
     ]
 }'
 ```
@@ -520,15 +520,15 @@ curl 'https://api.emporix.io/product/{{tenant}}/products' \
         "mixins": {}
     },
     "published": true,
-    "id": "screwdriver",
-    "code": "screwdriver",
+    "id": "heat123",
+    "code": "heat123",
     "name": {
-        "en": "Screwdriver",
-        "pl": "Śrubokręt"
+        "en": "ThermoBrand Heater X200",
+        "pl": "ThermoBrand Heater X200"
     },
     "description": {
-        "en": "Screwdriver",
-        "pl": "Śrubokręt"
+        "en": "ThermoBrand Heater X200 sample description",
+        "pl": "ThermoBrand Heater X200 opis"
     },
     "template": {},
     "taxClasses": {
@@ -609,7 +609,7 @@ curl 'https://api.emporix.io/price/{{tenant}}/prices' \
     "tierValues": [
         {
             "id": "{{priceModelId}}",
-            "priceValue": "24.00"
+            "priceValue": "3500.00"
         }
     ]
 }'
@@ -819,12 +819,6 @@ It is also possible for customers to continue to checkout as guest customers, wi
 
 This operation returns `Customer access token` and `Customer SaaS token`, which convey information about the customer and their activities on the storefront. Use these values for `Authorization` and `saas-token` headers in the next steps.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../../companies-and-customers/customer-service/api-reference/" %}
-[api-reference](../../companies-and-customers/customer-service/api-reference/)
-{% endcontent-ref %}
-
 {% endstep %}
 
 {% step %}
@@ -878,8 +872,8 @@ curl -i -X POST \
     "itemYrn": "{{productYrn}}",
     "price": {
       "priceId": "{{priceId}}",
-      "effectiveAmount": 24.00,
-      "originalAmount": 24.00,
+      "effectiveAmount": 3500.00,
+      "originalAmount": 3500.00,
       "currency": "PLN"
     },
     "quantity": 10
@@ -906,7 +900,7 @@ curl 'https://api.emporix.io/price/{{tenant}}/match-prices-by-context' \
     {
       "itemId": {
         "itemType": "PRODUCT",
-        "id": "screwdriver"
+        "id": "heat123"
       },
       "quantity": {
         "quantity": 10,
@@ -948,7 +942,7 @@ curl -i -X POST \
       "methodId": "{{shipping_method_id}}",
       "zoneId": "{{shipping_zone_id}}",
       "methodName": "Inpost",
-      "amount": 10,
+      "amount": 0,
       "shippingTaxCode": "STANDARD"
     },
     "deliveryWindowId": "inpost-weekday",
@@ -1018,15 +1012,334 @@ curl -i -X POST \
 
 {% step %}
 ### Verify order creation
-As a last step, verify if the order placed by a customer is created accordingly. Use the [Retrieving order details](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid) endpoint.
+As a last step, verify if the order placed by a customer is created accordingly. 
+To display the order details to the customer on the storefront, use the [Retrieving order details](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid) endpoint. Authorize the request with the `customer access token`.
 
 ```bash
 curl -L \
   --url 'https://api.emporix.io/order-v2/{{tenant}}/orders/{{orderId}}' \
-  --header 'Authorization: Bearer <CUSTOMER_TOKEN>' \
+  --header 'Authorization: Bearer <CUSTOMER_ACCESS_TOKEN>' \
   --header 'saas-token: text' \
   --header 'Accept: */*'
 ```
+To obtain the order details and later send tem to the ERP/CRM system, use the [Retrieving sales order details](). Authorize the request with the `OAuth access token`.
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/order-v2/{{tenant}}/salesorders/{{orderId}}' \
+  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' \
+  --header 'Accept: */*'
+```
+
+As a result, you retrieve all the details related to the placed order, which you can display in the UI.
+
+<details>
+<summary>Example response</summary>
+
+```json
+{
+    "id": "EON1001",
+    "status": "CREATED",
+    "created": "2026-01-28T08:24:27.161Z",
+    "lastStatusChange": "2026-01-28T08:24:27.161Z",
+    "cartId": "6979c71f1f08eb1365990995",
+    "entries": [
+        {
+            "id": "heat123",
+            "itemYrn": "urn:yaas:saasag:caasproduct:product:thermodev;heat123",
+            "keepAsSeparateLineItem": false,
+            "type": "INTERNAL",
+            "amount": 10,
+            "orderedAmount": 10,
+            "effectiveQuantity": 10.0,
+            "originalAmount": 3500,
+            "originalPrice": 3500,
+            "unitPrice": 3500,
+            "calculatedUnitPrice": {
+                "netValue": 3500.0,
+                "grossValue": 4305.0,
+                "taxValue": 805.0,
+                "taxCode": "STANDARD",
+                "taxRate": 23.0
+            },
+            "totalPrice": 35000.0,
+            "product": {
+                "id": "heat123",
+                "sku": "heat123",
+                "name": "ThermoBrand Heater X200",
+                "localizedName": {
+                    "en": "ThermoBrand Heater X200",
+                    "pl": "ThermoBrand Heater X200"
+                },
+                "description": "[en:ThermoBrand Heater X200 sample description, pl:ThermoBrand Heater X200 opis]",
+                "published": true,
+                "images": [],
+                "productType": "BASIC"
+            },
+            "tax": {
+                "lines": [
+                    {
+                        "amount": 8050.0,
+                        "currency": "PLN",
+                        "code": "STANDARD",
+                        "name": "STANDARD",
+                        "rate": 23.0,
+                        "sequenceId": 0,
+                        "inclusive": false
+                    }
+                ],
+                "total": {
+                    "amount": 0,
+                    "currency": "PLN",
+                    "inclusive": false
+                }
+            },
+            "price": {
+                "priceId": "69735d30318b654a97e882fe",
+                "currency": "PLN",
+                "originalAmount": 3500.0,
+                "effectiveAmount": 3500.0,
+                "basePrice": {},
+                "presentationPrice": {},
+                "metadata": {
+                    "createdAt": "2026-01-23T11:36:16.644Z",
+                    "modifiedAt": "2026-01-23T11:36:16.644Z",
+                    "version": 1
+                }
+            },
+            "totalDiscount": {
+                "amount": 0,
+                "currency": "PLN"
+            },
+            "fees": {
+                "total": {
+                    "subTotal": 0,
+                    "totalTax": 0,
+                    "total": 0
+                }
+            },
+            "metadata": {
+                "mixins": {
+                    "fees": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json"
+                }
+            },
+            "mixins": {
+                "fees": {
+                    "total": {
+                        "subTotal": 0,
+                        "totalTax": 0,
+                        "total": 0,
+                        "discount": 0
+                    }
+                }
+            },
+            "calculatedPrice": {
+                "price": {
+                    "netValue": 35000.0,
+                    "grossValue": 43050.0,
+                    "taxValue": 8050.0,
+                    "taxCode": "STANDARD",
+                    "taxRate": 23.0
+                },
+                "finalPrice": {
+                    "netValue": 35000.0,
+                    "grossValue": 43050.0,
+                    "taxValue": 8050.0,
+                    "taxCode": "STANDARD",
+                    "taxRate": 23.0
+                }
+            },
+            "priceMatchDetails": {
+                "netValue": 3500.0,
+                "grossValue": 4305.0,
+                "taxValue": 805.0,
+                "taxCode": "STANDARD",
+                "taxRate": 23,
+                "taxCountry": "PL"
+            }
+        }
+    ],
+    "discounts": [],
+    "customer": {
+        "id": "C0001",
+        "name": "Julia Nowak",
+        "title": "Mrs",
+        "firstName": "Julia",
+        "lastName": "Nowak",
+        "company": "ThermoBrand",
+        "email": "j.nowak@thermo.com"
+    },
+    "siteCode": "PL",
+    "countryCode": "PL",
+    "billingAddress": {
+        "contactName": "Julia Nowak",
+        "companyName": "ThermoBrand",
+        "street": "Kaczyniec",
+        "streetNumber": "9",
+        "streetAppendix": "",
+        "zipCode": "42-500",
+        "city": "Gliwice",
+        "country": "PL",
+        "state": "",
+        "contactPhone": "03214323412"
+    },
+    "shippingAddress": {
+        "contactName": "Julia Nowak",
+        "companyName": "ThermoBrand",
+        "street": "Kaczyniec",
+        "streetNumber": "9",
+        "streetAppendix": "",
+        "zipCode": "42-500",
+        "city": "Gliwice",
+        "country": "PL",
+        "state": "",
+        "contactPhone": "03214323412"
+    },
+    "payments": [
+        {
+            "status": "PENDING",
+            "method": "invoice",
+            "paidAmount": 0,
+            "currency": "PLN",
+            "provider": "INVOICE"
+        }
+    ],
+    "shipping": {
+        "total": {
+            "amount": 0,
+            "currency": "PLN"
+        },
+        "lines": [
+            {
+                "amount": 0,
+                "currency": "PLN",
+                "code": "inpost",
+                "name": "Inpost",
+                "localizedName": {
+                    "en": "Inpost",
+                    "pl": "Inpost"
+                },
+                "tax": {
+                    "total": {
+                        "amount": 0.0,
+                        "currency": "PLN",
+                        "inclusive": false
+                    },
+                    "rate": 23.0
+                },
+                "shippingTaxCode": "STANDARD"
+            }
+        ]
+    },
+    "tax": {
+        "lines": [
+            {
+                "amount": 8050.0,
+                "currency": "PLN",
+                "code": "STANDARD",
+                "name": "STANDARD",
+                "rate": 23.0,
+                "sequenceId": 0,
+                "inclusive": false
+            }
+        ],
+        "total": {
+            "amount": 0,
+            "currency": "PLN",
+            "inclusive": false
+        }
+    },
+    "subTotalPrice": 35000.0,
+    "totalPrice": 35000.0,
+    "totalAuthorizedAmount": 43050.0,
+    "currency": "PLN",
+    "metadata": {
+        "mixins": {
+            "payments": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/CAAS/fees_checkout-mashup.json",
+            "generalAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/orderGeneralAttributesMixIn.v9.json"
+        },
+        "version": 1
+    },
+    "mixins": {
+        "payments": {
+            "elements": [
+                {
+                    "paymentMethodYrn": "urn:yaas:hybris:payments:payment-method:thermodev;invoice",
+                    "total": {
+                        "subTotal": 0.0,
+                        "totalTax": 0.0,
+                        "total": 0.0,
+                        "discount": 0.0
+                    }
+                }
+            ],
+            "total": {
+                "subTotal": 0.0,
+                "totalTax": 0.0,
+                "total": 0.0,
+                "discount": 0.0
+            }
+        },
+        "generalAttributes": {
+            "extendedOrderStatus": "10",
+            "customerFirstOrder": false,
+            "orderNumber": "EON1001"
+        }
+    },
+    "feeYrnAggregate": {
+        "total": {
+            "subTotal": 0.0,
+            "totalTax": 0.0,
+            "total": 0.0
+        }
+    },
+    "calculatedPrice": {
+        "price": {
+            "netValue": 35000.0,
+            "grossValue": 43050.0,
+            "taxValue": 8050.0,
+            "taxCode": "STANDARD",
+            "taxRate": 23.0
+        },
+        "shipping": {
+            "netValue": 0.0,
+            "grossValue": 0.0,
+            "taxValue": 0.0,
+            "taxCode": "STANDARD",
+            "taxRate": 23.0
+        },
+        "totalShipping": {
+            "netValue": 0.0,
+            "grossValue": 0.0,
+            "taxValue": 0.0,
+            "taxCode": "STANDARD",
+            "taxRate": 23.0
+        },
+        "finalPrice": {
+            "netValue": 35000.0,
+            "grossValue": 43050.0,
+            "taxValue": 8050.0,
+            "taxCode": "STANDARD",
+            "taxRate": 23.0,
+            "taxAggregate": {
+                "lines": [
+                    {
+                        "netValue": 35000.0,
+                        "grossValue": 43050.0,
+                        "taxValue": 8050.0,
+                        "taxCode": "STANDARD",
+                        "taxRate": 23.0
+                    }
+                ]
+            }
+        }
+    },
+    "restriction": "PL"
+}
+```
+</details>
+
+From there, you can process the order.
 
 {% include "../.gitbook/includes/example-hint-text.md" %}
 
