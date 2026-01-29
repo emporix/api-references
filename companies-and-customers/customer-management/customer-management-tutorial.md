@@ -333,103 +333,6 @@ Once a customer is logged in, they can manage their profile information, includi
 
 {% stepper %}
 {% step %}
-### Retrieving a customer profile
-
-To allow a customer to check and modify the details associated with their account, fetch the current customer's profile information. Send a request to the [Retrieving a customer profile](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/account-and-profile#get-customer-tenant-me) endpoint.
-
-{% hint style="warning" %}
-Authorize the request with a customer access token or an anonymous access token, depending on the specific use case.
-{% endhint %}
-
-```bash
-curl -i -X GET 
-  'https://api.emporix.io/customer/{tenant}/me?expand=addresses,mixin:*' 
-  -H 'Authorization: Bearer {customer_access_token}'
-```
-
-The response includes customer details such as personal information, preferred settings, and associated accounts:
-
-```json
-{
-  "title": "MR",
-  "firstName": "John",
-  "lastName": "Doe",
-  "contactPhone": "123456789",
-  "company": "Emporix",
-  "preferredLanguage": "en_US",
-  "preferredCurrency": "USD",
-  "preferredSite": "default",
-  "metadata": {
-    "mixins": {},
-    "version": 2
-  },
-  "mixins": {},
-  "customerNumber": "13869000",
-  "id": "13869000",
-  "accounts": [
-    {
-      "id": "example@customer.com"
-    }
-  ],
-  "contactEmail": "example@customer.com",
-  "businessModel": "B2B",
-  "b2b": {
-    "companyRegistrationId": "123-456-789",
-    "legalEntities": [
-      {
-        "id": "D165356",
-        "name": "Emporix",
-        "contactAssignmentId": "D436432"
-      }
-    ]
-  }
-}
-```
-
-{% hint style="info" %}
-Use the `expand` query parameter to include additional attributes like `addresses` or `mixin:*` to expand mixin schemas.
-{% endhint %}
-{% endstep %}
-
-{% step %}
-### Updating a customer profile
-
-Customers can update their personal details, preference settings, and B2B information. Send a request to the [Updating a customer profile](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/account-and-profile#patch-customer-tenant-me) endpoint.
-
-{% hint style="warning" %}
-Authorize the request with a customer access token.
-{% endhint %}
-
-```bash
-curl -i -X PATCH 
-  'https://api.emporix.io/customer/{tenant}/me' 
-  -H 'Authorization: Bearer {customer_access_token}' 
-  -H 'Content-Type: application/json' 
-  -d '{
-    "title": "MR",
-    "firstName": "John",
-    "lastName": "Doe",
-    "contactEmail": "example@customer.com",
-    "contactPhone": "123456789",
-    "company": "Emporix",
-    "preferredLanguage": "en_US",
-    "preferredCurrency": "EUR",
-    "preferredSite": "DE",
-    "b2b": {
-      "companyRegistrationId": "123-456-789"
-    },
-    "metadata": {
-      "version": 1
-    }
-  }'
-```
-
-{% hint style="info" %}
-You can also use `application/merge-patch+json` as the Content-Type header for partial updates.
-{% endhint %}
-{% endstep %}
-
-{% step %}
 ### Adding an address to a customer profile
 
 Customers can add shipping or billing addresses to their profile. Send a request to the [Adding a customer address](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/addresses#post-customer-tenant-me-addresses) endpoint.
@@ -614,23 +517,6 @@ curl -i -X DELETE
 Deleting an address also removes any accounts associated with it.
 {% endhint %}
 
-{% endstep %}
-
-{% step %}
-### Deleting a customer profile
-
-To delete a customer profile and the associated account, send a request to the [Deleting a customer profile](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/account-and-profile#delete-customer-tenant-me) endpoint.
-In the query parameter, you can pass the token that the customer receives by email to confirm deletion.
-
-```bash
-curl -i -X DELETE 
-  'https://api.emporix.io/customer/{tenant}/me?token={confirmation_token}' 
-  -H 'Authorization: Bearer {customer_access_token}'
-```
-
-{% hint style="warning" %}
-Deleting a customer profile permanently removes the profile and all associated accounts. This action may return `202 Accepted` if confirmation is required, or `204 No Content` if deletion is immediate.
-{% endhint %}
 {% endstep %}
 {% endstepper %}
 
