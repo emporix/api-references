@@ -46,12 +46,7 @@ We recommend you to be prepared to collect these values as you go. Each step lis
 
 ### Authorization and headers
 
-Use a service access token for configuration steps (tenant setup, data import). For storefront flow, use:
-
-* **Anonymous Access Token** - for anonymous session and cart creation before login.
-* **Customer Access Token** - after login, for cart updates and checkout.
-
-Some checkout endpoints also require `saas-token` and `session-id` headers, which you obtain from the login/anonymous session response and should pass through your storefront.
+Use a **service access token** for configuration steps (tenant setup, data import, and customer setup). 
 
 {% stepper %}
 {% step %}
@@ -770,7 +765,19 @@ curl 'https://api.emporix.io/customer/{{tenant}}/customers/{{customerNumber}}/ad
 
 ## Storefront checkout flow
 
-The tenant setup is prepared to handle checkout functionality. Now, ensure that your storefront setup (or the Emporix B2B Commerce Frontend) is able to process the data and pass it to the relevant API endpoints. The example checkout flow on the storefront side includes the following steps.
+The tenant setup is prepared to handle checkout functionality. Now, ensure that your storefront setup (or the Emporix B2B Commerce Frontend) is able to process the data and pass it to the relevant API endpoints. 
+
+{% hint style="warning" %}
+For storefront flow, use:
+
+* **Anonymous Access Token** - for anonymous session and cart creation before login.
+* **Customer Access Token** - after login, for cart updates and checkout.
+
+Some checkout endpoints also require `saas-token` and `session-id` headers, which you obtain from the login/anonymous session response and should pass through your storefront.
+
+{% endhint %}
+
+The example checkout flow on the storefront side includes the following steps.
 
 {% stepper %}
 {% step %}
