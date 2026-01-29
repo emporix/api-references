@@ -9,7 +9,7 @@ layout:
 
 Built for Spring Boot applications with powerful authentication management, type-safe API clients, and convenient token handling.
 
-The Emporix Java SDK is available under [emporix-sdk](https://central.sonatype.com/artifact/io.emporix/emporix-sdk) maven repository and provides:
+The Emporix Java SDK is available under [emporix-sdk](https://mvnrepository.com/artifact/io.emporix/emporix-sdk) maven repository and provides:
 
 - Type-safe API clients for all Emporix services
 - Automatic Spring Boot configuration with `@EnableEmporixAutoConfiguration`
@@ -28,7 +28,7 @@ Before you begin, ensure you have the following installed and configured:
 
 ## Quick start
 
-This quick start shows how to add the Emporix SDK to your Spring Boot project, enable auto-configuration, set up credentials, and run a first API call.
+This quick start shows how to add the Emporix Java SDK to your Spring Boot project, enable auto-configuration, set up credentials, and run a first API call.
 
 {% stepper %}
 {% step %}
@@ -38,7 +38,7 @@ This quick start shows how to add the Emporix SDK to your Spring Boot project, e
 
 ```gradle
 dependencies {
-    implementation 'io.emporix:emporix-sdk:1.0.0'
+    implementation 'io.emporix:emporix-sdk:1.1.0'
 }
 ```
 
@@ -48,7 +48,7 @@ dependencies {
 <dependency>
   <groupId>io.emporix</groupId>
   <artifactId>emporix-sdk</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0</version>
 </dependency>
 ```
 {% endstep %}
