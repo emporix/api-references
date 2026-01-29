@@ -1656,7 +1656,7 @@ emporix:
   tenant: your-tenant-id
 ```
 
-### Isse: "Custom credentials 'xxx' not found"
+### Issue: "Custom credentials 'xxx' not found"
 
 **Cause:** Requesting a token with custom credential name that doesn't exist in configuration.
 
@@ -1681,7 +1681,7 @@ emporix:
 
 **Important:** The OAuth2 client must also be created in your Emporix tenant with appropriate scopes assigned.
 
-### Isse: "403 Forbidden" or "Insufficient Scopes"
+### Issue: "403 Forbidden" or "Insufficient Scopes"
 
 **Cause:** Token doesn't have required OAuth2 scopes for the operation.
 
