@@ -46,7 +46,7 @@ We recommend you to be prepared to collect these values as you go. Each step lis
 
 ### Authorization
 
-Obtain a **Service Access Token** for configuration steps (tenant setup, data import, and customer setup). 
+For the configuration steps (tenant setup, data import, and customer setup), the **Service Access Token** is required.
 
 {% stepper %}
 {% step %}
