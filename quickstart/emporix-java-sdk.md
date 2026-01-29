@@ -5,11 +5,11 @@ layout:
   width: wide
 ---
 
-# Emporix SDK
+# Emporix Java SDK
 
 Built for Spring Boot applications with powerful authentication management, type-safe API clients, and convenient token handling.
 
-The Emporix SDK is available under [LINK] and provides:
+The Emporix Java SDK is available under [LINK] and provides:
 
 - Type-safe API clients for all Emporix services
 - Automatic Spring Boot configuration with `@EnableEmporixAutoConfiguration`
@@ -137,7 +137,7 @@ public class ProductService {
 }
 ```
 
-**Result:** You're ready to use the SDK.
+**Result:** Setup is complete — the Emporix SDK is configured and working in your application.
 {% endstep %}
 {% endstepper %}
 
@@ -263,11 +263,11 @@ Environment variables take precedence over `application.yml` values.
 
 The SDK provides two usage modesL DTOs only and full SDK.
 
-### DTOs only with no configuration
+### DTOs only - with no configuration
 
 Simply add the SDK as a dependency to use the data transfer objects (DTOs). No additional configuration needed.
 
-### Full SDK with auto-configuration
+### Full SDK - with auto-configuration
 
 To enable API clients and authentication services, add the annotation:
 
@@ -480,10 +480,11 @@ Customer token requires an `anonymousToken` parameter - Emporix returns an error
 
 ### Token caching
 
-The SDK automatically caches tokens for optimal performance:
+The SDK automatically caches service and custom credential tokens for optimal performance:
 
 - **Service tokens** - Cached by scope set AND credential name, auto-refreshed on expiration
 - **Custom credential tokens** - Each credential set has its own cache
+
 - **Customer tokens** - NOT cached (managed by your application)
 - **Anonymous tokens** - NOT cached (each user needs unique token)
 
@@ -857,8 +858,8 @@ tokenService.clearCache(TokenType.SERVICE, "integration:" + PRODUCT_MANAGE);
 tokenService.clearCache(TokenType.SERVICE, "partner:");
 ```
 
-{% hint style="info" %}
-Anonymous and customer tokens are NOT cached by the SDK - you must manage them in your application (e.g., in HTTP session or Redis).
+{% hint style="warning" %}
+Anonymous and customer tokens are NOT cached by the SDK - you must manage them in your application (for example, in HTTP session or Redis).
 {% endhint %}
 
 ## Usage examples
@@ -1130,7 +1131,7 @@ emporix:
           secret: thirdparty-secret
 ```
 
-{% hint style="info" %}
+{% hint style="warning %}
 Each OAuth2 client (`integration`, `partner`, `thirdparty`) must be created in your Emporix tenant settings with the appropriate scopes assigned.
 {% endhint %}
 
@@ -1459,7 +1460,7 @@ When to use each:
 
 ### Preserve anonymous tokens on login
 
-Always pass the anonymous token when logging in customers to preserve shopping cart and session:
+Always pass the anonymous token when logging in customers to preserve shopping cart and session.
 
 **Recommended:**
 
@@ -1483,7 +1484,7 @@ CustomerTokenResponse customerToken = tokenService.getCustomerToken(
 
 ### Reuse service tokens
 
-Service tokens are automatically cached by the SDK. Reuse the same `EmporixTokenService` instance:
+Service tokens are automatically cached by the SDK. Reuse the same `EmporixTokenService` instance.
 
 **Recommended:**
 
@@ -1507,7 +1508,7 @@ public class ProductService {
 
 ### Handle errors gracefully
 
-Always handle API exceptions appropriately:
+Always handle API exceptions appropriately.
 
 **Recommended:**
 
@@ -1530,7 +1531,7 @@ public ProductResponse getProduct(String id) {
 
 ### Use custom credentials for integrations and partners
 
-Leverage custom credentials (separate OAuth2 clients configured in Emporix) for integrations, partners, or systems with limited permissions:
+Leverage custom credentials (separate OAuth2 clients configured in Emporix) for integrations, partners, or systems with limited permissions.
 
 **Recommended:**
 
@@ -1552,7 +1553,7 @@ Each custom credential corresponds to an OAuth2 client created in your Emporix t
 
 ### Manage customer tokens in your application
 
-The SDK does NOT cache customer tokens. Store them securely in your application:
+The SDK does NOT cache customer tokens. Store them securely in your application.
 
 **Recommended:**
 
@@ -1584,7 +1585,7 @@ productClient.getProducts(
 
 ### Enable token caching
 
-Keep token caching enabled in production for better performance:
+Keep token caching enabled in production for better performance.
 
 ```yaml
 emporix:
@@ -1597,9 +1598,9 @@ emporix:
 
 ## Troubleshooting
 
-Check the solution for common issues.
+Check the solutions for the most common issues.
 
-### "Bean of type ProductClient could not be found"
+### Issue: "Bean of type ProductClient could not be found"
 
 **Cause:** SDK auto-configuration is not enabled.
 
@@ -1613,7 +1614,7 @@ public class MyApplication { ...
 }
 ```
 
-### "401 Unauthorized"
+### Issue: "401 Unauthorized"
 
 **Possible Causes:**
 
@@ -1638,7 +1639,7 @@ public class MyApplication { ...
    productClient.getProducts(..., authorization);
    ```
 
-### "Tenant must be configured"
+### Issue: "Tenant must be configured"
 
 **Cause:** Missing tenant configuration.
 
@@ -1655,7 +1656,7 @@ emporix:
   tenant: your-tenant-id
 ```
 
-### "Custom credentials 'xxx' not found"
+### Isse: "Custom credentials 'xxx' not found"
 
 **Cause:** Requesting a token with custom credential name that doesn't exist in configuration.
 
@@ -1680,7 +1681,7 @@ emporix:
 
 **Important:** The OAuth2 client must also be created in your Emporix tenant with appropriate scopes assigned.
 
-### "403 Forbidden" or "Insufficient Scopes"
+### Isse: "403 Forbidden" or "Insufficient Scopes"
 
 **Cause:** Token doesn't have required OAuth2 scopes for the operation.
 
