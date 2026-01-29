@@ -373,7 +373,7 @@ The multi-site architecture pattern is most relevant when you want to run differ
 
 {% stepper %}
 {% step %}
-#### Create the site
+### Create the site
 
 Create the Netherlands site by sending a request to the [Creating a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites) endpoint.
 
@@ -412,7 +412,7 @@ curl -X POST 'https://api.emporix.io/site/{tenant}/sites'
 {% endstep %}
 
 {% step %}
-#### Create category trees for each brand
+### Create category trees for each brand
 
 Create root categories for each brand you sell. These categories can be used across multiple sites.
 
@@ -462,7 +462,7 @@ The same way, create subcategories for each root brand category, for example: `H
 {% endstep %}
 
 {% step %}
-#### Create the catalog and assign categories
+### Create the catalog and assign categories
 
 Create a catalog for the Netherlands site and assign the brand category trees to it by passing the IDs of the created categories. Send the request to the [Creating a catalog](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/catalog/api-reference/catalog-management#post-catalog-tenant-catalogs) endpoint.
 
@@ -495,7 +495,7 @@ curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs'
 {% endstep %}
 
 {% step %}
-#### Assign products to respective categories
+### Assign products to respective categories
 
 Call the [Assigning a resource to a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#post-category-tenant-categories-categoryid-assignments) endpoint to assign selected products to the Thermobrand and WarmTech categories. Pass the respective `categoryId` as the path parameter.
 
@@ -521,7 +521,7 @@ curl -X POST 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/a
 {% endstep %}
 
 {% step %}
-#### Create availability for products
+### Create availability for products
 
 Create availability records for the products on the Netherlands site to control visibility and stock levels. Send the request to the [Creating a new availability for a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site) endpoint passing the relevant `productId` and the `site` as the path parameters. 
 
@@ -548,7 +548,7 @@ curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{product
 
 {% stepper %}
 {% step %}
-#### Create sites
+### Create sites
 
 Create separate sites for each brand in Germany so that each brand has its own dedicated site. Use the [Creating a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites) endpoint.
 
@@ -618,7 +618,7 @@ curl -X POST 'https://api.emporix.io/site/{tenant}/sites'
 {% endstep %}
 
 {% step %}
-#### Create catalogs for each site
+### Create catalogs for each site
 
 Create a dedicated catalog for each site and assign only the relevant brand's category tree to each catalog. Call the [Creating a catalog](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/catalog/api-reference/catalog-management#post-catalog-tenant-catalogs) endpoint.
 
@@ -670,7 +670,7 @@ curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs'
 {% endstep %}
 
 {% step %}
-#### Create site-specific availability
+### Create site-specific availability
 
 Create availability records for products on each site to control visibility and stock levels independently. Call the [Creating a new availability for a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site) endpoint passing the relevant `productId` and the `site` as the path parameters. 
 
@@ -706,7 +706,7 @@ curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{product
 {% endstep %}
 
 {% step %}
-#### Create site-specific segments
+### Create site-specific segments
 
 Create customer segments for each site to control visibility based on customer roles and IDP roles. Use the [Creating a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments) endpoint.
 
