@@ -9,7 +9,7 @@ layout:
 
 Built for Spring Boot applications with powerful authentication management, type-safe API clients, and convenient token handling.
 
-The Emporix Java SDK is available under [LINK] and provides:
+The Emporix Java SDK is available under [emporix-sdk](https://central.sonatype.com/artifact/io.emporix/emporix-sdk) maven repository and provides:
 
 - Type-safe API clients for all Emporix services
 - Automatic Spring Boot configuration with `@EnableEmporixAutoConfiguration`
