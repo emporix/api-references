@@ -44,9 +44,9 @@ We recommend you to be prepared to collect these values as you go. Each step lis
 
 {% endhint %}
 
-### Authorization and headers
+### Authorization
 
-Use a **service access token** for configuration steps (tenant setup, data import, and customer setup). 
+Obtain a **Service Access Token** for configuration steps (tenant setup, data import, and customer setup). 
 
 {% stepper %}
 {% step %}
@@ -768,7 +768,7 @@ curl 'https://api.emporix.io/customer/{{tenant}}/customers/{{customerNumber}}/ad
 The tenant setup is prepared to handle checkout functionality. Now, ensure that your storefront setup (or the Emporix B2B Commerce Frontend) is able to process the data and pass it to the relevant API endpoints. 
 
 {% hint style="warning" %}
-For storefront flow, use:
+For storefront flow, authorize a customer:
 
 * **Anonymous Access Token** - for anonymous session and cart creation before login.
 * **Customer Access Token** - after login, for cart updates and checkout.
