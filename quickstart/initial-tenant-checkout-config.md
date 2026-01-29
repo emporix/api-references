@@ -16,7 +16,7 @@ The steps take you through the following paths:
 * **Customer setup** - Test customer and address configuration
 * **Storefront checkout flow** - The scenario to make a purchase and complete checkout on the storefront as a customer
 
-After completing the steps you will understand the minimum configuration needed for checkout and how to successfully complete a checkout in the Emporix Frontend, or a custom storefront solution. The described steps help you achieve a working configuration for the whole checkout flow, but you can further extend this configuration for your specific business needs. Consider configuring delivery times (for scheduled deliveries), multiple shipping methods (for different delivery options), multiple payment methods (for customer choice), enhancing product with images and media, as well as brand and label setup.
+After completing the steps you will understand the minimum configuration needed for checkout and how to successfully complete a checkout in the [Emporix B2B Commerce Frontend](https://app.gitbook.com/s/OgeoK7nW6gEh0q1ceUZP/), or a custom storefront solution. The described steps help you achieve a working configuration for the whole checkout flow with simple examples, but you can further extend this configuration for your specific business needs. Consider configuring multiple delivery times (for scheduled deliveries), multiple shipping methods (for different delivery options), multiple payment methods (for customer choice), enhancing product with images and media, as well as brand and label setup.
 
 ## Prerequisites
 
@@ -25,15 +25,15 @@ To get started, make sure you have:
 * **Emporix Account** - an active Emporix tenant created
 * **API keys** - credentials to make relevant API calls
 
-## Before you start
+{% hint style="info" %}
 
-Collect these values as you go. Each step lists where to copy them from.
+We recommend you to be prepared to collect these values as you go. Each step lists where to copy them from.
 
 | Placeholder | Description | Where it comes from |
 | --- | --- | --- |
 | `{{tenant}}` | Tenant identifier | Your tenant id |
-| `{{client_id}}`, `{{client_secret}}` | Service credentials | Emporix Console |
-| `{{storefront_client_id}}` | Storefront client id | Emporix Console |
+| `{{client_id}}`, `{{client_secret}}` | Service credentials | Emporix Developer Portal |
+| `{{storefront_client_id}}` | Storefront client id | Emporix Developer Portal |
 | `{{category_id}}` | Category id | Create a category response |
 | `{{product_id}}` | Product id | Create a product response |
 | `{{priceModelId}}` | Price model id | Create a price model response |
@@ -41,6 +41,8 @@ Collect these values as you go. Each step lists where to copy them from.
 | `{{zoneId}}` | Shipping zone id | Create a shipping zone response |
 | `{{shipping_method_id}}` | Shipping method id | Create a shipping method response |
 | `{{cartId}}` | Cart id | Create a cart response |
+
+{% endhint %}
 
 ### Authorization and headers
 
@@ -85,8 +87,8 @@ There is also a convenient alternative way for initial tenant configuration. You
 {% stepper %}
 {% step %}
 ### Configure payment method
-To create an `invoice` payment method, call the [Creating a single payment mode entity](https://developer.emporix.io/api-references/api-guides/checkout/payment-gateway/api-reference/payment-mode#post-payment-gateway-tenant-paymentmodes-config) endpoint.
-Use `invoice` for a minimal setup. For real payments, configure a provider-specific mode with its required credentials.
+Create `invoice` for a minimal setup of payments. To create a new payment method, call the [Creating a single payment mode entity](https://developer.emporix.io/api-references/api-guides/checkout/payment-gateway/api-reference/payment-mode#post-payment-gateway-tenant-paymentmodes-config) endpoint.
+For real payments, configure a provider-specific mode with its required credentials.
 
 ```bash
 curl 'https://api.emporix.io/payment-gateway/{{tenant}}/paymentmodes/config' \
@@ -247,7 +249,7 @@ curl 'https://api.emporix.io/tax/{{tenant}}/taxes' \
 
 {% step %}
 ### Create a site
-A site can be determined by a country or a brand you want to sell in your store. 
+Determine a site by a country you operate in or by a brand you want to sell in your store. 
 Create a `PL` site for the Polish market by sending a request to the [Creating a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites) endpoint. Include the `homeBase` address country, which is required for shipping calculations. Keep site, country, currency, tax, and shipping zone aligned.
 
 ```bash
@@ -768,7 +770,7 @@ curl 'https://api.emporix.io/customer/{{tenant}}/customers/{{customerNumber}}/ad
 
 ## Storefront checkout flow
 
-The tenant setup is prepared to handle checkout functionality. Now, ensure that your storefront setup (or the Emporix Commerce Frontend) is able to process the data and pass it to the relevant API endpoints. The example checkout flow on the storefront side includes the following steps.
+The tenant setup is prepared to handle checkout functionality. Now, ensure that your storefront setup (or the Emporix B2B Commerce Frontend) is able to process the data and pass it to the relevant API endpoints. The example checkout flow on the storefront side includes the following steps.
 
 {% stepper %}
 {% step %}
@@ -1349,8 +1351,8 @@ From there, you can process the order.
 {% endstep %}
 {% endstepper %}
 
-## Common pitfalls
-| Pitfall | Recommendation |
+## Troubleshooting
+| Problem | Recommendation |
 | --- | --- |
 | Missing home base address | Set `homeBase.country` on the site to match the site country so shipping calculations succeed. |
 | Currency mismatch between tenant and site | Ensure the site currency is active and matches the currency used in prices and carts. |
@@ -1363,13 +1365,13 @@ From there, you can process the order.
 {% hint style="info" %}
 For more information, see the following documentation and API references:
 
+- [Emporix Terraform Provider](./emporix-terraform-provider.md) 
 - [Availability Service API Reference](../orders/availability/api-reference/)
 - [Cart Service API Reference](../checkout/cart/api-reference/)
 - [Catalog Service API Reference](../catalogs-and-categories/catalog/api-reference/)
 - [Category Service API Reference](../catalogs-and-categories/category-tree/api-reference/)
 - [Checkout Service API Reference](../checkout/checkout/api-reference/) 
 - [Configuration Service API Reference](../configuration/configuration-service/api-reference/)
-- [Emporix Terraform Provider](./emporix-terraform-provider.md) 
 - [Price Service API Reference](../prices-and-taxes/price-service/api-reference/)
 - [Product Service API Reference](../products-labels-and-brands/product-service/api-reference/)
 - [Shipping API Reference](../delivery-and-shipping/shipping/api-reference/)
