@@ -22,6 +22,122 @@ tags:
   - name: Double opt-in
     description: Allow option for double opt-in.
 paths:
+  '/customer/{tenant}/me':
+    patch:
+      responses:
+        '200':
+          description: OK
+        '400':
+          $ref: '#/components/responses/400_bad_request'
+        '401':
+          $ref: '#/components/responses/401_unauthorized'
+        '403':
+          $ref: '#/components/responses/403_forbidden'
+      description: |
+        Updates a customer profile.
+
+        **Note**: The request needs to be authorized with a customer access token.
+        ***
+        ### Required scopes
+        No specific scopes are required.
+      operationId: PATCH-customer-update-customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerUpdateDto'
+            examples:
+              Request example:
+                value:
+                  title: MR
+                  firstName: John
+                  lastName: Doe
+                  contactEmail: example@customer.com
+                  contactPhone: '123456789'
+                  company: Emporix
+                  preferredLanguage: en_US
+                  preferredCurrency: EUR
+                  preferredSite: main
+                  b2b:
+                    companyRegistrationId: 123-456-789
+                  metadata:
+                    version: 1
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/CustomerUpdateDto'
+        required: false
+      security:
+        - CustomerAccessToken: []
+      summary: Updating a customer profile
+      tags:
+        - Account and profile
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Logged in customer:
+                  value:
+                    title: MR
+                    firstName: John
+                    lastName: Doe
+                    contactPhone: '123456789'
+                    company: Emporix
+                    preferredLanguage: en_US
+                    preferredCurrency: USD
+                    preferredSite: default
+                    metadata:
+                      mixins: {}
+                      version: 2
+                    mixins: {}
+                    customerNumber: '13869000'
+                    id: '13869000'
+                    accounts:
+                      - id: example@customer.com
+                    contactEmail: example@customer.com
+                    businessModel: B2B
+                    b2b:
+                      companyRegistrationId: 123-456-789
+                      legalEntities:
+                        - id: D165356
+                          name: Emporix
+                          contactAssignmentId: D436432
+                Anonymous customer:
+                  value:
+                    firstName: Anonymous
+                    lastName: Anonymous
+                    preferredSite: default
+                    customerNumber: '00000000'
+                    id: '00000000'
+                    accounts: []
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '400':
+          $ref: '#/components/responses/400_bad_request'
+        '401':
+          $ref: '#/components/responses/401_unauthorized'
+        '403':
+          $ref: '#/components/responses/403_forbidden'
+      description: |-
+        Retrieves a customer profile.
+
+        **Note**: The request needs to be authorized with a customer access token or an anonymous access token.
+        ***
+        ### Required scopes
+        No specific scopes are required.
+      operationId: GET-customer-retrieve-customer-profile
+      security:
+        - CustomerAccessToken: []
+        - AnonymousAccessToken: []
+      summary: Retrieving a customer profile
+      parameters:
+        - $ref: '#/components/parameters/expand'
+      tags:
+        - Account and profile
+    parameters:
+      - $ref: '#/components/parameters/tenant'
   '/customer/{tenant}/me/addresses':
     post:
       responses:
