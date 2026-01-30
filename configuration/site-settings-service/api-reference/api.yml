@@ -1220,7 +1220,7 @@ components:
                 status: 403
                 message: User not authorized
                 details:
-                  - message: 'Missing required scopes [hybris.site_manage, site.site_manage]'
+                  - message: 'Missing required scopes [site.site_manage]'
     400_invalid_tenant:
       description: ''
       content:

@@ -616,6 +616,12 @@ paths:
 
         `catalog.catalog_manage`
       operationId: DELETE-catalog-remove-catalog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       parameters:
         - name: tenant
           in: path
