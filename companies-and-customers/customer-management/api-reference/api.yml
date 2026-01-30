@@ -136,33 +136,6 @@ paths:
         - $ref: '#/components/parameters/expand'
       tags:
         - Account and profile
-    delete:
-      responses:
-        '202':
-          description: Customer profile deletion confirmation was successfully accepted
-        '204':
-          description: Customer profile deletion request was successful
-        '400':
-          $ref: '#/components/responses/400_bad_request'
-        '401':
-          $ref: '#/components/responses/401_unauthorized'
-        '403':
-          $ref: '#/components/responses/403_forbidden'
-      description: |-
-        Deletes a customer profile and the account associated with it.
-
-        **Note**: The request needs to be authorized with a customer access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
-      operationId: DELETE-customer-remove-customer-profile
-      security:
-        - CustomerAccessToken: []
-      parameters:
-        - $ref: '#/components/parameters/token'
-      summary: Deleting a customer profile
-      tags:
-        - Account and profile
     parameters:
       - $ref: '#/components/parameters/tenant'
   '/customer/{tenant}/me/addresses':
