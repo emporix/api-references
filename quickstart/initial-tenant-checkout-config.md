@@ -153,7 +153,7 @@ curl 'https://api.emporix.io/currency/{{tenant}}/currencies' \
 [api-reference](../configuration/currency-service/api-reference/)
 {% endcontent-ref %}
 
-* Specify the languages that your business communicates with suppliers and customers. Emporix supports all existing languages, including regional language variants. The tenant's language configuration is stored under the `project_lang` key, while site-specific language configuration is stored in the `defaultLanguage` and `languages` fields, inside the `Site` object.
+* Specify the languages that your business communicates with suppliers and customers. Emporix supports  a broad choice of languages, including regional language variants. The tenant's language configuration is stored under the `project_lang` key, while site-specific language configuration is stored in the `defaultLanguage` and `languages` fields, inside the `Site` object.
 To set `Polish` and `English` as project languages, use the [Updating a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint:
 
 ```bash
