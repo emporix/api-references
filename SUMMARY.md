@@ -10,6 +10,7 @@
 * [Emporix Terraform Provider](quickstart/emporix-terraform-provider.md)
 * [Multi-Site Architecture](quickstart/multisites.md)
 * [Emporix Java SDK](quickstart/emporix-java-sdk.md)
+* [Initial Tenant Checkout Configuration](quickstart/initial-tenant-checkout-config.md)
 
 ## Standard Practices
 

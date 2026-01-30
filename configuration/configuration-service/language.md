@@ -20,7 +20,7 @@ While the Emporix e-commerce system is designed in English, you can specify lang
 
 ### Supported languages
 
-The Emporix e-commerce system supports all existing languages, including regional language variants such as American English or Swiss German. By default, both your Emporix tenant and its main site have their language set to English.
+The Emporix e-commerce system supports a broad choice of languages, including regional language variants such as American English or Swiss German. By default, both your Emporix tenant and its main site have their language set to English.
 
 {% hint style="warning" %}
 Currently, the Emporix e-commerce system does not offer translation services.
