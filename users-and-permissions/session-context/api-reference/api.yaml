@@ -298,6 +298,8 @@ components:
         - $ref: '#/components/schemas/SessionContextBase'
         - type: object
           properties:
+            context:
+              $ref: '#/components/schemas/Context'
             metadata:
               $ref: '#/components/schemas/MetadataUpdate'
           required:
@@ -375,16 +377,12 @@ components:
     Context:
       title: Context
       type: object
+      additionalProperties:
+        type: object
       example:
-        Custom session attributes:
-          '': string
+        CustomSessionAttributes:
           property1: {}
           property2: {}
-      properties:
-        propertyKey:
-          oneOf:
-            - type: object
-            - type: string
   responses:
     204_POST_attributes:
       description: The request was successful. The attribute was added to the session context.

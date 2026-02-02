@@ -615,23 +615,6 @@ Deleting an address also removes any accounts associated with it.
 {% endhint %}
 
 {% endstep %}
-
-{% step %}
-### Deleting a customer profile
-
-To delete a customer profile and the associated account, send a request to the [Deleting a customer profile](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/account-and-profile#delete-customer-tenant-me) endpoint.
-In the query parameter, you can pass the token that the customer receives by email to confirm deletion.
-
-```bash
-curl -i -X DELETE 
-  'https://api.emporix.io/customer/{tenant}/me?token={confirmation_token}' 
-  -H 'Authorization: Bearer {customer_access_token}'
-```
-
-{% hint style="warning" %}
-Deleting a customer profile permanently removes the profile and all associated accounts. This action may return `202 Accepted` if confirmation is required, or `204 No Content` if deletion is immediate.
-{% endhint %}
-{% endstep %}
 {% endstepper %}
 
 ## How to manage customer credentials

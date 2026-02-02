@@ -355,7 +355,7 @@ curl -i -X POST
 Send a request to the [Creating a new price](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint.
 
 ```bash
-url -i -X POST 
+curl -i -X POST 
   'https://api.emporix.io/price/{tenant}/prices' 
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
   -H 'Content-Language: string' 
@@ -378,12 +378,15 @@ url -i -X POST
     },
     "tierValues": [
       {
+        "id": "{{priceModelId}}"
         "priceValue": 15.99
       },
       {
+        "id": "{{priceModelId}}"
         "priceValue": 14.99
       },
       {
+        "id": "{{priceModelId}}"
         "priceValue": 13.99
       }
     ]
