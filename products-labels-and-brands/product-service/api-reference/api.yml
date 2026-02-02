@@ -164,7 +164,8 @@ paths:
       tags:
         - Products
       description: |-
-        Creates products in a bulk.
+        Creates products in a bulk. The maximum batch size is 500.
+
         Response for a particular product is returned at the same position (index) at which that price is located in the request body.
 
         **Required scopes**
@@ -194,7 +195,9 @@ paths:
         '500':
           $ref: '#/components/responses/common_response_InternalServerError_500'
       description: |-
-        Updates or creates products in a bulk. Response for a particular product is returned at the same position (index) at which it is located in the request body.
+        Updates or creates products in a bulk. The maximum batch size is 500.
+
+        Response for a particular product is returned at the same position (index) at which it is located in the request body.
         ***
 
         **Required scopes**
