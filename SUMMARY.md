@@ -12,6 +12,10 @@
 * [Emporix Java SDK](quickstart/emporix-java-sdk.md)
 * [Initial Tenant Checkout Configuration](quickstart/initial-tenant-checkout-config.md)
 
+## Developer Training
+
+* [Emporix Developer Training](training/emporix-developer-training.md)
+
 ## Standard Practices
 
 * [General Info](standard-practices/general-info.md)
