@@ -204,6 +204,12 @@ paths:
       description: |
         Deletes a label with the specified label ID.
       operationId: DELETE-label-remove-label
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       responses:
         '204':
           description: The label was successfully deleted.
