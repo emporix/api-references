@@ -1531,8 +1531,8 @@ paths:
     post:
       summary: Creating custom instances in bulk
       description: |-
-        Creates multiple custom instances.
-        
+        Creates multiple custom instances. The maximum batch size is 200.
+
         ***
 
         ### Required scopes
@@ -1592,8 +1592,8 @@ paths:
     put:
       summary: Upserting custom instances in bulk
       description: |-
-        Upserts multiple custom instances.
-        
+        Upserts multiple custom instances. The maximum batch size is 200.
+
         ***
 
         ### Required scopes
