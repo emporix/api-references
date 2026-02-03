@@ -12,13 +12,7 @@ description: Bulk request limits for Emporix API endpoints that support multiple
 
 ## Overview
 
-Endpoints that allow multiple changes in a single request (bulk or batch operations) are subject to **batch size limits**. These limits ensure stable performance.
-
-In addition to per-endpoint batch size limits, Apigee applies:
-
-- **Request/response size for buffered (non-streamed) requests**: 30 MB  
-- **Request URL size**: 10 KB  
-- **Request header size**: 60 KB  
+Endpoints that allow multiple changes in a single request (bulk or batch operations) are subject to size limits. These limits ensure stable performance.
 
 Exceeding the maximum batch size for an endpoint typically results in a **400 Bad Request** with a message indicating the payload or array size limit.
 
@@ -36,8 +30,14 @@ Exceeding the maximum batch size for an endpoint typically results in a **400 Ba
 
 If a service uses a different limit, the API reference for that endpoint states the exact value. By default, keep batch sizes at or below **200** items unless the endpoint documentation specifies a higher limit (such as 500 for product bulk).
 
+In addition to per-endpoint batch size limits, see the following:
+
+- **Request/response size for buffered (non-streamed) requests**: 30 MB  
+- **Request URL size**: 10 KB  
+- **Request header size**: 60 KB  
+
 ## Best practices
 
 * Split large datasets into multiple requests if you exceed the limit (for example, 201–500 products in two calls for product bulk).
-* Stay within the 30 MB request size (Apigee) for the entire request body, including JSON structure.
+* Stay within the 30 MB request size for the entire request body, including JSON structure.
 * Handle 207 Multi-Status responses for bulk operations; each item in the response array corresponds to the same index in the request and may have a different status code.
