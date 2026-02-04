@@ -17,7 +17,7 @@ paths:
       summary: Retrieving a session context
       operationId: GET-session-context-retrieve-session-context
       description: |-
-        Retrieves a specified session context. A session context exists only after it has been created (for example when a cart has been created for that session).
+        Retrieves a specified session context. A session context is created when a cart is created for that session; until then it does not exist.
         Recommended for performing calls on the management side.
       responses:
         '200':

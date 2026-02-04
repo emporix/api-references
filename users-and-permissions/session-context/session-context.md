@@ -58,7 +58,7 @@ curl -i -X GET
 A **session context** (and its session ID) is created only when a cart is created for that user (for example when they add a product to the cart). Until then, only the anonymous token is returned; there is no session context resource to retrieve or manage. After the session context exists, preserve the session ID on the storefront (for example in user cookies).
 {% endhint %}
 
-Once a session context has been created (for example after cart creation), it contains the following information:
+Once a session context has been created (when a cart was created), it contains the following information:
 
 * `cartId` — present when a cart was created (session context is created at that time).
 * `customerId` — this field is empty for anonymous users.
@@ -96,7 +96,7 @@ curl -i -X POST
   }'
 ```
 
-The session context (created when a cart is created, or when the user first triggers session context creation) contains the following information:
+The session context (created when a cart is created) contains the following information:
 
 * `cartId` — if a cart was created during the anonymous session, the cart's Id is present. If not, adding products to cart triggers the Session Context Service, creates the session context if needed, and adds a `cartId`.
 * `customerId` — retrieved from the saas token returned during login, based on the user password provided.
@@ -112,7 +112,7 @@ The customer's session is terminated when the customer has logged out.
 
 ### Retrieve a session context by using a session Id
 
-To view the existing session context file, you need the session ID of a user session. The session context (and thus the session ID) exists only after it has been created—for example when a cart has been created for that session. Before that, only the anonymous or customer token is returned and there is no session context to retrieve.
+To view the existing session context file, you need the session ID of a user session. The session context (and thus the session ID) is created when a cart is created for that session; before that, only the anonymous or customer token is returned and there is no session context to retrieve.
 
 Retrieve the session context values by sending a request to the [Retrieving a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-management) endpoint. Use the scope **`session_context.context_manage`** (with underscore in `session_context`).
 
