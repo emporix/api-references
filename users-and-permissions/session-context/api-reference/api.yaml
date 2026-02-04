@@ -414,9 +414,11 @@ components:
       additionalProperties:
         type: object
       example:
-        CustomSessionAttributes:
-          property1: {}
-          property2: {}
+        customObject: {
+          property1: "value1",
+          property2: "value2"
+        }
+        customProperty: "customValue"
   responses:
     204_POST_attributes:
       description: The request was successful. The attribute was added to the session context.

@@ -36,12 +36,12 @@ In the following scenario, we are going to perform the following actions from th
 3. [Add or remove custom attributes from the session context.](session-context.md#add-new-attributes-to-the-session-context)
 
 {% hint style="warning" %}
-To be able to manage a user session and its corresponding session context file, a session context must already exist. The session context (and session ID) is created when a cart is created; until then, only the anonymous or customer token is available and there is no session context to retrieve or manage.
+To be able to manage a user session and its corresponding session context file, a session context must already exist. The session context (and session ID) is created when a cart is created. Until then, only the anonymous or customer token is available and there is no session context to retrieve or manage.
 {% endhint %}
 
 ### Create an anonymous user session
 
-An anonymous user session starts when a non-logged user enters the storefront and sends a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-refresh) endpoint. That request returns only an anonymous access token; no session context is created yet.
+An anonymous user session starts when a non-logged user enters the storefront and sends a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-refresh) endpoint. That request returns only an anonymous access token, no session context is created yet.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
