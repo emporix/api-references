@@ -27,29 +27,16 @@ Sessions and session context files can be managed both by your customers and emp
 
 In the following scenario, we are going to perform the following actions from the perspective of an employee:
 
-{% stepper %}
-{% step %}
-Create one of the following user sessions (these requests are normally sent on the storefront, but are here for illustrative purposes):
+1. Create one of the following user sessions (these requests are normally sent on the storefront, but are here for illustrative purposes):
 
-* [Anonymous session](session-context.md#create-an-anonymous-user-session)
-* [(Logged) customer session](session-context.md#create-a-customer-session)
-{% endstep %}
+  * [Anonymous session](session-context.md#create-an-anonymous-user-session)
+  * [(Logged) customer session](session-context.md#create-a-customer-session)
 
-{% step %}
-[Create a cart for that session](session-context.md#create-a-cart-so-that-session-context-exists) so that a session context (and session ID) is created. Without this step, there is no session context to retrieve or manage.
-{% endstep %}
-
-{% step %}
-[Retrieve the session context](session-context.md#retrieve-a-session-context-by-using-a-session-id) attributes and values for that user session.
-{% endstep %}
-
-{% step %}
-[Add or remove custom attributes](session-context.md#add-new-attributes-to-the-session-context) from the session context.
-{% endstep %}
-{% endstepper %}
+2. [Retrieve the session context attributes and values of a particular user session.](session-context.md#retrieve-a-session-context-by-using-a-session-id)
+3. [Add or remove custom attributes from the session context.](session-context.md#add-new-attributes-to-the-session-context)
 
 {% hint style="warning" %}
-The session context (and session ID) is created only when a cart is created for that session. Until then, only the anonymous or customer token is available—there is no session context to retrieve or manage. So you must complete the second step (create a cart) before retrieving or modifying the session context.
+To be able to manage a user session and its corresponding session context file, a session context must already exist. The session context (and session ID) is created when a cart is created; until then, only the anonymous or customer token is available and there is no session context to retrieve or manage.
 {% endhint %}
 
 ### Create an anonymous user session
