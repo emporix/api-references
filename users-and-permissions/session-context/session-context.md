@@ -36,12 +36,12 @@ In the following scenario, we are going to perform the following actions from th
 3. [Add or remove custom attributes from the session context.](session-context.md#add-new-attributes-to-the-session-context)
 
 {% hint style="warning" %}
-To be able to manage a user session and its corresponding session context file, make sure that the session with its session ID is present in the system.
+To be able to manage a user session and its corresponding session context file, a session context must already exist. The session context (and session ID) is created when a cart is created; until then, only the anonymous or customer token is available and there is no session context to retrieve or manage.
 {% endhint %}
 
 ### Create an anonymous user session
 
-An anonymous user session is created every time a non-logged user enters the storefront and sends a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-refresh) endpoint.
+An anonymous user session starts when a non-logged user enters the storefront and sends a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-refresh) endpoint. That request returns only an anonymous access token; no session context is created yet.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -55,13 +55,13 @@ curl -i -X GET
 ```
 
 {% hint style="warning" %}
-The session ID is automatically generated. It should be preserved on the storefront, for example in user cookies.
+A **session context** (and its session ID) is created only when a cart is created for that user (for example when they add a product to the cart). Until then, only the anonymous token is returned; there is no session context resource to retrieve or manage. After the session context exists, preserve the session ID on the storefront (for example in user cookies).
 {% endhint %}
 
-As a result of the anonymous session being established, a session context is created. It contains the following information:
+Once a session context has been created (for example after cart creation), it contains the following information:
 
-* `cartId` — present if a cart was created.
-* `customerId` — this field is empty.
+* `cartId` — present when a cart was created (session context is created at that time).
+* `customerId` — this field is empty for anonymous users.
 * `currency` — fetched from the site settings of the tenant's default site.
 * `targetLocation` — fetched from the home base address specified in the tenant's default site's settings.
 * `siteCode` — fetched from the site settings of the tenant's default site.
@@ -96,10 +96,10 @@ curl -i -X POST
   }'
 ```
 
-The session context contains the following information:
+The session context (created when a cart is created, or when the user first triggers session context creation) contains the following information:
 
-* `cartId` — if a cart was created during the anonymous session, the cart's Id is present. If not, adding products to cart triggers the Session Context Service and a `cartId` is added.
-* `customerID` — retrieved from the saas token returned during login, based on the user password provided.
+* `cartId` — if a cart was created during the anonymous session, the cart's Id is present. If not, adding products to cart triggers the Session Context Service, creates the session context if needed, and adds a `cartId`.
+* `customerId` — retrieved from the saas token returned during login, based on the user password provided.
 * `currency` — fetched from the `customerprefferedCurrency` entry in the customer's profile.
 * `targetLocation` — fetched from the customer's profile. Either default shipping address, or default billing address. Empty if none of those exist.
 * `siteCode` — fetched from the `customerprefferedSite` entry in the customer's profile.
@@ -112,9 +112,9 @@ The customer's session is terminated when the customer has logged out.
 
 ### Retrieve a session context by using a session Id
 
-To view the existing session context file, you need to have a session Id of a particular user session.
+To view the existing session context file, you need the session ID of a user session. The session context (and thus the session ID) exists only after it has been created—for example when a cart has been created for that session. Before that, only the anonymous or customer token is returned and there is no session context to retrieve.
 
-Retrieve the session context values by sending a request to the [Retrieving a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-management) endpoint with the `session_context.context_manage` scope.
+Retrieve the session context values by sending a request to the [Retrieving a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-management) endpoint. Use the scope **`session_context.context_manage`** (with underscore in `session_context`).
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -144,7 +144,7 @@ For example, it's raining in the user's location, so the list of suggested produ
 You can also implement a mechanism allowing users to manage and modify their own sessions and session contexts by calling the [Adding a new attribute to a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-context-modification#post-session-context-tenant-context-sessionid-attributes) endpoint on the storefront.
 {% endhint %}
 
-In the following example, we add an attribute by sending a request to the [Adding a new attribute to a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/own-session-context-modification#post-session-context-tenant-me-context-attributes) endpoint with the `session_context.context_manage` scope.
+In the following example, we add an attribute by sending a request to the [Adding a new attribute to a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-context-modification#post-session-context-tenant-context-sessionid-attributes) endpoint with the **`session_context.context_manage`** scope (with underscore in `session_context`).
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

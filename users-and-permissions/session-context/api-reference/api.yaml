@@ -17,7 +17,7 @@ paths:
       summary: Retrieving a session context
       operationId: GET-session-context-retrieve-session-context
       description: |-
-        Retrieves a specified session context.
+        Retrieves a specified session context. A session context exists only after it has been created (for example when a cart has been created for that session).
         Recommended for performing calls on the management side.
       responses:
         '200':
@@ -118,7 +118,7 @@ paths:
       summary: Retrieving own session context
       operationId: GET-session-context-retrieve-session-context-by-sessionId
       description: |-
-        Retrieves a session context associated with the `sessionId` derived from the Authorization token used in the call.
+        Retrieves a session context associated with the `sessionId` derived from the Authorization token used in the call. The session context is created when a cart is created; if none exists yet, the response is 404.
         Recommended for performing calls on the storefront.
       responses:
         '200':
@@ -128,7 +128,7 @@ paths:
         '500':
           $ref: '#/components/responses/500_common'
       security:
-        - OAuthNoScopes: []
+        - CustomerAccessToken: []
     patch:
       tags:
         - Own session management
@@ -149,7 +149,7 @@ paths:
         '500':
           $ref: '#/components/responses/500_common'
       security:
-        - OAuthNoScopes: []
+        - CustomerAccessToken: []
       requestBody:
         $ref: '#/components/requestBodies/sessionId_PATCH'
     parameters:
@@ -174,7 +174,7 @@ paths:
         '500':
           $ref: '#/components/responses/500_common'
       security:
-        - OAuthNoScopes: []
+        - CustomerAccessToken: []
     parameters:
       - $ref: '#/components/parameters/path_tenant'
       - $ref: '#/components/parameters/path_attributeName'
@@ -200,7 +200,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/attributes_POST'
       security:
-        - OAuthNoScopes: []
+        - CustomerAccessToken: []
     parameters:
       - $ref: '#/components/parameters/path_tenant'
 components:
@@ -223,7 +223,8 @@ components:
       in: path
       schema:
         type: string
-      description: Customer session ID.
+      description: |
+        Customer session ID. The session context (and this ID) is created when a cart is created for the user; until then, only an anonymous or customer token is returned and there is no session context resource.
       required: true
     path_attributeName:
       name: attributeName
@@ -258,13 +259,14 @@ components:
         clientCredentials:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
-            session_context.context_manage: ''
-    OAuthNoScopes:
-      type: oauth2
-      flows:
-        clientCredentials:
-          tokenUrl: 'https://api.emporix.io/oauth/token'
-          scopes: {}
+            session_context.context_manage: 'Manage session context'
+    CustomerAccessToken:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Customer or anonymous access token. Use the token obtained from the storefront session (e.g. [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-refresh) or [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login)).
+
   schemas:
     ContextAttribute:
       title: ContextAttribute
@@ -294,16 +296,48 @@ components:
             metadata:
               $ref: '#/components/schemas/Metadata'
     SessionContext_PUT:
+      title: SessionContextUpdateRequest
+      description: |
+        Request body for updating a session context (PUT).
+        You can send any of the session fields returned in the GET response, including `context` (custom attributes key-value map).
+        The `metadata.version` is required for optimistic locking.
       allOf:
         - $ref: '#/components/schemas/SessionContextBase'
         - type: object
           properties:
             context:
               $ref: '#/components/schemas/Context'
+              description: Custom session attributes. Same structure as returned in the response.
             metadata:
               $ref: '#/components/schemas/MetadataUpdate'
           required:
             - metadata
+    SessionContext_PATCH:
+      title: SessionContextPartialUpdateRequest
+      description: |
+        Request body for partially updating own session context (PATCH /me/context).
+        Only the following fields can be updated; all other fields are ignored.
+      type: object
+      properties:
+        siteCode:
+          type: string
+          description: Code of the site, as defined in the Site Settings Service.
+          example: main
+        currency:
+          type: string
+          description: Three-letter currency code, as defined in the Currency Service.
+          example: EUR
+        targetLocation:
+          type: string
+          description: The country code, as defined in the country service.
+          example: DE
+        context:
+          $ref: '#/components/schemas/Context'
+          description: Custom session attributes. Same structure as returned in the response.
+        metadata:
+          $ref: '#/components/schemas/MetadataUpdate'
+      required:
+        - metadata
     ErrorMessage:
       type: object
       properties:
@@ -437,15 +471,17 @@ components:
       description: The request was successful. The attribute has been deleted from the session context.
   requestBodies:
     sessionId_PUT:
+      description: Session context update. Include `context` to update custom attributes; `metadata.version` is required for optimistic locking.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/SessionContext_PUT'
     sessionId_PATCH:
+      description: Partial update. Only `siteCode`, `currency`, `targetLocation`, and `context` are accepted; include `metadata.version` for optimistic locking.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SessionContext_PUT'
+            $ref: '#/components/schemas/SessionContext_PATCH'
     attributes_POST:
       content:
         application/json:
