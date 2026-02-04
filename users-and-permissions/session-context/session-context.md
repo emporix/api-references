@@ -27,16 +27,29 @@ Sessions and session context files can be managed both by your customers and emp
 
 In the following scenario, we are going to perform the following actions from the perspective of an employee:
 
-1. Create one of the following user sessions (these requests are normally sent on the storefront, but are here for illustrative purposes):
+{% stepper %}
+{% step %}
+Create one of the following user sessions (these requests are normally sent on the storefront, but are here for illustrative purposes):
 
-  * [Anonymous session](session-context.md#create-an-anonymous-user-session)
-  * [(Logged) customer session](session-context.md#create-a-customer-session)
+* [Anonymous session](session-context.md#create-an-anonymous-user-session)
+* [(Logged) customer session](session-context.md#create-a-customer-session)
+{% endstep %}
 
-2. [Retrieve the session context attributes and values of a particular user session.](session-context.md#retrieve-a-session-context-by-using-a-session-id)
-3. [Add or remove custom attributes from the session context.](session-context.md#add-new-attributes-to-the-session-context)
+{% step %}
+[Create a cart for that session](session-context.md#create-a-cart-so-that-session-context-exists) so that a session context (and session ID) is created. Without this step, there is no session context to retrieve or manage.
+{% endstep %}
+
+{% step %}
+[Retrieve the session context](session-context.md#retrieve-a-session-context-by-using-a-session-id) attributes and values for that user session.
+{% endstep %}
+
+{% step %}
+[Add or remove custom attributes](session-context.md#add-new-attributes-to-the-session-context) from the session context.
+{% endstep %}
+{% endstepper %}
 
 {% hint style="warning" %}
-To be able to manage a user session and its corresponding session context file, a session context must already exist. The session context (and session ID) is created when a cart is created; until then, only the anonymous or customer token is available and there is no session context to retrieve or manage.
+The session context (and session ID) is created only when a cart is created for that session. Until then, only the anonymous or customer token is available—there is no session context to retrieve or manage. So you must complete the second step (create a cart) before retrieving or modifying the session context.
 {% endhint %}
 
 ### Create an anonymous user session
@@ -76,7 +89,7 @@ An anonymous customer's session is terminated if one of those two requirements i
 The session is created when a customer logs in to the storefront. This means that the anonymous session that was established when the user entered the site is migrated into a customer session when a request is sent to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.
 
 {% hint style="warning" %}
-The session Id and session context remain the same.
+If a session context already existed for the anonymous session (e.g. a cart was created before login), the session ID and session context remain the same after login. If no cart was created yet, the session context is still created only when a cart is created (after or before login).
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -110,11 +123,23 @@ If any of these values are not present in the customer's profile, they are retri
 
 The customer's session is terminated when the customer has logged out.
 
+### Create a cart (so that session context exists)
+
+A session context is created only when a cart is created for that user. Until then, the session has no session context and no session ID that you can use with the Session Context API.
+
+To create a cart (and thus create the session context), have the user add at least one product to the cart—for example from the storefront, or by calling the [Cart Service](../../checkout/cart/README.md) with the same anonymous or customer token used for that session. Once the cart exists, the session context exists and you can retrieve it or add attributes to it (see the steps above).
+
+{% hint style="info" %}
+If you are testing as an employee: use a session where a cart has already been created (e.g. a test user who added a product to the cart), or create a cart via the Cart API using that session's token so that the session context is created.
+{% endhint %}
+
 ### Retrieve a session context by using a session Id
 
-To view the existing session context file, you need the session ID of a user session. The session context (and thus the session ID) is created when a cart is created for that session; before that, only the anonymous or customer token is returned and there is no session context to retrieve.
+To view the existing session context file, you need the session ID of a user session. Ensure a cart has been created for that session first (see [Create a cart (so that session context exists)](session-context.md#create-a-cart-so-that-session-context-exists)), so that the session context exists.
 
-Retrieve the session context values by sending a request to the [Retrieving a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-management) endpoint. Use the scope **`session_context.context_manage`** (with underscore in `session_context`).
+**Getting the session ID:** When calling the management endpoint below, you must supply the session ID—for example from your storefront (where it may be stored when the session context is created), or by having the customer call the [Retrieving own session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/own-session-management#get-session-context-tenant-me-context) endpoint (GET `/session-context/{tenant}/me/context`) with their token; the response includes `sessionId`.
+
+Retrieve the session context by sending a request to the [Retrieving a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-management) endpoint. Use the scope **`session_context.context_manage`** (with underscore in `session_context`) and client credentials.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
