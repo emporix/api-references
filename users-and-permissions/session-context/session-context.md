@@ -184,6 +184,7 @@ The response is:
 }
 ```
 {% endstep %}
+{% endstepper %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -207,7 +208,7 @@ For example, it's raining in the user's location, so the list of suggested produ
 You can also implement a mechanism allowing users to manage and modify their own sessions and session contexts by calling the [Adding a new attribute to a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-context-modification#post-session-context-tenant-context-sessionid-attributes) endpoint on the storefront.
 {% endhint %}
 
-In the following example, we add an attribute by sending a request to the [Adding a new attribute to a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-context-modification#post-session-context-tenant-context-sessionid-attributes) endpoint with the **`session_context.context_manage`** scope (with underscore in `session_context`).
+In the following example, we add an attribute by sending a request to the [Adding a new attribute to a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-context-modification#post-session-context-tenant-context-sessionid-attributes) endpoint with the `session_context.context_manage` scope (with underscore in `session_context`).
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
