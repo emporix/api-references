@@ -55,7 +55,7 @@ curl -i -X GET
 ```
 
 {% hint style="warning" %}
-A **session context** (and its session ID) is created only when a cart is created for that user (for example when they add a product to the cart). Until then, only the anonymous token is returned; there is no session context resource to retrieve or manage. After the session context exists, preserve the session ID on the storefront (for example in user cookies).
+A session context, and its session ID, is created only when a cart is created for that user - when they add a product to the cart. Until then, only the anonymous token is returned. There is no session context resource to retrieve or manage. After the session context exists, the session ID should be preserved on the storefront, for example in user cookies.
 {% endhint %}
 
 Once a session context has been created (when a cart was created), it contains the following information:
@@ -76,7 +76,7 @@ An anonymous customer's session is terminated if one of those two requirements i
 The session is created when a customer logs in to the storefront. This means that the anonymous session that was established when the user entered the site is migrated into a customer session when a request is sent to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.
 
 {% hint style="warning" %}
-If a session context already existed for the anonymous session (e.g. a cart was created before login), the session ID and session context remain the same after login. If no cart was created yet, the session context is still created only when a cart is created (after or before login).
+If a session context already existed for the anonymous session (for example when a cart was created before login), the session ID and session context remain the same after login. If no cart was created yet, the session context is created only when a cart is created (after or before login).
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -96,7 +96,9 @@ curl -i -X POST
   }'
 ```
 
-The session context (created when a cart is created) contains the following information:
+### Retrieve a session context by using a session Id
+
+The session context is created when a cart is created - when a customer adds an item to the cart. The session-context details can be retrieved using the `sessionId` and include the following information:
 
 * `cartId` — if a cart was created during the anonymous session, the cart's Id is present. If not, adding products to cart triggers the Session Context Service, creates the session context if needed, and adds a `cartId`.
 * `customerId` — retrieved from the saas token returned during login, based on the user password provided.
@@ -108,37 +110,86 @@ The session context (created when a cart is created) contains the following info
 If any of these values are not present in the customer's profile, they are retrieved from the configuration on your main site.
 {% endhint %}
 
-The customer's session is terminated when the customer has logged out.
+The customer's session is terminated when the customer logs out.
 
-### Create a cart (so that session context exists)
+{% stepper %}
+{% step %}
+### Get the session ID
 
-A session context is created only when a cart is created for that user. Until then, the session has no session context and no session ID that you can use with the Session Context API.
+When retrieving the session-context details, you must supply the `sessionId`. It can be retrieved from the storefront or by sending the request to the [Retrieving own session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/own-session-management#get-session-context-tenant-me-context) endpoint with the `customerToken` -  in the request. Then, the response includes the `sessionId`.
 
-To create a cart (and thus create the session context), have the user add at least one product to the cart—for example from the storefront, or by calling the [Cart Service](../../checkout/cart/README.md) with the same anonymous or customer token used for that session. Once the cart exists, the session context exists and you can retrieve it or add attributes to it (see the steps above).
+**Example**:
 
-{% hint style="info" %}
-If you are testing as an employee: use a session where a cart has already been created (e.g. a test user who added a product to the cart), or create a cart via the Cart API using that session's token so that the session context is created.
-{% endhint %}
+```bash
+curl -L \
+  --url 'https://api.emporix.io/session-context/{tenant}/me/context' \
+  --header 'Authorization: Bearer YOUR_SECRET_TOKEN' \
+  --header 'Accept: */*'
+```
 
-### Retrieve a session context by using a session Id
+The response is:
 
-To view the existing session context file, you need the session ID of a user session. Ensure a cart has been created for that session first (see [Create a cart (so that session context exists)](session-context.md#create-a-cart-so-that-session-context-exists)), so that the session context exists.
+```json
+{
+  "sessionId": "3ef05d1f-bd7f-42a7-8322-ff85746e0f35",
+  "customerId": "31746755",
+  "siteCode": "main",
+  "currency": "USD",
+  "targetLocation": "DE",
+  "context": {
+    "legalEntityId": "68cd05d71aeab17fc69f81b7"
+  },
+  "metadata": {
+    "version": 5,
+    "createdAt": "2026-02-04T17:06:50.134Z",
+    "modifiedAt": "2026-02-04T17:07:04.104Z"
+  }
+}
+```
 
-**Getting the session ID:** When calling the management endpoint below, you must supply the session ID—for example from your storefront (where it may be stored when the session context is created), or by having the customer call the [Retrieving own session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/own-session-management#get-session-context-tenant-me-context) endpoint (GET `/session-context/{tenant}/me/context`) with their token; the response includes `sessionId`.
+{% endstep %}
+{% step %}
 
-Retrieve the session context by sending a request to the [Retrieving a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-management) endpoint. Use the scope **`session_context.context_manage`** (with underscore in `session_context`) and client credentials.
+Retrieve the session context by sending a request to the [Retrieving a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-management) endpoint. Use the `session_context.context_manage` scope.
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X GET 
+  'https://api.emporix.io/session-context/{tenant}/context/01736216-39a9-4801-b6f0-90a977453b75' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
+
+The response is:
+
+```json
+{
+  "sessionId": "01736216-39a9-4801-b6f0-90a977453b75",
+  "customerId": "31746755",
+  "siteCode": "main",
+  "currency": "EUR",
+  "cartId": "61079711ce0eb90861357045",
+  "targetLocation": "DE",
+  "context": {
+    "customObject": {
+      "property1": "value1"
+    },
+    "additional attribute name": "61079711ce0eb90861357445",
+    "customProperty": "customValue"
+  },
+  "metadata": {
+    "version": 10,
+    "createdAt": "2026-02-04T16:36:44.047Z",
+    "modifiedAt": "2026-02-04T17:01:56.173Z"
+  }
+}
+```
+{% endstep %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
-
-```bash
-curl -i -X GET 
-  'https://api.emporix.io/session-context/{tenant}/context/{sessionId}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
-```
 
 ### Add new attributes to the session context
 
