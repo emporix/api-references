@@ -8,7 +8,7 @@
 
 ## 2026
 
-* [2026-02-05: IAM Service – new endpoint for retrieving own user](2026/2026-02-05-iam.md)
+* [2026-02-06: IAM Service – new endpoint for retrieving own user](2026/2026-02-06-iam.md)
 * [2026-02-04: Product Service – category and customer segment IDs no longer in preview](2026/2026-02-04-product.md)
 * [2026-01-08: Configuration Service - New properties for configurations](2026/2026-01-08-configuration.md)
 

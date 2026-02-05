@@ -3024,7 +3024,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/tenant'
     get:
-      summary: Retrieving own `EMPLOYEE` user
+      summary: Retrieving own user
       tags:
         - Management Dashboard Users
       responses:
@@ -3096,8 +3096,7 @@ paths:
           name: expand
           description: Adds expanded groups objects to the response result.
       security:
-        - OAuth2:
-            - iam.user_read_own
+        - OAuth2: []
   '/iam/{tenant}/users/{userId}':
     parameters:
       - $ref: '#/components/parameters/tenant'
