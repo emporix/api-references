@@ -28,7 +28,7 @@ paths:
           $ref: '#/components/responses/500_common'
       security:
         - OAuth2:
-            - session_context.context_manage
+            - sessioncontext.context_manage
     put:
       tags:
         - Session management
@@ -51,7 +51,7 @@ paths:
           $ref: '#/components/responses/500_common'
       security:
         - OAuth2:
-            - session_context.context_manage
+            - sessioncontext.context_manage
       requestBody:
         $ref: '#/components/requestBodies/sessionId_PUT'
     parameters:
@@ -78,7 +78,7 @@ paths:
           $ref: '#/components/responses/500_common'
       security:
         - OAuth2:
-            - session_context.context_manage
+            - sessioncontext.context_manage
     parameters:
       - $ref: '#/components/parameters/path_tenant'
       - $ref: '#/components/parameters/path_sessionId'
@@ -104,7 +104,7 @@ paths:
           $ref: '#/components/responses/500_common'
       security:
         - OAuth2:
-            - session_context.context_manage
+            - sessioncontext.context_manage
       requestBody:
         $ref: '#/components/requestBodies/attributes_POST'
     parameters:
@@ -259,7 +259,7 @@ components:
         clientCredentials:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
-            session_context.context_manage: 'Manage session context'
+            sessioncontext.context_manage: 'Manage session context'
     CustomerAccessToken:
       type: http
       scheme: bearer
