@@ -64,6 +64,8 @@ paths:
                   approvalGroup:
                     - id: 123e121111452c12330b81390
                     - id: 123e061110acd223133333345
+                  restrictions:
+                    - US
               Create a subsidiary:
                 value:
                   name: ABC Subsidiary
@@ -312,6 +314,8 @@ paths:
                   approvalGroup:
                     - id: 123e121111452c12330b81390
                     - id: 123e061110acd223133333345
+                  restrictions:
+                    - US
                   metadata:
                     version: 1
       responses:
@@ -1005,6 +1009,8 @@ components:
           description: The list of customer assignment of the approval group of the legal entity.
           items:
             $ref: '#/components/schemas/contactAssignmentWithoutExpandedLegalEntity'
+        restrictions:
+          $ref: '#/components/schemas/restrictions'
         metadata:
           $ref: '#/components/schemas/metadata'
         mixins:
@@ -1044,6 +1050,24 @@ components:
         registrationId:
           type: string
           description: The unique identifier of the legal entity registration.
+    restrictions:
+      type: array
+      maximum: 1
+      nullable: true
+      description: List of restrictions which determine who can view or manage the Legal Entity.
+      items:
+        type: string
+        description: |
+          Access control identifier that determines who can view or manage the Legal Entity.
+          
+          **Purpose**: Restricts Legal Entity visibility based on scope permissions. Only users/applications 
+          with matching restrictions scopes can access Legal Entities with a specific restrictions value.
+          
+          **Access Control**:
+          - *Reading*: Users can only query and view Legal Entities whose `restrictions` value matches one of their authorized restrictions
+          
+          **Validation**: The value must exist in the tenant's configured list of valid restrictions.
+        example: "DE"
     legalEntityCreate:
       title: Legal Entity create payload
       type: object
@@ -1085,6 +1109,8 @@ components:
           description: The list of customer assignment IDs of an approval group of the legal entity.
           items:
             $ref: '#/components/schemas/resourceId'
+        restrictions:
+          $ref: '#/components/schemas/restrictions'
         metadata:
           $ref: '#/components/schemas/metadata_create'
         mixins:
@@ -1128,6 +1154,8 @@ components:
           description: The list of customer assignment IDs of an approval user group of the legal entity.
           items:
             $ref: '#/components/schemas/resourceId'
+        restrictions:
+          $ref: '#/components/schemas/restrictions'
         metadata:
           $ref: '#/components/schemas/metadataUpdate'
         mixins:
@@ -1455,6 +1483,8 @@ components:
                 accountLimit:
                   currency: EUR
                   value: 1000.99
+                restrictions:
+                  - US
                 customerGroups:
                   - id: 123e06ecf0452c2d6c0b81390
                     name:
@@ -1554,6 +1584,8 @@ components:
                     registrationId: 627e06ecf0452c2d6c0b81391
                     countryOfRegistration: DE
                     taxRegistrationNumber: '1234'
+                  restrictions:
+                    - US
                   metadata:
                     createdAt: '2022-03-31T13:18:02.379Z'
                     modifiedAt: '2022-03-31T13:18:02.379Z'
@@ -1640,6 +1672,8 @@ components:
                   name: Company C
                   type: SUBSIDIARY
                   parentId: company_b
+                  restrictions:
+                    - US
                   metadata:
                     createdAt: '2022-03-31T13:18:02.379Z'
                     modifiedAt: '2022-03-31T13:18:02.379Z'
@@ -1648,6 +1682,8 @@ components:
                   name: Company B
                   type: SUBSIDIARY
                   parentId: company_a
+                  restrictions:
+                    - US
                   metadata:
                     createdAt: '2022-03-18T14:22:07.321Z'
                     modifiedAt: '2022-03-18T14:22:07.321Z'
@@ -1655,11 +1691,13 @@ components:
                 - id: company_a
                   name: Company A
                   type: COMPANY
+                  restrictions:
+                    - US
                   metadata:
                     createdAt: '2022-03-31T13:18:02.379Z'
                     modifiedAt: '2022-03-31T13:18:02.379Z'
                     version: 1
-                
+
     GetContactAssignment:
       description: The request was successful. The requested customer assignment is returned.
       content:
@@ -1784,6 +1822,8 @@ components:
                         name:
                           en: Customer group 1
                           fr: Groupe de clients 1
+                    restrictions:
+                      - US
                   customer:
                     id: 627e06ecf0452c2d6c0b81391
                     name: John
@@ -1855,6 +1895,8 @@ components:
                       - id: 123e06ecf0452c2d6c0b81390
                         name: Adam
                         surname: Smith
+                    restrictions:
+                      - US
                     metadata:
                       createdAt: '2022-03-31T13:18:02.379Z'
                       modifiedAt: '2022-03-31T13:18:02.379Z'
