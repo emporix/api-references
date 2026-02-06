@@ -8,11 +8,12 @@
 
 ## 2026
 
-* [2026-01-28: Quote Service - restriction property for quotes](2026/2026-01-28-quote.md)
-* [2026-01-28: Customer Service - restriction property for customers](2026/2026-01-28-customer.md)
-* [2026-01-28: Order Service - restriction property for orders](2026/2026-01-28-order.md)
-* [2026-01-28: Cart Service - restriction property for carts](2026/2026-01-28-cart.md)
-* [2026-01-28: IAM Service - restrictions and restrictionAware properties](2026/2026-01-28-iam.md)
+* [2026-02-10: Quote Service - restriction property for quotes](2026/2026-02-10-quote.md)
+* [2026-02-10: Customer Service - restriction property for customers](2026/2026-02-10-customer.md)
+* [2026-02-10: Order Service - restriction property for orders](2026/2026-02-10-order.md)
+* [2026-02-10: Cart Service - restriction property for carts](2026/2026-02-10-cart.md)
+* [2026-02-10: Client Management Service - restrictions property for Legal Entities](2026/2026-02-10-client-management.md)
+* [2026-02-10: IAM Service - restrictions and restrictionAware properties](2026/2026-02-10-iam.md)
 * [2026-01-08: Configuration Service - New properties for configurations](2026/2026-01-08-configuration.md)
 
 ## Archive
