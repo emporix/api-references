@@ -3020,6 +3020,83 @@ paths:
                     - 1gr5e52e-6e27-4ac5-9471-2467d3fb7504
         required: true
         description: User creation sample
+  '/iam/{tenant}/users/me':
+    parameters:
+      - $ref: '#/components/parameters/tenant'
+    get:
+      summary: Retrieving own user
+      tags:
+        - Management Dashboard Users
+      responses:
+        '200':
+          description: The request was successful and user is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              examples:
+                Own user with extended groups:
+                  value:
+                    id: 00u4ukqvzlEP31sCk417
+                    firstName: John
+                    lastName: Doe
+                    backofficeUserNumber: 00u4ukqvzlEP31sCk417
+                    preferredSite: main
+                    preferredCurrency: PLN
+                    preferredLanguage: en
+                    department: departmentName
+                    validFrom: '2022-08-19T10:41:10Z'
+                    isAccountLocked: true
+                    contactEmail: user1@gmail.com
+                    status: ACTIVE
+                    groupIds:
+                      - 1gr5e52e-6e27-4ac5-9471-2467d3fb7503
+                    groups:
+                      - id: 1gr5e52e-6e27-4ac5-9471-2467d3fb7503
+                        name:
+                          de: Backoffice Manager
+                          en: Backoffice managers
+                        description:
+                          de: Backoffice Manager
+                          en: Backoffice managers
+                        code: BO_MANAGER
+                        userType: EMPLOYEE
+                Own user definition:
+                  value:
+                    id: 00u4ukqvzlEP31sCk417
+                    firstName: John
+                    lastName: Doe
+                    backofficeUserNumber: 00u4ukqvzlEP31sCk417
+                    preferredSite: main
+                    preferredCurrency: PLN
+                    preferredLanguage: en
+                    department: departmentName
+                    validFrom: '2022-08-19T10:41:10Z'
+                    isAccountLocked: true
+                    contactEmail: user1@gmail.com
+                    status: ACTIVE
+                    groupIds:
+                      - 1gr5e52e-6e27-4ac5-9471-2467d3fb7503
+        '400':
+          $ref: '#/components/responses/Bad_request_400'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+      operationId: GET-iam-retrieve-own-user
+      description: |-
+        Retrieves the currently authenticated user along with the groups this user belongs to.
+      parameters:
+        - schema:
+            type: string
+            enum:
+              - groups
+            example: groups
+          in: query
+          name: expand
+          description: Adds expanded groups objects to the response result.
+      security:
+        - OAuth2: []
   '/iam/{tenant}/users/{userId}':
     parameters:
       - $ref: '#/components/parameters/tenant'
