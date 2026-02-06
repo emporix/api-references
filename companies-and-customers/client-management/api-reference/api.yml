@@ -12,13 +12,13 @@ info:
     url: 'https://emporix.com'
     email: documentation@emporix.com
 servers:
-  - url: 'https://api.emporix.io/customer-management'
+  - url: 'https://api.emporix.io'
 tags:
   - name: Locations
   - name: Contact Assignments
   - name: Legal Entities
 paths:
-  '/{tenant}/legal-entities':
+  '/customer-management/{tenant}/legal-entities':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
     post:
@@ -162,7 +162,7 @@ paths:
       operationId: GET-customer-mgmt-list-legal-entities
       tags:
         - Legal Entities
-  '/{tenant}/legal-entities/search':
+  '/customer-management/{tenant}/legal-entities/search':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
     post:
@@ -233,7 +233,7 @@ paths:
       operationId: POST-customer-mgmt-search-legal-entities
       tags:
         - Legal Entities
-  '/{tenant}/legal-entities/{legalEntityId}':
+  '/customer-management/{tenant}/legal-entities/{legalEntityId}':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
       - $ref: '#/components/parameters/trait_legalEntity_id_path'
@@ -375,7 +375,7 @@ paths:
       operationId: DELETE-customer-mgmt-remove-legal-entity
       tags:
         - Legal Entities
-  '/{tenant}/legal-entities/{legalEntityId}/parent-hierarchy':
+  '/customer-management/{tenant}/legal-entities/{legalEntityId}/parent-hierarchy':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
       - $ref: '#/components/parameters/trait_legalEntity_id_path'
@@ -405,7 +405,7 @@ paths:
       operationId: GET-customer-mgmt-retrieve-legal-entity-parent-hierarchy
       tags:
         - Legal Entities
-  '/{tenant}/contact-assignments':
+  '/customer-management/{tenant}/contact-assignments':
     parameters:
       - name: tenant
         in: path
@@ -509,7 +509,7 @@ paths:
       operationId: GET-customer-mgmt-list-contact-assignments
       tags:
         - Contact Assignments
-  '/{tenant}/contact-assignments/{contactAssignmentId}':
+  '/customer-management/{tenant}/contact-assignments/{contactAssignmentId}':
     parameters:
       - name: tenant
         in: path
@@ -652,7 +652,7 @@ paths:
       operationId: DELETE-customer-mgmt-remove-contact-assignment
       tags:
         - Contact Assignments
-  '/{tenant}/locations':
+  '/customer-management/{tenant}/locations':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
     post:
@@ -761,7 +761,7 @@ paths:
       operationId: GET-customer-mgmt-list-all-locations
       tags:
         - Locations
-  '/{tenant}/locations/{locationId}':
+  '/customer-management/{tenant}/locations/{locationId}':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
       - $ref: '#/components/parameters/trait_location_id_path'

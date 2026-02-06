@@ -10,9 +10,9 @@ servers:
   - url: 'https://api.emporix.io'
 tags:
   - name: Products
-    description: Manage Products
+    description: Manage products. Supported product types include BASIC (standalone products), BUNDLE (groups of products sold together), PARENT_VARIANT (products with automatically generated variants), and VARIANT (individual variants of a parent variant product).
   - name: Product Templates
-    description: Manage Product Templates
+    description: Manage product templates. Product templates define a set of attributes which are common for all product instances based on that template.
 paths:
   /product/{tenant}/products/search:
     parameters:
@@ -251,6 +251,12 @@ paths:
                     relatedItems:
                       - refId: 631c6adac2d4ea73be34f0d1
                         type: ACCESSORY
+                    customerSegmentIds:
+                      - 689591c74ac99162678ae78f
+                      - 689591c74ac99162678ae78g
+                    categoryIds:
+                      - 631c6adac2d4ea73be34f0d4
+                      - 631c6adac2d4ea73be34f0d5
                     mixins:
                       productCustomAttributes:
                         pricingMeasurePrice: 13
@@ -299,6 +305,12 @@ paths:
                         amount: 1
                       - id: 53a358901b2e9dd2718b5c13
                         amount: 1
+                    customerSegmentIds:
+                      - 689591c74ac99162678ae78f
+                      - 689591c74ac99162678ae78g
+                    categoryIds:
+                      - 631c6adac2d4ea73be34f0d4
+                      - 631c6adac2d4ea73be34f0d5
                     mixins:
                       productCustomAttributes:
                         pricingMeasurePrice: 13
@@ -353,6 +365,12 @@ paths:
                         - key: M
                         - key: L
                         - key: XL
+                    customerSegmentIds:
+                      - 689591c74ac99162678ae78f
+                      - 689591c74ac99162678ae78g
+                    categoryIds:
+                      - 631c6adac2d4ea73be34f0d4
+                      - 631c6adac2d4ea73be34f0d5
                     mixins:
                       productCustomAttributes:
                         pricingMeasurePrice: 13
@@ -394,6 +412,12 @@ paths:
                     relatedItems:
                       - refId: 631c6adac2d4ea73be34f0d1
                         type: ACCESSORY
+                    customerSegmentIds:
+                      - 689591c74ac99162678ae78f
+                      - 689591c74ac99162678ae78g
+                    categoryIds:
+                      - 631c6adac2d4ea73be34f0d4
+                      - 631c6adac2d4ea73be34f0d5
                     mixins:
                       productTemplateAttributes:
                         color: RED
@@ -561,6 +585,12 @@ paths:
       tags:
         - Products
     delete:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       responses:
         '204':
           description: |
@@ -925,6 +955,12 @@ paths:
     delete:
       summary: Deleting a product template
       operationId: DELETE-product-remove-template
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       responses:
         '204':
           description: No Content
@@ -1065,6 +1101,12 @@ components:
                   relatedItems:
                     - refId: 631c6adac2d4ea73be34f0d1
                       type: ACCESSORY
+                  customerSegmentIds:
+                    - 689591c74ac99162678ae78f
+                    - 689591c74ac99162678ae78g
+                  categoryIds:
+                    - 631c6adac2d4ea73be34f0d4
+                    - 631c6adac2d4ea73be34f0d5
                   mixins:
                     productCustomAttributes:
                       pricingMeasurePrice: 13
@@ -1113,6 +1155,12 @@ components:
                       amount: 1
                     - id: 53a358901b2e9dd2718b5c13
                       amount: 1
+                  customerSegmentIds:
+                    - 689591c74ac99162678ae78f
+                    - 689591c74ac99162678ae78g
+                  categoryIds:
+                    - 631c6adac2d4ea73be34f0d4
+                    - 631c6adac2d4ea73be34f0d5
                   mixins:
                     productCustomAttributes:
                       pricingMeasurePrice: 13
@@ -1167,6 +1215,12 @@ components:
                       - key: M
                       - key: L
                       - key: XL
+                  customerSegmentIds:
+                    - 689591c74ac99162678ae78f
+                    - 689591c74ac99162678ae78g
+                  categoryIds:
+                    - 631c6adac2d4ea73be34f0d4
+                    - 631c6adac2d4ea73be34f0d5
                   mixins:
                     productCustomAttributes:
                       pricingMeasurePrice: 13
@@ -1208,6 +1262,12 @@ components:
                     - refId: 631c6adac2d4ea73be34f0d1
                       type: ACCESSORY
                   parentVariantId: 545b4e3dfaee4c10def3db24
+                  customerSegmentIds:
+                    - 689591c74ac99162678ae78f
+                    - 689591c74ac99162678ae78g
+                  categoryIds:
+                    - 631c6adac2d4ea73be34f0d4
+                    - 631c6adac2d4ea73be34f0d5
                   mixins:
                     productVariantAttributes:
                       color: RED
@@ -1311,7 +1371,16 @@ components:
               - $ref: '#/components/schemas/parentVariantProductCreation'
               - $ref: '#/components/schemas/variantProductCreation'
           examples:
-            BASIC Product Creation:
+            BASIC Product Creation - simple:
+              value:
+                name: Smartphone X2
+                code: BASIC001
+                description: The world best camera and camcorder in a waterproof smartphone.
+                published: false
+                taxClasses:
+                  EN: STANDARD
+                productType: BASIC
+            BASIC Product Creation - wtih additional attributes:
               value:
                 name: Smartphone X2
                 code: BASIC001
@@ -1369,36 +1438,11 @@ components:
                 taxClasses:
                   EN: STANDARD
                 bundledProducts:
-                  - id: 53a358901b2e9dd2718b5c12
+                  - productId: 53a358901b2e9dd2718b5c12
                     amount: 1
-                  - id: 53a358901b2e9dd2718b5c13
+                  - productId: 53a358901b2e9dd2718b5c13
                     amount: 1
                 productType: BUNDLE
-                template:
-                  id: 634cea2740033d7c2e7b03a8
-                  version: 1
-                relatedItems:
-                  - refId: 634cea2740033d7c2e7b03a9
-                    type: CONSUMABLE
-                mixins:
-                  productCustomAttributes:
-                    pricingMeasurePrice: 13
-                    unitPricingMeasure:
-                      value: 133
-                      unitCode: GRM
-                    unitPricingBaseMeasure:
-                      value: 100
-                      unitCode: GRM
-                    pricingMeasure:
-                      value: 100
-                      unitCode: GRM
-                    orderUnit: H87
-                    minOrderQuantity: 2
-                    maxOrderQuantity: 10
-                    defaultOrderQuantity: 5
-                metadata:
-                  mixins:
-                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
             PARENT VARIANT Product Creation:
               value:
                 name: Smartphone X2 with headset
@@ -1411,9 +1455,6 @@ components:
                 template:
                   id: 634cea2740033d7c2e7b03a8
                   version: 1
-                relatedItems:
-                  - refId: 634cea2740033d7c2e7b03a9
-                    type: CONSUMABLE
                 variantAttributes:
                   color:
                     - key: RED
@@ -1425,25 +1466,6 @@ components:
                     - key: M
                     - key: L
                     - key: XL
-                mixins:
-                  productCustomAttributes:
-                    pricingMeasurePrice: 13
-                    unitPricingMeasure:
-                      value: 133
-                      unitCode: GRM
-                    unitPricingBaseMeasure:
-                      value: 100
-                      unitCode: GRM
-                    pricingMeasure:
-                      value: 100
-                      unitCode: GRM
-                    orderUnit: H87
-                    minOrderQuantity: 2
-                    maxOrderQuantity: 10
-                    defaultOrderQuantity: 5
-                metadata:
-                  mixins:
-                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
             VARIANT Product Creation:
               value:
                 name: Smartphone X2 black
@@ -1525,42 +1547,12 @@ components:
                   EN: STANDARD
                 productType: BUNDLE
                 bundledProducts:
-                  - id: 53a358901b2e9dd2718b5c12
+                  - productId: 53a358901b2e9dd2718b5c12
                     amount: 1
-                  - id: 53a358901b2e9dd2718b5c13
+                  - productId: 53a358901b2e9dd2718b5c13
                     amount: 1
-                template:
-                  id: 634cea2740033d7c2e7b03a8
-                  version: 1
-                relatedItems:
-                  - refId: 634cea2740033d7c2e7b03a9
-                    type: CONSUMABLE
-                mixins:
-                  salePricesData:
-                    - salePriceStart: '2021-07-20T22:00:00.000+0000'
-                      salePriceAmount: 6.7
-                      salePriceEnd: '2021-07-25T21:59:59.000+0000'
-                      enabled: false
-                  productCustomAttributes:
-                    pricingMeasurePrice: 13
-                    unitPricingMeasure:
-                      value: 133
-                      unitCode: GRM
-                    unitPricingBaseMeasure:
-                      value: 100
-                      unitCode: GRM
-                    pricingMeasure:
-                      value: 100
-                      unitCode: GRM
-                    orderUnit: H87
-                    minOrderQuantity: 2
-                    maxOrderQuantity: 10
-                    defaultOrderQuantity: 5
                 metadata:
                   version: 1
-                  mixins:
-                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
-                    salePricesData: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/salePriceData.json'
             PARENT VARIANT Product Update:
               value:
                 name: Smartphone X2
@@ -1572,9 +1564,6 @@ components:
                 template:
                   id: 634cea2740033d7c2e7b03a8
                   version: 1
-                relatedItems:
-                  - refId: 634cea2740033d7c2e7b03a9
-                    type: CONSUMABLE
                 productType: PARENT_VARIANT
                 variantAttributes:
                   color:
@@ -1587,32 +1576,8 @@ components:
                     - key: M
                     - key: L
                     - key: XL
-                mixins:
-                  salePricesData:
-                    - salePriceStart: '2021-07-20T22:00:00.000+0000'
-                      salePriceAmount: 6.7
-                      salePriceEnd: '2021-07-25T21:59:59.000+0000'
-                      enabled: false
-                  productCustomAttributes:
-                    pricingMeasurePrice: 13
-                    unitPricingMeasure:
-                      value: 133
-                      unitCode: GRM
-                    unitPricingBaseMeasure:
-                      value: 100
-                      unitCode: GRM
-                    pricingMeasure:
-                      value: 100
-                      unitCode: GRM
-                    orderUnit: H87
-                    minOrderQuantity: 2
-                    maxOrderQuantity: 10
-                    defaultOrderQuantity: 5
                 metadata:
                   version: 1
-                  mixins:
-                    productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
-                    salePricesData: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/salePriceData.json'
             VARIANT Product Update:
               value:
                 name: Smartphone X2 black
@@ -1621,7 +1586,7 @@ components:
                 published: true
                 taxClasses:
                   EN: STANDARD
-                peoductType: VARIANT
+                productType: VARIANT
                 parentVariantId: 214cah2245033d9d2a2b17f1
                 relatedItems:
                   - refId: 634cea2740033d7c2e7b03a9
@@ -1884,7 +1849,7 @@ components:
     productTypeUpdate:
       type: string
       description: |
-        Indicates the product type, which is immutable. This property is taken into account only for insert operation.
+        Indicates the product type, which is immutable. This property is taken into account only for insert operations.
       default: BASIC
       enum:
         - BASIC
@@ -2283,24 +2248,6 @@ components:
           items:
             type: string
           description: 'Collection of label IDs.'
-        customerSegmentIds:
-          type: array
-          description: |-
-            Customer segment IDs assigned to the product.
-
-            **NOTE**: This is a preview field and it is not fully operational yet.
-          readOnly: true
-          items:
-            type: string
-        categoryIds:
-          type: array
-          description: |-
-            Category IDs assigned to the product.
-
-            **NOTE**: This is a preview field and it is not fully operational yet.
-          readOnly: true
-          items:
-            type: string
     basicProduct:
       type: object
       description: Products of the BASIC type.
@@ -2344,6 +2291,16 @@ components:
               $ref: '#/components/schemas/productMedia'
             metadata:
               $ref: '#/components/schemas/productMetadataGet'
+            customerSegmentIds:
+              type: array
+              description: Customer segment IDs assigned to the product.
+              items:
+                type: string
+            categoryIds:
+              type: array
+              description: Category IDs assigned to the product.
+              items:
+                type: string
     basicProductsArray:
       type: array
       description: List of products of the BASIC type.
@@ -2421,6 +2378,16 @@ components:
               $ref: '#/components/schemas/productMedia'
             metadata:
               $ref: '#/components/schemas/productMetadataGet'
+            customerSegmentIds:
+              type: array
+              description: Customer segment IDs assigned to the product.
+              items:
+                type: string
+            categoryIds:
+              type: array
+              description: Category IDs assigned to the product.
+              items:
+                type: string
     bundleProductsArray:
       type: array
       description: List of products of the BUNDLE type.
@@ -2494,6 +2461,16 @@ components:
               $ref: '#/components/schemas/productMedia'
             metadata:
               $ref: '#/components/schemas/productMetadataGet'
+            customerSegmentIds:
+              type: array
+              description: Customer segment IDs assigned to the product.
+              items:
+                type: string
+            categoryIds:
+              type: array
+              description: Category IDs assigned to the product.
+              items:
+                type: string
     parentVariantProductsArray:
       type: array
       description: List of products of the PARENT_VARIANT type.
@@ -2534,8 +2511,6 @@ components:
           required:
             - name
             - code
-            - productType
-            - parentVariantId
     variantProductCreation:
       type: object
       description: Creating products of the VARIANT type.
@@ -2569,6 +2544,16 @@ components:
               $ref: '#/components/schemas/productMedia'
             metadata:
               $ref: '#/components/schemas/variantProductMetadataGet'
+            customerSegmentIds:
+              type: array
+              description: Customer segment IDs assigned to the product.
+              items:
+                type: string
+            categoryIds:
+              type: array
+              description: Category IDs assigned to the product.
+              items:
+                type: string
     variantProductsArray:
       type: array
       description: List of products of the VARIANT type.
@@ -2587,7 +2572,7 @@ components:
               $ref: '#/components/schemas/productTypeUpdate'
             parentVariantId:
               type: string
-              description: Identifier of the PARENT_VARIANT product.
+              description: Identifier of the PARENT_VARIANT product. This property is taken into account only for insert operations.
     variantProductBulkUpdate:
       type: object
       description: Updating products of the VARIANT type in bulk.
@@ -2945,11 +2930,11 @@ components:
         message: Validation problem with request body.
     product_post_Created_201:
       value:
-        productId: 631b4bfe61f5e1663c745ffd
+        id: 631b4bfe61f5e1663c745ffd
         yrn: 'urn:yaas:saasag:caasproduct:product:apistage;631b4bfe61f5e1663c745ffd'
     variant_post_Created_201:
       value:
-        productId: 5c335acea9812100098ffde0--631b4bfe61f5e1663c745ffd
+        id: 5c335acea9812100098ffde0--631b4bfe61f5e1663c745ffd
         yrn: 'urn:yaas:saasag:caasproduct:product:apistage;5c335acea9812100098ffde0--631b4bfe61f5e1663c745ffd'
     product_NotFound_404:
       value:

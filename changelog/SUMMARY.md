@@ -14,6 +14,8 @@
 * [2026-02-10: Cart Service - restriction property for carts](2026/2026-02-10-cart.md)
 * [2026-02-10: Client Management Service - restrictions property for Legal Entities](2026/2026-02-10-client-management.md)
 * [2026-02-10: IAM Service - restrictions and restrictionAware properties](2026/2026-02-10-iam.md)
+* [2026-02-06: IAM Service – new endpoint for retrieving own user](2026/2026-02-06-iam.md)
+* [2026-02-04: Product Service – category and customer segment IDs no longer in preview](2026/2026-02-04-product.md)
 * [2026-01-08: Configuration Service - New properties for configurations](2026/2026-01-08-configuration.md)
 
 ## Archive
