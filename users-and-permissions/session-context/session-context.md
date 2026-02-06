@@ -150,7 +150,7 @@ The response is:
 {% endstep %}
 {% step %}
 
-Retrieve the session context by sending a request to the [Retrieving a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-management) endpoint. Use the `session_context.context_manage` scope.
+Retrieve the session context by sending a request to the [Retrieving a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-management) endpoint. Use the `sessioncontext.context_manage` scope.
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
@@ -196,7 +196,7 @@ The response is:
 
 If you want to personalize user experience on your website, you can add custom attributes to selected session contexts. Your attributes are not validated, as they are only stored in the Emporix Commerce Engine and can be deleted at any time. However, you can make the data actionable by incorporating a solution of your choice.
 
-Example:
+**Example**:
 
 If you want to suggest products on the storefront that are relevant to the weather conditions near the user's location, you can add two new attributes: `latitude` and `longitude` to the session context.
 The data can be collected on the storefront every time a user enters your website, and it will be kept in the Emporix Commerce Engine.
@@ -208,7 +208,7 @@ For example, it's raining in the user's location, so the list of suggested produ
 You can also implement a mechanism allowing users to manage and modify their own sessions and session contexts by calling the [Adding a new attribute to a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-context-modification#post-session-context-tenant-context-sessionid-attributes) endpoint on the storefront.
 {% endhint %}
 
-In the following example, we add an attribute by sending a request to the [Adding a new attribute to a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-context-modification#post-session-context-tenant-context-sessionid-attributes) endpoint with the `session_context.context_manage` scope (with underscore in `session_context`).
+In the following example, we add an attribute by sending a request to the [Adding a new attribute to a session context](https://developer.emporix.io/api-references/api-guides/users-and-permissions/session-context/api-reference/session-context-modification#post-session-context-tenant-context-sessionid-attributes) endpoint with the `sessioncontext.context_manage` scope (with underscore in `session_context`).
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
