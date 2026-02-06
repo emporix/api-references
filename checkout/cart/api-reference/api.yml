@@ -3897,7 +3897,7 @@ components:
         
         **Restriction Synchronization**: If cart is created by customer and `restriction` is not set, the `restriction` value will be set to the customer's restriction.' 
 
-        **Site Synchronization**: If customer's restriction is not set and tenant configuration (`enableSyncBetweenRestrictionsAndSiteCodes` property) is set to `true`, 
+        **Site Synchronization**: If restriction still is not set and tenant configuration (`enableSyncBetweenRestrictionsAndSiteCodes` property) is set to `true`, 
         this field automatically syncs with the `siteCode`.
       example: "DE"
     appliedDiscount:
