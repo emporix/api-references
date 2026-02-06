@@ -928,7 +928,6 @@ components:
         
         **Access Control**:
         - *Reading*: Users can only query and view customers whose `restriction` value matches one of their authorized restrictions
-        - *Modifying*: Requires special `restriction.restriction_manage` scope permission to create or update this field
         
         **Validation**: The value must exist in the tenant's configured list of valid restrictions.
         
