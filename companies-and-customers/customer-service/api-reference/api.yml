@@ -927,12 +927,11 @@ components:
         with matching restriction scopes can access customers with a specific restriction value.
         
         **Access Control**:
-        - *Reading*: Users can only query and view customers whose `restriction` value matches one of their authorized restrictions
+        - *Reading*: Users can only query and view customers with the `restriction` value that matches one of their authorized restrictions.
         
         **Validation**: The value must exist in the tenant's configured list of valid restrictions.
         
-        **Site Synchronization**: When enabled via tenant configuration (`enableSyncBetweenRestrictionsAndSiteCodes` property), 
-        this field automatically syncs with the `preferredSite` value if not explicitly set.
+        **Site Synchronization**: If the `restriction` property is not set with tenant configuration (the property `enableSyncBetweenRestrictionsAndSiteCodes` set to `true`), the `restriction` field automatically syncs with `preferredSite` property.
       example: "DE"
     CustomerCreateDto:
       type: object
