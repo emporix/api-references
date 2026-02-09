@@ -3895,10 +3895,9 @@ components:
         
         **Validation**: The value must exist in the tenant's configured list of valid restrictions.
         
-        **Restriction Synchronization**: If cart is created by customer and `restriction` is not set, the `restriction` value will be set to the customer's restriction.' 
+        **Restriction Synchronization**: If cart is created by customer and `restriction` is not set, the `restriction` will be inherited from customer's restriction'.
 
-        **Site Synchronization**: If restriction still is not set and tenant configuration (`enableSyncBetweenRestrictionsAndSiteCodes` property) is set to `true`, 
-        this field automatically syncs with the `siteCode`.
+        **Site Synchronization**: If customer's restriction is not present and tenant configuration property 'enableSyncBetweenRestrictionsAndSiteCodes' is set to 'true' then this field automatically syncs with the 'siteCode'.
       example: "DE"
     appliedDiscount:
       type: object
