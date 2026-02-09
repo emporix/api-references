@@ -733,12 +733,11 @@ components:
         with matching restriction scopes can access orders with a specific restriction value.
         
         **Access Control**:
-        - *Reading*: Users can only query and view orders whose `restriction` value matches one of their authorized restrictions
+        - *Reading*: Users can only query and view orders with the `restriction` value that matches one of their authorized restrictions.
         
         **Validation**: The value must exist in the tenant's configured list of valid restrictions.
         
-        **Site Synchronization**: When enabled via tenant configuration (`enableSyncBetweenRestrictionsAndSiteCodes` property), 
-        this field automatically syncs with the `siteCode` value if not explicitly set.
+        **Site Synchronization**: If the `restriction` property is not set with tenant configuration (the property `enableSyncBetweenRestrictionsAndSiteCodes` set to `true`), the `restriction` field automatically syncs with `siteCode` property.
       example: "DE"
     localizedValue:
       description: Localized value which can have different structure which depends on provided `Content-Language` header.
