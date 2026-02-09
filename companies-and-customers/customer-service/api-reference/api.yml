@@ -931,7 +931,7 @@ components:
         
         **Validation**: The value must exist in the tenant's configured list of valid restrictions.
         
-        **Site Synchronization**: If the `restriction` property is not set with tenant configuration (the property `enableSyncBetweenRestrictionsAndSiteCodes` set to `true`), the `restriction` field automatically syncs with `preferredSite` property.
+        **Site Synchronization**: If the `restriction` property is not set with tenant configuration property `enableSyncBetweenRestrictionsAndSiteCodes` set to `true`, the `restriction` field automatically syncs with `preferredSite` property.
       example: "DE"
     CustomerCreateDto:
       type: object
