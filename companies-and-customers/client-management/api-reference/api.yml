@@ -1066,7 +1066,6 @@ components:
           
           **Access Control**:
           - *Reading*: Users can only query and view Legal Entities whose `restrictions` value matches one of their authorized restrictions.
-          - *Modifying*: The provided value must exist in the tenant's configured list of restrictions.
           
           **Validation**: The value must exist in the tenant's configured list of valid restrictions.
         example: "DE"
