@@ -497,6 +497,7 @@ paths:
                       userId: 7777i52309521897214
                       userFirstName: Robin
                       userLastName: Fritz
+                      restriction: main
                       userType: EMPLOYEE
                       modifiedAt: '2024-04-02T13:06:15.280Z'
                     - id: 6447b45cac0475131f3a6262
@@ -1498,10 +1499,9 @@ components:
         
         **Validation**: The value must exist in the tenant's configured list of valid restrictions.
         
-        **Restriction Synchronization**: If quote is created by customer and `restriction` is not set, the `restriction` value will be set to the customer's restriction.' 
-
-        **Site Synchronization**: If restriction still is not set and tenant configuration (`enableSyncBetweenRestrictionsAndSiteCodes` property) is set to `true`, 
-        this field automatically syncs with the `siteCode`.
+        **Restriction Synchronization**:
+        - If quote is created by a customer (based on a cart) and `restriction` property is not set, the `restriction` value of quote is inherited from customer's restriction.
+        - If a quote is created by an employee and the `restriction` property is not set with tenant configuration (the property `enableSyncBetweenRestrictionsAndSiteCodes` set to `true`), the `restriction` field automatically syncs with quote's siteCode property.
       example: "DE"
     QuoteItemUpdatePriceRow:
       type: object
@@ -2397,6 +2397,8 @@ components:
               - CUSTOMER
               - SYSTEM
             type: string
+          restriction:
+            $ref: '#/components/schemas/Restriction'
           modifiedAt:
             type: string
             description: Modification date.
