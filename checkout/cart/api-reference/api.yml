@@ -3891,13 +3891,13 @@ components:
         with matching restriction scopes can access carts with a specific restriction value.
         
         **Access Control**:
-        - *Reading*: Users can only query and view carts whose `restriction` value matches one of their authorized restrictions
+        - *Reading*: Users can only query and view carts with the `restriction` value that matches one of their authorized restrictions.
         
         **Validation**: The value must exist in the tenant's configured list of valid restrictions.
         
-        **Restriction Synchronization**: If cart is created by customer and `restriction` is not set, the `restriction` will be inherited from customer's restriction'.
-
-        **Site Synchronization**: If customer's restriction is not present and tenant configuration property 'enableSyncBetweenRestrictionsAndSiteCodes' is set to 'true' then this field automatically syncs with the 'siteCode'.
+        **Restriction Synchronization**: 
+        - If cart is created by customer and `restriction` is not set, the `restriction` will be inherited from customer's restriction'.
+        - If the `restriction` property is not set with tenant configuration (the property `enableSyncBetweenRestrictionsAndSiteCodes` set to `true`), the `restriction` field automatically syncs with cart's siteCode property.
       example: "DE"
     appliedDiscount:
       type: object
