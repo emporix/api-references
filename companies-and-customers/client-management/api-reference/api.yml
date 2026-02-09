@@ -1051,6 +1051,7 @@ components:
           type: string
           description: The unique identifier of the legal entity registration.
     restrictions:
+      title: Restriction
       type: array
       maximum: 1
       nullable: true
@@ -1064,7 +1065,8 @@ components:
           with matching restrictions scopes can access Legal Entities with a specific restrictions value.
           
           **Access Control**:
-          - *Reading*: Users can only query and view Legal Entities whose `restrictions` value matches one of their authorized restrictions
+          - *Reading*: Users can only query and view Legal Entities whose `restrictions` value matches one of their authorized restrictions.
+          - *Modifying*: The provided value must exist in the tenant's configured list of restrictions.
           
           **Validation**: The value must exist in the tenant's configured list of valid restrictions.
         example: "DE"
