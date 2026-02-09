@@ -737,7 +737,7 @@ components:
         
         **Validation**: The value must exist in the tenant's configured list of valid restrictions.
         
-        **Site Synchronization**: If the `restriction` property is not set with tenant configuration (the property `enableSyncBetweenRestrictionsAndSiteCodes` set to `true`), the `restriction` field automatically syncs with `siteCode` property.
+        **Site Synchronization**: If the `restriction` property is not set with tenant configuration property `enableSyncBetweenRestrictionsAndSiteCodes` set to `true`, the `restriction` field automatically syncs with `siteCode` property.
       example: "DE"
     localizedValue:
       description: Localized value which can have different structure which depends on provided `Content-Language` header.
