@@ -1494,7 +1494,7 @@ components:
         with matching restriction scopes can access quotes with a specific restriction value.
         
         **Access Control**:
-        - *Reading*: Users can only query and view quotes whose `restriction` value matches one of their authorized restrictions
+        - *Reading*: Users can only query and view quotes with the `restriction` value that matches one of their authorized restrictions.
         
         **Validation**: The value must exist in the tenant's configured list of valid restrictions.
         
@@ -1792,7 +1792,7 @@ components:
               allOf:
                 - $ref: '#/components/schemas/QuoteReasonResponse'
                 - type: object
-                  description: The reason for status change
+                  description: The reason for status change.
         validTo:
           type: string
           format: date-time
@@ -1868,10 +1868,10 @@ components:
               properties:
                 grossValue:
                   type: number
-                  description: Gross value of the shipping cost
+                  description: Gross value of the shipping cost.
                 methodName:
                   type: object
-                  description: Localized Shipping method chosen by the customer.
+                  description: Localized name of the shipping method selected by the customer.
                   additionalProperties:
                     type: string
         items:
