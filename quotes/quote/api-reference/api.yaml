@@ -1501,7 +1501,7 @@ components:
         
         **Restriction Synchronization**:
         - If quote is created by a customer (based on a cart) and `restriction` property is not set, the `restriction` value of quote is inherited from customer's restriction.
-        - If a quote is created by an employee and the `restriction` property is not set with tenant configuration (the property `enableSyncBetweenRestrictionsAndSiteCodes` set to `true`), the `restriction` field automatically syncs with quote's siteCode property.
+        - If a quote is created by an employee and the `restriction` property is not set with tenant configuration property `enableSyncBetweenRestrictionsAndSiteCodes` set to `true`, the `restriction` field automatically syncs with quote's siteCode property.
       example: "DE"
     QuoteItemUpdatePriceRow:
       type: object
