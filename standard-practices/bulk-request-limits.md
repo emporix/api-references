@@ -12,7 +12,7 @@ description: Bulk request limits for Emporix API endpoints that support multiple
 
 ## Overview
 
-Our default maximum batch size is **200** items. 
+Our default maximum batch size is **200** items. If there are exceptions to it and an endpoint uses a different limit, the API reference for that endpoint specifies it.
 
 Endpoints that allow multiple changes in a single request (bulk or batch operations) are subject to these size limits to ensure stable performance. Exceeding the maximum batch size for an endpoint typically results in a **400 Bad Request** with a message indicating the payload or array size limit.
 
