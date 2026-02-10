@@ -532,7 +532,7 @@ components:
               moreInfo: https://pattern.yaas.io/errortypes.html
               type: validation_violation
               details:
-                - field: hybris-tenant
+                - field: tenant
                   message: size must be between 1 and 36
                   type: invalid_header
     trait_yaasAware_401:

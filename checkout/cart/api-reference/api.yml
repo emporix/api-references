@@ -38,7 +38,6 @@ paths:
                 Response example:
                   value:
                     cartId: 65141d687308095e25ca0671
-                    yrn: 'urn:yaas:hybris:cart:cart-item:saastest2;65141d687308095e25ca0671'
         '400':
           $ref: '#/components/responses/trait_400'
         '403':
@@ -124,7 +123,6 @@ paths:
                 Detailed cart with calculated prices:
                   value:
                     id: 68481e9e8bf22744fc578572
-                    yrn: urn:yaas:hybris:cart:cart:b2b2cstage;68481e9e8bf22744fc578572
                     customerId: "45620894"
                     currency: EUR
                     siteCode: GrossSite
@@ -584,11 +582,11 @@ paths:
                         links:
                           - rel: validate
                             title: Coupon Validation
-                            href: https://api-stage.emporix.io/coupon/b2b2cstage/coupons/LS100EUROTOTAL/validation
+                            href: https://api.emporix.io/coupon/b2b2cstage/coupons/LS100EUROTOTAL/validation
                             type: application/json
                           - rel: redeem
                             title: Coupon Redemption
-                            href: https://api-stage.emporix.io/coupon/b2b2cstage/coupons/LS100EUROTOTAL/redemptions
+                            href: https://api.emporix.io/coupon/b2b2cstage/coupons/LS100EUROTOTAL/redemptions
                             type: application/json
                         discountType: ABSOLUTE
                         discountCalculationType: TOTAL
@@ -791,7 +789,6 @@ paths:
                 'Logged in customer cart ':
                   value:
                     id: 612c9ae63cff1d66f699b691
-                    yrn: 'urn:yaas:hybris:cart:cart:saastest2;612c9ae63cff1d66f699b691'
                     customerId: '87413250'
                     currency: EUR
                     siteCode: main
@@ -808,7 +805,6 @@ paths:
                 Anonymous customer cart:
                   value:
                     id: 6128cf97330cc7035fa1484c
-                    yrn: 'urn:yaas:hybris:cart:cart:saastest2;6128cf97330cc7035fa1484c'
                     currency: EUR
                     siteCode: main
                     sessionId: YxXRjn9zSFM7gMq5dtNKarX7xYkIMV
@@ -940,7 +936,6 @@ paths:
                 Carts:
                   value:
                     - id: 68481e9e8bf22744fc578572
-                      yrn: urn:yaas:hybris:cart:cart:b2b2cstage;68481e9e8bf22744fc578572
                       customerId: "45620894"
                       currency: EUR
                       siteCode: GrossSite
@@ -1650,7 +1645,6 @@ paths:
                 Detailed cart with calculated prices:
                   value:
                     id: 68481e9e8bf22744fc578572
-                    yrn: urn:yaas:hybris:cart:cart:b2b2cstage;68481e9e8bf22744fc578572
                     customerId: "45620894"
                     currency: EUR
                     siteCode: GrossSite
@@ -2538,9 +2532,6 @@ paths:
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
-        - $ref: '#/components/parameters/Accept-Language'
-        - $ref: '#/components/parameters/Content-Language'
-        - $ref: '#/components/parameters/languages'
       summary: Changing a cart site
       tags:
         - Carts
@@ -2588,9 +2579,6 @@ paths:
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
-        - $ref: '#/components/parameters/Accept-Language'
-        - $ref: '#/components/parameters/Content-Language'
-        - $ref: '#/components/parameters/languages'
       summary: Changing a cart currency
       tags:
         - Carts
@@ -2655,9 +2643,6 @@ paths:
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
-        - $ref: '#/components/parameters/Accept-Language'
-        - $ref: '#/components/parameters/Content-Language'
-        - $ref: '#/components/parameters/languages'
       summary: Merging carts
       tags:
         - Carts

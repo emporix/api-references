@@ -254,6 +254,12 @@ paths:
                     relatedItems:
                       - refId: 631c6adac2d4ea73be34f0d1
                         type: ACCESSORY
+                    customerSegmentIds:
+                      - 689591c74ac99162678ae78f
+                      - 689591c74ac99162678ae78g
+                    categoryIds:
+                      - 631c6adac2d4ea73be34f0d4
+                      - 631c6adac2d4ea73be34f0d5
                     mixins:
                       productCustomAttributes:
                         pricingMeasurePrice: 13
@@ -302,6 +308,12 @@ paths:
                         amount: 1
                       - id: 53a358901b2e9dd2718b5c13
                         amount: 1
+                    customerSegmentIds:
+                      - 689591c74ac99162678ae78f
+                      - 689591c74ac99162678ae78g
+                    categoryIds:
+                      - 631c6adac2d4ea73be34f0d4
+                      - 631c6adac2d4ea73be34f0d5
                     mixins:
                       productCustomAttributes:
                         pricingMeasurePrice: 13
@@ -356,6 +368,12 @@ paths:
                         - key: M
                         - key: L
                         - key: XL
+                    customerSegmentIds:
+                      - 689591c74ac99162678ae78f
+                      - 689591c74ac99162678ae78g
+                    categoryIds:
+                      - 631c6adac2d4ea73be34f0d4
+                      - 631c6adac2d4ea73be34f0d5
                     mixins:
                       productCustomAttributes:
                         pricingMeasurePrice: 13
@@ -397,6 +415,12 @@ paths:
                     relatedItems:
                       - refId: 631c6adac2d4ea73be34f0d1
                         type: ACCESSORY
+                    customerSegmentIds:
+                      - 689591c74ac99162678ae78f
+                      - 689591c74ac99162678ae78g
+                    categoryIds:
+                      - 631c6adac2d4ea73be34f0d4
+                      - 631c6adac2d4ea73be34f0d5
                     mixins:
                       productTemplateAttributes:
                         color: RED
@@ -564,6 +588,12 @@ paths:
       tags:
         - Products
     delete:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       responses:
         '204':
           description: |
@@ -928,6 +958,12 @@ paths:
     delete:
       summary: Deleting a product template
       operationId: DELETE-product-remove-template
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: false
       responses:
         '204':
           description: No Content
@@ -1068,6 +1104,12 @@ components:
                   relatedItems:
                     - refId: 631c6adac2d4ea73be34f0d1
                       type: ACCESSORY
+                  customerSegmentIds:
+                    - 689591c74ac99162678ae78f
+                    - 689591c74ac99162678ae78g
+                  categoryIds:
+                    - 631c6adac2d4ea73be34f0d4
+                    - 631c6adac2d4ea73be34f0d5
                   mixins:
                     productCustomAttributes:
                       pricingMeasurePrice: 13
@@ -1116,6 +1158,12 @@ components:
                       amount: 1
                     - id: 53a358901b2e9dd2718b5c13
                       amount: 1
+                  customerSegmentIds:
+                    - 689591c74ac99162678ae78f
+                    - 689591c74ac99162678ae78g
+                  categoryIds:
+                    - 631c6adac2d4ea73be34f0d4
+                    - 631c6adac2d4ea73be34f0d5
                   mixins:
                     productCustomAttributes:
                       pricingMeasurePrice: 13
@@ -1170,6 +1218,12 @@ components:
                       - key: M
                       - key: L
                       - key: XL
+                  customerSegmentIds:
+                    - 689591c74ac99162678ae78f
+                    - 689591c74ac99162678ae78g
+                  categoryIds:
+                    - 631c6adac2d4ea73be34f0d4
+                    - 631c6adac2d4ea73be34f0d5
                   mixins:
                     productCustomAttributes:
                       pricingMeasurePrice: 13
@@ -1211,6 +1265,12 @@ components:
                     - refId: 631c6adac2d4ea73be34f0d1
                       type: ACCESSORY
                   parentVariantId: 545b4e3dfaee4c10def3db24
+                  customerSegmentIds:
+                    - 689591c74ac99162678ae78f
+                    - 689591c74ac99162678ae78g
+                  categoryIds:
+                    - 631c6adac2d4ea73be34f0d4
+                    - 631c6adac2d4ea73be34f0d5
                   mixins:
                     productVariantAttributes:
                       color: RED
@@ -2191,24 +2251,6 @@ components:
           items:
             type: string
           description: 'Collection of label IDs.'
-        customerSegmentIds:
-          type: array
-          description: |-
-            Customer segment IDs assigned to the product.
-
-            **NOTE**: This is a preview field and it is not fully operational yet.
-          readOnly: true
-          items:
-            type: string
-        categoryIds:
-          type: array
-          description: |-
-            Category IDs assigned to the product.
-
-            **NOTE**: This is a preview field and it is not fully operational yet.
-          readOnly: true
-          items:
-            type: string
     basicProduct:
       type: object
       description: Products of the BASIC type.
@@ -2252,6 +2294,16 @@ components:
               $ref: '#/components/schemas/productMedia'
             metadata:
               $ref: '#/components/schemas/productMetadataGet'
+            customerSegmentIds:
+              type: array
+              description: Customer segment IDs assigned to the product.
+              items:
+                type: string
+            categoryIds:
+              type: array
+              description: Category IDs assigned to the product.
+              items:
+                type: string
     basicProductsArray:
       type: array
       description: List of products of the BASIC type.
@@ -2329,6 +2381,16 @@ components:
               $ref: '#/components/schemas/productMedia'
             metadata:
               $ref: '#/components/schemas/productMetadataGet'
+            customerSegmentIds:
+              type: array
+              description: Customer segment IDs assigned to the product.
+              items:
+                type: string
+            categoryIds:
+              type: array
+              description: Category IDs assigned to the product.
+              items:
+                type: string
     bundleProductsArray:
       type: array
       description: List of products of the BUNDLE type.
@@ -2402,6 +2464,16 @@ components:
               $ref: '#/components/schemas/productMedia'
             metadata:
               $ref: '#/components/schemas/productMetadataGet'
+            customerSegmentIds:
+              type: array
+              description: Customer segment IDs assigned to the product.
+              items:
+                type: string
+            categoryIds:
+              type: array
+              description: Category IDs assigned to the product.
+              items:
+                type: string
     parentVariantProductsArray:
       type: array
       description: List of products of the PARENT_VARIANT type.
@@ -2475,6 +2547,16 @@ components:
               $ref: '#/components/schemas/productMedia'
             metadata:
               $ref: '#/components/schemas/variantProductMetadataGet'
+            customerSegmentIds:
+              type: array
+              description: Customer segment IDs assigned to the product.
+              items:
+                type: string
+            categoryIds:
+              type: array
+              description: Category IDs assigned to the product.
+              items:
+                type: string
     variantProductsArray:
       type: array
       description: List of products of the VARIANT type.
