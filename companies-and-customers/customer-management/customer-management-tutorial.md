@@ -150,7 +150,7 @@ If you want to use separate sign-up credentials (different email for login than 
 The created customer's account is inactive and requires an action on the employee's side to enable and activate the account. To achieve this, you need the relevant **employee access token**. 
 
 {% hint style="success" %}
-To obtain the employee token, see the steps described in the [Customer Service (Tenant Managed) Tutorial](../customer-service/api-reference/customer_service_tenant.md).
+To obtain the employee token, see the steps described in the [Customer Service (Tenant Managed) Tutorial](../customer-service/api-reference/customer-service-tenant.md).
 
 {% endhint %}
 
