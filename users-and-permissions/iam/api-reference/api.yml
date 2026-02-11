@@ -1370,7 +1370,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AssignmentIdResponse'
               example:
-                  id: e243dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                id: e243dc9e-a3f6-4573-bb01-a8ae21d2d4ae
         '400':
           description: Request was syntactically incorrect.
           content:
@@ -1599,9 +1599,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PermissionQueryDocument'
-              examples: 
+              examples:
                 example:
-                  value: 
+                  value:
                     id: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                     name:
                       en: Example name
@@ -1680,18 +1680,18 @@ paths:
               examples:
                 example:
                   value:
-                  - id: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4af
-                    name:
-                      en: Example name
-                      de: Beispielname
-                    description:
-                      en: Example resource description
-                      de: Beispiel Berechtigungsbeschreibung
-                    code: serviceName.resource
-                    metadata:
-                      version: 1
-                      createdAt: '2022-01-04 10:44:51.871Z'
-                      modifiedAt: '2022-01-05 12:44:51.456Z'
+                    - id: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4af
+                      name:
+                        en: Example name
+                        de: Beispielname
+                      description:
+                        en: Example resource description
+                        de: Beispiel Berechtigungsbeschreibung
+                      code: serviceName.resource
+                      metadata:
+                        version: 1
+                        createdAt: '2022-01-04 10:44:51.871Z'
+                        modifiedAt: '2022-01-05 12:44:51.456Z'
         '400':
           description: Request was syntactically incorrect. Details will be provided in the response payload
           content:
@@ -3394,14 +3394,10 @@ components:
       type: object
       properties:
         version:
-          required:
-            - 'true'
           type: integer
           description: Access control document version.
           format: int32
         createdAt:
-          required:
-            - 'true'
           type: string
           description: Timestamp indicating when the access control was created.
           format: date-time
@@ -3439,6 +3435,9 @@ components:
           description: A list of resolved scopes for a particular access control.
           items:
             type: string
+        restrictionAware:
+          type: boolean
+          description: Determines whether this access control generates scopes with restriction suffixes when assigned to a group that has restrictions defined. When `true`, the generated scopes will include restrictions (e.g. order.`order_manage--DE`) based on the group's restrictions list. When `false`, scopes are generated without restriction suffixes regardless of the group's restrictions.
     TemplateQueryDocument:
       type: object
       properties:
@@ -3568,7 +3567,6 @@ components:
           description: An identifier of a vendor to whom the group belongs. Can only be set during creation and is immutable thereafter. A group with vendorId can only be assigned to users of type `EMPLOYEE`
           readOnly: true
         name:
-          minItems: 1
           type: object
           additionalProperties:
             type: string
@@ -3610,6 +3608,8 @@ components:
             legalEntityId:
               type: string
               description: Identifier of the assigned legal entity.
+        restrictions:
+          $ref: '#/components/schemas/Restrictions'
       required:
         - name
     GroupUpdateRequest:
@@ -3633,7 +3633,6 @@ components:
       #     version: 1
       properties:
         name:
-          minItems: 1
           type: object
           additionalProperties:
             type: string
@@ -3675,6 +3674,8 @@ components:
             legalEntityId:
               type: string
               description: identifier of the assigned legal entity
+        restrictions:
+          $ref: '#/components/schemas/Restrictions'
         metadata:
           type: object
           properties:
@@ -3708,14 +3709,10 @@ components:
       type: object
       properties:
         version:
-          required:
-            - 'true'
           type: integer
           description: Group document version.
           format: int32
         createdAt:
-          required:
-            - 'true'
           type: string
           description: Timestamp indicating when the group was created.
           format: date-time
@@ -3766,6 +3763,8 @@ components:
             legalEntityId:
               type: string
               description: identifier of the assigned legal entity
+        restrictions:
+          $ref: '#/components/schemas/Restrictions'
         mixins:
           type: object
           additionalProperties:
@@ -3792,6 +3791,23 @@ components:
       #     version: 1
       #     createdAt: '2022-01-04 10:44:51.871Z'
       #     modifiedAt: '2022-01-05 12:44:51.456Z'
+    Restrictions:
+      type: array
+      items:
+        type: string
+        description: |
+          Limits the visibility of the permission-aware entities for the user. 
+          
+          **Purpose**: 
+          Restricts entity visibility based on scope permissions. Only users with matching restriction scopes can access entity with a specific restriction value.
+          
+          **Validation**: 
+          The value must exist in the tenant's configured list of valid restrictions.
+          **Site Synchronization**: 
+          When enabled via tenant configuration (`enableSyncBetweenRestrictionsAndSiteCodes` property), this field must match with the existing sites.
+        example:
+          - DE
+          - FR
     PermissionQueryDocument:
       type: object
       properties:
@@ -3842,14 +3858,10 @@ components:
       type: object
       properties:
         version:
-          required:
-            - 'true'
           type: integer
           description: Permission document version.
           format: int32
         createdAt:
-          required:
-            - 'true'
           type: string
           description: Timestamp indicating when the permission was created.
           format: date-time
@@ -3900,14 +3912,10 @@ components:
       type: object
       properties:
         version:
-          required:
-            - 'true'
           type: integer
           description: Resource document version.
           format: int32
         createdAt:
-          required:
-            - 'true'
           type: string
           description: Timestamp indicating when the resource was created.
           format: date-time
@@ -3980,14 +3988,10 @@ components:
       type: object
       properties:
         version:
-          required:
-            - 'true'
           type: integer
           description: Role document version.
           format: int32
         createdAt:
-          required:
-            - 'true'
           type: string
           description: Timestamp indicating when the role was created.
           format: date-time
