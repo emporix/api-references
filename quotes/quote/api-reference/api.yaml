@@ -198,6 +198,7 @@ paths:
                             taxClasses:
                               DE: STANDARD
                               PL: ZERO
+                      restriction: main
                       mixins:
                         customAttributes:
                           attribute:
@@ -310,6 +311,7 @@ paths:
                       metadata:
                         mixins:
                           customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695297f5b3fd5d378296ae41_customAttributes_v2.json'
+                  restriction: US
                   mixins:
                     customAttributes:
                       attribute:
@@ -495,6 +497,7 @@ paths:
                       userId: 7777i52309521897214
                       userFirstName: Robin
                       userLastName: Fritz
+                      restriction: main
                       userType: EMPLOYEE
                       modifiedAt: '2024-04-02T13:06:15.280Z'
                     - id: 6447b45cac0475131f3a6262
@@ -802,6 +805,7 @@ paths:
                           taxClasses:
                             DE: STANDARD
                             PL: ZERO
+                    restriction: main
                     mixins:
                       customAttributes:
                         attribute:
@@ -1481,6 +1485,24 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
 components:
   schemas:
+    Restriction:
+      type: string
+      nullable: true
+      description: |
+        Access control identifier that determines who can view or manage the quotes.
+        
+        **Purpose**: Restricts quote visibility based on scope permissions. Only users/applications 
+        with matching restriction scopes can access quotes with a specific restriction value.
+        
+        **Access Control**:
+        - *Reading*: Users can only query and view quotes with the `restriction` value that matches one of their authorized restrictions.
+        
+        **Validation**: The value must exist in the tenant's configured list of valid restrictions.
+        
+        **Restriction Synchronization**:
+        - If quote is created by a customer (based on a cart) and `restriction` property is not set, the `restriction` value of quote is inherited from customer's restriction.
+        - If a quote is created by an employee and the `restriction` property is not set with tenant configuration property `enableSyncBetweenRestrictionsAndSiteCodes` set to `true`, the `restriction` field automatically syncs with quote's siteCode property.
+      example: "DE"
     QuoteItemUpdatePriceRow:
       type: object
       description: Price details
@@ -1601,11 +1623,13 @@ components:
       type: array
       description: Quote item ID.
       items:
-        $ref: '#/components/schemas/QuoteItemUpdate'
-        properties:
-          itemId:
-            type: string
-            description: ID of the item. It's generated automatically when it's not provided.
+        allOf:
+          - $ref: '#/components/schemas/QuoteItemUpdate'
+          - type: object
+            properties:
+              itemId:
+                type: string
+                description: ID of the item. It's generated automatically when it's not provided.
     AddressResponse:
       type: object
       properties:
@@ -1765,8 +1789,10 @@ components:
               type: string
               description: Comment relating to the status.
             quoteReason:
-              $ref: '#/components/schemas/QuoteReasonResponse'
-              description: The reason for status change
+              allOf:
+                - $ref: '#/components/schemas/QuoteReasonResponse'
+                - type: object
+                  description: The reason for status change.
         validTo:
           type: string
           format: date-time
@@ -1836,16 +1862,18 @@ components:
                     type: number
                     description: The total taxable amount.
         shipping:
-          $ref: '#/components/schemas/QuoteShipping'
-          properties:
-            grossValue:
-              type: number
-              description: Gross value of the shipping cost
-            methodName:
-              type: object
-              description: Localized Shipping method chosen by the customer.
-              additionalProperties:
-                type: string
+          allOf:
+            - $ref: '#/components/schemas/QuoteShipping'
+            - type: object
+              properties:
+                grossValue:
+                  type: number
+                  description: Gross value of the shipping cost.
+                methodName:
+                  type: object
+                  description: Localized name of the shipping method selected by the customer.
+                  additionalProperties:
+                    type: string
         items:
           type: array
           description: A list of quote items.
@@ -1991,6 +2019,8 @@ components:
               type: string
               format: date-time
               description: Quote modification timestamp.
+        restriction:
+          $ref: '#/components/schemas/Restriction'
     QuoteReasonCreateRequest:
       type: object
       description: The schema specifies the attributes that must be provided when creating a quote reason.
@@ -2203,6 +2233,8 @@ components:
                     additionalProperties: true
             required:
               - product
+        restriction:
+          $ref: '#/components/schemas/Restriction'
         mixins:
           type: object
           description: Mixins request.
@@ -2272,6 +2304,7 @@ components:
               - /companyName
               - /customerId
               - /shipping
+              - /restriction
               - /items
               - '/items/{itemId}'
               - '/items/{itemId}/price'
@@ -2327,6 +2360,7 @@ components:
               - /companyName
               - /customerId
               - /shipping
+              - /restriction
               - /items
               - '/items/{itemId}'
               - '/items/{itemId}/price'
@@ -2338,11 +2372,16 @@ components:
               - '/metadata/{mixinsPath}'
             type: string
           newValue:
-            description: New value after the update.
-            $ref: '#/components/schemas/QuoteUpdateValues'
+            allOf:
+              - $ref: '#/components/schemas/QuoteUpdateValues'
+              - type: object
+                description: New value after the update.
           previousValue:
+            allOf:
+              - $ref: '#/components/schemas/QuoteUpdateValues'
+              - type: object
+                description: Value before update.
             description: Value before update.
-            $ref: '#/components/schemas/QuoteUpdateValues'
           userId:
             type: string
             description: ID of the user who modified the item.
@@ -2358,6 +2397,8 @@ components:
               - CUSTOMER
               - SYSTEM
             type: string
+          restriction:
+            $ref: '#/components/schemas/Restriction'
           modifiedAt:
             type: string
             description: Modification date.
