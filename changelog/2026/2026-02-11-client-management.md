@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2026-02-10: Client Management Service - restrictions property for Legal Entities
+# 2026-02-11: Client Management Service - restrictions property for Legal Entities
 
 ## Overview
 
