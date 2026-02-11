@@ -53,8 +53,12 @@ These announcements are intended to keep you informed about ongoing work and pot
     <th class="tg-x6qq">Description</th>
   </tr></thead>
 <tbody>
+<tr>
+    <td class="tg-0pky" rowspan="5">Product Service</td>
+    <td class="tg-0pky" rowspan="5">Product variants next generation</td>
+  </tr>
   <tr>
-    <td class="tg-0pky" rowspan="5">Schema Service<br>Product Service<br>Category Service</td>
+    <td class="tg-0pky" rowspan="5">Schema Service<br>Category Service</td>
     <td class="tg-0pky" rowspan="5">Classification categories<br>Mixins</td>
   </tr>
     <tr>
