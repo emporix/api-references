@@ -1746,7 +1746,7 @@ paths:
       tags:
         - Prices assigned to price lists
       description: |-
-        Deletes multiple prices from a specified price list.
+        Deletes multiple prices from a specified price list. The maximum batch size is 200.
 
         To indicate which prices should be deleted from the price list, you need to put their IDs in an array of strings and send it through the request body. The request body should look like this: `["exampleID1", "exampleID2"]`
       requestBody:
@@ -1809,7 +1809,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
       description: |-
-        Creates multiple prices for a specified price list.
+        Creates multiple prices for a specified price list. The maximum batch size is 200.
 
         Response for a particular price is returned at the same position (index) at which that price is located in the request body.
       security:
@@ -1821,7 +1821,7 @@ paths:
       tags:
         - Prices assigned to price lists
       description: |-
-        Updates or creates multiple prices in a specified price list.
+        Updates or creates multiple prices in a specified price list. The maximum batch size is 200.
 
         Response for a particular price is returned at the same position (index) at which that price is located in the request body.
       security:
