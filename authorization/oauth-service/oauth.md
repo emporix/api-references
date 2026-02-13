@@ -5,7 +5,7 @@ layout:
   width: wide
 ---
 
-# OAuth Service Tutorial
+# OAuth Tutorial
 
 This tutorial explains how to obtain a **service access token** from the OAuth Service. A service access token is required in server-to-server calls in your backend, scripts or jobs to call Emporix APIs for tasks such as adding products, managing categories, or modifying prices. 
 
@@ -39,12 +39,12 @@ Send a `POST` request to the token endpoint with form-encoded credentials.
 
 **Request body (form parameters):**
 
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `grant_type` | Yes | Always `client_credentials` for service access tokens |
-| `client_id` | Yes | Your client ID |
-| `client_secret` | Yes | Your client secret |
-| `scope` | Yes | One or more scopes (e.g. `tenant={tenant}`) |
+| Parameter | Description |
+|-----------|-------------|
+| `grant_type` | Always `client_credentials` for service access tokens |
+| `client_id` | Your client ID |
+| `client_secret` | Your client secret |
+| `scope` | One or more scopes (for example, `tenant={tenant}`) |
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -52,7 +52,7 @@ Send a `POST` request to the token endpoint with form-encoded credentials.
 [API reference](api-reference/)
 {% endcontent-ref %}
 
-**Example request (cURL):**
+**Example request:**
 
 ```bash
 curl -i -X POST 'https://api.emporix.io/oauth/token' \

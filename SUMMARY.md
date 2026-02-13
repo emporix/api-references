@@ -65,6 +65,7 @@
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/artificial-intelligence/ai-rag-indexer/api-reference/api.yml)
 * [Authorization](authorization/README.md)
   * [OAuth Service](authorization/oauth-service/README.md)
+    * [OAuth Tutorial](authorization/oauth-service/oauth.md)
     * [API Reference](authorization/oauth-service/api-reference/README.md)
       * ```yaml
         props:
