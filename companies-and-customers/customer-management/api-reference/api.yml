@@ -1059,6 +1059,62 @@ paths:
       servers:
         - url: https://api.emporix.io
           description: Production
+  '/customer/{tenant}/exchangeauthtoken':
+    post:
+      tags:
+        - Authentication and authorization
+      summary: Exchanging an external identity provider's subject access token for an Emporix customer token
+      description: |-
+        Exchanges an external identity provider's subject access token (e.g. from an identity provider such as Keycloak) for an Emporix customer access token.
+
+        **Note**: The request needs to be authorized with an anonymous token.
+        ***
+        ### Required scopes
+        No specific scopes are required.
+      operationId: POST-customer-exchange-authtoken
+      parameters:
+        - $ref: '#/components/parameters/tenant'
+        - name: subjectAccessToken
+          in: query
+          description: The subject access token (JWT) to exchange for a customer token.
+          required: true
+          schema:
+            type: string
+          example: "{subject_access_token}"
+        - name: Authorization
+          in: header
+          description: Anonymous token used to authorize the exchange.
+          required: true
+          schema:
+            type: string
+          example: "Bearer {anonymous_token}"
+      responses:
+        '200':
+          description: The request was successful. A customer token is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExchangeAuthTokenResponse'
+              examples:
+                Response example:
+                  value:
+                    subject_access_token: "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJqTEF2MmJINlhaVHNpZHBEZUNsNjFrNEJWTlREckRHRDV3Um1ETlQxNmpvIn0..."
+                    access_token: dEKATUWeewkraTlIzjVZBbGg7BQQ
+                    saas_token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJDMDAzMyIsImV4cCI6MTc3MTI3MzEwNiwiaWF0IjoxNzcxMjU4NzA2LCJqdGkiOiI0NTU0NzMzYS01NDY4LTRjYzctYjRiZS01OGZiMzA2Y2FhMGEifQ.5536UTfZ3KmNPbMDp5ZLRIeYwMV-P1jN5DUT2ZLu2qc"
+                    refresh_token: QtvQi9UAYS9GIbEGu73ERUmfdC569MBE
+                    refresh_token_expires_in: 15551999
+                    session_idle_time: 120
+                    token_type: Bearer
+                    expires_in: 14399
+                    scope: "customer.customerprofile_edit approval.approval_manage_own returns.returns_manage_own iam.scope_read_own customersegment.segment_read_own customer.consent_view quote.quote_read_own customermanagement.legalentity_read_own approval.approval_read_own ai.agentexecution_manage_own returns.returns_read_own order.order_readascustomer order.order_updateascustomer customer.consent_manage quote.quote_manage_own order.history_view coupon.coupon_redeem customer.customerprofile_view tenant=cockpitsdev"
+                    session_id: 14ccc133-5731-4d6c-8f38-ca82443e4e4e
+        '400':
+          $ref: '#/components/responses/400_bad_request'
+        '401':
+          $ref: '#/components/responses/401_unauthorized'
+        '403':
+          $ref: '#/components/responses/403_forbidden'
+      security: []
   '/customer/{tenant}/signup/optin/{token}':
     get:
       operationId: GET-customer-signup-customer-optin
@@ -1591,6 +1647,46 @@ components:
           type: string
         session_id:
           type: string
+    ExchangeAuthTokenResponse:
+      description: Response returned when exchanging an external subject access token for an Emporix customer token.
+      type: object
+      properties:
+        subject_access_token:
+          type: string
+          description: The subject access token (JWT) that was exchanged.
+        access_token:
+          type: string
+          minLength: 1
+          description: Customer access token.
+        saas_token:
+          type: string
+          minLength: 1
+          description: SaaS token for the session.
+        refresh_token:
+          type: string
+          minLength: 1
+          description: Token used to refresh the customer access token.
+        refresh_token_expires_in:
+          type: integer
+          format: int32
+          description: Expiration time of the refresh token in seconds.
+        session_idle_time:
+          type: integer
+          format: int32
+          description: Session idle time in seconds.
+        token_type:
+          type: string
+          description: Type of the token. Usually `Bearer`.
+        expires_in:
+          type: integer
+          format: int32
+          description: Expiration time of the access token in seconds.
+        scope:
+          type: string
+          description: List of scopes assigned to the customer.
+        session_id:
+          type: string
+          description: Session identifier.
     CustomerUpdateDto:
       allOf:
         - $ref: '#/components/schemas/CustomerCommonDto'
