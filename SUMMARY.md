@@ -8,8 +8,14 @@
 * [List of API Services](quickstart/list-of-api-services.md)
 * [OpenAPI Generator](quickstart/openapi-generator.md)
 * [Emporix Terraform Provider](quickstart/emporix-terraform-provider.md)
-* [Multi-Site Architecture](quickstart/multisites.md)
 * [Emporix Java SDK](quickstart/emporix-java-sdk.md)
+* [Customer Authentication](quickstart/authentication/customer-authentication.md)
+  * [SSO Authentication](quickstart/authentication/sso-authentication.md)
+    * [Identity Providers](integrations/authentication/identity-providers.md)
+      * [Auth0](integrations/authentication/auth0.md)
+      * [Keycloak](integrations/authentication/keycloak.md)
+  * [Token Exchange](quickstart/authentication/token-exchange.md)
+* [Multi-Site Architecture](quickstart/multisites.md)
 * [Initial Tenant Checkout Configuration](quickstart/initial-tenant-checkout-config.md)
 
 ## Standard Practices
@@ -25,9 +31,9 @@
 ## Integrations
 
 * [Integrations](integrations/README.md)
-  * [Identity Providers](integrations/authorization/identity-providers.md)
-    * [Auth0](integrations/authorization/auth0.md)
-    * [Keycloak](integrations/authorization/keycloak.md)
+  * [Identity Providers](integrations/authentication/identity-providers.md)
+    * [Auth0](integrations/authentication/auth0.md)
+    * [Keycloak](integrations/authentication/keycloak.md)
   * [Workflow Automation](integrations/workflow-automation/README.md)
     * [Emporix and Make](integrations/workflow-automation/emporix-and-make.md)
 
