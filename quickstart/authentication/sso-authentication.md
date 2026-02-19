@@ -39,7 +39,7 @@ The Emporix Authentication Service receives the callback and exchanges the authe
 {% endstep %}
 
 {% step %}
-### Emporix token issuance
+### Emporix token generation
 
 Emporix then issues the Emporix-specific OAuth token and returns it to the client (application/system). All subsequent API calls are authenticated using this Emporix token, not the IdP token.
 {% endstep %}
@@ -51,9 +51,39 @@ The client uses the Emporix token to call Emporix APIs. Authentication and sessi
 {% endstep %}
 {% endstepper %}
 
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  themeVariables:
+    primaryColor: '#DDE6EE'
+    primaryBorderColor: '#4C5359'
+    actorBkg: '#DDE6EE'
+    actorBorder: '#4C5359'
+    actorLineColor: '#4C5359'
+    signalColor: '#E86C07'
+    signalTextColor: '#7B8B99'
+    background: transparent 
+---
+sequenceDiagram
+  User->>Frontend: Start SSO login
+Frontend->>OpenID Provider: Redirect user (authorization request)
+OpenID Provider-->>OpenID Provider: Authenticate user
+OpenID Provider-->>Emporix Auth Service: Redirect back with authorization code
+Emporix Auth Service->>Emporix Customer Service: Forward authorization code
+Emporix Customer Service->>OpenID Provider: Exchange code for access token
+OpenID Provider->>Emporix Auth Service: Access token (OIDC)
+Emporix Auth Service-->>Frontend: Emporix-specific OAuth token
+Frontend->>API: Call APIs with Emporix token
+API-->>Frontend: API response
+```
+
 This design keeps Emporix as the sole authority for the authentication-code exchange and token generation in the SSO flow. The Identity Provider is responsible for authenticating the customer. Emporix is responsible for issuing and validating tokens used to access Emporix APIs.
 
 See the example flows that incorporate an external Identity Provider into the process:
 
-* 
+ * [Identity Providers](../../integrations/authentication/identity-providers.md)
+    * [Auth0](../../integrations/authentication/auth0.md)
+    * [Keycloak](../../integrations/authentication/keycloak.md)
 
