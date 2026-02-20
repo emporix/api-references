@@ -50,7 +50,7 @@ Authenticate a customer within your external authentication solution and extract
 {% endstep %}
 
 {% step %}
-### Exchange of the authentication code into the authentication token
+### Exchange of the authentication code for the authentication token
 Call the Emporix Token Exchange endpoint using the `POST https://api.emporix.io/customer/{tenant}/exchangeauthtoken`, which takes care of changing the authentication code into the authentication `access_token`. Provide the following parameters:
 
 * `subjectAccessToken` - The token received from the external IDP.
@@ -127,7 +127,7 @@ sequenceDiagram
     end
 ```
 
-### Token validation
+## Token validation
 
 Token validation happens after the authentication code is received on the token exchange endpoint. The Emporix Authentication Service fetches the token exchange configuration from the Configuration Service and, based on the `config` in the request, chooses the relevant configuration for validation. 
 
@@ -143,7 +143,7 @@ Emporix verifies the token using one of two methods:
 * `aud` - The token **Audience** must match configuration.
 * `azp` - The **Authorized Party** must match the `config.token_client_id`.
 
-#### Online verification
+### Online verification
 
 Having the right configuration (or the default one as a fallback), the Authentication Service runs the token introspection to receive its details. **Online verification** uses the token introspection results. 
 
@@ -152,11 +152,11 @@ Online verification is the recommended approach because it ensures the highest s
 {% endhint %}
 
 
-#### Offline verification
+### Offline verification
 
 If your setup cannot expose an introspection endpoint (for example, where there is VPN proxy), you can use **offline verification**. To trigger this method, you must include the JSON Web Key Set (`jwks`) object within your configuration. The verification checks the fidelity of the `jwks` object that contains an array of keys used to cryptographically verify the token's signature. Each key in the array typically includes attributes like the key ID (`kid`), key type (`kty`), algorithm (`alg`), and certificate chain (`x5c`). 
 
-#### Configuration
+## Configuration
 
 To configure whether Emporix uses online or offline token verification, you need to adjust your tenant's `tokenExchange` configuration object. 
 
@@ -192,7 +192,7 @@ If you want to use the token exchange flow within your authentication process, c
 
 {% endhint %}
 
-### Customer autoprovisioning and identification
+## Customer autoprovisioning and identification
 
 During the login process, once a token has been successfully validated, the Emporix Authentication Service flow calls the Customer Service endpoint that is responsible for either updating the last login date for an existing customer or automatically creating a new customer if they do not already exist in the system.
 
