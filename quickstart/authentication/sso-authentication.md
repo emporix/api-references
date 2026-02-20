@@ -1,4 +1,6 @@
 ---
+layout:
+  width: wide
 icon: user-key
 description: Implement SSO solution to authenticate your customers on the storefront.
 ---

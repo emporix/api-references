@@ -1,11 +1,13 @@
 ---
+layout:
+  width: wide
 icon: square-binary
 description: Implement token exchange as a way to authenticate your customers on the storefront.
 ---
 
 # SSO with Token Exchange
 
-The **Token Exchange** flow extends the existing Single Sign-On (SSO) solution to allow alternative way to authenticate your end-customers. The standard SSO implementation (authorization code flow) offered at Emporix allows you to cover the whole authentication flow from start to end using your preferred identity provider in the middle, while Emporix manages the entire authentication code exchange.
+The **Token Exchange** flow extends the existing Single Sign-On (SSO) solution to allow an alternative way to authenticate your end-customers. The standard SSO implementation (authorization code flow) offered at Emporix allows you to cover the whole authentication flow from start to end using your preferred identity provider in the middle, while Emporix manages the entire authentication code exchange.
 However, at enterprises with complex enterprise ecosystems, where businesses need to use their own identity tokens across multiple platforms, it is crucial to maintain full ownership of the initial authentication process. In such a case, token exchange is a solution that allows you to unify Emporix authentication within your existing system network.
 
 ## Token exchange approach
@@ -37,7 +39,7 @@ You can choose between delegating the entire flow to Emporix for simplicity or u
 | Good fit | The standard SSO flow is well-suited for enterprises that do not have external systems and do not want to invest in implementing own authentication mechanisms, but instead they want to delegate the whole authentication flow to Emporix. | The token exchange flow is ideal for large enterprises and platform customers with complex distributed ecosystems that already use own authentication flow and require greater architectural flexibility. |
 
 {% hint style="danger" %}
-SSO authentication code flow and token exchange flow are two separate approaches that you can choose from when enabling customer authentication in the webshop storefront, based on your integration needs. You cannot mix both flows in one implementation to mitigate ambuguity and security risks.
+SSO authentication code flow and token exchange flow are two separate approaches that you can choose from when enabling customer authentication in the webshop storefront, based on your integration needs. You cannot mix both flows in one implementation to mitigate ambiguity and security risks.
 {% endhint %}
 
 
@@ -54,7 +56,7 @@ Authenticate a customer within your external authentication solution and extract
 Call the Emporix Token Exchange endpoint using the `POST https://api.emporix.io/customer/{tenant}/exchangeauthtoken`, which takes care of changing the authentication code into the authentication `access_token`. Provide the following parameters:
 
 * `subjectAccessToken` - The token received from the external IDP.
-* `config` - The relevant configuration key; typically it corresponds to the site confguration (for example `Site_DE`).
+* `config` - The relevant configuration key; typically it corresponds to the site configuration (for example `Site_DE`).
 
 {% endstep %}
 
@@ -129,18 +131,18 @@ sequenceDiagram
 
 ### Token validation
 
-Token validation happens after the authentication code is received on the token exchange endpoint. The Emporix Authentication Service fetches the token exchange configuration from the Configuration Service and basing on the `config` in the request it chooses the relevant configuration for validation. 
+Token validation happens after the authentication code is received on the token exchange endpoint. The Emporix Authentication Service fetches the token exchange configuration from the Configuration Service and, based on the `config` in the request, chooses the relevant configuration for validation. 
 
 Emporix verifies the token using one of two methods:
 
 * Online verification - Uses the token introspection results.
-* Offline verification -Uses JWKS (JSON Web Key Sets) if introspection is not possible.
+* Offline verification - Uses JWKS (JSON Web Key Sets) if introspection is not possible.
 
 **The validation checks:**
 
 * Token must be active (`active: true`).
 * `iss` - The token **Issuer** must match configuration.
-* `aud` - The token **Audience** system must match configuration.
+* `aud` - The token **Audience** must match configuration.
 * `azp` - The **Authorized Party** must match the `config.token_client_id`.
 
 #### Online verification
@@ -161,11 +163,12 @@ If your setup cannot expose an introspection endpoint (for example, where there 
 To configure whether Emporix uses online or offline token verification, you need to adjust your tenant's `tokenExchange` configuration object. 
 
 {% hint style="warning" %}
-The system decides which validation method to use based on the received configuration - if a `jwks` (JSON Web Key Set) configuration is provided, offline verification is run. If it is omitted, the system defaults to online verification through the token introspection.
+The system decides which validation method to use based on the received configuration - if the `jwks` (JSON Web Key Set) configuration is provided, offline verification is run. If it is omitted, the system defaults to online verification through the token introspection.
 {% endhint %}
 
 The configuration is stored at the tenant level under the `tokenExchange` document. You can define a default configuration, as well as site-specific overrides (such as `Site_DE` or `Site_PL`).
 
+{% hint style="warning" %}
 If you want to use the token exchange flow within your authentication process, contact our [Emporix Support Team](mailto:support@emporix.com) and provide the following data required for configuration of proper token verification on Emporix end:
 
 {% tabs %}
@@ -186,8 +189,10 @@ If you want to use the token exchange flow within your authentication process, c
 * `audience` - Used to validate the `aud` claim. It recognizes the dedicated recipient of the token, such as a system, API or a service that accepts the token. For example, `https://your-api-url.some-domain.io`, `product-service`, `commerce-system`. It secures the token authorized usage.
 * `issuer` - Used to validate the `iss` claim. It represents the authentication server that issued the token. 
 * `jwks` object with the array of necessary keys
-{% endtab  %}
+{% endtab %}
 {% endtabs %}
+
+{% endhint %}
 
 ### Customer autoprovisioning and identification
 
@@ -195,8 +200,8 @@ During the login process, once a token has been successfully validated, the Empo
 
 This automatic creation is controlled by a tenant-level configuration setting called `ssoCustomerAutoprovisioningDisabled`:
 
-* Enabled (`false`) - This is the default setting. If a user logs in and does not currently exist in the Emporix system, their customer profile is automatically provisioned.
-* Disabled (`true`) - Clients can change this setting to true if they pre-synchronize their customer databases and expect all user data to already be in the system before a first-time login. If autoprovisioning is turned off and an unknown customer attempts to log in, the customer account is not created and the system returns a `404` error.
+* Autoprovisioning enabled (`false`) - This is the default setting. If a user logs in and does not currently exist in the Emporix system, their customer profile is automatically provisioned.
+* Autoprovisioning disabled (`true`) - Clients can change this setting to `true` if they pre-synchronize their customer databases and expect all user data to already be in the system before a first-time login. If autoprovisioning is turned off and an unknown customer attempts to log in, the customer account is not created and the system returns a `404` error.
 
 You can also configure how to identify a customer. The `ssoCustomerIdentifierField` setting allows you to specify if customer is identified by either `email` or `subject`. Email is the standard identifier, but for the cases when a different identifier is associated with a customer account (such as user name, ID or other), the introspection endpoint returns the `sub` parameter for identifying the `subject` field. 
 
