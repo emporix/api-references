@@ -47,13 +47,17 @@ SSO authentication code flow and token exchange flow are two separate approaches
 
 {% stepper %}
 {% step %}
-### Generatation of an authentication code
+### External authentication
 Authenticate a customer within your external authentication solution and extract the authentication code value. Identity providers provide the authentication code in the URL as a query param, for example `code=12345a12-12a1-1234-a123-abcde1123ab12.1234567a-12ab-1a12-12ab-1ab123a1a12c.12bb1234-1234-1234-1a3c-12345b12a123`.
 {% endstep %}
 
 {% step %}
 ### Exchange of the authentication code into the authentication token
-Call the Emporix Token Exchange endpoint that takes care of changing the authentication code into the authentication `access_token`.
+Call the Emporix Token Exchange endpoint using the `POST https://api.emporix.io/customer/{tenant}/exchangeauthtoken`, which takes care of changing the authentication code into the authentication `access_token`. Provide the following parameters:
+
+* `subjectAccessToken` - The token received from the external IDP.
+* `config` - The relevant configuration key; typically it corresponds to the site confguration (for example `Site_DE`).
+
 {% endstep %}
 
 {% step %}
@@ -62,11 +66,20 @@ Enable the introspection of the authentication token that allows Emporix to get 
 {% endstep %}
 
 {% step %}
-### Emporix token verification
-Emporix runs verification of the received token to authenticate a customer and allow store frontend access. There are two verification modes possible, depending on what you provide:
-* [online](#online-verification) 
-* [offline](#offline-verification)
+### Token validation
+Emporix runs validation of the received token to authenticate a customer and allow store's frontend access. There are two validation modes possible, depending on what you provide: online verification or offline verification methods.
+
+{% hint style="info" %}
+Find out more about the token validation in the [Token validation](#token-validation) section.
+{% endhint %}
 {% endstep %} 
+
+{% step %}
+### Token issuance
+If the token is proved valid, Emporix generates and returns an Emporix-specific access token, refresh token and Saas token, which are passed to the store's frontend and can be further used.
+
+The response returns JSON object containing `access_token`, `refresh_token`, `saas_token`, `expires_in`, and `scope`.
+{% endstep %}
 {% endstepper %}
 
 
@@ -116,54 +129,81 @@ sequenceDiagram
     end
 ```
 
-### Token verification
+### Token validation
 
-After receiving the access token, Emporix verifies its content to authenicate a customer and grant access.
+Token validation happens after the authentication code is received on the token exchange endpoint. The Emporix Authentication Service fetches the token exchange configuration from the Configuration Service and basing on the `config` in the request it chooses the relevant configuration for validation. 
+
+Emporix verifies the token using one of two methods:
+
+* Online verification - Uses the token introspection results.
+* Offline verification -Uses JWKS (JSON Web Key Sets) if introspection is not possible.
+
+**The validation checks:**
+
+* Token must be active (`active: true`).
+* `iss` - The token **Issuer** must match configuration.
+* `aud` - The token **Audience** system must match configuration.
+* `azp` - The **Authorized Party** must match the `config.token_client_id`.
 
 #### Online verification
 
-Online verification allows for instant verification. 
+Having the right configuration (or the default one as a fallback), the Authentication Service runs the token introspection to receive its details. **Online verification** uses the token introspection results. 
 
 {% hint style="success" %}
-Emporix recommends enabling online verification as it ensures the highest security level.
+Online verification is the recommended approach because it ensures the highest security level as it actively checks if a token has been explicitly invalidated before its expiration time.
 {% endhint %}
 
-##### Prerequisites
-
-If you want to use the token exchange flow within your authentication process, contact our [Emporix Support Team](mailto:support@emporix.com) and provide the following data required for configuration of proper token verification on Emporix end:
-
-Online version:
-
-* `domain`
-* `token_introspect_endpoint`
-* `client_id`
-* `client_secret`
-* `token_client_id`
-* `audience`
-* `issuer`
-
-Optionally:
-`storefront_client_id`
-`storefront_client_secret`
 
 #### Offline verification
 
-##### Prerequisites
+If your setup cannot expose an introspection endpoint (for example, where there is VPN proxy), you can use **offline verification**. To trigger this method, you must include the JSON Web Key Set (`jwks`) object within your configuration. The verification checks the fidelity of the `jwks` object that contains an array of keys used to cryptographically verify the token's signature. Each key in the array typically includes attributes like the key ID (`kid`), key type (`kty`), algorithm (`alg`), and certificate chain (`x5c`). 
 
-Offline version: 
+#### Configuration
 
-* `token_client_id` 
-* `audience`
-* `issuer`
-* `jwks` array 
+To configure whether Emporix uses online or offline token verification, you need to adjust your tenant's `tokenExchange` configuration object. 
 
-* The `domain` is the Keycloak domain value, for example, `keycloak.eu.yourdomain.com`.
-* The `token_endpoint` is the endpoint that is used for the token call, for Keycloak it’s usually `protocol/openid-connect/token`.
-* The `provider` is the provider that is configured for the IDP, the provider value can be then used in the state parameter, thanks to that it’s possible to have multiple configurations for one tenant, for example, `keycloak_siteA`, `keycloak_siteB`.
-* The `client_id` and `client_secret` are the credentials provided by the customer, to find the credentials in the Keycloak app go to **Clients** -> **Clients list**.
-* The `redirect_uri` is a value provided by customer that indicates where a user should be redirected after authentication flow. The value points storefront URL, for example, `https://storefront.emporix.io/keycloak`.
-* The `public_key` is a value provided by customer as their signing certificate. It has to be stored in one line, however each line of the original certificate value should be separated by `\n`. Copy the value to the json in the `public_key` field and surround it with `-----BEGIN CERTIFICATE-----\n{TOKEN}\n-----END CERTIFICATE-----`
+{% hint style="warning" %}
+The system decides which validation method to use based on the received configuration - if a `jwks` (JSON Web Key Set) configuration is provided, offline verification is run. If it is omitted, the system defaults to online verification through the token introspection.
+{% endhint %}
 
+The configuration is stored at the tenant level under the `tokenExchange` document. You can define a default configuration, as well as site-specific overrides (such as `Site_DE` or `Site_PL`).
 
+If you want to use the token exchange flow within your authentication process, contact our [Emporix Support Team](mailto:support@emporix.com) and provide the following data required for configuration of proper token verification on Emporix end:
+
+{% tabs %}
+{% tab title="Online verification" %}
+* `domain` - The base URL of your identity provider.
+* `token_introspect_endpoint` - The path to the introspection endpoint.
+* `client_id` - The credentials for a client that has the appropriate rights to perform token introspection. For example, `my-backend-service`.
+* `client_secret` - The credentials for a client that has the appropriate rights to perform token introspection.
+* `token_client_id` - Used to validate the `azp` (Authorized Party) claim. It recognizes if the token has been issued for the specific client, especially when a token has multiple potential recipients. For example, `my-backend-service`.
+* `audience` - Used to validate the `aud` claim. It recognizes the dedicated recipient of the token, such as a system, API or a service that accepts the token. For example, `https://your-api-url.some-domain.io`, `product-service`, `commerce-system`. It secures the token authorized usage.
+* `issuer` - Used to validate the `iss` claim. It represents the authentication server that issued the token. 
+* optionally `storefront_client_id` - Your storefront Client ID credential, can be checked in the [Developer Portal](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/getting-started/developer-portal/manage-apikeys).
+* optionally `storefront_client_secret` - Your storefront Client Secret credential, can be checked in the [Developer Portal](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/getting-started/developer-portal/manage-apikeys).
+{% endtab %}
+
+{% tab title="Offline verification" %}
+* `token_client_id` - Used to validate the `azp` (Authorized Party) claim. It recognizes if the token has been issued for the specific client, especially when a token has multiple potential recipients. For example, `my-backend-service`.
+* `audience` - Used to validate the `aud` claim. It recognizes the dedicated recipient of the token, such as a system, API or a service that accepts the token. For example, `https://your-api-url.some-domain.io`, `product-service`, `commerce-system`. It secures the token authorized usage.
+* `issuer` - Used to validate the `iss` claim. It represents the authentication server that issued the token. 
+* `jwks` object with the array of necessary keys
+{% endtab  %}
+{% endtabs %}
+
+### Customer autoprovisioning and identification
+
+During the login process, once a token has been successfully validated, the Emporix Authentication Service flow calls the Customer Service endpoint that is responsible for either updating the last login date for an existing customer or automatically creating a new customer if they do not already exist in the system.
+
+This automatic creation is controlled by a tenant-level configuration setting called `ssoCustomerAutoprovisioningDisabled`:
+
+* Enabled (`false`) - This is the default setting. If a user logs in and does not currently exist in the Emporix system, their customer profile is automatically provisioned.
+* Disabled (`true`) - Clients can change this setting to true if they pre-synchronize their customer databases and expect all user data to already be in the system before a first-time login. If autoprovisioning is turned off and an unknown customer attempts to log in, the customer account is not created and the system returns a `404` error.
+
+You can also configure how to identify a customer. The `ssoCustomerIdentifierField` setting allows you to specify if customer is identified by either `email` or `subject`. Email is the standard identifier, but for the cases when a different identifier is associated with a customer account (such as user name, ID or other), the introspection endpoint returns the `sub` parameter for identifying the `subject` field. 
+
+{% hint style="info" %}
+For more information about configuration settings, see the [System Preferences](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/settings/system-preferences).
+{% endhint %}
 
 

@@ -21,11 +21,11 @@ layout:
 
 # Identity Providers
 
-Emporix makes it possible to create standard customer tokens based on authentication provided by third-party identity providers (IPs). You can use external IDPs to offer the users alternative ways of signing up, such as social login.
+Emporix makes it possible to create standard customer tokens based on authentication provided by third-party identity providers (IDPs). You can use external IDPs to offer the users alternative ways of signing up, such as social login.
 
 Single sign on allows customers to authenticate themselves with an existing credenticals used in other systems or social media account. Introducing SSO login to your storefront simplifies the registration process by eliminating the need to manually create an account.
 
-Emporix can integrate with an external Identity Porvider, such as **Auth0** and **Keycloak**.
+Emporix can integrate with an external Identity Provider, such as **Auth0** and **Keycloak**.
 
 ## Configuring multiple IDPs
 
