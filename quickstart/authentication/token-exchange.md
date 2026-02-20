@@ -167,7 +167,8 @@ The system decides which validation method to use based on the received configur
 The configuration is stored at the tenant level under the `tokenExchange` document. You can define a default configuration, as well as site-specific overrides (such as `Site_DE` or `Site_PL`).
 
 {% hint style="success" %}
-If you want to use the token exchange flow within your authentication process, contact our [Emporix Support Team](mailto:support@emporix.com) and provide the following data required for configuration of proper token verification on Emporix end:
+If you want to use the token exchange flow within your authentication process, contact our [Emporix Support Team](mailto:support@emporix.com) and provide the following data required for configuration of proper token verification on Emporix end. Choose either online or offline verification method. 
+{% endhint %}
 
 {% tabs %}
 {% tab title="Online verification" %}
@@ -190,7 +191,6 @@ If you want to use the token exchange flow within your authentication process, c
 {% endtab %}
 {% endtabs %}
 
-{% endhint %}
 
 ## Customer autoprovisioning and identification
 
