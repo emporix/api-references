@@ -1,6 +1,4 @@
 ---
-layout:
-  width: wide
 icon: square-binary
 description: Implement token exchange as a way to authenticate your customers on the storefront.
 ---
