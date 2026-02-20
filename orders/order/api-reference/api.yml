@@ -1278,7 +1278,6 @@ components:
             currency:
               type: string
               description: Currency of the shipping amount.
-              default: USD
         lines:
           description: Shipping line list.
           type: array
@@ -1298,7 +1297,6 @@ components:
         currency:
           description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
           type: string
-          default: USD
         code:
           description: Shipping line code.
           type: string
@@ -1384,7 +1382,6 @@ components:
         currency:
           description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
           type: string
-          default: USD
         code:
           description: Tax code.
           type: string
@@ -1423,7 +1420,6 @@ components:
         currency:
           description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
           type: string
-          default: USD
         inclusive:
           description: Total tax inclusive flag.
           default: false
