@@ -1,6 +1,4 @@
 ---
-layout:
-  width: wide
 icon: square-binary
 description: Implement token exchange as a way to authenticate your customers on the storefront.
 ---
@@ -162,13 +160,13 @@ If your setup cannot expose an introspection endpoint (for example, where there 
 
 To configure whether Emporix uses online or offline token verification, you need to adjust your tenant's `tokenExchange` configuration object. 
 
-{% hint style="warning" %}
+{% hint style="info" %}
 The system decides which validation method to use based on the received configuration - if the `jwks` (JSON Web Key Set) configuration is provided, offline verification is run. If it is omitted, the system defaults to online verification through the token introspection.
 {% endhint %}
 
 The configuration is stored at the tenant level under the `tokenExchange` document. You can define a default configuration, as well as site-specific overrides (such as `Site_DE` or `Site_PL`).
 
-{% hint style="warning" %}
+{% hint style="success" %}
 If you want to use the token exchange flow within your authentication process, contact our [Emporix Support Team](mailto:support@emporix.com) and provide the following data required for configuration of proper token verification on Emporix end:
 
 {% tabs %}
