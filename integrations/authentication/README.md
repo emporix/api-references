@@ -4,6 +4,6 @@ layout:
 icon: fingerprint
 ---
 
-# Authorization
+# Authentication
 
  
