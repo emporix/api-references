@@ -1063,9 +1063,9 @@ paths:
     post:
       tags:
         - Authentication and authorization
-      summary: Exchanging an external identity provider's subject access token for an Emporix customer token
+      summary: Exchanging an external access token for an Emporix customer token
       description: |-
-        Exchanges an external identity provider's subject access token (e.g. from an identity provider such as Keycloak) for an Emporix customer access token.
+        Exchanges an external access token (for example, from an identity provider such as Keycloak) for an Emporix customer access token.
 
         **Note**: The request needs to be authorized with an anonymous token.
         ***
@@ -1081,6 +1081,15 @@ paths:
           schema:
             type: string
           example: "{subject_access_token}"
+        - name: config
+          in: query
+          description: |
+            Configuration identifier (for example, `site_PL`). If not provided, the default configuration is used.
+            If a non-existing configuration is provided, the request returns 400 Bad Request.
+          required: false
+          schema:
+            type: string
+          example: site_PL
         - name: Authorization
           in: header
           description: Anonymous token used to authorize the exchange.
