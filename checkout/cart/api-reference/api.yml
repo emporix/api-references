@@ -2680,7 +2680,8 @@ paths:
         '500':
           $ref: '#/components/responses/trait_500'
       description: |-
-        Adds multiple products to the specified cart and creates cart items.
+        Adds multiple products to the specified cart and creates cart items. The maximum batch size is 200.
+
         ***
 
         ### Required scopes
