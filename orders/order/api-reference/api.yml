@@ -32,6 +32,18 @@ paths:
         '200':
           description: |
             The request was successful. List of orders with details are returned.
+          headers:
+            X-Total-Count:
+              schema:
+                type: number
+              description: |
+                Number of orders matching the specified query
+            hybris-count:
+              deprecated: true
+              schema:
+                type: number
+              description: |
+                Number of orders matching the specified query. **This header is deprecated**. Please, use 'X-Total-Count' instead.
           content:
             application/json:
               examples:
@@ -112,6 +124,12 @@ paths:
                 type: number
               description: |
                 Number of orders matching the specified query
+            hybris-count:
+              deprecated: true
+              schema:
+                type: number
+              description: |
+                Number of orders matching the specified query. **This header is deprecated**. Please, use 'X-Total-Count' instead.
         '400':
           $ref: '#/components/responses/trait_billingAware_400'
         '403':
@@ -533,6 +551,18 @@ paths:
         '200':
           description: |
             Some server side error occurred.
+          headers:
+            X-Total-Count:
+              schema:
+                type: number
+              description: |
+                Number of orders matching the specified query
+            hybris-count:
+              deprecated: true
+              schema:
+                type: number
+              description: |
+                Number of orders matching the specified query. **This header is deprecated**. Please, use 'X-Total-Count' instead.
           content:
             application/json:
               examples:
@@ -3521,7 +3551,7 @@ components:
           mixins:
             payments:
               elements:
-                - paymentMethodYrn: 'urn:yaas:hybris:payments:payment-method:test;invoice'
+                - paymentMethodYrn: 'urn:yaas:payments:payment-method:test;invoice'
                   fees:
                     elements:
                       - yrn: 'urn:yaas:saasag:fee:fee:test;678f552a949c723de46bdb14'
@@ -3835,7 +3865,7 @@ components:
           mixins:
             payments:
               elements:
-                - paymentMethodYrn: 'urn:yaas:hybris:payments:payment-method:test;invoice'
+                - paymentMethodYrn: 'urn:yaas:payments:payment-method:test;invoice'
                   fees:
                     elements:
                       - yrn: 'urn:yaas:saasag:fee:fee:test;678f552a949c723de46bdb14'
@@ -4074,7 +4104,7 @@ components:
         mixins:
           payments:
             elements:
-              - paymentMethodYrn: 'urn:yaas:hybris:payments:payment-method:test;invoice'
+              - paymentMethodYrn: 'urn:yaas:payments:payment-method:test;invoice'
                 fees:
                   elements:
                     - yrn: 'urn:yaas:saasag:fee:fee:test;678f552a949c723de46bdb14'
@@ -4371,7 +4401,7 @@ components:
           mixins:
             payments:
               elements:
-                - paymentMethodYrn: 'urn:yaas:hybris:payments:payment-method:test;invoice'
+                - paymentMethodYrn: 'urn:yaas:payments:payment-method:test;invoice'
                   fees:
                     elements:
                       - yrn: 'urn:yaas:saasag:fee:fee:test;678f552a949c723de46bdb14'
@@ -5140,7 +5170,7 @@ components:
         mixins:
           payments:
             elements:
-              - paymentMethodYrn: urn:yaas:hybris:payments:payment-method:b2b2cstage;invoice
+              - paymentMethodYrn: urn:yaas:payments:payment-method:b2b2cstage;invoice
                 fees:
                   elements:
                     - yrn: urn:yaas:saasag:fee:fee:b2b2cstage;678f552a949c723de46bdb14
@@ -5444,7 +5474,7 @@ components:
         mixins:
           payments:
             elements:
-              - paymentMethodYrn: 'urn:yaas:hybris:payments:payment-method:test;invoice'
+              - paymentMethodYrn: 'urn:yaas:payments:payment-method:test;invoice'
                 fees:
                   elements:
                     - yrn: 'urn:yaas:saasag:fee:fee:test;678f552a949c723de46bdb14'
@@ -5741,7 +5771,7 @@ components:
           mixins:
             payments:
               elements:
-                - paymentMethodYrn: 'urn:yaas:hybris:payments:payment-method:test;invoice'
+                - paymentMethodYrn: 'urn:yaas:payments:payment-method:test;invoice'
                   fees:
                     elements:
                       - yrn: 'urn:yaas:saasag:fee:fee:test;678f552a949c723de46bdb14'
@@ -6049,7 +6079,7 @@ components:
           mixins:
             payments:
               elements:
-                - paymentMethodYrn: 'urn:yaas:hybris:payments:payment-method:test;invoice'
+                - paymentMethodYrn: 'urn:yaas:payments:payment-method:test;invoice'
                   fees:
                     elements:
                       - yrn: 'urn:yaas:saasag:fee:fee:test;678f552a949c723de46bdb14'
@@ -6357,7 +6387,7 @@ components:
           mixins:
             payments:
               elements:
-                - paymentMethodYrn: 'urn:yaas:hybris:payments:payment-method:test;invoice'
+                - paymentMethodYrn: 'urn:yaas:payments:payment-method:test;invoice'
                   fees:
                     elements:
                       - yrn: 'urn:yaas:saasag:fee:fee:test;678f552a949c723de46bdb14'
@@ -6673,7 +6703,7 @@ components:
         mixins:
           payments:
             elements:
-              - paymentMethodYrn: 'urn:yaas:hybris:payments:payment-method:test;invoice'
+              - paymentMethodYrn: 'urn:yaas:payments:payment-method:test;invoice'
                 fees:
                   elements:
                     - yrn: 'urn:yaas:saasag:fee:fee:test;678f552a949c723de46bdb14'
