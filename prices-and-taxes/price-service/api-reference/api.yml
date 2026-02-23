@@ -1626,6 +1626,7 @@ paths:
         - OAuth2:
             - price.pricelist_read
       parameters:
+        - $ref: '#/components/parameters/trait_qParam'
         - $ref: '#/components/parameters/header_acceptLanguageV2'
         - $ref: '#/components/parameters/trait_paged_pageNumber'
         - $ref: '#/components/parameters/trait_paged_pageSize'
@@ -1637,7 +1638,7 @@ paths:
           in: query
           name: itemId
           description: |
-            IDs of products for which prices should be retrieved.
+            ID of product for which prices should be retrieved.
         - schema:
             type: string
           in: query
@@ -1856,6 +1857,58 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+  '/price/{tenant}/price-lists/{priceListId}/prices/search':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/path_priceListId'
+    post:
+      tags:
+        - Prices assigned to price lists
+      summary: Searching for prices assigned to a price list
+      description: |-
+        Searches for prices assigned to a specified price list.
+      security:
+        - OAuth2:
+            - price.pricelist_read
+      parameters:
+        - $ref: '#/components/parameters/trait_paged_pageNumber'
+        - $ref: '#/components/parameters/trait_paged_pageSize'
+        - $ref: '#/components/parameters/trait_sort'
+        - $ref: '#/components/parameters/trait_XTotalCount_header'
+      requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/searchRequest'
+              examples:
+                search for prices:
+                  value:
+                    q: "itemId.id:53a358901b2e9dd2718b5c4e"
+      responses:
+        '200':
+          description: The request was successful. A list of prices is returned.
+          headers:
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of retrieved prices.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: '#/components/schemas/priceListPrice'
+              examples:
+                List of price list's prices:
+                  $ref: '#/components/examples/priceLists_priceListId_prices_get_200'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+      operationId: POST-price-search-prices-in-price-list
   '/price/{tenant}/price-lists/{priceListId}/prices/{priceId}':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
