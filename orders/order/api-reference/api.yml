@@ -950,7 +950,7 @@ components:
               description: '**This field is deprecated**. Please use `calculatedPrice.fees` instead. The `calculatedPrice.fees` field provides the same value with updated functionality.'
           deprecated: true
         originalAmount:
-          description: The original amount. **This field is deprecated**. Please use `calculatedUnitPrice` instead. The `calculatedUnitPrice` field provides the same value with updated functionality.
+          description: The original amount. **This field is deprecated**. Use `originalPrice` instead (or `calculatedUnitPrice` for the full replacement).
           type: number
           deprecated: true
         originalPrice:
