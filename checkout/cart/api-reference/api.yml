@@ -4003,7 +4003,10 @@ components:
       allOf:
         - $ref: "#/components/schemas/baseCart"
         - type: object
-          description: Cart details.
+          description: |
+            Cart details.
+
+            **Deprecated fields** (listed at the end): `deliveryWindowId`, `feeYrnAggregate`, `totalPrice`, `subTotalPrice`, `shipping`, `taxAggregate`, `subtotalAggregate`, `totalDiscount`, `itemFeesTotal`, `paymentFeesTotal`, `totalAuthorizedAmount`. Use `calculatedPrice` and `deliveryWindow` instead.
           properties:
             items:
               type: array
@@ -4409,18 +4412,14 @@ components:
         - effectiveQuantity
       description: Cart item details.
     cartItemResponse:
-      description: Cart item details.
+      description: |
+        Cart item details.
+
+        **Deprecated fields** (listed at the end): `price`, `couponDiscounts`, `itemPrice`, `itemTaxInfo`, `fees`, `authorizedAmount`, `totalDiscount`, `externalFees`. Use `unitPrice` and `calculatedPrice` instead.
       allOf:
         - $ref: "#/components/schemas/baseCartItemResponse"
         - type: object
           properties:
-            price:
-              allOf:
-                - $ref: '#/components/schemas/priceRow'
-                - type: object
-                  description: "**This field is deprecated**. Please use `unitPrice` instead.
-                            The `unitPrice` field provides the same value with updated functionality."
-              deprecated: true
             linePrice:
               description: Externally calculated total line price (`unit price × quantity`). When provided, this overrides internal calculations.
               properties:
@@ -4445,6 +4444,13 @@ components:
                 - grossValue
                 - rate
                 - quantity
+            price:
+              allOf:
+                - $ref: '#/components/schemas/priceRow'
+                - type: object
+                  description: "**This field is deprecated**. Please use `unitPrice` instead.
+                            The `unitPrice` field provides the same value with updated functionality."
+              deprecated: true
             couponDiscounts:
               allOf:
                 - $ref: '#/components/schemas/couponDiscounts'
@@ -4742,7 +4748,8 @@ components:
         - yrn
       description: ''
     discount:
-      description: ''
+      description: |
+        **Deprecated fields** (listed at the end): `calculationType`. The calculated price uses the site's settings instead.
       type: object
       title: ''
       properties:
