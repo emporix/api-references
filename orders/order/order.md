@@ -837,7 +837,7 @@ You have to register your listener in the Emporix Webhook Service so that the li
         "payments": {
             "elements": [
                 {
-                    "paymentMethodYrn": "urn:yaas:payments:payment-method:b2b2cstage;invoice",
+                    "paymentMethodYrn": "urn:yaas:hybris:payments:payment-method:b2b2cstage;invoice",
                     "fees": {
                         "elements": [
                             {
