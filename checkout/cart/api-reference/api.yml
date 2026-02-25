@@ -4027,7 +4027,8 @@ components:
           description: |
             Cart details.
 
-            **Deprecated fields** (listed at the end): `deliveryWindowId`, `feeYrnAggregate`, `totalPrice`, `subTotalPrice`, `shipping`, `taxAggregate`, `subtotalAggregate`, `totalDiscount`, `itemFeesTotal`, `paymentFeesTotal`, `totalAuthorizedAmount`. Use `calculatedPrice` and `deliveryWindow` instead.
+            **NOTE**: Deprecated fields details are visible at the end: `deliveryWindowId`, `feeYrnAggregate`, `totalPrice`, `subTotalPrice`, `shipping`, `taxAggregate`, `subtotalAggregate`, `totalDiscount`, `itemFeesTotal`, `paymentFeesTotal`, `totalAuthorizedAmount`. 
+            Use `calculatedPrice` and `deliveryWindow` instead.
           properties:
             items:
               type: array
@@ -4041,7 +4042,7 @@ components:
                 Delivery window unique identifier, as defined in the Shipping Service.
                 
                 ***NOTE***
-                This attribute is deprecated. Please use the `deliveryWindow` attribute.
+                This field is deprecated. Please use the `deliveryWindow` attribute.
             feeYrnAggregate:
               allOf:
                 - $ref: '#/components/schemas/feeAggregate'
@@ -4126,6 +4127,10 @@ components:
       description: Cart delivery time restrictions.
     cartItemRequest:
       type: object
+      description: |
+        Request body for adding or updating a cart item.
+
+        **Deprecated fields** (listed at the end): `weightDependent`. Use the product `weightDependent` attribute instead.
       properties:
         id:
           type: string
@@ -4436,7 +4441,9 @@ components:
       description: |
         Cart item details.
 
-        **Deprecated fields** (listed at the end): `price`, `couponDiscounts`, `itemPrice`, `itemTaxInfo`, `fees`, `authorizedAmount`, `totalDiscount`, `externalFees`. Use `unitPrice` and `calculatedPrice` instead.
+        **NOTE**: Deprecated fields details are visible at the end: `price`, `couponDiscounts`, `itemPrice`, `itemTaxInfo`, `fees`, `authorizedAmount`, `totalDiscount`, `externalFees`. 
+
+        Use `unitPrice` and `calculatedPrice` instead.
       allOf:
         - $ref: "#/components/schemas/baseCartItemResponse"
         - type: object
@@ -4771,8 +4778,7 @@ components:
         - yrn
       description: ''
     discount:
-      description: |
-        **Deprecated fields** (listed at the end): `calculationType`. The calculated price uses the site's settings instead.
+      description: ''
       type: object
       title: ''
       properties:
@@ -4839,7 +4845,10 @@ components:
       required:
         - code
     discountResponse:
-      description: Discount details.
+      description: |
+        Discount details.
+
+        **NOTE**: Deprecated fields are listed at the end: `calculationType`. The calculated price uses the site's settings instead.
       type: object
       properties:
         id:

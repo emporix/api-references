@@ -57,8 +57,6 @@ paths:
       summary: Creating a new order
       description: |
         Creates an order by the tenant employee, on behalf of a customer. 
-
-        **Note:** The `entries.originalAmount` is DEPRECATED. Use the `entries.originalPrice` field instead.
       security:
         - OAuth2:
             - order.order_create
@@ -891,7 +889,7 @@ components:
       description: |
         The ordered item.
 
-        **Deprecated fields** (listed at the end): `fees`, `originalAmount`, `originalPrice`, `unitPrice`, `discounts`, `totalPrice`, `authorizedAmount`, `tax`, `price`. Use `calculatedPrice` and `calculatedUnitPrice` instead.
+        **NOTE**: Deprecated fields are listed at the end: `fees`, `originalAmount`, `originalPrice`, `unitPrice`, `discounts`, `totalPrice`, `authorizedAmount`, `tax`, `price`. Use `calculatedPrice` and `calculatedUnitPrice` instead.
       type: object
       properties:
         id:
@@ -1628,7 +1626,7 @@ components:
       description: |
         The base order fields. This object is inherited by all of other order objects as Order Creation DTO, Order Update DTO etc.
 
-        **Deprecated fields** (listed at the end): `feeYrnAggregate`, `shipping`, `tax`, `subTotalPrice`, `totalPrice`, `orderCycle`, `deliveryWindowId`. Use `calculatedPrice` and `deliveryWindow` instead.
+        **NOTE**: Deprecated fields are listed at the end: `feeYrnAggregate`, `shipping`, `tax`, `subTotalPrice`, `totalPrice`, `orderCycle`, `deliveryWindowId`. Use `calculatedPrice` and `deliveryWindow` instead.
       type: object
       properties:
         restriction:
@@ -1732,17 +1730,13 @@ components:
         orderCycle:
           description: |-
             Order cycle date.
-
-            ***NOTE***
-            This attribute is DEPRECATED, please use the `deliveryWindow.deliveryCycle` attribute
+            This field is deprecated. Please use the `deliveryWindow.deliveryCycle` attribute instead
           deprecated: true
           type: string
         deliveryWindowId:
           description: |-
             Delivery window's unique identifier.
-
-            ***NOTE***
-            This attribute is DEPRECATED, please use the `deliveryWindow.id` attribute
+            This field is deprecated. Please use the `deliveryWindow.id` attribute instead.
           type: string
           deprecated: true
       required:
