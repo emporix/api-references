@@ -298,7 +298,9 @@ paths:
         - Category Assignment Resources
       summary: Updating assignment of resources to a category
       description: |
-        Assigns resources (such as products) to a specified category in bulk. Creates new assignments if they do not exist and updates existing ones. 
+        Assigns resources (such as products) to a specified category in bulk. Creates new assignments if they do not exist and updates existing ones.
+
+        The maximum batch size is 200. 
       operationId: PUT-category-tree-update-category-assignments
       parameters:
         - name: tenant
@@ -1799,6 +1801,8 @@ paths:
       summary: Assigning resources to a category
       description: |
         Assigns resources (such as products) to a specified category.
+
+        The maximum batch size is 200.
       operationId: POST-category-tree-assign-category-resources
       parameters:
         - name: tenant

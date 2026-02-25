@@ -1641,7 +1641,7 @@ paths:
         '500':
           $ref: '#/components/responses/internalError_500'
       description: |-
-        Creates multiple delivery times in a single request.
+        Creates multiple delivery times in a single request. The maximum batch size is 50.
 
         The endpoint has a validation which checks:
           - if the `zoneId` belongs to the site

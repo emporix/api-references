@@ -51,7 +51,7 @@ paths:
             schema:
               $ref: '#/components/schemas/paymentModeRequest'
             examples:
-              Payment mode request:
+              Creatng a Spreedly payment mode:
                 value:
                   code: paypal
                   active: true
@@ -63,6 +63,12 @@ paths:
                     Spreedly/PaymentMethodType: paypal
                     Spreedly/RedirectURL: 'https://storefront.emporix.io/exmporix/my-account/my-orders'
                     Spreedly/SignatureSecret: _eJMkqevWxAdq9qOyA7fjnfCseO7gIaG28rSRBHKJVeKHM6i_Uqt6fGa_cWhzGvc
+              Creating an invoice payment mode:
+                value:
+                  code: invoice
+                  active: true
+                  provider: INVOICE
+                  configuration: {}
         description: ''
     get:
       summary: Retrieving a list of payment modes

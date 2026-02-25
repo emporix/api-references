@@ -758,3 +758,6 @@ Refer to the API documentation for each service to get better understanding what
 
 {% endhint %}
 
+{% hint style="info" %}
+When you have multiple sites available in the tenant, you are able to control access to the entities associated with these sites for the employees. You use sites codes as restrictions to limit view and manage rights for greater responsibilities separation and user experience. Learn more about the [Site Permissions](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/system-management/authentication-and-authorization/site-permissions).
+{% endhint %}

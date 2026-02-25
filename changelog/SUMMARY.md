@@ -8,6 +8,15 @@
 
 ## 2026
 
+* [2026-02-24: Emporix SDK - price list prices q param search support](2026/2026-02-24-sdk.md)
+* [2026-02-20: Price Service - new search endpoint and query parameter for price list prices](2026/2026-02-20-price.md)
+* [2026-02-12: Emporix SDK - restrictions support](2026/2026-02-12-sdk.md)
+* [2026-02-11: Quote Service - restriction property for quotes](2026/2026-02-11-quote.md)
+* [2026-02-11: Customer Service - restriction property for customers](2026/2026-02-11-customer.md)
+* [2026-02-11: Order Service - restriction property for orders](2026/2026-02-11-order.md)
+* [2026-02-11: Cart Service - restriction property for carts](2026/2026-02-11-cart.md)
+* [2026-02-11: Client Management Service - restrictions property for Legal Entities](2026/2026-02-11-client-management.md)
+* [2026-02-11: IAM Service - restrictions and restrictionAware properties](2026/2026-02-11-iam.md)
 * [2026-02-06: IAM Service – new endpoint for retrieving own user](2026/2026-02-06-iam.md)
 * [2026-02-04: Product Service – category and customer segment IDs no longer in preview](2026/2026-02-04-product.md)
 * [2026-01-08: Configuration Service - New properties for configurations](2026/2026-01-08-configuration.md)

@@ -21,6 +21,7 @@
 * [Custom ID](standard-practices/custom-id.md)
 * [Upsert](standard-practices/upsert.md)
 * [B2B Token](standard-practices/b2btoken.md)
+* [Bulk Request Limits](standard-practices/bulk-request-limits.md)
 
 ## Integrations
 
@@ -222,7 +223,7 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/companies-and-customers/customer-management/api-reference/api.yml)
   * [Customer Service (Tenant Managed)](companies-and-customers/customer-service/README.md)
-    * [Customer Service (Tenant Managed) Tutorial](companies-and-customers/customer-service/api-reference/customer_service_tenant.md)
+    * [Customer Service (Tenant Managed) Tutorial](companies-and-customers/customer-service/api-reference/customer-service-tenant.md)
     * [API Reference](companies-and-customers/customer-service/api-reference/README.md)
       * ```yaml
         props:
