@@ -15,9 +15,12 @@ Before requesting a token, ensure you have:
 
 * **Client ID** – Your application's client identifier
 * **Client secret** – Your application's client secret
-* **Scope** – At least one scope, for example `tenant={tenant}` (replace `{tenant}` with your tenant identifier). Multiple scopes can be specified, separated by spaces.
 
 These data can be found in the Developer Portal.
+
+{% hint style="info" %}
+If you want to grant only specific scopes for service access token, you can define the scopes in the Developer Portal and use the assigned Client ID and Secret for that cope definition.
+{% endhint %}
 
 ## Requesting a service access token
 
@@ -42,9 +45,9 @@ Send a `POST` request to the token endpoint with form-encoded credentials.
 | Parameter | Description |
 |-----------|-------------|
 | `grant_type` | Always `client_credentials` for service access tokens |
-| `client_id` | Your client ID |
-| `client_secret` | Your client secret |
-| `scope` | One or more scopes (for example, `tenant={tenant}`) |
+| `client_id` | Your Client ID |
+| `client_secret` | Your Client secret |
+| `scope` | Optionally, specify a scope or several scopes that you want to grant to the user. This limits access persmissions only to the specified functionalities. If the parameter is skipped, the user gets all scopes assigned to the `client_id`. For example, `tenant={tenant}` |
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -57,13 +60,13 @@ Send a `POST` request to the token endpoint with form-encoded credentials.
 ```bash
 curl -i -X POST 'https://api.emporix.io/oauth/token' \
   -H 'Content-Type: application/x-www-form-urlencoded' \
-  -d 'client_id={client_id}' \
-  -d 'client_secret={client_secret}' \
+  -d 'client_id={{client_id}}' \
+  -d 'client_secret={{client_secret}}' \
   -d 'grant_type=client_credentials' \
-  -d 'scope=tenant={tenant}'
+  -d 'scope=category.category_manage category.category_publish category.category_read_unpublished category.category_unpublish \
 ```
 
-Replace `{client_id}`, `{client_secret}`, and `{tenant}` with your actual values.
+Replace `{client_id}` and `{client_secret}` with your actual values.
 {% endstep %}
 
 {% step %}
