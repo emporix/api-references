@@ -8,6 +8,7 @@
 
 ## 2026
 
+* [2026-02-26: Customer Service - SSO customer authentication based on token exchange](2026/2026-02-26-customer.md)
 * [2026-02-12: Emporix SDK - restrictions support](2026/2026-02-12-sdk.md)
 * [2026-02-11: Quote Service - restriction property for quotes](2026/2026-02-11-quote.md)
 * [2026-02-11: Customer Service - restriction property for customers](2026/2026-02-11-customer.md)
