@@ -82,8 +82,9 @@ The response returns JSON object containing `access_token`, `refresh_token`, `sa
 {% endstep %}
 {% endstepper %}
 
+<figure><img src="../.gitbook/assets/tokenexchange.svg" alt="Token exchange authentication"><figcaption>Token exchange authentication</figcaption></figure>
 
-```mermaid
+<!-- ```mermaid
 ---
 config:
   layout: fixed
@@ -127,7 +128,7 @@ sequenceDiagram
         AuthSvc->>AuthSvc: Generate Emporix access token
         AuthSvc-->>BFF: Emporix access token
     end
-```
+``` -->
 
 ## Token validation
 
