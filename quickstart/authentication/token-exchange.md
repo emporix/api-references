@@ -82,53 +82,7 @@ The response returns JSON object containing `access_token`, `refresh_token`, `sa
 {% endstep %}
 {% endstepper %}
 
-<figure><img src="../.gitbook/assets/tokenexchange.svg" alt="Token exchange authentication"><figcaption>Token exchange authentication</figcaption></figure>
-
-<!-- ```mermaid
----
-config:
-  layout: fixed
-  theme: base
-  themeVariables:
-    primaryColor: '#DDE6EE'
-    primaryBorderColor: '#4C5359'
-    actorBkg: '#DDE6EE'
-    actorBorder: '#4C5359'
-    actorLineColor: '#4C5359'
-    signalColor: '#E86C07'
-    signalTextColor: '#7B8B99'
-    background: transparent 
----
-sequenceDiagram
-    participant BFF as Frontend / BFF
-    participant AuthSvc as Emporix Authentication Service
-    participant ConfigSvc as Configuration Service
-    participant IdP as External OpenID Provider
-    participant CustSvc as Emporix Customer Service
-
-    BFF->>AuthSvc: POST /customer/{tenant}/exchangeauthtoken
-
-    AuthSvc->>ConfigSvc: Fetch token exchange configuration
-    ConfigSvc-->>AuthSvc: Token exchange config (issuer, audience, introspection endpoint)
-
-    AuthSvc->>IdP: POST /introspect<br/>Authorization: Basic (clientId:secret)<br/>token=subjectAccessToken
-    IdP-->>AuthSvc: Introspection response (active=true + claims fidelity)
-
-    alt Token inactive or invalid
-        AuthSvc-->>BFF: 401 Unauthorized
-    else Token valid
-        AuthSvc->>AuthSvc: Validate issuer (iss)
-        AuthSvc->>AuthSvc: Validate audience (aud)
-        AuthSvc->>AuthSvc: Validate expiration (exp)
-        AuthSvc->>AuthSvc: Validate authorized client (client_id)
-
-        AuthSvc->>CustSvc: resolve or create customer
-        CustSvc-->>AuthSvc: Customer identifier
-
-        AuthSvc->>AuthSvc: Generate Emporix access token
-        AuthSvc-->>BFF: Emporix access token
-    end
-``` -->
+<figure><img src="../../.gitbook/assets/tokenexchange.svg" alt="Token exchange authentication"><figcaption>Token exchange authentication</figcaption></figure>
 
 ## Token validation
 
