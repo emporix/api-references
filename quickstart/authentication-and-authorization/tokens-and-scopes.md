@@ -17,7 +17,7 @@ To be able to effectively use the Emporix API either as a employee user or as a 
 * **Emporix API** — used to access the API from a business user's perspective.
 * **Storefront API** — used to access the API from a customer's perspective. These credentials are used to perform basic actions on the storefront — browse products, view prices, or add products to a cart.
 
-You can define custom API keys that grant access to specific resources or specific integrations. This allows you to control authorization for particular users as well as to simulate some specific scenarios. For example, you can create dedicated scopes that allow you to manage prices externally for the products in your database, or limit scopes for particular service only. The custom scopes assign separate API keys with dedicated Client ID and Secret.
+You can define custom API keys that grant access to specific resources or specific integrations. This allows you to control authorization for particular users as well as to simulate some specific scenarios. For example, you can create dedicated scopes that allow you to manage prices externally for the products in your database, or limit scopes for particular services only. The custom scopes assign separate API keys with dedicated Client ID and Secret.
 
 {% hint style="info" %}
 To learn more how to manage API Keys or create custom scopes in the Developer Portal, refer to the [Manage API Keys](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/getting-started/developer-portal/manage-apikeys) guide.
@@ -25,21 +25,23 @@ To learn more how to manage API Keys or create custom scopes in the Developer Po
 
 # Tokens
 
-Emporix uses different types of tokens to authenticate and authorize different types of users. The Emporix system explicitly distinguishes between two types of users: customers and employee users. These tokens, associated with different scope levels, serve fundamentally different purposes.
+Emporix uses different types of tokens to authenticate and authorize different types of users. These tokens, associated with different scope levels, serve fundamentally different purposes. The Emporix system explicitly distinguishes between two types of users: employee users and customers. 
 
-## Employee user
+## Employee users
 
-### Service token
+The following tokens are used to authenticate and authorize employee users.
 
-The Service Token serves for backend operations and administrative tasks, representing the business owner's or employee's perspective. 
+### Service access token
 
-* Scope: A service token is required to manage core Emporix services, granting the ability to perform actions such as adding new products, modifying prices, or managing categories.
-* Required credentials: Service tokens are generated using backend credentials (such as a backend Client ID and Secret).
+The Service Access Token serves for backend operations and administrative tasks, representing the business owner's or employee's perspective. 
+
+* Scope: A service access token is required to manage core Emporix services, granting the ability to perform actions such as adding new products, modifying prices, or managing categories.
+* Required credentials: Service access tokens are generated using backend credentials (such as a backend Client ID and Secret).
 * Caching behavior in the Java SDK: The Emporix Java SDK automatically caches service tokens based on their credential name and requested scopes to optimize backend performance.
 * Endpoint: `POST /oauth/token` [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authorization/oauth-service/api-reference/service-access-token)
 
 {% hint style="info" %}
-Learn more about the Service Token in the [OAuth Service Tutorial](../../authentication/oauth-service/oauth.md).
+Learn more about the Service Access Token in the [OAuth Service Tutorial](../../authentication/oauth-service/oauth.md).
 {% endhint %}
 
 ### SSO Authentication Tokens
@@ -50,7 +52,9 @@ Employees are organized into groups that share specific access controls and role
 Learn more about SSO authentication approaches in the [SSO Authentication](sso-authentication.md) and [SSO Token Exchange](token-exchange.md).
 {% endhint %}
 
-## End customer
+## End customers
+
+The following tokens are used to authenticate and authorize end customers.
 
 ### Anonymous token
 
@@ -177,14 +181,14 @@ Learn more about SSO approaches in the [SSO Authentication](sso-authentication.m
 {% endhint %}
 
 
-## Scopes
+# Scopes
 
 In the Emporix API, **scopes** define which operations you are allowed to perform and which resources you can access. They are a foundational part of the token-based authorization system and help enforce security by ensuring users and applications only interact with the data they are permitted to see or modify.
 
 Scopes follow a standardized naming convention structure: `[service_name].[resource_name]_[action_name]`. For actions that grant read-only access to a resource, the terms `read` and `view` are used interchangeably.
 
 
-### Scope assignment by token type 
+## Scope assignment by token type 
 
 Different types of access tokens handle scopes differently based on their intended user:
 
@@ -196,11 +200,11 @@ Different types of access tokens handle scopes differently based on their intend
 Some API endpoints are implicitly readable and do not require any scopes at all.
 {% endhint %}
 
-### Identity and Access Management (IAM) 
+## Identity and Access Management (IAM) 
 
 For internal employees working within the Emporix Management Dashboard, scopes are used to enforce Identity and Access Management (IAM) controls. When employees are assigned to specific groups, their associated roles and access permissions are translated into scopes applied to the APIs, ensuring they only have access to authorized services.
 
-### Java SDK best practices 
+## Java SDK best practices 
 
 If you are building an application using the Emporix Java SDK, there are several best practices for managing scopes:
 * Use scope constants: The SDK provides nested Scopes interfaces (for example, `ProductClient.Scopes.PRODUCT_MANAGE`) so you do not have to guess the scope name. Using these constants instead of hardcoded strings provides type safety, enables IDE autocomplete, supports safe refactoring, and prevents typos.
