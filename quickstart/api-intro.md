@@ -82,7 +82,7 @@ Some endpoints do not require any scopes as they are implicitly readable. -->
 ## Customer audit logs
 
 You can request customer audit logs from Emporix by reaching out to our [Support Team](mailto:support@emporix.com) and sending the email request.\
-The logs are kept for the last 2 years. You can retrieve information about create, update or delete operations. The records contain information about the tenant, timestamp and the person who performed the actions.
+The logs are kept for the last 712 days. You can retrieve information about create, update or delete operations. The records contain information about the tenant, timestamp and the person who performed the actions.
 
 ## Quick start guide for developers
 
@@ -129,6 +129,8 @@ curl -L \
     "productType": "BASIC"
   }'
 ```
+{% endstep %}
+{% endstepper %}
 
 {% hint style="danger" %}
 If you want to send a request to an endpoint that requires a different set of scopes, you need to generate a new access token.
