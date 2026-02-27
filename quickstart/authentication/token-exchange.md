@@ -129,6 +129,9 @@ If you want to use the token exchange flow within your authentication process, c
 
 {% tabs %}
 {% tab title="Online verification" %}
+
+Provide the following information to use **online verification**:
+
 * `domain` - The base URL of your identity provider.
 * `token_introspect_endpoint` - The path to the introspection endpoint.
 * `client_id` - The credentials for a client that has the appropriate rights to perform token introspection. For example, `my-backend-service`.
@@ -141,6 +144,9 @@ If you want to use the token exchange flow within your authentication process, c
 {% endtab %}
 
 {% tab title="Offline verification" %}
+
+Provide the following information to use **offline verification**:
+
 * `token_client_id` - Used to validate the `azp` (Authorized Party) claim. It recognizes if the token has been issued for the specific client, especially when a token has multiple potential recipients. For example, `my-backend-service`.
 * `audience` - Used to validate the `aud` claim. It recognizes the dedicated recipient of the token, such as a system, API or a service that accepts the token. For example, `https://your-api-url.some-domain.io`, `product-service`, `commerce-system`. It secures the token authorized usage.
 * `issuer` - Used to validate the `iss` claim. It represents the authentication server that issued the token. 
