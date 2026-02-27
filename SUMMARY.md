@@ -67,10 +67,10 @@
               spec: ai-rag-indexer-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/artificial-intelligence/ai-rag-indexer/api-reference/api.yml)
-* [Authentication](authentication/README.md)
-  * [OAuth Service](authentication/oauth-service/README.md)
-    * [OAuth Tutorial](authentication/oauth-service/oauth.md)
-    * [API Reference](authentication/oauth-service/api-reference/README.md)
+* [Authentication and Authorization](authentication-and-authorization/README.md)
+  * [OAuth Service](authentication-and-authorization/oauth-service/README.md)
+    * [OAuth Tutorial](authentication-and-authorization/oauth-service/oauth.md)
+    * [API Reference](authentication-and-authorization/oauth-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
@@ -81,7 +81,7 @@
               kind: openapi
               spec: oauth-api
         ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/authentication/oauth-service/api-reference/api.yml)
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/authorization/oauth-service/api-reference/api.yml)
 * [Catalogs and Categories](catalogs-and-categories/README.md)
   * [Catalog Service](catalogs-and-categories/catalog/README.md)
     * [Catalog Tutorials](catalogs-and-categories/catalog/catalog.md)

@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-icon: fingerprint
+icon: user-key
 description: Learn how customer authentication works in Emporix.
 ---
 
