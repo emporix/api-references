@@ -1,6 +1,7 @@
 ---
 layout:
   width: wide
+  outline: visible
 icon: user-lock
 description: Tokens and scopes grant specific access to employee users and your storefront customers assigning them relevant permissions level to specific resources. Learn how to authenticate and authorize users in Emporix.
 ---
