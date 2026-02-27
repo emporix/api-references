@@ -1,7 +1,7 @@
 ---
 layout:
   width: wide
-  outline: visible
+  page-outline: true
 icon: user-lock
 description: Tokens and scopes grant specific access to employee users and your storefront customers assigning them relevant permissions level to specific resources. Learn how to authenticate and authorize users in Emporix.
 ---
@@ -28,7 +28,7 @@ To learn more how to manage API Keys or create custom scopes in the Developer Po
 
 Emporix uses different types of tokens to authenticate and authorize different types of users. These tokens, associated with different scope levels, serve fundamentally different purposes. The Emporix system explicitly distinguishes between two types of users: employee users and customers. 
 
-## Employee users
+## Employee users tokens
 
 The following tokens are used to authenticate and authorize employee users.
 
@@ -46,6 +46,7 @@ Learn more about the Service Access Token in the [OAuth Service Tutorial](../../
 {% endhint %}
 
 ### SSO Authentication Tokens
+
 When employees log into the Emporix Management Dashboard or the Developer Portal using Single Sign-On (SSO), an external Identity Provider (IDP) verifies their credentials. The IDP then returns a token that grants the employee access to the internal Emporix systems.
 Employees are organized into groups that share specific access controls and roles, and these access controls are applied to the APIs through token scopes. 
 
@@ -53,7 +54,7 @@ Employees are organized into groups that share specific access controls and role
 Learn more about SSO authentication approaches in the [SSO Authentication](sso-authentication.md) and [SSO Token Exchange](token-exchange.md).
 {% endhint %}
 
-## End customers
+## End customers tokens
 
 The following tokens are used to authenticate and authorize end customers.
 
@@ -75,7 +76,7 @@ The Customer Token is a JSON Web Token (JWT) that contains encrypted data associ
 * Caching behavior in the Java SDK: Customer tokens are never cached by the SDK. Because they are unique to individual users, the storefront application must manage them independently, such as storing them securely in an HTTP session or other tools.
 * Endpoint: `POST /customer/{tenant}/login` [Requesting a customer token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization).
 
-### Refresh Token
+### Refresh token
 
 A Refresh Token is a specific type of access token in the Emporix API used to generate a new customer token without forcing the user to log in again. 
 
@@ -84,7 +85,7 @@ Refresh tokens play a crucial role in maintaining seamless user sessions, partic
 * Using in the Java SDK: If you are developing with the Emporix Java SDK, the SDK provides built-in methods to handle token renewal, such as calling `refreshCustomerToken` (expiredToken), which allows your application to easily replace an expired customer session token.
 * Endpoint: `GET /customer/{tenant}/refreshauthtoken` [Requesting a refresh token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization).
 
-### B2B Token
+### B2B token
 
 In B2B scenarios, customers often represent multiple companies and can act on behalf of more than one legal entity (company). The B2B token handles this by embedding the customer's currently selected legal entity directly into their authorization token. This token-based approach guarantees a consistent user experience and centralized security enforcement while maintaining the required legal entity-based access control. Because the system updates the token securely in the background, the customer is not forced to log in again to access the relevant data and scopes for the new entity.
 
@@ -174,7 +175,7 @@ public CustomerTokenResponse switchToB2bContext(
 Find out more about the Customer Service and token generation in the [Customer Service (Customer Managed)](../companies-and-customers/customer-service/api-reference/) API reference documentation.
 {% endhint %}
 
-### SSO Generated Tokens
+### SSO generated tokens
 When customer log into the storefront using Single Sign-On (SSO), an external Identity Provider (IDP) verifies their credentials. The IDP then returns a token that grants the employee access to the internal Emporix systems.
 
 {% hint style="info" %}
