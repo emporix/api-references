@@ -254,7 +254,7 @@
             kind: openapi
             spec: media-api
       ```
-  * [OAuth](../authorization/oauth-service/api-reference/README.md)
+  * [OAuth](../authentication/oauth-service/api-reference/README.md)
     * ```yaml
       props:
         models: true
