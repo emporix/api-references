@@ -19,12 +19,12 @@ Before requesting a token, ensure you have:
 These data can be found in the Developer Portal.
 
 {% hint style="info" %}
-If you want to grant only specific scopes for service access token, you can define the scopes in the Developer Portal and use the assigned Client ID and Secret for that scope definition.
+If you want to grant only specific scopes for service access token, you can define the scopes in the Developer Portal and use the assigned Client ID and Secret for that specific scope definition.
 {% endhint %}
 
 ## Requesting a service access token
 
-The OAuth Service uses the **client credentials** grant type, so you receive an access token by sending a request authenticating with your client ID and secret.
+The OAuth Service uses the **client credentials** grant type, so you receive an access token by sending a request authenticating with your `client ID` and `secret`.
 
 {% stepper %}
 {% step %}
@@ -47,7 +47,7 @@ Send a `POST` request to the token endpoint with form-encoded credentials.
 | `grant_type` | Always `client_credentials` for service access tokens |
 | `client_id` | Your Client ID |
 | `client_secret` | Your Client secret |
-| `scope` | Optionally, specify a scope or several scopes that you want to grant to the user. This limits access persmissions only to the specified functionalities. If the parameter is skipped, the user gets all scopes assigned to the `client_id`. For example, `tenant={tenant}` |
+| `scope` | Optionally, specify a scope or several scopes that you want to grant to the user. For example, `scope=category.category_manage category.category_publish category.category_read_unpublished category.category_unpublish`. This limits access persmissions only to the specified functionalities. If the parameter is skipped, the user gets all scopes assigned to the `client_id`.  |
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -94,7 +94,7 @@ A successful response returns a JSON object containing the access token and meta
   "session_idle_time": 120,
   "refresh_token": "",
   "refresh_token_expires_in": 0,
-  "scope": "tenant={tenant} ..."
+  "scope": "scope=category.category_manage category.category_publish category.category_read_unpublished category.category_unpublish tenant=yourtenant"
 }
 ```
 
