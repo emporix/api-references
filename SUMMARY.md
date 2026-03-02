@@ -69,10 +69,10 @@
               spec: ai-rag-indexer-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/artificial-intelligence/ai-rag-indexer/api-reference/api.yml)
-* [Authentication and Authorization](authentication-and-authorization/README.md)
-  * [OAuth Service](authentication-and-authorization/oauth-service/README.md)
-    * [OAuth Tutorial](authentication-and-authorization/oauth-service/oauth.md)
-    * [API Reference](authentication-and-authorization/oauth-service/api-reference/README.md)
+* [Authentication](authentication/README.md)
+  * [OAuth Service](authentication/oauth-service/README.md)
+    * [OAuth Tutorial](authentication/oauth-service/oauth.md)
+    * [API Reference](authentication/oauth-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
