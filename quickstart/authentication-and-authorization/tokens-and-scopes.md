@@ -54,7 +54,8 @@ When an employee logs into the Emporix applications using Single Sign-On (SSO), 
 
 {% hint style="info" %}
 Learn more about SSO authentication approaches in the [SSO Authentication](sso-authentication.md) and [SSO Token Exchange](token-exchange.md).
-Learn more about the user groups in the [Users and Groups](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/administration/usersandgroups)
+
+Learn more about the user groups in the [Users and Groups](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/administration/usersandgroups).
 {% endhint %}
 
 ## End customers tokens
@@ -86,13 +87,21 @@ The Customer Token contains encrypted data associated with a specific, authentic
 Make sure that your implementation properly covers the customer authentication flow:
 
 1. Retrieval of an anonymous token for guest browsing
+
 The anonymous token returns the customer's `sessionId`. The session persists information about the items put into cart byt anonymous customers.
+
 `GET /customerlogin/auth/anonymous/login`
+
 2. Logging in or registering customers
+
 When a customer logs in or registers a new account, the anonymous token is used to authenticaterequest of the generation of the customer access token. The same `sessionId` is associated with the customer access token.
+
 `POST /customer/{tenant}/login`
+
 3. Merging carts
+
 The anonymous cart has to be merged to link it with the authenticated customer. Thanks to this, the customer is able to see the items already placed into cart and continue with their purchase.
+
 `POST https://api.emporix.io/cart/{tenant}/carts/{cartId}/merge`
 
 For more information, see the API tutorials:
@@ -111,7 +120,7 @@ The Saas Token is a token associated with an authenticated customer and is furth
 
 A Refresh Token is a specific type of access token in the Emporix API used to generate a new customer token without forcing the user to log in again. 
 
-* Purpose: A refresh token is used to maintain a seamless customer's session. Before the customer's session expires, requesting a refresh token can extend the session so that the customer remains authenticated. The refresh token is particularly useful in B2B environments as it can also update the customer's session with their legal entity selection dring the session. For instance, when a B2B customer selects or switches to another legal entity they are acting on behalf of, the storefront triggers the token refresh endpoint. This action issues a new customer token based on the previous one but securely embeds the newly selected `legalEntityId`, ensuring the customer's data access and product visibility adjust dynamically without requiring them to re-authenticate.
+* Purpose: A refresh token is used to maintain a seamless customer's session. Before the customer's session expires, requesting a refresh token can extend the session so that the customer remains authenticated. The refresh token is particularly useful in B2B environments as it can also update the customer's session with their legal entity selection during the session. See also [B2B Token](#b2b-token).
 * Endpoint: `GET /customer/{tenant}/refreshauthtoken` [Requesting a refresh token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization).
 
 ### B2B token
@@ -131,25 +140,33 @@ The token approach ensures a consistent user experience, and centralized securit
 {% endhint %}
 
 * Example use cases of B2B tokens:
-  * Placing an order on behalf of a specific legal entity: A B2B customer wants to make a purchase on behalf of a specific company. The legal entity has to be attached to the order information.
-  * Accessing company-shared orders: A B2B customer with a manager permissions needs to access not only his own orders, but also orders placed by other customers representing the same legal entity.
-  * Resolving products availability: With customer segments enabled, products visibility can become segment-based. Therefore, the endpoint responsible for retrieving products on the storefront has to return only these products that the customer has access to with the selected legal entity.
+  * **Placing an order on behalf of a specific legal entity**: A B2B customer wants to make a purchase on behalf of a specific company. The legal entity has to be attached to the order information.
+  * **Accessing company-shared orders**: A B2B customer with a manager permissions needs to access not only his own orders, but also orders placed by other customers representing the same legal entity.
+  * **Resolving products availability**: With customer segments enabled, products visibility can become segment-based. Therefore, the endpoint responsible for retrieving products on the storefront has to return only these products that the customer has access to with the selected legal entity.
 
 * Process: The following process steps demonstrate handling multiple legal entities with B2B tokens. 
 
+{% hint style="info" %}
+
+For more information on accessing company-shared resources, refer to the [Company Shared Orders and Customer Groups](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/customer-use-cases/scenarios-introduction/shared-orders).
+
+{% endhint %}
+
 {% hint style="warning" %}
-Make sure that your implementation covers the apropriate token issuance and retrieval. 
-{% endhint%}
+
+Make sure that your implementation covers the appropriate token issuance and retrieval. 
+
+{% endhint %}
 
 {% stepper %}
 {% step %}
 ### Authenticating a customer
-Upon a B2B customer logs in, a customer access token is issued.
+Upon a B2B customer logs in, a customer access token has to be issued.
 {% endstep %}
 
 {% step %}
 ### Legal entity assignment
-When the B2B customer chooses a specific legal entity they want to represent and act one behalf of, the refreshing customer token has to be run to embed the selected legal entity to the token. The new refresh token that embeds the `legalEntityId` parameter.
+When the B2B customer chooses a specific legal entity they want to represent and act one behalf of, the refreshing customer token has to be run to embed the selected legal entity to the token. The new refresh token embeds the `legalEntityId` parameter to the customer token.
 {% endstep %}
 
 {% step %}
@@ -233,4 +250,4 @@ Some API endpoints are implicitly readable and do not require any scopes at all.
 
 ## Identity and Access Management (IAM) 
 
-For internal employees working within the Emporix Management Dashboard, scopes are used to enforce Identity and Access Management (IAM) controls. When employees are assigned to specific groups, their associated roles and access permissions are translated into scopes applied to the APIs, ensuring they only have access to authorized services.
+For internal employees working within the Emporix Management Dashboard, scopes are used to enforce Identity and Access Management (IAM) controls. When employees are assigned to specific groups, their associated roles and access permissions are translated into scopes applied to the APIs, ensuring they only have access to authorized resources.
