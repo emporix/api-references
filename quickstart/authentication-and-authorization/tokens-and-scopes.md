@@ -13,10 +13,10 @@ The Emporix API uses the [OAuth 2.0](https://oauth.net/2/) token-based authentic
 
 ## API credentials
 
-To be able to effectively use the Emporix API, you need the revelant API keys. The [Emporix Developer Portal](https://app.emporix.io) provides you with two types of credentials out-of-the-box:
+To be able to effectively use the Emporix API, you need the relevant API keys. The [Emporix Developer Portal](https://app.emporix.io) provides you with two types of credentials out-of-the-box:
 
 * **Emporix API** — Credentials required to obtain a service access token, which is used to access Emporix resources through the Emporix API. The credentials grant access to all the resources without any restrictions. 
-* **Storefront API** — The `Client_ID` credential is required to obtain an anonymous token for a customer browsing the storefront. The anonymous token stores the information about the anauthenticated customer's session, such as browsing products or adding items to cart. When a customer decides to log in, the anonymous token is required to generate a customer token that already containsthe session information. The Storefront API credentials are also required to set up SSO authentication with token exchange.
+* **Storefront API** — The `Client_ID` credential is required to obtain an anonymous token for a customer browsing the storefront. The anonymous token stores the information about the unauthenticated customer's session, such as browsing products or adding items to cart. When a customer decides to log in, the anonymous token is required to generate a customer token that already contains the session information. The Storefront API credentials are also required to set up SSO authentication with token exchange.
 
 In addition, you can define custom API keys credentials that bear scopes to particular resources only. This allows you to restrict system permissions and safely use these credentials in a specific use case or in a dedicated integration. For example, you can create credentials with the scopes to manage prices externally for the products in your database and use them in your CRM system integration. Custom API credentials have a dedicated `Client_ID` and `Secret`, that you can use to obtain the service access token with the specified scopes.
 {% hint style="info" %}
@@ -88,13 +88,13 @@ Make sure that your implementation properly covers the customer authentication f
 
 1. Retrieval of an anonymous token for guest browsing
 
-The anonymous token returns the customer's `sessionId`. The session persists information about the items put into cart byt anonymous customers.
+The anonymous token returns the customer's `sessionId`. The session persists information about the items put into cart by anonymous customers.
 
 `GET /customerlogin/auth/anonymous/login`
 
 2. Logging in or registering customers
 
-When a customer logs in or registers a new account, the anonymous token is used to authenticaterequest of the generation of the customer access token. The same `sessionId` is associated with the customer access token.
+When a customer logs in or registers a new account, the anonymous token is used to authenticate the request for the generation of the customer access token. The same `sessionId` is associated with the customer access token.
 
 `POST /customer/{tenant}/login`
 
@@ -129,7 +129,7 @@ In B2B scenarios, customers often represent multiple companies and can act on be
 
 This token-based approach guarantees a consistent user experience and centralized security enforcement while maintaining the required legal entity-based access control. Because the system updates the token securely in the background, the customer is not forced to log in again to access the relevant data and scopes for the new entity.
 
-* Purpose: The B2B token ensures that a B2B customer's access to company-related resources is properly determined in accordance to the defined customer's roles and permissions. Once the customer access token has been issued, and the customer wants to make a purchase onbehalf of a specific entity, the customer access token has to be rereshed with the `legalEntityId` provided as a parameter.
+* Purpose: The B2B token ensures that a B2B customer's access to company-related resources is properly determined in accordance to the defined customer's roles and permissions. Once the customer access token has been issued, and the customer wants to make a purchase on behalf of a specific entity, the customer access token has to be refreshed with the `legalEntityId` provided as a parameter.
 * Endpoint: `GET https://api.emporix.io/customer/{tenant}/refreshauthtoken` [Refreshing a customer token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken).
 
 The token-based approach to pass the `legalEntityId` parameter guarantees that the relevant services use that information to retrieve relevant data. The `legalEntityId` header is injected in the requests. 
@@ -166,7 +166,7 @@ Upon a B2B customer logs in, a customer access token has to be issued.
 
 {% step %}
 ### Legal entity assignment
-When the B2B customer chooses a specific legal entity they want to represent and act one behalf of, the refreshing customer token has to be run to embed the selected legal entity to the token. The new refresh token embeds the `legalEntityId` parameter to the customer token.
+When the B2B customer chooses a specific legal entity they want to represent and act on behalf of, the refreshing customer token has to be run to embed the selected legal entity to the token. The new refresh token embeds the `legalEntityId` parameter to the customer token.
 {% endstep %}
 
 {% step %}
@@ -222,7 +222,7 @@ Find out more about the Customer Service and token generation in the [Customer S
 {% endhint %}
 
 ### SSO generated tokens
-When customer log into the storefront using Single Sign-On (SSO), an external Identity Provider (IDP) verifies their credentials. The IDP then returns a token that grants the employee access to the internal Emporix systems.
+When a customer logs into the storefront using Single Sign-On (SSO), an external Identity Provider (IDP) verifies their credentials. The IDP then returns a token that grants the customer access to the internal Emporix systems.
 
 {% hint style="info" %}
 Learn more about SSO approaches in the [SSO Authentication](sso-authentication.md) and [Token Exchange](token-exchange.md) guides. 
