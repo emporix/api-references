@@ -234,10 +234,3 @@ Some API endpoints are implicitly readable and do not require any scopes at all.
 ## Identity and Access Management (IAM) 
 
 For internal employees working within the Emporix Management Dashboard, scopes are used to enforce Identity and Access Management (IAM) controls. When employees are assigned to specific groups, their associated roles and access permissions are translated into scopes applied to the APIs, ensuring they only have access to authorized services.
-
-## Java SDK best practices 
-
-If you are building an application using the Emporix Java SDK, there are several best practices for managing scopes:
-* Use scope constants: The SDK provides nested Scopes interfaces (for example, `ProductClient.Scopes.PRODUCT_MANAGE`) so you do not have to guess the scope name. Using these constants instead of hardcoded strings provides type safety, enables IDE autocomplete, supports safe refactoring, and prevents typos.
-* Principle of least privilege: It is recommended to request only the specific scopes needed for a given operation (for example, `tokenService.getServiceToken(Set.of(SCOPES))`) rather than requesting all available scopes.
-* Troubleshooting: If your token lacks the required scopes for a specific API call, the system rejects the request and return a `403 Forbidden` or `Insufficient Scopes` error. If this happens, verify your credentials and request a new token with the appropriate scopes.
