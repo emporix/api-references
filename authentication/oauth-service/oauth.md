@@ -19,7 +19,7 @@ Before requesting a token, ensure you have:
 These data can be found in the Developer Portal.
 
 {% hint style="info" %}
-If you want to grant only specific scopes for service access token, you can define the scopes in the Developer Portal and use the assigned Client ID and Secret for that specific scope definition.
+If you want to grant only specific scopes for service access token, you can create dedicated credentials in the Developer Portal and assign the scopes you need. Then, in your request, use the Client ID and Secret credentials to obtain the limited access token.
 {% endhint %}
 
 ## Requesting a service access token

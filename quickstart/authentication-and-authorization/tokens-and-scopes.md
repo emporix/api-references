@@ -3,7 +3,7 @@ layout:
   width: wide
   page-outline: true
 icon: user-lock
-description: Tokens and scopes grant specific access to employee users and your storefront customers assigning them relevant permissions level to specific resources. Learn how to authenticate and authorize users in Emporix.
+description: Tokens and scopes grant access to employee users, your storefront customers assigning them relevant permissions level to specific resources. Dedicated tokens are also required for external system-to-system integrations.
 ---
 
 # Tokens and Scopes
@@ -13,13 +13,12 @@ The Emporix API uses the [OAuth 2.0](https://oauth.net/2/) token-based authentic
 
 ## API credentials
 
-To be able to effectively use the Emporix API either as a employee user or as a customer, you need the revelant API keys. The [Emporix Developer Portal](https://app.emporix.io) provides you with two types of credentials out-of-the-box:
+To be able to effectively use the Emporix API, you need the revelant API keys. The [Emporix Developer Portal](https://app.emporix.io) provides you with two types of credentials out-of-the-box:
 
-* **Emporix API** — used to access the API from a business user's perspective.
-* **Storefront API** — used to access the API from a customer's perspective. These credentials are used to perform basic actions on the storefront — browse products, view prices, or add products to a cart.
+* **Emporix API** — Credentials required to obtain a service access token, which is used to access Emporix resources through the Emporix API. The credentials grant access to all the resources without any restrictions. 
+* **Storefront API** — The `Client_ID` credential is required to obtain an anonymous token for a customer browsing the storefront. The anonymous token stores the information about the anauthenticated customer's session, such as browsing products or adding items to cart. When a customer decides to log in, the anonymous token is required to generate a customer token that already containsthe session information. The Storefront API credentials are also required to set up SSO authentication with token exchange.
 
-You can define custom API keys that grant access to specific resources or specific integrations. This allows you to control authorization for particular users as well as to simulate some specific scenarios. For example, you can create dedicated scopes that allow you to manage prices externally for the products in your database, or limit scopes for particular services only. The custom scopes assign separate API keys with dedicated Client ID and Secret.
-
+In addition, you can define custom API keys credentials that bear scopes to particular resources only. This allows you to restrict system permissions and safely use these credentials in a specific use case or in a dedicated integration. For example, you can create credentials with the scopes to manage prices externally for the products in your database and use them in your CRM system integration. Custom API credentials have a dedicated `Client_ID` and `Secret`, that you can use to obtain the service access token with the specified scopes.
 {% hint style="info" %}
 To learn more how to manage API Keys or create custom scopes in the Developer Portal, refer to the [Manage API Keys](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/getting-started/developer-portal/manage-apikeys) guide.
 {% endhint %}
@@ -28,97 +27,139 @@ To learn more how to manage API Keys or create custom scopes in the Developer Po
 
 Emporix uses different types of tokens to authenticate and authorize different types of users. These tokens, associated with different scope levels, serve fundamentally different purposes. The Emporix system explicitly distinguishes between two types of users: employee users and customers. 
 
-## Employee users tokens
+## System/integration tokens
 
-The following tokens are used to authenticate and authorize employee users.
+To grant smooth access to Emporix resources through API, whether to enable backend operations in the storefront implementation or in an external system integration, you need the Service Access Token.
 
 ### Service access token
 
 The Service Access Token serves for backend operations and administrative tasks, representing the business owner's or employee's perspective. 
 
-* Scope: A service access token is required to manage core Emporix services, granting the ability to perform actions such as adding new products, modifying prices, or managing categories.
-* Required credentials: Service access tokens are generated using backend credentials (such as a backend Client ID and Secret).
-* Caching behavior in the Java SDK: The Emporix Java SDK automatically caches service tokens based on their credential name and requested scopes to optimize backend performance.
+* Purpose: A service access token is required to manage core Emporix services, granting the ability to perform actions such as adding new products, modifying prices, or managing categories.
+* Required credentials: Service access tokens are generated using relevant backend API credentials (such as a backend Client ID and Secret).
 * Endpoint: `POST /oauth/token` [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authorization/oauth-service/api-reference/service-access-token)
 
 {% hint style="info" %}
 Learn more about the Service Access Token in the [OAuth Service Tutorial](../../authentication/oauth-service/oauth.md).
 {% endhint %}
 
+## Employee users tokens
+
+The employee access tokens are based on the user groups an employee user belongs to. Employees are organized into groups that share specific access controls and roles, and these access controls are applied to the APIs through token scopes. The relevant access is granted upon a user logging in to the Emporix backend applications.
+
 ### SSO Authentication Tokens
 
-When employees log into the Emporix Management Dashboard or the Developer Portal using Single Sign-On (SSO), an external Identity Provider (IDP) verifies their credentials. The IDP then returns a token that grants the employee access to the internal Emporix systems.
-Employees are organized into groups that share specific access controls and roles, and these access controls are applied to the APIs through token scopes. 
+When an employee logs into the Emporix applications using Single Sign-On (SSO), an external Identity Provider (IDP) verifies their credentials. The IDP then returns a token that grants the employee access to the internal Emporix systems.
+
 
 {% hint style="info" %}
 Learn more about SSO authentication approaches in the [SSO Authentication](sso-authentication.md) and [SSO Token Exchange](token-exchange.md).
+Learn more about the user groups in the [Users and Groups](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/administration/usersandgroups)
 {% endhint %}
 
 ## End customers tokens
 
-The following tokens are used to authenticate and authorize end customers.
+The following tokens are associated with end customers authentication and authorization on the storefront.
 
 ### Anonymous token
 
-The Anonymous Token is used by a storefront for guest browsing and public access. It allows the storefront to access public resources with a read scope, enabling users to browse products, view prices, and add products to a cart without logging in. It is not associated with any specific customer.
+The Anonymous Token is required on a storefront for guest customers browsing and public access.
 
-* Scope: No scope associated.
-* Required credentiqals: No required credentials for anonymous session or guest checkout.
-* Caching behavior in Java SDK: The anonymous tokens are not cached by design. Every guest user browsing the storefront requires a unique token to maintain their individual shopping session and context (such as an active shopping cart). Since the SDK does not automatically cache these tokens, your application must manage them independently, such as by securely storing them in an HTTP session or a other caching system.
+* Purpose: The anonymous token contains the `session_id` which bears the information about an unauthenticated customer's session, including the viewed products or items placed to cart, so that when the customer chooses to log in or register, their recent operations are persisted.
+* Required credentials: The Storefront API `Client_ID` credential is required in the request.
 * Endpoint: `GET /customerlogin/auth/anonymous/login` [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization).
 
 ### Customer token 
 
-The Customer Token is a JSON Web Token (JWT) that contains encrypted data associated with a specific, authenticated shopper on the storefront. 
+The Customer Token contains encrypted data associated with a specific, authenticated shopper on the storefront. It is generated when a guest shopper chooses to log in to the online store. 
 
-* Scope: A customer token allows the user to perform personal storefront actions associated with their account, such as completing a checkout or viewing their own orders.
-* Required credentials: Customer tokens are generated using storefront credentials. When a user logs in, the system requires an existing anonymous token to generate the customer token, ensuring that the user's guest shopping session (like their cart and preferences) is preserved after they authenticate. Furthermore, generating a customer token usually requires a customer's email and password, as well as an existing anonymous token to ensure their current browsing session (like their cart) is preserved upon logging in.
-* Caching behavior in the Java SDK: Customer tokens are never cached by the SDK. Because they are unique to individual users, the storefront application must manage them independently, such as storing them securely in an HTTP session or other tools.
-* Endpoint: `POST /customer/{tenant}/login` [Requesting a customer token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization).
+* Purpose: A customer token allows the user to perform personal storefront actions associated with their account, such as completing a checkout or viewing their own orders.
+* Required credentials: Customer tokens are generated using storefront credentials. When a guest shopper logs in using their email/password credentials or using SSO authentication, the system also requires an existing **anonymous token** to generate the customer token, ensuring that the user's guest shopping session (like their cart and preferences) is preserved after they authenticate. The customer token is associated with the same `session_id` as anonymous token.
+* Endpoint: `POST /customer/{tenant}/login` [Requesting a customer token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization). 
+
+  The response includes:
+    * `accessToken` - authenticates a specific customer
+    * `saasToken` - required for completing checkout by a customer
+    * `refreshToken` - required to extend the customer's session
+
+{% hint style="warning" %}
+Make sure that your implementation properly covers the customer authentication flow:
+
+1. Retrieval of an anonymous token for guest browsing
+The anonymous token returns the customer's `sessionId`. The session persists information about the items put into cart byt anonymous customers.
+`GET /customerlogin/auth/anonymous/login`
+2. Logging in or registering customers
+When a customer logs in or registers a new account, the anonymous token is used to authenticaterequest of the generation of the customer access token. The same `sessionId` is associated with the customer access token.
+`POST /customer/{tenant}/login`
+3. Merging carts
+The anonymous cart has to be merged to link it with the authenticated customer. Thanks to this, the customer is able to see the items already placed into cart and continue with their purchase.
+`POST https://api.emporix.io/cart/{tenant}/carts/{cartId}/merge`
+
+For more information, see the API tutorials:
+* [Customer Tutorial](../../companies-and-customers/customer-management/customer-management-tutorial)
+* [Cart Tutorial](../../checkout/cart/cart#how-to-merge-carts)
+
+{% endhint %}
+
+### Saas Token
+
+The Saas Token is a token associated with an authenticated customer and is further required for triggering checkout operation. It is obtained together with the customer access token.
+
+* Endpoint: `POST /customer/{tenant}/login` [Requesting a customer token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization). 
 
 ### Refresh token
 
 A Refresh Token is a specific type of access token in the Emporix API used to generate a new customer token without forcing the user to log in again. 
 
-* Scope: Like customer and anonymous tokens, a refresh token comes with a pre-defined set of authorization scopes that dictate which operations and resources the user can access.
-Refresh tokens play a crucial role in maintaining seamless user sessions, particularly in B2B environments. For instance, when a B2B customer needs to switch the legal entity they are acting on behalf of, the storefront triggers the token refresh endpoint. This action issues a new token based on the previous one but securely embeds the newly selected `legalEntityId`, ensuring the customer's data access and product visibility adjust dynamically without requiring them to re-authenticate.
-* Using in the Java SDK: If you are developing with the Emporix Java SDK, the SDK provides built-in methods to handle token renewal, such as calling `refreshCustomerToken` (expiredToken), which allows your application to easily replace an expired customer session token.
+* Purpose: A refresh token is used to maintain a seamless customer's session. Before the customer's session expires, requesting a refresh token can extend the session so that the customer remains authenticated. The refresh token is particularly useful in B2B environments as it can also update the customer's session with their legal entity selection dring the session. For instance, when a B2B customer selects or switches to another legal entity they are acting on behalf of, the storefront triggers the token refresh endpoint. This action issues a new customer token based on the previous one but securely embeds the newly selected `legalEntityId`, ensuring the customer's data access and product visibility adjust dynamically without requiring them to re-authenticate.
 * Endpoint: `GET /customer/{tenant}/refreshauthtoken` [Requesting a refresh token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization).
 
 ### B2B token
 
-In B2B scenarios, customers often represent multiple companies and can act on behalf of more than one legal entity (company). The B2B token handles this by embedding the customer's currently selected legal entity directly into their authorization token. This token-based approach guarantees a consistent user experience and centralized security enforcement while maintaining the required legal entity-based access control. Because the system updates the token securely in the background, the customer is not forced to log in again to access the relevant data and scopes for the new entity.
+In B2B scenarios, customers often represent multiple companies and can act on behalf of more than one legal entity (company). The B2B token handles this by embedding the customer's currently selected legal entity directly into their authorization token. The legal entity parameter recognizes a customer's role assigned within the selected legal entity and provides the relevant permissions. Then, the B2B token populates the `legalEntityId` in the subsequent API requests triggered by the customer. 
 
-* Scope: To ensure that the storefront properly reads a B2B customer's selected legal entity and determines the relevant access to resources, the authorization token generated by the [Customer Service](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken) gets updated with the `legalEntityId` parameter.\
+This token-based approach guarantees a consistent user experience and centralized security enforcement while maintaining the required legal entity-based access control. Because the system updates the token securely in the background, the customer is not forced to log in again to access the relevant data and scopes for the new entity.
+
+* Purpose: The B2B token ensures that a B2B customer's access to company-related resources is properly determined in accordance to the defined customer's roles and permissions. Once the customer access token has been issued, and the customer wants to make a purchase onbehalf of a specific entity, the customer access token has to be rereshed with the `legalEntityId` provided as a parameter.
+* Endpoint: `GET https://api.emporix.io/customer/{tenant}/refreshauthtoken` [Refreshing a customer token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken).
+
 The token-based approach to pass the `legalEntityId` parameter guarantees that the relevant services use that information to retrieve relevant data. The `legalEntityId` header is injected in the requests. 
 
 {% hint style="warning" %}
-Passing the `legalEntityId` parameter in the authorization token is the proper way to handle the B2B customer legal entity information across services.\
+Passing the `legalEntityId` parameter in the authorization token is the appropriate way to handle the B2B customer legal entity information across services.\
 The token approach ensures a consistent user experience, and centralized security enforcement while enabling the required legal entity-based access control.
 {% endhint %}
 
-* Example use cases:
-  * Orders: The customer's assigned legal entity can be crucial for accessing orders information. B2B customers need to access their own orders, but also the orders assigned to their legal entity.
-  * Products availability: With customer segments, product visibility can become segment-based. Therefore, the endpoint responsible for retrieving products on the storefront has to return only these products that the customer has access to with the selected legal entity.
+* Example use cases of B2B tokens:
+  * Placing an order on behalf of a specific legal entity: A B2B customer wants to make a purchase on behalf of a specific company. The legal entity has to be attached to the order information.
+  * Accessing company-shared orders: A B2B customer with a manager permissions needs to access not only his own orders, but also orders placed by other customers representing the same legal entity.
+  * Resolving products availability: With customer segments enabled, products visibility can become segment-based. Therefore, the endpoint responsible for retrieving products on the storefront has to return only these products that the customer has access to with the selected legal entity.
 
-* Process: The process of handling multiple legal entities looks as follows:
+* Process: The following process steps demonstrate handling multiple legal entities with B2B tokens. 
+
+{% hint style="warning" %}
+Make sure that your implementation covers the apropriate token issuance and retrieval. 
+{% endhint%}
 
 {% stepper %}
 {% step %}
-### Selection and verification
-When a B2B customer logs in, they choose the specific legal entity they want to represent for that session. The Customer Service then verifies that the user is assigned to this selected entity.
+### Authenticating a customer
+Upon a B2B customer logs in, a customer access token is issued.
 {% endstep %}
+
 {% step %}
-### Token generation 
-Upon verification, the [Customer Service](../companies-and-customers/customer-service/api-reference/) issues a new refresh token that embeds the `legalEntityId` parameter.
+### Legal entity assignment
+When the B2B customer chooses a specific legal entity they want to represent and act one behalf of, the refreshing customer token has to be run to embed the selected legal entity to the token. The new refresh token that embeds the `legalEntityId` parameter.
 {% endstep %}
+
 {% step %}
 ### Data access and scope 
-This updated token is passed to other services to determine the correct scopes and data visibility for the user. The `legalEntityId` header is injected into requests, ensuring the user only accesses relevant data, such as orders or segment-based product visibility tied to that specific legal entity.
+This updated token is populated in the subsequent requests to other services, triggered by the customer's actions, to determine the correct scopes and data visibility for the customer. The `legalEntityId` header is injected into requests, ensuring the user only accesses relevant data, such as orders or segment-based product visibility tied to that specific legal entity.
 {% endstep %}
+
 {% step %}
 ### Seamless switching
-If the customer needs to change the legal entity they are acting on behalf of, they do not need to log in again. The storefront simply triggers the [Refreshing a customer token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken) endpoint to generate a new token based on the previous one, but with the updated `legalEntityId` information.
+If the customer switches to a different legal entity, another refresh token request has to be called to issue a new token which is based on the previous one but with the changed `legalEntityId` information. Thanks to that the customer doesn't need to log in again and remains authenticated.
 {% endstep %}
 {% endstepper %}
 
@@ -157,18 +198,6 @@ sequenceDiagram
     CustomerService ->> CustomerManagementService: Validate user access
     CustomerManagementService -->> CustomerService: Validation success
     CustomerService -->> Storefront: Generate and return new token
-```
-
-* Using in the Emporix Java SDK: You can easily refresh the token by passing the existing customer token and the new legal entity ID into the `getB2bToken` method to generate the updated token.
-Example of how this is implemented in the Java SDK:
-
-```bash
-public CustomerTokenResponse switchToB2bContext(
-    CustomerTokenResponse customerToken,
-    String legalEntityId
-) {
-    return tokenService.getB2bToken(customerToken, legalEntityId);
-}
 ```
 
 {% hint style="warning" %}
