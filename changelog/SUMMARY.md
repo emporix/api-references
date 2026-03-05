@@ -8,7 +8,7 @@
 
 ## 2026
 
-* [2026-02-26: Customer Service - SSO customer authentication based on token exchange](2026/2026-02-26-customer.md)
+* [2026-03-02: Customer Service - SSO customer authentication based on token exchange](2026/2026-03-02-customer.md)
 * [2026-02-24: Emporix SDK - price list prices q param search support](2026/2026-02-24-sdk.md)
 * [2026-02-20: Price Service - new search endpoint and query parameter for price list prices](2026/2026-02-20-price.md)
 * [2026-02-12: Emporix SDK - restrictions support](2026/2026-02-12-sdk.md)

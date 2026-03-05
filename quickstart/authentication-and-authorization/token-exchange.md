@@ -24,31 +24,13 @@ Once the client has obtained the externally issued access token, it initiates th
 
 Emporix receives the external token and performs validation against the configured OpenID Provider to verify its authenticity and validity. Upon successful validation, Emporix exchanges the external token for an Emporix-specific OAuth access token, which the client can then use to authenticate all subsequent API requests to Emporix services.
 
-## Authorization code vs Token exchange approaches 
-
-You can choose between delegating the entire flow to Emporix for simplicity or utilizing the exchange endpoint for greater architectural flexibility. 
-
-| Aspect | **SSO authorization code flow** | **SSO Token exchange flow** |
-| ------- | --------------------- | ----------------------- |
-| Integration | The standard SSO flow provides simple integration for clients, requiring only minimal OAuth logic implementation. | The token exchange flow offers full flexibility for clients to integrate Emporix with other internal or third-party services. |
-| Flow Ownership | Emporix maintains centralized control over authentication and token generation throughout the entire flow. | The token exchange flow separates responsibilities: the client owns the authentication process, while Emporix owns authorization within its own domain. |
-| Token lifecycle and validation | Tokens follow a consistent Emporix structure and lifecycle management. | Emporix supports token validation for externally issued tokens while maintaining its own token structure. |
-| Risk mitigation | The standard flow reduces the risk of misconfiguration on the client side by handling the authentication process centrally. | Clients must correctly implement OAuth flows and token management, which increases the responsibility and potential for configuration errors. |
-| Authentication code access | The authorization code is consumed exclusively by Emporix. Clients do not receive authentication codes or external access tokens, as the entire process is fully maintained at Emporix. Clients cannot generate their own tokens for non-Emporix services. | Clients can reuse authentication results because they authenticate the customer and obtain an access token in their own system before exchanging it with Emporix. |
-| Limitation | The standard flow creates tight coupling between Emporix and the authentication process, limiting flexibility. | The token exchange flow requires higher integration complexity for clients, which may not be suitable for all use cases. |
-| Good fit | The standard SSO flow is well-suited for enterprises that do not have external systems and do not want to invest in implementing own authentication mechanisms, but instead they want to delegate the whole authentication flow to Emporix. | The token exchange flow is ideal for large enterprises and platform customers with complex distributed ecosystems that already use own authentication flow and require greater architectural flexibility. |
-
-{% hint style="danger" %}
-SSO authentication code flow and token exchange flow are two separate approaches that you can choose from when enabling customer authentication in the webshop storefront, based on your integration needs. You cannot mix both flows in one implementation to mitigate ambiguity and security risks.
-{% endhint %}
-
 
 ## Example token exchange flow
 
 {% stepper %}
 {% step %}
 ### External authentication
-Authenticate a customer within your external authentication solution and extract the authentication code value. Identity providers provide the authentication code in the URL as a query param, for example `code=12345a12-12a1-1234-a123-abcde1123ab12.1234567a-12ab-1a12-12ab-1ab123a1a12c.12bb1234-1234-1234-1a3c-12345b12a123`.
+Authenticate a customer within your external authentication solution through the usual customer login process. Extract the authentication token or code which results from this process. 
 {% endstep %}
 
 {% step %}
@@ -58,11 +40,6 @@ Call the Emporix Token Exchange endpoint using the `POST https://api.emporix.io/
 * `subjectAccessToken` - The token received from the external IDP.
 * `config` - The relevant configuration key; typically it corresponds to the site configuration (for example `Site_DE`).
 
-{% endstep %}
-
-{% step %}
-### Optional: Introspection of the token
-Enable the introspection of the authentication token that allows Emporix to get customer's information from the authentication token. The introspection provides a possibility for online token validation.
 {% endstep %}
 
 {% step %}
@@ -86,7 +63,7 @@ The response returns JSON object containing `access_token`, `refresh_token`, `sa
 
 ## Token validation
 
-Token validation happens after the authentication code is received on the token exchange endpoint. The Emporix Authentication Service fetches the token exchange configuration from the Configuration Service and, based on the `config` in the request, chooses the relevant configuration for validation. 
+Token validation happens after the customer's information is passed to Emporix on the token exchange endpoint. The Emporix Authentication Service fetches the token exchange configuration from the Configuration Service and, based on the `config` in the request, chooses the relevant configuration for validation. 
 
 Emporix verifies the token using one of two methods:
 
@@ -107,7 +84,6 @@ Having the right configuration (or the default one as a fallback), the Authentic
 {% hint style="success" %}
 Online verification is the recommended approach because it ensures the highest security level as it actively checks if a token has been explicitly invalidated before its expiration time.
 {% endhint %}
-
 
 ### Offline verification
 
@@ -136,21 +112,31 @@ Provide the following information to use **online verification**:
 * `token_introspect_endpoint` - The path to the introspection endpoint.
 * `client_id` - The credentials for a client that has the appropriate rights to perform token introspection. For example, `my-backend-service`.
 * `client_secret` - The credentials for a client that has the appropriate rights to perform token introspection.
-* `token_client_id` - Used to validate the `azp` (Authorized Party) claim. It recognizes if the token has been issued for the specific client, especially when a token has multiple potential recipients. For example, `my-backend-service`.
-* `audience` - Used to validate the `aud` claim. It recognizes the dedicated recipient of the token, such as a system, API or a service that accepts the token. For example, `https://your-api-url.some-domain.io`, `product-service`, `commerce-system`. It secures the token authorized usage.
-* `issuer` - Used to validate the `iss` claim. It represents the authentication server that issued the token. 
-* optionally `storefront_client_id` - Your storefront Client ID credential, can be checked in the [Developer Portal](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/getting-started/developer-portal/manage-apikeys).
-* optionally `storefront_client_secret` - Your storefront Client Secret credential, can be checked in the [Developer Portal](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/getting-started/developer-portal/manage-apikeys).
+* `token_client_id` - Optional. Used to validate the `azp` (Authorized Party) claim. It recognizes if the token has been issued for the specific client, especially when a token has multiple potential recipients. For example, `my-backend-service`.
+* `audience` - Optional. Used to validate the `aud` claim. It recognizes the dedicated recipient of the token, such as a system, API or a service that accepts the token. For example, `https://your-api-url.some-domain.io`, `product-service`, `commerce-system`. It secures the token authorized usage.
+* `issuer` - Optional. Used to validate the `iss` claim. It represents the authentication server that issued the token. 
+* `storefront_client_id` - Optional. Your storefront Client ID credential, can be checked in the [Developer Portal](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/getting-started/developer-portal/manage-apikeys).
+* `storefront_client_secret` - Optional. Your storefront Client Secret credential, can be checked in the [Developer Portal](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/getting-started/developer-portal/manage-apikeys).
+
+{% hint style="warning" %}
+The `token_client_id`, `audience`, and `issuer` fields are optional but recommended. When provided, Emporix validates their conformity; if not, the validation for these fields is skipped. For security reasons, Emporix recommends to always provide these parameters.
+{% endhint %}
+
 {% endtab %}
 
 {% tab title="Offline verification" %}
 
 Provide the following information to use **offline verification**:
 
-* `token_client_id` - Used to validate the `azp` (Authorized Party) claim. It recognizes if the token has been issued for the specific client, especially when a token has multiple potential recipients. For example, `my-backend-service`.
-* `audience` - Used to validate the `aud` claim. It recognizes the dedicated recipient of the token, such as a system, API or a service that accepts the token. For example, `https://your-api-url.some-domain.io`, `product-service`, `commerce-system`. It secures the token authorized usage.
-* `issuer` - Used to validate the `iss` claim. It represents the authentication server that issued the token. 
-* `jwks` object with the array of necessary keys
+* `token_client_id` - Optional. Used to validate the `azp` (Authorized Party) claim. It recognizes if the token has been issued for the specific client, especially when a token has multiple potential recipients. For example, `my-backend-service`.
+* `audience` - Optional. Used to validate the `aud` claim. It recognizes the dedicated recipient of the token, such as a system, API or a service that accepts the token. For example, `https://your-api-url.some-domain.io`, `product-service`, `commerce-system`. It secures the token authorized usage.
+* `issuer` - Optional. Used to validate the `iss` claim. It represents the authentication server that issued the token. 
+* `jwks` object with the array of necessary keys.
+
+{% hint style="warning" %}
+The `token_client_id`, `audience`, and `issuer` fields are optional but recommended. When provided, Emporix validates their conformity; if not, the validation for these fields is skipped. For security reasons, Emporix recommends to always provide these parameters.
+{% endhint %}
+
 {% endtab %}
 {% endtabs %}
 
@@ -164,7 +150,7 @@ This automatic creation is controlled by a tenant-level configuration setting ca
 * Autoprovisioning enabled (`false`) - This is the default setting. If a user logs in and does not currently exist in the Emporix system, their customer profile is automatically provisioned.
 * Autoprovisioning disabled (`true`) - Clients can change this setting to `true` if they pre-synchronize their customer databases and expect all user data to already be in the system before a first-time login. If autoprovisioning is turned off and an unknown customer attempts to log in, the customer account is not created and the system returns a `404` error.
 
-You can also configure how to identify a customer. The `ssoCustomerIdentifierField` setting allows you to specify if customer is identified by either `email` or `subject`. Email is the standard identifier, but for the cases when a different identifier is associated with a customer account (such as user name, ID or other), the introspection endpoint returns the `sub` parameter for identifying the `subject` field. 
+You can also configure how to identify a customer. The `ssoCustomerIdentifierField` setting allows you to specify if customer is identified by either `EMAIL` or `SUBJECT`. Email is the standard identifier, but for the cases when a different identifier is associated with a customer account (such as user name, ID or other), the introspection endpoint returns the `sub` parameter for identifying the `SUBJECT` field. 
 
 {% hint style="info" %}
 For more information about configuration settings, see the [System Preferences](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/settings/system-preferences).
