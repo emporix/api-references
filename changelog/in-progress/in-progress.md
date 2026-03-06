@@ -53,17 +53,29 @@ These announcements are intended to keep you informed about ongoing work and pot
     <th class="tg-x6qq">Description</th>
   </tr></thead>
 <tbody>
-<tr>
-    <td class="tg-0pky" rowspan="5">Product Service</td>
-    <td class="tg-0pky" rowspan="5">Product variants next generation</td>
+  <tr>
+    <td class="tg-0pky">Product Service</td>
+    <td class="tg-0pky">Product variants next generation</td>
   </tr>
   <tr>
-    <td class="tg-0pky" rowspan="5">Schema Service<br>Category Service</td>
-    <td class="tg-0pky" rowspan="5">Classification categories<br>Mixins</td>
+    <td class="tg-0pky">Value Stream Modeller</td>
+    <td class="tg-0pky">Branching and Looping &amp; Debugger</td>
   </tr>
-    <tr>
-    <td class="tg-0pky" rowspan="5">Value Stream Modeller </td>
-    <td class="tg-0pky" rowspan="5">Purchase Order Automation<br>Branching and Looping</td>
+  <tr>
+    <td class="tg-0pky">Value Streams</td>
+    <td class="tg-0pky">Product Substitution<br>PDF Automation</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">IAM &amp; schema Service</td>
+    <td class="tg-0pky">Custom Scopes</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Cart &amp; checkout Service</td>
+    <td class="tg-0pky">For SAP synchronous pricing</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">B2B Commerce Frontend</td>
+    <td class="tg-0pky">Returns</td>
   </tr>
 </tbody>
 </table>
