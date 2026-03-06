@@ -66,11 +66,11 @@ These announcements are intended to keep you informed about ongoing work and pot
     <td class="tg-0pky">Product substitution<br>PDF Automation</td>
   </tr>
   <tr>
-    <td class="tg-0pky">IAM &amp; schema Service</td>
+    <td class="tg-0pky">IAM &amp; Schema Service</td>
     <td class="tg-0pky">Custom scopes</td>
   </tr>
   <tr>
-    <td class="tg-0pky">Cart &amp; checkout Service</td>
+    <td class="tg-0pky">Cart &amp; Checkout Service</td>
     <td class="tg-0pky">Setup for the SAP synchronous pricing</td>
   </tr>
   <tr>
