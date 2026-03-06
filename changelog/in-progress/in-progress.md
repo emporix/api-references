@@ -55,19 +55,19 @@ These announcements are intended to keep you informed about ongoing work and pot
 <tbody>
   <tr>
     <td class="tg-0pky">Product Service</td>
-    <td class="tg-0pky">Product variants next generation</td>
+    <td class="tg-0pky">Next generation of product variants</td>
   </tr>
   <tr>
     <td class="tg-0pky">Value Stream Modeller</td>
-    <td class="tg-0pky">Branching and Looping<br>Debugger</td>
+    <td class="tg-0pky">Branching and looping<br>Debugger</td>
   </tr>
   <tr>
     <td class="tg-0pky">Value Streams</td>
-    <td class="tg-0pky">Product Substitution<br>PDF Automation</td>
+    <td class="tg-0pky">Product substitution<br>PDF Automation</td>
   </tr>
   <tr>
     <td class="tg-0pky">IAM &amp; schema Service</td>
-    <td class="tg-0pky">Custom Scopes</td>
+    <td class="tg-0pky">Custom scopes</td>
   </tr>
   <tr>
     <td class="tg-0pky">Cart &amp; checkout Service</td>
