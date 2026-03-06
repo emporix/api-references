@@ -59,7 +59,7 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr>
   <tr>
     <td class="tg-0pky">Value Stream Modeller</td>
-    <td class="tg-0pky">Branching and Looping &amp; Debugger</td>
+    <td class="tg-0pky">Branching and Looping<br>Debugger</td>
   </tr>
   <tr>
     <td class="tg-0pky">Value Streams</td>
@@ -71,7 +71,7 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr>
   <tr>
     <td class="tg-0pky">Cart &amp; checkout Service</td>
-    <td class="tg-0pky">For SAP synchronous pricing</td>
+    <td class="tg-0pky">Setup for the SAP synchronous pricing</td>
   </tr>
   <tr>
     <td class="tg-0pky">B2B Commerce Frontend</td>
