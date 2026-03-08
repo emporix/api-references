@@ -30,12 +30,12 @@ Emporix receives the external token and performs validation against the configur
 {% stepper %}
 {% step %}
 ### External authentication
-Authenticate a customer within your external authentication solution through the usual customer login process. Extract the authentication token or code which results from this process. 
+Authenticate a customer within your external authentication solution through the usual customer login process. Extract the access token which results from this process. 
 {% endstep %}
 
 {% step %}
 ### Exchange of the authentication code for the authentication token
-Call the Emporix Token Exchange endpoint using the `POST https://api.emporix.io/customer/{tenant}/exchangeauthtoken`, which takes care of changing the authentication code into the authentication `access_token`. Provide the following parameters:
+Call the Emporix Token Exchange endpoint using the `POST https://api.emporix.io/customer/{tenant}/exchangeauthtoken`, which takes care of changing the external access token into the Emporix authentication `access_token`. Provide the following parameters:
 
 * `subjectAccessToken` - The token received from the external IDP.
 * `config` - The relevant configuration key; typically it corresponds to the site configuration (for example `Site_DE`).
