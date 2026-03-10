@@ -31,7 +31,7 @@ paths:
       responses:
         '200':
           description: |
-            The request was successful. List of orders with details are returned.
+            The request was successful. List of orders with details has been returned.
           content:
             application/json:
               examples:
@@ -147,7 +147,7 @@ paths:
       responses:
         '200':
           description: |
-            The request was successful. List of orders with details are returned.
+            The request was successful. List of orders with details has been returned.
           content:
             application/json:
               examples:
@@ -183,7 +183,7 @@ paths:
       responses:
         '200':
           description: |
-            The request was successful. Given order details are returned.
+            The request was successful. Given order details have been returned.
           content:
             application/json:
               examples:
@@ -377,7 +377,7 @@ paths:
       operationId: POST-order-calculate-order-entries-employees
       responses:
         '200':
-          description: Order recalculated successfully
+          description: Order recalculated successfully.
         '400':
           description: Bad Request
         '403':
@@ -413,7 +413,7 @@ paths:
       responses:
         '200':
           description: |
-            The request was successful. Recalculated order is returned.
+            The request was successful. Recalculated order has been returned.
           content:
             application/json:
               examples:
@@ -532,7 +532,7 @@ paths:
       responses:
         '200':
           description: |
-            Some server side error occurred.
+            The request was successful. A list of orders has been returned.
           content:
             application/json:
               examples:
@@ -571,7 +571,7 @@ paths:
       responses:
         '200':
           description: |
-            The request was successful. Order details are returned.
+            The request was successful. Order details have been returned.
           content:
             application/json:
               examples:
@@ -673,7 +673,7 @@ paths:
         - Orders (Customer-managed)
       responses:
         '200':
-          description: The request was successful. List of legal entity orders with details are returned.
+          description: The request was successful. A list of legal entity orders with details has been returned.
           headers:
             X-Total-Count:
               description: The total number of objects that fulfil the criteria.
@@ -716,7 +716,7 @@ paths:
         - Orders (Customer-managed)
       responses:
         '200':
-          description: The request was successful. The legal entity order with details is returned.
+          description: The request was successful. The legal entity order with details has been returned.
           headers: {}
           content:
             application/json:
@@ -1278,7 +1278,6 @@ components:
             currency:
               type: string
               description: Currency of the shipping amount.
-              default: USD
         lines:
           description: Shipping line list.
           type: array
@@ -1298,7 +1297,6 @@ components:
         currency:
           description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
           type: string
-          default: USD
         code:
           description: Shipping line code.
           type: string
@@ -1384,7 +1382,6 @@ components:
         currency:
           description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
           type: string
-          default: USD
         code:
           description: Tax code.
           type: string
@@ -1423,7 +1420,6 @@ components:
         currency:
           description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
           type: string
-          default: USD
         inclusive:
           description: Total tax inclusive flag.
           default: false
