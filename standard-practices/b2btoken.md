@@ -27,6 +27,7 @@ layout:
     visible: true
   metadata:
     visible: true
+hidden: true
 ---
 
 # B2B Token
@@ -51,15 +52,42 @@ The token approach ensures a consistent user experience, and centralized securit
 
 ## How it works
 
-1. The B2B customer logs in and chooses the legal entity they represent.
-2. The Customer Service verifies the user's assignment to the selected legal entity.
-3. A new `refreshToken` is issued to a customer by the [Customer Service](../companies-and-customers/customer-service/api-reference/), embedding the selected legal entity.
-4. In the case the customer changes the legal entity, the storefront triggers the [Refreshing a customer token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken) endpoint to generate a new token based on the previous one but with the changed `legalEntityId` information. Thanks to that the customer isn't forced to log in again.
-5. The token with the selected legal entity is passed to other services to determine the right scopes for the user.
+{% stepper %}
+{% step %}
+### Selection and verification
+When a B2B customer logs in, they choose the specific legal entity they want to represent for that session. The Customer Service then verifies that the user is assigned to this selected entity.
+{% endstep %}
+{% step %}
+### Token generation 
+Upon verification, the [Customer Service](../companies-and-customers/customer-service/api-reference/) issues a new refresh token that embeds the `legalEntityId` parameter.
+{% endstep %}
+{% step %}
+### Data access and scope 
+This updated token is passed to other services to determine the correct scopes and data visibility for the user. The `legalEntityId` header is injected into requests, ensuring the user only accesses relevant data, such as orders or segment-based product visibility tied to that specific legal entity.
+{% endstep %}
+{% step %}
+### Seamless switching
+If the customer needs to change the legal entity they are acting on behalf of, they do not need to log in again. The storefront simply triggers the [Refreshing a customer token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken) endpoint to generate a new token based on the previous one, but with the updated `legalEntityId` information.
+{% endstep %}
+{% endstepper %}
 
 The diagram shows how the legal entity information is fetched and passed:
 
 ```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  themeVariables:
+    primaryColor: '#DDE6EE'
+    primaryBorderColor: '#4C5359'
+    actorBkg: '#DDE6EE'
+    actorBorder: '#4C5359'
+    actorLineColor: '#4C5359'
+    signalColor: '#E86C07'
+    signalTextColor: '#7B8B99'
+    background: transparent 
+---
 sequenceDiagram
     participant User
     participant Storefront

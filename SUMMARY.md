@@ -9,9 +9,11 @@
 * [OpenAPI Generator](quickstart/openapi-generator.md)
 * [Emporix Terraform Provider](quickstart/emporix-terraform-provider.md)
 * [Emporix Java SDK](quickstart/emporix-java-sdk.md)
-* [Customer Authentication](quickstart/authentication/customer-authentication.md)
-  * [SSO Authentication](quickstart/authentication/sso-authentication.md)
-  * [Token Exchange](quickstart/authentication/token-exchange.md)
+* [Authentication and Authorization](quickstart/authentication-and-authorization/README.md)
+  * [Tokens and Scopes](quickstart/authentication-and-authorization/tokens-and-scopes.md)
+  * [Customer Authentication](quickstart/authentication-and-authorization/customer-authentication.md)
+    * [SSO Authentication](quickstart/authentication-and-authorization/sso-authentication.md)
+    * [Token Exchange](quickstart/authentication-and-authorization/token-exchange.md)
 * [Multi-Site Architecture](quickstart/multisites.md)
 * [Initial Tenant Checkout Configuration](quickstart/initial-tenant-checkout-config.md)
 
@@ -67,9 +69,10 @@
               spec: ai-rag-indexer-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/artificial-intelligence/ai-rag-indexer/api-reference/api.yml)
-* [Authorization](authorization/README.md)
-  * [OAuth Service](authorization/oauth-service/README.md)
-    * [API Reference](authorization/oauth-service/api-reference/README.md)
+* [Authentication](authentication/README.md)
+  * [OAuth Service](authentication/oauth-service/README.md)
+    * [OAuth Tutorial](authentication/oauth-service/oauth.md)
+    * [API Reference](authentication/oauth-service/api-reference/README.md)
       * ```yaml
         props:
           models: true
