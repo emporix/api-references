@@ -33,7 +33,7 @@ To grant smooth access to Emporix resources through API, whether to enable backe
 
 ### Service access token
 
-The Service Access Token serves for backend operations and administrative tasks, representing the business owner's or employee's perspective. 
+The Service Access Token serves for backend operations and administrative tasks. 
 
 * Purpose: A service access token is required to manage core Emporix services, granting the ability to perform actions such as adding new products, modifying prices, or managing categories.
 * Required credentials: Service access tokens are generated using relevant backend API credentials (such as a backend Client ID and Secret).
