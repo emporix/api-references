@@ -242,7 +242,7 @@ Different types of access tokens handle scopes differently based on their intend
 
 * Storefront tokens: Anonymous, customer, and refresh tokens come with a pre-defined set of scopes tailored for standard storefront activities.
 * Service tokens: When requesting a service access token for backend or administrative operations, you can specify exactly which scopes you need. If you choose not to specify, you can request a token with all available scopes.
-* Custom credentials: You can configure additional OAuth2 clients in Emporix with highly specific, limited scopes. This is particularly useful for granting controlled access to external integrations, third-party systems, or partners without exposing your entire backend.
+  * Custom credentials: You can configure additional OAuth2 clients in Emporix with highly specific, limited scopes. This is particularly useful for granting controlled access to external integrations, third-party systems, or partners without exposing your entire backend.
 
 {% hint style="info" %}
 Some API endpoints are implicitly readable and do not require any scopes at all.
