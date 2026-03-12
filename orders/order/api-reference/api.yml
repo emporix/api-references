@@ -32,6 +32,12 @@ paths:
         '200':
           description: |
             The request was successful. List of orders with details has been returned.
+          headers:
+            X-Total-Count:
+              schema:
+                type: number
+              description: |
+                Number of orders matching the specified query
           content:
             application/json:
               examples:
@@ -533,6 +539,12 @@ paths:
         '200':
           description: |
             The request was successful. A list of orders has been returned.
+          headers:
+            X-Total-Count:
+              schema:
+                type: number
+              description: |
+                Number of orders matching the specified query
           content:
             application/json:
               examples:
