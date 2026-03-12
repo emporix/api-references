@@ -8,8 +8,13 @@
 * [List of API Services](quickstart/list-of-api-services.md)
 * [OpenAPI Generator](quickstart/openapi-generator.md)
 * [Emporix Terraform Provider](quickstart/emporix-terraform-provider.md)
-* [Multi-Site Architecture](quickstart/multisites.md)
 * [Emporix Java SDK](quickstart/emporix-java-sdk.md)
+* [Authentication and Authorization](quickstart/authentication-and-authorization/README.md)
+  * [Tokens and Scopes](quickstart/authentication-and-authorization/tokens-and-scopes.md)
+  * [Customer Authentication](quickstart/authentication-and-authorization/customer-authentication.md)
+    * [SSO Authentication](quickstart/authentication-and-authorization/sso-authentication.md)
+    * [Token Exchange](quickstart/authentication-and-authorization/token-exchange.md)
+* [Multi-Site Architecture](quickstart/multisites.md)
 * [Initial Tenant Checkout Configuration](quickstart/initial-tenant-checkout-config.md)
 
 ## Standard Practices
@@ -26,9 +31,9 @@
 ## Integrations
 
 * [Integrations](integrations/README.md)
-  * [Identity Providers](integrations/authorization/identity-providers.md)
-    * [Auth0](integrations/authorization/auth0.md)
-    * [Keycloak](integrations/authorization/keycloak.md)
+  * [Identity Providers](integrations/authentication/identity-providers.md)
+    * [Auth0](integrations/authentication/auth0.md)
+    * [Keycloak](integrations/authentication/keycloak.md)
   * [Workflow Automation](integrations/workflow-automation/README.md)
     * [Emporix and Make](integrations/workflow-automation/emporix-and-make.md)
 
@@ -64,9 +69,10 @@
               spec: ai-rag-indexer-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/artificial-intelligence/ai-rag-indexer/api-reference/api.yml)
-* [Authorization](authorization/README.md)
-  * [OAuth Service](authorization/oauth-service/README.md)
-    * [API Reference](authorization/oauth-service/api-reference/README.md)
+* [Authentication](authentication/README.md)
+  * [OAuth Service](authentication/oauth-service/README.md)
+    * [OAuth Tutorial](authentication/oauth-service/oauth.md)
+    * [API Reference](authentication/oauth-service/api-reference/README.md)
       * ```yaml
         props:
           models: true

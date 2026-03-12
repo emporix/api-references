@@ -134,6 +134,7 @@ paths:
         - $ref: '#/components/parameters/header_content_language'
         - $ref: '#/components/parameters/query_skip_variants_generation'
         - $ref: '#/components/parameters/query_do_index'
+        - $ref: '#/components/parameters/query_skip_related_items_validation'
       summary: Creating a new product
       tags:
         - Products
@@ -182,6 +183,7 @@ paths:
         - $ref: '#/components/parameters/header_content_language'
         - $ref: '#/components/parameters/query_skip_variants_generation'
         - $ref: '#/components/parameters/query_do_index'
+        - $ref: '#/components/parameters/query_skip_related_items_validation'
     put:
       responses:
         '207':
@@ -216,6 +218,7 @@ paths:
         - $ref: '#/components/parameters/header_content_language'
         - $ref: '#/components/parameters/query_skip_variants_generation'
         - $ref: '#/components/parameters/query_do_index'
+        - $ref: '#/components/parameters/query_skip_related_items_validation'
       summary: Upserting multiple products
       tags:
         - Products
@@ -537,6 +540,7 @@ paths:
         - $ref: '#/components/parameters/query_partial_product'
         - $ref: '#/components/parameters/query_skip_variants_generation'
         - $ref: '#/components/parameters/query_do_index'
+        - $ref: '#/components/parameters/query_skip_related_items_validation'
       summary: Upserting a product
       tags:
         - Products
@@ -584,6 +588,7 @@ paths:
         - $ref: '#/components/parameters/header_content_language'
         - $ref: '#/components/parameters/query_skip_variants_generation'
         - $ref: '#/components/parameters/query_do_index'
+        - $ref: '#/components/parameters/query_skip_related_items_validation'
       summary: Partially updating a product
       tags:
         - Products
@@ -2904,6 +2909,14 @@ components:
         type: boolean
         default: true
       description: Allows to control whether the change of the state should cause reindexing or not.
+    query_skip_related_items_validation:
+      name: skipRelatedItemsValidation
+      in: query
+      required: false
+      schema:
+        type: boolean
+        default: false
+      description: If set to `true`, the validation that checks whether related products exist is skipped. This is useful during data loading, where related products may not yet exist and will be created later. This parameter is only respected when the `allowToSkipRelatedProductsValidation` system setting is set to `true`. Otherwise, it is disregarded.
   securitySchemes:
     OAuth2:
       type: oauth2
