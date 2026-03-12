@@ -1,5 +1,5 @@
 ---
-icon: sparkles
+icon: hourglass-half
 layout:
   title:
     visible: true
