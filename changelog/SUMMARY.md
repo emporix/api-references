@@ -8,6 +8,7 @@
 
 ## 2026
 
+* [2026-03-13: Returns Service - calculated price properties for returns](2026/2026-03-13-return.md)
 * [2026-03-10: Customer Service - SSO customer authentication based on token exchange](2026/2026-03-10-customer.md)
 * [2026-03-09: Emporix SDK - Product API skipRelatedItemsValidation support](2026/2026-03-09-sdk.md)
 * [2026-03-09: Product Service – skip related items validation](2026/2026-03-09-product.md)
