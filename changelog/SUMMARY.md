@@ -8,6 +8,7 @@
 
 ## 2026
 
+* [2026-03-16: Order Service - checkout property for sales orders](2026/2026-03-16-order.md)
 * [2026-03-12: Order Service - hybris-count header deprecated](2026/2026-03-12-order.md)
 * [2026-03-10: Customer Service - SSO customer authentication based on token exchange](2026/2026-03-10-customer.md)
 * [2026-03-09: Emporix SDK - Product API skipRelatedItemsValidation support](2026/2026-03-09-sdk.md)

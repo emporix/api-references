@@ -1795,6 +1795,13 @@ components:
               type: string
             assistedBuying:
               $ref: '#/components/schemas/assistedBuying'
+            checkout:
+              type: boolean
+              description: |
+                Indicates whether this order was created through checkout. Available in tenant-managed responses only.
+
+                When set to `true`, only one order can be created per cart ID — enforcing that a checkout cart results in a single order.
+                Orders created through the checkout flow have this flag set to `true` by default.
         - $ref: '#/components/schemas/orderUpdateDto'
     salesOrderCreationDto:
       title: Order Creation DTO
@@ -1805,6 +1812,13 @@ components:
             quoteId:
               description: Identifier of the quote from which the order has been created
               type: string
+            checkout:
+              type: boolean
+              description: |
+                Indicates whether this order was created through checkout. Can only be provided when creating an order.
+
+                When set to `true`, only one order can be created per cart ID — enforcing that a checkout cart results in a single order.
+                Orders created through the checkout flow have this flag set to `true` by default.
         - $ref: '#/components/schemas/orderCreationDto'
     searchRequest:
       type: object
@@ -3338,7 +3352,8 @@ components:
   examples:
     salesOrders:
       value:
-        - status: IN_CHECKOUT
+        - checkout: true
+          status: IN_CHECKOUT
           entries:
             - id: BC10033--BC10033-43
               itemYrn: 'urn:yaas:saasag:caasproduct:product:test;BC10033--BC10033-43'
@@ -3968,6 +3983,7 @@ components:
           createdBy: '61443563'
     salesOrderCreation:
       value:
+        checkout: true
         status: IN_CHECKOUT
         entries:
           - id: BC10033--BC10033-43
@@ -4188,6 +4204,7 @@ components:
           channel: {}
     salesOrder1:
       value:
+        checkout: true
         status: IN_CHECKOUT
         entries:
           - id: BC10033--BC10033-43
@@ -4506,6 +4523,7 @@ components:
       value:
         id: EON1200
         createdBy: "45620894"
+        checkout: true
         status: CREATED
         lastStatusChange: 2025-06-10T12:31:39.614Z
         created: 2025-06-10T12:31:39.614Z
