@@ -365,6 +365,19 @@ components:
                         total:
                           value: 3.98
                           currency: USD
+                        calculatedUnitPrice:
+                          netValue: 1.68
+                          grossValue: 1.99
+                          taxValue: 0.31
+                          taxCode: STANDARD
+                          taxRate: 19.0
+                        calculatedPrice:
+                          finalPrice:
+                            netValue: 3.36
+                            grossValue: 3.98
+                            taxValue: 0.62
+                            taxCode: STANDARD
+                            taxRate: 19.0
                       - id: '32102'
                         name: Jacket
                         quantity: 15
@@ -374,12 +387,32 @@ components:
                         total:
                           value: 15
                           currency: USD
+                        calculatedUnitPrice:
+                          netValue: 0.84
+                          grossValue: 1.0
+                          taxValue: 0.16
+                          taxCode: STANDARD
+                          taxRate: 19.0
+                        calculatedPrice:
+                          finalPrice:
+                            netValue: 12.6
+                            grossValue: 15.0
+                            taxValue: 2.4
+                            taxCode: STANDARD
+                            taxRate: 19.0
                 reason:
                   code: '001'
                   details: The items do not work.
                 total:
                   value: 18.98
                   currency: USD
+                calculatedPrice:
+                  finalPrice:
+                    netValue: 15.96
+                    grossValue: 18.98
+                    taxValue: 3.02
+                    taxCode: STANDARD
+                    taxRate: 19.0
                 expiryDate: '2023-04-31T13:18:02.379Z'
                 metadata:
                   createdAt: '2023-04-31T13:18:02.379Z'
@@ -405,6 +438,19 @@ components:
                         total:
                           value: 3.98
                           currency: USD
+                        calculatedUnitPrice:
+                          netValue: 1.68
+                          grossValue: 1.99
+                          taxValue: 0.31
+                          taxCode: STANDARD
+                          taxRate: 19.0
+                        calculatedPrice:
+                          finalPrice:
+                            netValue: 3.36
+                            grossValue: 3.98
+                            taxValue: 0.62
+                            taxCode: STANDARD
+                            taxRate: 19.0
                       - id: '32102'
                         name: Jacket
                         quantity: 15
@@ -414,6 +460,19 @@ components:
                         total:
                           value: 15
                           currency: USD
+                        calculatedUnitPrice:
+                          netValue: 0.84
+                          grossValue: 1.0
+                          taxValue: 0.16
+                          taxCode: STANDARD
+                          taxRate: 19.0
+                        calculatedPrice:
+                          finalPrice:
+                            netValue: 12.6
+                            grossValue: 15.0
+                            taxValue: 2.4
+                            taxCode: STANDARD
+                            taxRate: 19.0
                 reason:
                   code: '001'
                   details: The items do not work.
@@ -432,6 +491,13 @@ components:
                 total:
                   value: 18.98
                   currency: USD
+                calculatedPrice:
+                  finalPrice:
+                    netValue: 15.96
+                    grossValue: 18.98
+                    taxValue: 3.02
+                    taxCode: STANDARD
+                    taxRate: 19.0
                 expiryDate: '2023-04-31T13:18:02.379Z'
                 metadata:
                   createdAt: '2023-04-31T13:18:02.379Z'
@@ -478,6 +544,19 @@ components:
                           total:
                             value: 3.98
                             currency: USD
+                          calculatedUnitPrice:
+                            netValue: 1.68
+                            grossValue: 1.99
+                            taxValue: 0.31
+                            taxCode: STANDARD
+                            taxRate: 19.0
+                          calculatedPrice:
+                            finalPrice:
+                              netValue: 3.36
+                              grossValue: 3.98
+                              taxValue: 0.62
+                              taxCode: STANDARD
+                              taxRate: 19.0
                         - id: '32102'
                           name: Jacket
                           quantity: 15
@@ -487,12 +566,32 @@ components:
                           total:
                             value: 15
                             currency: USD
+                          calculatedUnitPrice:
+                            netValue: 0.84
+                            grossValue: 1.0
+                            taxValue: 0.16
+                            taxCode: STANDARD
+                            taxRate: 19.0
+                          calculatedPrice:
+                            finalPrice:
+                              netValue: 12.6
+                              grossValue: 15.0
+                              taxValue: 2.4
+                              taxCode: STANDARD
+                              taxRate: 19.0
                   reason:
                     code: '001'
                     details: The items do not work.
                   total:
                     value: 18.98
                     currency: USD
+                  calculatedPrice:
+                    finalPrice:
+                      netValue: 15.96
+                      grossValue: 18.98
+                      taxValue: 3.02
+                      taxCode: STANDARD
+                      taxRate: 19.0
                   expiryDate: '2023-04-31T13:18:02.379Z'
                   metadata:
                     createdAt: '2023-04-31T13:18:02.379Z'
@@ -518,6 +617,19 @@ components:
                           total:
                             value: 3.98
                             currency: USD
+                          calculatedUnitPrice:
+                            netValue: 1.68
+                            grossValue: 1.99
+                            taxValue: 0.31
+                            taxCode: STANDARD
+                            taxRate: 19.0
+                          calculatedPrice:
+                            finalPrice:
+                              netValue: 3.36
+                              grossValue: 3.98
+                              taxValue: 0.62
+                              taxCode: STANDARD
+                              taxRate: 19.0
                         - id: '32102'
                           name: Jacket
                           quantity: 15
@@ -527,6 +639,19 @@ components:
                           total:
                             value: 15
                             currency: USD
+                          calculatedUnitPrice:
+                            netValue: 0.84
+                            grossValue: 1.0
+                            taxValue: 0.16
+                            taxCode: STANDARD
+                            taxRate: 19.0
+                          calculatedPrice:
+                            finalPrice:
+                              netValue: 12.6
+                              grossValue: 15.0
+                              taxValue: 2.4
+                              taxCode: STANDARD
+                              taxRate: 19.0
                   reason:
                     code: '001'
                     details: The items do not work.
@@ -546,6 +671,13 @@ components:
                   total:
                     value: 18.98
                     currency: USD
+                  calculatedPrice:
+                    finalPrice:
+                      netValue: 15.96
+                      grossValue: 18.98
+                      taxValue: 3.02
+                      taxCode: STANDARD
+                      taxRate: 19.0
                   expiryDate: '2023-04-31T13:18:02.379Z'
                   metadata:
                     createdAt: '2023-04-31T13:18:02.379Z'
@@ -580,6 +712,35 @@ components:
               type: string
               description: Unique identifier of a return.
         - $ref: '#/components/schemas/coreErrorMessage'
+    calculatedPrice:
+      type: object
+      description: 'Price calculation derived from the order entry''s `calculatedPrice.finalPrice`. The `finalPrice` reflects already applied discounts and fees.'
+      properties:
+        netValue:
+          type: number
+          format: double
+          description: Net value of the price.
+        grossValue:
+          type: number
+          format: double
+          description: Gross value of the price.
+        taxValue:
+          type: number
+          format: double
+          description: Tax value of the price.
+        taxCode:
+          type: string
+          description: 'Tax code applied to the price. Set to `null` when items with different tax codes are aggregated.'
+        taxRate:
+          type: number
+          format: double
+          description: 'Tax rate applied to the price. Set to `null` when items with different tax rates are aggregated.'
+    calculatedFinalPrice:
+      type: object
+      description: 'Wrapper for the calculated price containing the final price after discounts and fees.'
+      properties:
+        finalPrice:
+          $ref: '#/components/schemas/calculatedPrice'
     metadataCore:
       title: metadataCore
       description: 'Core metadata fields shared across multiple objects.'
@@ -663,7 +824,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/basicReturn'
         - type: object
-          properties: 
+          properties:
             requestor:
               type: object
               description: 'Indicates who requested the return. The field can be set and updated only by an employee, that is a person who has a `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.'
@@ -920,6 +1081,12 @@ components:
                             currency:
                               type: string
                               description: 'The value represents the currency associated with the price. The currency is compliant with the ISO-4217 standard (see https://www.iso.org/iso-4217-currency-codes.html).'
+                        calculatedUnitPrice:
+                          $ref: '#/components/schemas/calculatedPrice'
+#                          description: 'Unit price derived from the order entry's `calculatedPrice.finalPrice` divided by the order entry amount. Includes discounts and fees. Present only if the order entry has a valid `calculatedPrice.finalPrice`.'
+                        calculatedPrice:
+                          $ref: '#/components/schemas/calculatedFinalPrice'
+#                          description: 'Total calculated price for the returned quantity of this item. Computed as `calculatedUnitPrice` multiplied by the returned quantity. Present only if the order entry has a valid `calculatedPrice.finalPrice`.'
             total:
               type: object
               description: The value represents a total price (value and currency) of all returned products related to all orders.
@@ -929,6 +1096,9 @@ components:
                 currency:
                   type: string
                   description: 'The value represents the currency associated with the price. The currency is compliant with the ISO-4217 standard (see https://www.iso.org/iso-4217-currency-codes.html).'
+            calculatedPrice:
+              $ref: '#/components/schemas/calculatedFinalPrice'
+#              description: 'Aggregated calculated price across all returned items. Derived from each order entry''s `calculatedPrice.finalPrice`. Null if no order entries have calculated prices.'
         - $ref: '#/components/schemas/basicCustomerReturn'
         - $ref: '#/components/schemas/assistedBuying'
     fullEmployeeReturn:
