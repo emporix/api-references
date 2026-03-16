@@ -1046,9 +1046,7 @@ components:
               type: string
               description: 'A date when the return expires. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
             orders:
-              type: array
-              items:
-                $ref: '#/components/schemas/fullReturnOrder'
+              $ref: '#/components/schemas/fullReturnOrder'
             total:
               type: object
               description: 'The value represents a total price (value and currency) of all returned products related to all orders.'
