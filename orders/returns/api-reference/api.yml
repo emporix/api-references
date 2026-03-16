@@ -1025,6 +1025,8 @@ components:
       title: A customer return object.
       description: 'Schema for retrieving returns by a customer.'
       allOf:
+        - $ref: '#/components/schemas/basicCustomerReturn'
+        - $ref: '#/components/schemas/assistedBuying'
         - type: object
           properties:
             id:
@@ -1081,10 +1083,10 @@ components:
                               description: 'The value represents the currency associated with the price. The currency is compliant with the ISO-4217 standard (see https://www.iso.org/iso-4217-currency-codes.html).'
                         calculatedUnitPrice:
                           $ref: '#/components/schemas/calculatedPrice'
-#                          description: 'Unit price derived from the order entry's `calculatedPrice.finalPrice` divided by the order entry amount. Includes discounts and fees. Present only if the order entry has a valid `calculatedPrice.finalPrice`.'
+                          description: 'Unit price derived from the order entry `calculatedPrice.finalPrice` divided by the order entry amount. Includes discounts and fees. Present only if the order entry has a valid `calculatedPrice.finalPrice`.'
                         calculatedPrice:
                           $ref: '#/components/schemas/calculatedFinalPrice'
-#                          description: 'Total calculated price for the returned quantity of this item. Computed as `calculatedUnitPrice` multiplied by the returned quantity. Present only if the order entry has a valid `calculatedPrice.finalPrice`.'
+                          description: 'Total calculated price for the returned quantity of this item. Computed as `calculatedUnitPrice` multiplied by the returned quantity. Present only if the order entry has a valid `calculatedPrice.finalPrice`.'
             total:
               type: object
               description: The value represents a total price (value and currency) of all returned products related to all orders.
@@ -1096,9 +1098,7 @@ components:
                   description: 'The value represents the currency associated with the price. The currency is compliant with the ISO-4217 standard (see https://www.iso.org/iso-4217-currency-codes.html).'
             calculatedPrice:
               $ref: '#/components/schemas/calculatedFinalPrice'
-#              description: 'Aggregated calculated price across all returned items. Derived from each order entry''s `calculatedPrice.finalPrice`. Null if no order entries have calculated prices.'
-        - $ref: '#/components/schemas/basicCustomerReturn'
-        - $ref: '#/components/schemas/assistedBuying'
+              description: 'Aggregated calculated price across all returned items. Derived from each order entry''s `calculatedPrice.finalPrice`. Null if no order entries have calculated prices.'
     fullEmployeeReturn:
       title: A return object for an employee
       description: Schema for retrieving returns by an employee.
