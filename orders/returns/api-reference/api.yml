@@ -1256,7 +1256,7 @@ components:
       content:
         application/json:
           schema:
-            anyOf:
+            oneOf:
               - $ref: '#/components/schemas/basicCustomerReturn'
               - $ref: '#/components/schemas/basicEmployeeReturn'
               - $ref: '#/components/schemas/employeeReturnForAnonymousOrder'
