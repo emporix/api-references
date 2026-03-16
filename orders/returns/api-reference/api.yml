@@ -819,88 +819,57 @@ components:
       $ref: '#/components/schemas/basicReturn'
     basicEmployeeReturn:
       title: A return request created on behalf of a customer.
-      description: 'Base schema for returns on behalf of a customer.'
+      description: Base schema for returns created by an employee for a registered customer.
       allOf:
-        - $ref: '#/components/schemas/basicReturn'
+        - $ref: '#/components/schemas/basicEmployeeReturnBase'
         - type: object
           properties:
             requestor:
-              type: object
-              description: 'Indicates who requested the return. The field can be set and updated only by an employee, that is a person who has a `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.'
               required:
                 - customerId
-              properties:
-                customerId:
-                  type: string
-                  description: 'Identifier of a customer to whom the order and return belong.'
-                anonymous:
-                  type: boolean
-                  description: 'asdf'
-                email:
-                  type: string
-                  description: 'asdf'
-            submitter:
-              type: object
-              description: 'Indicates who submitted the return. The return can be submitted by an employee on behalf of a customer. In that case, the submitter and requestor of data are different entities. This field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.'
-              required:
-                - firstName
-                - lastName
-                - email
-              properties:
-                firstName:
-                  type: string
-                  description: 'Requestor first name.'
-                lastName:
-                  type: string
-                  description: 'Requestor last name.'
-                email:
-                  type: string
-                  description: 'Requestor email address.'
-            approver:
-              type: object
-              description: |-
-                Information about the approver of the return. The return can be approved by a particular user or a group of users. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. The provided value is validated against the `iam-service`:
-                * If `type` is equal to `USER`, then the provided `id` must be a valid employee identifier
-                * If `type` is equal to `GROUP`, then the provided `id` must be a valid employee group identifier
-              properties:
-                type:
-                  type: string
-                  description: 'Indicates whether the return needs to be approved by a particular user or a user group. Possible values: `USER` or `GROUP`. '
-                  enum:
-                    - USER
-                    - GROUP
-                id:
-                  type: string
-                  description: 'Identifier of a user or a user group, depending on the `type` value. '
-            expiryDate:
-              type: string
-              description: 'The date when a return expires. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. If the value is not provided, then the default value is fetched from the `configuration-service`, under the `return.defaultExpiryDate` key. The value should be provided in the number format. The value specifies for how many days the return will be valid. If the configuration does not exist, then a `30` days offset is taken as a fallback.'
-          required:
-            - requestor
-            - submitter
     employeeReturnForAnonymousOrder:
-      title: A return request created on behalf of a customer for anonymous order.
-      description: 'Base schema for a return requested by a customer. Related to an anonymous order.'
+      title: A return request created on behalf of a customer for an anonymous order.
+      description: Base schema for returns created by an employee for an anonymous order.
       allOf:
-        - $ref: '#/components/schemas/basicReturn'
+        - $ref: '#/components/schemas/basicEmployeeReturnBase'
         - type: object
           properties:
             requestor:
-              type: object
-              description: 'Indicates who requested the return. The field can be set and updated only by an employee, that is a person who has a `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.'
               required:
                 - anonymous
                 - email
+    basicEmployeeReturnBase:
+      title: Base schema for returns created by an employee.
+      description: Common structure for returns created by an employee on behalf of a customer.
+      allOf:
+        - $ref: '#/components/schemas/basicReturn'
+        - type: object
+          properties:
+            requestor:
+              type: object
+              description: |
+                Indicates who requested the return. The field can be set and updated only by an employee,
+                that is a person who has the `returns.returns_manage` scope granted.
+                For a customer with the `returns.returns_manage_own` scope, the value is populated
+                automatically based on an auth token.
               properties:
+                customerId:
+                  type: string
+                  description: Identifier of a customer to whom the order and return belong.
                 anonymous:
                   type: boolean
-                  description: 'Indicates that the request is related with anonymous orders'
+                  description: Indicates whether the request relates to an anonymous order.
                 email:
                   type: string
-                  description: 'Email which has been used for anonymous order'
+                  description: Email associated with the requestor.
+
             submitter:
               type: object
-              description: 'Indicates who submitted the return. The return can be submitted by an employee on behalf of a customer. In that case, the submitter and requestor of data are different entities. This field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.'
+              description: |
+                Indicates who submitted the return. The return can be submitted by an employee
+                on behalf of a customer. In that case, the submitter and requestor are different entities.
+                This field can be set and updated only by an employee with the
+                `returns.returns_manage` scope granted.
               required:
                 - firstName
                 - lastName
@@ -908,32 +877,46 @@ components:
               properties:
                 firstName:
                   type: string
-                  description: 'Requestor first name.'
+                  description: Requestor first name.
                 lastName:
                   type: string
-                  description: 'Requestor last name.'
+                  description: Requestor last name.
                 email:
                   type: string
-                  description: 'Requestor email address.'
+                  description: Requestor email address.
+
             approver:
               type: object
-              description: |-
-                Information about the approver of the return. The return can be approved by a particular user or a group of users. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. The provided value is validated against the `iam-service`:
+              description: |
+                Information about the approver of the return. The return can be approved
+                by a particular user or a group of users. The field can be set and updated
+                only by an employee with the `returns.returns_manage` scope granted.
+
+                The provided value is validated against the `iam-service`:
                 * If `type` is equal to `USER`, then the provided `id` must be a valid employee identifier
                 * If `type` is equal to `GROUP`, then the provided `id` must be a valid employee group identifier
               properties:
                 type:
                   type: string
-                  description: 'Indicates whether the return needs to be approved by a particular user or a user group. Possible values: `USER` or `GROUP`. '
+                  description: Indicates whether the return must be approved by a user or a group.
                   enum:
                     - USER
                     - GROUP
                 id:
                   type: string
-                  description: 'Identifier of a user or a user group, depending on the `type` value. '
+                  description: Identifier of a user or a user group depending on the `type` value.
+
             expiryDate:
               type: string
-              description: 'The date when a return expires. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. If the value is not provided, then the default value is fetched from the `configuration-service`, under the `return.defaultExpiryDate` key. The value should be provided in the number format. The value specifies for how many days the return will be valid. If the configuration does not exist, then a `30` days offset is taken as a fallback.'
+              description: |
+                The date when a return expires. The field can be set and updated only by an employee
+                with the `returns.returns_manage` scope granted.
+
+                If the value is not provided, the default value is fetched from the
+                `configuration-service` under the `return.defaultExpiryDate` key.
+
+                If the configuration does not exist, a fallback of 30 days is applied.
+
           required:
             - requestor
             - submitter
