@@ -34,7 +34,7 @@ paths:
           description: |
             Conflict. Possible causes:
             * Selected delivery window does not have available capacity.
-            * Order with the given cart ID and checkout=true already exists
+            * Order with the given cart ID and checkout=true already exists.
           content:
             application/json:
               schema:
