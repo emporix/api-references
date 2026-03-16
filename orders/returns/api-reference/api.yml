@@ -1012,7 +1012,7 @@ components:
                     - GROUP
                 id:
                   type: string
-                  description: 'Identifier of a user or a user group, depending on the `type` value. '
+                  description: 'Identifier of a user or a user group, depending on the `type` value.'
             expiryDate:
               type: string
               description: 'The date when the return expires. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. If the value is not provided, then the default value is fetched from the `configuration-service` under the `return.defaultExpiryDate` key. The value should be provided in the number format. The value specifies for how many days the return will be valid. If the configuration does not exist, then a `30` days offset is taken as a fallback.'
