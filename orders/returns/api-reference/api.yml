@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Returns Service
   version: ''
-  description: 'The Emporix API Returns Service allows you to manage your returns.'
+  description: The Emporix API Returns Service allows you to manage your returns.
   contact:
     email: documentation@emporix.com
 servers:
@@ -109,7 +109,7 @@ paths:
       operationId: PUT-returns-update-return
       responses:
         '204':
-          description: 'No Content'
+          description: No Content
         '400':
           $ref: '#/components/responses/returns_response_BadRequest_400'
         '401':
@@ -143,7 +143,7 @@ paths:
       operationId: DELETE-returns-remove-return
       responses:
         '204':
-          description: 'No Content'
+          description: No Content
         '400':
           $ref: '#/components/responses/returns_response_DeleteBadRequest_400'
         '401':
@@ -168,7 +168,7 @@ paths:
       operationId: PATCH-returns-update-return
       responses:
         '204':
-          description: 'No Content'
+          description: No Content
         '400':
           $ref: '#/components/responses/returns_response_BadRequest_400'
         '401':
@@ -238,7 +238,7 @@ paths:
 components:
   responses:
     returns_response_NotFound_404:
-      description: 'Not found response due to not-existing entity'
+      description: Not found response due to not-existing entity
       content:
         application/json:
           schema:
@@ -251,13 +251,13 @@ components:
                 status: Not Found
                 message: The return with id 7ba2f2b6-7dc8-45ff-9f20-4e6163c14c2e has not been found.
     returns_response_BadRequest_400:
-      description: 'Bad request due to validation, incorrect parameters, etc.'
+      description: Bad request due to validation, incorrect parameters, etc.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/coreErrorMessage'
     common_response_Unauthorized_401:
-      description: 'Unauthorized'
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -287,7 +287,7 @@ components:
                   detail:
                     errorcode: keymanagement.service.access_token_expired
     common_response_Forbidden_403:
-      description: 'Access forbidden. The caller is not allowed to access this resource.'
+      description: Access forbidden. The caller is not allowed to access this resource.
       content:
         application/json:
           schema:
@@ -299,7 +299,7 @@ components:
                 status: Forbidden
                 message: The access to the requested resource has been forbidden by the server.
     common_response_InternalServerError_500:
-      description: 'Internal Server Error.'
+      description: Internal Server Error.
       content:
         application/json:
           schema:
@@ -311,7 +311,7 @@ components:
                 status: Internal Server Error
                 message: Problem encountered while trying to connect to the database.
     returns_post_response_BadRequest_400:
-      description: 'Resources cannot be created due to an error.'
+      description: Resources cannot be created due to an error.
       content:
         application/json:
           schema:
@@ -325,7 +325,7 @@ components:
           schema:
             $ref: '#/components/schemas/coreErrorMessage'
     returns_response_DeleteBadRequest_400:
-      description: 'Bad request - a return cannot be deleted because it has an inappropriate status.'
+      description: Bad request - a return cannot be deleted because it has an inappropriate status.
       content:
         application/json:
           schema:
@@ -504,7 +504,7 @@ components:
                   modifiedAt: '2023-04-31T13:18:02.379Z'
                   version: 1
     listOfReturnsResponse_200:
-      description: 'Example response'
+      description: Example response
       headers:
         X-Total-Count:
           description: |-
@@ -689,73 +689,73 @@ components:
       properties:
         code:
           type: integer
-          description: 'HTTP Status Code.'
+          description: HTTP Status Code.
         status:
           type: string
-          description: 'HTTP Status.'
+          description: HTTP Status.
         message:
           type: string
-          description: 'Error message.'
+          description: Error message.
         details:
           type: array
-          description: 'Error message details.'
+          description: Error message details.
           items:
             type: object
             properties:
               message:
                 type: string
-                description: 'Detailed message of the error.'
+                description: Detailed message of the error.
     returnErrorMessage:
       allOf:
         - properties:
             returnId:
               type: string
-              description: 'Unique identifier of a return.'
+              description: Unique identifier of a return.
         - $ref: '#/components/schemas/coreErrorMessage'
     calculatedPrice:
       type: object
-      description: 'Price calculation derived from the order entry `calculatedPrice.finalPrice`. The `finalPrice` reflects already applied discounts and fees.'
+      description: Price calculation derived from the order entry `calculatedPrice.finalPrice`. The `finalPrice` reflects already applied discounts and fees.
       properties:
         netValue:
           type: number
           format: double
-          description: 'Net value of the price.'
+          description: Net value of the price.
         grossValue:
           type: number
           format: double
-          description: 'Gross value of the price.'
+          description: Gross value of the price.
         taxValue:
           type: number
           format: double
-          description: 'Tax value of the price.'
+          description: Tax value of the price.
         taxCode:
           type: string
-          description: 'Tax code applied to the price. Set to `null` when items with different tax codes are aggregated.'
+          description: Tax code applied to the price. Set to `null` when items with different tax codes are aggregated.
         taxRate:
           type: number
           format: double
-          description: 'Tax rate applied to the price. Set to `null` when items with different tax rates are aggregated.'
+          description: Tax rate applied to the price. Set to `null` when items with different tax rates are aggregated.
     calculatedFinalPrice:
       type: object
-      description: 'Wrapper for the calculated price containing the final price after discounts and fees.'
+      description: Wrapper for the calculated price containing the final price after discounts and fees.
       properties:
         finalPrice:
           $ref: '#/components/schemas/calculatedPrice'
     metadataCore:
       title: metadataCore
-      description: 'Core metadata fields shared across multiple objects.'
+      description: Core metadata fields shared across multiple objects.
       type: object
       properties:
         mixins:
           type: object
-          description: 'Links to the mixin schemas.'
+          description: Links to the mixin schemas.
           additionalProperties:
             type: string
           example:
             productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
     metadataUpdate:
       title: metadataUpdate
-      description: 'Metadata fields required when updating an existing object.'
+      description: Metadata fields required when updating an existing object.
       allOf:
         - $ref: '#/components/schemas/metadataCore'
       type: object
@@ -764,7 +764,7 @@ components:
       properties:
         version:
           type: number
-          description: 'Version of the object. The version is required during the update operation because of the optimistic locking mechanism.'
+          description: Version of the object. The version is required during the update operation because of the optimistic locking mechanism.
           example: 1
           minimum: 1
     metadataResponse:
@@ -778,31 +778,31 @@ components:
         - type: object
           properties:
             createdAt:
-              description: 'Date and time when the object was created. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
+              description: Date and time when the object was created. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`
               type: string
             modifiedAt:
-              description: 'Date and time when the object was last modified. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
+              description: Date and time when the object was last modified. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`
               type: string
     basicReturn:
       title: basicReturn
-      description: 'Base schema for a return.'
+      description: Base schema for a return.
       type: object
       properties:
         orders:
           type: array
-          description: 'A list of orders that contain items to be returned. All the orders must have the same currency. '
+          description: A list of orders that contain items to be returned. All the orders must have the same currency.
           items:
             $ref: '#/components/schemas/order'
         reason:
           type: object
-          description: 'A reason why the return is created. One of the values needs to be provided: `code` or `details`. '
+          description: A reason why the return is created. One of the values needs to be provided: `code` or `details`.
           properties:
             code:
               type: string
-              description: 'Code of a particular reason for return. A number which represents a reason why an order has been (fully or partially) returned.'
+              description: Code of a particular reason for return. A number which represents a reason why an order has been (fully or partially) returned.
             details:
               type: string
-              description: 'Details why an order has been (fully or partially) returned.'
+              description: Details why an order has been (fully or partially) returned.
         mixins:
           type: object
           description: |-
@@ -815,7 +815,7 @@ components:
         - reason
     basicCustomerReturn:
       title: A return request created by a customer.
-      description: 'Base schema for a return requested by a customer.'
+      description: Base schema for a return requested by a customer.
       $ref: '#/components/schemas/basicReturn'
     basicEmployeeReturn:
       title: A return request created on behalf of a customer.
@@ -826,13 +826,13 @@ components:
           properties:
             requestor:
               type: object
-              description: 'Indicates who requested the return. The field can be set and updated only by an employee, that is a person who has a `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.'
+              description: Indicates who requested the return. The field can be set and updated only by an employee, that is a person who has a `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.
               required:
                 - customerId
               properties:
                 customerId:
                   type: string
-                  description: 'Identifier of a customer to whom the order and return belong.'
+                  description: Identifier of a customer to whom the order and return belong.
                 anonymous:
                   type: boolean
                   description: 'asdf'
@@ -848,17 +848,17 @@ components:
           properties:
             requestor:
               type: object
-              description: 'Indicates who requested the return. The field can be set and updated only by an employee, that is a person who has a `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.'
+              description: Indicates who requested the return. The field can be set and updated only by an employee, that is a person who has a `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.
               required:
                 - anonymous
                 - email
               properties:
                 anonymous:
                   type: boolean
-                  description: 'Indicates that the request is related with anonymous orders'
+                  description: Indicates that the request is related with anonymous orders
                 email:
                   type: string
-                  description: 'Email which has been used for anonymous order'
+                  description: Email which has been used for anonymous order
     basicEmployeeReturnBase:
       title: Base schema for returns created by an employee.
       description: Common structure for returns created by an employee on behalf of a customer.
@@ -939,13 +939,13 @@ components:
             - submitter
     updateCustomerReturn:
       title: A return updated by a customer
-      description: 'Base schema for a return requested by a customer.'
+      description: Base schema for a return requested by a customer.
       allOf:
         - type: object
           properties:
             id:
               type: string
-              description: 'Unique identifier of a return.'
+              description: Unique identifier of a return.
         - $ref: '#/components/schemas/basicReturn'
         - type: object
           properties:
@@ -955,7 +955,7 @@ components:
             - metadata
     updateEmployeeReturn:
       title: A return updated on behalf of a customer.
-      description: 'Base schema for a return requested by an employee.'
+      description: Base schema for a return requested by an employee.
       allOf:
         - $ref: '#/components/schemas/updateCustomerReturn'
         - type: object
@@ -970,19 +970,19 @@ components:
               description: 'Indicates the current status of the order. When an order is being created, its status is automatically set to PENDING. An approver can change the status to `APPROVED` or `REJECTED`. A customer can change the status to `CLOSED`.'
             received:
               type: boolean
-              description: 'Indicates whether the items from the return have been received.'
+              description: Indicates whether the items from the return have been received.
             requestor:
               type: object
-              description: 'Indicates who requested the return. The field can be updated only by an employee, that is a person who has the `returns.returns_manage` scope granted.'
+              description: Indicates who requested the return. The field can be updated only by an employee, that is a person who has the `returns.returns_manage` scope granted.
               required:
                 - customerId
               properties:
                 customerId:
                   type: string
-                  description: 'Identifier of a customer to whom the order and return belong. '
+                  description: Identifier of a customer to whom the order and return belong.
             submitter:
               type: object
-              description: 'Indicates who submitted the return. The return can be submitted by an employee on behalf of a customer. In that case, the submitter and requestor data is different. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.'
+              description: Indicates who submitted the return. The return can be submitted by an employee on behalf of a customer. In that case, the submitter and requestor data is different. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.
               required:
                 - firstName
                 - lastName
@@ -990,13 +990,13 @@ components:
               properties:
                 firstName:
                   type: string
-                  description: 'Requestor first name.'
+                  description: Requestor first name.
                 lastName:
                   type: string
-                  description: 'Requestor last name.'
+                  description: Requestor last name.
                 email:
                   type: string
-                  description: 'Requestor email address.'
+                  description: Requestor email address.
             approver:
               type: object
               description: |-
@@ -1006,16 +1006,16 @@ components:
               properties:
                 type:
                   type: string
-                  description: 'Indicates whether the return needs to be approved by a particular user or a user group. Possible values: `USER` or `GROUP`. '
+                  description: Indicates whether the return needs to be approved by a particular user or a user group. Possible values: `USER` or `GROUP`.
                   enum:
                     - USER
                     - GROUP
                 id:
                   type: string
-                  description: 'Identifier of a user or a user group, depending on the `type` value.'
+                  description: Identifier of a user or a user group, depending on the `type` value.
             expiryDate:
               type: string
-              description: 'The date when the return expires. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. If the value is not provided, then the default value is fetched from the `configuration-service` under the `return.defaultExpiryDate` key. The value should be provided in the number format. The value specifies for how many days the return will be valid. If the configuration does not exist, then a `30` days offset is taken as a fallback.'
+              description: The date when the return expires. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. If the value is not provided, then the default value is fetched from the `configuration-service` under the `return.defaultExpiryDate` key. The value should be provided in the number format. The value specifies for how many days the return will be valid. If the configuration does not exist, then a `30` days offset is taken as a fallback.
           required:
             - approvalStatus
             - requestor
@@ -1061,57 +1061,57 @@ components:
               $ref: '#/components/schemas/calculatedFinalPrice'
     fullEmployeeReturn:
       title: A return object for an employee
-      description: 'Schema for retrieving returns by an employee.'
+      description: Schema for retrieving returns by an employee.
       allOf:
         - $ref: '#/components/schemas/fullCustomerReturn'
         - type: object
           properties:
             requestor:
               type: object
-              description: 'Indicates who requested the return. The field is visible only to an employee, that is a person who has the returns.returns_read scope.'
+              description: Indicates who requested the return. The field is visible only to an employee, that is a person who has the returns.returns_read scope.
               properties:
                 customerId:
                   type: string
-                  description: 'Identifier of a customer to whom the order and return belong.'
+                  description: Identifier of a customer to whom the order and return belong.
                 firstName:
                   type: string
-                  description: 'Requestor first name.'
+                  description: Requestor first name.
                 lastName:
                   type: string
                   description: |
                     Requestor's last name.
                 email:
                   type: string
-                  description: 'Requestor email.'
+                  description: Requestor email.
             submitter:
               type: object
-              description: 'Indicates who submitted the return. The return can be submitted by an employee on behalf of a customer. In that case, the submitter and requestor data is different. The field can be retrieved only by an employee, that is a person who has the `returns.returns_manage scope` granted.'
+              description: Indicates who submitted the return. The return can be submitted by an employee on behalf of a customer. In that case, the submitter and requestor data is different. The field can be retrieved only by an employee, that is a person who has the `returns.returns_manage scope` granted.
               properties:
                 userType:
                   type: string
-                  description: 'Indicates who sent the return request. Information whether the request has been sent by a customer or by someone else on behalf of a customer.'
+                  description: Indicates who sent the return request. Information whether the request has been sent by a customer or by someone else on behalf of a customer.
                 firstName:
                   type: string
-                  description: 'Submitter first name.'
+                  description: Submitter first name.
                 lastName:
                   type: string
-                  description: 'Submitter last name.'
+                  description: Submitter last name.
                 email:
                   type: string
-                  description: 'Submitter email name.'
+                  description: Submitter email name.
             approver:
               type: object
-              description: 'Information about the approver of the return. The return can be approved by a particular user or a group of users. The field can be retrieved only by an employee, that is a person who has the `returns.returns_read` scope granted.'
+              description: Information about the approver of the return. The return can be approved by a particular user or a group of users. The field can be retrieved only by an employee, that is a person who has the `returns.returns_read` scope granted.
               properties:
                 type:
                   type: string
-                  description: 'Indicates whether the return needs to be approved by a particular user or user group.'
+                  description: Indicates whether the return needs to be approved by a particular user or user group.
                   enum:
                     - USER
                     - GROUP
                 id:
                   type: string
-                  description: 'Identifier of a user or a user group, depending on the `type` value.'
+                  description: Identifier of a user or a user group, depending on the `type` value.
     fullReturnOrder:
       allOf:
         - $ref: '#/components/schemas/order'
@@ -1160,14 +1160,14 @@ components:
               description: Total calculated price for the returned quantity of this item. Computed as `calculatedUnitPrice` multiplied by the returned quantity. Present only if the order entry has a valid `calculatedPrice.finalPrice`.
     order:
       type: object
-      description: 'Represents the order which is being (fully or partially) returned.'
+      description: Represents the order which is being (fully or partially) returned.
       properties:
         id:
           type: string
-          description: 'Unique identifier of an order.'
+          description: Unique identifier of an order.
         items:
           type: array
-          description: 'Represents a list of items included in the order. In the `order` entity, the field is called `entries`.'
+          description: Represents a list of items included in the order. In the `order` entity, the field is called `entries`.
           items:
             $ref: '#/components/schemas/orderItem'
       required:
@@ -1202,7 +1202,7 @@ components:
       properties:
         id:
           type: string
-          description: 'Unique identifier of the created return.'
+          description: Unique identifier of the created return.
     patchOperation:
       title: patchRequest
       type: object
@@ -1213,15 +1213,15 @@ components:
             - add
             - remove
             - replace
-          description: 'Indicates an operation which should be done on a return. Available operations: `add` `remove` and `replace`'
+          description: Indicates an operation which should be done on a return. Available operations: `add` `remove` and `replace`
         path:
           type: string
-          description: 'Indicates a path for which the value should be applied. For example:`/mixins/additionalAttributes/externalId`, `/approvalStatus`, `/requestor/customerId`'
+          description: Indicates a path for which the value should be applied. For example: `/mixins/additionalAttributes/externalId`, `/approvalStatus`, `/requestor/customerId`
         value:
           oneOf:
             - type: object
             - type: string
-          description: 'Indicates a value that should be changed or added. The value can be of a primitive type, like string, number, boolean or it can be an object or an array.'
+          description: Indicates a value that should be changed or added. The value can be of a primitive type, like string, number, boolean or it can be an object or an array.
       required:
         - op
         - path
@@ -1231,7 +1231,7 @@ components:
       properties:
         employeeId:
           type: string
-          description: 'Identifier of an employee who performed an action on behalf of a customer.'
+          description: Identifier of an employee who performed an action on behalf of a customer.
         operation:
           type: string
           description: '''Indicates an operation type done by an employee on behalf of a customer. Available options: `CREATE` and `UPDATE_STATUS`'''
@@ -1479,7 +1479,7 @@ components:
       required: true
       schema:
         type: string
-      description: 'Unique identifier of a return.'
+              description: Unique identifier of a return.
     saasToken:
       name: saas-token
       in: header
