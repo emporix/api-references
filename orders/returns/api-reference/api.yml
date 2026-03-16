@@ -1024,6 +1024,8 @@ components:
       title: A customer return object.
       description: Schema for retrieving returns by a customer.
       allOf:
+        - $ref: '#/components/schemas/basicCustomerReturn'
+        - $ref: '#/components/schemas/assistedBuying'
         - type: object
           properties:
             id:
@@ -1057,8 +1059,6 @@ components:
                   type: string
             calculatedPrice:
               $ref: '#/components/schemas/calculatedFinalPrice'
-        - $ref: '#/components/schemas/basicCustomerReturn'
-        - $ref: '#/components/schemas/assistedBuying'
     fullEmployeeReturn:
       title: A return object for an employee
       description: 'Schema for retrieving returns by an employee.'
