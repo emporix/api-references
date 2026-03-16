@@ -825,8 +825,20 @@ components:
         - type: object
           properties:
             requestor:
+              type: object
+              description: 'Indicates who requested the return. The field can be set and updated only by an employee, that is a person who has a `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.'
               required:
                 - customerId
+              properties:
+                customerId:
+                  type: string
+                  description: 'Identifier of a customer to whom the order and return belong.'
+                anonymous:
+                  type: boolean
+                  description: 'asdf'
+                email:
+                  type: string
+                  description: 'asdf'
     employeeReturnForAnonymousOrder:
       title: A return request created on behalf of a customer for an anonymous order.
       description: Base schema for returns created by an employee for an anonymous order.
@@ -835,9 +847,18 @@ components:
         - type: object
           properties:
             requestor:
+              type: object
+              description: 'Indicates who requested the return. The field can be set and updated only by an employee, that is a person who has a `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.'
               required:
                 - anonymous
                 - email
+              properties:
+                anonymous:
+                  type: boolean
+                  description: 'Indicates that the request is related with anonymous orders'
+                email:
+                  type: string
+                  description: 'Email which has been used for anonymous order'
     basicEmployeeReturnBase:
       title: Base schema for returns created by an employee.
       description: Common structure for returns created by an employee on behalf of a customer.
@@ -862,7 +883,6 @@ components:
                 email:
                   type: string
                   description: Email associated with the requestor.
-
             submitter:
               type: object
               description: |
@@ -884,7 +904,6 @@ components:
                 email:
                   type: string
                   description: Requestor email address.
-
             approver:
               type: object
               description: |
@@ -905,7 +924,6 @@ components:
                 id:
                   type: string
                   description: Identifier of a user or a user group depending on the `type` value.
-
             expiryDate:
               type: string
               description: |
@@ -916,7 +934,6 @@ components:
                 `configuration-service` under the `return.defaultExpiryDate` key.
 
                 If the configuration does not exist, a fallback of 30 days is applied.
-
           required:
             - requestor
             - submitter
