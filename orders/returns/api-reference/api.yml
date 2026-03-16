@@ -1169,31 +1169,33 @@ components:
         items:
           type: array
           description: 'Represents a list of items included in the order. In the `order` entity, the field is called `entries`.'
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: 'Unique identifier of an item. In the `order` entity, the field is called `order.entries[].id`.'
-              quantity:
-                type: integer
-                description: 'Quantity of the items in the order. In the order entity, the field is called `order.entries[].amount`.'
-              reason:
-                type: object
-                description: 'A reason why the item needs to be returned.'
-                properties:
-                  code:
-                    type: string
-                    description: 'Code of a particular reason for return. A number which represents a reason why an order has been (fully or partially) returned.'
-                  details:
-                    type: string
-                    description: 'Details why the item is being returned.'
-            required:
-              - id
-              - quantity
+          $ref: '#/components/schemas/orderItem'
       required:
         - id
         - items
+    orderItem:
+      type: object
+      description: Represents an item included in the order.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of an item. In the order entity, the field is called `order.entries[].id`.
+        quantity:
+          type: integer
+          description: Quantity of the items in the order. In the order entity, the field is called `order.entries[].amount`.
+        reason:
+          type: object
+          description: A reason why the item needs to be returned.
+          properties:
+            code:
+              type: string
+              description: Code representing the reason for return.
+            details:
+              type: string
+              description: Details why the item is being returned.
+      required:
+        - id
+        - quantity
     returnId:
       title: returnId
       type: object
