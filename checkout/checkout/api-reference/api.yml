@@ -31,7 +31,10 @@ paths:
         '403':
           $ref: '#/components/responses/trait_restricted_403'
         '409':
-          description: Selected delivery window does not have available capacity
+          description: |
+            Conflict. Possible causes:
+            * Selected delivery window does not have available capacity.
+            * Order with the given cart ID and checkout=true already exists.
           content:
             application/json:
               schema:
@@ -45,13 +48,38 @@ paths:
                     type: string
                   moreInfo:
                     type: string
+                    nullable: true
                   details:
                     type: array
                     items:
                       type: object
-                      properties: {}
+                      properties:
+                        field:
+                          type: string
+                        type:
+                          type: string
+                        message:
+                          type: string
+                        moreInfo:
+                          type: string
+                          nullable: true
               examples:
-                example-1:
+                Order with checkout cart already exists:
+                  value:
+                    status: 409
+                    type: Conflict
+                    message: "Order with cartId '69b3dfa3a64df43dd0266fd6' and checkout=true already exists (order id: ORDER-2026-03-13-10-48-31-DE0671-D)"
+                    moreInfo: null
+                    details:
+                      - field: cartId
+                        type: unique_checkout_cartId_index
+                        message: '69b3dfa3a64df43dd0266fd6'
+                        moreInfo: null
+                      - field: existingOrderId
+                        type: unique_checkout_cartId_index
+                        message: ORDER-2026-03-13-10-48-31-DE0671-D
+                        moreInfo: null
+                Delivery window capacity conflict:
                   value:
                     status: 409
                     type: conflict_resource
