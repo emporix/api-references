@@ -1022,18 +1022,20 @@ components:
             - submitter
     fullCustomerReturn:
       title: A customer return object.
-      description: 'Schema for retrieving returns by a customer.'
+      description: Schema for retrieving returns by a customer.
       allOf:
+        - $ref: '#/components/schemas/basicCustomerReturn'
+        - $ref: '#/components/schemas/assistedBuying'
         - type: object
           properties:
             id:
               type: string
-              description: 'Unique identifier of a return, represented as a UUID string.'
+              description: Unique identifier of a return, represented as a UUID string.
             metadata:
               $ref: '#/components/schemas/metadataResponse'
             received:
               type: boolean
-              description: 'Indicates whether the items from the return have been received.'
+              description: Indicates whether the items from the return have been received.
             approvalStatus:
               type: string
               enum:
@@ -1041,35 +1043,22 @@ components:
                 - PENDING
                 - REJECTED
                 - CLOSED
-              description: 'Indicates the current status of the order. When an order is being created, then its status is automatically set to `PENDING`. An approver can change the status to `APPROVED` or `REJECTED`. A customer can change the status to `CLOSED`.'
             expiryDate:
               type: string
-              description: 'A date when the return expires. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
+              description: ISO-8601 timestamp when the return expires.
             orders:
               type: array
               items:
-                allOf:
-                  - $ref: '#/components/schemas/order'
-                  - type: object
-                    properties:
-                      items:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/fullReturnItem'
+                $ref: '#/components/schemas/fullReturnOrder'
             total:
               type: object
-              description: 'The value represents a total price (value and currency) of all returned products related to all orders.'
               properties:
                 value:
                   type: number
                 currency:
                   type: string
-                  description: 'The value represents the currency associated with the price. The currency is compliant with the ISO-4217 standard (see https://www.iso.org/iso-4217-currency-codes.html).'
             calculatedPrice:
               $ref: '#/components/schemas/calculatedFinalPrice'
-              description: 'Aggregated calculated price across all returned items. Derived from each order entry `calculatedPrice.finalPrice`. Null if no order entries have calculated prices.'
-        - $ref: '#/components/schemas/basicCustomerReturn'
-        - $ref: '#/components/schemas/assistedBuying'
     fullEmployeeReturn:
       title: A return object for an employee
       description: 'Schema for retrieving returns by an employee.'
@@ -1123,6 +1112,15 @@ components:
                 id:
                   type: string
                   description: 'Identifier of a user or a user group, depending on the `type` value.'
+    fullReturnOrder:
+      allOf:
+        - $ref: '#/components/schemas/order'
+        - type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/fullReturnItem'
     fullReturnItem:
       type: object
       description: 'Detailed information about a returned item within an order.'
