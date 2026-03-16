@@ -1044,10 +1044,15 @@ components:
             expiryDate:
               type: string
               description: ISO-8601 timestamp when the return expires.
-            returnOrders:
-              type: array
-              items:
-                $ref: '#/components/schemas/fullReturnOrder'
+            orders:
+              allOf:
+                - $ref: '#/components/schemas/order'
+                - type: object
+                  properties:
+                    items:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/fullReturnItem'
             total:
               type: object
               properties:
