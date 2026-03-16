@@ -1032,8 +1032,6 @@ components:
               description: 'Unique identifier of a return, represented as a UUID string.'
             metadata:
               $ref: '#/components/schemas/metadataResponse'
-        - type: object
-          properties:
             received:
               type: boolean
               description: Indicates whether the items from the return have been received.
