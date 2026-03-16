@@ -1046,46 +1046,44 @@ components:
               type: string
               description: 'A date when the return expires. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
             orders:
-              type: array
-              items:
-                allOf:
-                  - $ref: '#/components/schemas/order'
-                  - type: object
-                    properties:
+              allOf:
+                - $ref: '#/components/schemas/order'
+                - type: object
+                  properties:
+                    items:
+                      type: array
                       items:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            name:
-                              type: string
-                              description: 'Name of a product.'
-                            unitPrice:
-                              type: object
-                              description: 'The value represents a price (value and currency) of a single unit of the product.'
-                              properties:
-                                value:
-                                  type: number
-                                  description: 'The value represents a price value of a single unit of the product.'
-                                currency:
-                                  type: string
-                                  description: 'The value represents the currency associated with the price. The currency is compliant with the ISO-4217 standard (see https://www.iso.org/iso-4217-currency-codes.html).'
-                            total:
-                              type: object
-                              description: 'The value represents the total price (value and currency) of all returned products related to the order.'
-                              properties:
-                                value:
-                                  type: number
-                                  description: 'The value represents the total price value of all returned products.'
-                                currency:
-                                  type: string
-                                  description: 'The value represents the currency associated with the price. The currency is compliant with the ISO-4217 standard (see https://www.iso.org/iso-4217-currency-codes.html).'
-                            calculatedUnitPrice:
-                              $ref: '#/components/schemas/calculatedPrice'
-                              description: 'Unit price derived from the order entry `calculatedPrice.finalPrice` divided by the order entry amount. Includes discounts and fees. Present only if the order entry has a valid `calculatedPrice.finalPrice`.'
-                            calculatedPrice:
-                              $ref: '#/components/schemas/calculatedFinalPrice'
-                              description: 'Total calculated price for the returned quantity of this item. Computed as `calculatedUnitPrice` multiplied by the returned quantity. Present only if the order entry has a valid `calculatedPrice.finalPrice`.'
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            description: 'Name of a product.'
+                          unitPrice:
+                            type: object
+                            description: 'The value represents a price (value and currency) of a single unit of the product.'
+                            properties:
+                              value:
+                                type: number
+                                description: 'The value represents a price value of a single unit of the product.'
+                              currency:
+                                type: string
+                                description: 'The value represents the currency associated with the price. The currency is compliant with the ISO-4217 standard (see https://www.iso.org/iso-4217-currency-codes.html).'
+                          total:
+                            type: object
+                            description: 'The value represents the total price (value and currency) of all returned products related to the order.'
+                            properties:
+                              value:
+                                type: number
+                                description: 'The value represents the total price value of all returned products.'
+                              currency:
+                                type: string
+                                description: 'The value represents the currency associated with the price. The currency is compliant with the ISO-4217 standard (see https://www.iso.org/iso-4217-currency-codes.html).'
+                          calculatedUnitPrice:
+                            $ref: '#/components/schemas/calculatedPrice'
+                            description: 'Unit price derived from the order entry `calculatedPrice.finalPrice` divided by the order entry amount. Includes discounts and fees. Present only if the order entry has a valid `calculatedPrice.finalPrice`.'
+                          calculatedPrice:
+                            $ref: '#/components/schemas/calculatedFinalPrice'
+                            description: 'Total calculated price for the returned quantity of this item. Computed as `calculatedUnitPrice` multiplied by the returned quantity. Present only if the order entry has a valid `calculatedPrice.finalPrice`.'
             total:
               type: object
               description: 'The value represents a total price (value and currency) of all returned products related to all orders.'
