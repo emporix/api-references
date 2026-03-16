@@ -743,7 +743,7 @@ components:
           $ref: '#/components/schemas/calculatedPrice'
     metadataCore:
       title: metadataCore
-      description: Core metadata fields shared across multiple objects.
+      description: 'Core metadata fields shared across multiple objects.'
       type: object
       properties:
         mixins:
@@ -755,7 +755,7 @@ components:
             productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
     metadataUpdate:
       title: metadataUpdate
-      description: Metadata fields required when updating an existing object.
+      description: 'Metadata fields required when updating an existing object.'
       allOf:
         - $ref: '#/components/schemas/metadataCore'
       type: object
@@ -778,10 +778,10 @@ components:
         - type: object
           properties:
             createdAt:
-              description: Date and time when the object was created. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`
+              description: 'Date and time when the object was created. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
               type: string
             modifiedAt:
-              description: Date and time when the object was last modified. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`
+              description: 'Date and time when the object was last modified. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
               type: string
     basicReturn:
       title: basicReturn
@@ -795,7 +795,7 @@ components:
             $ref: '#/components/schemas/order'
         reason:
           type: object
-          description: A reason why the return is created. One of the values needs to be provided: `code` or `details`.
+          description: 'A reason why the return is created. One of the values needs to be provided: `code` or `details`.'
           properties:
             code:
               type: string
@@ -835,10 +835,10 @@ components:
                   description: Identifier of a customer to whom the order and return belong.
                 anonymous:
                   type: boolean
-                  description: 'asdf'
+                  description: Indicates that the request is related with anonymous orders
                 email:
                   type: string
-                  description: 'asdf'
+                  description: Email which has been used for anonymous order
     employeeReturnForAnonymousOrder:
       title: A return request created on behalf of a customer for an anonymous order.
       description: Base schema for returns created by an employee for an anonymous order.
@@ -1006,7 +1006,7 @@ components:
               properties:
                 type:
                   type: string
-                  description: Indicates whether the return needs to be approved by a particular user or a user group. Possible values: `USER` or `GROUP`.
+                  description: 'Indicates whether the return needs to be approved by a particular user or a user group. Possible values: `USER` or `GROUP`.'
                   enum:
                     - USER
                     - GROUP
@@ -1213,10 +1213,10 @@ components:
             - add
             - remove
             - replace
-          description: Indicates an operation which should be done on a return. Available operations: `add` `remove` and `replace`
+          description: 'Indicates an operation which should be done on a return. Available operations: `add` `remove` and `replace`'
         path:
           type: string
-          description: Indicates a path for which the value should be applied. For example: `/mixins/additionalAttributes/externalId`, `/approvalStatus`, `/requestor/customerId`
+          description: 'Indicates a path for which the value should be applied. For example: `/mixins/additionalAttributes/externalId`, `/approvalStatus`, `/requestor/customerId`'
         value:
           oneOf:
             - type: object
@@ -1234,7 +1234,7 @@ components:
           description: Identifier of an employee who performed an action on behalf of a customer.
         operation:
           type: string
-          description: '''Indicates an operation type done by an employee on behalf of a customer. Available options: `CREATE` and `UPDATE_STATUS`'''
+          description: 'Indicates an operation type done by an employee on behalf of a customer. Available options: `CREATE` and `UPDATE_STATUS`.'
           enum:
             - CREATE
             - UPDATE_STATUS
@@ -1479,14 +1479,14 @@ components:
       required: true
       schema:
         type: string
-              description: Unique identifier of a return.
+        description: Unique identifier of a return.
     saasToken:
       name: saas-token
       in: header
       required: false
       schema:
         type: string
-      description: 'Customer’s saasToken retrieved when logging in a customer. The header is mandatory for operations done by a customer. '
+      description: 'Customer saasToken retrieved when logging in a customer. The header is mandatory for operations done by a customer. '
   securitySchemes:
     OAuth2:
       type: oauth2
