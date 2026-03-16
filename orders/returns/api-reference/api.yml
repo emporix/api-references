@@ -1169,7 +1169,8 @@ components:
         items:
           type: array
           description: 'Represents a list of items included in the order. In the `order` entity, the field is called `entries`.'
-          $ref: '#/components/schemas/orderItem'
+          items:
+            $ref: '#/components/schemas/orderItem'
       required:
         - id
         - items
