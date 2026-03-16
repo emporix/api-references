@@ -1046,7 +1046,16 @@ components:
               type: string
               description: 'A date when the return expires. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
             orders:
-              $ref: '#/components/schemas/fullReturnOrder'
+              type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/order'
+                  - type: object
+                    properties:
+                      items:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/fullReturnItem'
             total:
               type: object
               description: 'The value represents a total price (value and currency) of all returned products related to all orders.'
@@ -1147,15 +1156,6 @@ components:
         calculatedPrice:
           $ref: '#/components/schemas/calculatedFinalPrice'
           description: 'Total calculated price for the returned quantity of this item. Computed as `calculatedUnitPrice` multiplied by the returned quantity. Present only if the order entry has a valid `calculatedPrice.finalPrice`.'
-    fullReturnOrder:
-      allOf:
-        - $ref: '#/components/schemas/order'
-        - type: object
-          properties:
-            items:
-              type: array
-              items:
-                $ref: '#/components/schemas/fullReturnItem'
     order:
       type: object
       description: 'Represents the order which is being (fully or partially) returned.'
