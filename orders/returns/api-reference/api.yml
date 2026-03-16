@@ -1479,7 +1479,7 @@ components:
       required: true
       schema:
         type: string
-        description: Unique identifier of a return.
+      description: Unique identifier of a return.
     saasToken:
       name: saas-token
       in: header
