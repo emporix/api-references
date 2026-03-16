@@ -917,17 +917,17 @@ components:
               properties:
                 type:
                   type: string
-                  description: Indicates whether the return must be approved by a user or a group.
+                  description: 'Indicates whether the return must be approved by a user or a group. Possible values: `USER` or `GROUP`.'
                   enum:
                     - USER
                     - GROUP
                 id:
                   type: string
-                  description: Identifier of a user or a user group depending on the `type` value.
+                  description: 'Identifier of a user or a user group depending on the `type` value.'
             expiryDate:
               type: string
               description: |
-                The date when a return expires. The field can be set and updated only by an employee
+                'The date when a return expires. The field can be set and updated only by an employee
                 with the `returns.returns_manage` scope granted.
 
                 If the value is not provided, the default value is fetched from the
@@ -973,7 +973,7 @@ components:
               description: Indicates whether the items from the return have been received.
             requestor:
               type: object
-              description: Indicates who requested the return. The field can be updated only by an employee, that is a person who has the `returns.returns_manage` scope granted.
+              description: 'Indicates who requested the return. The field can be updated only by an employee, that is a person who has the `returns.returns_manage` scope granted.'
               required:
                 - customerId
               properties:
@@ -982,7 +982,7 @@ components:
                   description: Identifier of a customer to whom the order and return belong.
             submitter:
               type: object
-              description: Indicates who submitted the return. The return can be submitted by an employee on behalf of a customer. In that case, the submitter and requestor data is different. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.
+              description: 'Indicates who submitted the return. The return can be submitted by an employee on behalf of a customer. In that case, the submitter and requestor data is different. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.'
               required:
                 - firstName
                 - lastName
@@ -1045,7 +1045,7 @@ components:
                 - CLOSED
             expiryDate:
               type: string
-              description: ISO-8601 timestamp when the return expires.
+              description: 'A date when the return will expire. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
             orders:
               type: array
               items:
@@ -1068,7 +1068,7 @@ components:
           properties:
             requestor:
               type: object
-              description: Indicates who requested the return. The field is visible only to an employee, that is a person who has the returns.returns_read scope.
+              description: 'Indicates who requested the return. The field is visible only to an employee, that is a person who has the returns.returns_read scope.'
               properties:
                 customerId:
                   type: string
@@ -1085,7 +1085,7 @@ components:
                   description: Requestor email.
             submitter:
               type: object
-              description: Indicates who submitted the return. The return can be submitted by an employee on behalf of a customer. In that case, the submitter and requestor data is different. The field can be retrieved only by an employee, that is a person who has the `returns.returns_manage scope` granted.
+              description: 'Indicates who submitted the return. The return can be submitted by an employee on behalf of a customer. In that case, the submitter and requestor data is different. The field can be retrieved only by an employee, that is a person who has the `returns.returns_manage scope` granted.'
               properties:
                 userType:
                   type: string
@@ -1101,7 +1101,7 @@ components:
                   description: Submitter email name.
             approver:
               type: object
-              description: Information about the approver of the return. The return can be approved by a particular user or a group of users. The field can be retrieved only by an employee, that is a person who has the `returns.returns_read` scope granted.
+              description: 'Information about the approver of the return. The return can be approved by a particular user or a group of users. The field can be retrieved only by an employee, that is a person who has the `returns.returns_read` scope granted.'
               properties:
                 type:
                   type: string
@@ -1153,21 +1153,21 @@ components:
             calculatedUnitPrice:
               allOf:
                 - $ref: '#/components/schemas/calculatedPrice'
-              description: Unit price derived from the order entry `calculatedPrice.finalPrice` divided by the order entry amount. Includes discounts and fees. Present only if the order entry has a valid `calculatedPrice.finalPrice`.
+              description: 'Unit price derived from the order entry `calculatedPrice.finalPrice` divided by the order entry amount. Includes discounts and fees. Present only if the order entry has a valid `calculatedPrice.finalPrice`.'
             calculatedPrice:
               allOf:
                 - $ref: '#/components/schemas/calculatedFinalPrice'
-              description: Total calculated price for the returned quantity of this item. Computed as `calculatedUnitPrice` multiplied by the returned quantity. Present only if the order entry has a valid `calculatedPrice.finalPrice`.
+              description: 'Total calculated price for the returned quantity of this item. Computed as `calculatedUnitPrice` multiplied by the returned quantity. Present only if the order entry has a valid `calculatedPrice.finalPrice`.'
     order:
       type: object
-      description: Represents the order which is being (fully or partially) returned.
+      description: 'Represents the order which is being (fully or partially) returned.'
       properties:
         id:
           type: string
           description: Unique identifier of an order.
         items:
           type: array
-          description: Represents a list of items included in the order. In the `order` entity, the field is called `entries`.
+          description: 'Represents a list of items included in the order. In the `order` entity, the field is called `entries`.'
           items:
             $ref: '#/components/schemas/orderItem'
       required:
@@ -1179,10 +1179,10 @@ components:
       properties:
         id:
           type: string
-          description: Unique identifier of an item. In the order entity, the field is called `order.entries[].id`.
+          description: 'Unique identifier of an item. In the order entity, the field is called `order.entries[].id`.'
         quantity:
           type: integer
-          description: Quantity of the items in the order. In the order entity, the field is called `order.entries[].amount`.
+          description: 'Quantity of the items in the order. In the order entity, the field is called `order.entries[].amount`.'
         reason:
           type: object
           description: A reason why the item needs to be returned.
