@@ -815,11 +815,11 @@ components:
         - reason
     basicCustomerReturn:
       title: A return request created by a customer.
-      description: Base schema for a return requested by a customer.
+      description: Base schema for a return requested BY A CUSTOMER.
       $ref: '#/components/schemas/basicReturn'
     basicEmployeeReturn:
       title: A return request created on behalf of a customer.
-      description: Base schema for returns created by an employee for a registered customer.
+      description: Base schema for returns created by an employee FOR A REGISTERED CUSTOMER.
       allOf:
         - $ref: '#/components/schemas/basicEmployeeReturnBase'
         - type: object
@@ -833,15 +833,9 @@ components:
                 customerId:
                   type: string
                   description: Identifier of a customer to whom the order and return belong.
-                anonymous:
-                  type: boolean
-                  description: Indicates that the request is related with anonymous orders
-                email:
-                  type: string
-                  description: Email which has been used for anonymous order
     employeeReturnForAnonymousOrder:
-      title: A return request created on behalf of a customer for an anonymous order.
-      description: Base schema for returns created by an employee for an anonymous order.
+      title: A return request created on behalf of a customer FOR AN ANONYMOUS ORDER.
+      description: Base schema for returns created by an employee for an ANONYMOUS ORDER.
       allOf:
         - $ref: '#/components/schemas/basicEmployeeReturnBase'
         - type: object
@@ -1059,6 +1053,7 @@ components:
                   type: string
             calculatedPrice:
               $ref: '#/components/schemas/calculatedFinalPrice'
+              description: 'Aggregated calculated price across all returned items. Derived from each order entry `calculatedPrice.finalPrice`. Null if no order entries have calculated prices.'
     fullEmployeeReturn:
       title: A return object for an employee
       description: Schema for retrieving returns by an employee.
