@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2026-03-11: Sequential ID Service - new schema removal endpoint
+# 2026-03-19: Sequential ID Service - new schema removal endpoint
 
 ## Overview
 
