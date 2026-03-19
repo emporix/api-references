@@ -172,7 +172,7 @@ paths:
       summary: Deleting a sequence schema
       description: |-
         Deletes a sequence schema by its ID.
-      operationId: GET-sequential-id-retrieve-schema
+      operationId: DELETE-sequential-id-remove-schema
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
       security:
@@ -186,7 +186,7 @@ paths:
         required: true
         schema:
           type: string
-        description: The ID of the schema to delete.
+        description: The ID of the schema.
   '/sequential-id/{tenant}/schemas/{schemaId}/setActive':
     post:
       responses:
@@ -393,7 +393,6 @@ paths:
             - sequentialid.schema_view
       tags:
         - Sequential IDs management
-
 components:
   schemas:
     SequenceSchema:
