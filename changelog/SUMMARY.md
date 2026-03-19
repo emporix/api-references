@@ -8,6 +8,12 @@
 
 ## 2026
 
+* [2026-03-16: Order Service - checkout property for sales orders](2026/2026-03-16-order.md)
+* [2026-03-12: Order Service - hybris-count header deprecated](2026/2026-03-12-order.md)
+* [2026-03-10: Customer Service - SSO customer authentication based on token exchange](2026/2026-03-10-customer.md)
+* [2026-03-09: Emporix SDK - Product API skipRelatedItemsValidation support](2026/2026-03-09-sdk.md)
+* [2026-03-09: Product Service – skip related items validation](2026/2026-03-09-product.md)
+* [2026-02-24: Emporix SDK - price list prices q param search support](2026/2026-02-24-sdk.md)
 * [2026-02-20: Price Service - new search endpoint and query parameter for price list prices](2026/2026-02-20-price.md)
 * [2026-02-12: Emporix SDK - restrictions support](2026/2026-02-12-sdk.md)
 * [2026-02-11: Quote Service - restriction property for quotes](2026/2026-02-11-quote.md)
