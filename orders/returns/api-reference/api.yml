@@ -251,7 +251,7 @@ components:
                 status: Not Found
                 message: The return with id 7ba2f2b6-7dc8-45ff-9f20-4e6163c14c2e has not been found.
     returns_response_BadRequest_400:
-      description: 'Bad request due to validation, incorrect parameters, etc.'
+      description: Bad request due to validation, incorrect parameters, etc.
       content:
         application/json:
           schema:
@@ -365,6 +365,19 @@ components:
                         total:
                           value: 3.98
                           currency: USD
+                        calculatedUnitPrice:
+                          netValue: 1.68
+                          grossValue: 1.99
+                          taxValue: 0.31
+                          taxCode: STANDARD
+                          taxRate: 19.0
+                        calculatedPrice:
+                          finalPrice:
+                            netValue: 3.36
+                            grossValue: 3.98
+                            taxValue: 0.62
+                            taxCode: STANDARD
+                            taxRate: 19.0
                       - id: '32102'
                         name: Jacket
                         quantity: 15
@@ -374,12 +387,32 @@ components:
                         total:
                           value: 15
                           currency: USD
+                        calculatedUnitPrice:
+                          netValue: 0.84
+                          grossValue: 1.0
+                          taxValue: 0.16
+                          taxCode: STANDARD
+                          taxRate: 19.0
+                        calculatedPrice:
+                          finalPrice:
+                            netValue: 12.6
+                            grossValue: 15.0
+                            taxValue: 2.4
+                            taxCode: STANDARD
+                            taxRate: 19.0
                 reason:
                   code: '001'
                   details: The items do not work.
                 total:
                   value: 18.98
                   currency: USD
+                calculatedPrice:
+                  finalPrice:
+                    netValue: 15.96
+                    grossValue: 18.98
+                    taxValue: 3.02
+                    taxCode: STANDARD
+                    taxRate: 19.0
                 expiryDate: '2023-04-31T13:18:02.379Z'
                 metadata:
                   createdAt: '2023-04-31T13:18:02.379Z'
@@ -405,6 +438,19 @@ components:
                         total:
                           value: 3.98
                           currency: USD
+                        calculatedUnitPrice:
+                          netValue: 1.68
+                          grossValue: 1.99
+                          taxValue: 0.31
+                          taxCode: STANDARD
+                          taxRate: 19.0
+                        calculatedPrice:
+                          finalPrice:
+                            netValue: 3.36
+                            grossValue: 3.98
+                            taxValue: 0.62
+                            taxCode: STANDARD
+                            taxRate: 19.0
                       - id: '32102'
                         name: Jacket
                         quantity: 15
@@ -414,6 +460,19 @@ components:
                         total:
                           value: 15
                           currency: USD
+                        calculatedUnitPrice:
+                          netValue: 0.84
+                          grossValue: 1.0
+                          taxValue: 0.16
+                          taxCode: STANDARD
+                          taxRate: 19.0
+                        calculatedPrice:
+                          finalPrice:
+                            netValue: 12.6
+                            grossValue: 15.0
+                            taxValue: 2.4
+                            taxCode: STANDARD
+                            taxRate: 19.0
                 reason:
                   code: '001'
                   details: The items do not work.
@@ -432,6 +491,13 @@ components:
                 total:
                   value: 18.98
                   currency: USD
+                calculatedPrice:
+                  finalPrice:
+                    netValue: 15.96
+                    grossValue: 18.98
+                    taxValue: 3.02
+                    taxCode: STANDARD
+                    taxRate: 19.0
                 expiryDate: '2023-04-31T13:18:02.379Z'
                 metadata:
                   createdAt: '2023-04-31T13:18:02.379Z'
@@ -478,6 +544,19 @@ components:
                           total:
                             value: 3.98
                             currency: USD
+                          calculatedUnitPrice:
+                            netValue: 1.68
+                            grossValue: 1.99
+                            taxValue: 0.31
+                            taxCode: STANDARD
+                            taxRate: 19.0
+                          calculatedPrice:
+                            finalPrice:
+                              netValue: 3.36
+                              grossValue: 3.98
+                              taxValue: 0.62
+                              taxCode: STANDARD
+                              taxRate: 19.0
                         - id: '32102'
                           name: Jacket
                           quantity: 15
@@ -487,12 +566,32 @@ components:
                           total:
                             value: 15
                             currency: USD
+                          calculatedUnitPrice:
+                            netValue: 0.84
+                            grossValue: 1.0
+                            taxValue: 0.16
+                            taxCode: STANDARD
+                            taxRate: 19.0
+                          calculatedPrice:
+                            finalPrice:
+                              netValue: 12.6
+                              grossValue: 15.0
+                              taxValue: 2.4
+                              taxCode: STANDARD
+                              taxRate: 19.0
                   reason:
                     code: '001'
                     details: The items do not work.
                   total:
                     value: 18.98
                     currency: USD
+                  calculatedPrice:
+                    finalPrice:
+                      netValue: 15.96
+                      grossValue: 18.98
+                      taxValue: 3.02
+                      taxCode: STANDARD
+                      taxRate: 19.0
                   expiryDate: '2023-04-31T13:18:02.379Z'
                   metadata:
                     createdAt: '2023-04-31T13:18:02.379Z'
@@ -518,6 +617,19 @@ components:
                           total:
                             value: 3.98
                             currency: USD
+                          calculatedUnitPrice:
+                            netValue: 1.68
+                            grossValue: 1.99
+                            taxValue: 0.31
+                            taxCode: STANDARD
+                            taxRate: 19.0
+                          calculatedPrice:
+                            finalPrice:
+                              netValue: 3.36
+                              grossValue: 3.98
+                              taxValue: 0.62
+                              taxCode: STANDARD
+                              taxRate: 19.0
                         - id: '32102'
                           name: Jacket
                           quantity: 15
@@ -527,6 +639,19 @@ components:
                           total:
                             value: 15
                             currency: USD
+                          calculatedUnitPrice:
+                            netValue: 0.84
+                            grossValue: 1.0
+                            taxValue: 0.16
+                            taxCode: STANDARD
+                            taxRate: 19.0
+                          calculatedPrice:
+                            finalPrice:
+                              netValue: 12.6
+                              grossValue: 15.0
+                              taxValue: 2.4
+                              taxCode: STANDARD
+                              taxRate: 19.0
                   reason:
                     code: '001'
                     details: The items do not work.
@@ -546,6 +671,13 @@ components:
                   total:
                     value: 18.98
                     currency: USD
+                  calculatedPrice:
+                    finalPrice:
+                      netValue: 15.96
+                      grossValue: 18.98
+                      taxValue: 3.02
+                      taxCode: STANDARD
+                      taxRate: 19.0
                   expiryDate: '2023-04-31T13:18:02.379Z'
                   metadata:
                     createdAt: '2023-04-31T13:18:02.379Z'
@@ -580,6 +712,35 @@ components:
               type: string
               description: Unique identifier of a return.
         - $ref: '#/components/schemas/coreErrorMessage'
+    calculatedPrice:
+      type: object
+      description: Price calculation derived from the order entry `calculatedPrice.finalPrice`. The `finalPrice` reflects already applied discounts and fees.
+      properties:
+        netValue:
+          type: number
+          format: double
+          description: Net value of the price.
+        grossValue:
+          type: number
+          format: double
+          description: Gross value of the price.
+        taxValue:
+          type: number
+          format: double
+          description: Tax value of the price.
+        taxCode:
+          type: string
+          description: Tax code applied to the price. Set to `null` when items with different tax codes are aggregated.
+        taxRate:
+          type: number
+          format: double
+          description: Tax rate applied to the price. Set to `null` when items with different tax rates are aggregated.
+    calculatedFinalPrice:
+      type: object
+      description: Wrapper for the calculated price containing the final price after discounts and fees.
+      properties:
+        finalPrice:
+          $ref: '#/components/schemas/calculatedPrice'
     metadataCore:
       title: metadataCore
       description: 'Core metadata fields shared across multiple objects.'
@@ -629,12 +790,12 @@ components:
       properties:
         orders:
           type: array
-          description: 'A list of orders that contain items to be returned. All the orders must have the same currency. '
+          description: A list of orders that contain items to be returned. All the orders must have the same currency.
           items:
             $ref: '#/components/schemas/order'
         reason:
           type: object
-          description: 'A reason why the return is created. One of the values needs to be provided: `code` or `details`. '
+          description: 'A reason why the return is created. One of the values needs to be provided: `code` or `details`.'
           properties:
             code:
               type: string
@@ -654,93 +815,75 @@ components:
         - reason
     basicCustomerReturn:
       title: A return request created by a customer.
-      description: Base schema for a return requested by a customer.
-      allOf:
-        - $ref: '#/components/schemas/basicReturn'
+      description: Base schema for a return requested BY A CUSTOMER.
+      $ref: '#/components/schemas/basicReturn'
     basicEmployeeReturn:
       title: A return request created on behalf of a customer.
-      description: Base schema for returns on behalf of a customer.
+      description: Base schema for returns created by an employee FOR A REGISTERED CUSTOMER.
       allOf:
-        - $ref: '#/components/schemas/basicReturn'
+        - $ref: '#/components/schemas/basicEmployeeReturnBase'
         - type: object
-          properties: 
+          properties:
             requestor:
               type: object
-              description: 'Indicates who requested the return. The field can be set and updated only by an employee, that is a person who has a `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.'
+              description: Indicates who requested the return. The field can be set and updated only by an employee, that is a person who has a `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.
               required:
                 - customerId
               properties:
                 customerId:
                   type: string
-                  description: 'Identifier of a customer to whom the order and return belong.'
-                anonymous:
-                  type: boolean
-                  description: 'asdf'
-                email:
-                  type: string
-                  description: 'asdf'
-            submitter:
-              type: object
-              description: 'Indicates who submitted the return. The return can be submitted by an employee on behalf of a customer. In that case, the submitter and requestor of data are different entities. This field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.'
-              required:
-                - firstName
-                - lastName
-                - email
-              properties:
-                firstName:
-                  type: string
-                  description: Requestor's first name.
-                lastName:
-                  type: string
-                  description: Requestor's last name.
-                email:
-                  type: string
-                  description: Requestor's email address.
-            approver:
-              type: object
-              description: |-
-                Information about the approver of the return. The return can be approved by a particular user or a group of users. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. The provided value is validated against the `iam-service`:
-                * If `type` is equal to `USER`, then the provided `id` must be a valid employee identifier
-                * If `type` is equal to `GROUP`, then the provided `id` must be a valid employee group identifier
-              properties:
-                type:
-                  type: string
-                  description: 'Indicates whether the return needs to be approved by a particular user or a user group. Possible values: `USER` or `GROUP`. '
-                  enum:
-                    - USER
-                    - GROUP
-                id:
-                  type: string
-                  description: 'Identifier of a user or a user group, depending on the `type` value. '
-            expiryDate:
-              type: string
-              description: 'The date when a return will expire. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. If the value is not provided, then the default value is fetched from the `configuration-service`, under the `return.defaultExpiryDate` key. The value should be provided in the number format. The value specifies for how many days the return will be valid. If the configuration does not exist, then a `30` days offset is taken as a fallback.'
-          required:
-            - requestor
-            - submitter
+                  description: Identifier of a customer to whom the order and return belong.
     employeeReturnForAnonymousOrder:
-      title: A return request created on behalf of a customer for anonymous order.
-      description: Base schema for a return requested by a customer. Related to an anonymous order.
+      title: A return request created on behalf of a customer FOR AN ANONYMOUS ORDER.
+      description: Base schema for returns created by an employee for an ANONYMOUS ORDER.
       allOf:
-        - $ref: '#/components/schemas/basicReturn'
+        - $ref: '#/components/schemas/basicEmployeeReturnBase'
         - type: object
           properties:
             requestor:
               type: object
-              description: 'Indicates who requested the return. The field can be set and updated only by an employee, that is a person who has a `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.'
+              description: Indicates who requested the return. The field can be set and updated only by an employee, that is a person who has a `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.
               required:
                 - anonymous
                 - email
               properties:
                 anonymous:
                   type: boolean
-                  description: 'Indicates that the request is related with anonymous orders'
+                  description: Indicates that the request is related with anonymous orders
                 email:
                   type: string
-                  description: 'Email which has been used for anonymous order'
+                  description: Email which has been used for anonymous order
+    basicEmployeeReturnBase:
+      title: Base schema for returns created by an employee.
+      description: Common structure for returns created by an employee on behalf of a customer.
+      allOf:
+        - $ref: '#/components/schemas/basicReturn'
+        - type: object
+          properties:
+            requestor:
+              type: object
+              description: |
+                Indicates who requested the return. The field can be set and updated only by an employee,
+                that is a person who has the `returns.returns_manage` scope granted.
+                For a customer with the `returns.returns_manage_own` scope, the value is populated
+                automatically based on an auth token.
+              properties:
+                customerId:
+                  type: string
+                  description: Identifier of a customer to whom the order and return belong.
+                anonymous:
+                  type: boolean
+                  description: Indicates whether the request relates to an anonymous order.
+                email:
+                  type: string
+                  description: Email associated with the requestor.
             submitter:
               type: object
-              description: 'Indicates who submitted the return. The return can be submitted by an employee on behalf of a customer. In that case, the submitter and requestor of data are different entities. This field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.'
+              description: |
+                Indicates who submitted the return. The return can be submitted by an employee
+                on behalf of a customer. In that case, the submitter and requestor are different entities.
+                This field can be set and updated only by an employee with the
+                `returns.returns_manage` scope granted.
               required:
                 - firstName
                 - lastName
@@ -748,32 +891,43 @@ components:
               properties:
                 firstName:
                   type: string
-                  description: Requestor's first name.
+                  description: Requestor first name.
                 lastName:
                   type: string
-                  description: Requestor's last name.
+                  description: Requestor last name.
                 email:
                   type: string
-                  description: Requestor's email address.
+                  description: Requestor email address.
             approver:
               type: object
-              description: |-
-                Information about the approver of the return. The return can be approved by a particular user or a group of users. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. The provided value is validated against the `iam-service`:
+              description: |
+                Information about the approver of the return. The return can be approved
+                by a particular user or a group of users. The field can be set and updated
+                only by an employee with the `returns.returns_manage` scope granted.
+
+                The provided value is validated against the `iam-service`:
                 * If `type` is equal to `USER`, then the provided `id` must be a valid employee identifier
                 * If `type` is equal to `GROUP`, then the provided `id` must be a valid employee group identifier
               properties:
                 type:
                   type: string
-                  description: 'Indicates whether the return needs to be approved by a particular user or a user group. Possible values: `USER` or `GROUP`. '
+                  description: 'Indicates whether the return must be approved by a user or a group. Possible values: `USER` or `GROUP`.'
                   enum:
                     - USER
                     - GROUP
                 id:
                   type: string
-                  description: 'Identifier of a user or a user group, depending on the `type` value. '
+                  description: 'Identifier of a user or a user group depending on the `type` value.'
             expiryDate:
               type: string
-              description: 'The date when a return will expire. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. If the value is not provided, then the default value is fetched from the `configuration-service`, under the `return.defaultExpiryDate` key. The value should be provided in the number format. The value specifies for how many days the return will be valid. If the configuration does not exist, then a `30` days offset is taken as a fallback.'
+              description: |
+                'The date when a return expires. The field can be set and updated only by an employee
+                with the `returns.returns_manage` scope granted.
+
+                If the value is not provided, the default value is fetched from the
+                `configuration-service` under the `return.defaultExpiryDate` key.
+
+                If the configuration does not exist, a fallback of 30 days is applied.
           required:
             - requestor
             - submitter
@@ -819,7 +973,7 @@ components:
               properties:
                 customerId:
                   type: string
-                  description: 'Identifier of a customer to whom the order and return belong. '
+                  description: Identifier of a customer to whom the order and return belong.
             submitter:
               type: object
               description: 'Indicates who submitted the return. The return can be submitted by an employee on behalf of a customer. In that case, the submitter and requestor data is different. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.'
@@ -830,13 +984,13 @@ components:
               properties:
                 firstName:
                   type: string
-                  description: Requestor's first name.
+                  description: Requestor first name.
                 lastName:
                   type: string
-                  description: Requestor's last name.
+                  description: Requestor last name.
                 email:
                   type: string
-                  description: Requestor's email address.
+                  description: Requestor email address.
             approver:
               type: object
               description: |-
@@ -846,33 +1000,33 @@ components:
               properties:
                 type:
                   type: string
-                  description: 'Indicates whether the return needs to be approved by a particular user or a user group. Possible values: `USER` or `GROUP`. '
+                  description: 'Indicates whether the return needs to be approved by a particular user or a user group. Possible values: `USER` or `GROUP`.'
                   enum:
                     - USER
                     - GROUP
                 id:
                   type: string
-                  description: 'Identifier of a user or a user group, depending on the `type` value. '
+                  description: Identifier of a user or a user group, depending on the `type` value.
             expiryDate:
               type: string
-              description: 'The date when the return will expire. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. If the value is not provided, then the default value is fetched from the `configuration-service` under the `return.defaultExpiryDate` key. The value should be provided in the number format. The value specifies for how many days the return will be valid. If the configuration does not exist, then a `30` days offset is taken as a fallback.'
+              description: The date when the return expires. The field can be set and updated only by an employee, that is a person who has the `returns.returns_manage` scope granted. If the value is not provided, then the default value is fetched from the `configuration-service` under the `return.defaultExpiryDate` key. The value should be provided in the number format. The value specifies for how many days the return will be valid. If the configuration does not exist, then a `30` days offset is taken as a fallback.
           required:
             - approvalStatus
             - requestor
             - submitter
     fullCustomerReturn:
       title: A customer return object.
-      description: 'Schema for retrieving returns by a customer.'
+      description: Schema for retrieving returns by a customer.
       allOf:
+        - $ref: '#/components/schemas/basicCustomerReturn'
+        - $ref: '#/components/schemas/assistedBuying'
         - type: object
           properties:
             id:
               type: string
-              description: 'Unique identifier of a return, represented as a UUID string.'
+              description: Unique identifier of a return, represented as a UUID string.
             metadata:
               $ref: '#/components/schemas/metadataResponse'
-        - type: object
-          properties:
             received:
               type: boolean
               description: Indicates whether the items from the return have been received.
@@ -883,54 +1037,23 @@ components:
                 - PENDING
                 - REJECTED
                 - CLOSED
-              description: 'Indicates the current status of the order. When an order is being created, then its status is automatically set to `PENDING`. An approver can change the status to `APPROVED` or `REJECTED`. A customer can change the status to `CLOSED`.'
             expiryDate:
               type: string
               description: 'A date when the return will expire. The value is returned as an ISO-8601 representation of an Instant. For example: `2022-04-31T13:18:02.379Z`'
             orders:
               type: array
               items:
-                type: object
-                properties:
-                  items:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        name:
-                          type: string
-                          description: Name of a product.
-                        unitPrice:
-                          type: object
-                          description: The value represents a price (value and currency) of a single unit of the product.
-                          properties:
-                            value:
-                              type: number
-                              description: The value represents a price value of a single unit of the product.
-                            currency:
-                              type: string
-                              description: 'The value represents the currency associated with the price. The currency is compliant with the ISO-4217 standard (see https://www.iso.org/iso-4217-currency-codes.html).'
-                        total:
-                          type: object
-                          description: The value represents the total price (value and currency) of all returned products related to the order.
-                          properties:
-                            value:
-                              type: number
-                              description: The value represents the total price value of all returned products.
-                            currency:
-                              type: string
-                              description: 'The value represents the currency associated with the price. The currency is compliant with the ISO-4217 standard (see https://www.iso.org/iso-4217-currency-codes.html).'
+                $ref: '#/components/schemas/fullReturnOrder'
             total:
               type: object
-              description: The value represents a total price (value and currency) of all returned products related to all orders.
               properties:
                 value:
                   type: number
                 currency:
                   type: string
-                  description: 'The value represents the currency associated with the price. The currency is compliant with the ISO-4217 standard (see https://www.iso.org/iso-4217-currency-codes.html).'
-        - $ref: '#/components/schemas/basicCustomerReturn'
-        - $ref: '#/components/schemas/assistedBuying'
+            calculatedPrice:
+              $ref: '#/components/schemas/calculatedFinalPrice'
+              description: 'Aggregated calculated price across all returned items. Derived from each order entry `calculatedPrice.finalPrice`. Null if no order entries have calculated prices.'
     fullEmployeeReturn:
       title: A return object for an employee
       description: Schema for retrieving returns by an employee.
@@ -947,14 +1070,14 @@ components:
                   description: Identifier of a customer to whom the order and return belong.
                 firstName:
                   type: string
-                  description: Requestor's first name.
+                  description: Requestor first name.
                 lastName:
                   type: string
                   description: |
                     Requestor's last name.
                 email:
                   type: string
-                  description: Requestor's email.
+                  description: Requestor email.
             submitter:
               type: object
               description: 'Indicates who submitted the return. The return can be submitted by an employee on behalf of a customer. In that case, the submitter and requestor data is different. The field can be retrieved only by an employee, that is a person who has the `returns.returns_manage scope` granted.'
@@ -964,13 +1087,13 @@ components:
                   description: Indicates who sent the return request. Information whether the request has been sent by a customer or by someone else on behalf of a customer.
                 firstName:
                   type: string
-                  description: Submitter's first name.
+                  description: Submitter first name.
                 lastName:
                   type: string
-                  description: Submitter's last name.
+                  description: Submitter last name.
                 email:
                   type: string
-                  description: Submitter's email name.
+                  description: Submitter email name.
             approver:
               type: object
               description: 'Information about the approver of the return. The return can be approved by a particular user or a group of users. The field can be retrieved only by an employee, that is a person who has the `returns.returns_read` scope granted.'
@@ -983,7 +1106,53 @@ components:
                     - GROUP
                 id:
                   type: string
-                  description: 'Identifier of a user or a user group, depending on the `type` value.'
+                  description: Identifier of a user or a user group, depending on the `type` value.
+    fullReturnOrder:
+      allOf:
+        - $ref: '#/components/schemas/order'
+        - type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/fullReturnItem'
+    fullReturnItem:
+      allOf:
+        - $ref: '#/components/schemas/orderItem'
+        - type: object
+          description: Detailed information about a returned item within an order.
+          properties:
+            name:
+              type: string
+              description: Name of a product.
+            unitPrice:
+              type: object
+              description: The value represents a price (value and currency) of a single unit of the product.
+              properties:
+                value:
+                  type: number
+                  description: The value represents a price value of a single unit of the product.
+                currency:
+                  type: string
+                  description: The value represents the currency associated with the price. The currency is compliant with the ISO-4217 standard.
+            total:
+              type: object
+              description: The value represents the total price (value and currency) of all returned products related to the order.
+              properties:
+                value:
+                  type: number
+                  description: The value represents the total price value of all returned products.
+                currency:
+                  type: string
+                  description: The value represents the currency associated with the price. The currency is compliant with the ISO-4217 standard.
+            calculatedUnitPrice:
+              allOf:
+                - $ref: '#/components/schemas/calculatedPrice'
+              description: 'Unit price derived from the order entry `calculatedPrice.finalPrice` divided by the order entry amount. Includes discounts and fees. Present only if the order entry has a valid `calculatedPrice.finalPrice`.'
+            calculatedPrice:
+              allOf:
+                - $ref: '#/components/schemas/calculatedFinalPrice'
+              description: 'Total calculated price for the returned quantity of this item. Computed as `calculatedUnitPrice` multiplied by the returned quantity. Present only if the order entry has a valid `calculatedPrice.finalPrice`.'
     order:
       type: object
       description: 'Represents the order which is being (fully or partially) returned.'
@@ -995,30 +1164,33 @@ components:
           type: array
           description: 'Represents a list of items included in the order. In the `order` entity, the field is called `entries`.'
           items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: 'Unique identifier of an item. In the `order` entity, the field is called `order.entries[].id`.'
-              quantity:
-                type: integer
-                description: 'Quantity of the items in the order. In the order entity, the field is called `order.entries[].amount`.'
-              reason:
-                type: object
-                description: 'A reason why the item needs to be returned.'
-                properties:
-                  code:
-                    type: string
-                    description: Code of a particular reason for return. A number which represents a reason why an order has been (fully or partially) returned.
-                  details:
-                    type: string
-                    description: Details why the item is being returned.
-            required:
-              - id
-              - quantity
+            $ref: '#/components/schemas/orderItem'
       required:
         - id
         - items
+    orderItem:
+      type: object
+      description: Represents an item included in the order.
+      properties:
+        id:
+          type: string
+          description: 'Unique identifier of an item. In the order entity, the field is called `order.entries[].id`.'
+        quantity:
+          type: integer
+          description: 'Quantity of the items in the order. In the order entity, the field is called `order.entries[].amount`.'
+        reason:
+          type: object
+          description: A reason why the item needs to be returned.
+          properties:
+            code:
+              type: string
+              description: Code representing the reason for return.
+            details:
+              type: string
+              description: Details why the item is being returned.
+      required:
+        - id
+        - quantity
     returnId:
       title: returnId
       type: object
@@ -1039,12 +1211,12 @@ components:
           description: 'Indicates an operation which should be done on a return. Available operations: `add` `remove` and `replace`'
         path:
           type: string
-          description: 'Indicates a path for which the value should be applied. For example:`/mixins/additionalAttributes/externalId`, `/approvalStatus`, `/requestor/customerId`'
+          description: 'Indicates a path for which the value should be applied. For example: `/mixins/additionalAttributes/externalId`, `/approvalStatus`, `/requestor/customerId`'
         value:
           oneOf:
             - type: object
             - type: string
-          description: 'Indicates a value that should be changed or added. The value can be of a primitive type, like string, number, boolean or it can be an object or an array.'
+          description: Indicates a value that should be changed or added. The value can be of a primitive type, like string, number, boolean or it can be an object or an array.
       required:
         - op
         - path
@@ -1057,20 +1229,20 @@ components:
           description: Identifier of an employee who performed an action on behalf of a customer.
         operation:
           type: string
-          description: '''Indicates an operation type done by an employee on behalf of a customer. Available options: `CREATE` and `UPDATE_STATUS`'''
+          description: 'Indicates an operation type done by an employee on behalf of a customer. Available options: `CREATE` and `UPDATE_STATUS`.'
           enum:
             - CREATE
             - UPDATE_STATUS
         timestamp:
           type: string
-          description: Indicates a timestamp when an operation was performed.
+          description: 'Indicates a timestamp when an operation was performed.'
     assistedBuying:
       title: assistedBuying
       type: object
       properties:
         entries:
           type: array
-          description: List of operations done by an employee on behalf of a customer.
+          description: 'List of operations done by an employee on behalf of a customer.'
           items:
             $ref: '#/components/schemas/assistedBuyingEntry'
       description: 'The field is populated only if an assisted buying operation was performed. The field is read-only. There is no possibility to update it by PUT/PATCH operation.'
@@ -1079,7 +1251,7 @@ components:
       content:
         application/json:
           schema:
-            anyOf:
+            oneOf:
               - $ref: '#/components/schemas/basicCustomerReturn'
               - $ref: '#/components/schemas/basicEmployeeReturn'
               - $ref: '#/components/schemas/employeeReturnForAnonymousOrder'
@@ -1255,7 +1427,7 @@ components:
         default: 60
         minimum: 1
         maximum: 60
-      description: The number of documents being retrieved on one page.
+      description: 'The number of documents being retrieved on one page.'
     sort_query_param:
       name: sort
       in: query
@@ -1309,7 +1481,7 @@ components:
       required: false
       schema:
         type: string
-      description: 'Customer’s saasToken retrieved when logging in a customer. The header is mandatory for operations done by a customer. '
+      description: 'Customer saasToken retrieved when logging in a customer. The header is mandatory for operations done by a customer. '
   securitySchemes:
     OAuth2:
       type: oauth2
