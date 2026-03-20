@@ -1,0 +1,62 @@
+# When a PR is merged to main, replace RELEASE_DATE placeholders in the changelog
+# with the merge date (in filenames, file content, and SUMMARY.md links).
+#
+# Usage: In your PR, create changelog entries using the placeholder RELEASE_DATE:
+#   - File: changelog/2025/RELEASE_DATE-my-feature.md (year folder is a hint; merge year is used)
+#   - Title inside file: # RELEASE_DATE: My feature title
+#   - SUMMARY.md: * [RELEASE_DATE: My feature title](2025/RELEASE_DATE-my-feature.md)
+# After merge, this workflow replaces RELEASE_DATE with the actual date (e.g. 2025-02-11).
+
+name: Update changelog dates on merge
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'changelog/**'
+
+jobs:
+  update-dates:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Check for RELEASE_DATE placeholder
+        id: check
+        run: |
+          has_placeholder=false
+          if grep -r --include='*.md' -l 'RELEASE_DATE' changelog/ 2>/dev/null | grep -q .; then
+            has_placeholder=true
+          fi
+          if find changelog -name '*RELEASE_DATE*' -type f 2>/dev/null | grep -q .; then
+            has_placeholder=true
+          fi
+          echo "has_placeholder=$has_placeholder" >> $GITHUB_OUTPUT
+
+      - name: Replace RELEASE_DATE with merge date
+        if: steps.check.outputs.has_placeholder == 'true'
+        run: |
+          # Use merge commit date (UTC) as the release date
+          RELEASE_DATE=$(date -u +%Y-%m-%d)
+          echo "Using release date: $RELEASE_DATE"
+          chmod +x .github/scripts/replace-release-date.sh
+          .github/scripts/replace-release-date.sh "$RELEASE_DATE"
+
+      - name: Commit and push if changed
+        if: steps.check.outputs.has_placeholder == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A changelog/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore(changelog): set RELEASE_DATE to merge date"
+            git push
+          fi
