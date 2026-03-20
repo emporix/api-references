@@ -159,13 +159,34 @@ paths:
             - sequentialid.schema_view
       tags:
         - Sequential IDs management
+    delete:
+      responses:
+        '204':
+          description: 'Successful schema removal'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/trait_yaasAware_403'
+        '500':
+          $ref: '#/components/responses/common_response_InternalServerError_500'
+      summary: Deleting a sequence schema
+      description: |-
+        Deletes a sequence schema by its ID.
+      operationId: DELETE-sequential-id-remove-schema
+      parameters:
+        - $ref: '#/components/parameters/trait_tenant'
+      security:
+        - OAuth2:
+            - sequentialid.schema_manage
+      tags:
+        - Sequential IDs management
     parameters:
       - name: schemaId
         in: path
         required: true
         schema:
           type: string
-        description: The ID of the schema to retrieve.
+        description: The ID of the schema.
   '/sequential-id/{tenant}/schemas/{schemaId}/setActive':
     post:
       responses:
@@ -540,6 +561,15 @@ components:
                 type: string
               field:
                 type: string
+    coreError:
+      type: object
+      properties:
+        status:
+          type: string
+          description: HTTP Status.
+        message:
+          type: string
+          description: Error message.
   responses:
     trait_yaasAware_400:
       description: Request syntactically incorrect. Details of the error are included in the response payload.
@@ -607,6 +637,17 @@ components:
               value:
                 status: 404
                 message: Resource does not exist.
+    common_response_InternalServerError_500:
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/coreError'
+          examples:
+            Internal Server Error:
+              value:
+                status: 500
+                message: Problem encountered while trying to connect to the database.
   parameters:
     trait_siteCode:
       name: siteCode
