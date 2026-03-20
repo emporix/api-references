@@ -183,8 +183,8 @@ paths:
         - Returns
       description: |
         Parial update of a single return document with given information.
-        If a return is updated by a customer directly, then the `returns.returns_manage_own` and `returns.returns_read_own` scope is required.
-        If a return is updated by a tenant employee on behalf of a customer, then the `returns.returns_manage` and `returns.returns_read` scope is required.
+        If a return is updated by a customer directly, then the `returns.returns_manage_own` and `returns.returns_read_own` scopes are required.
+        If a return is updated by a tenant employee on behalf of a customer, then the `returns.returns_manage` and `returns.returns_read` scopes are required.
 
         **Note**: Depending on a case, a different set of fields is allowed.
 
