@@ -517,12 +517,8 @@ components:
         application/json:
           schema:
             anyOf:
-              - items:
-                  $ref: '#/components/schemas/fullCustomerReturn'
-                type: array
-              - items:
-                  $ref: '#/components/schemas/fullEmployeeReturn'
-                type: array
+              - $ref: '#/components/schemas/fullCustomerReturn'
+              - $ref: '#/components/schemas/fullEmployeeReturn'
           examples:
             Returns retrieved by a customer:
               value:
@@ -827,12 +823,12 @@ components:
             requestor:
               type: object
               description: Indicates who requested the return. The field can be set and updated only by an employee, that is a person who has a `returns.returns_manage` scope granted. For a customer, who has the `returns.returns_manage_own` scope granted, the value is populated automatically based on an auth token.
-              required:
-                - customerId
               properties:
                 customerId:
                   type: string
                   description: Identifier of a customer to whom the order and return belong.
+              required:
+                - customerId
     employeeReturnForAnonymousOrder:
       title: A return request created on behalf of a customer FOR AN ANONYMOUS ORDER.
       description: Base schema for returns created by an employee for an ANONYMOUS ORDER.
@@ -853,6 +849,9 @@ components:
                 email:
                   type: string
                   description: Email which has been used for anonymous order
+                customerId:
+                  type: string
+                  description: Identifier of a customer to whom the order and return belong.
     basicEmployeeReturnBase:
       title: Base schema for returns created by an employee.
       description: Common structure for returns created by an employee on behalf of a customer.
@@ -867,16 +866,6 @@ components:
                 that is a person who has the `returns.returns_manage` scope granted.
                 For a customer with the `returns.returns_manage_own` scope, the value is populated
                 automatically based on an auth token.
-              properties:
-                customerId:
-                  type: string
-                  description: Identifier of a customer to whom the order and return belong.
-                anonymous:
-                  type: boolean
-                  description: Indicates whether the request relates to an anonymous order.
-                email:
-                  type: string
-                  description: Email associated with the requestor.
             submitter:
               type: object
               description: |
