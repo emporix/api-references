@@ -344,7 +344,15 @@ paths:
         - OAuth2:
             - ai.completion_manage
       requestBody:
-        $ref: '#/components/requestBodies/AgenticChat'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgenticRequest'
+            examples:
+              Agentic Chat request:
+                value:
+                  agentId: complaint-agent
+                  message: 'Find a product with "EON1243" code'
       tags:
         - Agent Chat
   '/ai-service/{tenant}/agentic/chat-async':
@@ -386,7 +394,30 @@ paths:
         - OAuth2:
             - ai.completion_manage
       requestBody:
-        $ref: '#/components/requestBodies/AgenticChat'
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AgenticRequestWithFiles'
+            examples:
+              Agentic Chat request with file:
+                value:
+                  files:
+                    externalValue: 'https://res.cloudinary.com/saas-ag/image/upload/v1695804155/emporix-logo-white-2f5e621206edefea6015fb4793959376_nswfbz.png'
+                  body:
+                    agentId: complaint-agent
+                    message: 'Find a product with "EON1243" code'
+                  metadata:
+                    - filename: emporix-logo-white-2f5e621206edefea6015fb4793959376_nswfbz.png
+                      caption: Emporix White Logo
+                      purpose: Use it in the slack message
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgenticRequest'
+            examples:
+              Agentic Chat request:
+                value:
+                  agentId: complaint-agent
+                  message: 'Find a product with "EON1243" code'
       tags:
         - Agent Chat
   '/ai-service/{tenant}/agentic/templates':
@@ -1677,6 +1708,36 @@ components:
       required:
         - agentId
         - message
+    AgenticFileMetadata:
+      type: object
+      properties:
+        filename:
+          type: string
+          description: The name of the file. It must match the name of the file uploaded via `files` multipart field in order to bound `caption` and `purpose` with correct file.
+        caption:
+          type: string
+          description: The caption of the file.
+        purpose:
+          type: string
+          description: The purpose of the file.
+      required:
+        - filename
+    AgenticRequestWithFiles:
+      type: object
+      properties:
+        files:
+          type: object
+          format: binary
+          description: Content of the files.
+        metadata:
+          allOf:
+            - $ref: '#/components/schemas/AgenticFileMetadata'
+        body:
+          allOf:
+            - $ref: '#/components/schemas/AgenticRequest'
+      required:
+        - file
+        - body
     AgentType:
       type: string
       description: Type of the agent handling the request.
@@ -3346,16 +3407,6 @@ components:
                 id: en
                 prompt: 'Generate a long description for product ''pipe cutter'' in language EN '
                 maxTokens: 2048
-    AgenticChat:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/AgenticRequest'
-          examples:
-            Agentic Chat request:
-              value:
-                agentId: complaint-agent
-                message: 'Find a product with "EON1243" code'
     Completion:
       content:
         application/json:
