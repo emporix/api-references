@@ -8,6 +8,7 @@
 
 ## 2026
 
+* [2026-03-26: Schema Service - support for CART_ITEM and ORDER_ENTRY type](2026/2026-03-26-schema.md)
 * [2026-03-23: Emporix SDK cartItem type replacement ](2026/2026-03-23-sdk.md)
 * [2026-03-20: Returns Service - calculated price properties for returns](2026/2026-03-20-return.md)
 * [2026-03-19: Sequential ID Service - new schema removal endpoint](2026/2026-03-19-sequential-id.md)
