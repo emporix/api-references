@@ -345,6 +345,21 @@ paths:
             - ai.completion_manage
       requestBody:
         content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AgenticRequestWithFiles'
+            examples:
+              Agentic Chat request with file:
+                value:
+                  files:
+                    externalValue: 'https://res.cloudinary.com/saas-ag/image/upload/v1695804155/emporix-logo-white-2f5e621206edefea6015fb4793959376_nswfbz.png'
+                  body:
+                    agentId: complaint-agent
+                    message: 'Find a product with "EON1243" code'
+                  metadata:
+                    - filename: emporix-logo-white-2f5e621206edefea6015fb4793959376_nswfbz.png
+                      caption: Emporix White Logo
+                      purpose: Use it in the slack message
           application/json:
             schema:
               $ref: '#/components/schemas/AgenticRequest'
