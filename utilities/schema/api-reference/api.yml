@@ -232,7 +232,7 @@ paths:
           in: query
           description: |
             Filters schemas by type. Possible types to specify, CART, CART_ITEM, CATEGORY, COMPANY, COUPON, CUSTOMER, CUSTOMER.ADDRESS, ORDER, ORDER_ENTRY, PRODUCT, QUOTE, RETURN, PRICE_LIST, SITE, CUSTOM_ENTITY, VENDOR. When the newest version of the schema is of different type than the previous one and the previous one matches the type specified in this query param, then the previous version is returned.
-          x-internal-note: If you add another type, the tutorial and MD guides have to be updated as well.
+# DEV NOTE: If you add another type, the tutorial and MD guides have to be updated as well.
           schema:
             type: string
   '/schema/{tenant}/schemas/{id}':
