@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2026-03-19: Availability Service - new bulk processing endpoints
+# 2026-03-30: Availability Service - new bulk processing endpoints
 
 ## Overview
 
