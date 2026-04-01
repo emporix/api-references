@@ -2809,7 +2809,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UserResponse'
+                  $ref: '#/components/schemas/UserExtendedResponse'
               examples:
                 Employee list with extended groups:
                   value:
@@ -2837,6 +2837,7 @@ paths:
                             en: Backoffice managers
                           code: BO_MANAGER
                           userType: EMPLOYEE
+                      lastLogin: '2025-05-21T09:15:00.733Z'
                     - id: 00u4ukqvzlEP31sCk417
                       firstName: John
                       lastName: Doe
@@ -2861,6 +2862,7 @@ paths:
                             en: Backoffice managers
                           code: BO_MANAGER
                           userType: EMPLOYEE
+                      lastLogin: '2025-05-20T10:45:07.333Z'
                 No employees found:
                   value: []
                 Employee list:
@@ -2879,6 +2881,7 @@ paths:
                       status: ACTIVE
                       groupIds:
                         - 1gr5e52e-6e27-4ac5-9471-2467d3fb7503
+                      lastLogin: '2025-05-25T13:45:05.353Z'
                     - id: 00u4ukqvzlEP31sCk417
                       firstName: John
                       lastName: Doe
@@ -2893,6 +2896,7 @@ paths:
                       status: PROVISIONED
                       groupIds:
                         - 1gr5e52e-6e27-4ac5-9471-2467d3fb7503
+                      lastLogin: '2025-04-10T10:47:07.733Z'
             application/xml:
               schema:
                 type: array
@@ -3111,7 +3115,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'
+                $ref: '#/components/schemas/UserExtendedResponse'
               examples:
                 Employee with extended groups:
                   value:
@@ -3139,6 +3143,7 @@ paths:
                           en: Backoffice managers
                         code: BO_MANAGER
                         userType: EMPLOYEE
+                    lastLogin: '2025-05-20T10:45:07.333Z'
                 Employee definition:
                   value:
                     id: 00u4ukqvzlEP31sCk417
@@ -4099,6 +4104,15 @@ components:
         - contactEmail
         - status
         - groupIds
+    UserExtendedResponse:
+      description: User response schema extended with additional information
+      allOf:
+        - $ref: '#/components/schemas/UserResponse'
+        - type: object
+          properties:
+            lastLogin:
+              type: string
+              description: Timestamp of account's last login
     UserUpdateRequest:
       type: object
       description: User update schema
