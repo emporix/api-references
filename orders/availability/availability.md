@@ -106,7 +106,7 @@ curl -i -X POST \
   ]'
 ```
 
-In this example, the same product has different availability on two sites: `site-a` and `site-b`, and both records are created in a single bulk operation.
+In this example, the same product has different availability on two sites: `site-a` and `site-b` where both records are created in a single bulk operation.
 
 ### Retrieve the availability information of a product
 
