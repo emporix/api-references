@@ -2809,7 +2809,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UserResponse'
+                  $ref: '#/components/schemas/UserExtendedResponse'
               examples:
                 Employee list with extended groups:
                   value:
@@ -3115,7 +3115,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'
+                $ref: '#/components/schemas/UserExtendedResponse'
               examples:
                 Employee with extended groups:
                   value:
@@ -4090,9 +4090,6 @@ components:
               userType:
                 type: string
                 description: The group type determines if the group can consist of users of the `CUSTOMER` or the `EMPLOYEE` type.
-        lastLogin:
-          type: string
-          description: Timestamp of account's last login
       required:
         - id
         - firstName
@@ -4107,6 +4104,15 @@ components:
         - contactEmail
         - status
         - groupIds
+    UserExtendedResponse:
+      description: User response schema extended with additional information
+      allOf:
+        - $ref: '#/components/schemas/UserResponse'
+        - type: object
+          properties:
+            lastLogin:
+              type: string
+              description: Timestamp of account's last login
     UserUpdateRequest:
       type: object
       description: User update schema
