@@ -452,9 +452,9 @@ paths:
     delete:
       tags:
         - Availabilities
-      summary: Deleting availability information of a product
+      summary: Deleting multiple availabilities information of a product
       description: |-
-        Deletes a specified product availability.
+        Deletes product availability records identified by the combination of `productId` and `site`. The maximum batch size is 200.
 
         **Note**: There is no possibility to delete a product bundle availability - it is always equal to the lowest availability found in the bundled products.
 
@@ -487,9 +487,9 @@ paths:
     post:
       tags:
         - Availabilities
-      summary: Creating new product availabilities
+      summary: Creating multiple product availabilities
       description: |-
-        Creates new product availabilities specified by product ID and site.
+        Creates availability records for a product based on its ID and site. A product can have different availability across sites, so each record is uniquely defined by the combination of `productId` and `site`. The maximum batch size is 200.
         
         **Note**: We recommend not to create new product availabilities for a site named `main`. A site named `main` works as an aggregator of availability data from other sites. It's not possible to later retrieve availability for a single site when it's called `main`.
         
@@ -537,10 +537,9 @@ paths:
     put:
       tags:
         - Availabilities
-      summary: Creating or updating product availabilities
+      summary: Upserting multiple availabilities information of a product
       description: |-
-        Creates new product availabilities specified by product ID and site where a product availability is not present yet.
-        Updates product availabilities specified by product ID and site where a product availability is already present.
+        Creates or updates product availability records based on product ID and site. If an availability does not yet exist for a given `productId` and `site`, it is created. If it already exists, it is updated. The maximum batch size is 200.
   
         **Note**: We recommend not to create new product availabilities for a site named `main`. A site named `main` works as an aggregator of availability data from other sites. It's not possible to later retrieve availability for a single site when it's called `main`.
   

@@ -8,7 +8,7 @@
 
 ## 2026
 
-* [2026-03-30: Availability Service - new bulk processing endpoints ](2026/2026-03-30-availability.md)
+* [2026-04-02: Availability Service - new bulk processing endpoints ](2026/2026-04-02-availability.md)
 * [2026-03-27: Schema Service - support for CART_ITEM and ORDER_ENTRY type](2026/2026-03-27-schema.md)
 * [2026-03-23: Emporix SDK cartItem type replacement ](2026/2026-03-23-sdk.md)
 * [2026-03-20: Returns Service - calculated price properties for returns](2026/2026-03-20-return.md)

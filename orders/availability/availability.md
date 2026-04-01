@@ -74,6 +74,40 @@ curl -i -X POST \
   }'
 ```
 
+### Manage product availabilities in bulk
+
+You can also manage multiple availabilities for a product at once. A single product can have different availabilities per site, so each availability entry is identified by the combination of `productId` and `site`.
+
+To create or update multiple product availabilities at once, send a request to one of the following endpoints:
+
+- [Creating multiple product availabilities](https://developer.emporix.io/api-references-1/readme/api-reference-2/availabilities#post-availability-tenant-availability-bulk)
+- [Upserting multiple availabilities information of a product](https://developer.emporix.io/api-references-1/readme/api-reference-2/availabilities#put-availability-tenant-availability-bulk)
+
+Example bulk request:
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/availability/{tenant}/availability/bulk' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '[
+    {
+      "productId": "PRODUCT-1",
+      "site": "site-a",
+      "stockLevel": 10,
+      "available": true
+    },
+    {
+      "productId": "PRODUCT-1",
+      "site": "site-b",
+      "stockLevel": 0,
+      "available": false
+    }
+  ]'
+```
+
+In this example, the same product has different availability on two sites: `site-a` and `site-b`, and both records are created in a single bulk operation.
+
 ### Retrieve the availability information of a product
 
 To check if a product's availability was added successfully, you need to send a request to the [Retrieving a product's availability](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) endpoint with the product's ID in the request body.

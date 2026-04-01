@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2026-03-30: Availability Service - new bulk processing endpoints
+# 2026-04-02: Availability Service - new bulk processing endpoints
 
 ## Overview
 
@@ -23,9 +23,9 @@ The Availability Service has been enhanced with bulk processing endpoints allowi
 
 | Endpoint                                                                                                                                                              | Description                                                              |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|
-| [Creating new product availabilities](https://developer.emporix.io/api-references-1/readme/api-reference-2/availabilities#post-availability-tenant-availability-bulk) | Creates new product availabilities specified by product ID and site.     |
-| [Upserting product availabilities](https://developer.emporix.io/api-references-1/readme/api-reference-2/availabilities#put-availability-tenant-availability-bulk)     | Creates/updates product availabilities specified by product ID and site. |
-| [Deleting product availabilities](https://developer.emporix.io/api-references-1/readme/api-reference-2/availabilities#delete-availability-tenant-availability-bulk)   | Deletes product availabilities specified by product ID and site.         |
+| [Creating multiple product availabilities](https://developer.emporix.io/api-references-1/readme/api-reference-2/availabilities#post-availability-tenant-availability-bulk) | Creates new product availabilities specified by product ID and site.     |
+| [Upserting multiple product availabilities](https://developer.emporix.io/api-references-1/readme/api-reference-2/availabilities#put-availability-tenant-availability-bulk)     | Creates/updates product availabilities specified by product ID and site. |
+| [Deleting multiple availability information of a product](https://developer.emporix.io/api-references-1/readme/api-reference-2/availabilities#delete-availability-tenant-availability-bulk)   | Deletes product availabilities specified by product ID and site.         |
 
 ## Known problems
 
