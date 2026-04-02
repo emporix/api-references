@@ -383,9 +383,16 @@ paths:
         $ref: '#/components/requestBodies/AgenticChat'
       tags:
         - Agent Chat
-  '/ai-service/{tenant}/agentic/attachments':
+  '/ai-service/{tenant}/agentic/{agentId}/attachments':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
+      - name: agentId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: |
+          ID of the agent which could use this attachment during chat process.
     post:
       summary: Uploads attachments for agent chat
       operationId: POST-ai-agents-attachments
@@ -416,7 +423,6 @@ paths:
         - image/png
         - application/pdf
         - text/csv
-        - application/vnd.ms-excel
         - text/plain
       requestBody:
         content:
