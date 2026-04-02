@@ -452,9 +452,9 @@ paths:
     delete:
       tags:
         - Availabilities
-      summary: Deleting availability information of a product
+      summary: Deleting multiple availabilities information of a product
       description: |-
-        Deletes a specified product availability.
+        Deletes product availability records identified by the combination of `productId` and `site`. The maximum batch size is 200.
 
         **Note**: There is no possibility to delete a product bundle availability - it is always equal to the lowest availability found in the bundled products.
 
@@ -480,6 +480,156 @@ paths:
         '500':
           $ref: '#/components/responses/ServerErrorResponse500'
       operationId: DELETE-availability-remove-product
+  /availability/{tenant}/availability/bulk:
+    parameters:
+      - $ref: '#/components/parameters/tenant-path'
+      - $ref: '#/components/parameters/vendor-id'
+    post:
+      tags:
+        - Availabilities
+      summary: Creating multiple product availabilities
+      description: |-
+        Creates availability records for a product based on its ID and site. A product can have different availability across sites, so each record is uniquely defined by the combination of `productId` and `site`. The maximum batch size is 200.
+        
+        **Note**: We recommend not to create new product availabilities for a site named `main`. A site named `main` works as an aggregator of availability data from other sites. It's not possible to later retrieve availability for a single site when it's called `main`.
+        
+        ***
+  
+        ### **Required scopes**
+        * Scope `availability.availability_manage`
+        * Scope `availability.availability_manage_by_vendor` required when using vendor-id header
+  
+        ***
+      security:
+        - OAuth2:
+            - availability.availability_manage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AvailabilityBulkDto'
+            examples:
+              Availability:
+                $ref: '#/components/examples/AvailabilityBulkDto'
+      responses:
+        '207':
+          description: Multi-status response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BulkResponse'
+              examples:
+                Segments Creations:
+                  $ref: '#/components/examples/BulkResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse400'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse401'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse403'
+        '500':
+          $ref: '#/components/responses/ServerErrorResponse500'
+      operationId: POST-availability-tenant-availability-bulk
+    put:
+      tags:
+        - Availabilities
+      summary: Upserting multiple availabilities information of a product
+      description: |-
+        Creates or updates product availability records based on product ID and site. If an availability does not yet exist for a given `productId` and `site`, it is created. If it already exists, it is updated. The maximum batch size is 200.
+  
+        **Note**: We recommend not to create new product availabilities for a site named `main`. A site named `main` works as an aggregator of availability data from other sites. It's not possible to later retrieve availability for a single site when it's called `main`.
+  
+        ***
+  
+        **Required scopes**
+        *  `availability.availability_manage`
+        *  `availability.availability_manage_by_vendor` - allows to create/update availabilities for products belonging to the vendor
+      security:
+        - OAuth2:
+            - availability.availability_manage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AvailabilityBulkDto'
+            examples:
+              Availability:
+                $ref: '#/components/examples/AvailabilityBulkDto'
+      responses:
+        '207':
+          description: Multi-status response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BulkResponse'
+              examples:
+                Segments Creations:
+                  $ref: '#/components/examples/BulkResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse400'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse401'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse403'
+        '500':
+          $ref: '#/components/responses/ServerErrorResponse500'
+      operationId: PUT-availability-tenant-availability-bulk
+    delete:
+      tags:
+        - Availabilities
+      summary: Deleting availability information of a product
+      description: |-
+        Deletes product availabilities specified by product ID and site.
+  
+        **Note**: There is no possibility to delete a product bundle availability - it is always equal to the lowest availability found in the bundled products.
+  
+        ***
+  
+        **Required scopes**
+        *  `availability.availability_manage`
+        *  `availability.availability_manage_by_vendor` - allows to delete availabilities belonging to the vendor
+      security:
+        - OAuth2:
+            - availability.availability_manage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AvailabilityDeleteBulkDto'
+            examples:
+              Availability:
+                $ref: '#/components/examples/AvailabilityDeleteBulkDto'
+      responses:
+        '207':
+          description: Multi-status response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BulkResponse'
+              examples:
+                Segments Creations:
+                  $ref: '#/components/examples/BulkResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse400'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse401'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse403'
+        '500':
+          $ref: '#/components/responses/ServerErrorResponse500'
+      operationId: DELETE-availability-tenant-availability-bulk
 components:
   parameters:
     tenant-path:
@@ -509,6 +659,14 @@ components:
       schema:
         type: string
         example: shop1
+    vendor-id:
+      in: header
+      name: venodr-id
+      required: false
+      description: 'Unique identifier of the vendor. The presence of this header will limit the operation to products assigned to the provided vendor.'
+      schema:
+        type: string
+        example: 68ad7d45c42fc8121a611fec
     location-path:
       in: path
       name: location
@@ -588,6 +746,56 @@ components:
                 type: string
               example:
                 productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
+    AvailabilityBulkDto:
+      type: object
+      properties:
+        productId:
+          type: string
+          description: 'Unique identifier of the product.'
+          example: '12345'
+        site:
+          type: string
+          description: 'Unique identifier of the site.'
+          example: 'shop1'
+        stockLevel:
+          type: number
+          description: 'Stock level of the product, expressed as a number.'
+          example: 10
+        available:
+          type: boolean
+          description: 'Flag indicating whether the product is available.'
+          example: true
+        popularity:
+          type: integer
+          description: 'Popularity of the product, expressed as a number.'
+          example: 5
+        distributionChannel:
+          $ref: '#/components/schemas/DistributionChannel'
+        mixins:
+          type: object
+          description: 'The field contains mixins values.'
+          additionalProperties: true
+        metadata:
+          type: object
+          properties:
+            mixins:
+              type: object
+              description: 'Links to the mixin schemas.'
+              additionalProperties:
+                type: string
+              example:
+                productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
+    AvailabilityDeleteBulkDto:
+      type: object
+      properties:
+        productId:
+          type: string
+          description: 'Unique identifier of the product.'
+          example: '12345'
+        site:
+          type: string
+          description: 'Unique identifier of the site.'
+          example: 'shop1'
     Availability:
       description: Availability details.
       type: object
@@ -720,6 +928,29 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/AvailabilityWithBundle'
+    BulkResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 'ID of the affected availability (in the format <site>:&lt;<productId>).'
+          example: 'shop1:12345'
+        index:
+          type: integer
+          description: 'Index of the processed item, matching the item position in request body.'
+          example: 1
+        code:
+          type: integer
+          description: 'HTTP Status Code.'
+          example: 204
+        status:
+          type: string
+          description: 'HTTP Status description.'
+          example: 'No Content'
+        message:
+          type: string
+          description: 'Error message. Present only when an error occurs (HTTP status code from groups `4xx` or `5xx`)'
+          example: 'There is no availability for productId: 12345 and site: shop1'
     DistributionChannel:
       type: string
       description: Name of the product distribution channel.
@@ -1034,6 +1265,24 @@ components:
         mixins:
           productCustomAttributes:
             minOrderQuantity: 2
+    AvailabilityBulkDto:
+      value:
+        productId: '12345'
+        site: 'shop1'
+        stockLevel: 10
+        available: true
+        popularity: 5
+        distributionChannel: ASSORTMENT
+        metadata:
+          mixins:
+            productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
+        mixins:
+          productCustomAttributes:
+            minOrderQuantity: 2
+    AvailabilityDeleteBulkDto:
+      value:
+        productId: '12345'
+        site: 'shop1'
     Availability:
       value:
         id: 'shop1:12345'
@@ -1134,6 +1383,13 @@ components:
       value:
         message: 'There is no availability for productId: 5f7c996173fc281cdd412345 and site: shop1'
         code: 404
+    BulkResponse:
+      value:
+        id: "shop1:12345"
+        index: 1
+        code: 400
+        status: Bad Request
+        message: "Product: '1234' does not belong to vendor: '68ad7d45c42fc8121a611fec'"
     Location:
       value:
         id: 'shop1:1234'
