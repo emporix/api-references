@@ -452,9 +452,9 @@ paths:
     delete:
       tags:
         - Availabilities
-      summary: Deleting multiple availabilities information of a product
+      summary: Deleting availability information of a product
       description: |-
-        Deletes product availability records identified by the combination of `productId` and `site`. The maximum batch size is 200.
+        Deletes a specified product availability.
 
         **Note**: There is no possibility to delete a product bundle availability - it is always equal to the lowest availability found in the bundled products.
 
@@ -523,8 +523,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/BulkResponse'
               examples:
-                Segments Creations:
-                  $ref: '#/components/examples/BulkResponse'
+                Multi-status creation example:
+                  $ref: '#/components/examples/BulkCreateResponse'
         '400':
           $ref: '#/components/responses/BadRequestResponse400'
         '401':
@@ -571,8 +571,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/BulkResponse'
               examples:
-                Segments Creations:
-                  $ref: '#/components/examples/BulkResponse'
+                Multi-status upsertion example:
+                  $ref: '#/components/examples/BulkUpsertResponse'
         '400':
           $ref: '#/components/responses/BadRequestResponse400'
         '401':
@@ -585,9 +585,9 @@ paths:
     delete:
       tags:
         - Availabilities
-      summary: Deleting availability information of a product
+      summary: Deleting multiple availabilities information of a product
       description: |-
-        Deletes product availabilities specified by product ID and site.
+        Deletes product availability records identified by the combination of `productId` and `site`. The maximum batch size is 200.
   
         **Note**: There is no possibility to delete a product bundle availability - it is always equal to the lowest availability found in the bundled products.
   
@@ -619,8 +619,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/BulkResponse'
               examples:
-                Segments Creations:
-                  $ref: '#/components/examples/BulkResponse'
+                Multi-status deletion example:
+                  $ref: '#/components/examples/BulkDeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequestResponse400'
         '401':
@@ -1267,22 +1267,22 @@ components:
             minOrderQuantity: 2
     AvailabilityBulkDto:
       value:
-        productId: '12345'
-        site: 'shop1'
-        stockLevel: 10
-        available: true
-        popularity: 5
-        distributionChannel: ASSORTMENT
-        metadata:
+        - productId: '12345'
+          site: 'shop1'
+          stockLevel: 10
+          available: true
+          popularity: 5
+          distributionChannel: ASSORTMENT
+          metadata:
+            mixins:
+              productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
           mixins:
-            productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
-        mixins:
-          productCustomAttributes:
-            minOrderQuantity: 2
+            productCustomAttributes:
+              minOrderQuantity: 2
     AvailabilityDeleteBulkDto:
       value:
-        productId: '12345'
-        site: 'shop1'
+        - productId: '12345'
+          site: 'shop1'
     Availability:
       value:
         id: 'shop1:12345'
@@ -1383,13 +1383,42 @@ components:
       value:
         message: 'There is no availability for productId: 5f7c996173fc281cdd412345 and site: shop1'
         code: 404
-    BulkResponse:
+    BulkCreateResponse:
       value:
-        id: "shop1:12345"
-        index: 1
-        code: 400
-        status: Bad Request
-        message: "Product: '1234' does not belong to vendor: '68ad7d45c42fc8121a611fec'"
+        - id: "shop1:12345"
+          index: 0
+          code: 201
+          status: Created
+        - id: "shop2:98765"
+          index: 1
+          code: 400
+          status: Bad Request
+          message: "Product: '98765' does not belong to vendor: '68ad7d45c42fc8121a611fec'"
+    BulkUpsertResponse:
+      value:
+        - id: "shop1:12345"
+          index: 0
+          code: 201
+          status: Created
+        - id: "shop2:98765"
+          index: 1
+          code: 204
+          status: No Content
+        - id: "shop3:98765"
+          index: 2
+          code: 400
+          status: Bad Request
+          message: "Product: '98765' does not belong to vendor: '68ad7d45c42fc8121a611fec'"
+    BulkDeleteResponse:
+      value:
+        - id: "shop1:12345"
+          index: 0
+          code: 204
+          status: No Content
+        - id: "shop2:98765"
+          index: 1
+          code: 204
+          status: No Content
     Location:
       value:
         id: 'shop1:1234'
