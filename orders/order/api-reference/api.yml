@@ -382,7 +382,6 @@ paths:
             - order.order_update
             - order.order_read_by_vendor
             - order.order_manage_by_vendor
-            - order.order_update_completed
       operationId: GET-order-retrieve-historical-transitions-employee
       responses:
         '200':
