@@ -8,6 +8,7 @@
 
 ## 2026
 
+* [2026-04-07: Product Service – dynamic variant product type and recalculation](2026/2026-04-07-product.md)
 * [2026-04-07: Emporix SDK - Availability Service support](2026/2026-04-07-sdk.md)
 * [2026-04-02: Availability Service - new bulk processing endpoints ](2026/2026-04-02-availability.md)
 * [2026-04-01: IAM Service - last login information exposed in user GET endpoints](2026/2026-04-01-iam.md)
