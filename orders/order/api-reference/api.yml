@@ -369,6 +369,43 @@ paths:
     parameters:
       - $ref: '#/components/parameters/trait_orderId'
       - $ref: '#/components/parameters/trait_tenant'
+  '/order-v2/{tenant}/salesorders/{orderId}/historical-transitions':
+    get:
+      tags:
+        - Orders (Tenant-managed)
+      summary: Retrieving historical status transitions for a specific order
+      description: |
+        Retrieves historical status transitions for a specific order, including status history metadata. To be used by tenant employees.
+      security:
+        - OAuth2:
+            - order.order_read
+            - order.order_update
+            - order.order_read_by_vendor
+            - order.order_manage_by_vendor
+            - order.order_update_completed
+      operationId: GET-order-retrieve-historical-transitions-employee
+      responses:
+        '200':
+          description: |
+            The request was successful. Historical status transitions for the given order have been returned.
+          content:
+            application/json:
+              examples:
+                Historical transitions example:
+                  $ref: '#/components/examples/historicalTransitions'
+              schema:
+                $ref: '#/components/schemas/historicalTransitionsResponse'
+        '403':
+          $ref: '#/components/responses/trait_yaasAware_403'
+        '404':
+          $ref: '#/components/responses/trait_order_404'
+        '500':
+          $ref: '#/components/responses/trait_500'
+      parameters:
+        - $ref: '#/components/parameters/trait_saas_token'
+    parameters:
+      - $ref: '#/components/parameters/trait_orderId'
+      - $ref: '#/components/parameters/trait_tenant'
   '/order-v2/{tenant}/salesorders/{orderId}/calculations':
     post:
       tags:
@@ -670,42 +707,6 @@ paths:
             schema:
               $ref: '#/components/schemas/transition'
         required: false
-      parameters:
-        - $ref: '#/components/parameters/trait_saas_token'
-    parameters:
-      - $ref: '#/components/parameters/trait_orderId'
-      - $ref: '#/components/parameters/trait_tenant'
-  '/order-v2/{tenant}/orders/{orderId}/historical-transitions':
-    get:
-      tags:
-        - Orders (Customer-managed)
-      summary: Retrieving historical status transitions for a specific order
-      description: |
-        Retrieves historical status transitions for a specific order, including status history metadata. To be used by customers on the storefront.
-
-        **Authentication:** Standard is customer token. Alternatively, use access token (client credentials) with `saas-token` header. Scope `order.history_view` applies when using client credentials.
-      security:
-        - CustomerAccessToken: []
-        - OAuth2:
-            - order.history_view
-      operationId: GET-order-retrieve-historical-transitions
-      responses:
-        '200':
-          description: |
-            The request was successful. Historical status transitions for the given order have been returned.
-          content:
-            application/json:
-              examples:
-                Historical transitions example:
-                  $ref: '#/components/examples/historicalTransitions'
-              schema:
-                $ref: '#/components/schemas/historicalTransitionsResponse'
-        '403':
-          $ref: '#/components/responses/trait_yaasAware_403'
-        '404':
-          $ref: '#/components/responses/trait_order_404'
-        '500':
-          $ref: '#/components/responses/trait_500'
       parameters:
         - $ref: '#/components/parameters/trait_saas_token'
     parameters:
