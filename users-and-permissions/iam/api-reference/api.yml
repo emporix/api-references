@@ -772,6 +772,8 @@ paths:
       summary: Deleting a custom scope
       description: |
         Deletes a custom scope for the tenant.
+
+        **Note**: The scope is removed and cannot be used anymore, but it may still appear on custom credentials that were already created before the deletion.
       operationId: DELETE-iam-delete-custom-scope
       responses:
         '204':

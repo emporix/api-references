@@ -861,6 +861,8 @@ paths:
       summary: Deleting a custom schema type
       description: |-
         Deletes a single custom type. This operation will fail if there are schemas or custom instances assigned to this custom type.
+
+        **Note**: Removing a custom entity type does not remove the custom scopes that were created when the type was added. Those scopes remain in the system until you remove them manually, if needed.
         
         ***
         
