@@ -722,6 +722,8 @@ paths:
       summary: Creating a custom schema type
       description: |
         Creates a custom type entity that can be later used for creating custom instances.
+
+        **Note**: When a custom entity type is created, a set of custom scopes is created, which allow managing custom instances of that type.
         
         ***
 
@@ -892,7 +894,9 @@ paths:
     put:
       summary: Upserting a custom schema type
       description: |-
-        Performs the `UPSERT` operation. If a custom schema type with specified ID exists in the system, then it is updated. If it doesn't exist, a new type is created. 
+        Performs the `UPSERT` operation. If a custom schema type with specified ID exists in the system, then it is updated. If it doesn't exist, a new type is created.
+
+        **Note**: When a custom entity type is created, a set of custom scopes is created, which allow managing custom instances of that type.
         
         **Required scopes**
         * `schema.schema_manage` - required for upserting custom schema type
@@ -961,7 +965,11 @@ paths:
 
         ### Required scopes
 
-          * `schema.custominstance_manage` - required for creating a custom instance
+        The access token must include **one** of the following:
+
+        * `schema.custominstance_manage` — manage custom instances of any custom schema type.
+        * `{lowerCaseType}.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manage`)
+        * `{lowerCaseType}.{lowerCaseType}_manageOwn` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manageOwn`)
       operationId: POST-schema-create-custom-instance
       requestBody:
         content:
@@ -1019,12 +1027,14 @@ paths:
                     status: Forbidden
                     message: You need to choose the required scope to complete this action.
                     details:
-                      - message: 'Required scope(s): schema.schema_manage'
+                      - message: 'Required scope(s): schema.custominstance_manage'
         '409':
           $ref: '#/components/responses/Conflict_409'
       security:
         - OAuth2:
-            - schema.schema_manage
+            - schema.custominstance_manage
+            - '{lowerCaseType}.{lowerCaseType}_manage'
+            - '{lowerCaseType}.{lowerCaseType}_manageOwn'
     get:
       summary: Retrieving all custom instances
       description: |-
@@ -1034,7 +1044,11 @@ paths:
 
         ### Required scopes
 
-          * `schema.custominstance_read` - required for retrieving custom instances
+        The access token must include **one** of the following:
+
+        * `schema.custominstance_read` — read custom instances of any custom schema type.
+        * `{lowerCaseType}.{lowerCaseType}_read` — read custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_read`)
+        * `{lowerCaseType}.{lowerCaseType}_readOwn` — allows to read only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_readOwn`)
       tags:
         - Custom Instance
       responses:
@@ -1057,6 +1071,9 @@ paths:
                       name:
                         en: Report
                       type: CUSTOM_DOCUMENT
+                      owner:
+                        type: EMPLOYEE
+                        userId: 00u4ukqvzlEP31sCk417
                       mixins:
                         productCustomAttributes:
                           inStock: true
@@ -1074,6 +1091,10 @@ paths:
                       name:
                         en: Manual
                       type: CUSTOM_DOCUMENT
+                      owner:
+                        type: CUSTOMER
+                        userId: '79474954'
+                        legalEntityId: 0149b1314144a01491314z128
                       media:
                         - media_id_3
                       metadata:
@@ -1086,6 +1107,9 @@ paths:
                       name:
                         en: Report
                       type: CUSTOM_DOCUMENT
+                      owner:
+                        type: SERVICE
+                        userId: RFPZOxRGUWeWGXMBymGhpIXdBVsXUt6QxTOPukecuSt1h8F3
                       mixins:
                         customAttributes:
                           references:
@@ -1143,6 +1167,11 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden_403'
       operationId: GET-schema-retrieve-custom-instances
+      security:
+        - OAuth2:
+            - schema.custominstance_read
+            - '{lowerCaseType}.{lowerCaseType}_read'
+            - '{lowerCaseType}.{lowerCaseType}_readOwn'
       parameters:
         - $ref: '#/components/parameters/trail_xTotalCount_header'
         - $ref: '#/components/parameters/trait_paged_pageNumber'
@@ -1170,7 +1199,11 @@ paths:
 
         ### Required scopes
 
-          * `schema.custominstance_read` - required for retrieving a custom instance
+        The access token must include **one** of the following:
+
+        * `schema.custominstance_read` — read custom instances of any custom schema type.
+        * `{lowerCaseType}.{lowerCaseType}_read` — read custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_read`)
+        * `{lowerCaseType}.{lowerCaseType}_readOwn` — allows to read only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_readOwn`)
       tags:
         - Custom Instance
       responses:
@@ -1187,6 +1220,9 @@ paths:
                     name:
                       en: Report
                     type: CUSTOM_DOCUMENT
+                    owner:
+                      type: EMPLOYEE
+                      userId: 00u4ukqvzlEP31sCk417
                     mixins:
                       productCustomAttributes:
                         inStock: true
@@ -1206,6 +1242,10 @@ paths:
                     name:
                       en: Report
                     type: CUSTOM_DOCUMENT
+                    owner:
+                      type: CUSTOMER
+                      userId: '79474954'
+                      legalEntityId: 0149b1314144a01491314z128
                     mixins:
                       customAttributes:
                         references:
@@ -1263,6 +1303,11 @@ paths:
         '404':
           $ref: '#/components/responses/Not_Found_404'
       operationId: GET-schema-retrieve-custom-instance
+      security:
+        - OAuth2:
+            - schema.custominstance_read
+            - '{lowerCaseType}.{lowerCaseType}_read'
+            - '{lowerCaseType}.{lowerCaseType}_readOwn'
     delete:
       summary: Deleting a custom instance
       description: |-
@@ -1270,8 +1315,13 @@ paths:
         
         ***
         
-        **Required scopes**
-        * `schema.custominstance_manage`
+        ### Required scopes
+
+        The access token must include **one** of the following:
+
+        * `schema.custominstance_manage` — manage custom instances of any custom schema type.
+        * `{lowerCaseType}.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manage`)
+        * `{lowerCaseType}.{lowerCaseType}_manageOwn` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manageOwn`)
       tags:
         - Custom Instance
       responses:
@@ -1284,7 +1334,9 @@ paths:
       operationId: DELETE-schema-remove-custom-instance
       security:
         - OAuth2:
-            - schema.schema_manage
+            - schema.custominstance_manage
+            - '{lowerCaseType}.{lowerCaseType}_manage'
+            - '{lowerCaseType}.{lowerCaseType}_manageOwn'
     put:
       summary: Upserting a custom instance
       parameters:
@@ -1293,8 +1345,13 @@ paths:
       description: |-
         Performs the `UPSERT` operation. If a custom instance with specified ID exists in the system, then it is updated. If it doesn't exist, a new custom instance is created.
         
-        **Required scopes**
-        * `schema.custominstance_manage` - required for upserting a custom instance
+        ### Required scopes
+
+        The access token must include **one** of the following:
+
+        * `schema.custominstance_manage` — manage custom instances of any custom schema type.
+        * `{lowerCaseType}.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manage`)
+        * `{lowerCaseType}.{lowerCaseType}_manageOwn` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manageOwn`)
       tags:
         - Custom Instance
       requestBody:
@@ -1349,7 +1406,9 @@ paths:
       operationId: PUT-schema-upsert-custom-instance
       security:
         - OAuth2:
-            - schema.schema_manage
+            - schema.custominstance_manage
+            - '{lowerCaseType}.{lowerCaseType}_manage'
+            - '{lowerCaseType}.{lowerCaseType}_manageOwn'
     patch:
       summary: Patching a custom instance
       parameters:
@@ -1358,8 +1417,13 @@ paths:
       description: |-
         The patch request consists of set of operation, that should be defined according to [RFC-6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.
         
-        **Required scopes**
-        * `schema.custominstance_manage` - required for patching a custom instance
+        ### Required scopes
+
+        The access token must include **one** of the following:
+
+        * `schema.custominstance_manage` — manage custom instances of any custom schema type.
+        * `{lowerCaseType}.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manage`)
+        * `{lowerCaseType}.{lowerCaseType}_manageOwn` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manageOwn`)
       tags:
         - Custom Instance
       requestBody:
@@ -1400,7 +1464,9 @@ paths:
       operationId: PATCH-schema-patch-custom-instance
       security:
         - OAuth2:
-            - schema.schema_manage
+            - schema.custominstance_manage
+            - '{lowerCaseType}.{lowerCaseType}_manage'
+            - '{lowerCaseType}.{lowerCaseType}_manageOwn'
 
   '/schema/{tenant}/custom-entities/{type}/instances/search':
     parameters:
@@ -1415,7 +1481,11 @@ paths:
 
         ### Required scopes
 
-          * `schema.custominstance_read` - required for retrieving custom instances
+        The access token must include **one** of the following:
+
+        * `schema.custominstance_read` — read custom instances of any custom schema type.
+        * `{lowerCaseType}.{lowerCaseType}_read` — read custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_read`)
+        * `{lowerCaseType}.{lowerCaseType}_readOwn` — allows to read only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_readOwn`)
       tags:
         - Custom Instance
       requestBody:
@@ -1443,6 +1513,9 @@ paths:
                       name:
                         en: Report
                       type: CUSTOM_DOCUMENT
+                      owner:
+                        type: EMPLOYEE
+                        userId: 00u4ukqvzlEP31sCk417
                       mixins:
                         productCustomAttributes:
                           inStock: true
@@ -1462,6 +1535,9 @@ paths:
                       name:
                         en: Report
                       type: CUSTOM_DOCUMENT
+                      owner:
+                        type: SERVICE
+                        userId: RFPZOxRGUWeWGXMBymGhpIXdBVsXUt6QxTOPukecuSt1h8F3
                       mixins:
                         customAttributes:
                           references:
@@ -1517,6 +1593,11 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden_403'
       operationId: POST-schema-search-custom-instances
+      security:
+        - OAuth2:
+            - schema.custominstance_read
+            - '{lowerCaseType}.{lowerCaseType}_read'
+            - '{lowerCaseType}.{lowerCaseType}_readOwn'
       parameters:
         - $ref: '#/components/parameters/trail_xTotalCount_header'
         - $ref: '#/components/parameters/trait_paged_pageNumber'
@@ -1538,7 +1619,11 @@ paths:
 
         ### Required scopes
 
-          * `schema.custominstance_manage` - required for creating custom instances
+        The access token must include **one** of the following:
+
+        * `schema.custominstance_manage` — manage custom instances of any custom schema type.
+        * `{lowerCaseType}.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manage`)
+        * `{lowerCaseType}.{lowerCaseType}_manageOwn` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manageOwn`)
       tags:
         - Custom Instance
       parameters:
@@ -1590,6 +1675,11 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden_403'
       operationId: POST-schema-create-custom-instances-bulk
+      security:
+        - OAuth2:
+            - schema.custominstance_manage
+            - '{lowerCaseType}.{lowerCaseType}_manage'
+            - '{lowerCaseType}.{lowerCaseType}_manageOwn'
     put:
       summary: Upserting custom instances in bulk
       description: |-
@@ -1599,7 +1689,11 @@ paths:
 
         ### Required scopes
 
-          * `schema.custominstance_manage` - required for upserting custom instances
+        The access token must include **one** of the following:
+
+        * `schema.custominstance_manage` — manage custom instances of any custom schema type.
+        * `{lowerCaseType}.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manage`)
+        * `{lowerCaseType}.{lowerCaseType}_manageOwn` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manageOwn`)
       tags:
         - Custom Instance
       parameters:
@@ -1658,6 +1752,11 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden_403'
       operationId: PUT-schema-create-custom-instances-bulk
+      security:
+        - OAuth2:
+            - schema.custominstance_manage
+            - '{lowerCaseType}.{lowerCaseType}_manage'
+            - '{lowerCaseType}.{lowerCaseType}_manageOwn'
     delete:
       summary: Deleting custom instances in bulk
       description: |-
@@ -1669,7 +1768,11 @@ paths:
 
         ### Required scopes
 
-          * `schema.custominstance_manage` - required for deleting custom instances
+        The access token must include **one** of the following:
+
+        * `schema.custominstance_manage` — manage custom instances of any custom schema type.
+        * `{lowerCaseType}.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manage`)
+        * `{lowerCaseType}.{lowerCaseType}_manageOwn` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manageOwn`)
       tags:
         - Custom Instance
       responses:
@@ -1691,6 +1794,11 @@ paths:
         '403':
           $ref: '#/components/responses/Forbidden_403'
       operationId: DELETE-schema-create-custom-instances-bulk
+      security:
+        - OAuth2:
+            - schema.custominstance_manage
+            - '{lowerCaseType}.{lowerCaseType}_manage'
+            - '{lowerCaseType}.{lowerCaseType}_manageOwn'
 components:
   examples:
     SchemaFileResponse:
@@ -2182,6 +2290,28 @@ components:
             mixins:
               type: object
               description: A key-value map, where key is a mixin name and value is a link to the mixin schema.
+    CustomInstanceOwner:
+      type: object
+      description: |
+        Ownership of the custom instance, which is populated automatically based on who created the custom instance.
+        The `legalEntityId` field is only present when `type` is `CUSTOMER`.
+      properties:
+        type:
+          type: string
+          enum:
+            - EMPLOYEE
+            - CUSTOMER
+            - SERVICE
+        userId:
+          type: string
+          description: Identifier of the employee, customer, or service principal associated with the owner.
+        legalEntityId:
+          type: string
+          nullable: true
+          description: Legal entity identifier. Only set when `type` is `CUSTOMER`.
+      required:
+        - type
+        - userId
     CustomInstanceResponse:
       type: object
       properties:
@@ -2194,6 +2324,10 @@ components:
         type:
           type: string
           description: Custom schema type to which custom instance is related.
+        owner:
+          readOnly: true
+          allOf:
+            - $ref: '#/components/schemas/CustomInstanceOwner'
         mixins:
           type: string
           description: A key-value map of additional attributes.
@@ -2280,6 +2414,12 @@ components:
           scopes:
             schema.schema_manage: ''
             schema.schema_read: ''
+            schema.custominstance_read: ''
+            schema.custominstance_manage: ''
+            '{lowerCaseType}.{lowerCaseType}_manage': ''
+            '{lowerCaseType}.{lowerCaseType}_manageOwn': ''
+            '{lowerCaseType}.{lowerCaseType}_read': ''
+            '{lowerCaseType}.{lowerCaseType}_readOwn': ''
   parameters:
     trait_validateReferences:
       name: validateReferences
@@ -2303,7 +2443,10 @@ components:
       name: type
       in: path
       required: true
-      description: Custom schema type to which custom instance is associated
+      description: |
+        Custom schema type to which the custom instance is associated.
+
+        For OAuth scopes on custom-instance operations, `{lowerCaseType}` is this value in lowercase (for example, `DOCUMENT` → `document.document_read`, `CUSTOM_DOCUMENT` → `custom_document.custom_document_read`).
       schema:
         example: CUSTOM_DOCUMENT
         type: string
