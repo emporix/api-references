@@ -713,6 +713,7 @@ paths:
                       deDE: Industrielle Senkschraube M3x20, verzinkt
                     productType: DYNAMIC_VARIANT
                     published: true
+                    sellable: false
                     taxClasses:
                       EN: STANDARD
                     variants:
@@ -1927,6 +1928,7 @@ components:
                   en: Industrial countersunk screw M3x20, zinc plated
                   deDE: Industrielle Senkschraube M3x20, verzinkt
                 published: true
+                sellable: false
                 taxClasses:
                   EN: STANDARD
                 productType: DYNAMIC_VARIANT
@@ -3285,6 +3287,10 @@ components:
               type: string
               description: |
                 Optional label identifying the variant level or kind within the hierarchy (e.g. `"H1_L1"`). Used for display and filtering purposes.
+            sellable:
+              type: boolean
+              description: |
+                Indicates whether this variant can be sold directly (i.e. it is a leaf in the hierarchy that a customer can add to a cart). This value is **not inherited** from parent variants — it must be set explicitly on each product. Root products and intermediate-level variants are typically `false`; leaf variants are typically `true`.
             ownVariantAttributes:
               $ref: '#/components/schemas/ownVariantAttributes'
           required:
@@ -3308,42 +3314,91 @@ components:
       description: |
         Response schema for products of the DYNAMIC_VARIANT type.
 
+        - **`sellable`** — not inherited from parents; must be set explicitly on each product. Root and intermediate variants are typically `false`; leaf variants are typically `true`.
         - **Root products** include a `variants` map containing all descendants with accumulated attributes computed at response time.
         - **Child products** include `ownVariantAttributes` (attributes defined on this product) and `inheritedVariantAttributes` (read-only, merged from ancestors).
-        - `parentVariantPath` is an ordered array of ancestor IDs from root (index 0) to direct parent (last index).
+        - `parentVariantPath` is an ordered array of ancestor IDs from root (index 0) to direct parent (last index). Empty for root products.
         - `metadata.dynamicVariantInfo` is present only when a hierarchy integrity issue is detected.
-      allOf:
-        - $ref: '#/components/schemas/dynamicVariantProductCreation'
-        - type: object
-          properties:
-            id:
-              $ref: '#/components/schemas/id'
-            yrn:
-              $ref: '#/components/schemas/YRN'
-            media:
-              $ref: '#/components/schemas/productMedia'
-            metadata:
-              $ref: '#/components/schemas/dynamicVariantProductMetadataGet'
-            parentVariantPath:
-              type: array
-              description: |
-                Ordered array of ancestor product identifiers, from the root (index 0) to the direct parent (last index). Empty for root-level products.
-              items:
-                type: string
-            inheritedVariantAttributes:
-              $ref: '#/components/schemas/inheritedVariantAttributes'
-            variants:
-              $ref: '#/components/schemas/variantsMap'
-            customerSegmentIds:
-              type: array
-              description: Customer segment IDs assigned to the product.
-              items:
-                type: string
-            categoryIds:
-              type: array
-              description: Category IDs assigned to the product.
-              items:
-                type: string
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        yrn:
+          $ref: '#/components/schemas/YRN'
+        code:
+          type: string
+          minLength: 1
+          description: 'Unique product identifier, defined by the user.'
+        name:
+          $ref: '#/components/schemas/localizedValue'
+        description:
+          $ref: '#/components/schemas/localizedValue'
+        productType:
+          $ref: '#/components/schemas/productType'
+        published:
+          $ref: '#/components/schemas/published'
+        sellable:
+          type: boolean
+          description: |
+            Indicates whether this variant can be sold directly (i.e. it is a leaf in the hierarchy that a customer can add to a cart). This value is **not inherited** from parent variants — it must be set explicitly on each product. Root products and intermediate-level variants are typically `false`; leaf variants are typically `true`.
+        parentVariantId:
+          type: string
+          description: Identifier of the immediate parent product in the variant hierarchy. Absent for root-level products.
+        parentVariantPath:
+          type: array
+          description: |
+            Ordered array of ancestor product identifiers, from the root (index 0) to the direct parent (last index). Empty for root-level products.
+          items:
+            type: string
+        dynamicVariantType:
+          type: string
+          description: Optional label identifying the variant level or kind within the hierarchy (e.g. `"H1_L1"`).
+        ownVariantAttributes:
+          $ref: '#/components/schemas/ownVariantAttributes'
+        inheritedVariantAttributes:
+          $ref: '#/components/schemas/inheritedVariantAttributes'
+        variants:
+          $ref: '#/components/schemas/variantsMap'
+        taxClasses:
+          $ref: '#/components/schemas/taxClasses'
+        vendor:
+          $ref: '#/components/schemas/vendor'
+        brandId:
+          type: string
+          description: ID of brand.
+        labelIds:
+          type: array
+          items:
+            type: string
+          description: Collection of label IDs.
+        categoryIds:
+          type: array
+          description: Category IDs assigned to the product.
+          items:
+            type: string
+        customerSegmentIds:
+          type: array
+          description: Customer segment IDs assigned to the product.
+          items:
+            type: string
+        relatedItems:
+          type: array
+          description: List of items in a relationship with this product.
+          items:
+            $ref: '#/components/schemas/relatedItem'
+        weightDependent:
+          type: boolean
+          description: Mark the product as weight-dependent if the line item price could change after packaging.
+        mixins:
+          $ref: '#/components/schemas/productMixins'
+        media:
+          $ref: '#/components/schemas/productMedia'
+        metadata:
+          $ref: '#/components/schemas/dynamicVariantProductMetadataGet'
+      required:
+        - id
+        - code
+        - name
+        - productType
     dynamicVariantProductsArray:
       type: array
       description: List of products of the DYNAMIC_VARIANT type.
