@@ -8,6 +8,8 @@
 
 ## 2026
 
+* [2026-04-10: Session Context Service - language attribute added to session context model](2026/2026-04-10-session-context.md)
+* [2026-04-10: Customer Service - session context attributes on anonymous login](2026/2026-04-10-customer.md)
 * [2026-04-02: Availability Service - new bulk processing endpoints ](2026/2026-04-02-availability.md)
 * [2026-04-01: IAM Service - last login information exposed in user GET endpoints](2026/2026-04-01-iam.md)
 * [2026-03-27: Schema Service - support for CART_ITEM and ORDER_ENTRY type](2026/2026-03-27-schema.md)
