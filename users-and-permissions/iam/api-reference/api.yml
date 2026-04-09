@@ -4818,7 +4818,7 @@ components:
     access_control_Id:
       name: accessControlId
       in: path
-      description: 'Unique identifier of an access control, generated when the access control is created.'
+      description: 'Unique identifier of an access control.'
       required: true
       schema:
         type: string
