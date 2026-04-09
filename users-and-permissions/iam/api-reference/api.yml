@@ -596,6 +596,8 @@ paths:
       summary: Deleting an access control
       description: |
         Deletes a specified access control.
+
+        **Note**: Only user-created access controls can be deleted. Predefined access controls cannot be removed.
       operationId: DELETE-iam-delete-access-control
       responses:
         '204':
@@ -3730,6 +3732,14 @@ components:
         restrictionAware:
           type: boolean
           description: Determines whether this access control generates scopes with restriction suffixes when assigned to a group that has restrictions defined. When `true`, the generated scopes will include restrictions (e.g. order.`order_manage--DE`) based on the group's restrictions list. When `false`, scopes are generated without restriction suffixes regardless of the group's restrictions.
+        predefined:
+          type: boolean
+          readOnly: true
+          description: Indicated whether this access control is predefined in the system or was created by a user.
+        vendorAware:
+          type: boolean
+          readOnly: true
+          description: Indicated whether this access control is associated with vendor scopes.
     AccessControlUpsertRequest:
       type: object
       description: Payload for creating or updating an access control.
