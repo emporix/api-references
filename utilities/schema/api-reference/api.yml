@@ -970,8 +970,8 @@ paths:
         The access token must include **one** of the following:
 
         * `schema.custominstance_manage` — manage custom instances of any custom schema type.
-        * `{lowerCaseType}.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manage`)
-        * `{lowerCaseType}.{lowerCaseType}_manageOwn` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manageOwn`)
+        * `custom.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage`)
+        * `custom.{lowerCaseType}_manage_own` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage_own`)
       operationId: POST-schema-create-custom-instance
       requestBody:
         content:
@@ -1035,8 +1035,8 @@ paths:
       security:
         - OAuth2:
             - schema.custominstance_manage
-            - '{lowerCaseType}.{lowerCaseType}_manage'
-            - '{lowerCaseType}.{lowerCaseType}_manageOwn'
+            - 'custom.{lowerCaseType}_manage'
+            - 'custom.{lowerCaseType}_manage_own'
     get:
       summary: Retrieving all custom instances
       description: |-
@@ -1049,8 +1049,8 @@ paths:
         The access token must include **one** of the following:
 
         * `schema.custominstance_read` — read custom instances of any custom schema type.
-        * `{lowerCaseType}.{lowerCaseType}_read` — read custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_read`)
-        * `{lowerCaseType}.{lowerCaseType}_readOwn` — allows to read only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_readOwn`)
+        * `custom.{lowerCaseType}_read` — read custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_read`)
+        * `custom.{lowerCaseType}_read_own` — allows to read only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_read_own`)
       tags:
         - Custom Instance
       responses:
@@ -1172,8 +1172,8 @@ paths:
       security:
         - OAuth2:
             - schema.custominstance_read
-            - '{lowerCaseType}.{lowerCaseType}_read'
-            - '{lowerCaseType}.{lowerCaseType}_readOwn'
+            - 'custom.{lowerCaseType}_read'
+            - 'custom.{lowerCaseType}_read_own'
       parameters:
         - $ref: '#/components/parameters/trail_xTotalCount_header'
         - $ref: '#/components/parameters/trait_paged_pageNumber'
@@ -1204,8 +1204,8 @@ paths:
         The access token must include **one** of the following:
 
         * `schema.custominstance_read` — read custom instances of any custom schema type.
-        * `{lowerCaseType}.{lowerCaseType}_read` — read custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_read`)
-        * `{lowerCaseType}.{lowerCaseType}_readOwn` — allows to read only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_readOwn`)
+        * `custom.{lowerCaseType}_read` — read custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_read`)
+        * `custom.{lowerCaseType}_read_own` — allows to read only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_read_own`)
       tags:
         - Custom Instance
       responses:
@@ -1308,8 +1308,8 @@ paths:
       security:
         - OAuth2:
             - schema.custominstance_read
-            - '{lowerCaseType}.{lowerCaseType}_read'
-            - '{lowerCaseType}.{lowerCaseType}_readOwn'
+            - 'custom.{lowerCaseType}_read'
+            - 'custom.{lowerCaseType}_read_own'
     delete:
       summary: Deleting a custom instance
       description: |-
@@ -1322,8 +1322,8 @@ paths:
         The access token must include **one** of the following:
 
         * `schema.custominstance_manage` — manage custom instances of any custom schema type.
-        * `{lowerCaseType}.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manage`)
-        * `{lowerCaseType}.{lowerCaseType}_manageOwn` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manageOwn`)
+        * `custom.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage`)
+        * `custom.{lowerCaseType}_manage_own` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage_own`)
       tags:
         - Custom Instance
       responses:
@@ -1337,8 +1337,8 @@ paths:
       security:
         - OAuth2:
             - schema.custominstance_manage
-            - '{lowerCaseType}.{lowerCaseType}_manage'
-            - '{lowerCaseType}.{lowerCaseType}_manageOwn'
+            - 'custom.{lowerCaseType}_manage'
+            - 'custom.{lowerCaseType}_manage_own'
     put:
       summary: Upserting a custom instance
       parameters:
@@ -1352,8 +1352,8 @@ paths:
         The access token must include **one** of the following:
 
         * `schema.custominstance_manage` — manage custom instances of any custom schema type.
-        * `{lowerCaseType}.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manage`)
-        * `{lowerCaseType}.{lowerCaseType}_manageOwn` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manageOwn`)
+        * `custom.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage`)
+        * `custom.{lowerCaseType}_manage_own` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage_own`)
       tags:
         - Custom Instance
       requestBody:
@@ -1409,8 +1409,8 @@ paths:
       security:
         - OAuth2:
             - schema.custominstance_manage
-            - '{lowerCaseType}.{lowerCaseType}_manage'
-            - '{lowerCaseType}.{lowerCaseType}_manageOwn'
+            - 'custom.{lowerCaseType}_manage'
+            - 'custom.{lowerCaseType}_manage_own'
     patch:
       summary: Patching a custom instance
       parameters:
@@ -1424,8 +1424,8 @@ paths:
         The access token must include **one** of the following:
 
         * `schema.custominstance_manage` — manage custom instances of any custom schema type.
-        * `{lowerCaseType}.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manage`)
-        * `{lowerCaseType}.{lowerCaseType}_manageOwn` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manageOwn`)
+        * `custom.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage`)
+        * `custom.{lowerCaseType}_manage_own` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage_own`)
       tags:
         - Custom Instance
       requestBody:
@@ -1467,8 +1467,8 @@ paths:
       security:
         - OAuth2:
             - schema.custominstance_manage
-            - '{lowerCaseType}.{lowerCaseType}_manage'
-            - '{lowerCaseType}.{lowerCaseType}_manageOwn'
+            - 'custom.{lowerCaseType}_manage'
+            - 'custom.{lowerCaseType}_manage_own'
 
   '/schema/{tenant}/custom-entities/{type}/instances/search':
     parameters:
@@ -1486,8 +1486,8 @@ paths:
         The access token must include **one** of the following:
 
         * `schema.custominstance_read` — read custom instances of any custom schema type.
-        * `{lowerCaseType}.{lowerCaseType}_read` — read custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_read`)
-        * `{lowerCaseType}.{lowerCaseType}_readOwn` — allows to read only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_readOwn`)
+        * `custom.{lowerCaseType}_read` — read custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_read`)
+        * `custom.{lowerCaseType}_read_own` — allows to read only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_read_own`)
       tags:
         - Custom Instance
       requestBody:
@@ -1598,8 +1598,8 @@ paths:
       security:
         - OAuth2:
             - schema.custominstance_read
-            - '{lowerCaseType}.{lowerCaseType}_read'
-            - '{lowerCaseType}.{lowerCaseType}_readOwn'
+            - 'custom.{lowerCaseType}_read'
+            - 'custom.{lowerCaseType}_read_own'
       parameters:
         - $ref: '#/components/parameters/trail_xTotalCount_header'
         - $ref: '#/components/parameters/trait_paged_pageNumber'
@@ -1624,8 +1624,8 @@ paths:
         The access token must include **one** of the following:
 
         * `schema.custominstance_manage` — manage custom instances of any custom schema type.
-        * `{lowerCaseType}.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manage`)
-        * `{lowerCaseType}.{lowerCaseType}_manageOwn` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manageOwn`)
+        * `custom.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage`)
+        * `custom.{lowerCaseType}_manage_own` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage_own`)
       tags:
         - Custom Instance
       parameters:
@@ -1680,8 +1680,8 @@ paths:
       security:
         - OAuth2:
             - schema.custominstance_manage
-            - '{lowerCaseType}.{lowerCaseType}_manage'
-            - '{lowerCaseType}.{lowerCaseType}_manageOwn'
+            - 'custom.{lowerCaseType}_manage'
+            - 'custom.{lowerCaseType}_manage_own'
     put:
       summary: Upserting custom instances in bulk
       description: |-
@@ -1694,8 +1694,8 @@ paths:
         The access token must include **one** of the following:
 
         * `schema.custominstance_manage` — manage custom instances of any custom schema type.
-        * `{lowerCaseType}.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manage`)
-        * `{lowerCaseType}.{lowerCaseType}_manageOwn` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manageOwn`)
+        * `custom.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage`)
+        * `custom.{lowerCaseType}_manage_own` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage_own`)
       tags:
         - Custom Instance
       parameters:
@@ -1757,8 +1757,8 @@ paths:
       security:
         - OAuth2:
             - schema.custominstance_manage
-            - '{lowerCaseType}.{lowerCaseType}_manage'
-            - '{lowerCaseType}.{lowerCaseType}_manageOwn'
+            - 'custom.{lowerCaseType}_manage'
+            - 'custom.{lowerCaseType}_manage_own'
     delete:
       summary: Deleting custom instances in bulk
       description: |-
@@ -1773,8 +1773,8 @@ paths:
         The access token must include **one** of the following:
 
         * `schema.custominstance_manage` — manage custom instances of any custom schema type.
-        * `{lowerCaseType}.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manage`)
-        * `{lowerCaseType}.{lowerCaseType}_manageOwn` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `document.document_manageOwn`)
+        * `custom.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage`)
+        * `custom.{lowerCaseType}_manage_own` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage_own`)
       tags:
         - Custom Instance
       responses:
@@ -1799,8 +1799,8 @@ paths:
       security:
         - OAuth2:
             - schema.custominstance_manage
-            - '{lowerCaseType}.{lowerCaseType}_manage'
-            - '{lowerCaseType}.{lowerCaseType}_manageOwn'
+            - 'custom.{lowerCaseType}_manage'
+            - 'custom.{lowerCaseType}_manage_own'
 components:
   examples:
     SchemaFileResponse:
@@ -2418,10 +2418,10 @@ components:
             schema.schema_read: ''
             schema.custominstance_read: ''
             schema.custominstance_manage: ''
-            '{lowerCaseType}.{lowerCaseType}_manage': ''
-            '{lowerCaseType}.{lowerCaseType}_manageOwn': ''
-            '{lowerCaseType}.{lowerCaseType}_read': ''
-            '{lowerCaseType}.{lowerCaseType}_readOwn': ''
+            'custom.{lowerCaseType}_manage': ''
+            'custom.{lowerCaseType}_manage_own': ''
+            'custom.{lowerCaseType}_read': ''
+            'custom.{lowerCaseType}_read_own': ''
   parameters:
     trait_validateReferences:
       name: validateReferences
@@ -2448,7 +2448,6 @@ components:
       description: |
         Custom schema type to which the custom instance is associated.
 
-        For OAuth scopes on custom-instance operations, `{lowerCaseType}` is this value in lowercase (for example, `DOCUMENT` → `document.document_read`, `CUSTOM_DOCUMENT` → `custom_document.custom_document_read`).
       schema:
         example: CUSTOM_DOCUMENT
         type: string
