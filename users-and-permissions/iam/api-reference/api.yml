@@ -18,11 +18,6 @@ paths:
       summary: Retrieving all access controls
       description: |
         Retrieves all access controls available for the tenant. The results can be filtered by using query parameters. You can expand the result by resolving the role and resource references.
-        ***
-
-        ### Required scopes
-
-          * `iam.access_read`
       operationId: GET-iam-list-tenant-access-controls
       parameters:
         - $ref: '#/components/parameters/tenant'

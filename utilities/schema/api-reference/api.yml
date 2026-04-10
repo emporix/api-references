@@ -19,11 +19,6 @@ paths:
       description: |
         Creates a schema entity and generates json-schema representation which is then uploaded to cloudinary repository.
         
-        ***
-
-        ### Required scopes
-
-          * `schema.schema_manage` - required for creating a schema
       operationId: POST-schema-create-schema
       requestBody:
         content:
@@ -269,11 +264,6 @@ paths:
       summary: Deleting a schema
       description: |-
         Deletes a single schema. It deletes just a database entry. The cloudinary reference file remains untouched.
-        
-        ***
-        
-        **Required scopes**
-        * `schema.schema_manage`
       tags:
         - Schema
       responses:
@@ -292,8 +282,6 @@ paths:
       description: |-
         Updates a single schema. Each update releases a new version of json schema file.
         
-        **Required scopes**
-        * `schema.schema_manage`
       tags:
         - Schema
       requestBody:
@@ -373,8 +361,6 @@ paths:
       description: |-
         Updates assigned types to the schema. It's allowed to change the assigned types to the newest schema as well as to the previous versions of the schema. This operation does not generate a new version of the schema.
         
-        **Required scopes**
-        * `schema.schema_manage`
       tags:
         - Type
       requestBody:
@@ -494,11 +480,6 @@ paths:
       description: |
         Creates a reference entity and uploads provided file to the cloudinary repository.
         
-        ***
-
-        ### Required scopes
-
-          * `schema.schema_manage` - required for creating a reference
       operationId: POST-schema-create-reference
       requestBody:
         content:
@@ -640,10 +621,6 @@ paths:
       description: |-
         Deletes a single reference. It deletes just a database entry. The cloudinary reference file remains untouched.
         
-        ***
-        
-        **Required scopes**
-        * `schema.schema_manage`
       tags:
         - Reference
       responses:
@@ -662,8 +639,6 @@ paths:
       description: |-
         Updates a single reference.
         
-        **Required scopes**
-        * `schema.schema_manage`
       tags:
         - Reference
       requestBody:
@@ -725,11 +700,6 @@ paths:
 
         **Note**: When a custom entity type is created, a set of custom scopes is created, which allow managing custom instances of that type.
         
-        ***
-
-        ### Required scopes
-
-          * `schema.schema_manage` - required for creating a custom schema type
       operationId: POST-schema-create-custom-schema-type
       requestBody:
         content:
@@ -864,10 +834,6 @@ paths:
 
         **Note**: Removing a custom entity type does not remove the custom scopes that were created when the type was added. Those scopes remain in the system until you remove them manually, if needed.
         
-        ***
-        
-        **Required scopes**
-        * `schema.schema_manage` - required for removing custom schema type
       tags:
         - Custom Schema Type
       responses:
@@ -900,8 +866,6 @@ paths:
 
         **Note**: When a custom entity type is created, a set of custom scopes is created, which allow managing custom instances of that type.
         
-        **Required scopes**
-        * `schema.schema_manage` - required for upserting custom schema type
       tags:
         - Custom Schema Type
       requestBody:
@@ -963,15 +927,6 @@ paths:
       description: |
         Creates a custom instance entity associated with given custom schema type.
         
-        ***
-
-        ### Required scopes
-
-        The access token must include **one** of the following:
-
-        * `schema.custominstance_manage` — manage custom instances of any custom schema type.
-        * `custom.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage`)
-        * `custom.{lowerCaseType}_manage_own` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage_own`)
       operationId: POST-schema-create-custom-instance
       requestBody:
         content:
@@ -1042,15 +997,6 @@ paths:
       description: |-
         Retrieves all custom instances associated with a specific custom schema type.
         
-        ***
-
-        ### Required scopes
-
-        The access token must include **one** of the following:
-
-        * `schema.custominstance_read` — read custom instances of any custom schema type.
-        * `custom.{lowerCaseType}_read` — read custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_read`)
-        * `custom.{lowerCaseType}_read_own` — allows to read only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_read_own`)
       tags:
         - Custom Instance
       responses:
@@ -1197,15 +1143,6 @@ paths:
       description: |-
         Retrieves a single custom instance by id.
         
-        ***
-
-        ### Required scopes
-
-        The access token must include **one** of the following:
-
-        * `schema.custominstance_read` — read custom instances of any custom schema type.
-        * `custom.{lowerCaseType}_read` — read custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_read`)
-        * `custom.{lowerCaseType}_read_own` — allows to read only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_read_own`)
       tags:
         - Custom Instance
       responses:
@@ -1315,15 +1252,6 @@ paths:
       description: |-
         Deletes a custom instance.
         
-        ***
-        
-        ### Required scopes
-
-        The access token must include **one** of the following:
-
-        * `schema.custominstance_manage` — manage custom instances of any custom schema type.
-        * `custom.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage`)
-        * `custom.{lowerCaseType}_manage_own` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage_own`)
       tags:
         - Custom Instance
       responses:
@@ -1347,13 +1275,6 @@ paths:
       description: |-
         Performs the `UPSERT` operation. If a custom instance with specified ID exists in the system, then it is updated. If it doesn't exist, a new custom instance is created.
         
-        ### Required scopes
-
-        The access token must include **one** of the following:
-
-        * `schema.custominstance_manage` — manage custom instances of any custom schema type.
-        * `custom.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage`)
-        * `custom.{lowerCaseType}_manage_own` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage_own`)
       tags:
         - Custom Instance
       requestBody:
@@ -1419,13 +1340,6 @@ paths:
       description: |-
         The patch request consists of set of operation, that should be defined according to [RFC-6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.
         
-        ### Required scopes
-
-        The access token must include **one** of the following:
-
-        * `schema.custominstance_manage` — manage custom instances of any custom schema type.
-        * `custom.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage`)
-        * `custom.{lowerCaseType}_manage_own` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage_own`)
       tags:
         - Custom Instance
       requestBody:
@@ -1479,15 +1393,6 @@ paths:
       description: |-
         Returns all custom instances for provided type that match specified criteria.
         
-        ***
-
-        ### Required scopes
-
-        The access token must include **one** of the following:
-
-        * `schema.custominstance_read` — read custom instances of any custom schema type.
-        * `custom.{lowerCaseType}_read` — read custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_read`)
-        * `custom.{lowerCaseType}_read_own` — allows to read only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_read_own`)
       tags:
         - Custom Instance
       requestBody:
@@ -1617,15 +1522,6 @@ paths:
       description: |-
         Creates multiple custom instances. The maximum batch size is 200.
 
-        ***
-
-        ### Required scopes
-
-        The access token must include **one** of the following:
-
-        * `schema.custominstance_manage` — manage custom instances of any custom schema type.
-        * `custom.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage`)
-        * `custom.{lowerCaseType}_manage_own` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage_own`)
       tags:
         - Custom Instance
       parameters:
@@ -1687,15 +1583,6 @@ paths:
       description: |-
         Upserts multiple custom instances. The maximum batch size is 200.
 
-        ***
-
-        ### Required scopes
-
-        The access token must include **one** of the following:
-
-        * `schema.custominstance_manage` — manage custom instances of any custom schema type.
-        * `custom.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage`)
-        * `custom.{lowerCaseType}_manage_own` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage_own`)
       tags:
         - Custom Instance
       parameters:
@@ -1766,15 +1653,6 @@ paths:
         ### The IDs of items should be defined in the request body as an array of strings.
         #### Example: `["firstId", "secondId", "thirdId"]`
         
-        ***
-
-        ### Required scopes
-
-        The access token must include **one** of the following:
-
-        * `schema.custominstance_manage` — manage custom instances of any custom schema type.
-        * `custom.{lowerCaseType}_manage` — manage custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage`)
-        * `custom.{lowerCaseType}_manage_own` — allows to manage only your own custom instances of a given type. (For example, for type `DOCUMENT` → `custom.document_manage_own`)
       tags:
         - Custom Instance
       responses:
@@ -2414,14 +2292,14 @@ components:
         clientCredentials:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
-            schema.schema_manage: ''
-            schema.schema_read: ''
-            schema.custominstance_read: ''
-            schema.custominstance_manage: ''
-            'custom.{lowerCaseType}_manage': ''
-            'custom.{lowerCaseType}_manage_own': ''
-            'custom.{lowerCaseType}_read': ''
-            'custom.{lowerCaseType}_read_own': ''
+            schema.schema_manage: Required for managing schemas.
+            schema.schema_read: Required for reading schemas.
+            schema.custominstance_read: Read custom instances of any custom schema type.
+            schema.custominstance_manage: Manage custom instances of any custom schema type.
+            'custom.{lowerCaseType}_manage': Manage custom instances of a given type. For example, for type `DOCUMENT` → `custom.document_manage`.
+            'custom.{lowerCaseType}_manage_own': Allows to manage only your own custom instances of a given type. For example, for type `DOCUMENT` → `custom.document_manage_own`.
+            'custom.{lowerCaseType}_read': Read custom instances of a given type. For example, for type `DOCUMENT` → `custom.document_read`.
+            'custom.{lowerCaseType}_read_own': Allows to read only your own custom instances of a given type. For example, for type `DOCUMENT` → `custom.document_read_own`.
   parameters:
     trait_validateReferences:
       name: validateReferences
