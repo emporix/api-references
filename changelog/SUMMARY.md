@@ -8,8 +8,8 @@
 
 ## 2026
 
-* [2026-04-10: Schema Service - custom instance scopes, owner, and type-scoped access](2026/2026-04-10-schema.md)
-* [2026-04-10: IAM Service - custom scopes and access controls](2026/2026-04-10-iam.md)
+* [2026-04-13: Schema Service - custom instance scopes, owner, and type-scoped access](2026/2026-04-13-schema.md)
+* [2026-04-13: IAM Service - custom scopes and access controls](2026/2026-04-13-iam.md)
 * [2026-04-07: Order Service - historical transitions endpoint for tenant-managed orders](2026/2026-04-07-order.md)
 * [2026-04-07: Emporix SDK - Availability Service support](2026/2026-04-07-sdk.md)
 * [2026-04-02: Availability Service - new bulk processing endpoints ](2026/2026-04-02-availability.md)

@@ -607,14 +607,16 @@ paths:
     parameters:
       - $ref: '#/components/parameters/tenant'
       - $ref: '#/components/parameters/access_control_Id'
-  '/iam/{tenant}/custom-scopes':
+  '/iam/{tenant}/scopes':
     get:
       tags:
-        - Custom Scopes
-      summary: Retrieving all custom scopes
+        - Scopes
+      summary: Retrieving all scopes
       description: |
-        Retrieves all custom scopes for the tenant. Results can be filtered and sorted using query parameters.
-      operationId: GET-iam-list-tenant-custom-scopes
+        Retrieves all scopes for the tenant. Results can be filtered and sorted using query parameters.
+
+        **Note:** Currently this endpoint returns only user-created custom scopes. Predefined scopes are not included yet.
+      operationId: GET-iam-list-tenant-scopes
       parameters:
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/trait_paged_pageNumber'
@@ -624,10 +626,10 @@ paths:
         - $ref: '#/components/parameters/X-Total-Count'
       responses:
         '200':
-          description: The request was successful. A list of custom scopes is returned.
+          description: The request was successful. A list of scopes is returned.
           headers:
             X-Total-Count:
-              description: Total number of retrieved custom scopes.
+              description: Total number of retrieved scopes.
               schema:
                 type: integer
                 format: int32
@@ -638,7 +640,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/CustomScopeQueryDocument'
               examples:
-                Custom scope list:
+                Scopes list:
                   value:
                     - id: custom.scope
                       description:
@@ -649,7 +651,7 @@ paths:
                         version: 1
                         createdAt: '2022-01-04 10:44:51.871Z'
                         modifiedAt: '2022-01-05 12:44:51.456Z'
-                Empty custom scope list:
+                Empty scopes list:
                   value: []
         '400':
           $ref: '#/components/responses/Bad_request_400'
@@ -659,25 +661,27 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
       security:
         - OAuth2:
-            - iam.custom_scope_read
+            - iam.scope_read
     parameters:
       - $ref: '#/components/parameters/tenant'
-  '/iam/{tenant}/custom-scopes/{scopeId}':
+  '/iam/{tenant}/scopes/{scopeId}':
     parameters:
       - $ref: '#/components/parameters/tenant'
       - $ref: '#/components/parameters/scopeId'
     get:
       tags:
-        - Custom Scopes
-      summary: Retrieving a custom scope
+        - Scopes
+      summary: Retrieving a scope
       description: |
-        Retrieves details of a specified custom scope.
-      operationId: GET-iam-retrieve-custom-scope
+        Retrieves details of a specified scope.
+
+        **Note:** Currently this endpoint returns only user-created custom scopes. Predefined scopes are not included yet.
+      operationId: GET-iam-retrieve-scope
       parameters:
         - $ref: '#/components/parameters/trait_acceptLanguage_header'
       responses:
         '200':
-          description: The request was successful. Custom scope details are returned.
+          description: The request was successful. Scope details are returned.
           content:
             application/json:
               schema:
@@ -712,15 +716,13 @@ paths:
                     resourceId: unknown.scope
                     code: 404
                     status: Not Found
-                    message: Error while getting custom scope
-                    details:
-                      - Custom scope with id 'unknown.scope' not found
+                    message: Scope not found
       security:
         - OAuth2:
-            - iam.custom_scope_read
+            - iam.scope_read
     put:
       tags:
-        - Custom Scopes
+        - Scopes
       summary: Upserting a custom scope
       description: |
         Creates a custom scope when it does not exist, or updates it when it already exists for the tenant.
@@ -743,7 +745,7 @@ paths:
                     version: 1
       responses:
         '201':
-          description: The request was successful. The custom scope has been created.
+          description: The request was successful. The scope has been created.
           content:
             application/json:
               schema:
@@ -753,7 +755,7 @@ paths:
                   value:
                     id: custom.scope
         '204':
-          description: The request was successful. The custom scope has been updated.
+          description: The request was successful. The scope has been updated.
         '400':
           $ref: '#/components/responses/Bad_request_400'
         '401':
@@ -762,10 +764,10 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
       security:
         - OAuth2:
-            - iam.custom_scope_manage
+            - iam.scope_manage
     delete:
       tags:
-        - Custom Scopes
+        - Scopes
       summary: Deleting a custom scope
       description: |
         Deletes a custom scope for the tenant.
@@ -774,14 +776,14 @@ paths:
       operationId: DELETE-iam-delete-custom-scope
       responses:
         '204':
-          description: The request was successful. The custom scope has been deleted.
+          description: The request was successful. The scope has been deleted.
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
           $ref: '#/components/responses/Forbidden_403'
       security:
         - OAuth2:
-            - iam.custom_scope_manage
+            - iam.scope_manage
   '/iam/{tenant}/groups':
     get:
       tags:
@@ -4533,24 +4535,24 @@ components:
       properties:
         version:
           type: integer
-          description: Custom scope document version.
+          description: Scope document version.
           format: int32
         createdAt:
           type: string
-          description: Timestamp indicating when the custom scope was created.
+          description: Timestamp indicating when the scope was created.
           format: date-time
         modifiedAt:
           type: string
-          description: Timestamp indicating when the custom scope was last modified.
+          description: Timestamp indicating when the scope was last modified.
           format: date-time
-      description: Custom scope metadata.
+      description: Scope metadata.
     CustomScopeQueryDocument:
       type: object
-      description: Definition of a custom scope.
+      description: Definition of a scope.
       properties:
         id:
           type: string
-          description: Custom scope identifier. Matches the `scopeId` path parameter.
+          description: Scope identifier.
         description:
           type: object
           additionalProperties:
@@ -4558,12 +4560,12 @@ components:
           description: Localized description as a map of language codes to text.
         domain:
           type: string
-          description: Domain identifier for the custom scope.
+          description: Domain identifier for the scope.
         metadata:
           $ref: '#/components/schemas/CustomScopeMetadataQueryDocument'
     CustomScopeUpsertRequest:
       type: object
-      description: Payload for creating or updating a custom scope.
+      description: Payload for creating or updating a scope.
       properties:
         description:
           type: object
@@ -4572,10 +4574,10 @@ components:
           description: Localized description as a map of language codes to text.
         domain:
           type: string
-          description: Domain identifier for the custom scope.
+          description: Domain identifier for the scope.
         metadata:
           type: object
-          description: Metadata for the custom scope. Only `version` is supported, for optimistic locking on updates.
+          description: Metadata for the scope. Only `version` is supported, for optimistic locking on updates.
           properties:
             version:
               type: integer
@@ -4601,8 +4603,6 @@ components:
             iam.assignment_create_own: ''
             iam.assignment_manage: ''
             iam.assignment_delete_own: ''
-            iam.custom_scope_manage: ''
-            iam.custom_scope_read: ''
             iam.permission_read: ''
             iam.permission_create: ''
             iam.permission_update: ''
@@ -4618,6 +4618,7 @@ components:
             iam.user_create: ''
             iam.user_update: ''
             iam.user_delete: ''
+            iam.scope_manage: ''
             iam.scope_read: ''
             iam.scope_read_own: ''
             iam.resource_read: ''
@@ -4806,7 +4807,7 @@ components:
       in: path
       required: true
       description: |
-        Unique identifier of a custom scope. Only letters, periods (`.`), hyphens (`-`), and underscores (`_`) are allowed.
+        Unique identifier of a scope. Only letters, periods (`.`), hyphens (`-`), and underscores (`_`) are allowed.
       schema:
         type: string
         example: custom.scope
@@ -5197,7 +5198,7 @@ security:
   - OAuth2: []
 tags:
   - name: Access Controls
-  - name: Custom Scopes
+  - name: Scopes
   - name: Group Assignments
   - name: Groups
   - name: Permissions
