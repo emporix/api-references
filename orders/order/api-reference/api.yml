@@ -63,8 +63,6 @@ paths:
       summary: Creating a new order
       description: |
         Creates an order by the tenant employee, on behalf of a customer. 
-
-        **Note:** The `entries.originalAmount` is DEPRECATED. Use the `entries.originalPrice` field instead.
       security:
         - OAuth2:
             - order.order_create
@@ -936,7 +934,10 @@ components:
           type: string
     orderEntry:
       title: Order entry
-      description: The ordered item.
+      description: |
+        The ordered item.
+
+        **NOTE**: Deprecated fields are listed at the end: `fees`, `originalAmount`, `originalPrice`, `unitPrice`, `discounts`, `totalPrice`, `authorizedAmount`, `tax`, `price`. Use `calculatedPrice` and `calculatedUnitPrice` instead.
       type: object
       properties:
         id:
@@ -944,12 +945,6 @@ components:
           type: string
         itemYrn:
           $ref: '#/components/schemas/YRN'
-        fees:
-          allOf:
-            - $ref: '#/components/schemas/aggregateFee'
-            - type: object
-              description: '**This field is deprecated**. Please use `calculatedPrice.fees` instead. The `calculatedPrice.fees` field provides the same value with updated functionality.'
-          deprecated: true
         amount:
           description: The amount of items.
           type: integer
@@ -963,18 +958,6 @@ components:
           description: Effective quantity is q calculated average quantity customer is paying for.
           type: number
           format: double
-        originalAmount:
-          description: The original amount. This field is deprecated**. Please use `calculatedUnitPrice` instead. The `calculatedUnitPrice` field provides the same value with updated functionality.
-          type: number
-          deprecated: true
-        originalPrice:
-          description: The original price. This field is deprecated**. Please use `calculatedUnitPrice` instead. The `calculatedUnitPrice` field provides the same value with updated functionality.
-          type: number
-          deprecated: true
-        unitPrice:
-          type: number
-          deprecated: true
-          description: '**This field is deprecated**. Please use `calculatedUnitPrice` instead. The `calculatedUnitPrice` field provides the same value with updated functionality.'
         calculatedUnitPrice:
           allOf:
             - $ref: '#/components/schemas/calculatedPrice'
@@ -985,27 +968,8 @@ components:
         link:
           description: Link to product.
           type: string
-        discounts:
-          deprecated: true
-          description: The discount list. **This field is deprecated**. Please use `calculatedPrice.totalDiscount` instead. The `calculatedPrice.totalDiscount` field provides the same value with updated functionality.
-        totalPrice:
-          type: number
-          deprecated: true
-          description: The total price of items. **This field is deprecated**. Please use `calculatedPrice.finalPrice` instead. The `calculatedPrice.finalPrice` field provides the same value with updated functionality.
-        authorizedAmount:
-          description: The authorized amount. **This field is deprecated**. Please use `calculatedPrice.upliftValue` instead. The `calculatedPrice.upliftValue` field how much payment authorization should be increased for given item.
-          deprecated: true
-          type: number
         product:
           $ref: '#/components/schemas/product'
-        tax:
-          allOf:
-            - $ref: '#/components/schemas/tax'
-            - type: object
-              description: '**This field is deprecated**. Please use `calculatedPrice.price` instead. The `calculatedPrice.price` field provides the same value with updated functionality.'
-          deprecated: true
-        price:
-          $ref: '#/components/schemas/price'
         metadata:
           $ref: '#/components/schemas/mixinsMetadata'
         mixins:
@@ -1027,6 +991,43 @@ components:
           description: External fees applied to this order entry.
           items:
             $ref: '#/components/schemas/externalFee'
+        fees:
+          allOf:
+            - $ref: '#/components/schemas/aggregateFee'
+            - type: object
+              description: '**This field is deprecated**. Please use `calculatedPrice.fees` instead. The `calculatedPrice.fees` field provides the same value with updated functionality.'
+          deprecated: true
+        originalAmount:
+          description: The original amount. **This field is deprecated**. Use `originalPrice` instead (or `calculatedUnitPrice` for the full replacement).
+          type: number
+          deprecated: true
+        originalPrice:
+          description: The original price. **This field is deprecated**. Please use `calculatedUnitPrice` instead. The `calculatedUnitPrice` field provides the same value with updated functionality.
+          type: number
+          deprecated: true
+        unitPrice:
+          type: number
+          deprecated: true
+          description: '**This field is deprecated**. Please use `calculatedUnitPrice` instead. The `calculatedUnitPrice` field provides the same value with updated functionality.'
+        discounts:
+          deprecated: true
+          description: The discount list. **This field is deprecated**. Please use `calculatedPrice.totalDiscount` instead. The `calculatedPrice.totalDiscount` field provides the same value with updated functionality.
+        totalPrice:
+          type: number
+          deprecated: true
+          description: The total price of items. **This field is deprecated**. Please use `calculatedPrice.finalPrice` instead. The `calculatedPrice.finalPrice` field provides the same value with updated functionality.
+        authorizedAmount:
+          description: The authorized amount. **This field is deprecated**. Please use `calculatedPrice.upliftValue` instead. The `calculatedPrice.upliftValue` field how much payment authorization should be increased for given item.
+          deprecated: true
+          type: number
+        tax:
+          allOf:
+            - $ref: '#/components/schemas/tax'
+            - type: object
+              description: '**This field is deprecated**. Please use `calculatedPrice.price` instead. The `calculatedPrice.price` field provides the same value with updated functionality.'
+          deprecated: true
+        price:
+          $ref: '#/components/schemas/price'
       required:
         - amount
         - calculatedUnitPrice
@@ -1666,18 +1667,14 @@ components:
         - id
     orderCommonDto:
       title: Order Common DTO
-      description: 'The base order fields. This object is inherited by all of other order objects as Order Creation DTO, Order Update DTO etc.'
+      description: |
+        The base order fields. This object is inherited by all of other order objects as Order Creation DTO, Order Update DTO etc.
+
+        **NOTE**: Deprecated fields are listed at the end: `feeYrnAggregate`, `shipping`, `tax`, `subTotalPrice`, `totalPrice`, `orderCycle`, `deliveryWindowId`. Use `calculatedPrice` and `deliveryWindow` instead.
       type: object
       properties:
         restriction:
           $ref: '#/components/schemas/restriction'
-        feeYrnAggregate:
-          allOf:
-            - $ref: '#/components/schemas/aggregateFee'
-            - type: object
-              description: "**This field is deprecated**. Please use `calculatedPrice.totalFees` and `entries[].calculatedPrice.fees` instead.
-                        These fields provide the same values with updated functionality."
-          deprecated: true
         status:
           $ref: '#/components/schemas/orderStatus'
         cartId:
@@ -1723,6 +1720,33 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/payment'
+        totalAuthorizedAmount:
+          type: number
+          description: "The amount that should be authorized with payment provider. It's a sum of `calculatedPrice.finalPrice.grossValue` and `calculatedPrice.upliftValue.grossValue`."
+        currency:
+          description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
+          type: string
+        deliveryWindow:
+          $ref: '#/components/schemas/deliveryWindow'
+        metadata:
+          $ref: '#/components/schemas/metadataMixins'
+        mixins:
+          type: object
+        calculatedPrice:
+          allOf:
+            - $ref: '#/components/schemas/orderCalculatedPrice'
+            - type: object
+              description: 'A breakdown of the total price calculated from all line items, including detailed pricing components. Can be skipped if deprecated`totalPrice` is provided to preserve backward compatibility'
+        legalEntityId:
+          type: string
+          description: The identifier of the legal entity on whose behalf the order was placed.
+        feeYrnAggregate:
+          allOf:
+            - $ref: '#/components/schemas/aggregateFee'
+            - type: object
+              description: "**This field is deprecated**. Please use `calculatedPrice.totalFees` and `entries[].calculatedPrice.fees` instead.
+                        These fields provide the same values with updated functionality."
+          deprecated: true
         shipping:
           allOf:
             - $ref: '#/components/schemas/shipping'
@@ -1747,42 +1771,18 @@ components:
           deprecated: true
           description: "Order total price. **This field is deprecated**. Please use `calculatedPrice.finalPrice` instead.
                         The `calculatedPrice.finalPrice` field provides the same value with updated functionality."
-        totalAuthorizedAmount:
-          type: number
-          description: "The amount that should be authorized with payment provider. It's a sum of `calculatedPrice.finalPrice.grossValue` and `calculatedPrice.upliftValue.grossValue`."
-        currency:
-          description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
-          type: string
         orderCycle:
           description: |-
             Order cycle date.
-
-            ***NOTE***
-            This attribute is DEPRECATED, please use the `deliveryWindow.deliveryCycle` attribute
+            This field is deprecated. Please use the `deliveryWindow.deliveryCycle` attribute instead
           deprecated: true
           type: string
         deliveryWindowId:
           description: |-
             Delivery window's unique identifier.
-
-            ***NOTE***
-            This attribute is DEPRECATED, please use the `deliveryWindow.id` attribute
+            This field is deprecated. Please use the `deliveryWindow.id` attribute instead.
           type: string
           deprecated: true
-        deliveryWindow:
-          $ref: '#/components/schemas/deliveryWindow'
-        metadata:
-          $ref: '#/components/schemas/metadataMixins'
-        mixins:
-          type: object
-        calculatedPrice:
-          allOf:
-            - $ref: '#/components/schemas/orderCalculatedPrice'
-            - type: object
-              description: 'A breakdown of the total price calculated from all line items, including detailed pricing components. Can be skipped if deprecated`totalPrice` is provided to preserve backward compatibility'
-        legalEntityId:
-          type: string
-          description: The identifier of the legal entity on whose behalf the order was placed.
       required:
         - entries
         - customer
