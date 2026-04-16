@@ -1450,10 +1450,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Retrieves agent requests based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1483,10 +1479,6 @@ paths:
           $ref: '#/components/responses/404_resp_common'
       description: |-
         Retrieves the agent request by given ID.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1517,10 +1509,6 @@ paths:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
         Searches for agent requests based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1549,10 +1537,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Retrieves agent sessions based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1582,10 +1566,6 @@ paths:
           $ref: '#/components/responses/404_resp_common'
       description: |-
         Retrieves the agent session by given ID.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1616,10 +1596,6 @@ paths:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
         Searches for agent sessions based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
