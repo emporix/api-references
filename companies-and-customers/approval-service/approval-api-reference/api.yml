@@ -44,7 +44,7 @@ paths:
       description: |
         Creates a single approval document with information about the approver and order details. 
         The user must be a *Requestor* or an *Approver* to have the required `approval.approval_manage_own` scope.
-        
+
         In case of any validation problems, the below `errorCodes` can be returned:
           - **APPROVAL-400003**: Incorrect value of the approval status
           - **APPROVAL-400004**: Not matching combination of approval action and resource type 
@@ -129,6 +129,7 @@ paths:
         - Approvals
       description: |
         Partially updates a single approval document with given information. To update the approval, the user must be a *Requestor* or an *Approver* to have the required `approval.approval_manage_own` scope.
+        
         Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
           - `add` (adding an item to the items list)
           - `remove` (removing an item from the items list)
