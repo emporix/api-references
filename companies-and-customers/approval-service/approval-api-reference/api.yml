@@ -44,6 +44,7 @@ paths:
       description: |
         Creates a single approval document with information about the approver and order details. 
         The user must be a *Requestor* or an *Approver* to have the required `approval.approval_manage_own` scope.
+        
         In case of any validation problems, the below `errorCodes` can be returned:
           - **APPROVAL-400003**: Incorrect value of the approval status
           - **APPROVAL-400004**: Not matching combination of approval action and resource type 
