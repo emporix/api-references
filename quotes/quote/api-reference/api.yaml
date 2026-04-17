@@ -23,10 +23,12 @@ paths:
         Retrieves quotes. The response includes either all quotes or a subset of quotes based on the assigned access token scopes.
         ***
 
-        ### Required scopes (one of)
+        ### **Additional scope information**
+        One of the scopes is required:
 
-          * `quote.quote_read` - assigned to employees to allow them to retrieve all tenant quotes
-          * `quote.quote_read_own` - assigned to customers to enable them to retrieve only the quotes that they created themselves or that were created on their behalf
+          * The `quote.quote_read` scope is required to employees to retrieve all tenant quotes.
+          * The `quote.quote_read_own` is assigned to customers to enable them to retrieve only the quotes that they created themselves or that were created on their behalf.
+        ***
       operationId: GET-quote-list-quotes
       parameters:
         - name: tenant
@@ -231,6 +233,7 @@ paths:
       security:
         - OAuth2:
             - quote.quote_read
+            - quote.quote_read_own
     post:
       tags:
         - Quote management
@@ -240,11 +243,10 @@ paths:
 
         ***
 
-        ### Required scopes
+        ### **Additional scope information**
+        The `cart.cart_manage_external_prices` scope is required for managing external prices.
 
-          * `quote.quote_manage` - required for the employee to create a quote
-          * `quote.quote_manage_own` - required for the customer to be able to create a quote from cart
-          * `cart.cart_manage_external_prices` - required for external prices
+        ***
       operationId: POST-quote-create-quote
       parameters:
         - name: tenant
@@ -374,13 +376,6 @@ paths:
       summary: Creating a quote PDF
       description: |
         Generates a pdf for a given quote and returns its contents. 
-        ***
-
-        ### Required scopes
-
-          * `quote.quote_read` - allows to generate a PDF for any quote
-          * `quote.quote_manage` - allows to generate a PDF for any quote
-          * `quote.quote_manage_own` - allows to generate a PDF for own quote
       operationId: POST-quote-generate-quote-pdf
       parameters:
         - name: tenant
@@ -441,11 +436,6 @@ paths:
       summary: Retrieving quote history
       description: |
         Retrieves changes related to a quote with a given ID. 
-        ***
-
-        ### Required scopes
-
-          * `quote.quote_read` - allows employees to retrieve history of any quote
       operationId: GET-quote-retrieve-quote-history
       parameters:
         - name: tenant
@@ -609,10 +599,11 @@ paths:
 
         ***
 
-        ### Required scopes
+        ### **Additional scope information**
 
-          * `quote.quote_read` - allows employees to retrieve any quote
-          * `quote.quote_read_own` - allows customers to retrieve their own quote
+        * The `quote.quote_read_own` scope is only required to customers to retrieve their own quote.
+
+        ***
       operationId: GET-quote-retrieve-quote
       parameters:
         - name: tenant
@@ -853,10 +844,11 @@ paths:
 
         ***
 
-        ### Required scopes
+        ### **Additional scope information**
 
-          * `quote.quote_manage` - allows employees or external api calls to modify all quotes
-          * `quote.quote_manage_own` - allows customers to modify only their own quotes by modifying the status to either `ACCEPTED` or `DECLINED`.
+        * The `quote.quote_manage_own` scope allows customers to modify only their own quotes by modifying the status to either `ACCEPTED` or `DECLINED`.
+
+        ***
       responses:
         '204':
           description: The request was successful. The quote has been updated.
@@ -1153,11 +1145,6 @@ paths:
       operationId: DELETE-quote-remove-quote
       description: |-
         Deletes a quote with a given quote ID.
-        ***
-
-        ### Required scopes
-
-          * `quote.quote_manage` - the quote can be deleted by an employee
       responses:
         '204':
           description: Quote has been deleted successfully.
@@ -1208,11 +1195,6 @@ paths:
       description: |-
         Creating reasons for the 'CHANGE' or 'DECLINE' types of quote statuses.
         The reason for the quote status change serves to provide more descriptive information why the status has been changed. This option is available both for merchants and customers, depending on who updates the status of the quote.
-        ***
-
-        ### Required scopes
-
-          * `quote.quote_manage`
       operationId: POST-quote-create-quote-reason
       parameters:
         - name: tenant
@@ -1264,12 +1246,6 @@ paths:
       summary: Retrieving reasons for changing the quote status
       description: |-
         Retrieves a full list of reasons for changing the quote status with details.
-        ***
-
-        ### Required scopes
-
-          * `quote.quote_read`
-          * `quote.quote_read_own`
       operationId: GET-quote-list-reasons
       parameters:
         - name: tenant
@@ -1326,12 +1302,6 @@ paths:
       summary: Retrieving a quote reason
       description: |-
         Retrieves a quote reason with details by its unique identifier. 
-        ***
-
-        ### Required scopes
-
-          * `quote.quote_read`
-          * `quote.quote_read_own`
       operationId: GET-quote-retrieve-reason
       parameters:
         - name: tenant
@@ -1389,11 +1359,6 @@ paths:
       summary: Updating the reason for changing the quote status
       description: |-
         Updating the reason for changing the quote status. 
-        ***
-
-        ### Required scopes
-
-          * `quote.quote_manage`
       operationId: PUT-quote-update-reason
       parameters:
         - name: tenant
@@ -1471,11 +1436,9 @@ paths:
             example: 642c1ff3c78f9b2958d17c18
       description: |-
         Deletes the reason provided for the quote status change with a specific reason ID.
-        ***
-
-        ### Required scopes
-
-          * `quote.quote_manage` - the quote reason can be deleted by an employee
+      security:
+        - OAuth2:
+            - quote.quote_manage
       responses:
         '204':
           description: Quote reason has been deleted successfully.
