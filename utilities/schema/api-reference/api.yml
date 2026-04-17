@@ -1650,8 +1650,11 @@ paths:
       summary: Deleting custom instances in bulk
       description: |-
         Removes multiple custom instances.
-        ### The IDs of items should be defined in the request body as an array of strings.
-        #### Example: `["firstId", "secondId", "thirdId"]`
+
+        **Note**:
+        The IDs of items should be defined in the request body as an array of strings.
+        
+        **Example**: `["firstId", "secondId", "thirdId"]`
         
       tags:
         - Custom Instance
