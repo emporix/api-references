@@ -24,7 +24,7 @@ paths:
         ***
 
         ### **Additional scope information**
-        One of the scopes is required:
+        One of the scopes is required.
 
           * The `quote.quote_read` scope is required to employees to retrieve all tenant quotes.
           * The `quote.quote_read_own` is assigned to customers to enable them to retrieve only the quotes that they created themselves or that were created on their behalf.
@@ -244,7 +244,10 @@ paths:
         ***
 
         ### **Additional scope information**
-        The `cart.cart_manage_external_prices` scope is required for managing external prices.
+        One of the scopes is required.
+
+        * The `quote.quote_manage_own` scope is required for customers to create a quote from cart.
+        * The additional `cart.cart_manage_external_prices` scope is required for managing external prices.
 
         ***
       operationId: POST-quote-create-quote
@@ -600,6 +603,7 @@ paths:
         ***
 
         ### **Additional scope information**
+        One of the scopes is required.
 
         * The `quote.quote_read_own` scope is only required to customers to retrieve their own quote.
 
@@ -831,6 +835,7 @@ paths:
       security:
         - OAuth2:
             - quote.quote_read
+            - quote.quote_read_own
     patch:
       operationId: PATCH-quote-update-quote
       summary: Partially updating a quote
@@ -845,6 +850,7 @@ paths:
         ***
 
         ### **Additional scope information**
+        One of the scopes is required.
 
         * The `quote.quote_manage_own` scope allows customers to modify only their own quotes by modifying the status to either `ACCEPTED` or `DECLINED`.
 
@@ -2393,10 +2399,10 @@ components:
         clientCredentials:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
-            quote.quote_read: ''
-            quote.quote_read_own: ''
-            quote.quote_manage: ''
-            quote.quote_manage_own: ''
+            quote.quote_read: Needed to retrieve quotes.
+            quote.quote_read_own: Needed to retrieve own quotes by the customer.
+            quote.quote_manage: Needed to manage quotes.
+            quote.quote_manage_own: Needed to manage own quotes by the customer.
   parameters:
     trait_paged_pageNumber:
       name: pageNumber
