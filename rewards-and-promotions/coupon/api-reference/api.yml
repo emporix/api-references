@@ -124,12 +124,13 @@ paths:
         ***
 
         ### Additional scopes info
-        * `coupon.coupon_redeem_on_behalf` - needed only if the service should use the customer identification specified in the request query (`customerNumber` attribute) instead of the one associated with current authentication token.
+        * The `coupon.coupon_redeem_on_behalf` scope is only required if the service should use the customer identification specified in the request query (`customerNumber` attribute) instead of the one associated with current authentication token.
       operationId: GET-coupon-retrieve-coupon
       parameters:
         - $ref: '#/components/parameters/customer_number'
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - coupon.coupon_redeem_on_behalf
     put:
       summary: Updating the coupon by code
       tags:
@@ -251,7 +252,7 @@ paths:
         ***
 
         ### Additional scopes info
-        * `coupon.coupon_redeem_on_behalf` - needed only if the service should use the customer identification
+        * The `coupon.coupon_redeem_on_behalf` scope is only required if the service should use the customer identification
         specified in the request body (`customerNumber` attribute) instead of the one associated with current
         authentication token.
       operationId: POST-coupon-validate-coupon
@@ -265,7 +266,8 @@ paths:
               $ref: '#/components/schemas/redemption-creation'
         required: true
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - coupon.coupon_redeem_on_behalf
     parameters:
       - $ref: '#/components/parameters/coupon_code'
       - $ref: '#/components/parameters/trait_tenant'
@@ -342,7 +344,7 @@ paths:
         ***
 
         ### Additional scopes info
-        * `coupon.coupon_redeem_on_behalf` - needed only if the service should use the customer identification specified in the request body (`customerNumber` attribute) instead of the one associated with current authentication token.
+        * The `coupon.coupon_redeem_on_behalf` scope is only required if the service should use the customer identification specified in the request body (`customerNumber` attribute) instead of the one associated with current authentication token.
       operationId: POST-coupon-invalidate-coupon
       requestBody:
         content:
@@ -354,7 +356,8 @@ paths:
               $ref: '#/components/schemas/redemption-creation'
         required: true
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - coupon.coupon_redeem_on_behalf
     parameters:
       - $ref: '#/components/parameters/coupon_code'
       - $ref: '#/components/parameters/trait_tenant'
@@ -388,14 +391,17 @@ paths:
         ***
 
         ### Additional scopes info
-        * `coupon.coupon_manage` for accessing any redemption.
-        * `coupon.coupon_redeem` for accessing only redemption created by current user.
-        * `coupon.coupon_redeem_on_behalf` - needed only if the service should use the customer identification specified in the request body (`customerNumber`attribute) instead of the one associated with current authentication token.
+        * The `coupon.coupon_manage` scope is required for accessing any redemption.
+        * The `coupon.coupon_redeem` scope is required for accessing only redemption created by current user.
+        * The `coupon.coupon_redeem_on_behalf` scope is only required if the service should use the customer identification specified in the request body (`customerNumber`attribute) instead of the one associated with current authentication token.
       operationId: GET-coupon-retrieve-coupon-redemption
       parameters:
         - $ref: '#/components/parameters/customer_number'
       security:
-        - OAuth2: []
+        - OAuth2:   
+            - coupon.coupon_manage
+            - coupon.coupon_redeem
+            - coupon.coupon_redeem_on_behalf
     delete:
       summary: Deleting a coupon redemption
       tags:
