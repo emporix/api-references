@@ -44,7 +44,7 @@
   * [AI Service](artificial-intelligence/ai-service/README.md)
     * [AI Tutorials](artificial-intelligence/ai-service/ai-tutorial.md)
     * [API Reference](artificial-intelligence/ai-service/api-reference/README.md)
-      * ```yaml
+    * ```yaml
         props:
           models: true
           downloadLink: true
