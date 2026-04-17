@@ -44,17 +44,17 @@
   * [AI Service](artificial-intelligence/ai-service/README.md)
     * [AI Tutorials](artificial-intelligence/ai-service/ai-tutorial.md)
     * [API Reference](artificial-intelligence/ai-service/api-reference/README.md)
-    * ```yaml
-        props:
-          models: true
-          downloadLink: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: ai-api
-        ```
+      * ```yaml
+          props:
+            models: true
+            downloadLink: true
+          type: builtin:openapi
+          dependencies:
+            spec:
+              ref:
+                kind: openapi
+                spec: ai-api
+          ```
   * [AI RAG Indexer](artificial-intelligence/ai-rag-indexer/README.md)
     * [AI RAG Indexer Tutorial](artificial-intelligence/ai-rag-indexer/ai-rag-indexer-tutorial.md)
     * [API Reference](artificial-intelligence/ai-rag-indexer/api-reference/README.md)
