@@ -3540,7 +3540,8 @@ components:
         config:
           url: 'http://localhost:7900/mcp'
           authorizationHeaderName: Authorization
-          authorizationHeaderTokenId: token-id
+          authorizationHeaderToken:
+            id: token-id
     McpServersResponse:
       value:
         - id: mcp-custom
@@ -3550,7 +3551,8 @@ components:
           config:
             url: 'http://localhost:7900/mcp'
             authorizationHeaderName: Authorization
-            authorizationHeaderTokenId: token-id
+            authorizationHeaderToken:
+              id: token-id
     CommerceEventsResponse:
       value:
         events:
@@ -3658,7 +3660,8 @@ components:
         config:
           url: 'http://localhost:7900/mcp'
           authorizationHeaderName: Authorization
-          authorizationHeaderTokenId: token-id
+          authorizationHeaderToken:
+            id: token-id
     TokenRequest:
       value:
         name: OpenAI Token
