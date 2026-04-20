@@ -1218,6 +1218,7 @@ paths:
     get:
       parameters:
         - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/expandMcpServer'
       summary: Retrieving MCP server by ID
       operationId: GET-ai-retrieve-mcp-server
       responses:
