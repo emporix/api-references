@@ -8,7 +8,7 @@
 
 ## 2026
 
-* [2026-04-10: Session Context Service - language attribute added to session context model](2026/2026-04-10-session-context.md)
+* [RELEASE_DATE: Session Context Service - language attribute added to session context model](2026/RELEASE_DATE-session-context.md)
 * [2026-04-13: Schema Service - custom instance scopes, owner, and type-scoped access](2026/2026-04-13-schema.md)
 * [2026-04-13: IAM Service - custom scopes and access controls](2026/2026-04-13-iam.md)
 * [2026-04-07: Order Service - historical transitions endpoint for tenant-managed orders](2026/2026-04-07-order.md)

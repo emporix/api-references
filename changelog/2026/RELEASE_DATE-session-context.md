@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2026-04-10: Session Context Service - language attribute added to session context model
+# RELEASE_DATE: Session Context Service - language attribute added to session context model
 
 ## Overview
 
