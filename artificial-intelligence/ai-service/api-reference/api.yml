@@ -1631,7 +1631,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/path_tenant'
     get:
-      summary: Retrieving agent analytics bundle
+      summary: Retrieving agent analytics bundle for last four weeks
       operationId: GET-ai-agentic-analytics
       parameters:
         - name: agentId
@@ -1641,16 +1641,6 @@ paths:
             type: string
           description: |
             When set, metrics are scoped to this agent. When omitted, tenant-wide aggregates are returned.
-        - name: trendWeeks
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-            minimum: 1
-            maximum: 56
-            default: 4
-          description: Number of calendar weeks of trend data to include (default 4, max 56).
       responses:
         '200':
           description: Aggregated request and session metrics, resolution efficiency, and weekly trends.
@@ -1665,7 +1655,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        Returns a single bundle of analytics for dashboards: request and session aggregates (including severity breakdowns), resolution efficiency, and per-week request and session error trends.
+        Returns a single bundle of analytics for dashboards: request and session aggregates (including severity breakdowns), resolution efficiency, and per-week session error trends.
 
         ### Required scopes
 
@@ -1688,7 +1678,7 @@ paths:
           schema:
             type: string
           description: |
-            Comma-separated list of agent IDs (no spaces). Required. Maximum 100 IDs.
+            Comma-separated list of agent IDs (no spaces). Maximum 100 IDs.
         - name: granularity
           in: query
           required: false
@@ -1700,16 +1690,6 @@ paths:
               - WEEK
             default: QUARTER
           description: Time bucket for each period (UTC).
-        - name: periods
-          in: query
-          required: false
-          schema:
-            type: integer
-            format: int32
-            minimum: 1
-            maximum: 56
-            default: 4
-          description: Number of consecutive periods to return (most recent first in the response order), max 56.
       responses:
         '200':
           description: Per-agent execution counts aligned to the returned periods.
@@ -1724,7 +1704,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        Returns execution (session) counts per agent for each calendar period (quarter, month, or week), for the requested number of most recent periods.
+        Returns execution (session) counts per agent for each calendar period (quarter, month, or week).
 
         ### Required scopes
 
