@@ -13,30 +13,32 @@ layout:
     visible: true
 ---
 
-# 2026-04-07: Product Service – dynamic variant product type and recalculation
+# RELEASE_DATE: Product Service – dynamic variant product type and recalculation
 
 ## Overview
 
-A new product type `DYNAMIC_VARIANT` has been introduced, enabling flexible multi-level variant hierarchies of up to 4 levels. Unlike `PARENT_VARIANT` products (which use a fixed attribute template), `DYNAMIC_VARIANT` products form a tree where each variant stores its own `ownVariantAttributes` — the attributes that distinguish it from its parent. The root product maintains a denormalized flat map of all descendants in its `variants` field, with accumulated attributes computed at response time.
+A new product type `DYNAMIC_VARIANT` has been introduced, enabling flexible multi-level variant hierarchies of up to 4 levels.
 
-Key characteristics of `DYNAMIC_VARIANT` products:
+Unlike `PARENT_VARIANT` products, which use a fixed attribute template, `DYNAMIC_VARIANT` products form a tree where each variant stores its own `ownVariantAttributes` - these are the attributes that distinguish it from its parent. The root product maintains a denormalized flat map of all descendants in its `variants` field, with accumulated attributes computed at response time.
+
+Key features of `DYNAMIC_VARIANT` products:
 
 - Variants can be created in any order — a child variant may exist before its parent, simplifying bulk data imports.
-- Each variant stores only **delta attributes** (the attributes introduced at its own level). Accumulated (fully merged) attributes are computed by the API at response time by walking the `parentVariantId` chain.
+- Each variant stores only delta attributes, which are the attributes introduced at its own level. The accumulated, fully merged, attributes are computed by the API at response time by following the `parentVariantId` chain.
 - Variant responses expose `ownVariantAttributes` (modifiable, stored in the database) and `inheritedVariantAttributes` (read-only, derived from ancestors at response time).
 - Every variant carries a `parentVariantPath` array (ancestor IDs, root-first) enabling efficient tree traversal without database graph lookups.
-- A `dynamicVariantType` label (e.g. `H1_L1`, `H1_L2`) identifies the variant's level in the hierarchy.
+- A `dynamicVariantType` label (for example: `H1_L1`, `H1_L2`) identifies the variant's level in the hierarchy.
 - The `sellable` flag indicates whether a variant can be sold directly.
 
-For single product writes, the variant tree on ancestor products is updated synchronously and inline. For bulk imports, a dedicated asynchronous recalculation mechanism is provided via the new `/recalculate` endpoints.
+For single product writes, the variant tree on ancestor products is updated synchronously and inline. For bulk imports, a dedicated asynchronous recalculation mechanism is provided by the new `/recalculate` endpoints.
 
 ## New endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Triggering dynamic variant recalculation](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-trigger-dynamic-variant-recalculation) `POST /product/{tenant}/products/recalculate` | Accepts up to 1000 product IDs at any hierarchy level and triggers asynchronous recalculation of the variant tree. The system resolves the root for each submitted ID and creates one recalculation job per unique root product. Returns `202 Accepted` with the list of created jobs. If a job for a given root is already `PENDING` or `PROCESSING`, the affected IDs are returned in `skippedProductIds`. Intended to be called after a full batch import, not per individual product write. |
-| [Listing recalculation jobs](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-list-recalculation-jobs) `GET /product/{tenant}/products/recalculate/jobs` | Retrieves all dynamic variant recalculation jobs for the tenant. Supports optional filtering by job `status` (`PENDING`, `PROCESSING`, `FINISHED`, `FAILED`, `FAILED_PERMANENT`). Jobs are retained for approximately 30 days after reaching a terminal state and then automatically removed. |
-| [Retrieving a recalculation job](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-get-recalculation-job) `GET /product/{tenant}/products/recalculate/jobs/{jobId}` | Retrieves the current status and details of a specific recalculation job by its ID. Use this endpoint to poll for job completion. Returns `404` if the job does not exist or has been removed by the TTL index. |
+| [Triggering dynamic variant recalculation](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-trigger-dynamic-variant-recalculation) | Accepts up to 1000 product IDs at any hierarchy level and triggers asynchronous recalculation of the variant tree. The system resolves the root for each submitted ID and creates one recalculation job per unique root product. Returns `202 Accepted` with the list of created jobs. If a job for a given root is already `PENDING` or `PROCESSING`, the affected IDs are returned in `skippedProductIds`. Intended to be called after a full batch import, not per individual product write. |
+| [Listing recalculation jobs](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-list-recalculation-jobs) | Retrieves all dynamic variant recalculation jobs for the tenant. Supports optional filtering by job `status` (`PENDING`, `PROCESSING`, `FINISHED`, `FAILED`, `FAILED_PERMANENT`). Jobs are retained for approximately 30 days after reaching a terminal state and then automatically removed. |
+| [Retrieving a recalculation job](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-get-recalculation-job) | Retrieves the current status and details of a specific recalculation job by its ID. Use this endpoint to poll for job completion. Returns `404` if the job does not exist or has been removed after 30 days. |
 
 ## Modified endpoints
 

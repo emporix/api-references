@@ -8,7 +8,7 @@
 
 ## 2026
 
-* [2026-04-07: Product Service – dynamic variant product type and recalculation](2026/2026-04-07-product.md)
+* [RELEASE_DATE: Product Service – dynamic variant product type and recalculation](2026/RELEASE_DATE-product.md)
 * [2026-04-21: Session Context Service - language attribute added to session context model](2026/2026-04-21-session-context.md)
 * [2026-04-21: Customer Service - session context attributes on anonymous login](2026/2026-04-21-customer.md)
 * [2026-04-13: Schema Service - custom instance scopes, owner, and type-scoped access](2026/2026-04-13-schema.md)

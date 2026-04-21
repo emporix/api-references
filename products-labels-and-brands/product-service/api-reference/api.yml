@@ -707,10 +707,10 @@ paths:
                     code: SCREW-M3X20-CSKP-ZP
                     name:
                       en: M3x20 Countersunk Screw
-                      deDE: M3x20 Senkschraube
+                      de: M3x20 Senkschraube
                     description:
                       en: Industrial countersunk screw M3x20, zinc plated
-                      deDE: Industrielle Senkschraube M3x20, verzinkt
+                      de: Industrielle Senkschraube M3x20, verzinkt
                     productType: DYNAMIC_VARIANT
                     published: true
                     sellable: false
@@ -721,7 +721,7 @@ paths:
                         version: 1
                         name:
                           en: M3x20 CSKP ZP
-                          deDE: M3x20 CSKP ZP
+                          de: M3x20 CSKP ZP
                         parentVariantId: screw-m3x20-cskp-zp
                         sellable: false
                         dynamicVariantType: H1_L1
@@ -729,39 +729,39 @@ paths:
                           screwHeadType:
                             name:
                               en: Head Type
-                              deDE: Kopfform
+                              de: Kopfform
                             value:
                               type: STRING
                               qualifier: CSKP
                               name:
                                 en: Countersunk milling pockets
-                                deDE: Senkkopf mit Frästaschen
+                                de: Senkkopf mit Frästaschen
                           screwSurfaceTreatment:
                             name:
                               en: Surface Protection
-                              deDE: Oberflächenschutz
+                              de: Oberflächenschutz
                             value:
                               type: STRING
                               qualifier: ZP
                               name:
                                 en: zinc plated
-                                deDE: verzinkt
+                                de: verzinkt
                           screwDiameter:
                             name:
                               en: Nominal Diameter
-                              deDE: Gewinde-Nenndurchmesser
+                              de: Gewinde-Nenndurchmesser
                             value:
                               type: DECIMAL
                               qualifier: 3.0
                               unit: MMT
                               name:
                                 en: 3.0 mm
-                                deDE: 3,0 mm
+                                de: 3,0 mm
                       screw-m3x20-cskp-zp-canister:
                         version: 1
                         name:
                           en: M3x20 CSKP ZP – Canister
-                          deDE: M3x20 CSKP ZP – Kanister
+                          de: M3x20 CSKP ZP – Kanister
                         parentVariantId: screw-m3x20-cskp-zp-l1
                         sellable: true
                         dynamicVariantType: H1_L2
@@ -769,44 +769,44 @@ paths:
                           screwHeadType:
                             name:
                               en: Head Type
-                              deDE: Kopfform
+                              de: Kopfform
                             value:
                               type: STRING
                               qualifier: CSKP
                               name:
                                 en: Countersunk milling pockets
-                                deDE: Senkkopf mit Frästaschen
+                                de: Senkkopf mit Frästaschen
                           screwSurfaceTreatment:
                             name:
                               en: Surface Protection
-                              deDE: Oberflächenschutz
+                              de: Oberflächenschutz
                             value:
                               type: STRING
                               qualifier: ZP
                               name:
                                 en: zinc plated
-                                deDE: verzinkt
+                                de: verzinkt
                           screwDiameter:
                             name:
                               en: Nominal Diameter
-                              deDE: Gewinde-Nenndurchmesser
+                              de: Gewinde-Nenndurchmesser
                             value:
                               type: DECIMAL
                               qualifier: 3.0
                               unit: MMT
                               name:
                                 en: 3.0 mm
-                                deDE: 3,0 mm
+                                de: 3,0 mm
                           packaging:
                             name:
                               en: Packaging
-                              deDE: Verpackung
+                              de: Verpackung
                             value:
                               type: STRING
                               qualifier: CANISTER
                               name:
                                 en: Canister
-                                deDE: Kanister
+                                de: Kanister
                     metadata:
                       version: 1
                       createdAt: '2024-01-15T10:00:00.000Z'
@@ -818,7 +818,7 @@ paths:
                     code: SCREW-M3X20-CSKP-ZP-CANISTER
                     name:
                       en: M3x20 CSKP ZP – Canister
-                      deDE: M3x20 CSKP ZP – Kanister
+                      de: M3x20 CSKP ZP – Kanister
                     productType: DYNAMIC_VARIANT
                     published: true
                     taxClasses:
@@ -833,45 +833,45 @@ paths:
                       packaging:
                         name:
                           en: Packaging
-                          deDE: Verpackung
+                          de: Verpackung
                         value:
                           type: STRING
                           qualifier: CANISTER
                           name:
                             en: Canister
-                            deDE: Kanister
+                            de: Kanister
                     inheritedVariantAttributes:
                       screwHeadType:
                         name:
                           en: Head Type
-                          deDE: Kopfform
+                          de: Kopfform
                         value:
                           type: STRING
                           qualifier: CSKP
                           name:
                             en: Countersunk milling pockets
-                            deDE: Senkkopf mit Frästaschen
+                            de: Senkkopf mit Frästaschen
                       screwSurfaceTreatment:
                         name:
                           en: Surface Protection
-                          deDE: Oberflächenschutz
+                          de: Oberflächenschutz
                         value:
                           type: STRING
                           qualifier: ZP
                           name:
                             en: zinc plated
-                            deDE: verzinkt
+                            de: verzinkt
                       screwDiameter:
                         name:
                           en: Nominal Diameter
-                          deDE: Gewinde-Nenndurchmesser
+                          de: Gewinde-Nenndurchmesser
                         value:
                           type: DECIMAL
                           qualifier: 3.0
                           unit: MMT
                           name:
                             en: 3.0 mm
-                            deDE: 3,0 mm
+                            de: 3,0 mm
                     metadata:
                       version: 1
                       createdAt: '2024-01-15T10:05:00.000Z'
@@ -1922,11 +1922,11 @@ components:
                 id: screw-m3x20-cskp-zp
                 name:
                   en: M3x20 Countersunk Screw
-                  deDE: M3x20 Senkschraube
+                  de: M3x20 Senkschraube
                 code: SCREW-M3X20-CSKP-ZP
                 description:
                   en: Industrial countersunk screw M3x20, zinc plated
-                  deDE: Industrielle Senkschraube M3x20, verzinkt
+                  de: Industrielle Senkschraube M3x20, verzinkt
                 published: true
                 sellable: false
                 taxClasses:
@@ -1937,7 +1937,7 @@ components:
                 id: screw-m3x20-cskp-zp-l1
                 name:
                   en: M3x20 CSKP ZP
-                  deDE: M3x20 CSKP ZP
+                  de: M3x20 CSKP ZP
                 code: SCREW-M3X20-CSKP-ZP-L1
                 published: true
                 taxClasses:
@@ -1950,40 +1950,40 @@ components:
                   screwHeadType:
                     name:
                       en: Head Type
-                      deDE: Kopfform
+                      de: Kopfform
                     value:
                       type: STRING
                       qualifier: CSKP
                       name:
                         en: Countersunk milling pockets
-                        deDE: Senkkopf mit Frästaschen
+                        de: Senkkopf mit Frästaschen
                   screwSurfaceTreatment:
                     name:
                       en: Surface Protection
-                      deDE: Oberflächenschutz
+                      de: Oberflächenschutz
                     value:
                       type: STRING
                       qualifier: ZP
                       name:
                         en: zinc plated
-                        deDE: verzinkt
+                        de: verzinkt
                   screwDiameter:
                     name:
                       en: Nominal Diameter
-                      deDE: Gewinde-Nenndurchmesser
+                      de: Gewinde-Nenndurchmesser
                     value:
                       type: DECIMAL
                       qualifier: 3.0
                       unit: MMT
                       name:
                         en: 3.0 mm
-                        deDE: 3,0 mm
+                        de: 3,0 mm
             DYNAMIC_VARIANT Child Product Creation (L2 leaf):
               value:
                 id: screw-m3x20-cskp-zp-canister
                 name:
                   en: M3x20 CSKP ZP – Canister
-                  deDE: M3x20 CSKP ZP – Kanister
+                  de: M3x20 CSKP ZP – Kanister
                 code: SCREW-M3X20-CSKP-ZP-CANISTER
                 published: true
                 taxClasses:
@@ -1996,13 +1996,13 @@ components:
                   packaging:
                     name:
                       en: Packaging
-                      deDE: Verpackung
+                      de: Verpackung
                     value:
                       type: STRING
                       qualifier: CANISTER
                       name:
                         en: Canister
-                        deDE: Kanister
+                        de: Kanister
     productUpdateBody:
       content:
         application/json:
@@ -2121,7 +2121,7 @@ components:
               value:
                 name:
                   en: M3x20 CSKP ZP
-                  deDE: M3x20 CSKP ZP
+                  de: M3x20 CSKP ZP
                 code: SCREW-M3X20-CSKP-ZP-L1
                 published: true
                 taxClasses:
@@ -2133,45 +2133,45 @@ components:
                   screwHeadType:
                     name:
                       en: Head Type
-                      deDE: Kopfform
+                      de: Kopfform
                     value:
                       type: STRING
                       qualifier: CSKP
                       name:
                         en: Countersunk milling pockets
-                        deDE: Senkkopf mit Frästaschen
+                        de: Senkkopf mit Frästaschen
                   screwSurfaceTreatment:
                     name:
                       en: Surface Protection
-                      deDE: Oberflächenschutz
+                      de: Oberflächenschutz
                     value:
                       type: STRING
                       qualifier: ZP
                       name:
                         en: zinc plated
-                        deDE: verzinkt
+                        de: verzinkt
                   screwDiameter:
                     name:
                       en: Nominal Diameter
-                      deDE: Gewinde-Nenndurchmesser
+                      de: Gewinde-Nenndurchmesser
                     value:
                       type: DECIMAL
                       qualifier: 3.0
                       unit: MMT
                       name:
                         en: 3.0 mm
-                        deDE: 3,0 mm
+                        de: 3,0 mm
                   screwLength:
                     name:
                       en: Total Length
-                      deDE: Gesamtlänge
+                      de: Gesamtlänge
                     value:
                       type: NUMBER
                       qualifier: 20
                       unit: MMT
                       name:
                         en: 20 mm
-                        deDE: 20 mm
+                        de: 20 mm
                 metadata:
                   version: 2
     productPartialUpdateBody:
