@@ -3748,7 +3748,7 @@ components:
         type: boolean
         default: false
       description: |
-        Removing the `PARENT_VARIANT` product means that all corresponding products of the `VARIANT` type are removed as well. This operation has to be confirmed by setting the flag on the force element as `true`.
+        Removing a parent variant product also removes all of its child variants. This applies to both `PARENT_VARIANT` roots with `VARIANT` children and `DYNAMIC_VARIANT` parent products with all descendant dynamic variants in the tree. This operation has to be confirmed by setting `force=true`.
     path_productTemplateId:
       name: product-template-id
       in: path
