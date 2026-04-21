@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2026-04-10: Customer Service - session context attributes on anonymous login
+# RELEASE_DATE: Customer Service - session context attributes on anonymous login
 
 ## Overview
 
