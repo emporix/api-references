@@ -242,11 +242,6 @@ paths:
         This endpoint is intended to be called **after** a batch of products has been fully ingested, not per individual product write. For single product writes, the variant tree is updated synchronously inline.
 
         If a recalculation job for a given root is already `PENDING` or `PROCESSING`, the corresponding IDs are returned in `skippedProductIds` and the existing job is referenced in the `jobs` list.
-        ***
-
-        **Required scopes**
-
-        * `product.product_manage`
       security:
         - OAuth2:
             - product.product_manage
@@ -332,11 +327,6 @@ paths:
         Retrieves a list of dynamic variant recalculation jobs for the tenant. Optionally filtered by job status.
 
         Jobs are retained for approximately 30 days after reaching a terminal state (`FINISHED`, `FAILED`, or `FAILED_PERMANENT`) and are then automatically removed by a TTL index.
-        ***
-
-        **Required scopes**
-
-        * `product.product_manage`
       security:
         - OAuth2:
             - product.product_manage
@@ -402,13 +392,6 @@ paths:
         - Products
       description: |-
         Retrieves the current status and details of a specific dynamic variant recalculation job. Use this endpoint to poll for job completion after triggering recalculation.
-
-        Returns `404` if the job does not exist or has been removed by the TTL index.
-        ***
-
-        **Required scopes**
-
-        * `product.product_manage`
       security:
         - OAuth2:
             - product.product_manage
@@ -3191,7 +3174,7 @@ components:
         unit:
           type: string
           description: |
-            Optional unit code for measurement attributes (e.g. `"MMT"` for millimetres, `"PCE"` for pieces). Unit translations are resolved by the frontend from a separate dictionary.
+            Optional unit code for measurement attributes (for example, `"MMT"` for millimetres, `"PCE"` for pieces). Unit translations are resolved by the frontend from a separate dictionary.
     dynamicVariantAttribute:
       type: object
       description: |
@@ -3206,7 +3189,7 @@ components:
     ownVariantAttributes:
       type: object
       description: |
-        Map of variant attributes defined directly on this product. Keys are attribute identifiers (e.g. `screwHeadType`). These are the attributes the caller can set via create/update requests. On responses they represent what is stored on this specific product.
+        Map of variant attributes defined directly on this product. Keys are attribute identifiers (for example, `screwHeadType`). These are the attributes the caller can set by create/update requests. On responses they represent what is stored on this specific product.
       additionalProperties:
         $ref: '#/components/schemas/dynamicVariantAttribute'
     inheritedVariantAttributes:
@@ -3237,7 +3220,7 @@ components:
             Publication state of this variant. Only included in responses when the caller has the `product.product_read_unpublished` scope; entries with `published: false` are otherwise omitted from the map.
         dynamicVariantType:
           type: string
-          description: Optional label identifying the variant level or kind (e.g. `"H1_L1"`).
+          description: Optional label identifying the variant level or kind (for example, `"H1_L1"`).
         variantAttributes:
           type: object
           description: |
@@ -3286,11 +3269,11 @@ components:
             dynamicVariantType:
               type: string
               description: |
-                Optional label identifying the variant level or kind within the hierarchy (e.g. `"H1_L1"`). Used for display and filtering purposes.
+                Optional label identifying the variant level or kind within the hierarchy (for example, `"H1_L1"`). Used for display and filtering purposes.
             sellable:
               type: boolean
               description: |
-                Indicates whether this variant can be sold directly (i.e. it is a leaf in the hierarchy that a customer can add to a cart). This value is **not inherited** from parent variants — it must be set explicitly on each product. Root products and intermediate-level variants are typically `false`; leaf variants are typically `true`.
+                Indicates whether this variant can be sold directly, if it's a leaf in the hierarchy that a customer can add to a cart. This value is **not inherited** from parent variants — it must be set explicitly on each product. Root products and intermediate-level variants are typically `false`. Leaf variants are typically `true`.
             ownVariantAttributes:
               $ref: '#/components/schemas/ownVariantAttributes'
           required:
@@ -3351,7 +3334,7 @@ components:
             type: string
         dynamicVariantType:
           type: string
-          description: Optional label identifying the variant level or kind within the hierarchy (e.g. `"H1_L1"`).
+          description: Optional label identifying the variant level or kind within the hierarchy (for example, `"H1_L1"`).
         ownVariantAttributes:
           $ref: '#/components/schemas/ownVariantAttributes'
         inheritedVariantAttributes:
@@ -3453,7 +3436,7 @@ components:
     dynamicVariantRecalculationJobResponse:
       type: object
       description: |
-        Represents a single dynamic variant recalculation job. One job is created per unique root product. Jobs remain queryable until automatically removed by a TTL index (approximately 30 days after reaching a terminal state).
+        Represents a single dynamic variant recalculation job. One job is created per unique root product. Jobs remain queryable until automatically removed approximately 30 days after reaching a terminal state.
       properties:
         id:
           type: string
@@ -3489,7 +3472,7 @@ components:
     dynamicVariantRecalculationResponse:
       type: object
       description: |
-        Response returned when recalculation is triggered. Contains one job per unique root product resolved from the submitted IDs, plus any IDs that were skipped (e.g. because a job for that root is already PENDING or PROCESSING).
+        Response returned when recalculation is triggered. Contains one job per unique root product resolved from the submitted IDs, plus any IDs that were skipped (for example, because a job for that root is already PENDING or PROCESSING).
       properties:
         jobs:
           type: array

@@ -958,12 +958,6 @@ Compared with standard variants (`PARENT_VARIANT` / `VARIANT`), dynamic variants
 Dynamic variants are designed for catalogs where the variant structure is not known in advance or where variants are loaded in bulk from an external system. For simpler, template-driven variants, use the `PARENT_VARIANT` / `VARIANT` product types instead.
 {% endhint %}
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
-
 ### Key features
 
 | Key feature | Description |
@@ -991,11 +985,14 @@ Root product (DYNAMIC_VARIANT, no parentVariantId)
 - `parentVariantPath` array — carried by every child, it's an ordered list of ancestor IDs from root (index 0) to direct parent (last index), enabling O(1) ancestor resolution.
 - `sellable` flag - marks variants that can be added to a cart. Non-sellable intermediate variants exist only to group attributes.
 
+### Creating dynamic variants
+
 {% stepper %}
 {% step %}
 ### Create the root product
 
 The root is a `DYNAMIC_VARIANT` product with no `parentVariantId`. It acts as the anchor for the entire tree and is the product your storefront links to.
+To create the root product, call the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 ```bash
 curl -i -X POST \
@@ -1023,6 +1020,8 @@ curl -i -X POST \
 
 {% step %}
 ### Create L1 variant products
+
+To create an L1 variant product, call the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 L1 variants are direct children of the root. Set `parentVariantId` to the root product ID and declare the attributes that distinguish this variant from the root in `ownVariantAttributes`. Set `sellable: false` if this variant is an intermediate grouping level.
 
@@ -1083,6 +1082,8 @@ curl -i -X POST \
 {% step %}
 ### Create L2 leaf variants
 
+To create an L2 variant product, call the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
+
 L2 variants are children of L1 variants. They declare only the attributes they introduce at their own level, the L1 attributes are inherited automatically. Set `sellable: true` on variants that can be purchased.
 
 ```bash
@@ -1118,7 +1119,7 @@ curl -i -X POST \
 {% step %}
 ### Retrieve the root product - the storefront view
 
-Fetch the root product to get the complete variant tree in a single call. The `variants` map on the root contains every descendant with **accumulated** attributes — each entry already has its own attributes merged with all ancestor attributes up the chain.
+To retrieve the root product with its complete variant tree, call the [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint. The `variants` map on the root contains every descendant with accumulated attributes, each entry already has its own attributes merged with all ancestor attributes up the chain.
 
 ```bash
 curl -i -X GET \
@@ -1189,6 +1190,12 @@ Notice that `screw-m3x20-cskp-zp-canister` (L2) already contains `screwHeadType`
 {% endstep %}
 {% endstepper %}
 
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ### Using the variants map on the storefront
 
 The `variants` map gives your product page everything it needs to build a variant selector UI without additional API calls:
@@ -1205,6 +1212,7 @@ When you fetch a child product directly, the response separates its attributes i
 
 - `ownVariantAttributes` - the attributes stored on this product. These are writable: you can change them via PUT or PATCH.
 - `inheritedVariantAttributes` - the attributes merged from ancestor products at response time. These are read-only on this product. To change an inherited attribute, update the ancestor that owns it.
+To retrieve a child product, call the [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint.
 
 ```bash
 curl -i -X GET \
@@ -1242,10 +1250,16 @@ curl -i -X GET \
   }
 }
 ```
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ### Updating a dynamic variant
 
 To update a variant's own attributes, send a PUT or PATCH request with the new `ownVariantAttributes`. Only the attributes in `ownVariantAttributes` are accepted - any attempt to modify `inheritedVariantAttributes` is ignored.
+To update a dynamic variant, call the [Upserting a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint.
 
 For a single product write, the `variants` map on all ancestor products is updated synchronously and inline — no recalculation job is needed.
 
@@ -1301,6 +1315,12 @@ curl -i -X PUT \
   }'
 ```
 
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ## How to recalculate dynamic variant trees after a bulk import
 
 When importing large catalogs, variants are often created in arbitrary order — a child product may be written before its parent exists. In this case the inline synchronous update is skipped for products whose parent is not yet present. After the full batch has been ingested, trigger an asynchronous recalculation to rebuild all variant trees.
@@ -1313,7 +1333,7 @@ Call the recalculation endpoint **after** the entire batch has been ingested, no
 {% step %}
 ### Trigger recalculation
 
-Send a list of up to 1000 product IDs (at any hierarchy level) to the recalculation endpoint. You do not need to know which products are roots, the system resolves the root for each submitted ID automatically and creates one job per unique root product.
+To trigger recalculation, call the [Triggering dynamic variant recalculation](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-recalculate) endpoint with a list of up to 1000 product IDs at any hierarchy level. You do not need to know which products are roots, the system resolves the root for each submitted ID automatically and creates one job per unique root product.
 
 ```bash
 curl -i -X POST \
@@ -1371,7 +1391,7 @@ If a recalculation job for a given root is already `PENDING` or `PROCESSING`, th
 {% step %}
 ### Poll for job completion
 
-Use the job ID from the response to poll for completion. Jobs move through the following lifecycle:
+Use the job ID from the response and call the [Retrieving a recalculation job](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-recalculate-jobs-jobid) endpoint to poll for completion. Jobs move through the following lifecycle:
 
 | Status | Meaning |
 |---|---|
@@ -1426,7 +1446,7 @@ Returns `404` if the job does not exist or has been automatically removed. Jobs 
 {% step %}
 ### List all jobs (optional)
 
-To monitor the overall import progress, retrieve all jobs for the tenant. Filter by `status` to focus on jobs that need attention.
+To monitor the overall import progress, call the [Listing recalculation jobs](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-recalculate-jobs) endpoint. Filter by `status` to focus on jobs that need attention.
 
 ```bash
 curl -i -X GET \
@@ -1438,6 +1458,12 @@ Available status filter values: `PENDING`, `PROCESSING`, `FINISHED`, `FAILED`, `
 
 {% endstep %}
 {% endstepper %}
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ### Recommended bulk import workflow
 
