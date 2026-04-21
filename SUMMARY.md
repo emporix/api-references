@@ -11,6 +11,7 @@
 * [Emporix Java SDK](quickstart/emporix-java-sdk.md)
 * [Authentication and Authorization](quickstart/authentication-and-authorization/README.md)
   * [Tokens and Scopes](quickstart/authentication-and-authorization/tokens-and-scopes.md)
+  * [Custom Scopes for Custom Entities](quickstart/authentication-and-authorization/custom-scopes-custom-entities.md)
   * [Customer Authentication](quickstart/authentication-and-authorization/customer-authentication.md)
     * [SSO Authentication](quickstart/authentication-and-authorization/sso-authentication.md)
     * [Token Exchange](quickstart/authentication-and-authorization/token-exchange.md)

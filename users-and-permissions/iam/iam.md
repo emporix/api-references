@@ -15,6 +15,64 @@ Names and descriptions of groups, permissions, resources, access control templat
 Looking for more info on localization? Check out [_Standard practices_](../../standard-practices/translations.md).
 {% endhint %}
 
+## How to manage custom scopes for custom entity authorization
+
+{% hint style="info" %}
+This functionality is still under development. Management Dashboard support is being added and may not yet expose all flows described in this tutorial.
+{% endhint %}
+
+You can define tenant-specific custom scopes and use them in access controls to authorize custom-entity operations in downstream services.
+
+Typical flow:
+
+1. Create or update a custom scope in IAM.
+2. Create or update an access control that resolves to this scope.
+3. Assign the access control to a user group.
+4. Assign users to the group and request OAuth2 tokens.
+5. Call service APIs that validate these scopes (for example, Schema custom-instance endpoints).
+
+### Create or update a custom scope
+
+Use the custom-scopes API in IAM to define a scope that fits your authorization model.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../iam/api-reference/custom-scopes" %}
+[custom-scopes](../iam/api-reference/custom-scopes)
+{% endcontent-ref %}
+
+### Create or update an access control that uses custom scopes
+
+Access controls map roles and resources to resolved scopes and are assigned to groups. Use the Access Controls API to create or update access controls that include your custom scopes.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../iam/api-reference/access-controls" %}
+[access-controls](../iam/api-reference/access-controls)
+{% endcontent-ref %}
+
+### Assign access controls through groups
+
+Assign access controls to groups and then assign users to these groups so token scopes can be resolved from group membership.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../iam/api-reference/groups" %}
+[groups](../iam/api-reference/groups)
+{% endcontent-ref %}
+
+### Verify resolved scopes for a user
+
+To validate IAM configuration, retrieve effective user scopes.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../iam/api-reference/users" %}
+[users](../iam/api-reference/users)
+{% endcontent-ref %}
+
+For the end-to-end integration flow across IAM and Schema, see [Custom scopes for custom entities](../../quickstart/authentication-and-authorization/custom-scopes-custom-entities.md).
+
 ## How to create a group of employees with a specific set of access controls
 
 To specify user access level in a particular service resource, you need to create a group of users that share the same access controls.\
