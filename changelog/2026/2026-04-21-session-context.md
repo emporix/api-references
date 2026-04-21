@@ -21,12 +21,12 @@ The Session Context Service has been updated with a new `language` attribute in 
 
 ## Updated endpoints
 
-| Endpoint                                             | Description                                                                |
-|------------------------------------------------------|----------------------------------------------------------------------------|
-| `[GET] session-context/{tenant}/context/{sessionId}` | The response now includes the `language` attribute in the session context. |
-| `[GET] session-context/{tenant}/me/context`          | The response now includes the `language` attribute in the session context. |
-| `[PATCH] session-context/{tenant}/me/context`        | The `language` attribute is now accepted as an updatable field.            |
-| `[PUT] session-context/{tenant}/context/{sessionId}` | The `language` attribute is now accepted as an updatable field.            |
+| Endpoint                                                                                                                                                                       | Description                                                                |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| [Retrieving a session context](https://developer.emporix.io/api-references-1/readme/api-reference-34/session-management#get-session-context-tenant-context-sessionid)          | The response now includes the `language` attribute in the session context. |
+| [Retrieving own session context](https://developer.emporix.io/api-references-1/readme/api-reference-34/own-session-management#get-session-context-tenant-me-context)           | The response now includes the `language` attribute in the session context. |
+| [Partially updating own session context](https://developer.emporix.io/api-references-1/readme/api-reference-34/own-session-management#patch-session-context-tenant-me-context) | The `language` attribute is now accepted as an updatable field.            |
+| [Updating a session context](https://developer.emporix.io/api-references-1/readme/api-reference-34/session-management#put-session-context-tenant-context-sessionid)            | The `language` attribute is now accepted as an updatable field.            |
 
 ## Known problems
 
