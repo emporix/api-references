@@ -329,6 +329,179 @@ The value of the `productId` from the response is the \{{bundle\_Id\}}.
 {% endstep %}
 {% endstepper %}
 
+
+## How to update multiple products in one operation
+
+If you want to update multiple products, use the bulk update feature to update several products in one operation. Send a request to the [Upserting multiple](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk) products endpoint.
+
+{% hint style="warning" %}
+The `product.product_update` scope is required. The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the products on the update.
+{% endhint %}
+
+```bash
+curl -i -X PUT 
+  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' 
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Content-Language: string' 
+  -H 'Content-Type: application/json' 
+  -d '{
+    "id": "65492420e492d916983c8431",
+    "code": "pa-1",
+    "name": {
+      "en": "Product_A"
+    },
+    "metadata": {
+      "version": 1,
+      "mixins": {
+        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
+      },
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/v1544786405/schemata/CAAS/product.v2"
+    },
+    "description": {
+      "en": "Some product"
+    },
+    "productType": "BASIC",
+    "published": false
+  },
+  {
+    "id": "6549262ce492d916983c8432",
+    "code": "pb-2",
+    "name": {
+      "en": "Product_B"
+    },
+    "metadata": {
+      "version": 2,
+      "mixins": {
+        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
+      },
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/v1544786405/schemata/CAAS/product.v2"
+    },
+    "description": {
+      "de": "",
+      "ar": "",
+      "en": "",
+      "fr": ""
+    },
+    "productType": "BASIC",
+    "published": false
+  },
+  {
+    "id": "654926f4e492d916983c8433",
+    "code": "pc-3",
+    "name": {
+      "en": "Product_C"
+    },
+    "metadata": {
+      "version": 1,
+      "mixins": {
+        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
+      },
+      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/v1544786405/schemata/CAAS/product.v2"
+    },
+    "description": {
+      "en": "Another product"
+    },
+    "productType": "BASIC",
+    "mixins": {
+      "productCustomAttributes": {
+        "brand": "63e9570adee051597612e36c"
+      }
+    },
+    "published": true
+}
+```
+
+When the update request is sent successfully, the response for a particular product is returned at the same position (index) at which it is located in the request body. The expected response is as follows:
+
+```xml
+[
+  {
+      "index": 0,
+      "id": "65492420e492d916983c8431",
+      "code": 204,
+      "status": "NO_CONTENT"
+  },
+  {
+      "index": 1,
+      "id": "6549262ce492d916983c8432",
+      "code": 204,
+      "status": "NO_CONTENT"
+  },
+  {
+      "index": 2,
+      "id": "654926f4e492d916983c8433",
+      "code": 204,
+      "status": "NO_CONTENT"
+  }
+]
+```
+
+When something goes wrong, you might see some error message in the response. See some examples of error notifications you might encounter:
+
+```xml
+[
+    {
+        "index": 0,
+        "id": "65492420e492d916983c8431",
+        "code": 404,
+        "status": "NOT_FOUND",
+        "message": "The product with id 65492420e492d916983c8431 has not been found."
+    }
+]
+```
+
+`404`: The first product was not found, check if you have provided the correct id.
+
+```xml
+[
+    {
+        "index": 1,
+        "id": "6549262ce492d916983c8432",
+        "code": 409,
+        "status": "CONFLICT",
+        "message": "The resource that was requested for update has changed. Please retry your request with valid version."
+    }
+]
+```
+
+`409`: The second product returns conflict, check if you have provided the correct product schema version.
+
+```xml
+[
+    {
+        "index": 2,
+        "id": "654926f4e492d916983c8433",
+        "code": 404,
+        "status": "NOT_FOUND",
+        "message": "Product template with id 634cea2740033d7c2e7b03a8 is not present in the database."
+    }
+]
+```
+
+`404`: The third product cannot be updated because the product template provided in the payload was not found, check if you have provided the correct data.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+**Related services:**
+
+Tax:
+
+{% content-ref url="../../prices-and-taxes/tax-service/api-reference/" %}
+[api-reference](../../prices-and-taxes/tax-service/api-reference/)
+{% endcontent-ref %}
+
+Product:
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+Media:
+
+{% content-ref url="../../media/media/api-reference/" %}
+[api-reference](../../media/media/api-reference/)
+{% endcontent-ref %}
+
 ## How to create a parent variant product with variants
 
 Variants are derivatives of the parent variant product. They contain the same attributes as their parent variant, but assume different attribute values.
@@ -775,179 +948,526 @@ curl -i -X PUT
 {% endstep %}
 {% endstepper %}
 
-## How to update multiple products in one operation
+## How to work with dynamic variant products
 
-If you want to update multiple products, use the bulk update feature to update several products in one operation. Send a request to the [Upserting multiple](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk) products endpoint.
+Dynamic variants let you build flexible, multi-level product hierarchies without a fixed attribute template. Each variant in the tree is an independent product that declares only its own distinguishing attributes. The API assembles the full picture including accumulated attributes, inherited values, and a ready-to-use variant map, at response time. With this, your storefront always receives complete, up-to-date data with a single API call.
 
-{% hint style="warning" %}
-The `product.product_update` scope is required. The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the products on the update.
+Compared with standard variants (`PARENT_VARIANT` / `VARIANT`), dynamic variants do not require a predefined shared variant template and support deeper, flexible hierarchies where each level can introduce different attribute dimensions. Standard variants are better for fixed, predictable option sets (for example, size and color only), while dynamic variants are better when hierarchy depth or variant dimensions can change over time.
+
+{% hint style="info" %}
+Dynamic variants are designed for catalogs where the variant structure is not known in advance or where variants are loaded in bulk from an external system. For simpler, template-driven variants, use the `PARENT_VARIANT` / `VARIANT` product types instead.
 {% endhint %}
 
-```bash
-curl -i -X PUT 
-  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Language: string' 
-  -H 'Content-Type: application/json' 
-  -d '{
-    "id": "65492420e492d916983c8431",
-    "code": "pa-1",
-    "name": {
-      "en": "Product_A"
-    },
-    "metadata": {
-      "version": 1,
-      "mixins": {
-        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
-      },
-      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/v1544786405/schemata/CAAS/product.v2"
-    },
-    "description": {
-      "en": "Some product"
-    },
-    "productType": "BASIC",
-    "published": false
-  },
-  {
-    "id": "6549262ce492d916983c8432",
-    "code": "pb-2",
-    "name": {
-      "en": "Product_B"
-    },
-    "metadata": {
-      "version": 2,
-      "mixins": {
-        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
-      },
-      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/v1544786405/schemata/CAAS/product.v2"
-    },
-    "description": {
-      "de": "",
-      "ar": "",
-      "en": "",
-      "fr": ""
-    },
-    "productType": "BASIC",
-    "published": false
-  },
-  {
-    "id": "654926f4e492d916983c8433",
-    "code": "pc-3",
-    "name": {
-      "en": "Product_C"
-    },
-    "metadata": {
-      "version": 1,
-      "mixins": {
-        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/productCustomAttributesMixIn.v29.json"
-      },
-      "schema": "https://res.cloudinary.com/saas-ag/raw/upload/v1544786405/schemata/CAAS/product.v2"
-    },
-    "description": {
-      "en": "Another product"
-    },
-    "productType": "BASIC",
-    "mixins": {
-      "productCustomAttributes": {
-        "brand": "63e9570adee051597612e36c"
-      }
-    },
-    "published": true
-}
-```
-
-When the update request is sent successfully, the response for a particular product is returned at the same position (index) at which it is located in the request body. The expected response is as follows:
-
-```xml
-[
-  {
-      "index": 0,
-      "id": "65492420e492d916983c8431",
-      "code": 204,
-      "status": "NO_CONTENT"
-  },
-  {
-      "index": 1,
-      "id": "6549262ce492d916983c8432",
-      "code": 204,
-      "status": "NO_CONTENT"
-  },
-  {
-      "index": 2,
-      "id": "654926f4e492d916983c8433",
-      "code": 204,
-      "status": "NO_CONTENT"
-  }
-]
-```
-
-When something goes wrong, you might see some error message in the response. See some examples of error notifications you might encounter:
-
-```xml
-[
-    {
-        "index": 0,
-        "id": "65492420e492d916983c8431",
-        "code": 404,
-        "status": "NOT_FOUND",
-        "message": "The product with id 65492420e492d916983c8431 has not been found."
-    }
-]
-```
-
-`404`: The first product was not found, check if you have provided the correct id.
-
-```xml
-[
-    {
-        "index": 1,
-        "id": "6549262ce492d916983c8432",
-        "code": 409,
-        "status": "CONFLICT",
-        "message": "The resource that was requested for update has changed. Please retry your request with valid version."
-    }
-]
-```
-
-`409`: The second product returns conflict, check if you have provided the correct product schema version.
-
-```xml
-[
-    {
-        "index": 2,
-        "id": "654926f4e492d916983c8433",
-        "code": 404,
-        "status": "NOT_FOUND",
-        "message": "Product template with id 634cea2740033d7c2e7b03a8 is not present in the database."
-    }
-]
-```
-
-`404`: The third product cannot be updated because the product template provided in the payload was not found, check if you have provided the correct data.
-
 {% include "../../.gitbook/includes/example-hint-text.md" %}
-
-**Related services:**
-
-Tax:
-
-{% content-ref url="../../prices-and-taxes/tax-service/api-reference/" %}
-[api-reference](../../prices-and-taxes/tax-service/api-reference/)
-{% endcontent-ref %}
-
-Product:
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
-Media:
+### Key features
 
-{% content-ref url="../../media/media/api-reference/" %}
-[api-reference](../../media/media/api-reference/)
-{% endcontent-ref %}
+| Key feature | Description |
+|---|---|
+| **No template required** | Each variant defines its own attributes directly on the product. You can introduce new attribute dimensions at any level without modifying a shared template. |
+| **Order-independent ingestion** | Variants can be created in any order - a child can exist before its parent. This is essential for bulk catalog imports where the full tree is not available in a single pass. After the import completes, a single recalculation call rebuilds the entire tree. |
+| **Single API call for the storefront** | Fetching the root product returns a `variants` map containing every descendant with fully accumulated attributes - parent attributes merged into child entries. The storefront never needs to make additional calls to resolve the complete attribute combination for a sellable variant. |
+| **Ready-to-render variant selectors** | The `variants` map on the root product is a flat map keyed by variant ID. Each entry carries `variantAttributes` (accumulated), `name` (localized), `sellable`, `dynamicVariantType`, and `parentVariantId`. This gives your product page everything it needs to render multi-step variant selectors (for example, "Head Type -> Surface Treatment -> Packaging") without any client-side tree reconstruction. |
+| **Delta storage, no cascading writes** | Each variant stores only the attributes it introduces at its own level (`ownVariantAttributes`). Changing a mid-level variant attribute updates only that variant's entry on each ancestor. |
+| **Hierarchy integrity signals** | The `metadata.dynamicVariantInfo` field on any product response surfaces broken chains (`missingAncestorId`) or circular references (`cycleDetected`) so you can detect and fix data issues proactively. |
 
-## Classification
+### The variant tree model
+
+A `DYNAMIC_VARIANT` hierarchy is a tree of independent products:
+
+```
+Root product (DYNAMIC_VARIANT, no parentVariantId)
+  └── L1 variant  (parentVariantId → root, dynamicVariantType: H1_L1, sellable: false)
+        ├── L2 leaf  (parentVariantId → L1, dynamicVariantType: H1_L2, sellable: true)
+        └── L2 leaf  (parentVariantId → L1, dynamicVariantType: H1_L2, sellable: true)
+```
+
+- **Root product** - holds a denormalized `variants` map of all descendants. In API responses each entry's `variantAttributes` contains accumulated (fully merged) attributes.
+- **Child products** - expose `ownVariantAttributes` (what is stored on this product, writable) and `inheritedVariantAttributes` (merged from ancestors at response time, read-only).
+- `parentVariantPath` array — carried by every child, it's an ordered list of ancestor IDs from root (index 0) to direct parent (last index), enabling O(1) ancestor resolution.
+- `sellable` flag - marks variants that can be added to a cart. Non-sellable intermediate variants exist only to group attributes.
+
+{% stepper %}
+{% step %}
+### Create the root product
+
+The root is a `DYNAMIC_VARIANT` product with no `parentVariantId`. It acts as the anchor for the entire tree and is the product your storefront links to.
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/product/{tenant}/products' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "id": "screw-m3x20-cskp-zp",
+    "name": {
+      "en": "M3x20 Countersunk Screw",
+      "deDE": "M3x20 Senkschraube"
+    },
+    "code": "SCREW-M3X20-CSKP-ZP",
+    "description": {
+      "en": "Industrial countersunk screw M3x20, zinc plated",
+      "deDE": "Industrielle Senkschraube M3x20, verzinkt"
+    },
+    "published": true,
+    "taxClasses": { "EN": "STANDARD" },
+    "productType": "DYNAMIC_VARIANT"
+  }'
+```
+
+{% endstep %}
+
+{% step %}
+### Create L1 variant products
+
+L1 variants are direct children of the root. Set `parentVariantId` to the root product ID and declare the attributes that distinguish this variant from the root in `ownVariantAttributes`. Set `sellable: false` if this variant is an intermediate grouping level.
+
+Each attribute value uses the `dynamicVariantAttribute` structure:
+- `name` - localized display label for the attribute itself
+- `value.type` - `STRING`, `NUMBER`, `DECIMAL`, or `BOOLEAN`
+- `value.qualifier` - the canonical value used for matching and filtering
+- `value.name` - localized display label for the selected value
+- `value.unit` - optional unit code for measurement attributes (for example, `"MMT"` for millimetres)
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/product/{tenant}/products' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "id": "screw-m3x20-cskp-zp-l1",
+    "name": { "en": "M3x20 CSKP ZP", "deDE": "M3x20 CSKP ZP" },
+    "code": "SCREW-M3X20-CSKP-ZP-L1",
+    "published": true,
+    "taxClasses": { "EN": "STANDARD" },
+    "productType": "DYNAMIC_VARIANT",
+    "parentVariantId": "screw-m3x20-cskp-zp",
+    "dynamicVariantType": "H1_L1",
+    "sellable": false,
+    "ownVariantAttributes": {
+      "screwHeadType": {
+        "name": { "en": "Head Type", "deDE": "Kopfform" },
+        "value": {
+          "type": "STRING",
+          "qualifier": "CSKP",
+          "name": { "en": "Countersunk milling pockets", "deDE": "Senkkopf mit Frästaschen" }
+        }
+      },
+      "screwSurfaceTreatment": {
+        "name": { "en": "Surface Protection", "deDE": "Oberflächenschutz" },
+        "value": {
+          "type": "STRING",
+          "qualifier": "ZP",
+          "name": { "en": "zinc plated", "deDE": "verzinkt" }
+        }
+      },
+      "screwDiameter": {
+        "name": { "en": "Nominal Diameter", "deDE": "Gewinde-Nenndurchmesser" },
+        "value": {
+          "type": "DECIMAL",
+          "qualifier": 3.0,
+          "unit": "MMT",
+          "name": { "en": "3.0 mm", "deDE": "3,0 mm" }
+        }
+      }
+    }
+  }'
+```
+
+{% endstep %}
+
+{% step %}
+### Create L2 leaf variants
+
+L2 variants are children of L1 variants. They declare only the attributes they introduce at their own level, the L1 attributes are inherited automatically. Set `sellable: true` on variants that can be purchased.
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/product/{tenant}/products' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "id": "screw-m3x20-cskp-zp-canister",
+    "name": { "en": "M3x20 CSKP ZP – Canister", "deDE": "M3x20 CSKP ZP – Kanister" },
+    "code": "SCREW-M3X20-CSKP-ZP-CANISTER",
+    "published": true,
+    "taxClasses": { "EN": "STANDARD" },
+    "productType": "DYNAMIC_VARIANT",
+    "parentVariantId": "screw-m3x20-cskp-zp-l1",
+    "dynamicVariantType": "H1_L2",
+    "sellable": true,
+    "ownVariantAttributes": {
+      "packaging": {
+        "name": { "en": "Packaging", "deDE": "Verpackung" },
+        "value": {
+          "type": "STRING",
+          "qualifier": "CANISTER",
+          "name": { "en": "Canister", "deDE": "Kanister" }
+        }
+      }
+    }
+  }'
+```
+
+{% endstep %}
+
+{% step %}
+### Retrieve the root product - the storefront view
+
+Fetch the root product to get the complete variant tree in a single call. The `variants` map on the root contains every descendant with **accumulated** attributes — each entry already has its own attributes merged with all ancestor attributes up the chain.
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/product/{tenant}/products/screw-m3x20-cskp-zp' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
+
+The response includes a `variants` map ready for your storefront:
+
+```json
+{
+  "id": "screw-m3x20-cskp-zp",
+  "productType": "DYNAMIC_VARIANT",
+  "name": { "en": "M3x20 Countersunk Screw" },
+  "variants": {
+    "screw-m3x20-cskp-zp-l1": {
+      "version": 1,
+      "name": { "en": "M3x20 CSKP ZP" },
+      "parentVariantId": "screw-m3x20-cskp-zp",
+      "sellable": false,
+      "dynamicVariantType": "H1_L1",
+      "variantAttributes": {
+        "screwHeadType": {
+          "name": { "en": "Head Type" },
+          "value": { "type": "STRING", "qualifier": "CSKP", "name": { "en": "Countersunk milling pockets" } }
+        },
+        "screwSurfaceTreatment": {
+          "name": { "en": "Surface Protection" },
+          "value": { "type": "STRING", "qualifier": "ZP", "name": { "en": "zinc plated" } }
+        },
+        "screwDiameter": {
+          "name": { "en": "Nominal Diameter" },
+          "value": { "type": "DECIMAL", "qualifier": 3.0, "unit": "MMT", "name": { "en": "3.0 mm" } }
+        }
+      }
+    },
+    "screw-m3x20-cskp-zp-canister": {
+      "version": 1,
+      "name": { "en": "M3x20 CSKP ZP – Canister" },
+      "parentVariantId": "screw-m3x20-cskp-zp-l1",
+      "sellable": true,
+      "dynamicVariantType": "H1_L2",
+      "variantAttributes": {
+        "screwHeadType": {
+          "name": { "en": "Head Type" },
+          "value": { "type": "STRING", "qualifier": "CSKP", "name": { "en": "Countersunk milling pockets" } }
+        },
+        "screwSurfaceTreatment": {
+          "name": { "en": "Surface Protection" },
+          "value": { "type": "STRING", "qualifier": "ZP", "name": { "en": "zinc plated" } }
+        },
+        "screwDiameter": {
+          "name": { "en": "Nominal Diameter" },
+          "value": { "type": "DECIMAL", "qualifier": 3.0, "unit": "MMT", "name": { "en": "3.0 mm" } }
+        },
+        "packaging": {
+          "name": { "en": "Packaging" },
+          "value": { "type": "STRING", "qualifier": "CANISTER", "name": { "en": "Canister" } }
+        }
+      }
+    }
+  }
+}
+```
+
+Notice that `screw-m3x20-cskp-zp-canister` (L2) already contains `screwHeadType`, `screwSurfaceTreatment`, and `screwDiameter` from its L1 parent - even though those attributes are not stored on the L2 product itself. The API merges them at response time.
+
+{% endstep %}
+{% endstepper %}
+
+### Using the variants map on the storefront
+
+The `variants` map gives your product page everything it needs to build a variant selector UI without additional API calls:
+
+1. Group by `dynamicVariantType` to determine the selection steps (e.g. first choose `H1_L1`, then `H1_L2`).
+2. Filter by `parentVariantId` to show only the children of the currently selected variant.
+3. Read `variantAttributes` on each entry to render the selector labels and values - all attributes are already accumulated, so an L2 entry shows all dimensions the customer needs to see.
+4. Check `sellable: true` to identify which variants can be added to a cart. Non-sellable intermediate variants are grouping nodes only.
+5. Use `name` (localized) for display in search results, breadcrumbs, or option labels.
+
+### Retrieving a child product - own versus inherited attributes
+
+When you fetch a child product directly, the response separates its attributes into two maps:
+
+- `ownVariantAttributes` - the attributes stored on this product. These are writable: you can change them via PUT or PATCH.
+- `inheritedVariantAttributes` - the attributes merged from ancestor products at response time. These are read-only on this product. To change an inherited attribute, update the ancestor that owns it.
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/product/{tenant}/products/screw-m3x20-cskp-zp-canister' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
+
+```json
+{
+  "id": "screw-m3x20-cskp-zp-canister",
+  "productType": "DYNAMIC_VARIANT",
+  "parentVariantId": "screw-m3x20-cskp-zp-l1",
+  "parentVariantPath": ["screw-m3x20-cskp-zp", "screw-m3x20-cskp-zp-l1"],
+  "dynamicVariantType": "H1_L2",
+  "sellable": true,
+  "ownVariantAttributes": {
+    "packaging": {
+      "name": { "en": "Packaging" },
+      "value": { "type": "STRING", "qualifier": "CANISTER", "name": { "en": "Canister" } }
+    }
+  },
+  "inheritedVariantAttributes": {
+    "screwHeadType": {
+      "name": { "en": "Head Type" },
+      "value": { "type": "STRING", "qualifier": "CSKP", "name": { "en": "Countersunk milling pockets" } }
+    },
+    "screwSurfaceTreatment": {
+      "name": { "en": "Surface Protection" },
+      "value": { "type": "STRING", "qualifier": "ZP", "name": { "en": "zinc plated" } }
+    },
+    "screwDiameter": {
+      "name": { "en": "Nominal Diameter" },
+      "value": { "type": "DECIMAL", "qualifier": 3.0, "unit": "MMT", "name": { "en": "3.0 mm" } }
+    }
+  }
+}
+```
+
+### Updating a dynamic variant
+
+To update a variant's own attributes, send a PUT or PATCH request with the new `ownVariantAttributes`. Only the attributes in `ownVariantAttributes` are accepted - any attempt to modify `inheritedVariantAttributes` is ignored.
+
+For a single product write, the `variants` map on all ancestor products is updated synchronously and inline — no recalculation job is needed.
+
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/product/{tenant}/products/screw-m3x20-cskp-zp-l1' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": { "en": "M3x20 CSKP ZP", "deDE": "M3x20 CSKP ZP" },
+    "code": "SCREW-M3X20-CSKP-ZP-L1",
+    "published": true,
+    "taxClasses": { "EN": "STANDARD" },
+    "productType": "DYNAMIC_VARIANT",
+    "dynamicVariantType": "H1_L1",
+    "sellable": false,
+    "ownVariantAttributes": {
+      "screwHeadType": {
+        "name": { "en": "Head Type", "deDE": "Kopfform" },
+        "value": {
+          "type": "STRING",
+          "qualifier": "CSKP",
+          "name": { "en": "Countersunk milling pockets", "deDE": "Senkkopf mit Frästaschen" }
+        }
+      },
+      "screwSurfaceTreatment": {
+        "name": { "en": "Surface Protection", "deDE": "Oberflächenschutz" },
+        "value": {
+          "type": "STRING",
+          "qualifier": "ZP",
+          "name": { "en": "zinc plated", "deDE": "verzinkt" }
+        }
+      },
+      "screwDiameter": {
+        "name": { "en": "Nominal Diameter", "deDE": "Gewinde-Nenndurchmesser" },
+        "value": {
+          "type": "DECIMAL",
+          "qualifier": 3.0,
+          "unit": "MMT",
+          "name": { "en": "3.0 mm", "deDE": "3,0 mm" }
+        }
+      },
+      "screwLength": {
+        "name": { "en": "Total Length", "deDE": "Gesamtlänge" },
+        "value": {
+          "type": "NUMBER",
+          "qualifier": 20,
+          "unit": "MMT",
+          "name": { "en": "20 mm", "deDE": "20 mm" }
+        }
+      }
+    }
+  }'
+```
+
+## How to recalculate dynamic variant trees after a bulk import
+
+When importing large catalogs, variants are often created in arbitrary order — a child product may be written before its parent exists. In this case the inline synchronous update is skipped for products whose parent is not yet present. After the full batch has been ingested, trigger an asynchronous recalculation to rebuild all variant trees.
+
+{% hint style="warning" %}
+Call the recalculation endpoint **after** the entire batch has been ingested, not per individual product write. For single product writes the tree is updated synchronously and no recalculation is needed.
+{% endhint %}
+
+{% stepper %}
+{% step %}
+### Trigger recalculation
+
+Send a list of up to 1000 product IDs (at any hierarchy level) to the recalculation endpoint. You do not need to know which products are roots, the system resolves the root for each submitted ID automatically and creates one job per unique root product.
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/product/{tenant}/products/recalculate' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "productIds": [
+      "screw-m3x20-cskp-zp-l1",
+      "screw-m3x20-cskp-zp-canister",
+      "screw-m4x25-cskp-zp-l1"
+    ]
+  }'
+```
+
+The response is `202 Accepted` with one job per unique root product resolved from the submitted IDs:
+
+```json
+{
+  "jobs": [
+    {
+      "id": "job-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "parentRoot": "screw-m3x20-cskp-zp",
+      "requestedByIds": [
+        "screw-m3x20-cskp-zp-l1",
+        "screw-m3x20-cskp-zp-canister"
+      ],
+      "status": "PENDING",
+      "createdAt": "2024-01-15T10:10:00.000Z",
+      "processingStartedAt": null,
+      "finishedAt": null,
+      "error": null,
+      "attempts": 0
+    },
+    {
+      "id": "job-b2c3d4e5-f6a7-8901-bcde-f12345678901",
+      "parentRoot": "screw-m4x25-cskp-zp",
+      "requestedByIds": ["screw-m4x25-cskp-zp-l1"],
+      "status": "PENDING",
+      "createdAt": "2024-01-15T10:10:00.000Z",
+      "processingStartedAt": null,
+      "finishedAt": null,
+      "error": null,
+      "attempts": 0
+    }
+  ],
+  "skippedProductIds": []
+}
+```
+
+If a recalculation job for a given root is already `PENDING` or `PROCESSING`, the affected IDs are returned in `skippedProductIds` and the existing job is referenced in the `jobs` list. This prevents duplicate concurrent recalculations of the same tree.
+
+{% endstep %}
+
+{% step %}
+### Poll for job completion
+
+Use the job ID from the response to poll for completion. Jobs move through the following lifecycle:
+
+| Status | Meaning |
+|---|---|
+| `PENDING` | Job created, waiting to be picked up by a subscriber |
+| `PROCESSING` | A subscriber has started rebuilding the variant tree |
+| `FINISHED` | Tree rebuilt successfully |
+| `FAILED` | Processing failed; may be retried |
+| `FAILED_PERMANENT` | Processing failed permanently; manual intervention required |
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/product/{tenant}/products/recalculate/jobs/job-a1b2c3d4-e5f6-7890-abcd-ef1234567890' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
+
+A finished job:
+
+```json
+{
+  "id": "job-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "parentRoot": "screw-m3x20-cskp-zp",
+  "requestedByIds": [
+    "screw-m3x20-cskp-zp-l1",
+    "screw-m3x20-cskp-zp-canister"
+  ],
+  "status": "FINISHED",
+  "createdAt": "2024-01-15T10:10:00.000Z",
+  "processingStartedAt": "2024-01-15T10:10:03.000Z",
+  "finishedAt": "2024-01-15T10:10:07.000Z",
+  "error": null,
+  "attempts": 1
+}
+```
+
+A failed job includes an `error` message and the number of `attempts` made:
+
+```json
+{
+  "id": "job-c3d4e5f6-a7b8-9012-cdef-123456789012",
+  "parentRoot": "screw-m5x30-cskp-zp",
+  "status": "FAILED",
+  "error": "Database write timeout during variant tree update",
+  "attempts": 3,
+  "finishedAt": "2024-01-15T10:08:12.000Z"
+}
+```
+
+Returns `404` if the job does not exist or has been automatically removed. Jobs are retained for approximately 30 days after reaching a terminal state (`FINISHED`, `FAILED`, or `FAILED_PERMANENT`).
+
+{% endstep %}
+
+{% step %}
+### List all jobs (optional)
+
+To monitor the overall import progress, retrieve all jobs for the tenant. Filter by `status` to focus on jobs that need attention.
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/product/{tenant}/products/recalculate/jobs?status=PENDING' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
+
+Available status filter values: `PENDING`, `PROCESSING`, `FINISHED`, `FAILED`, `FAILED_PERMANENT`.
+
+{% endstep %}
+{% endstepper %}
+
+### Recommended bulk import workflow
+
+{% stepper %}
+{% step %}
+### Import all products 
+Import all the products, root + all variant levels, using the `POST /products` or `POST /products/bulk`. Variants may arrive in any order.
+{% endstep %}
+
+{% step %}
+### Do the recalculation
+After the full batch is complete, call `POST /products/recalculate` with all imported IDs.
+{% endstep %}
+
+{% step %}
+### Retrieve the job details
+Poll `GET /products/recalculate/jobs/{jobId}` until status is `FINISHED`.
+{% endstep %}
+
+{% step %}
+### Fetch the root product
+The `variants` map is now fully populated and ready for the storefront.
+{% endstep %}
+{% endstepper %}
+
+{% hint style="info" %}
+The `attempts` field on a job tracks how many times the subscriber has attempted processing. If `status` is `FAILED` and `attempts` is greater than 1, the system has already retried. A `FAILED_PERMANENT` status indicates the job is not retried automatically and requires investigation.
+{% endhint %}
+
+## How to handle classification of products
 
 Classification categories allow you to organize products with consistent attributes across your catalog. By assigning products to classification categories, they automatically receive reusable attribute schemas that ensure data quality and consistency while reducing manual work.
 
@@ -1088,479 +1608,3 @@ The response includes the `classificationMixins` field:
 To learn about the end-to-end flow for implementing classification in your B2B commerce platform, along with the category service , see the [Classification tutorial](../../catalogs-and-categories/category-tree/classification.md).
 
 {% endhint %}
-
-## How to work with dynamic variant products
-
-Dynamic variants let you build flexible, multi-level product hierarchies without a fixed attribute template. Each variant in the tree is an independent product that declares only its own distinguishing attributes. The API assembles the full picture — accumulated attributes, inherited values, and a ready-to-use variant map — at response time, so your storefront always receives complete, up-to-date data with a single API call.
-
-{% hint style="info" %}
-Dynamic variants are designed for catalogs where the variant structure is not known in advance or where variants are loaded in bulk from an external system. For simpler, template-driven variants, use the `PARENT_VARIANT` / `VARIANT` product types instead.
-{% endhint %}
-
-### Why use dynamic variants
-
-**No template required.** Each variant defines its own attributes directly on the product. You can introduce new attribute dimensions at any level without modifying a shared template.
-
-**Order-independent ingestion.** Variants can be created in any order — a child can exist before its parent. This is essential for bulk catalog imports where the full tree is not available in a single pass. After the import completes, a single recalculation call rebuilds the entire tree.
-
-**Single API call for the storefront.** Fetching the root product returns a `variants` map containing every descendant with fully accumulated attributes — parent attributes merged into child entries. The storefront never needs to make additional calls to resolve the complete attribute combination for a sellable variant.
-
-**Ready-to-render variant selectors.** The `variants` map on the root product is a flat map keyed by variant ID. Each entry carries `variantAttributes` (accumulated), `name` (localized), `sellable`, `dynamicVariantType`, and `parentVariantId`. This gives your product page everything it needs to render multi-step variant selectors (for example, "Head Type → Surface Treatment → Packaging") without any client-side tree reconstruction.
-
-**Delta storage, no cascading writes.** Each variant stores only the attributes it introduces at its own level (`ownVariantAttributes`). Changing a mid-level variant attribute updates only that variant's entry on each ancestor — there are no cascading writes to descendant products.
-
-**Hierarchy integrity signals.** The `metadata.dynamicVariantInfo` field on any product response surfaces broken chains (`missingAncestorId`) or circular references (`cycleDetected`) so you can detect and fix data issues proactively.
-
-### The variant tree model
-
-A `DYNAMIC_VARIANT` hierarchy is a tree of independent products:
-
-```
-Root product (DYNAMIC_VARIANT, no parentVariantId)
-  └── L1 variant  (parentVariantId → root, dynamicVariantType: H1_L1, sellable: false)
-        ├── L2 leaf  (parentVariantId → L1, dynamicVariantType: H1_L2, sellable: true)
-        └── L2 leaf  (parentVariantId → L1, dynamicVariantType: H1_L2, sellable: true)
-```
-
-- The **root product** holds a denormalized `variants` map of all descendants. In API responses each entry's `variantAttributes` contains accumulated (fully merged) attributes.
-- **Child products** expose `ownVariantAttributes` (what is stored on this product, writable) and `inheritedVariantAttributes` (merged from ancestors at response time, read-only).
-- Every child carries a `parentVariantPath` array — an ordered list of ancestor IDs from root (index 0) to direct parent (last index) — enabling O(1) ancestor resolution.
-- The `sellable` flag marks variants that can be added to a cart. Non-sellable intermediate variants exist only to group attributes.
-
-### Step 1: Create the root product
-
-The root is a `DYNAMIC_VARIANT` product with no `parentVariantId`. It acts as the anchor for the entire tree and is the product your storefront links to.
-
-```bash
-curl -i -X POST \
-  'https://api.emporix.io/product/{tenant}/products' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "id": "screw-m3x20-cskp-zp",
-    "name": {
-      "en": "M3x20 Countersunk Screw",
-      "deDE": "M3x20 Senkschraube"
-    },
-    "code": "SCREW-M3X20-CSKP-ZP",
-    "description": {
-      "en": "Industrial countersunk screw M3x20, zinc plated",
-      "deDE": "Industrielle Senkschraube M3x20, verzinkt"
-    },
-    "published": true,
-    "taxClasses": { "EN": "STANDARD" },
-    "productType": "DYNAMIC_VARIANT"
-  }'
-```
-
-### Step 2: Create L1 variant products
-
-L1 variants are direct children of the root. Set `parentVariantId` to the root product ID and declare the attributes that distinguish this variant from the root in `ownVariantAttributes`. Set `sellable: false` if this variant is an intermediate grouping level.
-
-Each attribute value uses the `dynamicVariantAttribute` structure:
-- `name` — localized display label for the attribute itself
-- `value.type` — `STRING`, `NUMBER`, `DECIMAL`, or `BOOLEAN`
-- `value.qualifier` — the canonical value used for matching and filtering
-- `value.name` — localized display label for the selected value
-- `value.unit` — optional unit code for measurement attributes (e.g. `"MMT"` for millimetres)
-
-```bash
-curl -i -X POST \
-  'https://api.emporix.io/product/{tenant}/products' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "id": "screw-m3x20-cskp-zp-l1",
-    "name": { "en": "M3x20 CSKP ZP", "deDE": "M3x20 CSKP ZP" },
-    "code": "SCREW-M3X20-CSKP-ZP-L1",
-    "published": true,
-    "taxClasses": { "EN": "STANDARD" },
-    "productType": "DYNAMIC_VARIANT",
-    "parentVariantId": "screw-m3x20-cskp-zp",
-    "dynamicVariantType": "H1_L1",
-    "sellable": false,
-    "ownVariantAttributes": {
-      "screwHeadType": {
-        "name": { "en": "Head Type", "deDE": "Kopfform" },
-        "value": {
-          "type": "STRING",
-          "qualifier": "CSKP",
-          "name": { "en": "Countersunk milling pockets", "deDE": "Senkkopf mit Frästaschen" }
-        }
-      },
-      "screwSurfaceTreatment": {
-        "name": { "en": "Surface Protection", "deDE": "Oberflächenschutz" },
-        "value": {
-          "type": "STRING",
-          "qualifier": "ZP",
-          "name": { "en": "zinc plated", "deDE": "verzinkt" }
-        }
-      },
-      "screwDiameter": {
-        "name": { "en": "Nominal Diameter", "deDE": "Gewinde-Nenndurchmesser" },
-        "value": {
-          "type": "DECIMAL",
-          "qualifier": 3.0,
-          "unit": "MMT",
-          "name": { "en": "3.0 mm", "deDE": "3,0 mm" }
-        }
-      }
-    }
-  }'
-```
-
-### Step 3: Create L2 leaf variants
-
-L2 variants are children of L1 variants. They declare only the attributes they introduce at their own level — the L1 attributes are inherited automatically. Set `sellable: true` on variants that can be purchased.
-
-```bash
-curl -i -X POST \
-  'https://api.emporix.io/product/{tenant}/products' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "id": "screw-m3x20-cskp-zp-canister",
-    "name": { "en": "M3x20 CSKP ZP – Canister", "deDE": "M3x20 CSKP ZP – Kanister" },
-    "code": "SCREW-M3X20-CSKP-ZP-CANISTER",
-    "published": true,
-    "taxClasses": { "EN": "STANDARD" },
-    "productType": "DYNAMIC_VARIANT",
-    "parentVariantId": "screw-m3x20-cskp-zp-l1",
-    "dynamicVariantType": "H1_L2",
-    "sellable": true,
-    "ownVariantAttributes": {
-      "packaging": {
-        "name": { "en": "Packaging", "deDE": "Verpackung" },
-        "value": {
-          "type": "STRING",
-          "qualifier": "CANISTER",
-          "name": { "en": "Canister", "deDE": "Kanister" }
-        }
-      }
-    }
-  }'
-```
-
-### Step 4: Retrieve the root product — the storefront view
-
-Fetch the root product to get the complete variant tree in a single call. The `variants` map on the root contains every descendant with **accumulated** attributes — each entry already has its own attributes merged with all ancestor attributes up the chain.
-
-```bash
-curl -i -X GET \
-  'https://api.emporix.io/product/{tenant}/products/screw-m3x20-cskp-zp' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
-```
-
-The response includes a `variants` map ready for your storefront:
-
-```json
-{
-  "id": "screw-m3x20-cskp-zp",
-  "productType": "DYNAMIC_VARIANT",
-  "name": { "en": "M3x20 Countersunk Screw" },
-  "variants": {
-    "screw-m3x20-cskp-zp-l1": {
-      "version": 1,
-      "name": { "en": "M3x20 CSKP ZP" },
-      "parentVariantId": "screw-m3x20-cskp-zp",
-      "sellable": false,
-      "dynamicVariantType": "H1_L1",
-      "variantAttributes": {
-        "screwHeadType": {
-          "name": { "en": "Head Type" },
-          "value": { "type": "STRING", "qualifier": "CSKP", "name": { "en": "Countersunk milling pockets" } }
-        },
-        "screwSurfaceTreatment": {
-          "name": { "en": "Surface Protection" },
-          "value": { "type": "STRING", "qualifier": "ZP", "name": { "en": "zinc plated" } }
-        },
-        "screwDiameter": {
-          "name": { "en": "Nominal Diameter" },
-          "value": { "type": "DECIMAL", "qualifier": 3.0, "unit": "MMT", "name": { "en": "3.0 mm" } }
-        }
-      }
-    },
-    "screw-m3x20-cskp-zp-canister": {
-      "version": 1,
-      "name": { "en": "M3x20 CSKP ZP – Canister" },
-      "parentVariantId": "screw-m3x20-cskp-zp-l1",
-      "sellable": true,
-      "dynamicVariantType": "H1_L2",
-      "variantAttributes": {
-        "screwHeadType": {
-          "name": { "en": "Head Type" },
-          "value": { "type": "STRING", "qualifier": "CSKP", "name": { "en": "Countersunk milling pockets" } }
-        },
-        "screwSurfaceTreatment": {
-          "name": { "en": "Surface Protection" },
-          "value": { "type": "STRING", "qualifier": "ZP", "name": { "en": "zinc plated" } }
-        },
-        "screwDiameter": {
-          "name": { "en": "Nominal Diameter" },
-          "value": { "type": "DECIMAL", "qualifier": 3.0, "unit": "MMT", "name": { "en": "3.0 mm" } }
-        },
-        "packaging": {
-          "name": { "en": "Packaging" },
-          "value": { "type": "STRING", "qualifier": "CANISTER", "name": { "en": "Canister" } }
-        }
-      }
-    }
-  }
-}
-```
-
-Notice that `screw-m3x20-cskp-zp-canister` (L2) already contains `screwHeadType`, `screwSurfaceTreatment`, and `screwDiameter` from its L1 parent — even though those attributes are not stored on the L2 product itself. The API merges them at response time.
-
-### Using the variants map on the storefront
-
-The `variants` map gives your product page everything it needs to build a variant selector UI without additional API calls:
-
-1. **Group by `dynamicVariantType`** to determine the selection steps (e.g. first choose `H1_L1`, then `H1_L2`).
-2. **Filter by `parentVariantId`** to show only the children of the currently selected variant.
-3. **Read `variantAttributes`** on each entry to render the selector labels and values — all attributes are already accumulated, so an L2 entry shows all dimensions the customer needs to see.
-4. **Check `sellable: true`** to identify which variants can be added to a cart. Non-sellable intermediate variants are grouping nodes only.
-5. **Use `name`** (localized) for display in search results, breadcrumbs, or option labels.
-
-### Retrieving a child product — own vs. inherited attributes
-
-When you fetch a child product directly, the response separates its attributes into two maps:
-
-- `ownVariantAttributes` — the attributes stored on this product. These are writable: you can change them via PUT or PATCH.
-- `inheritedVariantAttributes` — the attributes merged from ancestor products at response time. These are read-only on this product. To change an inherited attribute, update the ancestor that owns it.
-
-```bash
-curl -i -X GET \
-  'https://api.emporix.io/product/{tenant}/products/screw-m3x20-cskp-zp-canister' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
-```
-
-```json
-{
-  "id": "screw-m3x20-cskp-zp-canister",
-  "productType": "DYNAMIC_VARIANT",
-  "parentVariantId": "screw-m3x20-cskp-zp-l1",
-  "parentVariantPath": ["screw-m3x20-cskp-zp", "screw-m3x20-cskp-zp-l1"],
-  "dynamicVariantType": "H1_L2",
-  "sellable": true,
-  "ownVariantAttributes": {
-    "packaging": {
-      "name": { "en": "Packaging" },
-      "value": { "type": "STRING", "qualifier": "CANISTER", "name": { "en": "Canister" } }
-    }
-  },
-  "inheritedVariantAttributes": {
-    "screwHeadType": {
-      "name": { "en": "Head Type" },
-      "value": { "type": "STRING", "qualifier": "CSKP", "name": { "en": "Countersunk milling pockets" } }
-    },
-    "screwSurfaceTreatment": {
-      "name": { "en": "Surface Protection" },
-      "value": { "type": "STRING", "qualifier": "ZP", "name": { "en": "zinc plated" } }
-    },
-    "screwDiameter": {
-      "name": { "en": "Nominal Diameter" },
-      "value": { "type": "DECIMAL", "qualifier": 3.0, "unit": "MMT", "name": { "en": "3.0 mm" } }
-    }
-  }
-}
-```
-
-### Updating a dynamic variant
-
-To update a variant's own attributes, send a PUT or PATCH request with the new `ownVariantAttributes`. Only the attributes in `ownVariantAttributes` are accepted — any attempt to modify `inheritedVariantAttributes` is ignored.
-
-For a single product write, the `variants` map on all ancestor products is updated synchronously and inline — no recalculation job is needed.
-
-```bash
-curl -i -X PUT \
-  'https://api.emporix.io/product/{tenant}/products/screw-m3x20-cskp-zp-l1' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "name": { "en": "M3x20 CSKP ZP", "deDE": "M3x20 CSKP ZP" },
-    "code": "SCREW-M3X20-CSKP-ZP-L1",
-    "published": true,
-    "taxClasses": { "EN": "STANDARD" },
-    "productType": "DYNAMIC_VARIANT",
-    "dynamicVariantType": "H1_L1",
-    "sellable": false,
-    "ownVariantAttributes": {
-      "screwHeadType": {
-        "name": { "en": "Head Type", "deDE": "Kopfform" },
-        "value": {
-          "type": "STRING",
-          "qualifier": "CSKP",
-          "name": { "en": "Countersunk milling pockets", "deDE": "Senkkopf mit Frästaschen" }
-        }
-      },
-      "screwSurfaceTreatment": {
-        "name": { "en": "Surface Protection", "deDE": "Oberflächenschutz" },
-        "value": {
-          "type": "STRING",
-          "qualifier": "ZP",
-          "name": { "en": "zinc plated", "deDE": "verzinkt" }
-        }
-      },
-      "screwDiameter": {
-        "name": { "en": "Nominal Diameter", "deDE": "Gewinde-Nenndurchmesser" },
-        "value": {
-          "type": "DECIMAL",
-          "qualifier": 3.0,
-          "unit": "MMT",
-          "name": { "en": "3.0 mm", "deDE": "3,0 mm" }
-        }
-      },
-      "screwLength": {
-        "name": { "en": "Total Length", "deDE": "Gesamtlänge" },
-        "value": {
-          "type": "NUMBER",
-          "qualifier": 20,
-          "unit": "MMT",
-          "name": { "en": "20 mm", "deDE": "20 mm" }
-        }
-      }
-    }
-  }'
-```
-
-## How to recalculate dynamic variant trees after a bulk import
-
-When importing large catalogs, variants are often created in arbitrary order — a child product may be written before its parent exists. In this case the inline synchronous update is skipped for products whose parent is not yet present. After the full batch has been ingested, trigger an asynchronous recalculation to rebuild all variant trees.
-
-{% hint style="warning" %}
-Call the recalculation endpoint **after** the entire batch has been ingested, not per individual product write. For single product writes the tree is updated synchronously and no recalculation is needed.
-{% endhint %}
-
-### Step 1: Trigger recalculation
-
-Send a list of up to 1000 product IDs — at any hierarchy level — to the recalculation endpoint. You do not need to know which products are roots; the system resolves the root for each submitted ID automatically and creates one job per unique root product.
-
-```bash
-curl -i -X POST \
-  'https://api.emporix.io/product/{tenant}/products/recalculate' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "productIds": [
-      "screw-m3x20-cskp-zp-l1",
-      "screw-m3x20-cskp-zp-canister",
-      "screw-m4x25-cskp-zp-l1"
-    ]
-  }'
-```
-
-The response is `202 Accepted` with one job per unique root product resolved from the submitted IDs:
-
-```json
-{
-  "jobs": [
-    {
-      "id": "job-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-      "parentRoot": "screw-m3x20-cskp-zp",
-      "requestedByIds": [
-        "screw-m3x20-cskp-zp-l1",
-        "screw-m3x20-cskp-zp-canister"
-      ],
-      "status": "PENDING",
-      "createdAt": "2024-01-15T10:10:00.000Z",
-      "processingStartedAt": null,
-      "finishedAt": null,
-      "error": null,
-      "attempts": 0
-    },
-    {
-      "id": "job-b2c3d4e5-f6a7-8901-bcde-f12345678901",
-      "parentRoot": "screw-m4x25-cskp-zp",
-      "requestedByIds": ["screw-m4x25-cskp-zp-l1"],
-      "status": "PENDING",
-      "createdAt": "2024-01-15T10:10:00.000Z",
-      "processingStartedAt": null,
-      "finishedAt": null,
-      "error": null,
-      "attempts": 0
-    }
-  ],
-  "skippedProductIds": []
-}
-```
-
-If a recalculation job for a given root is already `PENDING` or `PROCESSING`, the affected IDs are returned in `skippedProductIds` and the existing job is referenced in the `jobs` list. This prevents duplicate concurrent recalculations of the same tree.
-
-### Step 2: Poll for job completion
-
-Use the job ID from the response to poll for completion. Jobs move through the following lifecycle:
-
-| Status | Meaning |
-|---|---|
-| `PENDING` | Job created, waiting to be picked up by a subscriber |
-| `PROCESSING` | A subscriber has started rebuilding the variant tree |
-| `FINISHED` | Tree rebuilt successfully |
-| `FAILED` | Processing failed; may be retried |
-| `FAILED_PERMANENT` | Processing failed permanently; manual intervention required |
-
-```bash
-curl -i -X GET \
-  'https://api.emporix.io/product/{tenant}/products/recalculate/jobs/job-a1b2c3d4-e5f6-7890-abcd-ef1234567890' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
-```
-
-A finished job:
-
-```json
-{
-  "id": "job-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-  "parentRoot": "screw-m3x20-cskp-zp",
-  "requestedByIds": [
-    "screw-m3x20-cskp-zp-l1",
-    "screw-m3x20-cskp-zp-canister"
-  ],
-  "status": "FINISHED",
-  "createdAt": "2024-01-15T10:10:00.000Z",
-  "processingStartedAt": "2024-01-15T10:10:03.000Z",
-  "finishedAt": "2024-01-15T10:10:07.000Z",
-  "error": null,
-  "attempts": 1
-}
-```
-
-A failed job includes an `error` message and the number of `attempts` made:
-
-```json
-{
-  "id": "job-c3d4e5f6-a7b8-9012-cdef-123456789012",
-  "parentRoot": "screw-m5x30-cskp-zp",
-  "status": "FAILED",
-  "error": "Database write timeout during variant tree update",
-  "attempts": 3,
-  "finishedAt": "2024-01-15T10:08:12.000Z"
-}
-```
-
-Returns `404` if the job does not exist or has been automatically removed. Jobs are retained for approximately 30 days after reaching a terminal state (`FINISHED`, `FAILED`, or `FAILED_PERMANENT`).
-
-### Step 3: List all jobs (optional)
-
-To monitor the overall import progress, retrieve all jobs for the tenant. Filter by `status` to focus on jobs that need attention.
-
-```bash
-curl -i -X GET \
-  'https://api.emporix.io/product/{tenant}/products/recalculate/jobs?status=PENDING' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
-```
-
-Available status filter values: `PENDING`, `PROCESSING`, `FINISHED`, `FAILED`, `FAILED_PERMANENT`.
-
-### Recommended bulk import workflow
-
-```
-1. Import all products (root + all variant levels) via POST /products or POST /products/bulk
-   — variants may arrive in any order
-2. After the full batch is complete, call POST /products/recalculate with all imported IDs
-3. Poll GET /products/recalculate/jobs/{jobId} until status is FINISHED
-4. Fetch the root product — the variants map is now fully populated and ready for the storefront
-```
-
-{% hint style="info" %}
-The `attempts` field on a job tracks how many times the subscriber has attempted processing. If `status` is `FAILED` and `attempts` is greater than 1, the system has already retried. A `FAILED_PERMANENT` status indicates the job will not be retried automatically and requires investigation.
-{% endhint %}
-
