@@ -965,7 +965,7 @@ Dynamic variants are designed for catalogs where the variant structure is not kn
 | **No template required** | Each variant defines its own attributes directly on the product. You can introduce new attribute dimensions at any level without modifying a shared template. |
 | **Order-independent ingestion** | Variants can be created in any order - a child can exist before its parent. This is essential for bulk catalog imports where the full tree is not available in a single pass. After the import completes, a single recalculation call rebuilds the entire tree. |
 | **Single API call for the storefront** | Fetching the root product returns a `variants` map containing every descendant with fully accumulated attributes - parent attributes merged into child entries. The storefront never needs to make additional calls to resolve the complete attribute combination for a sellable variant. |
-| **Ready-to-render variant selectors** | The `variants` map on the root product is a flat map keyed by variant ID. Each entry carries `variantAttributes` (accumulated), `name` (localized), `sellable`, `dynamicVariantType`, and `parentVariantId`. This gives your product page everything it needs to render multi-step variant selectors (for example, "Head Type -> Surface Treatment -> Packaging") without any client-side tree reconstruction. |
+| **Ready-to-render variant selectors** | The `variants` map on the root product is a flat map keyed by variant ID. Each entry carries `variantAttributes` (accumulated), `name` (localized), `sellable`, `dynamicVariantType`, and `parentVariantId`. This gives your product page everything it needs to render multi-step variant selectors (for example, "Storage -> Color -> Bundle") without any client-side tree reconstruction. |
 | **Delta storage, no cascading writes** | Each variant stores only the attributes it introduces at its own level (`ownVariantAttributes`). Changing a mid-level variant attribute updates only that variant's entry on each ancestor. |
 | **Hierarchy integrity signals** | The `metadata.dynamicVariantInfo` field on any product response surfaces broken chains (`missingAncestorId`) or circular references (`cycleDetected`) so you can detect and fix data issues proactively. |
 
@@ -1000,15 +1000,15 @@ curl -i -X POST \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "id": "screw-m3x20-cskp-zp",
+    "id": "mobile-15-pro",
     "name": {
-      "en": "M3x20 Countersunk Screw",
-      "deDE": "M3x20 Senkschraube"
+      "en": "Mobile Phone 15 Pro",
+      "deDE": "Mobile Phone 15 Pro"
     },
-    "code": "SCREW-M3X20-CSKP-ZP",
+    "code": "MOBILE-15-PRO",
     "description": {
-      "en": "Industrial countersunk screw M3x20, zinc plated",
-      "deDE": "Industrielle Senkschraube M3x20, verzinkt"
+      "en": "Flagship smartphone with titanium design and advanced camera system.",
+      "deDE": "Flaggschiff-Smartphone mit Titan-Design und fortschrittlichem Kamerasystem."
     },
     "published": true,
     "taxClasses": { "EN": "STANDARD" },
@@ -1038,39 +1038,39 @@ curl -i -X POST \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "id": "screw-m3x20-cskp-zp-l1",
-    "name": { "en": "M3x20 CSKP ZP", "deDE": "M3x20 CSKP ZP" },
-    "code": "SCREW-M3X20-CSKP-ZP-L1",
+    "id": "mobile-15-pro-l1",
+    "name": { "en": "Mobile Phone 15 Pro – 256 GB Blue", "deDE": "Mobile Phone 15 Pro – 256 GB Blau" },
+    "code": "MOBILE-15-PRO-L1",
     "published": true,
     "taxClasses": { "EN": "STANDARD" },
     "productType": "DYNAMIC_VARIANT",
-    "parentVariantId": "screw-m3x20-cskp-zp",
+    "parentVariantId": "mobile-15-pro",
     "dynamicVariantType": "H1_L1",
     "sellable": false,
     "ownVariantAttributes": {
-      "screwHeadType": {
-        "name": { "en": "Head Type", "deDE": "Kopfform" },
+      "storageCapacity": {
+        "name": { "en": "Storage", "deDE": "Speicher" },
         "value": {
           "type": "STRING",
-          "qualifier": "CSKP",
-          "name": { "en": "Countersunk milling pockets", "deDE": "Senkkopf mit Frästaschen" }
+          "qualifier": "256_GB",
+          "name": { "en": "256 GB", "deDE": "256 GB" }
         }
       },
-      "screwSurfaceTreatment": {
-        "name": { "en": "Surface Protection", "deDE": "Oberflächenschutz" },
+      "colorFinish": {
+        "name": { "en": "Color", "deDE": "Farbe" },
         "value": {
           "type": "STRING",
-          "qualifier": "ZP",
-          "name": { "en": "zinc plated", "deDE": "verzinkt" }
+          "qualifier": "BLUE",
+          "name": { "en": "Blue Titanium", "deDE": "Blau Titan" }
         }
       },
-      "screwDiameter": {
-        "name": { "en": "Nominal Diameter", "deDE": "Gewinde-Nenndurchmesser" },
+      "displaySize": {
+        "name": { "en": "Display size", "deDE": "Displaygröße" },
         "value": {
           "type": "DECIMAL",
-          "qualifier": 3.0,
-          "unit": "MMT",
-          "name": { "en": "3.0 mm", "deDE": "3,0 mm" }
+          "qualifier": 6.1,
+          "unit": "INH",
+          "name": { "en": "6.1 in", "deDE": "6,1 Zoll" }
         }
       }
     }
@@ -1092,22 +1092,22 @@ curl -i -X POST \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "id": "screw-m3x20-cskp-zp-canister",
-    "name": { "en": "M3x20 CSKP ZP – Canister", "deDE": "M3x20 CSKP ZP – Kanister" },
-    "code": "SCREW-M3X20-CSKP-ZP-CANISTER",
+    "id": "mobile-15-pro-l2-retail",
+    "name": { "en": "Mobile Phone 15 Pro – 256 GB Blue – Retail box", "deDE": "Mobile Phone 15 Pro – 256 GB Blau – Einzelhandelsbox" },
+    "code": "MOBILE-15-PRO-L2-RETAIL",
     "published": true,
     "taxClasses": { "EN": "STANDARD" },
     "productType": "DYNAMIC_VARIANT",
-    "parentVariantId": "screw-m3x20-cskp-zp-l1",
+    "parentVariantId": "mobile-15-pro-l1",
     "dynamicVariantType": "H1_L2",
     "sellable": true,
     "ownVariantAttributes": {
-      "packaging": {
-        "name": { "en": "Packaging", "deDE": "Verpackung" },
+      "bundleType": {
+        "name": { "en": "Bundle", "deDE": "Bundle" },
         "value": {
           "type": "STRING",
-          "qualifier": "CANISTER",
-          "name": { "en": "Canister", "deDE": "Kanister" }
+          "qualifier": "RETAIL_BOX",
+          "name": { "en": "Retail box", "deDE": "Einzelhandelsbox" }
         }
       }
     }
@@ -1123,7 +1123,7 @@ To retrieve the root product with its complete variant tree, call the [Retrievin
 
 ```bash
 curl -i -X GET \
-  'https://api.emporix.io/product/{tenant}/products/screw-m3x20-cskp-zp' \
+  'https://api.emporix.io/product/{tenant}/products/mobile-15-pro' \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
@@ -1131,53 +1131,53 @@ The response includes a `variants` map ready for your storefront:
 
 ```json
 {
-  "id": "screw-m3x20-cskp-zp",
+  "id": "mobile-15-pro",
   "productType": "DYNAMIC_VARIANT",
-  "name": { "en": "M3x20 Countersunk Screw" },
+  "name": { "en": "Mobile Phone 15 Pro" },
   "variants": {
-    "screw-m3x20-cskp-zp-l1": {
+    "mobile-15-pro-l1": {
       "version": 1,
-      "name": { "en": "M3x20 CSKP ZP" },
-      "parentVariantId": "screw-m3x20-cskp-zp",
+      "name": { "en": "Mobile Phone 15 Pro – 256 GB Blue" },
+      "parentVariantId": "mobile-15-pro",
       "sellable": false,
       "dynamicVariantType": "H1_L1",
       "variantAttributes": {
-        "screwHeadType": {
-          "name": { "en": "Head Type" },
-          "value": { "type": "STRING", "qualifier": "CSKP", "name": { "en": "Countersunk milling pockets" } }
+        "storageCapacity": {
+          "name": { "en": "Storage" },
+          "value": { "type": "STRING", "qualifier": "256_GB", "name": { "en": "256 GB" } }
         },
-        "screwSurfaceTreatment": {
-          "name": { "en": "Surface Protection" },
-          "value": { "type": "STRING", "qualifier": "ZP", "name": { "en": "zinc plated" } }
+        "colorFinish": {
+          "name": { "en": "Color" },
+          "value": { "type": "STRING", "qualifier": "BLUE", "name": { "en": "Blue Titanium" } }
         },
-        "screwDiameter": {
-          "name": { "en": "Nominal Diameter" },
-          "value": { "type": "DECIMAL", "qualifier": 3.0, "unit": "MMT", "name": { "en": "3.0 mm" } }
+        "displaySize": {
+          "name": { "en": "Display size" },
+          "value": { "type": "DECIMAL", "qualifier": 6.1, "unit": "INH", "name": { "en": "6.1 in" } }
         }
       }
     },
-    "screw-m3x20-cskp-zp-canister": {
+    "mobile-15-pro-l2-retail": {
       "version": 1,
-      "name": { "en": "M3x20 CSKP ZP – Canister" },
-      "parentVariantId": "screw-m3x20-cskp-zp-l1",
+      "name": { "en": "Mobile Phone 15 Pro – 256 GB Blue – Retail box" },
+      "parentVariantId": "mobile-15-pro-l1",
       "sellable": true,
       "dynamicVariantType": "H1_L2",
       "variantAttributes": {
-        "screwHeadType": {
-          "name": { "en": "Head Type" },
-          "value": { "type": "STRING", "qualifier": "CSKP", "name": { "en": "Countersunk milling pockets" } }
+        "storageCapacity": {
+          "name": { "en": "Storage" },
+          "value": { "type": "STRING", "qualifier": "256_GB", "name": { "en": "256 GB" } }
         },
-        "screwSurfaceTreatment": {
-          "name": { "en": "Surface Protection" },
-          "value": { "type": "STRING", "qualifier": "ZP", "name": { "en": "zinc plated" } }
+        "colorFinish": {
+          "name": { "en": "Color" },
+          "value": { "type": "STRING", "qualifier": "BLUE", "name": { "en": "Blue Titanium" } }
         },
-        "screwDiameter": {
-          "name": { "en": "Nominal Diameter" },
-          "value": { "type": "DECIMAL", "qualifier": 3.0, "unit": "MMT", "name": { "en": "3.0 mm" } }
+        "displaySize": {
+          "name": { "en": "Display size" },
+          "value": { "type": "DECIMAL", "qualifier": 6.1, "unit": "INH", "name": { "en": "6.1 in" } }
         },
-        "packaging": {
-          "name": { "en": "Packaging" },
-          "value": { "type": "STRING", "qualifier": "CANISTER", "name": { "en": "Canister" } }
+        "bundleType": {
+          "name": { "en": "Bundle" },
+          "value": { "type": "STRING", "qualifier": "RETAIL_BOX", "name": { "en": "Retail box" } }
         }
       }
     }
@@ -1185,7 +1185,7 @@ The response includes a `variants` map ready for your storefront:
 }
 ```
 
-Notice that `screw-m3x20-cskp-zp-canister` (L2) already contains `screwHeadType`, `screwSurfaceTreatment`, and `screwDiameter` from its L1 parent - even though those attributes are not stored on the L2 product itself. The API merges them at response time.
+Notice that `mobile-15-pro-l2-retail` (L2) already contains `storageCapacity`, `colorFinish`, and `displaySize` from its L1 parent - even though those attributes are not stored on the L2 product itself. The API merges them at response time.
 
 {% endstep %}
 {% endstepper %}
@@ -1216,36 +1216,36 @@ To retrieve a child product, call the [Retrieving a product](https://developer.e
 
 ```bash
 curl -i -X GET \
-  'https://api.emporix.io/product/{tenant}/products/screw-m3x20-cskp-zp-canister' \
+  'https://api.emporix.io/product/{tenant}/products/mobile-15-pro-l2-retail' \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
 ```json
 {
-  "id": "screw-m3x20-cskp-zp-canister",
+  "id": "mobile-15-pro-l2-retail",
   "productType": "DYNAMIC_VARIANT",
-  "parentVariantId": "screw-m3x20-cskp-zp-l1",
-  "parentVariantPath": ["screw-m3x20-cskp-zp", "screw-m3x20-cskp-zp-l1"],
+  "parentVariantId": "mobile-15-pro-l1",
+  "parentVariantPath": ["mobile-15-pro", "mobile-15-pro-l1"],
   "dynamicVariantType": "H1_L2",
   "sellable": true,
   "ownVariantAttributes": {
-    "packaging": {
-      "name": { "en": "Packaging" },
-      "value": { "type": "STRING", "qualifier": "CANISTER", "name": { "en": "Canister" } }
+    "bundleType": {
+      "name": { "en": "Bundle" },
+      "value": { "type": "STRING", "qualifier": "RETAIL_BOX", "name": { "en": "Retail box" } }
     }
   },
   "inheritedVariantAttributes": {
-    "screwHeadType": {
-      "name": { "en": "Head Type" },
-      "value": { "type": "STRING", "qualifier": "CSKP", "name": { "en": "Countersunk milling pockets" } }
+    "storageCapacity": {
+      "name": { "en": "Storage" },
+      "value": { "type": "STRING", "qualifier": "256_GB", "name": { "en": "256 GB" } }
     },
-    "screwSurfaceTreatment": {
-      "name": { "en": "Surface Protection" },
-      "value": { "type": "STRING", "qualifier": "ZP", "name": { "en": "zinc plated" } }
+    "colorFinish": {
+      "name": { "en": "Color" },
+      "value": { "type": "STRING", "qualifier": "BLUE", "name": { "en": "Blue Titanium" } }
     },
-    "screwDiameter": {
-      "name": { "en": "Nominal Diameter" },
-      "value": { "type": "DECIMAL", "qualifier": 3.0, "unit": "MMT", "name": { "en": "3.0 mm" } }
+    "displaySize": {
+      "name": { "en": "Display size" },
+      "value": { "type": "DECIMAL", "qualifier": 6.1, "unit": "INH", "name": { "en": "6.1 in" } }
     }
   }
 }
@@ -1265,50 +1265,50 @@ For a single product write, the `variants` map on all ancestor products is updat
 
 ```bash
 curl -i -X PUT \
-  'https://api.emporix.io/product/{tenant}/products/screw-m3x20-cskp-zp-l1' \
+  'https://api.emporix.io/product/{tenant}/products/mobile-15-pro-l1' \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "name": { "en": "M3x20 CSKP ZP", "deDE": "M3x20 CSKP ZP" },
-    "code": "SCREW-M3X20-CSKP-ZP-L1",
+    "name": { "en": "Mobile Phone 15 Pro – 256 GB Blue", "deDE": "Mobile Phone 15 Pro – 256 GB Blau" },
+    "code": "MOBILE-15-PRO-L1",
     "published": true,
     "taxClasses": { "EN": "STANDARD" },
     "productType": "DYNAMIC_VARIANT",
     "dynamicVariantType": "H1_L1",
     "sellable": false,
     "ownVariantAttributes": {
-      "screwHeadType": {
-        "name": { "en": "Head Type", "deDE": "Kopfform" },
+      "storageCapacity": {
+        "name": { "en": "Storage", "deDE": "Speicher" },
         "value": {
           "type": "STRING",
-          "qualifier": "CSKP",
-          "name": { "en": "Countersunk milling pockets", "deDE": "Senkkopf mit Frästaschen" }
+          "qualifier": "256_GB",
+          "name": { "en": "256 GB", "deDE": "256 GB" }
         }
       },
-      "screwSurfaceTreatment": {
-        "name": { "en": "Surface Protection", "deDE": "Oberflächenschutz" },
+      "colorFinish": {
+        "name": { "en": "Color", "deDE": "Farbe" },
         "value": {
           "type": "STRING",
-          "qualifier": "ZP",
-          "name": { "en": "zinc plated", "deDE": "verzinkt" }
+          "qualifier": "BLUE",
+          "name": { "en": "Blue Titanium", "deDE": "Blau Titan" }
         }
       },
-      "screwDiameter": {
-        "name": { "en": "Nominal Diameter", "deDE": "Gewinde-Nenndurchmesser" },
+      "displaySize": {
+        "name": { "en": "Display size", "deDE": "Displaygröße" },
         "value": {
           "type": "DECIMAL",
-          "qualifier": 3.0,
-          "unit": "MMT",
-          "name": { "en": "3.0 mm", "deDE": "3,0 mm" }
+          "qualifier": 6.1,
+          "unit": "INH",
+          "name": { "en": "6.1 in", "deDE": "6,1 Zoll" }
         }
       },
-      "screwLength": {
-        "name": { "en": "Total Length", "deDE": "Gesamtlänge" },
+      "batteryCapacityMah": {
+        "name": { "en": "Battery capacity", "deDE": "Akku-Kapazität" },
         "value": {
           "type": "NUMBER",
-          "qualifier": 20,
-          "unit": "MMT",
-          "name": { "en": "20 mm", "deDE": "20 mm" }
+          "qualifier": 3274,
+          "unit": "MAH",
+          "name": { "en": "3274 mAh", "deDE": "3274 mAh" }
         }
       }
     }
@@ -1342,9 +1342,9 @@ curl -i -X POST \
   -H 'Content-Type: application/json' \
   -d '{
     "productIds": [
-      "screw-m3x20-cskp-zp-l1",
-      "screw-m3x20-cskp-zp-canister",
-      "screw-m4x25-cskp-zp-l1"
+      "mobile-15-pro-l1",
+      "mobile-15-pro-l2-retail",
+      "mobile-16-pro-l1"
     ]
   }'
 ```
@@ -1356,10 +1356,10 @@ The response is `202 Accepted` with one job per unique root product resolved fro
   "jobs": [
     {
       "id": "job-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-      "parentRoot": "screw-m3x20-cskp-zp",
+      "parentRoot": "mobile-15-pro",
       "requestedByIds": [
-        "screw-m3x20-cskp-zp-l1",
-        "screw-m3x20-cskp-zp-canister"
+        "mobile-15-pro-l1",
+        "mobile-15-pro-l2-retail"
       ],
       "status": "PENDING",
       "createdAt": "2024-01-15T10:10:00.000Z",
@@ -1370,8 +1370,8 @@ The response is `202 Accepted` with one job per unique root product resolved fro
     },
     {
       "id": "job-b2c3d4e5-f6a7-8901-bcde-f12345678901",
-      "parentRoot": "screw-m4x25-cskp-zp",
-      "requestedByIds": ["screw-m4x25-cskp-zp-l1"],
+      "parentRoot": "mobile-16-pro",
+      "requestedByIds": ["mobile-16-pro-l1"],
       "status": "PENDING",
       "createdAt": "2024-01-15T10:10:00.000Z",
       "processingStartedAt": null,
@@ -1412,10 +1412,10 @@ A finished job:
 ```json
 {
   "id": "job-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-  "parentRoot": "screw-m3x20-cskp-zp",
+  "parentRoot": "mobile-15-pro",
   "requestedByIds": [
-    "screw-m3x20-cskp-zp-l1",
-    "screw-m3x20-cskp-zp-canister"
+    "mobile-15-pro-l1",
+    "mobile-15-pro-l2-retail"
   ],
   "status": "FINISHED",
   "createdAt": "2024-01-15T10:10:00.000Z",
@@ -1431,7 +1431,7 @@ A failed job includes an `error` message and the number of `attempts` made:
 ```json
 {
   "id": "job-c3d4e5f6-a7b8-9012-cdef-123456789012",
-  "parentRoot": "screw-m5x30-cskp-zp",
+  "parentRoot": "mobile-17-pro",
   "status": "FAILED",
   "error": "Database write timeout during variant tree update",
   "attempts": 3,
