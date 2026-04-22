@@ -37,15 +37,19 @@ paths:
         Search a list of products.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-        * `product.product_read_unpublished` **Note:** Only required if the response should contain unpublished products.
-        * `product.product_read_by_vendor` - allows vendor employee to see vendor's products
+        * The `product.product_read_unpublished` scope is only required if the response should contain unpublished products.
+        * The `product.product_read_by_vendor` scope is only required to fetch products belonging to the vendor.
+
+        ***
       operationId: POST-product-search-products
       requestBody:
         $ref: '#/components/requestBodies/productsSearchBody'
       security:
-        - OAuth2: []
+        - OAuth2:  
+            - product.product_read_by_vendor
+            - product.product_read_unpublished
       parameters:
         - $ref: '#/components/parameters/header_x_total_count'
         - $ref: '#/components/parameters/query_page_number'
@@ -75,14 +79,19 @@ paths:
         Retrieves a list of products.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-        * `product.product_read_unpublished` **Note:** Only required if the response should contain unpublished products.
-        * `product.product_read_by_vendor` - allows vendor employee to see vendor's products
-        * `product.product_manage_by_vendor` - allows vendor employee to see vendor's products
+        * The `product.product_read_unpublished` scope is only required if the response should contain unpublished products.
+        * The `product.product_read_by_vendor` scope is only required to fetch products belonging to the vendor.
+        * The `product.product_manage_by_vendor` scope is only required to manage products belonging to the vendor.
+
+        ***
       operationId: GET-product-list-products
       security:
-        - OAuth2: []
+        - OAuth2:
+            - product.product_read_by_vendor
+            - product.product_read_unpublished  
+            - product.product_manage_by_vendor
       parameters:
         - $ref: '#/components/parameters/header_x_total_count'
         - $ref: '#/components/parameters/query_page_number'
@@ -124,17 +133,20 @@ paths:
         Creates a new product.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-         * `product.product_manage`
-         * `product.product_manage_by_vendor` - allows vendor employee to manage vendor's products
-         * `product.product_publish` **Note:** Only required if you want to publish the product when creating it.
+        * The `product.product_manage_by_vendor` scope is only required for vendor employeesto manage products belonging to the vendor.
+        * The `product.product_publish` scope is only required if you want to publish the product when creating it.
+
+        ***
       operationId: POST-product-create-product
       requestBody:
         $ref: '#/components/requestBodies/productCreateBody'
       security:
         - OAuth2:
             - product.product_manage
+            - product.product_manage_by_vendor
+            - product.product_publish
       parameters:
         - $ref: '#/components/parameters/path_tenant'
         - $ref: '#/components/parameters/header_content_language'
@@ -175,14 +187,17 @@ paths:
 
         Response for a particular product is returned at the same position (index) at which that price is located in the request body.
 
-        **Required scopes**
+        **Additional scope information**
 
-         * `product.product_manage`
-         * `product.product_manage_by_vendor` - allows vendor employee to manage vendor's products
-         * `product.product_publish` **Note:** Only required if you want to publish the product when creating it.
+        * The `product.product_manage_by_vendor` scope is only required for vendor employees to manage products belonging to the vendor.
+        * The `product.product_publish` scope is only required if you want to publish the product when creating it.
+
+        ***
       security:
         - OAuth2:
             - product.product_manage
+            - product.product_manage_by_vendor
+            - product.product_publish
       requestBody:
         $ref: '#/components/requestBodies/productBulkCreateBody'
       parameters:
@@ -208,18 +223,22 @@ paths:
         Response for a particular product is returned at the same position (index) at which it is located in the request body.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-        * `product.product_manage`
-        * `product.product_manage_by_vendor` - allows vendor employee to manage vendor's products
-        * `product.product_publish` **Note:** Only required if you want to publish the product when updating it.
-        * `product.product_unpublish` **Note:** Only required if you want to unpublish the product when updating it.
+        * The `product.product_manage_by_vendor` scope is only required for vendor employees to manage products belonging to the vendor.
+        * The `product.product_publish` scope is only required if you want to publish the product when updating it.
+        * The `product.product_unpublish` scope is only required if you want to unpublish the product when updating it.
+
+        ***
       operationId: PUT-product-update-bulk-products
       requestBody:
         $ref: '#/components/requestBodies/productBulkUpdateBody'
       security:
         - OAuth2:
             - product.product_manage
+            - product.product_manage_by_vendor
+            - product.product_publish
+            - product.product_unpublish
       parameters:
         - $ref: '#/components/parameters/header_content_language'
         - $ref: '#/components/parameters/query_skip_variants_generation'
@@ -871,14 +890,19 @@ paths:
         Retrieves a specified product details.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-        * `product.product_read_unpublished` **Note:** Only required if the product has not been published.
-        * `product.product_read_by_vendor` - allows vendor employee to see vendor's products
-        * `product.product_manage_by_vendor` - allows vendor employee to see vendor's products
+        * The `product.product_read_unpublished` scope is only required if the product has not been published.
+        * The `product.product_read_by_vendor` scope is only required to fetch products belonging to the vendor.
+        * The `product.product_manage_by_vendor` scope is only required to manage products belonging to the vendor.
+
+        ***
       operationId: GET-product-retrieve-product
       security:
-        - OAuth2: []
+        - OAuth2:
+            - product.product_read_by_vendor
+            - product.product_read_unpublished
+            - product.product_manage_by_vendor
       parameters:
         - $ref: '#/components/parameters/path_tenant'
         - $ref: '#/components/parameters/path_productId'
@@ -924,18 +948,22 @@ paths:
         If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-        * `product.product_manage`
-        * `product.product_manage_by_vendor` - allows vendor employee to manage vendor's products
-        * `product.product_publish` **Note:** Only required if you want to publish the product when updating it.
-        * `product.product_unpublish` **Note:** Only required if you want to unpublish the product when updating it.
+        * The `product.product_manage_by_vendor` scope is only required for vendor employees to manage products belonging to the vendor.
+        * The `product.product_publish` scope is only required if you want to publish the product when updating it.
+        * The `product.product_unpublish` scope is only required if you want to unpublish the product when updating it.
+
+        ***
       operationId: PUT-product-update-product
       requestBody:
         $ref: '#/components/requestBodies/productUpdateBody'
       security:
         - OAuth2:
             - product.product_manage
+            - product.product_manage_by_vendor
+            - product.product_publish
+            - product.product_unpublish
       parameters:
         - $ref: '#/components/parameters/path_tenant'
         - $ref: '#/components/parameters/path_productId'
@@ -973,18 +1001,22 @@ paths:
         Partially updates a specified product.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-        * `product.product_manage`
-        * `product.product_manage_by_vendor` - allows vendor employee to manage vendor's products
-        * `product.product_publish` **Note:** Only required if you want to publish the product when updating it.
-        * `product.product_unpublish` **Note:** Only required if you want to unpublish the product when updating it.
+        * The `product.product_manage_by_vendor` scope is only required for vendor employees to manage products belonging to the vendor.
+        * The `product.product_publish` scope is only required if you want to publish the product when updating it.
+        * The `product.product_unpublish` scope is only required if you want to unpublish the product when updating it.
+
+        ***
       operationId: PATCH-product-update-product
       requestBody:
         $ref: '#/components/requestBodies/productPartialUpdateBody'
       security:
         - OAuth2:
             - product.product_manage
+            - product.product_manage_by_vendor
+            - product.product_publish
+            - product.product_unpublish
       parameters:
         - $ref: '#/components/parameters/path_tenant'
         - $ref: '#/components/parameters/path_productId'
@@ -1016,14 +1048,16 @@ paths:
         Deletes a specified product.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-        * `product.product_manage`
-        * `product.product_manage_by_vendor` - allows vendor employee to delete vendor's products
+        * The `product.product_manage_by_vendor` scope is only required for vendor employees to delete products belonging to the vendor.
+
+        ***
       operationId: DELETE-product-remove-product
       security:
         - OAuth2:
             - product.product_manage
+            - product.product_manage_by_vendor
       parameters:
         - $ref: '#/components/parameters/path_tenant'
         - $ref: '#/components/parameters/path_productId'
@@ -1078,9 +1112,11 @@ paths:
         This endpoint is `deprecated`. Please use the [/product/{tenant}/products/search](/openapi/product/#operation/POST-product-search-products) instead.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-        * `product.product_read_unpublished` **Note:** Only required if the response should contain unpublished products.
+        * The `product.product_read_unpublished` scope is only required if the response should contain unpublished products.
+
+        ***
       operationId: POST-product-search-for-products
       requestBody:
         content:
@@ -1102,7 +1138,8 @@ paths:
         required: false
         description: ''
       security:
-        - OAuth2: []
+        - OAuth2:
+            - product.product_read_unpublished
       summary: Searching for products by YRNs
       tags:
         - Products
@@ -1161,11 +1198,6 @@ paths:
         Retrieves all product templates. You can filter the results with query parameters.
 
         A product template defines a set of attributes which are common for all product instances based on that template.
-
-        ***
-
-        **Required scopes**
-        * `product.product_template_read`
       parameters:
         - $ref: '#/components/parameters/header_x_total_count'
         - $ref: '#/components/parameters/header_accept_language'
@@ -1208,11 +1240,6 @@ paths:
         Creates a new product template. 
 
         A product template defines a set of attributes which are common for all product instances based on that template.
-
-        ***
-
-        **Required scopes**
-        * `product.product_template_manage`
       parameters:
         - $ref: '#/components/parameters/header_content_language'
       requestBody:
@@ -1298,11 +1325,6 @@ paths:
         Retrieves a specified product template's details.
 
         A product template defines a set of attributes which are common for all product instances based on that template.
-
-        ***
-
-        **Required scopes**
-        * `product.product_template_read`
     put:
       summary: Updating a product template
       operationId: PUT-product-update-template
@@ -1330,11 +1352,6 @@ paths:
         Updates a specified product template by replacing all of its existing data with data from the request body. 
 
         **Note**: Every product template update creates a new version of the template. Products based on previous versions are not automatically updated. In order to see the changes (for example new attributes) on the product level, you need to update the template version in applicable products.
-
-        ***
-
-        **Required scopes**
-        * `product.product_template_manage`
       requestBody:
         content:
           application/json:
@@ -1388,11 +1405,6 @@ paths:
             - product.product_template_manage
       description: |-
         Deletes a specified product template. Only product templates which are not used in products and parent variants can be deleted.
-
-        ***
-
-        **Required scopes**
-        * `product.product_template_manage`
 components:
   responses:
     common_response_BadRequest_400:
@@ -3821,8 +3833,8 @@ components:
             product.product_publish: Needed to publish products.
             product.product_unpublish: Needed to unpublish products.
             product.product_read_unpublished: Needed to retrieve unpublished products.
-            product.product_read_by_vendor: The scope allows vendor to read products with assigned vendor
-            product.product_manage_by_vendor: The scope allows vendor to manage products with assigned vendor
+            product.product_read_by_vendor: The scope allows vendor to read products with assigned vendor.
+            product.product_manage_by_vendor: The scope allows vendor to manage products with assigned vendor.
             product.price_manage: Needed to manage product prices.
             product.product_template_read: Needed for reading product templates.
             product.product_template_manage: Needed for updating and removing a product template.

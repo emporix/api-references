@@ -3088,7 +3088,9 @@ paths:
                     message: You need a scope for this action.
                     details:
                       - 'Required scope(s): category.category_read_unpublished'
-      security: []
+      security: 
+        - OAuth2:
+            - category.category_read_unpublished
   /category/{tenant}/category-trees/search:
     post:
       tags:
@@ -3178,7 +3180,9 @@ paths:
                     details:
                       - field: 'searchCategoryTree.searchRequest.categoryIds'
                         message: 'searchRequest.categoryIds: must not be null'
-      security: []
+      security: 
+        - OAuth2:
+            - category.category_read_unpublished
   /category/{tenant}/category-trees/{categoryId}:
     get:
       tags:
@@ -3289,7 +3293,9 @@ paths:
                     message: Error while getting category tree
                     details:
                       - Category tree for category with id '084bcaf6-66b8-4ddd-9489-65c5f6449e94' not found
-      security: []
+      security:   
+        - OAuth2:
+            - category.category_read_unpublished
 components:
   schemas:
     AssignmentDeprecated:
