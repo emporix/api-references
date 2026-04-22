@@ -773,6 +773,34 @@ paths:
         schema:
           type: string
           example: "{client_id}"
+      - name: currency
+        in: query
+        description: Three-letter currency code to set in the session context.
+        required: false
+        schema:
+          type: string
+          example: EUR
+      - name: siteCode
+        in: query
+        description: Code of the site to set in the session context, as defined in the Site Settings Service.
+        required: false
+        schema:
+          type: string
+          example: main
+      - name: language
+        in: query
+        description: Language to set in the session context.
+        required: false
+        schema:
+          type: string
+          example: EN
+      - name: targetLocation
+        in: query
+        description: Country code to set in the session context, as defined in the Country Service.
+        required: false
+        schema:
+          type: string
+          example: DE
       responses:
         "200":
           description: The request was successful. An anonymous token is returned.
