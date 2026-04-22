@@ -575,7 +575,7 @@ components:
               additionalProperties:
                 type: string
               example:
-                productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
+                couponCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/couponAttributes_v1.json'
     coupon:
       allOf:
         - $ref: '#/components/schemas/base-coupon'
@@ -680,7 +680,7 @@ components:
               additionalProperties:
                 type: string
               example:
-                productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
+                couponCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/couponAttributes_v1.json'
       required:
         - name
     segmentRestricted:
@@ -895,6 +895,25 @@ components:
         deleted:
           description: Flag to mark a coupon as deleted (a.k.a. Soft delete). It is a read-only and seller-only attribute
           type: boolean
+        mixins:
+          type: object
+          description: |-
+            The field contains mixins values.
+          additionalProperties: true
+        metadata:
+          type: object
+          additionalProperties: false
+          properties:
+            version:
+              description: Version of the document. Set to 0 after creating a document. Increments by 1 after every update.
+              type: number
+            mixins:
+              type: object
+              description: Links to the mixin schemas.
+              additionalProperties:
+                type: string
+              example:
+                couponCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/couponAttributes_v1.json'
       required:
         - discountType
         - issuedTo
@@ -1266,8 +1285,14 @@ components:
         maxRedemptionsPerCustomer: -1
         categoryRestricted: false
         segmentRestricted: false
+        mixins:
+          couponCustomAttributes:
+            provenance: Winter Sale
+            suggestedAmount: 50
         metadata:
           version: 1
+          mixins:
+            couponCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/couponAttributes_v1.json'
         code: MW2023_7
         status: EXPIRED
         maxRedemptions: -1
@@ -1290,8 +1315,14 @@ components:
           maxRedemptionsPerCustomer: -1
           categoryRestricted: false
           segmentRestricted: false
+          mixins:
+            couponCustomAttributes:
+              provenance: Winter Sale
+              suggestedAmount: 50
           metadata:
             version: 1
+            mixins:
+              couponCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/couponAttributes_v1.json'
           code: MW2023_7
           status: EXPIRED
           maxRedemptions: -1
@@ -1312,8 +1343,14 @@ components:
           maxRedemptionsPerCustomer: -1
           categoryRestricted: false
           segmentRestricted: false
+          mixins:
+            couponCustomAttributes:
+              provenance: Winter Sale
+              suggestedAmount: 50
           metadata:
             version: 3
+            mixins:
+              couponCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/couponAttributes_v1.json'
           code: MW2023_10
           status: VALID
           maxRedemptions: -1
@@ -1333,8 +1370,14 @@ components:
           maxRedemptionsPerCustomer: 1
           categoryRestricted: false
           segmentRestricted: true
+          mixins:
+            couponCustomAttributes:
+              provenance: Winter Sale
+              suggestedAmount: 50
           metadata:
             version: 1
+            mixins:
+              couponCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/couponAttributes_v1.json'
           code: MW2023_7
           status: VALID
           maxRedemptions: -1
@@ -1383,6 +1426,13 @@ components:
             amount: 49.99
             currency: USD
         issuedTo: C01234567989
+        mixins:
+          couponCustomAttributes:
+            provenance: Winter Sale
+            suggestedAmount: 50
+        metadata:
+          mixins:
+            couponCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/couponAttributes_v1.json'
     createSegmentRestrictedCouponBody:
       value:
         code: MW2023_10
@@ -1408,6 +1458,13 @@ components:
             amount: 49.99
             currency: USD
         issuedTo: C01234567989
+        mixins:
+          couponCustomAttributes:
+            provenance: Winter Sale
+            suggestedAmount: 50
+        metadata:
+          mixins:
+            couponCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/couponAttributes_v1.json'
     createCouponResponse:
       value:
         id: ENG2OC0
@@ -1458,8 +1515,14 @@ components:
         maxRedemptionsPerCustomer: -1
         categoryRestricted: false
         segmentRestricted: false
+        mixins:
+          couponCustomAttributes:
+            provenance: Winter Sale
+            suggestedAmount: 50
         metadata:
           version: 4
+          mixins:
+            couponCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/couponAttributes_v1.json'
         maxRedemptions: -1
         restrictions:
           validFrom: '2023-02-09T06:45:33.779Z'
@@ -1487,6 +1550,14 @@ components:
         restrictions:
           validFor: []
         status: VALID
+        mixins:
+          couponCustomAttributes:
+            provenance: Winter Sale
+            suggestedAmount: 50
+        metadata:
+          version: 1
+          mixins:
+            couponCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/couponAttributes_v1.json'
   headers:
     Total-Count:
       required: false
