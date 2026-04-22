@@ -41,11 +41,9 @@ paths:
       summary: Creating a fee
       description: |
         Creates a new fee within a specified tenant. Fees can be applied to various entities, such as products or payment methods, to manage pricing structures effectively.
-        ***
-
-        ### Required scopes
-
-          * `fee.fee_create`
+      security:
+        - OAuth2: 
+            - fee.fee_create
       operationId: POST-fee-create-fee
       requestBody:
         content:
@@ -137,11 +135,9 @@ paths:
     put:
       description: |
         Update the details of an existing fee.
-        ***
-
-        ### Required scopes
-
-          * `fee.fee_update`
+      security:
+        - OAuth2: 
+            - fee.fee_update
       tags:
         - Fee management
       summary: Updating a fee
@@ -175,11 +171,9 @@ paths:
     delete:
       description: |
         Deletes a fee by given id.
-        ***
-
-        ### Required scopes
-
-          * `fee.fee_delete`
+      security:
+        - OAuth2: 
+            - fee.fee_delete
       tags:
         - Fee management
       summary: Deleting a fee
@@ -230,11 +224,9 @@ paths:
     post:
       description: |
         Creates a new itemFee. This endpoint allows you to assign one or more predefined fees to a specific item within a tenant. By associating fees with items, you can manage charges such as packaging, handling, or other service fees directly at the item level.
-        ***
-
-        ### Required scopes
-
-          * `fee.item_create`
+      security:
+        - OAuth2: 
+            - fee.item_create
       tags:
         - Item fee management
       summary: Creating an itemFee
@@ -333,11 +325,9 @@ paths:
     put:
       description: |
         Adds a list of feeIds to the itemYRN.
-        ***
-
-        ### Required scopes
-
-          * `fee.item_update`
+      security:
+        - OAuth2: 
+            - fee.item_update
       tags:
         - Item fee management
       summary: Adding a list of fees to an item
@@ -361,11 +351,9 @@ paths:
     delete:
       description: |
         Deletes item fee with the specified itemYRN.
-        ***
-
-        ### Required scopes
-
-          * `fee.item_delete`
+      security:
+        - OAuth2: 
+            - fee.item_delete
       tags:
         - Item fee management
       summary: Deleting an item fee with itemYRN
@@ -384,11 +372,9 @@ paths:
     delete:
       description: |
         Deletes a fee for the specified itemYRN and optionally deletes item fee if does not contain any more fee ids.
-        ***
-
-        ### Required scopes
-
-          * `fee.item_delete`
+      security:
+        - OAuth2: 
+            - fee.item_delete
       tags:
         - Item fee management
       summary: Deleting a fee from the itemYRN
@@ -465,11 +451,9 @@ paths:
     put:
       description: |
         Adds a list of feeIds to the itemYRN.
-        ***
-
-        ### Required scopes
-
-          * `fee.item_update`
+      security:
+        - OAuth2: 
+            - fee.item_update
       tags:
         - Product fees management
       summary: Adding a list of fees to a product
@@ -493,14 +477,17 @@ paths:
         - $ref: '#/components/parameters/Partial'
     delete:
       description: |
-        Deletes item fee with specified productId in the itemYRN
+        Deletes item fee with specified productId in the itemYRN.
         ***
 
-        ### Required scopes
-
-          * `fee.fee_delete`
-          and/or
+        ### Additional scopes information
+        Use one or both of the following scopes to authorize the request:
+          * `fee.fee_delete` 
           * `fee.item_delete`
+      security:
+        - OAuth2: 
+            - fee.fee_delete
+            - fee.item_delete
       tags:
         - Product fees management
       summary: Deleting all fees of an itemYRN
@@ -521,11 +508,14 @@ paths:
         Deletes a fee for the specified productId and optionally deletes item fee if does not contain any more fee ids.
         ***
 
-        ### Required scopes
-
-          * `fee.fee_delete`
-          and/or
+        ### Additional scopes information
+        Use one or both of the following scopes to authorize the request:
+          * `fee.fee_delete` 
           * `fee.item_delete`
+      security:
+        - OAuth2: 
+            - fee.fee_delete
+            - fee.item_delete
       tags:
         - Product fees management
       summary: Deleting a fee from the itemYRN
@@ -1630,22 +1620,16 @@ components:
         clientCredentials:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
-            fee.fee_create: Needed to create a fee
-            fee.fee_update: Needed to update a fee
-            fee.fee_delete: Needed to delete a fee
-            fee.item_create: Needed to create an item fee
-            fee.item_update: Needed to update an item fee
-            fee.item_delete: Needed to delete an item fee
+            fee.fee_create: Needed to create a fee.
+            fee.fee_update: Needed to update a fee.
+            fee.fee_delete: Needed to delete a fee.
+            fee.item_create: Needed to create an item fee.
+            fee.item_update: Needed to update an item fee.
+            fee.item_delete: Needed to delete an item fee.
 tags:
   - name: Fee management
   - name: Item fee management
   - name: Product fees management
   - name: Item fee search
 security:
-  - OAuth2:
-      - fee.fee_create
-      - fee.fee_update
-      - fee.fee_delete
-      - fee.item_create
-      - fee.item_update
-      - fee.item_delete
+  - OAuth2: []

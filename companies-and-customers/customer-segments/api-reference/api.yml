@@ -27,8 +27,6 @@ paths:
       description: |
         
         Creates a new customer segment.
-        ### Required scopes
-        *  `customersegment.segment_manage` - required to create a customer segment
       requestBody:
         content:
           application/json:
@@ -58,6 +56,9 @@ paths:
           $ref: '#/components/responses/Common_response_Conflict_409'
       parameters:
         - $ref: '#/components/parameters/contentLanguage'
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
     get:
       summary: 'Retrieving all customer segments'
       tags:
@@ -82,9 +83,6 @@ paths:
       description: |
         
         Retrieves all customer segments.
-        ### Required scopes
-        *  `customersegment.segment_read` - allows you to retrieve all customer segments
-        *  `customersegment.segment_read_own` - allows customers to retrieve active customer segments which they are assigned to
       parameters:
         - $ref: '#/components/parameters/qParam'
         - $ref: '#/components/parameters/pageSize'
@@ -95,6 +93,10 @@ paths:
         - $ref: '#/components/parameters/acceptLanguage'
         - $ref: '#/components/parameters/legalEntityId'
         - $ref: '#/components/parameters/customerId'
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_read
+            - customersegment.segment_read_own
   '/customer-segment/{tenant}/segments/search':
     parameters:
       - $ref: '#/components/parameters/tenant'
@@ -132,9 +134,6 @@ paths:
       description: |
         
         Returns all customer segments that match provided criteria.
-        ### Required scopes
-        *  `customersegment.segment_read` - allows you to retrieve all customer segments
-        *  `customersegment.segment_read_own` - allows customers to retrieve customer segments which they are assigned to
       parameters:
         - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/pageNumber'
@@ -144,6 +143,10 @@ paths:
         - $ref: '#/components/parameters/acceptLanguage'
         - $ref: '#/components/parameters/legalEntityId'
         - $ref: '#/components/parameters/customerId'
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_read
+            - customersegment.segment_read_own
   '/customer-segment/{tenant}/segments/{segmentId}':
     parameters:
       - $ref: '#/components/parameters/tenant'
@@ -172,13 +175,14 @@ paths:
       description: |
         
         Retrieves segment with specified ID.
-        ### Required scopes
-        *  `customersegment.segment_read` - allows you to retrieve a customer segment
-        *  `customersegment.segment_read_own` - allows customers to retrieve active customer segment which they are assigned to
       parameters:
         - $ref: '#/components/parameters/fields'
         - $ref: '#/components/parameters/acceptLanguage'
         - $ref: '#/components/parameters/legalEntityId'
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_read
+            - customersegment.segment_read_own
     put:
       summary: Upserting a customer segment
       tags:
@@ -218,8 +222,9 @@ paths:
       description: |
         
         Performs the `UPSERT` operation. If a segment with specified ID exists in the system, then it is updated. If it doesn't exist, a new customer segment is created.
-        ### Required scopes
-        *  `customersegment.segment_manage`  - required to update a customer segment
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
     patch:
       summary: Patching a customer segment
       tags:
@@ -272,8 +277,9 @@ paths:
         
         The patch request consists of set of operation, that should be defined according to [RFC-6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.
         
-        ### Required scopes
-        *  `customersegment.segment_manage`  - required to update a customer segment
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
     delete:
       summary: 'Deleting a customer segment'
       tags:
@@ -294,8 +300,9 @@ paths:
         
         **Important**: If you want to delete a segment that has items or customers assigned to it, you need to set the `forceDelete` query parameter to `true`. In this case, all items and customers assignments will be deleted as well.
         
-        ### Required scopes
-        *  `customersegment.segment_manage` - required to delete a customer segment
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
   '/customer-segment/{tenant}/segments/bulk':
     parameters:
       - $ref: '#/components/parameters/tenant'
@@ -308,8 +315,9 @@ paths:
         
         Creates multiple customer segments. The maximum batch size is 200.
 
-        ### Required scopes
-        *  `customersegment.segment_manage` - required to create customer segments
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
       requestBody:
         content:
           application/json:
@@ -351,8 +359,9 @@ paths:
 
         The maximum batch size is 200.
 
-        ### Required scopes
-        *  `customersegment.segment_manage` - required to update customer segments
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
       requestBody:
         content:
           application/json:
@@ -400,8 +409,9 @@ paths:
         
         **Important**: If you want to delete a segment that has items or customers assigned to it, you need to set the `forceDelete` query parameter to `true`. In this case, all items and customers assignments will be deleted as well.
 
-        ### Required scopes
-        *  `customersegment.segment_manage` - required to delete customer segments
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
       responses:
         '207':
           description: Multi-status response.
@@ -432,8 +442,9 @@ paths:
         
 
         Checks if the provided items match specified criteria - if ids of the products are assigned directly to one of the provided segments or indirectly through the category assignment. Only items assigned to the active segments will be returned.
-        ### Required scopes
-        *  `customersegment.segment_manage` - required to check if items match criteria.
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
       requestBody:
         content:
           application/json:
@@ -477,9 +488,10 @@ paths:
       description: |
         
         Retrieves all customer assignments for a given customer segment.
-        ### Required scopes
-        *  `customersegment.segment_read` - allows you to retrieve customer assignments for a customer segment
-        *  `customersegment.segment_read_own` - allows customers to retrieve their own assignments to a active customer segment
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_read
+            - customersegment.segment_read_own
       responses:
         '200':
           description: Customer assignments for a customer segment were successfully retrieved.
@@ -515,8 +527,9 @@ paths:
       description: |
         
         Returns all customer assignments that match provided criteria.
-        ### Required scopes
-        *  `customersegment.segment_read` - allows you to retrieve customer assignments for a customer segment
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_read
       requestBody:
         content:
           application/json:
@@ -568,8 +581,9 @@ paths:
       description: |
         
         Retrieves a customer with specified customerId assigned to a customer segment.
-        ### Required scopes
-        *  `customersegment.segment_read` - allows you to retrieve a customer assignment for a active customer segment
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_read
       responses:
         '200':
           description: Customer assignment for a customer segment was successfully retrieved.
@@ -597,8 +611,9 @@ paths:
       description: |
         
         Performs `UPSERT` operation. Updates a customer assigned to a customer segment. A new customer assignment is created if it's not present in the system.
-        ### Required scopes
-        *  `customersegment.segment_manage` - required to add and modify customer assignments
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
       requestBody:
         content:
           application/json:
@@ -628,8 +643,9 @@ paths:
       description: |
         
         Removes customer assignment.
-        ### Required scopes
-        *  `customersegment.segment_manage` - required to delete customer assignments
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
       responses:
         '204':
           description: Customer assignment was successfully removed.
@@ -660,8 +676,9 @@ paths:
       description: |
         
         Retrieves a customer with specified customerId and companyId assigned to a customer segment.
-        ### Required scopes
-        *  `customersegment.segment_read` - allows you to retrieve a customer assignment for a customer segment
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_read
       responses:
         '200':
           description: Customer assignment for a customer segment was successfully retrieved.
@@ -689,8 +706,9 @@ paths:
       description: |
         
         Performs `UPSERT` operation. Updates a customer assigned to a customer segment. A new customer assignment is created if it's not present in the system.
-        ### Required scopes
-        *  `customersegment.segment_manage` - required to add and modify customer assignments
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
       requestBody:
         content:
           application/json:
@@ -720,8 +738,9 @@ paths:
       description: |
         
         Removes customer assignment.
-        ### Required scopes
-        *  `customersegment.segment_manage` - required to delete customer assignments
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
       responses:
         '204':
           description: Customer assignment was successfully removed.
@@ -742,8 +761,9 @@ paths:
         
         Performs `UPSERT` operation. Updates multiple customer assignments to a customer segment. The maximum batch size is 200.
 
-        ### Required scopes
-        *  `customersegment.segment_manage` - required to add and modify customer assignments
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
       requestBody:
         content:
           application/json:
@@ -783,8 +803,9 @@ paths:
 
         ### The request body for this endpoint is array of objects with `customerId` and `legalEntityId` fields.
         #### Example: `[{"customerId": "firstCustomerId", "legalEntityId": "firstLegalEntityId"}, {"customerId": "secondCustomerId", "legalEntityId": "secondLegalEntityId"}, {"customerId": "thirdCustomerId", "legalEntityId": "thirdLegalEntityId"}]`
-        ### Required scopes
-        *  `customersegment.segment_manage` - required to delete customer assignments
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
       responses:
         '207':
           description: Multi-status response.
@@ -813,8 +834,9 @@ paths:
       description: |
         
         Retrieves category trees for the customer segments. Category trees are built based on only `active` segments.
-        ### Required scopes
-        *  `customersegment.segment_read_own` - allows customers to access categories that are assigned to the active segments they belong to
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_read_own
       responses:
         '200':
           description: Customer categories assignments were successfully retrieved.
@@ -844,9 +866,10 @@ paths:
       description: |
         
         Retrieves all items assignments for all customer segments.
-        ### Required scopes
-        *  `customersegment.segment_read_own` - allows customers to access items that are assigned to the active segments they belong to
-        *  `customersegment.segment_read` - allows to access all items
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_read_own
+            - customersegment.segment_read
       responses:
         '200':
           description: Customer items assignments were successfully retrieved.
@@ -886,9 +909,10 @@ paths:
       description: |
         
         Retrieves all item assignments for a given customer segment.
-        ### Required scopes
-        *  `customersegment.segment_read` - allows you to retrieve all item assignments
-        *  `customersegment.segment_read_own` - allows customers to access items that are assigned to the active segment they belong to
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_read
+            - customersegment.segment_read_own
       responses:
         '200':
           description: Customer segment assignments were successfully retrieved.
@@ -926,9 +950,10 @@ paths:
       description: |
         
         Retrieves all item assignments for a given customer segment.
-        ### Required scopes
-        *  `customersegment.segment_read` - allows you to retrieve all item assignments
-        *  `customersegment.segment_read_own` - allows customers to access items that are assigned to the active segment they belong to
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_read
+            - customersegment.segment_read_own
       requestBody:
         content:
           application/json:
@@ -979,9 +1004,10 @@ paths:
       description: |
         
         Retrieves an item assignment by specified ID for a given customer segment.
-        ### Required scopes
-        *  `customersegment.segment_read` - allows you to retrieve an item assignment
-        *  `customersegment.segment_read_own` - allows customers to access item that is assigned to the active segment they belong to
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_read
+            - customersegment.segment_read_own
       responses:
         '200':
           description: Customer segment item assignment was successfully retrieved.
@@ -1011,8 +1037,9 @@ paths:
       description: |
         
         Performs `UPSERT` operation. Updates an item assignment to a customer segment. A new item assignment is created if it's not present in the system.
-        ### Required scopes
-        *  `customersegment.segment_manage` - required to add and modify item assignments
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
       requestBody:
         content:
           application/json:
@@ -1042,8 +1069,9 @@ paths:
       description: |
         
         Removes an item assignment.
-        ### Required scopes
-        *  `customersegment.segment_manage` - required to delete item assignments
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
       responses:
         '204':
           description: Item assignment was successfully removed.
@@ -1065,8 +1093,9 @@ paths:
         
         Performs `UPSERT` operation. Updates multiple item assignments to a customer segments. The maximum batch size is 200.
 
-        ### Required scopes
-        *  `customersegment.segment_manage` - required to add and modify item assignments
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
       requestBody:
         content:
           application/json:
@@ -1106,8 +1135,9 @@ paths:
 
         * The IDs of items should be defined in the request body as an array of strings.
         Example: `["firstItemId", "secondItemId", "thirdItemId"]`
-        ### Required scopes
-        *  `customersegment.segment_manage` - required to delete item assignments
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
       responses:
         '207':
           description: Multi-status response.

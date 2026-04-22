@@ -24,6 +24,10 @@ paths:
         ### Additional scope info
 
           * `shoppinglist.shoppinglist_manage` - Required only for the employee to create a shopping list for a provided customer. If the scope is not present, then the customerId is resolved from the token.
+      security:
+        - CustomerAccessToken: []
+        - OAuth2: 
+            - shoppinglist.shoppinglist_manage
       operationId: POST-shopping-list-create-shopping-list
       parameters:
         - name: tenant
@@ -163,6 +167,10 @@ paths:
         ### Additional scope info
 
           * `shoppinglist.shoppinglist_manage` - Required only for the employee to update a shopping list. If the scope is not present, then the operation is allowed for customer to update his own shopping list.
+      security:
+        - CustomerAccessToken: []
+        - OAuth2: 
+            - shoppinglist.shoppinglist_manage
       operationId: PUT-shopping-list-update-customer-shopping-list
       parameters:
         - name: tenant
@@ -318,6 +326,7 @@ paths:
       security:
         - OAuth2:
             - shoppinglist.shoppinglist_delete
+            - shoppinglist.shoppinglist_manage
       responses:
         '204':
           description: |
@@ -847,6 +856,7 @@ components:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
             shoppinglist.shoppinglist_read: Needed to retrieve shopping lists.
+            shoppinglist.shoppinglist_manage: Needed to manage shopping lists.
             shoppinglist.shoppinglist_delete: Needed to delete shopping lists.
 security:
   - CustomerAccessToken: [ ]
