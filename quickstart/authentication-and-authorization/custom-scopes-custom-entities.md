@@ -11,11 +11,9 @@ layout:
 
 This tutorial explains how to configure end-to-end authorization for custom entities by combining IAM custom scopes and Schema custom-instance APIs.
 
-## Quick recap: how scopes work today
-
 When tenants define custom entities, authorization should remain consistent with platform entities. The platform therefore supports tenant-defined custom scopes in IAM, automatic type-specific scopes in Schema, and ownership-aware scopes (`*_own`) for creator-limited access.
 
-### IAM scope resolution
+The overall flow is:
 
 ```mermaid
 ---
@@ -31,84 +29,19 @@ config:
     edgeLabelTextColor: "#4C5359"
 ---
 flowchart LR
-    U[User] --> A[assigned to]
-    A --> G[Groups]
-    G --> H[has]
-    H --> AC[Access Control]
-    AC --> R[resolves]
-    R --> S[Scopes]
+    U[User] -->|assigned to| G[Groups]
+    G -->|has| AC[Access Control]
+    AC -->|resolves| S[Scopes]
 
     U@{ shape: rounded}
-    A@{ shape: rounded}
     G@{ shape: rounded}
-    H@{ shape: rounded}
     AC@{ shape: rounded}
-    R@{ shape: rounded}
     S@{ shape: rounded}
 
     U:::Class_04
     G:::Class_02
     AC:::Class_02
     S:::Class_02
-    A:::Class_03
-    H:::Class_03
-    R:::Class_03
-    classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#DDE6EE
-    classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#A1BDDC
-    classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#E1A72A, fill:#FFC128
-    classDef Class_04 fill:#F2F6FA, stroke:#4C5359
-```
-
-### Runtime authorization
-
-```mermaid
----
-config:
-  layout: fixed
-  theme: base
-  look: classic
-  themeVariables:
-    background: transparent
-    lineColor: "#9CBBE3"
-    arrowheadColor: "#9CBBE3"
-    edgeLabelBackground: "#FFC128"
-    edgeLabelTextColor: "#4C5359"
----
-flowchart LR
-    L1[Login] --> T1[user access token]
-    T1 --> D[dynamically linked]
-    D --> S[Scopes]
-    T1 --> AU[authorizes]
-    AU --> API[Emporix API]
-
-    L2[Login] --> T2[user access token]
-    T2 --> MD[MD ext]
-    MD --> I[IAM get me scopes]
-    I --> PV[Personalize view]
-
-    L1@{ shape: rounded}
-    T1@{ shape: rounded}
-    D@{ shape: rounded}
-    S@{ shape: rounded}
-    AU@{ shape: rounded}
-    API@{ shape: rounded}
-    L2@{ shape: rounded}
-    T2@{ shape: rounded}
-    MD@{ shape: rounded}
-    I@{ shape: rounded}
-    PV@{ shape: rounded}
-
-    L1:::Class_04
-    L2:::Class_04
-    T1:::Class_02
-    T2:::Class_02
-    S:::Class_02
-    API:::Class_02
-    MD:::Class_04
-    PV:::Class_04
-    D:::Class_03
-    AU:::Class_03
-    I:::Class_03
     classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#DDE6EE
     classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#A1BDDC
     classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#E1A72A, fill:#FFC128
@@ -144,7 +77,55 @@ These scopes target a single custom entity type and to support ownership-based a
 
 The `owner` is assigned when an instance is created and must not be updated later.
 
-## End-to-end setup
+The scopes are a part of access controls that are assigned to a user group. 
+The runtime authorization works in a following flow:
+
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128"
+    edgeLabelTextColor: "#4C5359"
+---
+flowchart LR
+    L1[Login] --> T1[user access token]
+    T1 -->|dynamically linked| S[Scopes]
+    T1 -->|authorizes| API[Emporix API]
+
+    L2[Login] --> T2[user access token]
+    T2 --> MD[MD ext]
+    MD -->|IAM get me scopes| PV[Personalize view]
+
+    L1@{ shape: rounded}
+    T1@{ shape: rounded}
+    S@{ shape: rounded}
+    API@{ shape: rounded}
+    L2@{ shape: rounded}
+    T2@{ shape: rounded}
+    MD@{ shape: rounded}
+    PV@{ shape: rounded}
+
+    L1:::Class_04
+    L2:::Class_04
+    T1:::Class_02
+    T2:::Class_02
+    S:::Class_02
+    API:::Class_02
+    MD:::Class_04
+    PV:::Class_04
+    classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#DDE6EE
+    classDef Class_01 stroke-width:1px, stroke-dasharray: 0, stroke:#4C5359, fill:#A1BDDC
+    classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#E1A72A, fill:#FFC128
+    classDef Class_04 fill:#F2F6FA, stroke:#4C5359
+```
+
+## Creating a custom scope for custom entity
 
 {% stepper %}
 {% step %}
@@ -171,7 +152,8 @@ curl -i -X POST \
 {% endstep %}
 
 {% step %}
-### Define IAM custom scopes (optional but recommended)
+### Optional: Define IAM custom scopes 
+The step is optional, but recommended to do.
 
 To create or update a custom scope, call the [Upserting a custom scope](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/custom-scopes#put-iam-tenant-custom-scopes-scopeid) endpoint.
 
@@ -301,7 +283,7 @@ Custom-instance endpoints accept one of the following scope sets:
 - Use `custom.{lowerCaseType}_*` when you need least-privilege, type-specific access.
 - Use `*_own` scopes when users should only access instances they created.
 
-## Related tutorials
+
 
 {% hint style="info" %}
 For more details, see the [IAM Tutorial](../../users-and-permissions/iam/iam.md) and [Schema Tutorial](../../utilities/schema/schema.md).
