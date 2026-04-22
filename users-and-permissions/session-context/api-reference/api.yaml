@@ -140,7 +140,7 @@ paths:
 
         **Note**: To update a session context, you need to provide its current `metadata.version` value in the request body.
 
-        **Note**: Only specific fields can be updated this way, and the rest is ignored. The fields allowed to be updated: `siteCode`, `currency`, `targetLocation`, `context`.
+        **Note**: Only specific fields can be updated this way, and the rest is ignored. The fields allowed to be updated: `siteCode`, `currency`, `targetLocation`, `language`, `context`.
       responses:
         '204':
           $ref: '#/components/responses/204_update_session'
@@ -331,6 +331,10 @@ components:
           type: string
           description: The country code, as defined in the country service.
           example: DE
+        language:
+          type: string
+          description: Language associated with the session.
+          example: DE
         context:
           $ref: '#/components/schemas/Context'
           description: Custom session attributes. Same structure as returned in the response.
@@ -389,6 +393,10 @@ components:
 
 
             **Note**: The default country code for anonymous sessions is based on the home base address country of the default site. In the case of a logged-in customer session, the country code is derived from the customer's shipping address, with the billing address being used as a fallback if the former is not available. If both addresses are not set, the home base address country code from the default site is used.
+        language:
+          type: string
+          example: DE
+          description: Language associated with the session.
     MetadataUpdate:
       title: Metadata
       type: object
@@ -479,7 +487,7 @@ components:
           schema:
             $ref: '#/components/schemas/SessionContext_PUT'
     sessionId_PATCH:
-      description: Partial update. Only `siteCode`, `currency`, `targetLocation`, and `context` are accepted; include `metadata.version` for optimistic locking.
+      description: Partial update. Only `siteCode`, `currency`, `targetLocation`, `language`, and `context` are accepted; include `metadata.version` for optimistic locking.
       content:
         application/json:
           schema:
