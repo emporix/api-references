@@ -45,7 +45,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CustomerUpdateDto'
+              $ref: '#/components/schemas/CustomerPatchDto'
             examples:
               Request example:
                 value:
@@ -64,7 +64,7 @@ paths:
                     version: 1
           application/merge-patch+json:
             schema:
-              $ref: '#/components/schemas/CustomerUpdateDto'
+              $ref: '#/components/schemas/CustomerPatchDto'
         required: false
       security:
         - CustomerAccessToken: []
@@ -1731,6 +1731,14 @@ components:
           properties:
             contactEmail:
               type: string
+    CustomerPatchDto:
+      allOf:
+        - $ref: '#/components/schemas/CustomerUpdateDto'
+        - type: object
+          properties:
+            contactEmail:
+              type: string
+              description: Contact email address. Cannot be modified once set.
     BasicMetadataDto:
       title: DefaultDtoMetadata
       type: object
