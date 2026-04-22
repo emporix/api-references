@@ -950,7 +950,7 @@ curl -i -X PUT
 
 ## How to work with dynamic variant products
 
-Dynamic variants let you build flexible, multi-level product hierarchies without a fixed attribute template. Each variant in the tree is an independent product that declares only its own distinguishing attributes. The API assembles the full picture including accumulated attributes, inherited values, and a ready-to-use variant map, at response time. With this, your storefront always receives complete, up-to-date data with a single API call.
+Dynamic variants let you build flexible, multi-level product hierarchies without a fixed attribute template. Each variant in the tree is an independent product that declares only its own distinguishing attributes. The API provides a full picture including accumulated attributes, inherited values, and a ready-to-use variant map. With this, your storefront receives complete, up-to-date data with a single API call.
 
 Compared with standard variants (`PARENT_VARIANT` / `VARIANT`), dynamic variants do not require a predefined shared variant template and support deeper, flexible hierarchies where each level can introduce different attribute dimensions. Standard variants are better for fixed, predictable option sets (for example, size and color only), while dynamic variants are better when hierarchy depth or variant dimensions can change over time.
 
@@ -981,7 +981,7 @@ Root product (DYNAMIC_VARIANT, no parentVariantId)
 ```
 
 - **Root product** - holds a denormalized `variants` map of all descendants. In API responses each entry's `variantAttributes` contains accumulated (fully merged) attributes.
-- **Child products** - expose `ownVariantAttributes` (what is stored on this product, writable) and `inheritedVariantAttributes` (merged from ancestors at response time, read-only).
+- **Child products** - expose `ownVariantAttributes` (what is stored on this product, writable) and `inheritedVariantAttributes` (merged from ancestors, read-only).
 - `parentVariantPath` array — carried by every child, it's an ordered list of ancestor IDs from root (index 0) to direct parent (last index), enabling O(1) ancestor resolution.
 - `sellable` flag - marks variants that can be added to a cart. Non-sellable intermediate variants exist only to group attributes.
 
@@ -1185,7 +1185,7 @@ The response includes a `variants` map ready for your storefront:
 }
 ```
 
-Notice that `mobile-15-pro-l2-retail` (L2) already contains `storageCapacity`, `colorFinish`, and `displaySize` from its L1 parent - even though those attributes are not stored on the L2 product itself. The API merges them at response time.
+Notice that `mobile-15-pro-l2-retail` (L2) already contains `storageCapacity`, `colorFinish`, and `displaySize` from its L1 parent - even though those attributes are not stored on the L2 product itself.
 
 {% endstep %}
 {% endstepper %}
@@ -1211,7 +1211,7 @@ The `variants` map gives your product page everything it needs to build a varian
 When you fetch a child product directly, the response separates its attributes into two maps:
 
 - `ownVariantAttributes` - the attributes stored on this product. These are writable: you can change them via PUT or PATCH.
-- `inheritedVariantAttributes` - the attributes merged from ancestor products at response time. These are read-only on this product. To change an inherited attribute, update the ancestor that owns it.
+- `inheritedVariantAttributes` - the attributes inherited from ancestor products. These are read-only on this product. To change an inherited attribute, update the ancestor that owns it.
 To retrieve a child product, call the [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint.
 
 ```bash

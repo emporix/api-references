@@ -16,7 +16,7 @@ tags:
       - `BUNDLE` — groups of products sold together
       - `PARENT_VARIANT` — products with automatically generated variants defined by a template
       - `VARIANT` — individual variants of a `PARENT_VARIANT` product
-      - `DYNAMIC_VARIANT` — products forming a flexible variant hierarchy of up to 4 levels. Each variant stores its own `ownVariantAttributes` (the attributes that distinguish it from its parent). A root `DYNAMIC_VARIANT` product stores a denormalized flat map of all descendants in its `variants` field with accumulated attributes computed at response time. Use the `/recalculate` endpoint to rebuild variant trees after bulk imports.
+      - `DYNAMIC_VARIANT` — products forming a flexible variant hierarchy of up to 4 levels. Each variant stores its own `ownVariantAttributes` (the attributes that distinguish it from its parent). A root `DYNAMIC_VARIANT` product stores a denormalized flat map of all descendants in its `variants` field with accumulated attributes. Use the `/recalculate` endpoint to rebuild variant trees after bulk imports.
   - name: Product Templates
     description: Manage product templates. Product templates define a set of attributes which are common for all product instances based on that template.
 paths:
@@ -3195,7 +3195,7 @@ components:
     inheritedVariantAttributes:
       type: object
       description: |
-        Read-only map of variant attributes inherited from ancestor products in the hierarchy. Computed at response time by walking the `parentVariantId` chain upward. These cannot be modified on this product — to change an inherited attribute, update the ancestor that owns it.
+        Read-only map of variant attributes inherited from ancestor products in the hierarchy. These cannot be modified on this product — to change an inherited attribute, update the ancestor that owns it.
       additionalProperties:
         $ref: '#/components/schemas/dynamicVariantAttribute'
     variantMapEntry:
@@ -3230,7 +3230,7 @@ components:
     variantsMap:
       type: object
       description: |
-        Denormalized flat map of all descendant variants stored on the root product. Keys are variant product identifiers. In API responses each entry's `variantAttributes` contains accumulated (fully merged) attributes computed at response time.
+        Denormalized flat map of all descendant variants stored on the root product. Keys are variant product identifiers. In API responses each entry's `variantAttributes` contains accumulated attributes.
       additionalProperties:
         $ref: '#/components/schemas/variantMapEntry'
     dynamicVariantInfo:
@@ -3298,7 +3298,7 @@ components:
         Response schema for products of the DYNAMIC_VARIANT type.
 
         - **`sellable`** — not inherited from parents; must be set explicitly on each product. Root and intermediate variants are typically `false`; leaf variants are typically `true`.
-        - **Root products** include a `variants` map containing all descendants with accumulated attributes computed at response time.
+        - **Root products** include a `variants` map containing all descendants with accumulated attributes.
         - **Child products** include `ownVariantAttributes` (attributes defined on this product) and `inheritedVariantAttributes` (read-only, merged from ancestors).
         - `parentVariantPath` is an ordered array of ancestor IDs from root (index 0) to direct parent (last index). Empty for root products.
         - `metadata.dynamicVariantInfo` is present only when a hierarchy integrity issue is detected.
