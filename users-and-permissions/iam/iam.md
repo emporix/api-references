@@ -148,11 +148,6 @@ curl -i -X PUT \
   }'
 ```
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../iam/api-reference/" %}
-[api-reference](../iam/api-reference/)
-{% endcontent-ref %}
 {% endstep %}
 
 {% step %}
@@ -174,11 +169,6 @@ curl -i -X PUT \
   }'
 ```
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../iam/api-reference/" %}
-[api-reference](../iam/api-reference/)
-{% endcontent-ref %}
 {% endstep %}
 
 {% step %}
@@ -227,12 +217,15 @@ curl -i -X GET \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
 ```
 
+{% endstep %}
+{% endstepper %}
+
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="../iam/api-reference/" %}
 [api-reference](../iam/api-reference/)
 {% endcontent-ref %}
-{% endstep %}
-{% endstepper %}
 
+{% hint style="info" %}
 For the end-to-end integration flow across IAM and Schema, see [Custom scopes for custom entities](../../quickstart/authentication-and-authorization/custom-scopes-custom-entities.md).
+{% endhint %}
