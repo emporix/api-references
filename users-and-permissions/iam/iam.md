@@ -15,64 +15,6 @@ Names and descriptions of groups, permissions, resources, access control templat
 Looking for more info on localization? Check out [_Standard practices_](../../standard-practices/translations.md).
 {% endhint %}
 
-## How to manage custom scopes for custom entity authorization
-
-{% hint style="info" %}
-This functionality is still under development. Management Dashboard support is being added and may not yet expose all flows described in this tutorial.
-{% endhint %}
-
-You can define tenant-specific custom scopes and use them in access controls to authorize custom-entity operations in downstream services.
-
-Typical flow:
-
-1. Create or update a custom scope in IAM.
-2. Create or update an access control that resolves to this scope.
-3. Assign the access control to a user group.
-4. Assign users to the group and request OAuth2 tokens.
-5. Call service APIs that validate these scopes (for example, Schema custom-instance endpoints).
-
-### Create or update a custom scope
-
-Use the custom-scopes API in IAM to define a scope that fits your authorization model.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../iam/api-reference/custom-scopes" %}
-[custom-scopes](../iam/api-reference/custom-scopes)
-{% endcontent-ref %}
-
-### Create or update an access control that uses custom scopes
-
-Access controls map roles and resources to resolved scopes and are assigned to groups. Use the Access Controls API to create or update access controls that include your custom scopes.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../iam/api-reference/access-controls" %}
-[access-controls](../iam/api-reference/access-controls)
-{% endcontent-ref %}
-
-### Assign access controls through groups
-
-Assign access controls to groups and then assign users to these groups so token scopes can be resolved from group membership.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../iam/api-reference/groups" %}
-[groups](../iam/api-reference/groups)
-{% endcontent-ref %}
-
-### Verify resolved scopes for a user
-
-To validate IAM configuration, retrieve effective user scopes.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../iam/api-reference/users" %}
-[users](../iam/api-reference/users)
-{% endcontent-ref %}
-
-For the end-to-end integration flow across IAM and Schema, see [Custom scopes for custom entities](../../quickstart/authentication-and-authorization/custom-scopes-custom-entities.md).
-
 ## How to create a group of employees with a specific set of access controls
 
 To specify user access level in a particular service resource, you need to create a group of users that share the same access controls.\
@@ -176,3 +118,121 @@ curl -i -X POST
   }'
 ```
  
+## How to manage custom scopes for custom entity authorization
+
+You can define tenant-specific custom scopes and use them in access controls to authorize custom-entity operations in downstream services.
+
+Typical flow:
+
+1. Create or update a custom scope in IAM.
+2. Create or update an access control that resolves to this scope.
+3. Assign the access control to a user group.
+4. Assign users to the group and request OAuth2 tokens.
+5. Call service APIs that validate these scopes (for example, Schema custom-instance endpoints).
+
+{% stepper %}
+{% step %}
+### Create or update a custom scope
+
+To create or update a custom scope, call the [Upserting a custom scope](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/custom-scopes#put-iam-tenant-custom-scopes-scopeid) endpoint.
+
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/iam/{tenant}/custom-scopes/myproject.bulk_export_manage' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "description": {
+      "en": "Allows triggering bulk export jobs."
+    }
+  }'
+```
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../iam/api-reference/" %}
+[api-reference](../iam/api-reference/)
+{% endcontent-ref %}
+{% endstep %}
+
+{% step %}
+### Create or update an access control that uses custom scopes
+
+Access controls map roles and resources to resolved scopes and are assigned to groups. To create or update an access control, call the [Upserting an access control](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/access-controls#put-iam-tenant-access-controls-accesscontrolid) endpoint.
+
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/iam/{tenant}/access-controls/custom-bulk-export-manage' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "resourceId": "myproject.bulk_export",
+    "roleId": "manage",
+    "scopes": [
+      "myproject.bulk_export_manage"
+    ]
+  }'
+```
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../iam/api-reference/" %}
+[api-reference](../iam/api-reference/)
+{% endcontent-ref %}
+{% endstep %}
+
+{% step %}
+### Assign access controls through groups
+
+To assign access controls, call the [Creating a new group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups) endpoint and include your access control IDs in the payload.
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/iam/{tenant}/groups' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": {
+      "en": "Bulk Export Managers"
+    },
+    "userType": "EMPLOYEE",
+    "accessControls": [
+      "custom-bulk-export-manage"
+    ]
+  }'
+```
+
+Then call the [Adding a user to a group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups-groupid-users) endpoint.
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/iam/{tenant}/groups/{groupId}/users' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "userId": "00u4ukqvzlEP31sCk417",
+    "userType": "EMPLOYEE"
+  }'
+```
+{% endstep %}
+
+{% step %}
+### Verify resolved scopes for a user
+
+To validate IAM configuration, call the [Retrieving all scopes granted to a user](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-scopes) endpoint.
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/iam/{tenant}/users/{userId}/scopes' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../iam/api-reference/" %}
+[api-reference](../iam/api-reference/)
+{% endcontent-ref %}
+{% endstep %}
+{% endstepper %}
+
+For the end-to-end integration flow across IAM and Schema, see [Custom scopes for custom entities](../../quickstart/authentication-and-authorization/custom-scopes-custom-entities.md).

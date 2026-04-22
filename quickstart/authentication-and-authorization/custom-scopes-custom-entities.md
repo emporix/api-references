@@ -99,8 +99,8 @@ flowchart LR
     T1 -->|authorizes| API[Emporix API]
 
     L2[Login] --> T2[user access token]
-    T2 --> MD[MD ext]
-    MD -->|IAM get me scopes| PV[Personalize view]
+    T2 --> MD[Management Dashboard extension]
+    MD -->|IAM gets 'me' scopes| PV[Personalize view]
 
     L1@{ shape: rounded}
     T1@{ shape: rounded}
@@ -125,7 +125,16 @@ flowchart LR
     classDef Class_04 fill:#F2F6FA, stroke:#4C5359
 ```
 
-## Creating a custom scope for custom entity
+## Define custom scope for custom entity
+
+Custom-instance endpoints accept one of the following scope sets:
+
+- Read endpoints: `schema.custominstance_read` or `custom.{lowerCaseType}_read` or `custom.{lowerCaseType}_read_own`
+- Manage endpoints: `schema.custominstance_manage` or `custom.{lowerCaseType}_manage` or `custom.{lowerCaseType}_manage_own`
+
+- Use `schema.custominstance_*` when the client must handle many custom entity types.
+- Use `custom.{lowerCaseType}_*` when you need least-privilege, type-specific access.
+- Use `*_own` scopes when users should only access instances they created.
 
 {% stepper %}
 {% step %}
@@ -146,9 +155,6 @@ curl -i -X POST \
   }'
 ```
 
-{% content-ref url="../../utilities/schema/api-reference/" %}
-[api-reference](../../utilities/schema/api-reference/)
-{% endcontent-ref %}
 {% endstep %}
 
 {% step %}
@@ -168,10 +174,6 @@ curl -i -X PUT \
     }
   }'
 ```
-
-{% content-ref url="../../users-and-permissions/iam/api-reference/" %}
-[api-reference](../../users-and-permissions/iam/api-reference/)
-{% endcontent-ref %}
 {% endstep %}
 
 {% step %}
@@ -193,10 +195,6 @@ curl -i -X PUT \
     ]
   }'
 ```
-
-{% content-ref url="../../users-and-permissions/iam/api-reference/" %}
-[api-reference](../../users-and-permissions/iam/api-reference/)
-{% endcontent-ref %}
 {% endstep %}
 
 {% step %}
@@ -233,9 +231,6 @@ curl -i -X POST \
   }'
 ```
 
-{% content-ref url="../../users-and-permissions/iam/api-reference/" %}
-[api-reference](../../users-and-permissions/iam/api-reference/)
-{% endcontent-ref %}
 {% endstep %}
 
 {% step %}
@@ -268,22 +263,13 @@ curl -i -X POST \
   }'
 ```
 
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
 {% content-ref url="../../utilities/schema/api-reference/" %}
 [api-reference](../../utilities/schema/api-reference/)
 {% endcontent-ref %}
 {% endstep %}
 {% endstepper %}
-
-Custom-instance endpoints accept one of the following scope sets:
-
-- Read endpoints: `schema.custominstance_read` or `custom.{lowerCaseType}_read` or `custom.{lowerCaseType}_read_own`
-- Manage endpoints: `schema.custominstance_manage` or `custom.{lowerCaseType}_manage` or `custom.{lowerCaseType}_manage_own`
-
-- Use `schema.custominstance_*` when the client must handle many custom entity types.
-- Use `custom.{lowerCaseType}_*` when you need least-privilege, type-specific access.
-- Use `*_own` scopes when users should only access instances they created.
-
-
 
 {% hint style="info" %}
 For more details, see the [IAM Tutorial](../../users-and-permissions/iam/iam.md) and [Schema Tutorial](../../utilities/schema/schema.md).
