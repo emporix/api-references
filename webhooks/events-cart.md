@@ -11,6 +11,17 @@ description: Webhook events related to the creation, update, and deletion of a c
 ## Available events
 
 <table><thead><tr><th>Event type</th><th>Event schema</th></tr></thead><tbody><tr><td>cart.created</td><td><pre class="language-json"><code class="lang-json">{
+  "currency": "String",
+  "customerId": "String",
+  "id": "String",
+  "metadata": {
+    "createdAt": "String",
+    "modifiedAt": "String",
+    "version": "Number"
+  },
+  "siteCode": "String",
+}
+</code></pre></td></tr><tr><td>cart.updated</td><td><pre class="language-json"><code class="lang-json">{
   "id": "String",
   "yrn": "String",
   "restriction": "String",
