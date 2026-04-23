@@ -8,6 +8,12 @@
 
 ## 2026
 
+* [2026-04-21: Session Context Service - language attribute added to session context model](2026/2026-04-21-session-context.md)
+* [2026-04-21: Customer Service - session context attributes on anonymous login](2026/2026-04-21-customer.md)
+* [2026-04-13: Schema Service - custom instance scopes, owner, and type-scoped access](2026/2026-04-13-schema.md)
+* [2026-04-13: IAM Service - custom scopes and access controls](2026/2026-04-13-iam.md)
+* [2026-04-07: Order Service - historical transitions endpoint for tenant-managed orders](2026/2026-04-07-order.md)
+* [2026-04-07: Emporix SDK - Availability Service support](2026/2026-04-07-sdk.md)
 * [2026-04-02: Availability Service - new bulk processing endpoints ](2026/2026-04-02-availability.md)
 * [2026-04-01: IAM Service - last login information exposed in user GET endpoints](2026/2026-04-01-iam.md)
 * [2026-03-27: Schema Service - support for CART_ITEM and ORDER_ENTRY type](2026/2026-03-27-schema.md)

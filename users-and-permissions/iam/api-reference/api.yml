@@ -18,11 +18,6 @@ paths:
       summary: Retrieving all access controls
       description: |
         Retrieves all access controls available for the tenant. The results can be filtered by using query parameters. You can expand the result by resolving the role and resource references.
-        ***
-
-        ### Required scopes
-
-          * `iam.access_read`
       operationId: GET-iam-list-tenant-access-controls
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -31,6 +26,7 @@ paths:
         - $ref: '#/components/parameters/trait_metadataModifiedAt_query_param'
         - $ref: '#/components/parameters/roleId_query'
         - $ref: '#/components/parameters/trait_resourceId_query_param'
+        - $ref: '#/components/parameters/trait_q_query_param'
         - $ref: '#/components/parameters/trait_expand_query_param'
         - $ref: '#/components/parameters/X-Total-Count'
         - $ref: '#/components/parameters/trait_acceptLanguage_header'
@@ -55,6 +51,7 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -95,6 +92,7 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -137,6 +135,7 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name 2
                       role:
@@ -174,6 +173,7 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -201,6 +201,7 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -230,6 +231,7 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -253,6 +255,7 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -278,6 +281,7 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -288,6 +292,7 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -334,6 +339,7 @@ paths:
                     id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                     roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                     resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                    domain: example_domain
                     name:
                       en: Example name
                       de: Beispielname
@@ -378,6 +384,7 @@ paths:
                     id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                     roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                     resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                    domain: example_domain
                     name:
                       en: Example name
                     role:
@@ -417,6 +424,7 @@ paths:
                     id: string
                     roleId: string
                     resourceId: string
+                    domain: example_domain
                     name:
                       property1: string
                       property2: string
@@ -461,6 +469,7 @@ paths:
                     id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                     roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                     resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                    domain: example_domain
                     name:
                       en: Example name
                       de: Beispielname
@@ -488,6 +497,7 @@ paths:
                     id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                     roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                     resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                    domain: example_domain
                     name:
                       en: Example name
                       de: Beispielname
@@ -521,9 +531,259 @@ paths:
       security:
         - OAuth2:
             - iam.access_read
+    put:
+      tags:
+        - Access Controls
+      summary: Upserting an access control
+      description: |
+        Creates an access control when it does not exist, or updates it when it already exists for the tenant.
+        If `metadata.version` is provided, optimistic locking is applied for updates.
+
+        **Note**: Currently you can create access controls only with custom scopes.
+      operationId: PUT-iam-upsert-access-control
+      parameters:
+        - $ref: '#/components/parameters/trait_contentLanguage_header'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccessControlUpsertRequest'
+            examples:
+              example:
+                value:
+                  name:
+                    en: Example name
+                    de: Beispielname
+                  description:
+                    en: Example access control description
+                    de: Beispielbeschreibung
+                  scopes:
+                    - custom.scope
+                  domain: example_domain
+                  metadata:
+                    version: 1
+      responses:
+        '201':
+          description: The request was successful. The access control has been created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessControlIdResponse'
+              examples:
+                example:
+                  value:
+                    id: 084bcaf6-66b8-4ddd-9489-65c5f6449e94
+        '204':
+          description: The request was successful. The access control has been updated.
+        '400':
+          $ref: '#/components/responses/Bad_request_400_cl'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+      security:
+        - OAuth2:
+            - iam.access_manage
+    delete:
+      tags:
+        - Access Controls
+      summary: Deleting an access control
+      description: |
+        Deletes a specified access control.
+
+        **Note**: Only user-created access controls can be deleted. Predefined access controls cannot be removed.
+      operationId: DELETE-iam-delete-access-control
+      responses:
+        '204':
+          description: The request was successful. The access control has been deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+      security:
+        - OAuth2:
+            - iam.access_manage
     parameters:
       - $ref: '#/components/parameters/tenant'
       - $ref: '#/components/parameters/access_control_Id'
+  '/iam/{tenant}/scopes':
+    get:
+      tags:
+        - Scopes
+      summary: Retrieving all scopes
+      description: |
+        Retrieves all scopes for the tenant. Results can be filtered and sorted using query parameters.
+
+        **Note:** Currently this endpoint returns only user-created custom scopes. Predefined scopes are not included yet.
+      operationId: GET-iam-list-tenant-scopes
+      parameters:
+        - $ref: '#/components/parameters/tenant'
+        - $ref: '#/components/parameters/trait_paged_pageNumber'
+        - $ref: '#/components/parameters/trait_paged_pageSize'
+        - $ref: '#/components/parameters/trait_sort'
+        - $ref: '#/components/parameters/trait_q_query_param'
+        - $ref: '#/components/parameters/X-Total-Count'
+      responses:
+        '200':
+          description: The request was successful. A list of scopes is returned.
+          headers:
+            X-Total-Count:
+              description: Total number of retrieved scopes.
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomScopeQueryDocument'
+              examples:
+                Scopes list:
+                  value:
+                    - id: custom.scope
+                      description:
+                        en: Example scope description
+                        de: Beispielbeschreibung
+                      domain: example_domain
+                      metadata:
+                        version: 1
+                        createdAt: '2022-01-04 10:44:51.871Z'
+                        modifiedAt: '2022-01-05 12:44:51.456Z'
+                Empty scopes list:
+                  value: []
+        '400':
+          $ref: '#/components/responses/Bad_request_400'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+      security:
+        - OAuth2:
+            - iam.scope_read
+    parameters:
+      - $ref: '#/components/parameters/tenant'
+  '/iam/{tenant}/scopes/{scopeId}':
+    parameters:
+      - $ref: '#/components/parameters/tenant'
+      - $ref: '#/components/parameters/scopeId'
+    get:
+      tags:
+        - Scopes
+      summary: Retrieving a scope
+      description: |
+        Retrieves details of a specified scope.
+
+        **Note:** Currently this endpoint returns only user-created custom scopes. Predefined scopes are not included yet.
+      operationId: GET-iam-retrieve-scope
+      parameters:
+        - $ref: '#/components/parameters/trait_acceptLanguage_header'
+      responses:
+        '200':
+          description: The request was successful. Scope details are returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomScopeQueryDocument'
+              examples:
+                example:
+                  value:
+                    id: custom.scope
+                    description:
+                      en: Example scope description
+                      de: Beispielbeschreibung
+                    domain: example_domain
+                    metadata:
+                      version: 1
+                      createdAt: '2022-01-04 10:44:51.871Z'
+                      modifiedAt: '2022-01-05 12:44:51.456Z'
+        '400':
+          $ref: '#/components/responses/Bad_request_400'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          description: Given resources cannot be found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    resourceId: unknown.scope
+                    code: 404
+                    status: Not Found
+                    message: Scope not found
+      security:
+        - OAuth2:
+            - iam.scope_read
+    put:
+      tags:
+        - Scopes
+      summary: Upserting a custom scope
+      description: |
+        Creates a custom scope when it does not exist, or updates it when it already exists for the tenant.
+        If `metadata.version` is provided, optimistic locking is applied for updates.
+      operationId: PUT-iam-upsert-custom-scope
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomScopeUpsertRequest'
+            examples:
+              example:
+                value:
+                  description:
+                    en: Example scope description
+                    de: Beispielbeschreibung
+                  domain: example_domain
+                  metadata:
+                    version: 1
+      responses:
+        '201':
+          description: The request was successful. The scope has been created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomScopeIdResponse'
+              examples:
+                example:
+                  value:
+                    id: custom.scope
+        '204':
+          description: The request was successful. The scope has been updated.
+        '400':
+          $ref: '#/components/responses/Bad_request_400'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+      security:
+        - OAuth2:
+            - iam.scope_manage
+    delete:
+      tags:
+        - Scopes
+      summary: Deleting a custom scope
+      description: |
+        Deletes a custom scope for the tenant.
+
+        **Note**: The scope is removed and cannot be used anymore, but it may still appear on custom credentials that were already created before the deletion.
+      operationId: DELETE-iam-delete-custom-scope
+      responses:
+        '204':
+          description: The request was successful. The scope has been deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+      security:
+        - OAuth2:
+            - iam.scope_manage
   '/iam/{tenant}/groups':
     get:
       tags:
@@ -959,6 +1219,7 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -999,6 +1260,7 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -1041,6 +1303,7 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name
                       role:
@@ -1076,6 +1339,7 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name 2
                       role:
@@ -1113,6 +1377,7 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -1140,6 +1405,7 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -1169,6 +1435,7 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -1192,6 +1459,7 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -1217,6 +1485,7 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -1227,6 +1496,7 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -1843,6 +2113,7 @@ paths:
                         - id: 1ac869fc-d548-4ec8-8e06-c01491314117
                           roleId: 1rl5e52e-6e27-4ac5-9471-2467d3fb7500
                           resourceId: 1sr5e52e-6e27-4ac5-9471-2467d3fb7518
+                          domain: example_domain
                           name:
                             de: Konfiguration | Konfiguration viewer
                             en: Configuration | Configuration viewer
@@ -1878,6 +2149,7 @@ paths:
                         - id: 4ac869fc-d548-4ec8-8e06-c01491314113
                           roleId: 1rl5e52e-6e27-4ac5-9471-2467d3fb7502
                           resourceId: 1sr5e52e-6e27-4ac5-9471-2467d3fb7514
+                          domain: example_domain
                           name:
                             de: Katalog | Katalog manager
                             en: Catalog | Catalog manager
@@ -2132,6 +2404,7 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -2172,6 +2445,7 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -2214,6 +2488,7 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name
                       role:
@@ -2249,6 +2524,7 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name 2
                       role:
@@ -2286,6 +2562,7 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -2313,6 +2590,7 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -2342,6 +2620,7 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -2365,6 +2644,7 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -2390,6 +2670,7 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -2400,6 +2681,7 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+                      domain: example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -3424,6 +3706,10 @@ components:
         resourceId:
           type: string
           description: Resource unique identifier associated with this access control.
+        domain:
+          type: string
+          description: Domain identifier associated with this access control.
+          example: example_domain
         name:
           type: object
           additionalProperties:
@@ -3443,6 +3729,57 @@ components:
         restrictionAware:
           type: boolean
           description: Determines whether this access control generates scopes with restriction suffixes when assigned to a group that has restrictions defined. When `true`, the generated scopes will include restrictions (e.g. order.`order_manage--DE`) based on the group's restrictions list. When `false`, scopes are generated without restriction suffixes regardless of the group's restrictions.
+        predefined:
+          type: boolean
+          readOnly: true
+          description: Indicated whether this access control is predefined in the system or was created by a user.
+        vendorAware:
+          type: boolean
+          readOnly: true
+          description: Indicated whether this access control is associated with vendor scopes.
+    AccessControlUpsertRequest:
+      type: object
+      description: Payload for creating or updating an access control.
+      required:
+        - scopes
+      properties:
+        name:
+          type: object
+          additionalProperties:
+            type: string
+          description: Localized name as a map of language codes to text.
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: Localized description as a map of language codes to text.
+        scopes:
+          type: array
+          description: Scope codes for this access control. Must not be empty.
+          minItems: 1
+          uniqueItems: true
+          items:
+            type: string
+        domain:
+          type: string
+          description: Domain identifier for the access control.
+        metadata:
+          type: object
+          description: Metadata for optimistic locking on updates. Only `version` is supported.
+          properties:
+            version:
+              type: integer
+              format: int32
+              description: Document version. When provided on update, must match the stored version.
+          additionalProperties: false
+    AccessControlIdResponse:
+      type: object
+      example:
+        id: 084bcaf6-66b8-4ddd-9489-65c5f6449e94
+      properties:
+        id:
+          type: string
+          description: ID of the created access control. Matches the `accessControlId` path parameter.
     TemplateQueryDocument:
       type: object
       properties:
@@ -4190,6 +4527,70 @@ components:
         - department
         - contactEmail
         - groupIds
+    CustomScopeMetadataQueryDocument:
+      required:
+        - createdAt
+        - version
+      type: object
+      properties:
+        version:
+          type: integer
+          description: Scope document version.
+          format: int32
+        createdAt:
+          type: string
+          description: Timestamp indicating when the scope was created.
+          format: date-time
+        modifiedAt:
+          type: string
+          description: Timestamp indicating when the scope was last modified.
+          format: date-time
+      description: Scope metadata.
+    CustomScopeQueryDocument:
+      type: object
+      description: Definition of a scope.
+      properties:
+        id:
+          type: string
+          description: Scope identifier.
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: Localized description as a map of language codes to text.
+        domain:
+          type: string
+          description: Domain identifier for the scope.
+        metadata:
+          $ref: '#/components/schemas/CustomScopeMetadataQueryDocument'
+    CustomScopeUpsertRequest:
+      type: object
+      description: Payload for creating or updating a scope.
+      properties:
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: Localized description as a map of language codes to text.
+        domain:
+          type: string
+          description: Domain identifier for the scope.
+        metadata:
+          type: object
+          description: Metadata for the scope. Only `version` is supported, for optimistic locking on updates.
+          properties:
+            version:
+              type: integer
+              format: int32
+              description: Document version. When provided on update, must match the stored version.
+          additionalProperties: false
+    CustomScopeIdResponse:
+      type: object
+      example:
+        id: custom.scope
+      properties:
+        id:
+          type: string
   securitySchemes:
     OAuth2:
       type: oauth2
@@ -4198,6 +4599,7 @@ components:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
             iam.access_read: ''
+            iam.access_manage: ''
             iam.assignment_create_own: ''
             iam.assignment_manage: ''
             iam.assignment_delete_own: ''
@@ -4216,6 +4618,7 @@ components:
             iam.user_create: ''
             iam.user_update: ''
             iam.user_delete: ''
+            iam.scope_manage: ''
             iam.scope_read: ''
             iam.scope_read_own: ''
             iam.resource_read: ''
@@ -4399,10 +4802,19 @@ components:
       schema:
         type: string
       description: Unique identifier of a resource.
+    scopeId:
+      name: scopeId
+      in: path
+      required: true
+      description: |
+        Unique identifier of a scope. Only letters, periods (`.`), hyphens (`-`), and underscores (`_`) are allowed.
+      schema:
+        type: string
+        example: custom.scope
     access_control_Id:
       name: accessControlId
       in: path
-      description: 'Unique identifier of an access control, generated when the access control is created.'
+      description: 'Unique identifier of an access control.'
       required: true
       schema:
         type: string
@@ -4438,6 +4850,7 @@ components:
         - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+          domain: example_domain
           name:
             en: Example name
             de: Beispielname
@@ -4478,6 +4891,7 @@ components:
         - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+          domain: example_domain
           name:
             en: Example name 2
             de: Beispielname 2
@@ -4520,6 +4934,7 @@ components:
         - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+          domain: example_domain
           name:
             en: Example name
           role:
@@ -4555,6 +4970,7 @@ components:
         - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+          domain: example_domain
           name:
             en: Example name 2
           role:
@@ -4592,6 +5008,7 @@ components:
         - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+          domain: example_domain
           name:
             en: Example name
             de: Beispielname
@@ -4615,6 +5032,7 @@ components:
         - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+          domain: example_domain
           name:
             en: Example name 2
             de: Beispielname 2
@@ -4640,6 +5058,7 @@ components:
         - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+          domain: example_domain
           name:
             en: Example name
             de: Beispielname
@@ -4650,6 +5069,7 @@ components:
         - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
+          domain: example_domain
           name:
             en: Example name 2
             de: Beispielname 2
@@ -4778,6 +5198,7 @@ security:
   - OAuth2: []
 tags:
   - name: Access Controls
+  - name: Scopes
   - name: Group Assignments
   - name: Groups
   - name: Permissions

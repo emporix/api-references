@@ -1220,6 +1220,7 @@ paths:
     get:
       parameters:
         - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/expandMcpServer'
       summary: Retrieving MCP server by ID
       operationId: GET-ai-retrieve-mcp-server
       responses:
@@ -1452,10 +1453,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Retrieves agent requests based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1485,10 +1482,6 @@ paths:
           $ref: '#/components/responses/404_resp_common'
       description: |-
         Retrieves the agent request by given ID.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1519,10 +1512,6 @@ paths:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
         Searches for agent requests based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1551,10 +1540,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Retrieves agent sessions based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1584,10 +1569,6 @@ paths:
           $ref: '#/components/responses/404_resp_common'
       description: |-
         Retrieves the agent session by given ID.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1618,10 +1599,6 @@ paths:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
         Searches for agent sessions based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -3772,7 +3749,8 @@ components:
         config:
           url: 'http://localhost:7900/mcp'
           authorizationHeaderName: Authorization
-          authorizationHeaderTokenId: token-id
+          authorizationHeaderToken:
+            id: token-id
     McpServersResponse:
       value:
         - id: mcp-custom
@@ -3782,7 +3760,8 @@ components:
           config:
             url: 'http://localhost:7900/mcp'
             authorizationHeaderName: Authorization
-            authorizationHeaderTokenId: token-id
+            authorizationHeaderToken:
+              id: token-id
     CommerceEventsResponse:
       value:
         events:
@@ -3890,7 +3869,8 @@ components:
         config:
           url: 'http://localhost:7900/mcp'
           authorizationHeaderName: Authorization
-          authorizationHeaderTokenId: token-id
+          authorizationHeaderToken:
+            id: token-id
     TokenRequest:
       value:
         name: OpenAI Token

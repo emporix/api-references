@@ -26,10 +26,6 @@ paths:
       summary: Retrieving all locations for a site
       description: |-
         Retrieves all locations for a specified site.
-        ***
-
-        **Required scopes**
-        *  `availability.availability_view`
       security:
         - OAuth2:
             - availability.availability_view
@@ -60,10 +56,6 @@ paths:
       summary: Adding a new location to a site
       description: |-
         Adds a new location to a specified site.
-        ***
-
-        **Required scopes**
-        *  `availability.availability_manage`
       security:
         - OAuth2:
             - availability.availability_manage
@@ -102,10 +94,6 @@ paths:
       summary: Updating locations
       description: |-
         Updates locations for a specified site.
-        ***
-
-        **Required scopes**
-        *  `availability.availability_manage`
       security:
         - OAuth2:
             - availability.availability_manage
@@ -146,11 +134,6 @@ paths:
       summary: Deleting a location
       description: |-
         Deletes a specified location.
-
-        ***
-
-        **Required scopes**
-        *  `availability.availability_manage`
       security:
         - OAuth2:
             - availability.availability_manage
@@ -180,10 +163,6 @@ paths:
       summary: Retrieving product locations
       description: |-
         Retrieves locations of specified products.
-        ***
-
-        **Required scopes**
-        *  `availability.availability_view`
       security:
         - OAuth2:
             - availability.availability_view
@@ -238,11 +217,13 @@ paths:
 
         ***
 
-        ### **Required scopes**
-        * No specific scopes are required.
-        * Scope `availability.availability_view_by_vendor` allows to fetch just the availabilities belonging to the vendor.
+        ### **Additional scope information**
+        * The `availability.availability_view_by_vendor` scope is required only when fetching availabilities for a specific vendor. 
+
+        ***
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - availability.availability_view_by_vendor
       responses:
         '200':
           description: The request was successful. A list of availabilities is returned.
@@ -277,11 +258,13 @@ paths:
 
         ***
 
-        ### **Required scopes**
-        * No specific scopes are required.
-        * Scope `availability.availability_view_by_vendor` allows to fetch just the availabilities belonging to the vendor.
+        ### **Additional scope information**
+        * The `availability.availability_view_by_vendor` scope is required only when fetching availabilities for a specific vendor. 
+
+        ***
       security:
-        - OAuth2: []
+        - OAuth2:
+            - availability.availability_view_by_vendor
       parameters:
         - $ref: '#/components/parameters/tenant-path'
         - $ref: '#/components/parameters/site'
@@ -331,11 +314,15 @@ paths:
       description: |-
         Retrieves a specified product availability details.
         
-        ### **Required scopes**
-        * No specific scopes are required.
-        * Scope `availability.availability_view_by_vendor` allows to fetch just the availabilities belonging to the vendor.
+        ***
+
+        ### **Additional scope information**
+        * The `availability.availability_view_by_vendor` scope is required only when fetching availabilities for a specific vendor. 
 
         ***
+      security:
+        - OAuth2:
+            - availability.availability_view_by_vendor
       responses:
         '200':
           description: The request was successful. The product availability details are returned.
@@ -368,12 +355,14 @@ paths:
 
         ***
 
-        **Required scopes**
-        *  `availability.availability_manage`
-        *  `availability.availability_manage_by_vendor` - allows to create availabilities for products belonging to the vendor
+        **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope allows to create availabilities for products belonging to the vendor.
+
+        ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       requestBody:
         content:
           application/json:
@@ -413,12 +402,14 @@ paths:
 
         ***
 
-        **Required scopes**
-        *  `availability.availability_manage`
-        *  `availability.availability_manage_by_vendor` - allows to update availabilities belonging to the vendor
+        **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope is only required when updating or creating availabilities belonging to the vendor.
+
+        ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       requestBody:
         content:
           application/json:
@@ -452,20 +443,22 @@ paths:
     delete:
       tags:
         - Availabilities
-      summary: Deleting multiple availabilities information of a product
+      summary: Deleting availability information of a product
       description: |-
-        Deletes product availability records identified by the combination of `productId` and `site`. The maximum batch size is 200.
+        Deletes a specified product availability.
 
         **Note**: There is no possibility to delete a product bundle availability - it is always equal to the lowest availability found in the bundled products.
 
         ***
 
-        **Required scopes**
-        *  `availability.availability_manage`
-        *  `availability.availability_manage_by_vendor` - allows to delete belonging to the vendor
+        **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope is only required when deleting availabilities belonging to the vendor.
+
+        ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       responses:
         '204':
           description: The request was successful. The availability has been deleted.
@@ -495,14 +488,14 @@ paths:
         
         ***
   
-        ### **Required scopes**
-        * Scope `availability.availability_manage`
-        * Scope `availability.availability_manage_by_vendor` required when using vendor-id header
+        ### **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope is only required when creating availabilities belonging to the vendor.
   
         ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       requestBody:
         content:
           application/json:
@@ -523,8 +516,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/BulkResponse'
               examples:
-                Segments Creations:
-                  $ref: '#/components/examples/BulkResponse'
+                Multi-status creation example:
+                  $ref: '#/components/examples/BulkCreateResponse'
         '400':
           $ref: '#/components/responses/BadRequestResponse400'
         '401':
@@ -545,12 +538,14 @@ paths:
   
         ***
   
-        **Required scopes**
-        *  `availability.availability_manage`
-        *  `availability.availability_manage_by_vendor` - allows to create/update availabilities for products belonging to the vendor
+        **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope is only required when creating or updating availabilities belonging to the vendor.
+
+        ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       requestBody:
         content:
           application/json:
@@ -571,8 +566,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/BulkResponse'
               examples:
-                Segments Creations:
-                  $ref: '#/components/examples/BulkResponse'
+                Multi-status upsertion example:
+                  $ref: '#/components/examples/BulkUpsertResponse'
         '400':
           $ref: '#/components/responses/BadRequestResponse400'
         '401':
@@ -585,20 +580,22 @@ paths:
     delete:
       tags:
         - Availabilities
-      summary: Deleting availability information of a product
+      summary: Deleting multiple availabilities information of a product
       description: |-
-        Deletes product availabilities specified by product ID and site.
+        Deletes product availability records identified by the combination of `productId` and `site`. The maximum batch size is 200.
   
         **Note**: There is no possibility to delete a product bundle availability - it is always equal to the lowest availability found in the bundled products.
   
         ***
   
-        **Required scopes**
-        *  `availability.availability_manage`
-        *  `availability.availability_manage_by_vendor` - allows to delete availabilities belonging to the vendor
+        **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope is only required when deleting availabilities belonging to the vendor.
+
+        ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       requestBody:
         content:
           application/json:
@@ -619,8 +616,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/BulkResponse'
               examples:
-                Segments Creations:
-                  $ref: '#/components/examples/BulkResponse'
+                Multi-status deletion example:
+                  $ref: '#/components/examples/BulkDeleteResponse'
         '400':
           $ref: '#/components/responses/BadRequestResponse400'
         '401':
@@ -1267,22 +1264,22 @@ components:
             minOrderQuantity: 2
     AvailabilityBulkDto:
       value:
-        productId: '12345'
-        site: 'shop1'
-        stockLevel: 10
-        available: true
-        popularity: 5
-        distributionChannel: ASSORTMENT
-        metadata:
+        - productId: '12345'
+          site: 'shop1'
+          stockLevel: 10
+          available: true
+          popularity: 5
+          distributionChannel: ASSORTMENT
+          metadata:
+            mixins:
+              productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
           mixins:
-            productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
-        mixins:
-          productCustomAttributes:
-            minOrderQuantity: 2
+            productCustomAttributes:
+              minOrderQuantity: 2
     AvailabilityDeleteBulkDto:
       value:
-        productId: '12345'
-        site: 'shop1'
+        - productId: '12345'
+          site: 'shop1'
     Availability:
       value:
         id: 'shop1:12345'
@@ -1383,13 +1380,42 @@ components:
       value:
         message: 'There is no availability for productId: 5f7c996173fc281cdd412345 and site: shop1'
         code: 404
-    BulkResponse:
+    BulkCreateResponse:
       value:
-        id: "shop1:12345"
-        index: 1
-        code: 400
-        status: Bad Request
-        message: "Product: '1234' does not belong to vendor: '68ad7d45c42fc8121a611fec'"
+        - id: "shop1:12345"
+          index: 0
+          code: 201
+          status: Created
+        - id: "shop2:98765"
+          index: 1
+          code: 400
+          status: Bad Request
+          message: "Product: '98765' does not belong to vendor: '68ad7d45c42fc8121a611fec'"
+    BulkUpsertResponse:
+      value:
+        - id: "shop1:12345"
+          index: 0
+          code: 201
+          status: Created
+        - id: "shop2:98765"
+          index: 1
+          code: 204
+          status: No Content
+        - id: "shop3:98765"
+          index: 2
+          code: 400
+          status: Bad Request
+          message: "Product: '98765' does not belong to vendor: '68ad7d45c42fc8121a611fec'"
+    BulkDeleteResponse:
+      value:
+        - id: "shop1:12345"
+          index: 0
+          code: 204
+          status: No Content
+        - id: "shop2:98765"
+          index: 1
+          code: 204
+          status: No Content
     Location:
       value:
         id: 'shop1:1234'
@@ -1435,7 +1461,9 @@ components:
         clientCredentials:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
-            availability.availability_view: view_availability
-            availability.availability_manage: manage_availability
+            availability.availability_view: Needed to view availabilities.
+            availability.availability_manage: Needed to manage availabilities.
+            availability.availability_view_by_vendor: Needed to view availabilities belonging to the vendor.
+            availability.availability_manage_by_vendor: Needed to manage availabilities belonging to the vendor.
 security:
   - OAuth2: []
