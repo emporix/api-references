@@ -14,6 +14,8 @@ tags:
     description: Chat With Agents
   - name: Agent Logs
     description: Read Agent Logs
+  - name: Agent Analytics
+    description: Agent analytics and execution metrics
   - name: Agent Template
     description: Manage Agent Templates
   - name: AI Completions
@@ -1602,6 +1604,93 @@ paths:
             - ai.agent_read
       tags:
         - Agent Logs
+  '/ai-service/{tenant}/agentic/analytics':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    get:
+      summary: Retrieving agent analytics bundle for last four weeks
+      operationId: GET-ai-agentic-analytics
+      parameters:
+        - name: agentId
+          in: query
+          required: false
+          schema:
+            type: string
+          description: |
+            When set, metrics are scoped to this agent. When omitted, tenant-wide aggregates are returned.
+      responses:
+        '200':
+          description: Aggregated request and session metrics, resolution efficiency, and weekly trends.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentAnalyticsResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        Returns a single bundle of analytics for dashboards: request and session aggregates (including severity breakdowns), resolution efficiency, and per-week session error trends.
+
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Agent Analytics
+  '/ai-service/{tenant}/agentic/analytics/executions':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    get:
+      summary: Retrieving per-agent execution counts by period
+      operationId: GET-ai-agentic-analytics-executions
+      parameters:
+        - name: agentIds
+          in: query
+          required: true
+          schema:
+            type: string
+          description: |
+            Comma-separated list of agent IDs (no spaces). Maximum 100 IDs.
+        - name: granularity
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - QUARTER
+              - MONTH
+              - WEEK
+            default: QUARTER
+          description: Time bucket for each period (UTC).
+      responses:
+        '200':
+          description: Per-agent execution counts aligned to the returned periods.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionsResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        Returns execution (session) counts per agent for each calendar period (quarter, month, or week).
+
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Agent Analytics
 components:
   schemas:
     ErrorMessage:
@@ -2948,6 +3037,149 @@ components:
       required:
         - data
         - checksum
+    AnalyticsSeverityCounts:
+      type: object
+      description: Request log counts by severity.
+      properties:
+        info:
+          type: integer
+        warning:
+          type: integer
+        error:
+          type: integer
+    AnalyticsSessionSeverityCounts:
+      type: object
+      description: Session counts by outcome severity.
+      properties:
+        success:
+          type: integer
+        warning:
+          type: integer
+        error:
+          type: integer
+    AnalyticsLogMetrics:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of request logs in scope.
+        bySeverity:
+          $ref: '#/components/schemas/AnalyticsSeverityCounts'
+        errorRate:
+          type: number
+          format: double
+          description: Share of error-severity logs among request logs.
+    AnalyticsSessionMetrics:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of sessions in scope.
+        bySeverity:
+          $ref: '#/components/schemas/AnalyticsSessionSeverityCounts'
+        errorRate:
+          type: number
+          format: double
+          description: Share of error outcome sessions among sessions.
+    AnalyticsResolutionEfficiency:
+      type: object
+      properties:
+        requestsPerSession:
+          type: number
+          format: double
+          description: Average number of requests per session.
+        totalRequests:
+          type: integer
+        totalSessions:
+          type: integer
+    AnalyticsRequestTrendPoint:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+          description: Week start instant (UTC).
+        total:
+          type: integer
+        errors:
+          type: integer
+        errorRate:
+          type: number
+          format: double
+    AnalyticsSessionTrendPoint:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+          description: Week start instant (UTC).
+        totalSessions:
+          type: integer
+        errorSessions:
+          type: integer
+        errorRate:
+          type: number
+          format: double
+    AgentAnalyticsResponse:
+      type: object
+      description: Combined analytics payload for admin and partner dashboards.
+      properties:
+        requests:
+          $ref: '#/components/schemas/AnalyticsLogMetrics'
+        sessions:
+          $ref: '#/components/schemas/AnalyticsSessionMetrics'
+        resolutionEfficiency:
+          $ref: '#/components/schemas/AnalyticsResolutionEfficiency'
+        requestTrend:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsRequestTrendPoint'
+        sessionTrend:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsSessionTrendPoint'
+    AnalyticsPeriod:
+      type: object
+      properties:
+        label:
+          type: string
+          description: Human-readable period label (e.g. quarter name).
+        start:
+          type: string
+          format: date-time
+          description: Period start (inclusive), UTC.
+        end:
+          type: string
+          format: date-time
+          description: Period end (exclusive), UTC.
+    AgentExecutionSeries:
+      type: object
+      properties:
+        agentId:
+          type: string
+        counts:
+          type: array
+          description: Execution counts per period, same order as `periods`.
+          items:
+            type: integer
+    ExecutionsResponse:
+      type: object
+      properties:
+        granularity:
+          type: string
+          description: Time bucket used for periods and series (enum constant name).
+          enum:
+            - QUARTER
+            - MONTH
+            - WEEK
+        periods:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsPeriod'
+        series:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentExecutionSeries'
   securitySchemes:
     OAuth2:
       type: oauth2
