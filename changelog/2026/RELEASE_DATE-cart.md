@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# 2026-04-24: Cart Service - `cart.updated` event on any cart modification
+# RELEASE_DATE: Cart Service - `cart.updated` event on any cart modification
 
 ## Overview
 
