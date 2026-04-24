@@ -982,7 +982,7 @@ Root product (DYNAMIC_VARIANT, no parentVariantId)
 
 - **Root product** - holds a denormalized `variants` map of all descendants. In API responses each entry's `variantAttributes` contains accumulated (fully merged) attributes.
 - **Child products** - expose `ownVariantAttributes` (what is stored on this product, writable) and `inheritedVariantAttributes` (merged from ancestors, read-only).
-- `parentVariantPath` array — carried by every child, it's an ordered list of ancestor IDs from root (index 0) to direct parent (last index), enabling O(1) ancestor resolution.
+- `parentVariantPath` array — carried by every child, it's an ordered list of ancestor IDs from direct parent (index 0) to root (last index).
 - `sellable` flag - marks variants that can be added to a cart. Non-sellable intermediate variants exist only to group attributes.
 
 ### Creating dynamic variants

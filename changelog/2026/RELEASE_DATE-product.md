@@ -26,7 +26,7 @@ Key features of `DYNAMIC_VARIANT` products:
 - Variants can be created in any order — a child variant may exist before its parent, simplifying bulk data imports.
 - Each variant stores only delta attributes, which are the attributes introduced at its own level. The accumulated, fully merged, attributes are computed by the API at response time by following the `parentVariantId` chain.
 - Variant responses expose `ownVariantAttributes` (modifiable, stored in the database) and `inheritedVariantAttributes` (read-only, inherited from ancestors).
-- Every variant carries a `parentVariantPath` array (ancestor IDs, root-first) enabling efficient tree traversal without database graph lookups.
+- Every variant carries a `parentVariantPath` array (ancestor IDs, direct-parent-first) enabling efficient tree traversal without database graph lookups.
 - A `dynamicVariantType` label (for example: `H1_L1`, `H1_L2`) identifies the variant's level in the hierarchy.
 - The `sellable` flag indicates whether a variant can be sold directly.
 

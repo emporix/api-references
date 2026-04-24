@@ -827,8 +827,8 @@ paths:
                       EN: STANDARD
                     parentVariantId: mobile-15-pro-l1
                     parentVariantPath:
-                      - mobile-15-pro
                       - mobile-15-pro-l1
+                      - mobile-15-pro
                     dynamicVariantType: H1_L2
                     sellable: true
                     ownVariantAttributes:
@@ -3312,7 +3312,7 @@ components:
         - **`sellable`** — not inherited from parents; must be set explicitly on each product. Root and intermediate variants are typically `false`; leaf variants are typically `true`.
         - **Root products** include a `variants` map containing all descendants with accumulated attributes.
         - **Child products** include `ownVariantAttributes` (attributes defined on this product) and `inheritedVariantAttributes` (read-only, merged from ancestors).
-        - `parentVariantPath` is an ordered array of ancestor IDs from root (index 0) to direct parent (last index). Empty for root products.
+        - `parentVariantPath` is an ordered array of ancestor IDs from direct parent (index 0) to root (last index). Empty for root products.
         - `metadata.dynamicVariantInfo` is present only when a hierarchy integrity issue is detected.
       properties:
         id:
@@ -3341,7 +3341,7 @@ components:
         parentVariantPath:
           type: array
           description: |
-            Ordered array of ancestor product identifiers, from the root (index 0) to the direct parent (last index). Empty for root-level products.
+            Ordered array of ancestor product identifiers, from the direct parent (index 0) to the root (last index). Empty for root-level products.
           items:
             type: string
         dynamicVariantType:
