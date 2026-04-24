@@ -8,7 +8,7 @@
 
 ## 2026
 
-* [RELEASE_DATE: Cart Service - `cart.updated` event on any cart modification](2026/RELEASE_DATE-cart.md)
+* [2026-04-24: Cart Service - `cart.updated` event on any cart modification](2026/2026-04-24-cart.md)
 * [2026-04-23: AI Service - Agent Analytics](2026/2026-04-23-ai-service.md)
 * [2026-04-21: Session Context Service - language attribute added to session context model](2026/2026-04-21-session-context.md)
 * [2026-04-21: Customer Service - session context attributes on anonymous login](2026/2026-04-21-customer.md)
