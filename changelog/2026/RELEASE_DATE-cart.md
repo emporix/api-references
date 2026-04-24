@@ -1,0 +1,43 @@
+---
+icon: sparkles
+layout:
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: false
+  pagination:
+    visible: true
+---
+
+# RELEASE_DATE: Cart Service - `cart.updated` event on any cart modification
+
+## Overview
+
+The Cart Service now emits the `cart.updated` event whenever a cart is modified.
+This standardizes event behavior so downstream consumers can reliably react to all cart changes.
+
+## Updated endpoints
+
+| Endpoint | Description |
+|---|---|
+| [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) | Emits `cart.updated` when cart-level data is changed. |
+| [Changing a cart site](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-changesite) | Emits `cart.updated` when the cart site is changed. |
+| [Changing a cart currency](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-changecurrency) | Emits `cart.updated` when the cart currency is changed. |
+| [Refreshing a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid-refresh) | Emits `cart.updated` when the cart is refreshed. |
+| [Merging carts](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-merge) | Emits `cart.updated` when carts are merged. |
+| [Adding a cart item to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) | Emits `cart.updated` when a new item is added. |
+| [Adding multiple cart items to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-itemsbatch) | Emits `cart.updated` when items are added in batch. |
+| [Updating a cart item](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#put-cart-tenant-carts-cartid-items-itemid) | Emits `cart.updated` when an item is updated. |
+| [Deleting a cart item](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#delete-cart-tenant-carts-cartid-items-itemid) | Emits `cart.updated` when an item is removed. |
+| [Deleting all items from cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#delete-cart-tenant-carts-cartid-items) | Emits `cart.updated` when cart items are cleared. |
+| [Applying a discount to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/discounts#post-cart-tenant-carts-cartid-discounts) | Emits `cart.updated` when a discount is applied. |
+| [Removing all discounts from cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/discounts#delete-cart-tenant-carts-cartid-discounts) | Emits `cart.updated` when all discounts are removed. |
+| [Removing a discount from cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/discounts#delete-cart-tenant-carts-cartid-discounts-discountid) | Emits `cart.updated` when a single discount is removed. |
+
+## Known problems
+
+There are no known problems.
