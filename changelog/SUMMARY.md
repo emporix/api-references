@@ -8,7 +8,7 @@
 
 ## 2026
 
-* [RELEASE_DATE: Customer Service -  partial update - contactEmail field is immutable once set](2026/RELEASE_DATE-customer.md)
+* [RELEASE_DATE: Customer Service - partial update - contactEmail field cannot be unset once a value is present](2026/RELEASE_DATE-customer.md)
 * [2026-04-24: Cart Service - `cart.updated` event on any cart modification](2026/2026-04-24-cart.md)
 * [2026-04-23: AI Service - Agent Analytics](2026/2026-04-23-ai-service.md)
 * [2026-04-21: Session Context Service - language attribute added to session context model](2026/2026-04-21-session-context.md)

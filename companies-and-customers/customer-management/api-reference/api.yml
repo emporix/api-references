@@ -1669,7 +1669,7 @@ components:
           properties:
             contactEmail:
               type: string
-              description: Contact email address. Cannot be modified once set.
+              description: Contact email address. Cannot be unset once a value is present.
     BasicMetadataDto:
       title: DefaultDtoMetadata
       type: object
