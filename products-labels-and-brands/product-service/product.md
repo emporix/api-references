@@ -1003,12 +1003,12 @@ curl -i -X POST \
     "id": "mobile-15-pro",
     "name": {
       "en": "Mobile Phone 15 Pro",
-      "deDE": "Mobile Phone 15 Pro"
+      "de": "Mobile Phone 15 Pro"
     },
     "code": "MOBILE-15-PRO",
     "description": {
       "en": "Flagship smartphone with titanium design and advanced camera system.",
-      "deDE": "Flaggschiff-Smartphone mit Titan-Design und fortschrittlichem Kamerasystem."
+      "de": "Flaggschiff-Smartphone mit Titan-Design und fortschrittlichem Kamerasystem."
     },
     "published": true,
     "taxClasses": { "EN": "STANDARD" },
@@ -1039,7 +1039,7 @@ curl -i -X POST \
   -H 'Content-Type: application/json' \
   -d '{
     "id": "mobile-15-pro-l1",
-    "name": { "en": "Mobile Phone 15 Pro – 256 GB Blue", "deDE": "Mobile Phone 15 Pro – 256 GB Blau" },
+    "name": { "en": "Mobile Phone 15 Pro – 256 GB Blue", "de": "Mobile Phone 15 Pro – 256 GB Blau" },
     "code": "MOBILE-15-PRO-L1",
     "published": true,
     "taxClasses": { "EN": "STANDARD" },
@@ -1049,28 +1049,28 @@ curl -i -X POST \
     "sellable": false,
     "ownVariantAttributes": {
       "storageCapacity": {
-        "name": { "en": "Storage", "deDE": "Speicher" },
+        "name": { "en": "Storage", "de": "Speicher" },
         "value": {
           "type": "STRING",
           "qualifier": "256_GB",
-          "name": { "en": "256 GB", "deDE": "256 GB" }
+          "name": { "en": "256 GB", "de": "256 GB" }
         }
       },
       "colorFinish": {
-        "name": { "en": "Color", "deDE": "Farbe" },
+        "name": { "en": "Color", "de": "Farbe" },
         "value": {
           "type": "STRING",
           "qualifier": "BLUE",
-          "name": { "en": "Blue Titanium", "deDE": "Blau Titan" }
+          "name": { "en": "Blue Titanium", "de": "Blau Titan" }
         }
       },
       "displaySize": {
-        "name": { "en": "Display size", "deDE": "Displaygröße" },
+        "name": { "en": "Display size", "de": "Displaygröße" },
         "value": {
           "type": "DECIMAL",
           "qualifier": 6.1,
           "unit": "INH",
-          "name": { "en": "6.1 in", "deDE": "6,1 Zoll" }
+          "name": { "en": "6.1 in", "de": "6,1 Zoll" }
         }
       }
     }
@@ -1093,7 +1093,7 @@ curl -i -X POST \
   -H 'Content-Type: application/json' \
   -d '{
     "id": "mobile-15-pro-l2-retail",
-    "name": { "en": "Mobile Phone 15 Pro – 256 GB Blue – Retail box", "deDE": "Mobile Phone 15 Pro – 256 GB Blau – Einzelhandelsbox" },
+    "name": { "en": "Mobile Phone 15 Pro – 256 GB Blue – Retail box", "de": "Mobile Phone 15 Pro – 256 GB Blau – Einzelhandelsbox" },
     "code": "MOBILE-15-PRO-L2-RETAIL",
     "published": true,
     "taxClasses": { "EN": "STANDARD" },
@@ -1103,11 +1103,11 @@ curl -i -X POST \
     "sellable": true,
     "ownVariantAttributes": {
       "bundleType": {
-        "name": { "en": "Bundle", "deDE": "Bundle" },
+        "name": { "en": "Bundle", "de": "Bundle" },
         "value": {
           "type": "STRING",
           "qualifier": "RETAIL_BOX",
-          "name": { "en": "Retail box", "deDE": "Einzelhandelsbox" }
+          "name": { "en": "Retail box", "de": "Einzelhandelsbox" }
         }
       }
     }
@@ -1269,7 +1269,7 @@ curl -i -X PUT \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
   -H 'Content-Type: application/json' \
   -d '{
-    "name": { "en": "Mobile Phone 15 Pro – 256 GB Blue", "deDE": "Mobile Phone 15 Pro – 256 GB Blau" },
+    "name": { "en": "Mobile Phone 15 Pro – 256 GB Blue", "de": "Mobile Phone 15 Pro – 256 GB Blau" },
     "code": "MOBILE-15-PRO-L1",
     "published": true,
     "taxClasses": { "EN": "STANDARD" },
@@ -1278,37 +1278,37 @@ curl -i -X PUT \
     "sellable": false,
     "ownVariantAttributes": {
       "storageCapacity": {
-        "name": { "en": "Storage", "deDE": "Speicher" },
+        "name": { "en": "Storage", "de": "Speicher" },
         "value": {
           "type": "STRING",
           "qualifier": "256_GB",
-          "name": { "en": "256 GB", "deDE": "256 GB" }
+          "name": { "en": "256 GB", "de": "256 GB" }
         }
       },
       "colorFinish": {
-        "name": { "en": "Color", "deDE": "Farbe" },
+        "name": { "en": "Color", "de": "Farbe" },
         "value": {
           "type": "STRING",
           "qualifier": "BLUE",
-          "name": { "en": "Blue Titanium", "deDE": "Blau Titan" }
+          "name": { "en": "Blue Titanium", "de": "Blau Titan" }
         }
       },
       "displaySize": {
-        "name": { "en": "Display size", "deDE": "Displaygröße" },
+        "name": { "en": "Display size", "de": "Displaygröße" },
         "value": {
           "type": "DECIMAL",
           "qualifier": 6.1,
           "unit": "INH",
-          "name": { "en": "6.1 in", "deDE": "6,1 Zoll" }
+          "name": { "en": "6.1 in", "de": "6,1 Zoll" }
         }
       },
       "batteryCapacityMah": {
-        "name": { "en": "Battery capacity", "deDE": "Akku-Kapazität" },
+        "name": { "en": "Battery capacity", "de": "Akku-Kapazität" },
         "value": {
           "type": "NUMBER",
           "qualifier": 3274,
           "unit": "MAH",
-          "name": { "en": "3274 mAh", "deDE": "3274 mAh" }
+          "name": { "en": "3274 mAh", "de": "3274 mAh" }
         }
       }
     }
