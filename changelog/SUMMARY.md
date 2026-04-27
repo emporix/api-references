@@ -8,7 +8,9 @@
 
 ## 2026
 
-* [RELEASE_DATE: Product Service – dynamic variant product type and recalculation](2026/RELEASE_DATE-product.md)
+* [2026-04-27: Product Service – dynamic variant product type and recalculation](2026/2026-04-27-product.md)
+* [2026-04-27: Customer Service - contactEmail field cannot be unset once a value is present](2026/2026-04-27-customer.md)
+* [2026-04-27: Client Management Service - customer group role in Legal Entities](2026/2026-04-27-client-management.md)
 * [2026-04-24: Cart Service - `cart.updated` event on any cart modification](2026/2026-04-24-cart.md)
 * [2026-04-23: AI Service - Agent Analytics](2026/2026-04-23-ai-service.md)
 * [2026-04-21: Session Context Service - language attribute added to session context model](2026/2026-04-21-session-context.md)
