@@ -26,10 +26,6 @@ paths:
       summary: Retrieving all locations for a site
       description: |-
         Retrieves all locations for a specified site.
-        ***
-
-        **Required scopes**
-        *  `availability.availability_view`
       security:
         - OAuth2:
             - availability.availability_view
@@ -60,10 +56,6 @@ paths:
       summary: Adding a new location to a site
       description: |-
         Adds a new location to a specified site.
-        ***
-
-        **Required scopes**
-        *  `availability.availability_manage`
       security:
         - OAuth2:
             - availability.availability_manage
@@ -102,10 +94,6 @@ paths:
       summary: Updating locations
       description: |-
         Updates locations for a specified site.
-        ***
-
-        **Required scopes**
-        *  `availability.availability_manage`
       security:
         - OAuth2:
             - availability.availability_manage
@@ -146,11 +134,6 @@ paths:
       summary: Deleting a location
       description: |-
         Deletes a specified location.
-
-        ***
-
-        **Required scopes**
-        *  `availability.availability_manage`
       security:
         - OAuth2:
             - availability.availability_manage
@@ -180,10 +163,6 @@ paths:
       summary: Retrieving product locations
       description: |-
         Retrieves locations of specified products.
-        ***
-
-        **Required scopes**
-        *  `availability.availability_view`
       security:
         - OAuth2:
             - availability.availability_view
@@ -238,11 +217,13 @@ paths:
 
         ***
 
-        ### **Required scopes**
-        * No specific scopes are required.
-        * Scope `availability.availability_view_by_vendor` allows to fetch just the availabilities belonging to the vendor.
+        ### **Additional scope information**
+        * The `availability.availability_view_by_vendor` scope is required only when fetching availabilities for a specific vendor. 
+
+        ***
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - availability.availability_view_by_vendor
       responses:
         '200':
           description: The request was successful. A list of availabilities is returned.
@@ -277,11 +258,13 @@ paths:
 
         ***
 
-        ### **Required scopes**
-        * No specific scopes are required.
-        * Scope `availability.availability_view_by_vendor` allows to fetch just the availabilities belonging to the vendor.
+        ### **Additional scope information**
+        * The `availability.availability_view_by_vendor` scope is required only when fetching availabilities for a specific vendor. 
+
+        ***
       security:
-        - OAuth2: []
+        - OAuth2:
+            - availability.availability_view_by_vendor
       parameters:
         - $ref: '#/components/parameters/tenant-path'
         - $ref: '#/components/parameters/site'
@@ -331,11 +314,15 @@ paths:
       description: |-
         Retrieves a specified product availability details.
         
-        ### **Required scopes**
-        * No specific scopes are required.
-        * Scope `availability.availability_view_by_vendor` allows to fetch just the availabilities belonging to the vendor.
+        ***
+
+        ### **Additional scope information**
+        * The `availability.availability_view_by_vendor` scope is required only when fetching availabilities for a specific vendor. 
 
         ***
+      security:
+        - OAuth2:
+            - availability.availability_view_by_vendor
       responses:
         '200':
           description: The request was successful. The product availability details are returned.
@@ -368,12 +355,14 @@ paths:
 
         ***
 
-        **Required scopes**
-        *  `availability.availability_manage`
-        *  `availability.availability_manage_by_vendor` - allows to create availabilities for products belonging to the vendor
+        **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope allows to create availabilities for products belonging to the vendor.
+
+        ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       requestBody:
         content:
           application/json:
@@ -413,12 +402,14 @@ paths:
 
         ***
 
-        **Required scopes**
-        *  `availability.availability_manage`
-        *  `availability.availability_manage_by_vendor` - allows to update availabilities belonging to the vendor
+        **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope is only required when updating or creating availabilities belonging to the vendor.
+
+        ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       requestBody:
         content:
           application/json:
@@ -460,12 +451,14 @@ paths:
 
         ***
 
-        **Required scopes**
-        *  `availability.availability_manage`
-        *  `availability.availability_manage_by_vendor` - allows to delete belonging to the vendor
+        **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope is only required when deleting availabilities belonging to the vendor.
+
+        ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       responses:
         '204':
           description: The request was successful. The availability has been deleted.
@@ -495,14 +488,14 @@ paths:
         
         ***
   
-        ### **Required scopes**
-        * Scope `availability.availability_manage`
-        * Scope `availability.availability_manage_by_vendor` required when using vendor-id header
+        ### **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope is only required when creating availabilities belonging to the vendor.
   
         ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       requestBody:
         content:
           application/json:
@@ -545,12 +538,14 @@ paths:
   
         ***
   
-        **Required scopes**
-        *  `availability.availability_manage`
-        *  `availability.availability_manage_by_vendor` - allows to create/update availabilities for products belonging to the vendor
+        **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope is only required when creating or updating availabilities belonging to the vendor.
+
+        ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       requestBody:
         content:
           application/json:
@@ -593,12 +588,14 @@ paths:
   
         ***
   
-        **Required scopes**
-        *  `availability.availability_manage`
-        *  `availability.availability_manage_by_vendor` - allows to delete availabilities belonging to the vendor
+        **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope is only required when deleting availabilities belonging to the vendor.
+
+        ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       requestBody:
         content:
           application/json:
@@ -1464,7 +1461,9 @@ components:
         clientCredentials:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
-            availability.availability_view: view_availability
-            availability.availability_manage: manage_availability
+            availability.availability_view: Needed to view availabilities.
+            availability.availability_manage: Needed to manage availabilities.
+            availability.availability_view_by_vendor: Needed to view availabilities belonging to the vendor.
+            availability.availability_manage_by_vendor: Needed to manage availabilities belonging to the vendor.
 security:
   - OAuth2: []
