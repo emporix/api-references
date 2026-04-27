@@ -871,6 +871,9 @@ components:
           additionalProperties:
             type: string
           description: Localized name of a customer group.
+        role:
+          type: string
+          description: The customer group role.
       required:
         - id
     resourceId:
