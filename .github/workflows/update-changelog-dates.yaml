@@ -50,13 +50,16 @@ jobs:
 
       - name: Commit and push if changed
         if: steps.check.outputs.has_placeholder == 'true'
+        env:
+          GH_PAT: ${{ secrets.GH_TOKEN }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "tech-cicd"
+          git config user.email "cicd-user@emporix.com"
           git add -A changelog/
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
             git commit -m "chore(changelog): set RELEASE_DATE to merge date"
-            git push
+            git remote set-url origin https://tech-cicd:"$GH_PAT"@github.com/emporix/api-references.git
+            git push origin main
           fi
