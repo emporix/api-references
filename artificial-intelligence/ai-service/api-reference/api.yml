@@ -342,9 +342,6 @@ paths:
           $ref: '#/components/responses/500_resp_common'
       description: |-
         Allows for communication with Emporix agents.
-      security:
-        - OAuth2:
-            - ai.completion_manage
       requestBody:
         $ref: '#/components/requestBodies/AgenticChat'
       tags:
@@ -384,11 +381,63 @@ paths:
           $ref: '#/components/responses/500_resp_common'
       description: |-
         Allows for communication with Emporix agents in async way.
-      security:
-        - OAuth2:
-            - ai.completion_manage
       requestBody:
         $ref: '#/components/requestBodies/AgenticChat'
+      tags:
+        - Agent Chat
+  '/ai-service/{tenant}/agentic/{agentId}/attachments':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - name: agentId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: |
+          ID of the agent which could use this attachment during chat process.
+    post:
+      summary: Uploads attachments for agent chat
+      operationId: POST-ai-agents-attachments
+      responses:
+        '201':
+          description: Attachment ID response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IdResponse'
+              examples:
+                Attachment ID:
+                  $ref: '#/components/examples/IdResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+      description: |-
+        Allows for uploading files which can be used as attachments in Agent Chat. 
+        The returned `id` should be used as `attachmentId` in the chat request body.
+
+        Supported MIME types:
+        - image/jpeg
+        - image/png
+        - application/pdf
+        - text/csv
+        - text/plain
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                attachment:
+                  type: string
+                  format: binary
+                  description: Attachment to upload
+              required:
+                - attachment
       tags:
         - Agent Chat
   '/ai-service/{tenant}/agentic/templates':
@@ -1731,6 +1780,20 @@ components:
               properties:
                 errorcode:
                   type: string
+    AgenticAttachment:
+      type: object
+      properties:
+        attachmentId:
+          type: string
+          description: Id of the previously created attachment.
+        caption:
+          type: string
+          description: The caption of the attachment.
+        purpose:
+          type: string
+          description: The purpose of the attachment.
+      required:
+        - attachmentId
     AgenticRequest:
       type: object
       properties:
@@ -1740,6 +1803,10 @@ components:
         message:
           type: string
           description: The user message to the agent.
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgenticAttachment'
       required:
         - agentId
         - message
@@ -3565,6 +3632,10 @@ components:
               value:
                 agentId: complaint-agent
                 message: 'Find a product with "EON1243" code'
+                attachments:
+                  - attachmentId: 325444342346
+                    caption: Emporix Logo
+                    purpose: Should be placed to the Slack Channel
     Completion:
       content:
         application/json:
