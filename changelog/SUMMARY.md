@@ -8,6 +8,7 @@
 
 ## 2026
 
+* [RELEASE_DATE: Emporix SDK - Multi-tenant support](2026/RELEASE_DATE-sdk.md)
 * [2026-04-28: Availability Service - Q-param support, total count header and search improvements](2026/2026-04-28-availability.md)
 * [2026-04-27: Product Service – dynamic variant product type and recalculation](2026/2026-04-27-product.md)
 * [2026-04-27: Customer Service - contactEmail field cannot be unset once a value is present](2026/2026-04-27-customer.md)

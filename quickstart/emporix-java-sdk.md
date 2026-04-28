@@ -1,5 +1,5 @@
 ---
-description: A comprehensive Java SDK for integrating with Emporix Commerce APIs. 
+description: A comprehensive Java SDK for integrating with Emporix Commerce APIs.
 icon: code
 layout:
   width: wide
@@ -48,7 +48,7 @@ dependencies {
 <dependency>
   <groupId>io.emporix</groupId>
   <artifactId>emporix-sdk</artifactId>
-  <version>1.2.2</version>
+  <version>1.2.4</version>
 </dependency>
 ```
 {% endstep %}
@@ -279,9 +279,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @EnableEmporixAutoConfiguration  // ← Enables the SDK
 public class MyApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(MyApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(MyApplication.class, args);
+  }
 }
 ```
 
@@ -417,7 +417,7 @@ All client methods accept an optional authorization header parameter (typically 
 
 ### Scope constants
 
-All API clients provide scope constants through a nested `Scopes` interface. 
+All API clients provide scope constants through a nested `Scopes` interface.
 
 {% hint style="danger" %}
 Always use these constants instead of hardcoded strings for type safety and IDE autocomplete support.
@@ -435,22 +435,22 @@ import static io.emporix.price.PriceClient.Scopes.*;
 
 // Available Product Scopes:
 PRODUCT_MANAGE                  // product.product_manage
-PRODUCT_MANAGE_BY_VENDOR       // product.product_manage_by_vendor
-PRODUCT_PUBLISH                // product.product_publish
-PRODUCT_UNPUBLISH              // product.product_unpublish
-PRODUCT_READ_UNPUBLISHED       // product.product_read_unpublished
-PRODUCT_READ_BY_VENDOR         // product.product_read_by_vendor
+    PRODUCT_MANAGE_BY_VENDOR       // product.product_manage_by_vendor
+    PRODUCT_PUBLISH                // product.product_publish
+        PRODUCT_UNPUBLISH              // product.product_unpublish
+    PRODUCT_READ_UNPUBLISHED       // product.product_read_unpublished
+        PRODUCT_READ_BY_VENDOR         // product.product_read_by_vendor
 
-// Available Category Scopes:
-CATEGORY_MANAGE                // category.category_manage
-CATEGORY_PUBLISH               // category.category_publish
-CATEGORY_UNPUBLISH             // category.category_unpublish
-CATEGORY_READ_UNPUBLISHED      // category.category_read_unpublished
+    // Available Category Scopes:
+    CATEGORY_MANAGE                // category.category_manage
+        CATEGORY_PUBLISH               // category.category_publish
+    CATEGORY_UNPUBLISH             // category.category_unpublish
+        CATEGORY_READ_UNPUBLISHED      // category.category_read_unpublished
 
-// Available Price Scopes:
-PRICE_MANAGE                   // price.price_manage
-PRICE_READ                     // price.price_read
-PRICE_MANAGE_BY_VENDOR         // price.price_manage_by_vendor
+    // Available Price Scopes:
+    PRICE_MANAGE                   // price.price_manage
+        PRICE_READ                     // price.price_read
+    PRICE_MANAGE_BY_VENDOR         // price.price_manage_by_vendor
 ```
 
 **Benefits:**
@@ -545,67 +545,67 @@ import static io.emporix.product.ProductClient.Scopes.*;
 
 @Service
 public class ProductService {
-    
-    @Autowired
-    private EmporixTokenService tokenService;
-    
-    @Autowired
-    private ProductClient productClient;
-    
-    // Get service token and use it with client
-    public List<ProductResponse> getAllProducts() {
-        // 1. Get service token with all available scopes (simplest way)
-        ServiceTokenResponse token = tokenService.getServiceToken();
-        
-        // 2. Get Bearer token
-        String authorization = token.bearerAccessToken();
-        
-        // 3. Pass to client method
-        return productClient.getProducts(
-            null,          // q (query)
-            null,          // expand
-            null,          // rawValue
-            1,             // pageNumber
-            20,            // pageSize
-            "name:asc",    // sort
-            true,          // fetchTotalCount
-            "en",          // acceptLanguage
-            authorization  // authorization header
-        ).getBody();
-    }
-    
-    // Get service token with specific scopes
-    public List<ProductResponse> getProductsWithScopes() {
-        // Request token with specific scopes for least privilege
-        ServiceTokenResponse token = tokenService.getServiceToken(
-            Set.of(PRODUCT_READ_UNPUBLISHED)
-        );
-        
-        String authorization = token.bearerAccessToken();
-        
-        return productClient.getProducts(
-            null, null, null, 1, 20, null, true, "en", authorization
-        ).getBody();
-    }
-    
-    // Create product with service token
-    public String createProduct(GenericProductCreateRequest request) {
-        ServiceTokenResponse token = tokenService.getServiceToken(
-            Set.of(PRODUCT_MANAGE)
-        );
-        
-        String authorization = token.bearerAccessToken();
-        
-        ResourceLocation location = productClient.createProduct(
-            request,       // product data
-            false,         // skipVariantGeneration
-            true,          // doIndex
-            "en",          // contentLanguage
-            authorization  // authorization header
-        ).getBody();
-        
-        return location.getId();
-    }
+
+  @Autowired
+  private EmporixTokenService tokenService;
+
+  @Autowired
+  private ProductClient productClient;
+
+  // Get service token and use it with client
+  public List<ProductResponse> getAllProducts() {
+    // 1. Get service token with all available scopes (simplest way)
+    ServiceTokenResponse token = tokenService.getServiceToken();
+
+    // 2. Get Bearer token
+    String authorization = token.bearerAccessToken();
+
+    // 3. Pass to client method
+    return productClient.getProducts(
+        null,          // q (query)
+        null,          // expand
+        null,          // rawValue
+        1,             // pageNumber
+        20,            // pageSize
+        "name:asc",    // sort
+        true,          // fetchTotalCount
+        "en",          // acceptLanguage
+        authorization  // authorization header
+    ).getBody();
+  }
+
+  // Get service token with specific scopes
+  public List<ProductResponse> getProductsWithScopes() {
+    // Request token with specific scopes for least privilege
+    ServiceTokenResponse token = tokenService.getServiceToken(
+        Set.of(PRODUCT_READ_UNPUBLISHED)
+    );
+
+    String authorization = token.bearerAccessToken();
+
+    return productClient.getProducts(
+        null, null, null, 1, 20, null, true, "en", authorization
+    ).getBody();
+  }
+
+  // Create product with service token
+  public String createProduct(GenericProductCreateRequest request) {
+    ServiceTokenResponse token = tokenService.getServiceToken(
+        Set.of(PRODUCT_MANAGE)
+    );
+
+    String authorization = token.bearerAccessToken();
+
+    ResourceLocation location = productClient.createProduct(
+        request,       // product data
+        false,         // skipVariantGeneration
+        true,          // doIndex
+        "en",          // contentLanguage
+        authorization  // authorization header
+    ).getBody();
+
+    return location.getId();
+  }
 }
 ```
 
@@ -620,41 +620,41 @@ Custom credentials are additional OAuth2 clients configured in Emporix with spec
 ```java
 @Service
 public class IntegrationService {
-    
-    @Autowired
-    private EmporixTokenService tokenService;
-    
-    @Autowired
-    private ProductClient productClient;
-    
-    // Use default backend credentials (full admin access)
-    public void adminOperation() {
-        ServiceTokenResponse token = tokenService.getServiceToken();
-        String authorization = token.bearerAccessToken();
-        
-        productClient.createProduct(..., authorization);
-    }
-    
-    // Use integration credentials (all scopes granted to that OAuth2 client)
-    public void integrationOperation() {
-        // Get token using custom "integration" credentials
-        ServiceTokenResponse token = tokenService.getServiceToken("integration");
-        String authorization = token.bearerAccessToken();
-        
-        productClient.createProduct(..., authorization);
-    }
-    
-    // Use partner credentials with specific scopes (least privilege)
-    public void partnerReadOnlyOperation() {
-        // Partner OAuth2 client has limited scopes - request only what you need
-        ServiceTokenResponse token = tokenService.getServiceToken(
-            Set.of(PRODUCT_READ_UNPUBLISHED),
-            "partner"
-        );
-        String authorization = token.bearerAccessToken();
-        
-        productClient.getProducts(..., authorization);
-    }
+
+  @Autowired
+  private EmporixTokenService tokenService;
+
+  @Autowired
+  private ProductClient productClient;
+
+  // Use default backend credentials (full admin access)
+  public void adminOperation() {
+    ServiceTokenResponse token = tokenService.getServiceToken();
+    String authorization = token.bearerAccessToken();
+
+    productClient.createProduct(..., authorization);
+  }
+
+  // Use integration credentials (all scopes granted to that OAuth2 client)
+  public void integrationOperation() {
+    // Get token using custom "integration" credentials
+    ServiceTokenResponse token = tokenService.getServiceToken("integration");
+    String authorization = token.bearerAccessToken();
+
+    productClient.createProduct(..., authorization);
+  }
+
+  // Use partner credentials with specific scopes (least privilege)
+  public void partnerReadOnlyOperation() {
+    // Partner OAuth2 client has limited scopes - request only what you need
+    ServiceTokenResponse token = tokenService.getServiceToken(
+        Set.of(PRODUCT_READ_UNPUBLISHED),
+        "partner"
+    );
+    String authorization = token.bearerAccessToken();
+
+    productClient.getProducts(..., authorization);
+  }
 }
 ```
 
@@ -685,33 +685,33 @@ import io.emporix.auth.dto.AnonymousTokenResponse;
 
 @Service
 public class PublicProductService {
-    
-    @Autowired
-    private EmporixTokenService tokenService;
-    
-    @Autowired
-    private ProductClient productClient;
-    
-    // Get anonymous token and browse products
-    public List<ProductResponse> browseProducts() {
-        // 1. Get anonymous token
-        AnonymousTokenResponse token = tokenService.getAnonymousToken();
-        
-        // 2. Get Bearer token
-        String authorization = token.bearerAccessToken();
-        
-        // 3. Browse published products only
-        return productClient.getProducts(
-            "published:true",  // only published products
-            null, null, 1, 20, null, true, "en",
-            authorization
-        ).getBody();
-    }
-    
-    // Refresh anonymous token when expired
-    public AnonymousTokenResponse refreshToken(AnonymousTokenResponse expiredToken) {
-        return tokenService.refreshAnonymousToken(expiredToken);
-    }
+
+  @Autowired
+  private EmporixTokenService tokenService;
+
+  @Autowired
+  private ProductClient productClient;
+
+  // Get anonymous token and browse products
+  public List<ProductResponse> browseProducts() {
+    // 1. Get anonymous token
+    AnonymousTokenResponse token = tokenService.getAnonymousToken();
+
+    // 2. Get Bearer token
+    String authorization = token.bearerAccessToken();
+
+    // 3. Browse published products only
+    return productClient.getProducts(
+        "published:true",  // only published products
+        null, null, 1, 20, null, true, "en",
+        authorization
+    ).getBody();
+  }
+
+  // Refresh anonymous token when expired
+  public AnonymousTokenResponse refreshToken(AnonymousTokenResponse expiredToken) {
+    return tokenService.refreshAnonymousToken(expiredToken);
+  }
 }
 ```
 
@@ -779,61 +779,61 @@ import io.emporix.auth.dto.AnonymousTokenResponse;
 
 @Service
 public class CustomerAuthService {
-    
-    @Autowired
-    private EmporixTokenService tokenService;
-    
-    @Autowired
-    private ProductClient productClient;
-    
-    // RECOMMENDED: Login with AnonymousTokenResponse object (preserves session)
-    public CustomerTokenResponse login(String email, String password) {
-        // Get the user's existing anonymous token (from their browsing session)
-        AnonymousTokenResponse anonymousToken = tokenService.getAnonymousToken();
-        
-        // Login customer - preserves session (cart, etc.) from anonymous token
-        return tokenService.getCustomerToken(email, password, anonymousToken);
-    }
-    
-    // Alternative: Login with bearer string (when token comes from HTTP header)
-    public CustomerTokenResponse loginWithBearerString(
-        String email, 
-        String password, 
-        String anonymousBearerToken  // e.g., "Bearer xxx" or just "xxx"
-    ) {
-        // Use when you already have the anonymous token as a string
-        return tokenService.getCustomerToken(email, password, anonymousBearerToken);
-    }
-    
-    // NOT RECOMMENDED: Works but loses cart/session context
-    public CustomerTokenResponse loginWithoutSession(String email, String password) {
-        // SDK will auto-fetch a NEW anonymous token, creating a NEW session
-        // User's cart and browsing context will be lost!
-        return tokenService.getCustomerToken(email, password);
-    }
-    
-    // Use customer token to fetch products
-    public List<ProductResponse> getCustomerProducts(CustomerTokenResponse customerToken) {
-        String authorization = customerToken.bearerAccessToken();
-        
-        return productClient.getProducts(
-            null, null, null, 1, 20, null, true, "en",
-            authorization
-        ).getBody();
-    }
-    
-    // Refresh customer token when expired
-    public CustomerTokenResponse refreshCustomerToken(CustomerTokenResponse expiredToken) {
-        return tokenService.refreshCustomerToken(expiredToken);
-    }
-    
-    // Get B2B token with legal entity context
-    public CustomerTokenResponse switchToB2bContext(
-        CustomerTokenResponse customerToken,
-        String legalEntityId
-    ) {
-        return tokenService.getB2bToken(customerToken, legalEntityId);
-    }
+
+  @Autowired
+  private EmporixTokenService tokenService;
+
+  @Autowired
+  private ProductClient productClient;
+
+  // RECOMMENDED: Login with AnonymousTokenResponse object (preserves session)
+  public CustomerTokenResponse login(String email, String password) {
+    // Get the user's existing anonymous token (from their browsing session)
+    AnonymousTokenResponse anonymousToken = tokenService.getAnonymousToken();
+
+    // Login customer - preserves session (cart, etc.) from anonymous token
+    return tokenService.getCustomerToken(email, password, anonymousToken);
+  }
+
+  // Alternative: Login with bearer string (when token comes from HTTP header)
+  public CustomerTokenResponse loginWithBearerString(
+      String email,
+      String password,
+      String anonymousBearerToken  // e.g., "Bearer xxx" or just "xxx"
+  ) {
+    // Use when you already have the anonymous token as a string
+    return tokenService.getCustomerToken(email, password, anonymousBearerToken);
+  }
+
+  // NOT RECOMMENDED: Works but loses cart/session context
+  public CustomerTokenResponse loginWithoutSession(String email, String password) {
+    // SDK will auto-fetch a NEW anonymous token, creating a NEW session
+    // User's cart and browsing context will be lost!
+    return tokenService.getCustomerToken(email, password);
+  }
+
+  // Use customer token to fetch products
+  public List<ProductResponse> getCustomerProducts(CustomerTokenResponse customerToken) {
+    String authorization = customerToken.bearerAccessToken();
+
+    return productClient.getProducts(
+        null, null, null, 1, 20, null, true, "en",
+        authorization
+    ).getBody();
+  }
+
+  // Refresh customer token when expired
+  public CustomerTokenResponse refreshCustomerToken(CustomerTokenResponse expiredToken) {
+    return tokenService.refreshCustomerToken(expiredToken);
+  }
+
+  // Get B2B token with legal entity context
+  public CustomerTokenResponse switchToB2bContext(
+      CustomerTokenResponse customerToken,
+      String legalEntityId
+  ) {
+    return tokenService.getB2bToken(customerToken, legalEntityId);
+  }
 }
 ```
 
@@ -879,89 +879,89 @@ import static io.emporix.product.ProductClient.Scopes.*;
 
 @Service
 public class ProductManagementService {
-    
-    @Autowired
-    private ProductClient productClient;
-    
-    @Autowired
-    private EmporixTokenService tokenService;
-    
-    public String createProduct(String code, String name, String description) {
-        // Build product request
-        BasicProductCreateRequest request = BasicProductCreateRequest.builder()
-            .code(code)
-            .published(true)
-            .name(LocalizedValueDto.of("en", name))
-            .description(LocalizedValueDto.of("en", description))
-            .build();
-        
-        // Get service token
-        ServiceTokenResponse token = tokenService.getServiceToken(
-            Set.of(PRODUCT_MANAGE)
-        );
-        String authorization = token.bearerAccessToken();
-        
-        // Create product
-        ResourceLocation location = productClient.createProduct(
-            request,
-            false,         // skipVariantGeneration
-            true,          // doIndex
-            "en",          // contentLanguage
-            authorization  // authorization header
-        ).getBody();
-        
-        return location.getId();
-    }
-    
-    public List<ProductResponse> searchProducts(String query) {
-        // Get token with read scope
-        ServiceTokenResponse token = tokenService.getServiceToken(
-            Set.of(PRODUCT_READ_UNPUBLISHED)
-        );
-        String authorization = token.bearerAccessToken();
-        
-        return productClient.getProducts(
-            query,         // e.g., "published:true AND name:*shirt*"
-            null,          // expand
-            null,          // rawValue
-            1,             // pageNumber
-            50,            // pageSize
-            "name:asc",    // sort
-            true,          // fetchTotalCount
-            "en",          // acceptLanguage
-            authorization  // authorization header
-        ).getBody();
-    }
-    
-    public void updateProduct(String id, GenericProductUpdateRequest request) {
-        ServiceTokenResponse token = tokenService.getServiceToken(
-            Set.of(PRODUCT_MANAGE)
-        );
-        String authorization = token.bearerAccessToken();
-        
-        productClient.upsertProduct(
-            id,
-            request,
-            false,         // skipVariantGeneration
-            true,          // doIndex
-            "en",          // contentLanguage
-            authorization
-        );
-    }
-    
-    public void deleteProduct(String productId) {
-        ServiceTokenResponse token = tokenService.getServiceToken(
-            Set.of(PRODUCT_MANAGE)
-        );
-        String authorization = token.bearerAccessToken();
-        
-        productClient.deleteProduct(
-            productId,
-            null,          // force
-            true,          // doIndex
-            authorization
-        );
-    }
+
+  @Autowired
+  private ProductClient productClient;
+
+  @Autowired
+  private EmporixTokenService tokenService;
+
+  public String createProduct(String code, String name, String description) {
+    // Build product request
+    BasicProductCreateRequest request = BasicProductCreateRequest.builder()
+        .code(code)
+        .published(true)
+        .name(LocalizedValueDto.of("en", name))
+        .description(LocalizedValueDto.of("en", description))
+        .build();
+
+    // Get service token
+    ServiceTokenResponse token = tokenService.getServiceToken(
+        Set.of(PRODUCT_MANAGE)
+    );
+    String authorization = token.bearerAccessToken();
+
+    // Create product
+    ResourceLocation location = productClient.createProduct(
+        request,
+        false,         // skipVariantGeneration
+        true,          // doIndex
+        "en",          // contentLanguage
+        authorization  // authorization header
+    ).getBody();
+
+    return location.getId();
+  }
+
+  public List<ProductResponse> searchProducts(String query) {
+    // Get token with read scope
+    ServiceTokenResponse token = tokenService.getServiceToken(
+        Set.of(PRODUCT_READ_UNPUBLISHED)
+    );
+    String authorization = token.bearerAccessToken();
+
+    return productClient.getProducts(
+        query,         // e.g., "published:true AND name:*shirt*"
+        null,          // expand
+        null,          // rawValue
+        1,             // pageNumber
+        50,            // pageSize
+        "name:asc",    // sort
+        true,          // fetchTotalCount
+        "en",          // acceptLanguage
+        authorization  // authorization header
+    ).getBody();
+  }
+
+  public void updateProduct(String id, GenericProductUpdateRequest request) {
+    ServiceTokenResponse token = tokenService.getServiceToken(
+        Set.of(PRODUCT_MANAGE)
+    );
+    String authorization = token.bearerAccessToken();
+
+    productClient.upsertProduct(
+        id,
+        request,
+        false,         // skipVariantGeneration
+        true,          // doIndex
+        "en",          // contentLanguage
+        authorization
+    );
+  }
+
+  public void deleteProduct(String productId) {
+    ServiceTokenResponse token = tokenService.getServiceToken(
+        Set.of(PRODUCT_MANAGE)
+    );
+    String authorization = token.bearerAccessToken();
+
+    productClient.deleteProduct(
+        productId,
+        null,          // force
+        true,          // doIndex
+        authorization
+    );
+  }
 }
 ```
 
@@ -975,70 +975,70 @@ import static io.emporix.category.CategoryClient.Scopes.*;
 
 @Service
 public class CategoryManagementService {
-    
-    @Autowired
-    private CategoryClient categoryClient;
-    
-    @Autowired
-    private EmporixTokenService tokenService;
-    
-    public String createCategory(String code, String name) {
-        CategoryCreateRequest request = CategoryCreateRequest.builder()
-            .code(code)
-            .published(true)
-            .localizedName(LocalizedValueDto.of("en", name))
-            .build();
-        
-        // Get service token
-        ServiceTokenResponse token = tokenService.getServiceToken(
-            Set.of(CATEGORY_MANAGE)
-        );
-        String authorization = token.bearerAccessToken();
-        
-        ResourceLocation location = categoryClient.createCategory(
-            request,
-            true,          // publish
-            "en",          // contentLanguage
-            authorization  // authorization header
-        ).getBody();
-        
-        return location.getId();
-    }
-    
-    public List<CategoryResponse> getRootCategories() {
-        ServiceTokenResponse token = tokenService.getServiceToken(
-            Set.of(CATEGORY_READ_UNPUBLISHED)
-        );
-        String authorization = token.bearerAccessToken();
-        
-        return categoryClient.getCategories(
-            true,          // showRoots (only root categories)
-            false,         // showUnpublished
-            1,             // pageNumber
-            50,            // pageSize
-            null,          // sort
-            true,          // fetchTotalCount
-            "en",          // acceptLanguage
-            authorization  // authorization header
-        ).getBody();
-    }
-    
-    public List<CategoryResponse> getSubcategories(String categoryId) {
-        ServiceTokenResponse token = tokenService.getServiceToken();
-        String authorization = token.bearerAccessToken();
-        
-        return categoryClient.getCategorySubcategories(
-            categoryId,
-            1,             // depth (direct children only)
-            false,         // showUnpublished
-            1,             // pageNumber
-            50,            // pageSize
-            null,          // sort
-            true,          // fetchTotalCount
-            "en",          // acceptLanguage
-            authorization
-        ).getBody();
-    }
+
+  @Autowired
+  private CategoryClient categoryClient;
+
+  @Autowired
+  private EmporixTokenService tokenService;
+
+  public String createCategory(String code, String name) {
+    CategoryCreateRequest request = CategoryCreateRequest.builder()
+        .code(code)
+        .published(true)
+        .localizedName(LocalizedValueDto.of("en", name))
+        .build();
+
+    // Get service token
+    ServiceTokenResponse token = tokenService.getServiceToken(
+        Set.of(CATEGORY_MANAGE)
+    );
+    String authorization = token.bearerAccessToken();
+
+    ResourceLocation location = categoryClient.createCategory(
+        request,
+        true,          // publish
+        "en",          // contentLanguage
+        authorization  // authorization header
+    ).getBody();
+
+    return location.getId();
+  }
+
+  public List<CategoryResponse> getRootCategories() {
+    ServiceTokenResponse token = tokenService.getServiceToken(
+        Set.of(CATEGORY_READ_UNPUBLISHED)
+    );
+    String authorization = token.bearerAccessToken();
+
+    return categoryClient.getCategories(
+        true,          // showRoots (only root categories)
+        false,         // showUnpublished
+        1,             // pageNumber
+        50,            // pageSize
+        null,          // sort
+        true,          // fetchTotalCount
+        "en",          // acceptLanguage
+        authorization  // authorization header
+    ).getBody();
+  }
+
+  public List<CategoryResponse> getSubcategories(String categoryId) {
+    ServiceTokenResponse token = tokenService.getServiceToken();
+    String authorization = token.bearerAccessToken();
+
+    return categoryClient.getCategorySubcategories(
+        categoryId,
+        1,             // depth (direct children only)
+        false,         // showUnpublished
+        1,             // pageNumber
+        50,            // pageSize
+        null,          // sort
+        true,          // fetchTotalCount
+        "en",          // acceptLanguage
+        authorization
+    ).getBody();
+  }
 }
 ```
 
@@ -1053,58 +1053,58 @@ import static io.emporix.product.ProductClient.Scopes.*;
 
 @Service
 public class MultiClientProductService {
-    
-    @Autowired
-    private ProductClient productClient;
-    
-    @Autowired
-    private EmporixTokenService tokenService;
-    
-    // Admin operations with default backend credentials (full access)
-    public void adminCreateProduct(BasicProductCreateRequest request) {
-        ServiceTokenResponse token = tokenService.getServiceToken(
-            Set.of(PRODUCT_MANAGE)
-        );
-        
-        String authorization = token.bearerAccessToken();
-        productClient.createProduct(request, false, true, "en", authorization);
-    }
-    
-    // External integration with its own OAuth2 client (all granted scopes)
-    public List<ProductResponse> getProductsForIntegration() {
-        // Use integration OAuth2 client (configured in Emporix with specific scopes)
-        ServiceTokenResponse token = tokenService.getServiceToken("integration");
-        
-        String authorization = token.bearerAccessToken();
-        return productClient.getProducts(
-            null, null, null, 1, 100, null, true, "en", authorization
-        ).getBody();
-    }
-    
-    // Partner API with limited OAuth2 client (read-only access)
-    public List<ProductResponse> getProductsForPartner() {
-        // Partner OAuth2 client configured in Emporix with read-only scopes
-        ServiceTokenResponse token = tokenService.getServiceToken("partner");
-        
-        String authorization = token.bearerAccessToken();
-        return productClient.getProducts(
-            "published:true", null, null, 1, 100, null, true, "en", authorization
-        ).getBody();
-    }
-    
-    // Third-party system with specific scope requirement
-    public List<ProductResponse> getProductsForThirdParty() {
-        // Request only the specific scope needed (even if the OAuth2 client has more)
-        ServiceTokenResponse token = tokenService.getServiceToken(
-            Set.of(PRODUCT_READ_UNPUBLISHED),
-            "thirdparty"
-        );
-        
-        String authorization = token.bearerAccessToken();
-        return productClient.getProducts(
-            null, null, null, 1, 100, null, true, "en", authorization
-        ).getBody();
-    }
+
+  @Autowired
+  private ProductClient productClient;
+
+  @Autowired
+  private EmporixTokenService tokenService;
+
+  // Admin operations with default backend credentials (full access)
+  public void adminCreateProduct(BasicProductCreateRequest request) {
+    ServiceTokenResponse token = tokenService.getServiceToken(
+        Set.of(PRODUCT_MANAGE)
+    );
+
+    String authorization = token.bearerAccessToken();
+    productClient.createProduct(request, false, true, "en", authorization);
+  }
+
+  // External integration with its own OAuth2 client (all granted scopes)
+  public List<ProductResponse> getProductsForIntegration() {
+    // Use integration OAuth2 client (configured in Emporix with specific scopes)
+    ServiceTokenResponse token = tokenService.getServiceToken("integration");
+
+    String authorization = token.bearerAccessToken();
+    return productClient.getProducts(
+        null, null, null, 1, 100, null, true, "en", authorization
+    ).getBody();
+  }
+
+  // Partner API with limited OAuth2 client (read-only access)
+  public List<ProductResponse> getProductsForPartner() {
+    // Partner OAuth2 client configured in Emporix with read-only scopes
+    ServiceTokenResponse token = tokenService.getServiceToken("partner");
+
+    String authorization = token.bearerAccessToken();
+    return productClient.getProducts(
+        "published:true", null, null, 1, 100, null, true, "en", authorization
+    ).getBody();
+  }
+
+  // Third-party system with specific scope requirement
+  public List<ProductResponse> getProductsForThirdParty() {
+    // Request only the specific scope needed (even if the OAuth2 client has more)
+    ServiceTokenResponse token = tokenService.getServiceToken(
+        Set.of(PRODUCT_READ_UNPUBLISHED),
+        "thirdparty"
+    );
+
+    String authorization = token.bearerAccessToken();
+    return productClient.getProducts(
+        null, null, null, 1, 100, null, true, "en", authorization
+    ).getBody();
+  }
 }
 ```
 
@@ -1151,77 +1151,77 @@ import static io.emporix.product.ProductClient.Scopes.*;
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
-    
-    @Autowired
-    private ProductClient productClient;
-    
-    @Autowired
-    private EmporixTokenService tokenService;
-    
-    // Option 1: Controller manages tokens (simpler for internal APIs)
-    @GetMapping
-    public ResponseEntity<List<ProductResponse>> listProducts(
-        @RequestParam(required = false) String query
-    ) {
-        // Get service token
-        ServiceTokenResponse token = tokenService.getServiceToken(
-            Set.of(PRODUCT_READ_UNPUBLISHED)
-        );
-        String authorization = token.bearerAccessToken();
-        
-        // Call client
-        List<ProductResponse> products = productClient.getProducts(
-            query, null, null, 1, 20, null, true, "en", authorization
-        ).getBody();
-        
-        return ResponseEntity.ok(products);
+
+  @Autowired
+  private ProductClient productClient;
+
+  @Autowired
+  private EmporixTokenService tokenService;
+
+  // Option 1: Controller manages tokens (simpler for internal APIs)
+  @GetMapping
+  public ResponseEntity<List<ProductResponse>> listProducts(
+      @RequestParam(required = false) String query
+  ) {
+    // Get service token
+    ServiceTokenResponse token = tokenService.getServiceToken(
+        Set.of(PRODUCT_READ_UNPUBLISHED)
+    );
+    String authorization = token.bearerAccessToken();
+
+    // Call client
+    List<ProductResponse> products = productClient.getProducts(
+        query, null, null, 1, 20, null, true, "en", authorization
+    ).getBody();
+
+    return ResponseEntity.ok(products);
+  }
+
+  // Option 2: Accept Authorization header from caller (for external APIs)
+  @GetMapping("/{id}")
+  public ResponseEntity<ProductResponse> getProduct(
+      @PathVariable String id,
+      @RequestHeader(name = HttpHeaders.AUTHORIZATION, required = false) String authorization
+  ) {
+    // Authorization can come from request or be generated
+    if (authorization == null) {
+      ServiceTokenResponse token = tokenService.getServiceToken();
+      authorization = token.bearerAccessToken();
     }
-    
-    // Option 2: Accept Authorization header from caller (for external APIs)
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductResponse> getProduct(
-        @PathVariable String id,
-        @RequestHeader(name = HttpHeaders.AUTHORIZATION, required = false) String authorization
-    ) {
-        // Authorization can come from request or be generated
-        if (authorization == null) {
-            ServiceTokenResponse token = tokenService.getServiceToken();
-            authorization = token.bearerAccessToken();
-        }
-        
-        ProductResponse product = productClient.getProduct(
-            id, null, null, null, "en", authorization
-        ).getBody();
-        
-        return ResponseEntity.ok(product);
-    }
-    
-    @PostMapping
-    public ResponseEntity<ResourceLocation> createProduct(
-        @RequestBody BasicProductCreateRequest request
-    ) {
-        ServiceTokenResponse token = tokenService.getServiceToken(
-            Set.of(PRODUCT_MANAGE)
-        );
-        String authorization = token.bearerAccessToken();
-        
-        ResourceLocation location = productClient.createProduct(
-            request, false, true, "en", authorization
-        ).getBody();
-        
-        return ResponseEntity.status(HttpStatus.CREATED).body(location);
-    }
-    
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
-        ServiceTokenResponse token = tokenService.getServiceToken(
-            Set.of(PRODUCT_MANAGE)
-        );
-        String authorization = token.bearerAccessToken();
-        
-        productClient.deleteProduct(id, null, true, authorization);
-        return ResponseEntity.noContent().build();
-    }
+
+    ProductResponse product = productClient.getProduct(
+        id, null, null, null, "en", authorization
+    ).getBody();
+
+    return ResponseEntity.ok(product);
+  }
+
+  @PostMapping
+  public ResponseEntity<ResourceLocation> createProduct(
+      @RequestBody BasicProductCreateRequest request
+  ) {
+    ServiceTokenResponse token = tokenService.getServiceToken(
+        Set.of(PRODUCT_MANAGE)
+    );
+    String authorization = token.bearerAccessToken();
+
+    ResourceLocation location = productClient.createProduct(
+        request, false, true, "en", authorization
+    ).getBody();
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(location);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
+    ServiceTokenResponse token = tokenService.getServiceToken(
+        Set.of(PRODUCT_MANAGE)
+    );
+    String authorization = token.bearerAccessToken();
+
+    productClient.deleteProduct(id, null, true, authorization);
+    return ResponseEntity.noContent().build();
+  }
 }
 ```
 
@@ -1234,18 +1234,18 @@ Override default client configuration by providing your own beans:
 ```java
 @Configuration
 public class CustomClientConfig {
-    
-    @Bean
-    @Primary
-    public ProductClient customProductClient(EmporixClientFactory factory) {
-        return factory.createClient(
-            ProductClient.class,
-            ClientConfig.builder("product")//first part after api host in the endpoint url.
-                .xVersion2()  // Use API version 2
-                .header("X-Custom-Header", "value")
-                .build()
-        );
-    }
+
+  @Bean
+  @Primary
+  public ProductClient customProductClient(EmporixClientFactory factory) {
+    return factory.createClient(
+        ProductClient.class,
+        ClientConfig.builder("product")//first part after api host in the endpoint url.
+            .xVersion2()  // Use API version 2
+            .header("X-Custom-Header", "value")
+            .build()
+    );
+  }
 }
 ```
 
@@ -1253,16 +1253,16 @@ public class CustomClientConfig {
 
 ```java
 ClientConfig.builder("product")
-    // API version
+// API version
     .xVersion("v2")        // Sets X-Version: v2
-    
-    // Custom headers
+
+// Custom headers
     .header("X-Custom", "value")
     .headers(Map.of(
-        "X-Header-1", "value1",
-        "X-Header-2", "value2"
-    ))
-    
+    "X-Header-1", "value1",
+    "X-Header-2", "value2"
+))
+
     .build();
 ```
 
@@ -1283,63 +1283,63 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 
 @Configuration
 public class AdvancedClientConfig {
-    
-    @Autowired
-    private EmporixProperties properties;
-    
-    @Autowired
-    private EmporixErrorHandler errorHandler;
-    
-    @Bean
-    @Primary
-    public ProductClient productClientWithCustomTimeout(EmporixClientFactory factory) {
-        // Connection-level configuration (5 seconds connect, 30 seconds read)
-        ConnectionConfig connectionConfig = ConnectionConfig.custom()
-            .setConnectTimeout(Timeout.ofSeconds(5))
-            .setSocketTimeout(Timeout.ofSeconds(30))
+
+  @Autowired
+  private EmporixProperties properties;
+
+  @Autowired
+  private EmporixErrorHandler errorHandler;
+
+  @Bean
+  @Primary
+  public ProductClient productClientWithCustomTimeout(EmporixClientFactory factory) {
+    // Connection-level configuration (5 seconds connect, 30 seconds read)
+    ConnectionConfig connectionConfig = ConnectionConfig.custom()
+        .setConnectTimeout(Timeout.ofSeconds(5))
+        .setSocketTimeout(Timeout.ofSeconds(30))
+        .build();
+
+    // Build connection manager with custom configuration
+    PoolingHttpClientConnectionManager connectionManager =
+        PoolingHttpClientConnectionManagerBuilder.create()
+            .setDefaultConnectionConfig(connectionConfig)
             .build();
-        
-        // Build connection manager with custom configuration
-        PoolingHttpClientConnectionManager connectionManager = 
-            PoolingHttpClientConnectionManagerBuilder.create()
-                .setDefaultConnectionConfig(connectionConfig)
-                .build();
-        
-        // Request-level configuration
-        RequestConfig requestConfig = RequestConfig.custom()
-            .setConnectionRequestTimeout(Timeout.ofSeconds(5))
-            .setResponseTimeout(Timeout.ofSeconds(30))
-            .build();
-        
-        // Build Apache HttpClient 5 with custom settings
-        CloseableHttpClient httpClient = HttpClients.custom()
-            .setConnectionManager(connectionManager)
-            .setDefaultRequestConfig(requestConfig)
-            .build();
-        
-        // Create factory with pre-configured HttpClient
-        HttpComponentsClientHttpRequestFactory httpClientFactory = 
-            new HttpComponentsClientHttpRequestFactory(httpClient);
-        
-        // Wrap with BufferingClientHttpRequestFactory for error response handling
-        BufferingClientHttpRequestFactory requestFactory = 
-            new BufferingClientHttpRequestFactory(httpClientFactory);
-        
-        RestClient restClient = RestClient.builder()
-            .baseUrl(properties.getApiHost() + "/" + 
-                     properties.getTenant() + "/product")
-            .requestFactory(requestFactory)
-            .defaultHeader("X-Version", "v2")
-            .defaultStatusHandler(errorHandler)
-            .build();
-        
-        RestClientAdapter adapter = RestClientAdapter.create(restClient);
-        HttpServiceProxyFactory proxyFactory = HttpServiceProxyFactory
-            .builderFor(adapter)
-            .build();
-        
-        return proxyFactory.createClient(ProductClient.class);
-    }
+
+    // Request-level configuration
+    RequestConfig requestConfig = RequestConfig.custom()
+        .setConnectionRequestTimeout(Timeout.ofSeconds(5))
+        .setResponseTimeout(Timeout.ofSeconds(30))
+        .build();
+
+    // Build Apache HttpClient 5 with custom settings
+    CloseableHttpClient httpClient = HttpClients.custom()
+        .setConnectionManager(connectionManager)
+        .setDefaultRequestConfig(requestConfig)
+        .build();
+
+    // Create factory with pre-configured HttpClient
+    HttpComponentsClientHttpRequestFactory httpClientFactory =
+        new HttpComponentsClientHttpRequestFactory(httpClient);
+
+    // Wrap with BufferingClientHttpRequestFactory for error response handling
+    BufferingClientHttpRequestFactory requestFactory =
+        new BufferingClientHttpRequestFactory(httpClientFactory);
+
+    RestClient restClient = RestClient.builder()
+        .baseUrl(properties.getApiHost() + "/" +
+            properties.getTenant() + "/product")
+        .requestFactory(requestFactory)
+        .defaultHeader("X-Version", "v2")
+        .defaultStatusHandler(errorHandler)
+        .build();
+
+    RestClientAdapter adapter = RestClientAdapter.create(restClient);
+    HttpServiceProxyFactory proxyFactory = HttpServiceProxyFactory
+        .builderFor(adapter)
+        .build();
+
+    return proxyFactory.createClient(ProductClient.class);
+  }
 }
 ```
 
@@ -1349,6 +1349,246 @@ public class AdvancedClientConfig {
 - `ConnectionConfig` for connection-level timeouts (connect, socket)
 - `RequestConfig` for request-level timeouts (connection request, response)
 - `PoolingHttpClientConnectionManager` for better connection pooling control
+
+## Multi-tenant support
+
+The SDK supports running **multiple Emporix tenants within a single JVM**. This is useful when your application needs to communicate with different Emporix environments (e.g., QA, staging, production) or different tenant accounts simultaneously.
+
+When additional tenants are configured, the SDK automatically creates a **full bean stack** for each tenant — including `EmporixProperties`, `EmporixClientFactory`, `EmporixTokenService`, and all API clients. These beans are injected using Spring's `@Qualifier` annotation with the tenant key as the qualifier value.
+
+The default tenant (configured under `emporix.*`) remains the unqualified default and does not require `@Qualifier` for injection.
+
+### Configuration
+
+Define additional tenants under `emporix.tenants.<key>` in your `application.yml`. Each `<key>` becomes the `@Qualifier` value used to inject that tenant's beans:
+
+```yaml
+emporix:
+  # Default tenant (always required)
+  tenant: my-default-tenant
+  api:
+    host: https://api.emporix.io
+    credentials:
+      backend:
+        client-id: default-backend-id
+        secret: default-backend-secret
+      storefront:
+        client-id: default-storefront-id
+        secret: default-storefront-secret
+
+  # Additional tenants
+  tenants:
+    qa:
+      tenant: my-qa-tenant
+      api:
+        host: https://api-stage.emporix.io
+        credentials:
+          backend:
+            client-id: qa-backend-id
+            secret: qa-backend-secret
+          storefront:
+            client-id: qa-storefront-id
+            secret: qa-storefront-secret
+    prod:
+      tenant: my-prod-tenant
+      api:
+        host: https://api.emporix.io
+        credentials:
+          backend:
+            client-id: prod-backend-id
+            secret: prod-backend-secret
+          storefront:
+            client-id: prod-storefront-id
+            secret: prod-storefront-secret
+```
+
+Or via environment variables:
+
+```bash
+# Default tenant (always required)
+export EMPORIX_TENANT=my-default-tenant
+export EMPORIX_API_CREDENTIALS_BACKEND_CLIENT_ID=default-backend-id
+export EMPORIX_API_CREDENTIALS_BACKEND_SECRET=default-backend-secret
+export EMPORIX_API_CREDENTIALS_STOREFRONT_CLIENT_ID=default-storefront-id
+export EMPORIX_API_CREDENTIALS_STOREFRONT_SECRET=default-storefront-secret
+
+# QA tenant
+export EMPORIX_TENANTS_QA_TENANT=my-qa-tenant
+export EMPORIX_TENANTS_QA_API_HOST=https://api-stage.emporix.io
+export EMPORIX_TENANTS_QA_API_CREDENTIALS_BACKEND_CLIENT_ID=qa-backend-id
+export EMPORIX_TENANTS_QA_API_CREDENTIALS_BACKEND_SECRET=qa-backend-secret
+export EMPORIX_TENANTS_QA_API_CREDENTIALS_STOREFRONT_CLIENT_ID=qa-storefront-id
+export EMPORIX_TENANTS_QA_API_CREDENTIALS_STOREFRONT_SECRET=qa-storefront-secret
+
+# Prod tenant
+export EMPORIX_TENANTS_PROD_TENANT=my-prod-tenant
+export EMPORIX_TENANTS_PROD_API_HOST=https://api.emporix.io
+export EMPORIX_TENANTS_PROD_API_CREDENTIALS_BACKEND_CLIENT_ID=prod-backend-id
+export EMPORIX_TENANTS_PROD_API_CREDENTIALS_BACKEND_SECRET=prod-backend-secret
+export EMPORIX_TENANTS_PROD_API_CREDENTIALS_STOREFRONT_CLIENT_ID=prod-storefront-id
+export EMPORIX_TENANTS_PROD_API_CREDENTIALS_STOREFRONT_SECRET=prod-storefront-secret
+```
+
+### Injecting tenant-specific beans
+
+Use `@Qualifier("<key>")` to inject the bean stack for a specific tenant. Without `@Qualifier`, the default tenant beans are injected:
+
+```java
+import io.emporix.auth.service.EmporixTokenService;
+import io.emporix.product.ProductClient;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+@Service
+public class MultiTenantProductService {
+
+    private final ProductClient defaultProductClient;
+    private final ProductClient qaProductClient;
+    private final EmporixTokenService defaultTokenService;
+    private final EmporixTokenService qaTokenService;
+
+    public MultiTenantProductService(
+            ProductClient defaultProductClient,
+            EmporixTokenService defaultTokenService,
+            @Qualifier("qa") ProductClient qaProductClient,
+            @Qualifier("qa") EmporixTokenService qaTokenService) {
+        this.defaultProductClient = defaultProductClient;
+        this.qaProductClient = qaProductClient;
+        this.defaultTokenService = defaultTokenService;
+        this.qaTokenService = qaTokenService;
+    }
+
+    public List<ProductResponse> getDefaultProducts() {
+        var token = defaultTokenService.getServiceToken();
+        return defaultProductClient.getProducts(
+            null, null, null, 1, 20, null, true, "en",
+            token.bearerAccessToken()
+        ).getBody();
+    }
+
+    public List<ProductResponse> getQaProducts() {
+        var token = qaTokenService.getAnonymousToken();
+        return qaProductClient.getProducts(
+            null, null, null, 1, 20, null, true, "en",
+            token.bearerAccessToken()
+        ).getBody();
+    }
+}
+```
+
+All SDK clients are available per tenant — `ProductClient`, `CategoryClient`, `CartClient`, `OrderClient`, `CustomerClient`, and every other registered client. Simply use `@Qualifier("<key>")` on any of them.
+
+### Property inheritance and overrides
+
+Each tenant configuration **inherits** from the default configuration. You only need to specify properties that differ from the defaults:
+
+| Property | Inherited from default | Can be overridden |
+|---|---|---|
+| `tenant` | No (must be specified) | **Required** per tenant |
+| `api.host` | Yes | Yes |
+| `api.credentials.backend` | No (must be specified) | **Required** per tenant |
+| `api.credentials.storefront` | No (must be specified) | **Required** per tenant |
+| `api.credentials.custom.*` | Yes | Yes |
+| `api.timeouts.*` | Yes | Yes |
+| `cache.*` | Yes | Yes |
+
+If all tenants share the same timeout and cache settings, you only need to define them once in the default section.
+
+### Custom credentials per tenant
+
+Custom credentials can be defined per tenant. If a tenant does not define its own custom credentials, it **falls back** to the default custom credentials:
+
+```yaml
+emporix:
+  tenant: my-default-tenant
+  api:
+    credentials:
+      backend:
+        client-id: default-backend-id
+        secret: default-backend-secret
+      storefront:
+        client-id: default-storefront-id
+        secret: default-storefront-secret
+      custom:
+        integration:
+          client-id: default-integration-id
+          secret: default-integration-secret
+
+  tenants:
+    qa:
+      tenant: my-qa-tenant
+      api:
+        credentials:
+          backend:
+            client-id: qa-backend-id
+            secret: qa-backend-secret
+          storefront:
+            client-id: qa-storefront-id
+            secret: qa-storefront-secret
+          # Override custom credentials for this tenant
+          custom:
+            integration:
+              client-id: qa-integration-id
+              secret: qa-integration-secret
+    prod:
+      tenant: my-prod-tenant
+      api:
+        credentials:
+          backend:
+            client-id: prod-backend-id
+            secret: prod-backend-secret
+          storefront:
+            client-id: prod-storefront-id
+            secret: prod-storefront-secret
+          # No custom credentials — falls back to default "integration"
+```
+
+Usage in code:
+
+```java
+// Uses QA tenant's own "integration" custom credentials
+@Qualifier("qa") EmporixTokenService qaTokenService;
+var token = qaTokenService.getServiceToken("integration");
+
+// Falls back to the default "integration" custom credentials
+@Qualifier("prod") EmporixTokenService prodTokenService;
+var token = prodTokenService.getServiceToken("integration");
+```
+
+{% hint style="info" %}
+Custom credential lookup is **case-insensitive**. This ensures credentials defined via environment variables (which are uppercase) resolve correctly when referenced by camelCase names in code.
+{% endhint %}
+
+### Validation rules
+
+The SDK validates multi-tenant configuration at startup and will fail fast with descriptive error messages if any rule is violated:
+
+1. **Default tenant is always required** — `emporix.tenant` must be specified even when additional tenants are configured.
+2. **No duplicate tenant IDs** — the default tenant ID must not appear as a key or `tenant` value in `emporix.tenants`.
+3. **All tenant IDs must be unique** — no two entries in `emporix.tenants` can resolve to the same tenant ID.
+4. **Backend and storefront credentials are required** per tenant entry.
+
+### Overriding default beans
+
+Multi-tenant support is designed to be non-intrusive. SDK users can still override default beans using `@Primary` as before:
+
+```java
+@Configuration
+public class CustomConfig {
+
+    @Bean
+    @Primary
+    public ProductClient customProductClient(EmporixClientFactory factory) {
+        return factory.createClient(
+            ProductClient.class,
+            ClientConfig.builder("product").xVersion2().build()
+        );
+    }
+}
+```
+
+{% hint style="success" %}
+Tenant-specific beans are marked as non-default candidates, so they never interfere with unqualified injection or user-provided `@Primary` overrides.
+{% endhint %}
 
 ## Exception handling
 
@@ -1378,47 +1618,47 @@ import io.emporix.auth.dto.ServiceTokenResponse;
 
 @Service
 public class ProductService {
-    
-    @Autowired
-    private ProductClient productClient;
-    
-    @Autowired
-    private EmporixTokenService tokenService;
-    
-    public ProductResponse getProductSafely(String productId) {
-        // Get authorization
-        ServiceTokenResponse token = tokenService.getServiceToken();
-        String authorization = token.bearerAccessToken();
-        
-        try {
-            ResponseEntity<ProductResponse> response = 
-                productClient.getProduct(productId, null, null, null, "en", authorization);
-            return response.getBody();
-            
-        } catch (EmporixApiException e) {
-            // EmporixErrorHandler converts ALL 4xx and 5xx responses to EmporixApiException
-            // Provides structured error information from Emporix API
-            
-            log.error("Emporix API error: {} - {} - Details: {}", 
-                e.getStatusCode(), 
-                e.getMessage(),
-                e.getErrorResponse().getDetails());
-            
-            // Handle specific error cases
-            if (e.getStatusCode().value() == 404) {
-                log.info("Product not found: {}", productId);
-                return null;
-            }
-            
-            if (e.getStatusCode().value() == 403) {
-                log.error("Insufficient permissions to access product: {}", productId);
-                throw new IllegalStateException("Access denied", e);
-            }
-            
-            // Re-throw for other errors (500, 401, etc.)
-            throw e;
-        }
+
+  @Autowired
+  private ProductClient productClient;
+
+  @Autowired
+  private EmporixTokenService tokenService;
+
+  public ProductResponse getProductSafely(String productId) {
+    // Get authorization
+    ServiceTokenResponse token = tokenService.getServiceToken();
+    String authorization = token.bearerAccessToken();
+
+    try {
+      ResponseEntity<ProductResponse> response =
+          productClient.getProduct(productId, null, null, null, "en", authorization);
+      return response.getBody();
+
+    } catch (EmporixApiException e) {
+      // EmporixErrorHandler converts ALL 4xx and 5xx responses to EmporixApiException
+      // Provides structured error information from Emporix API
+
+      log.error("Emporix API error: {} - {} - Details: {}",
+          e.getStatusCode(),
+          e.getMessage(),
+          e.getErrorResponse().getDetails());
+
+      // Handle specific error cases
+      if (e.getStatusCode().value() == 404) {
+        log.info("Product not found: {}", productId);
+        return null;
+      }
+
+      if (e.getStatusCode().value() == 403) {
+        log.error("Insufficient permissions to access product: {}", productId);
+        throw new IllegalStateException("Access denied", e);
+      }
+
+      // Re-throw for other errors (500, 401, etc.)
+      throw e;
     }
+  }
 }
 ```
 
@@ -1478,8 +1718,8 @@ CustomerTokenResponse customerToken = tokenService.getCustomerToken(
 ```java
 // Works but creates a NEW session - user's cart and preferences are lost!
 CustomerTokenResponse customerToken = tokenService.getCustomerToken(
-    email, password  // SDK auto-fetches new anonymous token, new session created
-);
+        email, password  // SDK auto-fetches new anonymous token, new session created
+    );
 ```
 
 ### Reuse service tokens
@@ -1491,18 +1731,18 @@ Service tokens are automatically cached by the SDK. Reuse the same `EmporixToken
 ```java
 @Service
 public class ProductService {
-    @Autowired
-    private EmporixTokenService tokenService;  // Spring-managed singleton
-    
-    public void operation1() {
-        ServiceTokenResponse token = tokenService.getServiceToken(...);
-        // Token is cached for subsequent calls
-    }
-    
-    public void operation2() {
-        ServiceTokenResponse token = tokenService.getServiceToken(...);
-        // Returns cached token if not expired
-    }
+  @Autowired
+  private EmporixTokenService tokenService;  // Spring-managed singleton
+
+  public void operation1() {
+    ServiceTokenResponse token = tokenService.getServiceToken(...);
+    // Token is cached for subsequent calls
+  }
+
+  public void operation2() {
+    ServiceTokenResponse token = tokenService.getServiceToken(...);
+    // Returns cached token if not expired
+  }
 }
 ```
 
@@ -1514,18 +1754,18 @@ Always handle API exceptions appropriately.
 
 ```java
 public ProductResponse getProduct(String id) {
-    ServiceTokenResponse token = tokenService.getServiceToken();
-    String authorization = token.bearerAccessToken();
-    
-    try {
-        return productClient.getProduct(id, null, null, null, "en", authorization).getBody();
-    } catch (EmporixApiException e) {
-        if (e.getStatusCode().value() == 404) {
-            return null;  // Product not found
-        }
-        log.error("API error: {}", e.getMessage());
-        throw e;
+  ServiceTokenResponse token = tokenService.getServiceToken();
+  String authorization = token.bearerAccessToken();
+
+  try {
+    return productClient.getProduct(id, null, null, null, "en", authorization).getBody();
+  } catch (EmporixApiException e) {
+    if (e.getStatusCode().value() == 404) {
+      return null;  // Product not found
     }
+    log.error("API error: {}", e.getMessage());
+    throw e;
+  }
 }
 ```
 
@@ -1577,7 +1817,7 @@ String jwt = jwtService.createToken(customerToken);
 ```java
 // Authorization is always the last parameter
 productClient.getProducts(
-    query, expand, rawValue, pageNumber, pageSize, 
+    query, expand, rawValue, pageNumber, pageSize,
     sort, fetchTotalCount, acceptLanguage,
     authorization  // Last parameter
 );
@@ -1752,6 +1992,6 @@ tokenService.clearCache(TokenType.SERVICE, "vendor:" + PRODUCT_MANAGE);
 ```java
 ServiceTokenResponse token = tokenService.getServiceToken();
 log.info("Token expires in: {} seconds", token.getExpiresIn());
-log.info("Token type: {}", token.getTokenType());
-log.info("Access token: {}", token.getAccessToken().substring(0, 20) + "...");
+    log.info("Token type: {}", token.getTokenType());
+    log.info("Access token: {}", token.getAccessToken().substring(0, 20) + "...");
 ```
