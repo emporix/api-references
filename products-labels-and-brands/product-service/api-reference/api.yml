@@ -10,7 +10,13 @@ servers:
   - url: 'https://api.emporix.io'
 tags:
   - name: Products
-    description: Manage products. Supported product types include BASIC (standalone products), BUNDLE (groups of products sold together), PARENT_VARIANT (products with automatically generated variants), and VARIANT (individual variants of a parent variant product).
+    description: |
+      Manage products. Supported product types include:
+      - `BASIC` — standalone products
+      - `BUNDLE` — groups of products sold together
+      - `PARENT_VARIANT` — products with automatically generated variants defined by a template
+      - `VARIANT` — individual variants of a `PARENT_VARIANT` product
+      - `DYNAMIC_VARIANT` — products forming a flexible variant hierarchy of up to 4 levels. Each variant stores its own `ownVariantAttributes` (the attributes that distinguish it from its parent). A root `DYNAMIC_VARIANT` product stores a denormalized flat map of all descendants in its `variants` field with accumulated attributes. Use the `/recalculate` endpoint to rebuild variant trees after bulk imports.
   - name: Product Templates
     description: Manage product templates. Product templates define a set of attributes which are common for all product instances based on that template.
 paths:
@@ -31,15 +37,19 @@ paths:
         Search a list of products.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-        * `product.product_read_unpublished` **Note:** Only required if the response should contain unpublished products.
-        * `product.product_read_by_vendor` - allows vendor employee to see vendor's products
+        * The `product.product_read_unpublished` scope is only required if the response should contain unpublished products.
+        * The `product.product_read_by_vendor` scope is only required to fetch products belonging to the vendor.
+
+        ***
       operationId: POST-product-search-products
       requestBody:
         $ref: '#/components/requestBodies/productsSearchBody'
       security:
-        - OAuth2: []
+        - OAuth2:  
+            - product.product_read_by_vendor
+            - product.product_read_unpublished
       parameters:
         - $ref: '#/components/parameters/header_x_total_count'
         - $ref: '#/components/parameters/query_page_number'
@@ -69,14 +79,19 @@ paths:
         Retrieves a list of products.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-        * `product.product_read_unpublished` **Note:** Only required if the response should contain unpublished products.
-        * `product.product_read_by_vendor` - allows vendor employee to see vendor's products
-        * `product.product_manage_by_vendor` - allows vendor employee to see vendor's products
+        * The `product.product_read_unpublished` scope is only required if the response should contain unpublished products.
+        * The `product.product_read_by_vendor` scope is only required to fetch products belonging to the vendor.
+        * The `product.product_manage_by_vendor` scope is only required to manage products belonging to the vendor.
+
+        ***
       operationId: GET-product-list-products
       security:
-        - OAuth2: []
+        - OAuth2:
+            - product.product_read_by_vendor
+            - product.product_read_unpublished  
+            - product.product_manage_by_vendor
       parameters:
         - $ref: '#/components/parameters/header_x_total_count'
         - $ref: '#/components/parameters/query_page_number'
@@ -118,17 +133,20 @@ paths:
         Creates a new product.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-         * `product.product_manage`
-         * `product.product_manage_by_vendor` - allows vendor employee to manage vendor's products
-         * `product.product_publish` **Note:** Only required if you want to publish the product when creating it.
+        * The `product.product_manage_by_vendor` scope is only required for vendor employeesto manage products belonging to the vendor.
+        * The `product.product_publish` scope is only required if you want to publish the product when creating it.
+
+        ***
       operationId: POST-product-create-product
       requestBody:
         $ref: '#/components/requestBodies/productCreateBody'
       security:
         - OAuth2:
             - product.product_manage
+            - product.product_manage_by_vendor
+            - product.product_publish
       parameters:
         - $ref: '#/components/parameters/path_tenant'
         - $ref: '#/components/parameters/header_content_language'
@@ -169,14 +187,17 @@ paths:
 
         Response for a particular product is returned at the same position (index) at which that price is located in the request body.
 
-        **Required scopes**
+        **Additional scope information**
 
-         * `product.product_manage`
-         * `product.product_manage_by_vendor` - allows vendor employee to manage vendor's products
-         * `product.product_publish` **Note:** Only required if you want to publish the product when creating it.
+        * The `product.product_manage_by_vendor` scope is only required for vendor employees to manage products belonging to the vendor.
+        * The `product.product_publish` scope is only required if you want to publish the product when creating it.
+
+        ***
       security:
         - OAuth2:
             - product.product_manage
+            - product.product_manage_by_vendor
+            - product.product_publish
       requestBody:
         $ref: '#/components/requestBodies/productBulkCreateBody'
       parameters:
@@ -202,18 +223,22 @@ paths:
         Response for a particular product is returned at the same position (index) at which it is located in the request body.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-        * `product.product_manage`
-        * `product.product_manage_by_vendor` - allows vendor employee to manage vendor's products
-        * `product.product_publish` **Note:** Only required if you want to publish the product when updating it.
-        * `product.product_unpublish` **Note:** Only required if you want to unpublish the product when updating it.
+        * The `product.product_manage_by_vendor` scope is only required for vendor employees to manage products belonging to the vendor.
+        * The `product.product_publish` scope is only required if you want to publish the product when updating it.
+        * The `product.product_unpublish` scope is only required if you want to unpublish the product when updating it.
+
+        ***
       operationId: PUT-product-update-bulk-products
       requestBody:
         $ref: '#/components/requestBodies/productBulkUpdateBody'
       security:
         - OAuth2:
             - product.product_manage
+            - product.product_manage_by_vendor
+            - product.product_publish
+            - product.product_unpublish
       parameters:
         - $ref: '#/components/parameters/header_content_language'
         - $ref: '#/components/parameters/query_skip_variants_generation'
@@ -222,6 +247,226 @@ paths:
       summary: Upserting multiple products
       tags:
         - Products
+  /product/{tenant}/products/recalculate:
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    post:
+      summary: Triggering dynamic variant recalculation
+      operationId: POST-product-trigger-dynamic-variant-recalculation
+      tags:
+        - Products
+      description: |-
+        Triggers asynchronous recalculation of the variant tree for one or more `DYNAMIC_VARIANT` products. Accepts up to 1000 product IDs at any hierarchy level — the system automatically resolves the root for each ID and creates one recalculation job per unique root product.
+
+        This endpoint is intended to be called **after** a batch of products has been fully ingested, not per individual product write. For single product writes, the variant tree is updated synchronously inline.
+
+        If a recalculation job for a given root is already `PENDING` or `PROCESSING`, the corresponding IDs are returned in `skippedProductIds` and the existing job is referenced in the `jobs` list.
+      security:
+        - OAuth2:
+            - product.product_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/dynamicVariantRecalculationRequest'
+            examples:
+              Trigger recalculation for multiple products:
+                value:
+                  productIds:
+                    - mobile-15-pro-l1
+                    - mobile-15-pro-l2-retail
+                    - mobile-16-pro-l1
+      responses:
+        '202':
+          description: |
+            Recalculation jobs accepted. One job is created per unique root product resolved from the submitted IDs.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dynamicVariantRecalculationResponse'
+              examples:
+                Recalculation accepted:
+                  value:
+                    jobs:
+                      - id: job-a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                        parentRoot: mobile-15-pro
+                        requestedByIds:
+                          - mobile-15-pro-l1
+                          - mobile-15-pro-l2-retail
+                        status: PENDING
+                        createdAt: '2024-01-15T10:10:00.000Z'
+                        processingStartedAt: null
+                        finishedAt: null
+                        error: null
+                        attempts: 0
+                      - id: job-b2c3d4e5-f6a7-8901-bcde-f12345678901
+                        parentRoot: mobile-16-pro
+                        requestedByIds:
+                          - mobile-16-pro-l1
+                        status: PENDING
+                        createdAt: '2024-01-15T10:10:00.000Z'
+                        processingStartedAt: null
+                        finishedAt: null
+                        error: null
+                        attempts: 0
+                    skippedProductIds: []
+                Partial skip - job already active:
+                  value:
+                    jobs:
+                      - id: job-existing-c3d4e5f6-a7b8-9012-cdef-123456789012
+                        parentRoot: mobile-15-pro
+                        requestedByIds:
+                          - mobile-15-pro-l1
+                        status: PROCESSING
+                        createdAt: '2024-01-15T09:55:00.000Z'
+                        processingStartedAt: '2024-01-15T09:55:05.000Z'
+                        finishedAt: null
+                        error: null
+                        attempts: 1
+                    skippedProductIds:
+                      - mobile-15-pro-l2-retail
+        '400':
+          $ref: '#/components/responses/products_post_response_BadRequest_400'
+        '401':
+          $ref: '#/components/responses/common_response_Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/common_response_Forbidden_403'
+        '500':
+          $ref: '#/components/responses/common_response_InternalServerError_500'
+  /product/{tenant}/products/recalculate/jobs:
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    get:
+      summary: Listing recalculation jobs
+      operationId: GET-product-list-recalculation-jobs
+      tags:
+        - Products
+      description: |-
+        Retrieves a list of dynamic variant recalculation jobs for the tenant. Optionally filtered by job status.
+
+        Jobs are retained for approximately 30 days after reaching a terminal state (`FINISHED`, `FAILED`, or `FAILED_PERMANENT`) and are then automatically removed by a TTL index.
+      security:
+        - OAuth2:
+            - product.product_manage
+      parameters:
+        - name: status
+          in: query
+          required: false
+          description: Filter jobs by status. If omitted, all jobs are returned.
+          schema:
+            $ref: '#/components/schemas/dynamicVariantRecalculationJobStatus'
+      responses:
+        '200':
+          description: Jobs retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/dynamicVariantRecalculationJobResponse'
+              examples:
+                List of jobs:
+                  value:
+                    - id: job-a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                      parentRoot: mobile-15-pro
+                      requestedByIds:
+                        - mobile-15-pro-l1
+                        - mobile-15-pro-l2-retail
+                      status: FINISHED
+                      createdAt: '2024-01-15T10:10:00.000Z'
+                      processingStartedAt: '2024-01-15T10:10:03.000Z'
+                      finishedAt: '2024-01-15T10:10:07.000Z'
+                      error: null
+                      attempts: 1
+                    - id: job-b2c3d4e5-f6a7-8901-bcde-f12345678901
+                      parentRoot: mobile-16-pro
+                      requestedByIds:
+                        - mobile-16-pro-l1
+                      status: PENDING
+                      createdAt: '2024-01-15T10:10:00.000Z'
+                      processingStartedAt: null
+                      finishedAt: null
+                      error: null
+                      attempts: 0
+        '401':
+          $ref: '#/components/responses/common_response_Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/common_response_Forbidden_403'
+        '500':
+          $ref: '#/components/responses/common_response_InternalServerError_500'
+  /product/{tenant}/products/recalculate/jobs/{jobId}:
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - name: jobId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: Unique identifier of the recalculation job.
+    get:
+      summary: Retrieving a recalculation job
+      operationId: GET-product-get-recalculation-job
+      tags:
+        - Products
+      description: |-
+        Retrieves the current status and details of a specific dynamic variant recalculation job. Use this endpoint to poll for job completion after triggering recalculation.
+      security:
+        - OAuth2:
+            - product.product_manage
+      responses:
+        '200':
+          description: Job retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/dynamicVariantRecalculationJobResponse'
+              examples:
+                Job finished successfully:
+                  value:
+                    id: job-a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                    parentRoot: mobile-15-pro
+                    requestedByIds:
+                      - mobile-15-pro-l1
+                      - mobile-15-pro-l2-retail
+                    status: FINISHED
+                    createdAt: '2024-01-15T10:10:00.000Z'
+                    processingStartedAt: '2024-01-15T10:10:03.000Z'
+                    finishedAt: '2024-01-15T10:10:07.000Z'
+                    error: null
+                    attempts: 1
+                Job pending:
+                  value:
+                    id: job-b2c3d4e5-f6a7-8901-bcde-f12345678901
+                    parentRoot: mobile-16-pro
+                    requestedByIds:
+                      - mobile-16-pro-l1
+                    status: PENDING
+                    createdAt: '2024-01-15T10:10:00.000Z'
+                    processingStartedAt: null
+                    finishedAt: null
+                    error: null
+                    attempts: 0
+                Job failed:
+                  value:
+                    id: job-c3d4e5f6-a7b8-9012-cdef-123456789012
+                    parentRoot: mobile-17-pro
+                    requestedByIds:
+                      - mobile-17-pro-l1
+                    status: FAILED
+                    createdAt: '2024-01-15T10:08:00.000Z'
+                    processingStartedAt: '2024-01-15T10:08:05.000Z'
+                    finishedAt: '2024-01-15T10:08:12.000Z'
+                    error: 'Database write timeout during variant tree update'
+                    attempts: 3
+        '401':
+          $ref: '#/components/responses/common_response_Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/common_response_Forbidden_403'
+        '404':
+          $ref: '#/components/responses/product_NotFound_404'
+        '500':
+          $ref: '#/components/responses/common_response_InternalServerError_500'
   /product/{tenant}/products/{productId}:
     parameters:
       - $ref: '#/components/parameters/path_productId'
@@ -239,6 +484,7 @@ paths:
                   - $ref: '#/components/schemas/bundleProductWithId'
                   - $ref: '#/components/schemas/parentVariantProductWithId'
                   - $ref: '#/components/schemas/variantProductWithId'
+                  - $ref: '#/components/schemas/dynamicVariantProductWithId'
               examples:
                 BASIC Product:
                   value:
@@ -456,6 +702,182 @@ paths:
                         productCustomAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn-v38.json'
                         productTemplateAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_templateAttributes_v1.json'
                         productVariantAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/633d774f37937d425ce5570f_variantAttributes_v1.json'
+                DYNAMIC_VARIANT Root Product:
+                  value:
+                    id: mobile-15-pro
+                    yrn: 'urn:yaas:saasag:caasproduct:product:myshop;mobile-15-pro'
+                    code: MOBILE-15-PRO
+                    name:
+                      en: Mobile Phone 15 Pro
+                      de: Mobile Phone 15 Pro
+                    description:
+                      en: Flagship smartphone with titanium design and advanced camera system.
+                      de: Flaggschiff-Smartphone mit Titan-Design und fortschrittlichem Kamerasystem.
+                    productType: DYNAMIC_VARIANT
+                    published: true
+                    sellable: false
+                    taxClasses:
+                      EN: STANDARD
+                    variants:
+                      mobile-15-pro-l1:
+                        version: 1
+                        name:
+                          en: Mobile Phone 15 Pro – 256 GB Blue
+                          de: Mobile Phone 15 Pro – 256 GB Blau
+                        parentVariantId: mobile-15-pro
+                        sellable: false
+                        dynamicVariantType: H1_L1
+                        variantAttributes:
+                          storageCapacity:
+                            name:
+                              en: Storage
+                              de: Speicher
+                            value:
+                              type: STRING
+                              qualifier: 256_GB
+                              name:
+                                en: 256 GB
+                                de: 256 GB
+                          colorFinish:
+                            name:
+                              en: Color
+                              de: Farbe
+                            value:
+                              type: STRING
+                              qualifier: BLUE
+                              name:
+                                en: Blue Titanium
+                                de: Blau Titan
+                          displaySize:
+                            name:
+                              en: Display size
+                              de: Displaygröße
+                            value:
+                              type: DECIMAL
+                              qualifier: 6.1
+                              unit: INH
+                              name:
+                                en: 6.1 in
+                                de: 6,1 Zoll
+                      mobile-15-pro-l2-retail:
+                        version: 1
+                        name:
+                          en: Mobile Phone 15 Pro – 256 GB Blue – Retail box
+                          de: Mobile Phone 15 Pro – 256 GB Blau – Einzelhandelsbox
+                        parentVariantId: mobile-15-pro-l1
+                        sellable: true
+                        dynamicVariantType: H1_L2
+                        variantAttributes:
+                          storageCapacity:
+                            name:
+                              en: Storage
+                              de: Speicher
+                            value:
+                              type: STRING
+                              qualifier: 256_GB
+                              name:
+                                en: 256 GB
+                                de: 256 GB
+                          colorFinish:
+                            name:
+                              en: Color
+                              de: Farbe
+                            value:
+                              type: STRING
+                              qualifier: BLUE
+                              name:
+                                en: Blue Titanium
+                                de: Blau Titan
+                          displaySize:
+                            name:
+                              en: Display size
+                              de: Displaygröße
+                            value:
+                              type: DECIMAL
+                              qualifier: 6.1
+                              unit: INH
+                              name:
+                                en: 6.1 in
+                                de: 6,1 Zoll
+                          bundleType:
+                            name:
+                              en: Bundle
+                              de: Bundle
+                            value:
+                              type: STRING
+                              qualifier: RETAIL_BOX
+                              name:
+                                en: Retail box
+                                de: Einzelhandelsbox
+                    metadata:
+                      version: 1
+                      createdAt: '2024-01-15T10:00:00.000Z'
+                      modifiedAt: '2024-01-15T10:00:00.000Z'
+                DYNAMIC_VARIANT Child Product (L2 leaf):
+                  value:
+                    id: mobile-15-pro-l2-retail
+                    yrn: 'urn:yaas:saasag:caasproduct:product:myshop;mobile-15-pro-l2-retail'
+                    code: MOBILE-15-PRO-L2-RETAIL
+                    name:
+                      en: Mobile Phone 15 Pro – 256 GB Blue – Retail box
+                      de: Mobile Phone 15 Pro – 256 GB Blau – Einzelhandelsbox
+                    productType: DYNAMIC_VARIANT
+                    published: true
+                    taxClasses:
+                      EN: STANDARD
+                    parentVariantId: mobile-15-pro-l1
+                    parentVariantPath:
+                      - mobile-15-pro-l1
+                      - mobile-15-pro
+                    dynamicVariantType: H1_L2
+                    sellable: true
+                    ownVariantAttributes:
+                      bundleType:
+                        name:
+                          en: Bundle
+                          de: Bundle
+                        value:
+                          type: STRING
+                          qualifier: RETAIL_BOX
+                          name:
+                            en: Retail box
+                            de: Einzelhandelsbox
+                    inheritedVariantAttributes:
+                      storageCapacity:
+                        name:
+                          en: Storage
+                          de: Speicher
+                        value:
+                          type: STRING
+                          qualifier: 256_GB
+                          name:
+                            en: 256 GB
+                            de: 256 GB
+                      colorFinish:
+                        name:
+                          en: Color
+                          de: Farbe
+                        value:
+                          type: STRING
+                          qualifier: BLUE
+                          name:
+                            en: Blue Titanium
+                            de: Blau Titan
+                      displaySize:
+                        name:
+                          en: Display size
+                          de: Displaygröße
+                        value:
+                          type: DECIMAL
+                          qualifier: 6.1
+                          unit: INH
+                          name:
+                            en: 6.1 in
+                            de: 6,1 Zoll
+                    metadata:
+                      version: 1
+                      createdAt: '2024-01-15T10:05:00.000Z'
+                      modifiedAt: '2024-01-15T10:05:00.000Z'
         '401':
           $ref: '#/components/responses/common_response_Unauthorized_401'
         '403':
@@ -468,14 +890,19 @@ paths:
         Retrieves a specified product details.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-        * `product.product_read_unpublished` **Note:** Only required if the product has not been published.
-        * `product.product_read_by_vendor` - allows vendor employee to see vendor's products
-        * `product.product_manage_by_vendor` - allows vendor employee to see vendor's products
+        * The `product.product_read_unpublished` scope is only required if the product has not been published.
+        * The `product.product_read_by_vendor` scope is only required to fetch products belonging to the vendor.
+        * The `product.product_manage_by_vendor` scope is only required to manage products belonging to the vendor.
+
+        ***
       operationId: GET-product-retrieve-product
       security:
-        - OAuth2: []
+        - OAuth2:
+            - product.product_read_by_vendor
+            - product.product_read_unpublished
+            - product.product_manage_by_vendor
       parameters:
         - $ref: '#/components/parameters/path_tenant'
         - $ref: '#/components/parameters/path_productId'
@@ -521,18 +948,22 @@ paths:
         If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-        * `product.product_manage`
-        * `product.product_manage_by_vendor` - allows vendor employee to manage vendor's products
-        * `product.product_publish` **Note:** Only required if you want to publish the product when updating it.
-        * `product.product_unpublish` **Note:** Only required if you want to unpublish the product when updating it.
+        * The `product.product_manage_by_vendor` scope is only required for vendor employees to manage products belonging to the vendor.
+        * The `product.product_publish` scope is only required if you want to publish the product when updating it.
+        * The `product.product_unpublish` scope is only required if you want to unpublish the product when updating it.
+
+        ***
       operationId: PUT-product-update-product
       requestBody:
         $ref: '#/components/requestBodies/productUpdateBody'
       security:
         - OAuth2:
             - product.product_manage
+            - product.product_manage_by_vendor
+            - product.product_publish
+            - product.product_unpublish
       parameters:
         - $ref: '#/components/parameters/path_tenant'
         - $ref: '#/components/parameters/path_productId'
@@ -570,18 +1001,22 @@ paths:
         Partially updates a specified product.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-        * `product.product_manage`
-        * `product.product_manage_by_vendor` - allows vendor employee to manage vendor's products
-        * `product.product_publish` **Note:** Only required if you want to publish the product when updating it.
-        * `product.product_unpublish` **Note:** Only required if you want to unpublish the product when updating it.
+        * The `product.product_manage_by_vendor` scope is only required for vendor employees to manage products belonging to the vendor.
+        * The `product.product_publish` scope is only required if you want to publish the product when updating it.
+        * The `product.product_unpublish` scope is only required if you want to unpublish the product when updating it.
+
+        ***
       operationId: PATCH-product-update-product
       requestBody:
         $ref: '#/components/requestBodies/productPartialUpdateBody'
       security:
         - OAuth2:
             - product.product_manage
+            - product.product_manage_by_vendor
+            - product.product_publish
+            - product.product_unpublish
       parameters:
         - $ref: '#/components/parameters/path_tenant'
         - $ref: '#/components/parameters/path_productId'
@@ -613,14 +1048,16 @@ paths:
         Deletes a specified product.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-        * `product.product_manage`
-        * `product.product_manage_by_vendor` - allows vendor employee to delete vendor's products
+        * The `product.product_manage_by_vendor` scope is only required for vendor employees to delete products belonging to the vendor.
+
+        ***
       operationId: DELETE-product-remove-product
       security:
         - OAuth2:
             - product.product_manage
+            - product.product_manage_by_vendor
       parameters:
         - $ref: '#/components/parameters/path_tenant'
         - $ref: '#/components/parameters/path_productId'
@@ -675,9 +1112,11 @@ paths:
         This endpoint is `deprecated`. Please use the [/product/{tenant}/products/search](/openapi/product/#operation/POST-product-search-products) instead.
         ***
 
-        **Required scopes**
+        **Additional scope information**
 
-        * `product.product_read_unpublished` **Note:** Only required if the response should contain unpublished products.
+        * The `product.product_read_unpublished` scope is only required if the response should contain unpublished products.
+
+        ***
       operationId: POST-product-search-for-products
       requestBody:
         content:
@@ -699,7 +1138,8 @@ paths:
         required: false
         description: ''
       security:
-        - OAuth2: []
+        - OAuth2:
+            - product.product_read_unpublished
       summary: Searching for products by YRNs
       tags:
         - Products
@@ -758,11 +1198,6 @@ paths:
         Retrieves all product templates. You can filter the results with query parameters.
 
         A product template defines a set of attributes which are common for all product instances based on that template.
-
-        ***
-
-        **Required scopes**
-        * `product.product_template_read`
       parameters:
         - $ref: '#/components/parameters/header_x_total_count'
         - $ref: '#/components/parameters/header_accept_language'
@@ -805,11 +1240,6 @@ paths:
         Creates a new product template. 
 
         A product template defines a set of attributes which are common for all product instances based on that template.
-
-        ***
-
-        **Required scopes**
-        * `product.product_template_manage`
       parameters:
         - $ref: '#/components/parameters/header_content_language'
       requestBody:
@@ -895,11 +1325,6 @@ paths:
         Retrieves a specified product template's details.
 
         A product template defines a set of attributes which are common for all product instances based on that template.
-
-        ***
-
-        **Required scopes**
-        * `product.product_template_read`
     put:
       summary: Updating a product template
       operationId: PUT-product-update-template
@@ -927,11 +1352,6 @@ paths:
         Updates a specified product template by replacing all of its existing data with data from the request body. 
 
         **Note**: Every product template update creates a new version of the template. Products based on previous versions are not automatically updated. In order to see the changes (for example new attributes) on the product level, you need to update the template version in applicable products.
-
-        ***
-
-        **Required scopes**
-        * `product.product_template_manage`
       requestBody:
         content:
           application/json:
@@ -985,11 +1405,6 @@ paths:
             - product.product_template_manage
       description: |-
         Deletes a specified product template. Only product templates which are not used in products and parent variants can be deleted.
-
-        ***
-
-        **Required scopes**
-        * `product.product_template_manage`
 components:
   responses:
     common_response_BadRequest_400:
@@ -1091,6 +1506,7 @@ components:
               - $ref: '#/components/schemas/bundleProductsArray'
               - $ref: '#/components/schemas/parentVariantProductsArray'
               - $ref: '#/components/schemas/variantProductsArray'
+              - $ref: '#/components/schemas/dynamicVariantProductsArray'
           examples:
             BASIC Product:
               value:
@@ -1378,6 +1794,7 @@ components:
               - $ref: '#/components/schemas/bundleProductCreation'
               - $ref: '#/components/schemas/parentVariantProductCreation'
               - $ref: '#/components/schemas/variantProductCreation'
+              - $ref: '#/components/schemas/dynamicVariantProductCreation'
           examples:
             BASIC Product Creation - simple:
               value:
@@ -1495,6 +1912,92 @@ components:
                   productVariantAttributes:
                     color: RED
                     size: XS
+            DYNAMIC_VARIANT Root Product Creation:
+              value:
+                id: mobile-15-pro
+                name:
+                  en: Mobile Phone 15 Pro
+                  de: Mobile Phone 15 Pro
+                code: MOBILE-15-PRO
+                description:
+                  en: Flagship smartphone with titanium design and advanced camera system.
+                  de: Flaggschiff-Smartphone mit Titan-Design und fortschrittlichem Kamerasystem.
+                published: true
+                sellable: false
+                taxClasses:
+                  EN: STANDARD
+                productType: DYNAMIC_VARIANT
+            DYNAMIC_VARIANT Child Product Creation (L1 variant):
+              value:
+                id: mobile-15-pro-l1
+                name:
+                  en: Mobile Phone 15 Pro – 256 GB Blue
+                  de: Mobile Phone 15 Pro – 256 GB Blau
+                code: MOBILE-15-PRO-L1
+                published: true
+                taxClasses:
+                  EN: STANDARD
+                productType: DYNAMIC_VARIANT
+                parentVariantId: mobile-15-pro
+                dynamicVariantType: H1_L1
+                sellable: false
+                ownVariantAttributes:
+                  storageCapacity:
+                    name:
+                      en: Storage
+                      de: Speicher
+                    value:
+                      type: STRING
+                      qualifier: 256_GB
+                      name:
+                        en: 256 GB
+                        de: 256 GB
+                  colorFinish:
+                    name:
+                      en: Color
+                      de: Farbe
+                    value:
+                      type: STRING
+                      qualifier: BLUE
+                      name:
+                        en: Blue Titanium
+                        de: Blau Titan
+                  displaySize:
+                    name:
+                      en: Display size
+                      de: Displaygröße
+                    value:
+                      type: DECIMAL
+                      qualifier: 6.1
+                      unit: INH
+                      name:
+                        en: 6.1 in
+                        de: 6,1 Zoll
+            DYNAMIC_VARIANT Child Product Creation (L2 leaf):
+              value:
+                id: mobile-15-pro-l2-retail
+                name:
+                  en: Mobile Phone 15 Pro – 256 GB Blue – Retail box
+                  de: Mobile Phone 15 Pro – 256 GB Blau – Einzelhandelsbox
+                code: MOBILE-15-PRO-L2-RETAIL
+                published: true
+                taxClasses:
+                  EN: STANDARD
+                productType: DYNAMIC_VARIANT
+                parentVariantId: mobile-15-pro-l1
+                dynamicVariantType: H1_L2
+                sellable: true
+                ownVariantAttributes:
+                  bundleType:
+                    name:
+                      en: Bundle
+                      de: Bundle
+                    value:
+                      type: STRING
+                      qualifier: RETAIL_BOX
+                      name:
+                        en: Retail box
+                        de: Einzelhandelsbox
     productUpdateBody:
       content:
         application/json:
@@ -1504,6 +2007,7 @@ components:
               - $ref: '#/components/schemas/bundleProductUpdate'
               - $ref: '#/components/schemas/parentVariantProductUpdate'
               - $ref: '#/components/schemas/variantProductUpdate'
+              - $ref: '#/components/schemas/dynamicVariantProductUpdate'
           examples:
             BASIC Product Update:
               value:
@@ -1608,6 +2112,63 @@ components:
                   productVariantAttributes:
                     color: RED
                     size: XS
+            DYNAMIC_VARIANT Product Update:
+              value:
+                name:
+                  en: Mobile Phone 15 Pro – 256 GB Blue
+                  de: Mobile Phone 15 Pro – 256 GB Blau
+                code: MOBILE-15-PRO-L1
+                published: true
+                taxClasses:
+                  EN: STANDARD
+                productType: DYNAMIC_VARIANT
+                dynamicVariantType: H1_L1
+                sellable: false
+                ownVariantAttributes:
+                  storageCapacity:
+                    name:
+                      en: Storage
+                      de: Speicher
+                    value:
+                      type: STRING
+                      qualifier: 256_GB
+                      name:
+                        en: 256 GB
+                        de: 256 GB
+                  colorFinish:
+                    name:
+                      en: Color
+                      de: Farbe
+                    value:
+                      type: STRING
+                      qualifier: BLUE
+                      name:
+                        en: Blue Titanium
+                        de: Blau Titan
+                  displaySize:
+                    name:
+                      en: Display size
+                      de: Displaygröße
+                    value:
+                      type: DECIMAL
+                      qualifier: 6.1
+                      unit: INH
+                      name:
+                        en: 6.1 in
+                        de: 6,1 Zoll
+                  batteryCapacityMah:
+                    name:
+                      en: Battery capacity
+                      de: Akku-Kapazität
+                    value:
+                      type: NUMBER
+                      qualifier: 3274
+                      unit: MAH
+                      name:
+                        en: 3274 mAh
+                        de: 3274 mAh
+                metadata:
+                  version: 2
     productPartialUpdateBody:
       content:
         application/json:
@@ -1626,6 +2187,7 @@ components:
                 - $ref: '#/components/schemas/bundleProductBulkUpdate'
                 - $ref: '#/components/schemas/parentVariantProductBulkUpdate'
                 - $ref: '#/components/schemas/variantProductBulkUpdate'
+                - $ref: '#/components/schemas/dynamicVariantProductBulkUpdate'
           examples:
             Update multiple products in bulk:
               value:
@@ -1657,6 +2219,7 @@ components:
                 - $ref: '#/components/schemas/bundleProductCreation'
                 - $ref: '#/components/schemas/parentVariantProductCreation'
                 - $ref: '#/components/schemas/variantProductCreation'
+                - $ref: '#/components/schemas/dynamicVariantProductCreation'
           examples:
             Create multiple products in bulk:
               value:
@@ -1854,6 +2417,7 @@ components:
         - BUNDLE
         - PARENT_VARIANT
         - VARIANT
+        - DYNAMIC_VARIANT
     productTypeUpdate:
       type: string
       description: |
@@ -1864,6 +2428,7 @@ components:
         - BUNDLE
         - PARENT_VARIANT
         - VARIANT
+        - DYNAMIC_VARIANT
     template:
       type: object
       description: |
@@ -2592,6 +3157,346 @@ components:
               $ref: '#/components/schemas/id'
           required:
             - id
+    dynamicVariantAttributeValue:
+      type: object
+      description: |
+        The value part of a dynamic variant attribute. Holds the canonical qualifier used for matching, an optional localized display label, and an optional unit code for measurement attributes.
+      required:
+        - type
+        - qualifier
+      properties:
+        type:
+          type: string
+          description: |
+            Data type of the qualifier value.
+          enum:
+            - STRING
+            - NUMBER
+            - DECIMAL
+            - BOOLEAN
+        qualifier:
+          description: |
+            The canonical value used for variant matching. The JSON type must match `type`: a string for `STRING`, a number for `NUMBER` or `DECIMAL`, or a boolean for `BOOLEAN`.
+          oneOf:
+            - type: string
+            - type: number
+            - type: boolean
+        name:
+          $ref: '#/components/schemas/localizedValue'
+        unit:
+          type: string
+          description: |
+            Optional unit code for measurement attributes (for example, `"MMT"` for millimetres, `"PCE"` for pieces). Unit translations are resolved by the frontend from a separate dictionary.
+    dynamicVariantAttribute:
+      type: object
+      description: |
+        A single dynamic variant attribute. Combines a localized display name for the attribute itself with a typed, optionally localized value.
+      required:
+        - value
+      properties:
+        name:
+          $ref: '#/components/schemas/localizedValue'
+        value:
+          $ref: '#/components/schemas/dynamicVariantAttributeValue'
+    ownVariantAttributes:
+      type: object
+      description: |
+        Map of variant attributes defined directly on this product. Keys are attribute identifiers (for example, `storageCapacity`). These are the attributes the caller can set by create/update requests. On responses they represent what is stored on this specific product.
+      additionalProperties:
+        $ref: '#/components/schemas/dynamicVariantAttribute'
+    inheritedVariantAttributes:
+      type: object
+      description: |
+        Read-only map of variant attributes inherited from ancestor products in the hierarchy. These cannot be modified on this product — to change an inherited attribute, update the ancestor that owns it.
+      additionalProperties:
+        $ref: '#/components/schemas/dynamicVariantAttribute'
+    variantMapEntry:
+      type: object
+      description: |
+        A single entry in the root product's `variants` map. In API responses the `variantAttributes` field contains **accumulated** attributes — the entry's own delta attributes merged with all ancestor attributes up the chain, so storefront clients receive a ready-to-use combination without additional API calls. The `published` flag is included only when the caller has the `product.product_read_unpublished` scope.
+      properties:
+        version:
+          type: integer
+          description: Version of the source variant product at the time of the last recalculation.
+        name:
+          $ref: '#/components/schemas/localizedValue'
+        parentVariantId:
+          type: string
+          description: Identifier of the immediate parent product in the variant hierarchy.
+        sellable:
+          type: boolean
+          description: Indicates whether this variant can be sold directly.
+        published:
+          type: boolean
+          description: |
+            Publication state of this variant. Only included in responses when the caller has the `product.product_read_unpublished` scope; entries with `published: false` are otherwise omitted from the map.
+        dynamicVariantType:
+          type: string
+          description: Optional label identifying the variant level or kind (for example, `"H1_L1"`).
+        variantAttributes:
+          type: object
+          description: |
+            Accumulated variant attributes for this entry. For leaf variants this includes all ancestor attributes merged with the entry's own delta. Keys are attribute identifiers.
+          additionalProperties:
+            $ref: '#/components/schemas/dynamicVariantAttribute'
+    variantsMap:
+      type: object
+      description: |
+        Denormalized flat map of all descendant variants stored on the root product. Keys are variant product identifiers. In API responses each entry's `variantAttributes` contains accumulated attributes.
+      additionalProperties:
+        $ref: '#/components/schemas/variantMapEntry'
+    dynamicVariantInfo:
+      type: object
+      description: |
+        Hierarchy integrity information populated when the variant tree has structural problems. Present only when an issue is detected.
+      properties:
+        missingAncestorId:
+          type: string
+          description: Identifier of an ancestor product that could not be found, indicating a broken hierarchy chain.
+        cycleDetected:
+          type: boolean
+          description: Indicates that a circular reference was detected in the `parentVariantId` chain.
+    dynamicVariantProductMetadataGet:
+      type: object
+      description: Metadata for GET responses on DYNAMIC_VARIANT products. Extends the standard product metadata with hierarchy integrity information.
+      allOf:
+        - $ref: '#/components/schemas/productMetadataGet'
+        - type: object
+          properties:
+            dynamicVariantInfo:
+              $ref: '#/components/schemas/dynamicVariantInfo'
+    dynamicVariantProduct:
+      type: object
+      description: Base schema for products of the DYNAMIC_VARIANT type.
+      allOf:
+        - $ref: '#/components/schemas/productCore'
+        - type: object
+          properties:
+            metadata:
+              $ref: '#/components/schemas/productMetadataCore'
+            parentVariantId:
+              type: string
+              description: |
+                Identifier of the immediate parent product in the variant hierarchy. Omit or leave empty for root-level dynamic variant products.
+            dynamicVariantType:
+              type: string
+              description: |
+                Optional label identifying the variant level or kind within the hierarchy (for example, `"H1_L1"`). Used for display and filtering purposes.
+            sellable:
+              type: boolean
+              description: |
+                Indicates whether this variant can be sold directly, if it's a leaf in the hierarchy that a customer can add to a cart. This value is **not inherited** from parent variants — it must be set explicitly on each product. Root products and intermediate-level variants are typically `false`. Leaf variants are typically `true`.
+            ownVariantAttributes:
+              $ref: '#/components/schemas/ownVariantAttributes'
+          required:
+            - name
+            - code
+    dynamicVariantProductCreation:
+      type: object
+      description: Creating products of the DYNAMIC_VARIANT type.
+      allOf:
+        - $ref: '#/components/schemas/dynamicVariantProduct'
+        - type: object
+          properties:
+            id:
+              type: string
+              maxLength: 32
+              description: Custom product identifier. If not provided, it is automatically generated.
+            productType:
+              $ref: '#/components/schemas/productType'
+    dynamicVariantProductWithId:
+      type: object
+      description: |
+        Response schema for products of the DYNAMIC_VARIANT type.
+
+        - **`sellable`** — not inherited from parents; must be set explicitly on each product. Root and intermediate variants are typically `false`; leaf variants are typically `true`.
+        - **Root products** include a `variants` map containing all descendants with accumulated attributes.
+        - **Child products** include `ownVariantAttributes` (attributes defined on this product) and `inheritedVariantAttributes` (read-only, merged from ancestors).
+        - `parentVariantPath` is an ordered array of ancestor IDs from direct parent (index 0) to root (last index). Empty for root products.
+        - `metadata.dynamicVariantInfo` is present only when a hierarchy integrity issue is detected.
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        yrn:
+          $ref: '#/components/schemas/YRN'
+        code:
+          type: string
+          minLength: 1
+          description: 'Unique product identifier, defined by the user.'
+        name:
+          $ref: '#/components/schemas/localizedValue'
+        description:
+          $ref: '#/components/schemas/localizedValue'
+        productType:
+          $ref: '#/components/schemas/productType'
+        published:
+          $ref: '#/components/schemas/published'
+        sellable:
+          type: boolean
+          description: |
+            Indicates whether this variant can be sold directly (i.e. it is a leaf in the hierarchy that a customer can add to a cart). This value is **not inherited** from parent variants — it must be set explicitly on each product. Root products and intermediate-level variants are typically `false`; leaf variants are typically `true`.
+        parentVariantId:
+          type: string
+          description: Identifier of the immediate parent product in the variant hierarchy. Absent for root-level products.
+        parentVariantPath:
+          type: array
+          description: |
+            Ordered array of ancestor product identifiers, from the direct parent (index 0) to the root (last index). Empty for root-level products.
+          items:
+            type: string
+        dynamicVariantType:
+          type: string
+          description: Optional label identifying the variant level or kind within the hierarchy (for example, `"H1_L1"`).
+        ownVariantAttributes:
+          $ref: '#/components/schemas/ownVariantAttributes'
+        inheritedVariantAttributes:
+          $ref: '#/components/schemas/inheritedVariantAttributes'
+        variants:
+          $ref: '#/components/schemas/variantsMap'
+        taxClasses:
+          $ref: '#/components/schemas/taxClasses'
+        vendor:
+          $ref: '#/components/schemas/vendor'
+        brandId:
+          type: string
+          description: ID of brand.
+        labelIds:
+          type: array
+          items:
+            type: string
+          description: Collection of label IDs.
+        categoryIds:
+          type: array
+          description: Category IDs assigned to the product.
+          items:
+            type: string
+        customerSegmentIds:
+          type: array
+          description: Customer segment IDs assigned to the product.
+          items:
+            type: string
+        relatedItems:
+          type: array
+          description: List of items in a relationship with this product.
+          items:
+            $ref: '#/components/schemas/relatedItem'
+        weightDependent:
+          type: boolean
+          description: Mark the product as weight-dependent if the line item price could change after packaging.
+        mixins:
+          $ref: '#/components/schemas/productMixins'
+        media:
+          $ref: '#/components/schemas/productMedia'
+        metadata:
+          $ref: '#/components/schemas/dynamicVariantProductMetadataGet'
+      required:
+        - id
+        - code
+        - name
+        - productType
+    dynamicVariantProductsArray:
+      type: array
+      description: List of products of the DYNAMIC_VARIANT type.
+      items:
+        $ref: '#/components/schemas/dynamicVariantProductWithId'
+    dynamicVariantProductUpdate:
+      type: object
+      description: Updating products of the DYNAMIC_VARIANT type.
+      allOf:
+        - $ref: '#/components/schemas/dynamicVariantProduct'
+        - type: object
+          properties:
+            metadata:
+              $ref: '#/components/schemas/productMetadataWithVersion'
+            productType:
+              $ref: '#/components/schemas/productTypeUpdate'
+    dynamicVariantProductBulkUpdate:
+      type: object
+      description: Updating products of the DYNAMIC_VARIANT type in bulk.
+      allOf:
+        - $ref: '#/components/schemas/dynamicVariantProductUpdate'
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/id'
+          required:
+            - id
+    dynamicVariantRecalculationRequest:
+      type: object
+      description: |
+        Request body for triggering dynamic variant recalculation. Accepts up to 1000 product IDs at any level of the hierarchy — the system resolves the root for each ID automatically. Intended to be called after a batch of products has been fully ingested, not per individual product write.
+      required:
+        - productIds
+      properties:
+        productIds:
+          type: array
+          description: |
+            List of product IDs (variants at any hierarchy level) for which recalculation should be triggered. The system groups IDs by their root product and creates one job per unique root.
+          minItems: 1
+          maxItems: 1000
+          items:
+            type: string
+    dynamicVariantRecalculationJobStatus:
+      type: string
+      description: Current status of a dynamic variant recalculation job.
+      enum:
+        - PENDING
+        - PROCESSING
+        - FINISHED
+        - FAILED
+        - FAILED_PERMANENT
+    dynamicVariantRecalculationJobResponse:
+      type: object
+      description: |
+        Represents a single dynamic variant recalculation job. One job is created per unique root product. Jobs remain queryable until automatically removed approximately 30 days after reaching a terminal state.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the recalculation job.
+        parentRoot:
+          type: string
+          description: Identifier of the root product whose variant tree is being recalculated.
+        requestedByIds:
+          type: array
+          description: List of product IDs that were submitted in the recalculation request and resolved to this root.
+          items:
+            type: string
+        status:
+          $ref: '#/components/schemas/dynamicVariantRecalculationJobStatus'
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the job was created.
+        processingStartedAt:
+          type: string
+          format: date-time
+          description: Timestamp when a subscriber picked up the job and started processing. Null while the job is still PENDING.
+        finishedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the job reached a terminal state (FINISHED, FAILED, or FAILED_PERMANENT).
+        error:
+          type: string
+          description: Error message if the job failed. Null for successful jobs.
+        attempts:
+          type: integer
+          description: Number of processing attempts made for this job. Incremented on each delivery from the pub/sub subscription.
+    dynamicVariantRecalculationResponse:
+      type: object
+      description: |
+        Response returned when recalculation is triggered. Contains one job per unique root product resolved from the submitted IDs, plus any IDs that were skipped (for example, because a job for that root is already PENDING or PROCESSING).
+      properties:
+        jobs:
+          type: array
+          description: List of recalculation jobs created or referenced for each unique root product.
+          items:
+            $ref: '#/components/schemas/dynamicVariantRecalculationJobResponse'
+        skippedProductIds:
+          type: array
+          description: |
+            Product IDs that were not processed because a recalculation job for their root is already active (PENDING or PROCESSING). The existing job ID is available in the `jobs` list.
+          items:
+            type: string
     productPartialUpdate:
       type: object
       description: Partially updating a product.
@@ -2855,7 +3760,7 @@ components:
         type: boolean
         default: false
       description: |
-        Removing the `PARENT_VARIANT` product means that all corresponding products of the `VARIANT` type are removed as well. This operation has to be confirmed by setting the flag on the force element as `true`.
+        Removing a parent variant product also removes all of its child variants. This applies to both `PARENT_VARIANT` roots with `VARIANT` children and `DYNAMIC_VARIANT` parent products with all descendant dynamic variants in the tree. This operation has to be confirmed by setting `force=true`.
     path_productTemplateId:
       name: product-template-id
       in: path
@@ -2928,8 +3833,8 @@ components:
             product.product_publish: Needed to publish products.
             product.product_unpublish: Needed to unpublish products.
             product.product_read_unpublished: Needed to retrieve unpublished products.
-            product.product_read_by_vendor: The scope allows vendor to read products with assigned vendor
-            product.product_manage_by_vendor: The scope allows vendor to manage products with assigned vendor
+            product.product_read_by_vendor: The scope allows vendor to read products with assigned vendor.
+            product.product_manage_by_vendor: The scope allows vendor to manage products with assigned vendor.
             product.price_manage: Needed to manage product prices.
             product.product_template_read: Needed for reading product templates.
             product.product_template_manage: Needed for updating and removing a product template.

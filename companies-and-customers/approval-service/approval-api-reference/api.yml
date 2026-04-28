@@ -42,7 +42,8 @@ paths:
         '409':
           $ref: '#/components/responses/approval_post_response_Conflict_409'
       description: |
-        Creates a single approval document with information about the approver and order details.
+        Creates a single approval document with information about the approver and order details. 
+        The user must be a *Requestor* or an *Approver* to have the required `approval.approval_manage_own` scope.
 
         In case of any validation problems, the below `errorCodes` can be returned:
           - **APPROVAL-400003**: Incorrect value of the approval status
@@ -54,10 +55,6 @@ paths:
           - **APPROVAL-404002**: Provided resource does not exist
           - **APPROVAL-404003**: Requested user is not assigned to any legal entity
           - **APPROVAL-409001**: Approval already exists
-        
-        ***
-        **Required scopes**
-        * `approval.approval_manage_own`
       operationId: POST-approval-create-approval
       requestBody:
         $ref: '#/components/requestBodies/approvalCreateBody'
@@ -80,10 +77,7 @@ paths:
       tags:
         - Approvals
       description: |
-        Retrieves a list of approval documents which is assigned to the user. The user needs to be a *Requestor* or an *Approver*.
-        ***
-        **Required scopes**
-        * `approval.approval_read_own`
+        Retrieves a list of approval documents assigned to the user. The user must be a *Requestor* or an *Approver* to have the required `approval.approval_read_own` scope.
       parameters:
         - $ref: '#/components/parameters/x_total_count_header'
         - $ref: '#/components/parameters/page_size_query_param'
@@ -102,14 +96,10 @@ paths:
         - Approvals
       operationId: GET-approval-retrieve-approval
       description: |
-        Retrieves a single approval document which is assigned to the user. The user needs to be a *Requestor* or an *Approver*.
+        Retrieves a single approval document which is assigned to the user. The user must be a *Requestor* or an *Approver* to have the required `approval.approval_read_own` scope.
         
         In case of any validation problems, the below `errorCodes` can be returned:
           - **APPROVAL-404001**: Approval does not exist
-        
-        ***
-        **Required scopes**
-        * `approval.approval_read_own`
       responses:
         '200':
           $ref: '#/components/responses/singleApprovalResponse_200'
@@ -138,7 +128,8 @@ paths:
       tags:
         - Approvals
       description: |
-        Partially updates a single approval document with given information. To update the approval, the user needs to be a *Requestor* or an *Approver*. 
+        Partially updates a single approval document with given information. To update the approval, the user must be a *Requestor* or an *Approver* to have the required `approval.approval_manage_own` scope.
+        
         Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
           - `add` (adding an item to the items list)
           - `remove` (removing an item from the items list)
@@ -154,10 +145,6 @@ paths:
           - **APPROVAL-400009**: Approval process has been finished and cannot be updated
           - **APPROVAL-400010**: Incorrect patch operation
           - **APPROVAL-404001**: Approval does not exist
-
-        ***
-        **Required scopes**
-        * `approval.approval_manage_own`
       requestBody:
         $ref: '#/components/requestBodies/approvalUpdateBody'
       security:
@@ -180,14 +167,10 @@ paths:
         - Approvals
       description: |-
         Deletes a single approval document.
-        A customer, who has the `approval.approval_manage_own` scope granted and is assigned to the approval as a requestor, can delete an approval. The approval can only be deleted if its status is `PENDING`. The approval status is changed to `CLOSED` during deletion.
+        To delete an approval, a customer must be a *Requestor* or an *Approver* to have the required `approval.approval_manage_own` scope. The approval can only be deleted if its status is `PENDING`. The approval status is changed to `CLOSED` during deletion.
 
         In case of any validation problems, the below `errorCodes` can be returned:
           - **APPROVAL-404001**: Approval does not exist.
-        
-        ***
-        **Required scopes**
-        * `approval.approval_manage_own`
       security:
         - CustomerAccessToken: []
   '/approval/{tenant}/approval/permitted':
@@ -205,14 +188,10 @@ paths:
         '403':
           $ref: '#/components/responses/common_response_Forbidden_403'
       description: |
-        Checks the approval for given resource. The endpoint verifies whether a user is authorized to perform a specific action on a given resource within a tenant.
+        Checks the approval for given resource. The endpoint verifies whether a user is authorized to perform a specific action on a given resource within a tenant. The user must be a *Requestor* or an *Approver* to have the required `approval.approval_read_own` scope.
 
         In case of any validation problems, the below `errorCodes` can be returned:
           - **APPROVAL-400011**: Requested user is not assigned to any company
-        
-        ***
-        **Required scopes**
-        * `approval.approval_read_own`
       operationId: POST-approval-check-approval
       requestBody:
         $ref: '#/components/requestBodies/approvalPermittedRequestBody'
@@ -237,17 +216,13 @@ paths:
         '403':
           $ref: '#/components/responses/common_response_Forbidden_403'
       description: |
-        Search for the users who can be assigned to the approvals.
+        Searches for the users who can be assigned to the approvals. The user must be a *Requestor* or an *Approver* to have the required `approval.approval_read_own` scope.
 
         In case of any validation problem, the below `errorCodes` can be returned:
           - **APPROVAL-400008**: Requested user has no permissions to the resource.
           - **APPROVAL-400011**: Requested user is not assigned to any company.
           - **APPROVAL-404002**: Provided resource does not exist.
           - **APPROVAL-404003**: Requested user is not assigned to any legal entity.
-        
-        ***
-        **Required scopes**
-        * `approval.approval_read_own`
       operationId: POST-approval-search-users
       requestBody:
         $ref: '#/components/requestBodies/approvalSearchUsersRequestBody'

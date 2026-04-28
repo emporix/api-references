@@ -25,11 +25,6 @@ paths:
       summary: Creating legal entity
       description: |-
         Creates a new legal entity for the tenant. A legal entity represents a company or it's subsidiary in the system.
-
-        ***
-
-         ### Required scopes
-        * `customermanagement.legalentity_manage`
       security:
         - OAuth2:
             - customermanagement.legalentity_manage
@@ -122,13 +117,6 @@ paths:
 
         * If the `customermanagement.legalentity_read` scope is used, then all legal entities assigned to the tenant are returned. 
         * If the `customermanagement.legalentity_read_own` scope is used, then all legal entities assigned to the customer are returned. 
-
-
-        ***
-
-         ### Required scopes
-        * `customermanagement.legalentity_read`
-        * `customermanagement.legalentity_read_own`
       security:
         - OAuth2:
             - customermanagement.legalentity_read
@@ -174,13 +162,6 @@ paths:
 
         If the `customermanagement.legalentity_read` scope is used, then all legal entities assigned to the tenant are returned. 
         If the `customermanagement.legalentity_read_own` scope is used, then all legal entities assigned to the customer are returned. 
-
-
-        ***
-
-         ### Required scopes
-        * `customermanagement.legalentity_read`
-        * `customermanagement.legalentity_read_own`
       security:
         - OAuth2:
             - customermanagement.legalentity_read
@@ -245,11 +226,6 @@ paths:
         - $ref: '#/components/parameters/trait_fields'
       description: |-
         Retrieves a legal entity by the specified unique identifier.
-
-        ***
-
-         ### Required scopes
-        * `customermanagement.legalentity_read`
       security:
         - OAuth2:
             - customermanagement.legalentity_read
@@ -276,11 +252,6 @@ paths:
 
          **Important**: If automatically generated customer group is not present in customerGroups list, 
         this group will be removed from iam.
-
-        ***
-
-         ### Required scopes
-        * `customermanagement.legalentity_manage`
       security:
         - OAuth2:
             - customermanagement.legalentity_manage
@@ -354,12 +325,7 @@ paths:
       description: |-
         Deletes a legal entity.
 
-        **Important**: This operation causes removal of all other entities exclusively subordinated to the requested legal entity in an async way
-
-        ***
-
-         ### Required scopes
-        * `customermanagement.legalentity_manage`
+        **Important**: This operation causes removal of all other entities exclusively subordinated to the requested legal entity in an async way.
       security:
         - OAuth2:
             - customermanagement.legalentity_manage
@@ -387,12 +353,6 @@ paths:
       summary: Retrieving a legal entity with parent hierarchy
       description: |-
         Retrieves the provided legal entity and all its parent legal entities.
-
-        ***
-
-         ### Required scopes
-        * `customermanagement.legalentity_read`
-        * `customermanagement.legalentity_manage`
       security:
         - OAuth2:
             - customermanagement.legalentity_read
@@ -427,11 +387,6 @@ paths:
       summary: Creating contact assignment
       description: |-
         Creates a new contact assignment for the tenant. A contact assignment represents assignment of an employee of the Company to a legal entity.
-
-        ***
-
-         ### Required scopes
-        * `customermanagement.contactassignment_manage`
       security:
         - OAuth2:
             - customermanagement.contactassignment_manage
@@ -480,11 +435,6 @@ paths:
       summary: Retrieving all contact assignments
       description: |-
         Retrieves all contact assignments assigned to the tenant. You can filter, sort and paginate the results with query parameters.
-
-        ***
-
-         ### Required scopes
-        * `customermanagement.contactassignment_read`
       security:
         - OAuth2:
             - customermanagement.contactassignment_read
@@ -545,11 +495,6 @@ paths:
             example: 'name,type'
       description: |-
         Retrieves a contact assignment by the specified unique identifier.
-
-        ***
-
-         ### Required scopes
-        * `customermanagement.contactassignment_read`
       security:
         - OAuth2:
             - customermanagement.contactassignment_read
@@ -573,11 +518,6 @@ paths:
       summary: Upserting a contact assignment
       description: |-
         Updates or creates a contact assignment with given contact assignment id. You can omit the `metadata.version`, but then optimistic locking is not enabled.
-
-        ***
-
-         ### Required scopes
-        * `customermanagement.contactassignment_manage`
       security:
         - OAuth2:
             - customermanagement.contactassignment_manage
@@ -632,11 +572,6 @@ paths:
       summary: Delete a contact assignment
       description: |-
         Deletes a contact assignment.
-
-        ***
-
-         ### Required scopes
-        * `customermanagement.contactassignment_manage`
       security:
         - OAuth2:
             - customermanagement.contactassignment_manage
@@ -663,11 +598,6 @@ paths:
       summary: Creating location
       description: |-
         Creates a new location for the tenant. A location represents address information about a legal entity of the Company.
-
-        ***
-
-         ### Required scopes
-        * `customermanagement.location_manage`
       security:
         - OAuth2:
             - customermanagement.location_manage
@@ -727,11 +657,6 @@ paths:
       summary: Retrieving all locations
       description: |-
         Retrieves all locations assigned to the tenant. You can filter, sort and paginate the results with query parameters.
-
-        ***
-
-         ### Required scopes
-        * `customermanagement.location_read`
       security:
         - OAuth2:
             - customermanagement.location_read
@@ -775,11 +700,6 @@ paths:
       summary: Retrieving a location
       description: |-
         Retrieves a location by the specified unique identifier.
-
-        ***
-
-         ### Required scopes
-        * `customermanagement.location_read`
       security:
         - OAuth2:
             - customermanagement.location_read
@@ -803,12 +723,6 @@ paths:
       summary: Upserting a location
       description: |-
         Updates or creates a location with given location id. You can omit the `metadata.version`, but then optimistic locking is not enabled.
-
-
-        ***
-
-         ### Required scopes
-        * `customermanagement.location_manage`
       security:
         - OAuth2:
             - customermanagement.location_manage
@@ -874,11 +788,6 @@ paths:
       summary: Delete a location
       description: |-
         Deletes a location.
-
-        ***
-
-         ### Required scopes
-        * `customermanagement.location_manage`
       security:
         - OAuth2:
             - customermanagement.location_manage
@@ -962,6 +871,9 @@ components:
           additionalProperties:
             type: string
           description: Localized name of a customer group.
+        role:
+          type: string
+          description: The customer group role.
       required:
         - id
     resourceId:
@@ -2432,13 +2344,13 @@ components:
         clientCredentials:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
-            customermanagement.legalentity_read: Needed to read legal entities
-            customermanagement.legalentity_read_own: Needed to read legal entities by customer
-            customermanagement.legalentity_manage: Needed to manage legal entities
-            customermanagement.contactassignment_read: Needed to read contact assignments
-            customermanagement.contactassignment_manage: Needed to manage contact assignments
-            customermanagement.location_read: Needed to read locations
-            customermanagement.location_manage: Needed to manage locations
+            customermanagement.legalentity_read: Needed to read legal entities.
+            customermanagement.legalentity_read_own: Needed to read legal entities by customer.
+            customermanagement.legalentity_manage: Needed to manage legal entities.
+            customermanagement.contactassignment_read: Needed to read contact assignments.  
+            customermanagement.contactassignment_manage: Needed to manage contact assignments.
+            customermanagement.location_read: Needed to read locations.
+            customermanagement.location_manage: Needed to manage locations.
   examples:
     BadRequest400_AmbiguousTenant:
       value:
