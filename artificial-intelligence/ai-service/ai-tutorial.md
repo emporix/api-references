@@ -270,7 +270,7 @@ The following MIME types are supported:
 
 {% stepper %}
 {% step %}
-### Upload a file to the agent chat
+### Upload a file to an agent
 To upload a file to an agent, use the dedicated [Uploading attachments to agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat) endpoint. 
 
 ```bash
