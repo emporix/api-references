@@ -317,7 +317,7 @@ Authorize the request with a customer access token.
 
 ```bash
 curl -i -X GET \
-  'https://api.emporix.io/customer/{tenant}/logout?accessToken={{OAUTH2_ACCESS_TOKEN}}' \
+  'https://api.emporix.io/customer/{tenant}/logout?accessToken={{CUSTOMER_ACCESS_TOKEN}}' \
   -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
 ```
 
