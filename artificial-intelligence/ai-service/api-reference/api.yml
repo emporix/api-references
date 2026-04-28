@@ -396,7 +396,7 @@ paths:
         description: |
           ID of the agent which could use this attachment during chat process.
     post:
-      summary: Uploads attachments for agent chat
+      summary: Uploading attachments to agent chat
       operationId: POST-ai-agents-attachments
       responses:
         '201':

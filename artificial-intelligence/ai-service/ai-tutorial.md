@@ -60,7 +60,7 @@ You can generate the text by sending a request based on a provided prompt. To se
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/ai-service/{tenant}/texts' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \' 
   -H 'Content-Type: application/json' 
   -d '{
     "id": "en",
@@ -82,7 +82,7 @@ Completion is generated based on chat history. It's a generated response or cont
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/ai-service/{tenant}/completions' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \' 
   -H 'Content-Type: application/json' 
   -d '{
     "id": "abc-123",
@@ -184,7 +184,7 @@ curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat' \
 -H 'tenant: {tenant}' \
 -H 'scopes: ai.completion_manage' \
 -H 'Content-Type: application/json' \
--H 'Authorization: Basic {token}' \
+-H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
 -d '{
     "agentId": "de-agent",
     "message": "{\"id\":\"delightCoffee\",\"name\":{\"en\":\"Delight Coffee\"},\"yrn\":\"urn:yaas:saasag:caasproduct:product:{tenant};delightCoffee\",\"code\":\"delightCoffee\",\"description\":{\"en\":\"Awaken your senses with our hand-selected Gourmet Coffee, crafted for true coffee lovers who crave depth, aroma, and sophistication in every sip. Sourced from the world’s finest high-altitude farms, each bean is carefully harvested at peak ripeness, then small-batch roasted to unlock its natural sweetness and complex flavor notes.\"},\"media\":[],\"productType\":\"BASIC\",\"template\":{},\"published\":false,\"metadata\":{\"version\":1,\"createdAt\":\"2025-09-25T04:42:42.607Z\",\"modifiedAt\":\"2025-09-25T04:42:42.607Z\"}}"
@@ -230,7 +230,7 @@ In the above example, the German Translation Agent is triggered. The Agent acts 
 curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-async' \
 -H 'tenant: {tenant}' \
 -H 'Content-Type: application/json' \
--H 'Authorization: Basic {token}' \
+-H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
 -d '{
     "agentId": "complaint-agent",
     "message": Find the details of the customer order \"EON1243\"."
@@ -271,14 +271,45 @@ The following MIME types are supported:
 {% stepper %}
 {% step %}
 ### Upload a file to the agent chat
-To upload a file to the agent, use the dedicated [Uploading attachments to agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat) endpoint. 
+To upload a file to an agent, use the dedicated [Uploading attachments to agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat) endpoint. 
 
 ```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/{agentId}/attachments' \
+  --header 'Content-Type: multipart/form-data' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --form 'attachment=@order_request.pdf'
 
 ```
 
+Copy the returned `id` in the response to use it as the `attachmentId` in the subsequent chat request body.
 
+{% endstep %}
 
+{% step %}
+### Refer to the attachment in agent chat
+The agent has already access to the attached file. Now you can point to it and give additional instructions in the agent chat request. Call the agent, for example with the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) endpoint and include the upload `id` as the `attachmentId` parameter:
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/chat' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "agentId": "order-assistant-agent",
+    "message": "Find products or equivalents from the attached order request and create an order for the customer",
+    "attachments": [
+      {
+        "attachmentId": "325444342346",
+        "caption": "Order Request",
+        "purpose": "Serves as basis to create an order with the data, customer and products mentioned in the file."
+      }
+    ]
+  }'
+```
+
+The agent now can process the data according to its rules and code of conduct.
 {% endstep %}
 {% endstepper %}
 
@@ -303,7 +334,7 @@ Collect the `agentIds` you want to export, then call the [Exporting agents](http
 curl -L \
   --request POST \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/export' \
-  --header 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \' \
   --header 'Content-Type: application/json' \
   --data '{
     "agentIds": [
@@ -330,7 +361,7 @@ Use the payload obtained during export and call the [Importing agents](https://d
 curl -L \
   --request POST \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/import' \
-  --header 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Content-Type: application/json' \
   --data '{
     "data": "<BASE64_PAYLOAD_FROM_EXPORT>",
