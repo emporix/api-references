@@ -49,7 +49,7 @@ Crete a new customer by calling the [Creating a customer](https://developer.empo
 
 ```bash
 curl -X POST "https://api.emporix.io/customer/{tenant}/customers?sendPasswordResetNotifications=true" 
-  -H "Authorization: Bearer YOUR_OAUTH2_TOKEN" 
+  -H "Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}" 
   -H "Content-Type: application/json" 
   -d '{
     "contactEmail": "john.doe@emporix.com",
@@ -83,7 +83,7 @@ For example, update the customer's email:
 
 ```bash
 curl -X PUT "https://api.emporix.io/customer/mytenant/customers/{customerNumber}" 
-  -H "Authorization: Bearer YOUR_OAUTH2_TOKEN" 
+  -H "Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}" 
   -H "Content-Type: application/json" 
   -d '{
     "contactEmail": "john.updated@emporix.com",
@@ -101,7 +101,7 @@ To add an address to the customer's profile, call the [Adding a customer address
 
 ```bash
 curl -X POST "https://api.emporix.io/customer/{tenant}/customers/{customerNumber}/addresses" 
-  -H "Authorization: Bearer YOUR_OAUTH2_TOKEN" 
+  -H "Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}" 
   -H "Content-Type: application/json" 
   -d '{
     "contactName": "John Doe",
@@ -135,7 +135,7 @@ To add any tags to the address for easier address management, send the request t
 
 ```bash
 curl -X POST "https://api.emporix.io/customer/{tenant}/customers/{customerNumber}/addresses/{addressId}/tags?tags=PRIMARY_CONTACT" \
-  -H "Authorization: Bearer YOUR_OAUTH2_TOKEN"
+  -H "Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}"
 ```
 
 {% hint style="info" %}
@@ -150,7 +150,7 @@ As the customer's account preparation is complete, activate their account. To do
 
 ```bash
 curl -X PATCH "https://api.emporix.io/customer/{tenant}/customers/{customerNumber}" 
-  -H "Authorization: Bearer YOUR_OAUTH2_TOKEN" 
+  -H "Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}" 
   -H "Content-Type: application/json" 
   -d '{
     "active": true,
@@ -165,7 +165,7 @@ Verify the customer's details assigned to their profile by calling the [Retrievi
 
 ```bash
 curl -X GET "https://api.emporix.io/customer/{tenant}/customers/{customerNimber}?expand=addresses,accounts" 
-  -H "Authorization: Bearer YOUR_OAUTH2_TOKEN"
+  -H "Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}"
 ```
 
 Example successful response includes all the assigned details:

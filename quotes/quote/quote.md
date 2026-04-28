@@ -149,7 +149,7 @@ If you need custom quote status change reasons, create them by sending a request
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/quote/{tenant}/quote-reasons' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: de' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -192,7 +192,7 @@ The following scope is required:
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 {% endstep %}
 
@@ -210,7 +210,7 @@ The following scope is required:
 ```bash
 curl -i -X PATCH 
   'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "active": true
@@ -228,7 +228,7 @@ You can create new quote status change reasons, by sending a request to the [Cre
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/quote/{tenant}/quote-reasons' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: de' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -276,7 +276,7 @@ The customer can place a quote request on the storefront only if they have creat
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/quote/{tenant}/quotes' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "cartId": "4472v8d2309b06d46d3cf19fe",
@@ -312,7 +312,7 @@ The following scope is required:
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/quote/{tenant}/quotes' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "customerId": "9tt954309b06d46d3cf19fe",
@@ -390,7 +390,7 @@ In this example, an employee updates multiple fields:
 curl -L 
   --request PATCH 
   --url 'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '[
     {
@@ -459,7 +459,7 @@ In the following example, an employee updates only the price of requested item:
 curl -L 
   --request PATCH 
   --url 'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '[
     {
@@ -485,7 +485,7 @@ The following scope is required:
 ```bash
 curl -i -X PATCH 
   'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "op": "replace",
@@ -511,7 +511,7 @@ The following scope is required:
 
 curl -i -X PATCH 
   'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "op": "replace",
@@ -540,7 +540,7 @@ In this example, a customer receives a quote and decides to decline it because t
 ```bash
 curl -i -X PATCH 
   'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "op": "replace",
@@ -649,7 +649,7 @@ To generate a quote pdf, send a request to the [Creating a quote PDF](https://de
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}/pdf' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
  

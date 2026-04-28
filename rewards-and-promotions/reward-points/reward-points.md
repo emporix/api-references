@@ -30,7 +30,7 @@ The following scope is required: `site.site_manage`.
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 ### Update the reward points settings for a site
@@ -61,7 +61,7 @@ The following scope is required: `site.site_manage`.
 ```bash
 curl -i -X PATCH 
   'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "active": true
@@ -93,7 +93,7 @@ The following scope is required: `rewardspoints.rewardpoints_manage`.
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/reward-points/customer/{customerId}/addPoints?siteCode=main' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "id": "12345fee-0b83-48aa-95dc-11e3dcf84aaa",
@@ -124,7 +124,7 @@ To achieve that, you must send a request to the [Creating redemption options](ht
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/reward-points/{tenant}/redeemOptions' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "type": "coupon",
@@ -163,7 +163,7 @@ If the customer wants to redeem reward points in exchange for a coupon, first th
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/reward-points/{tenant}/redeemOptions' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 ### Redeem reward points for a coupon code
@@ -183,7 +183,7 @@ Reward points can only be exchanged for percentage and absolute coupons.
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/reward-points/public/customer/redeem?siteCode=main' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "id": "575937654bf757001d8496c9"
@@ -209,6 +209,6 @@ To check the reward points balance and history, the customer sends a request to 
 ```bash
 curl -i -X GET 
   https://api.emporix.io/reward-points/public/customer/summary 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
  

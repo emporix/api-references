@@ -28,7 +28,7 @@ In the following example, we are changing the expiration date offset to 14 days.
 ```bash
 curl -i -X PUT 
   'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "key": "return.defaultExpiryDate",
@@ -81,7 +81,7 @@ The `returns.returns_read` and `returns.returns_manage` scopes are only required
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/return/{tenant}/returns' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -H 'saas-token: string' 
   -d '{
@@ -147,7 +147,7 @@ The `returns.returns_read_own` and `returns.returns_manage_own` scopes are only 
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/return/{tenant}/returns' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -H 'saas-token: string' 
   -d '{
@@ -219,7 +219,7 @@ In this scenario, the customer updates the reason for the return.
 ```bash
 curl -i -X PUT 
   'https://api.emporix.io/return/{tenant}/returns/{returnId}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -H 'saas-token: string' 
   -d '{
@@ -283,7 +283,7 @@ In this scenario, the employee updates the approval status of the return request
 ```bash
 curl -i -X PUT 
   'https://api.emporix.io/return/{tenant}/returns/{returnId}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -H 'saas-token: string' 
   -d '{

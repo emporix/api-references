@@ -45,7 +45,7 @@ Here's an example on how to create a measurement unit with its name in German:
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/unit-handling/{tenant}/units' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Language: de' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -71,7 +71,7 @@ Here's an example on how to create a measurement unit with its name in multiple 
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/unit-handling/{tenant}/units' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Language: *' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -94,7 +94,7 @@ Here's an example on how to retrieve a product's localized fields in German:
 curl -i -X GET \
   'https://api.emporix.io/product/{tenant}/products/{productId}?fields=name%2Ccode&expand=string&rawValue=true' \
   -H 'Accept-Language: de' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 ## How to retrieve a localized object in all available languages
@@ -107,7 +107,7 @@ Here's an example on how to retrieve a product's localized fields in all availab
 curl -i -X GET \
   'https://api.emporix.io/product/{tenant}/products/{productId}?fields=name%2Ccode&expand=string&rawValue=true' \
   -H 'Accept-Language: *' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 ## How to add localized fields to an existing object
@@ -123,7 +123,7 @@ Here's an example on how to add translations to a measurement unit's name:
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/unit-handling/{tenant}/units/{unitCode}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Language: fr' \
   -H 'Content-Type: application/json' \
   -d '{
