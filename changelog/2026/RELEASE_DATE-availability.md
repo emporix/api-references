@@ -21,10 +21,10 @@ The Availability Service has been updated with support for the standard Q-param 
 
 ## Updated endpoints
 
-| Endpoint                                                                                                                                                                                 | Description                                                                                                                                         |
-|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Retrieving all availability information for a site](https://developer.emporix.io/api-references-1/readme/api-reference-2/availabilities#get-availability-tenant-availability-site-site) | The response now includes the `X-Total-Count` header. Added support for the standard `q` query parameter.                                           |
-| [Retrieving product availabilities](https://developer.emporix.io/api-references-1/readme/api-reference-2/availabilities#post-availability-tenant-availability-search)                    | The response now includes the `X-Total-Count` header. Added support for the standard `q` request body attribute as an alternative filtering method. |
+| Endpoint                                                                                                                                                                                                     | Description                                                                                                                                         |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Retrieving all availability information for a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-site-site) | The response now includes the `X-Total-Count` header. Added support for the standard `q` query parameter.                                           |
+| [Retrieving product availabilities](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search)                                        | The response now includes the `X-Total-Count` header. Added support for the standard `q` request body attribute as an alternative filtering method. |
 
 ## Known problems
 
