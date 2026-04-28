@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# RELEASE_DATE: Availability Service - Q-param support, total count header and search improvements
+# 2026-04-28: Availability Service - Q-param support, total count header and search improvements
 
 ## Overview
 
