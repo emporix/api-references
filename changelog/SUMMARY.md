@@ -8,7 +8,7 @@
 
 ## 2026
 
-* [RELEASE_DATE: Availability Service - Q-param support, total count header and search improvements](2026/RELEASE_DATE-availability.md)
+* [2026-04-28: Availability Service - Q-param support, total count header and search improvements](2026/2026-04-28-availability.md)
 * [2026-04-27: Product Service – dynamic variant product type and recalculation](2026/2026-04-27-product.md)
 * [2026-04-27: Customer Service - contactEmail field cannot be unset once a value is present](2026/2026-04-27-customer.md)
 * [2026-04-27: Client Management Service - customer group role in Legal Entities](2026/2026-04-27-client-management.md)
