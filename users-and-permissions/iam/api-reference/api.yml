@@ -631,7 +631,6 @@ paths:
       description: |
         Retrieves all scopes for the tenant. Results can be filtered and sorted using query parameters.
 
-        **Note:** Currently this endpoint returns only user-created custom scopes. Predefined scopes are not included yet.
       operationId: GET-iam-list-tenant-scopes
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -701,7 +700,6 @@ paths:
       description: |
         Retrieves details of a specified scope.
 
-        **Note:** Currently this endpoint returns only user-created custom scopes. Predefined scopes are not included yet.
       operationId: GET-iam-retrieve-scope
       parameters:
         - $ref: '#/components/parameters/trait_acceptLanguage_header'
