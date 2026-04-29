@@ -60,7 +60,7 @@ You can generate the text by sending a request based on a provided prompt. To se
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/ai-service/{tenant}/texts' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \' 
   -H 'Content-Type: application/json' 
   -d '{
     "id": "en",
@@ -82,7 +82,7 @@ Completion is generated based on chat history. It's a generated response or cont
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/ai-service/{tenant}/completions' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \' 
   -H 'Content-Type: application/json' 
   -d '{
     "id": "abc-123",
@@ -95,10 +95,6 @@ curl -i -X POST
   }'
 ```
 
-{% hint style="info" %}
-To see some more examples of using AI at Emporix, check our guides for Management Dashboard - [Powered by AI](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/ai-intro/ai-config).
-{% endhint %}
-
 ## How to create an AI agent using a template
 
 Create an AI agent using one of Emporix agent template.
@@ -107,7 +103,7 @@ Create an AI agent using one of Emporix agent template.
 
 To create an agent, you'll need a template ID.
 
-* Either, retrieve all the available agent templates by calling the [Listing available agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template) endpoint.
+* Either, retrieve all the available agent templates by calling the [Listing available agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#get-ai-service-tenant-agentic-templates) endpoint.
 
 ```bash
 curl -L \
@@ -115,7 +111,7 @@ curl -L \
   --header 'Accept: */*'
 ```
 
-* Use the [Searching agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template) endpoint to find the specific agent template.
+* Use the [Searching agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#post-ai-service-tenant-agentic-templates-search) endpoint to find the specific agent template.
 
 ```bash
 curl -L \
@@ -131,7 +127,7 @@ Copy and note down the template ID of your interest.
 
 #### Create an agent
 
-Call the [Creating agent instance based on the template](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template) endpoint to add an agent to your system. In the path parameter, provide the `templateID` you have copied.
+Call the [Creating agent instance based on the template](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#post-ai-service-tenant-agentic-templates-templateid-agent) endpoint to add an agent to your system. In the path parameter, provide the `templateID` you have copied.
 
 ```bash
 curl -L \
@@ -153,7 +149,7 @@ curl -L \
 
 When you want to add a trigger for an enabled AI agent through API, for example as a part of a digital process or from an external system, you need to fetch the specific agent details.
 
-* Use the [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/search) endpoint to pass a query parameter against the agents in your system.
+* Use the [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) endpoint to pass a query parameter against the agents in your system.
 
 For example, to find agents of `Complaint` type:
 
@@ -167,7 +163,7 @@ curl -L \
   }'
 ```
 
-* If you know the agent's ID, you can use the [Retrieving the agent by ID](ai-tutorial.md) endpoint.
+* If you know the agent's ID, you can use the [Retrieving the agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) endpoint.
 
 ```bash
 curl -L \
@@ -181,14 +177,14 @@ You can use the retrieved details to establish the required connections and trig
 
 For some Agents, it is convenient to trigger their actions by API calls. To allow communication with the selected agent, you can use the dedicated endpoints.
 
-* When instant responses are required from the agent, send the request to the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/chat)
+* When instant responses are required from the agent, send the request to the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat)
 
 ```bash
 curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat' \
 -H 'tenant: {tenant}' \
 -H 'scopes: ai.completion_manage' \
 -H 'Content-Type: application/json' \
--H 'Authorization: Basic {token}' \
+-H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
 -d '{
     "agentId": "de-agent",
     "message": "{\"id\":\"delightCoffee\",\"name\":{\"en\":\"Delight Coffee\"},\"yrn\":\"urn:yaas:saasag:caasproduct:product:{tenant};delightCoffee\",\"code\":\"delightCoffee\",\"description\":{\"en\":\"Awaken your senses with our hand-selected Gourmet Coffee, crafted for true coffee lovers who crave depth, aroma, and sophistication in every sip. Sourced from the world’s finest high-altitude farms, each bean is carefully harvested at peak ripeness, then small-batch roasted to unlock its natural sweetness and complex flavor notes.\"},\"media\":[],\"productType\":\"BASIC\",\"template\":{},\"published\":false,\"metadata\":{\"version\":1,\"createdAt\":\"2025-09-25T04:42:42.607Z\",\"modifiedAt\":\"2025-09-25T04:42:42.607Z\"}}"
@@ -228,13 +224,13 @@ In the above example, the German Translation Agent is triggered. The Agent acts 
 }
 ```
 
-* When it is more pragmatic to wait for the agent's response, for example, when the agent needs to process more data which takes more time, or the agent needs to wait for another task to be completed, use the asynchronous communication. Send the request to the agent using the [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/chat-async).
+* When it is more pragmatic to wait for the agent's response, for example, when the agent needs to process more data which takes more time, or the agent needs to wait for another task to be completed, use the asynchronous communication. Send the request to the agent using the [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async).
 
 ```bash
 curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-async' \
 -H 'tenant: {tenant}' \
 -H 'Content-Type: application/json' \
--H 'Authorization: Basic {token}' \
+-H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
 -d '{
     "agentId": "complaint-agent",
     "message": Find the details of the customer order \"EON1243\"."
@@ -251,7 +247,7 @@ In async requests, the response contains the `jobId` parameter, for example:
 }
 ```
 
-Use the `jobId` to check details of the job through the [Retrieving agent job by its ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/jobs) endpoint. For example:
+Use the `jobId` to check details of the job through the [Retrieving agent job by its ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid) endpoint. For example:
 
 ```bash
 curl -X 'GET' \
@@ -260,6 +256,62 @@ curl -X 'GET' \
 ```
 
 The job entity contains information about the request and response from the agent.
+
+## How to pass a media file for the agents to process
+
+Agents are able to retrieve data from media attachments and use that data to execute some steps or pass it over to other agents to process. You can attach media files and then use them in the agent chat. 
+
+The following MIME types are supported:
+* image/jpeg
+* image/png
+* application/pdf
+* text/csv
+* text/plain
+
+{% stepper %}
+{% step %}
+### Upload a file to an agent
+To upload a file to an agent, use the dedicated [Uploading attachments to agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat) endpoint. 
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/{agentId}/attachments' \
+  --header 'Content-Type: multipart/form-data' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --form 'attachment=@order_request.pdf'
+
+```
+
+Copy the returned `id` in the response to use it as the `attachmentId` in the subsequent chat request body.
+
+{% endstep %}
+
+{% step %}
+### Refer to the attachment in agent chat
+The agent has already access to the attached file. Now you can point to it and give additional instructions in the agent chat request. Call the agent, for example with the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) endpoint and include the upload `id` as the `attachmentId` parameter:
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/chat' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "agentId": "order-assistant-agent",
+    "message": "Find products or equivalents from the attached order request and create an order for the customer",
+    "attachments": [
+      {
+        "attachmentId": "325444342346",
+        "caption": "Order Request",
+        "purpose": "Serves as basis to create an order with the data, customer and products mentioned in the file."
+      }
+    ]
+  }'
+```
+
+The agent now can process the data according to its rules and code of conduct.
+{% endstep %}
+{% endstepper %}
 
 ## How to export and import AI agents
 
@@ -282,7 +334,7 @@ Collect the `agentIds` you want to export, then call the [Exporting agents](http
 curl -L \
   --request POST \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/export' \
-  --header 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \' \
   --header 'Content-Type: application/json' \
   --data '{
     "agentIds": [
@@ -309,7 +361,7 @@ Use the payload obtained during export and call the [Importing agents](https://d
 curl -L \
   --request POST \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/import' \
-  --header 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Content-Type: application/json' \
   --data '{
     "data": "<BASE64_PAYLOAD_FROM_EXPORT>",
