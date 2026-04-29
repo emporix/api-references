@@ -11,36 +11,133 @@ icon: webhook
 ## Available events
 
 <table><thead><tr><th>Event type</th><th>Event schema</th></tr></thead><tbody><tr><td>index-item.updated</td><td><pre class="language-json"><code class="lang-json">{
-  "availability": {},
-  "available": "Boolean",
-  "categoryAssignments": [
-    {
       "id": "String",
-      "localizedName": "Map",
-      "name": "String",
-      "parent": {}
-    }
-  ],
-  "code": "String",
-  "description": "Map",
-  "id": "String",
-  "medias": [
-   {
-    "mainImage": "Boolean",
-    "url": "String"
-   }
-  ],
-  "mixins": "Map",
-  "name": {
-    "name" : "Map"
-  },
-  "popularity": "Number",
-  "prices": [
-    {}
-  ],
-  "published": "Boolean",
-  "siteCode": "String",
-  "tags": ["String"]
+      "code": "String",
+      "siteCode": "String",
+      "name": "Object",
+      "description": "Object",
+      "categoryAssignments": [
+        {
+          "id": "String",
+          "code": "String",
+          "name": "String",
+          "localizedName": "Object",
+          "localizedSlug": "Object",
+          "parent": "Object"
+        }
+      ],
+      "tags": [
+        "String"
+      ],
+      "segmentIds": [
+        "String"
+      ],
+      "popularity": "Integer",
+      "prices": [
+        {
+          "id": "String"
+        }
+      ],
+      "medias": [
+        {
+          "url": "String"
+        }
+      ],
+      "availability": "Object",
+      "mixins": "Map",
+      "published": "Boolean",
+      "available": "Boolean",
+      "relatedItems": [
+        {
+          "refId": "String",
+          "type": "String"
+        }
+      ],
+      "productType": "String",
+      "parentVariantId": "String",
+      "labels": [
+        {
+          "id": "String",
+          "name": "String",
+          "description": "LocalizedString",
+          "image": "String",
+          "cloudinaryUrl": "String",
+          "mediaId": "String",
+          "overlay": {
+            "isTrue": "Boolean",
+            "position": "Integer"
+          }
+        }
+      ],
+      "brand": {
+        "id": "String",
+        "name": "String",
+        "description": "String",
+        "localizedName": "Object",
+        "localizedDescription": "Object",
+        "image": "String",
+        "cloudinaryUrl": "String",
+        "mediaId": "String"
+      },
+      "ownVariantAttributes": {
+        "attributeKey": {
+          "name": "Object",
+          "value": {
+            "type": "String",
+            "qualifier": "Object",
+            "name": "LocalizedString",
+            "unit": "String"
+          }
+        }
+      },
+      "inheritedVariantAttributes": {
+        "attributeKey": {
+          "name": "LocalizedString",
+          "value": {
+            "type": "String",
+            "qualifier": "Object",
+            "name": "LocalizedString",
+            "unit": "String"
+          }
+        }
+      },
+      "dynamicVariantType": "String",
+      "vendor": {
+        "id": "String",
+        "name": "String"
+      },
+      "variants": {
+        "variantId": {
+          "version": "Integer",
+          "name": "LocalizedString",
+          "parentVariantId": "String",
+          "sellable": "Boolean",
+          "published": "Boolean",
+          "dynamicVariantType": "String",
+          "variantAttributes": {
+            "attributeKey": {
+              "name": "LocalizedString",
+              "value": {
+                "type": "String",
+                "qualifier": "Object",
+                "name": "LocalizedString",
+                "unit": "String"
+              }
+            }
+          }
+        }
+      },
+      "sellable": "Boolean",
+      "sitePrices": {
+        "siteCode": [
+          {
+            "id": "String"
+          }
+        ]
+      },
+      "siteAvailabilities": {
+        "siteCode": "Object"
+      }
 }
 </code></pre></td></tr><tr><td>index-item.deleted</td><td><pre class="language-json"><code class="lang-json">{
   "id": "String",
