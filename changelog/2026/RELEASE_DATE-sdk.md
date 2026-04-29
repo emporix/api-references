@@ -17,7 +17,7 @@ layout:
 
 ## Overview
 
-A new `1.2.3` version of the Emporix SDK has been released with multi-tenant support.
+A new `1.2.4` version of the Emporix SDK has been released with multi-tenant support.
 
 The SDK now supports running **multiple Emporix tenants within a single JVM**. This is useful when your application needs to communicate with different Emporix environments (e.g., QA, staging, production) or different tenant accounts simultaneously.
 
