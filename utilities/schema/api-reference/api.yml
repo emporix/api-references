@@ -18,7 +18,7 @@ paths:
       summary: Creating a schema
       description: |
         Creates a schema entity and generates json-schema representation which is then uploaded to cloudinary repository.
-        
+
       operationId: POST-schema-create-schema
       requestBody:
         content:
@@ -227,7 +227,7 @@ paths:
           in: query
           description: |
             Filters schemas by type. Possible types to specify, CART, CART_ITEM, CATEGORY, COMPANY, COUPON, CUSTOMER, CUSTOMER.ADDRESS, ORDER, ORDER_ENTRY, PRODUCT, QUOTE, RETURN, PRICE_LIST, SITE, CUSTOM_ENTITY, VENDOR. When the newest version of the schema is of different type than the previous one and the previous one matches the type specified in this query param, then the previous version is returned.
-# DEV NOTE: If you add another type, the tutorial and MD guides have to be updated as well.
+          # DEV NOTE: If you add another type, the tutorial and MD guides have to be updated as well.
           schema:
             type: string
   '/schema/{tenant}/schemas/{id}':
@@ -281,7 +281,7 @@ paths:
       summary: Updating a schema
       description: |-
         Updates a single schema. Each update releases a new version of json schema file.
-        
+
       tags:
         - Schema
       requestBody:
@@ -360,7 +360,7 @@ paths:
       summary: Updating types of a schema
       description: |-
         Updates assigned types to the schema. It's allowed to change the assigned types to the newest schema as well as to the previous versions of the schema. This operation does not generate a new version of the schema.
-        
+
       tags:
         - Type
       requestBody:
@@ -479,7 +479,7 @@ paths:
       summary: Creating a reference
       description: |
         Creates a reference entity and uploads provided file to the cloudinary repository.
-        
+
       operationId: POST-schema-create-reference
       requestBody:
         content:
@@ -620,7 +620,7 @@ paths:
       summary: Deleting a reference
       description: |-
         Deletes a single reference. It deletes just a database entry. The cloudinary reference file remains untouched.
-        
+
       tags:
         - Reference
       responses:
@@ -638,7 +638,7 @@ paths:
       summary: Updating a reference
       description: |-
         Updates a single reference.
-        
+
       tags:
         - Reference
       requestBody:
@@ -699,7 +699,7 @@ paths:
         Creates a custom type entity that can be later used for creating custom instances.
 
         **Note**: When a custom entity type is created, a set of custom scopes is created, which allow managing custom instances of that type.
-        
+
       operationId: POST-schema-create-custom-schema-type
       requestBody:
         content:
@@ -833,7 +833,7 @@ paths:
         Deletes a single custom type. This operation will fail if there are schemas or custom instances assigned to this custom type.
 
         **Note**: Removing a custom entity type does not remove the custom scopes that were created when the type was added. Those scopes remain in the system until you remove them manually, if needed.
-        
+
       tags:
         - Custom Schema Type
       responses:
@@ -865,7 +865,7 @@ paths:
         Performs the `UPSERT` operation. If a custom schema type with specified ID exists in the system, then it is updated. If it doesn't exist, a new type is created.
 
         **Note**: When a custom entity type is created, a set of custom scopes is created, which allow managing custom instances of that type.
-        
+
       tags:
         - Custom Schema Type
       requestBody:
@@ -926,7 +926,7 @@ paths:
         - $ref: '#/components/parameters/trait_validateReferences'
       description: |
         Creates a custom instance entity associated with given custom schema type.
-        
+
       operationId: POST-schema-create-custom-instance
       requestBody:
         content:
@@ -996,7 +996,7 @@ paths:
       summary: Retrieving all custom instances
       description: |-
         Retrieves all custom instances associated with a specific custom schema type.
-        
+
       tags:
         - Custom Instance
       responses:
@@ -1142,7 +1142,7 @@ paths:
         - $ref: '#/components/parameters/trait_expand_references'
       description: |-
         Retrieves a single custom instance by id.
-        
+
       tags:
         - Custom Instance
       responses:
@@ -1251,7 +1251,7 @@ paths:
       summary: Deleting a custom instance
       description: |-
         Deletes a custom instance.
-        
+
       tags:
         - Custom Instance
       responses:
@@ -1274,7 +1274,7 @@ paths:
         - $ref: '#/components/parameters/trait_validateReferences'
       description: |-
         Performs the `UPSERT` operation. If a custom instance with specified ID exists in the system, then it is updated. If it doesn't exist, a new custom instance is created.
-        
+
       tags:
         - Custom Instance
       requestBody:
@@ -1339,7 +1339,7 @@ paths:
         - $ref: '#/components/parameters/trait_validateReferences'
       description: |-
         The patch request consists of set of operation, that should be defined according to [RFC-6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.
-        
+
       tags:
         - Custom Instance
       requestBody:
@@ -1392,7 +1392,7 @@ paths:
       summary: Searching for custom instances
       description: |-
         Returns all custom instances for provided type that match specified criteria.
-        
+
       tags:
         - Custom Instance
       requestBody:
@@ -1655,7 +1655,7 @@ paths:
         The IDs of items should be defined in the request body as an array of strings.
         
         **Example**: `["firstId", "secondId", "thirdId"]`
-        
+
       tags:
         - Custom Instance
       responses:
@@ -1682,6 +1682,103 @@ paths:
             - schema.custominstance_manage
             - 'custom.{lowerCaseType}_manage'
             - 'custom.{lowerCaseType}_manage_own'
+  '/schema/{tenant}/custom-entities/export':
+    parameters:
+      - $ref: '#/components/parameters/tenant'
+    post:
+      tags:
+        - Export / Import
+      summary: Exporting Custom Entities
+      description: |
+        Exports custom entities with corresponding schemas.
+      operationId: POST-schema-export
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+            example:
+              - CUSTOM_PRODUCT
+              - MANUFACTURER
+              - CAR
+      responses:
+        '200':
+          description: The request was successful.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportImport'
+              example:
+                exportedAt: "2026-04-29T07:05:18.857291343Z"
+                content: MQUlOVF9BR0VOVF9DT05URVhUIl19XX1dfQ==
+        '400':
+          $ref: '#/components/responses/Bad_request_400_cl'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          description: Permission denied due to insufficient rights. This may happen when the request does not contain sufficient scopes for the given query values.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Forbidden:
+                  value:
+                    code: 403
+                    status: Forbidden
+                    message: You need to choose the required scope to complete this action.
+                    details:
+                      - message: 'Required scope(s): schema.schema_manage'
+      security:
+        - OAuth2:
+            - schema.schema_manage
+  '/schema/{tenant}/custom-entities/import':
+    parameters:
+      - $ref: '#/components/parameters/tenant'
+    post:
+      tags:
+        - Export / Import
+      summary: Importing Custom Entities
+      description: |
+        Imports custom entities with corresponding schemas.
+        
+        
+        **Note**: If given `Custom Entity Type` or `Schema` already exists then it will be created with `_COPY` suffix. For example, `CUSTOM_PRODUCT` will be created as `CUSTOM_PRODUCT_COPY`.
+      operationId: POST-schema-import
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportImport'
+            example:
+              exportedAt: "2026-04-29T07:05:18.857291343Z"
+              content: MQUlOVF9BR0VOVF9DT05URVhUIl19XX1dfQ==
+      responses:
+        '204':
+          description: 'No content'
+        '400':
+          $ref: '#/components/responses/Bad_request_400_cl'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          description: Permission denied due to insufficient rights. This may happen when the request does not contain sufficient scopes for the given query values.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Forbidden:
+                  value:
+                    code: 403
+                    status: Forbidden
+                    message: You need to choose the required scope to complete this action.
+                    details:
+                      - message: 'Required scope(s): schema.schema_manage'
+      security:
+        - OAuth2:
+            - schema.schema_manage
 components:
   examples:
     SchemaFileResponse:
@@ -1801,6 +1898,17 @@ components:
             createdAt: "2023-08-10T10:15:30.123Z"
             modifiedAt: "2023-08-10T10:15:30.123Z"
   schemas:
+    ExportImport:
+      type: object
+      properties:
+        exportedAt:
+          type: string
+          description: 'Date and time when the object was created, compliant with the ISO 8601 standard. For example: `2022-03-31T09:52:15.423Z`'
+        content:
+          type: string
+          description: Base64 representation of custom entities with corresponding schemas.
+      required:
+        - content
     ErrorResponse:
       required:
         - code
