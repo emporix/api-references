@@ -1,5 +1,5 @@
 ---
-icon: circle-plus
+icon: wand-sparkles
 layout:
   title:
     visible: true
@@ -17,7 +17,7 @@ layout:
 
 ## Overview
 
-Product responses can now be enriched with **expanded brand and label data** using the `expand` query parameter.
+Product responses can now be enriched with expanded brand and label data using the `expand` query parameter.
 
 ## Modified behavior
 
@@ -27,18 +27,19 @@ When requesting product data, you can now use:
 - `expand=labels` to include a `labels` array expanded from `labelIds`
 - multiple values can be combined, for example: `expand=template,parentVariant,brand,labels`
 
-## Schema updates
-
-The product response schemas were extended with:
-
-- `brand` (expanded object)
-- `labels` (expanded array)
+## Schema changes
 
 New schemas were added:
 
 - `brand`
 - `label`
 - `labelOverlay`
+
+The product response schemas were extended with:
+
+- `brand` (expanded object)
+- `labels` (expanded array)
+
 
 ## Known problems
 

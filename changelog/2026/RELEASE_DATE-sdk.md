@@ -1,5 +1,5 @@
 ---
-icon: sparkles
+icon: wand-sparkles
 layout:
   title:
     visible: true
@@ -19,7 +19,7 @@ layout:
 
 A new `1.2.4` version of the Emporix SDK has been released with multi-tenant support.
 
-The SDK now supports running **multiple Emporix tenants within a single JVM**. This is useful when your application needs to communicate with different Emporix environments (e.g., QA, staging, production) or different tenant accounts simultaneously.
+The SDK now supports running **multiple Emporix tenants within a single JVM**. This is useful when your application needs to communicate with different Emporix environments (for example, QA, staging, production) or different tenant accounts simultaneously.
 
 When additional tenants are configured, the SDK automatically creates a full bean stack for each tenant — including `EmporixProperties`, `EmporixClientFactory`, `EmporixTokenService`, and all API clients. These beans are injected using Spring's `@Qualifier` annotation with the tenant key as the qualifier value.
 
@@ -32,3 +32,7 @@ When additional tenants are configured, the SDK automatically creates a full bea
 | Custom credentials per tenant | Custom OAuth2 credentials can be defined per tenant, with fallback to the default custom credentials. |
 | Startup validation | The SDK validates multi-tenant configuration at startup and fails fast with descriptive error messages if rules are violated. |
 | Non-intrusive design | Tenant-specific beans are non-default candidates, so they never interfere with unqualified injection or user-provided `@Primary` overrides. |
+
+## Known problems
+
+There are no known problems.

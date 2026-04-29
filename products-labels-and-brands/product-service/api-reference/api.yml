@@ -3816,7 +3816,7 @@ components:
       schema:
         type: string
       description: |
-        Fields that should be expanded with additional information in the response body. Expressed as strings separated by commas. You can combine multiple values, for example `expand=template,parentVariant,brand,labels`.
+        Fields that should be expanded with additional information in the response body. Expressed as strings separated by commas. You can combine multiple values, for example: `expand=template,parentVariant,brand,labels`.
 
         Possible values:
           * `template`
