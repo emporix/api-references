@@ -7,6 +7,7 @@
 * [Current work in progress](in-progress/in-progress.md)
 
 ## 2026
+* [RELEASE_DATE: Product Service - expand brand and labels in product responses](2026/RELEASE_DATE-product-service-expand-brand-labels.md)
 * [RELEASE_DATE: Webhook Events - updated `index-item.updated` event schema](2026/RELEASE_DATE-webhook-index-item-updated.md)
 * [2026-04-29: Emporix SDK - Multi-tenant support](2026/2026-04-29-sdk.md)
 * [2026-04-28: Availability Service - Q-param support, total count header and search improvements](2026/2026-04-28-availability.md)
