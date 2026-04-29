@@ -111,6 +111,7 @@ icon: webhook
           "version": "Integer",
           "name": "LocalizedString",
           "parentVariantId": "String",
+          "code": "String",
           "sellable": "Boolean",
           "published": "Boolean",
           "dynamicVariantType": "String",

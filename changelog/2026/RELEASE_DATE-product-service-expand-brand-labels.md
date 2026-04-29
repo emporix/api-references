@@ -34,12 +34,6 @@ The product response schemas were extended with:
 - `brand` (expanded object)
 - `labels` (expanded array)
 
-New schemas were added:
-
-- `brand`
-- `label`
-- `labelOverlay`
-
 ## Known problems
 
 There are no known problems.

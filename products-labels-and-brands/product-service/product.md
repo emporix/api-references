@@ -965,7 +965,7 @@ Dynamic variants are designed for catalogs where the variant structure is not kn
 | **No template required** | Each variant defines its own attributes directly on the product. You can introduce new attribute dimensions at any level without modifying a shared template. |
 | **Order-independent ingestion** | Variants can be created in any order - a child can exist before its parent. This is essential for bulk catalog imports where the full tree is not available in a single pass. After the import completes, a single recalculation call rebuilds the entire tree. |
 | **Single API call for the storefront** | Fetching the root product returns a `variants` map containing every descendant with fully accumulated attributes - parent attributes merged into child entries. The storefront never needs to make additional calls to resolve the complete attribute combination for a sellable variant. |
-| **Ready-to-render variant selectors** | The `variants` map on the root product is a flat map keyed by variant ID. Each entry carries `variantAttributes` (accumulated), `name` (localized), `sellable`, `dynamicVariantType`, and `parentVariantId`. This gives your product page everything it needs to render multi-step variant selectors (for example, "Storage -> Color -> Bundle") without any client-side tree reconstruction. |
+| **Ready-to-render variant selectors** | The `variants` map on the root product is a flat map keyed by variant ID. Each entry carries `variantAttributes` (accumulated), `name` (localized), `code` (the variant product code), `sellable`, `dynamicVariantType`, and `parentVariantId`. This gives your product page everything it needs to render multi-step variant selectors (for example, "Storage -> Color -> Bundle") without any client-side tree reconstruction. |
 | **Delta storage, no cascading writes** | Each variant stores only the attributes it introduces at its own level (`ownVariantAttributes`). Changing a mid-level variant attribute updates only that variant's entry on each ancestor. |
 | **Hierarchy integrity signals** | The `metadata.dynamicVariantInfo` field on any product response surfaces broken chains (`missingAncestorId`) or circular references (`cycleDetected`) so you can detect and fix data issues proactively. |
 
@@ -1137,6 +1137,7 @@ The response includes a `variants` map ready for your storefront:
   "variants": {
     "mobile-15-pro-l1": {
       "version": 1,
+      "code": "MOBILE-15-PRO-L1",
       "name": { "en": "Mobile Phone 15 Pro – 256 GB Blue" },
       "parentVariantId": "mobile-15-pro",
       "sellable": false,
@@ -1158,6 +1159,7 @@ The response includes a `variants` map ready for your storefront:
     },
     "mobile-15-pro-l2-retail": {
       "version": 1,
+      "code": "MOBILE-15-PRO-L2-RETAIL",
       "name": { "en": "Mobile Phone 15 Pro – 256 GB Blue – Retail box" },
       "parentVariantId": "mobile-15-pro-l1",
       "sellable": true,
@@ -1185,6 +1187,8 @@ The response includes a `variants` map ready for your storefront:
 }
 ```
 
+Each entry in `variants` includes `code` — the same business code as on the corresponding variant product (for example `MOBILE-15-PRO-L1` matches the L1 product created earlier).
+
 Notice that `mobile-15-pro-l2-retail` (L2) already contains `storageCapacity`, `colorFinish`, and `displaySize` from its L1 parent - even though those attributes are not stored on the L2 product itself.
 
 {% endstep %}
@@ -1205,6 +1209,7 @@ The `variants` map gives your product page everything it needs to build a varian
 3. Read `variantAttributes` on each entry to render the selector labels and values - all attributes are already accumulated, so an L2 entry shows all dimensions the customer needs to see.
 4. Check `sellable: true` to identify which variants can be added to a cart. Non-sellable intermediate variants are grouping nodes only.
 5. Use `name` (localized) for display in search results, breadcrumbs, or option labels.
+6. Use `code` for the variant product business code (for example cart lines, pricing, or integrations that key on SKU-style identifiers).
 
 ### Retrieving a child product - own versus inherited attributes
 
