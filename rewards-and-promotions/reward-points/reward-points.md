@@ -163,7 +163,7 @@ If the customer wants to redeem reward points in exchange for a coupon, first th
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/reward-points/{tenant}/redeemOptions' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
 ```
 
 ### Redeem reward points for a coupon code
@@ -183,7 +183,7 @@ Reward points can only be exchanged for percentage and absolute coupons.
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/reward-points/public/customer/redeem?siteCode=main' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "id": "575937654bf757001d8496c9"
@@ -209,6 +209,6 @@ To check the reward points balance and history, the customer sends a request to 
 ```bash
 curl -i -X GET 
   https://api.emporix.io/reward-points/public/customer/summary 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
 ```
  

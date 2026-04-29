@@ -219,7 +219,7 @@ In this scenario, the customer updates the reason for the return.
 ```bash
 curl -i -X PUT 
   'https://api.emporix.io/return/{tenant}/returns/{returnId}' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -H 'saas-token: string' 
   -d '{

@@ -164,7 +164,7 @@ curl -X PATCH "https://api.emporix.io/customer/{tenant}/customers/{customerNumbe
 Verify the customer's details assigned to their profile by calling the [Retrieving a customer profile](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#get-customer-tenant-customers-customernumber) endpoint.
 
 ```bash
-curl -X GET "https://api.emporix.io/customer/{tenant}/customers/{customerNimber}?expand=addresses,accounts" 
+curl -X GET "https://api.emporix.io/customer/{tenant}/customers/{customerNumber}?expand=addresses,accounts" 
   -H "Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}"
 ```
 

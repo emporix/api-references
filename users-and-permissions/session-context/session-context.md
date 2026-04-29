@@ -123,7 +123,7 @@ When retrieving the session-context details, you must supply the `sessionId`. It
 ```bash
 curl -L \
   --url 'https://api.emporix.io/session-context/{tenant}/me/context' \
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
   --header 'Accept: */*'
 ```
 
