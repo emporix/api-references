@@ -2686,6 +2686,82 @@ paths:
       summary: Adding multiple products to cart
       tags:
         - Cart items
+    put:
+      responses:
+        '200':
+          description: The request was successful. Items have been updated in the cart.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/batchResponse'
+              examples:
+                Response example:
+                  value:
+                    - status: 200
+                      id: '1'
+                    - status: 200
+                      id: '2'
+        '500':
+          $ref: '#/components/responses/trait_500'
+      description: |-
+        Updates multiple cart items in the specified cart. The maximum batch size is 50.
+      operationId: PUT-cart-update-multiple-items-in-cart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cartItemsBatchUpdateRequest'
+            examples:
+              Payload example:
+                value:
+                  - id: '1'
+                    product:
+                      id: 5f5a3ce35bac380024b93cff
+                      yrn: '{productYrn}'
+                      name: Cherry Tomatoes
+                      description: Guaranteed to be the sweetest tomato you have ever tasted! This super sweet bite sized tomato is juicy and bursting with flavor. They are great for snacking and in salads. Kids love them too!
+                      images:
+                        - id: dbf2f8a4-1ff6-40a9-982f-1485ddb602e0
+                          url: 'https://res.cloudinary.com/saas-ag/image/upload/v1599749351cart/{tenant}/products/dbf2f8a4-1ff6-40a9-982f-1485ddb602e0.jpg'
+                    quantity: 100
+                    price:
+                      priceId: 5f5a3ce5fb29e20020be99c8
+                      yrn: '{priceYrn}'
+                      originalAmount: 4.99
+                      effectiveAmount: 4.99
+                      currency: EUR
+                      measurementUnit:
+                        quantity: 100
+                        unitCode: GRM
+                  - id: '2'
+                    product:
+                      id: 5f5a3b435bac380024b93c88
+                      yrn: '{productYrn}'
+                      name: Black Tea
+                      description: A pack of high-quality black tea to drink with your guests.
+                      images:
+                        - id: 4b4addad-9272-4435-83a0-4b5f1621208d
+                          url: 'https://res.cloudinary.com/saas-ag/image/upload/v1599749351cart/{tenant}/products/4b4addad-9272-4435-83a0-4b5f1621208d.jpg'
+                    quantity: 1
+                    price:
+                      priceId: 5f5a3b45fb29e20020be9976
+                      yrn: '{priceYrn}'
+                      originalAmount: 2.29
+                      effectiveAmount: 2.29
+                      currency: EUR
+                      measurementUnit:
+                        quantity: 1
+                        unitCode: H87
+        required: false
+      security:
+        - OAuth2:   
+            - cart.cart_manage
+        - CustomerAccessToken: []
+      parameters:
+        - $ref: '#/components/parameters/trait_tenant'
+      summary: Updating multiple products in cart
+      tags:
+        - Cart items
     parameters:
       - $ref: '#/components/parameters/cartId'
       - $ref: '#/components/parameters/trait_tenant'
@@ -5379,6 +5455,14 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/cartItemRequest'
+    cartItemsBatchUpdateRequest:
+      type: array
+      items:
+        allOf:
+          - $ref: '#/components/schemas/cartItemRequest'
+          - type: object
+            required:
+              - id
     batchResponse:
       type: array
       description: ''
