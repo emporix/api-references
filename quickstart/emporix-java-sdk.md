@@ -38,7 +38,7 @@ This quick start shows how to add the Emporix Java SDK to your Spring Boot proje
 
 ```gradle
 dependencies {
-    implementation 'io.emporix:emporix-sdk:1.2.2'
+    implementation 'io.emporix:emporix-sdk:1.2.4'
 }
 ```
 
