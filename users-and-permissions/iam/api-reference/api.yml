@@ -3865,6 +3865,8 @@ components:
             * `EMPLOYEE` - the access control can be assigned only to groups of `EMPLOYEE` user type.
 
             If this property is not present, the access control can be assigned to any group regardless of its user type.
+
+            **Note**: This property is immutable. It can only be set when the access control is created and cannot be changed afterwards.
         metadata:
           type: object
           description: Metadata for optimistic locking on updates. Only `version` is supported.
