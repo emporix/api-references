@@ -35,5 +35,5 @@ There are no known problems.
 
 ## Links
 
-* [How to work with dynamic variant products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/product#how-to-work-with-dynamic-variant-products)
-* [Events - Index Item](https://developer.emporix.io/api-references/api-guides/webhooks/webhook-events/events-index)
+* [How to work with dynamic variant products](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/d4POTWomuSS7d3dnh4Dg/api-guides/products-labels-and-brands/product-service/product#how-to-work-with-dynamic-variant-products)
+* [Events - Index Item](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/d4POTWomuSS7d3dnh4Dg/api-guides/webhooks/webhook-events/events-index)
