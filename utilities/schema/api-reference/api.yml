@@ -1709,7 +1709,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExportImport'
+                $ref: '#/components/schemas/ExportImportResponse'
               example:
                 exportedAt: "2026-04-29T07:05:18.857291343Z"
                 data: MQUlOVF9BR0VOVF9DT05URVhUIl19XX1dfQ==
@@ -1751,9 +1751,8 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ExportImport'
+              $ref: '#/components/schemas/ExportImportRequest'
             example:
-              exportedAt: "2026-04-29T07:05:18.857291343Z"
               data: MQUlOVF9BR0VOVF9DT05URVhUIl19XX1dfQ==
       responses:
         '204':
@@ -1898,15 +1897,22 @@ components:
             createdAt: "2023-08-10T10:15:30.123Z"
             modifiedAt: "2023-08-10T10:15:30.123Z"
   schemas:
-    ExportImport:
+    ExportImportRequest:
+      type: object
+      properties:
+        data:
+          type: string
+          description: Base64 representation of custom entities with corresponding schemas.
+      required:
+        - data
+    ExportImportResponse:
+      allOf:
+        - $ref: '#/components/schemas/ExportImportRequest'
       type: object
       properties:
         exportedAt:
           type: string
           description: 'Date and time when the object was created, compliant with the ISO 8601 standard. For example: `2022-03-31T09:52:15.423Z`'
-        data:
-          type: string
-          description: Base64 representation of custom entities with corresponding schemas.
       required:
         - data
     ErrorResponse:
