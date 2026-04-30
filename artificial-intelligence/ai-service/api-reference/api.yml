@@ -388,7 +388,9 @@ paths:
         Allows for communication with Emporix agents in async way.
       security:
         - OAuth2:
-            - ai.completion_manage
+            - ai.agentexecution_manage_own
+            - ai.agentexecution_manage
+        - OAuth2NoScopes: []
       requestBody:
         $ref: '#/components/requestBodies/AgenticChat'
       tags:
@@ -3212,8 +3214,8 @@ components:
           scopes:
             ai.text_manage: Needed to execute actions related to the text generation.
             ai.completion_manage: Needed to execute actions related to the AI completions.
-            ai.agentexecution_manage: Needed to execute agentic chat
-            ai.agentexecution_manage_own: Needed to execute agentic chat by customers
+            ai.agentexecution_manage: Needed to execute agentic chat.
+            ai.agentexecution_manage_own: Needed to execute agentic chat by customers.
             ai.agent_read: Needed to read AI agents.
             ai.agent_manage: Needed to manage AI agents.
           tokenUrl: 'https://api.emporix.io/oauth/token'
