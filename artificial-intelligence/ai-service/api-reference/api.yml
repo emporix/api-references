@@ -344,7 +344,9 @@ paths:
         Allows for communication with Emporix agents.
       security:
         - OAuth2:
-            - ai.completion_manage
+            - ai.agentexecution_manage_own
+            - ai.agentexecution_manage
+        - OAuth2NoScopes: []
       requestBody:
         $ref: '#/components/requestBodies/AgenticChat'
       tags:
@@ -2554,6 +2556,28 @@ components:
         - $ref: '#/components/schemas/BaseForAgentAndTemplateAndHandOff'
         - type: object
           properties:
+            requiredScopes:
+              type: array
+              description: |
+                Defines which caller types are allowed to execute the agent.
+                Authorization is evaluated with OR semantics: access is granted if the caller
+                matches at least one configured value.
+                If this field is missing or empty, no scope-based restriction is applied.
+
+                Matching rules:
+                - anonymous: always grants access.
+                - customer: requires scope `ai.agentexecution_manage_own`.
+                - employee: requires scope `ai.agentexecution_manage`.
+                - integration: requires scope `ai.agentexecution_manage`.
+
+                If no configured value matches, request is rejected with 403 Forbidden.
+              items:
+                type: string
+                enum:
+                  - anonymous
+                  - customer
+                  - employee
+                  - integration
             userPrompt:
               type: string
               description: LLM Prompt which describes how agent should work in a detailed way, which tools it could use to solve problems etc; it can contain examples and step by step guidance.
@@ -3188,8 +3212,15 @@ components:
           scopes:
             ai.text_manage: Needed to execute actions related to the text generation.
             ai.completion_manage: Needed to execute actions related to the AI completions.
+            ai.agentexecution_manage: Needed to execute agentic chat
+            ai.agentexecution_manage_own: Needed to execute agentic chat by customers
             ai.agent_read: Needed to read AI agents.
             ai.agent_manage: Needed to manage AI agents.
+          tokenUrl: 'https://api.emporix.io/oauth/token'
+    OAuth2NoScopes:
+      type: oauth2
+      flows:
+        clientCredentials:
           tokenUrl: 'https://api.emporix.io/oauth/token'
   parameters:
     path_tenant:
