@@ -1277,15 +1277,15 @@ curl 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}'
 
 ```bash
 curl 'https://api.emporix.io/order-v2/{tenant}/orders' 
-  --header 'Authorization: Bearer YOUR_CUSTOMER_TOKEN'
+  --header 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
 ```
 
 **Alternatively (access token from client credentials + saas-token):**
 
 ```bash
 curl 'https://api.emporix.io/order-v2/{tenant}/orders' 
-  --header 'Authorization: Bearer YOUR_ACCESS_TOKEN' 
-  --header 'saas-token: YOUR_SAAS_TOKEN'
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+  --header 'saas-token: {{SAAS_TOKEN}}'
 ```
 
 ### Change the order status
@@ -1321,7 +1321,7 @@ curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/saleso
 ```bash
 curl -L --request POST 
   'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' 
-  --header 'Authorization: Bearer YOUR_CUSTOMER_TOKEN' 
+  --header 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{"status": "DECLINED"}'
 ```
@@ -1331,8 +1331,8 @@ curl -L --request POST
 ```bash
 curl -L --request POST 
   'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' 
-  --header 'Authorization: Bearer YOUR_ACCESS_TOKEN' 
-  --header 'saas-token: YOUR_SAAS_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+  --header 'saas-token: {{SAAS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{"status": "DECLINED"}'
 ```
@@ -1368,15 +1368,15 @@ curl -L
 
 ```bash
 curl -L 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
-  --header 'Authorization: Bearer YOUR_CUSTOMER_TOKEN'
+  --header 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
 ```
 
 **Alternatively (access token from client credentials + saas-token):**
 
 ```bash
 curl -L 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
-  --header 'Authorization: Bearer YOUR_ACCESS_TOKEN' \
-  --header 'saas-token: YOUR_SAAS_TOKEN'
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'saas-token: {{SAAS_TOKEN}}'
 ```
 
 ## Order splitting
