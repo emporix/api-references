@@ -1,5 +1,5 @@
 ---
-icon: circle-plus
+icon: wand-sparkles
 layout:
   title:
     visible: true
@@ -17,7 +17,7 @@ layout:
 
 ## Overview
 
-Product responses can now be enriched with **expanded brand and label data** using the `expand` query parameter.
+Product responses can now be enriched with expanded brand and label data using the `expand` query parameter.
 
 ## Modified behavior
 

@@ -1,5 +1,5 @@
 ---
-icon: circle-plus
+icon: wand-sparkles
 layout:
   title:
     visible: true
@@ -17,7 +17,7 @@ layout:
 
 ## Overview
 
-For `DYNAMIC_VARIANT` root products, each entry in the denormalized `variants` map now includes **`code`**: the business code of the corresponding variant product (the same value as on the variant product itself). This lets storefronts and integrations read SKU-style identifiers from the root response without an extra lookup.
+For `DYNAMIC_VARIANT` root products, each entry in the denormalized `variants` map now includes `code`: the business code of the corresponding variant product (the same value as on the variant product itself). This lets storefronts and integrations read SKU-style identifiers from the root response without an extra lookup.
 
 Webhook event documentation for payloads that include the dynamic variant `variants` structure has been aligned with this field.
 
