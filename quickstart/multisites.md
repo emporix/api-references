@@ -108,7 +108,7 @@ Assign products to categories and categories to catalogs. Then, publish catalogs
 
 Understanding the relationships between these concepts is crucial for effective multi-site management:
 
-<!-- <figure><img src="../.gitbook/assets/multisites.svg" alt="Mutli-sites architecture"><figcaption>Mutli-sites architecture</figcaption></figure> -->
+<!-- <figure><img src="../.gitbook/assets/multisites.svg" alt="Multi-sites architecture"><figcaption>Multi-sites architecture</figcaption></figure> -->
 
 **Multi-sites architecture**
 
@@ -227,7 +227,7 @@ SUBCATEGORY {
   style AVAILABILITY fill:#F2F6FA, stroke:#4C5359
   style PRICE fill:#F2F6FA, stroke:#4C5359
   style PRODUCT fill:#F2F6FA, stroke:#4C5359
-  style CATEORY_ASSIGNMENT fill:#F2F6FA, stroke:#4C5359
+  style CATEGORY_ASSIGNMENT fill:#F2F6FA, stroke:#4C5359
   style SEGMENTS fill:#F2F6FA, stroke:#4C5359
   style CUSTOMER fill:#F2F6FA, stroke:#4C5359
   style CATEGORY_ASSIGNMENT fill:#F2F6FA, stroke:#4C5359
@@ -467,7 +467,6 @@ classDef 4 fill:#3B73BB, stroke:#4C5359, color: #ffffff
 classDef 5 fill:#FFC128, stroke:#4C5359, stroke-dasharray: 5
 classDef 6 fill:#FAFBFC, stroke:#4C5359, stroke-dasharray: 5
 ```
-<!-- mermaid included as a file -->
 
 <!-- <figure><img src="../.gitbook/assets/multisites_example.svg" alt="Example architecture"><figcaption>Example architecture</figcaption></figure> -->
 

@@ -30,7 +30,7 @@ To create a vendor, send a request to the [Creating a vendor](https://developer.
 ```bash
 curl -L \
   --request POST \
-  --url 'https://api.emporix.io/vendor/vendor/{tenant}/vendors' \
+  --url 'https://api.emporix.io/vendor/{tenant}/vendors' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -50,7 +50,7 @@ curl -L \
       "phone": "+1-555-0123"
     }
   ]
-}
+}'
 ```
 
 Your vendor is created and you get its ID in the request response, for example `6880c8e860a76003fbece674`.

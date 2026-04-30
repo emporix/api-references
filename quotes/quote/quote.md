@@ -288,7 +288,7 @@ curl -i -X POST \
       },
       "shippingAddressId": "642c7f7d7fd3eb46339e80c4",
       "billingAddressId": "642c7f7d7fd3eb46339e80c4"
-  }
+  }'
 ```
 
 {% hint style="warning" %}
@@ -494,7 +494,7 @@ curl -i -X PATCH \
       "value": "OPEN",
       "comment": "new comment"
     }
-  }
+  }'
 ```
 
 ### Accepting a quote by a customer
