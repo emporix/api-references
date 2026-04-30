@@ -59,16 +59,16 @@ config:
     edgeLabelTextColor: "#4C5359"
 ---
 flowchart TB
- subgraph subGraph0["**Storefront**"]
+ subgraph subGraph0["`**Storefront**`"]
         A["Customer"]
   end
- subgraph subGraph1["**Emporix**"]
+ subgraph subGraph1["`**Emporix**`"]
         CS["Cart Service"]
         CHK["Checkout Service"]
         OS["Order Service"]
         WS["Webhook Service"]
   end
- subgraph subGraph2["**Customer's System**"]
+ subgraph subGraph2["`**Customer's System**`"]
         ERP["ERP"]
   end
     A -- "1.Add product to cart" --> CS
@@ -130,16 +130,16 @@ config:
     edgeLabelTextColor: "#4C5359"
 ---
 flowchart 
- subgraph subGraph0["**Storefront**"]
+ subgraph subGraph0["`**Storefront**`"]
         A["Customer"]
   end
- subgraph subGraph1["**Emporix**"]
+ subgraph subGraph1["`**Emporix**`"]
         CS["Cart Service"]
         CHK["Checkout Service"]
         OS["Order Service"]
         WS["Webhook Service"]
   end
- subgraph subGraph2["**Customer's System**"]
+ subgraph subGraph2["`**Customer's System**`"]
         BFF["Backend for Frontend (BFF)"]
         ERP["ERP"]
   end
@@ -204,15 +204,15 @@ config:
     edgeLabelTextColor: "#4C5359"
 ---
 flowchart 
- subgraph subGraph0["**Storefront**"]
+ subgraph subGraph0["`**Storefront**`"]
         A["Customer"]
   end
- subgraph subGraph1["**Emporix**"]
+ subgraph subGraph1["`**Emporix**`"]
         CS["Cart Service"]
         OS["Order Service"]
         WS["Webhook Service"]
   end
- subgraph subGraph2["**Customer's System**"]
+ subgraph subGraph2["`**Customer's System**`"]
         BFF["Backend for Frontend (BFF)"]
         ERP["ERP"]
   end
@@ -1083,10 +1083,10 @@ To create an order, first get the credentials to log in as a customer on the sto
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/oauth/token' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/oauth/token' \
+  --header 'Content-Type: application/json' \
   --data '{
     "client_id": "{client_id}",
     "client_secret": "{client_secret}",
@@ -1116,10 +1116,10 @@ curl 'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&
 {% endcontent-ref %}
 
 ```bash
-curl 'https://api.emporix.io/customer/{tenant}/login' 
-  --request POST 
-  --header 'Authorization: Bearer {{ANONYMOUS_ACCESS_TOKEN}}' 
-  --header 'Content-Type: application/json' 
+curl 'https://api.emporix.io/customer/{tenant}/login' \
+  --request POST \
+  --header 'Authorization: Bearer {{ANONYMOUS_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{
   "email": "customer@emporix.com",
   "password": "Qwurmdch673;'"
@@ -1276,15 +1276,15 @@ curl 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}'
 **Standard (customer token):**
 
 ```bash
-curl 'https://api.emporix.io/order-v2/{tenant}/orders' 
+curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
   --header 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
 ```
 
 **Alternatively (access token from client credentials + saas-token):**
 
 ```bash
-curl 'https://api.emporix.io/order-v2/{tenant}/orders' 
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'saas-token: {{SAAS_TOKEN}}'
 ```
 
@@ -1299,10 +1299,10 @@ curl 'https://api.emporix.io/order-v2/{tenant}/orders'
 {% endcontent-ref %}
 
 ```bash
-curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/salesorders/{order_id}?recalculate=false' 
---header 'Content-Type: application/json' 
---header 'Accept: application/json' 
---header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/salesorders/{order_id}?recalculate=false' \
+--header 'Content-Type: application/json' \
+--header 'Accept: application/json' \
+--header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
 --data '{
   "status": "SHIPPED"
   }'
@@ -1316,13 +1316,13 @@ curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/saleso
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
-**Standard (customer token):**
+**Standard (customer access token):**
 
 ```bash
 curl -L --request POST 
-  'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' 
-  --header 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' 
-  --header 'Content-Type: application/json' 
+  'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
+  --header 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{"status": "DECLINED"}'
 ```
 
@@ -1330,10 +1330,10 @@ curl -L --request POST
 
 ```bash
 curl -L --request POST 
-  'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' 
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  --header 'saas-token: {{SAAS_TOKEN}}' 
-  --header 'Content-Type: application/json' 
+  'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'saas-token: {{SAAS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{"status": "DECLINED"}'
 ```
 
@@ -1351,8 +1351,8 @@ Order Service APIs provide also tools for controlling the status transitions log
 
 ```bash
 curl -L 
-  --url 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}/transitions' 
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+  --url 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}/transitions' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: */*'
 ```
 
@@ -1364,7 +1364,7 @@ curl -L
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
-**Standard (customer token):**
+**Standard (customer access token):**
 
 ```bash
 curl -L 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
