@@ -399,13 +399,13 @@ R(AVAILABILITY: WarmTech_DE)
 S(SEGMENT: DE_WarmTech_Wholesaler)
 T(PRODUCT: ComfortHeat Thermalux Pro)
 
-subgraph d [**Products**]
+subgraph d [`**Products**`]
 G;
 M;
 T;
 end
 
-subgraph c [**Netherlands**]
+subgraph c [`**Netherlands**`]
 A-->D;
 A-.->H;
 A-->I;
@@ -418,7 +418,7 @@ I-->G;
 H-.->G
 end
 
-subgraph a [**ThermoBrand_DE**]
+subgraph a [`**ThermoBrand_DE**`]
 B-->J;
 J-->K;
 K-->M;
@@ -429,7 +429,7 @@ N-.->K;
 N-.->M
 end
 
-subgraph b [**WarmTech_DE**]
+subgraph b [`**WarmTech_DE**`]
 C-->O;
 C-->R;
 C-->S;
