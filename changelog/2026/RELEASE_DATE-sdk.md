@@ -73,7 +73,6 @@ asynchronously via the recalculation job endpoints.
 |--------|-------------|
 | Brand  | Brand representation embedded in `ProductResponse` (resolved when expanded by the API). |
 | Label  | Label representation embedded in `ProductResponse` (resolved when expanded by the API). |
-| Overlay | Optional label overlay configuration. |
 
 ## Updated types
 
