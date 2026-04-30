@@ -965,7 +965,7 @@ paths:
           required: true
           schema:
             type: string
-          example: "Bearer {customer_access_token}"
+          example: "Bearer {{CUSTOMER_ACCESS_TOKEN}}"
         - name: refreshToken
           in: query
           description: Customer refresh token generated when a customer token is requested.
@@ -1007,7 +1007,7 @@ paths:
           required: true
           schema:
             type: string
-          example: "Bearer {customer_access_token}"
+          example: "Bearer {{CUSTOMER_ACCESS_TOKEN}}"
       responses:
         "200":
           description: The request was successful. A token details are returned.

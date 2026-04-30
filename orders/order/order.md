@@ -1118,7 +1118,7 @@ curl 'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&
 ```bash
 curl 'https://api.emporix.io/customer/{tenant}/login' 
   --request POST 
-  --header 'Authorization: Bearer {anonymous_access_token}' 
+  --header 'Authorization: Bearer {{ANONYMOUS_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
   "email": "customer@emporix.com",
@@ -1302,7 +1302,7 @@ curl 'https://api.emporix.io/order-v2/{tenant}/orders'
 curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/salesorders/{order_id}?recalculate=false' 
 --header 'Content-Type: application/json' 
 --header 'Accept: application/json' 
---header 'Authorization: Bearer {YOUR_OAUTH2_TOKEN}' 
+--header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
 --data '{
   "status": "SHIPPED"
   }'
@@ -1352,7 +1352,7 @@ Order Service APIs provide also tools for controlling the status transitions log
 ```bash
 curl -L 
   --url 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}/transitions' 
-  --header 'Authorization: Bearer {YOUR_OAUTH2_TOKEN}' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 

@@ -95,7 +95,7 @@ To retrieve a list of all tenant configurations, send a request to the [Retrievi
 ```bash
 curl -L 
   --url 'https://api.emporix.io/configuration/{tenant}/configurations' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 
@@ -104,7 +104,7 @@ You can also filter configurations by specific keys using the `keys` query param
 ```bash
 curl -L 
   --url 'https://api.emporix.io/configuration/{tenant}/configurations?keys=project_lang' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 
@@ -121,7 +121,7 @@ To retrieve a specific tenant configuration by its key, send a request to the [R
 ```bash
 curl -L 
   --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 
@@ -130,7 +130,7 @@ curl -L
 ```bash
 curl -L 
   --url 'https://api.emporix.io/configuration/{tenant}/configurations/project_lang' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 
@@ -161,7 +161,7 @@ To create new tenant configurations, send a request to the [Creating configurati
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/configuration/{tenant}/configurations' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '[
     {
@@ -185,7 +185,7 @@ curl -L
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/configuration/{tenant}/configurations' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '[
     {
@@ -221,7 +221,7 @@ To update an existing tenant configuration, send a request to the [Updating a co
 curl -L 
   --request PUT 
   --url 'https://api.emporix.io/configuration/{tenant}/configurations/project_country' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
     "key": "project_country",
@@ -241,7 +241,7 @@ The `key` in the request body must match the `propertyKey` in the URL path. Also
 curl -L 
   --request PUT 
   --url 'https://api.emporix.io/configuration/{tenant}/configurations/customer.deletion.redirecturl' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
     "key": "customer.deletion.redirecturl",
@@ -257,7 +257,7 @@ curl -L
 curl -L 
   --request PUT 
   --url 'https://api.emporix.io/configuration/{tenant}/configurations/taxConfiguration' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
     "key": "taxConfiguration",
@@ -280,7 +280,7 @@ curl -L
 curl -L 
   --request PUT 
   --url 'https://api.emporix.io/configuration/{tenant}/configurations/packagingConf' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
     "key": "packagingConf",
@@ -308,7 +308,7 @@ curl -L
 curl -L 
   --request PUT 
   --url 'https://api.emporix.io/configuration/{tenant}/configurations/storefront.host' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
     "key": "storefront.host",
@@ -324,7 +324,7 @@ curl -L
 curl -L 
   --request PUT 
   --url 'https://api.emporix.io/configuration/{tenant}/configurations/cust.notification.email.from' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
     "key": "cust.notification.email.from",
@@ -348,7 +348,7 @@ To delete a tenant configuration, send a request to the [Deleting a configuratio
 curl -L 
   --request DELETE 
   --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN'
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 ## Managing client configurations 
@@ -368,7 +368,7 @@ To retrieve a list of available clients for your tenant, send a request to the [
 ```bash
 curl -L 
   --url 'https://api.emporix.io/configuration/{tenant}/clients' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 
@@ -393,7 +393,7 @@ To retrieve all configurations for a specific client, send a request to the [Ret
 ```bash
 curl -L 
   --url 'https://api.emporix.io/configuration/{tenant}/clients/{client}/configurations' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 
@@ -402,7 +402,7 @@ curl -L
 ```bash
 curl -L 
   --url 'https://api.emporix.io/configuration/{tenant}/clients/saas-ag.caas-indexing-service-client/configurations' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 
@@ -433,7 +433,7 @@ You can also filter client configurations by specific keys using the `keys` quer
 ```bash
 curl -L 
   --url 'https://api.emporix.io/configuration/{tenant}/clients/{client}/configurations?keys=algolia_activation' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 
@@ -450,7 +450,7 @@ To retrieve a specific client configuration by its key, send a request to the [R
 ```bash
 curl -L 
   --url 'https://api.emporix.io/configuration/{tenant}/clients/{client}/configurations/{propertyKey}' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 
@@ -459,7 +459,7 @@ curl -L
 ```bash
 curl -L 
   --url 'https://api.emporix.io/configuration/{tenant}/clients/saas-ag.caas-indexing-service-client/configurations/indexing_configuration' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 
@@ -491,7 +491,7 @@ To create new client configurations, send a request to the [Creating client conf
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/configuration/{tenant}/clients/{client}/configurations' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '[
     {
@@ -507,7 +507,7 @@ curl -L
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/configuration/{tenant}/clients/client_one/configurations' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '[
     {
@@ -549,7 +549,7 @@ To update an existing client configuration, send a request to the [Updating a cl
 curl -L 
   --request PUT 
   --url 'https://api.emporix.io/configuration/{tenant}/clients/{client}/configurations/{propertyKey}' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
     "client": "example_client",
@@ -572,7 +572,7 @@ To delete a client configuration, send a request to the [Deleting a client confi
 curl -L 
   --request DELETE 
   --url 'https://api.emporix.io/configuration/{tenant}/clients/{client}/configurations/{propertyKey}' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN'
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 ## Retrieving global configurations
@@ -592,7 +592,7 @@ To retrieve a list of global configurations, send a request to the [Retrieving g
 ```bash
 curl -L 
   --url 'https://api.emporix.io/configuration/{tenant}/global-configurations' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 
@@ -601,7 +601,7 @@ You can also filter global configurations by specific keys using the `keys` quer
 ```bash
 curl -L 
   --url 'https://api.emporix.io/configuration/{tenant}/global-configurations?keys=project_lang,project_curr' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 

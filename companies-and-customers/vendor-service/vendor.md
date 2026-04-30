@@ -31,7 +31,7 @@ To create a vendor, send a request to the [Creating a vendor](https://developer.
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/vendor/vendor/{tenant}/vendors' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
   "name": "ABC Company",
@@ -110,7 +110,7 @@ To set up a location for the vendor, send the request to the [Creating a locatio
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/vendor/{tenant}/locations' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
   "name": "Example HQ",
@@ -234,7 +234,7 @@ A single user can belong to only one vendor group.
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/iam/{tenant}/groups/{groupId}/users' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
     "userId": "3bf883fc-d18a-4175-8137-aaf64f810835",

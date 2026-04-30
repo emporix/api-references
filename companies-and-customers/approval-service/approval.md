@@ -195,7 +195,7 @@ You can check the approval rights either with IAM or Approval service.
 ```bash
 curl -L 
   --url 'https://api.emporix.io/iam/{tenant}/users/{userId}/groups' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 
@@ -216,7 +216,7 @@ Send the request to the [Retrieving users assigned to a group](https://developer
 ```bash
 curl -L 
   --url 'https://api.emporix.io/iam/{tenant}/groups/{groupId}/users' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 
@@ -238,7 +238,7 @@ If a customer is in `B2B_ADMIN` role, the create approval flow does not start.
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/approval/{tenant}/approvals' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "id": "64e241ced632aa413a27a318",
@@ -318,7 +318,7 @@ To update an approval, send a request to the [Updating a single approval](https:
 ```bash
 curl -i -X PATCH 
   'https://api.emporix.io/approval/{tenant}/approvals/{approvalId}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
 ```
 
@@ -337,7 +337,7 @@ To retrieve an approval, send a request to the [Retrieving a single approval](ht
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/approval/{tenant}/approvals/{approvalId}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 ## FAQ

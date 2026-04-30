@@ -60,7 +60,7 @@ You can generate the text by sending a request based on a provided prompt. To se
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/ai-service/{tenant}/texts' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "id": "en",
@@ -82,7 +82,7 @@ Completion is generated based on chat history. It's a generated response or cont
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/ai-service/{tenant}/completions' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "id": "abc-123",
@@ -282,7 +282,7 @@ Collect the `agentIds` you want to export, then call the [Exporting agents](http
 curl -L \
   --request POST \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/export' \
-  --header 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Content-Type: application/json' \
   --data '{
     "agentIds": [
@@ -309,7 +309,7 @@ Use the payload obtained during export and call the [Importing agents](https://d
 curl -L \
   --request POST \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/import' \
-  --header 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Content-Type: application/json' \
   --data '{
     "data": "<BASE64_PAYLOAD_FROM_EXPORT>",
