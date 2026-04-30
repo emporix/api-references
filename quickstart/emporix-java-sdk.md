@@ -38,7 +38,7 @@ This quick start shows how to add the Emporix Java SDK to your Spring Boot proje
 
 ```gradle
 dependencies {
-    implementation 'io.emporix:emporix-sdk:1.2.4'
+    implementation 'io.emporix:emporix-sdk:1.2.5'
 }
 ```
 
@@ -48,7 +48,7 @@ dependencies {
 <dependency>
   <groupId>io.emporix</groupId>
   <artifactId>emporix-sdk</artifactId>
-  <version>1.2.4</version>
+  <version>1.2.5</version>
 </dependency>
 ```
 {% endstep %}
@@ -307,6 +307,7 @@ The SDK provides type-safe clients for the following Emporix services:
 |----------------------|-------------------------|----------------------------------|------------------------------------------|
 | **Product**          | `ProductClient`         | Product management               | CRUD, bulk operations, search, filtering |
 | **Product Template** | `ProductTemplateClient` | Product templates                | Manage product templates                 |
+| **Product Recalculation Jobs** | `RecalculationJobClient` | Dynamic variant recalculation jobs | Trigger recalculation, list jobs, get job |
 | **Brand**            | `BrandClient`           | Brand management                 | CRUD for brands                          |
 | **Catalog**          | `CatalogClient`         | Catalog management               | Manage catalogs                          |
 
@@ -343,6 +344,12 @@ The SDK provides type-safe clients for the following Emporix services:
 |-----------------------|--------------------------|----------------------|----------------------------------|
 | **Order**             | `OrderClient`            | Order operations     | Retrieve, update orders          |
 | **Order Management**  | `OrderManagementClient`  | Order administration | Full order lifecycle management  |
+
+### Availability
+
+| Service              | Client               | Description                 | Key Operations                                  |
+|----------------------|----------------------|-----------------------------|-------------------------------------------------|
+| **Availability**     | `AvailabilityClient` | Product availability        | Create, upsert, delete, get, and search entries |
 
 ### Customer
 
@@ -1441,37 +1448,37 @@ import org.springframework.beans.factory.annotation.Qualifier;
 @Service
 public class MultiTenantProductService {
 
-    private final ProductClient defaultProductClient;
-    private final ProductClient qaProductClient;
-    private final EmporixTokenService defaultTokenService;
-    private final EmporixTokenService qaTokenService;
+  private final ProductClient defaultProductClient;
+  private final ProductClient qaProductClient;
+  private final EmporixTokenService defaultTokenService;
+  private final EmporixTokenService qaTokenService;
 
-    public MultiTenantProductService(
-            ProductClient defaultProductClient,
-            EmporixTokenService defaultTokenService,
-            @Qualifier("qa") ProductClient qaProductClient,
-            @Qualifier("qa") EmporixTokenService qaTokenService) {
-        this.defaultProductClient = defaultProductClient;
-        this.qaProductClient = qaProductClient;
-        this.defaultTokenService = defaultTokenService;
-        this.qaTokenService = qaTokenService;
-    }
+  public MultiTenantProductService(
+      ProductClient defaultProductClient,
+      EmporixTokenService defaultTokenService,
+      @Qualifier("qa") ProductClient qaProductClient,
+      @Qualifier("qa") EmporixTokenService qaTokenService) {
+    this.defaultProductClient = defaultProductClient;
+    this.qaProductClient = qaProductClient;
+    this.defaultTokenService = defaultTokenService;
+    this.qaTokenService = qaTokenService;
+  }
 
-    public List<ProductResponse> getDefaultProducts() {
-        var token = defaultTokenService.getServiceToken();
-        return defaultProductClient.getProducts(
-            null, null, null, 1, 20, null, true, "en",
-            token.bearerAccessToken()
-        ).getBody();
-    }
+  public List<ProductResponse> getDefaultProducts() {
+    var token = defaultTokenService.getServiceToken();
+    return defaultProductClient.getProducts(
+        null, null, null, 1, 20, null, true, "en",
+        token.bearerAccessToken()
+    ).getBody();
+  }
 
-    public List<ProductResponse> getQaProducts() {
-        var token = qaTokenService.getAnonymousToken();
-        return qaProductClient.getProducts(
-            null, null, null, 1, 20, null, true, "en",
-            token.bearerAccessToken()
-        ).getBody();
-    }
+  public List<ProductResponse> getQaProducts() {
+    var token = qaTokenService.getAnonymousToken();
+    return qaProductClient.getProducts(
+        null, null, null, 1, 20, null, true, "en",
+        token.bearerAccessToken()
+    ).getBody();
+  }
 }
 ```
 
@@ -1575,14 +1582,14 @@ Multi-tenant support is designed to be non-intrusive. SDK users can still overri
 @Configuration
 public class CustomConfig {
 
-    @Bean
-    @Primary
-    public ProductClient customProductClient(EmporixClientFactory factory) {
-        return factory.createClient(
+  @Bean
+  @Primary
+  public ProductClient customProductClient(EmporixClientFactory factory) {
+    return factory.createClient(
             ProductClient.class,
             ClientConfig.builder("product").xVersion2().build()
-        );
-    }
+    );
+  }
 }
 ```
 
@@ -1632,7 +1639,7 @@ public class ProductService {
 
     try {
       ResponseEntity<ProductResponse> response =
-          productClient.getProduct(productId, null, null, null, "en", authorization);
+              productClient.getProduct(productId, null, null, null, "en", authorization);
       return response.getBody();
 
     } catch (EmporixApiException e) {
@@ -1640,9 +1647,9 @@ public class ProductService {
       // Provides structured error information from Emporix API
 
       log.error("Emporix API error: {} - {} - Details: {}",
-          e.getStatusCode(),
-          e.getMessage(),
-          e.getErrorResponse().getDetails());
+              e.getStatusCode(),
+              e.getMessage(),
+              e.getErrorResponse().getDetails());
 
       // Handle specific error cases
       if (e.getStatusCode().value() == 404) {
@@ -1675,7 +1682,7 @@ import static io.emporix.product.ProductClient.Scopes.*;
 
 // Request only read scope for read operations
 ServiceTokenResponse token = tokenService.getServiceToken(
-    Set.of(PRODUCT_READ_UNPUBLISHED)
+        Set.of(PRODUCT_READ_UNPUBLISHED)
 );
 ```
 For full backend access (simpler, when you need multiple operations):
@@ -1710,7 +1717,7 @@ AnonymousTokenResponse anonymousToken = tokenService.getAnonymousToken();
 
 // Login with that token (preserves cart/session)
 CustomerTokenResponse customerToken = tokenService.getCustomerToken(
-    email, password, anonymousToken
+        email, password, anonymousToken
 );
 ```
 **Avoid:** (loses session context):
@@ -1718,8 +1725,8 @@ CustomerTokenResponse customerToken = tokenService.getCustomerToken(
 ```java
 // Works but creates a NEW session - user's cart and preferences are lost!
 CustomerTokenResponse customerToken = tokenService.getCustomerToken(
-        email, password  // SDK auto-fetches new anonymous token, new session created
-    );
+                email, password  // SDK auto-fetches new anonymous token, new session created
+        );
 ```
 
 ### Reuse service tokens
@@ -1781,8 +1788,8 @@ ServiceTokenResponse integrationToken = tokenService.getServiceToken("integratio
 
 // Partner OAuth2 client with read-only scopes
 ServiceTokenResponse partnerToken = tokenService.getServiceToken(
-    Set.of(PRODUCT_READ_UNPUBLISHED),
-    "partner"
+        Set.of(PRODUCT_READ_UNPUBLISHED),
+        "partner"
 );
 
 // External system OAuth2 client with specific permissions
@@ -1804,8 +1811,8 @@ session.setAttribute("customerToken", customerToken);
 // Or in Redis with expiration
 redisTemplate.opsForValue().set(
     "customer:token:" + customerId,
-    customerToken,
-    Duration.ofHours(1)
+        customerToken,
+        Duration.ofHours(1)
 );
 
 // Or in JWT for stateless authentication
@@ -1817,9 +1824,9 @@ String jwt = jwtService.createToken(customerToken);
 ```java
 // Authorization is always the last parameter
 productClient.getProducts(
-    query, expand, rawValue, pageNumber, pageSize,
-    sort, fetchTotalCount, acceptLanguage,
-    authorization  // Last parameter
+        query, expand, rawValue, pageNumber, pageSize,
+        sort, fetchTotalCount, acceptLanguage,
+        authorization  // Last parameter
 );
 ```
 
@@ -1992,6 +1999,6 @@ tokenService.clearCache(TokenType.SERVICE, "vendor:" + PRODUCT_MANAGE);
 ```java
 ServiceTokenResponse token = tokenService.getServiceToken();
 log.info("Token expires in: {} seconds", token.getExpiresIn());
-    log.info("Token type: {}", token.getTokenType());
-    log.info("Access token: {}", token.getAccessToken().substring(0, 20) + "...");
+        log.info("Token type: {}", token.getTokenType());
+        log.info("Access token: {}", token.getAccessToken().substring(0, 20) + "...");
 ```
