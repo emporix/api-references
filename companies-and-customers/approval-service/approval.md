@@ -107,7 +107,9 @@ sequenceDiagram
     Approval -->> Cart: Response
     Cart ->> Order: Checkout triggered
 ```
+
 **Buyer**
+
 ```mermaid
 ---
 config:
@@ -139,7 +141,9 @@ sequenceDiagram
     Approval ->> Approver: Approval created by company approver
     Approver ->> Order: Approver finishes the order process
 ```
+
 **Requester**
+
 ```mermaid
 ---
 config:

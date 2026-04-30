@@ -108,10 +108,10 @@ Assign products to categories and categories to catalogs. Then, publish catalogs
 
 Understanding the relationships between these concepts is crucial for effective multi-site management:
 
-<figure><img src="../.gitbook/assets/multisites.svg" alt="Mutli-sites architecture"><figcaption>Mutli-sites architecture</figcaption></figure>
+<!-- <figure><img src="../.gitbook/assets/multisites.svg" alt="Mutli-sites architecture"><figcaption>Mutli-sites architecture</figcaption></figure> -->
 
+**Multi-sites architecture**
 
-<!-- 
 ```mermaid
 ---
 config:
@@ -234,7 +234,6 @@ SUBCATEGORY {
   style SEGMENT_ITEM_ASSIGNMENT fill:#F2F6FA, stroke:#4C5359
   style SEGMENT_CUSTOMER_ASSIGNMENT fill:#F2F6FA, stroke:#4C5359
 ``` 
--->
 
 ### Connection flow
 
@@ -364,9 +363,113 @@ The multi-site architecture pattern is most relevant when you want to run differ
 
 ## Practical examples
 
+**Example architecture**  
+
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128" 
+    edgeLabelTextColor: "#4C5359"
+---
+flowchart TB
+A(SITE: Netherlands)
+B(SITE: Germany - ThermoBrand_DE)
+C(SITE: Germany - WarmTech_DE)
+D(CATALOG: Netherlands)
+E(CATEGORY: ComfortHeat)
+F(CATEGORY: WarmTech)
+G(PRODUCT: WarmTech FrostGuard Pro 2000)
+H(SEGMENT: NL_WarmTech_Installer)
+I(AVAILABILITY: Netherlands)
+J(CATALOG: ThermoBrand Germany Catalog)
+K(CATEGORY: ThermoBrand)
+L(AVAILABILITY: ThermoBrand_DE)
+M(PRODUCT: ThermoBrand AquaCore Boiler X500)
+N(SEGMENT: DE_ThermoBrand_Wholesaler)
+O(CATALOG: WarmTech Germany Catalog)
+P(CATEGORY: WarmTech)
+R(AVAILABILITY: WarmTech_DE)
+S(SEGMENT: DE_WarmTech_Wholesaler)
+T(PRODUCT: ComfortHeat Thermalux Pro)
+
+subgraph d [**Products**]
+G;
+M;
+T;
+end
+
+subgraph c [**Netherlands**]
+A-->D;
+A-.->H;
+A-->I;
+D-->F;
+D-->E;
+E-->T;
+F-->G;
+H-.->F;
+I-->G;
+H-.->G
+end
+
+subgraph a [**ThermoBrand_DE**]
+B-->J;
+J-->K;
+K-->M;
+B-->L;
+B-->N;
+L-.->M;
+N-.->K;
+N-.->M
+end
+
+subgraph b [**WarmTech_DE**]
+C-->O;
+C-->R;
+C-->S;
+O-->P;
+P-->G;
+R-->G;
+S-.->P;
+S-.->G;
+end
+
+A:::1
+B:::1
+C:::1
+D:::2
+J:::2
+O:::2
+E:::3
+F:::3
+K:::3
+P:::3
+G:::4
+M:::4
+I:::5
+L:::5
+R:::5
+H:::6
+N:::6
+S:::6
+T:::4
+
+classDef 1 fill:#A1BDDC, stroke:#4C5359
+classDef 2 fill:#DDE6EE, stroke:#4C5359
+classDef 3 fill:#F2F6FA, stroke:#4C5359
+classDef 4 fill:#3B73BB, stroke:#4C5359, color: #ffffff
+classDef 5 fill:#FFC128, stroke:#4C5359, stroke-dasharray: 5
+classDef 6 fill:#FAFBFC, stroke:#4C5359, stroke-dasharray: 5
+```
 <!-- mermaid included as a file -->
 
-<figure><img src="../.gitbook/assets/multisites_example.svg" alt="Example architecture"><figcaption>Example architecture</figcaption></figure>
+<!-- <figure><img src="../.gitbook/assets/multisites_example.svg" alt="Example architecture"><figcaption>Example architecture</figcaption></figure> -->
 
 
 ### Example 1: Setting up Netherlands (single site, multi-brands)
@@ -384,9 +487,9 @@ Create the Netherlands site by sending a request to the [Creating a site](https:
 {% endcontent-ref %}
 
 ```bash
-curl -X POST 'https://api.emporix.io/site/{tenant}/sites' 
-  -H 'Authorization: Bearer <TOKEN>' 
-  -H 'Content-Type: application/json' 
+curl -X POST 'https://api.emporix.io/site/{tenant}/sites' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "code": "NL",
     "name": "Netherlands",
@@ -427,10 +530,10 @@ Call the [Creating a new category](https://developer.emporix.io/api-references/a
 * `ComfortHeat`:
 
 ```bash
-curl -X POST 'https://api.emporix.io/category/{tenant}/categories' 
-  -H 'Authorization: Bearer <TOKEN>' 
-  -H 'X-Version: v2' 
-  -H 'Content-Type: application/json' 
+curl -X POST 'https://api.emporix.io/category/{tenant}/categories' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'X-Version: v2' \
+  -H 'Content-Type: application/json' \
   -d '{
     "parentId": "root",
     "localizedName": {
@@ -442,10 +545,10 @@ curl -X POST 'https://api.emporix.io/category/{tenant}/categories'
 * `WarmTech`:
 
 ```bash
-curl -X POST 'https://api.emporix.io/category/{tenant}/categories' 
-  -H 'Authorization: Bearer <TOKEN>' 
-  -H 'X-Version: v2' 
-  -H 'Content-Type: application/json' 
+curl -X POST 'https://api.emporix.io/category/{tenant}/categories' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'X-Version: v2' \
+  -H 'Content-Type: application/json' \
   -d '{
     "parentId": "root",
     "localizedName": {
@@ -473,9 +576,9 @@ Create a catalog for the Netherlands site and assign the brand category trees to
 {% endcontent-ref %}
 
 ```bash
-curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs' 
-  -H 'Authorization: Bearer <TOKEN>' 
-  -H 'Content-Type: application/json' 
+curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "name": {
       "en": "Netherlands Catalog"
@@ -506,10 +609,10 @@ Call the [Assigning a resource to a category](https://developer.emporix.io/api-r
 {% endcontent-ref %}
 
 ```bash
-curl -X POST 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' 
-  -H 'Authorization: Bearer <TOKEN>' 
-  -H 'X-Version: v2' 
-  -H 'Content-Type: application/json' 
+curl -X POST 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'X-Version: v2' \
+  -H 'Content-Type: application/json' \
   -d '{
     "ref": {
       "id": "<product-id>",
@@ -532,9 +635,9 @@ Create availability records for the products on the Netherlands site to control 
 {% endcontent-ref %}
 
 ```bash
-curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{productId}/NL' 
-  -H 'Authorization: Bearer <TOKEN>' 
-  -H 'Content-Type: application/json' 
+curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{productId}/NL' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "stockLevel": 100,
     "available": true,
@@ -561,9 +664,9 @@ Create separate sites for each brand in Germany so that each brand has its own d
 * Create `ThermoBrand_DE` site:
 
 ```bash
-curl -X POST 'https://api.emporix.io/site/{tenant}/sites' 
-  -H 'Authorization: Bearer <TOKEN>' 
-  -H 'Content-Type: application/json' 
+curl -X POST 'https://api.emporix.io/site/{tenant}/sites' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "code": "ThermoBrand_DE",
     "name": "ThermoBrand Germany",
@@ -590,9 +693,9 @@ curl -X POST 'https://api.emporix.io/site/{tenant}/sites'
 * Create `WarmTech_DE` site:
 
 ```bash
-curl -X POST 'https://api.emporix.io/site/{tenant}/sites' 
-  -H 'Authorization: Bearer <TOKEN>' 
-  -H 'Content-Type: application/json' 
+curl -X POST 'https://api.emporix.io/site/{tenant}/sites' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "code": "WarmTech_DE",
     "name": "WarmTech Germany",
@@ -631,9 +734,9 @@ Create a dedicated catalog for each site and assign only the relevant brand's ca
 * Create `ThermoBrand_DE` catalog:
 
 ```bash
-curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs' 
-  -H 'Authorization: Bearer <TOKEN>' 
-  -H 'Content-Type: application/json' 
+curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "name": {
       "en": "ThermoBrand Germany Catalog"
@@ -651,9 +754,9 @@ curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs'
 * Create `WarmTech_DE` catalog:
 
 ```bash
-curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs' 
-  -H 'Authorization: Bearer <TOKEN>' 
-  -H 'Content-Type: application/json' 
+curl -X POST 'https://api.emporix.io/catalog/{tenant}/catalogs' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "name": {
       "en": "WarmTech Germany Catalog"
@@ -683,9 +786,9 @@ Create availability records for products on each site to control visibility and 
 * Availability for `ThermoBrand_DE` site:
 
 ```bash
-curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{productId}/ThermoBrand_DE' 
-  -H 'Authorization: Bearer <TOKEN>' 
-  -H 'Content-Type: application/json' 
+curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{productId}/ThermoBrand_DE' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "stockLevel": 50,
     "available": true
@@ -695,9 +798,9 @@ curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{product
 * Availability for `WarmTech_DE` site:
 
 ```bash
-curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{productId}/WarmTech_DE' 
-  -H 'Authorization: Bearer <TOKEN>' 
-  -H 'Content-Type: application/json' 
+curl -X POST 'https://api.emporix.io/availability/{tenant}/availability/{productId}/WarmTech_DE' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "stockLevel": 30,
     "available": true
@@ -719,9 +822,9 @@ Create customer segments for each site to control visibility based on customer r
 * Create segment for `ThermoBrand_DE`:
 
 ```bash
-curl -X POST 'https://api.emporix.io/customer-segment/{tenant}/segments' 
-  -H 'Authorization: Bearer <TOKEN>' 
-  -H 'Content-Type: application/json' 
+curl -X POST 'https://api.emporix.io/customer-segment/{tenant}/segments' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "name": {
       "en": "ThermoBrand Wholesaler"
