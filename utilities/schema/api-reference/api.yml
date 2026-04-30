@@ -1712,7 +1712,7 @@ paths:
                 $ref: '#/components/schemas/ExportImport'
               example:
                 exportedAt: "2026-04-29T07:05:18.857291343Z"
-                content: MQUlOVF9BR0VOVF9DT05URVhUIl19XX1dfQ==
+                data: MQUlOVF9BR0VOVF9DT05URVhUIl19XX1dfQ==
         '400':
           $ref: '#/components/responses/Bad_request_400_cl'
         '401':
@@ -1754,7 +1754,7 @@ paths:
               $ref: '#/components/schemas/ExportImport'
             example:
               exportedAt: "2026-04-29T07:05:18.857291343Z"
-              content: MQUlOVF9BR0VOVF9DT05URVhUIl19XX1dfQ==
+              data: MQUlOVF9BR0VOVF9DT05URVhUIl19XX1dfQ==
       responses:
         '204':
           description: 'No content'
@@ -1904,11 +1904,11 @@ components:
         exportedAt:
           type: string
           description: 'Date and time when the object was created, compliant with the ISO 8601 standard. For example: `2022-03-31T09:52:15.423Z`'
-        content:
+        data:
           type: string
           description: Base64 representation of custom entities with corresponding schemas.
       required:
-        - content
+        - data
     ErrorResponse:
       required:
         - code
