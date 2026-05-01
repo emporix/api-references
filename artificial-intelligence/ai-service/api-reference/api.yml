@@ -346,7 +346,6 @@ paths:
         - OAuth2:
             - ai.agentexecution_manage_own
             - ai.agentexecution_manage
-        - OAuth2NoScopes: []
       requestBody:
         $ref: '#/components/requestBodies/AgenticChat'
       tags:
@@ -390,7 +389,6 @@ paths:
         - OAuth2:
             - ai.agentexecution_manage_own
             - ai.agentexecution_manage
-        - OAuth2NoScopes: []
       requestBody:
         $ref: '#/components/requestBodies/AgenticChat'
       tags:
@@ -3218,11 +3216,6 @@ components:
             ai.agentexecution_manage_own: Needed to execute agentic chat by customers.
             ai.agent_read: Needed to read AI agents.
             ai.agent_manage: Needed to manage AI agents.
-          tokenUrl: 'https://api.emporix.io/oauth/token'
-    OAuth2NoScopes:
-      type: oauth2
-      flows:
-        clientCredentials:
           tokenUrl: 'https://api.emporix.io/oauth/token'
   parameters:
     path_tenant:
