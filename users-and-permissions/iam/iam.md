@@ -234,10 +234,12 @@ When you create a custom entity for a tenant, Emporix automatically generates a 
 
 For each custom entity, the platform creates a predefined set of scopes following a consistent naming pattern:
 
+<code>
 <entity>.<entity>_read
 <entity>.<entity>_manage
 <entity>.<entity>_readOwn
 <entity>.<entity>_manageOwn
+</code>
 
 These scopes are immediately available for use in IAM and can be included in your custom access controls. They are also exposed through OAuth2.
 
