@@ -118,9 +118,11 @@ curl -i -X POST
   }'
 ```
  
-## How to manage custom scopes for custom entity authorization
+## How to manage custom scopes
 
-You can define tenant-specific custom scopes and use them in access controls to authorize custom-entity operations in downstream services.
+In addition to the standard authorization model, the IAM Service also supports tenant-specific custom scopes, allowing you to extend access control beyond the default capabilities. Custom access controls can be created as collections of scopes and assigned to groups representing employees, customers, or technical users.
+
+When a group is linked to a custom access control, its users automatically inherit both the platform’s default scopes and any tenant-specific scopes.
 
 Typical flow:
 
@@ -128,7 +130,7 @@ Typical flow:
 2. Create or update an access control that resolves to this scope.
 3. Assign the access control to a user group.
 4. Assign users to the group and request OAuth2 tokens.
-5. Call service APIs that validate these scopes (for example, Schema custom-instance endpoints).
+5. Verify the assigned controls and scopes.
 
 {% stepper %}
 {% step %}
@@ -226,6 +228,21 @@ curl -i -X GET \
 [api-reference](../iam/api-reference/)
 {% endcontent-ref %}
 
+### Custom scopes for custom entities
+
+When you create a custom entity for a tenant, Emporix automatically generates a standard set of custom scopes for this entity. This ensures consistency across APIs and reduces the effort required to design and maintain permission models.
+
+For each custom entity, the platform creates a predefined set of scopes following a consistent naming pattern:
+
+<entity>.<entity>_read
+<entity>.<entity>_manage
+<entity>.<entity>_readOwn
+<entity>.<entity>_manageOwn
+
+These scopes are immediately available for use in IAM and can be included in your custom access controls. They are also exposed through OAuth2.
+
+
 {% hint style="info" %}
+For a related Schema Service configuration, see the [Schema Service tutorial](../../utilities/schema/schema.md)
 For the end-to-end integration flow across IAM and Schema, see [Custom scopes for custom entities](../../quickstart/authentication-and-authorization/custom-scopes-custom-entities.md).
 {% endhint %}
