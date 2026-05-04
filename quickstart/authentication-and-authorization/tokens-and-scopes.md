@@ -255,7 +255,7 @@ Some API endpoints are implicitly readable and do not require any scopes at all.
 
 ## Custom scopes
 
-**Custom scopes** are scope identifiers you define for your tenant in IAM (for example `myintegration.invoice_export_read`). They extend the permission model beyond the built-in catalog: you define a scope, add it to access controls, assign those controls to user groups, and request OAuth2 tokens that include the scope so your own services, extensions, or integrations can enforce least-privilege checks the same way Emporix APIs use predefined scopes.
+Custom scopes are scope identifiers you define for your tenant in IAM, for example `myintegration.invoice_export_read`. They extend the permission model beyond the built-in catalog: you define a scope, add it to access controls, assign those controls to user groups, and request OAuth2 tokens that include the scope so your own services, extensions, or integrations can enforce least-privilege checks the same way Emporix APIs use predefined scopes.
 
 The overall custom scopes flow is:
 
@@ -292,7 +292,7 @@ flowchart LR
     classDef Class_04 fill:#F2F6FA, stroke:#4C5359
 ```
 
-### Custom scopes for custom entities
+## Scopes for custom entities
 
 Emporix platform supports tenant-specific custom scopes in IAM, automatic type-specific scopes in Schema, and ownership-aware scopes (`*_own`) for creator-limited access.
 
@@ -302,7 +302,7 @@ The tenant-wide Schema scopes are:
 - `schema.custominstance_manage`
 
 These scopes apply to custom instances across all custom entity types.
-When a custom entity type is created (for example `DOCUMENT`), scopes are provisioned for that type:
+When a custom entity type is created (for example `DOCUMENT`), scopes are automatically provisioned for that type:
 
 - `custom.document_read`
 - `custom.document_manage`
@@ -371,7 +371,7 @@ flowchart LR
     classDef Class_04 fill:#F2F6FA, stroke:#4C5359
 ```
 
-### Define custom scope for custom entity
+### Defining scopes for custom entity
 
 Custom-instance endpoints accept one of the following scope sets:
 
