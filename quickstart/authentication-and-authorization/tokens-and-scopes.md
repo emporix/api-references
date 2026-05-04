@@ -386,7 +386,9 @@ Custom-instance endpoints accept one of the following scope sets:
 {% step %}
 ### Create or upsert a custom entity type in Schema
 
-To create a custom entity type, call the [Creating a custom schema type](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-schema-type#post-schema-tenant-custom-entities) endpoint. This step provisions type-scoped `custom.{lowerCaseType}_*` scopes.
+To create a custom entity type, call the [Creating a custom schema type](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-schema-type#post-schema-tenant-custom-entities) endpoint. 
+
+This step automatically creates the custom scopes - `custom.{lowerCaseType}_*`.
 
 ```bash
 curl -i -X POST \
@@ -401,25 +403,6 @@ curl -i -X POST \
   }'
 ```
 
-{% endstep %}
-
-{% step %}
-### Optional: Define IAM custom scopes 
-The step is optional, but recommended to do.
-
-To create or update a custom scope, call the [Upserting a custom scope](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/custom-scopes#put-iam-tenant-custom-scopes-scopeid) endpoint.
-
-```bash
-curl -i -X PUT \
-  'https://api.emporix.io/iam/{tenant}/custom-scopes/myproject.bulk_export_manage' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "description": {
-      "en": "Allows triggering bulk export jobs."
-    }
-  }'
-```
 {% endstep %}
 
 {% step %}
@@ -482,7 +465,7 @@ curl -i -X POST \
 {% step %}
 ### Request OAuth2 tokens and call Schema custom-instance APIs
 
-Request an OAuth2 token with the configured IAM scopes, then call Schema custom-instance endpoints.
+To request an OAuth2 token with the configured IAM scopes, call the [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authorization/oauth-service/api-reference/service-access-token) endpoint.
 
 ```bash
 curl -i -X POST \
@@ -494,7 +477,7 @@ curl -i -X POST \
   --data-urlencode 'scope=custom.document_manage'
 ```
 
-Then call the [Creating a custom instance](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances) endpoint.
+Then call the [Creating a custom instance](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances) endpoint to validate that your IAM group, access control, and scope mapping are enforced end-to-end. A successful call confirms the configured scope authorizes the operation, while `403 Forbidden` indicates missing or incorrect scope assignment.
 
 ```bash
 curl -i -X POST \
@@ -518,7 +501,7 @@ curl -i -X POST \
 {% endstepper %}
 
 {% hint style="info" %}
-For more details, see the [IAM Tutorial](../../users-and-permissions/iam/iam.md) and [Schema Tutorial](../../utilities/schema/schema.md).
+For more details on custom scopes, see the [IAM Tutorial](../../users-and-permissions/iam/iam.md) and [Schema Tutorial](../../utilities/schema/schema.md).
 {% endhint %}
 
 ## Identity and Access Management (IAM) 
