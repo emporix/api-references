@@ -234,17 +234,17 @@ When you create a custom entity for a tenant, Emporix automatically generates a 
 
 For each custom entity, the platform creates a predefined set of scopes following a consistent naming pattern:
 
-<code>
-<entity>.<entity>_read
-<entity>.<entity>_manage
-<entity>.<entity>_readOwn
-<entity>.<entity>_manageOwn
-</code>
+
+* `<entity>.<entity>_read`
+* `<entity>.<entity>_manage`
+* `<entity>.<entity>_readOwn`
+* `<entity>.<entity>_manageOwn`
+
 
 These scopes are immediately available for use in IAM and can be included in your custom access controls. They are also exposed through OAuth2.
 
 
 {% hint style="info" %}
 For a related Schema Service configuration, see the [Schema Service tutorial](../../utilities/schema/schema.md)
-For the end-to-end integration flow across IAM and Schema, see [Custom scopes for custom entities](../../quickstart/authentication-and-authorization/tokens-and-scopes.md#custom-scopes-for-custom-entities) in the Tokens and Scopes guide.
+For the end-to-end integration flow across IAM and Schema, see [Custom scopes](../../quickstart/authentication-and-authorization/tokens-and-scopes.md) in the Tokens and Scopes guide.
 {% endhint %}
