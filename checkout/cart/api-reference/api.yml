@@ -2611,12 +2611,14 @@ paths:
               examples:
                 Response example:
                   value:
-                    - status: 201
+                    - index: 0
+                      status: 201
                       id: '1'
                       headers:
                         location: /carts/612cc4783cff1d66f699b6a1/items/1
                       yrn: 'urn:yaas:saasag:caasproduct:product:saastest2;5c3351aea9812100098ffc60'
-                    - status: 201
+                    - index: 1
+                      status: 201
                       id: '2'
                       headers:
                         location: /carts/612cc4783cff1d66f699b6a1/items/2
@@ -5187,6 +5189,9 @@ components:
       description: ''
       type: object
       properties:
+        index:
+          type: integer
+          description: Index of the processed cart item, matching the position in the request body.
         status:
           type: integer
           description: HTTP response status code.
