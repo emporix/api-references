@@ -237,14 +237,15 @@ curl -i -X GET \
 
 When you create a custom entity for a tenant, Emporix automatically generates a standard set of custom scopes for this entity. This ensures consistency across APIs and reduces the effort required to design and maintain permission models.
 
-For each custom entity, the platform creates a predefined set of scopes following a consistent naming pattern:
+For each custom entity, the platform creates a predefined set of scopes following the reserved naming pattern `custom.{lowerCaseType}_{action}`:
 
 
-* `<entity>.<entity>_read`
-* `<entity>.<entity>_manage`
-* `<entity>.<entity>_readOwn`
-* `<entity>.<entity>_manageOwn`
+* `custom.{lowerCaseType}_read`
+* `custom.{lowerCaseType}_manage`
+* `custom.{lowerCaseType}_read_own`
+* `custom.{lowerCaseType}_manage_own`
 
+For example, for a `Document` custom entity, the generated scopes include `custom.document_read`, `custom.document_manage`, `custom.document_read_own`, and `custom.document_manage_own`.
 
 These scopes are immediately available for use in IAM and can be included in your custom access controls. They are also exposed through OAuth2.
 
