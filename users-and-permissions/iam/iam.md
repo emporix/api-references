@@ -31,7 +31,7 @@ To create users, check out the **Manage Users** tab in the [Emporix Developer Po
 ### Retrieve a list of available access controls
 
 {% hint style="warning" %}
-Access controls are predefined and designed to cover all necessary scenarios. It is not possible to create your own access controls.
+There's a set of access controls that are predefined and designed to cover all necessary scenarios. It is not possible to change the built-in access controls, but you can create new custom ones. See section [How to manage custom scopes](#how-to-manage-custom-scopes).
 {% endhint %}
 
 To assign specific access control level to a group, first you need to retrieve a list of predefined access controls available for your tenant by sending a request to the [Retrieving all access controls](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/access-controls) endpoint.
@@ -122,13 +122,18 @@ curl -i -X POST
 
 In addition to the standard authorization model, the IAM Service also supports tenant-specific custom scopes, allowing you to extend access control beyond the default capabilities. Custom access controls can be created as collections of scopes and assigned to groups representing employees, customers, or technical users.
 
-When a group is linked to a custom access control, its users automatically inherit both the platform’s default scopes and any tenant-specific scopes.
+{% hint style="info" %}
+The access controls described earlier in [Retrieve a list of available access controls](#retrieve-a-list-of-available-access-controls) are the predefined, platform-managed access controls shipped by Emporix. Those built-in access controls can be listed and assigned, but tenants cannot create or modify them.
+This section covers a different capability: tenant-defined custom access controls created through the custom-scope APIs. These custom access controls are collections of tenant-specific scopes and can be assigned to groups representing employees, customers, or technical users.
+{% endhint %}
+
+When a group is linked to one of these tenant-defined custom access controls, its users automatically inherit both the platform’s default scopes and any tenant-specific scopes included in that custom access control.
 
 Typical flow:
 
 1. Create or update a custom scope in IAM.
-2. Create or update an access control that resolves to this scope.
-3. Assign the access control to a user group.
+2. Create or update a tenant-specific custom access control that resolves to this scope.
+3. Assign the custom access control to a user group.
 4. Assign users to the group and request OAuth2 tokens.
 5. Verify the assigned controls and scopes.
 
@@ -136,11 +141,11 @@ Typical flow:
 {% step %}
 ### Create or update a custom scope
 
-To create or update a custom scope, call the [Upserting a custom scope](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/custom-scopes#put-iam-tenant-custom-scopes-scopeid) endpoint.
+To create or update a custom scope, call the [Upserting a custom scope](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/scopes#put-iam-tenant-scopes-scopeid) endpoint.
 
 ```bash
 curl -i -X PUT \
-  'https://api.emporix.io/iam/{tenant}/custom-scopes/myproject.bulk_export_manage' \
+  'https://api.emporix.io/iam/{tenant}/scopes/myproject.bulk_export_manage' \
   -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
   -H 'Content-Type: application/json' \
   -d '{

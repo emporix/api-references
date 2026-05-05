@@ -549,5 +549,5 @@ Custom instance responses include the immutable `owner` object, which is used fo
 - `owner.legalEntityId`: present for customer-owned instances
 
 {% hint style="info" %}
-For the end-to-end IAM and Schema flow, see [Custom scopes for custom entities](../../quickstart/authentication-and-authorization/tokens-and-scopes.md#custom-scopes-for-custom-entities) in the Tokens and Scopes guide.
+ For the end-to-end IAM and Schema flow, see [Custom scopes for custom entities](../../quickstart/authentication-and-authorization/tokens-and-scopes.md#scopes-for-custom-entities) in the Tokens and Scopes guide.
 {% endhint %}
