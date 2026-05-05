@@ -17,12 +17,12 @@ layout:
 
 ## Overview
 
-A new version `1.3.0' of the Emporix SDK adds support for `DYNAMIC_VARIANT` products and introduces a dedicated client for asynchronous dynamic
+A new version `1.3.0` of the Emporix SDK adds support for `DYNAMIC_VARIANT` products and introduces a dedicated client for asynchronous dynamic
 variant recalculation jobs.
 
 Dynamic variants form a flexible hierarchy (up to 4 levels). Each variant stores its own distinguishing attributes (`ownVariantAttributes`)
 and a root dynamic variant contains a denormalized `variants` map of all descendants. For bulk imports, the variant tree can be rebuilt
-asynchronously via the recalculation job endpoints.
+asynchronously using the recalculation job endpoints.
 
 ## New client
 
@@ -58,7 +58,7 @@ asynchronously via the recalculation job endpoints.
 | DynamicVariantAttributeType  | Attribute value type enum (e.g. `STRING`, `BOOLEAN`, `NUMBER`, `DECIMAL`).                    |
 | VariantAttributeQualifier    | Qualifier value with custom serializer/deserializer for stable JSON representation.           |
 | VariantMapEntry              | Entry stored in a root product’s `variants` map with accumulated attributes for a descendant. |
-| DynamicVariantInfo           | Metadata information for dynamic variant trees (e.g. missing ancestor, cycle detection).      |
+| DynamicVariantInfo           | Metadata information for dynamic variant trees (for example, missing ancestor, cycle detection).      |
 
 ### Requests for `DYNAMIC_VARIANT` products
 
@@ -67,7 +67,7 @@ asynchronously via the recalculation job endpoints.
 | DynamicVariantCreateRequest | Create request for `DYNAMIC_VARIANT` products, including `ownVariantAttributes`. |
 | DynamicVariantUpdateRequest | Update request for `DYNAMIC_VARIANT` products, including `ownVariantAttributes`. |
 
-### Product presentation (brand & labels)
+### Product presentation - brand & labels
 
 | Type   | Description |
 |--------|-------------|
