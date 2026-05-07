@@ -86,7 +86,7 @@ Shipping zones are countries that your business delivers products to. You can cr
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/shipping/{tenant}/{site}/zones' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: fr' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -113,7 +113,7 @@ You can set up shipping groups for customers and define different shipping metho
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/shipping/{tenant}/{site}/groups' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: fr' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -140,7 +140,7 @@ By adding customers to shipping groups, you can offer them different shipping me
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/shipping/{tenant}/{site}/cgrelations' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "customerId": "C001",
@@ -163,7 +163,7 @@ Add shipping methods and configure shipping fees by calling the [Creating a ship
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/shipping/{tenant}/{site}/zones/{zoneId}/methods' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: fr'
   -H 'Content-Type: application/json' 
   -d '{
@@ -228,7 +228,7 @@ Add delivery times by calling the [Creating a delivery time](https://developer.e
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/shipping/{tenant}/{site}/zones/{zoneId}/methods' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: fr'
   -H 'Content-Type: application/json' 
   -d '{
@@ -293,7 +293,7 @@ Add delivery time slots by calling the [Creating a delivery time slot](https://d
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/shipping/{tenant}/delivery-times/{deliveryTimeId}/slots?validateOverlap=true' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "shippingMethod": "method2",
@@ -343,7 +343,7 @@ Shipping times for particular postal codes are automatically calculated based on
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/shipping/{tenant}/{site}/cgrelations/{customerId}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 {% endstep %}
 
@@ -357,7 +357,7 @@ Add the delivery information to the cart by calling the [Updating a cart](https:
 ```bash
 curl -i -X PUT 
   'https://api.emporix.io/cart/{tenant}/carts/{cartId}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "customerId": "87413250",

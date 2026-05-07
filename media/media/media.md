@@ -45,7 +45,7 @@ If you want to upload the asset to the database, you need to send a multipart re
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/media/{tenant}/assets' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: multipart/form-data' 
   -F 'file=[object Object]' 
   -F 'body=[object Object]'
@@ -66,7 +66,7 @@ Check out the "Asset of the BLOB type added for a CATEGORY" example:
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/media/{tenant}/assets' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: multipart/form-data' 
   -F 'file=[object Object]' 
   -F 'body=[object Object]'

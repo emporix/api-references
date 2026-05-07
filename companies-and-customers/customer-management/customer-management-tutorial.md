@@ -93,7 +93,7 @@ To create a new customer account, send a request to the [Creating a new customer
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/customer/{tenant}/signup' 
-  -H 'Authorization: Bearer {anonymous_access_token}' 
+  -H 'Authorization: Bearer {{ANONYMOUS_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "email": "example@customer.com",
@@ -158,7 +158,7 @@ Send the `PATCH` request for [Updating a customer profile](https://developer.emp
 
 ```bash
 curl -X PATCH "https://api.emporix.io/customer/{tenant}/customers/{customerNumber}" 
-  -H "Authorization: Bearer YOUR_OAUTH2_TOKEN" 
+  -H "Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}" 
   -H "Content-Type: application/json" 
   -d '{
     "active": true,
@@ -180,7 +180,7 @@ Send an authorization request to the [Logging in a customer](https://developer.e
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/customer/{tenant}/login' 
-  -H 'Authorization: Bearer {anonymous_access_token}' 
+  -H 'Authorization: Bearer {{ANONYMOUS_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "email": "customer@customer.com",
@@ -221,7 +221,7 @@ Authorize the request with the anonymous access token.
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/customer/{tenant}/refreshauthtoken?refreshToken={customer_refresh_token}&legalEntityId={legalEntityId}' \
-  -H 'Authorization: Bearer {anonymous_access_token}'
+  -H 'Authorization: Bearer {{ANONYMOUS_ACCESS_TOKEN}}'
 ```
 
 {% hint style="info" %}
@@ -243,7 +243,7 @@ Authorize the request with the customer access token.
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/customer/{tenant}/validateauthtoken' \
-  -H 'Authorization: Bearer {customer_access_token}'
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
 ```
 
 The response includes the details about the token type and granted scopes, for example:
@@ -278,7 +278,7 @@ Authorize the request with the anonymous access token.
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/customer/{tenant}/socialLogin?code={authorization_code}&redirect_uri={redirect_uri}&code_verifier={code_verifier}' \
-  -H 'Authorization: Bearer {anonymous_access_token}' \
+  -H 'Authorization: Bearer {{ANONYMOUS_ACCESS_TOKEN}}' \
   -H 'session-id: {session_id}'
 ```
 The response returns the social access token to authenticate the customer.
@@ -317,8 +317,8 @@ Authorize the request with a customer access token.
 
 ```bash
 curl -i -X GET \
-  'https://api.emporix.io/customer/{tenant}/logout?accessToken={customer_access_token}' \
-  -H 'Authorization: Bearer {customer_access_token}'
+  'https://api.emporix.io/customer/{tenant}/logout?accessToken={{CUSTOMER_ACCESS_TOKEN}}' \
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
 ```
 
 {% hint style="info" %}
@@ -344,7 +344,7 @@ Authorize the request with a customer access token or an anonymous access token,
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/customer/{tenant}/me?expand=addresses,mixin:*' 
-  -H 'Authorization: Bearer {customer_access_token}'
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
 ```
 
 The response includes customer details such as personal information, preferred settings, and associated accounts:
@@ -403,7 +403,7 @@ Authorize the request with a customer access token.
 ```bash
 curl -i -X PATCH 
   'https://api.emporix.io/customer/{tenant}/me' 
-  -H 'Authorization: Bearer {customer_access_token}' 
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "title": "MR",
@@ -437,7 +437,7 @@ Customers can add shipping or billing addresses to their profile. Send a request
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/customer/{tenant}/me/addresses' 
-  -H 'Authorization: Bearer {customer_access_token}' 
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "contactName": "John Doe",
@@ -479,7 +479,7 @@ To retrieve all addresses associated with a customer profile, send a request to 
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/customer/{tenant}/me/addresses' 
-  -H 'Authorization: Bearer {customer_access_token}'
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
 ```
 The response returns an array of addresses:
 
@@ -520,7 +520,7 @@ Authorize the request with a customer access token.
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/customer/{tenant}/me/addresses/{addressId}' 
-  -H 'Authorization: Bearer {customer_access_token}'
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
 ```
 
 The response returns the address details:
@@ -556,7 +556,7 @@ To update an existing address, send a request to the [Updating a customer addres
 ```bash
 curl -i -X PATCH 
   'https://api.emporix.io/customer/{tenant}/me/addresses/{addressId}' 
-  -H 'Authorization: Bearer {customer_access_token}' 
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "contactName": "John Doe",
@@ -591,7 +591,7 @@ To add tags to an existing address, send a request to the [Adding tags to a cust
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/customer/{tenant}/me/addresses/{addressId}/tags?tags=BILLING,SHIPPING,CUSTOM' 
-  -H 'Authorization: Bearer {customer_access_token}'
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
 ```
 
 {% hint style="info" %}
@@ -607,7 +607,7 @@ To remove an address from a customer profile, send a request to the [Deleting a 
 ```bash
 curl -i -X DELETE 
   'https://api.emporix.io/customer/{tenant}/me/addresses/{addressId}' 
-  -H 'Authorization: Bearer {customer_access_token}'
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
 ```
 
 {% hint style="warning" %}
@@ -640,7 +640,7 @@ Authorize the request with an anonymous access token.
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/customer/{tenant}/password/reset' 
-  -H 'Authorization: Bearer {anonymous_access_token}' 
+  -H 'Authorization: Bearer {{ANONYMOUS_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "email": "example@customer.com",
@@ -665,7 +665,7 @@ Authorize the request with the anonymous access token.
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/customer/{tenant}/password/reset/update' 
-  -H 'Authorization: Bearer {anonymous_access_token}' 
+  -H 'Authorization: Bearer {{ANONYMOUS_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "token": "beExUmshJC5gnuXk1kET5dCLyQWkrAfKRGFOxVXLcJI13R1fn5USjaWku5G71whM",
@@ -690,7 +690,7 @@ Authorize the request with a customer access token.
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/customer/{tenant}/password/change' 
-  -H 'Authorization: Bearer {customer_access_token}' 
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "currentPassword": "password123",
@@ -715,7 +715,7 @@ Authorize the request with a customer access token.
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/customer/{tenant}/me/accounts/internal/email/change' 
-  -H 'Authorization: Bearer {customer_access_token}' 
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "email": "example@customer.com",
@@ -742,7 +742,7 @@ Authorize the request with an anonymous access token.
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/customer/{tenant}/me/accounts/internal/email/change/confirm' 
-  -H 'Authorization: Bearer {anonymous_access_token}' 
+  -H 'Authorization: Bearer {{ANONYMOUS_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "token": "beExUmshJC5gnuXk1kET5dCLyQWkrAfKRGFOxVXLcJI13R1fn5USjaWku5G71whM"

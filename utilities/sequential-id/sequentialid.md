@@ -38,7 +38,7 @@ To create a schema for sequential IDs creation, send the request to the [Creatin
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/sequential-id/{tenant}/schemas' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "name": "testSchema",
@@ -79,7 +79,7 @@ To get the created schema details, make a call to the [Retrieving a schema](http
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/sequential-id/{tenant}/schemas/{schemaId}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 Copy the schema ID.
@@ -97,7 +97,7 @@ Activate the schema to apply it in the system so that the order numbers follow t
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/sequential-id/{tenant}/schemas/{schemaId}/setActive' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 Provide the `sequenceSchemaID` in the request.
@@ -143,7 +143,7 @@ You can define vendor-specific, separate number ranges with consecutive numberin
 ```bash
 curl -i -X POST 
   https://api.emporix.io/sequential-id/sequenceSchemas 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "name": "invoiceNoSequence",
