@@ -124,7 +124,7 @@ In addition to the standard authorization model, the IAM Service also supports t
 
 {% hint style="info" %}
 The access controls described earlier in [Retrieve a list of available access controls](#retrieve-a-list-of-available-access-controls) are the predefined, platform-managed access controls shipped by Emporix. Those built-in access controls can be listed and assigned, but tenants cannot create or modify them.
-This section covers a different capability: tenant-defined custom access controls created through the custom-scope APIs. These custom access controls are collections of tenant-specific scopes and can be assigned to groups representing employees, customers, or technical users.
+This section covers a different capability: tenant-specific custom access controls created through the custom-scope APIs. These custom access controls are collections of scopes and can be assigned to groups representing employees or customers.
 {% endhint %}
 
 When a group is linked to one of these tenant-defined custom access controls, its users automatically inherit both the platform’s default scopes and any tenant-specific scopes included in that custom access control.

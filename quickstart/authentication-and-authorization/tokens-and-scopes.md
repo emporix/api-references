@@ -382,6 +382,8 @@ Custom-instance endpoints accept one of the following scope sets:
 - Use `custom.{lowerCaseType}_*` when you need least-privilege, type-specific access.
 - Use `*_own` scopes when users should only access instances they created.
 
+The following flow describes how to enable a service-to-service integration to act on custom instances using a service access token. To grant the same scopes to employee users via login-based tokens, see [How to manage custom scopes](../../users-and-permissions/iam/iam.md#how-to-manage-custom-scopes) in the IAM tutorial.
+
 {% stepper %}
 {% step %}
 ### Create or upsert a custom entity type in Schema
@@ -393,7 +395,7 @@ This step automatically creates the custom scopes - `custom.{lowerCaseType}_*`.
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/schema/{tenant}/custom-entities' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
     "id": "DOCUMENT",
@@ -406,66 +408,20 @@ curl -i -X POST \
 {% endstep %}
 
 {% step %}
-### Map scopes into access controls
+### Configure custom API credentials with the new scopes
 
-To map scopes into IAM, call the [Upserting an access control](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/access-controls#put-iam-tenant-access-controls-accesscontrolid) endpoint.
+In the [Emporix Developer Portal](https://app.emporix.io), create or update a set of custom API credentials and assign the auto-generated `custom.{lowerCaseType}_*` scopes to them. The custom credentials' `Client_ID` and `Secret` are then used to obtain a service access token that carries those scopes.
 
-```bash
-curl -i -X PUT \
-  'https://api.emporix.io/iam/{tenant}/access-controls/custom-document-manage' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "resourceId": "custom.document",
-    "roleId": "manage",
-    "scopes": [
-      "custom.document_manage",
-      "custom.document_manage_own"
-    ]
-  }'
-```
-{% endstep %}
-
-{% step %}
-### Assign access controls to groups and users
-
-To assign access controls, call the [Creating a new group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups) endpoint and include your access controls in the group payload.
-
-```bash
-curl -i -X POST \
-  'https://api.emporix.io/iam/{tenant}/groups' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "name": {
-      "en": "Custom Document Managers"
-    },
-    "userType": "EMPLOYEE",
-    "accessControls": [
-      "custom-document-manage"
-    ]
-  }'
-```
-
-Then call the [Adding a user to a group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups-groupid-users) endpoint.
-
-```bash
-curl -i -X POST \
-  'https://api.emporix.io/iam/{tenant}/groups/{groupId}/users' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "userId": "00u4ukqvzlEP31sCk417",
-    "userType": "EMPLOYEE"
-  }'
-```
+{% hint style="info" %}
+For step-by-step instructions, refer to the [Manage API Keys](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/getting-started/developer-portal/manage-apikeys) guide.
+{% endhint %}
 
 {% endstep %}
 
 {% step %}
 ### Request OAuth2 tokens and call Schema custom-instance APIs
 
-To request an OAuth2 token with the configured IAM scopes, call the [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authorization/oauth-service/api-reference/service-access-token) endpoint.
+To request a service access token with the configured scopes, call the [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authentication/oauth-service/api-reference/service-access-token) endpoint, using the `Client_ID` and `Secret` of your custom API credentials.
 
 ```bash
 curl -i -X POST \
@@ -477,12 +433,12 @@ curl -i -X POST \
   --data-urlencode 'scope=custom.document_manage'
 ```
 
-Then call the [Creating a custom instance](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances) endpoint to validate that your IAM group, access control, and scope mapping are enforced end-to-end. A successful call confirms the configured scope authorizes the operation, while `403 Forbidden` indicates missing or incorrect scope assignment.
+Then call the [Creating a custom instance](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances) endpoint to validate that the configured scope is enforced end-to-end. A successful call confirms that the scope authorizes the operation, while `403 Forbidden` indicates that the scope is missing from the credentials or from the token request.
 
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/schema/{tenant}/custom-entities/DOCUMENT/instances' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
     "id": "doc-1001",
