@@ -1511,7 +1511,6 @@ Assign the product to a classification category using the [Assigning a resource 
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/category/{tenant}/categories/0720b75e-ee1c-4d76-9f53-eb3af3927e13/assignments' 
-  --header 'X-Version: v2' 
   --header 'Content-Type: application/json' 
   --data '{
     "ref": {

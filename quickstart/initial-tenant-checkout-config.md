@@ -424,7 +424,6 @@ Copy the returned `id` for catalog assignment.
 ```bash
 curl https://api.emporix.io/category/{{tenant}}/categories?publish=true \
   --request POST \
-  --header 'X-Version: v2' \
   --header 'Content-Type: application/json' \
   --data '{
     "published": true,
@@ -627,7 +626,6 @@ Add the product to a category tree for its better searchability. Call the [Assig
 ```bash
 curl 'https://api.emporix.io/category/{{tenant}}/categories/{{categoryId}}/assignments' \
   --request POST \
-  --header 'X-Version: v2' \
   --header 'Content-Type: application/json' \
   --data '{
     "ref": {

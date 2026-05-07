@@ -87,7 +87,6 @@ curl -i -X POST
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: `*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`' 
   -H 'Content-Type: application/json' 
-  -H 'X-Version: v2' 
   -d '{
     "parentId": "056bcaf6-66b8-4ddd-9489-65c5f6449e74",
     "localizedName": {
