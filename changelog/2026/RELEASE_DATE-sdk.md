@@ -26,10 +26,10 @@ A new `1.2.5` version of the Emporix SDK has been released with the following ch
 
 ## Updated methods
 
-| Method                                      | Description                                                                                                                                                              |
-|---------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| AvailabilityClient.getAvailabilitiesForSite | The response now includes the `X-Total-Count` header. Added support for the standard `q` query parameter and `sort` parameter.                                           |
-| AvailabilityClient.searchAvailability       | The response now includes the `X-Total-Count` header. Added support for the standard `q` request body attribute as an alternative filtering method and `sort` parameter. |
+| Method                                        | Description                                                                                                                                                              |
+|-----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `AvailabilityClient.getAvailabilitiesForSite` | The response now includes the `X-Total-Count` header. Added support for the standard `q` query parameter and `sort` parameter.                                           |
+| `AvailabilityClient.searchAvailability`       | The response now includes the `X-Total-Count` header. Added support for the standard `q` request body attribute as an alternative filtering method and `sort` parameter. |
 
 ## New types
 
