@@ -251,6 +251,6 @@ These scopes are immediately available for use in IAM and can be included in you
 
 
 {% hint style="info" %}
-For a related Schema Service configuration, see the [Schema Service tutorial](../../utilities/schema/schema.md)
-For the end-to-end integration flow across IAM and Schema, see [Custom scopes](../../quickstart/authentication-and-authorization/tokens-and-scopes.md) in the Tokens and Scopes guide.
+* For a related Schema Service configuration, see the [Schema Service tutorial](../../utilities/schema/schema.md).
+* For the end-to-end integration flow across IAM and Schema, see [Custom scopes](../../quickstart/authentication-and-authorization/tokens-and-scopes.md) in the Tokens and Scopes guide.
 {% endhint %}
