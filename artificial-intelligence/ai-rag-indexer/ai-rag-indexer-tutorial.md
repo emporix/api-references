@@ -38,7 +38,7 @@ Call the [Listing fields for RAG search](https://developer.emporix.io/api-refere
 curl -L 
   --request GET 
   --url 'https://api.emporix.io/ai-rag-indexer/{tenant}/{type}/rag-metadata' 
-  --header 'Authorization: Bearer <ACCESS_TOKEN>' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: application/json'
 ```
 
@@ -64,35 +64,35 @@ When you already know which fields you can index, call the [Listing fields for v
 
 ```bash
 curl --location --globoff --request PUT 'https://api.emporix.io/ai-service/{tenant}/agentic/tools/{toolId}' 
---header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
---header 'Content-Type: application/json' 
---data '{
-  "id": "rag-product",
-  "name": "Product Search RAG Tool",
-  "type": "rag_emporix",
-  "config": {
-        "entityType": "product",
-        "embeddingConfig": {
-            "provider": "emporix_openai"
-        },
-        "prompt": "You are a search tool for searching products",
-        "indexedFields": [
-            {
-                "name": "",
-                "key": "code"
-            },
-                        {
-                "name": "",
-                "key": "name.en"
-            },
-                        {
-                "name": "",
-                "key": "description.en"
-            }
-        ]
-    },
-    "enabled": true
-}'
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "id": "rag-product",
+    "name": "Product Search RAG Tool",
+    "type": "rag_emporix",
+    "config": {
+          "entityType": "product",
+          "embeddingConfig": {
+              "provider": "emporix_openai"
+          },
+          "prompt": "You are a search tool for searching products",
+          "indexedFields": [
+              {
+                  "name": "",
+                  "key": "code"
+              },
+                          {
+                  "name": "",
+                  "key": "name.en"
+              },
+                          {
+                  "name": "",
+                  "key": "description.en"
+              }
+          ]
+      },
+      "enabled": true
+  }'
 ```
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -111,7 +111,7 @@ When the tool is ready, call the [Reindexing the entities of given type](https:/
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/ai-rag-indexer/{tenant}/{type}/reindex' 
-  --header 'Authorization: Bearer <ACCESS_TOKEN>' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 

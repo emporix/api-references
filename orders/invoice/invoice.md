@@ -66,7 +66,7 @@ To set up the invoice configuration, call the [Creating new configurations](http
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/configuration/{tenant}/configurations' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "key": "invoiceSettings",
@@ -93,7 +93,7 @@ This configuration is used to set up the format of invoice numbers. Set up the n
 ```bash
 curl -i -X POST 
   https://api.emporix.io/sequential-id/sequenceSchemas 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "name": "invoiceNoSequence",

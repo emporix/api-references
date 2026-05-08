@@ -49,7 +49,7 @@ Then, send a request to the [Calculating net and gross values for prices](https:
 ```bash
 curl -i -X PUT 
   'https://api.emporix.io/tax/{tenant}/taxes/calculation-commands' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "input": {
@@ -94,7 +94,7 @@ Then, send a request to the [Calculating net and gross values for prices](https:
 ```bash
 curl -i -X PUT 
   'https://api.emporix.io/tax/{tenant}/taxes/calculation-commands' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "input": {
@@ -161,7 +161,7 @@ Then, send a request to the [Calculating net and gross values for prices](https:
 ```bash
 curl -i -X PUT 
   'https://api.emporix.io/tax/{tenant}/taxes/calculation-commands' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "input": {

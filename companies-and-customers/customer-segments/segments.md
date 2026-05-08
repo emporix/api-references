@@ -32,7 +32,7 @@ Create a customer segment by sending a request to the the [Creating a customer s
 ```bash
 curl -i -X POST
   'https://api.emporix.io/customer-segment/{tenant}/segments'
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
   -H 'Content-Language: string'
   -H 'Content-Type: application/json'
   -d '{
@@ -68,7 +68,7 @@ Connect the segment with specific products and/or categories for more customized
 ```bash
 curl -i -X PUT
   'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/items/{type}/{itemId}'
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
   -H 'Content-Type: application/json'
   -d '{
     "mixins": {
@@ -95,7 +95,7 @@ curl -i -X PUT
 ```bash
 curl -i -X PUT
   'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/items/{type}/bulk'
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
   -H 'Content-Type: application/json'
   -d '{}'
 ```
@@ -119,7 +119,7 @@ Now, add customers to the segment. Depending on your setup and purpose, you can 
 ```bash
 curl -i -X PUT
   'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/customers/{customerId}/{legalEntityId}'
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
   -H 'Content-Type: application/json'
   -d '{
     "mixins": {
@@ -146,7 +146,7 @@ curl -i -X PUT
 ```bash
 curl -i -X PUT
   'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/customers/{customerId}/{legalEntityId}'
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
   -H 'Content-Type: application/json'
   -d '{
     "mixins": {
@@ -173,7 +173,7 @@ curl -i -X PUT
 ```bash
 curl -i -X PUT
   'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/customers/bulk'
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
   -H 'Content-Type: application/json'
   -d '{}'
 ```
@@ -198,7 +198,7 @@ You can use the search API to find a segment of your interest that match a speci
 curl -i -X POST
   'https://api.emporix.io/customer-segment/{tenant}/segments/search?pageSize=string&pageNumber=string&sort=string&fields=string&legalEntityId=string'
   -H 'Accept-Language: string'
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
   -H 'Content-Type: application/json'
   -H 'X-Total-Count: true'
   -d '{
@@ -222,7 +222,7 @@ To create a coupon that is valid only for a specific segment, send the request t
 ```bash
 curl -i -X POST
   'https://api.emporix.io/coupon/{tenant}/coupons'
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
   -H 'Content-Type: application/json'
   -d '{
     "code": "ENG2OC0",
@@ -277,7 +277,7 @@ Send the request to the [Retrieving all items assignments for all customer segme
 curl -i -X GET
   'https://api.emporix.io/customer-segment/{tenant}/segments/items?q=string&pageSize=string&pageNumber=string&sort=string&fields=string&legalEntityId=string&siteCode=string&onlyActive=false'
   -H 'Accept-Language: string'
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
   -H 'X-Total-Count: true'
 ```
 
@@ -298,7 +298,7 @@ Send the request to the [Retrieving category trees for a customer segments](http
 curl -i -X GET
   'https://api.emporix.io/customer-segment/{tenant}/segments/items/category-trees?legalEntityId=string&siteCode=string'
   -H 'Accept-Language: string'
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 The request generates a category tree with categories assigned to a segment and their parent categories, if applicable. If a segment specifies a subcategory only, the customer of that segment is able to see the parent category label, but content-wise, only the products from the subcategory are available.
