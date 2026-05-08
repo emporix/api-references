@@ -1691,7 +1691,7 @@ paths:
       summary: Exporting Custom Entities
       description: |
         Exports custom entities with corresponding schemas.
-      operationId: POST-schema-export
+      operationId: POST-schema-export-custom-entities
       requestBody:
         content:
           application/json:
@@ -1746,7 +1746,7 @@ paths:
         
         
         **Note**: If given `Custom Entity Type` or `Schema` already exists then it will be created with `_COPY` suffix. For example, `CUSTOM_PRODUCT` will be created as `CUSTOM_PRODUCT_COPY`.
-      operationId: POST-schema-import
+      operationId: POST-schema-import-custom-entites
       requestBody:
         content:
           application/json:
@@ -1902,6 +1902,7 @@ components:
       properties:
         data:
           type: string
+          format: byte
           description: Base64 representation of custom entities with corresponding schemas.
       required:
         - data
@@ -2818,3 +2819,4 @@ tags:
   - name: Reference
   - name: Custom Schema Type
   - name: Custom Instance
+  - name: Export / Import
