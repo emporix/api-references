@@ -8,6 +8,7 @@
 
 ## 2026
 
+* [2026-05-08: Schema Service - EXPORT and IMPORT functionality for custom schema types](2026/2026-05-08-schema.md)
 * [2026-05-07: Emporix SDK - Availability Service Q-param support, total count header and search improvements](2026/2026-05-07-sdk.md)
 * [2026-04-29: Emporix SDK - Multi-tenant support](2026/2026-04-29-sdk.md)
 * [2026-04-28: Availability Service - Q-param support, total count header and search improvements](2026/2026-04-28-availability.md)
