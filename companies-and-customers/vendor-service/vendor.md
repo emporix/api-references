@@ -28,11 +28,11 @@ To create a vendor, send a request to the [Creating a vendor](https://developer.
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/vendor/vendor/{tenant}/vendors' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/vendor/{tenant}/vendors' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{
   "name": "ABC Company",
   "type": "COMPANY",
@@ -50,7 +50,7 @@ curl -L
       "phone": "+1-555-0123"
     }
   ]
-}
+}'
 ```
 
 Your vendor is created and you get its ID in the request response, for example `6880c8e860a76003fbece674`.
@@ -107,11 +107,11 @@ As a response, you get information about all your tenant vendors with company an
 To set up a location for the vendor, send the request to the [Creating a location](https://developer.emporix.io/api-references/api-guides/companies-and-customers/vendor-service/api-reference/locations#post-vendor-tenant-locations) endpoint.
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/vendor/{tenant}/locations' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/vendor/{tenant}/locations' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{
   "name": "Example HQ",
   "type": "HEADQUARTER",
@@ -231,11 +231,11 @@ A single user can belong to only one vendor group.
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/iam/{tenant}/groups/{groupId}/users' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/iam/{tenant}/groups/{groupId}/users' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{
     "userId": "3bf883fc-d18a-4175-8137-aaf64f810835",
     "userType": "EMPLOYEE"

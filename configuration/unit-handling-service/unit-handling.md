@@ -100,7 +100,7 @@ Before creating a price model with `unitCode: "kg"`, first verify if the unit ex
 ```bash
 curl -L 
   --url 'https://api.emporix.io/unit-handling/{tenant}/units' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 
@@ -110,7 +110,7 @@ If the unit exists, proceed with creating the price model:
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/price/{tenant}/priceModels' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
     "includesTax": true,

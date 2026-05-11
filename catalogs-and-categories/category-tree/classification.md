@@ -54,7 +54,6 @@ To create a classification category, send a request to the [Creating a new categ
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/category/{tenant}/categories' 
-  --header 'X-Version: v2' 
   --header 'Content-Type: application/json' 
   --data '{
     "type": "CLASSIFICATION",
@@ -134,7 +133,6 @@ If you create a classification category "Corded Power Tools" as a child of "Powe
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/category/{tenant}/categories' 
-  --header 'X-Version: v2' 
   --header 'Content-Type: application/json' 
   --data '{
     "type": "CLASSIFICATION",
@@ -209,7 +207,6 @@ Send a request to the [Assigning a resource to a category](https://developer.emp
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' 
-  --header 'X-Version: v2' 
   --header 'Content-Type: application/json' 
   --data '{
     "ref": {

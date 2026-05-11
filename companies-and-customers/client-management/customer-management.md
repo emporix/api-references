@@ -53,7 +53,7 @@ A location is a physical address where a company operates, such as its headquart
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/customer-management/{tenant}/locations' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "name": "Main HQ",
@@ -97,7 +97,7 @@ A legal entity is a representation of a company. To add a new legal entity, send
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/customer-management/{tenant}/legal-entities' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "name": "ABC Company",
@@ -167,7 +167,7 @@ The `id` from the response is further referred to as `parentId`.
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/customer-management/{tenant}/legal-entities?pageNumber=1&pageSize=16&sort=name%2Cmetadata.createdAt%3Adesc&q=name%3A~john&fields=name%2Ctype&id=string&name=string&type=COMPANY&parentId=string&legalInfo.legalName=string&legalInfo.registrationDate=string&legalInfo.taxRegistrationNumber=string&legalInfo.registrationAgency=string&legalInfo.countryOfRegistration=string&legalInfo.registrationId=string' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'X-Total-Count: false'
 ```
 
@@ -184,7 +184,7 @@ Subsidiaries are added similarly to their parent companies. To add a new subsidi
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/customer-management/{tenant}/legal-entities' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "name": "ABC Subsidiary",
@@ -264,7 +264,7 @@ To find out what a company ID is, send a request to the [Retrieving all legal en
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/customer-management/{tenant}/legal-entities?pageNumber=1&pageSize=16&sort=name%2Cmetadata.createdAt%3Adesc&q=name%3A~john&fields=name%2Ctype&id=string&name=string&type=COMPANY&parentId=string&legalInfo.legalName=string&legalInfo.registrationDate=string&legalInfo.taxRegistrationNumber=string&legalInfo.registrationAgency=string&legalInfo.countryOfRegistration=string&legalInfo.registrationId=string' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'X-Total-Count: false'
 ```
 
@@ -285,7 +285,7 @@ To retrieve an employee's customer ID, send a request to the [Retrieving a list 
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/customer/{tenant}/customers?q=contactEmail%3A{email}&sort=string&pageNumber=1&pageSize=60&expand=string' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 {% hint style="warning" %}
@@ -305,7 +305,7 @@ A contact represents an employee of one or more business customers. To assign a 
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/customer-management/{tenant}/contact-assignments' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "legalEntity": {
