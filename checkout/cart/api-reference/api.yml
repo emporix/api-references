@@ -2710,6 +2710,10 @@ paths:
                       message: Invalid quantity
                       details:
                         - Quantity must be greater than zero
+        '400':
+          $ref: '#/components/responses/trait_400'
+        '403':
+          $ref: '#/components/responses/trait_403'
         '500':
           $ref: '#/components/responses/trait_500'
       description: |-
