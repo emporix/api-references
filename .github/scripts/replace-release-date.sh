@@ -76,12 +76,15 @@ if [ -f "$SUMMARY_FILE" ] && grep -q "$PLACEHOLDER" "$SUMMARY_FILE"; then
       echo "${entry#*:}" >> "$insert_file"
     done
 
-    # Insert right after the year header line
+    # Insert right after the year header, absorbing any blank lines between header and first entry
     awk -v header="$YEAR_HEADER" -v ifile="$insert_file" '
+      skip_blanks && /^[[:space:]]*$/ { next }
+      skip_blanks { skip_blanks = 0 }
       { print }
       $0 == header {
         while ((getline line < ifile) > 0) print line
         close(ifile)
+        skip_blanks = 1
       }
     ' "$SUMMARY_FILE" > "${SUMMARY_FILE}.tmp"
     mv "${SUMMARY_FILE}.tmp" "$SUMMARY_FILE"
