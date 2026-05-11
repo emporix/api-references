@@ -7,6 +7,10 @@
 * [Current work in progress](in-progress/in-progress.md)
 
 ## 2026
+* [2026-05-11: Product Service - code on dynamic variant variants map entries](2026/2026-05-11-product-variants-code.md)
+* [2026-05-11: Product Service - expand brand and labels in product responses](2026/2026-05-11-product-service-expand-brand-labels.md)
+* [2026-05-11: Webhook Events - updated `index-item.updated` event schema](2026/2026-05-11-webhook-index-item-updated.md)
+* [2026-05-11: Cart Service - batch update endpoint for cart items](2026/2026-05-11-cart.md)
 * [2026-05-08: Schema Service - Export and Import functionality for custom schema types](2026/2026-05-08-schema.md)
 * [2026-05-07: Emporix SDK - Availability Service Q-param support, total count header and search improvements](2026/2026-05-07-sdk.md)
 * [2026-04-29: Emporix SDK - Multi-tenant support](2026/2026-04-29-sdk.md)
@@ -46,10 +50,6 @@
 * [2026-02-04: Product Service – category and customer segment IDs no longer in preview](2026/2026-02-04-product.md)
 * [2026-01-08: Configuration Service - New properties for configurations](2026/2026-01-08-configuration.md)
 
-* [2026-05-11: Product Service - code on dynamic variant variants map entries](2026/2026-05-11-product-variants-code.md)
-* [2026-05-11: Product Service - expand brand and labels in product responses](2026/2026-05-11-product-service-expand-brand-labels.md)
-* [2026-05-11: Webhook Events - updated `index-item.updated` event schema](2026/2026-05-11-webhook-index-item-updated.md)
-* [2026-05-11: Cart Service - batch update endpoint for cart items](2026/2026-05-11-cart.md)
 ## Archive
 
 * [Changelog 2025](archive/2025/changelog-2025.md)
