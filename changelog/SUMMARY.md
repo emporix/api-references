@@ -7,7 +7,9 @@
 * [Current work in progress](in-progress/in-progress.md)
 
 ## 2026
-
+* [RELEASE_DATE: Product Service - code on dynamic variant variants map entries](2026/RELEASE_DATE-product-variants-code.md)
+* [RELEASE_DATE: Product Service - expand brand and labels in product responses](2026/RELEASE_DATE-product-service-expand-brand-labels.md)
+* [RELEASE_DATE: Webhook Events - updated `index-item.updated` event schema](2026/RELEASE_DATE-webhook-index-item-updated.md)
 * [2026-05-11: Cart Service - batch update endpoint for cart items](2026/2026-05-11-cart.md)
 * [2026-05-08: Schema Service - Export and Import functionality for custom schema types](2026/2026-05-08-schema.md)
 * [2026-05-07: Emporix SDK - Availability Service Q-param support, total count header and search improvements](2026/2026-05-07-sdk.md)
