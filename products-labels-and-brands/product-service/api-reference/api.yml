@@ -47,7 +47,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/productsSearchBody'
       security:
-        - OAuth2:  
+        - OAuth2:
             - product.product_read_by_vendor
             - product.product_read_unpublished
       parameters:
@@ -90,7 +90,7 @@ paths:
       security:
         - OAuth2:
             - product.product_read_by_vendor
-            - product.product_read_unpublished  
+            - product.product_read_unpublished
             - product.product_manage_by_vendor
       parameters:
         - $ref: '#/components/parameters/header_x_total_count'
@@ -721,6 +721,7 @@ paths:
                     variants:
                       mobile-15-pro-l1:
                         version: 1
+                        code: MOBILE-15-PRO-L1
                         name:
                           en: Mobile Phone 15 Pro – 256 GB Blue
                           de: Mobile Phone 15 Pro – 256 GB Blau
@@ -761,6 +762,7 @@ paths:
                                 de: 6,1 Zoll
                       mobile-15-pro-l2-retail:
                         version: 1
+                        code: MOBILE-15-PRO-L2-RETAIL
                         name:
                           en: Mobile Phone 15 Pro – 256 GB Blue – Retail box
                           de: Mobile Phone 15 Pro – 256 GB Blau – Einzelhandelsbox
@@ -2816,11 +2818,74 @@ components:
         brandId:
           type: string
           description: 'ID of brand.'
+        brand:
+          $ref: '#/components/schemas/brand'
         labelIds:
           type: array
           items:
             type: string
           description: 'Collection of label IDs.'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/label'
+    brand:
+      type: object
+      description: Brand data expanded from `brandId`.
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        localizedName:
+          type: object
+          additionalProperties:
+            type: string
+        localizedDescription:
+          type: object
+          additionalProperties:
+            type: string
+        image:
+          type: string
+          format: uri
+        cloudinaryUrl:
+          type: string
+          format: uri
+        mediaId:
+          type: string
+    labelOverlay:
+      type: object
+      description: Overlay metadata for a label.
+      additionalProperties: false
+      properties:
+        isTrue:
+          type: boolean
+        position:
+          type: number
+    label:
+      type: object
+      description: Label data expanded from `labelIds`.
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          $ref: '#/components/schemas/localizedValue'
+        image:
+          type: string
+          format: uri
+        cloudinaryUrl:
+          type: string
+          format: uri
+        mediaId:
+          type: string
+        overlay:
+          $ref: '#/components/schemas/labelOverlay'
     basicProduct:
       type: object
       description: Products of the BASIC type.
@@ -3218,6 +3283,9 @@ components:
         version:
           type: integer
           description: Version of the source variant product at the time of the last recalculation.
+        code:
+          type: string
+          description: Code of the source variant product.
         name:
           $ref: '#/components/schemas/localizedValue'
         parentVariantId:
@@ -3360,11 +3428,17 @@ components:
         brandId:
           type: string
           description: ID of brand.
+        brand:
+          $ref: '#/components/schemas/brand'
         labelIds:
           type: array
           items:
             type: string
           description: Collection of label IDs.
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/label'
         categoryIds:
           type: array
           description: Category IDs assigned to the product.
@@ -3747,11 +3821,13 @@ components:
       schema:
         type: string
       description: |
-        Fields that should be expanded with additional information in the response body. Expressed as strings separated by commas.
+        Fields that should be expanded with additional information in the response body. Expressed as strings separated by commas. You can combine multiple values, for example `expand=template,parentVariant,brand,labels`.
 
         Possible values:
           * `template`
           * `parentVariant`
+          * `brand`
+          * `labels`
     query_force_product:
       name: force
       in: query
