@@ -39,10 +39,6 @@ If you want to create a root category, choose one from the following:
 
 If you want to create a subcategory, include the `parentId` of the root category in the request body.
 
-{% hint style="info" %}
-When the `X-Version` header is required, use `v2` — otherwise, the header is not necessary.
-{% endhint %}
-
 To create a new category, you need to send a request to the [Creating a new category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint.
 
 {% hint style="danger" %}
@@ -59,7 +55,6 @@ The `localizedSlug` field must not contain any diacritics.
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/category/{tenant}/categories' 
-  --header 'X-Version: v2' 
   --header 'Content-Type: application/json' 
   --data '{
     "parentId": "056bcaf6-66b8-4ddd-9489-65c5f6449e74",
@@ -118,7 +113,6 @@ To assign a product to a category, you need to send a request to the [Assigning 
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' 
-  --header 'X-Version: v2' 
   --header 'Content-Type: application/json' 
   --data '{
     "ref": {
@@ -141,7 +135,6 @@ To check whether the resource was properly assigned to the category, you can sen
 ```bash
 curl -L 
   --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' 
-  --header 'X-Version: v2' 
   --header 'Accept: */*'
 ```
 
@@ -167,7 +160,6 @@ To delete all assignments for a specific category, you need to send a request to
 curl -L 
   --request DELETE 
   --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' 
-  --header 'X-Version: v2' 
   --header 'Accept: */*'
 ```
 
@@ -185,7 +177,6 @@ To delete only a specific assignment, you need to send a request to the [Deletin
 curl -L 
   --request DELETE 
   --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments/{assignmentId}' 
-  --header 'X-Version: v2' 
   --header 'Accept: */*'
 ```
 
@@ -205,7 +196,6 @@ Category tree [Retrieving the category trees](https://developer.emporix.io/api-r
 curl -L 
   --request PATCH 
   --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}' 
-  --header 'X-Version: v2' 
   --header 'Content-Type: application/json' 
   --data '{
     "localizedName": {
@@ -245,7 +235,6 @@ To retrieve a specific category tree, you need to send a request to the [Retriev
 ```bash
 curl -L 
   --url 'https://api.emporix.io/category/{tenant}/category-trees/{categoryId}' 
-  --header 'X-Version: v2' 
   --header 'Accept: */*'
 ```
 
@@ -262,7 +251,6 @@ To retrieve all category trees, you need to send a request to the [Retrieving th
 ```bash
 curl -L 
   --url 'https://api.emporix.io/category/{tenant}/category-trees' 
-  --header 'X-Version: v2' 
   --header 'Accept: */*'
 ```
 
@@ -286,7 +274,6 @@ You can limit the depth of retrieved subcategories with the `depth` parameter.
 ```bash
 curl -L 
   --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/subcategories' 
-  --header 'X-Version: v2' 
   --header 'Accept: */*'
 ```
 
@@ -310,7 +297,6 @@ To move a category to be a child of another category, you need to send a request
 curl -L 
   --request PATCH 
   --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}' 
-  --header 'X-Version: v2' 
   --header 'Content-Type: application/json' 
   --data '{
     "localizedName": {
@@ -339,7 +325,6 @@ To create a classification category, send a request to the [Creating a new categ
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/category/{tenant}/categories' 
-  --header 'X-Version: v2' 
   --header 'Content-Type: application/json' 
   --data '{
     "type": "CLASSIFICATION",

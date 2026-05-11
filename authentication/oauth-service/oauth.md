@@ -101,7 +101,7 @@ A successful response returns a JSON object containing the access token and meta
 Use the token in subsequent API calls by setting the `Authorization` header:
 
 ```text
-Authorization: Bearer <access_token>
+Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}
 ```
 {% endstep %}
 {% endstepper %}

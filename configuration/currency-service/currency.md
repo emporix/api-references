@@ -107,7 +107,7 @@ You can also get a list of all the currencies for your tenant by sending a reque
 ```bash
 curl -L 
   --url 'https://api.emporix.io/currency/{tenant}/currencies' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 
