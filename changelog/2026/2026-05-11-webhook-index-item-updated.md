@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# RELEASE_DATE: Webhook Events - updated `index-item.updated` event schema
+# 2026-05-11: Webhook Events - updated `index-item.updated` event schema
 
 ## Overview
 

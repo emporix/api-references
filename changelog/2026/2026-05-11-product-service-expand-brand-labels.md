@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# RELEASE_DATE: Product Service - expand brand and labels in product responses
+# 2026-05-11: Product Service - expand brand and labels in product responses
 
 ## Overview
 
@@ -37,4 +37,3 @@ The product response schemas were extended with:
 ## Known problems
 
 There are no known problems.
-

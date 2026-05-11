@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# RELEASE_DATE: Product Service - code on dynamic variant variants map entries
+# 2026-05-11: Product Service - code on dynamic variant variants map entries
 
 ## Overview
 
