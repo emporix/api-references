@@ -2770,8 +2770,6 @@ paths:
         - OAuth2:   
             - cart.cart_manage
         - CustomerAccessToken: []
-      parameters:
-        - $ref: '#/components/parameters/trait_tenant'
       summary: Updating multiple products in cart
       tags:
         - Cart items
