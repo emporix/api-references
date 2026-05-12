@@ -17,7 +17,7 @@ layout:
 
 ## Overview
 
-The Approval Service supports quote checkout approvals alongside cart approvals. For `resourceType: QUOTE`, the client sends the quote id in `resourceId` and does not send `details` - the service loads quote line and price data from the quote integration. For `resourceType: CART`, `details` remains required as before.
+The Approval Service supports quote checkout approvals alongside cart approvals. For `resourceType: QUOTE`, the client sends the quote ID in `resourceId` and does not send `details`. The service loads quote line and price data from the quote integration. For `resourceType: CART`, `details` remains required as before.
 
 ## Updated endpoints
 
@@ -35,7 +35,7 @@ The Approval Service API reference schemas were extended with:
 
 - `resourceType` value `QUOTE`
 - `resourceItem`: `itemId`; `itemPrice` as line-level price (`unitPrice`, `newUnitPrice`, `calculatedPrice`)
-- `price` (totals): `netValue`, `grossValue`, `taxValue`;
+- `price` (totals): `netValue`, `grossValue`, `taxValue`
 
 ## Known problems
 

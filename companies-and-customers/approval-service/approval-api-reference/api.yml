@@ -45,7 +45,7 @@ paths:
         Creates a single approval document with information about the approver, resource type and resource identifier.
 
         - **`resourceType: CART`**: `details` is **required** (shipping, addresses, currency, payment methods, etc.).
-        - **`resourceType: QUOTE`**: `details` must be **omitted or `null`**; the service loads quote data using `resourceId`.
+        - **`resourceType: QUOTE`**: `details` must be **omitted**; the service loads quote data using `resourceId`.
 
         The user must be a *Requestor* or an *Approver* to have the required `approval.approval_manage_own` scope.
 

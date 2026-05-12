@@ -17,7 +17,7 @@ layout:
 
 ## Overview
 
-Several fields in approval's response have been deprecated in favor of new more descriptive fields. The new fields provide a more comprehensive and consistent way to access price calculations.
+Several fields in the approval response have been deprecated in favor of new, more descriptive fields. The new fields provide a more comprehensive and consistent way to access price calculations.
 
 ### Deprecated approval resource level fields:
 

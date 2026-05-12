@@ -39,11 +39,11 @@ The special operator `compoundLogicalQuery` allows to compound complex queries w
 {% hint style="warning" %}
 The `compoundLogicalQuery` operator is only available for the below services:
 
-* Approval Service,
-* Availability Service,
-* Product Service,
-* Quote Service,
-* Schema Service.
+* Approval Service
+* Availability Service
+* Product Service
+* Quote Service
+* Schema Service
 {% endhint %}
 
 <table>
