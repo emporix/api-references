@@ -237,7 +237,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CustomerUpdateBySellerDto'
+              $ref: '#/components/schemas/CustomerPatchBySellerDto'
             examples:
               Request example:
                 value:
@@ -245,7 +245,7 @@ paths:
                   active: true
           application/merge-patch+json:
             schema:
-              $ref: '#/components/schemas/CustomerUpdateDto'
+              $ref: '#/components/schemas/CustomerPatchDto'
         required: false
         description: ''
       parameters: []
@@ -1026,6 +1026,22 @@ components:
           properties:
             contactEmail:
               type: string
+    CustomerPatchBySellerDto:
+      allOf:
+        - $ref: '#/components/schemas/CustomerUpdateBySellerDto'
+        - type: object
+          properties:
+            contactEmail:
+              type: string
+              description: Contact email address. Cannot be unset once a value is present.
+    CustomerPatchDto:
+      allOf:
+        - $ref: '#/components/schemas/CustomerUpdateDto'
+        - type: object
+          properties:
+            contactEmail:
+              type: string
+              description: Contact email address. Cannot be unset once a value is present.
     BasicMetadataDto:
       title: DefaultDtoMetadata
       type: object

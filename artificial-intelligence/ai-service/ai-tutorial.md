@@ -60,7 +60,7 @@ You can generate the text by sending a request based on a provided prompt. To se
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/ai-service/{tenant}/texts' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "id": "en",
@@ -82,7 +82,7 @@ Completion is generated based on chat history. It's a generated response or cont
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/ai-service/{tenant}/completions' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "id": "abc-123",
@@ -153,7 +153,7 @@ curl -L \
 
 When you want to add a trigger for an enabled AI agent through API, for example as a part of a digital process or from an external system, you need to fetch the specific agent details.
 
-* Use the [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/search) endpoint to pass a query parameter against the agents in your system.
+* Use the [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) endpoint to pass a query parameter against the agents in your system.
 
 For example, to find agents of `Complaint` type:
 
@@ -167,7 +167,7 @@ curl -L \
   }'
 ```
 
-* If you know the agent's ID, you can use the [Retrieving the agent by ID](ai-tutorial.md) endpoint.
+* If you know the agent's ID, you can use the [Retrieving the agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) endpoint.
 
 ```bash
 curl -L \
@@ -181,12 +181,11 @@ You can use the retrieved details to establish the required connections and trig
 
 For some Agents, it is convenient to trigger their actions by API calls. To allow communication with the selected agent, you can use the dedicated endpoints.
 
-* When instant responses are required from the agent, send the request to the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/chat)
+* When instant responses are required from the agent, send the request to the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat)
 
 ```bash
 curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat' \
 -H 'tenant: {tenant}' \
--H 'scopes: ai.completion_manage' \
 -H 'Content-Type: application/json' \
 -H 'Authorization: Basic {token}' \
 -d '{
@@ -228,7 +227,7 @@ In the above example, the German Translation Agent is triggered. The Agent acts 
 }
 ```
 
-* When it is more pragmatic to wait for the agent's response, for example, when the agent needs to process more data which takes more time, or the agent needs to wait for another task to be completed, use the asynchronous communication. Send the request to the agent using the [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/chat-async).
+* When it is more pragmatic to wait for the agent's response, for example, when the agent needs to process more data which takes more time, or the agent needs to wait for another task to be completed, use the asynchronous communication. Send the request to the agent using the [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async).
 
 ```bash
 curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-async' \
@@ -251,7 +250,7 @@ In async requests, the response contains the `jobId` parameter, for example:
 }
 ```
 
-Use the `jobId` to check details of the job through the [Retrieving agent job by its ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/jobs) endpoint. For example:
+Use the `jobId` to check details of the job through the [Retrieving agent job by its ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid) endpoint. For example:
 
 ```bash
 curl -X 'GET' \
@@ -276,13 +275,13 @@ You can use the export and import to:
 {% step %}
 #### Export agents
 
-Collect the `agentIds` you want to export, then call the [Exporting agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/export) endpoint.
+Collect the `agentIds` you want to export, then call the [Exporting agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-export) endpoint.
 
 ```bash
 curl -L \
   --request POST \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/export' \
-  --header 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Content-Type: application/json' \
   --data '{
     "agentIds": [
@@ -295,7 +294,7 @@ The response contains:
 
 * `data`: a Base64-encoded JSON payload with the exported agents, tools, and MCP servers.
 * `checksum`: a hash of the decoded `data` string.
-* `jobId`: the export job identifier (you can poll the [Retrieving agent job by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/jobs) endpoint if you need job status updates).
+* `jobId`: the export job identifier (you can poll the [Retrieving agent job by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid) endpoint if you need job status updates).
 
 Store both `data` and `checksum`. You will need them when importing.
 {% endstep %}
@@ -303,13 +302,13 @@ Store both `data` and `checksum`. You will need them when importing.
 {% step %}
 #### Import agents
 
-Use the payload obtained during export and call the [Importing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/import) endpoint. Import requires the `ai.agent_manage` scope.
+Use the payload obtained during export and call the [Importing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-import) endpoint. Import requires the `ai.agent_manage` scope.
 
 ```bash
 curl -L \
   --request POST \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/import' \
-  --header 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Content-Type: application/json' \
   --data '{
     "data": "<BASE64_PAYLOAD_FROM_EXPORT>",

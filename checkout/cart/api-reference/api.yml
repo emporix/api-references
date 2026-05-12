@@ -51,12 +51,9 @@ paths:
 
         **Note**: A customer can have multiple carts opened, but they have to be of a different type. The cart type is specified in the payload in the `type` property. It allows for different types of carts, such as shopping carts and wishlists.
         ***
-        ### Required scopes
+        ### Additional scopes information
 
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
-              Use when you want to create a cart for a logged in customer.
+        *  `cart.cart_manage` - Use when you want to create a cart for a logged in customer.
       operationId: POST-cart-create-cart
       requestBody:
         content:
@@ -89,7 +86,8 @@ paths:
         required: false
       security:
         - CustomerAccessToken: []
-        - OAuth2: []
+        - OAuth2: 
+            - cart.cart_manage
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
         - schema:
@@ -830,17 +828,12 @@ paths:
       description: |-
         Retrieves cart details based on the store's site code and criteria such as session ID or customer ID. 
         
-        As a response only one cart is returned, so all required criteria needs to be provided to fetch the unique cart. Uniqueness of the cart is defined by combination of `siteCode`, `type`, `legalEntityId` and  (`sessionId` or `customerId`)
-        ***
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
+        As a response only one cart is returned, so all required criteria needs to be provided to fetch the unique cart. Uniqueness of the cart is defined by combination of `siteCode`, `type`, `legalEntityId` and  (`sessionId` or `customerId`).
       operationId: GET-cart-retrieve-cart-by-criteria
       security:
         - CustomerAccessToken: []
-        - OAuth2: []
+        - OAuth2: 
+          - cart.cart_manage
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
         - schema:
@@ -1610,16 +1603,11 @@ paths:
           $ref: '#/components/responses/trait_500'
       description: |-
         Returns all carts that match provided criteria.
-        ***
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: POST-cart-retrieve-carts-by-search
       security:
         - CustomerAccessToken: []
-        - OAuth2: []
+        - OAuth2:   
+            - cart.cart_manage
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
         - $ref: '#/components/parameters/pageSize'
@@ -2320,15 +2308,10 @@ paths:
           $ref: '#/components/responses/trait_500'
       description: |-
         Retrieves specified cart details.
-        ***
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: GET-cart-retrieve-cart-by-cartId
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -2373,12 +2356,6 @@ paths:
           $ref: '#/components/responses/trait_500'
       description: |-
         Updates specified cart details.
-        ***
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: PUT-cart-update-cart
       requestBody:
         content:
@@ -2412,7 +2389,8 @@ paths:
                       deliveryTimeId: 5f5a3da02d48b9000d39798c
         required: false
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -2434,15 +2412,10 @@ paths:
           $ref: '#/components/responses/trait_500'
       description: |-
         Deletes a specified cart.
-        ***
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: DELETE-cart-remove-cart
       security:
-        - OAuth2: []
+        - OAuth2:   
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -2469,15 +2442,10 @@ paths:
           $ref: '#/components/responses/trait_500'
       description: |-
         Refreshes a specified cart and their items. In case the prices assigned to cart items have been changed then these changes are recognized and reassigned to the cart.
-        ***
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: PUT-cart-refresh-cart
       security:
-        - OAuth2: []
+        - OAuth2:   
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -2509,13 +2477,6 @@ paths:
         * Payment
 
         In case the new site uses a different currency, the endpoint sends a price match request to the Price Service. This ensures that items in cart display correct prices in the new site's currency.
-        ***
-
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: POST-cart-change-cart-site
       requestBody:
         content:
@@ -2528,7 +2489,8 @@ paths:
                   siteCode: USA
         required: false
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -2553,13 +2515,6 @@ paths:
           $ref: '#/components/responses/trait_500'
       description: |-
         Changes a specified cart currency. The endpoint sends a price match request to the Price Service. This ensures that items in cart display correct prices in the new currency.
-        ***
-
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: POST-cart-change-cart-currency
       requestBody:
         content:
@@ -2575,7 +2530,8 @@ paths:
                   currency: USD
         required: false
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -2618,13 +2574,6 @@ paths:
         Merges a list of anonymous carts with the specified customer cart.
 
         **Note**: The cart specified in the path parameter must belong to a logged in customer. Carts listed in the request body must belong to anonymous customers.
-        ***
-
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: POST-cart-merge-carts
       requestBody:
         content:
@@ -2639,7 +2588,8 @@ paths:
         required: false
         description: ''
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -2661,12 +2611,14 @@ paths:
               examples:
                 Response example:
                   value:
-                    - status: 201
+                    - index: 0
+                      status: 201
                       id: '1'
                       headers:
                         location: /carts/612cc4783cff1d66f699b6a1/items/1
                       yrn: 'urn:yaas:saasag:caasproduct:product:saastest2;5c3351aea9812100098ffc60'
-                    - status: 201
+                    - index: 1
+                      status: 201
                       id: '2'
                       headers:
                         location: /carts/612cc4783cff1d66f699b6a1/items/2
@@ -2681,14 +2633,6 @@ paths:
           $ref: '#/components/responses/trait_500'
       description: |-
         Adds multiple products to the specified cart and creates cart items. The maximum batch size is 200.
-
-        ***
-
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: POST-cart-add-multiple-items-to-cart
       requestBody:
         content:
@@ -2736,11 +2680,99 @@ paths:
                         unitCode: H87
         required: false
       security:
-        - OAuth2: []
+        - OAuth2:   
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
       summary: Adding multiple products to cart
+      tags:
+        - Cart items
+    put:
+      responses:
+        '207':
+          description: The request was successful. Items have been updated in the cart.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cartItemsBatchUpdateResponse'
+              examples:
+                Multi-Status response example:
+                  value:
+                    - index: 0
+                      id: '1'
+                      code: 204
+                      status: No Content
+                    - index: 1
+                      id: '2'
+                      code: 400
+                      status: Bad Request
+                      message: Invalid quantity
+                      details:
+                        - Quantity must be greater than zero
+        '400':
+          $ref: '#/components/responses/trait_400'
+        '403':
+          $ref: '#/components/responses/trait_403'
+        '500':
+          $ref: '#/components/responses/trait_500'
+      description: |-
+        Updates multiple cart items in the specified cart. The maximum batch size is 50.
+      operationId: PUT-cart-update-multiple-items-in-cart
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cartItemsBatchUpdateRequest'
+            examples:
+              Payload example:
+                value:
+                  - id: '1'
+                    product:
+                      id: 5f5a3ce35bac380024b93cff
+                      yrn: '{productYrn}'
+                      name: Cherry Tomatoes
+                      description: Guaranteed to be the sweetest tomato you have ever tasted! This super sweet bite sized tomato is juicy and bursting with flavor. They are great for snacking and in salads. Kids love them too!
+                      images:
+                        - id: dbf2f8a4-1ff6-40a9-982f-1485ddb602e0
+                          url: 'https://res.cloudinary.com/saas-ag/image/upload/v1599749351cart/{tenant}/products/dbf2f8a4-1ff6-40a9-982f-1485ddb602e0.jpg'
+                    quantity: 100
+                    price:
+                      priceId: 5f5a3ce5fb29e20020be99c8
+                      yrn: '{priceYrn}'
+                      originalAmount: 4.99
+                      effectiveAmount: 4.99
+                      currency: EUR
+                      measurementUnit:
+                        quantity: 100
+                        unitCode: GRM
+                  - id: '2'
+                    product:
+                      id: 5f5a3b435bac380024b93c88
+                      yrn: '{productYrn}'
+                      name: Black Tea
+                      description: A pack of high-quality black tea to drink with your guests.
+                      images:
+                        - id: 4b4addad-9272-4435-83a0-4b5f1621208d
+                          url: 'https://res.cloudinary.com/saas-ag/image/upload/v1599749351cart/{tenant}/products/4b4addad-9272-4435-83a0-4b5f1621208d.jpg'
+                    quantity: 1
+                    price:
+                      priceId: 5f5a3b45fb29e20020be9976
+                      yrn: '{priceYrn}'
+                      originalAmount: 2.29
+                      effectiveAmount: 2.29
+                      currency: EUR
+                      measurementUnit:
+                        quantity: 1
+                        unitCode: H87
+        required: false
+      security:
+        - OAuth2:   
+            - cart.cart_manage
+        - CustomerAccessToken: []
+      parameters:
+        - $ref: '#/components/parameters/trait_tenant'
+      summary: Updating multiple products in cart
       tags:
         - Cart items
     parameters:
@@ -2958,16 +2990,10 @@ paths:
           $ref: '#/components/responses/trait_500'
       description: |-
         Retrieves all items added to the specified cart.
-        ***
-
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: GET-cart-list-cart-items
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -3006,17 +3032,6 @@ paths:
           $ref: '#/components/responses/trait_500'
       description: |-
         Adds a product to the specified cart and creates a cart item.
-        ***
-
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
-
-        *  `cart.cart_manage_external_prices` 
-
-            **Note**: This scope is used  to manage external prices, products, fees and discounts. It's required only when an external price, product, fee or discount is provided.
       operationId: POST-cart-add-item-to-cart
       requestBody:
         content:
@@ -3119,7 +3134,9 @@ paths:
         description: ''
       security:
         - CustomerAccessToken: []
-        - OAuth2: []
+        - OAuth2:   
+            - cart.cart_manage
+            - cart.cart_manage_external_prices
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
         - schema:
@@ -3150,16 +3167,10 @@ paths:
           $ref: '#/components/responses/trait_500'
       description: |-
         Removes all products from the specified cart and deletes the cart items.
-        ***
-
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: DELETE-cart-remove-items-from-cart
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -3383,16 +3394,10 @@ paths:
           $ref: '#/components/responses/trait_500'
       description: |-
         Retrieves a specified cart item's details.
-        ***
-
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: GET-cart-retrieve-item-details
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -3417,13 +3422,6 @@ paths:
           $ref: '#/components/responses/trait_500'
       description: |-
         Updates a specified cart item.
-        ***
-
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: PUT-cart-update-item-details
       requestBody:
         content:
@@ -3467,7 +3465,8 @@ paths:
                   quantity: 10
         required: false
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -3501,16 +3500,10 @@ paths:
           $ref: '#/components/responses/trait_500'
       description: |-
         Removes a specified product from cart and deletes the cart item.
-        ***
-
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: DELETE-cart-remove-item-from-cart
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -3590,13 +3583,6 @@ paths:
                     message: Discount code DEVIZU already exists in cart.
       description: |-
         Applies a discount on the specified cart. Multiple discount coupons can be applied to cart, but you need to send a separate request for each discount coupon.
-        ***
-
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: POST-cart-apply-discount
       requestBody:
         content:
@@ -3625,7 +3611,8 @@ paths:
                   code: CVMTRE
         required: false
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -3648,16 +3635,10 @@ paths:
           $ref: '#/components/responses/trait_500'
       description: |-
         Removes all discounts applied to the specified cart.
-        ***
-
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: DELETE-cart-remove-all-discounts
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -3693,13 +3674,9 @@ paths:
           $ref: '#/components/responses/trait_500'
       description: |-
         Returns all discounts of the specified cart.
-        ***
-
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
+      security:
+        - OAuth2: 
+            - cart.cart_manage
   '/cart/{tenant}/carts/{cartId}/discounts/{discountIndex}':
     delete:
       tags:
@@ -3723,16 +3700,10 @@ paths:
                 $ref: '#/components/schemas/ErrorMessage'
       description: |-
         Delete the discount in the cart by the provided discount Index.
-        ***
-
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: DELETE-cart-remove-discount
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -3788,16 +3759,10 @@ paths:
           $ref: '#/components/responses/trait_500'
       description: |-
         Retrieves the lead time and non-delivery times for a specified cart. 
-        ***
-
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: GET-cart-retrieve-lead-time-and-non-delivery-times
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/trait_tenant'
@@ -3848,16 +3813,10 @@ paths:
         The endpoint checks for two specific validation issues:
         1. **CART-ITEM-UNIT-PRICE-100001** - Returns this error when a cart contains a price that is no longer valid or not found in the price match.
         2. **CART-ITEM-UNIT-PRICE-100002** - Returns this error when there are duplicated prices for the same product in the cart.
-        
-        ***
-        ### Required scopes
-
-        *  `cart.cart_manage`
-
-            **Note**: This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
       operationId: GET-cart-validate
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - cart.cart_manage
         - CustomerAccessToken: []
       parameters:
         - $ref: '#/components/parameters/cartId'
@@ -5234,6 +5193,9 @@ components:
       description: ''
       type: object
       properties:
+        index:
+          type: integer
+          description: Index of the processed cart item, matching the position in the request body.
         status:
           type: integer
           description: HTTP response status code.
@@ -5255,6 +5217,37 @@ components:
           $ref: '#/components/schemas/YRN'
       required:
         - status
+    updateCartItemsBatchEntryResponse:
+      title: updateCartItemsBatchEntryResponse
+      type: object
+      description: Result for a single cart item in a batch update, aligned with bulk operation entry responses.
+      properties:
+        index:
+          type: integer
+          description: |
+            Index of the processed cart item, matching the position in the request body.
+        id:
+          type: string
+          description: Cart item unique identifier.
+        code:
+          type: integer
+          description: HTTP status code for this entry.
+        status:
+          type: string
+          description: HTTP status description for this entry.
+        message:
+          type: string
+          description: Message describing the outcome or error for this entry.
+        details:
+          type: array
+          description: Additional detail messages for this entry.
+          items:
+            type: string
+    cartItemsBatchUpdateResponse:
+      type: array
+      description: Per-entry results for batch cart item updates.
+      items:
+        $ref: '#/components/schemas/updateCartItemsBatchEntryResponse'
     shipping:
       type: object
       properties:
@@ -5509,6 +5502,14 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/cartItemRequest'
+    cartItemsBatchUpdateRequest:
+      type: array
+      items:
+        allOf:
+          - $ref: '#/components/schemas/cartItemRequest'
+          - type: object
+            required:
+              - id
     batchResponse:
       type: array
       description: ''
@@ -6521,7 +6522,8 @@ components:
         clientCredentials:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
-            cart.cart_manage: Needed to manage carts.
+            cart.cart_manage: Needed to manage carts. This scope is only required for OAuth2 authorization method to authorize the request with the `access_token`.
+            cart.cart_manage_external_prices: Needed to manage external prices, products, fees and discounts. It's required only when an external price, product, fee or discount is provided.   
     CustomerAccessToken:
       type: http
       scheme: bearer

@@ -37,15 +37,12 @@ paths:
         Updates a customer profile.
 
         **Note**: The request needs to be authorized with a customer access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       operationId: PATCH-customer-update-customer
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CustomerUpdateDto'
+              $ref: '#/components/schemas/CustomerPatchDto'
             examples:
               Request example:
                 value:
@@ -64,7 +61,7 @@ paths:
                     version: 1
           application/merge-patch+json:
             schema:
-              $ref: '#/components/schemas/CustomerUpdateDto'
+              $ref: '#/components/schemas/CustomerPatchDto'
         required: false
       security:
         - CustomerAccessToken: []
@@ -124,9 +121,6 @@ paths:
         Retrieves a customer profile.
 
         **Note**: The request needs to be authorized with a customer access token or an anonymous access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       operationId: GET-customer-retrieve-customer-profile
       security:
         - CustomerAccessToken: []
@@ -162,9 +156,6 @@ paths:
         Adds an address to a customer profile.
 
         **Note**: The request needs to be authorized with a customer access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       operationId: POST-customer-add-address
       requestBody:
         content:
@@ -239,9 +230,6 @@ paths:
         Retrieves a list of addresses for a customer.
 
         **Note**: The request needs to be authorized with a customer access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       operationId: GET-customer-list-customer-addresses
       security:
         - CustomerAccessToken: []
@@ -267,9 +255,6 @@ paths:
         Updates a specified customer address.
 
         **Note**: The request needs to be authorized with a customer access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       operationId: PATCH-customer-update-customer-address
       requestBody:
         content:
@@ -345,9 +330,6 @@ paths:
         Retrieves a specified customer address and its details.
 
         **Note**: The request needs to be authorized with a customer access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       operationId: GET-customer-retrieve-address-by-id
       security:
         - CustomerAccessToken: []
@@ -370,9 +352,6 @@ paths:
         Deletes a specified customer address and accounts associated with it.
 
         **Note**: The request needs to be authorized with a customer access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       operationId: DELETE-customer-remove-customer-address-by-id
       security:
         - CustomerAccessToken: []
@@ -410,9 +389,6 @@ paths:
         Adds tags to a specified customer address.
 
         **Note**: The request needs to be authorized with a customer access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
     delete:
       summary: Deleting tags from a customer address
       operationId: DELETE-customer-remove-address-tags
@@ -437,9 +413,6 @@ paths:
         Deletes tags from a specified customer address.
 
         **Note**: The request needs to be authorized with a customer access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
   '/customer/{tenant}/me/accounts/internal/email/change':
     post:
       responses:
@@ -455,13 +428,8 @@ paths:
         Sends a request to change a customer email address. As a result, the customer receives a unique token through email.
 
         **Note**: The request needs to be authorized with a customer access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
 
-        Request for changing login email token using current email id and password.
-
-        Requires scope `customer.customerprofile_edit`
+        Request for changing login email token using current email id and password requires the `customer.customerprofile_edit` scope assigned with the customer access token.
       operationId: POST-customer-change-customer-login-email
       requestBody:
         content:
@@ -498,9 +466,6 @@ paths:
         Updates a customer email address using the token received through email.
 
         **Note**: The request needs to be authorized with a anonymous access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       operationId: POST-customer-confirm-customer-login-email
       requestBody:
         content:
@@ -539,9 +504,6 @@ paths:
         Sends a request to reset a Customer account password. As a result, the customer receives a unique token through email.
 
         **Note**: The request needs to be authorized with a anonymous access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       operationId: POST-customer-request-reset-password
       requestBody:
         content:
@@ -575,9 +537,6 @@ paths:
         Resets a customer password using the token received through email and sets a new password.
 
         **Note**: The request needs to be authorized with a anonymous access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       operationId: POST-customer-reset-password
       requestBody:
         content:
@@ -612,9 +571,6 @@ paths:
         Changes a Customer account password.
 
         **Note**: The request needs to be authorized with a customer access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       operationId: POST-customer-change-account-password
       requestBody:
         content:
@@ -659,9 +615,6 @@ paths:
         Creates a new customer account.
 
         **Note**: The request needs to be authorized with an anonymous access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       operationId: POST-customer-create-customer-account
       requestBody:
         content:
@@ -920,9 +873,6 @@ paths:
           - Customer SaaS token
 
           **Note**: The request needs to be authorized with an anonymous access token.
-          ***
-          ### Required scopes
-        No specific scopes are required.
       operationId: POST-customer-authenticate-customer
       requestBody:
         content:
@@ -955,9 +905,6 @@ paths:
         Logs out a customer and invalidates their customer token.
 
         **Note**: The request needs to be authorized with a customer access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       operationId: GET-customer-logout-customer
       security:
         - CustomerAccessToken: []
@@ -999,9 +946,6 @@ paths:
         Sends an authentication request and returns a refresh token.
 
         **Note**: The request needs to be authorized with an anonymous access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       operationId: GET-customer-refresh-authtoken
       tags:
         - Authentication and authorization
@@ -1021,7 +965,7 @@ paths:
           required: true
           schema:
             type: string
-          example: "Bearer {customer_access_token}"
+          example: "Bearer {{CUSTOMER_ACCESS_TOKEN}}"
         - name: refreshToken
           in: query
           description: Customer refresh token generated when a customer token is requested.
@@ -1063,7 +1007,7 @@ paths:
           required: true
           schema:
             type: string
-          example: "Bearer {customer_access_token}"
+          example: "Bearer {{CUSTOMER_ACCESS_TOKEN}}"
       responses:
         "200":
           description: The request was successful. A token details are returned.
@@ -1096,9 +1040,6 @@ paths:
         Exchanges an external access token (for example, from an identity provider such as Keycloak) for an Emporix customer access token.
 
         **Note**: The request needs to be authorized with an anonymous token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       operationId: POST-customer-exchange-authtoken
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -1179,9 +1120,6 @@ paths:
         Creates a customer account using the token obtained through double opt-in.
 
         **Note**: The request needs to be authorized with an anonymous access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       security:
         - AnonymousAccessToken: []
       parameters:
@@ -1223,9 +1161,6 @@ paths:
         Resends an account activation link to the customer.
 
         **Note**: The request needs to be authorized with an anonymous access token.
-        ***
-        ### Required scopes
-        No specific scopes are required.
       security:
         - AnonymousAccessToken: []
       summary: Resending an account activation link to a customer
@@ -1299,10 +1234,6 @@ paths:
           required: false
       description: |-
         Logs in a customer using an authentication code from Auth0 and retrieves a standard customer token.
-        ***
-
-        ### Required scopes
-        No specific scopes are required.
       tags:
         - Authentication and authorization
       security:
@@ -1731,6 +1662,14 @@ components:
           properties:
             contactEmail:
               type: string
+    CustomerPatchDto:
+      allOf:
+        - $ref: '#/components/schemas/CustomerUpdateDto'
+        - type: object
+          properties:
+            contactEmail:
+              type: string
+              description: Contact email address. Cannot be unset once a value is present.
     BasicMetadataDto:
       title: DefaultDtoMetadata
       type: object

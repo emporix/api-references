@@ -26,10 +26,6 @@ paths:
       summary: Retrieving all locations for a site
       description: |-
         Retrieves all locations for a specified site.
-        ***
-
-        **Required scopes**
-        *  `availability.availability_view`
       security:
         - OAuth2:
             - availability.availability_view
@@ -60,10 +56,6 @@ paths:
       summary: Adding a new location to a site
       description: |-
         Adds a new location to a specified site.
-        ***
-
-        **Required scopes**
-        *  `availability.availability_manage`
       security:
         - OAuth2:
             - availability.availability_manage
@@ -102,10 +94,6 @@ paths:
       summary: Updating locations
       description: |-
         Updates locations for a specified site.
-        ***
-
-        **Required scopes**
-        *  `availability.availability_manage`
       security:
         - OAuth2:
             - availability.availability_manage
@@ -146,11 +134,6 @@ paths:
       summary: Deleting a location
       description: |-
         Deletes a specified location.
-
-        ***
-
-        **Required scopes**
-        *  `availability.availability_manage`
       security:
         - OAuth2:
             - availability.availability_manage
@@ -180,10 +163,6 @@ paths:
       summary: Retrieving product locations
       description: |-
         Retrieves locations of specified products.
-        ***
-
-        **Required scopes**
-        *  `availability.availability_view`
       security:
         - OAuth2:
             - availability.availability_view
@@ -238,14 +217,21 @@ paths:
 
         ***
 
-        ### **Required scopes**
-        * No specific scopes are required.
-        * Scope `availability.availability_view_by_vendor` allows to fetch just the availabilities belonging to the vendor.
+        ### **Additional scope information**
+        * The `availability.availability_view_by_vendor` scope is required only when fetching availabilities for a specific vendor. 
+
+        ***
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - availability.availability_view_by_vendor
       responses:
         '200':
           description: The request was successful. A list of availabilities is returned.
+          headers:
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of availabilities matching the query criteria.
           content:
             application/json:
               schema:
@@ -265,43 +251,72 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page-size'
         - $ref: '#/components/parameters/page-number'
+        - $ref: '#/components/parameters/q'
+        - $ref: '#/components/parameters/sort'
       tags:
         - Availabilities
   '/availability/{tenant}/availability/search':
     post:
       tags:
         - Availabilities
-      summary: Retrieving product availabilities for a site
+      summary: Retrieving product availabilities
       description: |-
-        Retrieves availabilities for specified products on a specified site.
+        Retrieves availabilities for specified products. The request body accepts one of two mutually exclusive formats:
+
+        * **List of product IDs** — retrieves availabilities for the specified products. If the product ID refers to a product bundle, availability information for the entire bundle is returned. The `site` query parameter is optional.
+        * **Q-param object** — retrieves availabilities matching the provided query criteria. The response will **not** include avaialbilities for product bundles. The `site` query parameter must **not** be provided together with the Q-param body.
 
         ***
 
-        ### **Required scopes**
-        * No specific scopes are required.
-        * Scope `availability.availability_view_by_vendor` allows to fetch just the availabilities belonging to the vendor.
+        ### **Additional scope information**
+        * The `availability.availability_view_by_vendor` scope is required only when fetching availabilities for a specific vendor. 
+
+        ***
       security:
-        - OAuth2: []
+        - OAuth2:
+            - availability.availability_view_by_vendor
       parameters:
         - $ref: '#/components/parameters/tenant-path'
         - $ref: '#/components/parameters/site'
         - $ref: '#/components/parameters/page-size'
         - $ref: '#/components/parameters/page-number'
+        - $ref: '#/components/parameters/sort'
       requestBody:
         content:
           application/json:
             schema:
-              type: array
-              description: IDs of products for which the locations should be retrieved.
-              items:
-                type: string
-            example:
-              - 5f7c996173fc281cdd412345
-              - 5f7c996173fc281cdd412346
-        description: ''
+              oneOf:
+                - type: array
+                  description: IDs of products for which availabilities should be retrieved.
+                  items:
+                    type: string
+                - type: object
+                  description: Query criteria for filtering availabilities.
+                  properties:
+                    q:
+                      type: string
+                      description: |
+                        A standard query parameter used to search for specific values.
+
+                        See: [Standard Practices - Query parameter](https://developer.emporix.io/docs/content/q-param)
+                  required:
+                    - q
+            examples:
+              Product IDs:
+                value:
+                  - 5f7c996173fc281cdd412345
+                  - 5f7c996173fc281cdd412346
+              Q-param:
+                value:
+                  q: 'popularity:>10'
       responses:
         '200':
           description: The request was successful. A list of availabilities is returned.
+          headers:
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of availabilities matching the query criteria. Does not include availabilities for product bundles.
           content:
             application/json:
               schema:
@@ -331,11 +346,15 @@ paths:
       description: |-
         Retrieves a specified product availability details.
         
-        ### **Required scopes**
-        * No specific scopes are required.
-        * Scope `availability.availability_view_by_vendor` allows to fetch just the availabilities belonging to the vendor.
+        ***
+
+        ### **Additional scope information**
+        * The `availability.availability_view_by_vendor` scope is required only when fetching availabilities for a specific vendor. 
 
         ***
+      security:
+        - OAuth2:
+            - availability.availability_view_by_vendor
       responses:
         '200':
           description: The request was successful. The product availability details are returned.
@@ -368,12 +387,14 @@ paths:
 
         ***
 
-        **Required scopes**
-        *  `availability.availability_manage`
-        *  `availability.availability_manage_by_vendor` - allows to create availabilities for products belonging to the vendor
+        **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope allows to create availabilities for products belonging to the vendor.
+
+        ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       requestBody:
         content:
           application/json:
@@ -413,12 +434,14 @@ paths:
 
         ***
 
-        **Required scopes**
-        *  `availability.availability_manage`
-        *  `availability.availability_manage_by_vendor` - allows to update availabilities belonging to the vendor
+        **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope is only required when updating or creating availabilities belonging to the vendor.
+
+        ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       requestBody:
         content:
           application/json:
@@ -460,12 +483,14 @@ paths:
 
         ***
 
-        **Required scopes**
-        *  `availability.availability_manage`
-        *  `availability.availability_manage_by_vendor` - allows to delete belonging to the vendor
+        **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope is only required when deleting availabilities belonging to the vendor.
+
+        ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       responses:
         '204':
           description: The request was successful. The availability has been deleted.
@@ -495,14 +520,14 @@ paths:
         
         ***
   
-        ### **Required scopes**
-        * Scope `availability.availability_manage`
-        * Scope `availability.availability_manage_by_vendor` required when using vendor-id header
+        ### **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope is only required when creating availabilities belonging to the vendor.
   
         ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       requestBody:
         content:
           application/json:
@@ -545,12 +570,14 @@ paths:
   
         ***
   
-        **Required scopes**
-        *  `availability.availability_manage`
-        *  `availability.availability_manage_by_vendor` - allows to create/update availabilities for products belonging to the vendor
+        **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope is only required when creating or updating availabilities belonging to the vendor.
+
+        ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       requestBody:
         content:
           application/json:
@@ -593,12 +620,14 @@ paths:
   
         ***
   
-        **Required scopes**
-        *  `availability.availability_manage`
-        *  `availability.availability_manage_by_vendor` - allows to delete availabilities belonging to the vendor
+        **Additional scope information**
+        * The `availability.availability_manage_by_vendor` scope is only required when deleting availabilities belonging to the vendor.
+
+        ***
       security:
         - OAuth2:
             - availability.availability_manage
+            - availability.availability_manage_by_vendor
       requestBody:
         content:
           application/json:
@@ -713,6 +742,28 @@ components:
         type: boolean
         example: true
         default: false
+    q:
+      in: query
+      name: q
+      required: false
+      description: |
+        A standard query parameter is used to search for specific values.
+
+        See: [Standard Practices - Query parameter](https://developer.emporix.io/docs/content/q-param)
+      schema:
+        type: string
+    sort:
+      in: query
+      name: sort
+      required: false
+      description: |
+        List of properties used to sort the results, separated by colons.
+        Possible values:
+        * `{fieldName}`
+        * `{fieldName}:asc`
+        * `{fieldName}:desc`
+      schema:
+        type: string
   schemas:
     AvailabilityDto:
       type: object
@@ -1464,7 +1515,9 @@ components:
         clientCredentials:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
-            availability.availability_view: view_availability
-            availability.availability_manage: manage_availability
+            availability.availability_view: Needed to view availabilities.
+            availability.availability_manage: Needed to manage availabilities.
+            availability.availability_view_by_vendor: Needed to view availabilities belonging to the vendor.
+            availability.availability_manage_by_vendor: Needed to manage availabilities belonging to the vendor.
 security:
   - OAuth2: []

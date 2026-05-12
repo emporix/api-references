@@ -32,7 +32,7 @@ When creating a free shipping coupon, ensure that the `categoryRestricted` param
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/coupon/{tenant}/coupons' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
   "code": "ENG2OC0",
@@ -68,7 +68,7 @@ To limit a coupon to a specific customer, you need to provide the customer ID in
 ```bash
 curl -i -X POST 
  'https://api.emporix.io/coupon/{tenant}/coupons' 
- -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+ -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
  -H 'Content-Type: application/json' 
  -d '{
    "code": "ENG2OC0",
@@ -106,7 +106,7 @@ To limit a coupon to a specific category, you need to set the `categoryRestricte
 ```bash
 curl -i -X POST 
  'https://api.emporix.io/coupon/{tenant}/coupons' 
- -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+ -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
  -H 'Content-Type: application/json' 
  -d '{
    "code": "ENG2OC0",
@@ -152,7 +152,7 @@ To update an existing coupon, you need to send a request to the [Partially updat
 ```bash
 curl -i -X PATCH 
   'https://api.emporix.io/coupon/{tenant}/coupons/{code}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "name": "Winter Sale 2022",
@@ -202,7 +202,7 @@ In the following example, we are changing the maximum number of coupons that can
 ```bash
 curl -i -X PUT 
   'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "key": "maxNumberOfCouponsPerCart",
@@ -229,7 +229,7 @@ If you want to apply more than one coupon to a cart, you need to send a separate
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/cart/{tenant}/carts/{cartId}/discounts' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "code": "CVMTRE"
@@ -262,7 +262,7 @@ Redeem a coupon on behalf of a customer by sending a request to the [Redeeming t
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/coupon/{tenant}/coupons/{code}/redemptions' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "customerNumber": "CustomerId",
@@ -298,7 +298,7 @@ First, check if your `couponSettings` mixin has already been configured by sendi
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 If your site's `couponSettings` have never been configured before or have been deleted, you will receive a `404` error in the response body.
@@ -314,7 +314,7 @@ In this case, to configure referral coupons, you need to send a request to the [
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "testMixin": {
@@ -352,7 +352,7 @@ In this case, to configure referral coupons, you need to send a request to the [
 ```bash
 curl -i -X PATCH 
   'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "active": true
@@ -374,7 +374,7 @@ First, check if your `emailTemplates` have already been configured by sending a 
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 If your `emailTemplates` have never been configured before or have been deleted, you will receive a `404` error in the response body.
@@ -390,7 +390,7 @@ In this case, to configure referral email templates, you need to send a request 
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/configuration/{tenant}/configurations' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
   "key": "emailTemplates",
@@ -455,7 +455,7 @@ To add referral email templates to an existing `emailTemplates` configuration, y
 ```bash
 curl -i -X PUT 
   'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "key": "emailTemplates",
@@ -502,7 +502,7 @@ To manually generate a referral coupon for a specific customer, you need to send
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/coupon/{tenant}/referral-coupons/{customerNumber}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 ## How to retrieve a specific customer's referral coupon

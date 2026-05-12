@@ -55,27 +55,27 @@ These announcements are intended to keep you informed about ongoing work and pot
 <tbody>
   <tr>
     <td class="tg-0pky">Product Service</td>
-    <td class="tg-0pky">Next generation of product variants</td>
+    <td class="tg-0pky">Next generation of product variants including Management Dashboard</td>
   </tr>
   <tr>
     <td class="tg-0pky">Value Stream Modeller</td>
-    <td class="tg-0pky">Branching and looping<br>Debugger</td>
+    <td class="tg-0pky">Improvements</td>
   </tr>
   <tr>
     <td class="tg-0pky">Value Streams</td>
-    <td class="tg-0pky">Product substitution<br>PDF Automation</td>
+    <td class="tg-0pky">Quote Intake</td>
   </tr>
   <tr>
-    <td class="tg-0pky">IAM &amp; Schema Service</td>
-    <td class="tg-0pky">Custom scopes</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky">Cart &amp; Checkout Service</td>
-    <td class="tg-0pky">Setup for the SAP synchronous pricing</td>
+    <td class="tg-0pky">Cart Price &amp; Checkout Service</td>
+    <td class="tg-0pky">Improvements</td>
   </tr>
   <tr>
     <td class="tg-0pky">B2B Commerce Frontend</td>
-    <td class="tg-0pky">Returns</td>
+    <td class="tg-0pky">Quick Order, Product Detail Page & Improvements Product List Page</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">SAP Integration Package</td>
+    <td class="tg-0pky">Quote integration</td>
   </tr>
 </tbody>
 </table>

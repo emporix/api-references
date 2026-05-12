@@ -36,7 +36,7 @@ To extend the product entity in Management Dashboard with some industry-specific
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/schema/{tenant}/schemas' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
     "name": {
@@ -118,7 +118,7 @@ Retrieve the created schema to get the schema URL by calling the [Retrieving a s
 ```bash
 curl -L 
   --url 'https://api.emporix.io/schema/{tenant}/schemas/{id}' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 
@@ -418,7 +418,7 @@ CURL request example:
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/schema/{tenant}/references' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: multipart/form-data' 
   --form 'file=[object Object]' 
   --form 'body=[object Object]'
