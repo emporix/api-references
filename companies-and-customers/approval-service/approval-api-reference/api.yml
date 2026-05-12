@@ -613,10 +613,23 @@ components:
     basicApproval:
       title: basicApproval
       description: Base schema for an approval.
+      allOf:
+        - $ref: '#/components/schemas/genericApprovalForCreate'
+        - type: object
+          properties:
+            resourceType:
+              $ref: '#/components/schemas/resourceType'
+            details:
+              $ref: '#/components/schemas/details'
+      required:
+        - resourceType
+        - action
+        - approver
+    genericApprovalForCreate:
+      title: basicApproval
+      description: Base schema for an approval creation.
       type: object
       properties:
-        resourceType:
-          $ref: '#/components/schemas/resourceType'
         action:
           $ref: '#/components/schemas/approvalAction'
         approver:
@@ -629,35 +642,35 @@ components:
         comment:
           type: string
           description: A comment from the requestor to the approver.
-        details:
-          type: object
-          title: additional information
-          description: |
-            Checkout details for **cart** approvals. **Required** when `resourceType` is `CART`.  
-          properties:
-            shipping:
-              $ref: '#/components/schemas/shipping'
-            payment:
-              $ref: '#/components/schemas/payment'
-            paymentMethods:
-              description: Methods chosen to process the payment for the order.
-              type: array
-              items:
-                $ref: '#/components/schemas/paymentMethod'
-            currency:
-              type: string
-              description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
-            addresses:
-              type: array
-              uniqueItems: true
-              minItems: 1
-              description: List of addresses associated with the order.
-              items:
-                $ref: '#/components/schemas/address'
+
       required:
-        - resourceType
         - action
         - approver
+    details:
+      type: object
+      title: additional information
+      description: |
+        Checkout details for **cart** approvals. **Required** when `resourceType` is `CART`.
+      properties:
+        shipping:
+          $ref: '#/components/schemas/shipping'
+        payment:
+          $ref: '#/components/schemas/payment'
+        paymentMethods:
+          description: Methods chosen to process the payment for the order.
+          type: array
+          items:
+            $ref: '#/components/schemas/paymentMethod'
+        currency:
+          type: string
+          description: 'Three-letter currency code, compliant with the ISO 4217 standard.'
+        addresses:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          description: List of addresses associated with the order.
+          items:
+            $ref: '#/components/schemas/address'
     address:
       type: object
       description: Information about the customer address.
@@ -984,12 +997,12 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/user'
-    createApprovalRequest:
-      title: Create an approval
+    createCartApprovalRequest:
+      title: Create a cart approval
       allOf:
-        - $ref: '#/components/schemas/basicApproval'
+        - $ref: '#/components/schemas/genericApprovalForCreate'
         - type: object
-          description: Base schema for an approval creation.
+          description: Request payload for creating a CART approval.
           properties:
             id:
               type: string
@@ -997,6 +1010,35 @@ components:
             resourceId:
               type: string
               description: An identifier of the approval resource.
+            resourceType:
+              type: string
+              enum:
+                - CART
+            details:
+              $ref: '#/components/schemas/details'
+          required:
+            - resourceId
+            - resourceType
+            - action
+            - approver
+            - details
+    createQuoteApprovalRequest:
+      title: Create a quote approval
+      allOf:
+        - $ref: '#/components/schemas/genericApprovalForCreate'
+        - type: object
+          description: Request payload for creating a QUOTE approval (without details).
+          properties:
+            id:
+              type: string
+              description: An identifier of the approval document.
+            resourceId:
+              type: string
+              description: An identifier of the approval resource.
+            resourceType:
+              type: string
+              enum:
+                - QUOTE
           required:
             - resourceId
             - resourceType
@@ -1102,7 +1144,9 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/createApprovalRequest'
+            oneOf:
+              - $ref: '#/components/schemas/createCartApprovalRequest'
+              - $ref: '#/components/schemas/createQuoteApprovalRequest'
           examples:
             An approval request for cart checkout:
               value:
@@ -1323,23 +1367,9 @@ components:
         type: string
         example: 'q=status:APPROVED'
       description: |
-        A standard query parameter is used to search for the specific values.
+        A standard query parameter is used to search for specific values.
 
-           + Searching for an item by a string property: `q=status:PENDING`, where `status` is the name of the string field and `PENDING` is its required value.
-           + Searching for items by a number-based property:
-             + Searching for items with specific values: `q=mixins.approvalCustomAttributes.orderQuantity:20`
-             + Searching for items with values greater than: `q=mixins.approvalCustomAttributes.orderQuantity:>20`
-             + Searching for items with values lower than: `q=mixins.approvalCustomAttributes.orderQuantity:<20`
-             + Searching for items with values greater than or equal to: `q=mixins.approvalCustomAttributes.orderQuantity:>=20`
-             + Searching for items with values lower than or equal to: `q=mixins.approvalCustomAttributes.orderQuantity:<=20`
-             + Searching for items within a range of values: `q=mixins.approvalCustomAttributes.orderQuantity:(>=10 AND <=20)`, where `mixins.approvalCustomAttributes.orderQuantity` is the name of a number-based field, and `20` is its querying value.
-           + Searching for items by a date property. All number-based property queries are also valid for dates. In that case, the date should be placed within double quotes: `q=metadataCreatedAt:(>="2021-05-18T07:27:27.455Z" AND <"2021-05-20T07:27:27.455Z")`
-           + Searching for items by a boolean value: `q=received:true`, where `received` is the name of a boolean field, and 'true' is its required value.
-           + Searching for items with a non-existing or empty property: `q=reason.description:null`, where `reason.description` is the name of the field that has the `null` value.
-           + Searching for items with an existing property: `q=mixins.mixinName:exists`, where the specific mixin named `mixinName` exists in the database.
-           + Searching for items by multiple specific values: `q=id:(5c3325baa9812100098ff48f,5c3325d1a9812100098ff494)`, where `id` is the name of the field, and strings within a bracket are its required values.
-           + Searching for items by multiple fields: `q=id:5c3325baa9812100098ff48f code:A705121667`, where `id` and 'code' are the names of fields. All documents that contain the specified values in these fields are approved. Multiple fields separated by spaces can be specified. Multiple values for each field can also be provided in the format presented above.
-           + Searching for items with string fields conforming to a regex: `q=orders._id:~EON107` or `q=code:(~EON107 EON106)` - in the case of searching for strings with a space, where `order._id` is the name of the field and `EON107` or `EON107 EON106` are its querying regular expressions.
+        See: [Standard Practices - Query parameter](https://developer.emporix.io/docs/content/q-param)
 
     x_total_count_header:
       name: X-Total-Count
