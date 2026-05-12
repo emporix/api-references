@@ -3153,6 +3153,11 @@ components:
         siteCode:
           description: Code of the site for which the prices should be retrieved.
           type: string
+        siteCodes:
+          description: List of site codes for which the prices should be retrieved. If siteCode is specified, this field is ignored.
+          type: array
+          items:
+           type: string
         principalId:
           description: IDs of customers for whom the retrieved prices should be valid.
           type: string

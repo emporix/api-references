@@ -7,6 +7,7 @@
 * [Current work in progress](in-progress/in-progress.md)
 
 ## 2026
+* [RELEASE_DATE: Price Service - siteCodes support in price search](2026/RELEASE_DATE-price.md)
 * [2026-05-11: Product Service - code on dynamic variant variants map entries](2026/2026-05-11-product-variants-code.md)
 * [2026-05-11: Product Service - expand brand and labels in product responses](2026/2026-05-11-product-service-expand-brand-labels.md)
 * [2026-05-11: Webhook Events - updated `index-item.updated` event schema](2026/2026-05-11-webhook-index-item-updated.md)
