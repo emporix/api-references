@@ -7,7 +7,7 @@ info:
   title: Approval Service
   version: ''
   description: |
-    The Emporix API Approval Service allows you to manage approval requests related to orders. The orders are referred to as resources.
+    The Emporix API Approval Service allows you to manage approval requests for resources such as shopping carts and quotes.
     
 servers:
   - url: 'https://api.emporix.io'
@@ -42,7 +42,11 @@ paths:
         '409':
           $ref: '#/components/responses/approval_post_response_Conflict_409'
       description: |
-        Creates a single approval document with information about the approver and order details. 
+        Creates a single approval document with information about the approver, resource type and resource identifier.
+
+        - **`resourceType: CART`**: `details` is **required** (shipping, addresses, currency, payment methods, etc.).
+        - **`resourceType: QUOTE`**: `details` must be **omitted or `null`**; the service loads quote data using `resourceId`.
+
         The user must be a *Requestor* or an *Approver* to have the required `approval.approval_manage_own` scope.
 
         In case of any validation problems, the below `errorCodes` can be returned:
@@ -347,21 +351,33 @@ components:
                   id: cartId
                   items:
                     - quantity: 1
+                      itemId: 507f1f77bcf86cd799439011
                       itemPrice:
                         currency: EUR
                         amount: 10.0
-                      itemYrn: urn:yaas:saasag:caasproduct:product:myshop;4474e3dfaee4c10def3d9b24
+                        unitPrice: 10.0
+                        calculatedPrice:
+                          price:
+                            netValue: 10.0
+                            grossValue: 12.00
+                            taxValue: 2.00
                   totalPrice:
                     currency: EUR
                     amount: 10.0
+                    netValue: 10.0
+                    grossValue: 12.00
+                    taxValue: 2.00
                   subTotalPrice:
                     currency: EUR
                     amount: 10.0
+                    netValue: 10.0
+                    grossValue: 12.00
+                    taxValue: 2.00
                   subtotalAggregate:
                     currency: EUR
                     netValue: 10.0
                     grossValue: 12.00
-                    taxValue: 20
+                    taxValue: 2.00
                   siteCode: main
                   deliveryWindow:
                     id: deliveryWindowId
@@ -439,16 +455,28 @@ components:
                     id: cartId
                     items:
                       - quantity: 1
+                        itemId: 507f1f77bcf86cd799439011
                         itemPrice:
                           currency: EUR
                           amount: 10.0
-                        itemYrn: urn:yaas:saasag:caasproduct:product:myshop;4474e3dfaee4c10def3d9b24
+                          unitPrice: 10.0
+                          calculatedPrice:
+                            price:
+                              netValue: 10.0
+                              grossValue: 12.00
+                              taxValue: 2.00
                     totalPrice:
                       currency: EUR
                       amount: 10.0
+                      netValue: 10.0
+                      grossValue: 12.00
+                      taxValue: 2.00
                     subTotalPrice:
                       currency: EUR
                       amount: 10.0
+                      netValue: 10.0
+                      grossValue: 12.00
+                      taxValue: 2.00
                     subtotalAggregate:
                       currency: EUR
                       netValue: 10.0
@@ -604,7 +632,8 @@ components:
         details:
           type: object
           title: additional information
-          description: additional information required for approval process.
+          description: |
+            Checkout details for **cart** approvals. **Required** when `resourceType` is `CART`.  
           properties:
             shipping:
               $ref: '#/components/schemas/shipping'
@@ -751,10 +780,12 @@ components:
         - lastName
     resourceType:
       title: A type of a resource
-      description: Base schema for an approval resource type.
+      description: |
+        Type of resource under approval.  
       type: string
       enum:
         - CART
+        - QUOTE
     approvalAction:
       title: An approval action
       description: Base schema for an approval action type.
@@ -837,9 +868,6 @@ components:
           $ref: '#/components/schemas/price'
         subtotalAggregate:
           $ref: '#/components/schemas/taxablePrice'
-        amount:
-          type: number
-          description: Value of the price.
         siteCode:
           type: string
           description: Name of the site.
@@ -854,13 +882,17 @@ components:
           type: number
           description: Quantity of the given item.
         itemPrice:
-          $ref: '#/components/schemas/price'
+          $ref: '#/components/schemas/resourceItemPrice'
         itemYrn:
+          deprecated: true
           type: string
           description: YRN which identifies the product.
-    price:
-      title: Price value
-      description: Price value with the currency.
+        itemId:
+          type: string
+          description: Line-item identifier (e.g. quote line id).
+    resourceItemPrice:
+      title: Resource item price
+      description: Per-line price; used for resource line items.
       type: object
       properties:
         currency:
@@ -868,7 +900,53 @@ components:
           description: Currency of the price.
         amount:
           type: number
-          description: Value of the price.
+          deprecated: true
+          description: Deprecated; prefer `unitPrice`, `newUnitPrice`, or `calculatedPrice`.
+        unitPrice:
+          type: number
+          description: Unit net price before adjustments.
+        newUnitPrice:
+          type: number
+          description: Unit net price after adjustments (valid for quote line items).
+        calculatedPrice:
+          $ref: '#/components/schemas/calculatedPrice'
+    calculatedPrice:
+      title: Calculated price breakdown
+      type: object
+      properties:
+        price:
+          type: object
+          properties:
+            netValue:
+              description: Net value of the price.
+              type: number
+            grossValue:
+              type: number
+              description: Gross value of the price.
+            taxValue:
+              description: Tax value of the price.
+              type: number
+    price:
+      title: Price value
+      description: Aggregated price (totals, subtotals) with currency and optional tax breakdown.
+      type: object
+      properties:
+        currency:
+          type: string
+          description: Currency of the price.
+        amount:
+          type: number
+          deprecated: true
+          description: Deprecated; use `netValue`, `grossValue`, and `taxValue` when present.
+        netValue:
+          type: number
+          description: Net value of the price.
+        grossValue:
+          type: number
+          description: Gross value of the price.
+        taxValue:
+          type: number
+          description: Tax value of the price.
     taxablePrice:
       title: Taxable price value
       description: Price value with the currency and tax information.
@@ -919,6 +997,11 @@ components:
             resourceId:
               type: string
               description: An identifier of the approval resource.
+          required:
+            - resourceId
+            - resourceType
+            - action
+            - approver
     updateApprovalRequest:
       type: array
       description: Approval partial update operation list.
@@ -1068,6 +1151,15 @@ components:
                       country: DE
                       type: BILLING
                       contactPhone: '123456789'
+            An approval request for quote checkout:
+              value:
+                id: 64e241ced632aa413a27a319
+                resourceType: QUOTE
+                resourceId: quoteId
+                action: CHECKOUT
+                approver:
+                  userId: aaa2f2b6-7dc8-45ff-9f20-4e6163c14cbb
+                comment: Comment for quote approval
     approvalUpdateBody:
       content:
         application/json:
@@ -1158,10 +1250,15 @@ components:
           schema:
             $ref: '#/components/schemas/approvalPermittedRequest'
           examples:
-            Check if action is permitted:
+            Check if action is permitted (cart):
               value:
                 resourceId: cartId
                 resourceType: CART
+                action: CHECKOUT
+            Check if action is permitted (quote):
+              value:
+                resourceId: quoteId
+                resourceType: QUOTE
                 action: CHECKOUT
     approvalSearchUsersRequestBody:
       content:
@@ -1169,10 +1266,15 @@ components:
           schema:
             $ref: '#/components/schemas/searchUsersRequest'
           examples:
-            Search for approval users:
+            Search for approval users (cart):
               value:
                 resourceId: cartId
                 resourceType: CART
+                action: CHECKOUT
+            Search for approval users (quote):
+              value:
+                resourceId: quoteId
+                resourceType: QUOTE
                 action: CHECKOUT
   parameters:
     path_tenant:

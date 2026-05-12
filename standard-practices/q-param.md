@@ -37,7 +37,13 @@ description: You can use a standard q-param to filter search by string, localize
 The special operator `compoundLogicalQuery` allows to compound complex queries with nested `OR` and `AND` operators. The syntax is following: **q=compoundLogicalQuery:((_expression1_) OR/AND (_expression2_))**.
 
 {% hint style="warning" %}
-The `compoundLogicalQuery` operator is only available for the Product Service and Schema Service.
+The `compoundLogicalQuery` operator is only available for the below services:
+
+* Approval Service,
+* Availability Service,
+* Product Service,
+* Quote Service,
+* Schema Service.
 {% endhint %}
 
 <table>
