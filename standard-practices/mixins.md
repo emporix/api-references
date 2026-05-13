@@ -146,7 +146,7 @@ The procedure below presents applying mixins to a `Customer` object.
 ```bash
 curl -i -X PATCH \
   'https://api.emporix.io/customer/{tenant}/customers/{customerNumber}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
     "contactEmail": "example@customer.com",

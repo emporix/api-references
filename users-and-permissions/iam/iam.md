@@ -46,7 +46,7 @@ To assign specific access control level to a group, first you need to retrieve a
 curl -i -X GET 
   'https://api.emporix.io/iam/{tenant}/access-controls?pageNumber=1&pageSize=60&metadataModifiedAt=2022-01-01&roleId=1rl5e52e-6e27-4ac5-9471-2467d3fb7503&resourceId=string&expand=role%2Cresource' 
   -H 'Accept-Language: string' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'X-Total-Count: true'
 ```
 
@@ -67,7 +67,7 @@ The user type in the `userType` parameter can be specified as `CUSTOMER` or `EMP
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/iam/{tenant}/groups' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: de' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -110,7 +110,7 @@ The user type in the `userType` parameter can be specified as `customer` or `emp
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/iam/{tenant}/groups/{groupId}/users' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "userId": " ",

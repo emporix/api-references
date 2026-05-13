@@ -8,7 +8,13 @@
 
 ## 2026
 
-* [2026-05-07: IAM Service - access control restrictions, predefined scopes, and deprecations](2026/2026-05-07-iam.md)
+* [2026-05-13: IAM Service - access control restrictions, predefined scopes, and deprecations](2026/2026-05-13-iam.md)
+* [2026-05-11: Product Service - code on dynamic variant variants map entries](2026/2026-05-11-product-variants-code.md)
+* [2026-05-11: Product Service - expand brand and labels in product responses](2026/2026-05-11-product-service-expand-brand-labels.md)
+* [2026-05-11: Webhook Events - updated `index-item.updated` event schema](2026/2026-05-11-webhook-index-item-updated.md)
+* [2026-05-11: Cart Service - batch update endpoint for cart items](2026/2026-05-11-cart.md)
+* [2026-05-08: Schema Service - Export and Import functionality for custom schema types](2026/2026-05-08-schema.md)
+* [2026-05-07: Emporix SDK - Availability Service Q-param support, total count header and search improvements](2026/2026-05-07-sdk.md)
 * [2026-04-29: Emporix SDK - Multi-tenant support](2026/2026-04-29-sdk.md)
 * [2026-04-28: Availability Service - Q-param support, total count header and search improvements](2026/2026-04-28-availability.md)
 * [2026-04-27: Product Service – dynamic variant product type and recalculation](2026/2026-04-27-product.md)

@@ -51,6 +51,8 @@ The client uses the Emporix token to call Emporix APIs. Authentication and sessi
 {% endstep %}
 {% endstepper %}
 
+**SSO flow**
+
 ```mermaid
 ---
 config:
@@ -67,7 +69,7 @@ config:
     background: transparent 
 ---
 sequenceDiagram
-  User->>Frontend: Start SSO login
+User->>Frontend: Start SSO login
 Frontend->>OpenID Provider: Redirect user (authorization request)
 OpenID Provider-->>OpenID Provider: Authenticate user
 OpenID Provider-->>Emporix Authentication Service: Redirect back with authorization code

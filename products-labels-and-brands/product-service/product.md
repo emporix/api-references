@@ -59,7 +59,7 @@ To define sales tax rates for a country, send a request to the [Creating a new t
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/tax/{tenant}/taxes' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -107,7 +107,7 @@ To add a single basic product, send a request to the [Creating a new product](ht
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/product/{tenant}/products' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "name": "Smartphone X2",
@@ -126,7 +126,7 @@ You can also add multiple basic products at the same time. To achieve that, send
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/product/{tenant}/products/bulk' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '[
     {
@@ -163,7 +163,7 @@ Sending a json/application request to the Creating an asset endpoint does **not*
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/media/{tenant}/assets' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: multipart/form-data' 
   -F 'file=[object Object]' 
   -F 'body=[object Object]'
@@ -184,7 +184,7 @@ To create a new product template, call the [Creating a new product template](htt
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/product/{tenant}/product-templates' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -234,7 +234,7 @@ To create a new product by applying a product template to it, call the [Creating
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/product/{tenant}/products' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "name": "Smartphone X2",
@@ -286,7 +286,7 @@ In this example, we create a bundle containing a T-shirt product and socks produ
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/product/{tenant}/products' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
   "name": "T-shirt and socks bundle",
@@ -341,7 +341,7 @@ The `product.product_update` scope is required. The `product.product_publish` an
 ```bash
 curl -i -X PUT 
   'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -521,7 +521,7 @@ Call the [Creating a new product template](https://developer.emporix.io/api-refe
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/product/{tenant}/product-templates' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -594,7 +594,7 @@ To create a single `parent_variant` type of product with variants, send a reques
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -638,7 +638,7 @@ If you want to create multiple `parent_variant` products at the same time, send 
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '[
@@ -759,7 +759,7 @@ Each of the attributes has its own metadata element, where you can specify wheth
 ```bash
 curl -i -X PUT 
   'https://api.emporix.io/product/{tenant}/product-templates/{product-template-id}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -848,7 +848,7 @@ When creating or updating a product of the `PARENT_VARIANT` type, by default, pr
 ```bash
 curl -i -X PATCH 
   'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -911,7 +911,7 @@ In the following example, we override the following fields:
 ```bash
 curl -i -X PUT 
   'https://api.emporix.io/product/{tenant}/products/{productId}?partial=false&skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -965,7 +965,7 @@ Dynamic variants are designed for catalogs where the variant structure is not kn
 | **No template required** | Each variant defines its own attributes directly on the product. You can introduce new attribute dimensions at any level without modifying a shared template. |
 | **Order-independent ingestion** | Variants can be created in any order - a child can exist before its parent. This is essential for bulk catalog imports where the full tree is not available in a single pass. After the import completes, a single recalculation call rebuilds the entire tree. |
 | **Single API call for the storefront** | Fetching the root product returns a `variants` map containing every descendant with fully accumulated attributes - parent attributes merged into child entries. The storefront never needs to make additional calls to resolve the complete attribute combination for a sellable variant. |
-| **Ready-to-render variant selectors** | The `variants` map on the root product is a flat map keyed by variant ID. Each entry carries `variantAttributes` (accumulated), `name` (localized), `sellable`, `dynamicVariantType`, and `parentVariantId`. This gives your product page everything it needs to render multi-step variant selectors (for example, "Storage -> Color -> Bundle") without any client-side tree reconstruction. |
+| **Ready-to-render variant selectors** | The `variants` map on the root product is a flat map keyed by variant ID. Each entry carries `variantAttributes` (accumulated), `name` (localized), `code` (the variant product code), `sellable`, `dynamicVariantType`, and `parentVariantId`. This gives your product page everything it needs to render multi-step variant selectors (for example, "Storage -> Color -> Bundle") without any client-side tree reconstruction. |
 | **Delta storage, no cascading writes** | Each variant stores only the attributes it introduces at its own level (`ownVariantAttributes`). Changing a mid-level variant attribute updates only that variant's entry on each ancestor. |
 | **Hierarchy integrity signals** | The `metadata.dynamicVariantInfo` field on any product response surfaces broken chains (`missingAncestorId`) or circular references (`cycleDetected`) so you can detect and fix data issues proactively. |
 
@@ -997,7 +997,7 @@ To create the root product, call the [Creating a new product](https://developer.
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/product/{tenant}/products' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
     "id": "mobile-15-pro",
@@ -1035,7 +1035,7 @@ Each attribute value uses the `dynamicVariantAttribute` structure:
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/product/{tenant}/products' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
     "id": "mobile-15-pro-l1",
@@ -1089,7 +1089,7 @@ L2 variants are children of L1 variants. They declare only the attributes they i
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/product/{tenant}/products' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
     "id": "mobile-15-pro-l2-retail",
@@ -1124,7 +1124,7 @@ To retrieve the root product with its complete variant tree, call the [Retrievin
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/product/{tenant}/products/mobile-15-pro' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 The response includes a `variants` map ready for your storefront:
@@ -1137,6 +1137,7 @@ The response includes a `variants` map ready for your storefront:
   "variants": {
     "mobile-15-pro-l1": {
       "version": 1,
+      "code": "MOBILE-15-PRO-L1",
       "name": { "en": "Mobile Phone 15 Pro – 256 GB Blue" },
       "parentVariantId": "mobile-15-pro",
       "sellable": false,
@@ -1158,6 +1159,7 @@ The response includes a `variants` map ready for your storefront:
     },
     "mobile-15-pro-l2-retail": {
       "version": 1,
+      "code": "MOBILE-15-PRO-L2-RETAIL",
       "name": { "en": "Mobile Phone 15 Pro – 256 GB Blue – Retail box" },
       "parentVariantId": "mobile-15-pro-l1",
       "sellable": true,
@@ -1185,6 +1187,8 @@ The response includes a `variants` map ready for your storefront:
 }
 ```
 
+Each entry in `variants` includes `code` — the same business code as on the corresponding variant product (for example `MOBILE-15-PRO-L1` matches the L1 product created earlier).
+
 Notice that `mobile-15-pro-l2-retail` (L2) already contains `storageCapacity`, `colorFinish`, and `displaySize` from its L1 parent - even though those attributes are not stored on the L2 product itself.
 
 {% endstep %}
@@ -1205,6 +1209,7 @@ The `variants` map gives your product page everything it needs to build a varian
 3. Read `variantAttributes` on each entry to render the selector labels and values - all attributes are already accumulated, so an L2 entry shows all dimensions the customer needs to see.
 4. Check `sellable: true` to identify which variants can be added to a cart. Non-sellable intermediate variants are grouping nodes only.
 5. Use `name` (localized) for display in search results, breadcrumbs, or option labels.
+6. Use `code` for the variant product business code (for example cart lines, pricing, or integrations that key on SKU-style identifiers).
 
 ### Retrieving a child product - own versus inherited attributes
 
@@ -1217,7 +1222,7 @@ To retrieve a child product, call the [Retrieving a product](https://developer.e
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/product/{tenant}/products/mobile-15-pro-l2-retail' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 ```json
@@ -1266,7 +1271,7 @@ For a single product write, the `variants` map on all ancestor products is updat
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/product/{tenant}/products/mobile-15-pro-l1' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
     "name": { "en": "Mobile Phone 15 Pro – 256 GB Blue", "de": "Mobile Phone 15 Pro – 256 GB Blau" },
@@ -1338,7 +1343,7 @@ To trigger recalculation, call the [Triggering dynamic variant recalculation](ht
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/product/{tenant}/products/recalculate' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
     "productIds": [
@@ -1404,7 +1409,7 @@ Use the job ID from the response and call the [Retrieving a recalculation job](h
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/product/{tenant}/products/recalculate/jobs/job-a1b2c3d4-e5f6-7890-abcd-ef1234567890' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 A finished job:
@@ -1451,7 +1456,7 @@ To monitor the overall import progress, call the [Listing recalculation jobs](ht
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/product/{tenant}/products/recalculate/jobs?status=PENDING' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 Available status filter values: `PENDING`, `PROCESSING`, `FINISHED`, `FAILED`, `FAILED_PERMANENT`.
@@ -1511,7 +1516,6 @@ Assign the product to a classification category using the [Assigning a resource 
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/category/{tenant}/categories/0720b75e-ee1c-4d76-9f53-eb3af3927e13/assignments' 
-  --header 'X-Version: v2' 
   --header 'Content-Type: application/json' 
   --data '{
     "ref": {

@@ -85,7 +85,7 @@ export EMPORIX_API_CREDENTIALS_STOREFRONT_CLIENT_ID=your-storefront-client-id
 export EMPORIX_API_CREDENTIALS_STOREFRONT_SECRET=your-storefront-secret
 ```
 
-Alternatively, use application.yml:
+Alternatively, use the `application.yml`:
 
 ```yaml
 emporix:

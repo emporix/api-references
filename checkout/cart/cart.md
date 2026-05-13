@@ -38,7 +38,7 @@ To create a new cart, send a request to the [Creating a new cart](https://develo
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/cart/{tenant}/carts' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -H 'saas-token: string' 
   -H 'session-id: string' 
@@ -102,7 +102,7 @@ To add custom attributes to a cart, send a request to the [Updating a cart](http
 ```bash
 curl -i -X PUT 
   'https://api.emporix.io/cart/{tenant}/carts/{cartId}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
   "customerId": "87413250",
@@ -158,7 +158,7 @@ To merge an anonymous cart with a customer cart, send a request to the [Merging 
 curl -i -X POST \
   'https://api.emporix.io/cart/{tenant}/carts/{cartId}/merge' 
   -H 'Accept-Language: string' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -H 'languages: string' 
@@ -201,7 +201,7 @@ Once external pricing is enabled, you can add a product that is available within
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "itemYrn": "urn:yaas:saasag:caasproduct:product:mytenant;1600A016BF",
@@ -251,7 +251,7 @@ To add a product outside Commerce Engine, send the request to the Adding a produ
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode={siteCode}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "itemYrn": null,
@@ -302,7 +302,7 @@ To add a custom fee to the cart, send the request to the [Adding a product to ca
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "itemYrn": "{productYrn}",
@@ -353,7 +353,7 @@ To apply an external discount to a cart, use the `externalDiscounts` attribute w
 curl -L 
   --request PUT 
   --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}' 
-  --header 'Authorization: Bearer YOUR_SECRET_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
     "externalDiscounts": [
@@ -403,7 +403,7 @@ Use the `externalDiscounts` attribute when adding an item to the cart or updatin
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=text' 
-  --header 'Authorization: Bearer YOUR_SECRET_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
     "externalDiscounts": [
@@ -2204,7 +2204,7 @@ Make sure the shipping zone is properly stored in the delivery times object.
 ```bash
 curl -L 
   --url 'https://api.emporix.io/shipping/{tenant}/actualDeliveryWindows/{cartId}' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 {% endstep %}
@@ -2218,7 +2218,7 @@ Pick the delivery window you'd like to use and update the cart accordingly by ca
 curl -L 
   --request PUT 
   --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
         "countryCode": "DE",     
@@ -2241,7 +2241,7 @@ Verify the results by retrieving the cart. Call the [Retrieving cart details by 
 ```bash
 curl -L 
   --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}'
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN'
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
   --header 'Accept: */*'
 ```
 {% endstep %}
