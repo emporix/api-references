@@ -9,6 +9,7 @@
 ## 2026
 
 * [RELEASE_DATE: SEPA Export Service - deprecation](2026/RELEASE_DATE-sepa-export.md)
+* [2026-05-13: Emporix SDK - Multi-tenant support](2026/2026-05-13-sdk.md)
 * [2026-05-13: IAM Service - access control restrictions, predefined scopes, and deprecations](2026/2026-05-13-iam.md)
 * [2026-05-11: Product Service - code on dynamic variant variants map entries](2026/2026-05-11-product-variants-code.md)
 * [2026-05-11: Product Service - expand brand and labels in product responses](2026/2026-05-11-product-service-expand-brand-labels.md)
