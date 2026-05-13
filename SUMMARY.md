@@ -456,19 +456,6 @@
               spec: returns-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/orders/returns/api-reference/api.yml)
-  * [SEPA Export Service](orders/sepa-export/README.md)
-    * [API Reference](orders/sepa-export/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: sepa-export-api
-        ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/orders/sepa-export/api-reference/api.yml)
 * [Prices and Taxes](prices-and-taxes/README.md)
   * [Price Service](prices-and-taxes/price-service/README.md)
     * [Price Tutorials](prices-and-taxes/price-service/price.md)
