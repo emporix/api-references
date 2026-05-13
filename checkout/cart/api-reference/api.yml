@@ -2773,9 +2773,9 @@ paths:
       summary: Updating multiple products in cart
       tags:
         - Cart items
-    parameters:
-      - $ref: '#/components/parameters/cartId'
-      - $ref: '#/components/parameters/trait_tenant'
+      parameters:
+        - $ref: '#/components/parameters/cartId'
+        - $ref: '#/components/parameters/trait_tenant'
   '/cart/{tenant}/carts/{cartId}/items':
     get:
       responses:
