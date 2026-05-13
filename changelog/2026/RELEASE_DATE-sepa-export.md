@@ -13,11 +13,11 @@ layout:
     visible: true
 ---
 
-# RELEASE_DATE: Sepa Export Service - deprecation
+# RELEASE_DATE: SEPA Export Service - deprecation
 
 ## Overview
 
-The Sepa Export Service has been deprecated and will be removed on 2026-11-23.
+The SEPA Export Service has been deprecated and will be removed on 2026-11-23.
 
 ## Known problems
 
