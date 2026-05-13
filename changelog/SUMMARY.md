@@ -8,7 +8,7 @@
 
 ## 2026
 
-* [RELEASE_DATE: Sepa Export Service - deprecation](2026/RELEASE_DATE-sepa-export.md)
+* [RELEASE_DATE: SEPA Export Service - deprecation](2026/RELEASE_DATE-sepa-export.md)
 * [2026-05-11: Cart Service - batch update endpoint for cart items](2026/2026-05-11-cart.md)
 * [2026-05-08: Schema Service - Export and Import functionality for custom schema types](2026/2026-05-08-schema.md)
 * [2026-05-07: Emporix SDK - Availability Service Q-param support, total count header and search improvements](2026/2026-05-07-sdk.md)
