@@ -552,8 +552,6 @@ paths:
       description: |
         Creates an access control when it does not exist, or updates it when it already exists for the tenant.
         If `metadata.version` is provided, optimistic locking is applied for updates.
-
-        **Note**: Currently you can create access controls only with custom scopes.
       operationId: PUT-iam-upsert-access-control
       parameters:
         - $ref: '#/components/parameters/trait_contentLanguage_header'
