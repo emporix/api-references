@@ -3981,7 +3981,11 @@ components:
       allOf:
         - $ref: "#/components/schemas/baseCart"
         - type: object
-          description: Cart details.
+          description: |
+            Cart details.
+
+            **NOTE**: Deprecated fields details are visible at the end: `deliveryWindowId`, `feeYrnAggregate`, `totalPrice`, `subTotalPrice`, `shipping`, `taxAggregate`, `subtotalAggregate`, `totalDiscount`, `itemFeesTotal`, `paymentFeesTotal`, `totalAuthorizedAmount`. 
+            Use `calculatedPrice` and `deliveryWindow` instead.
           properties:
             items:
               type: array
@@ -3995,7 +3999,7 @@ components:
                 Delivery window unique identifier, as defined in the Shipping Service.
                 
                 ***NOTE***
-                This attribute is deprecated. Please use the `deliveryWindow` attribute.
+                This field is deprecated. Please use the `deliveryWindow` attribute.
             feeYrnAggregate:
               allOf:
                 - $ref: '#/components/schemas/feeAggregate'
@@ -4080,6 +4084,10 @@ components:
       description: Cart delivery time restrictions.
     cartItemRequest:
       type: object
+      description: |
+        Request body for adding or updating a cart item.
+
+        **Deprecated fields** (listed at the end): `weightDependent`. Use the product `weightDependent` attribute instead.
       properties:
         id:
           type: string
@@ -4387,18 +4395,16 @@ components:
         - effectiveQuantity
       description: Cart item details.
     cartItemResponse:
-      description: Cart item details.
+      description: |
+        Cart item details.
+
+        **NOTE**: Deprecated fields details are visible at the end: `price`, `couponDiscounts`, `itemPrice`, `itemTaxInfo`, `fees`, `authorizedAmount`, `totalDiscount`, `externalFees`. 
+
+        Use `unitPrice` and `calculatedPrice` instead.
       allOf:
         - $ref: "#/components/schemas/baseCartItemResponse"
         - type: object
           properties:
-            price:
-              allOf:
-                - $ref: '#/components/schemas/priceRow'
-                - type: object
-                  description: "**This field is deprecated**. Please use `unitPrice` instead.
-                            The `unitPrice` field provides the same value with updated functionality."
-              deprecated: true
             linePrice:
               description: Externally calculated total line price (`unit price × quantity`). When provided, this overrides internal calculations.
               properties:
@@ -4423,6 +4429,13 @@ components:
                 - grossValue
                 - rate
                 - quantity
+            price:
+              allOf:
+                - $ref: '#/components/schemas/priceRow'
+                - type: object
+                  description: "**This field is deprecated**. Please use `unitPrice` instead.
+                            The `unitPrice` field provides the same value with updated functionality."
+              deprecated: true
             couponDiscounts:
               allOf:
                 - $ref: '#/components/schemas/couponDiscounts'
@@ -4789,7 +4802,10 @@ components:
       required:
         - code
     discountResponse:
-      description: Discount details.
+      description: |
+        Discount details.
+
+        **NOTE**: Deprecated fields are listed at the end: `calculationType`. The calculated price uses the site's settings instead.
       type: object
       properties:
         id:
