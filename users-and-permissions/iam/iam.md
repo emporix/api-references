@@ -31,7 +31,7 @@ To create users, check out the **Manage Users** tab in the [Emporix Developer Po
 ### Retrieve a list of available access controls
 
 {% hint style="warning" %}
-Access controls are predefined and designed to cover all necessary scenarios. It is not possible to create your own access controls.
+There's a set of access controls that are predefined and designed to cover all necessary scenarios. It is not possible to change the built-in access controls, but you can create new custom ones. See section [How to manage custom scopes](#how-to-manage-custom-scopes).
 {% endhint %}
 
 To assign specific access control level to a group, first you need to retrieve a list of predefined access controls available for your tenant by sending a request to the [Retrieving all access controls](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/access-controls) endpoint.
@@ -118,3 +118,139 @@ curl -i -X POST
   }'
 ```
  
+## How to manage custom scopes
+
+In addition to the standard authorization model, the IAM Service also supports tenant-specific custom scopes, allowing you to extend access control beyond the default capabilities. Custom access controls can be created as collections of scopes and assigned to groups representing employees, customers, or technical users.
+
+{% hint style="info" %}
+The access controls described earlier in [Retrieve a list of available access controls](#retrieve-a-list-of-available-access-controls) are the predefined, platform-managed access controls shipped by Emporix. Those built-in access controls can be listed and assigned, but tenants cannot create or modify them.
+This section covers a different capability: tenant-specific custom access controls created through the custom-scope APIs. These custom access controls are collections of scopes and can be assigned to groups representing employees or customers.
+{% endhint %}
+
+When a group is linked to one of these tenant-defined custom access controls, its users automatically inherit both the platform’s default scopes and any tenant-specific scopes included in that custom access control.
+
+Typical flow:
+
+1. Create or update a custom scope in IAM.
+2. Create or update a tenant-specific custom access control that resolves to this scope.
+3. Assign the custom access control to a user group.
+4. Assign users to the group and request OAuth2 tokens.
+5. Verify the assigned controls and scopes.
+
+{% stepper %}
+{% step %}
+### Create or update a custom scope
+
+To create or update a custom scope, call the [Upserting a custom scope](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/scopes#put-iam-tenant-scopes-scopeid) endpoint.
+
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/iam/{tenant}/scopes/myproject.bulk_export_manage' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "description": {
+      "en": "Allows triggering bulk export jobs."
+    }
+  }'
+```
+
+{% endstep %}
+
+{% step %}
+### Create or update an access control that uses custom scopes
+
+Access controls map roles and resources to resolved scopes and are assigned to groups. To create or update an access control, call the [Upserting an access control](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/access-controls#put-iam-tenant-access-controls-accesscontrolid) endpoint.
+
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/iam/{tenant}/access-controls/custom-bulk-export-manage' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "resourceId": "myproject.bulk_export",
+    "roleId": "manage",
+    "scopes": [
+      "myproject.bulk_export_manage"
+    ]
+  }'
+```
+
+{% endstep %}
+
+{% step %}
+### Assign access controls through groups
+
+To assign access controls, call the [Creating a new group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups) endpoint and include your access control IDs in the payload.
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/iam/{tenant}/groups' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": {
+      "en": "Bulk Export Managers"
+    },
+    "userType": "EMPLOYEE",
+    "accessControls": [
+      "custom-bulk-export-manage"
+    ]
+  }'
+```
+
+Then call the [Adding a user to a group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups-groupid-users) endpoint.
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/iam/{tenant}/groups/{groupId}/users' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "userId": "00u4ukqvzlEP31sCk417",
+    "userType": "EMPLOYEE"
+  }'
+```
+{% endstep %}
+
+{% step %}
+### Verify resolved scopes for a user
+
+To validate IAM configuration, call the [Retrieving all scopes granted to a user](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-scopes) endpoint.
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/iam/{tenant}/users/{userId}/scopes' \
+  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+```
+
+{% endstep %}
+{% endstepper %}
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../iam/api-reference/" %}
+[api-reference](../iam/api-reference/)
+{% endcontent-ref %}
+
+### Custom scopes for custom entities
+
+When you create a custom entity for a tenant, Emporix automatically generates a standard set of custom scopes for this entity. This ensures consistency across APIs and reduces the effort required to design and maintain permission models.
+
+For each custom entity, the platform creates a predefined set of scopes following the reserved naming pattern `custom.{lowerCaseType}_{action}`:
+
+
+* `custom.{lowerCaseType}_read`
+* `custom.{lowerCaseType}_manage`
+* `custom.{lowerCaseType}_read_own`
+* `custom.{lowerCaseType}_manage_own`
+
+For example, for a `Document` custom entity, the generated scopes include `custom.document_read`, `custom.document_manage`, `custom.document_read_own`, and `custom.document_manage_own`.
+
+These scopes are immediately available for use in IAM and can be included in your custom access controls. They are also exposed through OAuth2.
+
+
+{% hint style="info" %}
+* For a related Schema Service configuration, see the [Schema Service tutorial](../../utilities/schema/schema.md).
+* For the end-to-end integration flow across IAM and Schema, see [Custom scopes](../../quickstart/authentication-and-authorization/tokens-and-scopes.md) in the Tokens and Scopes guide.
+{% endhint %}
