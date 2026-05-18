@@ -276,7 +276,6 @@ To upload a file to an agent, use the dedicated [Uploading attachments to agent 
 curl -L \
   --request POST \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/{agentId}/attachments' \
-  --header 'Content-Type: multipart/form-data' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --form 'attachment=@"order_request.pdf"'
 
