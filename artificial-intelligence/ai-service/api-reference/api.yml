@@ -3665,7 +3665,7 @@ components:
                 agentId: complaint-agent
                 message: 'Find a product with "EON1243" code'
                 attachments:
-                  - attachmentId: 325444342346
+                  - attachmentId: '325444342346'
                     caption: Emporix Logo
                     purpose: Should be placed to the Slack Channel
     Completion:
