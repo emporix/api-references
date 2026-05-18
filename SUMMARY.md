@@ -54,7 +54,7 @@
               kind: openapi
               spec: ai-api
         ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/01fb3165bfc6f98d3b52ed92f00de4f8338e959b/artificial-intelligence/ai-service/api-reference/api.yml)
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/artificial-intelligence/ai-service/api-reference/api.yml)
   * [AI RAG Indexer](artificial-intelligence/ai-rag-indexer/README.md)
     * [AI RAG Indexer Tutorial](artificial-intelligence/ai-rag-indexer/ai-rag-indexer-tutorial.md)
     * [API Reference](artificial-intelligence/ai-rag-indexer/api-reference/README.md)

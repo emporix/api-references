@@ -36,6 +36,7 @@ Send the request to the [Creating Configurations](https://developer.emporix.io/a
 curl -L \
   --request POST \
   --url 'https://api.emporix.io/configuration/{tenant}/configurations' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Content-Type: application/json' \
   --data '[
     {
@@ -58,7 +59,7 @@ You can generate the text by sending a request based on a provided prompt. To se
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST 
+curl -i -X POST \
   'https://api.emporix.io/ai-service/{tenant}/texts' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
@@ -276,7 +277,6 @@ To upload a file to an agent, use the dedicated [Uploading attachments to agent 
 curl -L \
   --request POST \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/{agentId}/attachments' \
-  --header 'Content-Type: multipart/form-data' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --form 'attachment=@"order_request.pdf"'
 
@@ -300,7 +300,7 @@ Attaching a media file of an unsupported type results in the `400` error, for ex
 
 {% step %}
 ### Refer to the attachment in agent chat
-The agent has already access to the attached file. Now you can point to it and give additional instructions in the agent chat request. Call the agent, for example with the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) endpoint and include the upload `id` as the `attachmentId` parameter:
+The agent already has access to the attached file. Now you can point to it and give additional instructions in the agent chat request. Call the agent, for example with the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) endpoint and include the upload `id` as the `attachmentId` parameter:
 
 ```bash
 curl -L \
