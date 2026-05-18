@@ -299,7 +299,7 @@ Attaching a media file of an unsupported type results in the `400` error, for ex
 
 {% step %}
 ### Refer to the attachment in agent chat
-The agent has already access to the attached file. Now you can point to it and give additional instructions in the agent chat request. Call the agent, for example with the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) endpoint and include the upload `id` as the `attachmentId` parameter:
+The agent already has access to the attached file. Now you can point to it and give additional instructions in the agent chat request. Call the agent, for example with the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) endpoint and include the upload `id` as the `attachmentId` parameter:
 
 ```bash
 curl -L \
