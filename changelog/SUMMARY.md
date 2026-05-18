@@ -7,6 +7,7 @@
 * [Current work in progress](in-progress/in-progress.md)
 
 ## 2026
+* [RELEASE_DATE: Price Service - siteCodes support in price search](2026/RELEASE_DATE-price.md)
 * [2026-05-13: Emporix SDK - Dynamic variants support](2026/2026-05-13-sdk.md)
 * [2026-05-13: IAM Service - access control restrictions, predefined scopes, and deprecations](2026/2026-05-13-iam.md)
 * [2026-05-11: Product Service - code on dynamic variant variants map entries](2026/2026-05-11-product-variants-code.md)
