@@ -284,8 +284,7 @@ curl -L \
 
 Copy the returned `id` in the response to use it as the `attachmentId` in the subsequent chat request body.
 
-{% hint style="warning" %}
-If you attach a media file of an unsupported type, you get `400` error, for example:
+Attaching a media file of an unsupported type results in the `400` error, for example:
 
 ```
 {
@@ -296,7 +295,6 @@ If you attach a media file of an unsupported type, you get `400` error, for exam
     "details": []
 }
 ```
-{% endhint %}
 
 {% endstep %}
 
