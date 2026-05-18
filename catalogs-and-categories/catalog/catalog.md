@@ -44,7 +44,7 @@ To create a new catalog, you need to send a request to the [Creating a new catal
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/catalog/{tenant}/catalogs' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
   "name": {
@@ -84,10 +84,9 @@ For more information, check out [_How to create a category_](../category-tree/ca
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/category/{tenant}/categories?publish=true' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: `*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`' 
   -H 'Content-Type: application/json' 
-  -H 'X-Version: v2' 
   -d '{
     "parentId": "056bcaf6-66b8-4ddd-9489-65c5f6449e74",
     "localizedName": {
@@ -132,7 +131,7 @@ In the request body, insert the ID of the category into the `categoryIds` array.
 ```bash
 curl -i -X PATCH 
   'https://api.emporix.io/catalog/{tenant}/catalogs/{catalogId}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "name": {

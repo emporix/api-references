@@ -227,6 +227,11 @@ paths:
       responses:
         '200':
           description: The request was successful. A list of availabilities is returned.
+          headers:
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of availabilities matching the query criteria.
           content:
             application/json:
               schema:
@@ -246,15 +251,20 @@ paths:
       parameters:
         - $ref: '#/components/parameters/page-size'
         - $ref: '#/components/parameters/page-number'
+        - $ref: '#/components/parameters/q'
+        - $ref: '#/components/parameters/sort'
       tags:
         - Availabilities
   '/availability/{tenant}/availability/search':
     post:
       tags:
         - Availabilities
-      summary: Retrieving product availabilities for a site
+      summary: Retrieving product availabilities
       description: |-
-        Retrieves availabilities for specified products on a specified site.
+        Retrieves availabilities for specified products. The request body accepts one of two mutually exclusive formats:
+
+        * **List of product IDs** — retrieves availabilities for the specified products. If the product ID refers to a product bundle, availability information for the entire bundle is returned. The `site` query parameter is optional.
+        * **Q-param object** — retrieves availabilities matching the provided query criteria. The response will **not** include avaialbilities for product bundles. The `site` query parameter must **not** be provided together with the Q-param body.
 
         ***
 
@@ -270,21 +280,43 @@ paths:
         - $ref: '#/components/parameters/site'
         - $ref: '#/components/parameters/page-size'
         - $ref: '#/components/parameters/page-number'
+        - $ref: '#/components/parameters/sort'
       requestBody:
         content:
           application/json:
             schema:
-              type: array
-              description: IDs of products for which the locations should be retrieved.
-              items:
-                type: string
-            example:
-              - 5f7c996173fc281cdd412345
-              - 5f7c996173fc281cdd412346
-        description: ''
+              oneOf:
+                - type: array
+                  description: IDs of products for which availabilities should be retrieved.
+                  items:
+                    type: string
+                - type: object
+                  description: Query criteria for filtering availabilities.
+                  properties:
+                    q:
+                      type: string
+                      description: |
+                        A standard query parameter used to search for specific values.
+
+                        See: [Standard Practices - Query parameter](https://developer.emporix.io/docs/content/q-param)
+                  required:
+                    - q
+            examples:
+              Product IDs:
+                value:
+                  - 5f7c996173fc281cdd412345
+                  - 5f7c996173fc281cdd412346
+              Q-param:
+                value:
+                  q: 'popularity:>10'
       responses:
         '200':
           description: The request was successful. A list of availabilities is returned.
+          headers:
+            X-Total-Count:
+              schema:
+                type: integer
+              description: Total number of availabilities matching the query criteria. Does not include availabilities for product bundles.
           content:
             application/json:
               schema:
@@ -710,6 +742,28 @@ components:
         type: boolean
         example: true
         default: false
+    q:
+      in: query
+      name: q
+      required: false
+      description: |
+        A standard query parameter is used to search for specific values.
+
+        See: [Standard Practices - Query parameter](https://developer.emporix.io/docs/content/q-param)
+      schema:
+        type: string
+    sort:
+      in: query
+      name: sort
+      required: false
+      description: |
+        List of properties used to sort the results, separated by colons.
+        Possible values:
+        * `{fieldName}`
+        * `{fieldName}:asc`
+        * `{fieldName}:desc`
+      schema:
+        type: string
   schemas:
     AvailabilityDto:
       type: object

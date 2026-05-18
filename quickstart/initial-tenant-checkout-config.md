@@ -424,7 +424,6 @@ Copy the returned `id` for catalog assignment.
 ```bash
 curl https://api.emporix.io/category/{{tenant}}/categories?publish=true \
   --request POST \
-  --header 'X-Version: v2' \
   --header 'Content-Type: application/json' \
   --data '{
     "published": true,
@@ -627,7 +626,6 @@ Add the product to a category tree for its better searchability. Call the [Assig
 ```bash
 curl 'https://api.emporix.io/category/{{tenant}}/categories/{{categoryId}}/assignments' \
   --request POST \
-  --header 'X-Version: v2' \
   --header 'Content-Type: application/json' \
   --data '{
     "ref": {
@@ -1027,7 +1025,7 @@ To display the order details to the customer on the storefront, use the [Retriev
 ```bash
 curl -L \
   --url 'https://api.emporix.io/order-v2/{{tenant}}/orders/{{orderId}}' \
-  --header 'Authorization: Bearer <CUSTOMER_ACCESS_TOKEN>' \
+  --header 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
   --header 'saas-token: text' \
   --header 'Accept: */*'
 ```
@@ -1036,7 +1034,7 @@ To obtain the order details and later send tem to the ERP/CRM system, use the [R
 ```bash
 curl -L \
   --url 'https://api.emporix.io/order-v2/{{tenant}}/salesorders/{{orderId}}' \
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: */*'
 ```
 

@@ -48,7 +48,7 @@ Send the request to the [Creating a fee](https://developer.emporix.io/api-refere
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/fee/{tenant}/fees' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -81,7 +81,7 @@ To add the fee to the specific product, send the request to the [Adding a list o
 ```bash
 curl -i -X PUT 
   'https://api.emporix.io/fee/{tenant}/productFees/{productId}/fees?siteCode=main&partial=false' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "feeIds": [
@@ -103,7 +103,7 @@ To make sure the fee has been added properly, you can send the request to the [R
 curl -i -X GET 
   'https://api.emporix.io/fee/{tenant}/productFees/{productId}/fees?siteCode=main&expand=false' 
   -H 'Accept-Language: *' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 In the query parameter, provide the `siteCode` of the specific site the fee was applied to, for example `?siteCode=DE`.
@@ -113,7 +113,7 @@ Or, you can check if the fee was applied by sending the request to the [Searchin
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/fee/{tenant}/itemFees/searchByProductId' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "productId": "Apple_A_productId",
@@ -146,7 +146,7 @@ Send the request to the [Creating a fee](https://developer.emporix.io/api-refere
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/fee/{tenant}/fees' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -179,7 +179,7 @@ To connect the fee to the specific payment type, create the item fee by sending 
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/fee/{tenant}/itemFees' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application:json' 
   -d '[object Object]'
@@ -196,7 +196,7 @@ Send a request to the [Adding a list of fees to an item](https://developer.empor
 ```bash
 curl -i -X PUT 
   'https://api.emporix.io/fee/{tenant}/itemFees/{itemYRN}/fees?partial=false' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "feeIds": [
@@ -219,7 +219,7 @@ Send the request to the [Checking of a fee has been applied](https://developer.e
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/fee/{tenant}/itemFees/search?siteCode=main' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "itemYrns": [

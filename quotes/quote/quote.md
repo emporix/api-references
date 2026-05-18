@@ -147,11 +147,11 @@ The quote reason of the `DECLINE` type can only be used for the `DECLINED` or `D
 If you need custom quote status change reasons, create them by sending a request to the [Creating a reason for changing the quote status](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-reason#post-quote-tenant-quote-reasons) endpoint.
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/quote/{tenant}/quote-reasons' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Language: de' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/quote/{tenant}/quote-reasons' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Language: de' \
+  -H 'Content-Type: application/json' \
   -d '{
     "code": "WRONG_SIZE",
     "type": "Change",
@@ -190,9 +190,9 @@ The following scope is required:
 {% endhint %}
 
 ```bash
-curl -i -X GET 
-  'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+curl -i -X GET \
+  'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 {% endstep %}
 
@@ -208,10 +208,10 @@ The following scope is required:
 {% endhint %}
 
 ```bash
-curl -i -X PATCH 
-  'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Type: application/json' 
+curl -i -X PATCH \
+  'https://api.emporix.io/site/{tenant}/sites/{siteCode}/mixins/{mixinName}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "active": true
   }'
@@ -226,11 +226,11 @@ There are four default reasons that your customers and employees can select for 
 You can create new quote status change reasons, by sending a request to the [Creating a reason for changing the quote status](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-reason#post-quote-tenant-quote-reasons) endpoint.
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/quote/{tenant}/quote-reasons' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Language: de' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/quote/{tenant}/quote-reasons' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Language: de' \
+  -H 'Content-Type: application/json' \
   -d '{
     "code": "PRICE_TOO_HIGH",
     "type": "CHANGE",
@@ -274,10 +274,10 @@ The following scope is granted to a customer group:
 The customer can place a quote request on the storefront only if they have created a cart with the requested items beforehand.
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/quote/{tenant}/quotes' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/quote/{tenant}/quotes' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "cartId": "4472v8d2309b06d46d3cf19fe",
     "shipping": {
@@ -288,7 +288,7 @@ curl -i -X POST
       },
       "shippingAddressId": "642c7f7d7fd3eb46339e80c4",
       "billingAddressId": "642c7f7d7fd3eb46339e80c4"
-  }
+  }'
 ```
 
 {% hint style="warning" %}
@@ -310,10 +310,10 @@ The following scope is required:
 {% endhint %}
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/quote/{tenant}/quotes' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/quote/{tenant}/quotes' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "customerId": "9tt954309b06d46d3cf19fe",
     "employeeId": "7ytw5533f0mo335mfr0l3336",
@@ -387,11 +387,11 @@ The following scope is required:
 In this example, an employee updates multiple fields:
 
 ```bash
-curl -L 
-  --request PATCH 
-  --url 'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '[
     {
       "op": "ADD",
@@ -456,11 +456,11 @@ curl -L
 In the following example, an employee updates only the price of requested item:
 
 ```bash
-curl -L 
-  --request PATCH 
-  --url 'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '[
     {
       "op": "REPLACE",
@@ -483,10 +483,10 @@ The following scope is required:
 {% endhint %}
 
 ```bash
-curl -i -X PATCH 
-  'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Type: application/json' 
+curl -i -X PATCH \
+  'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "op": "replace",
     "path": "/status",
@@ -494,7 +494,7 @@ curl -i -X PATCH
       "value": "OPEN",
       "comment": "new comment"
     }
-  }
+  }'
 ```
 
 ### Accepting a quote by a customer
@@ -509,10 +509,10 @@ The following scope is required:
 
 ```bash
 
-curl -i -X PATCH 
-  'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Type: application/json' 
+curl -i -X PATCH \
+  'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "op": "replace",
     "path": "/status",
@@ -538,10 +538,10 @@ If the customer wants to provide a reason for declining a quote, they can choose
 In this example, a customer receives a quote and decides to decline it because the proposed price is too high. They also add a comment to negotiate the price.
 
 ```bash
-curl -i -X PATCH 
-  'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
-  -H 'Content-Type: application/json' 
+curl -i -X PATCH \
+  'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "op": "replace",
     "path": "/status",
@@ -646,10 +646,10 @@ PATCH operations support adding, replacing, and removing mixin values at all the
 To generate a quote pdf, send a request to the [Creating a quote PDF](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-pdf) endpoint. The request does not require any body, you only need a tenant name and quote ID.
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}/pdf' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}/pdf' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: */*'
 ```
  

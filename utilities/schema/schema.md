@@ -36,7 +36,7 @@ To extend the product entity in Management Dashboard with some industry-specific
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/schema/{tenant}/schemas' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
     "name": {
@@ -118,7 +118,7 @@ Retrieve the created schema to get the schema URL by calling the [Retrieving a s
 ```bash
 curl -L 
   --url 'https://api.emporix.io/schema/{tenant}/schemas/{id}' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Accept: */*'
 ```
 
@@ -418,7 +418,7 @@ CURL request example:
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/schema/{tenant}/references' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: multipart/form-data' 
   --form 'file=[object Object]' 
   --form 'body=[object Object]'
@@ -526,3 +526,28 @@ See the example payload for creating a product basing on the schema from the pre
 }
 ```
  
+## Custom entity authorization and ownership
+
+When you create a custom entity type, the platform provisions type-specific scopes that follow the `custom.{lowerCaseType}_*` naming pattern.
+
+For a type like `DOCUMENT`, generated scopes follow this pattern:
+
+- `custom.document_read`
+- `custom.document_manage`
+- `custom.document_read_own`
+- `custom.document_manage_own`
+
+Custom instance endpoints accept either tenant-wide Schema scopes or type-scoped scopes:
+
+- Read operations: `schema.custominstance_read` or `custom.{lowerCaseType}_read` or `custom.{lowerCaseType}_read_own`
+- Manage operations: `schema.custominstance_manage` or `custom.{lowerCaseType}_manage` or `custom.{lowerCaseType}_manage_own`
+
+Custom instance responses include the immutable `owner` object, which is used for ownership-aware authorization:
+
+- `owner.type`: `CUSTOMER`, `EMPLOYEE`, or `SERVICE`
+- `owner.userId`: creator identifier (for service flows, client identifier)
+- `owner.legalEntityId`: present for customer-owned instances
+
+{% hint style="info" %}
+ For the end-to-end IAM and Schema flow, see [Custom scopes for custom entities](../../quickstart/authentication-and-authorization/tokens-and-scopes.md#scopes-for-custom-entities) in the Tokens and Scopes guide.
+{% endhint %}

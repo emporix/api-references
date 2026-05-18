@@ -83,7 +83,7 @@
               kind: openapi
               spec: oauth-api
         ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/authorization/oauth-service/api-reference/api.yml)
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/authentication/oauth-service/api-reference/api.yml)
 * [Catalogs and Categories](catalogs-and-categories/README.md)
   * [Catalog Service](catalogs-and-categories/catalog/README.md)
     * [Catalog Tutorials](catalogs-and-categories/catalog/catalog.md)

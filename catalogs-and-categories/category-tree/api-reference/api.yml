@@ -128,17 +128,6 @@ paths:
             type: string
             example: '`*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`'
             default: '*'
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
         - name: X-Total-Count
           in: header
           description: |
@@ -242,17 +231,6 @@ paths:
             type: string
             example: '1256792345'
           example: ''
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
       responses:
         '204':
           description: Assignments has been successfully deleted
@@ -325,17 +303,6 @@ paths:
             type: string
             example: 084bcaf6-66b8-4ddd-9489-65c5f6449e94
           example: ''
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
       requestBody:
         content:
           application/json:
@@ -551,17 +518,6 @@ paths:
             type: string
             example: '`*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`'
             default: '*'
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
         - name: X-Total-Count
           in: header
           description: |
@@ -682,17 +638,6 @@ paths:
             type: string
             example: '`*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`'
             default: '*'
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
       requestBody:
         content:
           application/json:
@@ -1213,17 +1158,6 @@ paths:
             type: string
             example: '`*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`'
             default: '*'
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
       responses:
         '200':
           description: The request was successful. The category is returned.
@@ -1338,17 +1272,6 @@ paths:
             type: string
             example: '`*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`'
             default: '*'
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
       requestBody:
         content:
           application/json:
@@ -1557,17 +1480,6 @@ paths:
             type: string
             example: '`*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`'
             default: '*'
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
       responses:
         '204':
           description: The category was successfully deleted.
@@ -1682,17 +1594,6 @@ paths:
             type: string
             example: '`*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`'
             default: '*'
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
       requestBody:
         content:
           application/json:
@@ -1827,17 +1728,6 @@ paths:
             type: string
             example: 084bcaf6-66b8-4ddd-9489-65c5f6449e94
           example: ''
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
       requestBody:
         content:
           application/json:
@@ -2033,17 +1923,6 @@ paths:
             type: string
             example: '`*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`'
             default: '*'
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
         - name: X-Total-Count
           in: header
           description: |
@@ -2161,17 +2040,6 @@ paths:
             type: string
             example: 084bcaf6-66b8-4ddd-9489-65c5f6449e94
           example: ''
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
       requestBody:
         content:
           application/json:
@@ -2272,17 +2140,6 @@ paths:
             default: PRODUCT
             enum:
               - PRODUCT
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
       responses:
         '204':
           description: Assignments has been successfully deleted
@@ -2361,17 +2218,6 @@ paths:
             type: string
             example: '1256792345'
           example: ''
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
       responses:
         '204':
           description: Assignment has been successfully deleted.
@@ -2465,17 +2311,6 @@ paths:
             type: string
             example: 084bcaf6-66b8-4ddd-9489-65c5f6449e94
           example: ''
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
       responses:
         '201':
           description: The resource has been successfully assigned to the category.
@@ -2577,17 +2412,6 @@ paths:
             type: string
             example: '1256792345'
           example: ''
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
       responses:
         '204':
           description: Assignment has been successfully deleted.
@@ -2733,17 +2557,6 @@ paths:
             type: string
             example: '`*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`'
             default: '*'
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
         - name: X-Total-Count
           in: header
           description: |
@@ -2924,17 +2737,6 @@ paths:
             type: string
             example: '`*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`'
             default: '*'
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
         - name: X-Total-Count
           in: header
           description: |
@@ -3054,17 +2856,6 @@ paths:
             example:
               - d9e4fdd0-e671-4968-9ba1-a5533a7f3b02
               - 0f1056cc-b4b4-488b-9f95-245f6b542702
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
       responses:
         '200':
           description: The request was successful. The category tree is returned.
@@ -3139,17 +2930,6 @@ paths:
             type: string
             example: '`*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`'
             default: '*'
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
       requestBody:
         content:
           application/json:
@@ -3246,17 +3026,6 @@ paths:
             type: string
             example: '`*`, `en`, `en,de,fr`, `en-EN`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7`'
             default: '*'
-        - name: X-Version
-          in: header
-          description: |
-            To use this endpoint you have to add `X-Version` header with proper value to your request.
-
-            **Note**: The header value has to match following regular expression: `^v[1-9][0-9]?$`
-          required: true
-          schema:
-            pattern: '^v[1-9][0-9]?$'
-            type: string
-            example: v2
       responses:
         '200':
           description: The request was successful. The category tree is returned.

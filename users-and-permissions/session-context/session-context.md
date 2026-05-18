@@ -123,7 +123,7 @@ When retrieving the session-context details, you must supply the `sessionId`. It
 ```bash
 curl -L \
   --url 'https://api.emporix.io/session-context/{tenant}/me/context' \
-  --header 'Authorization: Bearer YOUR_SECRET_TOKEN' \
+  --header 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
   --header 'Accept: */*'
 ```
 
@@ -156,7 +156,7 @@ Retrieve the session context by sending a request to the [Retrieving a session c
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/session-context/{tenant}/context/01736216-39a9-4801-b6f0-90a977453b75' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 The response is:
@@ -219,7 +219,7 @@ In the following example, we add an attribute by sending a request to the [Addin
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/session-context/{tenant}/context/{sessionId}/attributes' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "key": "additional attribute name",

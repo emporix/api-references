@@ -54,7 +54,7 @@ To add availability-related information for a specific product, you need to send
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/availability/{tenant}/availability/{productId}/{site}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
     "stockLevel": 10,
@@ -88,7 +88,7 @@ Example bulk request:
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/availability/{tenant}/availability/bulk' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '[
     {
@@ -125,7 +125,7 @@ You can also retrieve availability information for multiple products at once by 
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/availability/{tenant}/availability/{productId}/{site}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 ## How to calculate a product bundle's stock level
@@ -171,7 +171,7 @@ To find out what the stock level of a product bundle is, you need to send a requ
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/availability/{tenant}/availability/{productId}/{site}' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 The response includes both the availability information of the bundle as a whole, as well as the bundled products.

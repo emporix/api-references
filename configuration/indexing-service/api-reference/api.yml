@@ -5,6 +5,13 @@ info:
   description: |
     The indexing service allows you to manage indexing configuration. Currently supported index providers:
       * Algolia - https://www.algolia.com
+    
+    **Algolia limitations:**
+    By default, Algolia indexes provided by Emporix support records up to 10kB in size.
+    In order to support larger records, you must provide your own Algolia service.
+    For more information, please refer to documents provided by Algolia:
+      * [Algolia documentation](https://www.algolia.com/doc/guides/scaling/algolia-service-limits#application-record-and-index-limits)
+      * [Algolia FAQ](https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records)
   contact:
     email: documentation@emporix.com
 servers:

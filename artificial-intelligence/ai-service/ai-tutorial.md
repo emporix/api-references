@@ -33,10 +33,10 @@ Send the request to the [Creating Configurations](https://developer.emporix.io/a
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/configuration/{tenant}/configurations' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations' \
+  --header 'Content-Type: application/json' \
   --data '[
     {
       "_id": "openAiApiToken",
@@ -59,9 +59,9 @@ You can generate the text by sending a request based on a provided prompt. To se
 
 ```bash
 curl -i -X POST 
-  'https://api.emporix.io/ai-service/{tenant}/texts' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \' 
-  -H 'Content-Type: application/json' 
+  'https://api.emporix.io/ai-service/{tenant}/texts' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "id": "en",
     "prompt": "Generate a long description for product '\''pipe cutter'\'' in language EN ",
@@ -80,10 +80,10 @@ Completion is generated based on chat history. It's a generated response or cont
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/ai-service/{tenant}/completions' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/ai-service/{tenant}/completions' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "id": "abc-123",
     "messages": [
@@ -182,7 +182,6 @@ For some Agents, it is convenient to trigger their actions by API calls. To allo
 ```bash
 curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat' \
 -H 'tenant: {tenant}' \
--H 'scopes: ai.completion_manage' \
 -H 'Content-Type: application/json' \
 -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
 -d '{
@@ -279,11 +278,25 @@ curl -L \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/{agentId}/attachments' \
   --header 'Content-Type: multipart/form-data' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
-  --form 'attachment=@order_request.pdf'
+  --form 'attachment=@"order_request.pdf"'
 
 ```
 
 Copy the returned `id` in the response to use it as the `attachmentId` in the subsequent chat request body.
+
+{% hint style="warning" %}
+If you attach a media file of an unsupported type, you get `400` error, for example:
+
+```
+{
+    "resourceId": null,
+    "message": "The provided 'image/svg+xml' content type is not supported for agent chat",
+    "code": 400,
+    "status": "Bad Request",
+    "details": []
+}
+```
+{% endhint %}
 
 {% endstep %}
 
@@ -295,6 +308,7 @@ The agent has already access to the attached file. Now you can point to it and g
 curl -L \
   --request POST \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/chat' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Content-Type: application/json' \
   --data '{
     "agentId": "order-assistant-agent",
@@ -328,13 +342,13 @@ You can use the export and import to:
 {% step %}
 #### Export agents
 
-Collect the `agentIds` you want to export, then call the [Exporting agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/export) endpoint.
+Collect the `agentIds` you want to export, then call the [Exporting agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-export) endpoint.
 
 ```bash
 curl -L \
   --request POST \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/export' \
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Content-Type: application/json' \
   --data '{
     "agentIds": [
@@ -347,7 +361,7 @@ The response contains:
 
 * `data`: a Base64-encoded JSON payload with the exported agents, tools, and MCP servers.
 * `checksum`: a hash of the decoded `data` string.
-* `jobId`: the export job identifier (you can poll the [Retrieving agent job by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/jobs) endpoint if you need job status updates).
+* `jobId`: the export job identifier (you can poll the [Retrieving agent job by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid) endpoint if you need job status updates).
 
 Store both `data` and `checksum`. You will need them when importing.
 {% endstep %}
@@ -355,7 +369,7 @@ Store both `data` and `checksum`. You will need them when importing.
 {% step %}
 #### Import agents
 
-Use the payload obtained during export and call the [Importing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent/import) endpoint. Import requires the `ai.agent_manage` scope.
+Use the payload obtained during export and call the [Importing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-import) endpoint. Import requires the `ai.agent_manage` scope.
 
 ```bash
 curl -L \
