@@ -17,7 +17,7 @@ layout:
 
 ## Overview
 
-The SEPA Export Service has been deprecated and will be removed on 2026-11-23.
+The SEPA Export Service has been deprecated and will be removed on 2026-08-24.
 
 ## Known problems
 
