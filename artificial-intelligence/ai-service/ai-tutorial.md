@@ -268,6 +268,8 @@ The following MIME types are supported:
 * text/csv
 * text/plain
 
+Media file size can be up to 10 MB.
+
 {% stepper %}
 {% step %}
 ### Upload a file to an agent
