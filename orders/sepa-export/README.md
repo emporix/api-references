@@ -2,6 +2,8 @@
 layout:
   width: wide
 icon: euro-sign
+tags:
+  - deprecated
 ---
 
 # SEPA Export Service
