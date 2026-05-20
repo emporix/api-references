@@ -78,7 +78,7 @@ These announcements are intended to keep you informed about ongoing work and pot
     <td class="tg-0pky">Quote integration</td>
   </tr>
   <tr>
-    <td class="tg-0pky">Agentic Commerce Intelligence</td>
+    <td class="tg-0pky">Approval, Checkout and Quote Services</td>
     <td class="tg-0pky">Approval process for quotes</td>
   </tr>
 </tbody>
