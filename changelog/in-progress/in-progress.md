@@ -66,12 +66,12 @@ These announcements are intended to keep you informed about ongoing work and pot
     <td class="tg-0pky">Quote Intake and Stock Promotion</td>
   </tr>
   <tr>
-    <td class="tg-0pky">Cart Price &amp; Checkout Service</td>
+    <td class="tg-0pky">Cart Price and Checkout Service</td>
     <td class="tg-0pky">Improvements</td>
   </tr>
   <tr>
     <td class="tg-0pky">B2B Commerce Frontend</td>
-    <td class="tg-0pky">Quick Order, Product Detail page & improvements in Product List page</td>
+    <td class="tg-0pky">Quick Order, Product Detail page and improvements in Product List page</td>
   </tr>
   <tr>
     <td class="tg-0pky">SAP Integration Package</td>
