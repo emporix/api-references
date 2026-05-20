@@ -63,7 +63,7 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr>
   <tr>
     <td class="tg-0pky">Value Streams</td>
-    <td class="tg-0pky">Quote Intake</td>
+    <td class="tg-0pky">Quote Intake and Stock Promotion</td>
   </tr>
   <tr>
     <td class="tg-0pky">Cart Price &amp; Checkout Service</td>
@@ -71,11 +71,15 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr>
   <tr>
     <td class="tg-0pky">B2B Commerce Frontend</td>
-    <td class="tg-0pky">Quick Order, Product Detail Page & Improvements Product List Page</td>
+    <td class="tg-0pky">Quick Order, Product Detail page & improvements in Product List page</td>
   </tr>
   <tr>
     <td class="tg-0pky">SAP Integration Package</td>
     <td class="tg-0pky">Quote integration</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Agentic Commerce Intelligence</td>
+    <td class="tg-0pky">Approval process for quotes</td>
   </tr>
 </tbody>
 </table>
