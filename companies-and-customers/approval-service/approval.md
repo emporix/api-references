@@ -9,7 +9,7 @@ layout:
 
 # Approval Tutorials
 
-An approval process is essential for organizations to define the proper purchasing flow and enforce budget limits. Depending on the role of the customer, some checkouts are approved automatically, while others require additional confirmation from eligible users. The Approval Service supports approvals for **orders placed from a cart** and for **orders placed from an accepted quote**.
+An approval process is essential for organizations to define the proper purchasing flow and enforce budget limits. Depending on the role of the customer, some checkouts are approved automatically, while others require additional confirmation from eligible users. The Approval Service supports approvals for orders placed from a cart and for orders placed from an accepted quote.
 
 {% hint style="warning" %}
 **Quote checkout approval** requires enabling the feature in [System Preferences](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/settings/system-preferences) in the Management Dashboard. Set **Enable quote approval process** (`approval.enableQuoteApprovalProcess`) to active before customers can use the approval workflow for quote checkout.
@@ -17,17 +17,17 @@ An approval process is essential for organizations to define the proper purchasi
 
 ## Approval use cases
 
-Both flows use the same `action` value (`CHECKOUT`) and the same roles, scopes, and approval statuses. They differ by **resource type**, **when** the approval is created, and **request payload**.
+Both flows use the same `action` value (`CHECKOUT`) and the same roles, scopes, and approval statuses. They differ by resource type, when the approval is created, and request payload.
 
 | | **Order approval (cart checkout)** | **Quote checkout approval** |
 | --- | --- | --- |
 | **When** | Customer checks out a cart on the storefront | Customer checks out an open quote to create an order |
-| **Prerequisite** | B2B approval setup (roles and company limits) | Same, plus **Enable quote approval process** in System Preferences |
+| **Prerequisite** | B2B approval setup (roles and company limits) | B2B approval setup, and the `approval.enableQuoteApprovalProcess` setting enabled in the System Preferences |
 | **`resourceType`** | `CART` | `QUOTE` |
 | **`resourceId`** | Cart ID | Quote ID |
 | **`action`** | `CHECKOUT` | `CHECKOUT` |
-| **`details` in POST** | **Required** (shipping, addresses, currency, payment, and so on) | **Must be omitted** — the service loads quote line and price data from the quote |
-| **Outcome** | Approver completes checkout → **order** from cart | Approver completes checkout → **order** from quote |
+| **`details` in POST** | Required (shipping, addresses, currency, payment, and so on) | Omitted — the service loads quote line and price data from the quote |
+| **Outcome** | Approver completes checkout → order from cart | Approver completes checkout → order from quote |
 | **Related docs** | [Checkout Service](../../checkout/checkout/) | [Quote Tutorial](../../quotes/quote/quote.md), [Checkout Service](../../checkout/checkout/) |
 
 {% hint style="info" %}
@@ -321,7 +321,7 @@ An approval can be created (requested) only by a customer who does not have perm
 Cart checkout approval is the default B2B approval flow and does not require an extra tenant setting beyond roles and company limits.
 
 * Use `resourceType: CART` and the cart ID as `resourceId`.
-* Include `details` in the create request — shipping, addresses, currency, payment methods, and related checkout data are **required**. The Approval Service stores this payload for the approver; it does not load checkout data from the cart alone.
+* Include `details` in the create request — shipping, addresses, currency, payment methods, and related checkout data are required. The Approval Service stores this payload for the approver; it does not load checkout data from the cart alone.
 * The requestor must own an active cart with the items to purchase. On the storefront, the flow typically starts when checkout is blocked or when the integration creates an approval after a failed checkout attempt.
 * After the approver approves, complete checkout through the [Checkout Service](../../checkout/checkout/) using the cart ID and the data from the approval `details`.
 * To verify permissions before checkout, call [Checking the resource approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approval#post-approval-tenant-approval-permitted) with `resourceType: CART`, the cart `resourceId`, and `action: CHECKOUT`.
@@ -551,5 +551,7 @@ The Approval Service supports only one approver per request. There is no built-i
 {% hint style="info" %}
 To learn more about the approval groups, see the [Approvals](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/customer-management/approvals) user guides documentation.
 
-To see an end-to-end flow from the B2B Commerce Frontend perspective, see the [Quote Process](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/OgeoK7nW6gEh0q1ceUZP/commerce-examples/quote-process).
+To see an end-to-end quote approval flow from the B2B Commerce Frontend perspective, see the [Quotes](https://app.gitbook.com/s/OgeoK7nW6gEh0q1ceUZP/commerce-examples/quote-process). 
+
+To see the ed-to-end cart approval process, see the [Users Management and Approvals](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/customer-use-cases/scenarios-introduction/right-roles#approval-requests-flow)
 {% endhint %}
