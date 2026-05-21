@@ -219,12 +219,10 @@ components:
     path_type:
       schema:
         type: string
-        enum:
-          - PRODUCT
       in: path
       required: true
       name: type
-      description: Rag Entity Type.
+      description: "Rag Entity Type. Supported predefined types: [PRODUCT] and custom entity types."
   responses:
     401_resp_common:
       description: The authorization token is invalid or has expired.

@@ -13,19 +13,18 @@ layout:
     visible: true
 ---
 
-# RELEASE_DATE: AI Rag Indexer - `name` and `description` fields from `/filter-metadata` endpoint deprecated
+# RELEASE_DATE: AI Rag Indexer - support for custom entity types in `/filter-metadata` and `/rag-metadata` endpoints
 
 ## Overview
 
-The fields `name` and `description` from the response of `/filter-metadata` endpoint of AI Rag Indexer have been deprecated. These fields
-were previously used to provide additional information about the filters, but they are no longer necessary for the functionality of the
-service. They will be removed on **2026-12-01**.
+The endpoints `/filter-metadata` and `/rag-metadata` of AI Rag Indexer have been enhanced to support custom entity types.
 
-## Affected endpoint
+## Updated endpoints
 
-| Endpoint                                                                                                                                                                                                          | Description                                                                 |
-|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------|
-| [Listing fields for vector search filtering](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-tenant-type-filter-metadata) | Fields `name` and `description` from the response are marked as deprecated. |
+| Endpoint                                                                                                                                                                                                          | Description                      |
+|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------|
+| [Listing fields for vector search filtering](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-tenant-type-filter-metadata) | Support for custom entity types. |
+| [Listing fields for RAG search](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-retrieve-rag-metadata)                    | Support for custom entity types. |
 
 ## Known problems
 
