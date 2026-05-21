@@ -392,7 +392,7 @@ If a customer is in the `B2B_ADMIN` role, the create approval flow does not star
 {% endcontent-ref %}
 
 {% tabs %}
-{% tab title="Order (cart checkout)" %}
+{% tab title="**Order (cart checkout)**" %}
 
 Use `resourceType: CART` and include `details` with shipping, payment, and address information required for checkout.
 
@@ -466,7 +466,7 @@ curl -i -X POST \
 
 {% endtab %}
 
-{% tab title="Quote checkout" %}
+{% tab title="**Quote checkout**" %}
 
 Use `resourceType: QUOTE`, set `resourceId` to the quote ID, and omit `details`. Ensure **Enable quote approval process** is active for the tenant.
 
