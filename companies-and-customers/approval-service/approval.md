@@ -21,7 +21,7 @@ Both flows use the same `action` value (`CHECKOUT`) and the same roles, scopes, 
 
 | | **Order approval (cart checkout)** | **Quote checkout approval** |
 | --- | --- | --- |
-| **When** | Customer checks out a cart on the storefront | Customer checks out an accepted quote to create an order |
+| **When** | Customer checks out a cart on the storefront | Customer checks out an open quote to create an order |
 | **Prerequisite** | B2B approval setup (roles and company limits) | Same, plus **Enable quote approval process** in System Preferences |
 | **`resourceType`** | `CART` | `QUOTE` |
 | **`resourceId`** | Cart ID | Quote ID |
@@ -31,7 +31,7 @@ Both flows use the same `action` value (`CHECKOUT`) and the same roles, scopes, 
 | **Related docs** | [Checkout Service](../../checkout/checkout/) | [Quote Tutorial](../../quotes/quote/quote.md), [Checkout Service](../../checkout/checkout/) |
 
 {% hint style="info" %}
-**Approval Service status** (`PENDING`, `APPROVED`, `CLOSED`, and so on) is separate from **Quote Service status** (`AWAITING`, `OPEN`, `ACCEPTED`, and so on). Quote checkout approval applies after the quote is ready to be converted to an order — see the [Quote Tutorial](../../quotes/quote/quote.md) for the full quote lifecycle.
+**Approval Service status** (for example, `PENDING`, `APPROVED`, `CLOSED`) is separate from **Quote Service status** (for example, `AWAITING`, `OPEN`, `ACCEPTED`). Quote checkout approval applies after the quote is ready to be converted to an order — see the [Quote Tutorial](../../quotes/quote/quote.md) for the full quote lifecycle.
 {% endhint %}
 
 ```mermaid
@@ -173,7 +173,7 @@ sequenceDiagram
     Cart ->> Approval: Permission check
     Approval -->> Cart: Auto-permit checkout<br/>(if within company limit)
 
-    Approval ->> Approver: Approval created by company approver
+    Approval ->> Approver: Approval request created for the company approver
     Approver ->> Order: Approver finishes checkout
 ```
 
@@ -198,12 +198,12 @@ sequenceDiagram
     participant BR as B2B REQUESTER
     participant C as CART
     participant AS as APPROVAL SERVICE
-    participant A as APPROVAL
+    participant A as APPROVER
     participant O as ORDER
 
     BR->>C: Product added to the cart
     C->>AS: Permission check
-    AS->>A: Approval created by the company approver
+    AS->>A: Approval request created for the company approver
     A->>O: The approver finishes checkout
 ```
 
@@ -234,7 +234,7 @@ sequenceDiagram
     participant Approval as APPROVAL SERVICE
     participant Order as ORDER
 
-    Admin ->> Quote: Quote accepted / ready for checkout
+    Admin ->> Quote: Quote ready to be accepted / ready for checkout
     Quote ->> Approval: Permission check
     Approval -->> Quote: Response
     Quote ->> Order: Checkout triggered
@@ -264,13 +264,13 @@ sequenceDiagram
     participant Approver as APPROVER
     participant Order as ORDER
 
-    Buyer ->> Quote: Quote accepted / ready for checkout
+    Buyer ->> Quote: Quote ready to be accepted / ready for checkout
     Quote ->> Order: Checkout triggered
 
     Quote ->> Approval: Permission check
     Approval -->> Quote: Auto-permit checkout<br/>(if within company limit)
 
-    Approval ->> Approver: Approval created by company approver
+    Approval ->> Approver: Approval request created for the company approver
     Approver ->> Order: Approver finishes checkout
 ```
 
@@ -295,12 +295,12 @@ sequenceDiagram
     participant BR as B2B REQUESTER
     participant Q as QUOTE
     participant AS as APPROVAL SERVICE
-    participant A as APPROVAL
+    participant A as APPROVER
     participant O as ORDER
 
     BR->>Q: Quote ready to be accepted / ready for checkout
     Q->>AS: Permission check
-    AS->>A: Approval created by the company approver
+    AS->>A: Approval request created for the company approver
     A->>O: The approver finishes checkout
 ```
 
