@@ -265,10 +265,9 @@ sequenceDiagram
     participant Order as ORDER
 
     Buyer ->> Quote: Quote ready to be accepted / ready for checkout
-    Quote ->> Order: Checkout triggered
-
     Quote ->> Approval: Permission check
     Approval -->> Quote: Auto-permit checkout<br/>(if within company limit)
+    Quote ->> Order: Checkout triggered
 
     Approval ->> Approver: Approval request created for the company approver
     Approver ->> Order: Approver finishes checkout
@@ -373,7 +372,7 @@ Send the request to the [Retrieving users assigned to a group](https://developer
 curl -L \
   --url 'https://api.emporix.io/iam/{{tenant}}/groups/{{groupId}}/users' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
-  --header 'Accept: */*' \
+  --header 'Accept: */*'
 ```
 
 ### How to start the approval flow
@@ -553,5 +552,5 @@ To learn more about the approval groups, see the [Approvals](https://app.gitbook
 
 To see an end-to-end quote approval flow from the B2B Commerce Frontend perspective, see the [Quotes](https://app.gitbook.com/s/OgeoK7nW6gEh0q1ceUZP/commerce-examples/quote-process). 
 
-To see the ed-to-end cart approval process, see the [Users Management and Approvals](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/customer-use-cases/scenarios-introduction/right-roles#approval-requests-flow)
+To see the end-to-end cart approval process, see the [Users Management and Approvals](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/customer-use-cases/scenarios-introduction/right-roles#approval-requests-flow)
 {% endhint %}
