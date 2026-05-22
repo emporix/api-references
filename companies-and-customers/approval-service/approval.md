@@ -19,16 +19,16 @@ An approval process is essential for organizations to define the proper purchasi
 
 Both flows use the same `action` value (`CHECKOUT`) and the same roles, scopes, and approval statuses. They differ by resource type, when the approval is created, and request payload.
 
-| | **Order approval (cart checkout)** | **Quote checkout approval** |
+| **Order approval (cart checkout)** | **Quote checkout approval** |
 | --- | --- | --- |
-| **When** | Customer checks out a cart on the storefront | Customer checks out an open quote to create an order |
-| **Prerequisite** | B2B approval setup (roles and company limits) | B2B approval setup, and the `approval.enableQuoteApprovalProcess` setting enabled in the System Preferences |
-| **`resourceType`** | `CART` | `QUOTE` |
-| **`resourceId`** | Cart ID | Quote ID |
-| **`action`** | `CHECKOUT` | `CHECKOUT` |
-| **`details` in POST** | Required (shipping, addresses, currency, payment, and so on) | Omitted — the service loads quote line and price data from the quote |
-| **Outcome** | Approver completes checkout → order from cart | Approver completes checkout → order from quote |
-| **Related docs** | [Checkout Service](../../checkout/checkout/) | [Quote Tutorial](../../quotes/quote/quote.md), [Checkout Service](../../checkout/checkout/) |
+| When | Customer checks out a cart on the storefront | Customer checks out an open quote to create an order |
+| Prerequisite | B2B approval setup (roles and company limits) | B2B approval setup, and the `approval.enableQuoteApprovalProcess` setting enabled in the System Preferences |
+| `resourceType` | `CART` | `QUOTE` |
+| `resourceId` | Cart ID | Quote ID |
+| `action` | `CHECKOUT` | `CHECKOUT` |
+| `details` in POST | Required (shipping, addresses, currency, payment, and so on) | Omitted — the service loads quote line and price data from the quote |
+| Outcome | Approver completes checkout → order from cart | Approver completes checkout → order from quote |
+| Related docs | [Checkout Service](../../checkout/checkout/) | [Quote Tutorial](../../quotes/quote/quote.md), [Checkout Service](../../checkout/checkout/) |
 
 {% hint style="info" %}
 **Approval Service status** (for example, `PENDING`, `APPROVED`, `CLOSED`) is separate from **Quote Service status** (for example, `AWAITING`, `OPEN`, `ACCEPTED`). Quote checkout approval applies after the quote is ready to be converted to an order — see the [Quote Tutorial](../../quotes/quote/quote.md) for the full quote lifecycle.
@@ -93,7 +93,7 @@ classDiagram
 
 ## Roles and scopes
 
-The approval flow begins when a customer works with a cart or an open quote in the storefront.
+The approval flow begins when a customer adds products to a cart or works on an open quote in the storefront.
 The functionality supports four scopes, designed for *Admin*, *Buyer* and *Requester* roles.
 
 Scopes designed for a customer:
@@ -336,44 +336,32 @@ Quote checkout approval is available only when **Enable quote approval process**
 
 ### How to check user rights for approval flow
 
-You can check the approval rights either with IAM or the Approval Service.
+You can check the approval rights with the Approval Service API.
 
-* **IAM**: To check user approval rights upfront, send the request to [Retrieving all groups to which a user is assigned](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-groups) endpoint.
+Perform the check during cart or quote checkout. If the user lacks the necessary rights, the approval flow can be triggered after checkout fails. This approach requires first distinguishing between B2B and B2C users to verify whether they belong to a B2B legal entity or group.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../../users-and-permissions/iam/api-reference/" %}
-[api-reference](../../users-and-permissions/iam/api-reference/)
-{% endcontent-ref %}
-
-
-```bash
-curl -L \
-  --url 'https://api.emporix.io/iam/{{tenant}}/users/{{userId}}/groups' \
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
-  --header 'Accept: */*'
-```
-
-* **Approval**: You can perform the check during cart or quote checkout. If the user lacks the necessary rights, the approval flow can be triggered after checkout fails. This approach requires first distinguishing between B2B and B2C users to verify whether they belong to a B2B legal entity or group.
-
-### How to check eligible approvers
-
-To check approvers from your company, query the IAM Service or company user service for users in the same legal entity who belong to `B2B_ADMIN` or `B2B_BUYER` groups.
-
-Send the request to the [Retrieving users assigned to a group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups-groupid-users) endpoint and provide the `groupId` (*Admin* or *Buyer* group) to get a response with assigned users.
+To check for the eligible approvers from your company, use the dedicated [Search for the users eligible to act as approvers](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/search) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../users-and-permissions/iam/api-reference/" %}
-[api-reference](../../users-and-permissions/iam/api-reference/)
+{% content-ref url="../../companies-and-customers/approval-service/approval-api-reference/" %}
+[api-reference](../../companies-and-customers/approval-service/approval-api-reference/)
 {% endcontent-ref %}
 
 ```bash
 curl -L \
-  --url 'https://api.emporix.io/iam/{{tenant}}/groups/{{groupId}}/users' \
+  --request POST \
+  --url 'https://api.emporix.io/approval/{{tenant}}/search/users' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
-  --header 'Accept: */*'
+  --header 'Content-Type: application/json' \
+  --data '{
+    "resourceId": "cartId",
+    "resourceType": "CART",
+    "action": "CHECKOUT"
+  }'
 ```
+
+Depending on the use case, provide the `CART` or `QUOTE` resource details.
 
 ### How to start the approval flow
 
