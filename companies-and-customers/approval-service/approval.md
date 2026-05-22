@@ -9,7 +9,7 @@ layout:
 
 # Approval Tutorials
 
-An approval process is essential for organizations to define the proper purchasing flow and enforce budget limits. Depending on the role of the customer, some checkouts are approved automatically, while others require additional confirmation from eligible users. The Approval Service supports approvals for orders placed from a cart and for orders placed from an accepted quote.
+An approval process is essential for organizations to define the proper purchasing flow and enforce budget limits. Depending on the role of the customer, some checkouts are approved automatically, while others require additional confirmation from eligible users. The Approval Service supports the approval of orders placed either from a cart or from an accepted quote.
 
 {% hint style="warning" %}
 **Quote checkout approval** requires enabling the feature in [System Preferences](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/settings/system-preferences) in the Management Dashboard. Set **Enable quote approval process** (`approval.enableQuoteApprovalProcess`) to active before customers can use the approval workflow for quote checkout.
