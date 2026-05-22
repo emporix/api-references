@@ -19,7 +19,7 @@ An approval process is essential for organizations to define the proper purchasi
 
 Both flows use the same `action` value (`CHECKOUT`) and the same roles, scopes, and approval statuses. They differ by resource type, when the approval is created, and request payload.
 
-| | **Order approval (cart checkout)** | **Quote checkout approval** |
+| | Order approval (cart checkout) | Quote checkout approval |
 | --- | --- | --- |
 | When | Customer checks out a cart on the storefront | Customer checks out an open quote to create an order |
 | Prerequisite | B2B approval setup (roles and company limits) | B2B approval setup, and the `approval.enableQuoteApprovalProcess` setting enabled in the System Preferences |
