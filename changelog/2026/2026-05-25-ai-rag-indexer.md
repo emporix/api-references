@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# RELEASE_DATE: AI Rag Indexer - support for custom entity types in `/filter-metadata` and `/rag-metadata` endpoints
+# 2026-05-25: AI Rag Indexer - support for custom entity types in `/filter-metadata` and `/rag-metadata` endpoints
 
 ## Overview
 
