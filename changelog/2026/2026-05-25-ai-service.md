@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# RELEASE_DATE: AI Service - RAG_EMPORIX filter fields
+# 2026-05-25: AI Service - RAG_EMPORIX filter fields
 
 ## Overview
 
