@@ -23,8 +23,11 @@ paths:
     get:
       tags:
         - Locations
+      deprecated: true
       summary: Retrieving all locations for a site
       description: |-
+        **Deprecated.** This endpoint is deprecated and will be removed on 2026-09-01. It should no longer be used.
+
         Retrieves all locations for a specified site.
       security:
         - OAuth2:
@@ -53,8 +56,11 @@ paths:
     post:
       tags:
         - Locations
+      deprecated: true
       summary: Adding a new location to a site
       description: |-
+        **Deprecated.** This endpoint is deprecated and will be removed on 2026-09-01. It should no longer be used.
+
         Adds a new location to a specified site.
       security:
         - OAuth2:
@@ -91,8 +97,11 @@ paths:
     put:
       tags:
         - Locations
+      deprecated: true
       summary: Updating locations
       description: |-
+        **Deprecated.** This endpoint is deprecated and will be removed on 2026-09-01. It should no longer be used.
+
         Updates locations for a specified site.
       security:
         - OAuth2:
@@ -131,8 +140,11 @@ paths:
     delete:
       tags:
         - Locations
+      deprecated: true
       summary: Deleting a location
       description: |-
+        **Deprecated.** This endpoint is deprecated and will be removed on 2026-09-01. It should no longer be used.
+
         Deletes a specified location.
       security:
         - OAuth2:
@@ -160,8 +172,11 @@ paths:
   /availability/{tenant}/search/locations:
     description: Availability service
     post:
+      deprecated: true
       summary: Retrieving product locations
       description: |-
+        **Deprecated.** This endpoint is deprecated and will be removed on 2026-09-01. It should no longer be used.
+
         Retrieves locations of specified products.
       security:
         - OAuth2:
