@@ -472,7 +472,7 @@ paths:
         $ref: '#/components/requestBodies/QParamSearchBody'
       tags:
         - Agent Template
-  '/ai-service/{tenant}/agentic/templates/{templateId}/agent':
+  '/ai-service/{tenant}/agentic/templates/{templateId}/agents':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
       - $ref: '#/components/parameters/header_Content-Language'
