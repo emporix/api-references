@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# RELEASE_DATE: AI Rag Indexer - `name` and `description` fields from `/filter-metadata` endpoint deprecated
+# 2026-05-25: AI Rag Indexer - `name` and `description` fields from `/filter-metadata` endpoint deprecated
 
 ## Overview
 
