@@ -7,11 +7,14 @@
 * [Current work in progress](in-progress/in-progress.md)
 
 ## 2026
-* [RELEASE_DATE: Webhook Service - updated schema.custom-instance-updated and schema.custom-instance-created events schema](2026/RELEASE_DATE-webhook-custom-instance-events-updated.md)
 * [RELEASE_DATE: AI Service - RAG_EMPORIX support for custom entity types](2026/RELEASE_DATE-ai-service.md)
+* [RELEASE_DATE: Webhook Service - updated schema.custom-instance-updated and schema.custom-instance-created events schema](2026/RELEASE_DATE-webhook-custom-instance-events-updated.md)
+* [2026-05-26: Approval Service - quote approval process](2026/2026-05-26-approval.md)
+* [2026-05-26: Approval Service - deprecated fields](2026/2026-05-26-approval-deprecations.md)
 * [2026-05-25: AI RAG Indexer - support for custom entity types in /filter-metadata and /rag-metadata endpoints](2026/2026-05-25-ai-rag-indexer.md)
 * [2026-05-25: AI Rag Indexer - name and description fields from /filter-metadata endpoint deprecated](2026/2026-05-25-ai-rag-indexer-deprecations.md)
 * [2026-05-25: AI Service - RAG_EMPORIX filter fields](2026/2026-05-25-ai-service.md)
+* [2026-05-25: SEPA Export Service - deprecation](2026/2026-05-25-sepa-export)
 * [2026-05-18: Price Service - siteCodes support in price search](2026/2026-05-18-price.md)
 * [2026-05-13: Emporix SDK - Dynamic variants support](2026/2026-05-13-sdk.md)
 * [2026-05-13: IAM Service - access control restrictions, predefined scopes, and deprecations](2026/2026-05-13-iam.md)
