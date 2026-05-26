@@ -92,7 +92,7 @@ Sample response (field paths depend on your custom schema):
 Replace the sample paths with the values returned by `rag-metadata` for your tenant. Mixin keys must match your Schema Service attribute definitions.
 {% endhint %}
 
-Use the response paths in `indexedFields[].key` when you call the [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) endpoint.
+Use the response paths in `indexedFields[].key` when you call the [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) endpoint in an upcoming step.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -158,7 +158,7 @@ Sample response (field paths depend on your custom schema):
 {% endtab %}
 {% endtabs %}
 
-Use the returned field paths in `filterFields[].key` when creating the tool. Add a `description` for each field so the agent knows when to apply that filter.
+Use the returned field paths in `filterFields[].key` when creating the tool. 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -173,7 +173,9 @@ Use the returned field paths in `filterFields[].key` when creating the tool. Add
 
 When you know which fields to index and filter, call the [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) endpoint to create or update a `rag_emporix` tool. 
 
-Set the `toolId` in the URL path (for example, `rag-product` or `rag-car-parts`). The `indexedFields` and `filterFields` are required for `rag_emporix` tools – specify the paths from the responses returned in previous steps. The `indexedFields` can use optional name aliases. For the `filterFields`, add relevant descriptions so that the agent knows when to apply the filters.
+Set the `toolId` in the URL path (for example, `rag-product` or `rag-car-parts`). The `indexedFields` and `filterFields` are required for `rag_emporix` tools – specify the paths from the responses returned in previous steps:
+* The `indexedFields` can use optional name aliases. 
+* For the `filterFields`, add relevant descriptions so that the agent knows when to apply the filters.
 
 {% tabs %}
 {% tab title="Product" %}
