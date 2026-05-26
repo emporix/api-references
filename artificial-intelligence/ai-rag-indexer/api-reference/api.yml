@@ -120,7 +120,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        Retrieves alist of fields which can be used for vector search filtering. Filtering is applied before RAG retrieval stage.
+        Retrieves a list of fields which can be used for vector search filtering. Filtering is applied before RAG retrieval stage.
       security:
         - OAuth2:
             - ai.agent_read
@@ -136,9 +136,11 @@ components:
           description: Unique identifier of the fields. It contains full field path.
         name:
           type: string
+          deprecated: true
           description: Name of the field.
         description:
           type: string
+          deprecated: true
           description: Description of the field.
         type:
           type: string
@@ -217,12 +219,10 @@ components:
     path_type:
       schema:
         type: string
-        enum:
-          - PRODUCT
       in: path
       required: true
       name: type
-      description: Rag Entity Type.
+      description: "Rag Entity Type. Supported predefined types: [PRODUCT] and custom entity types."
   responses:
     401_resp_common:
       description: The authorization token is invalid or has expired.

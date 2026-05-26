@@ -2038,10 +2038,28 @@ components:
                 description: Unique value representing the entityType key.
             required:
               - key
+        filterFields:
+          type: array
+          description: This field specifies the fields of the given entityType that are used for filtering the data before performing actual search.
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+                description: It should contain the description of the field, so LLM is able to know when to use this field in order to filter the data. For enums, possible values should be specified here.
+              name:
+                type: string
+                description: It can act as an alias for the field key.
+              key:
+                type: string
+                description: Unique value representing the entityType key.
+            required:
+              - key
       required:
         - prompt
         - entityType
         - indexedFields
+        - filterFields
     RagEmporixNativeToolConfigRequest:
       allOf:
         - $ref: '#/components/schemas/RagEmporixNativeToolConfig'

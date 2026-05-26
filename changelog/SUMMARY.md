@@ -8,6 +8,12 @@
 
 ## 2026
 * [RELEASE_DATE: AI Service - commerce event trigger filter support and job status update](2026/RELEASE_DATE-ai-service-commerce-event-trigger-filter.md)
+* [2026-05-26: Approval Service - quote approval process](2026/2026-05-26-approval.md)
+* [2026-05-26: Approval Service - deprecated fields](2026/2026-05-26-approval-deprecations.md)
+* [2026-05-25: AI RAG Indexer - support for custom entity types in /filter-metadata and /rag-metadata endpoints](2026/2026-05-25-ai-rag-indexer.md)
+* [2026-05-25: AI Rag Indexer - name and description fields from /filter-metadata endpoint deprecated](2026/2026-05-25-ai-rag-indexer-deprecations.md)
+* [2026-05-25: AI Service - RAG_EMPORIX filter fields](2026/2026-05-25-ai-service.md)
+* [2026-05-25: SEPA Export Service - deprecation](2026/2026-05-25-sepa-export)
 * [2026-05-18: Price Service - siteCodes support in price search](2026/2026-05-18-price.md)
 * [2026-05-13: Emporix SDK - Dynamic variants support](2026/2026-05-13-sdk.md)
 * [2026-05-13: IAM Service - access control restrictions, predefined scopes, and deprecations](2026/2026-05-13-iam.md)
