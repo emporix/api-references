@@ -24,7 +24,7 @@ Follow this tutorial to learn how to create a RAG tool with indexable and filter
 
 ## Prerequisites
 
-* The OAuth2 access token with the `ai.agent_read` and `ai.agent_manage` scopes is required.
+* The OAuth2 access token must include the `ai.agent_read` and `ai.agent_manage` scopes.
 * For custom entities, the custom type must exist in Schema Service. The `{type}` in indexer URLs must match the `config.entityType`.
 
 ## How to prepare RAG indexing
