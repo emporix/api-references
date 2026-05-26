@@ -93,7 +93,7 @@ Replace the sample paths with the values returned by `rag-metadata` for your ten
 {% endhint %}
 
 Use the response paths in the `indexedFields[].key` when you 
-create a RAG tool in an upcoming step.
+create a RAG tool in the upcoming step.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -370,6 +370,9 @@ Reindexing is a computationally expensive and time-consuming operation, especial
 
 Assign the tool ID (for example, `rag-product`, `rag-car-parts`) to an AI agent so it can be invoked during agentic chat. Use the [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint or configure the agent in Management Dashboard.
 
+{% hint style="info" %}
 For broader agent setup and chat flows, see the [AI Service Tutorial](../ai-service/ai-tutorial.md).
+{% endhint %}
+
 {% endstep %}
 {% endstepper %}
