@@ -92,7 +92,8 @@ Sample response (field paths depend on your custom schema):
 Replace the sample paths with the values returned by `rag-metadata` for your tenant. Mixin keys must match your Schema Service attribute definitions.
 {% endhint %}
 
-Use the response paths in `indexedFields[].key` when you call the [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) endpoint in an upcoming step.
+Use the response paths in the `indexedFields[].key` when you 
+create a RAG tool in an upcoming step.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -158,7 +159,7 @@ Sample response (field paths depend on your custom schema):
 {% endtab %}
 {% endtabs %}
 
-Use the returned field paths in `filterFields[].key` when creating the tool. 
+Use the returned field paths in `filterFields[].key` when creating the tool in the upcoming step. 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
