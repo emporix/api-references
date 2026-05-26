@@ -159,7 +159,7 @@ Sample response (field paths depend on your custom schema):
 {% endtab %}
 {% endtabs %}
 
-Use the returned field paths in `filterFields[].key` when creating the tool in the upcoming step. 
+Use the returned field paths in `filterFields[].key` when creating a tool in the upcoming step. 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
