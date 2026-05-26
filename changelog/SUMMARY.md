@@ -9,6 +9,13 @@
 ## 2026
 * [RELEASE_DATE: Approval Service - quote approval process](2026/RELEASE_DATE-approval.md)
 * [RELEASE_DATE: Approval Service - deprecated fields](2026/RELEASE_DATE-approval-deprecations.md)
+* [2026-05-25: AI RAG Indexer - support for custom entity types in /filter-metadata and /rag-metadata endpoints](2026/2026-05-25-ai-rag-indexer.md)
+* [2026-05-25: AI Rag Indexer - name and description fields from /filter-metadata endpoint deprecated](2026/2026-05-25-ai-rag-indexer-deprecations.md)
+* [2026-05-25: AI Service - RAG_EMPORIX filter fields](2026/2026-05-25-ai-service.md)
+* [2026-05-25: SEPA Export Service - deprecation](2026/2026-05-25-sepa-export)
+* [2026-05-18: Price Service - siteCodes support in price search](2026/2026-05-18-price.md)
+* [2026-05-13: Emporix SDK - Dynamic variants support](2026/2026-05-13-sdk.md)
+* [2026-05-13: IAM Service - access control restrictions, predefined scopes, and deprecations](2026/2026-05-13-iam.md)
 * [2026-05-11: Product Service - code on dynamic variant variants map entries](2026/2026-05-11-product-variants-code.md)
 * [2026-05-11: Product Service - expand brand and labels in product responses](2026/2026-05-11-product-service-expand-brand-labels.md)
 * [2026-05-11: Webhook Events - updated `index-item.updated` event schema](2026/2026-05-11-webhook-index-item-updated.md)

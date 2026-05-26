@@ -51,7 +51,8 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -92,7 +93,8 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -135,7 +137,8 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name 2
                       role:
@@ -173,7 +176,8 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -201,7 +205,8 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -231,7 +236,8 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -255,7 +261,8 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -281,7 +288,8 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -292,7 +300,8 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -339,7 +348,8 @@ paths:
                     id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                     roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                     resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                    domain: example_domain
+                    domains:
+                      - example_domain
                     name:
                       en: Example name
                       de: Beispielname
@@ -384,7 +394,8 @@ paths:
                     id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                     roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                     resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                    domain: example_domain
+                    domains:
+                      - example_domain
                     name:
                       en: Example name
                     role:
@@ -424,7 +435,8 @@ paths:
                     id: string
                     roleId: string
                     resourceId: string
-                    domain: example_domain
+                    domains:
+                      - example_domain
                     name:
                       property1: string
                       property2: string
@@ -469,7 +481,8 @@ paths:
                     id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                     roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                     resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                    domain: example_domain
+                    domains:
+                      - example_domain
                     name:
                       en: Example name
                       de: Beispielname
@@ -497,7 +510,8 @@ paths:
                     id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                     roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                     resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                    domain: example_domain
+                    domains:
+                      - example_domain
                     name:
                       en: Example name
                       de: Beispielname
@@ -538,8 +552,6 @@ paths:
       description: |
         Creates an access control when it does not exist, or updates it when it already exists for the tenant.
         If `metadata.version` is provided, optimistic locking is applied for updates.
-
-        **Note**: Currently you can create access controls only with custom scopes.
       operationId: PUT-iam-upsert-access-control
       parameters:
         - $ref: '#/components/parameters/trait_contentLanguage_header'
@@ -560,7 +572,9 @@ paths:
                     de: Beispielbeschreibung
                   scopes:
                     - custom.scope
-                  domain: example_domain
+                  domains:
+                    - example_domain
+                  restrictedTo: CUSTOMER
                   metadata:
                     version: 1
       responses:
@@ -615,7 +629,6 @@ paths:
       description: |
         Retrieves all scopes for the tenant. Results can be filtered and sorted using query parameters.
 
-        **Note:** Currently this endpoint returns only user-created custom scopes. Predefined scopes are not included yet.
       operationId: GET-iam-list-tenant-scopes
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -647,6 +660,16 @@ paths:
                         en: Example scope description
                         de: Beispielbeschreibung
                       domain: example_domain
+                      predefined: false
+                      metadata:
+                        version: 1
+                        createdAt: '2022-01-04 10:44:51.871Z'
+                        modifiedAt: '2022-01-05 12:44:51.456Z'
+                    - id: iam.access_read
+                      description:
+                        en: Read access to access controls
+                      domain: iam
+                      predefined: true
                       metadata:
                         version: 1
                         createdAt: '2022-01-04 10:44:51.871Z'
@@ -675,7 +698,6 @@ paths:
       description: |
         Retrieves details of a specified scope.
 
-        **Note:** Currently this endpoint returns only user-created custom scopes. Predefined scopes are not included yet.
       operationId: GET-iam-retrieve-scope
       parameters:
         - $ref: '#/components/parameters/trait_acceptLanguage_header'
@@ -694,6 +716,7 @@ paths:
                       en: Example scope description
                       de: Beispielbeschreibung
                     domain: example_domain
+                    predefined: false
                     metadata:
                       version: 1
                       createdAt: '2022-01-04 10:44:51.871Z'
@@ -1219,7 +1242,8 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -1260,7 +1284,8 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -1303,7 +1328,8 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name
                       role:
@@ -1339,7 +1365,8 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name 2
                       role:
@@ -1377,7 +1404,8 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -1405,7 +1433,8 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -1435,7 +1464,8 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -1459,7 +1489,8 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -1485,7 +1516,8 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -1496,7 +1528,8 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -1791,8 +1824,11 @@ paths:
       tags:
         - Permissions
       summary: Retrieving all permissions
+      deprecated: true
       description: |
         Retrieves all permissions available for the tenant. You can filter the results by using query parameters.
+
+        **Note**: This endpoint is deprecated.
       operationId: GET-iam-list-all-tenant-permissions
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -1855,8 +1891,11 @@ paths:
       tags:
         - Permissions
       summary: Retrieving a permission
+      deprecated: true
       description: |
         Retrieves details of a specified permission.
+
+        **Note**: This endpoint is deprecated.
       operationId: GET-iam-retrieve-permission-by-permissionId
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -1919,8 +1958,11 @@ paths:
       tags:
         - Resources
       summary: Retrieving all resources
+      deprecated: true
       description: |
         Retrieves all resources of a given tenant. You can filter the results by using query parameters.
+
+        **Note**: This endpoint is deprecated.
       operationId: GET-iam-list-tenant-resources
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -1990,8 +2032,11 @@ paths:
       tags:
         - Resources
       summary: Retrieving a resource
+      deprecated: true
       description: |
         Retrieves details of a specified resource.
+
+        **Note**: This endpoint is deprecated.
       operationId: GET-iam-retrieve-resource
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -2113,7 +2158,8 @@ paths:
                         - id: 1ac869fc-d548-4ec8-8e06-c01491314117
                           roleId: 1rl5e52e-6e27-4ac5-9471-2467d3fb7500
                           resourceId: 1sr5e52e-6e27-4ac5-9471-2467d3fb7518
-                          domain: example_domain
+                          domains:
+                            - example_domain
                           name:
                             de: Konfiguration | Konfiguration viewer
                             en: Configuration | Configuration viewer
@@ -2149,7 +2195,8 @@ paths:
                         - id: 4ac869fc-d548-4ec8-8e06-c01491314113
                           roleId: 1rl5e52e-6e27-4ac5-9471-2467d3fb7502
                           resourceId: 1sr5e52e-6e27-4ac5-9471-2467d3fb7514
-                          domain: example_domain
+                          domains:
+                            - example_domain
                           name:
                             de: Katalog | Katalog manager
                             en: Catalog | Catalog manager
@@ -2198,10 +2245,13 @@ paths:
       tags:
         - Roles
       summary: Retrieving a list of roles
+      deprecated: true
       description: |
         Retrieves all roles available for a specific tenant. You can filter the results by using query parameters. 
 
         Each role contains a `permissions` list, and each permission is combined with the `applicablePermissionResources`field. This field allows you to allowlist resources that the permission is applicable to. The field can only contain resources specified in the permission document under `applicableResources`.
+
+        **Note**: This endpoint is deprecated.
       operationId: GET-iam-list-tenant-roles
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -2265,8 +2315,11 @@ paths:
       tags:
         - Roles
       summary: Retrieving a role
+      deprecated: true
       description: |
         Retrieves details of a specified role.
+
+        **Note**: This endpoint is deprecated.
       operationId: GET-iam-retrieve-role-by-roleId
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -2380,8 +2433,11 @@ paths:
       tags:
         - Users
       summary: Retrieving user access controls for a resource
+      deprecated: true
       description: |
         Retrieves a specified user's access controls for a specified resource.
+
+        **Note**: This endpoint is deprecated.
       operationId: GET-iam-retrieve-user-resource-access-controls
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -2404,7 +2460,8 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -2445,7 +2502,8 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -2488,7 +2546,8 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name
                       role:
@@ -2524,7 +2583,8 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name 2
                       role:
@@ -2562,7 +2622,8 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -2590,7 +2651,8 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -2620,7 +2682,8 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -2644,7 +2707,8 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -2670,7 +2734,8 @@ paths:
                     - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name
                         de: Beispielname
@@ -2681,7 +2746,8 @@ paths:
                     - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
                       resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-                      domain: example_domain
+                      domains:
+                        - example_domain
                       name:
                         en: Example name 2
                         de: Beispielname 2
@@ -2885,8 +2951,11 @@ paths:
       tags:
         - Users
       summary: Retrieving user permissions for a resource
+      deprecated: true
       description: |
         Retrieves a specified user's permissions for a specific resource. The permissions are calculated based on the user's group assignments and the access control lists of those groups.
+
+        **Note**: This endpoint is deprecated.
       operationId: GET-iam-retrieve-user-resource-permissions
       parameters:
         - $ref: '#/components/parameters/tenant'
@@ -3702,14 +3771,19 @@ components:
           description: Assignment unique identifier generated when the assignment is created.
         roleId:
           type: string
+          deprecated: true
           description: Role unique identifier associated with this access control.
         resourceId:
           type: string
+          deprecated: true
           description: Resource unique identifier associated with this access control.
-        domain:
-          type: string
-          description: Domain identifier associated with this access control.
-          example: example_domain
+        domains:
+          type: array
+          description: Domain identifiers associated with this access control.
+          items:
+            type: string
+          example:
+            - example_domain
         name:
           type: object
           additionalProperties:
@@ -3729,6 +3803,17 @@ components:
         restrictionAware:
           type: boolean
           description: Determines whether this access control generates scopes with restriction suffixes when assigned to a group that has restrictions defined. When `true`, the generated scopes will include restrictions (e.g. order.`order_manage--DE`) based on the group's restrictions list. When `false`, scopes are generated without restriction suffixes regardless of the group's restrictions.
+        restrictedTo:
+          type: string
+          enum:
+            - CUSTOMER
+            - EMPLOYEE
+          description: |
+            Restricts the type of group this access control can be assigned to.
+            * `CUSTOMER` - the access control can be assigned only to groups of `CUSTOMER` user type.
+            * `EMPLOYEE` - the access control can be assigned only to groups of `EMPLOYEE` user type.
+
+            If this property is not present, the access control can be assigned to any group regardless of its user type.
         predefined:
           type: boolean
           readOnly: true
@@ -3760,9 +3845,26 @@ components:
           uniqueItems: true
           items:
             type: string
-        domain:
+        domains:
+          type: array
+          description: Domain identifiers for the access control.
+          items:
+            type: string
+          example:
+            - example_domain
+        restrictedTo:
           type: string
-          description: Domain identifier for the access control.
+          enum:
+            - CUSTOMER
+            - EMPLOYEE
+          description: |
+            Restricts the type of group this access control can be assigned to.
+            * `CUSTOMER` - the access control can be assigned only to groups of `CUSTOMER` user type.
+            * `EMPLOYEE` - the access control can be assigned only to groups of `EMPLOYEE` user type.
+
+            If this property is not present, the access control can be assigned to any group regardless of its user type.
+
+            **Note**: This property is immutable. It can only be set when the access control is created and cannot be changed afterwards.
         metadata:
           type: object
           description: Metadata for optimistic locking on updates. Only `version` is supported.
@@ -4561,6 +4663,10 @@ components:
         domain:
           type: string
           description: Domain identifier for the scope.
+        predefined:
+          type: boolean
+          readOnly: true
+          description: Indicates whether this scope is predefined in the system or was created by a user.
         metadata:
           $ref: '#/components/schemas/CustomScopeMetadataQueryDocument'
     CustomScopeUpsertRequest:
@@ -4715,10 +4821,13 @@ components:
       name: resourceId
       in: query
       required: false
+      deprecated: true
       schema:
         type: string
       description: |
         Search by the id of a given resource.
+
+        **Note**: This query parameter is deprecated.
     trait_name_query_param:
       name: name
       in: query
@@ -4751,6 +4860,7 @@ components:
       name: expand
       in: query
       required: false
+      deprecated: true
       schema:
         type: string
         example: 'role,resource'
@@ -4759,7 +4869,10 @@ components:
           - 'resource,role'
           - role
           - resource
-      description: Adds expanded resource and/or role objects to the response.
+      description: |
+        Adds expanded resource and/or role objects to the response.
+
+        **Note**: This query parameter is deprecated.
     trait_description_query_param:
       name: description
       in: query
@@ -4840,7 +4953,11 @@ components:
     roleId_query:
       name: roleId
       in: query
-      description: Search by access controls with the `roleId` field equal to the specified value.
+      deprecated: true
+      description: |
+        Search by access controls with the `roleId` field equal to the specified value.
+
+        **Note**: This query parameter is deprecated.
       schema:
         type: string
         example: 1rl5e52e-6e27-4ac5-9471-2467d3fb7503
@@ -4850,7 +4967,8 @@ components:
         - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-          domain: example_domain
+          domains:
+            - example_domain
           name:
             en: Example name
             de: Beispielname
@@ -4891,7 +5009,8 @@ components:
         - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-          domain: example_domain
+          domains:
+            - example_domain
           name:
             en: Example name 2
             de: Beispielname 2
@@ -4934,7 +5053,8 @@ components:
         - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-          domain: example_domain
+          domains:
+            - example_domain
           name:
             en: Example name
           role:
@@ -4970,7 +5090,8 @@ components:
         - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-          domain: example_domain
+          domains:
+            - example_domain
           name:
             en: Example name 2
           role:
@@ -5008,7 +5129,8 @@ components:
         - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-          domain: example_domain
+          domains:
+            - example_domain
           name:
             en: Example name
             de: Beispielname
@@ -5032,7 +5154,8 @@ components:
         - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-          domain: example_domain
+          domains:
+            - example_domain
           name:
             en: Example name 2
             de: Beispielname 2
@@ -5058,7 +5181,8 @@ components:
         - id: I981dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           roleId: Z843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           resourceId: S843dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-          domain: example_domain
+          domains:
+            - example_domain
           name:
             en: Example name
             de: Beispielname
@@ -5069,7 +5193,8 @@ components:
         - id: PO43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           roleId: Rvsf43dc9e-a3f6-4573-bb01-a8ae21d2d4ae
           resourceId: L343dc9e-a3f6-4573-bb01-a8ae21d2d4ae
-          domain: example_domain
+          domains:
+            - example_domain
           name:
             en: Example name 2
             de: Beispielname 2

@@ -209,7 +209,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/path_tenant'
     post:
-      summary: Search for the users eligible to act as *Approvers*.
+      summary: Search for the users eligible to act as approvers
       responses:
         '200':
           $ref: '#/components/responses/ApprovalSearchUsersResponse_200'
