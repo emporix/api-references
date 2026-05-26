@@ -7,8 +7,8 @@
 * [Current work in progress](in-progress/in-progress.md)
 
 ## 2026
-* [RELEASE_DATE: Approval Service - quote approval process](2026/RELEASE_DATE-approval.md)
-* [RELEASE_DATE: Approval Service - deprecated fields](2026/RELEASE_DATE-approval-deprecations.md)
+* [2026-05-26: Approval Service - quote approval process](2026/2026-05-26-approval.md)
+* [2026-05-26: Approval Service - deprecated fields](2026/2026-05-26-approval-deprecations.md)
 * [2026-05-25: AI RAG Indexer - support for custom entity types in /filter-metadata and /rag-metadata endpoints](2026/2026-05-25-ai-rag-indexer.md)
 * [2026-05-25: AI Rag Indexer - name and description fields from /filter-metadata endpoint deprecated](2026/2026-05-25-ai-rag-indexer-deprecations.md)
 * [2026-05-25: AI Service - RAG_EMPORIX filter fields](2026/2026-05-25-ai-service.md)

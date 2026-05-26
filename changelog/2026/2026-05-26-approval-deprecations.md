@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# RELEASE_DATE: Approval Service - deprecated fields
+# 2026-05-26: Approval Service - deprecated fields
 
 ## Overview
 
