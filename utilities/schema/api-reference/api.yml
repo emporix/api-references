@@ -771,7 +771,7 @@ paths:
                     createdAt: "2023-08-09T09:21:42.693Z"
                     modifiedAt: "2023-08-09T09:21:42.693Z"
                     version: 1
-                - code: DOCUMENT
+                - id: DOCUMENT
                   name:
                     en: Documents
                   metadata:
@@ -1897,7 +1897,7 @@ components:
           version: 1
     CustomSchemaTypesResponse:
       value:
-        - code: CUSTOM_PRODUCT
+        - id: CUSTOM_PRODUCT
           name:
             en: Custom Product Type
           description:
@@ -1905,7 +1905,7 @@ components:
           metadata:
             createdAt: "2023-08-09T09:21:42.693Z"
             modifiedAt: "2023-08-09T09:21:42.693Z"
-        - code: CUSTOM_ORDER
+        - id: CUSTOM_ORDER
           name:
             en: Custom Order Type
           description:
