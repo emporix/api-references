@@ -12,7 +12,7 @@
 * [2026-05-25: AI RAG Indexer - support for custom entity types in /filter-metadata and /rag-metadata endpoints](2026/2026-05-25-ai-rag-indexer.md)
 * [2026-05-25: AI Rag Indexer - name and description fields from /filter-metadata endpoint deprecated](2026/2026-05-25-ai-rag-indexer-deprecations.md)
 * [2026-05-25: AI Service - RAG_EMPORIX filter fields](2026/2026-05-25-ai-service.md)
-* [2026-05-25: SEPA Export Service - deprecation](2026/2026-05-25-sepa-export)
+* [2026-05-25: SEPA Export Service - deprecation](2026/2026-05-25-sepa-export.md)
 * [2026-05-25: Pick-pack Service - service deprecation](2026/2026-05-25-pick-pack.md)
 * [2026-05-18: Price Service - siteCodes support in price search](2026/2026-05-18-price.md)
 * [2026-05-13: Emporix SDK - Dynamic variants support](2026/2026-05-13-sdk.md)
