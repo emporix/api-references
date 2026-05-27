@@ -958,6 +958,23 @@ paths:
                   metadata:
                     mixins:
                       order_reference: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/order_reference_v1.json'
+              Custom instance with customer owner:
+                value:
+                  id: '124'
+                  name:
+                    en: Report
+                  owner:
+                    type: CUSTOMER
+                    userId: '71742661'
+                    legalEntityId: '6848b31e779f645dc9fe42f7'
+              Custom instance with employee owner:
+                value:
+                  id: '125'
+                  name:
+                    en: Report
+                  owner:
+                    type: EMPLOYEE
+                    userId: '4f2c1a0e-2d1d-4c8b-a5fa-9a8b71234abc'
       responses:
         '201':
           description: Custom instance was successfully created.
@@ -2261,6 +2278,8 @@ components:
         name:
           type: object
           description: Localized custom type name in a form of a map of translations.
+        owner:
+          $ref: '#/components/schemas/CustomInstanceOwnerRequest'
         mixins:
           type: string
           description: A key-value map of additional attributes.
@@ -2276,6 +2295,8 @@ components:
         name:
           type: object
           description: Localized custom type name in a form of a map of translations.
+        owner:
+          $ref: '#/components/schemas/CustomInstanceOwnerRequest'
         mixins:
           type: string
           description: A key-value map of additional attributes.
@@ -2291,11 +2312,13 @@ components:
     CustomInstanceOwner:
       type: object
       description: |
-        Ownership of the custom instance, which is populated automatically based on who created the custom instance.
+        Ownership of the custom instance. It can be assigned explicitly during creation by users with a `manage` scope, or populated automatically based on who created the custom instance. Once set, the owner is immutable and cannot be modified.
+
         The `legalEntityId` field is only present when `type` is `CUSTOMER`.
       properties:
         type:
           type: string
+          description: Type of the owner.
           enum:
             - EMPLOYEE
             - CUSTOMER
@@ -2307,6 +2330,28 @@ components:
           type: string
           nullable: true
           description: Legal entity identifier. Only set when `type` is `CUSTOMER`.
+      required:
+        - type
+        - userId
+    CustomInstanceOwnerRequest:
+      type: object
+      description: |
+        Ownership of the custom instance that can be provided when creating a custom instance.
+        The `owner` field can be set explicitly only by users with a `manage` scope, when the request is authorized with a `manage_own` scope, this field is ignored and ownership is set automatically to the user who created the custom instance.
+        When the user has a `manage` scope but this field is not provided, ownership is set automatically to the user who created the custom instance.
+      properties:
+        type:
+          type: string
+          description: Type of the owner.
+          enum:
+            - EMPLOYEE
+            - CUSTOMER
+        userId:
+          type: string
+          description: Identifier of the employee or customer associated with the owner.
+        legalEntityId:
+          type: string
+          description: Legal entity identifier. Can be provided only when `type` is `CUSTOMER`.
       required:
         - type
         - userId
