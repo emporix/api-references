@@ -9,7 +9,7 @@ tags:
 # Pick-pack Service
 
 {% hint style="danger" %}
-**The Pick-Pack Service is deprecated as of 20 May 2026** and will be removed from the Emporix platform on **24 August 2026**.
+**The Pick-Pack Service is deprecated as of 26 May 2026** and will be removed from the Emporix platform on **24 August 2026**.
 
 If you currently use **Orders → Pick-Pack** to manage picking and packing processes in-store or warehouse, plan an alternative workflow before the removal date. For assistance, contact [Emporix Support](mailto:support@emporix.com).
 {% endhint %}
