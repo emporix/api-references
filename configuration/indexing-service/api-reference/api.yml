@@ -420,6 +420,8 @@ components:
                 When set, the specified mixin keys are omitted from both the non-localized
                 and localized portions of the indexed document.
                 Applies only to the `BATTERY_INCLUDED` provider; ignored for `ALGOLIA`.
+          required:
+            - provider
     IndexCreationResponse:
       title: IndexCreationResponse
       type: object
