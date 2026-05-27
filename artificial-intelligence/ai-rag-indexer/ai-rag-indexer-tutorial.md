@@ -25,7 +25,11 @@ Follow this tutorial to learn how to create a RAG tool with indexable and filter
 ## Prerequisites
 
 * The OAuth2 access token must include the `ai.agent_read` and `ai.agent_manage` scopes.
-* For custom entities, the custom type must exist in Schema Service. The `{type}` in indexer URLs must match the `config.entityType`.
+* For custom entities, the custom type must exist in Schema Service. The `{type}` in indexer URLs must match the `config.entityType`. 
+
+{% hint style="warning" %}
+Note that removing a custom entity from the Emporix system results in automatic deletion of RAG tools that reference that entity.
+{% endhint %}
 
 ## How to prepare RAG indexing
 
