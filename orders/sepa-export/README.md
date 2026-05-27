@@ -2,9 +2,17 @@
 layout:
   width: wide
 icon: euro-sign
+tags:
+  - deprecated
 ---
 
 # SEPA Export Service
+
+{% hint style="danger" %}
+**The SEPA service is deprecated as of 25 May 2026** and will be removed from the Emporix platform on **24 August 2026**.
+
+If you currently use **Orders → SEPA** to generate SEPA-XML files, plan an alternative workflow before the removal date. For assistance, contact [Emporix Support](mailto:support@emporix.com).
+{% endhint %}
 
 SEPA (Single Euro Payments Area) export service refers to the process of exporting payment data in a standardized format to facilitate cross-border bank transfers within the EU.
 
