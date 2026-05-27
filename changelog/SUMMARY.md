@@ -7,6 +7,8 @@
 * [Current work in progress](in-progress/in-progress.md)
 
 ## 2026
+* [RELEASE_DATE: AI Service - RAG_EMPORIX support for custom entity types](2026/RELEASE_DATE-ai-service.md)
+* [RELEASE_DATE: Webhook Service - updated schema.custom-instance-updated and schema.custom-instance-created events schema](2026/RELEASE_DATE-webhook-custom-instance-events-updated.md)
 * [2026-05-26: Approval Service - quote approval process](2026/2026-05-26-approval.md)
 * [2026-05-26: Approval Service - deprecated fields](2026/2026-05-26-approval-deprecations.md)
 * [2026-05-25: AI RAG Indexer - support for custom entity types in /filter-metadata and /rag-metadata endpoints](2026/2026-05-25-ai-rag-indexer.md)
