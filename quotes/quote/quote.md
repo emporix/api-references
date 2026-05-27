@@ -499,7 +499,7 @@ curl -i -X PATCH \
 
 ### Accepting a quote by a customer
 
-When a customer accepts a quote on the storefront, the following endpoint is called: [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
+When a customer accepts a quote on the storefront, or accepts a quote as an approver, the following endpoint is called: [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
 
 {% hint style="warning" %}
 The following scope is required:
