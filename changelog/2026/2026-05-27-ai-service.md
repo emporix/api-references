@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# RELEASE_DATE: AI Service - RAG_EMPORIX support for custom entity types
+# 2026-05-27: AI Service - RAG_EMPORIX support for custom entity types
 
 ## Overview
 

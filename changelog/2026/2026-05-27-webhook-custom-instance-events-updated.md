@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# RELEASE_DATE: Webhook Events - updated `schema.custom-instance-updated` and `schema.custom-instance-created` events schema
+# 2026-05-27: Webhook Events - updated `schema.custom-instance-updated` and `schema.custom-instance-created` events schema
 
 ## Overview
 
