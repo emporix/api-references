@@ -2047,9 +2047,6 @@ components:
               description:
                 type: string
                 description: It should contain the description of the field, so LLM is able to know when to use this field in order to filter the data. For enums, possible values should be specified here.
-              name:
-                type: string
-                description: It can act as an alias for the field key.
               key:
                 type: string
                 description: Unique value representing the entityType key.
