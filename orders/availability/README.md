@@ -2,8 +2,6 @@
 layout:
   width: wide
 icon: warehouse-full
-tags:
-  - deprecated
 ---
 
 # Availability Service
