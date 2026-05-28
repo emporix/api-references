@@ -7,6 +7,7 @@
 * [Current work in progress](in-progress/in-progress.md)
 
 ## 2026
+* [RELEASE_DATE: AI Service - LLM models from supported providers](2026/RELEASE_DATE-ai-service-models.md)
 * [2026-05-27: Schema Service — explicit `owner` on custom instance creation](2026/2026-05-27-schema.md)
 * [2026-05-27: AI Service - RAG_EMPORIX support for custom entity types](2026/2026-05-27-ai-service.md)
 * [2026-05-27: Webhook Service - updated schema.custom-instance-updated and schema.custom-instance-created events schema](2026/2026-05-27-webhook-custom-instance-events-updated.md)
