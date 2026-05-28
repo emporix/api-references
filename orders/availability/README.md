@@ -2,11 +2,19 @@
 layout:
   width: wide
 icon: warehouse-full
+tags:
+  - deprecated
 ---
 
 # Availability Service
 
 Manages the availability and physical location of a product.
+
+{% hint style="danger" %}
+**The *Location* endpoints of the Availability Service are deprecated as of 28 May 2026** and will be removed from the Emporix platform on **01 September 2026**.
+
+If you currently use these endpoints, plan an alternative workflow before the removal date. For assistance, contact [Emporix Support](mailto:support@emporix.com).
+{% endhint %}
 
 ### Key features and benefits
 
