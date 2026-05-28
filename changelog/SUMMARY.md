@@ -7,6 +7,7 @@
 * [Current work in progress](in-progress/in-progress.md)
 
 ## 2026
+* [2026-05-28: Availability Service - deprecated endpoints removed from documentation](2026/2026-05-28-availability.md)
 * [2026-05-28: Supplier Service - deprecation](2026/2026-05-28-supplier.md)
 * [2026-05-27: Schema Service — explicit `owner` on custom instance creation](2026/2026-05-27-schema.md)
 * [2026-05-27: AI Service - RAG_EMPORIX support for custom entity types](2026/2026-05-27-ai-service.md)
