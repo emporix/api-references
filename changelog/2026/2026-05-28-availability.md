@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# RELEASE_DATE: Availability Service - deprecated endpoints
+# 2026-05-28: Availability Service - deprecated endpoints
 
 ## Overview
 
