@@ -2022,8 +2022,8 @@ components:
           type: string
           description: The prompt for an agent. It should define when and why this tool is to be called.
         entityType:
-          allOf:
-            - $ref: '#/components/schemas/RagEntityType'
+          type: string
+          description: "Type of the entity which is stored in the given collection. Supported predefined types: [PRODUCT] and custom entity types."
         indexedFields:
           type: array
           description: This field specifies the fields of the given entityType that are used for generating embeddings. The provided values are then concatenated and converted to embeddings.
