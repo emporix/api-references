@@ -7,6 +7,7 @@
 * [Current work in progress](in-progress/in-progress.md)
 
 ## 2026
+* [RELEASE_DATE: AI Service - LLM models from supported providers](2026/RELEASE_DATE-ai-service-models.md)
 * [2026-05-29: Indexing Service - Battery Included provider support](2026/2026-05-29-indexing-battery-included.md)
 * [2026-05-28: Availability Service - deprecated endpoints removed from documentation](2026/2026-05-28-availability.md)
 * [2026-05-28: Supplier Service - deprecation](2026/2026-05-28-supplier.md)
