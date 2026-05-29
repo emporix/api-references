@@ -2053,8 +2053,8 @@ components:
           type: string
           description: The prompt for an agent. It should define when and why this tool is to be called.
         entityType:
-          allOf:
-            - $ref: '#/components/schemas/RagEntityType'
+          type: string
+          description: "Type of the entity which is stored in the given collection. Supported predefined types: [PRODUCT] and custom entity types."
         indexedFields:
           type: array
           description: This field specifies the fields of the given entityType that are used for generating embeddings. The provided values are then concatenated and converted to embeddings.
@@ -2592,149 +2592,6 @@ components:
       enum:
         - commerce_events
       description: Type of the trigger.
-    CommerceEventTriggerFilterLeafOperator:
-      type: string
-      enum:
-        - $eq
-        - $ne
-        - $in
-        - $notIn
-        - $exists
-        - $notExists
-        - $isEmpty
-        - $notEmpty
-      description: Comparison operator applied to a commerce event payload field.
-    CommerceEventTriggerFilterLogicalOperator:
-      type: string
-      enum:
-        - $and
-        - $or
-      description: Logical operator used to combine multiple filter conditions.
-    CommerceEventTriggerFilterScalarValue:
-      description: Scalar value used in commerce event filter comparisons.
-      oneOf:
-        - type: string
-        - type: number
-        - type: boolean
-    CommerceEventTriggerFilterScalarArrayValue:
-      type: array
-      description: Array value used by list-based operators in commerce event filters.
-      items:
-        $ref: '#/components/schemas/CommerceEventTriggerFilterScalarValue'
-      minItems: 1
-    CommerceEventTriggerLeafFilterNoRight:
-      type: object
-      description: Filter condition for unary operators that do not accept `right`.
-      example:
-        left: payload.customer.id
-        op: $exists
-      properties:
-        left:
-          type: string
-          description: Dot-notation path to a field in the commerce event payload.
-        op:
-          type: string
-          enum:
-            - $exists
-            - $notExists
-            - $isEmpty
-            - $notEmpty
-      required:
-        - left
-        - op
-      additionalProperties: false
-    CommerceEventTriggerLeafFilterScalarRight:
-      type: object
-      description: Filter condition for scalar comparison operators.
-      example:
-        left: payload.order.totalPrice
-        op: $eq
-        right: 99.99
-      properties:
-        left:
-          type: string
-          description: Dot-notation path to a field in the commerce event payload.
-        op:
-          type: string
-          enum:
-            - $eq
-            - $ne
-        right:
-          $ref: '#/components/schemas/CommerceEventTriggerFilterScalarValue'
-      required:
-        - left
-        - op
-        - right
-      additionalProperties: false
-    CommerceEventTriggerLeafFilterArrayRight:
-      type: object
-      description: Filter condition for array membership operators.
-      example:
-        left: payload.order.currency
-        op: $in
-        right:
-          - USD
-          - EUR
-      properties:
-        left:
-          type: string
-          description: Dot-notation path to a field in the commerce event payload.
-        op:
-          type: string
-          enum:
-            - $in
-            - $notIn
-        right:
-          $ref: '#/components/schemas/CommerceEventTriggerFilterScalarArrayValue'
-      required:
-        - left
-        - op
-        - right
-      additionalProperties: false
-    CommerceEventTriggerLeafFilter:
-      description: Filter condition applied to a single field in the commerce event payload.
-      oneOf:
-        - $ref: '#/components/schemas/CommerceEventTriggerLeafFilterNoRight'
-        - $ref: '#/components/schemas/CommerceEventTriggerLeafFilterScalarRight'
-        - $ref: '#/components/schemas/CommerceEventTriggerLeafFilterArrayRight'
-    CommerceEventTriggerCompoundFilter:
-      type: object
-      description: Filter that combines multiple conditions using logical operators.
-      example:
-        op: $and
-        conditions:
-          - left: payload.order.currency
-            op: $in
-            right:
-              - USD
-              - EUR
-          - left: payload.order.customerEmail
-            op: $notEmpty
-      properties:
-        op:
-          $ref: '#/components/schemas/CommerceEventTriggerFilterLogicalOperator'
-        conditions:
-          type: array
-          description: Nested filter conditions combined by the logical operator.
-          items:
-            $ref: '#/components/schemas/CommerceEventTriggerFilter'
-          minItems: 1
-      required:
-        - op
-        - conditions
-    CommerceEventTriggerFilter:
-      oneOf:
-        - $ref: '#/components/schemas/CommerceEventTriggerLeafFilter'
-        - $ref: '#/components/schemas/CommerceEventTriggerCompoundFilter'
-      description: Optional filter expression applied to commerce event payloads. When set, the agent is triggered only if the event payload matches the filter.
-      example:
-        op: $or
-        conditions:
-          - left: payload.eventType
-            op: $eq
-            right: order.updated
-          - left: payload.order.tags
-            op: $notEmpty
     AgentTrigger:
       oneOf:
         - type: object
@@ -2754,8 +2611,6 @@ components:
                 events:
                   type: string
                   description: List of events that trigger the agent.
-                filter:
-                  $ref: '#/components/schemas/CommerceEventTriggerFilter'
               required:
                 - events
           required:
@@ -2956,7 +2811,7 @@ components:
     # Jobs:
     JobStatus:
       type: string
-      enum: [ in_progress,success,failure,skipped ]
+      enum: [ in_progress,success,failure ]
       description: Status of the job.
     JobType:
       type: string
