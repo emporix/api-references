@@ -5,7 +5,15 @@ info:
   description: |
     The indexing service allows you to manage indexing configuration. Currently supported index providers:
       * Algolia - https://www.algolia.com
-    
+      * Battery Included - https://www.batteryincluded.io
+
+    **Provider mutual exclusivity:**
+    Only one provider can be active at a time per tenant. This constraint is enforced by the configuration service.
+
+    **Battery Included limitations:**
+    Battery Included only supports the `MERGE` site-aware fields strategy. Tenants configured with the `SPLIT`
+    strategy will have Battery Included indexing silently skipped.
+
     **Algolia limitations:**
     By default, Algolia indexes provided by Emporix support records up to 10kB in size.
     In order to support larger records, you must provide your own Algolia service.
@@ -21,10 +29,12 @@ paths:
     post:
       summary: Create a new configuration
       description: |-
-        Creates a new index configuration. Currently supported providers:
+        Creates a new index configuration. Supported providers:
         * Algolia - https://www.algolia.com
+        * Battery Included - https://www.batteryincluded.io
 
         Identifier of a newly created configuration is a provider name.
+        Only one provider can be active per tenant at a time.
       security:
         - OAuth2:
             - indexing.search_manage
@@ -36,7 +46,7 @@ paths:
             schema:
               $ref: '#/components/schemas/IndexConfiguration'
             examples:
-              Create a new configuration:
+              Create Algolia configuration:
                 value:
                   active: true
                   searchKey: 84dc4886f81f805c42bdd89d64de751a
@@ -44,6 +54,14 @@ paths:
                   indexName: exampleTenant
                   writeKey: 51ebe89215dddcf85e5dacd5643d17e7
                   provider: ALGOLIA
+              Create Battery Included configuration:
+                value:
+                  active: true
+                  indexName: exampleTenant
+                  writeKey: bi-api-key-abc123
+                  provider: BATTERY_INCLUDED
+                  excludedMixinKeys:
+                    - internalAttributes
         description: ''
       responses:
         '201':
@@ -53,9 +71,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/IndexCreationResponse'
               examples:
-                Creation Response:
+                Algolia creation response:
                   value:
                     id: ALGOLIA
+                Battery Included creation response:
+                  value:
+                    id: BATTERY_INCLUDED
         '400':
           $ref: '#/components/responses/BadRequest_400'
         '401':
@@ -87,6 +108,12 @@ paths:
                       indexName: exampleTenant
                       writeKey: 51ebe89215dddcf85e5dacd5643d17e7
                       provider: ALGOLIA
+                    - active: false
+                      indexName: exampleTenant
+                      writeKey: bi-api-key-abc123
+                      provider: BATTERY_INCLUDED
+                      excludedMixinKeys:
+                        - internalAttributes
               schema:
                 type: array
                 items:
@@ -108,8 +135,9 @@ paths:
     get:
       summary: Get configuration by provider name
       description: |-
-        Retrieves a single configuration by a provider name. Currently supported providers:
+        Retrieves a single configuration by a provider name. Supported providers:
         * Algolia - https://www.algolia.com
+        * Battery Included - https://www.batteryincluded.io
       security:
         - OAuth2:
             - indexing.search_view
@@ -120,7 +148,7 @@ paths:
           content:
             application/json:
               examples:
-                Get configuration:
+                Get Algolia configuration:
                   value:
                     active: true
                     searchKey: 84dc4886f81f805c42bdd89d64de751a
@@ -128,6 +156,14 @@ paths:
                     indexName: exampleTenant
                     writeKey: 51ebe89215dddcf85e5dacd5643d17e7
                     provider: ALGOLIA
+                Get Battery Included configuration:
+                  value:
+                    active: true
+                    indexName: exampleTenant
+                    writeKey: bi-api-key-abc123
+                    provider: BATTERY_INCLUDED
+                    excludedMixinKeys:
+                      - internalAttributes
               schema:
                 $ref: '#/components/schemas/IndexConfiguration'
         '401':
@@ -152,7 +188,7 @@ paths:
             schema:
               $ref: '#/components/schemas/IndexConfiguration'
             examples:
-              Configuration update:
+              Update Algolia configuration:
                 value:
                   active: true
                   searchKey: 84dc4886f81f805c42bdd89d64de751a
@@ -160,6 +196,15 @@ paths:
                   indexName: exampleTenant
                   writeKey: 51ebe89215dddcf85e5dacd5643d17e7
                   provider: ALGOLIA
+              Update Battery Included configuration:
+                value:
+                  active: true
+                  indexName: exampleTenant
+                  writeKey: bi-api-key-abc123
+                  provider: BATTERY_INCLUDED
+                  excludedMixinKeys:
+                    - internalAttributes
+                    - customData
       responses:
         '204':
           description: Configuration updated
@@ -230,6 +275,9 @@ paths:
                       applicationId: 8AP2HABA2I
                       indexName: exampleTenant
                       provider: ALGOLIA
+                    - active: false
+                      indexName: exampleTenant
+                      provider: BATTERY_INCLUDED
         '401':
           description: Unauthorized
       operationId: GET-indexing-list-public-configs
@@ -252,21 +300,28 @@ paths:
               schema:
                 $ref: '#/components/schemas/IndexPublicConfiguration'
               examples:
-                Public configuration:
+                Public Algolia configuration:
                   value:
                     active: true
                     searchKey: 84dc4886f81f805c42bdd89d64de751a
                     applicationId: 8AP2HABA2I
                     indexName: exampleTenant
                     provider: ALGOLIA
+                Public Battery Included configuration:
+                  value:
+                    active: true
+                    indexName: exampleTenant
+                    provider: BATTERY_INCLUDED
+                    searchKey: 84dc4886f81f805c42bdd89d64de751x
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '404':
           $ref: '#/components/responses/NotFound_404'
       operationId: GET-indexing-retrieve-public-config
       description: |-
-        Retrieves a single public configuration by a provider name. Currently supported providers:
+        Retrieves a single public configuration by a provider name. Supported providers:
         * Algolia - https://www.algolia.com
+        * Battery Included - https://www.batteryincluded.io
       security:
         - OAuth2: []
   '/indexing/{tenant}/reindex':
@@ -340,9 +395,10 @@ components:
           description: Identifier of an index.
         provider:
           type: string
-          description: 'Index provider name. Supported providers: Algolia - https://www.algolia.com'
+          description: 'Index provider name. Supported providers: `ALGOLIA` (https://www.algolia.com), `BATTERY_INCLUDED` (https://www.batteryincluded.io). Only one provider can be active per tenant at a time.'
           enum:
             - ALGOLIA
+            - BATTERY_INCLUDED
         active:
           type: boolean
           description: Indicates if the configuration is active or not.
@@ -355,6 +411,17 @@ components:
             writeKey:
               type: string
               description: API key used for write purposes.
+            excludedMixinKeys:
+              type: array
+              items:
+                type: string
+              description: >-
+                Optional list of root product mixin keys to exclude from indexing.
+                When set, the specified mixin keys are omitted from both the non-localized
+                and localized portions of the indexed document.
+                Applies only to the `BATTERY_INCLUDED` provider; ignored for `ALGOLIA`.
+          required:
+            - provider
     IndexCreationResponse:
       title: IndexCreationResponse
       type: object
@@ -427,7 +494,7 @@ components:
               value:
                 code: 400
                 status: Bad Request
-                message: The provider ALGOLIA2 is not supported.
+                message: The provider UNKNOWN_PROVIDER is not supported.
     NotFound_404:
       description: Resource has not been found.
       content:
@@ -439,7 +506,7 @@ components:
               value:
                 code: 404
                 status: Not Found
-                message: The provider ALGOLIA2 is not supported.
+                message: The provider UNKNOWN_PROVIDER is not supported.
   parameters:
     trait_tenant:
       name: tenant
@@ -460,7 +527,10 @@ components:
       required: true
       schema:
         type: string
-      description: 'Provider name. Currently supported providers: ALGOLIA'
+        enum:
+          - ALGOLIA
+          - BATTERY_INCLUDED
+      description: 'Provider name. Supported values: `ALGOLIA`, `BATTERY_INCLUDED`'
   securitySchemes:
     OAuth2:
       type: oauth2
