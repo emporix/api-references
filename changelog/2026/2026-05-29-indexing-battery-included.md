@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# RELEASE_DATE: Indexing Service - Battery Included provider support
+# 2026-05-29: Indexing Service - Battery Included provider support
 
 ## Overview
 
