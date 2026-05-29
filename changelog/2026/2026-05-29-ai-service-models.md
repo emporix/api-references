@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# RELEASE_DATE: AI Service - LLM models from supported providers
+# 2026-05-29: AI Service - LLM models from supported providers
 
 ## Overview
 
