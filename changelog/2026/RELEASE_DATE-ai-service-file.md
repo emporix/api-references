@@ -22,16 +22,16 @@ endpoints it is possible to reference this file.
 
 ## New endpoints
 
-| Endpoint                                                                                                                                                                    | Description                  |
-|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------|
-| [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#POST-ai-agents-upload-attachment) | Attaches a file to the agent |
+| Endpoint                                                                                                                                                                                      | Description                  |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------|
+| [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentId-attachments) | Attaches a file to the agent |
 
 ## Updated endpoints
 
-| Endpoint                                                                                                                                                                  | Description                                     |
-|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------|
-| [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#POST-ai-agents-chat)             | Request body extended with `attachments` field. |
-| [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#POST-ai-agents-chat-async) | Request body extended with `attachments` field. |
+| Endpoint                                                                                                                                                                                  | Description                                     |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------|
+| [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat)             | Request body extended with `attachments` field. |
+| [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) | Request body extended with `attachments` field. |
 
 ## Known problems
 

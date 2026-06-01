@@ -2998,7 +2998,7 @@ components:
           description: Unique identifier of the created attachment.
         sessionId:
           type: string
-          description: Unique identifier of the session.
+          description: Unique identifier of the session. The same sessionId must be used when calling chat endpoints to ensure the correct attachment is found.
 
     # Agent Logs:
     LogSeverity:
