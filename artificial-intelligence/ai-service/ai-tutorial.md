@@ -285,7 +285,19 @@ curl -L \
 
 ```
 
-Copy the returned `id` in the response to use it as the `attachmentId` in the subsequent chat request body.
+The successful response returns the attachment `id` and the `sessionId` during which the attachment is available. Both will be needed in the subsequent agent chat request. 
+
+* If the `sessionId` was already provided in the request header, the exact same `sessionId` is returned.
+* If there was no `sessionId`in the header, the `sessionId` is generated.
+
+Example response:
+
+```
+{
+    "id": "6a1d5961a8c0af22364a2c54",
+    "sessionId": "bdec151b-303f-4344-b41d-ccf307fb7907"
+}
+```
 
 Attaching a media file of an unsupported type results in the `400` error, for example:
 
@@ -303,7 +315,7 @@ Attaching a media file of an unsupported type results in the `400` error, for ex
 
 {% step %}
 ### Refer to the attachment in agent chat
-The agent already has access to the attached file. Now you can point to it and give additional instructions in the agent chat request. Call the agent, for example with the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) endpoint and include the upload `id` as the `attachmentId` parameter:
+The agent already has access to the attached file. Now you can point to it and give additional instructions in the agent chat request. Call the agent, for example with the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) endpoint. Include the upload `id` as the `attachmentId` parameter in the request body and provide the `session-id` in the header to ensure secure access to the attachment:
 
 ```bash
 curl -L \
@@ -311,12 +323,13 @@ curl -L \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/chat' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Content-Type: application/json' \
+  --header 'session-id: bdec151b-303f-4344-b41d-ccf307fb7907' \
   --data '{
     "agentId": "order-assistant-agent",
     "message": "Find products or equivalents from the attached order request and create an order for the customer",
     "attachments": [
       {
-        "attachmentId": "325444342346",
+        "attachmentId": "6a1d5961a8c0af22364a2c54",
         "caption": "Order Request",
         "purpose": "Serves as basis to create an order with the data, customer and products mentioned in the file."
       }
