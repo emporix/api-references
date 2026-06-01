@@ -28,6 +28,8 @@ tags:
     description: Manage Jobs
   - name: MCP Server
     description: Manage MCP Servers
+  - name: Model
+    description: Read LLM models from supported providers
   - name: Text Generation
     description: AI Text Generation
   - name: Token
@@ -1188,6 +1190,35 @@ paths:
             - ai.agent_manage
       tags:
         - Token
+  '/ai-service/{tenant}/agentic/models':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    get:
+      summary: Listing LLM models from supported providers
+      operationId: GET-ai-list-models
+      responses:
+        '200':
+          description: List of models grouped by LLM provider.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProviderModelsResponse'
+              examples:
+                Provider Models Response:
+                  $ref: '#/components/examples/ProviderModelsResponse'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        Retrieves available LLM models from supported LLM providers: OpenAI, Anthropic, and Google.
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Model
   '/ai-service/{tenant}/agentic/mcp-servers':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -2095,8 +2126,8 @@ components:
           type: string
           description: The prompt for an agent. It should define when and why this tool is to be called.
         entityType:
-          allOf:
-            - $ref: '#/components/schemas/RagEntityType'
+          type: string
+          description: "Type of the entity which is stored in the given collection. Supported predefined types: [PRODUCT] and custom entity types."
         indexedFields:
           type: array
           description: This field specifies the fields of the given entityType that are used for generating embeddings. The provided values are then concatenated and converted to embeddings.
@@ -2111,10 +2142,28 @@ components:
                 description: Unique value representing the entityType key.
             required:
               - key
+        filterFields:
+          type: array
+          description: This field specifies the fields of the given entityType that are used for filtering the data before performing actual search.
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+                description: It should contain the description of the field, so LLM is able to know when to use this field in order to filter the data. For enums, possible values should be specified here.
+              name:
+                type: string
+                description: It can act as an alias for the field key.
+              key:
+                type: string
+                description: Unique value representing the entityType key.
+            required:
+              - key
       required:
         - prompt
         - entityType
         - indexedFields
+        - filterFields
     RagEmporixNativeToolConfigRequest:
       allOf:
         - $ref: '#/components/schemas/RagEmporixNativeToolConfig'
@@ -2491,6 +2540,41 @@ components:
         - google
         - anthropic
       example: openai
+    ModelResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Model identifier to use in agent LLM configuration.
+          example: gpt-4.1-mini
+        name:
+          type: string
+          description: Display name of the model.
+          example: gpt-4.1-mini
+        description:
+          type: string
+          description: Short description of the model. Available for some providers, such as Google.
+          example: Gemini 3.1 Flash Lite
+        thinking:
+          type: boolean
+          description: Indicates whether the model supports thinking capabilities.
+          example: true
+      required:
+        - id
+        - name
+    ProviderModelsResponse:
+      type: object
+      properties:
+        provider:
+          $ref: '#/components/schemas/ApiKeyLlmProvider'
+        models:
+          type: array
+          description: List of models available for the provider.
+          items:
+            $ref: '#/components/schemas/ModelResponse'
+      required:
+        - provider
+        - models
     ApiKeyLlm:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
@@ -3880,6 +3964,26 @@ components:
           name: Emporix OpenAi Token
         - id: openai
           name: OpenAi Token
+    ProviderModelsResponse:
+      value:
+        - provider: openai
+          models:
+            - id: gpt-4.1-mini
+              name: gpt-4.1-mini
+        - provider: anthropic
+          models:
+            - id: claude-opus-4-6
+              name: Claude Opus 4.6
+              thinking: true
+            - id: claude-haiku-3-5
+              name: Claude Haiku 3.5
+              thinking: false
+        - provider: google
+          models:
+            - id: gemini-3.1-flash-lite
+              name: Gemini 3.1 Flash Lite
+              description: Gemini 3.1 Flash Lite
+              thinking: true
     SlackNativeToolResponse:
       value:
         id: "slack-1"
