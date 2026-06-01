@@ -285,10 +285,11 @@ curl -L \
 
 ```
 
-The successful response returns the attachment `id` and the `sessionId` during which the attachment is available. Both will be needed in the subsequent agent chat request. 
+The successful response returns an attachment `id` and a `sessionId` that scopes the upload to your chat session. Save both values as you need them when you call agent chat in the subsequent step. 
 
-* If the `sessionId` was already provided in the request header, the exact same `sessionId` is returned.
-* If there was no `sessionId`in the header, the `sessionId` is generated.
+How the `sessionId` in the response is set:
+* If you send a `session-id` header on the upload request (optional), the response returns the exact same value.
+* If you omit the header, the API generates a new `sessionId` for you.
 
 Example response:
 
