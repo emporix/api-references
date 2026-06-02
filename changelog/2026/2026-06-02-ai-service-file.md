@@ -13,7 +13,7 @@ layout:
     visible: true
 ---
 
-# RELEASE_DATE: AI Service - Supports file upload
+# 2026-06-02: AI Service - Supports file upload
 
 ## Overview
 
