@@ -370,13 +370,11 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/JobIdResponse'
+                $ref: '#/components/schemas/JobIdResponse'
               examples:
                 JobId:
                   value:
-                    - jobId: 68835cc3ef4e8e1425c360ad
+                    jobId: 68835cc3ef4e8e1425c360ad
         '400':
           $ref: '#/components/responses/400_resp_common'
         '401':
@@ -398,26 +396,32 @@ paths:
   '/ai-service/{tenant}/agentic/{agentId}/attachments':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
-      - name: agentId
+      - schema:
+          type: string
+        name: agentId
         in: path
         required: true
-        schema:
+      - schema:
           type: string
-        description: |
-          ID of the agent which could use this attachment during chat process.
+          format: uuid
+        name: session-id
+        in: header
+        description: Unique session identifier which allows for storing the context of the chat. If not provided, the system generates it.
     post:
-      summary: Uploading attachments to agent chat
-      operationId: POST-ai-agents-attachments
+      summary: Uploading attachment
+      operationId: POST-ai-agents-upload-attachment
       responses:
         '201':
-          description: Attachment ID response.
+          description: Attachment response.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IdResponse'
+                $ref: '#/components/schemas/AttachmentResponse'
               examples:
-                Attachment ID:
-                  $ref: '#/components/examples/IdResponse'
+                AttachmentId:
+                  value:
+                    id: 68835cc3ef4e8e1425c360ad
+                    sessionId: 0499bef6-a4d2-45b9-86a0-2edf7d70d726
         '400':
           $ref: '#/components/responses/400_resp_common'
         '401':
@@ -427,15 +431,14 @@ paths:
         '500':
           $ref: '#/components/responses/500_resp_common'
       description: |-
-        Allows for uploading files which can be used as attachments in Agent Chat. 
-        The returned `id` should be used as `attachmentId` in the chat request body.
-
-        Supported MIME types:
-        - image/jpeg
-        - image/png
-        - application/pdf
-        - text/csv
-        - text/plain
+        Allows for upload of a file and assign it to the agent. Supported file extensions:
+          - jpg
+          - jpeg
+          - png
+          - pdf
+          - csv
+          - text
+          - txt
       requestBody:
         content:
           multipart/form-data:
@@ -445,7 +448,7 @@ paths:
                 attachment:
                   type: string
                   format: binary
-                  description: Attachment to upload
+                  description: Content of the file.
               required:
                 - attachment
       tags:
@@ -1819,20 +1822,6 @@ components:
               properties:
                 errorcode:
                   type: string
-    AgenticAttachment:
-      type: object
-      properties:
-        attachmentId:
-          type: string
-          description: Id of the previously created attachment.
-        caption:
-          type: string
-          description: The caption of the attachment.
-        purpose:
-          type: string
-          description: The purpose of the attachment.
-      required:
-        - attachmentId
     AgenticRequest:
       type: object
       properties:
@@ -1845,7 +1834,19 @@ components:
         attachments:
           type: array
           items:
-            $ref: '#/components/schemas/AgenticAttachment'
+            type: object
+            properties:
+              attachmentId:
+                type: string
+                description: Id of the attachment.
+              caption:
+                type: string
+                description: Caption of the attachment.
+              purpose:
+                type: string
+                description: Purpose of the attachment.
+            required:
+              - attachmentId
       required:
         - agentId
         - message
@@ -2989,6 +2990,15 @@ components:
         message:
           type: string
           description: Agent message.
+    AttachmentResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the created attachment.
+        sessionId:
+          type: string
+          description: Unique identifier of the session. The same sessionId must be used when calling chat endpoints to ensure the correct attachment is found.
 
     # Agent Logs:
     LogSeverity:
@@ -3748,10 +3758,6 @@ components:
               value:
                 agentId: complaint-agent
                 message: 'Find a product with "EON1243" code'
-                attachments:
-                  - attachmentId: '325444342346'
-                    caption: Emporix Logo
-                    purpose: Should be placed to the Slack Channel
     Completion:
       content:
         application/json:
