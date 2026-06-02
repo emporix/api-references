@@ -22,11 +22,6 @@ paths:
       summary: Creating a catalog
       description: |
         Creates a new catalog based on the provided request payload, for the specified tenant.
-        ***
-
-        ### Required scopes
-
-        `catalog.catalog_manage`
       operationId: POST-catalog-create-catalog
       parameters:
         - name: tenant
@@ -117,7 +112,8 @@ paths:
                     message: An unexpected error prevented the server from fulfilling
                       the request.
       security:
-        - OAuth2: []
+        - OAuth2:
+            - catalog.catalog_manage
     get:
       tags:
         - Catalog management
@@ -512,11 +508,6 @@ paths:
       summary: Upserting a catalog
       description: |
         Update or create the specified catalog.
-        ***
-
-        ### Required scopes
-
-        `catalog.catalog_manage`
       operationId: PUT-catalog-update-catalog
       parameters:
         - name: tenant
@@ -603,18 +594,14 @@ paths:
                     message: An unexpected error prevented the server from fulfilling
                       the request.
       security:
-        - OAuth2: []
+        - OAuth2:
+            - catalog.catalog_manage
     delete:
       tags:
         - Catalog management
       summary: Removing catalog
       description: |
         Remove the specified catalog.
-        ***
-
-        ### Required scopes
-
-        `catalog.catalog_manage`
       operationId: DELETE-catalog-remove-catalog
       requestBody:
         content:
@@ -690,18 +677,14 @@ paths:
                     message: An unexpected error prevented the server from fulfilling
                       the request.
       security:
-        - OAuth2: []
+        - OAuth2:
+            - catalog.catalog_manage
     patch:
       tags:
         - Catalog management
       summary: Partially updating a catalog
       description: |
         Update the specified catalog, even partially.
-        ***
-
-        ### Required scopes
-
-        `catalog.catalog_manage`
       operationId: PATCH-catalog-update-catalog-properties
       parameters:
         - name: tenant
@@ -778,7 +761,8 @@ paths:
                     message: An unexpected error prevented the server from fulfilling
                       the request.
       security:
-        - OAuth2: []
+        - OAuth2:
+            - catalog.catalog_manage
 components:
   schemas:
     Catalog:

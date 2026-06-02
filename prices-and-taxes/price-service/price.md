@@ -55,7 +55,7 @@ To add a new entry to your configuration of currencies, you need to send a reque
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/currency/{tenant}/currencies' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: de' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -86,7 +86,7 @@ To create a new price model, you need to send a request to the [Creating a new p
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/price/{tenant}/priceModels' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -137,7 +137,7 @@ Price models that use the basic pricing strategy have one tier. To retrieve its 
 curl -i -X GET 
   'https://api.emporix.io/price/{tenant}/priceModels/{priceModelId}' 
   -H 'Accept-Language: string' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 The ID can be found in the `tierDefinition.tiers.id` field.
@@ -155,7 +155,7 @@ To define a new price for a product, you need to send a request to the [Creating
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/price/{tenant}/prices' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -492,7 +492,7 @@ Make sure to set a value for the `currency` field in the request body. Otherwise
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/price/{tenant}/price-lists' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -526,7 +526,7 @@ To create a new price list with a legal entity, send a request to the [Creating 
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/price/{tenant}/price-lists' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '{
     "name": {
@@ -561,7 +561,7 @@ To create a new list-specific price, you need to send a request to the [Adding a
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/price/{tenant}/price-lists/{priceListId}/prices' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
   "itemId": {
@@ -657,7 +657,7 @@ Create a sample product through the [Creating a new product](https://developer.e
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -737,7 +737,7 @@ Start with defining a price model with [Creating a price model](https://develope
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/price/{tenant}/priceModels' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -781,7 +781,7 @@ Now, retrieve the automatically-generated ID of the pricing tier, use the [Retri
 curl -i -X GET 
   'https://api.emporix.io/price/{tenant}/priceModels/{priceModelId}' 
   -H 'Accept-Language: string' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 Once you know the tier ID, define a price for the bananas, use the [Creating a new price](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint:
@@ -795,7 +795,7 @@ Once you know the tier ID, define a price for the bananas, use the [Creating a n
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/price/{tenant}/prices' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -828,7 +828,7 @@ Then, define a price model where the price per kilogram changes based on the ord
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/price/{tenant}/priceModels' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -876,7 +876,7 @@ Now, retrieve the automatically-generated IDs of the pricing tiers, use the [Ret
 curl -i -X GET 
   'https://api.emporix.io/price/{tenant}/priceModels/{priceModelId}' 
   -H 'Accept-Language: string' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 Once you know the tier IDs, define another price for the bananas, use the [Creating a new price](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint.
@@ -884,7 +884,7 @@ Once you know the tier IDs, define another price for the bananas, use the [Creat
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/price/{tenant}/prices' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -935,7 +935,7 @@ Check the best price for both one kilogram and ten kilograms of bananas:
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/price/{tenant}/match-prices' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "targetCurrency": "EUR",
@@ -1001,7 +1001,7 @@ Define sales tax rates for the desired country by sending a request to the [Crea
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/tax/{tenant}/taxes' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -1061,7 +1061,7 @@ To update a product with applicable tax classes, send a request to the [Partiall
 ```bash
 curl -i -X PATCH 
   'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -1087,7 +1087,7 @@ To calculate a gross price between countries, send a request to the [Matching pr
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/price/{tenant}/match-prices' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "targetCurrency": "EUR",
@@ -1135,7 +1135,7 @@ Add the currency in which the price will be retrieved to your configuration of c
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/currency/{tenant}/currencies' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: de' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -1169,7 +1169,7 @@ To define a new exchange rate, send a request to the [Creating a new exchange ra
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/currency/{tenant}/exchanges' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "sourceCurrency": "EUR",
@@ -1191,7 +1191,7 @@ To retrieve a price in the desired currency, send a request to the [Matching pri
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/price/{tenant}/match-prices' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "targetCurrency": "USD",
@@ -1245,7 +1245,7 @@ To add or update the `includesTax` field in your site's settings, you need to se
 ```bash
 curl -i -X PATCH 
   'https://api.emporix.io/site/{tenant}/sites/{siteCode}' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
   "defaultLanguage": "en",

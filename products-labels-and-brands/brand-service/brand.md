@@ -60,7 +60,7 @@ To create a brand and add media files to it, you need to send a request to the [
 ```bash
 curl -i -X POST 
   https://api.emporix.io/brand/brands 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: en' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -129,7 +129,7 @@ To update the existing product with brand information, you need to send a reques
 ```bash
 curl -i -X PATCH 
   'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{

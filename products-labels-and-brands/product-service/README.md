@@ -11,6 +11,7 @@ Manages structured product information.
 ### Key features and benefits
 
 * Supports different product types — basic, bundles, variants to create e.g. physical, digital, or service products
+* Supports dynamic variants for flexible, multi-level variant hierarchies without fixed templates
 * Offers extensible/customizable product configuration
 * Attaches media such as pictures, videos, manuals, etc.
 * Configures tax classes

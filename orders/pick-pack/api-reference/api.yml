@@ -24,6 +24,7 @@ paths:
     post:
       tags:
         - Orders
+      deprecated: true
       description: |
         Finishes a specified order by:
         * Recalculating the current state
@@ -54,6 +55,7 @@ paths:
     get:
       tags:
         - Order cycles
+      deprecated: true
       description: |
         Extracts all order delivery dates from the current time onwards.
       parameters:
@@ -77,6 +79,7 @@ paths:
     get:
       tags:
         - Orders
+      deprecated: true
       responses:
         '200':
           $ref: '#/components/responses/ordersResponse'
@@ -109,6 +112,7 @@ paths:
     get:
       tags:
         - Orders
+      deprecated: true
       responses:
         '200':
           $ref: '#/components/responses/orderResponse'
@@ -133,6 +137,7 @@ paths:
     patch:
       tags:
         - Orders
+      deprecated: true
       responses:
         '200':
           $ref: '#/components/responses/successResponse'
@@ -170,6 +175,7 @@ paths:
     post:
       tags:
         - Assignees
+      deprecated: true
       responses:
         '200':
           $ref: '#/components/responses/successResponse'
@@ -218,6 +224,7 @@ paths:
     delete:
       tags:
         - Assignees
+      deprecated: true
       responses:
         '204':
           description: |
@@ -251,6 +258,7 @@ paths:
     put:
       tags:
         - Orders
+      deprecated: true
       responses:
         '200':
           $ref: '#/components/responses/successResponse'
@@ -286,6 +294,7 @@ paths:
     post:
       tags:
         - Events
+      deprecated: true
       responses:
         '200':
           $ref: '#/components/responses/successResponse'
@@ -319,6 +328,7 @@ paths:
     get:
       tags:
         - Events
+      deprecated: true
       responses:
         '200':
           $ref: '#/components/responses/eventsResponse'
@@ -367,6 +377,7 @@ paths:
     post:
       tags:
         - Recalculations
+      deprecated: true
       responses:
         '200':
           $ref: '#/components/responses/jobCreationResponse'
@@ -407,6 +418,7 @@ paths:
     get:
       tags:
         - Recalculations
+      deprecated: true
       responses:
         '200':
           $ref: '#/components/responses/getRecalculationJobResponse'

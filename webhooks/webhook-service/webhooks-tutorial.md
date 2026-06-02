@@ -53,7 +53,7 @@ If there is no prior subscription to the event of your choice, the `metadata.ver
 curl -i -X GET 
   'https://api.emporix.io/webhook/{tenant}/event-subscriptions' 
   -H 'Accept-Language: fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 ### Subscribe to events
@@ -73,7 +73,7 @@ In this example, you will subscribe to the following events: `catalog.created` a
 ```bash
 curl -i -X PATCH 
   'https://api.emporix.io/webhook/{tenant}/event-subscriptions' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "eventType": "catalog.created",
@@ -134,7 +134,7 @@ To generate the login link with the authentication token needed to connect a ten
 ```bash
 curl -i -X GET 
   'https://api.emporix.io/webhook/{tenant}/dashboard-access' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 {% hint style="warning" %}

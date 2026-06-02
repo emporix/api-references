@@ -27,13 +27,9 @@ paths:
         * If the `Content-Language` is set to `*`
         the request body payload should contain localized fields not as a string,
         but as a map in format: `key:value`, where the `key` is the language code and `value` is the translation.
-
-        ***
-
-        ### Required scopes
-        *  `unithandling.unit_manage`
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - unithandling.unit_manage
       parameters:
         - $ref: '#/components/parameters/tenant-path'
         - $ref: '#/components/parameters/content-language'
@@ -128,12 +124,9 @@ paths:
         Deletes the units with the given codes. After successful deletion, units will not be visible and executable for other parts of the system after 5 minutes.
         * The codes are defined in the request body as an array of strings.
         * Example: `["g", "kg", "dag", "test"]`
-        ***
-
-        ### Required scopes
-        *  `unithandling.unit_manage`
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - unithandling.unit_manage
       parameters:
         - $ref: '#/components/parameters/tenant-path'
       responses:
@@ -214,12 +207,9 @@ paths:
       summary: Deleting a specific unit
       description: |-
         Deletes a unit with a given code. After a successful deletion, the unit is not visible and executable for other parts of the system after 5 minutes.
-        ***
-
-        ### Required scopes
-        *  `unithandling.unit_manage`
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - unithandling.unit_manage
       parameters:
         - $ref: '#/components/parameters/unit-code'
         - $ref: '#/components/parameters/tenant-path'
@@ -245,13 +235,9 @@ paths:
         * If the `Content-Language` is set to `*`
         the request body payload should contain localized fields not as a string,
         but as a map in format: `key:value`, where the `key` is the language code and `value` is the translation.
-
-        ***
-
-        ### Required scopes
-        *  `unithandling.unit_manage`
       security:
-        - OAuth2: []
+        - OAuth2: 
+            - unithandling.unit_manage
       parameters:
         - $ref: '#/components/parameters/unit-code'
         - $ref: '#/components/parameters/tenant-path'

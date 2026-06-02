@@ -1,0 +1,50 @@
+---
+description: Conventions for creating changelog entries in this repository
+alwaysApply: true
+---
+
+# Changelog Conventions
+
+## Release date placeholder
+
+New changelogs are never created with a concrete date. Use the `RELEASE_DATE` placeholder instead — a GitHub Action replaces it with the actual merge date when the PR lands on `main`.
+
+Apply `RELEASE_DATE` in three places:
+
+1. **Filename** — `changelog/YYYY/RELEASE_DATE-topic.md` (use current year for the folder)
+2. **Title inside the file** — `# RELEASE_DATE: My feature title`
+3. **SUMMARY.md link** — `* [RELEASE_DATE: My feature title](YYYY/RELEASE_DATE-topic.md)`
+
+❌ `changelog/2026/2026-05-13-cart.md` / `# 2026-05-13: Cart Service - …`
+✅ `changelog/2026/RELEASE_DATE-cart.md` / `# RELEASE_DATE: Cart Service - …`
+
+## Changelog header icon
+
+Every changelog file has an `icon` field in its YAML frontmatter. Choose the icon based on the type of change:
+
+| Change type | Icon |
+|---|---|
+| New feature | `sparkles` |
+| Improvement | `wand-sparkles` |
+| Major change | `sliders-up` |
+| Minor change | `sliders` |
+| Deprecation | `hourglass-half` |
+
+Example frontmatter for a new feature:
+
+```yaml
+---
+icon: sparkles
+layout:
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: false
+  pagination:
+    visible: true
+---
+```

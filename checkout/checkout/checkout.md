@@ -87,7 +87,7 @@ Send a request to the [Creating a new tax configuration](https://developer.empor
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/tax/{tenant}/taxes' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -145,7 +145,7 @@ Send a request to the [Creating a shipping zone](https://developer.emporix.io/ap
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/shipping/{tenant}/{site}/zones' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: fr' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -170,7 +170,7 @@ Send a request to the [Creating a shipping method](https://developer.emporix.io/
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/shipping/{tenant}/{site}/zones/{zoneId}/methods' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: fr' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -227,7 +227,7 @@ The delivery time is matched with the delivery method and zone by sending the re
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/shipping/{tenant}/delivery-times?validateOverlap=true' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "siteCode": "main",
@@ -277,7 +277,7 @@ Send the request to the [Creating multiple products](https://developer.emporix.i
 curl -L 
   --request POST 
   --url 'https://api.emporix.io/product/{tenant}/products/bulk' 
-  --header 'Authorization: Bearer YOUR_OAUTH2_TOKEN' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   --header 'Content-Type: application/json' 
   --data '[
     {
@@ -322,7 +322,7 @@ Send a request to the [Creating a new price model](https://developer.emporix.io/
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/price/{tenant}/priceModels' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -357,7 +357,7 @@ Send a request to the [Creating a new price](https://developer.emporix.io/api-re
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/price/{tenant}/prices' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
@@ -402,7 +402,7 @@ Allow your customers find the best price based on information retrieved from the
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/price/{tenant}/match-prices-by-context' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "items": [
@@ -445,7 +445,7 @@ Creating a cart takes care of things like gathering customer's session details, 
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/cart/{tenant}/carts' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -H 'saas-token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MTQ0MzU2MyIsImV4cCI6MTY5Nzk3MDUyOH0.F0b5jr6KeSoBCj-suTLuasmydaJEudc1ZrESkQXSCGk' 
   -H 'session-id: string' 
@@ -471,7 +471,7 @@ curl -i -X POST
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/cart/{tenant}/carts' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -H 'saas-token: string' 
   -H 'session-id: string' 
@@ -496,7 +496,7 @@ Send a request to the [Creating a new cart](https://developer.emporix.io/api-ref
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/cart/{tenant}/carts/{cartId}/items?siteCode=string' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "itemYrn": "{productYrn}",
@@ -550,7 +550,7 @@ Send a request to the [Triggering a checkout](https://developer.emporix.io/api-r
 ```bash
 curl -i -X POST 
   'https://api.emporix.io/checkout/{tenant}/checkouts/order' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -H 'saas-token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MTQ0MzU2MyIsImV4cCI6MTY5Nzk3MDUyOH0.F0b5jr6KeSoBCj-suTLuasmydaJEudc1ZrESkQXSCGk' \
   -d '{

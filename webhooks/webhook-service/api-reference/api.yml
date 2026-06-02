@@ -41,10 +41,6 @@ paths:
 
         **NOTE**
         Svix supports a maximum message payload size of approximately 350kb. However, it is generally advisable to keep webhook payloads small, ideally under 40kb. For larger message sizes, consider using the HTTP Webhook Strategy.
-
-        ***
-        **Required scopes**
-        * `webhook.subscription_manage`
       operationId: POST-webhook-create-config
       security:
         - OAuth2:
@@ -109,9 +105,6 @@ paths:
         - Config
       description: |
         Retrieves a list of webhook configurations for a given tenant. 
-        ***
-        **Required scopes**
-        * `webhook.subscription_read`
       security:
         - OAuth2:
             - webhook.subscription_read
@@ -139,10 +132,6 @@ paths:
 
         * Svix Emporix Shared Account
         * Svix Custom Account
-
-        ***
-        **Required scopes**
-        * `webhook.subscription_manage`
       operationId: PUT-webhook-update-config
       security:
         - OAuth2:
@@ -194,11 +183,6 @@ paths:
         Partially updates a webhook config for a given tenant. Single update may contain multiple partial updates in the form of an array. Following operations are allowed:
         * `REMOVE` - removing an item from the list
         * `UPSERT` - adding or updating given property
-
-
-        ***
-        **Required scopes**
-        * `webhook.subscription_manage`
       security:
         - OAuth2:
             - webhook.subscription_manage
@@ -321,9 +305,6 @@ paths:
         - Config
       description: |
         Retrieves a webhook configuration for a given tenant. 
-        ***
-        **Required scopes**
-        * `webhook.subscription_read`
       security:
         - OAuth2:
             - webhook.subscription_read
@@ -351,9 +332,6 @@ paths:
         - Config
       description: |
         Removes a webhook configuration for a given tenant. 
-        ***
-        **Required scopes**
-        * `webhook.subscription_manage`
       security:
         - OAuth2:
             - webhook.subscription_manage
@@ -388,11 +366,6 @@ paths:
 
         To receive events with fewer fields, you can specify the names of fields that you want to exclude in the 'fieldsToUnsubscribe' array.
         To re-include the previously excluded fields, you can provide their names in the 'fieldsToSubscribe' array.
-
-        ***
-
-        **Required scopes**
-        * `webhook.subscription_manage`
       requestBody:
         content:
           application/json:
@@ -448,11 +421,6 @@ paths:
 
         **Note**: Events that have no past subscription information will contain empty metadata.
         Fields that are referenced in the 'excludedFields' array will be filtered out from the event payload. The absence of a field in 'excludedFields' means it will be automatically included in the event payload.
-
-        ***
-
-        **Required scopes**
-        * `webhook.subscription_read`
       security:
         - OAuth2:
             - webhook.subscription_read
@@ -493,9 +461,6 @@ paths:
       operationId: GET-webhook-access-tenant-svix
       description: |-
         Retrieves a Svix magic login link (authentication embedded) and an authentication token needed to connect a tenant to their consumer application portal.
-
-        **Required scopes**
-        * `webhook.subscription_manage`
       security:
         - OAuth2:
             - webhook.subscription_manage
@@ -534,9 +499,6 @@ paths:
       operationId: GET-webhook-retrieve-statistics
       description: |-
         Retrieves statistics on the number of emitted events and provides information on the limit of webhook notifications configured for a specific tenant.
-
-        **Required scopes**
-        * `webhook.subscription_read`
       security:
         - OAuth2:
             - webhook.subscription_read

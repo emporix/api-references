@@ -119,7 +119,7 @@ Send a sample request. For example, create a basic product:
 curl -L \
   --request POST \
   --url 'https://api.emporix.io/product/{tenant}/products' \
-  --header 'Authorization: Bearer {{YOUR_OAUTH2_TOKEN}}' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Content-Type: application/json' \
   --data '{
     "name": "Smartphone X2",

@@ -16,6 +16,7 @@ paths:
       tags:
         - Files
       summary: Get SEPA Export file by ID for tenant
+      deprecated: true
       description: |-
         Downloads a specified SEPA Export file.
       operationId: GET-sepa-export-download-file
@@ -58,6 +59,7 @@ paths:
       tags:
         - Jobs
       summary: Retrieving a list of export jobs
+      deprecated: true
       description: |-
         Retrieves a list of SEPA Export jobs.
       operationId: GET-sepa-export-list-jobs
@@ -131,6 +133,7 @@ paths:
       tags:
         - Jobs
       summary: Creating a new export job
+      deprecated: true
       description: |-
         Creates a new SEPA Export job.
       operationId: POST-sepa-export-create-job

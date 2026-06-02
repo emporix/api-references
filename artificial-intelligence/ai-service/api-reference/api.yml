@@ -14,6 +14,8 @@ tags:
     description: Chat With Agents
   - name: Agent Logs
     description: Read Agent Logs
+  - name: Agent Analytics
+    description: Agent analytics and execution metrics
   - name: Agent Template
     description: Manage Agent Templates
   - name: AI Completions
@@ -26,6 +28,8 @@ tags:
     description: Manage Jobs
   - name: MCP Server
     description: Manage MCP Servers
+  - name: Model
+    description: Read LLM models from supported providers
   - name: Text Generation
     description: AI Text Generation
   - name: Token
@@ -340,6 +344,10 @@ paths:
           $ref: '#/components/responses/500_resp_common'
       description: |-
         Allows for communication with Emporix agents.
+      security:
+        - OAuth2:
+            - ai.agentexecution_manage_own
+            - ai.agentexecution_manage
       requestBody:
         $ref: '#/components/requestBodies/AgenticChat'
       tags:
@@ -379,6 +387,10 @@ paths:
           $ref: '#/components/responses/500_resp_common'
       description: |-
         Allows for communication with Emporix agents in async way.
+      security:
+        - OAuth2:
+            - ai.agentexecution_manage_own
+            - ai.agentexecution_manage
       requestBody:
         $ref: '#/components/requestBodies/AgenticChat'
       tags:
@@ -1178,6 +1190,35 @@ paths:
             - ai.agent_manage
       tags:
         - Token
+  '/ai-service/{tenant}/agentic/models':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    get:
+      summary: Listing LLM models from supported providers
+      operationId: GET-ai-list-models
+      responses:
+        '200':
+          description: List of models grouped by LLM provider.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProviderModelsResponse'
+              examples:
+                Provider Models Response:
+                  $ref: '#/components/examples/ProviderModelsResponse'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        Retrieves available LLM models from supported LLM providers: OpenAI, Anthropic, and Google.
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Model
   '/ai-service/{tenant}/agentic/mcp-servers':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -1267,6 +1308,7 @@ paths:
     get:
       parameters:
         - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/expandMcpServer'
       summary: Retrieving MCP server by ID
       operationId: GET-ai-retrieve-mcp-server
       responses:
@@ -1499,10 +1541,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Retrieves agent requests based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1532,10 +1570,6 @@ paths:
           $ref: '#/components/responses/404_resp_common'
       description: |-
         Retrieves the agent request by given ID.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1566,10 +1600,6 @@ paths:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
         Searches for agent requests based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1598,10 +1628,6 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Retrieves agent sessions based on the provided query.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1631,10 +1657,6 @@ paths:
           $ref: '#/components/responses/404_resp_common'
       description: |-
         Retrieves the agent session by given ID.
-        
-        ### Required scopes
-
-        * `ai.agent_read`
       security:
         - OAuth2:
             - ai.agent_read
@@ -1665,7 +1687,41 @@ paths:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
         Searches for agent sessions based on the provided query.
-        
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Agent Logs
+  '/ai-service/{tenant}/agentic/analytics':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    get:
+      summary: Retrieving agent analytics bundle for last four weeks
+      operationId: GET-ai-agentic-analytics
+      parameters:
+        - name: agentId
+          in: query
+          required: false
+          schema:
+            type: string
+          description: |
+            When set, metrics are scoped to this agent. When omitted, tenant-wide aggregates are returned.
+      responses:
+        '200':
+          description: Aggregated request and session metrics, resolution efficiency, and weekly trends.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentAnalyticsResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        Returns a single bundle of analytics for dashboards: request and session aggregates (including severity breakdowns), resolution efficiency, and per-week session error trends.
+
         ### Required scopes
 
         * `ai.agent_read`
@@ -1673,7 +1729,56 @@ paths:
         - OAuth2:
             - ai.agent_read
       tags:
-        - Agent Logs
+        - Agent Analytics
+  '/ai-service/{tenant}/agentic/analytics/executions':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    get:
+      summary: Retrieving per-agent execution counts by period
+      operationId: GET-ai-agentic-analytics-executions
+      parameters:
+        - name: agentIds
+          in: query
+          required: true
+          schema:
+            type: string
+          description: |
+            Comma-separated list of agent IDs (no spaces). Maximum 100 IDs.
+        - name: granularity
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - QUARTER
+              - MONTH
+              - WEEK
+            default: QUARTER
+          description: Time bucket for each period (UTC).
+      responses:
+        '200':
+          description: Per-agent execution counts aligned to the returned periods.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionsResponse'
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+      description: |-
+        Returns execution (session) counts per agent for each calendar period (quarter, month, or week).
+
+        ### Required scopes
+
+        * `ai.agent_read`
+      security:
+        - OAuth2:
+            - ai.agent_read
+      tags:
+        - Agent Analytics
 components:
   schemas:
     ErrorMessage:
@@ -2021,8 +2126,8 @@ components:
           type: string
           description: The prompt for an agent. It should define when and why this tool is to be called.
         entityType:
-          allOf:
-            - $ref: '#/components/schemas/RagEntityType'
+          type: string
+          description: "Type of the entity which is stored in the given collection. Supported predefined types: [PRODUCT] and custom entity types."
         indexedFields:
           type: array
           description: This field specifies the fields of the given entityType that are used for generating embeddings. The provided values are then concatenated and converted to embeddings.
@@ -2037,10 +2142,28 @@ components:
                 description: Unique value representing the entityType key.
             required:
               - key
+        filterFields:
+          type: array
+          description: This field specifies the fields of the given entityType that are used for filtering the data before performing actual search.
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+                description: It should contain the description of the field, so LLM is able to know when to use this field in order to filter the data. For enums, possible values should be specified here.
+              name:
+                type: string
+                description: It can act as an alias for the field key.
+              key:
+                type: string
+                description: Unique value representing the entityType key.
+            required:
+              - key
       required:
         - prompt
         - entityType
         - indexedFields
+        - filterFields
     RagEmporixNativeToolConfigRequest:
       allOf:
         - $ref: '#/components/schemas/RagEmporixNativeToolConfig'
@@ -2417,6 +2540,41 @@ components:
         - google
         - anthropic
       example: openai
+    ModelResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Model identifier to use in agent LLM configuration.
+          example: gpt-4.1-mini
+        name:
+          type: string
+          description: Display name of the model.
+          example: gpt-4.1-mini
+        description:
+          type: string
+          description: Short description of the model. Available for some providers, such as Google.
+          example: Gemini 3.1 Flash Lite
+        thinking:
+          type: boolean
+          description: Indicates whether the model supports thinking capabilities.
+          example: true
+      required:
+        - id
+        - name
+    ProviderModelsResponse:
+      type: object
+      properties:
+        provider:
+          $ref: '#/components/schemas/ApiKeyLlmProvider'
+        models:
+          type: array
+          description: List of models available for the provider.
+          items:
+            $ref: '#/components/schemas/ModelResponse'
+      required:
+        - provider
+        - models
     ApiKeyLlm:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
@@ -2555,6 +2713,28 @@ components:
         - $ref: '#/components/schemas/BaseForAgentAndTemplateAndHandOff'
         - type: object
           properties:
+            requiredScopes:
+              type: array
+              description: |
+                Defines which caller types are allowed to execute the agent.
+                Authorization is evaluated with OR semantics: access is granted if the caller
+                matches at least one configured value.
+                If this field is missing or empty, no scope-based restriction is applied.
+
+                Matching rules:
+                - anonymous: always grants access.
+                - customer: requires scope `ai.agentexecution_manage_own`.
+                - employee: requires scope `ai.agentexecution_manage`.
+                - integration: requires scope `ai.agentexecution_manage`.
+
+                If no configured value matches, request is rejected with 403 Forbidden.
+              items:
+                type: string
+                enum:
+                  - anonymous
+                  - customer
+                  - employee
+                  - integration
             userPrompt:
               type: string
               description: LLM Prompt which describes how agent should work in a detailed way, which tools it could use to solve problems etc; it can contain examples and step by step guidance.
@@ -3038,6 +3218,149 @@ components:
       required:
         - data
         - checksum
+    AnalyticsSeverityCounts:
+      type: object
+      description: Request log counts by severity.
+      properties:
+        info:
+          type: integer
+        warning:
+          type: integer
+        error:
+          type: integer
+    AnalyticsSessionSeverityCounts:
+      type: object
+      description: Session counts by outcome severity.
+      properties:
+        success:
+          type: integer
+        warning:
+          type: integer
+        error:
+          type: integer
+    AnalyticsLogMetrics:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of request logs in scope.
+        bySeverity:
+          $ref: '#/components/schemas/AnalyticsSeverityCounts'
+        errorRate:
+          type: number
+          format: double
+          description: Share of error-severity logs among request logs.
+    AnalyticsSessionMetrics:
+      type: object
+      properties:
+        total:
+          type: integer
+          description: Total number of sessions in scope.
+        bySeverity:
+          $ref: '#/components/schemas/AnalyticsSessionSeverityCounts'
+        errorRate:
+          type: number
+          format: double
+          description: Share of error outcome sessions among sessions.
+    AnalyticsResolutionEfficiency:
+      type: object
+      properties:
+        requestsPerSession:
+          type: number
+          format: double
+          description: Average number of requests per session.
+        totalRequests:
+          type: integer
+        totalSessions:
+          type: integer
+    AnalyticsRequestTrendPoint:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+          description: Week start instant (UTC).
+        total:
+          type: integer
+        errors:
+          type: integer
+        errorRate:
+          type: number
+          format: double
+    AnalyticsSessionTrendPoint:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+          description: Week start instant (UTC).
+        totalSessions:
+          type: integer
+        errorSessions:
+          type: integer
+        errorRate:
+          type: number
+          format: double
+    AgentAnalyticsResponse:
+      type: object
+      description: Combined analytics payload for admin and partner dashboards.
+      properties:
+        requests:
+          $ref: '#/components/schemas/AnalyticsLogMetrics'
+        sessions:
+          $ref: '#/components/schemas/AnalyticsSessionMetrics'
+        resolutionEfficiency:
+          $ref: '#/components/schemas/AnalyticsResolutionEfficiency'
+        requestTrend:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsRequestTrendPoint'
+        sessionTrend:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsSessionTrendPoint'
+    AnalyticsPeriod:
+      type: object
+      properties:
+        label:
+          type: string
+          description: Human-readable period label (e.g. quarter name).
+        start:
+          type: string
+          format: date-time
+          description: Period start (inclusive), UTC.
+        end:
+          type: string
+          format: date-time
+          description: Period end (exclusive), UTC.
+    AgentExecutionSeries:
+      type: object
+      properties:
+        agentId:
+          type: string
+        counts:
+          type: array
+          description: Execution counts per period, same order as `periods`.
+          items:
+            type: integer
+    ExecutionsResponse:
+      type: object
+      properties:
+        granularity:
+          type: string
+          description: Time bucket used for periods and series (enum constant name).
+          enum:
+            - QUARTER
+            - MONTH
+            - WEEK
+        periods:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsPeriod'
+        series:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentExecutionSeries'
   securitySchemes:
     OAuth2:
       type: oauth2
@@ -3046,6 +3369,8 @@ components:
           scopes:
             ai.text_manage: Needed to execute actions related to the text generation.
             ai.completion_manage: Needed to execute actions related to the AI completions.
+            ai.agentexecution_manage: Needed to execute agentic chat.
+            ai.agentexecution_manage_own: Needed to execute agentic chat by customers.
             ai.agent_read: Needed to read AI agents.
             ai.agent_manage: Needed to manage AI agents.
           tokenUrl: 'https://api.emporix.io/oauth/token'
@@ -3611,7 +3936,8 @@ components:
         config:
           url: 'http://localhost:7900/mcp'
           authorizationHeaderName: Authorization
-          authorizationHeaderTokenId: token-id
+          authorizationHeaderToken:
+            id: token-id
     McpServersResponse:
       value:
         - id: mcp-custom
@@ -3621,7 +3947,8 @@ components:
           config:
             url: 'http://localhost:7900/mcp'
             authorizationHeaderName: Authorization
-            authorizationHeaderTokenId: token-id
+            authorizationHeaderToken:
+              id: token-id
     CommerceEventsResponse:
       value:
         events:
@@ -3637,6 +3964,26 @@ components:
           name: Emporix OpenAi Token
         - id: openai
           name: OpenAi Token
+    ProviderModelsResponse:
+      value:
+        - provider: openai
+          models:
+            - id: gpt-4.1-mini
+              name: gpt-4.1-mini
+        - provider: anthropic
+          models:
+            - id: claude-opus-4-6
+              name: Claude Opus 4.6
+              thinking: true
+            - id: claude-haiku-3-5
+              name: Claude Haiku 3.5
+              thinking: false
+        - provider: google
+          models:
+            - id: gemini-3.1-flash-lite
+              name: Gemini 3.1 Flash Lite
+              description: Gemini 3.1 Flash Lite
+              thinking: true
     SlackNativeToolResponse:
       value:
         id: "slack-1"
@@ -3729,7 +4076,8 @@ components:
         config:
           url: 'http://localhost:7900/mcp'
           authorizationHeaderName: Authorization
-          authorizationHeaderTokenId: token-id
+          authorizationHeaderToken:
+            id: token-id
     TokenRequest:
       value:
         name: OpenAI Token

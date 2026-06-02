@@ -21,9 +21,6 @@ paths:
         The currency consists of a code compliant with the ISO-4217 standard (https://www.iso.org/iso-4217-currency-codes.html) and a currency name. The `name` field is localized.
 
         If the `Content-Language` is set to `*`, the request body payload should contain localized fields as a map in the `key:value` pairs format, where `key` is the language code, and `value` is the translation.
-        ***
-        **Required scopes**
-        * `currency.currency_manage`
       tags:
         - Currencies
       security:
@@ -165,9 +162,6 @@ paths:
         The currency code is immutable, so it cannot be changed in this request. For the `name` field, the following rules are applicable:
         * If the `Content-Language` is set to `*`, the `name` field should be represented as a map in the`key:value` format, where `key` is the language code, and `value` is the translation.
         * If the `Content-Language` is set to a specific language, the `name` parameter should be passed as a string.
-        ***
-        **Required scopes**
-        * `currency.currency_manage`
       tags:
         - Currencies
       security:
@@ -218,9 +212,6 @@ paths:
         Warning
         Deleting a currency removes all exchange rates and prices related to the currency. Price removal is an asynchronous operation.
         ````
-        ***
-        **Required scopes**
-        * `currency.currency_manage`
       tags:
         - Currencies
       security:
@@ -251,9 +242,6 @@ paths:
         Creates a new exchange rate between two currencies. 
 
         **Note:** Both the source and target currency codes must be compliant with the ISO-4217 standard (https://www.iso.org/iso-4217-currency-codes.html) and must be defined in the system. 
-        ***
-        **Required scopes**
-        * `currency.currency_manage`
       security:
         - OAuth2:
             - currency.currency_manage
@@ -295,9 +283,6 @@ paths:
       summary: Retrieving all exchange rates
       description: |-
         Retrieves all exchange rates. You can filter and sort the results by the fields, for example `source` or `target currency`.
-        ***
-        **Required scopes**
-        * `currency.currency_read`
       security:
         - OAuth2:
             - currency.currency_read
@@ -353,9 +338,6 @@ paths:
       summary: Retrieving an exchange rate by code
       description: |-
         Retrieves a currency exchange rate definition by code.
-        ***
-        **Required scopes**
-        * `currency.currency_read`
       security:
         - OAuth2:
             - currency.currency_read
@@ -392,9 +374,6 @@ paths:
         Updates an existing exchange rate by code. 
 
         **Note:** The exchange rate code, source, and target currencies are immutable, so they cannot be changed in this request. Only the `rate` field can be changed.
-        ***
-        **Required scopes**
-        * `currency.currency_manage`
       security:
         - OAuth2:
             - currency.currency_manage
@@ -433,9 +412,6 @@ paths:
       summary: Deleting an exchange rate
       description: |
         Deletes the exchange rate definition by the provided code. If given definition does not exist in the system, the http code `204` will be returned.
-        ***
-        **Required scopes**
-        * `currency.currency_manage`
       security:
         - OAuth2:
             - currency.currency_manage

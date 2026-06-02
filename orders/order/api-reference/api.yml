@@ -369,6 +369,42 @@ paths:
     parameters:
       - $ref: '#/components/parameters/trait_orderId'
       - $ref: '#/components/parameters/trait_tenant'
+  '/order-v2/{tenant}/salesorders/{orderId}/historical-transitions':
+    get:
+      tags:
+        - Orders (Tenant-managed)
+      summary: Retrieving historical status transitions for a specific order
+      description: |
+        Retrieves historical status transitions for a specific order, including status history metadata. To be used by tenant employees.
+      security:
+        - OAuth2:
+            - order.order_read
+            - order.order_update
+            - order.order_read_by_vendor
+            - order.order_manage_by_vendor
+      operationId: GET-order-retrieve-historical-transitions-employee
+      responses:
+        '200':
+          description: |
+            The request was successful. Historical status transitions for the given order have been returned.
+          content:
+            application/json:
+              examples:
+                Historical transitions example:
+                  $ref: '#/components/examples/historicalTransitions'
+              schema:
+                $ref: '#/components/schemas/historicalTransitionsResponse'
+        '403':
+          $ref: '#/components/responses/trait_yaasAware_403'
+        '404':
+          $ref: '#/components/responses/trait_order_404'
+        '500':
+          $ref: '#/components/responses/trait_500'
+      parameters:
+        - $ref: '#/components/parameters/trait_saas_token'
+    parameters:
+      - $ref: '#/components/parameters/trait_orderId'
+      - $ref: '#/components/parameters/trait_tenant'
   '/order-v2/{tenant}/salesorders/{orderId}/calculations':
     post:
       tags:
@@ -1947,6 +1983,56 @@ components:
       properties:
         status:
           $ref: '#/components/schemas/orderStatus'
+    historicalTransition:
+      title: Historical Transition
+      description: A historical order status transition entry.
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/orderStatus'
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp when the status transition happened.
+      required:
+        - status
+        - timestamp
+    historicalTransitionsMetadata:
+      title: Historical Transitions Metadata
+      description: Metadata related to historical order status transitions.
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+          description: Version of the transition history record.
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the transition history record was created.
+        modifiedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the transition history record was last modified.
+      required:
+        - version
+        - createdAt
+        - modifiedAt
+    historicalTransitionsResponse:
+      title: Historical Transitions Response
+      description: Historical order status transitions with metadata.
+      type: object
+      properties:
+        transitions:
+          type: array
+          description: Ordered list of historical status transitions.
+          items:
+            $ref: '#/components/schemas/historicalTransition'
+        metadata:
+          $ref: '#/components/schemas/historicalTransitionsMetadata'
+      required:
+        - transitions
+        - metadata
     metadataMixins:
       title: Metadata DTO
       type: object
@@ -6831,6 +6917,21 @@ components:
     transitions:
       value:
         - status: CONFIRMED
+    historicalTransitions:
+      value:
+        transitions:
+          - status: CREATED
+            timestamp: '2026-04-03T07:19:23.123Z'
+          - status: IN_CHECKOUT
+            timestamp: '2026-04-03T07:22:53.614Z'
+          - status: CREATED
+            timestamp: '2026-04-03T07:24:07.618Z'
+          - status: CONFIRMED
+            timestamp: '2026-04-03T07:25:17.859Z'
+        metadata:
+          version: 4
+          createdAt: '2026-04-03T07:19:23.123Z'
+          modifiedAt: '2026-04-03T07:25:18.440Z'
     orderCalculation:
       value:
         entries:

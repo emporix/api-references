@@ -30,7 +30,7 @@ To create a new label, send the request to the [Creating a label](https://develo
 ```bash
 curl -i -X POST 
   https://api.emporix.io/label/labels 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
     "name": "Worldwide Shipment",
@@ -92,7 +92,7 @@ To specify a brand for a product, you need to provide the `labelId` field on pro
 ```bash
 curl -i -X PATCH 
   'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Language: string' 
   -H 'Content-Type: application/json' 
   -d '{
