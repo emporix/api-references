@@ -7,6 +7,7 @@
 * [Current work in progress](in-progress/in-progress.md)
 
 ## 2026
+* [RELEASE_DATE: Approval Service - legal entity and created resource on approval responses](2026/RELEASE_DATE-approval-legal-entity-created-resource.md)
 * [2026-06-02: AI Service - Supports file upload](2026/2026-06-02-ai-service-file.md)
 * [2026-05-29: AI Service - LLM models from supported providers](2026/2026-05-29-ai-service-models.md)
 * [2026-05-29: Indexing Service - Battery Included provider support](2026/2026-05-29-indexing-battery-included.md)
