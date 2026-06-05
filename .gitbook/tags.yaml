@@ -1,3 +1,12 @@
 - tag: deprecated
   label: deprecated
   color: red
+- tag: new-feature
+  label: new feature
+  color: green
+- tag: improvement
+  label: improvement
+  color: blue
+- tag: major-change
+  label: major change
+  color: orange
