@@ -7,10 +7,9 @@ layout:
   tableOfContents:
     visible: true
   outline:
-    visible: true
+    visible: false
   pagination:
     visible: true
-icon: arrows-rotate-reverse
 ---
 
 # Changelog 2026
@@ -1255,7 +1254,7 @@ If your code previously relied on the `type` field, it will no longer compile. N
 
 {% endupdate %}
 
-{% update date="2026-03-20" tags="new-feature" %}
+{% update date="2026-03-18" tags="new-feature" %}
 
 ## Returns Service - calculated price properties for returns
 

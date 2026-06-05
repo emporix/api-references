@@ -1,14 +1,12 @@
 # Table of contents
 
-* [Changelog](README.md)
+## 2026
+
+* [Changelog 2026](changelog.md)
 
 ## In progress
 
 * [Current work in progress](in-progress/in-progress.md)
-
-## 2026
-
-* [Changelog 2026](changelog.md)
 
 ## Archive
 
