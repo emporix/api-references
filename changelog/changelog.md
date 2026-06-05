@@ -10,6 +10,7 @@ layout:
     visible: false
   pagination:
     visible: true
+icon: arrows-rotate-reverse
 ---
 
 # Changelog 2026

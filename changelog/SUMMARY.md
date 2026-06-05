@@ -8,7 +8,7 @@
 
 ## 2026
 
-* [Changelog 2026](changelog-2026.md)
+* [Changelog 2026](changelog.md)
 
 ## Archive
 
