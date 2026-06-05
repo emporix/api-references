@@ -1,6 +1,4 @@
-# Table of contents
-
-## 2026
+# Changelog 2026
 
 * [Changelog 2026](changelog.md)
 
