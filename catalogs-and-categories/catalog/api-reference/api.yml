@@ -295,6 +295,83 @@ paths:
                       the request.
       security:
         - OAuth2: [] 
+  '/catalog/{tenant}/catalogs/categories':
+    get:
+      tags:
+        - Catalog management
+      summary: Retrieving visible category ids for a published site
+      description: |
+        Returns a deduplicated list of root category identifiers from catalogs that are currently visible
+        and published on the specified site.
+
+        A catalog is considered visible when:
+        * `visibility.visible` is `true`
+        * the current date and time is within the configured visibility period, if defined
+          (`visibility.from` <= now and `visibility.to` > now)
+      operationId: GET-catalog-list-visible-category-ids
+      parameters:
+        - name: tenant
+          in: path
+          description: |
+            Your Emporix tenant's name.
+            **Note**: The tenant should always be written in lowercase.
+          required: true
+          schema:
+            type: string
+            example: saasdev2
+        - name: publishedSite
+          in: query
+          description: |
+            Site identifier for which visible category ids should be returned.
+            Only catalogs published on this site are considered.
+          required: true
+          schema:
+            type: string
+            example: main
+      responses:
+        "200":
+          description: The search was successful.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                description: Deduplicated list of root category identifiers from currently visible catalogs.
+              examples:
+                example:
+                  value:
+                    - rootCategory1
+                    - "9398832423423"
+        "400":
+          description: Request was syntactically incorrect. Details will be provided
+            in the response payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    code: 400
+                    status: Bad Request
+                    message: Required QueryValue [publishedSite] not specified
+        "500":
+          description: An unexpected error prevented the server from fulfilling the
+            request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                example:
+                  value:
+                    code: 500
+                    status: Internal Server Error
+                    message: An unexpected error prevented the server from fulfilling
+                      the request.
+      security:
+        - OAuth2: []
   '/catalog/{tenant}/catalogs/categories/{categoryId}':
     get:
       tags:
