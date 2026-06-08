@@ -1,6 +1,6 @@
 # Changelog 2026
 
-* [Changelog 2026](changelog.md)
+* [2026](changelog.md)
 
 ## In progress
 
@@ -8,7 +8,7 @@
 
 ## Archive
 
-* [Changelog 2025](archive/2025/changelog-2025.md)
+* [2025](archive/2025/changelog-2025.md)
   * [2025-12-17: Product Service - classification mixins support](archive/2025/2025-12-17-product-classification.md)
   * [2025-12-17: Category Service - classification categories](archive/2025/2025-12-17-category.md)
   * [2025-12-17: Webhook Service - update category event schema](archive/2025/2025-12-17-webhook.md)
@@ -115,7 +115,7 @@
   * [2025-01-29: Price Match - new priceListId field added](archive/2025/2025-01-29-price-match.md)
   * [2025-01-24: Algolia - added information about segments](archive/2025/2025-01-24-algolia.md)
   * [2025-01-13: Availability Service - availability endpoints replacement](archive/2025/2025-01-13-availability.md)
-* [Changelog 2024](archive/2024/changelog-2024.md)
-* [Changelog 2023](archive/2023/changelog-2023.md)
-* [Changelog 2022](archive/2022/changelog-2022.md)
+* [2024](archive/2024/changelog-2024.md)
+* [2023](archive/2023/changelog-2023.md)
+* [2022](archive/2022/changelog-2022.md)
  
