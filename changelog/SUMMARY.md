@@ -7,6 +7,7 @@
 * [Current work in progress](in-progress/in-progress.md)
 
 ## 2026
+* [RELEASE_DATE: Webhook Events - `cartId` and `quoteId` on `order.created` and `order.updated`](2026/RELEASE_DATE-webhook-order-cart-quote-id.md)
 * [RELEASE_DATE: Approval Service - legal entity scoping and approval response fields](2026/RELEASE_DATE-approval-legal-entity-created-resource.md)
 * [2026-06-02: AI Service - Supports file upload](2026/2026-06-02-ai-service-file.md)
 * [2026-05-29: AI Service - LLM models from supported providers](2026/2026-05-29-ai-service-models.md)
