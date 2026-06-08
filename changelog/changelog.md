@@ -19,7 +19,7 @@ icon: arrows-rotate-reverse
 
 {% update date="2026-06-02" tags="new-feature" %}
 
-## AI Service - Supports file upload
+## AI Service - Support for file upload
 
 #### Overview
 
