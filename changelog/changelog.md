@@ -798,7 +798,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="2026-04-29" tags="new-feature" %}
+{% update date="RELEASE_DATE" tags="new-feature, improvement" %}
 
 ## Emporix SDK - Multi-tenant support
 
