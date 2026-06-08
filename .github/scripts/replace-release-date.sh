@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Replaces RELEASE_DATE placeholder in changelog filenames and content with the merge date.
+# Replaces RELEASE_DATE placeholder in changelog content with the merge date.
 # Usage: ./replace-release-date.sh YYYY-MM-DD
 # Example: ./replace-release-date.sh 2025-02-11
 
@@ -21,7 +21,18 @@ if ! [[ "$RELEASE_DATE" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
   exit 1
 fi
 
-# Find all files under changelog that contain PLACEHOLDER in their path (filename or directory)
+# Replace placeholder in changelog markdown files (e.g. changelog/changelog.md).
+# Skips changelog-release-date.md, which documents the placeholder itself.
+grep -rl --include='*.md' "${PLACEHOLDER}" "${CHANGELOG_DIR}" 2>/dev/null | while IFS= read -r file_path; do
+  if [[ "$(basename "$file_path")" == *"${PLACEHOLDER}"* ]] || [[ "$(basename "$file_path")" == "changelog-release-date.md" ]]; then
+    continue
+  fi
+  echo "Replacing ${PLACEHOLDER} in content: $file_path"
+  sed "s/date=\"${PLACEHOLDER}\"/date=\"${RELEASE_DATE}\"/g" "$file_path" > "${file_path}.tmp"
+  mv "${file_path}.tmp" "$file_path"
+done
+
+# Legacy: rename files whose path contains the placeholder and update their content
 find "${CHANGELOG_DIR}" -name "*${PLACEHOLDER}*" -type f | while IFS= read -r old_path; do
   # Get the filename part (e.g. RELEASE_DATE-my-feature.md)
   filename=$(basename "$old_path")
