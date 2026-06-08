@@ -17,7 +17,7 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature, improvement" %}
+{% update date="2026-06-08" tags="new-feature, improvement" %}
 
 ## Emporix SDK - Batch cart item update and removal of X-Version header from category clients
 
