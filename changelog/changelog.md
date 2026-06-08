@@ -16,6 +16,7 @@ icon: arrows-rotate-reverse
 # Changelog 2026
 
 {% updates format="full" %}
+
 {% update date="2026-06-02" tags="new-feature" %}
 
 ## AI Service - Supports file upload
