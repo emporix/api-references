@@ -37,4 +37,4 @@ There are no known problems.
 
 ## Links
 
-* [Events - Order](https://developer.emporix.io/api-references/api-guides/webhooks/webhook-events/events-order)
+* [Events - Order](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/d4POTWomuSS7d3dnh4Dg/api-guides/webhooks/webhook-events/events-order)

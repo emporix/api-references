@@ -33,4 +33,4 @@ There are no known problems.
 
 ## Links
 
-* [Events - Custom Instance](https://developer.emporix.io/api-references/api-guides/webhooks/webhook-events/events-schema)
+* [Events - Custom Instance](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/d4POTWomuSS7d3dnh4Dg/api-guides/webhooks/webhook-events/events-index)
