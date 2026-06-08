@@ -17,6 +17,50 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature, improvement" %}
+
+## Emporix SDK - Batch cart item update and removal of X-Version header from category clients
+
+#### Overview
+
+A new version `1.3.1` of the Emporix SDK has been released with the following changes:
+
+* support for batch updating cart items via `PUT /cart/{tenant}/carts/{cartId}/itemsBatch`
+* removal of the `X-Version` header from Category Service clients (`CategoryClient`, `CategoryAssignmentClient`, `CategoryTreeClient`)
+
+#### New methods
+
+| Method                                        | Description                                                                                                                                                              |
+|-----------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `CartItemsClient.updateMultipleItemsToCart` | Updates multiple cart items in a single batch operation (maximum 50 items). Returns HTTP 207 (Multi-Status) with per-item outcomes aligned to request order. |
+
+#### New types
+
+| Type                                | Description                                                                                          |
+|-------------------------------------|------------------------------------------------------------------------------------------------------|
+| `UpdateCartItemsBatchRequest`       | Batch cart item update request. Each entry must include a cart item `id`.                            |
+| `UpdateCartItemsBatchEntryResponse` | Per-item outcome for a batch update (`index`, `id`, `code`, `status`, `message`, `details`).         |
+
+#### Updated types
+
+| Type                | Description                                                                 |
+|---------------------|-----------------------------------------------------------------------------|
+| `BatchItemResponse` | Added `index` field matching the position of the item in the request body. |
+
+#### Updated clients
+
+| Client                     | Description                                              |
+|----------------------------|----------------------------------------------------------|
+| `CategoryClient`           | No longer sends the `X-Version` header on requests.    |
+| `CategoryAssignmentClient` | No longer sends the `X-Version` header on requests.    |
+| `CategoryTreeClient`       | No longer sends the `X-Version` header on requests.    |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-06-02" tags="new-feature" %}
 
 ## AI Service - Support for file upload

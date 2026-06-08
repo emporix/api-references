@@ -23,8 +23,8 @@ Apply `RELEASE_DATE` in the `{% update %}` block:
 ## Cart Service - batch update endpoint for cart items
 ```
 
-❌ `{% update date="2026-05-13" tags="new-feature" %}`
-✅ `{% update date="RELEASE_DATE" tags="new-feature" %}`
+must not use: `{% update date="2026-05-13" tags="new-feature" %}`
+must use: `{% update date="RELEASE_DATE" tags="new-feature" %}`
 
 Titles are plain `##` headings **without** a date prefix.
 
