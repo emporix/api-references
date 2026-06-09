@@ -31,6 +31,7 @@ These entities support mixin schema creation through the [Schema Service API](..
 - **Coupon** - Coupon Service
 - **Custom Entities** and **Custom Instances**
 - **Customer** - Customer Service / Customer Management Service
+- **Media** - Media Service
 - **Customer Address** - Customer Service
 - **Order** - Order Service
 - **Price List** - Price Service
