@@ -17,7 +17,7 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-06-09" tags="improvement" %}
 
 ## Webhook Events - `cartId` and `quoteId` on `order.created` and `order.updated`
 
@@ -47,7 +47,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="major-change" %}
+{% update date="2026-06-09" tags="major-change" %}
 
 ## Approval Service - legal entity scoping and approval response fields
 
