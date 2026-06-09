@@ -1,5 +1,7 @@
 # Changelog 2026
 
+## Changelog
+
 * [2026](changelog.md)
 
 ## In progress

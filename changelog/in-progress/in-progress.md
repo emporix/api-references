@@ -71,7 +71,7 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr>
   <tr>
     <td class="tg-0pky">Audit Logs</td>
-    <td class="tg-0pky">Audit logs / changed logs for all existing entities</td>
+    <td class="tg-0pky">Audit logs / changelogs for all existing entities</td>
   </tr>
 </tbody>
 </table>
