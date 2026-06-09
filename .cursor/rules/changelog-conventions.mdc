@@ -5,46 +5,41 @@ alwaysApply: true
 
 # Changelog Conventions
 
+## Where to add entries
+
+All changelog entries go in **`changelog/changelog.md`**, inside the existing `{% updates format="full" %}` block. Each PR adds a **new** `{% update %}…{% endupdate %}` block — do **not** modify existing entries. Place the new block at the **top** (directly after the opening `{% updates %}` tag).
+
+Do **not** create separate changelog files. Do **not** update `changelog/SUMMARY.md`.
+
 ## Release date placeholder
 
-New changelogs are never created with a concrete date. Use the `RELEASE_DATE` placeholder instead — a GitHub Action replaces it with the actual merge date when the PR lands on `main`.
+New entries never use a concrete date. Use the `RELEASE_DATE` placeholder in the `{% update %}` tag — a GitHub Action replaces it with the actual merge date when the PR lands on `main`.
 
-Apply `RELEASE_DATE` in three places:
+Apply `RELEASE_DATE` in the `{% update %}` block:
 
-1. **Filename** — `changelog/YYYY/RELEASE_DATE-topic.md` (use current year for the folder)
-2. **Title inside the file** — `# RELEASE_DATE: My feature title`
-3. **SUMMARY.md link** — `* [RELEASE_DATE: My feature title](YYYY/RELEASE_DATE-topic.md)`
+```markdown
+{% update date="RELEASE_DATE" tags="new-feature" %}
 
-❌ `changelog/2026/2026-05-13-cart.md` / `# 2026-05-13: Cart Service - …`
-✅ `changelog/2026/RELEASE_DATE-cart.md` / `# RELEASE_DATE: Cart Service - …`
-
-## Changelog header icon
-
-Every changelog file has an `icon` field in its YAML frontmatter. Choose the icon based on the type of change:
-
-| Change type | Icon |
-|---|---|
-| New feature | `sparkles` |
-| Improvement | `wand-sparkles` |
-| Major change | `sliders-up` |
-| Minor change | `sliders` |
-| Deprecation | `hourglass-half` |
-
-Example frontmatter for a new feature:
-
-```yaml
----
-icon: sparkles
-layout:
-  title:
-    visible: true
-  description:
-    visible: true
-  tableOfContents:
-    visible: true
-  outline:
-    visible: false
-  pagination:
-    visible: true
----
+## Cart Service - batch update endpoint for cart items
 ```
+
+must not use: `{% update date="2026-05-13" tags="new-feature" %}`
+must use: `{% update date="RELEASE_DATE" tags="new-feature" %}`
+
+Titles are plain `##` headings **without** a date prefix.
+
+## Change type tags
+
+Use the `tags` attribute on the `{% update %}` block. Do **not** add an `icon` to frontmatter.
+
+| Change type | Tag |
+|---|---|
+| New feature | `new-feature` |
+| Improvement | `improvement` |
+| Major change | `major-change` |
+| Minor change | `minor-change` |
+| Deprecation | `deprecated` |
+
+## Section headings
+
+Use `####` for sections inside an entry (for example `#### Overview`, `#### New endpoints`, `#### Updated endpoints`, `#### Known problems`).

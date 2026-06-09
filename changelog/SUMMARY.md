@@ -1,14 +1,14 @@
-# Table of contents
+# Changelog 2026
 
-* [Changelog](README.md)
+## Changelog
+
+* [2026](changelog.md)
 
 ## In progress
 
 * [Current work in progress](in-progress/in-progress.md)
 
 ## 2026
-* [RELEASE_DATE: Webhook Events - `cartId` and `quoteId` on `order.created` and `order.updated`](2026/RELEASE_DATE-webhook-order-cart-quote-id.md)
-* [RELEASE_DATE: Approval Service - legal entity scoping and approval response fields](2026/RELEASE_DATE-approval-legal-entity-created-resource.md)
 * [2026-06-02: AI Service - Supports file upload](2026/2026-06-02-ai-service-file.md)
 * [2026-05-29: AI Service - LLM models from supported providers](2026/2026-05-29-ai-service-models.md)
 * [2026-05-29: Indexing Service - Battery Included provider support](2026/2026-05-29-indexing-battery-included.md)
@@ -72,7 +72,7 @@
 
 ## Archive
 
-* [Changelog 2025](archive/2025/changelog-2025.md)
+* [2025](archive/2025/changelog-2025.md)
   * [2025-12-17: Product Service - classification mixins support](archive/2025/2025-12-17-product-classification.md)
   * [2025-12-17: Category Service - classification categories](archive/2025/2025-12-17-category.md)
   * [2025-12-17: Webhook Service - update category event schema](archive/2025/2025-12-17-webhook.md)
@@ -179,7 +179,7 @@
   * [2025-01-29: Price Match - new priceListId field added](archive/2025/2025-01-29-price-match.md)
   * [2025-01-24: Algolia - added information about segments](archive/2025/2025-01-24-algolia.md)
   * [2025-01-13: Availability Service - availability endpoints replacement](archive/2025/2025-01-13-availability.md)
-* [Changelog 2024](archive/2024/changelog-2024.md)
-* [Changelog 2023](archive/2023/changelog-2023.md)
-* [Changelog 2022](archive/2022/changelog-2022.md)
+* [2024](archive/2024/changelog-2024.md)
+* [2023](archive/2023/changelog-2023.md)
+* [2022](archive/2022/changelog-2022.md)
  
