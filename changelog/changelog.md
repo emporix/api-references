@@ -17,6 +17,36 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## Media, Schema, and Product Services - mixin support for media assets
+
+#### Overview
+
+Media assets now support mixins, consistent with other Emporix entities. The Schema Service supports a new `MEDIA` schema type for defining mixin schemas, but custom attribute values must still be provided in the asset payload through `mixins` and `metadata.mixins` when creating or updating assets through the Media Service. Category and Product Service endpoints do not accept `media` in requests; when media is created and linked to a category or product, the `media` items in responses include the corresponding mixin values.
+
+#### Updated endpoints
+
+| Endpoint                                                                                                                                                                                                                       | Description                                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets)                                                                                          | Request accepts `mixins` and `metadata.mixins`.                                                                                              |
+| [Updating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#put-media-tenant-assets-assetid)                                                                                   | Request accepts `mixins` and `metadata.mixins`.                                                                                              |
+| [Retrieving all assets](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets)                                                                                       | Response includes `mixins` and `metadata.mixins`.                                                                                          |
+| [Retrieving an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid)                                                                                 | Response includes `mixins` and `metadata.mixins`.                                                                                            |
+| [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas)                                                                                   | `MEDIA` added to supported schema types.                                                                                                    |
+| [Updating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id)                                                                                | `MEDIA` added to supported schema types.                                                                                                    |
+| [Retrieving a list of categories](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#get-category-tenant-categories)                                  | Response `media` items include a `mixins` field.                                                 |
+| [Retrieving a category's details](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#get-category-tenant-categories-categoryid)                   | Response `media` items include a `mixins` field.                                                 |
+| [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid)                                       | Response `media` items include a `mixins` field.                                                 |
+| [Retrieving all products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products)                                                | Response `media` items include a `mixins` field.                                                 |
+| [Searching for products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-search)                                        | Response `media` items include a `mixins` field.                                                 |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-06-09" tags="improvement" %}
 
 ## Webhook Events - `cartId` and `quoteId` on `order.created` and `order.updated`
