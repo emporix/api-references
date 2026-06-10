@@ -25,7 +25,7 @@ icon: arrows-rotate-reverse
 
 The Category Service no longer requires the `X-Version` header to be passed in requests. Existing integrations that still send the `X-Version` header will continue to work without any changes.
 
-## Affected endpoints
+#### Affected endpoints
 
 All Category Service endpoints are affected. The `X-Version` request header is no longer required and can be safely omitted.
 
