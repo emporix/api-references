@@ -39,7 +39,6 @@ There are no known problems.
 
 {% endupdate %}
 
-{% updates format="full" %}
 
 {% update date="2026-06-09" tags="improvement" %}
 
