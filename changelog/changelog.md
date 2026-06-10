@@ -424,7 +424,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="2026-05-25" tags="new-feature" %}
+{% update date="2026-05-25" tags="deprecated" %}
 
 ## AI Rag Indexer - `name` and `description` fields from `/filter-metadata` endpoint deprecated
 
