@@ -2161,7 +2161,6 @@ components:
         - prompt
         - entityType
         - indexedFields
-        - filterFields
     RagEmporixNativeToolConfigRequest:
       allOf:
         - $ref: '#/components/schemas/RagEmporixNativeToolConfig'
