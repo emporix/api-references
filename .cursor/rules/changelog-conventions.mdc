@@ -1,0 +1,45 @@
+---
+description: Conventions for creating changelog entries in this repository
+alwaysApply: true
+---
+
+# Changelog Conventions
+
+## Where to add entries
+
+All changelog entries go in **`changelog/changelog.md`**, inside the existing `{% updates format="full" %}` block. Each PR adds a **new** `{% update %}…{% endupdate %}` block — do **not** modify existing entries. Place the new block at the **top** (directly after the opening `{% updates %}` tag).
+
+Do **not** create separate changelog files. Do **not** update `changelog/SUMMARY.md`.
+
+## Release date placeholder
+
+New entries never use a concrete date. Use the `RELEASE_DATE` placeholder in the `{% update %}` tag — a GitHub Action replaces it with the actual merge date when the PR lands on `main`.
+
+Apply `RELEASE_DATE` in the `{% update %}` block:
+
+```markdown
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Cart Service - batch update endpoint for cart items
+```
+
+must not use: `{% update date="2026-05-13" tags="new-feature" %}`
+must use: `{% update date="RELEASE_DATE" tags="new-feature" %}`
+
+Titles are plain `##` headings **without** a date prefix.
+
+## Change type tags
+
+Use the `tags` attribute on the `{% update %}` block. Do **not** add an `icon` to frontmatter.
+
+| Change type | Tag |
+|---|---|
+| New feature | `new-feature` |
+| Improvement | `improvement` |
+| Major change | `major-change` |
+| Minor change | `minor-change` |
+| Deprecation | `deprecated` |
+
+## Section headings
+
+Use `####` for sections inside an entry (for example `#### Overview`, `#### New endpoints`, `#### Updated endpoints`, `#### Known problems`).

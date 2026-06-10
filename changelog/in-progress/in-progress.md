@@ -54,32 +54,24 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr></thead>
 <tbody>
   <tr>
-    <td class="tg-0pky">Product Service</td>
-    <td class="tg-0pky">Next generation of product variants including Management Dashboard</td>
-  </tr>
-  <tr>
     <td class="tg-0pky">Value Stream Modeller</td>
-    <td class="tg-0pky">Improvements</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky">Value Streams</td>
-    <td class="tg-0pky">Quote Intake and Stock Promotion</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky">Cart Price and Checkout Service</td>
-    <td class="tg-0pky">Improvements</td>
+    <td class="tg-0pky"><p>Improvements</p><p>Direct invocation of Emporix APIs from VSM</p></td>
   </tr>
   <tr>
     <td class="tg-0pky">B2B Commerce Frontend</td>
-    <td class="tg-0pky">Quick Order, Product Detail page and improvements in Product List page</td>
+    <td class="tg-0pky"><p>B2B Quote Approval</p><p>Product Detail page and improvements in Product List page</p></td>
   </tr>
   <tr>
-    <td class="tg-0pky">SAP Integration Package</td>
-    <td class="tg-0pky">Quote integration</td>
+    <td class="tg-0pky">SAP Integration</td>
+    <td class="tg-0pky">Quote integration from SAP into Emporix and from Emporix into SAP</td>
   </tr>
   <tr>
-    <td class="tg-0pky">Approval, Checkout and Quote Services</td>
-    <td class="tg-0pky">Approval process for quotes</td>
+    <td class="tg-0pky">Approval Service</td>
+    <td class="tg-0pky">Adaptation and enhancement of the existing approval process to include Employees' approvals</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Audit Logs</td>
+    <td class="tg-0pky">Audit logs / changelogs for all existing entities</td>
   </tr>
 </tbody>
 </table>
