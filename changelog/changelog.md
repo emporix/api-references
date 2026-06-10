@@ -46,6 +46,76 @@ Additionally, jobs now support the `skipped` status value.
 | [Searching jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#post-ai-service-tenant-jobs-search)                                          | Job responses can now return `status: skipped`.                               |
 | [Retrieving available job](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid)                                   | Job response can now return `status: skipped`.                                |
 
+{% endupdate %}
+
+{% update date="2026-06-09" tags="improvement" %}
+
+## Webhook Events - `cartId` and `quoteId` on `order.created` and `order.updated`
+
+#### Overview
+
+The `order.created` and `order.updated` webhook event payloads were extended with `cartId` and `quoteId`. These fields link an order to its source cart or quote and are populated when the order was created from checkout.
+
+- `cartId` — identifier of the cart used to create the order (cart checkout).
+- `quoteId` — identifier of the quote from which the order was created (quote checkout).
+
+Either field may be omitted when it does not apply to the order.
+
+#### Updated events
+
+| Event | Description |
+| --- | --- |
+| `order.created` | Event schema extended with optional `cartId` and `quoteId` properties. |
+| `order.updated` | Event schema extended with optional `cartId` and `quoteId` properties. |
+
+#### Known problems
+
+There are no known problems.
+
+#### Links
+
+* [Events - Order](https://app.gitbook.com/o/z8MNPigQv25NZe33g3AV/s/d4POTWomuSS7d3dnh4Dg/api-guides/webhooks/webhook-events/events-order)
+
+{% endupdate %}
+
+{% update date="2026-06-09" tags="major-change" %}
+
+## Approval Service - legal entity scoping and approval response fields
+
+#### Overview
+
+The Approval Service now scopes approvals to the B2B legal entity from the customer token. Previously, customers could see approvals created for other companies because the `Legal-Entity-Id` has not been stored on the `Approval` model.
+
+New and updated approvals store `legalEntity` on the document and are filtered by `legalEntity.id`. GET responses also expose `createdResource` when a downstream resource (for checkout, typically an order) exists after the approval flow completes.
+
+#### Behavior change (not backward compatible)
+
+When the `Legal-Entity-Id` request header is sent (injected for B2B customer tokens — see [B2B token and legal entity](https://developer.emporix.io/api-references/api-guides/quickstart/authentication-and-authorization/tokens-and-scopes#b2b-token)), the service:
+
+- **Creates** approvals for that legal entity only (requestor and approver contact assignments are resolved for the given entity).
+- **Returns** only approvals whose stored `legalEntity.id` matches the `legal-entity-id` from token.
+
+**Existing approvals created before this release do not have `legalEntity` stored.** They are **not** returned when `Legal-Entity-Id` is present in token, because they cannot match the legal-entity filter. This is intentional and **not backward compatible**: tenants will not see historical approvals through the scoped B2B API.
+
+#### Updated endpoints
+
+| Endpoint                                                                                                                                                       | Description                                                                                                                                 |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Creating an approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#post-approval-tenant-approvals)                   | Respects `Legal-Entity-Id`; persists `legalEntity` on the approval.                                                                          |
+| [Retrieving a list of approvals](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#get-approval-tenant-approvals)          | Filtered by `Legal-Entity-Id` when present; response includes `legalEntity` and optional `createdResource`.                                   |
+| [Retrieving an approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#get-approval-tenant-approvals-approvalid)       | Filtered by `Legal-Entity-Id` when present; response includes `legalEntity` and optional `createdResource`.                                   |
+| [Updating an approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#patch-approval-tenant-approvals-approvalid)         | Filtered by `Legal-Entity-Id` when present.                                                                                                 |
+| [Deleting an approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#delete-approval-tenant-approvals-approvalid)      | Filtered by `Legal-Entity-Id` when present.                                                                                                 |
+| [Checking the resource approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approval#post-approval-tenant-approval-permitted) | Respects `Legal-Entity-Id` when checking existing approvals.                                                                                  |
+| [Searching for approver users](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/search#post-approval-tenant-search-users)           | Respects `Legal-Entity-Id` for contact assignment and approver resolution.                                                                  |
+
+#### Schema updates
+
+The `getApprovalResponse` schema was extended with:
+
+- `legalEntity` — object with `id` (legal entity identifier); set when the approval is created
+- `createdResource` — object with `id` (identifier of the created resource; for checkout, typically an order ID); omitted until the approved action produces a linked resource
+
 #### Known problems
 
 There are no known problems.
@@ -385,7 +455,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="2026-05-25" tags="new-feature" %}
+{% update date="2026-05-25" tags="deprecated" %}
 
 ## AI Rag Indexer - `name` and `description` fields from `/filter-metadata` endpoint deprecated
 
