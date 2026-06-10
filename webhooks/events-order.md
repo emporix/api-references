@@ -244,6 +244,8 @@ description: Webhook events related to the creation, update, cancellation, and s
     "mixins": "Object"
   },
   "siteCode": "String",
+  "cartId": "String",
+  "quoteId": "String",
   "countryCode": "String",
   "billingAddress": {
     "contactName": "String",
@@ -643,6 +645,8 @@ description: Webhook events related to the creation, update, cancellation, and s
     "mixins": "Object"
   },
   "siteCode": "String",
+  "cartId": "String",
+  "quoteId": "String",
   "countryCode": "String",
   "billingAddress": {
     "contactName": "String",
