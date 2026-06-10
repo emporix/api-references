@@ -33,7 +33,7 @@ All Category Service endpoints are affected. The `X-Version` request header is n
 |---|---|
 | [Category Service API](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference) | The `X-Version` request header is no longer required and is ignored when provided. |
 
-## Known problems
+#### Known problems
 
 There are no known problems.
 
