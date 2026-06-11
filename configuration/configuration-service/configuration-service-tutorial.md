@@ -62,23 +62,49 @@ The Configuration Service manages three types of configurations:
 
 ## Common configuration keys
 
-The Configuration Service supports various configuration keys for different purposes:
+The Configuration Service supports various configuration keys for different purposes. Many of these keys (although not all) can also be managed in **Management Dashboard** -> **Settings** -> **System Preferences**. The **MD Setting** column indicates whether a key is available there. For full descriptions, possible values, and default values of keys marked **yes**, see [System Preferences](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/settings/system-preferences).
 
-| Configuration Key | Description |
-|-------------------|-------------|
-| `customer.passwordreset.redirecturl` | URL to redirect customers when resetting their password |
-| `customer.changeemail.redirecturl` | URL to redirect customers when changing their email address |
-| `cust.notification.email.from` | Email address used as the sender for customer notifications |
-| `customer.deletion.redirecturl` | URL to redirect customers after account deletion |
-| `project_country` | Default country for your tenant |
-| `project_curr` | Default currencies for your tenant |
-| `project_lang` | Default languages for your tenant |
-| `taxConfiguration` | Tax classes and rates configuration |
-| `packagingConf` | Packaging groups and position options |
-| `storefront.host` | Hostname for your storefront |
-| `storefront.htmlPage` | Default HTML page for your storefront|
-| `unitConf` | Unit conversion configurations|
-| `invoiceSettings` | Invoice generation thresholds and statuses |
+| Configuration Key | Description | MD Setting |
+|-------------------|-------------|------------|
+| `allowAnonymousCheckoutWithExistingCustomerEmail` | Whether anonymous checkout is allowed when the customer email already exists | yes |
+| `allowToSkipRelatedProductsValidation` | Whether related products validation can be skipped | yes |
+| `approval.default_expiryDays` | Default number of days until an approval expires | yes |
+| `approval.enableQuoteApprovalProcess` | Whether the quote approval workflow is enabled | yes |
+| `cartItemValidationSkipCurrency` | Whether `currency` is optional when adding items to cart | yes |
+| `cartItemValidationSkipEffectiveAmount` | Whether `effectiveAmount` is optional when adding items to cart | yes |
+| `cartItemValidationSkipExistingItemsValidationOnAddToCart` | Whether to skip validation for existing cart items when adding a new item | yes |
+| `cartItemValidationSkipOriginalAmount` | Whether `originalAmount` is optional when adding items to cart | yes |
+| `companyContactPropagation` | How company contact assignments are propagated in a company hierarchy (`DOWNWARD`, `UPWARD`, or `DISABLED`) | yes |
+| `couponPermanentDelete` | Whether deleted coupons are permanently removed from the database instead of being flagged as deleted | yes |
+| `cust.notification.email.from` | Email address used as the sender for customer notifications | no |
+| `customer.changeemail.redirecturl` | URL to redirect customers when changing their email address | no |
+| `customer.deletion.redirecturl` | URL to redirect customers after account deletion | no |
+| `customer.passwordreset.redirecturl` | URL of the page for resetting the customer's password | yes |
+| `customerActiveOnCreation` | Whether newly created customers are set as active by default | yes |
+| `customerOnHoldOnCreation` | Whether newly created customers are set on hold by default | yes |
+| `enableCouponCodeCaseSensitivity` | Whether coupon codes can be saved in both upper and lower case | yes |
+| `enableExternalPrices` | Whether external price and product sourcing is enabled at cart level | yes |
+| `enableLegalEntityAddressFallbackInCart` | Whether to fall back to the legal entity address in cart when no address is provided | yes |
+| `enableOrderAddressPropagation` | Whether the address from an order is automatically saved to the customer profile | yes |
+| `enableProductCategoryAssignmentValidation` | Whether to validate that a product exists before assigning it to a category | yes |
+| `enableRecreationOfDeletedCustomer` | Whether a customer with the same customer number can be created after deletion | no |
+| `enableSyncBetweenRestrictionsAndSiteCodes` | Whether entity restrictions are synchronized with defined site codes | yes |
+| `invoiceSettings` | Invoice generation thresholds and statuses | no |
+| `maxNumberOfCouponsPerCart` | Maximum number of coupons that can be applied per cart | yes |
+| `openAiApiToken` | OpenAI API token used to connect Emporix AI features to OpenAI | yes |
+| `packagingConf` | Packaging groups and position options | no |
+| `populateProductDetailsOnAddToCart` | Whether product details are automatically populated when adding items to cart | yes |
+| `project_country` | Default country for your tenant | no |
+| `project_curr` | Default currencies for your tenant | no |
+| `project_lang` | Default languages for your tenant | no |
+| `restrictions` | List of restrictions applied to site-aware entities | yes |
+| `signUp.enableAccountCreationEmailConfirmation` | Whether welcome emails are sent when new customer accounts are created | yes |
+| `ssoCustomerAutoprovisioningDisabled` | Whether automatic customer creation during SSO token exchange is disabled | yes |
+| `ssoCustomerIdentifierField` | Field used to identify customers during token exchange (`EMAIL` or `SUBJECT`) | yes |
+| `storefront.host` | Hostname for your storefront | no |
+| `storefront.htmlPage` | Default HTML page for your storefront | no |
+| `taxConfiguration` | Tax classes and rates configuration | no |
+| `unitConf` | Unit conversion configurations | no |
 
 ## Managing tenant configurations 
 
@@ -200,6 +226,32 @@ curl -L
     }
   ]'
 ```
+
+**Example:** Enabling recreation of deleted customers
+
+```bash
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/configuration/{tenant}/configurations' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+  --header 'Content-Type: application/json' 
+  --data '[
+    {
+      "key": "enableRecreationOfDeletedCustomer",
+      "secured": false,
+      "value": true,
+      "version": 1
+    }
+  ]'
+```
+
+{% hint style="info" %}
+**Enabling recreation of deleted customers**
+
+By default, for security reasons, it is not possible to recreate a customer that was previously deleted. When a customer profile is deleted, the record is stored in the `deletedcustomers` collection. During customer creation, the Customer Service checks whether a customer with the requested customer number exists in that collection and rejects the request if a match is found.
+
+To allow recreation of previously deleted customers with the same customer number, create the `enableRecreationOfDeletedCustomer` tenant configuration and set its value to `true`, as shown in the preceding example.
+{% endhint %}
 
 {% hint style="warning" %}
 When creating configurations, make sure the `version` field is set to `1` for new configurations. The version number is incremented automatically when you update the configuration.
