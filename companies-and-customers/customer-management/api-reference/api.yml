@@ -22,7 +22,6 @@ tags:
   - name: Double opt-in
     description: Allow option for double opt-in.
 paths:
-  # Authentication and authorization
   /customerlogin/auth/anonymous/login:
     get:
       tags:
