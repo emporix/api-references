@@ -120,7 +120,7 @@ paths:
       description: |-
         Retrieves a customer profile.
 
-        **Note**: The request needs to be authorized with a customer access token or an anonymous access token.
+        **Note**: The request needs to be authorized with a customer access token or an anonymous access token. 
       operationId: GET-customer-retrieve-customer-profile
       security:
         - CustomerAccessToken: []
@@ -413,293 +413,6 @@ paths:
         Deletes tags from a specified customer address.
 
         **Note**: The request needs to be authorized with a customer access token.
-  '/customer/{tenant}/me/accounts/internal/email/change':
-    post:
-      responses:
-        '204':
-          description: No Content
-        '400':
-          $ref: '#/components/responses/400_bad_request'
-        '401':
-          $ref: '#/components/responses/401_unauthorized'
-        '403':
-          $ref: '#/components/responses/403_forbidden'
-      description: |
-        Sends a request to change a customer email address. As a result, the customer receives a unique token through email.
-
-        **Note**: The request needs to be authorized with a customer access token.
-
-        Request for changing login email token using current email id and password requires the `customer.customerprofile_edit` scope assigned with the customer access token.
-      operationId: POST-customer-change-customer-login-email
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ChangeEmailRequestDto'
-            examples:
-              Request example:
-                value:
-                  email: example@customer.com
-                  password: password123
-                  newEmail: example@emporix.com
-                  syncContactEmail: true
-        required: false
-      security:
-        - CustomerAccessToken: []
-      summary: Sending a request to update a customer email address
-      tags:
-        - Credentials
-    parameters:
-      - $ref: '#/components/parameters/tenant'
-  '/customer/{tenant}/me/accounts/internal/email/change/confirm':
-    post:
-      responses:
-        '204':
-          description: No Content
-        '400':
-          $ref: '#/components/responses/400_bad_request'
-        '401':
-          $ref: '#/components/responses/401_unauthorized'
-        '403':
-          $ref: '#/components/responses/403_forbidden'
-      description: |-
-        Updates a customer email address using the token received through email.
-
-        **Note**: The request needs to be authorized with a anonymous access token.
-      operationId: POST-customer-confirm-customer-login-email
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateEmail'
-            examples:
-              Request example:
-                value:
-                  token: beExUmshJC5gnuXk1kET5dCLyQWkrAfKRGFOxVXLcJI13R1fn5USjaWku5G71whM
-        required: false
-      security:
-        - AnonymousAccessToken: []
-      tags:
-        - Credentials
-      summary: Updating a customer email address
-    parameters:
-      - name: tenant
-        in: path
-        required: true
-        schema:
-          type: string
-        description: The tenant string is the project's Identifier from the Builder.
-  '/customer/{tenant}/password/reset':
-    post:
-      responses:
-        '204':
-          description: No Content
-        '400':
-          $ref: '#/components/responses/400_bad_request'
-        '401':
-          $ref: '#/components/responses/401_unauthorized'
-        '403':
-          $ref: '#/components/responses/403_forbidden'
-      description: |
-        Sends a request to reset a Customer account password. As a result, the customer receives a unique token through email.
-
-        **Note**: The request needs to be authorized with a anonymous access token.
-      operationId: POST-customer-request-reset-password
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PasswordResetRequestDto'
-            examples:
-              Request example:
-                value:
-                  email: example@customer.com
-        required: false
-      security:
-        - AnonymousAccessToken: []
-      summary: Sending a request to reset a customer password
-      tags:
-        - Credentials
-    parameters:
-      - $ref: '#/components/parameters/tenant'
-  '/customer/{tenant}/password/reset/update':
-    post:
-      responses:
-        '204':
-          description: No Content
-        '400':
-          $ref: '#/components/responses/400_bad_request'
-        '401':
-          $ref: '#/components/responses/401_unauthorized'
-        '403':
-          $ref: '#/components/responses/403_forbidden'
-      description: |-
-        Resets a customer password using the token received through email and sets a new password.
-
-        **Note**: The request needs to be authorized with a anonymous access token.
-      operationId: POST-customer-reset-password
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PasswordUpdate'
-            examples:
-              Request example:
-                value:
-                  token: beExUmshJC5gnuXk1kET5dCLyQWkrAfKRGFOxVXLcJI13R1fn5USjaWku5G71whM
-                  password: P@ssw0rd123
-        required: false
-      security:
-        - AnonymousAccessToken: []
-      tags:
-        - Credentials
-      summary: Resetting a customer password
-    parameters:
-      - $ref: '#/components/parameters/tenant'
-  '/customer/{tenant}/password/change':
-    post:
-      responses:
-        '204':
-          description: No Content
-        '400':
-          $ref: '#/components/responses/400_bad_request'
-        '401':
-          $ref: '#/components/responses/401_unauthorized'
-        '403':
-          $ref: '#/components/responses/403_forbidden'
-      description: |-
-        Changes a Customer account password.
-
-        **Note**: The request needs to be authorized with a customer access token.
-      operationId: POST-customer-change-account-password
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PasswordChangeDto'
-            examples:
-              Request example:
-                value:
-                  currentPassword: password123
-                  newPassword: P@ssw0rd123
-        required: false
-      security:
-        - CustomerAccessToken: []
-      tags:
-        - Credentials
-      summary: Changing a customer password
-    parameters:
-      - $ref: '#/components/parameters/tenant'
-  '/customer/{tenant}/signup':
-    post:
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ResourceLocation'
-              examples:
-                Response example:
-                  value:
-                    id: '13730481'
-        '400':
-          $ref: '#/components/responses/400_bad_request'
-        '401':
-          $ref: '#/components/responses/401_unauthorized'
-        '403':
-          $ref: '#/components/responses/403_forbidden'
-        '409':
-          $ref: '#/components/responses/409_conflict'
-      description: |-
-        Creates a new customer account.
-
-        **Note**: The request needs to be authorized with an anonymous access token.
-      operationId: POST-customer-create-customer-account
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CustomerSignup'
-            examples:
-              Create account:
-                value:
-                  email: example@customer.com
-                  password: password123
-                  customerDetails:
-                    title: MR
-                    firstName: John
-                    middleName: ''
-                    lastName: Doe
-                    contactEmail: example@customer.com
-                    contactPhone: '123456789'
-                    company: Emporix
-                    preferredLanguage: en_US
-                    preferredCurrency: EUR
-                    preferredSite: main
-                    b2b:
-                      companyRegistrationId: 123-456-789
-                  customerAddress:
-                    contactName: John Doe
-                    companyName: Emporix
-                    street: Platz der Republik
-                    streetNumber: '1'
-                    streetAppendix: ''
-                    extraLine1: ''
-                    extraLine2: ''
-                    zipCode: '11011'
-                    city: Berlin
-                    country: DE
-                    state: Berlin
-                    contactPhone: '123456789'
-                    tags:
-                      - BILLING
-                      - SHIPPING
-              Create account with separate sign-up credentials:
-                value:
-                  email: example@customer.com
-                  password: password123
-                  customerDetails:
-                    title: MR
-                    firstName: Jane
-                    middleName: ''
-                    lastName: Doe
-                    contactEmail: example@customer.com
-                    contactPhone: '123456789'
-                    company: Emporix
-                    preferredLanguage: en_US
-                    preferredCurrency: EUR
-                    preferredSite: main
-                    b2b:
-                      companyRegistrationId: 123-456-789
-                  customerAddress:
-                    contactName: Jane Doe
-                    companyName: Emporix
-                    street: Platz der Republik
-                    streetNumber: '1'
-                    streetAppendix: ''
-                    extraLine1: ''
-                    extraLine2: ''
-                    zipCode: '11011'
-                    city: Berlin
-                    country: DE
-                    state: Berlin
-                    contactPhone: '123456789'
-                    tags:
-                      - BILLING
-                      - SHIPPING
-                  signup:
-                    email: signup-example@customer.com
-                    password: password1234
-        required: false
-        description: ''
-      security:
-        - AnonymousAccessToken: []
-      summary: Creating a new customer
-      tags:
-        - Authentication and authorization
-    parameters:
-      - $ref: '#/components/parameters/tenant'
   /customerlogin/auth/anonymous/login:
     get:
       tags:
@@ -842,6 +555,116 @@ paths:
       servers:
       - url: https://api.emporix.io
         description: Production
+  '/customer/{tenant}/signup':
+    post:
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceLocation'
+              examples:
+                Response example:
+                  value:
+                    id: '13730481'
+        '400':
+          $ref: '#/components/responses/400_bad_request'
+        '401':
+          $ref: '#/components/responses/401_unauthorized'
+        '403':
+          $ref: '#/components/responses/403_forbidden'
+        '409':
+          $ref: '#/components/responses/409_conflict'
+      description: |-
+        Creates a new customer account.
+
+        **Note**: The request needs to be authorized with an anonymous access token.
+      operationId: POST-customer-create-customer-account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerSignup'
+            examples:
+              Create account:
+                value:
+                  email: example@customer.com
+                  password: password123
+                  customerDetails:
+                    title: MR
+                    firstName: John
+                    middleName: ''
+                    lastName: Doe
+                    contactEmail: example@customer.com
+                    contactPhone: '123456789'
+                    company: Emporix
+                    preferredLanguage: en_US
+                    preferredCurrency: EUR
+                    preferredSite: main
+                    b2b:
+                      companyRegistrationId: 123-456-789
+                  customerAddress:
+                    contactName: John Doe
+                    companyName: Emporix
+                    street: Platz der Republik
+                    streetNumber: '1'
+                    streetAppendix: ''
+                    extraLine1: ''
+                    extraLine2: ''
+                    zipCode: '11011'
+                    city: Berlin
+                    country: DE
+                    state: Berlin
+                    contactPhone: '123456789'
+                    tags:
+                      - BILLING
+                      - SHIPPING
+              Create account with separate sign-up credentials:
+                value:
+                  email: example@customer.com
+                  password: password123
+                  customerDetails:
+                    title: MR
+                    firstName: Jane
+                    middleName: ''
+                    lastName: Doe
+                    contactEmail: example@customer.com
+                    contactPhone: '123456789'
+                    company: Emporix
+                    preferredLanguage: en_US
+                    preferredCurrency: EUR
+                    preferredSite: main
+                    b2b:
+                      companyRegistrationId: 123-456-789
+                  customerAddress:
+                    contactName: Jane Doe
+                    companyName: Emporix
+                    street: Platz der Republik
+                    streetNumber: '1'
+                    streetAppendix: ''
+                    extraLine1: ''
+                    extraLine2: ''
+                    zipCode: '11011'
+                    city: Berlin
+                    country: DE
+                    state: Berlin
+                    contactPhone: '123456789'
+                    tags:
+                      - BILLING
+                      - SHIPPING
+                  signup:
+                    email: signup-example@customer.com
+                    password: password1234
+        required: false
+        description: ''
+      security:
+        - AnonymousAccessToken: []
+      summary: Creating a new customer
+      tags:
+        - Authentication and authorization
+    parameters:
+      - $ref: '#/components/parameters/tenant'
   '/customer/{tenant}/login':
     post:
       responses:
@@ -1093,6 +916,253 @@ paths:
         '403':
           $ref: '#/components/responses/403_forbidden'
       security: []
+  '/customer/{tenant}/socialLogin':
+    parameters:
+      - $ref: '#/components/parameters/tenant'
+    post:
+      summary: Logging in a customer with social login
+      operationId: POST-customer-login-customer-by-auth0
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: ''
+                type: object
+                properties:
+                  social_access_token:
+                    type: string
+                  social_id_token:
+                    type: string
+                  refresh_token:
+                    type: string
+                  refresh_token_expires_in:
+                    type: string
+                  session_idle_time:
+                    type: integer
+                  token_type:
+                    type: string
+                  access_token:
+                    type: string
+                  saas_token:
+                    type: string
+                  expires_in:
+                    type: string
+                  scope:
+                    type: string
+        '400':
+          $ref: '#/components/responses/400_bad_request'
+        '401':
+          $ref: '#/components/responses/401_unauthorized'
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: session-id
+          description: Anonymous customer unique session identifier.
+          required: false
+        - schema:
+            type: string
+          in: query
+          name: code
+          description: The authorization code received from the identity provider.
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: redirect_uri
+          description: The redirect URI that was used in the initial authorization request.
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: code_verifier
+          description: Required only if using PKCE (Proof Key for Code Exchange) flow.
+          required: false
+      description: |-
+        Logs in a customer using an authentication code from Auth0 and retrieves a standard customer token.
+      tags:
+        - Authentication and authorization
+      security:
+        - AnonymousAccessToken: []
+  '/customer/{tenant}/me/accounts/internal/email/change':
+    post:
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/400_bad_request'
+        '401':
+          $ref: '#/components/responses/401_unauthorized'
+        '403':
+          $ref: '#/components/responses/403_forbidden'
+      description: |
+        Sends a request to change a customer email address. As a result, the customer receives a unique token through email.
+
+        **Note**: The request needs to be authorized with a customer access token.
+
+        Request for changing login email token using current email id and password requires the `customer.customerprofile_edit` scope assigned with the customer access token.
+      operationId: POST-customer-change-customer-login-email
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeEmailRequestDto'
+            examples:
+              Request example:
+                value:
+                  email: example@customer.com
+                  password: password123
+                  newEmail: example@emporix.com
+                  syncContactEmail: true
+        required: false
+      security:
+        - CustomerAccessToken: []
+      summary: Sending a request to update a customer email address
+      tags:
+        - Credentials
+    parameters:
+      - $ref: '#/components/parameters/tenant'
+  '/customer/{tenant}/me/accounts/internal/email/change/confirm':
+    post:
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/400_bad_request'
+        '401':
+          $ref: '#/components/responses/401_unauthorized'
+        '403':
+          $ref: '#/components/responses/403_forbidden'
+      description: |-
+        Updates a customer email address using the token received through email.
+
+        **Note**: The request needs to be authorized with a anonymous access token.
+      operationId: POST-customer-confirm-customer-login-email
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEmail'
+            examples:
+              Request example:
+                value:
+                  token: beExUmshJC5gnuXk1kET5dCLyQWkrAfKRGFOxVXLcJI13R1fn5USjaWku5G71whM
+        required: false
+      security:
+        - AnonymousAccessToken: []
+      tags:
+        - Credentials
+      summary: Updating a customer email address
+    parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The tenant string is the project's Identifier from the Builder.
+  '/customer/{tenant}/password/reset':
+    post:
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/400_bad_request'
+        '401':
+          $ref: '#/components/responses/401_unauthorized'
+        '403':
+          $ref: '#/components/responses/403_forbidden'
+      description: |
+        Sends a request to reset a Customer account password. As a result, the customer receives a unique token through email.
+
+        **Note**: The request needs to be authorized with a anonymous access token.
+      operationId: POST-customer-request-reset-password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetRequestDto'
+            examples:
+              Request example:
+                value:
+                  email: example@customer.com
+        required: false
+      security:
+        - AnonymousAccessToken: []
+      summary: Sending a request to reset a customer password
+      tags:
+        - Credentials
+    parameters:
+      - $ref: '#/components/parameters/tenant'
+  '/customer/{tenant}/password/reset/update':
+    post:
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/400_bad_request'
+        '401':
+          $ref: '#/components/responses/401_unauthorized'
+        '403':
+          $ref: '#/components/responses/403_forbidden'
+      description: |-
+        Resets a customer password using the token received through email and sets a new password.
+
+        **Note**: The request needs to be authorized with a anonymous access token.
+      operationId: POST-customer-reset-password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordUpdate'
+            examples:
+              Request example:
+                value:
+                  token: beExUmshJC5gnuXk1kET5dCLyQWkrAfKRGFOxVXLcJI13R1fn5USjaWku5G71whM
+                  password: P@ssw0rd123
+        required: false
+      security:
+        - AnonymousAccessToken: []
+      tags:
+        - Credentials
+      summary: Resetting a customer password
+    parameters:
+      - $ref: '#/components/parameters/tenant'
+  '/customer/{tenant}/password/change':
+    post:
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/400_bad_request'
+        '401':
+          $ref: '#/components/responses/401_unauthorized'
+        '403':
+          $ref: '#/components/responses/403_forbidden'
+      description: |-
+        Changes a Customer account password.
+
+        **Note**: The request needs to be authorized with a customer access token.
+      operationId: POST-customer-change-account-password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordChangeDto'
+            examples:
+              Request example:
+                value:
+                  currentPassword: password123
+                  newPassword: P@ssw0rd123
+        required: false
+      security:
+        - CustomerAccessToken: []
+      tags:
+        - Credentials
+      summary: Changing a customer password
+    parameters:
+      - $ref: '#/components/parameters/tenant'
   '/customer/{tenant}/signup/optin/{token}':
     get:
       operationId: GET-customer-signup-customer-optin
@@ -1168,76 +1238,6 @@ paths:
         - Double opt-in
     parameters:
       - $ref: '#/components/parameters/tenant'
-  '/customer/{tenant}/socialLogin':
-    parameters:
-      - $ref: '#/components/parameters/tenant'
-    post:
-      summary: Logging in a customer with social login
-      operationId: POST-customer-login-customer-by-auth0
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                description: ''
-                type: object
-                properties:
-                  social_access_token:
-                    type: string
-                  social_id_token:
-                    type: string
-                  refresh_token:
-                    type: string
-                  refresh_token_expires_in:
-                    type: string
-                  session_idle_time:
-                    type: integer
-                  token_type:
-                    type: string
-                  access_token:
-                    type: string
-                  saas_token:
-                    type: string
-                  expires_in:
-                    type: string
-                  scope:
-                    type: string
-        '400':
-          $ref: '#/components/responses/400_bad_request'
-        '401':
-          $ref: '#/components/responses/401_unauthorized'
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: session-id
-          description: Anonymous customer unique session identifier.
-          required: false
-        - schema:
-            type: string
-          in: query
-          name: code
-          description: The authorization code received from the identity provider.
-          required: true
-        - schema:
-            type: string
-          in: query
-          name: redirect_uri
-          description: The redirect URI that was used in the initial authorization request.
-          required: true
-        - schema:
-            type: string
-          in: query
-          name: code_verifier
-          description: Required only if using PKCE (Proof Key for Code Exchange) flow.
-          required: false
-      description: |-
-        Logs in a customer using an authentication code from Auth0 and retrieves a standard customer token.
-      tags:
-        - Authentication and authorization
-      security:
-        - AnonymousAccessToken: []
 components:
   schemas:
     AccountId:
@@ -1962,8 +1962,8 @@ components:
     CustomerAccessToken:
       type: http
       scheme: bearer
-      description: To generate a customer access token, go to the 'Logging in a customer' endpoint.
+      description: To generate a customer access token, go to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.
     AnonymousAccessToken:
       type: http
       scheme: bearer
-      description: To generate an anonymous token, check out the 'Requesting an anonymous token' endpoint.
+      description: To generate an anonymous token, check out the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-login) endpoint.
