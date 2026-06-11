@@ -11,12 +11,12 @@ info:
 servers:
   - url: 'https://api.emporix.io'
 tags:
+  - name: Authentication and authorization
+    description: Create and manage customer access tokens.
   - name: Account and profile
     description: Manage customer account details.
   - name: Addresses
     description: Manage customer address information.
-  - name: Authentication and authorization
-    description: Create and manage customer access tokens.
   - name: Credentials
     description: Manage customer credentials.
   - name: Double opt-in
