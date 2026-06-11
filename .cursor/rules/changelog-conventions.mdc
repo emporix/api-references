@@ -43,3 +43,7 @@ Use the `tags` attribute on the `{% update %}` block. Do **not** add an `icon` t
 ## Section headings
 
 Use `####` for sections inside an entry (for example `#### Overview`, `#### New endpoints`, `#### Updated endpoints`, `#### Known problems`).
+
+## Style and content
+
+For title, overview, endpoint tables, known problems, and hints, follow `.style-guide/templates/changelog.md`.

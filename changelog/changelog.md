@@ -17,7 +17,6 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
-
 {% update date="2026-06-10" tags="improvement" %}
 
 ## AI Service - commerce event trigger filter support and job status update
