@@ -143,6 +143,10 @@ The response returns the ID of the created customer.
 {% hint style="info" %}
 If you want to use separate sign-up credentials (different email for login than the main contact email), you can include the `signup` object with `email` and `password` fields in the request.
 {% endhint %}
+
+{% hint style="info" %}
+By default, you cannot create a customer with a customer number that belongs to a previously deleted profile. To allow recreation with the same customer number, create the `enableRecreationOfDeletedCustomer` tenant configuration in the Configuration Service. For more information, see the examples in [How to create tenant configurations](../../configuration/configuration-service/configuration-service-tutorial.md#how-to-create-tenant-configurations).
+{% endhint %}
 {% endstep %}
 
 {% step %}
