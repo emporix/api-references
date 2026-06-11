@@ -121,7 +121,7 @@ The Saas Token is a token associated with an authenticated customer and is furth
 A Refresh Token is a specific type of access token in the Emporix API used to generate a new customer token without forcing the user to log in again. 
 
 * Purpose: A refresh token is used to maintain a seamless customer's session. Before the customer's session expires, requesting a refresh token can extend the session so that the customer remains authenticated. The refresh token is particularly useful in B2B environments as it can also update the customer's session with their legal entity selection during the session. See also [B2B Token](#b2b-token).
-* Endpoint: `GET /customer/{tenant}/refreshauthtoken` [Requesting a refresh token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization).
+* Endpoint: `GET /customer/{tenant}/refreshauthtoken` [Requesting a refresh token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken).
 
 ### B2B token
 
