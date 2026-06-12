@@ -74,7 +74,7 @@ The successful response returns the `201 Created` status and the customer's assi
 }
 ```
 
-{% hint style="info" %}
+{% hint style="warning" %}
 By default, you cannot create a customer with a `customerNumber` that belongs to a previously deleted profile. To allow recreation with the same `customerNumber`, create the `enableRecreationOfDeletedCustomer` tenant configuration in the Configuration Service. For more information, see the examples in [How to create tenant configurations](../../configuration/configuration-service/configuration-service-tutorial.md#how-to-create-tenant-configurations).
 {% endhint %}
 {% endstep %}
