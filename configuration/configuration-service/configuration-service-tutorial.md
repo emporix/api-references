@@ -248,7 +248,7 @@ curl -L
 {% hint style="info" %}
 **Enabling recreation of deleted customers**
 
-By default, for security reasons, it is not possible to recreate a customer that was previously deleted. When a customer profile is deleted, the record is stored in the `deletedcustomers` collection. During customer creation, the Customer Service checks whether a customer with the requested customer number exists in that collection and rejects the request if a match is found.
+By default, for security reasons, it is not possible to recreate a customer that was previously deleted. During customer creation, the Customer Service rejects requests that use a `customerNumber` already assigned to a deleted customer profile.
 
 To allow recreation of previously deleted customers with the same customer number, create the `enableRecreationOfDeletedCustomer` tenant configuration and set its value to `true`, as shown in the preceding example.
 {% endhint %}
