@@ -17,7 +17,7 @@ The steps described in this tutorial demonstrate how you, as an employee, can ma
 {% step %}
 ### Get an employee access token
 
-Firstly, obtain a relevant access token to be able to perform operations as an employee on behalf of a customer. Call the OAuth Service [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authorization/oauth-service/api-reference/service-access-token) endpoint to get credentials of a technical client with the `customer.customer_manage` and `customer.customer_manage_own` scopes assigned. The `customer.customer_manage_own` is required only when you want to let a customer manage customer profiles from the same company.
+Firstly, obtain a relevant access token to be able to perform operations as an employee on behalf of a customer. Call the OAuth Service [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authentication/oauth-service/api-reference/service-access-token) endpoint to get credentials of a technical client with the `customer.customer_manage` and `customer.customer_manage_own` scopes assigned. The `customer.customer_manage_own` is required only when you want to let a customer manage customer profiles from the same company.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -75,7 +75,7 @@ The successful response returns the `201 Created` status and the customer's assi
 ```
 
 {% hint style="warning" %}
-By default, you cannot create a customer with a `customerNumber` that belongs to a previously deleted profile. To allow recreation with the same `customerNumber`, create the `enableRecreationOfDeletedCustomer` tenant configuration in the Configuration Service. For more information, see the examples in [How to create tenant configurations](../../configuration/configuration-service/configuration-service-tutorial.md#how-to-create-tenant-configurations).
+By default, you cannot create a customer with a `customerNumber` that belongs to a previously deleted profile. To allow recreation with the same `customerNumber`, create the `enableRecreationOfDeletedCustomer` tenant configuration in the Configuration Service. For more information, see the examples in [How to create tenant configurations](../../../configuration/configuration-service/configuration-service-tutorial.md#how-to-create-tenant-configurations).
 {% endhint %}
 {% endstep %}
 
