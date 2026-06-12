@@ -245,7 +245,7 @@ curl -L
   ]'
 ```
 
-{% hint style="info" %}
+{% hint style="warning" %}
 **Enabling recreation of deleted customers**
 
 By default, for security reasons, it is not possible to recreate a customer that was previously deleted. During customer creation, the Customer Service rejects requests that use a `customerNumber` already assigned to a deleted customer profile.
