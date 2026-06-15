@@ -17,6 +17,34 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
+{% update date="2026-06-15" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-5698 -->
+## Customer Assignment - Handling of ':' Character in Customer IDs
+
+#### Overview
+The issue COP-5698 identifies a limitation where customers with IDs containing the colon (`:`) character cannot be assigned to legal entities. This affects workflows involving special-character-containing customer identifiers and blocks correct association with legal entities.
+
+Currently, no implementation or API changes have been delivered or documented to address this limitation. The affected services likely include Client Management Service, Customer Service, and Customer Segment Service, which handle customer profiles, legal entities, and assignments respectively.
+
+The expected fix would involve updating validation and parsing logic across these services to accept `:` characters in customer IDs during assignment operations. However, no code changes, API diffs, or rollout plans have been provided yet.
+
+#### Updated endpoints / Added endpoints / Updated types / Affected endpoints
+
+| Service                   | Endpoint / Area                     | Notes                                                                                     |
+|---------------------------|-----------------------------------|-------------------------------------------------------------------------------------------|
+| Client Management Service | Customer-to-legal-entity assignment | Expected to update validation to accept `:` in customer IDs (no changes documented yet)  |
+| Customer Service          | Customer ID validation and storage | Needs to support `:` in IDs without data corruption (no changes documented yet)           |
+| Customer Segment Service  | Customer assignment and embedding  | Should handle `:` in customer IDs consistently (no changes documented yet)                |
+
+No public API changes or new endpoints have been introduced; therefore, no API reference updates are required at this time.
+
+#### Known problems
+- No implementation or code changes have been provided or verified for this feature.
+- Without concrete changes, the system impact, security implications, and cross-service compatibility cannot be assessed.
+- Risk of inconsistent handling of `:` characters across services remains until coordinated updates are implemented.
+- Lack of traceability and documentation increases the risk of incomplete or conflicting fixes.
+{% endupdate %}
+
 {% update date="2026-06-10" tags="improvement" %}
 
 ## AI Service - commerce event trigger filter support and job status update
