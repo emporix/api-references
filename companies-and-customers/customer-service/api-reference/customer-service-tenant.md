@@ -21,8 +21,8 @@ Firstly, obtain a relevant access token to be able to perform operations as an e
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../../authorization/oauth-service/api-reference/" %}
-[api-reference](../../../authorization/oauth-service/api-reference/)
+{% content-ref url="../../../authentication/oauth-service/api-reference/" %}
+[api-reference](../../../authentication/oauth-service/api-reference/)
 {% endcontent-ref %}
 
 ```bash
