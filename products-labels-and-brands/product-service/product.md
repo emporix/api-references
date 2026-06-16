@@ -157,7 +157,7 @@ curl -i -X POST \
 To add media files, for example images or videos, for a particular product, upload them directly to the Emporix database, or link to their location on an external website. In this example, create a `PUBLIC` `BLOB` asset and associate it with a product by sending a request to the [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint with the `media.asset_manage` scope.
 
 {% hint style="warning" %}
-To upload a file, send a `multipart/form-data` request and create a `BLOB` asset with `PUBLIC` access. To reference an external URL without uploading the file, send an `application/json` request and create a `LINK` asset. Storefront-visible product media requires `PUBLIC` access; private `LINK` assets are supported for internal product documentation. For more information, check out the [Media Tutorial](../../media/media/media.md).
+To upload a file, send a `multipart/form-data` request and create a `BLOB` asset with `PUBLIC` access. To reference an external URL without uploading the file, send an `application/json` request and create a `LINK` asset. Storefront-visible product media requires `PUBLIC` access. For more information, check out the [Media Tutorial](../../media/media/media.md).
 {% endhint %}
 
 ```bash
