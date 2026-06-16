@@ -39,6 +39,8 @@ To link media to a category, product, or other predefined resource type, create 
 Before you begin, ensure the target category, product, or other resource already exists. For more information, check out the relevant service API reference.
 {% endhint %}
 
+After association, you can manage the asset in the Management Dashboard from the related resource view (for example, a category or product).
+
 ### Associate a public asset by link
 
 To add a linked asset for a category, or other resource, send an `application/json` request to the [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint with the `media.asset_manage` scope.
