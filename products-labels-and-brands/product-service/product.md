@@ -570,7 +570,7 @@ curl -i -X POST \
         ]
       }
     ]
-  }
+  }'
 ```
 
 The `id` from the response is the product template ID. Use it as `{{product_template_Id}}` in the next step.
@@ -600,33 +600,33 @@ curl -i -X POST \
   -H 'Content-Language: string' \
   -H 'Content-Type: application/json' \
   -d '{
-  "name": "T-shirt with variants",
-  "code": "PARENT001",
-  "description": "Plain cotton T-shirt.",
-  "published": false,
-  "taxClasses": {
-    "EN": "STANDARD"
-  },
-  "productType": "PARENT_VARIANT",
-  "template": {
-    "id": "{{product_template_Id}}",
-    "version": 1
-  },
-  "variantAttributes": {
-    "color": [
-      { "key": "RED" },
-      { "key": "GREEN" },
-      { "key": "BLUE" }
-    ],
-    "size": [
-      { "key": "XS" },
-      { "key": "S" },
-      { "key": "M" },
-      { "key": "L" },
-      { "key": "XL" }
-    ]
-  }
-}
+    "name": "T-shirt with variants",
+    "code": "PARENT001",
+    "description": "Plain cotton T-shirt.",
+    "published": false,
+    "taxClasses": {
+      "EN": "STANDARD"
+    },
+    "productType": "PARENT_VARIANT",
+    "template": {
+      "id": "{{product_template_Id}}",
+      "version": 1
+    },
+    "variantAttributes": {
+      "color": [
+        { "key": "RED" },
+        { "key": "GREEN" },
+        { "key": "BLUE" }
+      ],
+      "size": [
+        { "key": "XS" },
+        { "key": "S" },
+        { "key": "M" },
+        { "key": "L" },
+        { "key": "XL" }
+      ]
+    }
+  }'
 ```
 {% endstep %}
 
@@ -765,72 +765,72 @@ curl -i -X PUT \
   -H 'Content-Language: string' \
   -H 'Content-Type: application/json' \
   -d '{
-  "name": {
-    "en": "T-shirt"
-  },
-  "attributes": [
-    {
-      "key": "color",
-      "name": {
-        "en": "Color",
-        "pl": "Kolor"
-      },
-      "type": "TEXT",
-      "metadata": {
-        "mandatory": false,
-        "variantAttribute": true,
-        "defaultValue": null
-      },
-      "values": [
-        { "key": "GREEN" },
-        { "key": "RED" },
-        { "key": "BLUE" },
-        { "key": "PURPLE" }
-      ]
+    "name": {
+      "en": "T-shirt"
     },
-    {
-      "key": "discount",
-      "name": {
-        "en": "Discount"
+    "attributes": [
+      {
+        "key": "color",
+        "name": {
+          "en": "Color",
+          "pl": "Kolor"
+        },
+        "type": "TEXT",
+        "metadata": {
+          "mandatory": false,
+          "variantAttribute": true,
+          "defaultValue": null
+        },
+        "values": [
+          { "key": "GREEN" },
+          { "key": "RED" },
+          { "key": "BLUE" },
+          { "key": "PURPLE" }
+        ]
       },
-      "type": "NUMBER",
-      "metadata": {
-        "mandatory": false,
-        "defaultValue": 0
+      {
+        "key": "discount",
+        "name": {
+          "en": "Discount"
+        },
+        "type": "NUMBER",
+        "metadata": {
+          "mandatory": false,
+          "defaultValue": 0
+        },
+        "values": [
+          { "key": 0 },
+          { "key": 30 },
+          { "key": 40 },
+          { "key": 50 },
+          { "key": 60 }
+        ]
       },
-      "values": [
-        { "key": 0 },
-        { "key": 30 },
-        { "key": 40 },
-        { "key": 50 },
-        { "key": 60 }
-      ]
-    },
-    {
-      "key": "size",
-      "name": {
-        "en": "Size",
-        "pl": "Rozmiar"
-      },
-      "type": "TEXT",
-      "metadata": {
-        "mandatory": false,
-        "variantAttribute": true,
-        "defaultValue": null
-      },
-      "values": [
-        { "key": "XS" },
-        { "key": "S" },
-        { "key": "M" },
-        { "key": "L" },
-        { "key": "XL" }
-      ]
+      {
+        "key": "size",
+        "name": {
+          "en": "Size",
+          "pl": "Rozmiar"
+        },
+        "type": "TEXT",
+        "metadata": {
+          "mandatory": false,
+          "variantAttribute": true,
+          "defaultValue": null
+        },
+        "values": [
+          { "key": "XS" },
+          { "key": "S" },
+          { "key": "M" },
+          { "key": "L" },
+          { "key": "XL" }
+        ]
+      }
+    ],
+    "metadata": {
+      "version": 1
     }
-  ],
-  "metadata": {
-    "version": 1
-  }
-}
+  }'
 ```
 {% endstep %}
 
@@ -922,30 +922,30 @@ curl -i -X PUT \
     "description": "The best T-shirt ever.",
     "published": true,
     "taxClasses": {
-        "EN": "STANDARD",
-        "PL": "STANDARD"
+      "EN": "STANDARD",
+      "PL": "STANDARD"
     },
     "productType": "VARIANT",
     "relatedItems": [
-        {
+      {
         "refId": "634cea2740033d7c2e7b03a9",
         "type": "CONSUMABLE"
-        }
+      }
     ],
     "metadata": {
-        "version": 1,
-        "overridden": [
+      "version": 1,
+      "overridden": [
         "published",
         "taxClasses"
-        ]
+      ]
     },
     "mixins": {
-        "productVariantAttributes": {
+      "productVariantAttributes": {
         "color": "BLUE",
         "size": "M"
-        }
+      }
     }
-}
+  }'
 ```
 {% endstep %}
 {% endstepper %}
@@ -1525,7 +1525,7 @@ curl -L \
       "id": "product-123",
       "type": "PRODUCT"
     }
-  }
+  }'
 ```
 {% endstep %}
 
@@ -1559,7 +1559,7 @@ curl -L \
     "metadata": {
       "version": 1
     }
-  }
+  }'
 ```
 
 {% hint style="info" %}
