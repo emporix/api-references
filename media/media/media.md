@@ -22,7 +22,7 @@ The assets can either be linked to an external website where they are stored, or
 You can also specify the access type of each asset:
 
 - `PUBLIC` — Stored on public storage and accessible from an external URL. Use this access type for storefront-visible media, such as category banners or product images.
-- `PRIVATE` — Stored on private storage and not accessible from an external URL. Use this access type for internal documents, such as contracts or specification sheets. Private assets can only be retrieved through the [Downloading an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download) endpoint.
+- `PRIVATE` — Stored on private storage and not accessible from an external URL. Use this access type for internal documents, such as contracts or specification sheets. To download the file content of a `PRIVATE` `BLOB` asset, use the [Downloading an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download) endpoint.
 
 {% hint style="warning" %}
 The [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint supports two request formats, each creating a different asset type:

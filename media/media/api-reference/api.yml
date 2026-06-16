@@ -23,7 +23,7 @@ paths:
         - To create an asset of the `LINK` type, use the `application/json` request body.
 
         **Access and assignment rules:**
-        - assets assigned to predefined `refIds` types (such as `CATEGORY` or `PRODUCT`) require `PUBLIC` access.
+        - Assets assigned to predefined `refIds` types (such as `CATEGORY` or `PRODUCT`) require `PUBLIC` access.
         - `PRIVATE` access assets can be linked to custom schema types or remain unassigned.
       security:
         - OAuth2:

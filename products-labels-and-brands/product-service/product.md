@@ -93,7 +93,7 @@ curl -i -X POST \
         "rate": 0
       }
     ]
-  }
+  }'
 ```
 {% endstep %}
 
@@ -118,7 +118,7 @@ curl -i -X POST \
       "EN": "STANDARD"
     },
     "productType": "BASIC"
-  }
+  }'
 ```
 
 You can also add multiple basic products at the same time. To achieve that, send a request to the [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
@@ -214,7 +214,7 @@ curl -i -X POST \
         ]
       }
     ]
-  }
+  }'
 ```
 
 The `id` from the response is the product template ID that you can use when creating products.
@@ -254,7 +254,7 @@ curl -i -X POST \
         "size": "L"
       }
     }
-  }
+  }'
 ```
 {% endstep %}
 {% endstepper %}
@@ -308,7 +308,7 @@ curl -i -X POST \
     }
   ],
   "productType": "BUNDLE"
-}
+}'
 ```
 
 The value of the `productId` from the response is the \{{bundle\_Id\}}.
@@ -344,7 +344,8 @@ curl -i -X PUT \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Language: string' \
   -H 'Content-Type: application/json' \
-  -d '{
+  -d '[
+  {
     "id": "65492420e492d916983c8431",
     "code": "pa-1",
     "name": {
@@ -408,7 +409,8 @@ curl -i -X PUT \
       }
     },
     "published": true
-}
+  }
+]'
 ```
 
 When the update request is sent successfully, the response for a particular product is returned at the same position (index) at which it is located in the request body. The expected response is as follows:
@@ -857,22 +859,22 @@ curl -i -X PATCH \
       "id": "{{product_template_Id}}",
       "version": 2
     },
-  "variantAttributes": {
-    "color": [
-      { "key": "GREEN" },
-      { "key": "RED" },
-      { "key": "BLUE" },
-      { "key": "PURPLE" }
-    ],
-    "size": [
-      { "key": "XS" },
-      { "key": "S" },
-      { "key": "M" },
-      { "key": "L" },
-      { "key": "XL" }
-    ]
-  }
-}
+    "variantAttributes": {
+      "color": [
+        { "key": "GREEN" },
+        { "key": "RED" },
+        { "key": "BLUE" },
+        { "key": "PURPLE" }
+      ],
+      "size": [
+        { "key": "XS" },
+        { "key": "S" },
+        { "key": "M" },
+        { "key": "L" },
+        { "key": "XL" }
+      ]
+    }
+  }'
 ```
 
 As a result, new product variants are created automatically, in combinations that include the newly specified attributes and values.
