@@ -26,7 +26,7 @@ layout:
 {% hint style="warning" %}
 Category names and descriptions are localized. When creating a new category, you can specify the category name and descriptions in multiple languages.
 
-Looking for more info on localization? Check out [_Standard practices_](../../standard-practices/translations.md).
+Looking for more info on localization? Check out [Standard practices](../../standard-practices/translations.md).
 {% endhint %}
 
 **Root categories vs. subcategories**
@@ -52,10 +52,11 @@ The `localizedSlug` field must not contain any diacritics.
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/category/{tenant}/categories' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/category/{{tenant}}/categories' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{
     "parentId": "056bcaf6-66b8-4ddd-9489-65c5f6449e74",
     "localizedName": {
@@ -93,8 +94,8 @@ You can assign resources, such as products, to particular categories.
 
 Make sure you have already finished the following tutorials:
 
-* [_How to create a category_](category.md#how-to-create-a-category)
-* [_How to add your first product_](../../products-labels-and-brands/product-service/product.md#how-to-add-your-first-product)
+* [How to create a category](category.md#how-to-create-a-category)
+* [How to add your first product](../../products-labels-and-brands/product-service/product.md#how-to-add-your-first-product)
 
 ### Assign a product to a category
 
@@ -110,10 +111,11 @@ To assign a product to a category, you need to send a request to the [Assigning 
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/category/{{tenant}}/categories/{{categoryId}}/assignments' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{
     "ref": {
       "id": "1639265",
@@ -133,8 +135,9 @@ To check whether the resource was properly assigned to the category, you can sen
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' 
+curl -L \
+  --url 'https://api.emporix.io/category/{{tenant}}/categories/{{categoryId}}/assignments' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: */*'
 ```
 
@@ -157,9 +160,10 @@ To delete all assignments for a specific category, you need to send a request to
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request DELETE 
-  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments' 
+curl -L \
+  --request DELETE \
+  --url 'https://api.emporix.io/category/{{tenant}}/categories/{{categoryId}}/assignments' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: */*'
 ```
 
@@ -174,9 +178,10 @@ To delete only a specific assignment, you need to send a request to the [Deletin
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request DELETE 
-  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/assignments/{assignmentId}' 
+curl -L \
+  --request DELETE \
+  --url 'https://api.emporix.io/category/{{tenant}}/categories/{{categoryId}}/assignments/{{assignmentId}}' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: */*'
 ```
 
@@ -193,10 +198,11 @@ Category tree [Retrieving the category trees](https://developer.emporix.io/api-r
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request PATCH 
-  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/category/{{tenant}}/categories/{{categoryId}}' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{
     "localizedName": {
       "en": "Floor Care Liquids"
@@ -233,8 +239,9 @@ To retrieve a specific category tree, you need to send a request to the [Retriev
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --url 'https://api.emporix.io/category/{tenant}/category-trees/{categoryId}' 
+curl -L \
+  --url 'https://api.emporix.io/category/{{tenant}}/category-trees/{{categoryId}}' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: */*'
 ```
 
@@ -249,8 +256,9 @@ To retrieve all category trees, you need to send a request to the [Retrieving th
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --url 'https://api.emporix.io/category/{tenant}/category-trees' 
+curl -L \
+  --url 'https://api.emporix.io/category/{{tenant}}/category-trees' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: */*'
 ```
 
@@ -272,8 +280,9 @@ You can limit the depth of retrieved subcategories with the `depth` parameter.
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}/subcategories' 
+curl -L \
+  --url 'https://api.emporix.io/category/{{tenant}}/categories/{{categoryId}}/subcategories' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: */*'
 ```
 
@@ -294,10 +303,11 @@ To move a category to be a child of another category, you need to send a request
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request PATCH 
-  --url 'https://api.emporix.io/category/{tenant}/categories/{categoryId}' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/category/{{tenant}}/categories/{{categoryId}}' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{
     "localizedName": {
       "en": "Floor Care Liquids"
@@ -322,10 +332,11 @@ Classification categories allow you to organize products with consistent attribu
 To create a classification category, send a request to the [Creating a new category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint with the `type` field set to `"CLASSIFICATION"` and define `ownClassificationMixins`.
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/category/{tenant}/categories' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/category/{{tenant}}/categories' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{
     "type": "CLASSIFICATION",
     "parentId": "root",
