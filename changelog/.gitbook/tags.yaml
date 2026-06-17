@@ -10,3 +10,6 @@
 - tag: major-change
   label: major change
   color: orange
+- tag: minor-change
+  label: minor change
+  color: default

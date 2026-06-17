@@ -1,67 +1,16 @@
-# Table of contents
+# Changelog 2026
 
-* [Changelog](README.md)
+## Changelog
+
+* [2026](changelog.md)
 
 ## In progress
 
 * [Current work in progress](in-progress/in-progress.md)
 
-## 2026
-* [2026-05-26: Approval Service - quote approval process](2026/2026-05-26-approval.md)
-* [2026-05-26: Approval Service - deprecated fields](2026/2026-05-26-approval-deprecations.md)
-* [2026-05-25: AI RAG Indexer - support for custom entity types in /filter-metadata and /rag-metadata endpoints](2026/2026-05-25-ai-rag-indexer.md)
-* [2026-05-25: AI Rag Indexer - name and description fields from /filter-metadata endpoint deprecated](2026/2026-05-25-ai-rag-indexer-deprecations.md)
-* [2026-05-25: AI Service - RAG_EMPORIX filter fields](2026/2026-05-25-ai-service.md)
-* [2026-05-25: SEPA Export Service - deprecation](2026/2026-05-25-sepa-export)
-* [2026-05-18: Price Service - siteCodes support in price search](2026/2026-05-18-price.md)
-* [2026-05-13: Emporix SDK - Dynamic variants support](2026/2026-05-13-sdk.md)
-* [2026-05-13: IAM Service - access control restrictions, predefined scopes, and deprecations](2026/2026-05-13-iam.md)
-* [2026-05-11: Product Service - code on dynamic variant variants map entries](2026/2026-05-11-product-variants-code.md)
-* [2026-05-11: Product Service - expand brand and labels in product responses](2026/2026-05-11-product-service-expand-brand-labels.md)
-* [2026-05-11: Webhook Events - updated `index-item.updated` event schema](2026/2026-05-11-webhook-index-item-updated.md)
-* [2026-05-11: Cart Service - batch update endpoint for cart items](2026/2026-05-11-cart.md)
-* [2026-05-08: Schema Service - Export and Import functionality for custom schema types](2026/2026-05-08-schema.md)
-* [2026-05-07: Emporix SDK - Availability Service Q-param support, total count header and search improvements](2026/2026-05-07-sdk.md)
-* [2026-04-29: Emporix SDK - Multi-tenant support](2026/2026-04-29-sdk.md)
-* [2026-04-28: Availability Service - Q-param support, total count header and search improvements](2026/2026-04-28-availability.md)
-* [2026-04-27: Product Service – dynamic variant product type and recalculation](2026/2026-04-27-product.md)
-* [2026-04-27: Customer Service - contactEmail field cannot be unset once a value is present](2026/2026-04-27-customer.md)
-* [2026-04-27: Client Management Service - customer group role in Legal Entities](2026/2026-04-27-client-management.md)
-* [2026-04-24: Cart Service - `cart.updated` event on any cart modification](2026/2026-04-24-cart.md)
-* [2026-04-23: AI Service - Agent Analytics](2026/2026-04-23-ai-service.md)
-* [2026-04-21: Session Context Service - language attribute added to session context model](2026/2026-04-21-session-context.md)
-* [2026-04-21: Customer Service - session context attributes on anonymous login](2026/2026-04-21-customer.md)
-* [2026-04-13: Schema Service - custom instance scopes, owner, and type-scoped access](2026/2026-04-13-schema.md)
-* [2026-04-13: IAM Service - custom scopes and access controls](2026/2026-04-13-iam.md)
-* [2026-04-07: Order Service - historical transitions endpoint for tenant-managed orders](2026/2026-04-07-order.md)
-* [2026-04-07: Emporix SDK - Availability Service support](2026/2026-04-07-sdk.md)
-* [2026-04-02: Availability Service - new bulk processing endpoints ](2026/2026-04-02-availability.md)
-* [2026-04-01: IAM Service - last login information exposed in user GET endpoints](2026/2026-04-01-iam.md)
-* [2026-03-27: Schema Service - support for CART_ITEM and ORDER_ENTRY type](2026/2026-03-27-schema.md)
-* [2026-03-23: Emporix SDK cartItem type replacement ](2026/2026-03-23-sdk.md)
-* [2026-03-20: Returns Service - calculated price properties for returns](2026/2026-03-20-return.md)
-* [2026-03-19: Sequential ID Service - new schema removal endpoint](2026/2026-03-19-sequential-id.md)
-* [2026-03-16: Order Service - checkout property for sales orders](2026/2026-03-16-order.md)
-* [2026-03-12: Order Service - hybris-count header deprecated](2026/2026-03-12-order.md)
-* [2026-03-10: Customer Service - SSO customer authentication based on token exchange](2026/2026-03-10-customer.md)
-* [2026-03-09: Emporix SDK - Product API skipRelatedItemsValidation support](2026/2026-03-09-sdk.md)
-* [2026-03-09: Product Service – skip related items validation](2026/2026-03-09-product.md)
-* [2026-02-24: Emporix SDK - price list prices q param search support](2026/2026-02-24-sdk.md)
-* [2026-02-20: Price Service - new search endpoint and query parameter for price list prices](2026/2026-02-20-price.md)
-* [2026-02-12: Emporix SDK - restrictions support](2026/2026-02-12-sdk.md)
-* [2026-02-11: Quote Service - restriction property for quotes](2026/2026-02-11-quote.md)
-* [2026-02-11: Customer Service - restriction property for customers](2026/2026-02-11-customer.md)
-* [2026-02-11: Order Service - restriction property for orders](2026/2026-02-11-order.md)
-* [2026-02-11: Cart Service - restriction property for carts](2026/2026-02-11-cart.md)
-* [2026-02-11: Client Management Service - restrictions property for Legal Entities](2026/2026-02-11-client-management.md)
-* [2026-02-11: IAM Service - restrictions and restrictionAware properties](2026/2026-02-11-iam.md)
-* [2026-02-06: IAM Service – new endpoint for retrieving own user](2026/2026-02-06-iam.md)
-* [2026-02-04: Product Service – category and customer segment IDs no longer in preview](2026/2026-02-04-product.md)
-* [2026-01-08: Configuration Service - New properties for configurations](2026/2026-01-08-configuration.md)
-
 ## Archive
 
-* [Changelog 2025](archive/2025/changelog-2025.md)
+* [2025](archive/2025/changelog-2025.md)
   * [2025-12-17: Product Service - classification mixins support](archive/2025/2025-12-17-product-classification.md)
   * [2025-12-17: Category Service - classification categories](archive/2025/2025-12-17-category.md)
   * [2025-12-17: Webhook Service - update category event schema](archive/2025/2025-12-17-webhook.md)
@@ -168,7 +117,7 @@
   * [2025-01-29: Price Match - new priceListId field added](archive/2025/2025-01-29-price-match.md)
   * [2025-01-24: Algolia - added information about segments](archive/2025/2025-01-24-algolia.md)
   * [2025-01-13: Availability Service - availability endpoints replacement](archive/2025/2025-01-13-availability.md)
-* [Changelog 2024](archive/2024/changelog-2024.md)
-* [Changelog 2023](archive/2023/changelog-2023.md)
-* [Changelog 2022](archive/2022/changelog-2022.md)
+* [2024](archive/2024/changelog-2024.md)
+* [2023](archive/2023/changelog-2023.md)
+* [2022](archive/2022/changelog-2022.md)
  

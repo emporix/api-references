@@ -23,6 +23,7 @@ paths:
     get:
       tags:
         - Locations
+      deprecated: true
       summary: Retrieving all locations for a site
       description: |-
         Retrieves all locations for a specified site.
@@ -53,6 +54,7 @@ paths:
     post:
       tags:
         - Locations
+      deprecated: true
       summary: Adding a new location to a site
       description: |-
         Adds a new location to a specified site.
@@ -91,6 +93,7 @@ paths:
     put:
       tags:
         - Locations
+      deprecated: true
       summary: Updating locations
       description: |-
         Updates locations for a specified site.
@@ -131,6 +134,7 @@ paths:
     delete:
       tags:
         - Locations
+      deprecated: true
       summary: Deleting a location
       description: |-
         Deletes a specified location.
@@ -160,6 +164,7 @@ paths:
   /availability/{tenant}/search/locations:
     description: Availability service
     post:
+      deprecated: true
       summary: Retrieving product locations
       description: |-
         Retrieves locations of specified products.

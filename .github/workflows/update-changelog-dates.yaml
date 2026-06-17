@@ -1,11 +1,10 @@
 # When a PR is merged to main, replace RELEASE_DATE placeholders in the changelog
-# with the merge date (in filenames, file content, and SUMMARY.md links).
+# with the merge date (UTC) in changelog/changelog.md.
 #
-# Usage: In your PR, create changelog entries using the placeholder RELEASE_DATE:
-#   - File: changelog/2025/RELEASE_DATE-my-feature.md (year folder is a hint; merge year is used)
-#   - Title inside file: # RELEASE_DATE: My feature title
-#   - SUMMARY.md: * [RELEASE_DATE: My feature title](2025/RELEASE_DATE-my-feature.md)
-# After merge, this workflow replaces RELEASE_DATE with the actual date (e.g. 2025-02-11).
+# Usage: In your PR, add an entry to changelog/changelog.md using:
+#   {% update date="RELEASE_DATE" tags="new-feature" %}
+#   ## My feature title
+# After merge, this workflow replaces RELEASE_DATE with the actual date (e.g. 2026-06-08).
 
 name: Update changelog dates on merge
 

@@ -49,9 +49,19 @@ config:
 classDiagram
     class Approval {
         id : String
+        legalEntity : LegalEntity
+        createdResource : CreatedResource
         approver : Customer
         requestor : Customer
         resource : Resource
+    }
+
+    class LegalEntity {
+        id : String
+    }
+
+    class CreatedResource {
+        id : String
     }
 
     class Customer {
@@ -82,6 +92,8 @@ classDiagram
     Approval --> ResourceQuote : resource (QUOTE)
 
     class Approval
+    class LegalEntity
+    class CreatedResource
     class Customer
     class ResourceCart
     class ResourceQuote
@@ -89,6 +101,8 @@ classDiagram
     style Customer fill:#F2F6FA, stroke:#4C5359
     style ResourceCart fill:#F2F6FA, stroke:#4C5359
     style ResourceQuote fill:#F2F6FA, stroke:#4C5359
+    style LegalEntity fill:#F2F6FA, stroke:#4C5359
+    style CreatedResource fill:#F2F6FA, stroke:#4C5359
   ```
 
 ## Roles and scopes
@@ -504,6 +518,11 @@ curl -i -X PATCH \
 ### How to retrieve an approval
 
 Approvals can be fetched by a customer. Only the approval which is assigned to the customer is returned.
+
+The response includes:
+
+* `legalEntity` — the company the approval belongs to (`id` is the legal entity identifier). It is set when the approval is created from the requestor's contact assignment for the active B2B legal entity.
+* `createdResource` — the resource created when the approval flow completes (`id` is that resource's identifier). For checkout approvals, `id` is typically the order ID (for example, `64ef8d12b6385140afea1603`). The field is omitted until the approved action produces a linked resource; other actions may reference invoices, contracts, or similar entities in the future.
 
 To retrieve an approval, send a request to the [Retrieving a single approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#get-approval-tenant-approvals-approvalid) endpoint.
 
