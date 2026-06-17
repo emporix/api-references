@@ -45,7 +45,7 @@ There are no known problems.
 #### Overview
 
 The Indexing Service endpoint for reindexing has been marked as deprecated and will be removed on **2026-12-01**. Use the
- [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs)
+ [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead.
 
 #### Deprecated endpoints
 
