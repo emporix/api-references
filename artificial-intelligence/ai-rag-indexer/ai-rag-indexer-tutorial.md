@@ -364,7 +364,7 @@ curl -L \
 {% endtab %}
 {% endtabs %}
 
-The service fetches every entity of the specified type (`product` or custom entity type). Embeddings are generated per entity and vector database records are updated. You receive the `204 No Content` response once the job is scheduled successfully.
+The service fetches every entity of the specified type (`product` or custom entity type). Embeddings are generated per entity and vector database records are updated. You receive the `201` or `200` reponse with reindex job ID, which allows you to track the progress.
 
 {% hint style="danger" %}
 Reindexing is a computationally expensive and time-consuming operation, especially for large catalogs. It may significantly increase infrastructure costs, processing time, and overall system load. For this reason, perform reindexing only when truly necessary — for example, after major configuration changes, embedding model updates, or structural schema modifications. Avoid triggering it frequently or without clear intent.
