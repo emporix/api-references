@@ -19,19 +19,18 @@ icon: arrows-rotate-reverse
 
 {% update date="RELEASE_DATE" tags="deprecated" %}
 
-## Ai Rag Indexer Service - deprecated endpoint
+## AI Rag Indexer Service - deprecated endpoint
 
 #### Overview
 
-The Ai Rag Indexer Service endpoint for reindexing has been marked as deprecated and will be removed on **2026-12-01**. The endpoint
-for [creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs)
-should be used instead.
+The AI Rag Indexer Service endpoint for reindexing has been marked as deprecated and will be removed on **2026-12-01**. Instead, use the
+ [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint.
 
 #### Deprecated endpoints
 
 | Endpoint                                                                                                                                                                  | Description                                                                                                                                                                                 |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Reindexing](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/reindex#post-ai-rag-indexer-tenant-type-reindex) | Use [creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead. | 
+| [Reindexing the entities of given type](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/reindex#post-ai-rag-indexer-tenant-type-reindex) | Use the [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead. | 
 
 #### Known problems
 
