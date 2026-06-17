@@ -344,7 +344,7 @@ curl -L \
   }'
 ```
 
-
+For products, set `"rag": true` so the reindex job generates vector embeddings for your `rag_emporix` tool, using the `indexedFields` defined in the tool configuration. Without this flag, only the storefront search index is rebuilt; the vector database used for RAG retrieval is not updated.
 
 {% endtab %}
 
