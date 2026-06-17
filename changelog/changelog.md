@@ -45,15 +45,14 @@ There are no known problems.
 
 #### Overview
 
-The Indexing Service endpoint for reindexing has been marked as deprecated and will be removed on **2026-12-01**. The endpoint
-for [creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs)
-should be used instead.
+The Indexing Service endpoint for reindexing has been marked as deprecated and will be removed on **2026-12-01**. Use the
+ [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs)
 
 #### Deprecated endpoints
 
 | Endpoint                                                                                                                                               | Description                                                                                                                                                                                 |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Reindexing](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex) | Use [creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead. | 
+| [Reindexing](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex) | Use the [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead. | 
 
 #### Known problems
 
