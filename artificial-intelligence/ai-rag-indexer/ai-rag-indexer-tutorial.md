@@ -47,7 +47,7 @@ Call the [Listing fields for RAG search](https://developer.emporix.io/api-refere
 ```bash
 curl -L \
   --request GET \
-  --url 'https://api.emporix.io/ai-rag-indexer/{tenant}/product/rag-metadata' \
+  --url 'https://api.emporix.io/ai-rag-indexer/{{tenant}}/product/rag-metadata' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: application/json'
 ```
@@ -71,7 +71,7 @@ Sample response:
 ```bash
 curl -L \
   --request GET \
-  --url 'https://api.emporix.io/ai-rag-indexer/{tenant}/car-parts/rag-metadata' \
+  --url 'https://api.emporix.io/ai-rag-indexer/{{tenant}}/car-parts/rag-metadata' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: application/json'
 ```
@@ -118,7 +118,7 @@ Call the [Listing fields for vector search filtering](https://developer.emporix.
 ```bash
 curl -L \
   --request GET \
-  --url 'https://api.emporix.io/ai-rag-indexer/{tenant}/product/filter-metadata' \
+  --url 'https://api.emporix.io/ai-rag-indexer/{{tenant}}/product/filter-metadata' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: application/json'
 ```
@@ -141,7 +141,7 @@ Sample response:
 ```bash
 curl -L \
   --request GET \
-  --url 'https://api.emporix.io/ai-rag-indexer/{tenant}/car-parts/filter-metadata' \
+  --url 'https://api.emporix.io/ai-rag-indexer/{{tenant}}/car-parts/filter-metadata' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: application/json'
 ```
@@ -187,7 +187,7 @@ Set the `toolId` in the URL path (for example, `rag-product` or `rag-car-parts`)
 
 ```bash
 curl --request PUT \
-  'https://api.emporix.io/ai-service/{tenant}/agentic/tools/rag-product' \
+  'https://api.emporix.io/ai-service/{{tenant}}/agentic/tools/rag-product' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -232,7 +232,7 @@ curl --request PUT \
 
 ```bash
 curl --request PUT \
-  'https://api.emporix.io/ai-service/{tenant}/agentic/tools/rag-car-parts' \
+  'https://api.emporix.io/ai-service/{{tenant}}/agentic/tools/rag-car-parts' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -327,7 +327,7 @@ Align `indexedFields` and `filterFields` with the output of `rag-metadata` and `
 {% step %}
 #### Trigger a reindex job
 
-When the tool is configured, call the [Reindexing the entities of given type](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/reindex#GET-ai-rag-indexer-tenant-type-reindex) endpoint to regenerate embeddings for the selected entity type. The reindex endpoint currently performs a full rebuild.
+When the tool is configured, call the [Create a reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint to regenerate embeddings for the selected entity type. The reindex endpoint currently performs a full rebuild.
 
 {% tabs %}
 {% tab title="Product" %}
@@ -335,10 +335,16 @@ When the tool is configured, call the [Reindexing the entities of given type](ht
 ```bash
 curl -L \
   --request POST \
-  --url 'https://api.emporix.io/ai-rag-indexer/{tenant}/product/reindex' \
+  --url 'https://api.emporix.io/indexing/{{tenant}}/reindex-jobs' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
-  --header 'Accept: */*'
+  --header 'Content-Type: application/json' \
+  --data '{
+    "entityType": "PRODUCT",
+    "rag": true
+  }'
 ```
+
+
 
 {% endtab %}
 
@@ -347,9 +353,12 @@ curl -L \
 ```bash
 curl -L \
   --request POST \
-  --url 'https://api.emporix.io/ai-rag-indexer/{tenant}/car-parts/reindex' \
+  --url 'https://api.emporix.io/indexing/{{tenant}}/reindex-jobs' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
-  --header 'Accept: */*'
+  --header 'Content-Type: application/json' \
+  --data '{
+    "entityType": "CAR_PARTS"
+  }'
 ```
 
 {% endtab %}
