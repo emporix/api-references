@@ -17,6 +17,68 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
+{% update date="2026-06-18" tags="deprecated" %}
+
+## AI Rag Indexer Service - deprecated endpoint
+
+#### Overview
+
+The AI Rag Indexer Service endpoint for reindexing has been marked as deprecated and will be removed on **2026-12-01**. Instead, use the
+ [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint.
+
+#### Deprecated endpoints
+
+| Endpoint                                                                                                                                                                  | Description                                                                                                                                                                                 |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Reindexing the entities of given type](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/reindex#post-ai-rag-indexer-tenant-type-reindex) | Use the [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead. | 
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-06-18" tags="deprecated" %}
+
+## Indexing Service - deprecated endpoint
+
+#### Overview
+
+The Indexing Service endpoint for reindexing has been marked as deprecated and will be removed on **2026-12-01**. Use the
+ [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead.
+
+#### Deprecated endpoints
+
+| Endpoint                                                                                                                                               | Description                                                                                                                                                                                 |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Reindexing](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex) | Use the [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead. | 
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+
+{% update date="2026-06-18" tags="new-feature, improvement" %}
+
+## Indexing Service - Reindex Jobs
+
+#### Overview
+
+The Indexing Service was extended with new endpoints for creating and fetching reindex jobs. For now, reindexing supports `PRODUCT` and custom schema entity types.
+
+#### New endpoints
+
+| Endpoint                                                                                                                                                                          | Description                         |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|
+| [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs)             | Endpoint for creating reindex job.  |
+| [Fetching reindex jobs](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs)             | Endpoint for fetching reindex jobs. |
+| [Fetching reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid) | Endpoint for fetching reindex job.  |
+
+{% endupdate %}
+
+
 {% update date="2026-06-10" tags="improvement" %}
 
 ## AI Service - commerce event trigger filter support and job status update

@@ -57,11 +57,11 @@ For more information, check out the [Tax classes guide](https://app.gitbook.com/
 To define sales tax rates for a country, send a request to the [Creating a new tax configuration](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/tax-service/api-reference/taxes#post-tax-tenant-taxes) endpoint.
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/tax/{tenant}/taxes' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Language: string' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/tax/{{tenant}}/taxes' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
   -d '{
     "location": {
       "countryCode": "DE"
@@ -93,7 +93,7 @@ curl -i -X POST
         "rate": 0
       }
     ]
-  }
+  }'
 ```
 {% endstep %}
 
@@ -105,10 +105,10 @@ To add a single basic product, send a request to the [Creating a new product](ht
 **Simple product example:**
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/product/{tenant}/products' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/product/{{tenant}}/products' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "name": "Smartphone X2",
     "code": "BASIC001",
@@ -118,16 +118,16 @@ curl -i -X POST
       "EN": "STANDARD"
     },
     "productType": "BASIC"
-  }
+  }'
 ```
 
 You can also add multiple basic products at the same time. To achieve that, send a request to the [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/product/{tenant}/products/bulk' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/product/{{tenant}}/products/bulk' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '[
     {
         "id": "abc-123",
@@ -154,19 +154,19 @@ curl -i -X POST
 {% step %}
 ### Add media for a product
 
-To add media files, for example images or videos, for a particular product, you can upload them directly to the Emporix database, or link to their location on an external website. In the following example, we are creating a `public` type of an asset that is linked to the product of our choice by sending a request to the Creating an asset endpoint with the `media.asset_manage` scope.
+To add media files, for example images or videos, for a particular product, upload them directly to the Emporix database, or link to their location on an external website. In this example, create a `PUBLIC` `BLOB` asset and associate it with a product by sending a request to the [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint with the `media.asset_manage` scope.
 
 {% hint style="warning" %}
-Sending a json/application request to the Creating an asset endpoint does **not** mean that the asset is uploaded to the database. It is only linked to the resource (category or product). If you want to upload the asset to the database, send a multipart request to the [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint. For more information, check out the [_Media Management Tutorials_](../../media/media/media.md).
+To upload a file, send a `multipart/form-data` request and create a `BLOB` asset with `PUBLIC` access. To reference an external URL without uploading the file, send an `application/json` request and create a `LINK` asset. Storefront-visible product media requires `PUBLIC` access. For more information, check out the [Media Tutorial](../../media/media/media.md).
 {% endhint %}
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/media/{tenant}/assets' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Type: multipart/form-data' 
-  -F 'file=[object Object]' 
-  -F 'body=[object Object]'
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/media/{{tenant}}/assets' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --form 'file=@abc-125.png' \
+  --form 'body={"type":"BLOB","access":"PUBLIC","refIds":[{"id":"abc-125","type":"PRODUCT"}],"details":{"filename":"abc-125","mimeType":"image/png"}}'
 ```
 {% endstep %}
 {% endstepper %}
@@ -182,11 +182,11 @@ You can create a product template that contains additional attributes describing
 To create a new product template, call the [Creating a new product template](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#post-product-tenant-product-templates) endpoint.
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/product/{tenant}/product-templates' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Language: string' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/product/{{tenant}}/product-templates' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
   -d '{
     "id": "545b4e3dfaee4c10def3db24",
     "name": {
@@ -214,7 +214,7 @@ curl -i -X POST
         ]
       }
     ]
-  }
+  }'
 ```
 
 The `id` from the response is the product template ID that you can use when creating products.
@@ -232,10 +232,10 @@ By applying a product template, you can create a product that contains additiona
 To create a new product by applying a product template to it, call the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint and provide the template's ID in the request body.
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/product/{tenant}/products' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/product/{{tenant}}/products' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "name": "Smartphone X2",
     "code": "BASIC001",
@@ -254,7 +254,7 @@ curl -i -X POST
         "size": "L"
       }
     }
-  }
+  }'
 ```
 {% endstep %}
 {% endstepper %}
@@ -284,10 +284,10 @@ You can group together two or more products that already exist in the system so 
 In this example, we create a bundle containing a T-shirt product and socks product that already exist in the system.
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/product/{tenant}/products' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/product/{{tenant}}/products' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
   "name": "T-shirt and socks bundle",
   "code": "tshirt_socks_bundle",
@@ -308,7 +308,7 @@ curl -i -X POST
     }
   ],
   "productType": "BUNDLE"
-}
+}'
 ```
 
 The value of the `productId` from the response is the \{{bundle\_Id\}}.
@@ -339,12 +339,13 @@ The `product.product_update` scope is required. The `product.product_publish` an
 {% endhint %}
 
 ```bash
-curl -i -X PUT 
-  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Language: string' 
-  -H 'Content-Type: application/json' 
-  -d '{
+curl -i -X PUT \
+  'https://api.emporix.io/product/{{tenant}}/products/bulk?skipVariantGeneration=false&doIndex=true' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
     "id": "65492420e492d916983c8431",
     "code": "pa-1",
     "name": {
@@ -408,7 +409,8 @@ curl -i -X PUT
       }
     },
     "published": true
-}
+  }
+]'
 ```
 
 When the update request is sent successfully, the response for a particular product is returned at the same position (index) at which it is located in the request body. The expected response is as follows:
@@ -519,11 +521,11 @@ Create a product template that defines the variant attributes (for example, `col
 Call the [Creating a new product template](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#post-product-tenant-product-templates) endpoint.
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/product/{tenant}/product-templates' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Language: string' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/product/{{tenant}}/product-templates' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
   -d '{
     "name": {
       "en": "T-shirt with variants"
@@ -568,7 +570,7 @@ curl -i -X POST
         ]
       }
     ]
-  }
+  }'
 ```
 
 The `id` from the response is the product template ID. Use it as `{{product_template_Id}}` in the next step.
@@ -592,39 +594,39 @@ The product template can contain more attributes and values than are needed to c
 To create a single `parent_variant` type of product with variants, send a request to the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/product/{tenant}/products?skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Language: string' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/product/{{tenant}}/products?skipVariantGeneration=false&doIndex=true' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
   -d '{
-  "name": "T-shirt with variants",
-  "code": "PARENT001",
-  "description": "Plain cotton T-shirt.",
-  "published": false,
-  "taxClasses": {
-    "EN": "STANDARD"
-  },
-  "productType": "PARENT_VARIANT",
-  "template": {
-    "id": "{{product_template_Id}}",
-    "version": 1
-  },
-  "variantAttributes": {
-    "color": [
-      { "key": "RED" },
-      { "key": "GREEN" },
-      { "key": "BLUE" }
-    ],
-    "size": [
-      { "key": "XS" },
-      { "key": "S" },
-      { "key": "M" },
-      { "key": "L" },
-      { "key": "XL" }
-    ]
-  }
-}
+    "name": "T-shirt with variants",
+    "code": "PARENT001",
+    "description": "Plain cotton T-shirt.",
+    "published": false,
+    "taxClasses": {
+      "EN": "STANDARD"
+    },
+    "productType": "PARENT_VARIANT",
+    "template": {
+      "id": "{{product_template_Id}}",
+      "version": 1
+    },
+    "variantAttributes": {
+      "color": [
+        { "key": "RED" },
+        { "key": "GREEN" },
+        { "key": "BLUE" }
+      ],
+      "size": [
+        { "key": "XS" },
+        { "key": "S" },
+        { "key": "M" },
+        { "key": "L" },
+        { "key": "XL" }
+      ]
+    }
+  }'
 ```
 {% endstep %}
 
@@ -636,11 +638,11 @@ If you want to create multiple `parent_variant` products at the same time, send 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/product/{tenant}/products/bulk?skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Language: string' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/product/{{tenant}}/products/bulk?skipVariantGeneration=false&doIndex=true' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
   -d '[
   {
     "id": "abc-123",
@@ -757,78 +759,78 @@ Each of the attributes has its own metadata element, where you can specify wheth
 {% endhint %}
 
 ```bash
-curl -i -X PUT 
-  'https://api.emporix.io/product/{tenant}/product-templates/{product-template-id}' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Language: string' 
-  -H 'Content-Type: application/json' 
+curl -i -X PUT \
+  'https://api.emporix.io/product/{{tenant}}/product-templates/{{product-template-id}}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
   -d '{
-  "name": {
-    "en": "T-shirt"
-  },
-  "attributes": [
-    {
-      "key": "color",
-      "name": {
-        "en": "Color",
-        "pl": "Kolor"
-      },
-      "type": "TEXT",
-      "metadata": {
-        "mandatory": false,
-        "variantAttribute": true,
-        "defaultValue": null
-      },
-      "values": [
-        { "key": "GREEN" },
-        { "key": "RED" },
-        { "key": "BLUE" },
-        { "key": "PURPLE" }
-      ]
+    "name": {
+      "en": "T-shirt"
     },
-    {
-      "key": "discount",
-      "name": {
-        "en": "Discount"
+    "attributes": [
+      {
+        "key": "color",
+        "name": {
+          "en": "Color",
+          "pl": "Kolor"
+        },
+        "type": "TEXT",
+        "metadata": {
+          "mandatory": false,
+          "variantAttribute": true,
+          "defaultValue": null
+        },
+        "values": [
+          { "key": "GREEN" },
+          { "key": "RED" },
+          { "key": "BLUE" },
+          { "key": "PURPLE" }
+        ]
       },
-      "type": "NUMBER",
-      "metadata": {
-        "mandatory": false,
-        "defaultValue": 0
+      {
+        "key": "discount",
+        "name": {
+          "en": "Discount"
+        },
+        "type": "NUMBER",
+        "metadata": {
+          "mandatory": false,
+          "defaultValue": 0
+        },
+        "values": [
+          { "key": 0 },
+          { "key": 30 },
+          { "key": 40 },
+          { "key": 50 },
+          { "key": 60 }
+        ]
       },
-      "values": [
-        { "key": 0 },
-        { "key": 30 },
-        { "key": 40 },
-        { "key": 50 },
-        { "key": 60 }
-      ]
-    },
-    {
-      "key": "size",
-      "name": {
-        "en": "Size",
-        "pl": "Rozmiar"
-      },
-      "type": "TEXT",
-      "metadata": {
-        "mandatory": false,
-        "variantAttribute": true,
-        "defaultValue": null
-      },
-      "values": [
-        { "key": "XS" },
-        { "key": "S" },
-        { "key": "M" },
-        { "key": "L" },
-        { "key": "XL" }
-      ]
+      {
+        "key": "size",
+        "name": {
+          "en": "Size",
+          "pl": "Rozmiar"
+        },
+        "type": "TEXT",
+        "metadata": {
+          "mandatory": false,
+          "variantAttribute": true,
+          "defaultValue": null
+        },
+        "values": [
+          { "key": "XS" },
+          { "key": "S" },
+          { "key": "M" },
+          { "key": "L" },
+          { "key": "XL" }
+        ]
+      }
+    ],
+    "metadata": {
+      "version": 1
     }
-  ],
-  "metadata": {
-    "version": 1
-  }
-}
+  }'
 ```
 {% endstep %}
 
@@ -846,33 +848,33 @@ When creating or updating a product of the `PARENT_VARIANT` type, by default, pr
 {% endhint %}
 
 ```bash
-curl -i -X PATCH 
-  'https://api.emporix.io/product/{tenant}/products/{productId}?skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Language: string' 
-  -H 'Content-Type: application/json' 
+curl -i -X PATCH \
+  'https://api.emporix.io/product/{{tenant}}/products/{{productId}}?skipVariantGeneration=false&doIndex=true' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
   -d '{
     "published": true,
     "template": {
       "id": "{{product_template_Id}}",
       "version": 2
     },
-  "variantAttributes": {
-    "color": [
-      { "key": "GREEN" },
-      { "key": "RED" },
-      { "key": "BLUE" },
-      { "key": "PURPLE" }
-    ],
-    "size": [
-      { "key": "XS" },
-      { "key": "S" },
-      { "key": "M" },
-      { "key": "L" },
-      { "key": "XL" }
-    ]
-  }
-}
+    "variantAttributes": {
+      "color": [
+        { "key": "GREEN" },
+        { "key": "RED" },
+        { "key": "BLUE" },
+        { "key": "PURPLE" }
+      ],
+      "size": [
+        { "key": "XS" },
+        { "key": "S" },
+        { "key": "M" },
+        { "key": "L" },
+        { "key": "XL" }
+      ]
+    }
+  }'
 ```
 
 As a result, new product variants are created automatically, in combinations that include the newly specified attributes and values.
@@ -909,41 +911,41 @@ In the following example, we override the following fields:
 * `taxClasses`
 
 ```bash
-curl -i -X PUT 
-  'https://api.emporix.io/product/{tenant}/products/{productId}?partial=false&skipVariantGeneration=false&doIndex=true' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Language: string' 
-  -H 'Content-Type: application/json' 
+curl -i -X PUT \
+  'https://api.emporix.io/product/{{tenant}}/products/{{productId}}?partial=false&skipVariantGeneration=false&doIndex=true' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Language: string' \
+  -H 'Content-Type: application/json' \
   -d '{
     "name": "Blue T-shirt M",
     "code": "VARIANT001",
     "description": "The best T-shirt ever.",
     "published": true,
     "taxClasses": {
-        "EN": "STANDARD",
-        "PL": "STANDARD"
+      "EN": "STANDARD",
+      "PL": "STANDARD"
     },
     "productType": "VARIANT",
     "relatedItems": [
-        {
+      {
         "refId": "634cea2740033d7c2e7b03a9",
         "type": "CONSUMABLE"
-        }
+      }
     ],
     "metadata": {
-        "version": 1,
-        "overridden": [
+      "version": 1,
+      "overridden": [
         "published",
         "taxClasses"
-        ]
+      ]
     },
     "mixins": {
-        "productVariantAttributes": {
+      "productVariantAttributes": {
         "color": "BLUE",
         "size": "M"
-        }
+      }
     }
-}
+  }'
 ```
 {% endstep %}
 {% endstepper %}
@@ -996,7 +998,7 @@ To create the root product, call the [Creating a new product](https://developer.
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/product/{tenant}/products' \
+  'https://api.emporix.io/product/{{tenant}}/products' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -1034,7 +1036,7 @@ Each attribute value uses the `dynamicVariantAttribute` structure:
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/product/{tenant}/products' \
+  'https://api.emporix.io/product/{{tenant}}/products' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -1088,7 +1090,7 @@ L2 variants are children of L1 variants. They declare only the attributes they i
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/product/{tenant}/products' \
+  'https://api.emporix.io/product/{{tenant}}/products' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -1123,7 +1125,7 @@ To retrieve the root product with its complete variant tree, call the [Retrievin
 
 ```bash
 curl -i -X GET \
-  'https://api.emporix.io/product/{tenant}/products/mobile-15-pro' \
+  'https://api.emporix.io/product/{{tenant}}/products/mobile-15-pro' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
@@ -1221,7 +1223,7 @@ To retrieve a child product, call the [Retrieving a product](https://developer.e
 
 ```bash
 curl -i -X GET \
-  'https://api.emporix.io/product/{tenant}/products/mobile-15-pro-l2-retail' \
+  'https://api.emporix.io/product/{{tenant}}/products/mobile-15-pro-l2-retail' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
@@ -1270,7 +1272,7 @@ For a single product write, the `variants` map on all ancestor products is updat
 
 ```bash
 curl -i -X PUT \
-  'https://api.emporix.io/product/{tenant}/products/mobile-15-pro-l1' \
+  'https://api.emporix.io/product/{{tenant}}/products/mobile-15-pro-l1' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -1342,7 +1344,7 @@ To trigger recalculation, call the [Triggering dynamic variant recalculation](ht
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/product/{tenant}/products/recalculate' \
+  'https://api.emporix.io/product/{{tenant}}/products/recalculate' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -1408,7 +1410,7 @@ Use the job ID from the response and call the [Retrieving a recalculation job](h
 
 ```bash
 curl -i -X GET \
-  'https://api.emporix.io/product/{tenant}/products/recalculate/jobs/job-a1b2c3d4-e5f6-7890-abcd-ef1234567890' \
+  'https://api.emporix.io/product/{{tenant}}/products/recalculate/jobs/job-a1b2c3d4-e5f6-7890-abcd-ef1234567890' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
@@ -1455,7 +1457,7 @@ To monitor the overall import progress, call the [Listing recalculation jobs](ht
 
 ```bash
 curl -i -X GET \
-  'https://api.emporix.io/product/{tenant}/products/recalculate/jobs?status=PENDING' \
+  'https://api.emporix.io/product/{{tenant}}/products/recalculate/jobs?status=PENDING' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
@@ -1513,16 +1515,17 @@ To create a product with classification mixins, assign it first to a classificat
 Assign the product to a classification category using the [Assigning a resource to a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#post-category-tenant-categories-categoryid-assignments) endpoint:
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/category/{tenant}/categories/0720b75e-ee1c-4d76-9f53-eb3af3927e13/assignments' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/category/{{tenant}}/categories/0720b75e-ee1c-4d76-9f53-eb3af3927e13/assignments' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{
     "ref": {
       "id": "product-123",
       "type": "PRODUCT"
     }
-  }
+  }'
 ```
 {% endstep %}
 
@@ -1532,11 +1535,12 @@ curl -L
 Update the product with classification mixin attributes using the [Partially updating a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint. Use the `mixinPath` from the classification category's `classificationMixins` field:
 
 ```bash
-curl -L 
-  --request PATCH 
-  --url 'https://api.emporix.io/product/{tenant}/products/product-123' 
-  --header 'X-Version: v2' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/product/{{tenant}}/products/product-123' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'X-Version: v2' \
+  --header 'Content-Type: application/json' \
   --data '{
     "mixins": {
       "productCustomAttributes": {
@@ -1555,7 +1559,7 @@ curl -L
     "metadata": {
       "version": 1
     }
-  }
+  }'
 ```
 
 {% hint style="info" %}
@@ -1569,10 +1573,11 @@ When updating a product with classification mixins, you don't need to provide th
 To retrieve a product that is assigned to a classification category, send a request to the [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint. The response includes the `classificationMixins` field in the metadata:
 
 ```bash
-curl -L 
-  --request GET 
-  --url 'https://api.emporix.io/product/{tenant}/products/product-123' 
-  --header 'X-Version: v2' 
+curl -L \
+  --request GET \
+  --url 'https://api.emporix.io/product/{{tenant}}/products/product-123' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'X-Version: v2' \
   --header 'Content-Type: application/json'
 ```
 
