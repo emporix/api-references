@@ -331,7 +331,7 @@ paths:
       description: |-
         Triggers indexing process of products for the tenant. The reindex works with a `FULL` mode - all products are reindexed.
         
-        This endpoint is marked as deprecated. Use [creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead.
+        This endpoint is marked as deprecated. Use the [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead.
       security:
         - OAuth2:
             - indexing.search_manage
@@ -348,7 +348,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
     post:
-      summary: Create a reindex job
+      summary: Creating a reindex job
       operationId: POST-indexing-reindex-jobs
       responses:
         '201':
@@ -412,7 +412,7 @@ paths:
         - $ref: '#/components/parameters/sort'
         - $ref: '#/components/parameters/fields'
         - $ref: '#/components/parameters/header_xTotalCount'
-      summary: Get reindex jobs
+      summary: Retrieving reindex jobs
       operationId: GET-indexing-reindex-jobs
       responses:
         '200':
@@ -457,7 +457,7 @@ paths:
     get:
       parameters:
         - $ref: '#/components/parameters/fields'
-      summary: Get reindex job
+      summary: Retrieving a reindex job
       operationId: GET-indexing-reindex-jobs-reindex-job-id
       responses:
         '200':
