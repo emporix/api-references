@@ -327,7 +327,7 @@ Align `indexedFields` and `filterFields` with the output of `rag-metadata` and `
 {% step %}
 #### Trigger a reindex job
 
-When the tool is configured, call the [Create a reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint to regenerate embeddings for the selected entity type. The reindex endpoint currently performs a full rebuild.
+When the tool is configured, call the [Creating a reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint to regenerate embeddings for the selected entity type. The reindex endpoint currently performs a full rebuild.
 
 {% tabs %}
 {% tab title="Product" %}
