@@ -17,7 +17,7 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="deprecated" %}
+{% update date="2026-06-18" tags="deprecated" %}
 
 ## AI Rag Indexer Service - deprecated endpoint
 
@@ -38,7 +38,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="deprecated" %}
+{% update date="2026-06-18" tags="deprecated" %}
 
 ## Indexing Service - deprecated endpoint
 
@@ -60,7 +60,7 @@ There are no known problems.
 {% endupdate %}
 
 
-{% update date="RELEASE_DATE" tags="new-feature, improvement" %}
+{% update date="2026-06-18" tags="new-feature, improvement" %}
 
 ## Indexing Service - Reindex Jobs
 
