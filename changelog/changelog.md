@@ -17,6 +17,20 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## Cart Service - wishlist tutorial
+
+#### Overview
+
+Added a dedicated wishlist tutorial that documents how to implement customer wishlists using the Cart Service with `type: "wishlist"`. The tutorial covers anonymous and logged-in flows, cart merge on login, session lifetime behavior, and moving items from a wishlist to the shopping cart.
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-06-10" tags="improvement" %}
 
 ## AI Service - commerce event trigger filter support and job status update

@@ -117,6 +117,7 @@
 * [Checkout](checkout/README.md)
   * [Cart Service](checkout/cart/README.md)
     * [Cart Tutorial](checkout/cart/cart.md)
+    * [Wishlist Tutorial](checkout/cart/wishlist.md)
     * [API Reference](checkout/cart/api-reference/README.md)
       * ```yaml
         props:
