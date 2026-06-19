@@ -21,7 +21,7 @@ layout:
 The Shopping List Service allows you to convienently organize the customers frequently purchased items into reusable and manageable shopping lists.
 
 {% hint style="info" %}
-The Shopping List Service is intended for frequently purchased items and reusable reorder lists, not save-for-later wishlists. For wishlist functionality, use the Cart Service with `"type": "wishlist"`. See the [Wishlist Tutorial](../cart/wishlist.md).
+The Shopping List Service is intended for frequently purchased items and reusable reorder lists, not save-for-later wishlists. For wishlist functionality, use the Cart Service with `"type": "wishlist"`. See the [Wishlist Cart Tutorial](../cart/wishlist.md).
 {% endhint %}
 
 ## How to create and use a shopping list

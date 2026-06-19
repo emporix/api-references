@@ -16,12 +16,12 @@ layout:
     visible: true
 ---
 
-# Cart Service - Wishlist Tutorial
+# Wishlist Cart Tutorial
 
 The Cart Service supports wishlists as a dedicated cart type. A logged-in customer can have an open `shopping` cart for checkout and a separate open `wishlist` cart for saved products at the same time. Cart uniqueness is defined by the combination of `siteCode`, `type`, `legalEntityId`, and `customerId`.
 
 {% hint style="info" %}
-Use the Cart Service with `"type": "wishlist"` for the save-for-later functionality. The Shopping List Service is intended for frequently purchased items and reorder lists, not classic wishlists.
+Use the Cart Service with the `"type": "wishlist"` for the "save-for-later" functionality. The Shopping List Service is intended for frequently purchased items and reorder lists, not classic wishlists.
 {% endhint %}
 
 {% hint style="warning" %}
@@ -30,7 +30,7 @@ Wishlists should be used by authenticated customers. Although the Cart API allow
 
 ## How wishlists work
 
-Wishlists require a `customerId` so saved items persist across visits. Unlike a `shopping` cart — which can be used anonymously and merged on login (see [How to merge carts](cart.md#how-to-merge-carts) in the Cart Tutorial) — a `wishlist` cart is not suitable for anonymous sessions because session-bound carts are lost when the session ends.
+Wishlists require a `customerId` so saved items persist across visits. Unlike a `shopping` cart — which can be used anonymously and merged on login (see the [How to merge carts](cart.md#how-to-merge-carts) in the Cart Tutorial) — a `wishlist` cart is not suitable for anonymous sessions because session-bound carts are lost when the session ends.
 
 ## Prerequisites
 
@@ -114,7 +114,7 @@ curl -i -X DELETE \
 
 ## How to move a wishlist item to the shopping cart
 
-To move a wishlist item to the shopping cart, add the product to the customer's `shopping` cart and remove it from the `wishlist` cart. Use the same `{{CUSTOMER_ACCESS_TOKEN}}` and `{{SAAS_TOKEN}}` as in the wishlist steps above.
+To move a wishlist item to the shopping cart, add the product to the customer's `shopping` cart and remove it from the `wishlist` cart.
 
 {% stepper %}
 {% step %}
@@ -124,12 +124,15 @@ To move a wishlist item to the shopping cart, add the product to the customer's 
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
+**Shopping cart**
+
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/cart/{{tenant}}/carts?siteCode=main&customerId={{customerId}}&type=shopping&create=true' \
   -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
   -H 'saas-token: {{SAAS_TOKEN}}'
 ```
+**Wishlist cart**
 
 ```bash
 curl -i -X GET \
@@ -192,23 +195,37 @@ Guest customers cannot persist a wishlist without logging in. When a guest choos
 ### Guest add-to-wishlist flow
 
 ```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  themeVariables:
+    primaryColor: '#DDE6EE'
+    primaryBorderColor: '#4C5359'
+    actorBkg: '#DDE6EE'
+    actorBorder: '#4C5359'
+    actorLineColor: '#4C5359'
+    signalColor: '#E86C07'
+    signalTextColor: '#7B8B99'
+    background: transparent
+---
 sequenceDiagram
-  participant Guest
-  participant Storefront
-  participant Storage as SessionStorage
-  participant Auth as CustomerService
-  participant Cart as CartService
+    participant Guest
+    participant Storefront
+    participant Storage as SessionStorage
+    participant Auth as CustomerService
+    participant Cart as CartService
 
-  Guest->>Storefront: Choose Add to wishlist
-  Storefront->>Storage: Save pending product
-  Storefront->>Guest: Redirect to login
-  Guest->>Storefront: Submit credentials
-  Storefront->>Auth: POST /customer/login
-  Auth-->>Storefront: Customer token and saas_token
-  Storefront->>Storage: Read pending product
-  Storefront->>Cart: Create or retrieve wishlist cart
-  Storefront->>Cart: POST item with saved productId
-  Storefront->>Storage: Remove pending product
+    Guest->>Storefront: Choose Add to wishlist
+    Storefront->>Storage: Save pending product
+    Storefront->>Guest: Redirect to login
+    Guest->>Storefront: Submit credentials
+    Storefront->>Auth: POST /customer/login
+    Auth-->>Storefront: Customer token and saas_token
+    Storefront->>Storage: Read pending product
+    Storefront->>Cart: Create or retrieve wishlist cart
+    Storefront->>Cart: POST item with saved productId
+    Storefront->>Storage: Remove pending product
 ```
 
 {% stepper %}
