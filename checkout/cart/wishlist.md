@@ -220,7 +220,7 @@ sequenceDiagram
     Storefront->>Storage: Save pending product
     Storefront->>Guest: Redirect to login
     Guest->>Storefront: Submit credentials
-    Storefront->>Auth: POST /customer/login
+    Storefront->>Auth: POST /customer/{tenant}/login
     Auth-->>Storefront: Customer token and saas_token
     Storefront->>Storage: Read pending product
     Storefront->>Cart: Create or retrieve wishlist cart
