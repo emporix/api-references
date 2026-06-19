@@ -16,7 +16,6 @@ icon: arrows-rotate-reverse
 # Changelog 2026
 
 {% updates format="full" %}
-
 {% update date="2026-06-18" tags="deprecated" %}
 
 ## AI Rag Indexer Service - deprecated endpoint
