@@ -17,6 +17,23 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
+{% update date="2026-06-19" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:SQS-8 -->
+## Custom Entities - Increased Bulk Create Limit to 5000 Items
+
+#### Overview
+The maximum number of custom entity instances allowed in a single bulk create request has been increased from 1000 to 5000 items. This change addresses performance bottlenecks during large-scale import processes by enabling larger batch sizes, reducing the number of requests needed, and improving overall import throughput. The update affects the `POST /{tenant}/custom-entities/{type}/instances` endpoint only, with no changes to request or response schemas beyond the increased payload size limit.
+
+#### Updated endpoints / Added endpoints / Updated types / Affected endpoints
+
+| Service / Domain   | Endpoint                                                                                   | Change Description                                  |
+|-------------------|--------------------------------------------------------------------------------------------|----------------------------------------------------|
+| Custom Entities   | [`POST /{tenant}/custom-entities/{type}/instances`](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-bulk) | Increased max bulk create payload size from 1000 to 5000 items. Validation error message updated accordingly. |
+
+#### Known problems
+There are no known problems. Clients should ensure they can handle larger payloads in terms of memory and processing. Monitoring is recommended post-deployment to detect any performance regressions related to larger bulk requests.
+{% endupdate %}
+
 {% update date="2026-06-18" tags="deprecated" %}
 
 ## AI Rag Indexer Service - deprecated endpoint
