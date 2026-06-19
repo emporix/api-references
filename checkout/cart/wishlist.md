@@ -18,7 +18,7 @@ layout:
 
 # Wishlist Cart Tutorial
 
-The Cart Service supports wishlists as a dedicated cart type. A logged-in customer can have an open `shopping` cart for checkout and a separate open `wishlist` cart for saved products at the same time. Cart uniqueness is defined by the combination of `siteCode`, `type`, `legalEntityId`, and `customerId`.
+The Cart Service supports wishlists as a dedicated cart type. A logged-in customer can have an open `shopping` cart for checkout and a separate open `wishlist` cart for saved products at the same time. Cart uniqueness is defined by the combination of `siteCode`, `type`, `legalEntityId`, and (`sessionId` or `customerId`).
 
 {% hint style="info" %}
 Use the Cart Service with the `"type": "wishlist"` for the "save-for-later" functionality. The Shopping List Service is intended for frequently purchased items and reorder lists, not classic wishlists.
