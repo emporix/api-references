@@ -212,9 +212,9 @@ config:
 sequenceDiagram
     participant Guest
     participant Storefront
-    participant Storage as SessionStorage
-    participant Auth as CustomerService
-    participant Cart as CartService
+    participant Storage as Session Storage
+    participant Auth as Customer Service
+    participant Cart as Cart Service
 
     Guest->>Storefront: Choose Add to wishlist
     Storefront->>Storage: Save pending product
