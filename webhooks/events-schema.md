@@ -19,7 +19,7 @@ description: Webhook events related to the creation, update, and deletion of cus
         "mixins": "Map",
         "name": {
             "name" : "Map"
-        },
+        }
     }
 }
 </code></pre></td></tr><tr><td>schema.custom-instance-deleted</td><td><pre class="language-json"><code class="lang-json">{
@@ -36,9 +36,8 @@ description: Webhook events related to the creation, update, and deletion of cus
         "mixins": "Map",
         "name": {
             "name" : "Map"
-        },
+        }
     }
 }
 </code></pre></td></tr>
 </tbody></table>
- 
