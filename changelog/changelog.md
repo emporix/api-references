@@ -17,6 +17,27 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:SQS-8 -->
+
+## Schema Service - bulk custom instance payload limit
+
+#### Overview
+
+Schema Service now accepts up to `5000` items in a single bulk custom entity instance creation request instead of `1000`. This increases import throughput for large custom-entity datasets and updates the oversize validation message to reflect the new maximum payload array size.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Creating custom instances in bulk](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance-bulk#post-schema-tenant-custom-entities-type-instances-bulk) | Increased the maximum accepted payload array size from `1000` to `5000` items and updated the validation limit accordingly. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-06-18" tags="deprecated" %}
 
 ## AI Rag Indexer Service - deprecated endpoint
