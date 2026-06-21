@@ -927,8 +927,6 @@ paths:
       description: |
         Creates a custom instance entity associated with given custom schema type.
 
-        For bulk creation requests sent to this operation, the maximum payload array size is 5000 items. Requests with more than 5000 items are rejected with the validation message `Maximum size of the payload array is 5000.`
-
       operationId: POST-schema-create-custom-instance
       requestBody:
         content:
@@ -1548,7 +1546,7 @@ paths:
     post:
       summary: Creating custom instances in bulk
       description: |-
-        Creates multiple custom instances. The maximum batch size is 200.
+        Creates multiple custom instances. The maximum batch size is 5000.
 
       tags:
         - Custom Instance
