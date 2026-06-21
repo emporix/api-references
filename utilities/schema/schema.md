@@ -551,3 +551,7 @@ Custom instance responses include the immutable `owner` object, which is used fo
 {% hint style="info" %}
  For the end-to-end IAM and Schema flow, see [Custom scopes for custom entities](../../quickstart/authentication-and-authorization/tokens-and-scopes.md#scopes-for-custom-entities) in the Tokens and Scopes guide.
 {% endhint %}
+
+{% hint style="info" %}
+The bulk create endpoint for custom entity instances, `POST /{tenant}/custom-entities/{type}/instances`, accepts up to **5000** items in a single request.
+{% endhint %}
