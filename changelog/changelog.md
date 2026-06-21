@@ -17,6 +17,30 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:SQS-8 -->
+## Schema Service - Increased bulk operation limit for custom entities creation to 5000 items and updated API documentation
+
+#### Overview
+The maximum allowed number of items in a single bulk create or upsert request for custom entities in the Schema Service has been increased from 1000 to 5000. This change improves import performance by allowing larger batch operations, reducing the number of requests needed for large data imports.
+
+In addition, the API documentation and service registry/catalog have been updated to reflect the new limit of 5000 items, resolving the previous mismatch between implemented validation and published API contracts.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Bulk creating and upserting custom entity instances](https://developer.emporix.io/api-references/api-guides/utilities/schema/schema-service/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-bulk) | Increased maximum bulk payload size from 1000 to 5000 items; updated validation error message and API documentation accordingly. |
+
+The validation error message for exceeding the limit is now:
+```
+"Maximum size of the payload array is 5000."
+```
+
+#### Known problems
+There are no known problems. Clients should verify their ability to handle larger payloads and monitor performance and resource usage when using the increased bulk size limit. It is recommended to review operational safeguards such as rate limiting and request size limits to ensure system stability with larger batch sizes.
+{% endupdate %}
+
 {% update date="2026-06-18" tags="deprecated" %}
 
 ## AI Rag Indexer Service - deprecated endpoint
