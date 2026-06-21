@@ -551,3 +551,13 @@ Custom instance responses include the immutable `owner` object, which is used fo
 {% hint style="info" %}
  For the end-to-end IAM and Schema flow, see [Custom scopes for custom entities](../../quickstart/authentication-and-authorization/tokens-and-scopes.md#scopes-for-custom-entities) in the Tokens and Scopes guide.
 {% endhint %}
+
+## Bulk custom instance creation limit
+
+For bulk creation requests to custom instance endpoints under `/{tenant}/custom-entities/{type}/instances`, the maximum number of items in the payload array is **5000**.
+
+This limit applies to bulk custom entity instance creation requests in Schema Service. Requests with more than `5000` items are rejected with the validation message:
+
+```text
+Maximum size of the payload array is 5000.
+```
