@@ -551,3 +551,7 @@ Custom instance responses include the immutable `owner` object, which is used fo
 {% hint style="info" %}
  For the end-to-end IAM and Schema flow, see [Custom scopes for custom entities](../../quickstart/authentication-and-authorization/tokens-and-scopes.md#scopes-for-custom-entities) in the Tokens and Scopes guide.
 {% endhint %}
+
+## Bulk create limit for custom entity instances
+
+The [Creating custom instances in bulk](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-bulk) endpoint accepts up to `5000` items in a single request payload.
