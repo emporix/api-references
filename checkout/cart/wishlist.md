@@ -38,6 +38,10 @@ Log in the customer with the [Logging in a customer](https://developer.emporix.i
 
 ## How to manage a wishlist for a logged-in customer
 
+{% hint style="info" %}
+The steps below use `wishlist` as the cart `type` in all examples. This is not a required value — use any non-shopping `type` that fits your storefront.
+{% endhint %}
+
 {% stepper %}
 {% step %}
 #### Create or retrieve a wishlist cart
