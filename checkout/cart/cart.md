@@ -108,7 +108,7 @@ curl -i -X PUT
   "customerId": "87413250",
   "currency": "EUR",
   "deliveryWindowId": "60006da77ec20a807cd6f065",
-  "type": "wishlist",
+  "type": "shopping",
   "zipCode": "10115",
   "countryCode": "DE",
   "status": "OPEN",
