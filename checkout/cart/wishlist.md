@@ -18,14 +18,14 @@ layout:
 
 # Wishlist Cart Tutorial
 
-The Cart Service supports wishlists as a dedicated cart type. A logged-in customer can have an open `shopping` cart for checkout and a separate open `wishlist` cart for saved products at the same time. Cart uniqueness is defined by the combination of `siteCode`, `type`, `legalEntityId`, and (`sessionId` or `customerId`).
+The Cart Service lets a customer keep multiple open carts at the same time by giving each cart a distinct `type` parameter. Use the `type` to separate a regular checkout cart (typically `shopping`) from carts that hold products for later, for example, wishlists or favorites. There is no dedicated wishlist type in the API, and the `type` is a free-form string you choose. This tutorial uses `wishlist` as an example, but you can use any value that fits your storefront (for example, `favorites` or `save-for-later`). Cart uniqueness is defined by the combination of `siteCode`, `type`, `legalEntityId`, and (`sessionId` or `customerId`).
 
 {% hint style="info" %}
-Use the Cart Service with the `"type": "wishlist"` for the "save-for-later" functionality. The Shopping List Service is intended for frequently purchased items and reorder lists, not classic wishlists.
+Use the Cart Service with a non-shopping `type` for save-for-later functionality – choose any value that distinguishes these carts from your regular `shopping` cart. The Shopping List Service is intended for frequently purchased items and reorder lists, not classic wishlists.
 {% endhint %}
 
 {% hint style="warning" %}
-Wishlists should be used by authenticated customers. Although the Cart API allows creating a `type: "wishlist"` cart for an anonymous session, such carts are assigned to the `sessionId` and are only accessible during that session. If the guest customer never logs in, the wishlist is lost when the session ends or the token expires. For storefronts, it is better to prompt guest customers to log in before adding products to a wishlist.
+Wishlists should be used by authenticated customers. Although the Cart API allows creating any type of cart for an anonymous session, such carts are assigned to the `sessionId` and are only accessible during that session. If the guest customer never logs in, the wishlist is lost when the session ends or the token expires. For storefronts, it is better to prompt guest customers to log in before adding products to a wishlist.
 {% endhint %}
 
 ## How wishlists work
@@ -34,7 +34,7 @@ Wishlists require a `customerId` so saved items persist across visits. Unlike a 
 
 ## Prerequisites
 
-Log in the customer with the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint. Use `{{CUSTOMER_ACCESS_TOKEN}}` and `{{SAAS_TOKEN}}` from the response in the Cart Service requests below. Use the customer identity from the `saas_token` as `{{customerId}}` when retrieving carts.
+Log in the customer with the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint to get the `{{CUSTOMER_ACCESS_TOKEN}}` to authenticate subsequent requests. Use the customer identity from the login response as `{{customerId}}` when retrieving carts.
 
 ## How to manage a wishlist for a logged-in customer
 
@@ -42,7 +42,7 @@ Log in the customer with the [Logging in a customer](https://developer.emporix.i
 {% step %}
 #### Create or retrieve a wishlist cart
 
-Retrieve an existing wishlist cart or create one if none exists by calling the [Retrieving a cart by criteria](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts) with `type=wishlist` and `create=true`.
+Retrieve an existing wishlist cart or create one if none exists by calling the [Retrieving a cart by criteria](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts) with `type=wishlist` and `create=true`. If the customer has several wishlists, use the appropriate `type` in the query parameters (or create the cart with [Creating a new cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts)) so you target the correct list.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -54,7 +54,6 @@ Retrieve an existing wishlist cart or create one if none exists by calling the [
 curl -i -X GET \
   'https://api.emporix.io/cart/{{tenant}}/carts?siteCode=main&customerId={{customerId}}&type=wishlist&create=true' \
   -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
-  -H 'saas-token: {{SAAS_TOKEN}}'
 ```
 
 Use the cart `id` from the response as `{{wishlistCartId}}` in the following steps.
@@ -78,7 +77,6 @@ curl -i -X POST \
   'https://api.emporix.io/cart/{{tenant}}/carts/{{wishlistCartId}}/items?siteCode=main' \
   -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
-  -H 'saas-token: {{SAAS_TOKEN}}' \
   -d '{
     "itemYrn": "urn:yaas:saasag:caasproduct:product:{{tenant}};{{productId}}",
     "price": {
@@ -107,7 +105,6 @@ To remove a single item, call the [Deleting a cart item](https://developer.empor
 curl -i -X DELETE \
   'https://api.emporix.io/cart/{{tenant}}/carts/{{wishlistCartId}}/items/{{itemId}}' \
   -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
-  -H 'saas-token: {{SAAS_TOKEN}}'
 ```
 {% endstep %}
 {% endstepper %}
@@ -130,7 +127,6 @@ To move a wishlist item to the shopping cart, add the product to the customer's 
 curl -i -X GET \
   'https://api.emporix.io/cart/{{tenant}}/carts?siteCode=main&customerId={{customerId}}&type=shopping&create=true' \
   -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
-  -H 'saas-token: {{SAAS_TOKEN}}'
 ```
 **Wishlist cart**
 
@@ -138,7 +134,6 @@ curl -i -X GET \
 curl -i -X GET \
   'https://api.emporix.io/cart/{{tenant}}/carts?siteCode=main&customerId={{customerId}}&type=wishlist' \
   -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
-  -H 'saas-token: {{SAAS_TOKEN}}'
 ```
 
 Use the shopping cart `id` as `{{shoppingCartId}}`, the wishlist cart `id` as `{{wishlistCartId}}`, and the wishlist item `id` as `{{itemId}}`.
@@ -154,7 +149,6 @@ curl -i -X POST \
   'https://api.emporix.io/cart/{{tenant}}/carts/{{shoppingCartId}}/items?siteCode=main' \
   -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
-  -H 'saas-token: {{SAAS_TOKEN}}' \
   -d '{
     "itemYrn": "urn:yaas:saasag:caasproduct:product:{{tenant}};{{productId}}",
     "price": {
@@ -182,8 +176,7 @@ Remove the product from the `type: "wishlist"` cart by calling the [Deleting a c
 ```bash
 curl -i -X DELETE \
   'https://api.emporix.io/cart/{{tenant}}/carts/{{wishlistCartId}}/items/{{itemId}}' \
-  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
-  -H 'saas-token: {{SAAS_TOKEN}}'
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' 
 ```
 {% endstep %}
 {% endstepper %}
@@ -219,7 +212,7 @@ sequenceDiagram
     Storefront->>Guest: Redirect to login
     Guest->>Storefront: Submit credentials
     Storefront->>Auth: POST /customer/{tenant}/login
-    Auth-->>Storefront: Customer token and saas_token
+    Auth-->>Storefront: Customer token
     Storefront->>Storage: Read pending product
     Storefront->>Cart: Create or retrieve wishlist cart
     Storefront->>Cart: POST item with saved productId

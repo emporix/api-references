@@ -16,6 +16,7 @@ icon: arrows-rotate-reverse
 # Changelog 2026
 
 {% updates format="full" %}
+
 {% update date="2026-06-18" tags="deprecated" %}
 
 ## AI Rag Indexer Service - deprecated endpoint
@@ -76,6 +77,7 @@ The Indexing Service was extended with new endpoints for creating and fetching r
 | [Fetching reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid) | Endpoint for fetching reindex job.  |
 
 {% endupdate %}
+
 
 {% update date="2026-06-10" tags="improvement" %}
 

@@ -83,7 +83,7 @@ paths:
                     name: storefront
                     source: 'https://your-storefront.com/'
                   currency: EUR
-              Wishlist cart type:
+              Save-for-later cart type:
                 value:
                   siteCode: main
                   currency: EUR
@@ -114,8 +114,6 @@ paths:
           name: saas-token
           description: |
             Customer `saasToken` generated when the customer token is generated. 
-
-            **Note**: The `saas-token` is only required if you want to create a cart for a logged in customer.
       summary: Creating a new cart
       tags:
         - Carts
