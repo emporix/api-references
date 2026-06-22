@@ -190,9 +190,7 @@ curl -i -X DELETE \
 
 ## How to handle guest add-to-wishlist
 
-Guest customers cannot persist a wishlist without logging in. When a guest chooses to add an item to a wishlist on the storefront, follow these steps.
-
-### Guest add-to-wishlist flow
+Guest customers cannot persist a wishlist without logging in. When a guest chooses to add an item to a wishlist on the storefront, the right flow is to first trigger customer authentication. See the below guest flow diagram for details.
 
 ```mermaid
 ---
@@ -227,6 +225,8 @@ sequenceDiagram
     Storefront->>Cart: POST item with saved productId
     Storefront->>Storage: Remove pending product
 ```
+
+Follow these steps to implement wishlist functionality for guest customers on the storefront.
 
 {% stepper %}
 {% step %}
