@@ -80,7 +80,7 @@ curl -i -X POST \
   -d '{
     "itemYrn": "urn:yaas:saasag:caasproduct:product:{{tenant}};{{productId}}",
     "price": {
-      "priceId": "683987a51fb08560120d5354",
+      "priceId": "{{priceId}}",
       "effectiveAmount": 50,
       "originalAmount": 50,
       "currency": "EUR"
@@ -152,7 +152,7 @@ curl -i -X POST \
   -d '{
     "itemYrn": "urn:yaas:saasag:caasproduct:product:{{tenant}};{{productId}}",
     "price": {
-      "priceId": "683987a51fb08560120d5354",
+      "priceId": "{{priceId}}",
       "effectiveAmount": 50,
       "originalAmount": 50,
       "currency": "EUR"
@@ -176,7 +176,7 @@ Remove the product from the `type: "wishlist"` cart by calling the [Deleting a c
 ```bash
 curl -i -X DELETE \
   'https://api.emporix.io/cart/{{tenant}}/carts/{{wishlistCartId}}/items/{{itemId}}' \
-  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' 
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
 ```
 {% endstep %}
 {% endstepper %}
