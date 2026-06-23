@@ -11,6 +11,7 @@ Provides a high-performance, extensible cart that holds products for later check
 ### Key features and benefits
 
 * Supports authenticated user carts
+* Supports wishlists for authenticated customers
 * Merges carts seamlessly
 * Provides a single cart across sites or an individual cart per site
 * Makes the cart persistent for later checkout
