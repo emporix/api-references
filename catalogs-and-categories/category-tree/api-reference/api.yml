@@ -3562,6 +3562,9 @@ components:
               uploadLink:
                 type: string
                 description: 'URL where the media file is uploaded, with the file extension specified.'
+              mixins:
+                type: object
+                description: Custom media attributes.
             additionalProperties: false
         position:
           minimum: 0
@@ -3893,6 +3896,9 @@ components:
           allOf:
             - $ref: '#/components/schemas/MediaCustomAttributesQueryDocument'
             - description: Custom attributes of the file.
+        mixins:
+          type: object
+          description: Custom media attributes.
       example:
         id: 345-12345
         url: 'https://emporix.com/platform/saas-ag/media/v2/public/files/12345678'
@@ -3906,6 +3912,9 @@ components:
           sizeKB: 5
           type: jpg
           name: ima.jpg
+        mixins:
+          mediaCustomAttributes:
+            altText: Cordless impact driver
     MediaCustomAttributesQueryDocument:
       type: object
       properties:
