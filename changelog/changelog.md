@@ -17,6 +17,31 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-5242 -->
+
+## Cart Service - wishlist cart guidance
+
+#### Overview
+
+The Cart Service documentation was expanded to clarify how to implement wishlist and save-for-later flows by using existing cart APIs with a custom cart `type`. The update explains that `type` is an integrator-defined value, documents cart uniqueness criteria, adds a dedicated wishlist tutorial, and updates cart creation examples to show a `wishlist` cart for authenticated customers.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Creating a new cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts) | Added a request example for creating a wishlist cart with `type: wishlist` for an authenticated customer. |
+| [Retrieving a cart by criteria](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts) | Documentation now highlights using `type` and `create=true` to retrieve or create a wishlist cart. |
+| [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) | Documentation now clarifies that the same cart item endpoint is used to add products to wishlist carts. |
+| [Deleting a cart item](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#delete-cart-tenant-carts-cartid-items-itemid) | Documentation now clarifies that the same cart item endpoint is used to remove products from wishlist carts. |
+| [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) | The new wishlist tutorial references customer login as the recommended prerequisite for persistent wishlist flows. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-06-18" tags="deprecated" %}
 
 ## AI Rag Indexer Service - deprecated endpoint
