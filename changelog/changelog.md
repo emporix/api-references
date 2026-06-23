@@ -17,7 +17,7 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-06-23" tags="improvement" %}
 
 ## Media, Schema, and Product Services - mixin support for media assets
 
