@@ -17,6 +17,27 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-5790 -->
+
+## IAM Service - employee group lookup for validation rule resolvers
+
+#### Overview
+
+The IAM Service group listing endpoint is now documented for validation rule resolver selection in Cockpit. Rule authors can use `GET /iam/{tenant}/groups` with `userType=EMPLOYEE`, pagination, and optional localized names to fetch employee groups when assigning responsibility for validation failures.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Retrieving groups](https://developer.emporix.io/api-references/users-and-permissions/iam/iam#get-iam-tenant-groups) | Documented the use of `userType=EMPLOYEE`, `pageNumber`, `pageSize`, `Accept-Language`, and `X-Total-Count` support for paginated employee group lookup in resolver selection flows. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-06-23" tags="improvement" %}
 
 ## Media, Schema, and Product Services - mixin support for media assets
