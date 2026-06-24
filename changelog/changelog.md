@@ -17,6 +17,37 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-5789 -->
+
+## B2B Invoice Intake - document multi-assignment
+
+#### Overview
+
+The B2B Invoice Intake document assignment model now supports multiple assignees instead of a single assignee. Documents can now store zero, one, or many assignees in the `assignee` collection, and each assignee can be represented as either `USER` or `GROUP` with `id` and `name` fields. This improves document ownership visibility in cockpit views and extends assigned-document filtering to match both the current user ID and IAM `groupIds`.
+
+#### Updated types
+
+| Type | Description |
+|------|-------------|
+| `DocumentMetadataMixin.assignee` | Changed from a single assignee object to an array of assignee entries with `type`, `id`, and `name`. |
+| `DocumentMetadataAssignmentEntry.assignee` | Updated to store the new assignee shape with `type`, `id`, and `name`. |
+| `DocumentMetadataApprovalAssignee` | Updated to use the new assignee shape and continue exposing approval metadata such as `approvalStatus` and `message`. |
+
+#### Affected endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Retrieving documents](https://developer.emporix.io/api-references/api-guides/order-intake/b2b-invoice-intake/api-reference/documents) | Document responses now support multi-assignee metadata and assigned-document filtering based on assignee `id` values, including IAM group IDs. |
+| [Retrieving a document](https://developer.emporix.io/api-references/api-guides/order-intake/b2b-invoice-intake/api-reference/documents#get-documents-tenant-documents-documentid) | Document details now expose the multi-assignee structure in `mixins.documentMetadata.assignee`. |
+| [Updating a document](https://developer.emporix.io/api-references/api-guides/order-intake/b2b-invoice-intake/api-reference/documents#patch-documents-tenant-documents-documentid) | Document updates can persist the new assignee collection shape in document metadata and assignment history. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-06-23" tags="improvement" %}
 
 ## Media, Schema, and Product Services - mixin support for media assets
