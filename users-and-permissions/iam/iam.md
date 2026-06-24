@@ -118,6 +118,60 @@ curl -i -X POST
   }'
 ```
  
+### Retrieve employee groups with pagination
+
+To let clients select an employee group for assignment or routing scenarios, retrieve groups by calling the [Retrieving all groups](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups) endpoint.
+
+Use the `userType=EMPLOYEE` query parameter to limit the result to employee groups. If your tenant contains many groups, use `pageNumber` and `pageSize` to paginate through the result set. To receive the total number of matching groups, send the `X-Total-Count: true` header.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../iam/api-reference/" %}
+[api-reference](../iam/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/iam/{tenant}/groups?pageNumber=1&pageSize=10&userType=EMPLOYEE' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Accept-Language: en' \
+  -H 'X-Total-Count: true'
+```
+
+Example response:
+
+```json
+[
+  {
+    "id": "1gr5e52e-6e27-4ac5-cccc-2467d3fb7501",
+    "name": {
+      "de": "OE Viewer",
+      "en": "OE Viewer"
+    },
+    "description": {
+      "de": "OE Viewer",
+      "en": "OE Viewer"
+    },
+    "accessControls": [
+      "5ac869fc-d548-4ec8-cccc-c01491314101",
+      "5ac869fc-d548-4ec8-cccc-c01491314105",
+      "5ac869fc-d548-4ec8-cccc-c01491314109",
+      "5ac869fc-d548-4ec8-cccc-c01491314113",
+      "5ac869fc-d548-4ec8-cccc-c01491314120"
+    ],
+    "code": "OE_VIEWER",
+    "userType": "EMPLOYEE",
+    "metadata": {
+      "version": 1,
+      "createdAt": "2026-05-26T13:49:13.852Z",
+      "modifiedAt": "2026-05-26T13:49:13.852Z"
+    }
+  }
+]
+```
+
+The response localizes `name` and `description`. Use the `Accept-Language` header to request localized values.
+
 ## How to manage custom scopes
 
 In addition to the standard authorization model, the IAM Service also supports tenant-specific custom scopes, allowing you to extend access control beyond the default capabilities. Custom access controls can be created as collections of scopes and assigned to groups representing employees, customers, or technical users.
