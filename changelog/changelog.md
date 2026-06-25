@@ -17,6 +17,31 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-5791 -->
+
+## Business Rule AI Engine - configurable validation rule parameters
+
+#### Overview
+
+AI-generated validation rules now support structured `parameters` and `parameterValues`, so business users can change rule behavior without regenerating or editing Cloud Function code. Generated rules can now define any number of parameters across the supported types `TEXT`, `NUMBER`, `BOOLEAN`, `FIELD_PATH`, `FIELD_PATH_LIST`, and `ENUM`, while runtime execution forwards the latest saved parameter values to the validator.
+
+The update also adds validation for generated parameter definitions, including type-safe `defaultValue` handling and `ENUM` `allowedValues`, and enables schema-backed field selection for `FIELD_PATH` and `FIELD_PATH_LIST` parameters in the rule editor.
+
+#### Updated types
+
+| Type | Description |
+|------|-------------|
+| `BusinessRulePayload` | Extended with a `parameters` array so AI-generated validation rules can return structured parameter definitions together with `cloudFunction`, `message`, and `visualization`. |
+| `BusinessRuleParameter` | Added support for `id`, `name`, `description`, `type`, `required`, optional `defaultValue`, and `allowedValues` for `ENUM` parameters. |
+| `BusinessRuleParameterValues` | Added support for storing editable runtime values separately from generated rule code so validators can execute with the latest saved configuration. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-06-23" tags="improvement" %}
 
 ## Media, Schema, and Product Services - mixin support for media assets
