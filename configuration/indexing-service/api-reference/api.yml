@@ -363,6 +363,8 @@ paths:
                     id: 6a31424ef4ddd37d108f8168
                     status: IN_PROGRESS
                     entityType: PRODUCT
+                    expectedCount: 5000
+                    processedCount: 2000
                     metadata:
                       createdAt: "2026-06-16T12:32:14.132Z"
                       modifiedAt: "2026-06-16T12:32:14.150Z"
@@ -378,6 +380,8 @@ paths:
                     id: 6a31424ef4ddd37d108f8168
                     status: IN_PROGRESS
                     entityType: PRODUCT
+                    expectedCount: 5000
+                    processedCount: 2000
                     metadata:
                       createdAt: "2026-06-16T12:32:14.132Z"
                       modifiedAt: "2026-06-16T12:32:14.150Z"
@@ -390,7 +394,7 @@ paths:
       tags:
         - Reindex
       description: |-
-        Triggers indexing process of given entities for the tenant. The reindex works with a `FULL` mode - all entities are reindexed. It returns a reindex job which allows to track the progress. The `SUCCESS` means that all entities events are published, but process of their indexing in Algolia or RAG can take more time.
+        Triggers indexing process of given entities for the tenant. The reindex works with a `FULL` mode - all entities are reindexed. It returns a reindex job which allows to track the progress. The `SUCCESS` means that all entities events are indexed.
       security:
         - OAuth2:
             - indexing.search_manage
@@ -429,6 +433,8 @@ paths:
                     - id: 6a31424ef4ddd37d108f8168
                       status: IN_PROGRESS
                       entityType: PRODUCT
+                      expectedCount: 5000
+                      processedCount: 2000
                       metadata:
                         createdAt: "2026-06-16T12:32:14.132Z"
                         modifiedAt: "2026-06-16T12:32:14.150Z"
@@ -472,6 +478,8 @@ paths:
                     id: 6a31424ef4ddd37d108f8168
                     status: IN_PROGRESS
                     entityType: PRODUCT
+                    expectedCount: 5000
+                    processedCount: 2000
                     metadata:
                       createdAt: "2026-06-16T12:32:14.132Z"
                       modifiedAt: "2026-06-16T12:32:14.150Z"
@@ -512,8 +520,8 @@ components:
 
     ReindexJobStatus:
       type: string
-      description: Informs about status of reindex job. `PENDING` means that the maximum number of parallel `IN_PROGRESS` jobs is reached and such job will be processed when one of current `IN_PROGRESS` jobs is released.
-      enum: [FAILURE, IN_PROGRESS, PENDING, SUCCESS]
+      description: Informs about status of reindex job. `PENDING` means that the maximum number of parallel `IN_PROGRESS` jobs is reached and such job will be processed when one of current `IN_PROGRESS` jobs is released. `PUBLISHED` means that all the indexing events were emitted. `SUCCESS` means that all the indexing events were consumed.
+      enum: [FAILURE, IN_PROGRESS, PENDING, PUBLISHED, SUCCESS]
 
 
     Metadata:
@@ -545,6 +553,12 @@ components:
           description: In case if reindex job finishes with `FAILURE` status, the message is populated with information what was the reason of the failure.
         status:
           $ref: '#/components/schemas/ReindexJobStatus'
+        expectedCount:
+          type: integer
+          description: Expected number of entities which need to be indexed.
+        processedCount:
+          type: integer
+          description: Actual number of entities which were indexed. Allows to track the progress of reindexing process.
         metadata:
           $ref: '#/components/schemas/Metadata'
 
