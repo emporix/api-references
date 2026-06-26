@@ -17,6 +17,27 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-5835 -->
+
+## Invoice Intake - validation rule order
+
+#### Overview
+
+Invoice intake validation rules now support an `order` attribute that controls the execution sequence. Rules execute in ascending order of `order`, which makes validation flow deterministic and allows administrators to prioritize prerequisite or critical checks. The `order` value must be a positive integer, and existing validation behavior remains unchanged apart from the execution sequence.
+
+#### Updated types
+
+| Type | Description |
+|------|-------------|
+| `InvoiceBusinessRuleMixin` | Added the optional `order` attribute to define the execution sequence of validation rules. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-06-23" tags="improvement" %}
 
 ## Media, Schema, and Product Services - mixin support for media assets
