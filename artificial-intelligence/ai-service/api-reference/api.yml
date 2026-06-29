@@ -2892,7 +2892,7 @@ components:
               type: string
               description: >
                 Optional JSON Schema (provided as a JSON string) that constrains the structure
-                of the agent response. Use this when you need predictable, machine-readable
+                of the agent's generated output. Use this when you need predictable, machine-readable
                 output instead of free-form text.
               example: '{"type":"object","properties":{"answer":{"type":"string"}},"required":["answer"]}'
             enabled:
