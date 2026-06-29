@@ -2888,6 +2888,13 @@ components:
               items:
                 type: string
                 description: Markers that allow you to categorize the agent.
+            outputFormat:
+              type: string
+              description: >
+                Optional JSON Schema (provided as a JSON string) that constrains the structure
+                of the agent response. Use this when you need predictable, machine-readable
+                output instead of free-form text.
+              example: '{"type":"object","properties":{"answer":{"type":"string"}},"required":["answer"]}'
             enabled:
               type: boolean
               description: Indicates whether the agent is enabled.
