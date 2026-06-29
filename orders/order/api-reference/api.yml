@@ -840,9 +840,13 @@ components:
                   - $ref: '#/components/schemas/localizedValue'
                   - type: object
                     description: Fee name.
-              yrn:
+              id:
                 type: string
                 description: Unique identifier of the fee.
+              yrn:
+                type: string
+                deprecated: true
+                description: '**This field is deprecated**. Use `id` instead.'
               taxCode:
                 type: string
                 description: Tax code of the fee.
@@ -943,7 +947,11 @@ components:
           description: The ordered item ID.
           type: string
         itemYrn:
-          $ref: '#/components/schemas/YRN'
+          allOf:
+            - $ref: '#/components/schemas/YRN'
+            - type: object
+              description: '**This field is deprecated**. Use `id` instead.'
+          deprecated: true
         fees:
           allOf:
             - $ref: '#/components/schemas/aggregateFee'
