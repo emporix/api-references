@@ -17,7 +17,7 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-06-30" tags="improvement" %}
 
 ## AI Service - introduction of 'outputFormat' field
 
