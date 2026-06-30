@@ -108,7 +108,7 @@ curl -i -X PUT
   "customerId": "87413250",
   "currency": "EUR",
   "deliveryWindowId": "60006da77ec20a807cd6f065",
-  "type": "wishlist",
+  "type": "shopping",
   "zipCode": "10115",
   "countryCode": "DE",
   "status": "OPEN",
@@ -2472,4 +2472,7 @@ When you add the same product first as an internal one and then as an external, 
   item0: productA, internal, priceX, qty:1, keepAsSeparateLineItem=false 
   item0: productA, external, priceY, qty:1, keepAsSeparateLineItem=false
 ```
- 
+
+{% hint style="info" %}
+A customer can have multiple open carts of different types. To implement save-for-later functionality (for example, wishlists) alongside a `shopping` cart, see the [Wishlist Cart Tutorial](wishlist.md).
+{% endhint %}

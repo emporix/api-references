@@ -12,7 +12,7 @@ With the Schema Service you can easily create and manage customized/industry-spe
 
 ## Supported entity types for schema creation
 
-When creating a mixin schema through the Schema Service API, you can select from the following entity types: `cart`, `cart_item`, `category`, `company`, `coupon`, `customer`, `customer_address`, `custom_entity`, `order`, `order_entry`, `price_list`, `product`, `quote`, `return`, `site`, and `vendor`.
+When creating a mixin schema through the Schema Service API, you can select from the following entity types: `cart`, `cart_item`, `category`, `company`, `coupon`, `customer`, `customer_address`, `custom_entity`, `media`, `order`, `order_entry`, `price_list`, `product`, `quote`, `return`, `site`, and `vendor`.
 
 {% hint style="info" %}
 **Important distinction:** The list above shows which entity types support mixin schema creation through the Schema Service API. However, many additional APIs accept mixins in their requests and responses even though you cannot create schemas for them through this service. For example, the Order API, Checkout API, Availability API, and Shopping List API all support mixins, but you need to create mixin schemas manually (as JSON schemas) and reference them when using those APIs. See the [Mixins standard practices](../../standard-practices/mixins.md) page for a complete list of APIs that support mixins.
@@ -526,3 +526,28 @@ See the example payload for creating a product basing on the schema from the pre
 }
 ```
  
+## Custom entity authorization and ownership
+
+When you create a custom entity type, the platform provisions type-specific scopes that follow the `custom.{lowerCaseType}_*` naming pattern.
+
+For a type like `DOCUMENT`, generated scopes follow this pattern:
+
+- `custom.document_read`
+- `custom.document_manage`
+- `custom.document_read_own`
+- `custom.document_manage_own`
+
+Custom instance endpoints accept either tenant-wide Schema scopes or type-scoped scopes:
+
+- Read operations: `schema.custominstance_read` or `custom.{lowerCaseType}_read` or `custom.{lowerCaseType}_read_own`
+- Manage operations: `schema.custominstance_manage` or `custom.{lowerCaseType}_manage` or `custom.{lowerCaseType}_manage_own`
+
+Custom instance responses include the immutable `owner` object, which is used for ownership-aware authorization:
+
+- `owner.type`: `CUSTOMER`, `EMPLOYEE`, or `SERVICE`
+- `owner.userId`: creator identifier (for service flows, client identifier)
+- `owner.legalEntityId`: present for customer-owned instances
+
+{% hint style="info" %}
+ For the end-to-end IAM and Schema flow, see [Custom scopes for custom entities](../../quickstart/authentication-and-authorization/tokens-and-scopes.md#scopes-for-custom-entities) in the Tokens and Scopes guide.
+{% endhint %}

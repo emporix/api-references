@@ -5,7 +5,16 @@ info:
   description: |
     The indexing service allows you to manage indexing configuration. Currently supported index providers:
       * Algolia - https://www.algolia.com
-    
+      * Battery Included - https://www.batteryincluded.io
+
+    **Provider mutual exclusivity:**
+    Only one provider can be active at a time per tenant. This constraint is enforced by the configuration service.
+
+    **Battery Included limitations:**
+    This feature is in a `preview` state and payload sent to battery included is subject to change. 
+    Battery Included only supports the `MERGE` site-aware fields strategy. Tenants configured with the `SPLIT`
+    strategy will have Battery Included indexing silently skipped.
+
     **Algolia limitations:**
     By default, Algolia indexes provided by Emporix support records up to 10kB in size.
     In order to support larger records, you must provide your own Algolia service.
@@ -21,10 +30,12 @@ paths:
     post:
       summary: Create a new configuration
       description: |-
-        Creates a new index configuration. Currently supported providers:
+        Creates a new index configuration. Supported providers:
         * Algolia - https://www.algolia.com
+        * Battery Included - https://www.batteryincluded.io
 
         Identifier of a newly created configuration is a provider name.
+        Only one provider can be active per tenant at a time.
       security:
         - OAuth2:
             - indexing.search_manage
@@ -36,7 +47,7 @@ paths:
             schema:
               $ref: '#/components/schemas/IndexConfiguration'
             examples:
-              Create a new configuration:
+              Create Algolia configuration:
                 value:
                   active: true
                   searchKey: 84dc4886f81f805c42bdd89d64de751a
@@ -44,6 +55,14 @@ paths:
                   indexName: exampleTenant
                   writeKey: 51ebe89215dddcf85e5dacd5643d17e7
                   provider: ALGOLIA
+              Create Battery Included configuration:
+                value:
+                  active: true
+                  indexName: exampleTenant
+                  writeKey: bi-api-key-abc123
+                  provider: BATTERY_INCLUDED
+                  excludedMixinKeys:
+                    - internalAttributes
         description: ''
       responses:
         '201':
@@ -53,9 +72,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/IndexCreationResponse'
               examples:
-                Creation Response:
+                Algolia creation response:
                   value:
                     id: ALGOLIA
+                Battery Included creation response:
+                  value:
+                    id: BATTERY_INCLUDED
         '400':
           $ref: '#/components/responses/BadRequest_400'
         '401':
@@ -87,6 +109,12 @@ paths:
                       indexName: exampleTenant
                       writeKey: 51ebe89215dddcf85e5dacd5643d17e7
                       provider: ALGOLIA
+                    - active: false
+                      indexName: exampleTenant
+                      writeKey: bi-api-key-abc123
+                      provider: BATTERY_INCLUDED
+                      excludedMixinKeys:
+                        - internalAttributes
               schema:
                 type: array
                 items:
@@ -99,17 +127,14 @@ paths:
       tags:
         - Configuration
     parameters:
-      - schema:
-          type: string
-        name: tenant
-        in: path
-        required: true
+      - $ref: '#/components/parameters/trait_tenant'
   '/indexing/{tenant}/configurations/{provider}':
     get:
       summary: Get configuration by provider name
       description: |-
-        Retrieves a single configuration by a provider name. Currently supported providers:
+        Retrieves a single configuration by a provider name. Supported providers:
         * Algolia - https://www.algolia.com
+        * Battery Included - https://www.batteryincluded.io
       security:
         - OAuth2:
             - indexing.search_view
@@ -120,7 +145,7 @@ paths:
           content:
             application/json:
               examples:
-                Get configuration:
+                Get Algolia configuration:
                   value:
                     active: true
                     searchKey: 84dc4886f81f805c42bdd89d64de751a
@@ -128,6 +153,14 @@ paths:
                     indexName: exampleTenant
                     writeKey: 51ebe89215dddcf85e5dacd5643d17e7
                     provider: ALGOLIA
+                Get Battery Included configuration:
+                  value:
+                    active: true
+                    indexName: exampleTenant
+                    writeKey: bi-api-key-abc123
+                    provider: BATTERY_INCLUDED
+                    excludedMixinKeys:
+                      - internalAttributes
               schema:
                 $ref: '#/components/schemas/IndexConfiguration'
         '401':
@@ -152,7 +185,7 @@ paths:
             schema:
               $ref: '#/components/schemas/IndexConfiguration'
             examples:
-              Configuration update:
+              Update Algolia configuration:
                 value:
                   active: true
                   searchKey: 84dc4886f81f805c42bdd89d64de751a
@@ -160,6 +193,15 @@ paths:
                   indexName: exampleTenant
                   writeKey: 51ebe89215dddcf85e5dacd5643d17e7
                   provider: ALGOLIA
+              Update Battery Included configuration:
+                value:
+                  active: true
+                  indexName: exampleTenant
+                  writeKey: bi-api-key-abc123
+                  provider: BATTERY_INCLUDED
+                  excludedMixinKeys:
+                    - internalAttributes
+                    - customData
       responses:
         '204':
           description: Configuration updated
@@ -193,18 +235,7 @@ paths:
       tags:
         - Configuration
     parameters:
-      - name: tenant
-        in: path
-        required: true
-        description: |
-          The tenant that the caller is acting upon.
-
-          Please note that this value is always lowercase.
-        schema:
-          pattern: '^[a-z][a-z0-9]+$'
-          minLength: 3
-          maxLength: 16
-          type: string
+      - $ref: '#/components/parameters/trait_tenant'
       - $ref: '#/components/parameters/trait_provider'
   '/indexing/{tenant}/public/configurations':
     parameters:
@@ -230,6 +261,9 @@ paths:
                       applicationId: 8AP2HABA2I
                       indexName: exampleTenant
                       provider: ALGOLIA
+                    - active: false
+                      indexName: exampleTenant
+                      provider: BATTERY_INCLUDED
         '401':
           description: Unauthorized
       operationId: GET-indexing-list-public-configs
@@ -252,31 +286,35 @@ paths:
               schema:
                 $ref: '#/components/schemas/IndexPublicConfiguration'
               examples:
-                Public configuration:
+                Public Algolia configuration:
                   value:
                     active: true
                     searchKey: 84dc4886f81f805c42bdd89d64de751a
                     applicationId: 8AP2HABA2I
                     indexName: exampleTenant
                     provider: ALGOLIA
+                Public Battery Included configuration:
+                  value:
+                    active: true
+                    indexName: exampleTenant
+                    provider: BATTERY_INCLUDED
+                    searchKey: 84dc4886f81f805c42bdd89d64de751x
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '404':
           $ref: '#/components/responses/NotFound_404'
       operationId: GET-indexing-retrieve-public-config
       description: |-
-        Retrieves a single public configuration by a provider name. Currently supported providers:
+        Retrieves a single public configuration by a provider name. Supported providers:
         * Algolia - https://www.algolia.com
+        * Battery Included - https://www.batteryincluded.io
       security:
         - OAuth2: []
   '/indexing/{tenant}/reindex':
     parameters:
-      - schema:
-          type: string
-        name: tenant
-        in: path
-        required: true
+      - $ref: '#/components/parameters/trait_tenant'
     post:
+      deprecated: true
       summary: Reindex
       operationId: POST-indexing-reindex
       responses:
@@ -292,6 +330,8 @@ paths:
         - Reindex
       description: |-
         Triggers indexing process of products for the tenant. The reindex works with a `FULL` mode - all products are reindexed.
+        
+        This endpoint is marked as deprecated. Use the [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead.
       security:
         - OAuth2:
             - indexing.search_manage
@@ -304,6 +344,158 @@ paths:
               Reindex request:
                 value:
                   mode: FULL
+  '/indexing/{tenant}/reindex-jobs':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    post:
+      summary: Creating a reindex job
+      operationId: POST-indexing-reindex-jobs
+      responses:
+        '201':
+          description: The new reindex job was created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReindexJob'
+              examples:
+                Example 1:
+                  value:
+                    id: 6a31424ef4ddd37d108f8168
+                    status: IN_PROGRESS
+                    entityType: PRODUCT
+                    expectedCount: 5000
+                    processedCount: 2000
+                    metadata:
+                      createdAt: "2026-06-16T12:32:14.132Z"
+                      modifiedAt: "2026-06-16T12:32:14.150Z"
+        '200':
+          description: The reindex job for given entityType was already `IN_PROGRESS` and it is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReindexJob'
+              examples:
+                Example 1:
+                  value:
+                    id: 6a31424ef4ddd37d108f8168
+                    status: IN_PROGRESS
+                    entityType: PRODUCT
+                    expectedCount: 5000
+                    processedCount: 2000
+                    metadata:
+                      createdAt: "2026-06-16T12:32:14.132Z"
+                      modifiedAt: "2026-06-16T12:32:14.150Z"
+        '400':
+          $ref: '#/components/responses/BadRequest_400'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+      tags:
+        - Reindex
+      description: |-
+        Triggers indexing process of given entities for the tenant. The reindex works with a `FULL` mode - all entities are reindexed. It returns a reindex job which allows to track the progress. The `SUCCESS` means that all entities events are indexed.
+      security:
+        - OAuth2:
+            - indexing.search_manage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReindexRequest'
+            examples:
+              Reindex request:
+                value:
+                  entityType: PRODUCT
+                  rag: true
+    get:
+      parameters:
+        - $ref: '#/components/parameters/qParam'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/header_xTotalCount'
+      summary: Retrieving reindex jobs
+      operationId: GET-indexing-reindex-jobs
+      responses:
+        '200':
+          description: Reindex jobs are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReindexJob'
+              examples:
+                Example 1:
+                  value:
+                    - id: 6a31424ef4ddd37d108f8168
+                      status: IN_PROGRESS
+                      entityType: PRODUCT
+                      expectedCount: 5000
+                      processedCount: 2000
+                      metadata:
+                        createdAt: "2026-06-16T12:32:14.132Z"
+                        modifiedAt: "2026-06-16T12:32:14.150Z"
+        '400':
+          $ref: '#/components/responses/BadRequest_400'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+      tags:
+        - Reindex
+      description: |-
+        Returns reindex jobs.
+      security:
+        - OAuth2:
+            - indexing.search_view
+  '/indexing/{tenant}/reindex-jobs/{reindexJobId}':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - schema:
+          type: string
+        name: reindexJobId
+        in: path
+        required: true
+        description: Id of the reindex job.
+    get:
+      parameters:
+        - $ref: '#/components/parameters/fields'
+      summary: Retrieving a reindex job
+      operationId: GET-indexing-reindex-jobs-reindex-job-id
+      responses:
+        '200':
+          description: Reindex job is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReindexJob'
+              examples:
+                Example 1:
+                  value:
+                    id: 6a31424ef4ddd37d108f8168
+                    status: IN_PROGRESS
+                    entityType: PRODUCT
+                    expectedCount: 5000
+                    processedCount: 2000
+                    metadata:
+                      createdAt: "2026-06-16T12:32:14.132Z"
+                      modifiedAt: "2026-06-16T12:32:14.150Z"
+        '400':
+          $ref: '#/components/responses/BadRequest_400'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+      tags:
+        - Reindex
+      description: |-
+        Returns reindex job.
+      security:
+        - OAuth2:
+            - indexing.search_view
 components:
   schemas:
     errorMessage:
@@ -325,6 +517,63 @@ components:
           description: Error details
           items:
             type: string
+
+    ReindexJobStatus:
+      type: string
+      description: Informs about status of reindex job. `PENDING` means that the maximum number of parallel `IN_PROGRESS` jobs is reached and such job will be processed when one of current `IN_PROGRESS` jobs is released. `PUBLISHED` means that all the indexing events were emitted. `SUCCESS` means that all the indexing events were consumed.
+      enum: [FAILURE, IN_PROGRESS, PENDING, PUBLISHED, SUCCESS]
+
+
+    Metadata:
+      type: object
+      properties:
+        createdAt:
+          description: 'Date and time when the object was created. The value is approved as an ISO-8601 representation of an Instant. For example: `2022-04-30T13:18:02.379Z`'
+          type: string
+          format: date-time
+        modifiedAt:
+          description: 'Date and time when the object was last modified. The value is approved as an ISO-8601 representation of an Instant. For example: `2022-04-30T13:18:02.379Z`'
+          type: string
+          format: date-time
+
+    ReindexEntityType:
+      type: string
+      description: Entity type which should be reindexed. For now, it supports only `PRODUCT` and custom schema types.
+
+    ReindexJob:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the reindex job.
+        entityType:
+          $ref: '#/components/schemas/ReindexEntityType'
+        message:
+          type: string
+          description: In case if reindex job finishes with `FAILURE` status, the message is populated with information what was the reason of the failure.
+        status:
+          $ref: '#/components/schemas/ReindexJobStatus'
+        expectedCount:
+          type: integer
+          description: Expected number of entities which need to be indexed.
+        processedCount:
+          type: integer
+          description: Actual number of entities which were indexed. Allows to track the progress of reindexing process.
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    ReindexRequest:
+      type: object
+      properties:
+        entityType:
+          $ref: '#/components/schemas/ReindexEntityType'
+        rag:
+          type: boolean
+          default: false
+          description: Whether products should be reindexed for RAG. This property is applicable only when `entityType` is `PRODUCT`.
+      required:
+        - entityType
+
     IndexPublicConfiguration:
       title: IndexPublicConfiguration
       type: object
@@ -340,9 +589,10 @@ components:
           description: Identifier of an index.
         provider:
           type: string
-          description: 'Index provider name. Supported providers: Algolia - https://www.algolia.com'
+          description: 'Index provider name. Supported providers: `ALGOLIA` (https://www.algolia.com), `BATTERY_INCLUDED` (https://www.batteryincluded.io). Only one provider can be active per tenant at a time.'
           enum:
             - ALGOLIA
+            - BATTERY_INCLUDED
         active:
           type: boolean
           description: Indicates if the configuration is active or not.
@@ -355,6 +605,17 @@ components:
             writeKey:
               type: string
               description: API key used for write purposes.
+            excludedMixinKeys:
+              type: array
+              items:
+                type: string
+              description: >-
+                Optional list of root product mixin keys to exclude from indexing.
+                When set, the specified mixin keys are omitted from both the non-localized
+                and localized portions of the indexed document.
+                Applies only to the `BATTERY_INCLUDED` provider; ignored for `ALGOLIA`.
+          required:
+            - provider
     IndexCreationResponse:
       title: IndexCreationResponse
       type: object
@@ -427,7 +688,7 @@ components:
               value:
                 code: 400
                 status: Bad Request
-                message: The provider ALGOLIA2 is not supported.
+                message: The provider UNKNOWN_PROVIDER is not supported.
     NotFound_404:
       description: Resource has not been found.
       content:
@@ -439,7 +700,7 @@ components:
               value:
                 code: 404
                 status: Not Found
-                message: The provider ALGOLIA2 is not supported.
+                message: The provider UNKNOWN_PROVIDER is not supported.
   parameters:
     trait_tenant:
       name: tenant
@@ -460,7 +721,54 @@ components:
       required: true
       schema:
         type: string
-      description: 'Provider name. Currently supported providers: ALGOLIA'
+        enum:
+          - ALGOLIA
+          - BATTERY_INCLUDED
+      description: 'Provider name. Supported values: `ALGOLIA`, `BATTERY_INCLUDED`'
+    header_xTotalCount:
+      schema:
+        type: boolean
+      in: header
+      name: X-Total-Count
+      description: Flag indicating whether the total number of retrieved results should be returned.
+    qParam:
+      in: query
+      name: q
+      description: |
+        A standard query parameter is used to search for specific values.
+
+        See: [Standard Practices - Query parameter](https://developer.emporix.io/docs/content/q-param)
+      schema:
+        type: string
+    pageSize:
+      schema:
+        type: integer
+        default: 60
+        minimum: 1
+        maximum: 2000
+      in: query
+      name: pageSize
+      description: The number of documents to be retrieved per page.
+    pageNumber:
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+      in: query
+      name: pageNumber
+      description: The page number to be retrieved. The size of the pages should be specified by the `pageSize` parameter.
+    sort:
+      schema:
+        type: string
+      in: query
+      name: sort
+      description: List of properties used to sort the results, separated by colons.
+    fields:
+      schema:
+        type: string
+      in: query
+      name: fields
+      description: Fields to be returned in the response.
   securitySchemes:
     OAuth2:
       type: oauth2
