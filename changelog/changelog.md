@@ -17,6 +17,30 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-5844 -->
+
+## Schema and IAM Services - digit support in custom identifiers
+
+#### Overview
+
+Schema Service custom entity type IDs and IAM Service custom scope IDs now accept digits. This broadens the identifier format for custom entities and scopes, which helps tenants and integrations use numeric naming schemes while keeping the existing validation rules for other allowed characters.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Creating a custom schema type](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-schema-type#post-schema-tenant-custom-entities) | The `id` field now accepts uppercase letters, digits, and underscores, and it must start with a letter. |
+| [Upserting a custom schema type](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-schema-type#put-schema-tenant-custom-entities-id) | The `id` field now accepts uppercase letters, digits, and underscores, and it must start with a letter. |
+| [Retrieving a scope](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/scopes#get-iam-tenant-scopes-scopeid) | The `scopeId` path parameter now accepts letters, digits, periods (`.`), hyphens (`-`), and underscores (`_`). |
+| [Upserting a custom scope](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/scopes#put-iam-tenant-scopes-scopeid) | The `scopeId` path parameter now accepts letters, digits, periods (`.`), hyphens (`-`), and underscores (`_`). |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-06-30" tags="improvement" %}
 
 ## Country Service - X-Version header no longer required
