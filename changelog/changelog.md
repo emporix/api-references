@@ -17,6 +17,28 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## AI Service - introduction of 'outputFormat' field
+
+#### Overview
+
+The AI Service API now accepts a JSON Schema (as a JSON string) in the `outputFormat` field to constrain the structure of the agent response. This enables clients to request predictable, machine-readable output for easier integration with downstream workflows.
+
+#### Updated endpoints
+
+| Endpoint                                                                                                                                                                                          | Description                                      |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)              | Response now includes the `outputFormat` field.  |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                              | Response now includes the `outputFormat` field.  |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)                    | Response now includes the `outputFormat` field.  |
+| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid)                  | Request now includes the `outputFormat` field.   |
+| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid)       | Request now includes the `outputFormat` field.   |
+| [Listing available agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#get-ai-service-tenant-agentic-templates) | Response now includes the `outputFormat` field.  |
+| [Searching agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#post-ai-service-tenant-agentic-templates-search)  | Response now includes the `outputFormat` field.  |
+
+{% endupdate %}
+
 {% update date="2026-06-30" tags="improvement" %}
 
 ## Country Service - X-Version header no longer required
