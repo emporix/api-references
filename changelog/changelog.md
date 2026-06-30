@@ -17,6 +17,29 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+<!-- emporix-ai-buddy:changelog:COP-5838 -->
+
+## Agentic Platform - `Output Format` for structured agent responses
+
+#### Overview
+
+The Agentic Platform now supports the `Output Format` field in the Agent View `General` tab, allowing you to define a JSON Schema that constrains agent responses to a predictable structure. This helps produce machine-readable output for workflows, frontend components, and downstream integrations. The updated documentation also describes the one-time enablement flow for the Agentic JSON Schema Assistant, which can generate schema definitions from natural-language instructions.
+
+#### Affected endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [AI Agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/agentic/agents) | Documentation now describes the `Output Format` field, the updated `General` tab layout, and the structured response configuration flow. |
+| [Agentic JSON Schema Assistant](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/agentic/agent-templates/json-schema-agent) | Documentation now introduces the helper agent for generating JSON Schema definitions for `Output Format`. |
+| [Agent Library](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/agentic/agent-templates/agent-library) | Documentation now lists structured agent output as a supported use case through the Agentic JSON Schema Assistant. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-06-30" tags="improvement" %}
 
 ## Country Service - X-Version header no longer required
