@@ -2230,7 +2230,7 @@ components:
       properties:
         id:
           type: string
-          description: Unique code for the custom type. Can only contain uppercase letters and underscores.
+          description: Unique code for the custom type. Can contain uppercase letters, digits, and underscores. The first character must be a letter.
         name:
           type: object
           description: Localized custom type name in a form of a map of translations.
