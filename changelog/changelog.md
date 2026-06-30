@@ -17,7 +17,7 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-06-30" tags="improvement" %}
 
 ## Country Service - X-Version header no longer required
 
