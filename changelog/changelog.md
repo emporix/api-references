@@ -17,7 +17,7 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-07-01" tags="improvement" %}
 
 ## Schema and IAM Services - digits now supported in custom entity and scope IDs
 
