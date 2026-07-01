@@ -19,11 +19,11 @@ icon: arrows-rotate-reverse
 
 {% update date="RELEASE_DATE" tags="improvement" %}
 
-## Schema and IAM Services - digits now supported in custom entity type and scope IDs
+## Schema and IAM Services - digits now supported in custom entity and scope IDs
 
 #### Overview
 
-Custom entity type IDs in the Schema Service and scope IDs in the IAM Service now accept digits alongside letters and other allowed characters, giving more flexibility when naming custom types and scopes.
+Custom entity IDs in the Schema Service and scope IDs in the IAM Service now accept digits alongside letters and other allowed characters, giving more flexibility when naming custom types and scopes.
 
 #### Updated endpoints
 
@@ -31,7 +31,6 @@ Custom entity type IDs in the Schema Service and scope IDs in the IAM Service no
 |---|---|
 | [Creating a custom schema type](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-schema-type#post-schema-tenant-custom-entities) | The `id` field now accepts digits. |
 | [Upserting a custom schema type](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-schema-type#put-schema-tenant-custom-entities-id) | The `id` field now accepts digits. |
-| [Retrieving a scope](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/scopes#get-iam-tenant-scopes-scopeid) | The `scopeId` path parameter now accepts digits. |
 | [Upserting a custom scope](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/scopes#put-iam-tenant-scopes-scopeid) | The `scopeId` path parameter now accepts digits. |
 
 #### Known problems
