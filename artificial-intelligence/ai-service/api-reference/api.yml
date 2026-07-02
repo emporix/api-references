@@ -352,6 +352,95 @@ paths:
         $ref: '#/components/requestBodies/AgenticChat'
       tags:
         - Agent Chat
+  '/ai-service/{tenant}/agentic/chat-stream':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - schema:
+          type: string
+          format: uuid
+        name: session-id
+        in: header
+        description: Unique session identifier which allows for storing the context of the chat. If not provided, the system generates it.
+      - schema:
+          type: string
+        name: request-id
+        in: header
+        required: false
+        description: Unique request identifier forwarded to the downstream streaming service.
+      - schema:
+          type: string
+        name: scopes
+        in: header
+        required: false
+        description: OAuth scopes forwarded to the downstream streaming service.
+      - schema:
+          type: string
+        name: Hybris-User
+        in: header
+        required: false
+        description: Hybris user identifier forwarded to the downstream streaming service.
+      - schema:
+          type: string
+        name: Hybris-User-Id
+        in: header
+        required: false
+        description: Hybris user ID forwarded to the downstream streaming service.
+      - schema:
+          type: string
+        name: Hybris-Session-Id
+        in: header
+        required: false
+        description: Hybris session ID forwarded to the downstream streaming service.
+      - schema:
+          type: string
+        name: Client-Id
+        in: header
+        required: false
+        description: Client identifier forwarded to the downstream streaming service.
+      - schema:
+          type: string
+        name: Legal-Entity-Id
+        in: header
+        required: false
+        description: Legal entity identifier forwarded to the downstream streaming service.
+      - schema:
+          type: string
+        name: saas-token
+        in: header
+        required: false
+        description: SaaS token forwarded to the downstream streaming service.
+    post:
+      summary: Starting agent chat stream
+      operationId: POST-ai-agents-chat-stream
+      responses:
+        '200':
+          description: Chat response stream.
+          content:
+            text/event-stream:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+      description: |-
+        Allows for communication with Emporix agents using a Server-Sent Events stream.
+
+        The endpoint uses the same request body as the synchronous chat endpoint and validates agent availability, trigger type, scopes, token usage, and attachment references before the stream starts.
+
+        **Important**: The event names and payload format are proxied from the downstream AI Agentic streaming service and are not further specified in this contract.
+      security:
+        - OAuth2:
+            - ai.agentexecution_manage_own
+            - ai.agentexecution_manage
+      requestBody:
+        $ref: '#/components/requestBodies/AgenticChat'
+      tags:
+        - Agent Chat
   '/ai-service/{tenant}/agentic/chat-async':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -439,6 +528,8 @@ paths:
           - csv
           - text
           - txt
+
+        Uploaded attachments can also be referenced in `POST /ai-service/{tenant}/agentic/chat-stream` requests. Attachment references are validated before the stream starts.
       requestBody:
         content:
           multipart/form-data:
