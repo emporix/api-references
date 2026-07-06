@@ -483,8 +483,6 @@ paths:
           - csv
           - text
           - txt
-
-        Uploaded attachments can also be referenced in `POST /ai-service/{tenant}/agentic/chat-stream` requests. Attachment references are validated before the stream starts.
       requestBody:
         content:
           multipart/form-data:
