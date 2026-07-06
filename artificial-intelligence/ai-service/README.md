@@ -16,7 +16,7 @@ The service facilitates and streamlines e-commerce processes of product marketin
 * Creates attention-grabbing descriptions using diverse writing styles
 * Ensures consistency in tone and language across all content
 * Increases visibility through search engine optimization
-
+ 
 ## Streaming chat responses
 
 AI Service supports streaming LLM output for endpoint-triggered agents through a dedicated Server-Sent Events (SSE) endpoint.
@@ -60,3 +60,4 @@ After validation, AI Service proxies the SSE response from the downstream runtim
 - Clients must support SSE and consume `text/event-stream` responses.
 - The implementation uses a dedicated streaming endpoint instead of switching behavior on the existing chat endpoint.
 - Attachment validation is preserved on the streaming path, but the exact downstream SSE event taxonomy and payload shape are not documented in this file.
+

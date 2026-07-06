@@ -6,6 +6,7 @@ icon: rectangle-terminal
 
 # API Reference
 
+ 
 ## Streaming chat responses
 
 AI Service supports streaming LLM responses for endpoint-triggered agents through a dedicated Server-Sent Events (SSE) endpoint.
@@ -55,5 +56,3 @@ Attachment validation is also performed before the stream starts, so requests th
 
 > Event names and payload shapes are proxied from the downstream AI Agentic streaming endpoint and are not further specified in this reference.
 
-
- 

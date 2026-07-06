@@ -372,7 +372,7 @@ paths:
         name: scopes
         in: header
         required: false
-        description: OAuth scopes forwarded to the downstream streaming service.
+        description: OAuth scopes used for validation and forwarded to the downstream streaming service.
       - schema:
           type: string
         name: Hybris-User
@@ -409,6 +409,13 @@ paths:
         in: header
         required: false
         description: SaaS token forwarded to the downstream streaming service.
+      - schema:
+          type: string
+          example: text/event-stream
+        name: Accept
+        in: header
+        required: false
+        description: Use `text/event-stream` to receive the response as a Server-Sent Events stream.
     post:
       summary: Starting agent chat stream
       operationId: POST-ai-agents-chat-stream
@@ -430,9 +437,9 @@ paths:
       description: |-
         Allows for communication with Emporix agents using a Server-Sent Events stream.
 
-        The endpoint uses the same request body as the synchronous chat endpoint and validates agent availability, trigger type, scopes, token usage, and attachment references before the stream starts.
+        Send the existing `AgenticChat` JSON request body and consume the response as `text/event-stream`.
 
-        **Important**: The event names and payload format are proxied from the downstream AI Agentic streaming service and are not further specified in this contract.
+        The event names and payload format are proxied from the downstream streaming service and are not further specified in this contract.
       security:
         - OAuth2:
             - ai.agentexecution_manage_own
