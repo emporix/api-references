@@ -363,54 +363,6 @@ paths:
         description: Unique session identifier which allows for storing the context of the chat. If not provided, the system generates it.
       - schema:
           type: string
-        name: request-id
-        in: header
-        required: false
-        description: Unique request identifier forwarded to the downstream streaming service.
-      - schema:
-          type: string
-        name: scopes
-        in: header
-        required: false
-        description: OAuth scopes used for validation and forwarded to the downstream streaming service.
-      - schema:
-          type: string
-        name: Hybris-User
-        in: header
-        required: false
-        description: Hybris user identifier forwarded to the downstream streaming service.
-      - schema:
-          type: string
-        name: Hybris-User-Id
-        in: header
-        required: false
-        description: Hybris user ID forwarded to the downstream streaming service.
-      - schema:
-          type: string
-        name: Hybris-Session-Id
-        in: header
-        required: false
-        description: Hybris session ID forwarded to the downstream streaming service.
-      - schema:
-          type: string
-        name: Client-Id
-        in: header
-        required: false
-        description: Client identifier forwarded to the downstream streaming service.
-      - schema:
-          type: string
-        name: Legal-Entity-Id
-        in: header
-        required: false
-        description: Legal entity identifier forwarded to the downstream streaming service.
-      - schema:
-          type: string
-        name: saas-token
-        in: header
-        required: false
-        description: SaaS token forwarded to the downstream streaming service.
-      - schema:
-          type: string
           example: text/event-stream
         name: Accept
         in: header
@@ -436,10 +388,6 @@ paths:
           $ref: '#/components/responses/500_resp_common'
       description: |-
         Allows for communication with Emporix agents using a Server-Sent Events stream.
-
-        Send the existing `AgenticChat` JSON request body and consume the response as `text/event-stream`.
-
-        The event names and payload format are proxied from the downstream streaming service and are not further specified in this contract.
       security:
         - OAuth2:
             - ai.agentexecution_manage_own
