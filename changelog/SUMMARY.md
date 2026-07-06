@@ -1,8 +1,8 @@
-# Changelog 2026
+# Table of contents
 
 ## Changelog
 
-* [2026](changelog.md)
+* [2026](README.md)
 
 ## In progress
 
@@ -19,7 +19,7 @@
   * [2025-12-04: AI Service - Deprecation of SSE transport protocol](archive/2025/2025-12-04-ai-deprecations.md)
   * [2025-12-04: AI Service - Streamable HTTP MCP servers](archive/2025/2025-12-04-ai.md)
   * [2025-12-03: AI RAG Indexer - new endpoints for configuring RAG Search Functionality](archive/2025/2025-12-03-ai-rag-indexer.md)
-  * [2025-12-03: AI Service - RAG_CUSTOM and RAG_EMPORIX new tool types](archive/2025/2025-12-03-ai.md)
+  * [2025-12-03: AI Service - RAG\_CUSTOM and RAG\_EMPORIX new tool types](archive/2025/2025-12-03-ai.md)
   * [2025-11-26: Category Tree – filtering category trees by category IDs](archive/2025/2025-11-26-category-tree.md)
   * [2025-11-26: Product Service – category and customer segment IDs in product response](archive/2025/2025-11-26-product.md)
   * [2025-11-25: AI Service - Agent Logs](archive/2025/2025-11-25-ai.md)
@@ -120,4 +120,3 @@
 * [2024](archive/2024/changelog-2024.md)
 * [2023](archive/2023/changelog-2023.md)
 * [2022](archive/2022/changelog-2022.md)
- 
