@@ -17,26 +17,26 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="RELEASE_DATE" tags="new-feature, improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-5424 -->
 
 ## AI Service - streaming chat responses
 
 #### Overview
 
-AI Service now supports streaming LLM responses for endpoint-triggered agents through a new Server-Sent Events endpoint. This lets clients receive incremental output over `text/event-stream` while preserving the existing validation flow for agent state, trigger type, scopes, token usage, and attachments.
+AI Service now supports streaming LLM responses for endpoint-triggered agents through a new Server-Sent Events endpoint. This lets clients receive incremental output over `text/event-stream` while preserving the existing validation flow for agent state, trigger type, scopes, token usage, and attachments. The attachment upload flow was also updated to clarify that uploaded attachments can be referenced in streaming chat requests.
 
 #### New endpoints
 
 | Endpoint | Description |
 |----------|-------------|
-| [Streaming chat responses](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agentic-chat#post-ai-service-tenant-agentic-chat-stream) | Adds `POST /ai-service/{tenant}/agentic/chat-stream` for streaming chat responses over Server-Sent Events. |
+| [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agentic-chat#post-ai-service-tenant-agentic-chat-stream) | Adds `POST /ai-service/{tenant}/agentic/chat-stream` for streaming chat responses over `text/event-stream`. |
 
 #### Updated endpoints
 
 | Endpoint | Description |
 |----------|-------------|
-| [Uploading agent attachments](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agentic-chat#post-ai-service-tenant-agentic-agentid-attachments) | Uploaded attachments can be used with the streaming chat endpoint, and attachment validation remains part of the request flow. |
+| [Uploading agent attachments](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agentic-chat#post-ai-service-tenant-agentic-agentid-attachments) | Clarifies that uploaded attachments can be referenced in streaming chat requests and are validated before the stream starts. |
 
 #### Known problems
 
