@@ -352,6 +352,50 @@ paths:
         $ref: '#/components/requestBodies/AgenticChat'
       tags:
         - Agent Chat
+  '/ai-service/{tenant}/agentic/chat-stream':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - schema:
+          type: string
+          format: uuid
+        name: session-id
+        in: header
+        description: Unique session identifier which allows for storing the context of the chat. If not provided, the system generates it.
+      - schema:
+          type: string
+          example: text/event-stream
+        name: Accept
+        in: header
+        required: false
+        description: Use `text/event-stream` to receive the response as a Server-Sent Events stream.
+    post:
+      summary: Starting agent chat stream
+      operationId: POST-ai-agents-chat-stream
+      responses:
+        '200':
+          description: Chat response stream.
+          content:
+            text/event-stream:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+      description: |-
+        Allows for communication with Emporix agents using a Server-Sent Events stream.
+      security:
+        - OAuth2:
+            - ai.agentexecution_manage_own
+            - ai.agentexecution_manage
+      requestBody:
+        $ref: '#/components/requestBodies/AgenticChat'
+      tags:
+        - Agent Chat
   '/ai-service/{tenant}/agentic/chat-async':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
