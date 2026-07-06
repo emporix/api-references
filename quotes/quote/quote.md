@@ -472,37 +472,6 @@ curl -L \
   ]'
 ```
 
-Employees can also update the customer-specific quote fields by using the `REPLACE` operation on the following paths:
-
-* `/customerReference`
-* `/customerComment`
-
-Example:
-
-```bash
-curl -L \
-  --request PATCH \
-  --url 'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}' \
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
-  --header 'Content-Type: application/json' \
-  --data '[
-    {
-      "op": "REPLACE",
-      "path": "/customerReference",
-      "value": {
-        "value": "REF-EMP-001"
-      }
-    },
-    {
-      "op": "REPLACE",
-      "path": "/customerComment",
-      "value": {
-        "value": "Updated by employee"
-      }
-    }
-  ]'
-```
-
 ### Approving a quote by an employee
 
 When an employee accepts a quote, they approve it to be sent to the customer. Depending on the flow, the quote status changes from 'AWAITING', 'CREATING' or "IN\_PROGRESS" to 'OPEN"'.

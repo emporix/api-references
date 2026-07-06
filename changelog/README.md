@@ -23,6 +23,33 @@ layout:
 # 2026
 
 {% updates format="full" %}
+{% update date="RELEASE_DATE" tags="new-feature" %}
+## Quote Service - customerReference and customerComment properties
+
+#### Overview
+
+The `Quote` object has been extended with two new properties that allow customers to provide additional information on their quotes:
+
+- `customerReference` - A customer-provided reference stored on the quote (e.g., a purchase order number like "PO-12345")
+- `customerComment` - A customer-provided comment stored on the quote (e.g., "Please deliver before Friday")
+
+These properties can be set when creating a quote, creating a quote from a cart, or when updating a quote.
+
+#### Updated endpoints
+
+| Endpoint                                                                                                                                                            | Description                                                                                                   |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| [Creating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes)                     | Properties `customerReference` and `customerComment` can be provided.                                         |
+| [Creating a quote from a cart](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes-from-cart) | Properties `customerReference` and `customerComment` can be provided.                                         |
+| [Retrieving quotes](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes)                     | Properties `customerReference` and `customerComment` are returned.                                            |
+| [Retrieving a single quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid)     | Properties `customerReference` and `customerComment` are returned.                                            |
+| [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid)  | Properties `customerReference` and `customerComment` can be updated. Customers can update these on own quotes. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
 {% update date="2026-07-06" tags="new-feature" %}
 ## AI Service - streaming chat responses
 

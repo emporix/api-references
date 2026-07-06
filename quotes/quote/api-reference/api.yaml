@@ -1684,15 +1684,6 @@ components:
               format: date-time
               description: The Quote Reason modification timestamp.
     QuoteResponse:
-      properties:
-        customerReference:
-          type: string
-          description: Customer-provided reference stored on the quote.
-          example: PO-12345
-        customerComment:
-          type: string
-          description: Customer-provided comment stored on the quote.
-          example: Please deliver before Friday
       type: object
       properties:
         id:
@@ -1708,6 +1699,14 @@ components:
           enum:
             - B2B
             - B2C
+        customerReference:
+          type: string
+          description: Customer-provided reference stored on the quote.
+          example: PO-12345
+        customerComment:
+          type: string
+          description: Customer-provided comment stored on the quote.
+          example: Please deliver before Friday
         customer:
           type: object
           description: This attribute contains details about the customer for whom the quote was created.
@@ -2401,15 +2400,6 @@ components:
             type: string
             description: Modification date.
     QuoteCreateFromCartRequest:
-      properties:
-        customerReference:
-          type: string
-          description: Customer-provided reference stored on the quote.
-          example: PO-12345
-        customerComment:
-          type: string
-          description: Customer-provided comment stored on the quote.
-          example: Please deliver before Friday
       type: object
       description: This schema includes the attributes that are required to be provided when creating a quote from the cart.
       title: QuoteCreateFromCartRequest
@@ -2430,6 +2420,14 @@ components:
           description: For B2B customers, it represents the location which should specify the shipping address. For B2C customers, it represents identifier of customer's shipping address.
         shipping:
           $ref: '#/components/schemas/QuoteShipping'
+        customerReference:
+          type: string
+          description: Customer-provided reference stored on the quote.
+          example: PO-12345
+        customerComment:
+          type: string
+          description: Customer-provided comment stored on the quote.
+          example: Please deliver before Friday
   securitySchemes:
     OAuth2:
       type: oauth2
