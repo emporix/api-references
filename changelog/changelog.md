@@ -17,7 +17,7 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-07-06" tags="new-feature" %}
 
 ## AI Service - streaming chat responses
 
