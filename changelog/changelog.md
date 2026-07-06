@@ -17,6 +17,26 @@ icon: arrows-rotate-reverse
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## AI Service - streaming chat responses
+
+#### Overview
+
+AI Service now supports streaming LLM responses for endpoint-triggered agents through a new Server-Sent Events endpoint. This lets clients receive incremental output over `text/event-stream`.
+
+#### New endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agentic-chat#post-ai-service-tenant-agentic-chat-stream) | Adds `POST /ai-service/{tenant}/agentic/chat-stream` for streaming chat responses over `text/event-stream`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-07-01" tags="improvement" %}
 
 ## Schema and IAM Services - digits now supported in custom entity and scope IDs
