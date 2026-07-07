@@ -23,6 +23,24 @@ layout:
 # 2026
 
 {% updates format="full" %}
+{% update date="RELEASE_DATE" tags="new-feature" %}
+## Schema Service - bulk patching of custom instances
+
+#### Overview
+
+The Schema Service now supports partially updating multiple custom instances in a single request. Each item provides the custom instance `id` and a list of patch operations to apply. The maximum batch size is 200, and each item returns its own result status.
+
+#### New endpoints
+
+| Endpoint                                                                                                                                                                                     | Description                                                                                              |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| [Patching custom instances in bulk](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#patch-schema-tenant-custom-entities-type-instances-bulk) | Partially updates up to 200 custom instances in one request by applying patch operations to each item. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
 {% update date="2026-07-07" tags="new-feature" %}
 ## Quote Service - customerReference and customerComment properties
 
