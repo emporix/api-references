@@ -23,7 +23,7 @@ layout:
 # 2026
 
 {% updates format="full" %}
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-07-08" tags="new-feature" %}
 ## Schema Service - bulk patching of custom instances
 
 #### Overview
