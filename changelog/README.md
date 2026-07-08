@@ -23,6 +23,27 @@ layout:
 # 2026
 
 {% updates format="full" %}
+{% update date="RELEASE_DATE" tags="new-feature" %}
+## Indexing Service - mixin path allowlist for Battery Included
+
+#### Overview
+
+The `IndexConfiguration` object has been extended with a new optional `includedMixinPaths` property for the `BATTERY_INCLUDED` provider. It is a glob-based allowlist of product mixin paths (matched against full dot-notation paths rooted at the mixin key), where `*` matches within a single path segment and `**` matches across one or more segments. When `includedMixinPaths` is non-empty, only matching mixin paths are indexed, and it must not be combined with `excludedMixinKeys`. Malformed glob patterns are rejected with a validation error.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|---|---|
+| [Creating a new configuration](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Property `includedMixinPaths` can be provided for the `BATTERY_INCLUDED` provider. |
+| [Getting all configurations](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations) | Property `includedMixinPaths` is returned. |
+| [Getting configuration by provider name](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) | Property `includedMixinPaths` is returned. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Property `includedMixinPaths` can be updated. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
 {% update date="2026-07-08" tags="new-feature" %}
 ## Schema Service - bulk patching of custom instances
 
