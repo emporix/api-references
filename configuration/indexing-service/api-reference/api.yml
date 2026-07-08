@@ -628,7 +628,7 @@ components:
                 `class_EA673_toolsClassification.sk.OnlineIsService_P`.
 
                 `*` matches within a single path segment, `**` matches across one or more
-                segments, and matching is case sensitive.
+                path segments, and matching is case sensitive.
 
                 If a matched path points to an object, the entire subtree under that object is
                 included. When this field is absent or an empty list, path filtering is inactive
@@ -636,7 +636,7 @@ components:
 
                 `includedMixinPaths` and `excludedMixinKeys` are mutually exclusive when
                 `includedMixinPaths` is non-empty. Malformed glob patterns are rejected with a
-                `400` response.
+                validation error on configuration writes.
           required:
             - provider
     IndexCreationResponse:

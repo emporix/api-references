@@ -45,12 +45,12 @@ curl -L
   }'
 ```
 
-For the `BATTERY_INCLUDED` provider, the same configuration endpoints also accept Battery Included-specific mixin filtering options:
+For the `BATTERY_INCLUDED` provider, the same configuration endpoints also support mixin filtering options:
 
 - `excludedMixinKeys` - optional list of top-level mixin keys to exclude
 - `includedMixinPaths` - optional list of glob patterns that allowlist mixin paths
 
-`includedMixinPaths` is matched against dot-notation paths rooted at the mixin key, for example `class_EA673_toolsClassification.sk.OnlineIsService_P`.
+`includedMixinPaths` is matched against full dot-notation mixin paths rooted at the mixin key, for example `class_EA673_toolsClassification.sk.OnlineIsService_P`.
 
 Supported glob syntax:
 
@@ -65,7 +65,7 @@ Behavior:
 - if `includedMixinPaths` is absent or an empty list (`[]`), allowlist filtering is inactive
 - if `includedMixinPaths` is non-empty, only matching mixin paths are sent to Battery Included
 - `includedMixinPaths` and `excludedMixinKeys` must not both be non-empty in the same request
-- malformed glob patterns are rejected with a `4xx` validation error on configuration writes
+- malformed glob patterns are rejected with a `400` validation error on configuration writes
 
 Example Battery Included configuration:
 
