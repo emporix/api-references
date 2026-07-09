@@ -2,4 +2,4 @@
 hidden: true
 ---
 
-# changelog
+# Changelog
