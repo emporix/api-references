@@ -45,6 +45,48 @@ curl -L
   }'
 ```
 
+For the `BATTERY_INCLUDED` provider, the same configuration endpoints also support mixin filtering options:
+
+- `excludedMixinKeys` - optional list of top-level mixin keys to exclude
+- `includedMixinPaths` - optional list of glob patterns that allowlist mixin paths
+
+The `includedMixinPaths` option is matched against full dot-notation mixin paths rooted at the mixin key, for example `class_EA673_toolsClassification.sk.OnlineIsService_P`.
+
+Supported glob syntax:
+
+- `*` matches any characters within a single path segment
+- `**` matches across one or more path segments
+- `.` separates path segments
+
+Matching is case sensitive and uses full-path matching. If a matched path points to an object, the whole subtree under that object is included.
+
+Behavior:
+
+- if `includedMixinPaths` is absent or an empty list (`[]`), allowlist filtering is inactive
+- if `includedMixinPaths` is non-empty, only matching mixin paths are sent to Battery Included
+- `includedMixinPaths` and `excludedMixinKeys` must not both be non-empty in the same request
+- malformed glob patterns are rejected with a `400` validation error on configuration writes
+
+Example of the Battery Included configuration:
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/indexing/{tenant}/configurations' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "active": true,
+    "indexName": "exampleTenant",
+    "writeKey": "51ebe89215dddcf85e5dacd5643d17e7",
+    "provider": "BATTERY_INCLUDED",
+    "includedMixinPaths": [
+      "*_siteAware.*.OnlineIsService_P",
+      "*_siteAware.**"
+    ]
+  }'
+```
+
+
 ## How to update the index configuration
 
 To update the index configuration you need to retrieve the `writeKey` first.
@@ -84,6 +126,9 @@ curl -L
     "provider": "ALGOLIA"
   }'
 ```
+
+For `BATTERY_INCLUDED`, `includedMixinPaths` filtering is applied to the raw source mixin tree before the localized and non-localized mixin split. The retained data is then written to the existing Battery Included mixin fields, such as `_product.mixins` and `_product_i18n.<lang>.mixins`.
+
 
 To apply your configuration changes to existing data, run the reindexing process. See the [How to reindex existing products](indexing.md#how_to_reindex_existing_products) section.
 
