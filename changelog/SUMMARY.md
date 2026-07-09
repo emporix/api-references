@@ -1,10 +1,11 @@
 # Table of contents
 
+* [README](README.md)
 * [README](changelog.md)
 
 ## Changelog
 
-* [2026](changelog.md)
+* [2026](/broken/pages/Bw5nGK6XkLjSvy8QOoNn)
 
 ## In progress
 
