@@ -1,6 +1,6 @@
 # Table of contents
 
-* [README](README.md)
+* [Changelog](README.md)
 
 ## Changelog
 
