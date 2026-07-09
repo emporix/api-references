@@ -61,8 +61,9 @@ paths:
                   indexName: exampleTenant
                   writeKey: bi-api-key-abc123
                   provider: BATTERY_INCLUDED
-                  excludedMixinKeys:
-                    - internalAttributes
+                  includedMixinPaths:
+                    - "*_siteAware.*.OnlineIsService_P"
+                    - "*_siteAware.**"
         description: ''
       responses:
         '201':
@@ -113,8 +114,9 @@ paths:
                       indexName: exampleTenant
                       writeKey: bi-api-key-abc123
                       provider: BATTERY_INCLUDED
-                      excludedMixinKeys:
-                        - internalAttributes
+                      includedMixinPaths:
+                        - "*_siteAware.*.OnlineIsService_P"
+                        - "*_siteAware.**"
               schema:
                 type: array
                 items:
@@ -159,8 +161,9 @@ paths:
                     indexName: exampleTenant
                     writeKey: bi-api-key-abc123
                     provider: BATTERY_INCLUDED
-                    excludedMixinKeys:
-                      - internalAttributes
+                    includedMixinPaths:
+                      - "*_siteAware.*.OnlineIsService_P"
+                      - "*_siteAware.**"
               schema:
                 $ref: '#/components/schemas/IndexConfiguration'
         '401':
@@ -199,9 +202,9 @@ paths:
                   indexName: exampleTenant
                   writeKey: bi-api-key-abc123
                   provider: BATTERY_INCLUDED
-                  excludedMixinKeys:
-                    - internalAttributes
-                    - customData
+                  includedMixinPaths:
+                    - "*_siteAware"
+                    - "catalogAttrs.**.color"
       responses:
         '204':
           description: Configuration updated
@@ -613,7 +616,27 @@ components:
                 Optional list of root product mixin keys to exclude from indexing.
                 When set, the specified mixin keys are omitted from both the non-localized
                 and localized portions of the indexed document.
-                Applies only to the `BATTERY_INCLUDED` provider; ignored for `ALGOLIA`.
+                Applies only to the `BATTERY_INCLUDED` provider.
+            includedMixinPaths:
+              type: array
+              items:
+                type: string
+              description: >-
+                Optional allowlist of product mixin paths to include in indexing for the
+                `BATTERY_INCLUDED` provider. Patterns are matched against full dot-notation
+                paths rooted at the mixin key, for example
+                `class_EA673_toolsClassification.sk.OnlineIsService_P`.
+
+                `*` matches within a single path segment, `**` matches across one or more
+                path segments, and matching is case sensitive.
+
+                If a matched path points to an object, the entire subtree under that object is
+                included. When this field is absent or an empty list, path filtering is inactive
+                and existing `excludedMixinKeys` behavior applies.
+
+                `includedMixinPaths` and `excludedMixinKeys` are mutually exclusive when
+                `includedMixinPaths` is non-empty. Malformed glob patterns are rejected with a
+                validation error on configuration writes.
           required:
             - provider
     IndexCreationResponse:
