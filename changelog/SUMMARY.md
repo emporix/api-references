@@ -1,7 +1,10 @@
 # Table of contents
 
-* [Changelog 2026](README.md)
-* [README](<README (1).md>)
+* [Changelog](README.md)
+
+## Changelog 
+
+* [2026](changelog.md)
 
 ## In progress
 
