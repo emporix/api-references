@@ -4,6 +4,8 @@ title: Docs Self-Review Workflow
 
 # Docs Self-Review Workflow
 
+> **See also:** [guide.md](guide.md) for the full author and maintainer guide (docs-standards, subtree setup, propagation).
+
 ## Overview
 
 Two-phase flow with native Cursor Keep/Undo for fixes:
