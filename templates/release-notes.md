@@ -6,6 +6,12 @@ icon: rocket-launch
 # Release Notes
 
 * For a new entry add a new `{% update %}…{% endupdate %}` block at the top of `release-notes/README.md`, just under the opening `{% updates format="full" %}`. Do not modify existing entries. Do not update `release-notes/SUMMARY.md`.
+* Add the date placeholder `RELEASE_DATE` in the update block.
+
+{% hint style="info" %}
+The date placeholder `RELEASE_DATE` is transformed into an actual date of release upon the PR merge to `master`.
+{% endhint %}
+
 * Add relevant tag or tags for the type of introduced changes (aligned with the API changelog):
   * new feature: `new-feature`
   * improvement: `improvement`
@@ -23,11 +29,11 @@ icon: rocket-launch
 Examples:
 
 ```
-{% update date="2026-06-11" tags="new-feature, vsm" %}
+{% update date="RELEASE_DATE" tags="new-feature, vsm" %}
 ```
 
 ```
-{% update date="2026-06-10" tags="improvement, aci" %}
+{% update date="RELEASE_DATE" tags="improvement, aci" %}
 ```
 
 * Use title format inside the update block (date goes on the `{% update %}` tag, not in the title): `## {change/feature}` — omit product prefixes (CE, VSM, ACI, etc.); use the product area tag instead.
