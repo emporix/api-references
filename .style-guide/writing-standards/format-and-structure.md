@@ -23,6 +23,10 @@ Example:
 The section title within a page
 ```
 
+* Do not use em dashes (`—`) in section titles (markdown headings). An em dash is converted to a double hyphen (`--`) in anchor IDs by the editor, while GitBook collapses it to a single hyphen. Cross-page links such as `[Section title](page.md#section-title)` then open the page but do not scroll to the subsection.
+* Keep section titles simple so the heading text, link label, and anchor match. For example, use `### RFC-based Pricing Simulation` with `#rfc-based-pricing-simulation`, not `### Pricing Simulation — RFC-based Pricing Simulation`.
+* Em dashes and en dashes are fine in body text and bullet lists; this rule applies to headings only.
+
 ## Frontmatter metadata
 
 ### Descriptions
@@ -181,3 +185,8 @@ Example:
 * Use en dashes in bullet points when enumerating items and providing some further details / descriptions.
 * Use between numbers and dates.
 * Use to introduce a contrary point, break, change in the sentence structure (only where it makes sense for such strong emphasis).
+
+### Em dashes
+
+* `shift` + `alt` + `-` (or `—` when pasted)
+* Do not use in section titles — see [Titles](#titles). In headings, em dashes break subsection anchor links in GitBook.
