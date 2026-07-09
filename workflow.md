@@ -100,6 +100,7 @@ Compliant rewrite:
 ## Phase 3 (planned): automatic trigger
 
 After the manual flow is stable, enable automatic Phase 1 review through project hooks. Phase 2 remains author-confirmed.
+<!-- This will be added at later stage. -->
 
 ### Example hook blueprint (not active yet)
 
