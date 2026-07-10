@@ -23,6 +23,38 @@ layout:
 # 2026
 
 {% updates format="full" %}
+
+{% update date="RELEASE_DATE" tags="new-feature, improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-5477 -->
+
+## AI Service - Microsoft Teams callbacks and agent tool support
+
+#### Overview
+
+AI Service now supports Microsoft Teams integration for agents. The service exposes new callback endpoints for receiving Teams activities and handling Microsoft Graph consent, and the agent/tool contract now supports the `TEAMS` trigger type, the `teams` native tool type, and Teams-specific configuration fields such as `teamId`, `tenantId`, `defaultInboundAgentId`, and `allowedOperations`. This enables Teams-based outbound collaboration and inbound reply routing for agents.
+
+#### New endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Receiving Teams callbacks](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/api#post-ai-service-callbacks-teams-receiver) | Receives Microsoft Teams callback activities for agent message routing and processing. |
+| [Handling Teams Graph consent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/api#get-ai-service-callbacks-teams-graph-consent) | Handles the Microsoft Graph consent callback required for Teams integration setup. |
+
+#### Updated types
+
+| Type | Description |
+|------|-------------|
+| `TriggerType` | Added the `TEAMS` enum value for Teams-triggered agent flows. |
+| `NativeToolType` | Added the `teams` enum value for Microsoft Teams native tools. |
+| Teams native tool configuration | Added `teamId`, `tenantId`, `defaultInboundAgentId`, and `allowedOperations` fields for Teams tool setup. |
+| Agent native tool references | Added support for per-agent `allowedOperations` restrictions on attached native tools. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-07-09" tags="new-feature" %}
 ## Indexing Service - mixin path allowlist for BatteryIncluded
 
