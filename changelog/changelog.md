@@ -23,6 +23,41 @@ layout:
 # 2026
 
 {% updates format="full" %}
+{% update date="RELEASE_DATE" tags="new-feature" %}
+## AI Service - agent conversation listing and MS Teams tools
+
+#### Overview
+
+The AI Service API now exposes preview endpoints for listing and searching agent conversations created during MS Teams collaboration flows. Responses include conversation identifiers, context references, linked agent and session IDs, and the timestamp of the last message.
+
+The Tools API adds the preview `teams` native tool type for MS Teams collaboration. Tool configuration supports `teamId`, `tenantId`, `defaultInboundAgentId`, and `allowedOperations`. Agent upsert requests can assign native tools with optional per-agent `allowedOperations` overrides.
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Listing conversations](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/conversation#get-ai-service-tenant-agentic-conversations) | Returns agent conversations for the tenant. |
+| [Searching conversations](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/conversation#post-ai-service-tenant-agentic-conversations-search) | Searches agent conversations for the tenant. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Supports the preview `teams` native tool type with `config.teamId`, `config.tenantId`, `config.defaultInboundAgentId`, and `config.allowedOperations`. |
+| [Listing tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools) | Responses can include `teams` tools with the new configuration fields. |
+| [Retrieving tool by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Responses can return a `teams` tool with the new configuration fields. |
+| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | `nativeTools` items now accept `id` and optional preview `allowedOperations` per assigned tool. |
+| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | `nativeTools` items now accept `id` and optional preview `allowedOperations` per assigned tool. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
 {% update date="2026-07-09" tags="new-feature" %}
 ## Indexing Service - mixin path allowlist for BatteryIncluded
 
