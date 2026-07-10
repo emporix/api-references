@@ -25,20 +25,21 @@ Use the correct trademark symbol whenever these Emporix product names appear in 
 
 | Name | Mark | Example |
 | ---- | ---- | ------- |
-| ACE | ™ | ACE™ platform, Emporix ACE™ |
-| Autonomous Commerce Execution | ® | Autonomous Commerce Execution® |
+| ACE | ™ | ACE<sup>™</sup> platform, Emporix ACE<sup>™</sup> |
+| Autonomous Commerce Execution | ® | Autonomous Commerce Execution<sup>®</sup> |
 
 When both names appear together, mark each one:
 
 ```
-Autonomous Commerce Execution® (ACE™)
+Autonomous Commerce Execution<sup>®</sup> (ACE<sup>™</sup>)
 ```
 
 ### Usage rules
 
 * Apply the mark on **first and subsequent mentions** in a page unless your legal team specifies otherwise.
-* Append the symbol directly to the name — do not add a space before ™ or ®.
-* In **bold** or other inline formatting, include the symbol inside the formatted span when the whole name is emphasized: **Autonomous Commerce Execution® (ACE™)**.
+* Wrap ™ and ® in `<sup>` tags so the symbols render smaller and as superscript in GitBook output.
+* Keep the symbol attached to the name with no space before `<sup>™</sup>` or `<sup>®</sup>`.
+* In **bold** or other inline formatting, include the name and superscript mark inside the same formatted span: **Autonomous Commerce Execution<sup>®</sup> (ACE<sup>™</sup>)**.
 * For cross-space GitBook links to other documentation spaces, keep trademark marks in link labels the same way as in plain text.
 
 ### Do not trademark
