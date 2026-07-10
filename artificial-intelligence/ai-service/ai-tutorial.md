@@ -257,6 +257,44 @@ curl -X 'GET' \
 
 The job entity contains information about the request and response from the agent.
 
+## How to receive messages from Microsoft Teams
+
+Agents can also continue conversations from Microsoft Teams through callback-based communication. For Teams-originated messages, configure the agent and the Teams native tool first, then expose the callback endpoints required by the integration.
+
+### Teams callback endpoints
+
+The AI service exposes the following callback paths for Microsoft Teams integration:
+
+* `POST /callbacks/teams-receiver` — receives Bot Framework activities from Microsoft Teams and forwards them for agent processing.
+* `/callbacks/teams-graph-consent` — handles the Microsoft Graph admin consent callback used during Teams setup.
+
+### Teams agent and tool configuration
+
+When you configure an agent for Teams communication, the public agent and tool contract supports:
+
+* trigger type `TEAMS`
+* native tool type `teams`
+* Teams tool configuration fields:
+  * `teamId`
+  * `tenantId`
+  * `defaultInboundAgentId`
+  * `allowedOperations`
+
+The supported Teams `allowedOperations` values are:
+
+* `sendMessage`
+* `createChat`
+* `createChannel`
+* `inviteParticipants`
+* `collaborateOnChannel`
+* `collaborateOnChat`
+
+Per-agent native tool references can also define an `allowedOperations` subset for the attached Teams tool.
+
+{% hint style="info" %}
+For inbound Teams communication, the callback endpoints are intended for Microsoft Teams platform calls and are not used like standard authenticated agent chat endpoints.
+{% endhint %}
+
 ## How to pass a media file for the agents to process
 
 Agents are able to retrieve data from media attachments and use that data to execute some steps or pass it over to other agents to process. You can attach media files and then use them in the agent chat. 

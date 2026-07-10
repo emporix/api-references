@@ -36,9 +36,28 @@ tags:
     description: Manage Tokens
   - name: Tool
     description: Manage Tools
+  - name: Callback
+    description: Receive external communication callbacks
 servers:
   - url: https://api.emporix.io
 paths:
+  '/ai-service/callbacks/teams-receiver':
+    post:
+      summary: Receiving Microsoft Teams callbacks
+      operationId: POST-ai-teams-receiver
+      responses:
+        '202':
+          description: The Microsoft Teams activity has been accepted for asynchronous processing.
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+      description: |-
+        Receives Bot Framework activities sent by Microsoft Teams and forwards them for asynchronous agent processing.
+
+        This callback endpoint is intended for Microsoft Teams platform calls and does not use the tenant path parameter.
+      tags:
+        - Callback
   '/ai-service/{tenant}/texts':
     parameters:
       - name: tenant
