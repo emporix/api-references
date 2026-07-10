@@ -2,7 +2,7 @@
 
 * [Changelog](README.md)
 
-## Changelog
+## Changelog 
 
 * [2026](changelog.md)
 

@@ -24,7 +24,7 @@ layout:
 
 {% updates format="full" %}
 {% update date="2026-07-09" tags="new-feature" %}
-## Indexing Service - mixin path allowlist for Battery Included
+## Indexing Service - mixin path allowlist for BatteryIncluded
 
 #### Overview
 
