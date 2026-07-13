@@ -55,11 +55,11 @@ These announcements are intended to keep you informed about ongoing work and pot
 <tbody>
   <tr>
     <td class="tg-0pky">Value Stream Modeller</td>
-    <td class="tg-0pky"><p>Improvements</p><p>Direct invocation of Emporix APIs from VSM</p></td>
+    <td class="tg-0pky"><p>Direct invocation of Emporix APIs from VSM</p></td>
   </tr>
   <tr>
     <td class="tg-0pky">B2B Commerce Frontend</td>
-    <td class="tg-0pky"><p>B2B Quote Approval</p><p>Product Detail page and improvements in Product List page</p></td>
+    <td class="tg-0pky"><p>Product listing and filtering</p><p>Product Detail page and improvements in Product List page</p></td>
   </tr>
   <tr>
     <td class="tg-0pky">SAP Integration</td>
@@ -72,6 +72,14 @@ These announcements are intended to keep you informed about ongoing work and pot
   <tr>
     <td class="tg-0pky">Audit Logs</td>
     <td class="tg-0pky">Audit logs / changelogs for all existing entities</td>
+  </tr>
+    <tr>
+    <td class="tg-0pky">Schema Service</td>
+    <td class="tg-0pky">Mixins improvements</td>
+  </tr>
+    <tr>
+    <td class="tg-0pky">Agentic</td>
+    <td class="tg-0pky"><p>RAG for orders and customers</p><p>Communication with MS Teams</p></td>
   </tr>
 </tbody>
 </table>
