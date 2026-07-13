@@ -75,7 +75,7 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr>
     <tr>
     <td class="tg-0pky">Agentic</td>
-    <td class="tg-0pky"><p>RAG for orders and customers</p><p>Communication with MS Teams</p></td>
+    <td class="tg-0pky"><p>RAG for orders</p><p>Communication with MS Teams</p></td>
   </tr>
 </tbody>
 </table>
