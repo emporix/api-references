@@ -61,7 +61,7 @@ These announcements are intended to keep you informed about ongoing work and pot
     <td class="tg-0pky">B2B Commerce Frontend</td>
     <td class="tg-0pky"><p>Product details page, listing and filtering</p></td>
   </tr>
-    <tr>
+  <tr>
     <td class="tg-0pky">Schema Service</td>
     <td class="tg-0pky">Mixins improvements</td>
   </tr>
@@ -73,7 +73,7 @@ These announcements are intended to keep you informed about ongoing work and pot
     <td class="tg-0pky">Audit Logs</td>
     <td class="tg-0pky">Audit logs / changelogs for all existing entities</td>
   </tr>
-    <tr>
+  <tr>
     <td class="tg-0pky">Agentic</td>
     <td class="tg-0pky"><p>RAG for orders</p><p>Communication with MS Teams</p></td>
   </tr>
