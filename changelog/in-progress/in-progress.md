@@ -63,7 +63,7 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr>
   <tr>
     <td class="tg-0pky">Schema Service</td>
-    <td class="tg-0pky">Mixins improvements</td>
+    <td class="tg-0pky">Improvements to mixins</td>
   </tr>
   <tr>
     <td class="tg-0pky">Approval Service</td>
