@@ -5,7 +5,7 @@ icon: megaphone
 
 # Changelog
 
-This space is your reference for changes to the Emporix API and related services. Use it to track what we shipped, planned upgrades, and see what we're working on next.
+This space is your reference for changes to the Emporix API and related services. Use it to track what we shipped and see what we're working on next.
 
 Each changelog entry describes the affected service, the type of change, and links to the updated API reference where relevant. 
 
