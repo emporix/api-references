@@ -59,11 +59,11 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr>
   <tr>
     <td class="tg-0pky">B2B Commerce Frontend</td>
-    <td class="tg-0pky"><p>Product listing and filtering</p><p>Product Detail page and improvements in Product List page</p></td>
+    <td class="tg-0pky"><p>Product details page, listing and filtering</p></td>
   </tr>
-  <tr>
-    <td class="tg-0pky">SAP Integration</td>
-    <td class="tg-0pky">Quote integration from SAP into Emporix and from Emporix into SAP</td>
+    <tr>
+    <td class="tg-0pky">Schema Service</td>
+    <td class="tg-0pky">Mixins improvements</td>
   </tr>
   <tr>
     <td class="tg-0pky">Approval Service</td>
@@ -72,10 +72,6 @@ These announcements are intended to keep you informed about ongoing work and pot
   <tr>
     <td class="tg-0pky">Audit Logs</td>
     <td class="tg-0pky">Audit logs / changelogs for all existing entities</td>
-  </tr>
-    <tr>
-    <td class="tg-0pky">Schema Service</td>
-    <td class="tg-0pky">Mixins improvements</td>
   </tr>
     <tr>
     <td class="tg-0pky">Agentic</td>
