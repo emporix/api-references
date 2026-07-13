@@ -2,8 +2,6 @@
 
 * [Changelog](README.md)
 
-## Changelog 
-
 * [2026](changelog.md)
 
 ## In progress
