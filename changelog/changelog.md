@@ -23,7 +23,7 @@ layout:
 # 2026
 
 {% updates format="full" %}
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-07-14" tags="improvement" %}
 
 ## Webhook Events - `restriction` on `order.created` and `order.updated`
 
@@ -47,7 +47,7 @@ There are no known problems.
 * [Events - Order](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/webhooks/webhook-events/events-order)
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-07-14" tags="new-feature" %}
 
 ## AI Rag Indexer - support for `ORDER` type in `/filter-metadata` and `/rag-metadata` endpoints
 
