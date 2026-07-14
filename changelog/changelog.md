@@ -23,6 +23,50 @@ layout:
 # 2026
 
 {% updates format="full" %}
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## Webhook Events - `restriction` on `order.created` and `order.updated`
+
+#### Overview
+
+The `order.created` and `order.updated` webhook event payloads were extended with `restriction`.
+
+#### Updated events
+
+| Event           | Description                                        |
+|-----------------|----------------------------------------------------|
+| `order.created` | Event schema extended with `restriction` property. |
+| `order.updated` | Event schema extended with `restriction` property. |
+
+#### Known problems
+
+There are no known problems.
+
+#### Links
+
+* [Events - Order](https://developer.emporix.io/api-references-1/readme/webhook-events/events-order)
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## AI Rag Indexer - support for `ORDER` type in `/filter-metadata` and `/rag-metadata` endpoints
+
+#### Overview
+
+The endpoints `/filter-metadata` and `/rag-metadata` of AI Rag Indexer have been enhanced to support `ORDER` type.
+
+#### Updated endpoints
+
+| Endpoint                                                                                                                                                                                                          | Description               |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------|
+| [Listing fields for vector search filtering](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-tenant-type-filter-metadata) | Support for `ORDER` type. |
+| [Listing fields for RAG search](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-retrieve-rag-metadata)                    | Support for `ORDER` type. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
 {% update date="2026-07-09" tags="new-feature" %}
 ## Indexing Service - mixin path allowlist for BatteryIncluded
 
