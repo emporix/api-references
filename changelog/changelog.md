@@ -57,10 +57,10 @@ The endpoints `/filter-metadata` and `/rag-metadata` of AI Rag Indexer have been
 
 #### Updated endpoints
 
-| Endpoint                                                                                                                                                                                                       | Description               |
-|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------|
-| [Listing fields for vector search filtering](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-rag-metadata) | Support for `ORDER` type. |
-| [Listing fields for RAG search](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-filter-metadata)           | Support for `ORDER` type. |
+| Endpoint                                                                                                                                                                                                          | Description               |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------|
+| [Listing fields for RAG search](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-rag-metadata)                 | Support for `ORDER` type. |
+| [Listing fields for vector search filtering](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-filter-metadata) | Support for `ORDER` type. |
 
 #### Known problems
 
