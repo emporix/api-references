@@ -1,0 +1,24 @@
+# Local style-check configuration (api-references).
+# See .github/scripts/style-check/README.md for usage.
+
+default_scope: git_diff
+
+checks:
+  frontmatter: on
+  summary_nav: on
+  release_notes_template: off
+  changelog_template: on
+  mermaid_brand: on
+  step_headings: on
+  vale_word_choice: on
+  vale_tone: on
+
+guide_links:
+  frontmatter: .style-guide/writing-standards/format-and-structure.md
+  summary_nav: .style-guide/writing-standards/format-and-structure.md
+  release_notes_template: .style-guide/templates/release-notes.md
+  changelog_template: .style-guide/templates/changelog.md
+  mermaid_brand: .style-guide/visuals/diagrams.md
+  step_headings: .style-guide/writing-standards/format-and-structure.md
+  vale_word_choice: .style-guide/writing-standards/word-choice.md
+  vale_tone: .style-guide/writing-standards/language-and-tone.md

@@ -1,0 +1,11 @@
+extends: existence
+message: "Avoid filler phrase '%s'."
+link: .style-guide/writing-standards/language-and-tone.md
+level: suggestion
+ignorecase: true
+scope: sentence
+tokens:
+  - simply
+  - obviously
+  - "it is important to note that"
+  - "it is important to note"
