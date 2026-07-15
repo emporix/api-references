@@ -47,4 +47,5 @@ Manage the webhook configuration to allow users to choose which events they want
   * Svix Emporix Shared Account
   * Svix Custom Account
   * HTTP Webhook (third-party provider)
+* Allows only one webhook configuration of each type per tenant: `svix`, `svix_shared`, and `http`
  

@@ -18,6 +18,8 @@ For example, if you create a catalog in the Emporix environment, a notification 
 
 ## How to configure webhook notifications
 
+At any time, a tenant can have only one webhook configuration of each type: `svix`, `svix_shared`, and `http`. To switch strategy or change provider settings, update or delete the existing configuration of that type before creating a new one.
+
 To receive notifications from Emporix API services, you need to subscribe to specific events by following the process below:
 
 * [Webhooks Tutorial](webhooks-tutorial.md#webhooks-tutorial)
