@@ -133,8 +133,8 @@ paths:
             examples:
               Create site:
                 value:
-                  code: test2
-                  name: postmanTestSiteName
+                  code: uk-store
+                  name: United Kingdom
                   active: false
                   default: false
                   defaultLanguage: en
@@ -1297,8 +1297,8 @@ components:
           examples:
             Get site:
               value:
-                code: test2
-                name: postmanTestSiteName
+                code: uk-store
+                name: United Kingdom
                 active: false
                 defaultLanguage: en
                 languages:
