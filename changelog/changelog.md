@@ -145,7 +145,7 @@ AI Service now supports streaming LLM responses for endpoint-triggered agents th
 
 | Endpoint                                                                                                                                                                                      | Description                                                                                                 |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agentic-chat#post-ai-service-tenant-agentic-chat-stream) | Adds `POST /ai-service/{tenant}/agentic/chat-stream` for streaming chat responses over `text/event-stream`. |
+| [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Adds `POST /ai-service/{tenant}/agentic/chat-stream` for streaming chat responses over `text/event-stream`. |
 
 #### Known problems
 
