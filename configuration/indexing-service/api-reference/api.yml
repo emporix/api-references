@@ -11,7 +11,7 @@ info:
     Only one provider can be active at a time per tenant. This constraint is enforced by the configuration service.
 
     **Battery Included limitations:**
-    This feature is in a `preview` state and payload sent to battery included is subject to change. 
+    **This functionality is in preview mode** - some of the features may not be fully operational yet. The payload sent to Battery Included is subject to change. 
     Battery Included only supports the `MERGE` site-aware fields strategy. Tenants configured with the `SPLIT`
     strategy will have Battery Included indexing silently skipped.
 

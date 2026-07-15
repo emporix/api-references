@@ -507,7 +507,7 @@ There are no known problems.
 
 The Indexing Service now supports **Battery Included** as a new index provider alongside Algolia. Only one provider can be active per tenant at a time. Battery Included only supports the `MERGE` site-aware fields strategy; tenants configured with the `SPLIT` strategy will have Battery Included indexing silently skipped.
 
-This feature is in a `preview` state and payload sent to battery included is subject to change.
+This functionality is in preview mode - some of the features may not be fully operational yet. The payload sent to Battery Included is subject to change.
 
 #### Updated endpoints
 

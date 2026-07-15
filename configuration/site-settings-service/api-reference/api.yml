@@ -978,7 +978,8 @@ components:
         tax:
           type: array
           description: |-
-            `Preview feature - the feature is not fully operated yet.` 
+            **This functionality is in preview mode** - some of the features may not be fully operational yet.
+
             Tax service configurations.
           items:
             $ref: '#/components/schemas/ServiceConfigurationDto'
