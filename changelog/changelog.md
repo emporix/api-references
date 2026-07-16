@@ -23,6 +23,35 @@ layout:
 # 2026
 
 {% updates format="full" %}
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## AI Service - introduction of `oAuthParams` field
+
+#### Overview
+
+Self-hosted LLM configuration now supports OAuth 2.0 client-credentials authentication through the new `oAuthParams` field on `selfHostedParams`. You can use it to obtain access tokens from your authorization server instead of providing a static authorization header. When `oAuthParams` is set, it is mutually exclusive with the static authorization header fields on `SelfHostedParams`.
+
+The `oAuthParams` object includes:
+
+* `url` – base URL of the OAuth 2.0 authorization server; the access token is requested from `{url}/token`
+* `clientId` – OAuth 2.0 client identifier registered with the authorization server
+* `grantType` – grant type used to obtain an access token; supported value is `client_credentials`
+* `scope` – optional space-separated list of scopes to request for the access token
+
+#### Updated endpoints
+
+| Endpoint                                                                                                                                                                                            | Description                                                               |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)                | Response now includes the `llmConfig.selfHostedParams.oAuthParams` field. |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                                | Response now includes the `llmConfig.selfHostedParams.oAuthParams` field. |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)                      | Response now includes the `llmConfig.selfHostedParams.oAuthParams` field. |
+| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid)                    | Request now includes the `llmConfig.selfHostedParams.oAuthParams` field.  |
+| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid)         | Request now includes the `llmConfig.selfHostedParams.oAuthParams` field.  |
+| [Listing available agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#get-ai-service-tenant-agentic-templates) | Response now includes the `llmConfig.selfHostedParams.oAuthParams` field. |
+| [Searching agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#post-ai-service-tenant-agentic-templates-search) | Response now includes the `llmConfig.selfHostedParams.oAuthParams` field. |
+
+{% endupdate %}
+
 {% update date="2026-07-14" tags="improvement" %}
 
 ## Webhook Events - `restriction` on `order.created` and `order.updated`
