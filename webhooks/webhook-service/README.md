@@ -18,7 +18,8 @@ layout:
 
 # Webhook Service
 
-Manage the webhook configuration to allow users to choose which events they want to receive via the Svix webhook provider.
+Manage the webhook configuration to allow users to choose which events they want to receive via the Svix or HTTP webhook provider.
+A tenant can have only one webhook configuration of each type: `svix`, `svix_shared`, and `http` at a time.
 
 ### Key features and benefits
 

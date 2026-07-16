@@ -5,7 +5,7 @@ info:
   contact:
     email: documentation@emporix.com
   description: |-
-    Manage the webhook configuration to allow users to choose which events they want to receive via the Svix webhook provider.
+    Manage the webhook configuration to allow users to choose which events they want to receive via the Svix or HTTP webhook provider.
 
     At any time, a tenant can have only one webhook configuration of each type: `svix`, `svix_shared`, and `http`.
 servers:
@@ -664,7 +664,7 @@ components:
     ConfigCode:
       type: string
       description: |-
-        Unique identifier of the webhook configuration type. Supported values are `svix`, `svix_shared`, and `http`. Only one configuration of each type can exist per tenant.
+        Unique identifier of the webhook configuration type.
     Provider:
       type: string
       enum:
