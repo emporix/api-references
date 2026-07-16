@@ -29,10 +29,14 @@ layout:
 
 #### Overview
 
-Added OAuthParams schema to the API documentation for self-hosted LLM configuration. Documents OAuth 2.0 client-credentials settings used to
-authenticate with a self-hosted LLM backend via SelfHostedParams.oAuthParams. Covers url (authorization server base URL; token endpoint is
-{url}/token), clientId, grantType (client_credentials), and optional scope. Mutually exclusive with static authorization header fields on
-SelfHostedParams.
+Self-hosted LLM configuration now supports OAuth 2.0 client-credentials authentication through the new `oAuthParams` field on `selfHostedParams`. You can use it to obtain access tokens from your authorization server instead of providing a static authorization header. When `oAuthParams` is set, it is mutually exclusive with the static authorization header fields on `SelfHostedParams`.
+
+The `oAuthParams` object includes:
+
+* `url` – base URL of the OAuth 2.0 authorization server; the access token is requested from `{url}/token`
+* `clientId` – OAuth 2.0 client identifier registered with the authorization server
+* `grantType` – grant type used to obtain an access token; supported value is `client_credentials`
+* `scope` – optional space-separated list of scopes to request for the access token
 
 #### Updated endpoints
 
