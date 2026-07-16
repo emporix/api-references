@@ -25,7 +25,7 @@ layout:
 {% updates format="full" %}
 {% update date="RELEASE_DATE" tags="improvement" %}
 
-## AI Service - introduction of 'oAuthParams' field
+## AI Service - introduction of `oAuthParams` field
 
 #### Overview
 
