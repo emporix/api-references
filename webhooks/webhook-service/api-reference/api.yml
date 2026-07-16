@@ -7,7 +7,7 @@ info:
   description: |-
     Manage the webhook configuration to allow users to choose which events they want to receive via the Svix or HTTP webhook provider.
 
-    At any time, a tenant can have only one webhook configuration of each type: `svix`, `svix_shared`, and `http`.
+    A tenant can have only one webhook configuration of each type: `svix`, `svix_shared`, and `http` at a time.
 servers:
   - url: 'https://api.emporix.io'
 tags:
@@ -1123,7 +1123,7 @@ components:
       schema:
         type: string
       description: |-
-        Unique identifier of the webhook configuration type. Supported values are `svix`, `svix_shared`, and `http`. Only one configuration of each type can exist per tenant.
+        Unique identifier of the webhook configuration type.
     to_month:
       name: toYearMonth
       in: query
