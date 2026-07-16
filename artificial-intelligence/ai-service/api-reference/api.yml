@@ -2506,8 +2506,6 @@ components:
           example: 1000
       required:
         - model
-        - temperature
-        - maxTokens
     EmporixLlm:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
