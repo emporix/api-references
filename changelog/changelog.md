@@ -23,6 +23,26 @@ layout:
 # 2026
 
 {% updates format="full" %}
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Category Tree - `rebuild` endpoint
+
+#### Overview
+
+The Category Tree service now supports rebuilding a category tree for a given root category on demand. The rebuilt tree is returned in the response.
+
+#### New endpoints
+
+| Endpoint | Description |
+|---|---|
+| [Rebuilding a category tree](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#post-category-tenant-category-trees-rootcategoryid-rebuild) | Triggers a rebuild of the category tree for the given root category and returns the result. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-07-16" tags="improvement" %}
 
 ## AI Service - introduction of `oAuthParams` field
