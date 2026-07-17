@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Changelog](README.md)
+* [Changelog 2026](README.md)
 
 ## In progress
 
