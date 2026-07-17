@@ -39,6 +39,7 @@ Suggested trigger phrase:
 - Grammar and spelling (typos, subject-verb agreement, punctuation, malformed phrasing).
 - Terminology and word-choice compliance.
 - Template conformance for changelog/release-notes content.
+- Changelog location and release-date placeholder when `changelog/` files change: entries go in `changelog/README.md` (not `changelog/changelog.md` or new per-release files); new entries use `{% update date="RELEASE_DATE" ... %}` at the top of the `{% updates %}` block; do not edit existing entries or `changelog/SUMMARY.md`.
 - API tutorial completeness when relevant (auth, headers, examples, behavior notes).
 
 ## Severity model (hybrid gate)
