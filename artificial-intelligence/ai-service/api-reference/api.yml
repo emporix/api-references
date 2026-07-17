@@ -2702,8 +2702,6 @@ components:
           example: 1000
       required:
         - model
-        - temperature
-        - maxTokens
     EmporixLlm:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'
@@ -2716,6 +2714,42 @@ components:
               example: emporix_openai
           required:
             - provider
+    OAuthParams:
+      type: object
+      description: OAuth 2.0 client-credentials settings for authenticating with a self-hosted LLM backend.
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Base URL of the OAuth 2.0 authorization server. The access token is requested from `{url}/token`.
+        clientId:
+          type: string
+          description: OAuth 2.0 client identifier registered with the authorization server.
+        grantType:
+          type: string
+          description: OAuth 2.0 grant type used to obtain an access token.
+          enum: [ client_credentials ]
+        scope:
+          type: string
+          description: Optional space-separated list of scopes to request for the access token.
+      required:
+        - url
+        - clientId
+        - grantType
+    OAuthParamsRequest:
+      allOf:
+        - $ref: '#/components/schemas/OAuthParams'
+        - type: object
+        - properties:
+            clientSecret:
+              $ref: '#/components/schemas/InnerTokenRequest'
+    OAuthParamsResponse:
+      allOf:
+        - $ref: '#/components/schemas/OAuthParams'
+        - type: object
+          properties:
+            clientSecret:
+              $ref: '#/components/schemas/ExpandableTokenResponse'
     SelfHostedParams:
       type: object
       properties:
@@ -2734,6 +2768,8 @@ components:
         - properties:
             authorizationHeaderToken:
               $ref: '#/components/schemas/InnerTokenRequest'
+            oAuthParams:
+              $ref: '#/components/schemas/OAuthParamsRequest'
     SelfHostedParamsResponse:
       allOf:
         - $ref: '#/components/schemas/SelfHostedParams'
@@ -2741,6 +2777,8 @@ components:
           properties:
             authorizationHeaderToken:
               $ref: '#/components/schemas/ExpandableTokenResponse'
+            oAuthParams:
+              $ref: '#/components/schemas/OAuthParamsResponse'
     SelfHostedLlm:
       allOf:
         - $ref: '#/components/schemas/BaseLlm'

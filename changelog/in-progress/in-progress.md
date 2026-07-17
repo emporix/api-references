@@ -55,15 +55,15 @@ These announcements are intended to keep you informed about ongoing work and pot
 <tbody>
   <tr>
     <td class="tg-0pky">Value Stream Modeller</td>
-    <td class="tg-0pky"><p>Improvements</p><p>Direct invocation of Emporix APIs from VSM</p></td>
+    <td class="tg-0pky"><p>Direct invocation of Emporix APIs from VSM</p></td>
   </tr>
   <tr>
     <td class="tg-0pky">B2B Commerce Frontend</td>
-    <td class="tg-0pky"><p>B2B Quote Approval</p><p>Product Detail page and improvements in Product List page</p></td>
+    <td class="tg-0pky"><p>Product details page, listing and filtering</p></td>
   </tr>
   <tr>
-    <td class="tg-0pky">SAP Integration</td>
-    <td class="tg-0pky">Quote integration from SAP into Emporix and from Emporix into SAP</td>
+    <td class="tg-0pky">Schema Service</td>
+    <td class="tg-0pky">Improvements to mixins</td>
   </tr>
   <tr>
     <td class="tg-0pky">Approval Service</td>
@@ -74,10 +74,8 @@ These announcements are intended to keep you informed about ongoing work and pot
     <td class="tg-0pky">Audit logs / changelogs for all existing entities</td>
   </tr>
   <tr>
-    <td class="tg-0pky">AI Service</td>
-    <td class="tg-0pky">
-      <p><em>Preview:</em> MS Teams communication for agents</p>  </tr>
-    </td>
+    <td class="tg-0pky">Agentic</td>
+    <td class="tg-0pky"><p>RAG for orders</p><p>Communication with MS Teams</p></td>
   </tr>
 </tbody>
 </table>
