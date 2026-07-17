@@ -5,8 +5,8 @@ icon: hourglass-clock
 
 # Changelog
 
-* Changelogs are created and kept in the `api-references` repository in the `changelog/changelog.md` file.
-* Add a new `{% update %}…{% endupdate %}` block at the top of `changelog/changelog.md`, just under the opening `{% updates format="full" %}`. Do not modify existing entries. Do not create separate changelog files or update `changelog/SUMMARY.md`.
+* Changelogs are created and kept in the `api-references` repository in the `changelog/README.md` file.
+* Add a new `{% update %}…{% endupdate %}` block at the top of `changelog/README.md`, just under the opening `{% updates format="full" %}`. Do not modify existing entries. Do not create separate changelog files or update `changelog/SUMMARY.md`.
 * Add the date placeholder `RELEASE_DATE` in the update block.
 
 {% hint style="info" %}
