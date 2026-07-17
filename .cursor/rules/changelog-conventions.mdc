@@ -7,7 +7,7 @@ alwaysApply: true
 
 ## Where to add entries
 
-All changelog entries go in **`changelog/changelog.md`**, inside the existing `{% updates format="full" %}` block. Each PR adds a **new** `{% update %}…{% endupdate %}` block — do **not** modify existing entries. Place the new block at the **top** (directly after the opening `{% updates %}` tag).
+All changelog entries go in **`changelog/README.md`**, inside the existing `{% updates format="full" %}` block. Each PR adds a **new** `{% update %}…{% endupdate %}` block — do **not** modify existing entries. Place the new block at the **top** (directly after the opening `{% updates %}` tag).
 
 Do **not** create separate changelog files. Do **not** update `changelog/SUMMARY.md`.
 
