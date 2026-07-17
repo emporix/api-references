@@ -26,7 +26,7 @@ layout:
 {% updates format="full" %}
 {% update date="2026-07-16" tags="improvement" %}
 
-## AI Service - introduction of `oAuthParams` field
+## AI Service - introduction of `outputFormat` field
 
 #### Overview
 
@@ -1705,7 +1705,7 @@ There are no known problems.
 
 The `hybris-count` response header is deprecated as the same information is provided by the `X-Total-Count` header. The `hybris-count` will be removed on **2026-09-14**
 
-The `hybris-count` respnse header:
+The `hybris-count` response header:
 
 * Returns the order count in a number of GET endpoints
 * Information provided by the header duplicates the information already provided by the `X-Total-Count` header
@@ -1899,7 +1899,6 @@ The `restriction` field:
 | [Creating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes)                     | Property `restriction` has been introduced. |
 | [Retrieving quotes](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes)                     | Property `restriction` has been introduced. |
 | [Retrieving a single quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid)     | Property `restriction` has been introduced. |
-| [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid)  | Property `restriction` has been introduced. |
 | [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid)  | Property `restriction` has been introduced. |
 | [Retrieving quote history](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-history#get-quote-tenant-quotes-quoteid-history) | Property `restriction` has been introduced. |
 
