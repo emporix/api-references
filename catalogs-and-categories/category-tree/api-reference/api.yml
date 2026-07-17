@@ -3074,10 +3074,6 @@ paths:
         Rebuilds the category tree for a given root category and returns the result.
         ***
 
-        ### Required scopes
-
-        * `category.category_manage`
-
         ### Additional scope info
 
         * `category.category_read_unpublished` - Only required if the response should contain unpublished categories.
