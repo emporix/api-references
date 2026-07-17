@@ -3153,6 +3153,7 @@ paths:
       security:
         - OAuth2:
             - category.category_manage
+            - category.category_read_unpublished
 components:
   schemas:
     AssignmentDeprecated:
