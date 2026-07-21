@@ -2489,7 +2489,7 @@ components:
           type: array
           description: List of patch operations to apply to the custom instance.
           items:
-            type: object
+            $ref: '#/components/schemas/PatchOperation'
     CustomInstanceMetadata:
       type: object
       properties:
