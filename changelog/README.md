@@ -82,7 +82,7 @@ There are no known problems.
 
 {% update date="2026-07-16" tags="improvement" %}
 
-## AI Service - introduction of `outputFormat` field
+## AI Service - introduction of `oAuthParams` field
 
 #### Overview
 
