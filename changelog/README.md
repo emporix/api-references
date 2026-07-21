@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-07-21" tags="new-feature" %}
 ## AI Service - agent conversation listing and MS Teams tools
 
 #### Overview
