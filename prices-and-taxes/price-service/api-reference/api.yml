@@ -2024,7 +2024,7 @@ components:
                 * `PRODUCT`
                 * `SKU`
 
-                **The `SKU` value is in preview mode** - the system does not fully operate on the SKU concept yet.
+                  **The `SKU` value is in preview mode** - the system does not fully operate on the SKU concept yet.
             id:
               type: string
               description: |
@@ -2094,7 +2094,7 @@ components:
                 * `PRODUCT`
                 * `SKU`
 
-                **The `SKU` value is in preview mode** - the system does not fully operate on the SKU concept yet.
+                  **The `SKU` value is in preview mode** - the system does not fully operate on the SKU concept yet.
             id:
               type: string
               description: |
@@ -2245,7 +2245,7 @@ components:
                       * `PRICE`
                       * `SKU`
 
-                      **The `SKU` value is in preview mode** - the system does not fully operate on the SKU concept yet.
+                        **The `SKU` value is in preview mode** - the system does not fully operate on the SKU concept yet.
                   id:
                     type: string
                     description: 'Item''s unique identifier, generated when the item is created.'
@@ -2293,7 +2293,7 @@ components:
                       * `PRICE`
                       * `SKU`
 
-                      **The `SKU` value is in preview mode** - the system does not fully operate on the SKU concept yet.
+                        **The `SKU` value is in preview mode** - the system does not fully operate on the SKU concept yet.
                   id:
                     type: string
                     description: 'Item''s unique identifier, generated when the item is created.'
@@ -2328,7 +2328,7 @@ components:
                 * `CUSTOMER`
                 * `GROUP`
 
-                **The `GROUP` value is in preview mode** - the system does not fully operate on the customer groups concept yet.
+                  **The `GROUP` value is in preview mode** - the system does not fully operate on the customer groups concept yet.
         useFallback:
           type: boolean
           description: |-
@@ -2437,7 +2437,7 @@ components:
             * `CUSTOMER`
             * `GROUP`
 
-            **The `GROUP` value is in preview mode** - the system does not fully operate on the customer groups concept yet.
+              **The `GROUP` value is in preview mode** - the system does not fully operate on the customer groups concept yet.
         id:
           type: string
           description: Unique identifier of the customer or customer group.
@@ -2454,7 +2454,7 @@ components:
           description: |-
             List of customers and customer groups for whom the price is valid.
 
-            **Customer groups are in preview mode** - the system does not fully operate on the customer groups concept yet.
+            **The `GROUP` principals are in preview mode** - the system does not fully operate on the customer groups concept yet.
           items:
             allOf:
               - $ref: '#/components/schemas/principal'
@@ -2711,7 +2711,7 @@ components:
                 * `PRODUCT`
                 * `SKU`
 
-                **The `SKU` value is in preview mode** - the system does not fully operate on the SKU concept yet.
+                  **The `SKU` value is in preview mode** - the system does not fully operate on the SKU concept yet.
             id:
               type: string
               description: |
@@ -2995,7 +2995,7 @@ components:
                 * `PRODUCT`
                 * `SKU`
 
-                **The `SKU` value is in preview mode** - the system does not fully operate on the SKU concept yet.
+                  **The `SKU` value is in preview mode** - the system does not fully operate on the SKU concept yet.
             id:
               type: string
               description: |
