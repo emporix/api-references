@@ -21,7 +21,8 @@ This style guide defines how to plan, write, and maintain documentation in the E
 
 * Start with writing standards for language, structure, and terminology.
 * Apply visual standards for diagrams, images, and videos.
-* Use templates for repeatable document types such as changelogs and release notes.
+* Use API tutorials and API references standards when writing how-tos or OpenAPI specs in `api-references`.
+* Use templates for repeatable document types such as changelogs, release notes, and API references.
 * When in doubt, optimize for:
   * fast user comprehension
   * actionable examples
