@@ -25,6 +25,7 @@ It is vendored into consumer repos via **git subtree**:
 |---------------|--------------|
 | [api-references](https://github.com/emporix/api-references) | `.style-guide/`, `.cursor/docs-review/`, `.cursor/skills/` |
 | [emporix-documentation-portal](https://github.com/emporix/emporix-documentation-portal) | same |
+| [learning-paths](https://github.com/emporix/learning-paths) | same |
 
 ```text
 docs-standards (source of truth)
@@ -69,7 +70,7 @@ Squashed '.cursor/skills/' content from commit ...
 
 ### What you need to do
 
-Authors work in `api-references` or `emporix-documentation-portal`. You do **not** run subtree commands.
+Authors work in `api-references`, `emporix-documentation-portal`, or `learning-paths`. You do **not** run subtree commands.
 
 1. `git pull` to get the latest shared standards
 2. Write or update documentation
@@ -226,6 +227,7 @@ cd ~/emporix/docs-standards
 # Or one repo at a time:
 ./scripts/update-subtrees.sh --repo api-references
 ./scripts/update-subtrees.sh --repo emporix-documentation-portal
+./scripts/update-subtrees.sh --repo learning-paths
 
 # 4) Push consumer repo branches and open PRs there if needed
 ```
@@ -236,7 +238,7 @@ cd ~/emporix/docs-standards
 |--------|-------------|
 | `bootstrap-subtrees.sh` | First-time setup only (new consumer repo) |
 | `refresh-splits.sh` | After every merge to `master` that changes shared content |
-| `update-subtrees.sh` | After `refresh-splits.sh` — pulls into api-references and portal |
+| `update-subtrees.sh` | After `refresh-splits.sh` — pulls into api-references, portal, and learning-paths |
 
 Dry-run any script first:
 
