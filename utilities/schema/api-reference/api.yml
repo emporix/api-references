@@ -1578,7 +1578,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BulkItemResponses'
+                $ref: '#/components/schemas/BulkResponse'
               example:
                 - index: 0
                   id: Ford
@@ -1660,20 +1660,6 @@ paths:
             - schema.custominstance_manage
             - 'custom.{lowerCaseType}_manage'
             - 'custom.{lowerCaseType}_manage_own'
-  BulkPatchCustomInstanceRequest:
-    type: object
-    required:
-      - id
-      - data
-    properties:
-      id:
-        type: string
-        description: Unique identifier of the custom instance to patch.
-      data:
-        type: array
-        description: List of patch operations to apply to the custom instance.
-        items:
-          type: object
     put:
       summary: Upserting custom instances in bulk
       description: |-
@@ -2490,6 +2476,20 @@ components:
                 message:
                   type: string
                   description: Error details.
+    BulkPatchCustomInstanceRequest:
+      type: object
+      required:
+        - id
+        - data
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the custom instance to patch.
+        data:
+          type: array
+          description: List of patch operations to apply to the custom instance.
+          items:
+            $ref: '#/components/schemas/PatchOperation'
     CustomInstanceMetadata:
       type: object
       properties:
