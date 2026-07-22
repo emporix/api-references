@@ -25,6 +25,46 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## AI Service - managed OAuth configurations
+
+#### Overview
+
+The AI Service now provides dedicated OAuth configuration resources for self-hosted LLM authentication. You can create and manage reusable
+OAuth 2.0 client-credentials configurations under `/agentic/oauths`, then reference them from agents through
+`llmConfig.selfHostedParams.oauth`. Agent responses support `expand=oauth` to return the full configuration, and OAuth responses support
+`expand=token` to expand the referenced client secret token.
+
+Currently only the `client_credentials` grant type is supported. Deleting an OAuth configuration that is assigned to an agent requires the
+`force` query parameter.
+
+#### New endpoints
+
+| Endpoint                                                                                                                                                                                               | Description                                                                           |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
+| [Listing OAuth configurations](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/oauth#get-ai-service-tenant-agentic-oauths)                     | Returns OAuth configurations for the tenant.                                          |
+| [Searching OAuth configurations](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/oauth#post-ai-service-tenant-agentic-oauths-search)           | Searches OAuth configurations for the tenant.                                         |
+| [Retrieving OAuth configuration by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/oauth#get-ai-service-tenant-agentic-oauths-oauthid)     | Returns a single OAuth configuration by ID.                                           |
+| [Upserting OAuth configuration](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/oauth#put-ai-service-tenant-agentic-oauths-oauthid)            | Creates or replaces an OAuth configuration.                                           |
+| [Partially updating OAuth configuration](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/oauth#patch-ai-service-tenant-agentic-oauths-oauthid) | Applies a partial update to an OAuth configuration.                                   |
+| [Deleting OAuth configuration](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/oauth#delete-ai-service-tenant-agentic-oauths-oauthid)          | Deletes an OAuth configuration. Use `force=true` when it is still assigned to agents. |
+
+#### Updated endpoints
+
+| Endpoint                                                                                                                                                                                    | Description                                                                                 |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)        | Supports `llmConfig.selfHostedParams.oauth` and `expand=oauth`.                             |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                        | Supports `llmConfig.selfHostedParams.oauth` and `expand=oauth`.                             |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)              | Supports `llmConfig.selfHostedParams.oauth` and `expand=oauth`.                             |
+| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid)            | Accepts `llmConfig.selfHostedParams.oauth` as a reference to a managed OAuth configuration. |
+| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Accepts `llmConfig.selfHostedParams.oauth` as a reference to a managed OAuth configuration. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
 {% update date="2026-07-21" tags="new-feature" %}
 ## AI Service - agent conversation listing and MS Teams tools
 
@@ -77,35 +117,6 @@ The Category Tree service now supports rebuilding a category tree for a given ro
 #### Known problems
 
 There are no known problems.
-
-{% endupdate %}
-
-{% update date="2026-07-16" tags="improvement" %}
-
-## AI Service - introduction of `oAuthParams` field
-
-#### Overview
-
-Self-hosted LLM configuration now supports OAuth 2.0 client-credentials authentication through the new `oAuthParams` field on `selfHostedParams`. You can use it to obtain access tokens from your authorization server instead of providing a static authorization header. When `oAuthParams` is set, it is mutually exclusive with the static authorization header fields on `SelfHostedParams`.
-
-The `oAuthParams` object includes:
-
-* `url` – base URL of the OAuth 2.0 authorization server; the access token is requested from `{url}/token`
-* `clientId` – OAuth 2.0 client identifier registered with the authorization server
-* `grantType` – grant type used to obtain an access token; supported value is `client_credentials`
-* `scope` – optional space-separated list of scopes to request for the access token
-
-#### Updated endpoints
-
-| Endpoint                                                                                                                                                                                            | Description                                                               |
-|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
-| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)                | Response now includes the `llmConfig.selfHostedParams.oAuthParams` field. |
-| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                                | Response now includes the `llmConfig.selfHostedParams.oAuthParams` field. |
-| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)                      | Response now includes the `llmConfig.selfHostedParams.oAuthParams` field. |
-| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid)                    | Request now includes the `llmConfig.selfHostedParams.oAuthParams` field.  |
-| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid)         | Request now includes the `llmConfig.selfHostedParams.oAuthParams` field.  |
-| [Listing available agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#get-ai-service-tenant-agentic-templates) | Response now includes the `llmConfig.selfHostedParams.oAuthParams` field. |
-| [Searching agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#post-ai-service-tenant-agentic-templates-search) | Response now includes the `llmConfig.selfHostedParams.oAuthParams` field. |
 
 {% endupdate %}
 
