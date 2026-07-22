@@ -13,8 +13,10 @@ Authoritative rules:
 - `.style-guide/writing-standards/language-and-tone.md`
 - `.style-guide/writing-standards/word-choice.md`
 - `.style-guide/writing-standards/api-tutorials.md`
+- `.style-guide/writing-standards/api-references.md`
 - `.style-guide/templates/changelog.md`
 - `.style-guide/templates/release-notes.md`
+- `.style-guide/templates/api-reference.md`
 
 Contract:
 - `.cursor/docs-review/review-contract.md`
@@ -31,6 +33,13 @@ How to review:
 4. Return the structured chat report below.
 5. Do not modify any files.
 6. For structural findings marked `Auto-fixable: no`, include a `Reworked structure suggestion` block with a concrete rewrite blueprint.
+
+Changelog checks (when `changelog/` files are in scope):
+- New entries belong in `changelog/README.md` inside the existing `{% updates format="full" %}` block — not in `changelog/changelog.md`, not as new per-release files.
+- Each PR adds one new `{% update %}…{% endupdate %}` block at the top (after the opening `{% updates %}` tag); do not modify existing entries.
+- Use `date="RELEASE_DATE"` in the `{% update %}` tag (never a hard-coded date); a GitHub Action replaces it on merge to `main`.
+- Do not update `changelog/SUMMARY.md`.
+- Rule reference: `.style-guide/templates/changelog.md` (style guide template).
 
 Line reference rules (required for every finding):
 - Every finding heading must use `path/to/file.md:LINE` — never omit the line number.
