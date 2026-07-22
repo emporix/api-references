@@ -168,8 +168,9 @@ When auto-fixable findings exist:
 - Tone and clarity
 - Grammar and spelling
 - Word-choice compliance (see `.style-guide/writing-standards/word-choice.md`)
-- Changelog / release-notes template conformance (when relevant)
+- Changelog / release-notes template conformance (when relevant) — changelog entries go in `changelog/README.md` with `date="RELEASE_DATE"` placeholders
 - API tutorial completeness (when relevant)
+- API reference completeness (when relevant) — OpenAPI structure, gerund summaries, scopes on `security`, schema/example quality
 
 ### Mermaid diagrams skill
 
