@@ -133,8 +133,8 @@ paths:
             examples:
               Create site:
                 value:
-                  code: test2
-                  name: postmanTestSiteName
+                  code: uk-store
+                  name: United Kingdom
                   active: false
                   default: false
                   defaultLanguage: en
@@ -978,8 +978,9 @@ components:
         tax:
           type: array
           description: |-
-            `Preview feature - the feature is not fully operated yet.` 
             Tax service configurations.
+
+            **The `tax` field is in preview mode** - some of the features may not be fully operational yet.
           items:
             $ref: '#/components/schemas/ServiceConfigurationDto'
         assistedBuying:
@@ -1296,8 +1297,8 @@ components:
           examples:
             Get site:
               value:
-                code: test2
-                name: postmanTestSiteName
+                code: uk-store
+                name: United Kingdom
                 active: false
                 defaultLanguage: en
                 languages:

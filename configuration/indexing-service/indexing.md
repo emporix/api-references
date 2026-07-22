@@ -9,12 +9,35 @@ layout:
 
 # Indexing Tutorial
 
-The Indexing service is designed to manage indexing configuration. Currently, the index provider supported in Commerce Engine is [Algolia](https://www.algolia.com/).\
-Proper indexing allows you to enhance your search mechanism within Emporix system. By connecting your Algolia instance to Commerce Engine, you get an improved search functionality.
+The Indexing service is designed to manage indexing configuration. Currently supported index providers:
+
+* [Algolia](https://www.algolia.com)
+* [Battery Included](https://www.batteryincluded.io)
+
+Proper indexing allows you to enhance your search mechanism within the Emporix system. By connecting an index provider to Commerce Engine, you get improved search functionality.
 
 {% hint style="info" %}
 To learn more about the Indexing Service, see the [Indexing Service](./).
 {% endhint %}
+
+#### Provider mutual exclusivity
+
+Only one provider can be active at a time per tenant. This constraint is enforced by the configuration service.
+
+#### Battery Included limitations
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet. The payload sent to Battery Included is subject to change.
+{% endhint %}
+
+Battery Included only supports the `MERGE` site-aware fields strategy. Tenants configured with the `SPLIT` strategy will have Battery Included indexing silently skipped.
+
+#### Algolia limitations
+
+By default, Algolia indexes provided by Emporix support records up to 10kB in size. In order to support larger records, you must provide your own Algolia service. For more information, please refer to documents provided by Algolia:
+
+* [Algolia documentation](https://www.algolia.com/doc/guides/scaling/algolia-service-limits#application-record-and-index-limits)
+* [Algolia FAQ](https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records)
 
 For every tenant, new Algolia credentials are created and kept as `AlgoliaClient`.
 
