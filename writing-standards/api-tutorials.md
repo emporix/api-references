@@ -7,6 +7,8 @@ icon: gear-complex-api
 
 # API Tutorials
 
+* For OpenAPI `.yml` API reference specs, see [API References](api-references.md).
+* For preview features, use the preview badge and danger hint described in [Preview labeling](api-references.md#preview-labeling).
 * API tutorials are kept as `.md` files in the `api-references` repository.
 * Section titles follow the pattern "How to {do/achieve...}".
 * In the page metadata (in the API docs space), specify the icon as `graduation-cap`, and wide layout.
