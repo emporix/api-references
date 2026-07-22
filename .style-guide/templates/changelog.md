@@ -6,8 +6,8 @@ icon: hourglass-clock
 # Changelog
 
 * Changelogs are created and kept in the `api-references` repository in the `changelog/README.md` file.
-* Add a new `{% update %}…{% endupdate %}` block at the top of `changelog/README.md`, just under the opening `{% updates format="full" %}`. Do not modify existing entries. Do not create separate changelog files or update `changelog/SUMMARY.md`.
-* Add the date placeholder `RELEASE_DATE` in the update block.
+ * Add a new `{% update date="RELEASE_DATE" ... %}…{% endupdate %}` block at the top of `changelog/README.md`, just under the opening `{% updates format="full" %}`. Do not modify existing entries. Do not create separate changelog files or update `changelog/SUMMARY.md`.
+ * Use `date="RELEASE_DATE"` in the `{% update %}` tag (never a hard-coded date).
 
 {% hint style="info" %}
 The date placeholder `RELEASE_DATE` is transformed into an actual date of release upon the PR merge.
