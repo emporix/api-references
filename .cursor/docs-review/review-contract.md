@@ -30,8 +30,10 @@ Suggested trigger phrase:
 - `.style-guide/writing-standards/language-and-tone.md`
 - `.style-guide/writing-standards/word-choice.md`
 - `.style-guide/writing-standards/api-tutorials.md`
+- `.style-guide/writing-standards/api-references.md`
 - `.style-guide/templates/changelog.md`
 - `.style-guide/templates/release-notes.md`
+- `.style-guide/templates/api-reference.md`
 
 ## Required checks
 - Structure and formatting (headings, sections, hints, list style).
@@ -39,7 +41,9 @@ Suggested trigger phrase:
 - Grammar and spelling (typos, subject-verb agreement, punctuation, malformed phrasing).
 - Terminology and word-choice compliance.
 - Template conformance for changelog/release-notes content.
+- Changelog location and release-date placeholder when `changelog/` files change: entries go in `changelog/README.md` (not `changelog/changelog.md` or new per-release files); new entries use `{% update date="RELEASE_DATE" ... %}` at the top of the `{% updates %}` block; do not edit existing entries or `changelog/SUMMARY.md`.
 - API tutorial completeness when relevant (auth, headers, examples, behavior notes).
+- API reference completeness when relevant (OpenAPI structure, gerund summaries, scopes on `security`, schema/example quality, common parameters).
 
 ## Severity model (hybrid gate)
 - `critical` -> blocks readiness for peer review.
