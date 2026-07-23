@@ -1455,6 +1455,8 @@ paths:
         - OAuth
     put:
       summary: Upserting OAuth configuration
+      parameters:
+        - $ref: '#/components/parameters/forceDisable'
       operationId: PUT-ai-upsert-oauth
       responses:
         '201':
@@ -1492,6 +1494,8 @@ paths:
         - OAuth
     patch:
       summary: Partially updating OAuth configuration
+      parameters:
+        - $ref: '#/components/parameters/forceDisable'
       operationId: PATCH-ai-update-oauth
       responses:
         '204':
