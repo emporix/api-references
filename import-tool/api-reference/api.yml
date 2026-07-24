@@ -1,0 +1,14 @@
+openapi: 3.0.0
+info:
+  title: Import Tool
+  version: ''
+  description: |-
+    Import Tool for Emporix.
+
+  contact:
+    name: Emporix
+    url: https://emporix.com
+    email: documentation@emporix.com
+    
+servers:
+  - url: 'https://api.emporix.io'
