@@ -25,6 +25,28 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6051 -->
+## Schema Service - mixin schema support for `Location` and `Availability`
+
+#### Overview
+
+Schema Service now supports `LOCATION` and `AVAILABILITY` as valid entity types for mixin schema creation and management. This allows you to define and maintain mixin schemas for location and availability entities through the Schema Service API instead of managing these schemas manually.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Added support for `LOCATION` and `AVAILABILITY` in schema `types`. |
+| [Updating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-schemaid) | Added support for `LOCATION` and `AVAILABILITY` in schema `types`. |
+| [Partially updating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#patch-schema-tenant-schemas-schemaid) | Added support for `LOCATION` and `AVAILABILITY` in schema `types`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-07-23" tags="new-feature" %}
 
 ## AI Service - managed OAuth configurations
