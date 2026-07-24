@@ -372,6 +372,7 @@ paths:
               SchemaTypes:
                 value:
                   - PRODUCT
+                  - ORDER
                   - AVAILABILITY
         description: ''
       responses:
