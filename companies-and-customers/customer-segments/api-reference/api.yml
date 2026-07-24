@@ -15,6 +15,8 @@ tags:
     description: Manage customer assignments to segments
   - name: Items Assignments
     description: Manage item assignments to segments
+  - name: Group Assignments
+    description: Manage group assignments to segments
 paths:
   '/customer-segment/{tenant}/segments':
     parameters:
@@ -824,6 +826,174 @@ paths:
           $ref: '#/components/responses/Common_response_Unauthorized_401'
         '403':
           $ref: '#/components/responses/Common_response_Forbidden_403'
+  '/customer-segment/{tenant}/segments/{segmentId}/groups':
+    parameters:
+      - $ref: '#/components/parameters/tenant'
+      - $ref: '#/components/parameters/segmentId'
+    get:
+      summary: 'Retrieving all group assignments for a customer segment'
+      tags:
+        - Group Assignments
+      description: |
+        
+        **PREVIEW**
+
+        Retrieves all group assignments for a given customer segment.
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_read
+      responses:
+        '200':
+          description: Group assignments for a customer segment were successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GroupAssignmentResponse'
+        '401':
+          $ref: '#/components/responses/Common_response_Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Common_response_Forbidden_403'
+      operationId: GET-customer-segment-retrieve-groups
+      parameters:
+        - $ref: '#/components/parameters/qParam'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/xTotalCount'
+  '/customer-segment/{tenant}/segments/{segmentId}/groups/search':
+    parameters:
+      - $ref: '#/components/parameters/tenant'
+      - $ref: '#/components/parameters/segmentId'
+    post:
+      summary: 'Searching with parameters for group assignments'
+      tags:
+        - Group Assignments
+      description: |
+        
+        **PREVIEW**
+
+        Returns all group assignments that match provided criteria.
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_read
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SegmentsSearch'
+            example:
+              q: "group.id:groupId1"
+      responses:
+        '200':
+          description: Group assignments for a customer segment were successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GroupAssignmentResponse'
+        '400':
+          $ref: '#/components/responses/Common_response_BadRequest_400'
+        '401':
+          $ref: '#/components/responses/Common_response_Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Common_response_Forbidden_403'
+      operationId: POST-customer-segment-search-groups
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/xTotalCount'
+  '/customer-segment/{tenant}/segments/{segmentId}/groups/{groupId}':
+    parameters:
+      - $ref: '#/components/parameters/tenant'
+      - $ref: '#/components/parameters/segmentId'
+      - $ref: '#/components/parameters/groupId'
+    get:
+      summary: 'Retrieving a group assignment for a customer segment'
+      tags:
+        - Group Assignments
+      description: |
+        
+        **PREVIEW**
+
+        Retrieves a group assignment for a given customer segment.
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_read
+      responses:
+        '200':
+          description: Group assignment for a customer segment was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupAssignmentResponse'
+        '401':
+          $ref: '#/components/responses/Common_response_Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Common_response_Forbidden_403'
+        '404':
+          $ref: '#/components/responses/Common_response_NotFound_404'
+      operationId: GET-customer-segment-retrieve-group
+      parameters:
+        - $ref: '#/components/parameters/fields'
+    put:
+      summary: 'Updating a group assignment for a customer segment'
+      tags:
+        - Group Assignments
+      operationId: PUT-customer-segment-update-group
+      description: |
+        
+        **PREVIEW**
+
+        Performs `UPSERT` operation. Updates a group assigned to a customer segment. A new group assignment is created if it's not present in the system.
+
+        Only groups with `userType` equal to `CUSTOMER` can be assigned to segments.
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupAssignmentUpsert'
+      responses:
+        '201':
+          description: A new group assignment was successfully created.
+        '204':
+          description: Group assignment was successfully updated.
+        '400':
+          $ref: '#/components/responses/Common_response_BadRequest_400'
+        '401':
+          $ref: '#/components/responses/Common_response_Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Common_response_Forbidden_403'
+        '404':
+          $ref: '#/components/responses/Common_response_NotFound_404'
+    delete:
+      summary: 'Removing a group from customer segment'
+      tags:
+        - Group Assignments
+      operationId: DELETE-customer-segment-remove-group
+      description: |
+        
+        **PREVIEW**
+
+        Removes group assignment.
+      security:
+        - CustomerAccessToken: 
+            - customersegment.segment_manage
+      responses:
+        '204':
+          description: Group assignment was successfully removed.
+        '401':
+          $ref: '#/components/responses/Common_response_Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Common_response_Forbidden_403'
   '/customer-segment/{tenant}/segments/items/category-trees':
     parameters:
       - $ref: '#/components/parameters/tenant'
@@ -1314,6 +1484,42 @@ components:
             legalEntity:
               $ref: '#/components/schemas/LegalEntity'
         - $ref: '#/components/schemas/CustomerAssignmentB2CResponse'
+    GroupAssignmentUpsert:
+      type: object
+      description: |
+        
+      properties:
+        mixins:
+          type: object
+          description: A key-value map of additional attributes.
+          additionalProperties: true
+        metadata:
+          $ref: '#/components/schemas/MetadataUpdate'
+    Group:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of an existing group.
+        name:
+          type: object
+          description: Localized name of the group.
+          additionalProperties:
+            type: string
+    GroupAssignmentResponse:
+      allOf:
+        - type: object
+          properties:
+            segmentId:
+              type: string
+              description: Unique identifier of the customer segment.
+            group:
+              $ref: '#/components/schemas/Group'
+        - $ref: '#/components/schemas/GroupAssignmentUpsert'
+        - type: object
+          properties:
+            metadata:
+              $ref: '#/components/schemas/MetadataResponse'
     ItemAssignmentUpsert:
       type: object
       description: |
@@ -1636,6 +1842,13 @@ components:
       in: path
       required: true
       description: Unique identifier of the customer segment.
+      schema:
+        type: string
+    groupId:
+      name: groupId
+      in: path
+      required: true
+      description: Unique identifier of the group assigned to a customer segment.
       schema:
         type: string
     type:

@@ -50,6 +50,31 @@ description: Webhook events related to the creation, update, and deletion of cus
   "segmentId": "String",
   "tenant": "String"
 }
+</code></pre></td></tr><tr><td>customer-segment.group-assignment-created</td><td><pre class="language-json"><code class="lang-json">{
+  "group": {
+    "id": "String",
+    "name": "Map"
+  },
+  "metadata": {},
+  "mixins": "Map",
+  "segmentId": "String",
+  "tenant": "String"
+}
+</code></pre></td></tr><tr><td>customer-segment.group-assignment-deleted</td><td><pre class="language-json"><code class="lang-json">{
+  "groupId": "String",
+  "segmentId": "String",
+  "tenant": "String"
+}
+</code></pre></td></tr><tr><td>customer-segment.group-assignment-updated</td><td><pre class="language-json"><code class="lang-json">{
+  "group": {
+    "id": "String",
+    "name": "Map"
+  },
+  "metadata": {},
+  "mixins": "Map",
+  "segmentId": "String",
+  "tenant": "String"
+}
 </code></pre></td></tr><tr><td>customer-segment.item-assignment-created</td><td><pre class="language-json"><code class="lang-json">{
   "item": {
     "code": "String",
