@@ -182,6 +182,86 @@ curl -i -X PUT
 Note that this operation performs an `UPSERT` operation. The `UPSERT` means that if a customer is already assigned to a segment, the assignment gets updated. If not, the customer assignment is created in the system.
 {% endhint %}
 
+### Add groups to a segment
+
+{% hint style="warning" %}
+The group assignment endpoints are currently in **PREVIEW**.
+{% endhint %}
+
+You can also assign IAM groups to a customer segment.
+
+* To add or update a group assignment, send the request to the [Updating a group assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#put-customer-segment-tenant-segments-segmentid-groups-groupid) endpoint. You need the `customersegment.segment_manage` scope.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../customer-segments/api-reference/" %}
+[api-reference](../customer-segments/api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -i -X PUT
+  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/groups/{groupId}'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+  -H 'Content-Type: application/json'
+  -d '{
+    "mixins": {
+      "segmentAttributes": {
+        "membershipStatus": "PREMIUM"
+      }
+    },
+    "metadata": {
+      "mixins": {
+        "segmentAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/69537caeb3fd5d378296ae42_segmentAttributes.json"
+      }
+    }
+  }'
+```
+
+The operation performs an `UPSERT`. If the group is already assigned to the segment, the assignment is updated. Otherwise, a new assignment is created.
+
+Only IAM groups with `userType=CUSTOMER` can be assigned to segments.
+
+* To retrieve all group assignments for a segment, send the request to the [Retrieving group assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups) endpoint. You need the `customersegment.segment_read` scope. You can use paging, sorting, `fields`, and the `q` query parameter.
+
+```bash
+curl -i -X GET
+  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/groups?q=group.id:groupId1&pageSize=1&pageNumber=1&sort=group.id:ASC&fields=group,metadata'
+  -H 'Accept-Language: string'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+  -H 'X-Total-Count: true'
+```
+
+* To search group assignments within a segment, send the request to the [Searching group assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#post-customer-segment-tenant-segments-segmentid-groups-search) endpoint. You need the `customersegment.segment_read` scope.
+
+```bash
+curl -i -X POST
+  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/groups'
+  -H 'Accept-Language: string'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+  -H 'Content-Type: application/json'
+  -H 'X-Total-Count: true'
+  -d '{
+    "q": "group.id:groupId1"
+  }'
+```
+
+* To retrieve a specific group assignment, send the request to the [Retrieving a group assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups-groupid) endpoint. You need the `customersegment.segment_read` scope.
+
+```bash
+curl -i -X GET
+  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/groups/{groupId}'
+  -H 'Accept-Language: string'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
+
+* To remove a group assignment from a segment, send the request to the [Deleting a group assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#delete-customer-segment-tenant-segments-segmentid-groups-groupid) endpoint. You need the `customersegment.segment_manage` scope.
+
+```bash
+curl -i -X DELETE
+  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/groups/{groupId}'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
+
 ## How to find a specific segment using search parameters
 
 {% hint style="warning" %}
