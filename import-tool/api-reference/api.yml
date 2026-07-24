@@ -3,12 +3,1060 @@ info:
   title: Import Tool
   version: ''
   description: |-
-    Import Tool for Emporix.
+    The Emporix Import Tool imports external master data into Emporix. A configuration groups one or more
+    streams; each stream extracts from a source connection, maps fields to an Emporix target type, and
+    upserts idempotently. Imports run asynchronously and stream per-stream progress over Server-Sent Events.
 
+    This reference covers the operational surface available with the `importtool.import_trigger` scope:
+    triggering, scheduling, monitoring, and cancelling import runs, and reading configurations, streams,
+    schedules, runs, and imported data. Administrative operations (creating and changing configurations,
+    connections, streams, and mappings) require the `importtool.import_manage` scope.
   contact:
     name: Emporix
     url: https://emporix.com
     email: documentation@emporix.com
-    
+tags:
+  - name: Configurations
+    description: Read import configurations.
+  - name: Streams
+    description: Read the streams of a configuration.
+  - name: Schedules
+    description: Read and set a configuration's run schedule.
+  - name: Runs
+    description: Trigger, monitor, and cancel import runs.
+  - name: Data
+    description: Read imported records.
 servers:
   - url: 'https://api.emporix.io'
+paths:
+  '/importtool/{tenant}/configs':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    get:
+      summary: Retrieving all import configurations
+      description: Retrieves all import configurations defined for the tenant.
+      operationId: GET-importtool-list-configs
+      tags:
+        - Configurations
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The request was successful. The configurations are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ImportConfig'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/configs/{id}':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    get:
+      summary: Retrieving an import configuration
+      description: Retrieves a single import configuration by its identifier.
+      operationId: GET-importtool-get-config
+      tags:
+        - Configurations
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The request was successful. The configuration is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportConfig'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/configs/{configId}/streams':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_configId'
+    get:
+      summary: Retrieving all streams of a configuration
+      description: Retrieves the streams belonging to a configuration, ordered by sequence.
+      operationId: GET-importtool-list-streams
+      tags:
+        - Streams
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The request was successful. The streams are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ImportStream'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/streams/{id}':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    get:
+      summary: Retrieving a stream
+      description: Retrieves a single stream by its identifier, including its resolved target types.
+      operationId: GET-importtool-get-stream
+      tags:
+        - Streams
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The request was successful. The stream is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportStream'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/configs/{configId}/schedule':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_configId'
+    get:
+      summary: Retrieving a schedule
+      description: Retrieves the cron schedule for a configuration.
+      operationId: GET-importtool-get-schedule
+      tags:
+        - Schedules
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The request was successful. The schedule is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule'
+        '204':
+          description: No schedule is configured for the configuration.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+    put:
+      summary: Scheduling an import job
+      description: Creates or updates the cron schedule (cron expression, time zone, and enabled flag) that runs a configuration automatically.
+      operationId: PUT-importtool-schedule-job
+      tags:
+        - Schedules
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule'
+            examples:
+              Every day at 02:00 Berlin time:
+                value:
+                  cron: '0 0 2 * * *'
+                  timezone: Europe/Berlin
+                  enabled: true
+      responses:
+        '200':
+          description: The request was successful. The schedule has been saved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/configs/{configId}/runs':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_configId'
+    post:
+      summary: Triggering an import run
+      description: |-
+        Starts an import run for the configuration and returns immediately with the run in a running state;
+        progress is streamed over Server-Sent Events. At most one run is active per configuration.
+      operationId: POST-importtool-trigger-run
+      tags:
+        - Runs
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mode:
+                  type: string
+                  enum:
+                    - FULL
+                    - DELTA
+                  description: The run mode. Defaults to `DELTA`.
+                dryRun:
+                  type: boolean
+                  description: When `true`, the run maps and validates but performs no remote writes.
+            examples:
+              Full run:
+                value:
+                  mode: FULL
+      responses:
+        '200':
+          description: The request was successful. The run has been started.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportRun'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '409':
+          $ref: '#/components/responses/Conflict_409'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+    get:
+      summary: Retrieving run history
+      description: Retrieves the run history for a configuration, most recent first.
+      operationId: GET-importtool-list-runs
+      tags:
+        - Runs
+      parameters:
+        - $ref: '#/components/parameters/trait_page'
+        - $ref: '#/components/parameters/trait_size'
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The request was successful. The run history is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportRunPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/runs/{runId}':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_runId'
+    get:
+      summary: Retrieving a run
+      description: Retrieves a run's status together with its per-stream progress.
+      operationId: GET-importtool-get-run
+      tags:
+        - Runs
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The request was successful. The run and its streams are returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunDetail'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/runs/{runId}/events':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_runId'
+    get:
+      summary: Streaming run progress
+      description: |-
+        Streams a run's progress as Server-Sent Events: an initial `snapshot` (run and streams), then a
+        `stream` event per processed batch, and a final `run` event when the run finishes.
+      operationId: GET-importtool-stream-run-events
+      tags:
+        - Runs
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The event stream was opened.
+          content:
+            text/event-stream:
+              schema:
+                type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/runs/{runId}/cancel':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_runId'
+    post:
+      summary: Cancelling a run
+      description: |-
+        Requests cancellation of an active run. By default the cancellation is cooperative; with
+        `force=true` the run is stopped immediately and its configuration is unblocked.
+      operationId: POST-importtool-cancel-run
+      tags:
+        - Runs
+      parameters:
+        - name: force
+          in: query
+          required: false
+          description: When `true`, hard-stops the run immediately.
+          schema:
+            type: boolean
+            default: false
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '202':
+          description: The cancellation was accepted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '409':
+          $ref: '#/components/responses/Conflict_409'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/runs/{runId}/errors':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_runId'
+    get:
+      summary: Retrieving run errors
+      description: Retrieves the errors recorded during a run, paginated.
+      operationId: GET-importtool-list-run-errors
+      tags:
+        - Runs
+      parameters:
+        - $ref: '#/components/parameters/trait_page'
+        - $ref: '#/components/parameters/trait_size'
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The request was successful. The errors are returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorRecordPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/data/types':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    get:
+      summary: Retrieving imported data types
+      description: Retrieves the distinct target types that currently hold imported records.
+      operationId: GET-importtool-list-data-types
+      tags:
+        - Data
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The request was successful. The types are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/data/records':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    get:
+      summary: Searching imported records
+      description: Searches imported records of a given type with an optional free-text query, paginated.
+      operationId: GET-importtool-search-data-records
+      tags:
+        - Data
+      parameters:
+        - name: type
+          in: query
+          required: true
+          description: The target type to search.
+          schema:
+            type: string
+        - name: q
+          in: query
+          required: false
+          description: A free-text query.
+          schema:
+            type: string
+            default: ''
+        - $ref: '#/components/parameters/trait_page'
+        - $ref: '#/components/parameters/trait_size'
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The request was successful. The records are returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportedRecordPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/data/streams/{streamId}/records':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    get:
+      summary: Searching a stream's imported records
+      description: Searches the imported records produced by a specific stream with an optional free-text query, paginated.
+      operationId: GET-importtool-search-stream-records
+      tags:
+        - Data
+      parameters:
+        - name: q
+          in: query
+          required: false
+          description: A free-text query.
+          schema:
+            type: string
+            default: ''
+        - $ref: '#/components/parameters/trait_page'
+        - $ref: '#/components/parameters/trait_size'
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The request was successful. The records are returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportedRecordPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+components:
+  schemas:
+    errorMessage:
+      title: Error
+      description: Schema for specific API errors.
+      type: object
+      properties:
+        code:
+          type: integer
+          description: HTTP status code.
+          minimum: 100
+          maximum: 599
+        status:
+          description: HTTP status.
+          type: string
+        message:
+          description: Descriptive error message for debugging.
+          type: string
+        details:
+          description: List of problems causing this error.
+          type: array
+          items:
+            title: Error Detail
+            description: Error details.
+            type: string
+      required:
+        - status
+        - code
+        - message
+    ImportConfig:
+      title: Import configuration
+      type: object
+      description: An import configuration grouping one or more streams.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The configuration identifier.
+        tenant:
+          type: string
+          description: The owning tenant.
+        name:
+          type: string
+          description: The configuration name.
+        description:
+          type: string
+          description: A free-text description.
+        sourceConnId:
+          type: string
+          format: uuid
+          description: The default source connection for the configuration's streams.
+        deltaEnabled:
+          type: boolean
+          description: Whether delta (incremental) runs are enabled.
+        enabled:
+          type: boolean
+          description: Whether the configuration is active.
+        createdAt:
+          type: string
+          format: date-time
+          description: When the configuration was created.
+        updatedAt:
+          type: string
+          format: date-time
+          description: When the configuration was last updated.
+    ImportStream:
+      title: Stream
+      type: object
+      description: A stream that extracts from a source, maps fields, and upserts into an Emporix target type.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The stream identifier.
+        configId:
+          type: string
+          format: uuid
+          description: The parent configuration.
+        name:
+          type: string
+          description: The stream name.
+        sourceEntity:
+          type: string
+          description: The logical source entity or record.
+        targetWriter:
+          type: string
+          description: The target writer code, for example `emporix.customEntity`.
+        targetType:
+          type: string
+          description: The default target type (custom-entity type identifier).
+        mode:
+          type: string
+          enum:
+            - STANDALONE
+            - COMPOSITE_CHILD
+            - COMPOSITE_MERGE
+          description: How the stream contributes to the target.
+        enabled:
+          type: boolean
+          description: Whether the stream is active.
+    Schedule:
+      title: Schedule
+      type: object
+      description: A cron schedule for a configuration.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The schedule identifier.
+        configId:
+          type: string
+          format: uuid
+          description: The scheduled configuration.
+        cron:
+          type: string
+          description: A Spring cron expression with six fields.
+        timezone:
+          type: string
+          description: The IANA time zone the cron is evaluated in.
+        enabled:
+          type: boolean
+          description: Whether the schedule is active.
+        nextFireAt:
+          type: string
+          format: date-time
+          description: The next fire time.
+      required:
+        - cron
+    ImportRun:
+      title: Run
+      type: object
+      description: An import run and its reconciled counters.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The run identifier.
+        configId:
+          type: string
+          format: uuid
+          description: The configuration the run belongs to.
+        tenant:
+          type: string
+          description: The owning tenant.
+        trigger:
+          type: string
+          enum:
+            - MANUAL
+            - SCHEDULED
+          description: What triggered the run.
+        status:
+          type: string
+          enum:
+            - QUEUED
+            - RUNNING
+            - SUCCEEDED
+            - PARTIAL
+            - FAILED
+            - CANCELLED
+          description: The run status.
+        mode:
+          type: string
+          enum:
+            - FULL
+            - DELTA
+          description: The run mode.
+        startedAt:
+          type: string
+          format: date-time
+          description: When the run started.
+        finishedAt:
+          type: string
+          format: date-time
+          description: When the run finished.
+        recordsRead:
+          type: integer
+          description: Records read (created + updated + skipped + deleted + failed).
+        created:
+          type: integer
+          description: Records created.
+        updated:
+          type: integer
+          description: Records updated.
+        skipped:
+          type: integer
+          description: Records skipped because they were unchanged.
+        failed:
+          type: integer
+          description: Records that failed.
+        deleted:
+          type: integer
+          description: Records deleted.
+        message:
+          type: string
+          description: A terminal status message, typically set on failure.
+    ImportRunStream:
+      title: Run stream progress
+      type: object
+      description: The per-stream progress within a run.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The run-stream identifier.
+        runId:
+          type: string
+          format: uuid
+          description: The run this progress belongs to.
+        streamId:
+          type: string
+          format: uuid
+          description: The stream this progress belongs to.
+        streamName:
+          type: string
+          description: The stream name.
+        status:
+          type: string
+          enum:
+            - QUEUED
+            - RUNNING
+            - SUCCEEDED
+            - PARTIAL
+            - FAILED
+            - SKIPPED
+          description: The stream's status within the run.
+        recordsRead:
+          type: integer
+          description: Records read for this stream.
+        created:
+          type: integer
+          description: Records created.
+        updated:
+          type: integer
+          description: Records updated.
+        skipped:
+          type: integer
+          description: Records skipped.
+        failed:
+          type: integer
+          description: Records that failed.
+        deleted:
+          type: integer
+          description: Records deleted.
+        message:
+          type: string
+          description: A per-stream status message.
+    RunDetail:
+      title: Run detail
+      type: object
+      description: A run together with its per-stream progress.
+      properties:
+        run:
+          $ref: '#/components/schemas/ImportRun'
+        streams:
+          type: array
+          description: The per-stream progress.
+          items:
+            $ref: '#/components/schemas/ImportRunStream'
+    CancelResult:
+      title: Cancellation result
+      type: object
+      description: The outcome of a cancellation request.
+      properties:
+        runId:
+          type: string
+          format: uuid
+          description: The run the cancellation targeted.
+        force:
+          type: boolean
+          description: Whether a hard stop was requested.
+        accepted:
+          type: boolean
+          description: Whether the cancellation was accepted. `false` when the run is unknown or already finished.
+    ErrorRecord:
+      title: Error record
+      type: object
+      description: A single error recorded during a run.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The error identifier.
+        runId:
+          type: string
+          format: uuid
+          description: The run the error occurred in.
+        streamId:
+          type: string
+          format: uuid
+          description: The stream the error occurred in.
+        naturalKey:
+          type: string
+          description: The source natural key of the offending record.
+        targetEntity:
+          type: string
+          description: The target writer the record was bound for.
+        stage:
+          type: string
+          description: The pipeline stage the error occurred in.
+        errorCode:
+          type: string
+          description: A machine-readable error code.
+        message:
+          type: string
+          description: A human-readable error message.
+        createdAt:
+          type: string
+          format: date-time
+          description: When the error was recorded.
+    ImportedRecord:
+      title: Imported record
+      type: object
+      description: A record that was imported. Holds keys and outcome; for composite parents it also holds the embedded child arrays.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The imported-record identifier.
+        configId:
+          type: string
+          format: uuid
+          description: The configuration the record belongs to.
+        streamId:
+          type: string
+          format: uuid
+          description: The stream that produced the record.
+        runId:
+          type: string
+          format: uuid
+          description: The run that last touched the record.
+        targetEntity:
+          type: string
+          description: The target writer code.
+        targetType:
+          type: string
+          description: The target type.
+        naturalKey:
+          type: string
+          description: The source natural key.
+        fields:
+          type: object
+          description: The stored fields.
+        outcome:
+          type: string
+          description: The last outcome, for example `CREATED`, `UPDATED`, or `DELETED`.
+        importedAt:
+          type: string
+          format: date-time
+          description: When the record was last imported.
+    Page:
+      title: Page
+      type: object
+      description: Pagination metadata for a page of results.
+      properties:
+        totalElements:
+          type: integer
+          description: The total number of elements across all pages.
+        totalPages:
+          type: integer
+          description: The total number of pages.
+        number:
+          type: integer
+          description: The current zero-based page number.
+        size:
+          type: integer
+          description: The page size.
+    ImportRunPage:
+      title: Run page
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - type: object
+          properties:
+            content:
+              type: array
+              description: The runs on this page.
+              items:
+                $ref: '#/components/schemas/ImportRun'
+    ErrorRecordPage:
+      title: Error record page
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - type: object
+          properties:
+            content:
+              type: array
+              description: The error records on this page.
+              items:
+                $ref: '#/components/schemas/ErrorRecord'
+    ImportedRecordPage:
+      title: Imported record page
+      allOf:
+        - $ref: '#/components/schemas/Page'
+        - type: object
+          properties:
+            content:
+              type: array
+              description: The imported records on this page.
+              items:
+                $ref: '#/components/schemas/ImportedRecord'
+  responses:
+    Unauthorized_401:
+      description: Given request is unauthorized - the authorization token is invalid or has expired. Details will be provided in the response payload.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              fault:
+                type: object
+                properties:
+                  faultstring:
+                    type: string
+                  detail:
+                    type: object
+                    properties:
+                      errorcode:
+                        type: string
+          examples:
+            Invalid access token:
+              value:
+                fault:
+                  faultstring: Invalid access token
+                  detail:
+                    errorcode: oauth.v2.InvalidAccessToken
+            Access token expired:
+              value:
+                fault:
+                  faultstring: Access Token expired
+                  detail:
+                    errorcode: keymanagement.service.access_token_expired
+    Forbidden_403:
+      description: Given authorization scopes are not sufficient and do not match scopes required by the endpoint.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorMessage'
+          examples:
+            Access to resource is forbidden:
+              $ref: '#/components/examples/Forbidden403_Example'
+    NotFound_404:
+      description: The requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorMessage'
+          examples:
+            Resource not found:
+              $ref: '#/components/examples/NotFound404_Example'
+    Conflict_409:
+      description: The request conflicts with the current state of the resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorMessage'
+          examples:
+            Run already active:
+              $ref: '#/components/examples/Conflict409_Example'
+    InternalServiceError_500:
+      description: Internal Service Error occurred.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorMessage'
+          examples:
+            Internal service error:
+              $ref: '#/components/examples/InternalServiceError500_Example'
+  parameters:
+    trait_tenant:
+      name: tenant
+      in: path
+      required: true
+      description: |
+        The tenant you want to access.
+      schema:
+        type: string
+    trait_id:
+      name: id
+      in: path
+      required: true
+      description: The resource identifier.
+      schema:
+        type: string
+        format: uuid
+    trait_configId:
+      name: configId
+      in: path
+      required: true
+      description: The configuration identifier.
+      schema:
+        type: string
+        format: uuid
+    trait_streamId:
+      name: streamId
+      in: path
+      required: true
+      description: The stream identifier.
+      schema:
+        type: string
+        format: uuid
+    trait_runId:
+      name: runId
+      in: path
+      required: true
+      description: The run identifier.
+      schema:
+        type: string
+        format: uuid
+    trait_page:
+      name: page
+      in: query
+      required: false
+      description: The zero-based page number.
+      schema:
+        type: integer
+        default: 0
+    trait_size:
+      name: size
+      in: query
+      required: false
+      description: The page size.
+      schema:
+        type: integer
+  examples:
+    Forbidden403_Example:
+      value:
+        status: forbidden
+        code: 403
+        message: The access to the requested resource has been forbidden.
+        details:
+          - Missing required scopes
+    NotFound404_Example:
+      value:
+        status: element_resource_non_existing
+        code: 404
+        message: The requested resource does not exist.
+    Conflict409_Example:
+      value:
+        status: conflict
+        code: 409
+        message: An import run is already active for this configuration.
+    InternalServiceError500_Example:
+      value:
+        status: internal_service_error
+        code: 500
+        message: A server-side exception occurred that prevented the system from correctly returning the result.
+        details:
+          - 'https://pattern.yaas.io/errortypes.html'
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://api.emporix.io/oauth/token'
+          scopes:
+            importtool.import_trigger: Needed to trigger, schedule, monitor, and cancel import runs and to read configurations, streams, schedules, runs, and imported data.
+security:
+  - OAuth2:
+      - importtool.import_trigger
