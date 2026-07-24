@@ -25,6 +25,42 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+<!-- emporix-ai-buddy:changelog:COP-6041 -->
+## Customer Segment Service - group assignments
+
+{% hint style="warning" %}
+This functionality is in preview mode — some of the features may not be fully operational yet.
+{% endhint %}
+
+#### Overview
+
+Customer Segment Service now supports assigning customer groups to segments. You can create, retrieve, search, list, and delete group assignments by using dedicated endpoints.
+
+#### New endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Upserting a group assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/group-assignments#put-customer-segment-tenant-segments-segmentid-groups-groupid) | Creates or updates a group assignment for a customer segment. |
+| [Retrieving a group assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/group-assignments#get-customer-segment-tenant-segments-segmentid-groups-groupid) | Returns a single group assignment. |
+| [Retrieving group assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/group-assignments#get-customer-segment-tenant-segments-segmentid-groups) | Returns group assignments for a customer segment. |
+| [Searching group assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/group-assignments#post-customer-segment-tenant-segments-segmentid-groups-search) | Searches group assignments for a customer segment. |
+| [Deleting a group assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/group-assignments#delete-customer-segment-tenant-segments-segmentid-groups-groupid) | Removes a group assignment from a customer segment. |
+
+#### Updated events
+
+| Event | Description |
+|-------|-------------|
+| `customer-segment.group-assignment-created` | Published when a group assignment is created. |
+| `customer-segment.group-assignment-updated` | Published when a group assignment is updated. |
+| `customer-segment.group-assignment-deleted` | Published when a group assignment is deleted. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-07-23" tags="new-feature" %}
 
 ## AI Service - managed OAuth configurations
