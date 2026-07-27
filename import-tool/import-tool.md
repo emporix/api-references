@@ -110,7 +110,7 @@ curl -i -X GET \
 
 The response includes fields such as `name`, `enabled`, `deltaEnabled`, and `sourceConnId`. Note the configuration `id` — you need it for scheduling and triggering runs.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+{% include "../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
@@ -142,7 +142,7 @@ Each stream response includes `sourceEntity`, `targetWriter`, `targetType`, and 
 * `COMPOSITE_CHILD` — the stream contributes child records to a composite parent.
 * `COMPOSITE_MERGE` — the stream merges data into a composite parent.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+{% include "../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
@@ -176,7 +176,7 @@ curl -i -X PUT \
 
 In this example, the configuration runs every day at 02:00 in the `Europe/Berlin` time zone. The saved schedule response includes `nextFireAt` when a next run time can be calculated.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+{% include "../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
@@ -230,7 +230,7 @@ curl -i -X GET \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+{% include "../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
@@ -271,7 +271,7 @@ curl -i -N -X GET \
 `curl` is useful for debugging the event stream. In production, use an SSE-capable HTTP client or `EventSource`.
 {% endhint %}
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+{% include "../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
@@ -297,7 +297,7 @@ curl -i -X POST \
 
 On success, the endpoint returns `202 Accepted` with `accepted: true`. If the run is already finished or unknown, `accepted` is `false`.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+{% include "../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
@@ -343,7 +343,7 @@ curl -i -X GET \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+{% include "../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
@@ -371,7 +371,7 @@ Each error record includes:
 
 Use these fields to identify which source records failed and at which stage of the import pipeline.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
+{% include "../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
