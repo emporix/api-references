@@ -29,15 +29,15 @@ layout:
 
 ## Import Tool - operational API for import runs
 
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
 #### Overview
 
 The Import Tool API is now available for importing external master data into Emporix. A configuration groups one or more streams; each stream extracts from a source connection, maps fields to an Emporix target type, and upserts idempotently. Imports run asynchronously and stream per-stream progress over Server-Sent Events (SSE).
 
 This release covers the operational surface available with the `importtool.import_trigger` scope: reading configurations and streams, scheduling and triggering runs, monitoring and cancelling runs, and searching imported records. Administrative operations that create or change configurations, connections, streams, and mappings require the `importtool.import_manage` scope.
-
-{% hint style="danger" %}
-This functionality is in preview mode - some of the features may not be fully operational yet.
-{% endhint %}
 
 #### New endpoints
 

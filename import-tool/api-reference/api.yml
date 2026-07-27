@@ -39,7 +39,7 @@ paths:
     get:
       summary: Retrieving all import configurations
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -78,7 +78,7 @@ paths:
     get:
       summary: Retrieving an import configuration
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -117,7 +117,7 @@ paths:
     get:
       summary: Retrieving all streams of a configuration
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -156,7 +156,7 @@ paths:
     get:
       summary: Retrieving a stream
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -195,7 +195,7 @@ paths:
     get:
       summary: Retrieving a schedule
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -230,7 +230,7 @@ paths:
     put:
       summary: Scheduling an import job
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -278,7 +278,7 @@ paths:
     post:
       summary: Triggering an import run
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -338,7 +338,7 @@ paths:
     get:
       summary: Retrieving run history
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -378,7 +378,7 @@ paths:
     get:
       summary: Retrieving a run
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -417,7 +417,7 @@ paths:
     get:
       summary: Streaming run progress
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -460,7 +460,7 @@ paths:
     post:
       summary: Cancelling a run
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -508,7 +508,7 @@ paths:
     get:
       summary: Retrieving run errors
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -547,7 +547,7 @@ paths:
     get:
       summary: Retrieving imported data types
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -586,7 +586,7 @@ paths:
     get:
       summary: Searching imported records
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -644,7 +644,7 @@ paths:
     get:
       summary: Searching a stream's imported records
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
