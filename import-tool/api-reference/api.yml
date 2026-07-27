@@ -7,6 +7,10 @@ info:
     streams; each stream extracts from a source connection, maps fields to an Emporix target type, and
     upserts idempotently. Imports run asynchronously and stream per-stream progress over Server-Sent Events.
 
+    {% hint style="danger" %}
+    This functionality is in preview mode - some of the features may not be fully operational yet.
+    {% endhint %}
+
     This reference covers the operational surface available with the `importtool.import_trigger` scope:
     triggering, scheduling, monitoring, and cancelling import runs, and reading configurations, streams,
     schedules, runs, and imported data. Administrative operations (creating and changing configurations,
@@ -34,7 +38,15 @@ paths:
       - $ref: '#/components/parameters/trait_tenant'
     get:
       summary: Retrieving all import configurations
-      description: Retrieves all import configurations defined for the tenant.
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves all import configurations defined for the tenant.
+
       operationId: GET-importtool-list-configs
       tags:
         - Configurations
@@ -65,7 +77,15 @@ paths:
       - $ref: '#/components/parameters/trait_id'
     get:
       summary: Retrieving an import configuration
-      description: Retrieves a single import configuration by its identifier.
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves a single import configuration by its identifier.
+
       operationId: GET-importtool-get-config
       tags:
         - Configurations
@@ -96,7 +116,15 @@ paths:
       - $ref: '#/components/parameters/trait_configId'
     get:
       summary: Retrieving all streams of a configuration
-      description: Retrieves the streams belonging to a configuration, ordered by sequence.
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves the streams belonging to a configuration, ordered by sequence.
+
       operationId: GET-importtool-list-streams
       tags:
         - Streams
@@ -127,7 +155,15 @@ paths:
       - $ref: '#/components/parameters/trait_id'
     get:
       summary: Retrieving a stream
-      description: Retrieves a single stream by its identifier, including its resolved target types.
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves a single stream by its identifier, including its resolved target types.
+
       operationId: GET-importtool-get-stream
       tags:
         - Streams
@@ -158,7 +194,15 @@ paths:
       - $ref: '#/components/parameters/trait_configId'
     get:
       summary: Retrieving a schedule
-      description: Retrieves the cron schedule for a configuration.
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves the cron schedule for a configuration.
+
       operationId: GET-importtool-get-schedule
       tags:
         - Schedules
@@ -185,7 +229,15 @@ paths:
           $ref: '#/components/responses/InternalServiceError_500'
     put:
       summary: Scheduling an import job
-      description: Creates or updates the cron schedule (cron expression, time zone, and enabled flag) that runs a configuration automatically.
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Creates or updates the cron schedule (cron expression, time zone, and enabled flag) that runs a configuration automatically.
+
       operationId: PUT-importtool-schedule-job
       tags:
         - Schedules
@@ -226,6 +278,12 @@ paths:
     post:
       summary: Triggering an import run
       description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
         Starts an import run for the configuration and returns immediately with the run in a running state;
         progress is streamed over Server-Sent Events. At most one run is active per configuration.
       operationId: POST-importtool-trigger-run
@@ -279,7 +337,15 @@ paths:
           $ref: '#/components/responses/InternalServiceError_500'
     get:
       summary: Retrieving run history
-      description: Retrieves the run history for a configuration, most recent first.
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves the run history for a configuration, most recent first.
+
       operationId: GET-importtool-list-runs
       tags:
         - Runs
@@ -311,7 +377,15 @@ paths:
       - $ref: '#/components/parameters/trait_runId'
     get:
       summary: Retrieving a run
-      description: Retrieves a run's status together with its per-stream progress.
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves a run's status together with its per-stream progress.
+
       operationId: GET-importtool-get-run
       tags:
         - Runs
@@ -343,6 +417,12 @@ paths:
     get:
       summary: Streaming run progress
       description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
         Streams a run's progress as Server-Sent Events: an initial `snapshot` (run and streams), then a
         `stream` event per processed batch, and a final `run` event when the run finishes.
       operationId: GET-importtool-stream-run-events
@@ -380,6 +460,12 @@ paths:
     post:
       summary: Cancelling a run
       description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
         Requests cancellation of an active run. By default the cancellation is cooperative; with
         `force=true` the run is stopped immediately and its configuration is unblocked.
       operationId: POST-importtool-cancel-run
@@ -421,7 +507,15 @@ paths:
       - $ref: '#/components/parameters/trait_runId'
     get:
       summary: Retrieving run errors
-      description: Retrieves the errors recorded during a run, paginated.
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves the errors recorded during a run, paginated.
+
       operationId: GET-importtool-list-run-errors
       tags:
         - Runs
@@ -452,7 +546,15 @@ paths:
       - $ref: '#/components/parameters/trait_tenant'
     get:
       summary: Retrieving imported data types
-      description: Retrieves the distinct target types that currently hold imported records.
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves the distinct target types that currently hold imported records.
+
       operationId: GET-importtool-list-data-types
       tags:
         - Data
@@ -483,7 +585,15 @@ paths:
       - $ref: '#/components/parameters/trait_tenant'
     get:
       summary: Searching imported records
-      description: Searches imported records of a given type with an optional `search` filter on the natural key, paginated.
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Searches imported records of a given type with an optional `search` filter on the natural key, paginated.
+
       operationId: GET-importtool-search-data-records
       tags:
         - Data
@@ -533,7 +643,15 @@ paths:
       - $ref: '#/components/parameters/trait_streamId'
     get:
       summary: Searching a stream's imported records
-      description: Searches the imported records produced by a specific stream with an optional `search` filter on the natural key, paginated.
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Searches the imported records produced by a specific stream with an optional `search` filter on the natural key, paginated.
+
       operationId: GET-importtool-search-stream-records
       tags:
         - Data

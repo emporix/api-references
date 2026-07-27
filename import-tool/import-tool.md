@@ -23,6 +23,10 @@ layout:
 
 The Import Tool imports external master data into Emporix. A configuration groups one or more streams, where each stream extracts from a source connection, maps fields to an Emporix target type, and upserts idempotently. Imports run asynchronously and stream per-stream progress over Server-Sent Events (SSE).
 
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
 {% hint style="info" %}
 To learn more about the Import Tool, see the [Import Tool](./).
 {% endhint %}
