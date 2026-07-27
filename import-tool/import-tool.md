@@ -27,10 +27,6 @@ The Import Tool imports external master data into Emporix. A configuration group
 This functionality is in preview mode - some of the features may not be fully operational yet.
 {% endhint %}
 
-{% hint style="info" %}
-To learn more about the Import Tool, see the [Import Tool](./).
-{% endhint %}
-
 {% hint style="warning" %}
 This tutorial covers triggering, scheduling, monitoring, cancelling, and inspecting import runs. An import configuration must already exist for your tenant.
 
