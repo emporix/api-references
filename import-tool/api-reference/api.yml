@@ -50,6 +50,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ImportConfig'
+              examples:
+                Configurations response:
+                  $ref: '#/components/examples/ImportConfigs_Example'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -76,6 +79,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ImportConfig'
+              examples:
+                Configuration response:
+                  $ref: '#/components/examples/ImportConfig_Example'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -106,6 +112,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ImportStream'
+              examples:
+                Streams response:
+                  $ref: '#/components/examples/ImportStreams_Example'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -132,6 +141,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ImportStream'
+              examples:
+                Stream response:
+                  $ref: '#/components/examples/ImportStream_Example'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -160,6 +172,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Schedule'
+              examples:
+                Schedule response:
+                  $ref: '#/components/examples/Schedule_Example'
         '204':
           description: No schedule is configured for the configuration.
         '401':
@@ -195,6 +210,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Schedule'
+              examples:
+                Schedule response:
+                  $ref: '#/components/examples/Schedule_Example'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -228,13 +246,19 @@ paths:
                     - FULL
                     - DELTA
                   description: The run mode. Defaults to `DELTA`.
+                  example: DELTA
                 dryRun:
                   type: boolean
                   description: When `true`, the run maps and validates but performs no remote writes.
+                  example: false
             examples:
               Full run:
                 value:
                   mode: FULL
+              Delta dry run:
+                value:
+                  mode: DELTA
+                  dryRun: true
       responses:
         '200':
           description: The request was successful. The run has been started.
@@ -242,6 +266,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ImportRun'
+              examples:
+                Run response:
+                  $ref: '#/components/examples/ImportRun_Example'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -269,6 +296,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ImportRunPage'
+              examples:
+                Run history response:
+                  $ref: '#/components/examples/ImportRunPage_Example'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -295,6 +325,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RunDetail'
+              examples:
+                Run detail response:
+                  $ref: '#/components/examples/RunDetail_Example'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -325,6 +358,15 @@ paths:
             text/event-stream:
               schema:
                 type: string
+                example: |-
+                  event: snapshot
+                  data: {"run":{"id":"9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d","status":"RUNNING"},"streams":[{"streamName":"Products","status":"RUNNING","recordsRead":120}]}
+
+                  event: stream
+                  data: {"streamName":"Products","status":"RUNNING","recordsRead":240,"created":20,"updated":210,"failed":2}
+
+                  event: run
+                  data: {"id":"9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d","status":"SUCCEEDED","recordsRead":1250}
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -351,6 +393,7 @@ paths:
           schema:
             type: boolean
             default: false
+            example: false
       security:
         - OAuth2:
             - importtool.import_trigger
@@ -361,6 +404,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CancelResult'
+              examples:
+                Cancellation response:
+                  $ref: '#/components/examples/CancelResult_Example'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -392,6 +438,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorRecordPage'
+              examples:
+                Errors response:
+                  $ref: '#/components/examples/ErrorRecordPage_Example'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -419,6 +468,10 @@ paths:
                 type: array
                 items:
                   type: string
+                  example: product
+              examples:
+                Data types response:
+                  $ref: '#/components/examples/DataTypes_Example'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -430,7 +483,7 @@ paths:
       - $ref: '#/components/parameters/trait_tenant'
     get:
       summary: Searching imported records
-      description: Searches imported records of a given type with an optional free-text query, paginated.
+      description: Searches imported records of a given type with an optional `search` filter on the natural key, paginated.
       operationId: GET-importtool-search-data-records
       tags:
         - Data
@@ -441,6 +494,7 @@ paths:
           description: The target type to search.
           schema:
             type: string
+            example: product
         - name: search
           in: query
           required: false
@@ -451,6 +505,7 @@ paths:
           schema:
             type: string
             default: ''
+            example: SKU-1001
         - $ref: '#/components/parameters/trait_page'
         - $ref: '#/components/parameters/trait_size'
       security:
@@ -463,6 +518,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ImportedRecordPage'
+              examples:
+                Imported records response:
+                  $ref: '#/components/examples/ImportedRecordPage_Example'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -475,7 +533,7 @@ paths:
       - $ref: '#/components/parameters/trait_streamId'
     get:
       summary: Searching a stream's imported records
-      description: Searches the imported records produced by a specific stream with an optional free-text query, paginated.
+      description: Searches the imported records produced by a specific stream with an optional `search` filter on the natural key, paginated.
       operationId: GET-importtool-search-stream-records
       tags:
         - Data
@@ -490,6 +548,7 @@ paths:
           schema:
             type: string
             default: ''
+            example: SKU-1001
         - $ref: '#/components/parameters/trait_page'
         - $ref: '#/components/parameters/trait_size'
       security:
@@ -502,6 +561,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ImportedRecordPage'
+              examples:
+                Stream records response:
+                  $ref: '#/components/examples/ImportedRecordPage_Example'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -546,33 +608,42 @@ components:
           type: string
           format: uuid
           description: The configuration identifier.
+          example: 7c9e6679-7425-40de-944b-e07fc1f90ae7
         tenant:
           type: string
           description: The owning tenant.
+          example: mytenant
         name:
           type: string
           description: The configuration name.
+          example: ERP product master import
         description:
           type: string
           description: A free-text description.
+          example: Nightly import of product master data from the ERP system.
         sourceConnId:
           type: string
           format: uuid
           description: The default source connection for the configuration's streams.
+          example: 550e8400-e29b-41d4-a716-446655440000
         deltaEnabled:
           type: boolean
           description: Whether delta (incremental) runs are enabled.
+          example: true
         enabled:
           type: boolean
           description: Whether the configuration is active.
+          example: true
         createdAt:
           type: string
           format: date-time
           description: When the configuration was created.
+          example: '2026-07-01T10:15:30.000Z'
         updatedAt:
           type: string
           format: date-time
           description: When the configuration was last updated.
+          example: '2026-07-20T08:00:00.000Z'
     ImportStream:
       title: Stream
       type: object
@@ -582,22 +653,28 @@ components:
           type: string
           format: uuid
           description: The stream identifier.
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
         configId:
           type: string
           format: uuid
           description: The parent configuration.
+          example: 7c9e6679-7425-40de-944b-e07fc1f90ae7
         name:
           type: string
           description: The stream name.
+          example: Products
         sourceEntity:
           type: string
           description: The logical source entity or record.
+          example: PRODUCT
         targetWriter:
           type: string
           description: The target writer code, for example `emporix.customEntity`.
+          example: emporix.customEntity
         targetType:
           type: string
           description: The default target type (custom-entity type identifier).
+          example: product
         mode:
           type: string
           enum:
@@ -605,9 +682,11 @@ components:
             - COMPOSITE_CHILD
             - COMPOSITE_MERGE
           description: How the stream contributes to the target.
+          example: STANDALONE
         enabled:
           type: boolean
           description: Whether the stream is active.
+          example: true
     Schedule:
       title: Schedule
       type: object
@@ -617,23 +696,29 @@ components:
           type: string
           format: uuid
           description: The schedule identifier.
+          example: a3bb189e-8bf9-3888-9912-ace4e6543002
         configId:
           type: string
           format: uuid
           description: The scheduled configuration.
+          example: 7c9e6679-7425-40de-944b-e07fc1f90ae7
         cron:
           type: string
           description: A Spring cron expression with six fields.
+          example: '0 0 2 * * *'
         timezone:
           type: string
           description: The IANA time zone the cron is evaluated in.
+          example: Europe/Berlin
         enabled:
           type: boolean
           description: Whether the schedule is active.
+          example: true
         nextFireAt:
           type: string
           format: date-time
           description: The next fire time.
+          example: '2026-07-28T00:00:00.000Z'
       required:
         - cron
     ImportRun:
@@ -645,19 +730,23 @@ components:
           type: string
           format: uuid
           description: The run identifier.
+          example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
         configId:
           type: string
           format: uuid
           description: The configuration the run belongs to.
+          example: 7c9e6679-7425-40de-944b-e07fc1f90ae7
         tenant:
           type: string
           description: The owning tenant.
+          example: mytenant
         trigger:
           type: string
           enum:
             - MANUAL
             - SCHEDULED
           description: What triggered the run.
+          example: MANUAL
         status:
           type: string
           enum:
@@ -668,41 +757,52 @@ components:
             - FAILED
             - CANCELLED
           description: The run status.
+          example: SUCCEEDED
         mode:
           type: string
           enum:
             - FULL
             - DELTA
           description: The run mode.
+          example: DELTA
         startedAt:
           type: string
           format: date-time
           description: When the run started.
+          example: '2026-07-27T02:00:00.000Z'
         finishedAt:
           type: string
           format: date-time
           description: When the run finished.
+          example: '2026-07-27T02:04:12.000Z'
         recordsRead:
           type: integer
           description: Records read (created + updated + skipped + deleted + failed).
+          example: 1250
         created:
           type: integer
           description: Records created.
+          example: 40
         updated:
           type: integer
           description: Records updated.
+          example: 1180
         skipped:
           type: integer
           description: Records skipped because they were unchanged.
+          example: 25
         failed:
           type: integer
           description: Records that failed.
+          example: 5
         deleted:
           type: integer
           description: Records deleted.
+          example: 0
         message:
           type: string
           description: A terminal status message, typically set on failure.
+          example: Import completed with 5 record failures.
     ImportRunStream:
       title: Run stream progress
       type: object
@@ -712,17 +812,21 @@ components:
           type: string
           format: uuid
           description: The run-stream identifier.
+          example: c56a4180-65aa-42ec-a945-5fd21dec0538
         runId:
           type: string
           format: uuid
           description: The run this progress belongs to.
+          example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
         streamId:
           type: string
           format: uuid
           description: The stream this progress belongs to.
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
         streamName:
           type: string
           description: The stream name.
+          example: Products
         status:
           type: string
           enum:
@@ -733,27 +837,35 @@ components:
             - FAILED
             - SKIPPED
           description: The stream's status within the run.
+          example: PARTIAL
         recordsRead:
           type: integer
           description: Records read for this stream.
+          example: 1250
         created:
           type: integer
           description: Records created.
+          example: 40
         updated:
           type: integer
           description: Records updated.
+          example: 1180
         skipped:
           type: integer
           description: Records skipped.
+          example: 25
         failed:
           type: integer
           description: Records that failed.
+          example: 5
         deleted:
           type: integer
           description: Records deleted.
+          example: 0
         message:
           type: string
           description: A per-stream status message.
+          example: 5 records failed validation.
     RunDetail:
       title: Run detail
       type: object
@@ -775,12 +887,15 @@ components:
           type: string
           format: uuid
           description: The run the cancellation targeted.
+          example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
         force:
           type: boolean
           description: Whether a hard stop was requested.
+          example: false
         accepted:
           type: boolean
           description: Whether the cancellation was accepted. `false` when the run is unknown or already finished.
+          example: true
     ErrorRecord:
       title: Error record
       type: object
@@ -790,33 +905,42 @@ components:
           type: string
           format: uuid
           description: The error identifier.
+          example: 6ba7b810-9dad-11d1-80b4-00c04fd430c8
         runId:
           type: string
           format: uuid
           description: The run the error occurred in.
+          example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
         streamId:
           type: string
           format: uuid
           description: The stream the error occurred in.
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
         naturalKey:
           type: string
           description: The source natural key of the offending record.
+          example: SKU-1001
         targetEntity:
           type: string
           description: The target writer the record was bound for.
+          example: emporix.customEntity
         stage:
           type: string
           description: The pipeline stage the error occurred in.
+          example: MAPPING
         errorCode:
           type: string
           description: A machine-readable error code.
+          example: REQUIRED_FIELD_MISSING
         message:
           type: string
           description: A human-readable error message.
+          example: Required field 'name' is missing for natural key SKU-1001.
         createdAt:
           type: string
           format: date-time
           description: When the error was recorded.
+          example: '2026-07-27T02:03:41.000Z'
     ImportedRecord:
       title: Imported record
       type: object
@@ -826,37 +950,50 @@ components:
           type: string
           format: uuid
           description: The imported-record identifier.
+          example: 1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed
         configId:
           type: string
           format: uuid
           description: The configuration the record belongs to.
+          example: 7c9e6679-7425-40de-944b-e07fc1f90ae7
         streamId:
           type: string
           format: uuid
           description: The stream that produced the record.
+          example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
         runId:
           type: string
           format: uuid
           description: The run that last touched the record.
+          example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
         targetEntity:
           type: string
           description: The target writer code.
+          example: emporix.customEntity
         targetType:
           type: string
           description: The target type.
+          example: product
         naturalKey:
           type: string
           description: The source natural key.
+          example: SKU-1001
         fields:
           type: object
           description: The stored fields.
+          example:
+            name: Pipe cutter
+            sku: SKU-1001
+            active: true
         outcome:
           type: string
           description: The last outcome, for example `CREATED`, `UPDATED`, or `DELETED`.
+          example: UPDATED
         importedAt:
           type: string
           format: date-time
           description: When the record was last imported.
+          example: '2026-07-27T02:03:55.000Z'
     Page:
       title: Page
       type: object
@@ -865,15 +1002,19 @@ components:
         totalElements:
           type: integer
           description: The total number of elements across all pages.
+          example: 1250
         totalPages:
           type: integer
           description: The total number of pages.
+          example: 63
         number:
           type: integer
           description: The current zero-based page number.
+          example: 0
         size:
           type: integer
           description: The page size.
+          example: 20
     ImportRunPage:
       title: Run page
       allOf:
@@ -983,6 +1124,7 @@ components:
         The tenant you want to access.
       schema:
         type: string
+        example: mytenant
     trait_id:
       name: id
       in: path
@@ -991,6 +1133,7 @@ components:
       schema:
         type: string
         format: uuid
+        example: 7c9e6679-7425-40de-944b-e07fc1f90ae7
     trait_configId:
       name: configId
       in: path
@@ -999,6 +1142,7 @@ components:
       schema:
         type: string
         format: uuid
+        example: 7c9e6679-7425-40de-944b-e07fc1f90ae7
     trait_streamId:
       name: streamId
       in: path
@@ -1007,6 +1151,7 @@ components:
       schema:
         type: string
         format: uuid
+        example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
     trait_runId:
       name: runId
       in: path
@@ -1015,6 +1160,7 @@ components:
       schema:
         type: string
         format: uuid
+        example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
     trait_page:
       name: page
       in: query
@@ -1023,6 +1169,7 @@ components:
       schema:
         type: integer
         default: 0
+        example: 0
     trait_size:
       name: size
       in: query
@@ -1030,6 +1177,7 @@ components:
       description: The page size.
       schema:
         type: integer
+        example: 20
   examples:
     Forbidden403_Example:
       value:
@@ -1055,6 +1203,171 @@ components:
         message: A server-side exception occurred that prevented the system from correctly returning the result.
         details:
           - 'https://pattern.yaas.io/errortypes.html'
+    ImportConfig_Example:
+      value:
+        id: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+        tenant: mytenant
+        name: ERP product master import
+        description: Nightly import of product master data from the ERP system.
+        sourceConnId: 550e8400-e29b-41d4-a716-446655440000
+        deltaEnabled: true
+        enabled: true
+        createdAt: '2026-07-01T10:15:30.000Z'
+        updatedAt: '2026-07-20T08:00:00.000Z'
+    ImportConfigs_Example:
+      value:
+        - id: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+          tenant: mytenant
+          name: ERP product master import
+          description: Nightly import of product master data from the ERP system.
+          sourceConnId: 550e8400-e29b-41d4-a716-446655440000
+          deltaEnabled: true
+          enabled: true
+          createdAt: '2026-07-01T10:15:30.000Z'
+          updatedAt: '2026-07-20T08:00:00.000Z'
+    ImportStream_Example:
+      value:
+        id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+        configId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+        name: Products
+        sourceEntity: PRODUCT
+        targetWriter: emporix.customEntity
+        targetType: product
+        mode: STANDALONE
+        enabled: true
+    ImportStreams_Example:
+      value:
+        - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+          configId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+          name: Products
+          sourceEntity: PRODUCT
+          targetWriter: emporix.customEntity
+          targetType: product
+          mode: STANDALONE
+          enabled: true
+    Schedule_Example:
+      value:
+        id: a3bb189e-8bf9-3888-9912-ace4e6543002
+        configId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+        cron: '0 0 2 * * *'
+        timezone: Europe/Berlin
+        enabled: true
+        nextFireAt: '2026-07-28T00:00:00.000Z'
+    ImportRun_Example:
+      value:
+        id: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+        configId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+        tenant: mytenant
+        trigger: MANUAL
+        status: RUNNING
+        mode: FULL
+        startedAt: '2026-07-27T02:00:00.000Z'
+        finishedAt: null
+        recordsRead: 120
+        created: 10
+        updated: 100
+        skipped: 8
+        failed: 2
+        deleted: 0
+        message: null
+    ImportRunPage_Example:
+      value:
+        totalElements: 3
+        totalPages: 1
+        number: 0
+        size: 20
+        content:
+          - id: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+            configId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+            tenant: mytenant
+            trigger: MANUAL
+            status: SUCCEEDED
+            mode: DELTA
+            startedAt: '2026-07-27T02:00:00.000Z'
+            finishedAt: '2026-07-27T02:04:12.000Z'
+            recordsRead: 1250
+            created: 40
+            updated: 1180
+            skipped: 25
+            failed: 5
+            deleted: 0
+            message: Import completed with 5 record failures.
+    RunDetail_Example:
+      value:
+        run:
+          id: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+          configId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+          tenant: mytenant
+          trigger: MANUAL
+          status: SUCCEEDED
+          mode: DELTA
+          startedAt: '2026-07-27T02:00:00.000Z'
+          finishedAt: '2026-07-27T02:04:12.000Z'
+          recordsRead: 1250
+          created: 40
+          updated: 1180
+          skipped: 25
+          failed: 5
+          deleted: 0
+          message: Import completed with 5 record failures.
+        streams:
+          - id: c56a4180-65aa-42ec-a945-5fd21dec0538
+            runId: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+            streamId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+            streamName: Products
+            status: PARTIAL
+            recordsRead: 1250
+            created: 40
+            updated: 1180
+            skipped: 25
+            failed: 5
+            deleted: 0
+            message: 5 records failed validation.
+    CancelResult_Example:
+      value:
+        runId: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+        force: false
+        accepted: true
+    ErrorRecordPage_Example:
+      value:
+        totalElements: 5
+        totalPages: 1
+        number: 0
+        size: 50
+        content:
+          - id: 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+            runId: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+            streamId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+            naturalKey: SKU-1001
+            targetEntity: emporix.customEntity
+            stage: MAPPING
+            errorCode: REQUIRED_FIELD_MISSING
+            message: Required field 'name' is missing for natural key SKU-1001.
+            createdAt: '2026-07-27T02:03:41.000Z'
+    DataTypes_Example:
+      value:
+        - product
+        - category
+    ImportedRecordPage_Example:
+      value:
+        totalElements: 1250
+        totalPages: 63
+        number: 0
+        size: 20
+        content:
+          - id: 1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed
+            configId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+            streamId: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+            runId: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+            targetEntity: emporix.customEntity
+            targetType: product
+            naturalKey: SKU-1001
+            fields:
+              name: Pipe cutter
+              sku: SKU-1001
+              active: true
+            outcome: UPDATED
+            importedAt: '2026-07-27T02:03:55.000Z'
   securitySchemes:
     OAuth2:
       type: oauth2
