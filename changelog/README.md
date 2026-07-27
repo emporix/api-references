@@ -76,8 +76,6 @@ There are no known problems.
 
 {% endupdate %}
 
-<<<<<<< HEAD
-=======
 {% update date="2026-07-23" tags="new-feature" %}
 
 ## AI Service - managed OAuth configurations
@@ -118,7 +116,6 @@ Currently only the `client_credentials` grant type is supported. Deleting an OAu
 There are no known problems.
 {% endupdate %}
 
->>>>>>> main
 {% update date="2026-07-21" tags="new-feature" %}
 ## AI Service - agent conversation listing and MS Teams tools
 
