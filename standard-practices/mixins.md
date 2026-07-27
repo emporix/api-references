@@ -33,7 +33,9 @@ These entities support mixin schema creation through the [Schema Service API](..
 - **Customer** - Customer Service / Customer Management Service
 - **Media** - Media Service
 - **Customer Address** - Customer Service
+- **Location** - Vendor Service
 - **Order** - Order Service
+- **Availability** - Availability Service
 - **Price List** - Price Service
 - **Product** - Product Service
 - **Quote** - Quote Service
@@ -43,11 +45,9 @@ These entities support mixin schema creation through the [Schema Service API](..
 
 ### Additional mixin support 
 These services accept mixins in their API requests and responses, but require manually created JSON schemas (not supported through Schema Service schema creation):
-- **Availability** - Availability Service
 - **Customer and Item Assignments** - Customer Segments Service
 - **Customer Segments** - Customer Segments Service
 - **Groups** - IAM Service (supports `mixins` field directly, without `metadata.mixins`)
-- **Locations** - Vendor Service
 - **Locations and Contact Assignment** - Client Management Service 
 - **Prices** - Price Service
 - **Returns** - Returns Service
