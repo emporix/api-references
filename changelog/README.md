@@ -25,6 +25,42 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Import Tool - operational API for import runs
+
+#### Overview
+
+The Import Tool API is now available for importing external master data into Emporix. A configuration groups one or more streams; each stream extracts from a source connection, maps fields to an Emporix target type, and upserts idempotently. Imports run asynchronously and stream per-stream progress over Server-Sent Events (SSE).
+
+This release covers the operational surface available with the `importtool.import_trigger` scope: reading configurations and streams, scheduling and triggering runs, monitoring and cancelling runs, and searching imported records. Administrative operations that create or change configurations, connections, streams, and mappings require the `importtool.import_manage` scope.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving all import configurations](https://developer.emporix.io/api-references/api-guides/import-tool/api-reference/configurations#get-importtool-tenant-configs) | Returns all import configurations defined for the tenant. |
+| [Retrieving an import configuration](https://developer.emporix.io/api-references/api-guides/import-tool/api-reference/configurations#get-importtool-tenant-configs-id) | Returns a single import configuration by its identifier. |
+| [Retrieving all streams of a configuration](https://developer.emporix.io/api-references/api-guides/import-tool/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Returns the streams belonging to a configuration, ordered by sequence. |
+| [Retrieving a stream](https://developer.emporix.io/api-references/api-guides/import-tool/api-reference/streams#get-importtool-tenant-streams-id) | Returns a single stream by its identifier, including resolved target types. |
+| [Retrieving a schedule](https://developer.emporix.io/api-references/api-guides/import-tool/api-reference/schedules#get-importtool-tenant-configs-configid-schedule) | Returns the cron schedule for a configuration, or `204` when none is set. |
+| [Scheduling an import job](https://developer.emporix.io/api-references/api-guides/import-tool/api-reference/schedules#put-importtool-tenant-configs-configid-schedule) | Creates or updates the cron schedule that runs a configuration automatically. |
+| [Triggering an import run](https://developer.emporix.io/api-references/api-guides/import-tool/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Starts an import run in `FULL` or `DELTA` mode, with an optional `dryRun`. |
+| [Retrieving run history](https://developer.emporix.io/api-references/api-guides/import-tool/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Returns the run history for a configuration, most recent first. |
+| [Retrieving a run](https://developer.emporix.io/api-references/api-guides/import-tool/api-reference/runs#get-importtool-tenant-runs-runid) | Returns a run's status together with its per-stream progress. |
+| [Streaming run progress](https://developer.emporix.io/api-references/api-guides/import-tool/api-reference/runs#get-importtool-tenant-runs-runid-events) | Streams run progress as Server-Sent Events (`snapshot`, `stream`, and final `run`). |
+| [Cancelling a run](https://developer.emporix.io/api-references/api-guides/import-tool/api-reference/runs#post-importtool-tenant-runs-runid-cancel) | Requests cancellation of an active run; `force=true` stops the run immediately. |
+| [Retrieving run errors](https://developer.emporix.io/api-references/api-guides/import-tool/api-reference/runs#get-importtool-tenant-runs-runid-errors) | Returns the errors recorded during a run, paginated. |
+| [Retrieving imported data types](https://developer.emporix.io/api-references/api-guides/import-tool/api-reference/data#get-importtool-tenant-data-types) | Returns the distinct target types that currently hold imported records. |
+| [Searching imported records](https://developer.emporix.io/api-references/api-guides/import-tool/api-reference/data#get-importtool-tenant-data-records) | Searches imported records of a given type with an optional `search` filter on the natural key. |
+| [Searching a stream's imported records](https://developer.emporix.io/api-references/api-guides/import-tool/api-reference/data#get-importtool-tenant-data-streams-streamid-records) | Searches the imported records produced by a specific stream with an optional `search` filter. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-07-21" tags="new-feature" %}
 ## AI Service - agent conversation listing and MS Teams tools
 
