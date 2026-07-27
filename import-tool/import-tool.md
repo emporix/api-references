@@ -352,7 +352,11 @@ curl -i -X GET \
 
 ### Search imported records by type
 
-To search records of a given target type, send a request to the [Searching imported records](api-reference/#get-importtool-tenant-data-records) endpoint. The `type` query parameter is required; `q` provides optional free-text search.
+To search records of a given target type, send a request to the [Searching imported records](api-reference/#get-importtool-tenant-data-records) endpoint. The `type` query parameter is required. The optional `search` parameter filters by natural key.
+
+{% hint style="warning" %}
+The `search` parameter performs a case-insensitive substring match on the record's natural key only. It is not the Emporix query language, so field selectors and operators (for example `field:value`, comparisons, or boolean logic) are not supported.
+{% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -362,7 +366,7 @@ To search records of a given target type, send a request to the [Searching impor
 
 ```bash
 curl -i -X GET \
-  'https://api.emporix.io/importtool/{tenant}/data/records?type=product&q=SKU-1001&page=0&size=20' \
+  'https://api.emporix.io/importtool/{tenant}/data/records?type=product&search=SKU-1001&page=0&size=20' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
@@ -370,7 +374,7 @@ Each record includes `naturalKey`, `targetType`, `fields`, `outcome` (for exampl
 
 ### Search records for a specific stream
 
-To search only the records produced by one stream, send a request to the [Searching a stream's imported records](api-reference/#get-importtool-tenant-data-streams-streamid-records) endpoint.
+To search only the records produced by one stream, send a request to the [Searching a stream's imported records](api-reference/#get-importtool-tenant-data-streams-streamid-records) endpoint. The optional `search` parameter uses the same natural-key substring filter as the type-based search endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -380,19 +384,6 @@ To search only the records produced by one stream, send a request to the [Search
 
 ```bash
 curl -i -X GET \
-  'https://api.emporix.io/importtool/{tenant}/data/streams/{streamId}/records?q=&page=0&size=20' \
+  'https://api.emporix.io/importtool/{tenant}/data/streams/{streamId}/records?search=&page=0&size=20' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
-
-## Recommended end-to-end flow
-
-The following sequence covers a typical operational workflow:
-
-1. **List configurations** and choose the `configId` you want to run.
-2. **Inspect streams** to confirm source entities and target types.
-3. **Trigger a `DELTA` run** (or a `dryRun` first if you want to validate without writing).
-4. **Monitor progress** by polling the run endpoint or subscribing to SSE events.
-5. If the run ends as `PARTIAL` or `FAILED`, **retrieve errors** and fix the source data or mappings.
-6. **Search imported records** to confirm the expected outcomes.
-
-This flow uses only the `importtool.import_trigger` scope documented in the [API Reference](api-reference/).
