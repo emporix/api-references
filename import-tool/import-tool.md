@@ -21,7 +21,7 @@ layout:
 
 # Import Tool Tutorial
 
-The Import Tool imports external master data into Emporix. A configuration groups one or more streams; each stream extracts from a source connection, maps fields to an Emporix target type, and upserts idempotently. Imports run asynchronously and stream per-stream progress over Server-Sent Events (SSE).
+The Import Tool imports external master data into Emporix. A configuration groups one or more streams, where each stream extracts from a source connection, maps fields to an Emporix target type, and upserts idempotently. Imports run asynchronously and stream per-stream progress over Server-Sent Events (SSE).
 
 {% hint style="info" %}
 To learn more about the Import Tool, see the [Import Tool](./).
@@ -30,7 +30,7 @@ To learn more about the Import Tool, see the [Import Tool](./).
 {% hint style="warning" %}
 This tutorial covers triggering, scheduling, monitoring, cancelling, and inspecting import runs. An import configuration must already exist for your tenant.
 
-Creating and changing configurations, connections, streams, and mappings requires the `importtool.import_manage` scope and is not covered here.
+Creating and changing configurations, connections, streams, and mappings requires the `importtool.import_manage` scope.
 {% endhint %}
 
 The following diagram shows how the main Import Tool resources relate to each other:
@@ -66,16 +66,23 @@ flowchart LR
   style errors fill:#F2F6FA, stroke:#4C5359
 ```
 
-## Before you start
+A typical operational workflow follows these steps:
 
-Make sure the following requirements are fulfilled:
+1. **List configurations** and choose the `configId` you want to run.
+2. **Inspect streams** to confirm source entities and target types.
+3. **Trigger a `DELTA` run** (or a `dryRun` first if you want to validate without writing).
+4. **Monitor progress** by polling the run endpoint or subscribing to SSE events.
+5. If the run ends as `PARTIAL` or `FAILED`, **retrieve errors** and fix the source data or mappings.
+6. **Search imported records** to confirm the expected outcomes.
 
-* You have a **service OAuth2 token** with the `importtool.import_trigger` scope. For more information, see [Authentication and Authorization](../quickstart/authentication-and-authorization/README.md).
+The sections below walk through each step in detail. All operations use the `importtool.import_trigger` scope documented in the [API Reference](api-reference/).
+
+## Prerequisites
+
+Make sure you have the following:
+
+* A **service OAuth2 token** with the `importtool.import_trigger` scope. For more information, see [Authentication and Authorization](../quickstart/authentication-and-authorization/README.md).
 * An **enabled import configuration** with active streams already exists for your tenant.
-* You understand these run constraints:
-  * At most **one active run per configuration**. Starting another run while one is active returns `409 Conflict`.
-  * The default run mode is `DELTA`. Use `FULL` to reload all data from the source.
-  * When `dryRun` is `true`, the run maps and validates records but performs no remote writes.
 
 ## How to inspect import configurations
 
@@ -292,34 +299,6 @@ On success, the endpoint returns `202 Accepted` with `accepted: true`. If the ru
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
-## How to troubleshoot import failures
-
-When a run finishes with status `PARTIAL` or `FAILED`, inspect the recorded errors.
-
-To retrieve paginated errors for a run, send a request to the [Retrieving run errors](api-reference/#get-importtool-tenant-runs-runid-errors) endpoint.
-
-```bash
-curl -i -X GET \
-  'https://api.emporix.io/importtool/{tenant}/runs/{runId}/errors?page=0&size=50' \
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
-```
-
-Each error record includes:
-
-* `naturalKey` — the source natural key of the offending record.
-* `streamId` — the stream where the error occurred.
-* `stage` — the pipeline stage, for example extraction or mapping.
-* `errorCode` — a machine-readable error code.
-* `message` — a human-readable description.
-
-Use these fields to identify which source records failed and at which stage of the import pipeline.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
-
 ## How to inspect imported data
 
 After a successful or partial run, verify what was imported.
@@ -366,15 +345,30 @@ curl -i -X GET \
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
-## Recommended end-to-end flow
+## Troubleshooting
 
-The following sequence covers a typical operational workflow:
+When a run finishes with status `PARTIAL` or `FAILED`, inspect the recorded errors.
 
-1. **List configurations** and choose the `configId` you want to run.
-2. **Inspect streams** to confirm source entities and target types.
-3. **Trigger a `DELTA` run** (or a `dryRun` first if you want to validate without writing).
-4. **Monitor progress** by polling the run endpoint or subscribing to SSE events.
-5. If the run ends as `PARTIAL` or `FAILED`, **retrieve errors** and fix the source data or mappings.
-6. **Search imported records** to confirm the expected outcomes.
+To retrieve paginated errors for a run, send a request to the [Retrieving run errors](api-reference/#get-importtool-tenant-runs-runid-errors) endpoint.
 
-This flow uses only the `importtool.import_trigger` scope documented in the [API Reference](api-reference/).
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/importtool/{tenant}/runs/{runId}/errors?page=0&size=50' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
+
+Each error record includes:
+
+* `naturalKey` — the source natural key of the offending record.
+* `streamId` — the stream where the error occurred.
+* `stage` — the pipeline stage, for example extraction or mapping.
+* `errorCode` — a machine-readable error code.
+* `message` — a human-readable description.
+
+Use these fields to identify which source records failed and at which stage of the import pipeline.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}

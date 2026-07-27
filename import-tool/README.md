@@ -6,8 +6,7 @@ icon: file-import
 
 # Import Tool
 
-Imports external master data into Emporix. A configuration groups one or more streams; each stream extracts from a source connection, maps fields to an Emporix target type, and upserts idempotently. Imports run asynchronously and stream per-stream progress over Server-Sent Events.
-
+Imports external master data into Emporix. A configuration groups one or more streams; each stream extracts from a source connection, maps fields to an Emporix target type, and upserts idempotently. 
 ### Key features and benefits
 
 * Imports external master data into Emporix through configured streams
@@ -17,5 +16,5 @@ Imports external master data into Emporix. A configuration groups one or more st
 * Supports full and delta run modes, with an optional dry run that validates without writing
 * Runs imports asynchronously and streams per-stream progress over Server-Sent Events
 * Monitors run status, history, errors, and per-stream counters
-* Cancels active runs cooperatively or with a forced stop
+* Cancels active import jobs
 * Retrieves configurations, streams, schedules, and imported records
