@@ -1,7 +1,7 @@
 ---
 seo:
   title: Import Tool Tutorials
-  description: import, master data, streams, schedules, runs
+  description: Learn how to trigger, schedule, monitor, and inspect import runs with the Import Tool.
 icon: graduation-cap
 layout:
   width: wide
@@ -33,17 +33,37 @@ This tutorial covers triggering, scheduling, monitoring, cancelling, and inspect
 Creating and changing configurations, connections, streams, and mappings requires the `importtool.import_manage` scope and is not covered here.
 {% endhint %}
 
-Take a look at how the main Import Tool resources relate to each other:
+The following diagram shows how the main Import Tool resources relate to each other:
 
 ```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128"
+    edgeLabelTextColor: "#4C5359"
+---
 flowchart LR
-  config[ImportConfig] --> streams[Streams]
-  schedule[Schedule] --> run[ImportRun]
+  config(ImportConfig) --> streams(Streams)
+  schedule(Schedule) --> run(ImportRun)
   config --> run
   streams --> run
-  run --> sse[SSE_progress]
-  run --> records[ImportedRecords]
-  run --> errors[RunErrors]
+  run --> sse(SSE progress)
+  run --> records(Imported records)
+  run --> errors(Run errors)
+
+  style config fill:#A1BDDC, stroke:#4C5359
+  style streams fill:#DDE6EE, stroke:#4C5359
+  style schedule fill:#A1BDDC, stroke:#4C5359
+  style run fill:#F2FAFE, stroke:#4C5359
+  style sse fill:#DDE6EE, stroke:#4C5359
+  style records fill:#DDE6EE, stroke:#4C5359
+  style errors fill:#F2F6FA, stroke:#4C5359
 ```
 
 ## Before you start
@@ -63,12 +83,6 @@ Before triggering a run, verify that the configuration you want to use exists an
 
 To list all import configurations for your tenant, send a request to the [Retrieving all import configurations](api-reference/#get-importtool-tenant-configs) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
-
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/importtool/{tenant}/configs' \
@@ -76,12 +90,6 @@ curl -i -X GET \
 ```
 
 To retrieve a single configuration by its identifier, send a request to the [Retrieving an import configuration](api-reference/#get-importtool-tenant-configs-id) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
 
 ```bash
 curl -i -X GET \
@@ -91,17 +99,17 @@ curl -i -X GET \
 
 The response includes fields such as `name`, `enabled`, `deltaEnabled`, and `sourceConnId`. Note the configuration `id` — you need it for scheduling and triggering runs.
 
-## How to inspect configuration streams
-
-Each configuration contains one or more streams. A stream defines which source entity is extracted, how fields are mapped, and which Emporix target type receives the upserted records.
-
-To list the streams for a configuration, ordered by sequence, send a request to the [Retrieving all streams of a configuration](api-reference/#get-importtool-tenant-configs-configid-streams) endpoint.
-
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
+
+## How to inspect configuration streams
+
+Each configuration contains one or more streams. A stream defines which source entity is extracted, how fields are mapped, and which Emporix target type receives the upserted records.
+
+To list the streams for a configuration, ordered by sequence, send a request to the [Retrieving all streams of a configuration](api-reference/#get-importtool-tenant-configs-configid-streams) endpoint.
 
 ```bash
 curl -i -X GET \
@@ -110,12 +118,6 @@ curl -i -X GET \
 ```
 
 To retrieve a single stream, including its resolved target types, send a request to the [Retrieving a stream](api-reference/#get-importtool-tenant-streams-id) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
 
 ```bash
 curl -i -X GET \
@@ -129,17 +131,17 @@ Each stream response includes `sourceEntity`, `targetWriter`, `targetType`, and 
 * `COMPOSITE_CHILD` — the stream contributes child records to a composite parent.
 * `COMPOSITE_MERGE` — the stream merges data into a composite parent.
 
-## How to schedule recurring imports
-
-You can run a configuration automatically on a cron schedule.
-
-To check whether a schedule already exists, send a request to the [Retrieving a schedule](api-reference/#get-importtool-tenant-configs-configid-schedule) endpoint. If no schedule is configured, the endpoint returns `204 No Content`.
-
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
+
+## How to schedule recurring imports
+
+You can run a configuration automatically on a cron schedule.
+
+To check whether a schedule already exists, send a request to the [Retrieving a schedule](api-reference/#get-importtool-tenant-configs-configid-schedule) endpoint. If no schedule is configured, the endpoint returns `204 No Content`.
 
 ```bash
 curl -i -X GET \
@@ -147,13 +149,7 @@ curl -i -X GET \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
-To create or update a schedule, send a request to the [Scheduling an import job](api-reference/#put-importtool-tenant-configs-configid-schedule) endpoint with a Spring cron expression (six fields), time zone, and `enabled` flag.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
+To create or update a schedule, send a request to the [Scheduling an import run](api-reference/#put-importtool-tenant-configs-configid-schedule) endpoint with a Spring cron expression (six fields), time zone, and `enabled` flag.
 
 ```bash
 curl -i -X PUT \
@@ -169,15 +165,15 @@ curl -i -X PUT \
 
 In this example, the configuration runs every day at 02:00 in the `Europe/Berlin` time zone. The saved schedule response includes `nextFireAt` when a next run time can be calculated.
 
-## How to trigger an import run
-
-To start an import manually, send a request to the [Triggering an import run](api-reference/#post-importtool-tenant-configs-configid-runs) endpoint. The endpoint returns immediately with the run in a `RUNNING` state; progress is available through polling or SSE.
-
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
+
+## How to trigger an import run
+
+To start an import manually, send a request to the [Triggering an import run](api-reference/#post-importtool-tenant-configs-configid-runs) endpoint. The endpoint returns immediately with the run in a `RUNNING` state; progress is available through polling or SSE.
 
 ```bash
 curl -i -X POST \
@@ -217,17 +213,17 @@ On success, the response includes the run `id`, `status`, `mode`, and counters s
 
 To list previous runs for a configuration, send a request to the [Retrieving run history](api-reference/#get-importtool-tenant-configs-configid-runs) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
-
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/importtool/{tenant}/configs/{configId}/runs?page=0&size=20' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ## How to monitor an import run
 
@@ -236,12 +232,6 @@ You can monitor a run by polling its status or by subscribing to the SSE progres
 ### Poll run status
 
 To retrieve a run together with per-stream progress, send a request to the [Retrieving a run](api-reference/#get-importtool-tenant-runs-runid) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
 
 ```bash
 curl -i -X GET \
@@ -259,12 +249,6 @@ To receive live progress updates, open the [Streaming run progress](api-referenc
 2. A `stream` event for each processed batch.
 3. A final `run` event when the run finishes.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
-
 ```bash
 curl -i -N -X GET \
   'https://api.emporix.io/importtool/{tenant}/runs/{runId}/events' \
@@ -276,15 +260,15 @@ curl -i -N -X GET \
 `curl` is useful for debugging the event stream. In production, use an SSE-capable HTTP client or `EventSource`.
 {% endhint %}
 
-## How to cancel an import run
-
-To request cancellation of an active run, send a request to the [Cancelling a run](api-reference/#post-importtool-tenant-runs-runid-cancel) endpoint.
-
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
+
+## How to cancel an import run
+
+To request cancellation of an active run, send a request to the [Cancelling a run](api-reference/#post-importtool-tenant-runs-runid-cancel) endpoint.
 
 ```bash
 curl -i -X POST \
@@ -302,17 +286,17 @@ curl -i -X POST \
 
 On success, the endpoint returns `202 Accepted` with `accepted: true`. If the run is already finished or unknown, `accepted` is `false`.
 
-## How to troubleshoot import failures
-
-When a run finishes with status `PARTIAL` or `FAILED`, inspect the recorded errors.
-
-To retrieve paginated errors for a run, send a request to the [Retrieving run errors](api-reference/#get-importtool-tenant-runs-runid-errors) endpoint.
-
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
+
+## How to troubleshoot import failures
+
+When a run finishes with status `PARTIAL` or `FAILED`, inspect the recorded errors.
+
+To retrieve paginated errors for a run, send a request to the [Retrieving run errors](api-reference/#get-importtool-tenant-runs-runid-errors) endpoint.
 
 ```bash
 curl -i -X GET \
@@ -330,6 +314,12 @@ Each error record includes:
 
 Use these fields to identify which source records failed and at which stage of the import pipeline.
 
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ## How to inspect imported data
 
 After a successful or partial run, verify what was imported.
@@ -337,12 +327,6 @@ After a successful or partial run, verify what was imported.
 ### List imported data types
 
 To see which target types currently hold imported records, send a request to the [Retrieving imported data types](api-reference/#get-importtool-tenant-data-types) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
 
 ```bash
 curl -i -X GET \
@@ -358,12 +342,6 @@ To search records of a given target type, send a request to the [Searching impor
 The `search` parameter performs a case-insensitive substring match on the record's natural key only. It is not the Emporix query language, so field selectors and operators (for example `field:value`, comparisons, or boolean logic) are not supported.
 {% endhint %}
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
-
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/importtool/{tenant}/data/records?type=product&search=SKU-1001&page=0&size=20' \
@@ -376,14 +354,27 @@ Each record includes `naturalKey`, `targetType`, `fields`, `outcome` (for exampl
 
 To search only the records produced by one stream, send a request to the [Searching a stream's imported records](api-reference/#get-importtool-tenant-data-streams-streamid-records) endpoint. The optional `search` parameter uses the same natural-key substring filter as the type-based search endpoint.
 
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/importtool/{tenant}/data/streams/{streamId}/records?search=&page=0&size=20' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
+
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
-```bash
-curl -i -X GET \
-  'https://api.emporix.io/importtool/{tenant}/data/streams/{streamId}/records?search=&page=0&size=20' \
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
-```
+## Recommended end-to-end flow
+
+The following sequence covers a typical operational workflow:
+
+1. **List configurations** and choose the `configId` you want to run.
+2. **Inspect streams** to confirm source entities and target types.
+3. **Trigger a `DELTA` run** (or a `dryRun` first if you want to validate without writing).
+4. **Monitor progress** by polling the run endpoint or subscribing to SSE events.
+5. If the run ends as `PARTIAL` or `FAILED`, **retrieve errors** and fix the source data or mappings.
+6. **Search imported records** to confirm the expected outcomes.
+
+This flow uses only the `importtool.import_trigger` scope documented in the [API Reference](api-reference/).
