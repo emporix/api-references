@@ -441,10 +441,13 @@ paths:
           description: The target type to search.
           schema:
             type: string
-        - name: q
+        - name: search
           in: query
           required: false
-          description: A free-text query.
+          description: >-
+            Optional free-text filter. This is a case-insensitive substring match on the record's
+            natural key only — it is NOT the Emporix query language, so field selectors and operators
+            (e.g. `field:value`, comparisons, boolean logic) are not supported.
           schema:
             type: string
             default: ''
@@ -477,10 +480,13 @@ paths:
       tags:
         - Data
       parameters:
-        - name: q
+        - name: search
           in: query
           required: false
-          description: A free-text query.
+          description: >-
+            Optional free-text filter. This is a case-insensitive substring match on the record's
+            natural key only — it is NOT the Emporix query language, so field selectors and operators
+            (e.g. `field:value`, comparisons, boolean logic) are not supported.
           schema:
             type: string
             default: ''
