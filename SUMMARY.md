@@ -40,20 +40,6 @@
 ## API Guides
 
 * [API Tutorials and References](api-guides-and-references/README.md)
-* [Import Tool](import-tool/README.md)
-  * [Import Tool Tutorial](import-tool/import-tool.md)
-  * [API Reference](import-tool/api-reference/README.md)
-    * ```yaml
-      props:
-        models: true
-      type: builtin:openapi
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: import-tool-api
-      ```
-  * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/import-tool/api-reference/api.yml)
 * [Artificial Intelligence](artificial-intelligence/README.md)
   * [AI Service](artificial-intelligence/ai-service/README.md)
     * [AI Tutorial](artificial-intelligence/ai-service/ai-tutorial.md)
@@ -630,6 +616,20 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/users-and-permissions/session-context/api-reference/api.yaml)
 * [Utilities](utilities/README.md)
+  * [Import Service](utilities/import-service/README.md)
+    * [Import Service Tutorial](utilities/import-service/import-service.md)
+    * [API Reference](utilities/import-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: import-service-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/utilities/import-service/api-reference/api.yml)
   * [Schema Service](utilities/schema/README.md)
     * [Schema Tutorial](utilities/schema/schema.md)
     * [API Reference](utilities/schema/api-reference/README.md)

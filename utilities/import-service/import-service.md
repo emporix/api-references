@@ -1,7 +1,7 @@
 ---
 seo:
-  title: Import Tool Tutorials
-  description: Learn how to trigger, schedule, monitor, and inspect import runs with the Import Tool.
+  title: Import Service Tutorials
+  description: Learn how to trigger, schedule, monitor, and inspect import runs with the Import Service.
 icon: graduation-cap
 layout:
   width: wide
@@ -19,9 +19,9 @@ layout:
     visible: true
 ---
 
-# Import Tool Tutorial
+# Import Service Tutorial
 
-The Import Tool imports external master data into Emporix. A configuration groups one or more streams, where each stream extracts from a source connection, maps fields to an Emporix target type, and upserts idempotently. Imports run asynchronously and stream per-stream progress over Server-Sent Events (SSE).
+The Import Service imports external master data into Emporix. A configuration groups one or more streams, where each stream extracts from a source connection, maps fields to an Emporix target type, and upserts idempotently. Imports run asynchronously and stream per-stream progress over Server-Sent Events (SSE).
 
 {% hint style="danger" %}
 This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -33,7 +33,7 @@ This tutorial covers triggering, scheduling, monitoring, cancelling, and inspect
 Creating and changing configurations, connections, streams, and mappings requires the `importtool.import_manage` scope.
 {% endhint %}
 
-The following diagram shows how the main Import Tool resources relate to each other:
+The following diagram shows how the main Import Service resources relate to each other:
 
 ```mermaid
 ---
@@ -81,7 +81,7 @@ The sections below walk through each step in detail. All operations use the `imp
 
 Make sure you have the following:
 
-* A **service OAuth2 token** with the `importtool.import_trigger` scope. For more information, see [Authentication and Authorization](../quickstart/authentication-and-authorization/README.md).
+* A **service OAuth2 token** with the `importtool.import_trigger` scope. For more information, see [Authentication and Authorization](../../quickstart/authentication-and-authorization/README.md).
 * An **enabled import configuration** with active streams already exists for your tenant.
 
 ## How to inspect import configurations
@@ -106,7 +106,7 @@ curl -i -X GET \
 
 The response includes fields such as `name`, `enabled`, `deltaEnabled`, and `sourceConnId`. Note the configuration `id` — you need it for scheduling and triggering runs.
 
-{% include "../.gitbook/includes/example-hint-text.md" %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
@@ -138,7 +138,7 @@ Each stream response includes `sourceEntity`, `targetWriter`, `targetType`, and 
 * `COMPOSITE_CHILD` — the stream contributes child records to a composite parent.
 * `COMPOSITE_MERGE` — the stream merges data into a composite parent.
 
-{% include "../.gitbook/includes/example-hint-text.md" %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
@@ -172,7 +172,7 @@ curl -i -X PUT \
 
 In this example, the configuration runs every day at 02:00 in the `Europe/Berlin` time zone. The saved schedule response includes `nextFireAt` when a next run time can be calculated.
 
-{% include "../.gitbook/includes/example-hint-text.md" %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
@@ -226,7 +226,7 @@ curl -i -X GET \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
-{% include "../.gitbook/includes/example-hint-text.md" %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
@@ -267,7 +267,7 @@ curl -i -N -X GET \
 `curl` is useful for debugging the event stream. In production, use an SSE-capable HTTP client or `EventSource`.
 {% endhint %}
 
-{% include "../.gitbook/includes/example-hint-text.md" %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
@@ -293,7 +293,7 @@ curl -i -X POST \
 
 On success, the endpoint returns `202 Accepted` with `accepted: true`. If the run is already finished or unknown, `accepted` is `false`.
 
-{% include "../.gitbook/includes/example-hint-text.md" %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
@@ -339,7 +339,7 @@ curl -i -X GET \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
-{% include "../.gitbook/includes/example-hint-text.md" %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
@@ -367,7 +367,7 @@ Each error record includes:
 
 Use these fields to identify which source records failed and at which stage of the import pipeline.
 
-{% include "../.gitbook/includes/example-hint-text.md" %}
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)

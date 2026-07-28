@@ -1,9 +1,9 @@
 openapi: 3.0.0
 info:
-  title: Import Tool
+  title: Import Service
   version: ''
   description: |-
-    The Emporix Import Tool imports external master data into Emporix. A configuration groups one or more
+    The Emporix Import Service imports external master data into Emporix. A configuration groups one or more
     streams; each stream extracts from a source connection, maps fields to an Emporix target type, and
     upserts idempotently. Imports run asynchronously and stream per-stream progress over Server-Sent Events.
 
