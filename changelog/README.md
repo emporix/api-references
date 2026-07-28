@@ -25,6 +25,29 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="minor-change" %}
+<!-- emporix-ai-buddy:changelog:COP-5586 -->
+
+## AI Experience Services - warning-level failure logging
+
+#### Overview
+
+AI Agentic and related MCP servers now classify runtime failures by HTTP status when writing operational logs. Non-5xx failures are generally logged at `warning` level, while `5xx`, timeout, network, and other server-like failures continue to be logged at `error` level. This reduces log noise for expected client-side and validation failures without changing user-facing failure semantics.
+
+#### Affected endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| AI Agentic tool execution flows | Tool execution failures now use status-aware log severity, including support for `ToolMessage.status`, `status_code`, and common HTTP status patterns in tool output. |
+| MCP server tool invocation flows | MCP wrapper-level tool failures now log `4xx` failures as warnings and `5xx` failures as errors. |
+| MCP server outbound HTTP calls | HTTP response logging now maps successful responses to `info`, `4xx` responses to `warning`, and `5xx` responses to `error`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-07-24" tags="improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-6051 -->
 ## Schema Service - mixin schema support for `Location` and `Availability`
