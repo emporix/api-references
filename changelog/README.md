@@ -25,8 +25,37 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+## AI Service - Slack tool configuration and business log message formats
+
+#### Overview
+
+Slack native tool configuration now documents inbound-routing fields aligned with MS Teams: `defaultInboundAgentId` and `allowedOperations`. These fields are in preview and control which agent handles the first inbound Slack message when no conversation routing context exists yet, and which collaboration operations the tool exposes.
+
+Agent log message schemas now document the business-log prefixes used for HTTP chat, Slack (legacy and routed), and MS Teams requests. Log viewers can use these prefixes to extract the user message and agent response from `messages[]` entries where `isBusinessLog` is `true`.
+
+{% hint style="danger" %}
+Slack `defaultInboundAgentId` and `allowedOperations` are in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Slack preview `config.defaultInboundAgentId` and `config.allowedOperations`. |
+| [Listing tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools) | Slack tool responses can include preview `defaultInboundAgentId` and `allowedOperations`. |
+| [Retrieving tool by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Slack tool responses can include preview `defaultInboundAgentId` and `allowedOperations`. |
+| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` override applies to Slack (preview) as well as MS Teams. |
+| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` override applies to Slack (preview) as well as MS Teams. |
+| [Retrieving agent request by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/api#get-ai-service-tenant-agentic-logs-requests-requestid) | `AgentLogMessageResponse.message` documents Slack and MS Teams business-log prefixes. |
+| [Retrieving agent session by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/api#get-ai-service-tenant-agentic-logs-sessions-sessionid) | `AgentLogMessageResponse.message` documents Slack and MS Teams business-log prefixes. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
 {% update date="2026-07-24" tags="improvement" %}
-<!-- emporix-ai-buddy:changelog:COP-6051 -->
 ## Schema Service - mixin schema support for `Location` and `Availability`
 
 #### Overview
