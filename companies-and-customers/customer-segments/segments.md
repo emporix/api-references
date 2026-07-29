@@ -221,6 +221,8 @@ The operation performs an `UPSERT`. If the group is already assigned to the segm
 
 Only IAM groups with `userType=CUSTOMER` can be assigned to segments.
 
+The first upsert returns `201 Created`. Updating an existing assignment returns `204 No Content`.
+
 * To retrieve all group assignments for a segment, send the request to the [Retrieving group assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups) endpoint. You need the `customersegment.segment_read` scope. You can use paging, sorting, `fields`, and the `q` query parameter.
 
 ```bash
@@ -235,7 +237,7 @@ curl -i -X GET
 
 ```bash
 curl -i -X POST
-  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/groups'
+  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/groups/search'
   -H 'Accept-Language: string'
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
   -H 'Content-Type: application/json'

@@ -842,6 +842,7 @@ paths:
       security:
         - CustomerAccessToken: 
             - customersegment.segment_read
+            - customersegment.segment_read_own
       responses:
         '200':
           description: Group assignments for a customer segment were successfully retrieved.
@@ -863,6 +864,7 @@ paths:
         - $ref: '#/components/parameters/sort'
         - $ref: '#/components/parameters/fields'
         - $ref: '#/components/parameters/xTotalCount'
+        - $ref: '#/components/parameters/acceptLanguage'
   '/customer-segment/{tenant}/segments/{segmentId}/groups/search':
     parameters:
       - $ref: '#/components/parameters/tenant'
@@ -879,6 +881,7 @@ paths:
       security:
         - CustomerAccessToken: 
             - customersegment.segment_read
+            - customersegment.segment_read_own
       requestBody:
         content:
           application/json:
@@ -908,6 +911,7 @@ paths:
         - $ref: '#/components/parameters/sort'
         - $ref: '#/components/parameters/fields'
         - $ref: '#/components/parameters/xTotalCount'
+        - $ref: '#/components/parameters/acceptLanguage'
   '/customer-segment/{tenant}/segments/{segmentId}/groups/{groupId}':
     parameters:
       - $ref: '#/components/parameters/tenant'
@@ -925,6 +929,7 @@ paths:
       security:
         - CustomerAccessToken: 
             - customersegment.segment_read
+            - customersegment.segment_read_own
       responses:
         '200':
           description: Group assignment for a customer segment was successfully retrieved.
@@ -941,6 +946,7 @@ paths:
       operationId: GET-customer-segment-retrieve-group
       parameters:
         - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/acceptLanguage'
     put:
       summary: 'Updating a group assignment for a customer segment'
       tags:
@@ -964,6 +970,14 @@ paths:
       responses:
         '201':
           description: A new group assignment was successfully created.
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: string
+              example:
+                id: 628cd20c6e8b2432b6346ca6
         '204':
           description: Group assignment was successfully updated.
         '400':
@@ -972,8 +986,6 @@ paths:
           $ref: '#/components/responses/Common_response_Unauthorized_401'
         '403':
           $ref: '#/components/responses/Common_response_Forbidden_403'
-        '404':
-          $ref: '#/components/responses/Common_response_NotFound_404'
     delete:
       summary: 'Removing a group from customer segment'
       tags:

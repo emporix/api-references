@@ -12,7 +12,7 @@ icon: rectangle-terminal
 Preview
 {% endhint %}
 
-Customer segments now support the `GROUP` assignment type. You can assign IAM customer groups to a customer segment. Only groups with `userType` set to `CUSTOMER` can be assigned.
+Customer segments support the `GROUP` assignment type. You can assign IAM customer groups to a customer segment. Only groups with `userType` set to `CUSTOMER` can be assigned.
 
 ### Upsert a group assignment
 
@@ -20,7 +20,7 @@ Customer segments now support the `GROUP` assignment type. You can assign IAM cu
 
 Creates or updates a group assignment for the specified segment.
 
-**Required scope:** `segment.segment_manage`
+**Required scope:** `customersegment.segment_manage`
 
 #### Path parameters
 
@@ -32,8 +32,6 @@ Creates or updates a group assignment for the specified segment.
 
 #### Request body
 
-Uses the same assignment payload as other segment assignment upsert endpoints.
-
 | Field | Type | Description |
 | --- | --- | --- |
 | `mixins` | object | Optional assignment mixins. |
@@ -43,10 +41,9 @@ Uses the same assignment payload as other segment assignment upsert endpoints.
 
 | Status | Description |
 | --- | --- |
-| `201 Created` | The assignment is created and the response returns a creation response body. |
+| `201 Created` | The assignment is created. |
 | `204 No Content` | The assignment is updated. |
-| `400 Bad Request` | The segment does not exist or the group `userType` is not `CUSTOMER`. |
-| `404 Not Found` | The group does not exist. |
+| `400 Bad Request` | The segment does not exist, the group does not exist, or the group `userType` is not `CUSTOMER`. |
 | `403 Forbidden` | The caller does not have the required scope. |
 
 ### Get a group assignment
@@ -55,7 +52,7 @@ Uses the same assignment payload as other segment assignment upsert endpoints.
 
 Returns a single group assignment.
 
-**Required scope:** `segment.segment_read`
+**Required scope:** `customersegment.segment_read`
 
 #### Path parameters
 
@@ -90,7 +87,7 @@ Returns a single group assignment.
 
 Returns group assignments for the specified segment.
 
-**Required scope:** `segment.segment_read`
+**Required scope:** `customersegment.segment_read`
 
 #### Path parameters
 
@@ -101,7 +98,7 @@ Returns group assignments for the specified segment.
 
 #### Query parameters and headers
 
-Supports the standard assignment collection parameters and headers, including paging, sorting, filtering with `q`, field selection, and the `X-Total-Count` response header.
+Supports paging, sorting, filtering with `q`, field selection with `fields`, and the `X-Total-Count` response header.
 
 #### Responses
 
@@ -116,7 +113,7 @@ Supports the standard assignment collection parameters and headers, including pa
 
 Searches group assignments for the specified segment.
 
-**Required scope:** `segment.segment_read`
+**Required scope:** `customersegment.segment_read`
 
 #### Path parameters
 
@@ -136,6 +133,7 @@ Searches group assignments for the specified segment.
 | Status | Description |
 | --- | --- |
 | `200 OK` | Returns matching group assignments. |
+| `400 Bad Request` | The search request is invalid. |
 | `403 Forbidden` | The caller does not have the required scope. |
 
 ### Delete a group assignment
@@ -144,7 +142,7 @@ Searches group assignments for the specified segment.
 
 Deletes the group assignment if it exists.
 
-**Required scope:** `segment.segment_manage`
+**Required scope:** `customersegment.segment_manage`
 
 #### Path parameters
 
@@ -166,3 +164,5 @@ Deletes the group assignment if it exists.
 - When a group is updated in IAM, the assignment stores the updated `group.name`.
 - If a group's `userType` changes to `EMPLOYEE`, all assignments for that group are removed.
 - If a group is deleted, all assignments for that group are removed.
+
+ 
