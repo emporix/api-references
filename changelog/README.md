@@ -27,7 +27,8 @@ layout:
 
 {% update date="RELEASE_DATE" tags="new-feature" %}
 <!-- emporix-ai-buddy:changelog:COP-6041 -->
-## Customer Segment Service - group assignments
+
+## Customer Segment Service - `GROUP` segment assignments
 
 {% hint style="warning" %}
 This functionality is in preview mode — some of the features may not be fully operational yet.
@@ -35,25 +36,27 @@ This functionality is in preview mode — some of the features may not be fully 
 
 #### Overview
 
-Customer Segment Service now supports assigning customer groups to segments. You can create, retrieve, search, list, and delete group assignments by using dedicated endpoints.
+Customer Segment Service now supports assigning IAM customer groups to customer segments by using the new `GROUP` assignment type. The new preview endpoints let you create, retrieve, list, search, and delete group assignments, and the service keeps stored group data synchronized with IAM group updates and deletions.
+
+Only IAM groups with `userType` set to `CUSTOMER` can be assigned to segments.
 
 #### New endpoints
 
 | Endpoint | Description |
 |----------|-------------|
-| [Upserting a group assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/group-assignments#put-customer-segment-tenant-segments-segmentid-groups-groupid) | Creates or updates a group assignment for a customer segment. |
-| [Retrieving a group assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/group-assignments#get-customer-segment-tenant-segments-segmentid-groups-groupid) | Returns a single group assignment. |
-| [Retrieving group assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/group-assignments#get-customer-segment-tenant-segments-segmentid-groups) | Returns group assignments for a customer segment. |
-| [Searching group assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/group-assignments#post-customer-segment-tenant-segments-segmentid-groups-search) | Searches group assignments for a customer segment. |
-| [Deleting a group assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/group-assignments#delete-customer-segment-tenant-segments-segmentid-groups-groupid) | Removes a group assignment from a customer segment. |
+| [Updating a group assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/group-assignments#put-customer-segment-tenant-segments-segmentid-groups-groupid) | Creates or updates a group assignment for a customer segment. |
+| [Retrieving a group assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/group-assignments#get-customer-segment-tenant-segments-segmentid-groups-groupid) | Returns a single group assignment with `segmentId`, `group`, `mixins`, and `metadata`. |
+| [Retrieving all group assignments for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/group-assignments#get-customer-segment-tenant-segments-segmentid-groups) | Returns all group assignments for the specified customer segment. |
+| [Searching with parameters for group assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/group-assignments#post-customer-segment-tenant-segments-segmentid-groups-search) | Searches group assignments within the specified customer segment. |
+| [Removing a group from customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/group-assignments#delete-customer-segment-tenant-segments-segmentid-groups-groupid) | Deletes a group assignment from a customer segment. |
 
 #### Updated events
 
 | Event | Description |
 |-------|-------------|
-| `customer-segment.group-assignment-created` | Published when a group assignment is created. |
-| `customer-segment.group-assignment-updated` | Published when a group assignment is updated. |
-| `customer-segment.group-assignment-deleted` | Published when a group assignment is deleted. |
+| `customer-segment.segment-group-assignment-created` | Published when a group assignment is created. |
+| `customer-segment.segment-group-assignment-updated` | Published when a group assignment is updated or when stored group data is refreshed after an IAM group update. |
+| `customer-segment.segment-group-assignment-deleted` | Published when a group assignment is deleted or removed after an IAM group deletion or `userType` change. |
 
 #### Known problems
 
