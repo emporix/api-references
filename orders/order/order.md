@@ -96,13 +96,9 @@ Scopes necessary to work with orders are:
 
 The Order Service functionality allows your employees to act on behalf of a customer and create an order for them. This way, merchants can facilitate order process for your customers. See the steps of the order process flow.
 
-{% stepper %}
-{% step %}
-#### Get authorization
+### Get authorization
 
-To create an order, first get the credentials to log in as a customer on the storefront:
-
-1. Get the `access_token` by sending the request to the [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authentication/oauth-service/api-reference/service-access-token).
+To create an order, first get the credentials to log in as a customer on the storefront.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -113,6 +109,12 @@ To create an order, first get the credentials to log in as a customer on the sto
 {% content-ref url="../../companies-and-customers/customer-management/api-reference/" %}
 [api-reference](../../companies-and-customers/customer-management/api-reference/)
 {% endcontent-ref %}
+
+{% stepper %}
+{% step %}
+#### Request a service access token
+
+Get the `access_token` by sending the request to the [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authentication/oauth-service/api-reference/service-access-token).
 
 ```bash
 curl -L \
@@ -126,14 +128,22 @@ curl -L \
     "scope": "scope=order.order_read order.order_delete order.order_create order.order_update tenant={tenant}"
   }'
 ```
+{% endstep %}
 
-2. Retrieve the `anonymous_token` by sending a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-login) endpoint.
+{% step %}
+#### Request an anonymous token
+
+Retrieve the `anonymous_token` by sending a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-login) endpoint.
 
 ```bash
 curl 'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id&{client_id}'
 ```
+{% endstep %}
 
-3. Log in as the customer by sending an authorization request to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.
+{% step %}
+#### Log in as a customer
+
+Log in as the customer by sending an authorization request to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.
 
 ```bash
 curl 'https://api.emporix.io/customer/{tenant}/login' \
@@ -146,7 +156,17 @@ curl 'https://api.emporix.io/customer/{tenant}/login' \
 }'
 ```
 {% endstep %}
+{% endstepper %}
 
+### Create an order
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+{% stepper %}
 {% step %}
 #### Create an order
 
@@ -300,12 +320,6 @@ curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
 
 * As a merchant, when the order has been prepared and dispatched, change the order status to `SHIPPED`. Send the request to the [Partially updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
-
 ```bash
 curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}?recalculate=false' \
   --header 'Content-Type: application/json' \
@@ -346,12 +360,6 @@ curl -L --request POST \
 Order Service APIs provide tools for checking possible next statuses and reviewing status change history.
 
 * As a merchant, check which status transitions are currently available for an order by sending the request to the [Retrieving status transitions for an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid-transitions) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
 
 ```bash
 curl -L \
