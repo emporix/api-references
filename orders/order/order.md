@@ -77,25 +77,27 @@ curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/saleso
 
 Scopes necessary to work with orders are:
 
-* `order.order_post`: Needed to create new order as a customer.
-* `order.order_read`: Needed to read order.
-* `order.order_read_le`: Needed to read legal entity orders.
-* `order.order_update`: Needed to update an order.
-* `order.order_update_completed`: Needed to update an order with a `completed` status.
-* `order.order_create`: Needed to create new order by merchant.
-* `order.order_delete`: Needed to delete an order.
-* `order.history_view`: Needed to view order when logged as a customer.
-* `order.order_readascustomer`: Needed to read an order as a customer.
-* `order.order_updateascustomer`: Needed to update an order as a customer.
-* `order.order_read_by_vendor`: The scope allows vendor to read order with assigned vendor.
-* `order.order_manage_by_vendor`: The scope allows vendor to manage order with assigned vendor.
+| Scope                          | Description                                              | Used By           |
+| ------------------------------ | -------------------------------------------------------- | ----------------- |
+| `order.order_post`             | Create a new order as a customer                         | Customer          |
+| `order.order_read`             | Read an order                                            | Merchant/Employee |
+| `order.order_read_le`          | Read legal entity orders                                 | Customer          |
+| `order.order_update`           | Update an order                                          | Merchant/Employee |
+| `order.order_update_completed` | Update an order with a `COMPLETED` status                | Merchant/Employee |
+| `order.order_create`           | Create a new order as a merchant                         | Merchant/Employee |
+| `order.order_delete`           | Delete an order                                          | Merchant/Employee |
+| `order.history_view`           | View order history when logged in as a customer          | Customer          |
+| `order.order_readascustomer`   | Read an order as a customer                              | Customer          |
+| `order.order_updateascustomer` | Update an order as a customer                            | Customer          |
+| `order.order_read_by_vendor`   | Read an order with an assigned vendor                    | Vendor            |
+| `order.order_manage_by_vendor` | Manage an order with an assigned vendor                  | Vendor            |
 
 ## How to create an order on behalf of a customer
 
 The Order Service functionality allows your employees to act on behalf of a customer and create an order for them. This way, merchants can facilitate order process for your customers. See the steps of the order process flow.
 
-### Create an order as a merchant
-
+{% stepper %}
+{% step %}
 #### Get authorization
 
 To create an order, first get the credentials to log in as a customer on the storefront:
@@ -143,7 +145,9 @@ curl 'https://api.emporix.io/customer/{tenant}/login' \
   "password": "Qwurmdch673;'"
 }'
 ```
+{% endstep %}
 
+{% step %}
 #### Create an order
 
 As a merchant acting on behalf of a customer, send the request to the [Creating a new order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) endpoint.
@@ -258,9 +262,10 @@ curl --location 'https://api.emporix.io/order-v2/{tenant}/salesorders' \
   },
   "channel": {}
 }
-
 ```
+{% endstep %}
 
+{% step %}
 #### Confirm order creation
 
 You can retrieve the order details as a merchant or as the customer.
@@ -288,8 +293,10 @@ curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'saas-token: {{SAAS_TOKEN}}'
 ```
+{% endstep %}
 
-### Change the order status
+{% step %}
+#### Change the order status
 
 * As a merchant, when the order has been prepared and dispatched, change the order status to `SHIPPED`. Send the request to the [Partially updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid) endpoint.
 
@@ -331,8 +338,10 @@ curl -L --request POST \
   --header 'Content-Type: application/json' \
   --data '{"status": "DECLINED"}'
 ```
+{% endstep %}
 
-### Check the status transitions
+{% step %}
+#### Check the status transitions
 
 Order Service APIs provide tools for checking possible next statuses and reviewing status change history.
 
@@ -376,6 +385,8 @@ curl -L 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' 
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'saas-token: {{SAAS_TOKEN}}'
 ```
+{% endstep %}
+{% endstepper %}
 
 ## Order splitting
 
