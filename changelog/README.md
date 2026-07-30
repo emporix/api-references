@@ -25,6 +25,29 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6103 -->
+
+## AI Agentic Service - request and message size limits
+
+#### Overview
+
+AI Agentic Service now applies memory-safety guardrails to reduce the risk of OutOfMemory failures during agent execution. Write requests with oversized bodies can now be rejected earlier, and large message content or long message histories can be bounded before model execution. This improves service stability for large-payload and supervisor-style agent flows.
+
+#### Affected endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| AI Agentic Service `POST` endpoints | Oversized request bodies can now be rejected with `413 Request Entity Too Large`, and invalid `Content-Length` headers can return `400 Bad Request`. |
+| AI Agentic Service `PUT` endpoints | Oversized request bodies can now be rejected with `413 Request Entity Too Large`, and invalid `Content-Length` headers can return `400 Bad Request`. |
+| AI Agentic Service `PATCH` endpoints | Oversized request bodies can now be rejected with `413 Request Entity Too Large`, and invalid `Content-Length` headers can return `400 Bad Request`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-07-24" tags="improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-6051 -->
 ## Schema Service - mixin schema support for `Location` and `Availability`
