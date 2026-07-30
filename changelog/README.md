@@ -25,6 +25,52 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## AI Service - `ORDER` support for `rag_emporix` tools
+
+#### Overview
+
+The `rag_emporix` native tool type now accepts `ORDER` as a predefined `entityType` alongside `PRODUCT` and custom entity types. You can configure RAG tools to search and filter against order data in the vector index.
+
+#### Updated endpoints
+
+| Endpoint                                                                                                                                                                                     | Description                                                                 |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| [Listing tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools)                           | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
+| [Searching tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#post-ai-service-tenant-agentic-tools-search)                  | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
+| [Retrieving tool by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid)             | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
+| [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid)                    | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
+| [Partially updating tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#patch-ai-service-tenant-agentic-tools-toolid)         | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Indexing Service - `ORDER` support for reindex jobs
+
+#### Overview
+
+Reindex jobs now support `ORDER` as an `entityType` alongside `PRODUCT` and custom schema types. You can trigger a full reindex of order entities and track progress through the existing reindex job endpoints.
+
+#### Updated endpoints
+
+| Endpoint                                                                                                                                                                                       | Description                                      |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|
+| [Creating a reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs)                       | Accepts `ORDER` as a valid `entityType`.         |
+| [Retrieving reindex jobs](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs)                        | Returns jobs with `entityType` set to `ORDER`.   |
+| [Retrieving a reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid)          | Returns jobs with `entityType` set to `ORDER`.   |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-07-24" tags="improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-6051 -->
 ## Schema Service - mixin schema support for `Location` and `Availability`
