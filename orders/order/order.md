@@ -45,7 +45,7 @@ The default order status after creation is `CREATED`.
 To audit all status changes for an order, use the transitions endpoints described in [Check the status transitions](order.md#check-the-status-transitions).
 {% endhint %}
 
-### Add shipment data before changing status to `SHIPPED`
+#### Add shipment data before changing status to `SHIPPED`
 
 To use the `CONFIRMED` -> `SHIPPED` transition, append shipment details to the order first by using [Updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid) or [Partially updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid).
 
@@ -71,8 +71,10 @@ curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/saleso
     ]
   }'
 ```
+## Scopes
 
 Scopes necessary to work with orders are:
+
 * `order.order_post`: Needed to create new order as a customer.
 * `order.order_read`: Needed to read order.
 * `order.order_read_le`: Needed to read legal entity orders.
@@ -85,12 +87,6 @@ Scopes necessary to work with orders are:
 * `order.order_updateascustomer`: Needed to update an order as a customer.
 * `order.order_read_by_vendor`: The scope allows vendor to read order with assigned vendor.
 * `order.order_manage_by_vendor`: The scope allows vendor to manage order with assigned vendor.
-
-As Emporix offers full commerce functionality, order calculations and management can be handled end-to-end by our Commerce Orchestration Platform services. However, to support integrations with other systems, we have also introduced other capabilities. Order management with external systems can be approached using three different models:
-
-* asynchronous calculation
-* synchronous calculation
-* ERP calculated orders
 
 ## How to create an order on behalf of a customer
 
@@ -399,10 +395,18 @@ To support this functionality, the following order attributes are introduced:
 {% hint style="info" %}
 To check the end to end story for order splitting, see the [Vendor Tutorial - Order Split](../../companies-and-customers/vendor-service/vendor.md#order-split-example) example.
 {% endhint %}
+
+## Order calcualtion
+
+As Emporix offers full commerce functionality, order calculations and management can be handled end-to-end by our Commerce Orchestration Platform services. However, to support integrations with other systems, we have also introduced other capabilities. Order management with external systems can be approached using three different models:
+
+* asynchronous calculation
+* synchronous calculation
+* ERP calculated orders
  
 
 
-## Asynchronous calculation
+### Asynchronous calculation
 
 Emporix utilizes an asynchronous pricing model, where all price calculations are dynamically determined at the cart/checkout stage. Product prices are initially replicated from an ERP system and stored in the Emporix, ensuring consistency across the platform.
 
@@ -476,7 +480,7 @@ You have to register your listener in the Emporix Webhook Service so that the li
 To learn how pricing is calculated at Emporix, see the [Cart Service Tutorials](../../checkout/cart/cart.md#pricing-calculations).
 {% endhint %}
 
-## Synchronous calculation
+### Synchronous calculation
 
 In this approach, the Emporix cart interacts with an ERP system to retrieve real-time order calculations. Instead of using the Emporix calculation, the checkout uses the calculation provided by the ERP.
 
@@ -552,7 +556,7 @@ You have to register your listener in the Emporix Webhook Service so that the li
 For more information, see the [External Pricing](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) guides.
 {% endhint %}
 
-## ERP calculated order
+### ERP calculated order
 
 With this use case, the Commerce Orchestration Platform cart is used to collect products and customer details, such as addresses. However, instead of using COP for final price calculations at checkout, the BFF (Backend-for-Frontend) layer communicates with the ERP to simulate the order, ensuring that all pricing, discounts, and rules from the ERP are applied before order creation.
 
@@ -630,13 +634,13 @@ You have to register your listener in the Emporix Webhook Service so that the li
 | **Security**              | Secure – prices stored in Emporix cannot be altered.                                                    | Secure – only BFF can fetch external prices, preventing tampering.                            | Secure – BFF ensures price integrity before order creation.                                    |
 | **Use Case**              | Best for businesses that want Emporix to manage pricing and apply customer-specific rules at checkout.  | Ideal when ERP must control pricing in real time, and checkout happens in an external system. | Suitable when ERP validation is needed before order creation, but checkout remains in Emporix. |
 
-## Summary of differences
+### Summary of differences
 
 * **Asynchronous calculation** - Emporix controls pricing (replicated from ERP), and calculation happens at checkout.
 * **Synchronous calculation** - Pricing is provided by an external system, for example an ERP in real time, and checkout/order processing happens with external prices.
 * **ERP calculated order** - Emporix cart is used, but ERP simulates pricing at checkout before the order is created in Emporix.
 
-## Payload example
+### Payload example
 
 {% hint style="warning" %}
 <details>
