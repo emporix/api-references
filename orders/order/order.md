@@ -32,6 +32,7 @@ Possible status transitions:
 
 * `IN_CHECKOUT` -> `CREATED`
 * `IN_CHECKOUT` -> `DECLINED`
+* `CREATED` -> `IN_CHECKOUT`
 * `CREATED` -> `CONFIRMED`
 * `CREATED` -> `DECLINED`
 * `CONFIRMED` -> `SHIPPED`
@@ -40,12 +41,12 @@ Possible status transitions:
 * `SHIPPED` -> `COMPLETED`
 
 {% hint style="info" %}
-The default order status after creation is `CREATED`.
+The initial order status depends on the checkout flow. Standard checkout orders are typically created with `CREATED`, while invoice or payment flows can start in `IN_CHECKOUT`.
 
-To audit all status changes for an order, use the transitions endpoints described in [Check the status transitions](order.md#check-the-status-transitions).
+To audit all status changes for an order, use the historical transitions endpoint described in [Check the status transitions](order.md#check-the-status-transitions).
 {% endhint %}
 
-#### Add shipment data before changing status to `SHIPPED`
+### Add shipment data before changing status to `SHIPPED`
 
 To use the `CONFIRMED` -> `SHIPPED` transition, append shipment details to the order first by using [Updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid) or [Partially updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid).
 
@@ -63,14 +64,15 @@ curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/saleso
   --data '{
     "shipments": [
       {
-        "shippedDate": "28/07/2026",
+        "shippedDate": "2026-07-28T00:00:00.000Z",
         "carrier": "UPS",
         "trackingNumber": "123456",
-        "expectDeliveryOn": "30/07/2026"
+        "expectDeliveryOn": "2026-07-30T00:00:00.000Z"
       }
     ]
   }'
 ```
+
 ## Scopes
 
 Scopes necessary to work with orders are:
@@ -98,12 +100,12 @@ The Order Service functionality allows your employees to act on behalf of a cust
 
 To create an order, first get the credentials to log in as a customer on the storefront:
 
-1. Get the `access_token` by sending the request to the [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authorization/oauth-service/api-reference/service-access-token).
+1. Get the `access_token` by sending the request to the [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authentication/oauth-service/api-reference/service-access-token).
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../../authorization/oauth-service/api-reference/" %}
-[api-reference](../../authorization/oauth-service/api-reference/)
+{% content-ref url="../../authentication/oauth-service/api-reference/" %}
+[api-reference](../../authentication/oauth-service/api-reference/)
 {% endcontent-ref %}
 
 {% content-ref url="../../companies-and-customers/customer-management/api-reference/" %}
@@ -299,10 +301,10 @@ curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
 
 ```bash
 curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}?recalculate=false' \
---header 'Content-Type: application/json' \
---header 'Accept: application/json' \
---header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
---data '{
+  --header 'Content-Type: application/json' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --data '{
   "status": "SHIPPED"
   }'
 ```
@@ -332,9 +334,9 @@ curl -L --request POST \
 
 ### Check the status transitions
 
-Order Service APIs provide also tools for controlling the status transitions logs.
+Order Service APIs provide tools for checking possible next statuses and reviewing status change history.
 
-* As a merchant, check the status history of the order by sending the request to the [Retrieving status transitions for an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid-transitions) endpoint.
+* As a merchant, check which status transitions are currently available for an order by sending the request to the [Retrieving status transitions for an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid-transitions) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -349,7 +351,16 @@ curl -L \
   --header 'Accept: */*'
 ```
 
-* As a logged in customer, you can fetch your own order status transitions history. Use the [Retrieving status transitions for an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid-transitions) endpoint.
+* As a merchant, audit the status change history by sending the request to the [Retrieving historical status transitions for a specific order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid-historical-transitions) endpoint.
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}/historical-transitions' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Accept: */*'
+```
+
+* As a logged in customer, you can fetch possible status transitions for your order. Use the [Retrieving status transitions for an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid-transitions) endpoint.
 
 **Standard (customer access token):**
 
@@ -396,7 +407,7 @@ To support this functionality, the following order attributes are introduced:
 To check the end to end story for order splitting, see the [Vendor Tutorial - Order Split](../../companies-and-customers/vendor-service/vendor.md#order-split-example) example.
 {% endhint %}
 
-## Order calcualtion
+## Order calculation
 
 As Emporix offers full commerce functionality, order calculations and management can be handled end-to-end by our Commerce Orchestration Platform services. However, to support integrations with other systems, we have also introduced other capabilities. Order management with external systems can be approached using three different models:
 
@@ -477,7 +488,7 @@ You have to register your listener in the Emporix Webhook Service so that the li
 {% endhint %}
 
 {% hint style="info" %}
-To learn how pricing is calculated at Emporix, see the [Cart Service Tutorials](../../checkout/cart/cart.md#pricing-calculations).
+To learn how pricing is calculated at Emporix, see the [Cart Service Tutorials](../../checkout/cart/cart.md#how-is-price-calculated).
 {% endhint %}
 
 ### Synchronous calculation
