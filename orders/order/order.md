@@ -100,16 +100,6 @@ The Order Service functionality allows your employees to act on behalf of a cust
 
 To create an order, first get the credentials to log in as a customer on the storefront.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../../authentication/oauth-service/api-reference/" %}
-[api-reference](../../authentication/oauth-service/api-reference/)
-{% endcontent-ref %}
-
-{% content-ref url="../../companies-and-customers/customer-management/api-reference/" %}
-[api-reference](../../companies-and-customers/customer-management/api-reference/)
-{% endcontent-ref %}
-
 {% stepper %}
 {% step %}
 #### Request a service access token
@@ -158,13 +148,17 @@ curl 'https://api.emporix.io/customer/{tenant}/login' \
 {% endstep %}
 {% endstepper %}
 
-### Create an order
-
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
+{% content-ref url="../../authentication/oauth-service/api-reference/" %}
+[api-reference](../../authentication/oauth-service/api-reference/)
 {% endcontent-ref %}
+
+{% content-ref url="../../companies-and-customers/customer-management/api-reference/" %}
+[api-reference](../../companies-and-customers/customer-management/api-reference/)
+{% endcontent-ref %}
+
+### Create an order
 
 {% stepper %}
 {% step %}
@@ -395,6 +389,12 @@ curl -L 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' 
 ```
 {% endstep %}
 {% endstepper %}
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ## Order splitting
 
