@@ -616,6 +616,16 @@ paths:
             type: string
             default: ''
             example: SKU-1001
+        - name: outcome
+          in: query
+          required: false
+          description: >-
+            Optional filter by import outcome. Omit to return records of all outcomes. `UPSERTED`
+            (created or updated), `DELETED` (removed at the source), `DELETED_TARGET` (removed in
+            Emporix), `FAILED`, `DRY_RUN` (produced by a dry run).
+          schema:
+            type: string
+            enum: [UPSERTED, DELETED, DELETED_TARGET, FAILED, DRY_RUN]
         - $ref: '#/components/parameters/trait_page'
         - $ref: '#/components/parameters/trait_size'
       security:
@@ -667,6 +677,16 @@ paths:
             type: string
             default: ''
             example: SKU-1001
+        - name: outcome
+          in: query
+          required: false
+          description: >-
+            Optional filter by import outcome. Omit to return records of all outcomes. `UPSERTED`
+            (created or updated), `DELETED` (removed at the source), `DELETED_TARGET` (removed in
+            Emporix), `FAILED`, `DRY_RUN` (produced by a dry run).
+          schema:
+            type: string
+            enum: [UPSERTED, DELETED, DELETED_TARGET, FAILED, DRY_RUN]
         - $ref: '#/components/parameters/trait_page'
         - $ref: '#/components/parameters/trait_size'
       security:
@@ -1105,7 +1125,7 @@ components:
             active: true
         outcome:
           type: string
-          description: The last outcome, for example `CREATED`, `UPDATED`, or `DELETED`.
+          description: The last outcome, one of `UPSERTED`, `DELETED`, `DELETED_TARGET`, `FAILED`, or `DRY_RUN`.
           example: UPDATED
         importedAt:
           type: string
