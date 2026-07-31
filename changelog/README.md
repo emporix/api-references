@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-07-31" tags="new-feature" %}
 
 ## AI Service - `ORDER` support for `rag_emporix` tools
 
@@ -49,7 +49,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-07-31" tags="new-feature" %}
 
 ## Indexing Service - `ORDER` support for reindex jobs
 
