@@ -188,98 +188,98 @@ Choose the chat endpoint based on how you want to receive the agent's response:
 
 * When instant responses are required from the agent, send the request to the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat)
 
-```bash
-curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat' \
--H 'tenant: {tenant}' \
--H 'Content-Type: application/json' \
--H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
--d '{
-    "agentId": "de-agent",
-    "message": "{\"id\":\"delightCoffee\",\"name\":{\"en\":\"Delight Coffee\"},\"yrn\":\"urn:yaas:saasag:caasproduct:product:{tenant};delightCoffee\",\"code\":\"delightCoffee\",\"description\":{\"en\":\"Awaken your senses with our hand-selected Gourmet Coffee, crafted for true coffee lovers who crave depth, aroma, and sophistication in every sip. Sourced from the world’s finest high-altitude farms, each bean is carefully harvested at peak ripeness, then small-batch roasted to unlock its natural sweetness and complex flavor notes.\"},\"media\":[],\"productType\":\"BASIC\",\"template\":{},\"published\":false,\"metadata\":{\"version\":1,\"createdAt\":\"2025-09-25T04:42:42.607Z\",\"modifiedAt\":\"2025-09-25T04:42:42.607Z\"}}"
-}'
-```
+  ```bash
+  curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat' \
+  -H 'tenant: {tenant}' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -d '{
+      "agentId": "de-agent",
+      "message": "{\"id\":\"delightCoffee\",\"name\":{\"en\":\"Delight Coffee\"},\"yrn\":\"urn:yaas:saasag:caasproduct:product:{tenant};delightCoffee\",\"code\":\"delightCoffee\",\"description\":{\"en\":\"Awaken your senses with our hand-selected Gourmet Coffee, crafted for true coffee lovers who crave depth, aroma, and sophistication in every sip. Sourced from the world’s finest high-altitude farms, each bean is carefully harvested at peak ripeness, then small-batch roasted to unlock its natural sweetness and complex flavor notes.\"},\"media\":[],\"productType\":\"BASIC\",\"template\":{},\"published\":false,\"metadata\":{\"version\":1,\"createdAt\":\"2025-09-25T04:42:42.607Z\",\"modifiedAt\":\"2025-09-25T04:42:42.607Z\"}}"
+  }'
+  ```
 
-Trigger the specific agent providing its `agentId`. In the `message`, type in your query or data you want the agent to process.
+  Trigger the specific agent providing its `agentId`. In the `message`, type in your query or data you want the agent to process.
 
-In the above example, the German Translation Agent is triggered. The Agent acts according to its defined prompt - here, the agent is programmed to find the product `name` and `description` in the request message and translate the fields into German language. As a result, the Agent gets back with the following response:
+  In the above example, the German Translation Agent is triggered. The Agent acts according to its defined prompt - here, the agent is programmed to find the product `name` and `description` in the request message and translate the fields into German language. As a result, the Agent gets back with the following response:
 
-```
-{
-    "agentId": "de-agent",
-    "agentType": "generic",
-    "message": "{
-        "id":"delightCoffee",
-        "name":{
-            "en":"Delight Coffee",
-            "de":"Delight Kaffee"
-        },
-        "yrn":"urn:yaas:saasag:caasproduct:product:mytenant;delightCoffee",
-        "code":"delightCoffee",
-        "description":{
-            "en":"Awaken your senses with our hand-selected Gourmet Coffee, crafted for true coffee lovers who crave depth, aroma, and sophistication in every sip. Sourced from the world’s finest high-altitude farms, each bean is carefully harvested at peak ripeness, then small-batch roasted to unlock its natural sweetness and complex flavor notes.",
-            "de":"Wecken Sie Ihre Sinne mit unserem handverlesenen Gourmetkaffee, kreiert für wahre Kaffeeliebhaber, die Tiefe, Aroma und Raffinesse in jedem Schluck suchen. Aus den besten Hochlandfarmen der Welt bezogen, wird jede Bohne sorgfältig zum Höhepunkt ihrer Reife geerntet und dann in kleinen Chargen geröstet, um ihre natürliche Süße und komplexen Geschmacksnoten freizusetzen."
-        },
-        "media":[],
-        "productType":"BASIC",
-        "template":{},
-        "published":false,"metadata":{
-            "version":1,
-            "createdAt":"2025-09-25T04:42:42.607Z",
-            "modifiedAt":"2025-09-25T04:42:42.607Z"
-        }
-    }",
-    "sessionId": "33a550d0-d812-4fb2-bb0d-d50dbfe3627b"
-}
-```
+  ```
+  {
+      "agentId": "de-agent",
+      "agentType": "generic",
+      "message": "{
+          "id":"delightCoffee",
+          "name":{
+              "en":"Delight Coffee",
+              "de":"Delight Kaffee"
+          },
+          "yrn":"urn:yaas:saasag:caasproduct:product:mytenant;delightCoffee",
+          "code":"delightCoffee",
+          "description":{
+              "en":"Awaken your senses with our hand-selected Gourmet Coffee, crafted for true coffee lovers who crave depth, aroma, and sophistication in every sip. Sourced from the world’s finest high-altitude farms, each bean is carefully harvested at peak ripeness, then small-batch roasted to unlock its natural sweetness and complex flavor notes.",
+              "de":"Wecken Sie Ihre Sinne mit unserem handverlesenen Gourmetkaffee, kreiert für wahre Kaffeeliebhaber, die Tiefe, Aroma und Raffinesse in jedem Schluck suchen. Aus den besten Hochlandfarmen der Welt bezogen, wird jede Bohne sorgfältig zum Höhepunkt ihrer Reife geerntet und dann in kleinen Chargen geröstet, um ihre natürliche Süße und komplexen Geschmacksnoten freizusetzen."
+          },
+          "media":[],
+          "productType":"BASIC",
+          "template":{},
+          "published":false,"metadata":{
+              "version":1,
+              "createdAt":"2025-09-25T04:42:42.607Z",
+              "modifiedAt":"2025-09-25T04:42:42.607Z"
+          }
+      }",
+      "sessionId": "33a550d0-d812-4fb2-bb0d-d50dbfe3627b"
+  }
+  ```
 
 * When you want progressive output as the agent's response is generated, stream the request to the [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) endpoint.
 
-```bash
-curl -N -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-stream' \
--H 'tenant: {tenant}' \
--H 'Content-Type: application/json' \
--H 'Accept: text/event-stream' \
--H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
--d '{
-    "agentId": "support-agent",
-    "message": "Summarize the delivery options available for order EON1243."
-}'
-```
+  ```bash
+  curl -N -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-stream' \
+  -H 'tenant: {tenant}' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: text/event-stream' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -d '{
+      "agentId": "support-agent",
+      "message": "Summarize the delivery options available for order EON1243."
+  }'
+  ```
 
-The request body uses the same `agentId` and `message` fields as the synchronous chat request. The endpoint returns the response as a Server-Sent Events stream (`text/event-stream`), so clients receive incremental output instead of waiting for the full message.
+  The request body uses the same `agentId` and `message` fields as the synchronous chat request. The endpoint returns the response as a Server-Sent Events stream (`text/event-stream`), so clients receive incremental output instead of waiting for the full message.
 
 * When it is more pragmatic to wait for the agent's response, for example, when the agent needs to process more data which takes more time, or the agent needs to wait for another task to be completed, use the asynchronous communication. Send the request to the agent using the [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async).
 
-```bash
-curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-async' \
--H 'tenant: {tenant}' \
--H 'Content-Type: application/json' \
--H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
--d '{
-    "agentId": "complaint-agent",
-    "message": Find the details of the customer order \"EON1243\"."
-}'
-```
+  ```bash
+  curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-async' \
+  -H 'tenant: {tenant}' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -d '{
+      "agentId": "complaint-agent",
+      "message": Find the details of the customer order \"EON1243\"."
+  }'
+  ```
 
-Similarly, provide the relevant `agentId` and pass your query in the `message`.
+  Similarly, provide the relevant `agentId` and pass your query in the `message`.
 
-In async requests, the response contains the `jobId` parameter, for example:
+  In async requests, the response contains the `jobId` parameter, for example:
 
-```
-{
-    "jobId": "68e3a593b2cb061e36630849"
-}
-```
+  ```
+  {
+      "jobId": "68e3a593b2cb061e36630849"
+  }
+  ```
 
-Use the `jobId` to check details of the job through the [Retrieving agent job by its ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid) endpoint. For example:
+  Use the `jobId` to check details of the job through the [Retrieving agent job by its ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid) endpoint. For example:
 
-```bash
-curl -X 'GET' \
-  'https://api.emporix.io/ai-service/{tenant}/jobs/68e3a593b2cb061e36630849' \
-  -H 'accept: application/json'
-```
+  ```bash
+  curl -X 'GET' \
+    'https://api.emporix.io/ai-service/{tenant}/jobs/68e3a593b2cb061e36630849' \
+    -H 'accept: application/json'
+  ```
 
-The job entity contains information about the request and response from the agent.
+  The job entity contains information about the request and response from the agent.
 
 ## How to pass a media file for the agents to process
 
