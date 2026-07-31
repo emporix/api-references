@@ -178,6 +178,14 @@ You can use the retrieved details to establish the required connections and trig
 
 For some Agents, it is convenient to trigger their actions by API calls. To allow communication with the selected agent, you can use the dedicated endpoints.
 
+{% hint style="info" %}
+Choose the chat endpoint based on how you want to receive the agent's response:
+
+* [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) – when you need a single complete JSON response right away.
+* [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) – when you build interactive experiences, such as chat UIs, storefront assistants, or backoffice tools, that display the agent's reply as it is written and benefit from improved responsiveness.
+* [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) – when the agent may take longer to process data or wait for another task, and you want to poll the result using the `jobId`.
+{% endhint %}
+
 * When instant responses are required from the agent, send the request to the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat)
 
 ```bash
@@ -223,6 +231,22 @@ In the above example, the German Translation Agent is triggered. The Agent acts 
     "sessionId": "33a550d0-d812-4fb2-bb0d-d50dbfe3627b"
 }
 ```
+
+* When you want progressive output as the agent's response is generated, stream the request to the [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) endpoint.
+
+```bash
+curl -N -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-stream' \
+-H 'tenant: {tenant}' \
+-H 'Content-Type: application/json' \
+-H 'Accept: text/event-stream' \
+-H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+-d '{
+    "agentId": "support-agent",
+    "message": "Summarize the delivery options available for order EON1243."
+}'
+```
+
+The request body uses the same `agentId` and `message` fields as the synchronous chat request. The endpoint returns the response as a Server-Sent Events stream (`text/event-stream`), so clients receive incremental output instead of waiting for the full message.
 
 * When it is more pragmatic to wait for the agent's response, for example, when the agent needs to process more data which takes more time, or the agent needs to wait for another task to be completed, use the asynchronous communication. Send the request to the agent using the [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async).
 
