@@ -58,6 +58,13 @@ This release covers the operational surface available with the `importtool.impor
 | [Retrieving imported data types](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-types) | Returns the distinct target types that currently hold imported records. |
 | [Searching imported records](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-records) | Searches imported records of a given type with an optional `search` filter on the natural key. |
 | [Searching a stream's imported records](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-streams-streamid-records) | Searches the imported records produced by a specific stream with an optional `search` filter. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-07-31" tags="new-feature" %}
 
 ## AI Service - `ORDER` support for `rag_emporix` tools
