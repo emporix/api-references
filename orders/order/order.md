@@ -32,7 +32,6 @@ Possible status transitions:
 
 * `IN_CHECKOUT` -> `CREATED`
 * `IN_CHECKOUT` -> `DECLINED`
-* `CREATED` -> `IN_CHECKOUT`
 * `CREATED` -> `CONFIRMED`
 * `CREATED` -> `DECLINED`
 * `CONFIRMED` -> `SHIPPED`
