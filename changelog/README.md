@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-07-31" tags="new-feature" %}
 
 ## Import Service - operational API for import runs
 
