@@ -236,7 +236,6 @@ Choose the chat endpoint based on how you want to receive the agent's response:
 
   ```bash
   curl -N -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-stream' \
-  -H 'tenant: {tenant}' \
   -H 'Content-Type: application/json' \
   -H 'Accept: text/event-stream' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
