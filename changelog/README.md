@@ -25,6 +25,29 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Schema Service - `precision` for `DECIMAL` attributes
+
+#### Overview
+
+Schema attributes of type `DECIMAL` now support an optional `precision` property that defines the allowed decimal step for attribute values. You can set `-1` for no precision constraint, or a positive step such as `0.1`, `0.01`, or `0.001`. When omitted for a `DECIMAL` attribute, the default precision `0.01` applies. For array attributes, provide `precision` when `arrayType.type` is `DECIMAL`.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Accepts `precision` on `DECIMAL` attributes in the request. |
+| [Updating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-schemaid) | Accepts `precision` on `DECIMAL` attributes in the request. |
+| [Retrieving a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-schemaid) | Returns `precision` for `DECIMAL` attributes in the response. |
+| [Retrieving all schemas](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas) | Returns `precision` for `DECIMAL` attributes in the response. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-07-31" tags="new-feature" %}
 
 ## Import Service - operational API for import runs
