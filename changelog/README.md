@@ -139,6 +139,10 @@ There are no known problems.
 
 #### Overview
 
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
 The AI Service now provides dedicated OAuth configuration resources for self-hosted LLM authentication. You can create and manage reusable
 OAuth 2.0 client-credentials configurations under `/agentic/oauths`, then reference them from agents through
 `llmConfig.selfHostedParams.oauth`. Agent responses support `expand=oauth` to return the full configuration, and OAuth responses support
