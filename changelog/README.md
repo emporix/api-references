@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-08-03" tags="new-feature" %}
 
 ## Schema Service - `precision` for `DECIMAL` attributes
 
