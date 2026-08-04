@@ -38,8 +38,8 @@ Schema attributes of type `DECIMAL` now support an optional `precision` property
 | Endpoint | Description |
 | --- | --- |
 | [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Accepts `precision` on `DECIMAL` attributes in the request. |
-| [Updating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-schemaid) | Accepts `precision` on `DECIMAL` attributes in the request. |
-| [Retrieving a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-schemaid) | Returns `precision` for `DECIMAL` attributes in the response. |
+| [Updating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) | Accepts `precision` on `DECIMAL` attributes in the request. |
+| [Retrieving a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-id) | Returns `precision` for `DECIMAL` attributes in the response. |
 | [Retrieving all schemas](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas) | Returns `precision` for `DECIMAL` attributes in the response. |
 
 #### Known problems
