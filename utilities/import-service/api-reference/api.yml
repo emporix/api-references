@@ -312,8 +312,7 @@ paths:
                 force:
                   type: boolean
                   description: >-
-                    When `true`, every extracted record is re-written even if unchanged (bypasses the
-                    idempotency skip-if-unchanged check). Use to force target ids/values to be re-written.
+                    When `true`, every extracted record is rewritten, even if unchanged. It bypasses the idempotency `skip-if-unchanged` check. Use it to force target IDs and values to be rewritten.
                   example: false
             examples:
               Full run:
@@ -1125,8 +1124,8 @@ components:
         targetId:
           type: string
           description: >-
-            The deterministic Emporix instance id the record was written under (derived from the natural
-            key), so the record can be located in the target.
+            The deterministic Emporix instance ID the record was written under. It's derived from the natural
+            key and allows the record to be located in the target.
           example: id-sku-1001
         fields:
           type: object
