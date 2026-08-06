@@ -1,0 +1,15 @@
+extends: substitution
+message: "Use '%s' instead of '%s'."
+link: .style-guide/writing-standards/word-choice.md
+level: warning
+ignorecase: true
+scope: sentence
+swap:
+  webshop: storefront
+  "app user": customer
+  "e-mail": email
+  "payload data": payload
+  "API's": APIs
+  whitelist: allowlist
+  blacklist: blocklist
+  logon: login
