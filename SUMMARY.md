@@ -16,6 +16,7 @@
     * [Token Exchange](quickstart/authentication-and-authorization/token-exchange.md)
 * [Multi-Site Architecture](quickstart/multisites.md)
 * [Initial Tenant Checkout Configuration](quickstart/initial-tenant-checkout-config.md)
+* [API Links Test](quickstart/API-links-test.md)
 
 ## Standard Practices
 
