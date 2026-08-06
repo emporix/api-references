@@ -25,14 +25,12 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
-## AI Service - Slack tool configuration and business log message formats
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+## AI Service - Slack tool configuration
 #### Overview
 
 Slack native tool configuration now documents inbound-routing fields aligned with MS Teams: `defaultInboundAgentId` and `allowedOperations`. These fields are in preview and control which agent handles the first inbound Slack message when no conversation routing context exists yet, and which collaboration operations the tool exposes.
-
-Agent log message schemas now document the business-log prefixes used for HTTP chat, Slack (legacy and routed), and MS Teams requests. Log viewers can use these prefixes to extract the user message and agent response from `messages[]` entries where `isBusinessLog` is `true`.
 
 {% hint style="danger" %}
 Slack `defaultInboundAgentId` and `allowedOperations` are in preview mode - some of the features may not be fully operational yet.
@@ -47,12 +45,121 @@ Slack `defaultInboundAgentId` and `allowedOperations` are in preview mode - some
 | [Retrieving tool by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Slack tool responses can include preview `defaultInboundAgentId` and `allowedOperations`. |
 | [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` override applies to Slack (preview) as well as MS Teams. |
 | [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` override applies to Slack (preview) as well as MS Teams. |
-| [Retrieving agent request by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/api#get-ai-service-tenant-agentic-logs-requests-requestid) | `AgentLogMessageResponse.message` documents Slack and MS Teams business-log prefixes. |
-| [Retrieving agent session by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/api#get-ai-service-tenant-agentic-logs-sessions-sessionid) | `AgentLogMessageResponse.message` documents Slack and MS Teams business-log prefixes. |
 
 #### Known problems
 
 There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-08-03" tags="new-feature" %}
+
+## Schema Service - `precision` for `DECIMAL` attributes
+
+#### Overview
+
+Schema attributes of type `DECIMAL` now support an optional `precision` property that defines the allowed decimal step for attribute values. You can set `-1` for no precision constraint, or a positive step such as `0.1`, `0.01`, or `0.001`. When omitted for a `DECIMAL` attribute, the default precision `0.01` applies. For array attributes, provide `precision` when `arrayType.type` is `DECIMAL`.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Accepts `precision` on `DECIMAL` attributes in the request. |
+| [Updating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) | Accepts `precision` on `DECIMAL` attributes in the request. |
+| [Retrieving a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-id) | Returns `precision` for `DECIMAL` attributes in the response. |
+| [Retrieving all schemas](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas) | Returns `precision` for `DECIMAL` attributes in the response. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-07-31" tags="new-feature" %}
+
+## Import Service - operational API for import runs
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+#### Overview
+
+The Import Service API is now available for importing external master data into Emporix. A configuration groups one or more streams; each stream extracts from a source connection, maps fields to an Emporix target type, and upserts idempotently. Imports run asynchronously and stream per-stream progress over Server-Sent Events (SSE).
+
+This release covers the operational surface available with the `importtool.import_trigger` scope: reading configurations and streams, scheduling and triggering runs, monitoring and cancelling runs, and searching imported records. Administrative operations that create or change configurations, connections, streams, and mappings require the `importtool.import_manage` scope.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving all import configurations](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs) | Returns all import configurations defined for the tenant. |
+| [Retrieving an import configuration](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs-id) | Returns a single import configuration by its identifier. |
+| [Retrieving all streams of a configuration](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Returns the streams belonging to a configuration, ordered by sequence. |
+| [Retrieving a stream](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Returns a single stream by its identifier, including resolved target types. |
+| [Retrieving a schedule](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/schedules#get-importtool-tenant-configs-configid-schedule) | Returns the cron schedule for a configuration, or `204` when none is set. |
+| [Scheduling an import job](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/schedules#put-importtool-tenant-configs-configid-schedule) | Creates or updates the cron schedule that runs a configuration automatically. |
+| [Triggering an import run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Starts an import run in `FULL` or `DELTA` mode, with an optional `dryRun`. |
+| [Retrieving run history](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Returns the run history for a configuration, most recent first. |
+| [Retrieving a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Returns a run's status together with its per-stream progress. |
+| [Streaming run progress](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-events) | Streams run progress as Server-Sent Events (`snapshot`, `stream`, and final `run`). |
+| [Cancelling a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-cancel) | Requests cancellation of an active run; `force=true` stops the run immediately. |
+| [Retrieving run errors](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-errors) | Returns the errors recorded during a run, paginated. |
+| [Retrieving imported data types](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-types) | Returns the distinct target types that currently hold imported records. |
+| [Searching imported records](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-records) | Searches imported records of a given type with an optional `search` filter on the natural key. |
+| [Searching a stream's imported records](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-streams-streamid-records) | Searches the imported records produced by a specific stream with an optional `search` filter. |
+
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-07-31" tags="new-feature" %}
+
+## AI Service - `ORDER` support for `rag_emporix` tools
+
+#### Overview
+
+The `rag_emporix` native tool type now accepts `ORDER` as a predefined `entityType` alongside `PRODUCT` and custom entity types. You can configure RAG tools to search and filter against order data in the vector index.
+
+#### Updated endpoints
+
+| Endpoint                                                                                                                                                                                     | Description                                                                 |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| [Listing tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools)                           | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
+| [Searching tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#post-ai-service-tenant-agentic-tools-search)                  | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
+| [Retrieving tool by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid)             | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
+| [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid)                    | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
+| [Partially updating tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#patch-ai-service-tenant-agentic-tools-toolid)         | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-07-31" tags="new-feature" %}
+
+## Indexing Service - `ORDER` support for reindex jobs
+
+#### Overview
+
+Reindex jobs now support `ORDER` as an `entityType` alongside `PRODUCT` and custom schema types. You can trigger a full reindex of order entities and track progress through the existing reindex job endpoints.
+
+#### Updated endpoints
+
+| Endpoint                                                                                                                                                                                       | Description                                      |
+|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|
+| [Creating a reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs)                       | Accepts `ORDER` as a valid `entityType`.         |
+| [Retrieving reindex jobs](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs)                        | Returns jobs with `entityType` set to `ORDER`.   |
+| [Retrieving a reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid)          | Returns jobs with `entityType` set to `ORDER`.   |
+
+#### Known problems
+
+There are no known problems.
+
 {% endupdate %}
 
 {% update date="2026-07-24" tags="improvement" %}
@@ -81,6 +188,10 @@ There are no known problems.
 ## AI Service - managed OAuth configurations
 
 #### Overview
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
 
 The AI Service now provides dedicated OAuth configuration resources for self-hosted LLM authentication. You can create and manage reusable
 OAuth 2.0 client-credentials configurations under `/agentic/oauths`, then reference them from agents through

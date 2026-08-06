@@ -31,7 +31,7 @@ tags:
   - name: Model
     description: Read LLM models from supported providers
   - name: OAuth
-    description: Manage OAuth configurations
+    description: Manage OAuth configurations (Preview)
   - name: Text Generation
     description: AI Text Generation
   - name: Token
@@ -861,7 +861,7 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -906,7 +906,7 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -1370,6 +1370,12 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
         Retrieves OAuth configurations based on the provided query.
       security:
         - OAuth2:
@@ -1410,6 +1416,12 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
         Searches for OAuth configurations based on the provided query.
       security:
         - OAuth2:
@@ -1447,6 +1459,12 @@ paths:
         '404':
           $ref: '#/components/responses/404_resp_common'
       description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
         Retrieves the OAuth configuration by a given ID.
       security:
         - OAuth2:
@@ -1481,6 +1499,12 @@ paths:
         '409':
           $ref: '#/components/responses/409_resp_common'
       description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
         Updates or creates a specified OAuth configuration by replacing all of its existing data with data from the request body.
         If the `metadata.version` is provided, then optimistic locking is enabled and version must match the version in the database.
 
@@ -1509,6 +1533,12 @@ paths:
         '404':
           $ref: '#/components/responses/404_resp_common'
       description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
         Partially updates a single OAuth configuration document with given information.
         Single update may contain multiple partial updates in the form of an array. It contains the allowed operations list:
           - `add` (adding an item to the items list)
@@ -1536,6 +1566,12 @@ paths:
         '403':
           $ref: '#/components/responses/403_resp_common'
       description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
         Deletes OAuth configuration by given ID.
 
         ***Important***: If an OAuth configuration is being used by an agent, then delete operation is not possible without `force` flag set to `true`.
@@ -2473,7 +2509,7 @@ components:
           description: The prompt for an agent. It should define when and why this tool is to be called.
         entityType:
           type: string
-          description: "Type of the entity which is stored in the given collection. Supported predefined types: [PRODUCT] and custom entity types."
+          description: "Type of the entity which is stored in the given collection. Supported predefined types: [ORDER, PRODUCT] and custom entity types."
         indexedFields:
           type: array
           description: This field specifies the fields of the given entityType that are used for generating embeddings. The provided values are then concatenated and converted to embeddings.
