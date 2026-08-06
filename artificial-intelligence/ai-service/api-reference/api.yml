@@ -2979,6 +2979,11 @@ components:
               description: Type of the LLM Provider. The self-hosted LLM allows you to provide your own LLMs. When using this providers, the `selfHostedParams.url` property cannot be omitted.
               enum: [ self_hosted_ollama, self_hosted_vllm ]
               example: self_hosted_ollama
+            baseProvider:
+              type: string
+              description: Optional. Indicates which cloud LLM provider API the self-hosted endpoint is compatible with (OPENAI, GOOGLE, or ANTHROPIC). Applies when provider is self_hosted_ollama or self_hosted_vllm. Used to select the correct request/response conventions for that backend. Ignored for non–self-hosted providers.
+              enum: [ ANTHROPIC, GOOGLE, OPENAI ]
+              example: OPENAI
           required:
             - provider
     SelfHostedLlmRequest:

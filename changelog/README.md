@@ -25,6 +25,32 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## AI Service - `baseProvider` for self-hosted LLMs
+
+#### Overview
+
+Self-hosted LLM configurations (`self_hosted_ollama` and `self_hosted_vllm`) now support an optional `baseProvider` property on `llmConfig`.
+Use `OPENAI`, `GOOGLE`, or `ANTHROPIC` to indicate which cloud LLM provider API the self-hosted endpoint is compatible with, so the service
+can apply the correct request and response conventions. The property is ignored for non–self-hosted providers.
+
+#### Updated endpoints
+
+| Endpoint                                                                                                                                                                                    | Description                                                              |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|
+| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid)            | Accepts optional `llmConfig.baseProvider` for self-hosted LLM providers. |
+| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Accepts optional `llmConfig.baseProvider` for self-hosted LLM providers. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)        | Returns `llmConfig.baseProvider` when set for a self-hosted LLM.         |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                        | Returns `llmConfig.baseProvider` when set for a self-hosted LLM.         |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)              | Returns `llmConfig.baseProvider` when set for a self-hosted LLM.         |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-03" tags="new-feature" %}
 
 ## Schema Service - `precision` for `DECIMAL` attributes
