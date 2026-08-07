@@ -2718,6 +2718,24 @@ components:
         default: 60
         minimum: 1
         type: integer
+    trait_cursor_next:
+      name: next
+      in: query
+      required: false
+      schema:
+        type: string
+        maxLength: 4096
+      description: |
+        Opaque cursor from the `X-Next-Cursor` response header. Use it to retrieve the next set of results. Cannot be combined with `prev` in the same request; sending both returns `400 Bad Request`. When provided, cursor pagination is active and `pageNumber` is ignored.
+    trait_cursor_prev:
+      name: prev
+      in: query
+      required: false
+      schema:
+        type: string
+        maxLength: 4096
+      description: |
+        Opaque cursor from the `X-Prev-Cursor` response header. Use it to retrieve the previous set of results. Cannot be combined with `next` in the same request; sending both returns `400 Bad Request`. When provided, cursor pagination is active and `pageNumber` is ignored.
     trait_fields:
       name: fields
       in: query

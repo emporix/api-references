@@ -22,6 +22,7 @@
 * [General Info](standard-practices/general-info.md)
 * [Mixins](standard-practices/mixins.md)
 * [Query Parameter](standard-practices/q-param.md)
+* [Pagination](standard-practices/pagination.md)
 * [Translations](standard-practices/translations.md)
 * [Custom ID](standard-practices/custom-id.md)
 * [Upsert](standard-practices/upsert.md)
