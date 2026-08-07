@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature, improvement" %}
+{% update date="2026-08-07" tags="new-feature, improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-6152 -->
 
 ## Schema Service - cursor-based pagination for custom instances
