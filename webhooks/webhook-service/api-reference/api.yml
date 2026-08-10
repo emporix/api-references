@@ -43,6 +43,8 @@ paths:
         **NOTE**
         At any time, a tenant can have only one webhook configuration of each type: `svix`, `svix_shared`, and `http`. If a configuration of the requested type already exists, the request returns a `409 Conflict` response. To change the configuration, update or delete the existing one.
 
+        For HTTP configurations, `eventsConfiguration` can contain multiple entries for the same `eventType`. The server assigns a stable `id` to each entry. Client-supplied entry ids on create are rejected.
+
         **NOTE**
         Svix supports a maximum message payload size of approximately 350kb. However, it is generally advisable to keep webhook payloads small, ideally under 40kb. For larger message sizes, consider using the HTTP Webhook Strategy.
       operationId: POST-webhook-create-config
@@ -136,6 +138,11 @@ paths:
 
         * Svix Emporix Shared Account
         * Svix Custom Account
+        * HTTP Webhook Strategy
+
+        For HTTP configurations, `eventsConfiguration` can contain multiple entries for the same `eventType`. Each entry is identified by a stable `id`.
+
+        Existing entry ids must be preserved on update. Legacy payloads without entry ids are still accepted and the server assigns ids to id-less entries.
       operationId: PUT-webhook-update-config
       security:
         - OAuth2:
@@ -552,6 +559,8 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/EventConfiguration'
+      description: List of HTTP event-specific configuration entries. Multiple entries for the same `eventType` are allowed. Duplicate entry ids are rejected. The maximum number of entries per event type is limited by the service configuration.
+
     HttpHeaderConfigValue:
       type: object
       properties:
