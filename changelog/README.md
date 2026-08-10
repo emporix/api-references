@@ -26,13 +26,19 @@ layout:
 {% updates format="full" %}
 
 {% update date="RELEASE_DATE" tags="improvement" %}
-## AI Service - Slack tool configuration
+## AI Service - Slack collaboration config and predefined agent migration
 #### Overview
 
 Slack native tool configuration now documents inbound-routing fields aligned with MS Teams: `defaultInboundAgentId` and `allowedOperations`. These fields are in preview and control which agent handles the first inbound Slack message when no conversation routing context exists yet, and which collaboration operations the tool exposes.
 
+Existing tenants were migrated to this model. Predefined agents are represented by three agent types — `support`, `complaint`, and `anti_fraud` — on the generic Slack/Teams collaboration runtime. Slack tools received `allowedOperations` and `defaultInboundAgentId` where missing. Live Slack channel routing was backfilled into communication conversation contexts. Complaint and anti-fraud agents collaborate with specialist categorization/scoring and audit agents; legacy collaboration agents are disabled.
+
 {% hint style="danger" %}
 Slack `defaultInboundAgentId` and `allowedOperations` are in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+{% hint style="info" %}
+Migration has already been applied for existing tenants. New tenants receive the updated predefined-agent and Slack tool setup by default.
 {% endhint %}
 
 #### Updated endpoints
