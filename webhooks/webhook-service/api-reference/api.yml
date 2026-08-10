@@ -211,7 +211,11 @@ paths:
         * `REMOVE` - removing an item from the list
         * `UPSERT` - adding or updating given property
 
-        For HTTP `eventsConfiguration`, prefer addressing entries by id with `/configuration/http/eventsConfigurationEntry/{entryId}` (and field subpaths for `destinationUrl`, `secretKey`, `headers`, `filter`, and `excludedFields`). Legacy `/configuration/http/eventsConfiguration/{eventType}` paths remain supported when at most one entry exists for that event type and return `409 Conflict` when multiple entries exist.
+        For HTTP `eventsConfiguration`:
+        * Create a new entry with `UPSERT` on `/configuration/http/eventsConfigurationEntry` (no id segment). Do not send `id` in the body — the server generates it. `REMOVE` is not supported on this path.
+        * Address an existing entry by id with `/configuration/http/eventsConfigurationEntry/{entryId}` (and field subpaths for `destinationUrl`, `secretKey`, `headers`, `filter`, and `excludedFields`).
+        * Legacy `/configuration/http/eventsConfiguration/{eventType}` paths remain supported when at most one entry exists for that event type and return `409 Conflict` when multiple entries exist.
+        * Create/update requests return `400 Bad Request` when the body supplies a client-minted entry id or the JsonPath `filter` is invalid.
       security:
         - OAuth2:
             - webhook.subscription_manage
@@ -321,6 +325,16 @@ paths:
                         value: value1
                       header2:
                         value: value2
+              Create Configuration Event Entry:
+                value:
+                  - op: UPSERT
+                    path: /configuration/http/eventsConfigurationEntry
+                    value:
+                      eventType: PRODUCT.CREATED
+                      destinationUrl: 'https://gcp.cloudfunctions.net/webhook?name=New'
+                      filter: "$[?(@.status == 'DECLINED')]"
+                      excludedFields:
+                        - mixins
               Upsert Configuration Event Entry:
                 value:
                   - op: UPSERT
@@ -687,6 +701,7 @@ components:
             - '/configuration/http/eventsConfiguration/{eventType}/destinationUrl'
             - '/configuration/http/eventsConfiguration/{eventType}/secretKey'
             - '/configuration/http/eventsConfiguration/{eventType}/headers'
+            - /configuration/http/eventsConfigurationEntry
             - '/configuration/http/eventsConfigurationEntry/{entryId}'
             - '/configuration/http/eventsConfigurationEntry/{entryId}/destinationUrl'
             - '/configuration/http/eventsConfigurationEntry/{entryId}/secretKey'
@@ -694,7 +709,11 @@ components:
             - '/configuration/http/eventsConfigurationEntry/{entryId}/filter'
             - '/configuration/http/eventsConfigurationEntry/{entryId}/excludedFields'
           description: |-
-            Path identifying which properties should be updated. Prefer `/configuration/http/eventsConfigurationEntry/{entryId}` paths to address a specific entry. Legacy `/configuration/http/eventsConfiguration/{eventType}` paths remain supported when at most one entry exists for that event type; they return `409` when multiple entries exist.
+            Path identifying which properties should be updated.
+            Use `UPSERT` on `/configuration/http/eventsConfigurationEntry` (no id) to create a new entry — body must omit `id` (server-generated); `REMOVE` on this path is rejected.
+            Prefer `/configuration/http/eventsConfigurationEntry/{entryId}` paths to address a specific existing entry.
+            Legacy `/configuration/http/eventsConfiguration/{eventType}` paths remain supported when at most one entry exists for that event type; they return `409` when multiple entries exist.
+            Create/update can return `400` for a client-supplied entry id or an invalid JsonPath `filter`.
         value:
           type: object
           anyOf:
