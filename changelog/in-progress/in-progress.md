@@ -55,7 +55,7 @@ These announcements are intended to keep you informed about ongoing work and pot
 <tbody>
   <tr>
     <td class="tg-0pky">B2B Commerce Frontend</td>
-    <td class="tg-0pky"><p>Product details page improvements</p> <p>User management</p> <p>Customer resistration improvements</p></td>
+    <td class="tg-0pky"><p>Product details page improvements</p> <p>User management</p> <p>Customer registration improvements</p></td>
   </tr>
   <tr>
     <td class="tg-0pky">Schema Service</td>
