@@ -51,6 +51,38 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-08-10" tags="improvement" %}
+## AI Service - Slack collaboration config and predefined agent migration
+#### Overview
+
+Slack native tool configuration now documents inbound-routing fields aligned with MS Teams: `defaultInboundAgentId` and `allowedOperations`. These fields are currently in preview mode. They control which agent handles the first inbound Slack message when no conversation routing context exists yet, and which collaboration operations the tool exposes.
+
+Existing tenants were migrated to this model. Predefined agents are represented by three agent types — `support`, `complaint`, and `anti_fraud` — on the generic Slack/Teams collaboration runtime. Slack tools received `allowedOperations` and `defaultInboundAgentId` where missing. Live Slack channel routing was backfilled into communication conversation contexts. Complaint and anti-fraud agents collaborate with specialist categorization/scoring and audit agents; legacy collaboration agents are disabled.
+
+{% hint style="danger" %}
+Slack `defaultInboundAgentId` and `allowedOperations` are in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+{% hint style="info" %}
+Migration has already been applied for existing tenants. New tenants receive the updated predefined-agent and Slack tool setup by default.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Slack preview `config.defaultInboundAgentId` and `config.allowedOperations`. |
+| [Listing tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools) | Slack tool responses can include preview `config.defaultInboundAgentId` and `config.allowedOperations`. |
+| [Retrieving tool by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Slack tool responses can include preview `config.defaultInboundAgentId` and `config.allowedOperations`. |
+| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` override applies to Slack (preview) as well as MS Teams. |
+| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` override applies to Slack (preview) as well as MS Teams. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-07" tags="new-feature, improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-6152 -->
 
@@ -185,7 +217,6 @@ There are no known problems.
 {% endupdate %}
 
 {% update date="2026-07-24" tags="improvement" %}
-<!-- emporix-ai-buddy:changelog:COP-6051 -->
 ## Schema Service - mixin schema support for `Location` and `Availability`
 
 #### Overview
