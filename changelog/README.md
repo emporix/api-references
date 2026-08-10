@@ -25,7 +25,6 @@ layout:
 
 {% updates format="full" %}
 
-
 {% update date="RELEASE_DATE" tags="improvement" %}
 ## AI Service - Slack tool configuration
 #### Overview
@@ -45,6 +44,30 @@ Slack `defaultInboundAgentId` and `allowedOperations` are in preview mode - some
 | [Retrieving tool by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Slack tool responses can include preview `defaultInboundAgentId` and `allowedOperations`. |
 | [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` override applies to Slack (preview) as well as MS Teams. |
 | [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` override applies to Slack (preview) as well as MS Teams. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-08-07" tags="new-feature, improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6152 -->
+
+## Schema Service - cursor-based pagination for custom instances
+
+#### Overview
+
+Schema Service now supports cursor-based pagination for custom instance listing and search. Clients can use the `next` and `prev` query parameters together with the `X-Next-Cursor` and `X-Prev-Cursor` response headers to navigate large result sets without relying on deep offset pagination.
+
+Offset pagination with `pageNumber` and `pageSize` remains supported. In cursor mode, `pageNumber` is ignored, `X-Total-Count` is not calculated or returned, and requests that send both `next` and `prev` return `400`. The service also now applies deterministic sorting to all custom instance list queries by defaulting to `_id:ASC` when no sort is provided and appending `_id:ASC` as a tie-breaker when a sort is provided.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Retrieving custom instances](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Searching custom instances](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-search) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
 
 #### Known problems
 

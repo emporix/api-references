@@ -30,6 +30,7 @@ Check the below for specific practices:
 * [Mixins](./mixins.md)
 * [Translations](./translations.md)
 * [Query Parameter](./q-param.md)
+* [Pagination](./pagination.md)
 * [Upsert](./upsert.md)
 * [Custom ID](./custom-id.md)
 * [Bulk Request Limits](./bulk-request-limits.md)
