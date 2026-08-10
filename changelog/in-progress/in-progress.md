@@ -66,8 +66,8 @@ These announcements are intended to keep you informed about ongoing work and pot
     <td class="tg-0pky">Audit logs / changelogs for all existing entities</td>
   </tr>
   <tr>
-    <td class="tg-0pky">Entra ID</td>
-    <td class="tg-0pky">Integration with Entra ID</td>
+    <td class="tg-0pky">Microsoft Entra ID</td>
+    <td class="tg-0pky">Integration with Microsoft Entra ID</td>
   </tr>
   <tr>
     <td class="tg-0pky">Customer Segments</td>
