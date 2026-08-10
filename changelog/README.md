@@ -46,8 +46,8 @@ Migration has already been applied for existing tenants. New tenants receive the
 | Endpoint | Description |
 | --- | --- |
 | [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Slack preview `config.defaultInboundAgentId` and `config.allowedOperations`. |
-| [Listing tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools) | Slack tool responses can include preview `defaultInboundAgentId` and `allowedOperations`. |
-| [Retrieving tool by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Slack tool responses can include preview `defaultInboundAgentId` and `allowedOperations`. |
+| [Listing tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools) | Slack tool responses can include preview `config.defaultInboundAgentId` and `config.allowedOperations`. |
+| [Retrieving tool by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Slack tool responses can include preview `config.defaultInboundAgentId` and `config.allowedOperations`. |
 | [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` override applies to Slack (preview) as well as MS Teams. |
 | [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` override applies to Slack (preview) as well as MS Teams. |
 

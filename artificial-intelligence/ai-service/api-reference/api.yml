@@ -1066,7 +1066,7 @@ paths:
           $ref: '#/components/responses/409_resp_common'
       description: |-
         Updates or creates a specified tool by replacing all of its existing data with data from the request body.
-        If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.`
+        If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
 
         ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
 
