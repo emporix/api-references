@@ -25,6 +25,32 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## AI Service - `baseProvider` for self-hosted LLMs
+
+#### Overview
+
+Self-hosted LLM configurations (`self_hosted_ollama` and `self_hosted_vllm`) now support an optional `baseProvider` property on `llmConfig`.
+Use `OPENAI`, `GOOGLE`, or `ANTHROPIC` to indicate which cloud LLM provider API the self-hosted endpoint is compatible with, so the service
+can apply the correct request and response conventions. The property is ignored for non–self-hosted providers.
+
+#### Updated endpoints
+
+| Endpoint                                                                                                                                                                                    | Description                                                              |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|
+| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid)            | Accepts optional `llmConfig.baseProvider` for self-hosted LLM providers. |
+| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Accepts optional `llmConfig.baseProvider` for self-hosted LLM providers. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)        | Returns `llmConfig.baseProvider` when set for a self-hosted LLM.         |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                        | Returns `llmConfig.baseProvider` when set for a self-hosted LLM.         |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)              | Returns `llmConfig.baseProvider` when set for a self-hosted LLM.         |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-10" tags="improvement" %}
 ## AI Service - Slack collaboration config and predefined agent migration
 #### Overview
@@ -137,7 +163,6 @@ This release covers the operational surface available with the `importtool.impor
 | [Retrieving imported data types](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-types) | Returns the distinct target types that currently hold imported records. |
 | [Searching imported records](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-records) | Searches imported records of a given type with an optional `search` filter on the natural key. |
 | [Searching a stream's imported records](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-streams-streamid-records) | Searches the imported records produced by a specific stream with an optional `search` filter. |
-
 
 #### Known problems
 
