@@ -54,28 +54,28 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr></thead>
 <tbody>
   <tr>
-    <td class="tg-0pky">Value Stream Modeller</td>
-    <td class="tg-0pky"><p>Direct invocation of Emporix APIs from VSM</p></td>
-  </tr>
-  <tr>
     <td class="tg-0pky">B2B Commerce Frontend</td>
-    <td class="tg-0pky"><p>Product details page, listing and filtering</p></td>
+    <td class="tg-0pky"><p>Product details page improvements</p> <p>User management</p> <p>Customer resistration improvements</p></td>
   </tr>
   <tr>
     <td class="tg-0pky">Schema Service</td>
     <td class="tg-0pky">Improvements to mixins</td>
   </tr>
   <tr>
-    <td class="tg-0pky">Approval Service</td>
-    <td class="tg-0pky">Adaptation and enhancement of the existing approval process to include Employees' approvals</td>
-  </tr>
-  <tr>
     <td class="tg-0pky">Audit Logs</td>
     <td class="tg-0pky">Audit logs / changelogs for all existing entities</td>
   </tr>
   <tr>
+    <td class="tg-0pky">Entra ID</td>
+    <td class="tg-0pky">Integration with Entra ID</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Customer Segments</td>
+    <td class="tg-0pky">Group-aware customer segments</td>
+  </tr>
+  <tr>
     <td class="tg-0pky">Agentic</td>
-    <td class="tg-0pky"><p>RAG for orders</p><p>Communication with MS Teams</p></td>
+    <td class="tg-0pky"><p>RAG for quotes</p><p>Generic MCP</p><p>Communication with MS Teams</p></td>
   </tr>
 </tbody>
 </table>
