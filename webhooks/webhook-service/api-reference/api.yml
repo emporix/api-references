@@ -180,6 +180,7 @@ paths:
                     destinationUrl: 'https://gcp.cloudfunctions.net/webhook?name=General'
                     eventsConfiguration:
                       - id: 3f1a2b4c-5d6e-7f80-91a2-b3c4d5e6f708
+                        name: ERP integration
                         eventType: PRODUCT.CREATED
                         destinationUrl: 'https://gcp.cloudfunctions.net/webhook?name=Detailed'
                         filter: "$[?(@.code == 'abc')]"
@@ -213,7 +214,7 @@ paths:
 
         For HTTP `eventsConfiguration`:
         * Create a new entry with `UPSERT` on `/configuration/http/eventsConfigurationEntry` (no id segment). Do not send `id` in the body — the server generates it. `REMOVE` is not supported on this path.
-        * Address an existing entry by id with `/configuration/http/eventsConfigurationEntry/{entryId}` (and field subpaths for `destinationUrl`, `secretKey`, `headers`, `filter`, and `excludedFields`).
+        * Address an existing entry by id with `/configuration/http/eventsConfigurationEntry/{entryId}` (and field subpaths for `destinationUrl`, `secretKey`, `headers`, `filter`, `excludedFields`, and `name`).
         * Legacy `/configuration/http/eventsConfiguration/{eventType}` paths remain supported when at most one entry exists for that event type and return `409 Conflict` when multiple entries exist.
         * Create/update requests return `400 Bad Request` when the body supplies a client-minted entry id or the JsonPath `filter` is invalid.
       security:
@@ -330,6 +331,7 @@ paths:
                   - op: UPSERT
                     path: /configuration/http/eventsConfigurationEntry
                     value:
+                      name: ERP integration
                       eventType: PRODUCT.CREATED
                       destinationUrl: 'https://gcp.cloudfunctions.net/webhook?name=New'
                       filter: "$[?(@.status == 'DECLINED')]"
@@ -365,6 +367,11 @@ paths:
                     path: /configuration/http/eventsConfigurationEntry/3f1a2b4c-5d6e-7f80-91a2-b3c4d5e6f708/excludedFields
                     value:
                       - mixins
+              Upsert Configuration Event Entry Name:
+                value:
+                  - op: UPSERT
+                    path: /configuration/http/eventsConfigurationEntry/3f1a2b4c-5d6e-7f80-91a2-b3c4d5e6f708/name
+                    value: ERP integration
         description: ''
     get:
       summary: Retrieving a webhook config
@@ -614,6 +621,11 @@ components:
           type: string
           description: |-
             Stable server-generated identifier of this event configuration entry. Omit on create; client-supplied ids are rejected with `400`. On update, known ids must refer to existing entries; unknown ids are rejected with `400`. Ids are immutable once assigned.
+        name:
+          type: string
+          maxLength: 255
+          description: |-
+            Optional user-facing label for this entry (for example "ERP integration"). Purely descriptive — it has no impact on delivery. Maximum 255 characters.
         eventType:
           type: string
           description: Unique identifier of the event. Multiple entries may share the same `eventType`.
@@ -708,6 +720,7 @@ components:
             - '/configuration/http/eventsConfigurationEntry/{entryId}/headers'
             - '/configuration/http/eventsConfigurationEntry/{entryId}/filter'
             - '/configuration/http/eventsConfigurationEntry/{entryId}/excludedFields'
+            - '/configuration/http/eventsConfigurationEntry/{entryId}/name'
           description: |-
             Path identifying which properties should be updated.
             Use `UPSERT` on `/configuration/http/eventsConfigurationEntry` (no id) to create a new entry — body must omit `id` (server-generated); `REMOVE` on this path is rejected.
