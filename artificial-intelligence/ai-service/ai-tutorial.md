@@ -120,7 +120,7 @@ curl -L \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/templates/search' \
   --header 'Content-Type: application/json' \
   --data '{
-    "q": "name:~Support"
+    "q": "name:~Complaint"
   }'
 ```
 
@@ -240,7 +240,7 @@ Choose the chat endpoint based on how you want to receive the agent's response:
   -H 'Accept: text/event-stream' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -d '{
-      "agentId": "support-agent",
+      "agentId": "generic-agent",
       "message": "Summarize the delivery options available for order EON1243."
   }'
   ```

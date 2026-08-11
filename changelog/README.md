@@ -25,6 +25,33 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="major-change" %}
+
+## AI Service - removal of `support` agent type
+
+#### Overview
+
+The `support` value is removed from the agent `type` enum. Existing support agents and predefined support templates were already migrated to `generic`.
+
+{% hint style="info" %}
+Migration has already been applied for existing tenants. Agents formerly stored with `type: support` were converted to `generic`.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint                                                                                                                                                                                    | Description                                                                 |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)        | Returned `type` is one of `generic`, `complaint`, or `anti_fraud`.          |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                        | Returned `type` is one of `generic`, `complaint`, or `anti_fraud`.          |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)              | Returned `type` is one of `generic`, `complaint`, or `anti_fraud`.          |
+| [Listing available agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#get-ai-service-tenant-agentic-templates) | Template `type` no longer includes `support`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-10" tags="improvement" %}
 
 ## AI Service - `baseProvider` for self-hosted LLMs
