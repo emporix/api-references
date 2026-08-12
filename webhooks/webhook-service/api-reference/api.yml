@@ -181,6 +181,8 @@ paths:
           $ref: '#/components/responses/Unauthorized_401'
         '403':
           $ref: '#/components/responses/Forbidden_403'
+        '409':
+          $ref: '#/components/responses/Conflict_409'
         '500':
           $ref: '#/components/responses/InternalServerError_500'
       description: |
