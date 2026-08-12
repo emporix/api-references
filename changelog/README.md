@@ -25,6 +25,36 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature, improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6177 -->
+
+## Webhook Service - multi-target HTTP event configuration
+
+#### Overview
+
+Webhook Service now supports multiple `eventsConfiguration` entries for the same event type in HTTP webhook configs. Each entry can have its own stable `id`, optional `filter`, and optional `excludedFields`, which lets API clients manage event-specific HTTP targets independently through the existing config API.
+
+The `GET`, `POST`, `PUT`, and `PATCH` config endpoints now expose and accept these fields. The service assigns entry IDs on write, keeps `secretKey` write-only, validates `filter` as JsonPath, and preserves the difference between `excludedFields: null` and `excludedFields: []`.
+
+{% hint style="warning" %}
+This change updates the configuration model and API only. Webhook delivery still uses the first matching event-type entry until the follow-up delivery change is released.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Creating a config](https://developer.emporix.io/api-references/api-guides/operations-and-fulfillment/webhook-service/api-reference/config#post-webhook-tenant-config) | HTTP webhook configs now accept multiple `eventsConfiguration` entries for the same event type, with optional `filter` and `excludedFields`. |
+| [Updating a config](https://developer.emporix.io/api-references/api-guides/operations-and-fulfillment/webhook-service/api-reference/config#put-webhook-tenant-config-code) | The endpoint now preserves or assigns per-entry `id` values and accepts the new `filter` and `excludedFields` fields. |
+| [Retrieving a config by code](https://developer.emporix.io/api-references/api-guides/operations-and-fulfillment/webhook-service/api-reference/config#get-webhook-tenant-config-code) | HTTP event configuration entries now return `id`, `filter`, and `excludedFields`, while `secretKey` remains hidden behind `secretKeyExists`. |
+| [Patching a config](https://developer.emporix.io/api-references/api-guides/operations-and-fulfillment/webhook-service/api-reference/config#patch-webhook-tenant-config-code) | PATCH operations can now address HTTP event configuration entries by entry `id`, including updates to `destinationUrl`, `secretKey`, `headers`, `filter`, and `excludedFields`. Legacy event-type-based PATCH paths still work when only one entry exists for the event type and return `409` when multiple entries exist. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-11" tags="major-change" %}
 
 ## AI Service - removal of `support` agent type
