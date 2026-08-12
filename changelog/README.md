@@ -25,6 +25,29 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6103 -->
+
+## AI Agentic Service - memory usage safeguards
+
+#### Overview
+
+AI Agentic Service now includes additional runtime safeguards to reduce memory growth and lower the risk of OutOfMemory failures during agent execution. The service now bounds internal cache growth, reuses selected runtime clients, closes MCP, OpenAI, and Qdrant clients more consistently, and limits concurrent agent construction. Earlier request-size protection for write requests remains part of this hardening, so oversized `POST`, `PUT`, and `PATCH` requests can be rejected before execution starts.
+
+#### Affected endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| AI Agentic Service `POST` endpoints | Oversized request bodies can be rejected with `413 Request Entity Too Large`, and invalid `Content-Length` headers can return `400 Bad Request`. |
+| AI Agentic Service `PUT` endpoints | Oversized request bodies can be rejected with `413 Request Entity Too Large`, and invalid `Content-Length` headers can return `400 Bad Request`. |
+| AI Agentic Service `PATCH` endpoints | Oversized request bodies can be rejected with `413 Request Entity Too Large`, and invalid `Content-Length` headers can return `400 Bad Request`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-12" tags="new-feature, improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-6177 -->
 
