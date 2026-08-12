@@ -28,7 +28,7 @@ A tenant can have only one webhook configuration of each type: `svix`, `svix_sha
 * Updates configuration
 * Subscribes and unsubscribes from events without having to provide the full configuration
 * Supports multiple webhook targets for the HTTP strategy: multiple `eventsConfiguration` entries per `eventType`, each with optional Jayway JsonPath `filter`, per-entry secrets/headers, and `excludedFields`
-* Supports filtering Schema custom entity events (`schema.custom-instance-*`) with JsonPath predicates
+* Supports filtering custom entity events (`schema.custom-instance-*`) with JsonPath predicates
 * Supports hooking into the following objects:
   * Availability
   * Catalog

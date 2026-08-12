@@ -10,7 +10,7 @@ The Emporix Webhook Event publishing works in the following way:
 
 1. When an event takes place and you subscribed to receiving notifications about this event, a message is sent to the Webhook Service.
 2. The Webhook Service forwards the message to the Event Gateway.
-3. The Event Gateway matches the event to your configured endpoints. For the HTTP strategy with Multiple Webhooks, optional JsonPath filters are evaluated against the sanitized payload.
+3. The Event Gateway matches the event to your configured endpoints. For the HTTP strategy with defined multiple webhook targets, optional JsonPath filters are evaluated against the event payload.
 
 {% hint style="warning" %}
 For example, if you create a catalog in the Emporix environment, a notification is sent to the Webhook service. The service passes the message to the Event Gateway. If you configured an endpoint for catalog creation beforehand, you receive the notification that a new catalog has been created.
@@ -120,7 +120,7 @@ Example:
 
 #### Subscribe to custom entity events
 
-You can subscribe to Schema custom entity events the same way as other event types:
+You can subscribe to custom entity events the same way as other event types:
 
 * `schema.custom-instance-created`
 * `schema.custom-instance-updated`
@@ -139,7 +139,7 @@ curl -i -X PATCH \
 ]'
 ```
 
-With the HTTP strategy, pair the subscription with an optional JsonPath `filter` on an endpoint (for example `$[?(@.type == 'contract')]`) when you only want specific custom entity types delivered. If no filter is configured, all events of the subscribed custom-instance type are candidates for delivery. See [Multiple Webhooks (HTTP strategy)](webhooks-tutorial.md#multiple-webhooks-http-strategy).
+With the HTTP strategy, pair the subscription with an optional JsonPath `filter` on an endpoint (for example `$[?(@.type == 'contract')]`) when you only want specific custom entity types delivered. If no filter is configured, all events of the subscribed custom-instance type are candidates for delivery. See [Multiple webhook targets (HTTP strategy)](#multiple-webhooks-http-strategy).
 
 ### Connect to the Event Gateway
 
@@ -167,26 +167,30 @@ You can use your Emporix tenant ID as application ID in Svix.
 
 ### Configure your endpoints
 
-To receive notifications about the events you subscribed to in [_Subscribe to events_](webhooks-tutorial.md#subscribe-to-events), configure endpoints that relate to those events.
+To receive notifications about the events you subscribed to in [Subscribe to events](#subscribe-to-events), configure endpoints that relate to those events.
 
 * **Svix strategies:** On the Event Gateway, configure endpoints that relate to those events. To configure endpoints by using the APIs, check out the "Add webhook endpoints/Using the API" section in the [official Svix documentation](https://docs.svix.com/quickstart).
-* **HTTP strategy:** Configure a global destination URL and optional per-event `eventsConfiguration` entries through the Webhook Service config API, as described in [Multiple Webhooks (HTTP strategy)](webhooks-tutorial.md#multiple-webhooks-http-strategy).
+* **HTTP strategy:** Configure a global destination URL and optional per-event `eventsConfiguration` entries through the Webhook Service config API, as described in [Multiple webhook targetss (HTTP strategy)](#multiple-webhooks-http-strategy).
 
-## Multiple Webhooks (HTTP strategy)
+## Multiple webhook targets (HTTP strategy)
 
-Multiple Webhooks lets you register several HTTP targets for the same `eventType`. Each entry in `eventsConfiguration` can define its own `destinationUrl`, `secretKey`, `headers`, optional Jayway JsonPath `filter`, `excludedFields`, `name`, and `active` flag.
+Defining multiple webhook targets lets you register several HTTP targets for the same `eventType`. Each entry in `eventsConfiguration` can define its own `destinationUrl`, `secretKey`, `headers`, optional Jayway JsonPath `filter`, `excludedFields`, optional `name` (max 255 characters), and `active` flag.
 
 {% hint style="warning" %}
-This release updates the **configuration model and API**. Webhook delivery still uses the **first matching** event-type entry until the follow-up delivery change is released. Existing single-target configurations remain backward compatible.
+This release updates the configuration model and API. Webhook delivery still uses the first matching event-type entry until the follow-up delivery change is released. Existing single-target configurations remain backward compatible.
 {% endhint %}
 
 ### JsonPath filter structure and validation
+
+{% hint style="info" %}
+When you create a `filter`, the JsonPath expression must match the payload structure of the configured `eventType`. Use the corresponding schema under [Webhook - Events](../webhook-events.md) to choose field paths. The API validates JsonPath syntax only; it does not check paths against the event schema.
+{% endhint %}
 
 | Rule | Details |
 | ---- | ------- |
 | Field | `filter` (string) on an `eventsConfiguration` entry |
 | Form | Jayway JsonPath predicate, typically `$[?(@.<path> <op> <value>)]` |
-| Evaluation | Against the sanitized event payload |
+| Evaluation | Against the event payload |
 | Empty / omitted | Matches every event of the given `eventType` |
 | Invalid expression | Rejected with HTTP `400` and not stored |
 | Inactive entry (`active: false`) | Skipped without filter evaluation, delivery, or retries |
@@ -194,19 +198,28 @@ This release updates the **configuration model and API**. Webhook delivery still
 Examples:
 
 * Match by status: `$[?(@.status == 'DECLINED')]`
-* Nested path: `$[?(@.status.value == 'DECLINED')]`
+* Nested path: `$[?(@.total.amount > 100)]` or `$[?(@.status.value == 'DECLINED')]`
 * Custom entity type: `$[?(@.type == 'contract')]`
-* AND: `$[?(@.status == 'DECLINED' && @.channel == 'web')]`
-* OR: `$[?(@.status == 'DECLINED' || @.status == 'CANCELLED')]`
 
 Related validation rules:
 
-* Entry `id` is server-generated. Client-supplied ids on create are rejected with `400`.
+* Entry `id` is server-generated. Omit `id` on create (`POST` or PATCH create-entry); client-supplied ids are rejected with `400`.
+* On update (`PUT`), known ids must refer to existing entries; unknown ids are rejected with `400`. Ids are immutable once assigned. Legacy payloads without entry ids are still accepted; the server assigns ids to id-less entries.
 * Duplicate entry ids are rejected with `400`.
 * `excludedFields: null` or omit inherits subscription exclusions; `[]` means no exclusions for that target.
-* Legacy PATCH paths by `{eventType}` return `409` when multiple entries exist for that type. Prefer `/configuration/http/eventsConfigurationEntry/{entryId}`.
+* Create a new entry with `UPSERT` on `/configuration/http/eventsConfigurationEntry` (no id segment). `REMOVE` is not supported on that path.
+* Prefer `/configuration/http/eventsConfigurationEntry/{entryId}` (and field subpaths for `destinationUrl`, `secretKey`, `headers`, `filter`, `excludedFields`, `name`, and `active`) to address an existing entry.
+* Legacy PATCH paths by `{eventType}` remain supported when at most one entry exists for that type and return `409` when multiple entries exist.
 
-### Valid configuration: multiple targets for one event type
+### Configure multiple targets for one event type
+
+Use this pattern when one `eventType` needs to reach more than one HTTP destination — for example, send declined quotes to a CRM and all quote updates to analytics. Call the [Updating a single webhook config](api-reference/config#put-webhook-tenant-config-code) endpoint with multiple `eventsConfiguration` entries that share the same `eventType`.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X PUT \
@@ -239,7 +252,7 @@ curl -i -X PUT \
 }'
 ```
 
-Example successful response body (shape) when retrieving the config:
+After the update, retrieve the config with the [Retrieving a webhook config](api-reference/config#get-webhook-tenant-config-code) endpoint. The response assigns a server-generated `id` to each entry and returns `secretKeyExists` instead of `secretKey`:
 
 ```json
 {
@@ -252,7 +265,6 @@ Example successful response body (shape) when retrieving the config:
     "eventsConfiguration": [
       {
         "id": "3f2a1c9e-8b4d-4e2a-9f1c-7a6b5d4e3c2b",
-        "name": "Declined quotes",
         "eventType": "quote.updated",
         "destinationUrl": "https://crm.example/quotes",
         "secretKeyExists": false,
@@ -262,7 +274,6 @@ Example successful response body (shape) when retrieving the config:
       },
       {
         "id": "9c8b7a6d-5e4f-3a2b-1c0d-9e8f7a6b5c4d",
-        "name": "All quote updates",
         "eventType": "quote.updated",
         "destinationUrl": "https://analytics.example/quotes",
         "secretKeyExists": false,
@@ -273,7 +284,15 @@ Example successful response body (shape) when retrieving the config:
 }
 ```
 
-### Valid configuration: custom entity filter
+### Filter custom entity events by type
+
+Use a JsonPath `filter` when you subscribe to custom entity events but only want specific entity types delivered — for example, only `contract` updates. Call the [Updating a single webhook config](api-reference/config#put-webhook-tenant-config-code) endpoint and set `filter` on the matching `eventsConfiguration` entry.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X PUT \
@@ -300,7 +319,48 @@ curl -i -X PUT \
 
 With this setup, only `schema.custom-instance-updated` payloads where `type` is `contract` match the endpoint filter. Other custom entity types are not candidates for this entry.
 
-### Valid PATCH by entry id
+### Create an eventsConfiguration entry
+
+Add a new HTTP target without replacing the full config. Call the [Partially updating a webhook config](api-reference/config#patch-webhook-tenant-config-code) endpoint with `UPSERT` on `/configuration/http/eventsConfigurationEntry`. Do not send `id` in the body — the server generates it.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/webhook/{tenant}/config/http' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "op": "UPSERT",
+    "path": "/configuration/http/eventsConfigurationEntry",
+    "value": {
+      "name": "Declined quotes",
+      "eventType": "quote.updated",
+      "destinationUrl": "https://crm.example/quotes",
+      "filter": "$[?(@.status.value == '\''DECLINED'\'')]",
+      "excludedFields": [
+        "mixins"
+      ],
+      "active": true
+    }
+  }
+]'
+```
+
+### Update a filter by entry id
+
+Change the JsonPath `filter` on an existing target without rewriting the whole `eventsConfiguration` list. Call the [Partially updating a webhook config](api-reference/config#patch-webhook-tenant-config-code) endpoint and address the entry with `/configuration/http/eventsConfigurationEntry/{entryId}/filter`.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X PATCH \
@@ -316,82 +376,15 @@ curl -i -X PATCH \
 ]'
 ```
 
-### Invalid configuration: malformed JsonPath (`400`)
+### Deactivate a single target
 
-```bash
-curl -i -X PUT \
-  'https://api.emporix.io/webhook/{tenant}/config/http' \
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "active": true,
-  "provider": "HTTP",
-  "configuration": {
-    "destinationUrl": "https://fallback.example/hooks",
-    "eventsConfiguration": [
-      {
-        "name": "Broken filter",
-        "eventType": "quote.updated",
-        "destinationUrl": "https://crm.example/quotes",
-        "filter": "$[?(invalid"
-      }
-    ]
-  }
-}'
-```
+Temporarily stop deliveries to one HTTP target without removing it. Call the [Partially updating a webhook config](api-reference/config#patch-webhook-tenant-config-code) endpoint with `UPSERT` on `/configuration/http/eventsConfigurationEntry/{entryId}/active` and value `false`. Events for a deactivated endpoint are dropped without filter evaluation, delivery, or retries; other endpoints are not affected. Set the value back to `true` to resume deliveries.
 
-Example error response:
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
-```json
-{
-  "code": 400,
-  "status": "Bad Request",
-  "message": "Invalid JsonPath filter expression",
-  "details": [
-    "filter is not a valid Jayway JsonPath predicate"
-  ]
-}
-```
-
-### Invalid configuration: client-supplied entry id (`400`)
-
-```bash
-curl -i -X PUT \
-  'https://api.emporix.io/webhook/{tenant}/config/http' \
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "active": true,
-  "provider": "HTTP",
-  "configuration": {
-    "destinationUrl": "https://fallback.example/hooks",
-    "eventsConfiguration": [
-      {
-        "id": "client-supplied-id",
-        "eventType": "quote.updated",
-        "destinationUrl": "https://crm.example/quotes"
-      }
-    ]
-  }
-}'
-```
-
-Example error response:
-
-```json
-{
-  "code": 400,
-  "status": "Bad Request",
-  "message": "Client-supplied entry id is not allowed",
-  "details": [
-    "eventsConfiguration[].id must be omitted on create; ids are server-generated"
-  ]
-}
-```
-
-### Invalid PATCH by event type when multiple entries exist (`409`)
-
-When more than one entry shares `quote.updated`, a legacy path returns conflict:
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
 
 ```bash
 curl -i -X PATCH \
@@ -401,21 +394,8 @@ curl -i -X PATCH \
   -d '[
   {
     "op": "UPSERT",
-    "path": "/configuration/http/eventsConfiguration/quote.updated/destinationUrl",
-    "value": "https://crm.example/quotes-v2"
+    "path": "/configuration/http/eventsConfigurationEntry/3f2a1c9e-8b4d-4e2a-9f1c-7a6b5d4e3c2b/active",
+    "value": false
   }
 ]'
-```
-
-Example error response:
-
-```json
-{
-  "code": 409,
-  "status": "Conflict",
-  "message": "Multiple eventsConfiguration entries exist for event type",
-  "details": [
-    "Use /configuration/http/eventsConfigurationEntry/{entryId} when more than one entry exists for quote.updated"
-  ]
-}
 ```
