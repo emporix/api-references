@@ -25,6 +25,121 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="2026-08-12" tags="new-feature, improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6177 -->
+
+## Webhook Service - multi-target HTTP event configuration
+
+#### Overview
+
+Webhook Service now supports multiple `eventsConfiguration` entries for the same event type in HTTP webhook configs. Each entry can have its own stable `id`, optional `filter`, and optional `excludedFields`, which lets API clients manage event-specific HTTP targets independently through the existing config API.
+
+The `GET`, `POST`, `PUT`, and `PATCH` config endpoints now expose and accept these fields. The service assigns entry IDs on write, keeps `secretKey` write-only, validates `filter` as JsonPath, and preserves the difference between `excludedFields: null` and `excludedFields: []`.
+
+{% hint style="warning" %}
+This change updates the configuration model and API only. Webhook delivery still uses the first matching event-type entry until the follow-up delivery change is released.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Creating a config](https://developer.emporix.io/api-references/api-guides/operations-and-fulfillment/webhook-service/api-reference/config#post-webhook-tenant-config) | HTTP webhook configs now accept multiple `eventsConfiguration` entries for the same event type, with optional `filter` and `excludedFields`. |
+| [Updating a config](https://developer.emporix.io/api-references/api-guides/operations-and-fulfillment/webhook-service/api-reference/config#put-webhook-tenant-config-code) | The endpoint now preserves or assigns per-entry `id` values and accepts the new `filter` and `excludedFields` fields. |
+| [Retrieving a config by code](https://developer.emporix.io/api-references/api-guides/operations-and-fulfillment/webhook-service/api-reference/config#get-webhook-tenant-config-code) | HTTP event configuration entries now return `id`, `filter`, and `excludedFields`, while `secretKey` remains hidden behind `secretKeyExists`. |
+| [Patching a config](https://developer.emporix.io/api-references/api-guides/operations-and-fulfillment/webhook-service/api-reference/config#patch-webhook-tenant-config-code) | PATCH operations can now address HTTP event configuration entries by entry `id`, including updates to `destinationUrl`, `secretKey`, `headers`, `filter`, and `excludedFields`. Legacy event-type-based PATCH paths still work when only one entry exists for the event type and return `409` when multiple entries exist. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-08-11" tags="major-change" %}
+
+## AI Service - removal of `support` agent type
+
+#### Overview
+
+The `support` value is removed from the agent `type` enum. Existing support agents and predefined support templates were already migrated to `generic`.
+
+{% hint style="info" %}
+Migration has already been applied for existing tenants. Agents formerly stored with `type: support` were converted to `generic`.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint                                                                                                                                                                                    | Description                                                                 |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)        | Returned `type` is one of `generic`, `complaint`, or `anti_fraud`.          |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                        | Returned `type` is one of `generic`, `complaint`, or `anti_fraud`.          |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)              | Returned `type` is one of `generic`, `complaint`, or `anti_fraud`.          |
+| [Listing available agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#get-ai-service-tenant-agentic-templates) | Template `type` no longer includes `support`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-08-10" tags="improvement" %}
+
+## AI Service - `baseProvider` for self-hosted LLMs
+
+#### Overview
+
+Self-hosted LLM configurations (`self_hosted_ollama` and `self_hosted_vllm`) now support an optional `baseProvider` property on `llmConfig`.
+Use `OPENAI`, `GOOGLE`, or `ANTHROPIC` to indicate which cloud LLM provider API the self-hosted endpoint is compatible with, so the service
+can apply the correct request and response conventions. The property is ignored for non–self-hosted providers.
+
+#### Updated endpoints
+
+| Endpoint                                                                                                                                                                                    | Description                                                              |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|
+| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid)            | Accepts optional `llmConfig.baseProvider` for self-hosted LLM providers. |
+| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Accepts optional `llmConfig.baseProvider` for self-hosted LLM providers. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)        | Returns `llmConfig.baseProvider` when set for a self-hosted LLM.         |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                        | Returns `llmConfig.baseProvider` when set for a self-hosted LLM.         |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)              | Returns `llmConfig.baseProvider` when set for a self-hosted LLM.         |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-08-10" tags="improvement" %}
+## AI Service - Slack collaboration config and predefined agent migration
+#### Overview
+
+Slack native tool configuration now documents inbound-routing fields aligned with MS Teams: `defaultInboundAgentId` and `allowedOperations`. These fields are currently in preview mode. They control which agent handles the first inbound Slack message when no conversation routing context exists yet, and which collaboration operations the tool exposes.
+
+Existing tenants were migrated to this model. Predefined agents are represented by three agent types — `support`, `complaint`, and `anti_fraud` — on the generic Slack/Teams collaboration runtime. Slack tools received `allowedOperations` and `defaultInboundAgentId` where missing. Live Slack channel routing was backfilled into communication conversation contexts. Complaint and anti-fraud agents collaborate with specialist categorization/scoring and audit agents; legacy collaboration agents are disabled.
+
+{% hint style="danger" %}
+Slack `defaultInboundAgentId` and `allowedOperations` are in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+{% hint style="info" %}
+Migration has already been applied for existing tenants. New tenants receive the updated predefined-agent and Slack tool setup by default.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Slack preview `config.defaultInboundAgentId` and `config.allowedOperations`. |
+| [Listing tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools) | Slack tool responses can include preview `config.defaultInboundAgentId` and `config.allowedOperations`. |
+| [Retrieving tool by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Slack tool responses can include preview `config.defaultInboundAgentId` and `config.allowedOperations`. |
+| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` override applies to Slack (preview) as well as MS Teams. |
+| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` override applies to Slack (preview) as well as MS Teams. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-07" tags="new-feature, improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-6152 -->
 
@@ -159,7 +274,6 @@ There are no known problems.
 {% endupdate %}
 
 {% update date="2026-07-24" tags="improvement" %}
-<!-- emporix-ai-buddy:changelog:COP-6051 -->
 ## Schema Service - mixin schema support for `Location` and `Availability`
 
 #### Overview
