@@ -10,10 +10,10 @@ The Emporix Webhook Event publishing works in the following way:
 
 1. When an event takes place and you subscribed to receiving notifications about this event, a message is sent to the Webhook Service.
 2. The Webhook Service forwards the message to the Event Gateway.
-3. The Event Gateway matches the event to your configured endpoints. For the HTTP strategy with defined multiple webhook targets, optional JsonPath filters are evaluated against the event payload.
+3. The Event Gateway matches the event to your configured endpoints. For the HTTP strategy with multiple webhook targets defined, optional JsonPath filters are evaluated against the event payload.
 
 {% hint style="warning" %}
-For example, if you create a catalog in the Emporix environment, a notification is sent to the Webhook service. The service passes the message to the Event Gateway. If you configured an endpoint for catalog creation beforehand, you receive the notification that a new catalog has been created.
+For example, if you create a catalog in the Emporix environment, a notification is sent to the Webhook Service. The service passes the message to the Event Gateway. If you configured an endpoint for catalog creation beforehand, you receive the notification that a new catalog has been created.
 
 For HTTP Multiple Webhooks, you can store multiple `eventsConfiguration` entries for the same event type. Until the follow-up delivery change is released, delivery still uses the **first matching** event-type entry.
 {% endhint %}
@@ -28,7 +28,6 @@ To receive notifications from Emporix API services, you need to subscribe to spe
 * [Subscribe to events](webhooks-tutorial.md#subscribe-to-events)
 * [Connect to the Event Gateway](webhooks-tutorial.md#connect-to-the-event-gateway)
 * [Configure your endpoints](webhooks-tutorial.md#configure-your-endpoints)
-* [Multiple Webhooks (HTTP strategy)](webhooks-tutorial.md#multiple-webhooks-http-strategy)
 
 {% hint style="warning" %}
 By default, the maximum number of events per tenant is limited to 5000/month. The limit resets on the first day of each month. If you want to publish more events, contact Emporix Support.
@@ -120,7 +119,7 @@ Example:
 
 #### Subscribe to custom entity events
 
-You can subscribe to custom entity events the same way as other event types:
+You can subscribe to custom entity events the same way as other event types by calling the [Subscribing and unsubscribing from events](https://developer.emporix.io/api-references/api-guides/webhooks/webhook-service/api-reference/events#patch-webhook-tenant-event-subscriptions) endpoint:
 
 * `schema.custom-instance-created`
 * `schema.custom-instance-updated`
@@ -169,10 +168,10 @@ You can use your Emporix tenant ID as application ID in Svix.
 
 To receive notifications about the events you subscribed to in [Subscribe to events](#subscribe-to-events), configure endpoints that relate to those events.
 
-* **Svix strategies:** On the Event Gateway, configure endpoints that relate to those events. To configure endpoints by using the APIs, check out the "Add webhook endpoints/Using the API" section in the [official Svix documentation](https://docs.svix.com/quickstart).
-* **HTTP strategy:** Configure a global destination URL and optional per-event `eventsConfiguration` entries through the Webhook Service config API, as described in [Multiple webhook targetss (HTTP strategy)](#multiple-webhooks-http-strategy).
+* **Svix strategies** – On the Event Gateway, configure endpoints that relate to those events. To configure endpoints by using the APIs, check out the "Add webhook endpoints/Using the API" section in the [official Svix documentation](https://docs.svix.com/quickstart).
+* **HTTP strategy** – Configure a global destination URL and optional per-event `eventsConfiguration` entries through the Webhook Service config API, as described in [How to configure multiple webhook targets (HTTP strategy)](#how-to-configure-multiple-webhook-targets-http-strategy).
 
-## Multiple webhook targets (HTTP strategy)
+## How to configure multiple webhook targets (HTTP strategy)
 
 Defining multiple webhook targets lets you register several HTTP targets for the same `eventType`. Each entry in `eventsConfiguration` can define its own `destinationUrl`, `secretKey`, `headers`, optional Jayway JsonPath `filter`, `excludedFields`, optional `name` (max 255 characters), and `active` flag.
 
@@ -197,16 +196,16 @@ When you create a `filter`, the JsonPath expression must match the payload struc
 
 Examples:
 
-* Match by status: `$[?(@.status == 'DECLINED')]`
-* Nested path: `$[?(@.total.amount > 100)]` or `$[?(@.status.value == 'DECLINED')]`
-* Custom entity type: `$[?(@.type == 'contract')]`
+* Match by status – `$[?(@.status == 'DECLINED')]`
+* Nested path – `$[?(@.total.amount > 100)]` or `$[?(@.status.value == 'DECLINED')]`
+* Custom entity type – `$[?(@.type == 'contract')]`
 
 Related validation rules:
 
-* Entry `id` is server-generated. Omit `id` on create (`POST` or PATCH create-entry); client-supplied ids are rejected with `400`.
-* On update (`PUT`), known ids must refer to existing entries; unknown ids are rejected with `400`. Ids are immutable once assigned. Legacy payloads without entry ids are still accepted; the server assigns ids to id-less entries.
-* Duplicate entry ids are rejected with `400`.
-* `excludedFields: null` or omit inherits subscription exclusions; `[]` means no exclusions for that target.
+* Entry `id` is server-generated. Omit `id` on create (`POST` or `PATCH` create-entry); client-supplied IDs are rejected with `400`.
+* On update (`PUT`), known IDs must refer to existing entries; unknown IDs are rejected with `400`. IDs are immutable once assigned. Legacy payloads without entry IDs are still accepted; the server assigns IDs to id-less entries.
+* Duplicate entry IDs are rejected with `400`.
+* Omitting `excludedFields` or setting it to `null` inherits subscription exclusions; `[]` means no exclusions for that target.
 * Create a new entry with `UPSERT` on `/configuration/http/eventsConfigurationEntry` (no id segment). `REMOVE` is not supported on that path.
 * Prefer `/configuration/http/eventsConfigurationEntry/{entryId}` (and field subpaths for `destinationUrl`, `secretKey`, `headers`, `filter`, `excludedFields`, `name`, and `active`) to address an existing entry.
 * Legacy PATCH paths by `{eventType}` remain supported when at most one entry exists for that type and return `409` when multiple entries exist.
@@ -319,7 +318,7 @@ curl -i -X PUT \
 
 With this setup, only `schema.custom-instance-updated` payloads where `type` is `contract` match the endpoint filter. Other custom entity types are not candidates for this entry.
 
-### Create an eventsConfiguration entry
+### Create an `eventsConfiguration` entry
 
 Add a new HTTP target without replacing the full config. Call the [Partially updating a webhook config](api-reference/config#patch-webhook-tenant-config-code) endpoint with `UPSERT` on `/configuration/http/eventsConfigurationEntry`. Do not send `id` in the body — the server generates it.
 
@@ -378,7 +377,7 @@ curl -i -X PATCH \
 
 ### Deactivate a single target
 
-Temporarily stop deliveries to one HTTP target without removing it. Call the [Partially updating a webhook config](api-reference/config#patch-webhook-tenant-config-code) endpoint with `UPSERT` on `/configuration/http/eventsConfigurationEntry/{entryId}/active` and value `false`. Events for a deactivated endpoint are dropped without filter evaluation, delivery, or retries; other endpoints are not affected. Set the value back to `true` to resume deliveries.
+Temporarily stop deliveries to one HTTP target without removing it. Call the [Partially updating a webhook config](api-reference/config#patch-webhook-tenant-config-code) endpoint with `UPSERT` on `/configuration/http/eventsConfigurationEntry/{entryId}/active` and value `false`. Events for a deactivated target are dropped without filter evaluation, delivery, or retries; other targets are not affected. Set the value back to `true` to resume deliveries.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

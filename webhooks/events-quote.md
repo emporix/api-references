@@ -11,7 +11,7 @@ description: Webhook events related to the creation, update, and deletion of a q
 ## Available events
 
 <table><thead><tr><th>Event type</th><th>Event schema</th></tr></thead><tbody><tr><td>quote.created</td><td><pre class="language-json"><code class="lang-json">{
-  "id": "string",
+  "id": "String",
   "businessModel": "String",
   "restriction": "String",
   "customer": {
@@ -141,7 +141,7 @@ description: Webhook events related to the creation, update, and deletion of a q
   "previousStatus": "String",
   "businessModel": "String",
   "restriction": "String",
-  "id": "string",
+  "id": "String",
   "customer": {
     "customerId": "String",
     "firstName": "String",
