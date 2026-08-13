@@ -15,7 +15,7 @@ The Emporix Webhook Event publishing works in the following way:
 {% hint style="warning" %}
 For example, if you create a catalog in the Emporix environment, a notification is sent to the Webhook Service. The service passes the message to the Event Gateway. If you configured an endpoint for catalog creation beforehand, you receive the notification that a new catalog has been created.
 
-For HTTP Multiple Webhooks, you can store multiple `eventsConfiguration` entries for the same event type. Until the follow-up delivery change is released, delivery still uses the **first matching** event-type entry.
+For the HTTP strategy with multiple webhook targets, you can store multiple `eventsConfiguration` entries for the same event type.
 {% endhint %}
 
 ## How to configure webhook notifications
@@ -173,11 +173,7 @@ To receive notifications about the events you subscribed to in [Subscribe to eve
 
 ## How to configure multiple webhook targets (HTTP strategy)
 
-Defining multiple webhook targets lets you register several HTTP targets for the same `eventType`. Each entry in `eventsConfiguration` can define its own `destinationUrl`, `secretKey`, `headers`, optional Jayway JsonPath `filter`, `excludedFields`, optional `name` (max 255 characters), and `active` flag.
-
-{% hint style="warning" %}
-This release updates the configuration model and API. Webhook delivery still uses the first matching event-type entry until the follow-up delivery change is released. Existing single-target configurations remain backward compatible.
-{% endhint %}
+Defining multiple webhook targets lets you register several HTTP targets for the same `eventType`. Each entry in `eventsConfiguration` can define its own `destinationUrl`, `secretKey`, `headers`, optional Jayway JsonPath `filter`, `excludedFields`, optional `name` (max 255 characters), and `active` flag. 
 
 ### JsonPath filter structure and validation
 

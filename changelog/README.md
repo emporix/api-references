@@ -36,10 +36,6 @@ Webhook Service now supports multiple `eventsConfiguration` entries for the same
 
 The `GET`, `POST`, `PUT`, and `PATCH` config endpoints now expose and accept these fields. The service assigns entry IDs on write, keeps `secretKey` write-only, validates `filter` as JsonPath, and preserves the difference between `excludedFields: null` and `excludedFields: []`.
 
-{% hint style="warning" %}
-This change updates the configuration model and API only. Webhook delivery still uses the first matching event-type entry until the follow-up delivery change is released.
-{% endhint %}
-
 #### Updated endpoints
 
 | Endpoint | Description |
