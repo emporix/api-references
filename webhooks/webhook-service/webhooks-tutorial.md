@@ -138,7 +138,7 @@ curl -i -X PATCH \
 ]'
 ```
 
-With the HTTP strategy, pair the subscription with an optional JsonPath `filter` on an endpoint (for example `$[?(@.type == 'contract')]`) when you only want specific custom entity types delivered. If no filter is configured, all events of the subscribed custom-instance type are candidates for delivery. See [Multiple webhook targets (HTTP strategy)](#multiple-webhooks-http-strategy).
+With the HTTP strategy, pair the subscription with an optional JsonPath `filter` on an endpoint (for example `$[?(@.type == 'contract')]`) when you only want specific custom entity types delivered. If no filter is configured, all events of the subscribed custom-instance type are candidates for delivery. See [How to configure multiple webhook targets (HTTP strategy)](#how-to-configure-multiple-webhook-targets-http-strategy).
 
 ### Connect to the Event Gateway
 
