@@ -25,6 +25,35 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6126 -->
+## Sequential ID Service - site-derived placeholder resolution
+
+#### Overview
+
+Sequential ID Service now supports resolving placeholder values from the active site's Site Settings payload, including `mixins.*` and `metadata.mixins.*`, when generating IDs with `siteCode`. This allows checkout-created order IDs to include site-specific values such as `mixins.orderConfig.salesOrg` without manual `nextId` calls or post-processing.
+
+New placeholder attributes added to sequence schema definitions:
+
+- `sitePath` - a dotted path to a value in the Site Settings payload used to populate the placeholder.
+- `arrayLimit` - the maximum number of array elements to include when `sitePath` resolves to an array.
+- `delimiter` - the separator used when joining array values.
+
+Request-supplied placeholder values still take precedence over `sitePath` resolution. Existing built-in placeholders such as `__country__` and time-based placeholders continue to work.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Creating a new sequential schema](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-id#post-sequential-tenant-sequenceschemas) | Added support for `sitePath`, `arrayLimit`, and `delimiter` in placeholder definitions. The service validates supported Site Settings paths and rejects malformed or unsupported values. |
+| [Creating a nextId for schema type](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-id#post-sequential-tenant-nextid-schematype) | The service now resolves placeholder values from the active site payload, including site mixins, when `siteCode` is provided. This enables final order IDs to be generated during checkout with site-specific values. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-13" tags="improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-6223 -->
 ## Indexing Service - Battery Included site-aware availability
