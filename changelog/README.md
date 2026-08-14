@@ -33,12 +33,6 @@ layout:
 
 Battery Included site-aware product data now includes availability for sites that do not have any prices. This change ensures that `productSiteAware.availability` remains exposed when a product has site availability but no site price, which helps integrations link unavailable or no-longer-sold products to newer versions. This change affects only Battery Included output and does not change webhook payloads or Algolia data.
 
-#### Affected endpoints
-
-| Endpoint | Description |
-|----------|-------------|
-| [Creating and updating products](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/indexing) | Battery Included site-aware payloads now include `availability` for sites without prices. |
-
 #### Known problems
 
 There are no known problems.
