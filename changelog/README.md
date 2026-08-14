@@ -25,6 +25,33 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+<!-- emporix-ai-buddy:changelog:COP-6126 -->
+
+## Sequential ID Service - custom site path placeholders
+
+#### Overview
+
+Sequential ID Service now supports custom placeholders that resolve from site data when a `nextId` request includes `siteCode`. Use `sitePath` to point at a field from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) or [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins), for example `mixins.customConfig.region`. This makes site-specific prefixes such as `EC-EU-1001` possible without supplying the placeholder in the `nextId` request.
+
+Placeholder definitions also accept optional `arrayLimit` and `delimiter` properties for array values. Placeholder names on a schema must start and end with `__`. Request-supplied placeholder values still take precedence. Built-in placeholders (`__year__`, `__month__`, `__day__`, `__hour__`, `__minute__`, `__second__`, and `__country__`) keep their current behavior.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Creating a sequence schema](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas) | Accepts optional `sitePath`, `arrayLimit`, and `delimiter` on placeholder definitions. The service validates `sitePath` against the Site schema, except for `mixins.*` paths, which are format-validated only. |
+| [Retrieving all sequence schemas](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-tenant-schemas) | Returns the new placeholder properties when they are defined on a schema. |
+| [Retrieving a sequence schema](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-tenant-schemas-schemaid) | Returns the new placeholder properties when they are defined on a schema. |
+| [Creating a nextId for a sequence schema type](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-types-schematype-nextid) | Resolves custom `sitePath` placeholders from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) or [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins) when `siteCode` is provided. |
+| [Creating nextIds for sequence schema types](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-sequenceschemabatch-nextids) | Resolves custom `sitePath` placeholders from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) or [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins) when `siteCode` is provided. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-13" tags="improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-6223 -->
 ## Indexing Service - Battery Included site-aware availability
