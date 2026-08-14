@@ -163,6 +163,12 @@ curl 'https://api.emporix.io/customer/{tenant}/login' \
 {% step %}
 #### Create an order
 
+{% hint style="info" %}
+When order IDs are generated from Sequential ID during checkout or order creation, the final `id` can include placeholder values resolved from the active site configuration, including `mixins.*` and `metadata.mixins.*` paths defined in the sequence schema. For example, a schema prefix such as `EC-__salesOrg__-` can resolve `__salesOrg__` from a site mixin value like `mixins.orderConfig.salesOrg`.
+
+This behavior is configured in the Sequential ID schema, not in the order payload. The `siteCode` sent in the order request determines which site data is used for placeholder resolution.
+{% endhint %}
+
 As a merchant acting on behalf of a customer, send the request to the [Creating a new order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) endpoint.
 
 ```bash

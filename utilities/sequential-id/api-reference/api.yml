@@ -87,7 +87,7 @@ paths:
             example:
               name: Schema
               schemaType: orderNoSequence
-              preText: C-__year__-__month__-
+              preText: EC-__salesOrg__-__year__-__month__-
               postText: '-D'
               maxValue: 999999999
               numberOfDigits: 9
@@ -97,6 +97,9 @@ paths:
                   required: true
                 __month__:
                   required: true
+                __salesOrg__:
+                  required: true
+                  sitePath: mixins.orderConfig.salesOrg
             schema:
               $ref: '#/components/schemas/SequenceSchemaCreate'
         required: true
@@ -129,7 +132,7 @@ paths:
                 name: Schema
                 schemaType: orderNoSequence
                 active: true
-                preText: C-__year__-__month__-
+                preText: EC-__salesOrg__-__year__-__month__-
                 postText: '-D'
                 startValue: 1
                 maxValue: 999999999
@@ -140,6 +143,9 @@ paths:
                     required: true
                   __month__:
                     required: true
+                  __salesOrg__:
+                    required: true
+                    sitePath: mixins.orderConfig.salesOrg
               schema:
                 $ref: '#/components/schemas/SequenceSchema'
         '400':
@@ -438,6 +444,16 @@ components:
             type: boolean
           default:
             type: string
+          sitePath:
+            type: string
+            description: Dotted path into the Site Settings payload used to resolve the placeholder value when `siteCode` is provided, for example `homeBase.address.country`, `mixins.orderConfig.salesOrg`, or `shipping.0.id`.
+          arrayLimit:
+            type: integer
+            minimum: 1
+            description: Maximum number of array elements to include when the resolved `sitePath` value is an array. Defaults to `10`.
+          delimiter:
+            type: string
+            description: Delimiter used to join array elements when the resolved `sitePath` value is an array. Defaults to `-`.
     SequenceSchemaCreate:
       type: object
       properties:
@@ -654,16 +670,22 @@ components:
       in: query
       required: false
       description: |
-        Value used to resolve certain placeholders.
+        Value used to resolve placeholders from the site context.
 
-        Placeholders such as **\_\_year__**, **\_\_month__**, **\_\_day__**, **\_\_hour__**, **\_\_minute__**, **\_\_second__**, and **\_\_country__**, 
-        which are defined in the schema, can have default values computed when their counterparts are missing in the request body.
+        When `siteCode` is provided, Sequential ID can populate schema placeholders from the Site Settings payload if the placeholder definition includes `sitePath`.
+
+        Built-in placeholders such as **\_\_year__**, **\_\_month__**, **\_\_day__**, **\_\_hour__**, **\_\_minute__**, **\_\_second__**, and **\_\_country__** are still supported when their values are missing in the request body.
 
         The default values are derived from the `site`. Specifically:
         - All date-related placeholders are computed based on the `site.homeBase.timezone` field.
         - The **__country__** placeholder is replaced with the value of `site.homeBase.address.country`.
+        - Custom placeholders can be resolved from any configured leaf-level `sitePath`, including `mixins.*` and `metadata.mixins.*` paths.
 
-        If these values are missing in `site`, the following defaults are used:
+        Arrays are supported for leaf-level paths. By default, up to `10` elements are included and joined with `-`. Use the placeholder `arrayLimit` and `delimiter` properties to change this behavior.
+
+        Paths must point to a leaf value. Paths that resolve to upper-level objects are not supported.
+
+        If `timezone` or `country` are missing in `site`, the following defaults are used:
         - `UTC` for `timezone`
         - `DE` for `country`
       schema:
