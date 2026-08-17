@@ -759,6 +759,7 @@ paths:
                   value:
                     retentionEndDate: '2027-01-31'
                     emailReminderDate: '2027-01-24'
+                    emailNotificationsEnabled: true
         '401':
           $ref: '#/components/responses/401_unauthorized'
         '403':
@@ -775,10 +776,11 @@ paths:
 
         Use this configuration before importing customers with `legacyAuth`.
         For customers with `legacyAuth`, legacy password hashes are silently migrated to Emporix hashes on the first successful login.
-        When the retention period ends, remaining unmigrated accounts require a password reset and legacy credentials are cleared. A password reset email is sent to affected customers.
-        An email reminder requesting a single login is sent on `emailReminderDate` to all unmigrated customers, asking them to log in once so their accounts can be migrated.
+        When the retention period ends, remaining unmigrated accounts require a password reset and legacy credentials are cleared. A password reset email is sent to affected customers when `emailNotificationsEnabled` is `true`.
+        An email reminder requesting a single login is sent on `emailReminderDate` to all unmigrated customers when `emailNotificationsEnabled` is `true`, asking them to log in once so their accounts can be migrated.
 
         If `emailReminderDate` is omitted, the service defaults to 7 days before `retentionEndDate`, or to tomorrow when that default would fall on or before today.
+        If `emailNotificationsEnabled` is omitted, the service defaults to `true`. When `false`, customers do not receive any emails regarding the migration.
         
         If emails should include links to the storefront (password reset or login page), or a non-standard email template is required, please contact Emporix support.
 
@@ -798,6 +800,7 @@ paths:
                 value:
                   retentionEndDate: '2027-01-31'
                   emailReminderDate: '2027-01-24'
+                  emailNotificationsEnabled: true
       responses:
         '200':
           description: OK
@@ -810,6 +813,7 @@ paths:
                   value:
                     retentionEndDate: '2027-01-31'
                     emailReminderDate: '2027-01-24'
+                    emailNotificationsEnabled: true
         '400':
           $ref: '#/components/responses/400_bad_request'
         '401':
@@ -1290,6 +1294,13 @@ components:
           description: |
             Optional date on or after today and before `retentionEndDate` when reminder emails are sent to unmigrated customers.
             When omitted, defaults to 7 days before `retentionEndDate`, or to tomorrow when that default would fall on or before today.
+        emailNotificationsEnabled:
+          type: boolean
+          default: true
+          description: |
+            Optional flag indicating whether customers receive email notifications about the migration process.
+            When `true`, customers receive reminder and password reset emails. When `false`, customers do not receive any emails regarding the migration.
+            When omitted, defaults to `true`.
     PasswordMigrationRetentionConfigResponse:
       type: object
       properties:
@@ -1301,6 +1312,11 @@ components:
           type: string
           format: date
           description: Date when reminder emails are sent to unmigrated customers.
+        emailNotificationsEnabled:
+          type: boolean
+          description: |
+            Flag indicating whether customers receive email notifications about the migration process.
+            When `true`, customers receive reminder and password reset emails. When `false`, customers do not receive any emails regarding the migration.
     CustomerBulkItemResponse:
       type: object
       properties:
