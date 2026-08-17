@@ -32,7 +32,7 @@ layout:
 
 #### Overview
 
-Sequential ID Service now supports custom placeholders that resolve from site data when a `nextId` request includes `siteCode`. Use `sitePath` to point at a field from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) or [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins), for example `mixins.customConfig.region`. This makes site-specific prefixes such as `EC-EU-1001` possible without supplying the placeholder in the `nextId` request.
+Sequential ID Service now supports custom placeholders that resolve from site data when a `nextId` request includes `siteCode`. Use `sitePath` to point at a field from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) or [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins), for example `mixins.customConfig.region`. This makes site-specific prefixes possible without supplying the placeholder in the `nextId` request.
 
 Placeholder definitions also accept optional `arrayLimit` and `delimiter` properties for array values. Placeholder names on a schema must start and end with `__`. Request-supplied placeholder values still take precedence. Built-in placeholders (`__year__`, `__month__`, `__day__`, `__hour__`, `__minute__`, `__second__`, and `__country__`) keep their current behavior.
 

@@ -72,11 +72,11 @@ You can declare custom placeholders that Sequential ID fills from site data when
 
 Each placeholder object can include these properties in addition to `required` and `default`:
 
-| Property | Type | Description |
-| --- | --- | --- |
+| Property | Type | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| --- | --- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `sitePath` | string | Dotted path used to resolve the placeholder. Paths that start with `mixins.` come from [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins), for example `mixins.customConfig.region`. Other paths come from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) and must match the Site schema, for example `homeBase.address.country`. Use numeric segments to index arrays, for example `shipping.0.id`. |
-| `arrayLimit` | integer | Maximum number of array elements to include when `sitePath` resolves to an array. Minimum value is `1`. Default: `10`. Ignored for scalar values. |
-| `delimiter` | string | Separator used when joining array values. Default: `-`. Ignored for scalar values. |
+| `arrayLimit` | integer | Maximum number of array elements to include when `sitePath` resolves to an array. Minimum value is `1`. Default: `3`. Ignored for scalar values.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `delimiter` | string | Separator used when joining array values. Default: `-`. Ignored for scalar values.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 
 Placeholder names must start and end with `__`, for example `__region__`.
 
@@ -216,7 +216,7 @@ For example, for a schema with `"preText": "EC-__region__-"` and `"sitePath": "m
 EC-EU-1001
 ```
 
-If `sitePath` resolves to an array of scalar values, Sequential ID joins the values using the configured `delimiter` and `arrayLimit`. By default, up to `10` elements are included and joined with `-`. Placeholders that resolve to a value longer than 100 characters are truncated.
+If `sitePath` resolves to an array of scalar values, Sequential ID joins the values using the configured `delimiter` and `arrayLimit`. By default, up to `3` elements are included and joined with `-`. Placeholders that resolve to a value longer than 100 characters are truncated.
 
 If a required placeholder cannot be resolved from `sitePath`, for example because the path is missing or points to an object, the request fails with `400 Bad Request`.
 
