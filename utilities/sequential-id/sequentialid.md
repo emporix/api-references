@@ -139,7 +139,8 @@ Placeholder values can be resolved dynamically from site data when you pass `sit
 * Built-in date and time placeholders (`__year__`, `__month__`, `__day__`, `__hour__`, `__minute__`, `__second__`) use `homeBase.timezone` from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode). If no timezone is defined, `UTC` is used.
 * The built-in `__country__` placeholder uses `homeBase.address.country` from the same response. If no country is defined, `DE` is used.
 * Custom placeholders that declare `sitePath` are resolved from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode), or from [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins) when the path starts with `mixins.`.
-* `sitePath` must resolve to a scalar value or to an array of scalars. Object paths are not supported.
+* `sitePath` must resolve to a scalar value or to an array of scalars.
+* Singular array elements can be addressed with numeric segments, for example `shipping.0.id`. If `sitePath` resolves to an array, the service joins the values using the configured `delimiter` and `arrayLimit`.
 {% endhint %}
 
 ### Retrieve the created schema
