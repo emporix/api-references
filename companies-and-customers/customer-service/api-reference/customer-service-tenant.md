@@ -321,7 +321,7 @@ A successful response returns `200 OK` and the current configuration:
 }
 ```
 
-If no configuration is set for the tenant, the endpoint returns `404`.
+If no configuration is set for the tenant, the endpoint returns `404 Not Found`.
 {% endstep %}
 
 {% step %}
