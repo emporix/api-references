@@ -1229,14 +1229,6 @@ components:
               description: |
                 Optional contact email. When provided, it must match `account.email` (case-insensitive).
                 If omitted, `account.email` is used as the contact email.
-            active:
-              type: boolean
-              default: true
-              description: Flag indicating whether the customer profile is active.
-            onHold:
-              type: boolean
-              default: false
-              description: Flag indicating whether the customer profile is suspended.
             account:
               $ref: '#/components/schemas/CustomerImportAccountDto'
     CustomerImportAccountDto:
@@ -1253,6 +1245,7 @@ components:
             Precomputed Emporix native password hash.
 
             Provide exactly one of `passwordHash` or `legacyAuth`.
+            Please, contact Emporix support to determine if your existing password hashing strategy is compatible with the Emporix native password hashing strategy.
         legacyAuth:
           $ref: '#/components/schemas/LegacyAuth'
           description: |
@@ -1267,7 +1260,7 @@ components:
       properties:
         algorithm:
           type: string
-          description: Identifier of the legacy password verifier to use during login.
+          description: Identifier of the legacy password verifier to use during login. Please, contact Emporix support to determine the correct value for your case.
           enum:
             - hybris-sha512-uid-salt
         hash:
@@ -1277,7 +1270,7 @@ components:
           type: object
           description: |
             Algorithm-specific metadata required for verification.
-            For `hybris-sha512-uid-salt`, provide `originalUid` with the pre-normalization source user identifier used as the salt.
+            Please, contact Emporix support to determine the correct values for your case.
           additionalProperties:
             type: string
           example:
