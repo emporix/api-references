@@ -25,6 +25,33 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Customer Service - password migration retention and bulk customer import
+
+#### Overview
+
+Customer Service now supports password migration for imported customer accounts. You can retrieve, configure, and remove a tenant-level password migration retention window, and import customers in bulk with either a native `passwordHash` or a `legacyAuth` payload. Customers imported with `legacyAuth` can keep their existing passwords; on first successful login the password is verified with the legacy algorithm and silently rehashed to the Emporix native format.
+
+{% hint style="info" %}
+Importing customers with `legacyAuth` requires an active password migration retention configuration. Provide exactly one of `passwordHash` or `legacyAuth` for each imported account.
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint                                                                                                                                                                                                                                                             | Description                                                                                                                          |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| [Retrieving password migration retention configuration](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#get-customer-tenant-config-password-migration-retention)                   | Returns the tenant password migration retention configuration, or `404` when none is set.                                            |
+| [Configuring password migration retention](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#post-customer-tenant-config-password-migration-retention)                                 | Creates or updates the tenant password migration retention configuration, including `retentionEndDate` and optional `emailReminderDate`. |
+| [Removing password migration retention configuration](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#delete-customer-tenant-config-password-migration-retention)                   | Removes the password migration retention configuration when no accounts with `legacyAuth` remain.                                    |
+| [Importing customers in bulk](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#post-customer-tenant-customers-import)                                                                  | Imports up to 200 customers in one request, with either native `passwordHash` or `legacyAuth` credentials.                           |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-17" tags="new-feature" %}
 <!-- emporix-ai-buddy:changelog:COP-6126 -->
 
