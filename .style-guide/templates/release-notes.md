@@ -52,11 +52,11 @@ Example:
 ...
 #### New features
 
-|Feature|Benefit|
-|---|---|
-|**Feature one**|One or more sentences for description of its benefits.|
-|**Feature two**|One or more sentences for description of its benefits.|
-| ... | ... |
+| Feature | Function | Benefit |
+| ------- | -------- | ------- |
+| **Feature one** | One or more sentences describing what the feature does or how it works. | One or more sentences describing its benefits. |
+| **Feature two** | One or more sentences describing what the feature does or how it works. | One or more sentences describing its benefits. |
+| ... | ... | ... |
 
 #### Fixes and improvements
 
@@ -64,7 +64,7 @@ None as this is a new feature/improvement.
 
 #### Known problems
 
-None as this is a new feature/improvement.
+No known problems at the time of release.
 
 #### Documentation and links
 
@@ -80,7 +80,8 @@ API Guides:
 
 * The table in `New features` section
   * Feature: bold, sentence case
+  * Function: one or more sentences describing what the feature does or how it works (capability/behavior, not user value).
   * Benefit: one or more sentences for description of its benefits.
 * `Fixes and improvements` section – if there are any fixes to the existing features, state briefly what they are. If not applicable, state "None as this is a new feature."
-* `Known problems` - if there are any known issues, state what they are. If there is nothing known, state "None as this is a new feature/improvement." (feature or improvement depending on the type of announcement).
+* `Known problems` - if there are any known issues, state what they are. If there are no known issues, state "No known problems at the time of release."
 * `Documentation and links` section – list all the relevant links to docs that have been created/updated in relation to the announcement.

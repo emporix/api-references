@@ -52,6 +52,100 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-08-17" tags="new-feature" %}
+<!-- emporix-ai-buddy:changelog:COP-6126 -->
+
+## Sequential ID Service - custom site path placeholders
+
+#### Overview
+
+Sequential ID Service now supports custom placeholders that resolve from site data when a `nextId` request includes `siteCode`. Use `sitePath` to point at a field from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) or [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins), for example `mixins.customConfig.region`. This makes site-specific prefixes possible without supplying the placeholder in the `nextId` request.
+
+Placeholder definitions also accept optional `arrayLimit` and `delimiter` properties for array values. Placeholder names on a schema must start and end with `__`. Request-supplied placeholder values still take precedence. Built-in placeholders (`__year__`, `__month__`, `__day__`, `__hour__`, `__minute__`, `__second__`, and `__country__`) keep their current behavior.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Creating a sequence schema](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas) | Accepts optional `sitePath`, `arrayLimit`, and `delimiter` on placeholder definitions. The service validates `sitePath` against the Site schema, except for `mixins.*` paths, which are format-validated only. |
+| [Retrieving all sequence schemas](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-tenant-schemas) | Returns the new placeholder properties when they are defined on a schema. |
+| [Retrieving a sequence schema](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-tenant-schemas-schemaid) | Returns the new placeholder properties when they are defined on a schema. |
+| [Creating a nextId for a sequence schema type](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-types-schematype-nextid) | Resolves custom `sitePath` placeholders from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) or [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins) when `siteCode` is provided. |
+| [Creating nextIds for sequence schema types](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-sequenceschemabatch-nextids) | Resolves custom `sitePath` placeholders from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) or [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins) when `siteCode` is provided. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-08-13" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6223 -->
+## Indexing Service - Battery Included site-aware availability
+
+#### Overview
+
+Battery Included site-aware product data now includes availability for sites that do not have any prices. This change ensures that `productSiteAware.availability` remains exposed when a product has site availability but no site price, which helps integrations link unavailable or no-longer-sold products to newer versions. This change affects only Battery Included output and does not change webhook payloads or Algolia data.
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-08-12" tags="new-feature, improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6177 -->
+
+## Webhook Service - multi-target HTTP event configuration
+
+#### Overview
+
+Webhook Service now supports multiple `eventsConfiguration` entries for the same event type in HTTP webhook configs. Each entry can have its own stable `id`, optional `filter`, and optional `excludedFields`, which lets API clients manage event-specific HTTP targets independently through the existing config API.
+
+The `GET`, `POST`, `PUT`, and `PATCH` config endpoints now expose and accept these fields. The service assigns entry IDs on write, keeps `secretKey` write-only, validates `filter` as JsonPath, and preserves the difference between `excludedFields: null` and `excludedFields: []`.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Creating a single webhook config](https://developer.emporix.io/api-references/api-guides/webhooks/webhook-service/api-reference/config#post-webhook-tenant-config) | HTTP webhook configs now accept multiple `eventsConfiguration` entries for the same event type, with optional `filter` and `excludedFields`. |
+| [Updating a single webhook config](https://developer.emporix.io/api-references/api-guides/webhooks/webhook-service/api-reference/config#put-webhook-tenant-config-code) | The endpoint now preserves or assigns per-entry `id` values and accepts the new `filter` and `excludedFields` fields. |
+| [Retrieving a webhook config](https://developer.emporix.io/api-references/api-guides/webhooks/webhook-service/api-reference/config#get-webhook-tenant-config-code) | HTTP event configuration entries now return `id`, `filter`, and `excludedFields`, while `secretKey` remains hidden behind `secretKeyExists`. |
+| [Partially updating a webhook config](https://developer.emporix.io/api-references/api-guides/webhooks/webhook-service/api-reference/config#patch-webhook-tenant-config-code) | PATCH operations can now address HTTP event configuration entries by entry `id`, including updates to `destinationUrl`, `secretKey`, `headers`, `filter`, and `excludedFields`. Legacy event-type-based PATCH paths still work when only one entry exists for the event type and return `409` when multiple entries exist. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-08-11" tags="major-change" %}
+
+## AI Service - removal of `support` agent type
+
+#### Overview
+
+The `support` value is removed from the agent `type` enum. Existing support agents and predefined support templates were already migrated to `generic`.
+
+{% hint style="info" %}
+Migration has already been applied for existing tenants. Agents formerly stored with `type: support` were converted to `generic`.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint                                                                                                                                                                                    | Description                                                                 |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)        | Returned `type` is one of `generic`, `complaint`, or `anti_fraud`.          |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                        | Returned `type` is one of `generic`, `complaint`, or `anti_fraud`.          |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)              | Returned `type` is one of `generic`, `complaint`, or `anti_fraud`.          |
+| [Listing available agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#get-ai-service-tenant-agentic-templates) | Template `type` no longer includes `support`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-10" tags="improvement" %}
 
 ## AI Service - `baseProvider` for self-hosted LLMs

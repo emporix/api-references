@@ -59,11 +59,88 @@ curl -i -X POST
   }'
 ```
 
-{% hint style="warning" %}
-The values of the placeholder properties are resolved dynamically from the defined site settings:
+The schema can use these built-in placeholders, which Sequential ID resolves from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) when you pass `siteCode`:
 
-* All the placeholder values connected to date and time are based on the `site.homeBase.timezone` property. If no timezone is defined, the default GMT (UTC-0) timezone is used.
-* The `__country__` placeholder comes from the `site.homeBase.address.country` property. The default system value is `DE` for Germany.
+| Placeholder | Source |
+| --- | --- |
+| `__year__`, `__month__`, `__day__`, `__hour__`, `__minute__`, `__second__` | `homeBase.timezone`. If no timezone is defined, `UTC` is used. |
+| `__country__` | `homeBase.address.country`. If no country is defined, `DE` is used. |
+
+### Resolve custom placeholders from a site
+
+You can declare custom placeholders that Sequential ID fills from site data when you pass `siteCode` during ID generation.
+
+Each placeholder object can include these properties in addition to `required` and `default`:
+
+| Property | Type | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| --- | --- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `sitePath` | string | Dotted path used to resolve the placeholder. Paths that start with `mixins.` come from [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins), for example `mixins.customConfig.region`. Other paths come from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) and must match the Site schema, for example `homeBase.address.country`. Use numeric segments to index arrays, for example `shipping.0.id`. |
+| `arrayLimit` | integer | Maximum number of array elements to include when `sitePath` resolves to an array. Minimum value is `1`. Default: `3`. Ignored for scalar values.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `delimiter` | string | Separator used when joining array values. Default: `-`. Ignored for scalar values.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+
+Placeholder names must start and end with `__`, for example `__region__`.
+
+Example schema with a custom placeholder resolved from a site mixin:
+
+```bash
+curl -i -X POST 
+  'https://api.emporix.io/sequential-id/{tenant}/schemas' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+  -H 'Content-Type: application/json' 
+  -d '{
+    "name": "testSchema",
+    "schemaType": "orderNoSequence",
+    "preText": "EC-__region__-__year__-__month__-__abo__-",
+    "postText": "-D",
+    "maxValue": 999999999,
+    "numberOfDigits": 9,
+    "startValue": 3,
+    "placeholders": {
+      "__year__": {
+        "required": true
+      },
+      "__month__": {
+        "required": true
+      },
+      "__abo__": {
+        "default": "REG",
+        "required": false
+      },
+      "__region__": {
+        "required": true,
+        "sitePath": "mixins.customConfig.region"
+      }
+    }
+  }'
+```
+
+Example placeholder resolved from an array field:
+
+```json
+{
+  "__regions__": {
+    "required": false,
+    "sitePath": "shipToCountries",
+    "arrayLimit": 3,
+    "delimiter": "_"
+  }
+}
+```
+
+When you create a schema, Sequential ID validates every `sitePath`:
+
+* Standard site paths must match the known Site schema from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode), for example `homeBase.address.country`, `currency`, `shipToCountries`, or `shipping.0.id`.
+* Paths that start with `mixins.` are format-validated only, because mixin content is tenant-defined. These paths are resolved from [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins).
+* The service rejects malformed paths, bracket notation such as `shipping[0].id`, unknown non-mixin properties, the bare `mixins` root, any `metadata` path, and `arrayLimit` values that are not positive.
+
+{% hint style="warning" %}
+Placeholder values can be resolved dynamically from site data when you pass `siteCode`:
+
+* Built-in date and time placeholders (`__year__`, `__month__`, `__day__`, `__hour__`, `__minute__`, `__second__`) use `homeBase.timezone` from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode). If no timezone is defined, `UTC` is used.
+* The built-in `__country__` placeholder uses `homeBase.address.country` from the same response. If no country is defined, `DE` is used.
+* Custom placeholders that declare `sitePath` are resolved from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode), or from [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins) when the path starts with `mixins.`.
+* `sitePath` must resolve to a scalar value or to an array of scalars.
+* Singular array elements can be addressed with numeric segments, for example `shipping.0.id`. If `sitePath` resolves to an array, the service joins the values using the configured `delimiter` and `arrayLimit`.
 {% endhint %}
 
 ### Retrieve the created schema
@@ -126,15 +203,23 @@ curl -i -X POST
 }'
 ```
 
-In the query parameter, pass the `siteCode` of a site where you want to use the schema to ensure the placeholder values are replaced in a fly.
+In the query parameter, pass the `siteCode` of a site where you want to use the schema so that site-based placeholders can be resolved during ID generation.
 
-This endpoint creates and returns the `nextId` value. When you send an empty body in the request, the `nextId` is generated following the pattern defined in the schema and the placeholders are replaced with the values from the site settings.
+Providing `siteCode` is required when the schema uses a required `sitePath` placeholder that is not supplied in the request body.
 
-In this case, the subsequent order ID looks like this:
+This endpoint creates and returns the `nextId` value. When you send an empty body in the request, the `nextId` is generated following the pattern defined in the schema and the placeholders are replaced with values from the site settings.
+
+If a placeholder defines `sitePath`, Sequential ID resolves it from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode), or from [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins) when the path starts with `mixins.`. Values supplied in the request body take precedence over `sitePath` resolution.
+
+For example, for a schema with `"preText": "EC-__region__-"` and `"sitePath": "mixins.customConfig.region"`, a site mixin value of `"EU"` produces an ID such as:
 
 ```
-ORDER-2025-03-27-14-03-22-DE0002-N
+EC-EU-1001
 ```
+
+If `sitePath` resolves to an array of scalar values, Sequential ID joins the values using the configured `delimiter` and `arrayLimit`. By default, up to `3` elements are included and joined with `-`. Placeholders that resolve to a value longer than 100 characters are truncated.
+
+If a required placeholder cannot be resolved from `sitePath`, for example because the path is missing or points to an object, the request fails with `400 Bad Request`.
 
 ### Vendor-specific invoice numbering
 
