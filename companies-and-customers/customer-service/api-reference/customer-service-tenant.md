@@ -226,10 +226,10 @@ Example successful response includes all the assigned details:
 
 ## How to import customers and migrate passwords
 
-You can import customers in bulk and migrate their passwords from a legacy system. Customers keep their existing passwords with either `legacyAuth` or `passwordHash`. Each imported account must include exactly one of these fields.
+You can import customers in bulk and migrate their passwords from a legacy system. Customers keep their existing passwords with either field. Each imported account must include exactly one of `legacyAuth` or `passwordHash`.
 
-* `legacyAuth` – a password hash from a source system that is not compatible with the Emporix native hashing strategy, plus algorithm metadata. On the first successful login, Emporix verifies the password with the legacy algorithm and silently rehashes it to the native format. This option requires an active password migration retention configuration.
-* `passwordHash` – a precomputed hash that is already compatible with the Emporix native hashing strategy. The hash is stored as a native password immediately, so no retention configuration or first-login rehash is needed.
+* `legacyAuth` – The supported way to import a non-native password hash. Provide the source hash and algorithm metadata. On the first successful login, Emporix verifies the password with the legacy algorithm and silently rehashes it to the native format. This option requires an active password migration retention configuration.
+* `passwordHash` – Use this only when the source hash is already compatible with the Emporix native hashing strategy. The hash is stored as a native hash immediately, so no retention configuration or first-login rehash is needed.
 
 {% hint style="info" %}
 For the retention timeline and customer email behavior, see [Password Migration Strategy](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/system-management/authentication-and-authorization/customer-authentication/password-migration-strategy).
@@ -326,11 +326,11 @@ If no configuration is set for the tenant, the endpoint returns `404 Not Found`.
 {% endstep %}
 
 {% step %}
-#### Import customers with non-native `legacyAuth`
+#### Import customers with non-native hash
 
 Import up to 200 customers in one request by calling the [Importing customers in bulk](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#post-customer-tenant-customers-import) endpoint. Repeat the request until you import the full customer base.
 
-Each item must include an `account` object with `email` and exactly one of `passwordHash` or `legacyAuth`. Importing with `legacyAuth` requires an active password migration retention configuration. When you provide `contactEmail`, it must match `account.email` (case-insensitive). If you omit `contactEmail`, the service uses `account.email`.
+Each item must include an `account` object with `email` and `legacyAuth`. For a non-native hash, `legacyAuth` is the only supported field. Importing with `legacyAuth` requires an active password migration retention configuration. When you provide `contactEmail`, it must match `account.email` (case-insensitive). If you omit `contactEmail`, the service uses `account.email`.
 
 This import does not send welcome emails or run other onboarding logic. Contact [Emporix Support](mailto:support@emporix.com) to confirm the `algorithm` value and `context` metadata for your source system.
 
@@ -364,7 +364,7 @@ curl -X POST "https://api.emporix.io/customer/{tenant}/customers/import" \
 
 The response is `207 Multi-Status`. Each result is returned at the same index as the customer in the request body. A successful item returns `201` and the generated customer `id`.
 
-If an item is invalid, the result at that index is an error, and other items in the same batch can still succeed. For example, when an account is missing both `passwordHash` and `legacyAuth`:
+If an item is invalid, the result at that index is an error, and other items in the same batch can still succeed. For example, when an account is missing `legacyAuth`:
 
 ```json
 [
@@ -387,7 +387,7 @@ If an item is invalid, the result at that index is an error, and other items in 
 {% step %}
 #### Import customers with native `passwordHash`
 
-Use the same [Importing customers in bulk](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#post-customer-tenant-customers-import) endpoint when the source hashes are compatible with the Emporix native password hashing strategy. Provide `passwordHash` instead of `legacyAuth`. Native-hash imports do not require a password migration retention configuration.
+Use the same [Importing customers in bulk](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#post-customer-tenant-customers-import) endpoint only when the source hashes are compatible with the Emporix native password hashing strategy. Provide `passwordHash`. Do not send a non-native hash in `passwordHash`. Native-hash imports do not require a password migration retention configuration.
 
 Contact [Emporix Support](mailto:support@emporix.com) to confirm that your existing hashing strategy is compatible.
 
@@ -412,7 +412,7 @@ curl -X POST "https://api.emporix.io/customer/{tenant}/customers/import" \
 ```
 
 {% hint style="info" %}
-Provide exactly one of `passwordHash` or `legacyAuth` for each imported account.
+Use `legacyAuth` for a non-native hash and `passwordHash` for a native hash. Provide exactly one of these fields for each imported account.
 {% endhint %}
 {% endstep %}
 
