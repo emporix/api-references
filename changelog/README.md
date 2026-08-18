@@ -25,6 +25,37 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6279 -->
+
+## Order Service - dynamic variant product snapshots
+
+#### Overview
+
+Order entry product snapshots now preserve dynamic-variant-specific fields for `DYNAMIC_VARIANT` products created through checkout and order flows. The `entries[].product` object can now include `parentVariantId`, `parentVariantPath`, `ownVariantAttributes`, `inheritedVariantAttributes`, and `sellable`, which keeps the order snapshot aligned with the source product data when these fields are present.
+
+New optional fields on `entries[].product`:
+
+- `parentVariantId` - the immediate parent variant identifier.
+- `parentVariantPath` - the ordered list of ancestor variant identifiers from direct parent to root.
+- `ownVariantAttributes` - variant attributes defined directly on the purchased dynamic variant.
+- `inheritedVariantAttributes` - variant attributes inherited from ancestor variants.
+- `sellable` - the explicit sellability flag for the dynamic variant, including `false`.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Creating an order from checkout](https://developer.emporix.io/api-references/api-guides/checkout/checkout/api-reference/checkout#post-checkout-tenant-checkouts-order) | Order creation now preserves dynamic-variant-specific product fields on `entries[].product` for `DYNAMIC_VARIANT` products. |
+| [Creating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/order#post-order-tenant-orders) | The `entries[].product` schema now supports optional dynamic-variant-specific snapshot fields. |
+| [Retrieving an order by ID](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/order#get-order-tenant-orders-orderid) | Order responses now return preserved dynamic-variant-specific fields on `entries[].product` when available. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-18" tags="new-feature" %}
 
 ## Customer Service - password migration retention and bulk customer import
