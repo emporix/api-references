@@ -19,7 +19,7 @@ paths:
   '/customer/{tenant}/customers':
     get:
       summary: Retrieving a list of customers
-      responses:`
+      responses:
         '200':
           description: OK
           content:
@@ -741,9 +741,6 @@ paths:
         - Import and migration
       description: |-
         Retrieves the password migration retention configuration for the tenant.
-
-        **Required scopes**
-        * `customer.import_read`
       security:
         - OAuth2:
             - customer.import_read
@@ -783,9 +780,6 @@ paths:
         If `emailNotificationsEnabled` is omitted, the service defaults to `true`. When `false`, customers do not receive any emails regarding the migration.
         
         If emails should include links to the storefront (password reset or login page), or a non-standard email template is required, please contact Emporix support.
-
-        **Required scopes**
-        * `customer.import_manage`
       security:
         - OAuth2:
             - customer.import_manage
@@ -832,9 +826,6 @@ paths:
 
         To avoid indefinite storage of potentially sensitive legacy password hashes, the configuration removal is blocked while any customer account still contains a `legacyAuth` record.
         Complete the migration window first. The configuration may still be updated to move the `retentionEndDate` earlier and complete migration sooner.
-
-        **Required scopes**
-        * `customer.import_manage`
       security:
         - OAuth2:
             - customer.import_manage
@@ -869,9 +860,6 @@ paths:
         To avoid indefinite storage of potentially sensitive legacy password hashes, importing customers with `legacyAuth` requires an active password migration retention configuration for the tenant.
 
         Response for a particular customer is returned at the same position (index) at which that customer is located in the request body.
-
-        **Required scopes**
-        * `customer.import_manage`
       security:
         - OAuth2:
             - customer.import_manage
