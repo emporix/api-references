@@ -330,7 +330,9 @@ If no configuration is set for the tenant, the endpoint returns `404 Not Found`.
 
 Import up to 200 customers in one request by calling the [Importing customers in bulk](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#post-customer-tenant-customers-import) endpoint. Repeat the request until you import the full customer base.
 
-Each item must include an `account` object with `email` and `legacyAuth`. For a non-native hash, `legacyAuth` is the only supported field. Importing with `legacyAuth` requires an active password migration retention configuration. When you provide `contactEmail`, it must match `account.email` (case-insensitive). If you omit `contactEmail`, the service uses `account.email`.
+To import a non-native hash, include `legacyAuth` in each `account` object, together with `email`. An active password migration retention configuration is required.
+
+When you provide `contactEmail`, it must match `account.email` (case-insensitive). If you omit `contactEmail`, the service uses `account.email`.
 
 This import does not send welcome emails or run other onboarding logic. Contact [Emporix Support](mailto:support@emporix.com) to confirm the `algorithm` value and `context` metadata for your source system.
 
