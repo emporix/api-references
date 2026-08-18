@@ -1756,6 +1756,8 @@ paths:
         If the `metadata.version` is provided, then optimistic locking is enabled and version must match the version in the database.
         
         ***Important***: If MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Only then the agent and MCP server are disabled.
+
+        The `type: dynamic` value and its `tools` definitions are in preview. When upserting an enabled dynamic MCP server, each tool's `config.invocation.functionId` is validated against the Automation service. The request returns `400` when a referenced function does not exist on the tenant.
       security:
         - OAuth2:
             - ai.agent_manage
@@ -2828,9 +2830,8 @@ components:
           properties:
             authorizationHeaderToken:
               $ref: '#/components/schemas/ExpandableTokenResponse'
-    BaseMcpServer:
+    BaseManagedMcpServer:
       type: object
-      description: An object representing customer's own implementation of the MCP server.
       properties:
         name:
           type: string
@@ -2841,11 +2842,133 @@ components:
           default: false
         transport:
           $ref: '#/components/schemas/CustomMcpServerTransportType'
-    McpServerRequest:
+    ManagedMcpServerType:
+      type: string
+      enum: [ custom, dynamic ]
+      description: |-
+        Type of the managed MCP server resource. Possible values:
+        * `custom`
+        * `dynamic`
+
+          **The `dynamic` value is in preview mode** - some of the features may not be fully operational yet.
+    McpToolInvocationMethod:
+      type: string
+      enum: [ GET, POST, PUT, PATCH, DELETE ]
+      description: HTTP method used to invoke the Automation function.
+    McpToolInvocationArgsLocation:
+      type: string
+      enum: [ body, query ]
+      description: Location of the tool arguments in the HTTP request. Defaults to `body` when omitted.
+    McpToolInvocationRequest:
+      type: object
+      properties:
+        functionId:
+          type: string
+          description: Identifier of the Automation function to invoke when the tool is called.
+        method:
+          $ref: '#/components/schemas/McpToolInvocationMethod'
+        argsLocation:
+          $ref: '#/components/schemas/McpToolInvocationArgsLocation'
+      required:
+        - functionId
+        - method
+    McpToolInvocationResponse:
+      type: object
+      properties:
+        functionId:
+          type: string
+          description: Identifier of the Automation function to invoke when the tool is called.
+        method:
+          $ref: '#/components/schemas/McpToolInvocationMethod'
+        argsLocation:
+          $ref: '#/components/schemas/McpToolInvocationArgsLocation'
+    McpToolConfigRequest:
+      type: object
+      properties:
+        requiredScopes:
+          type: array
+          description: OAuth scopes required to invoke the tool.
+          items:
+            type: string
+        inputSchema:
+          type: string
+          description: JSON Schema document describing the tool input, provided as a JSON string.
+        invocation:
+          $ref: '#/components/schemas/McpToolInvocationRequest'
+      required:
+        - inputSchema
+        - invocation
+    McpToolConfigResponse:
+      type: object
+      properties:
+        requiredScopes:
+          type: array
+          description: OAuth scopes required to invoke the tool.
+          items:
+            type: string
+        inputSchema:
+          type: string
+          description: JSON Schema document describing the tool input, provided as a JSON string.
+        invocation:
+          $ref: '#/components/schemas/McpToolInvocationResponse'
+    McpToolRequest:
+      type: object
+      description: |-
+        Tool definition for a dynamic MCP server.
+
+        **Dynamic MCP tools are in preview mode** - some of the features may not be fully operational yet.
+      properties:
+        name:
+          type: string
+          description: Unique name of the tool. Must not contain whitespace characters.
+        description:
+          type: string
+          description: Human-readable description of the tool.
+        prompt:
+          type: string
+          description: Prompt that defines when and why the agent should call this tool.
+        enabled:
+          type: boolean
+          description: An indicator whether the tool is enabled.
+          default: false
+        config:
+          $ref: '#/components/schemas/McpToolConfigRequest'
+      required:
+        - name
+        - prompt
+        - config
+    McpToolResponse:
+      type: object
+      description: |-
+        Tool definition for a dynamic MCP server.
+
+        **Dynamic MCP tools are in preview mode** - some of the features may not be fully operational yet.
+      properties:
+        name:
+          type: string
+          description: Unique name of the tool.
+        description:
+          type: string
+          description: Human-readable description of the tool.
+        prompt:
+          type: string
+          description: Prompt that defines when and why the agent should call this tool.
+        enabled:
+          type: boolean
+          description: An indicator whether the tool is enabled.
+        config:
+          $ref: '#/components/schemas/McpToolConfigResponse'
+    CustomMcpServerRequest:
       allOf:
-        - $ref: '#/components/schemas/BaseMcpServer'
+        - $ref: '#/components/schemas/BaseManagedMcpServer'
         - type: object
+          description: An object representing customer's own implementation of the MCP server.
           properties:
+            type:
+              allOf:
+                - $ref: '#/components/schemas/ManagedMcpServerType'
+              description: For custom MCP servers it has to be set to `custom` or omitted. Defaults to `custom`.
+              example: custom
             config:
               $ref: '#/components/schemas/McpServerConfigRequest'
             metadata:
@@ -2854,15 +2977,79 @@ components:
             - name
             - transport
             - config
-    McpServerResponse:
+    DynamicMcpServerRequest:
       allOf:
-        - $ref: '#/components/schemas/BaseMcpServer'
+        - $ref: '#/components/schemas/BaseManagedMcpServer'
         - type: object
           properties:
+            type:
+              allOf:
+                - $ref: '#/components/schemas/ManagedMcpServerType'
+              description: For dynamic MCP servers it has to be set to `dynamic`.
+              example: dynamic
+            tools:
+              type: array
+              description: |-
+                List of tools exposed by this MCP server.
+
+                **The `tools` field is in preview mode** - some of the features may not be fully operational yet.
+              items:
+                $ref: '#/components/schemas/McpToolRequest'
+            metadata:
+              $ref: '#/components/schemas/MetadataRequest'
+          required:
+            - name
+            - type
+            - tools
+    McpServerRequest:
+      oneOf:
+        - $ref: '#/components/schemas/CustomMcpServerRequest'
+        - $ref: '#/components/schemas/DynamicMcpServerRequest'
+    CustomMcpServerResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseManagedMcpServer'
+        - type: object
+          description: An object representing customer's own implementation of the MCP server.
+          properties:
+            id:
+              type: string
+              description: Unique identifier of the MCP server.
+            type:
+              allOf:
+                - $ref: '#/components/schemas/ManagedMcpServerType'
+              description: Type of the managed MCP server resource.
+              example: custom
             config:
               $ref: '#/components/schemas/McpServerConfigResponse'
             metadata:
               $ref: '#/components/schemas/MetadataResponse'
+    DynamicMcpServerResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseManagedMcpServer'
+        - type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier of the MCP server.
+            type:
+              allOf:
+                - $ref: '#/components/schemas/ManagedMcpServerType'
+              description: For dynamic MCP servers it has to be set to `dynamic`.
+              example: dynamic
+            tools:
+              type: array
+              description: |-
+                List of tools exposed by this MCP server.
+
+                **The `tools` field is in preview mode** - some of the features may not be fully operational yet.
+              items:
+                $ref: '#/components/schemas/McpToolResponse'
+            metadata:
+              $ref: '#/components/schemas/MetadataResponse'
+    McpServerResponse:
+      oneOf:
+        - $ref: '#/components/schemas/CustomMcpServerResponse'
+        - $ref: '#/components/schemas/DynamicMcpServerResponse'
     CommerceEventsResponse:
       type: object
       properties:
@@ -3248,18 +3435,6 @@ components:
       enum:
         - commerce_events
       description: Type of the trigger.
-    CommerceEventTriggerFilterLeafOperator:
-      type: string
-      enum:
-        - $eq
-        - $ne
-        - $in
-        - $notIn
-        - $exists
-        - $notExists
-        - $isEmpty
-        - $notEmpty
-      description: Comparison operator applied to a commerce event payload field.
     CommerceEventTriggerFilterLogicalOperator:
       type: string
       enum:
@@ -4570,7 +4745,9 @@ components:
             $ref: '#/components/schemas/McpServerRequest'
           examples:
             Create Custom MCP Server:
-              $ref: '#/components/examples/McpServerRequest'
+              $ref: '#/components/examples/CustomMcpServerRequest'
+            Create Dynamic MCP Server:
+              $ref: '#/components/examples/DynamicMcpServerRequest'
     mcpServerPatchBody:
       content:
         application/json:
@@ -4582,6 +4759,20 @@ components:
                 - op: REPLACE
                   path: /name
                   value: New Custom MCP Server
+            Replace tools on dynamic MCP server:
+              value:
+                - op: REPLACE
+                  path: /tools
+                  value:
+                    - name: get-order
+                      prompt: Use this tool to retrieve an order by ID.
+                      enabled: true
+                      config:
+                        inputSchema: '{"type":"object","properties":{"orderId":{"type":"string"}},"required":["orderId"]}'
+                        invocation:
+                          functionId: fn-get-order
+                          method: GET
+                          argsLocation: query
     tokenUpsertBody:
       content:
         application/json:
@@ -4702,6 +4893,7 @@ components:
       value:
         id: mcp-custom
         name: Custom MCP Server
+        type: custom
         enabled: true
         transport: streamable_http
         config:
@@ -4713,6 +4905,7 @@ components:
       value:
         - id: mcp-custom
           name: Custom MCP Server
+          type: custom
           enabled: true
           transport: streamable_http
           config:
@@ -4720,6 +4913,24 @@ components:
             authorizationHeaderName: Authorization
             authorizationHeaderToken:
               id: token-id
+        - id: mcp-dynamic
+          name: Dynamic MCP Server
+          type: dynamic
+          enabled: true
+          transport: streamable_http
+          tools:
+            - name: get-order
+              description: Retrieves an order by ID.
+              prompt: Use this tool when the user asks for order details.
+              enabled: true
+              config:
+                requiredScopes:
+                  - order.order_read
+                inputSchema: '{"type":"object","properties":{"orderId":{"type":"string"}},"required":["orderId"]}'
+                invocation:
+                  functionId: fn-get-order
+                  method: GET
+                  argsLocation: query
     CommerceEventsResponse:
       value:
         events:
@@ -4866,9 +5077,10 @@ components:
             - name: slack
               config:
                 teamId: T0445953
-    McpServerRequest:
+    CustomMcpServerRequest:
       value:
         name: Custom MCP Server
+        type: custom
         transport: streamable_http
         enabled: true
         config:
@@ -4876,6 +5088,56 @@ components:
           authorizationHeaderName: Authorization
           authorizationHeaderToken:
             id: token-id
+    DynamicMcpServerRequest:
+      value:
+        name: Dynamic MCP Server
+        type: dynamic
+        enabled: true
+        tools:
+          - name: get-order
+            description: Retrieves an order by ID.
+            prompt: Use this tool when the user asks for order details.
+            enabled: true
+            config:
+              requiredScopes:
+                - order.order_read
+              inputSchema: '{"type":"object","properties":{"orderId":{"type":"string"}},"required":["orderId"]}'
+              invocation:
+                functionId: fn-get-order
+                method: GET
+                argsLocation: query
+    CustomMcpServerResponse:
+      value:
+        id: mcp-custom
+        name: Custom MCP Server
+        type: custom
+        enabled: true
+        transport: streamable_http
+        config:
+          url: 'http://localhost:7900/mcp'
+          authorizationHeaderName: Authorization
+          authorizationHeaderToken:
+            id: token-id
+    DynamicMcpServerResponse:
+      value:
+        id: mcp-dynamic
+        name: Dynamic MCP Server
+        type: dynamic
+        enabled: true
+        transport: streamable_http
+        tools:
+          - name: get-order
+            description: Retrieves an order by ID.
+            prompt: Use this tool when the user asks for order details.
+            enabled: true
+            config:
+              requiredScopes:
+                - order.order_read
+              inputSchema: '{"type":"object","properties":{"orderId":{"type":"string"}},"required":["orderId"]}'
+              invocation:
+                functionId: fn-get-order
+                method: GET
+                argsLocation: query
     TokenRequest:
       value:
         name: OpenAI Token
