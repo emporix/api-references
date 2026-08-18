@@ -1505,12 +1505,13 @@ components:
           description: Product published flag.
           type: boolean
         productType:
-          description: 'Type of the product (BASIC, VARIANT, BUNDLE).'
+          description: 'Type of the product (BASIC, VARIANT, BUNDLE, DYNAMIC_VARIANT).'
           type: string
           enum:
             - BASIC
             - VARIANT
             - BUNDLE
+            - DYNAMIC_VARIANT
         bundledProducts:
           description: The collection of products assigned to the bundle.
           type: array
@@ -1532,6 +1533,25 @@ components:
             - $ref: '#/components/schemas/mixinsMetadata'
             - type: object
               description: The metadata of the product.
+        parentVariantId:
+          description: Identifier of the immediate parent variant. Present only for `DYNAMIC_VARIANT` products that are not root variants.
+          type: string
+        parentVariantPath:
+          description: Ancestor variant identifiers ordered from the direct parent at index `0` to the root variant. Present only for `DYNAMIC_VARIANT` products.
+          type: array
+          items:
+            type: string
+        ownVariantAttributes:
+          description: Variant attributes defined directly on this `DYNAMIC_VARIANT` product.
+          type: object
+          additionalProperties: true
+        inheritedVariantAttributes:
+          description: Variant attributes inherited from ancestor variants for this `DYNAMIC_VARIANT` product.
+          type: object
+          additionalProperties: true
+        sellable:
+          description: Explicit per-product flag indicating whether the `DYNAMIC_VARIANT` product can be sold.
+          type: boolean
     bundleProduct:
       title: Bundle Product
       description: Represents the product used in a bundle.

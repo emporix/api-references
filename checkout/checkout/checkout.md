@@ -635,3 +635,57 @@ curl -i -X POST
 [api-reference](api-reference/)
 {% endcontent-ref %}
  
+## Dynamic variant product data in created orders
+
+When you create an order through checkout for a `DYNAMIC_VARIANT` product, the resulting order entry product snapshot preserves the following product fields when they are present on the source product:
+
+- `parentVariantId`
+- `parentVariantPath`
+- `ownVariantAttributes`
+- `inheritedVariantAttributes`
+- `sellable`
+
+These fields are stored on `order.entries[].product` so downstream consumers can use the order snapshot without fetching the current product data again.
+
+{% hint style="info" %}
+The fields are optional. Empty or null `parentVariantId`, `parentVariantPath`, `ownVariantAttributes`, and `inheritedVariantAttributes` are omitted from the order product snapshot. `sellable` is preserved whenever it is present, including `false`.
+{% endhint %}
+
+Example order entry product snapshot for a dynamic variant:
+
+```json
+{
+  "product": {
+    "id": "abc-125",
+    "sku": "532432412333",
+    "name": "Product 3",
+    "productType": "DYNAMIC_VARIANT",
+    "sellable": true,
+    "parentVariantId": "6a580d93663d735a3d947ffb",
+    "parentVariantPath": [
+      "6a580d93663d735a3d947ffb",
+      "6a580aec3f3be6699304cf21"
+    ],
+    "ownVariantAttributes": {
+      "detailDescription": {
+        "name": {
+          "de": "detailDescription"
+        },
+        "value": {
+          "type": "STRING",
+          "qualifier": "detailDescription_primo"
+        }
+      }
+    },
+    "inheritedVariantAttributes": {
+      "subscriptioninterval": {
+        "value": {
+          "type": "STRING",
+          "qualifier": "YEARLY"
+        }
+      }
+    }
+  }
+}
+```
+

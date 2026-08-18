@@ -987,6 +987,12 @@ Root product (DYNAMIC_VARIANT, no parentVariantId)
 - `parentVariantPath` array — carried by every child, it's an ordered list of ancestor IDs from direct parent (index 0) to root (last index).
 - `sellable` flag - marks variants that can be added to a cart. Non-sellable intermediate variants exist only to group attributes.
 
+{% hint style="info" %}
+When a `DYNAMIC_VARIANT` product is purchased, the order entry product snapshot now preserves the dynamic-variant-specific fields from the source product on `entries[].product`, if present. This includes `parentVariantId`, `parentVariantPath`, `ownVariantAttributes`, `inheritedVariantAttributes`, and `sellable`.
+
+The snapshot omits `parentVariantId`, `parentVariantPath`, `ownVariantAttributes`, and `inheritedVariantAttributes` when they are null or empty. The `sellable` field is included whenever it is present, including `false`.
+{% endhint %}
+
 ### Creating dynamic variants
 
 {% stepper %}

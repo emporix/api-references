@@ -425,6 +425,24 @@ To support this functionality, the following order attributes are introduced:
 To check the end to end story for order splitting, see the [Vendor Tutorial - Order Split](../../companies-and-customers/vendor-service/vendor.md#order-split-example) example.
 {% endhint %}
 
+## Dynamic variant product snapshot fields
+
+When an order contains a `DYNAMIC_VARIANT` product, the order entry product snapshot can include additional variant-specific fields on `entries[].product`.
+
+The following fields are supported as optional snapshot fields:
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `parentVariantId` | `string` | Identifier of the immediate parent variant. |
+| `parentVariantPath` | `string[]` | Ancestor variant identifiers ordered from the direct parent to the root variant. |
+| `ownVariantAttributes` | `object` | Variant attributes defined directly on the purchased dynamic variant. |
+| `inheritedVariantAttributes` | `object` | Variant attributes inherited from ancestor variants. |
+| `sellable` | `boolean` | Explicit sellability flag stored on the purchased dynamic variant. |
+
+These fields are returned only when they are present on the source product snapshot. Empty `parentVariantId`, `parentVariantPath`, `ownVariantAttributes`, and `inheritedVariantAttributes` are omitted. `sellable` is included whenever it has a value, including `false`.
+
+This applies to order creation and subsequent order reads for the `entries[].product` object.
+
 ## Order calculation
 
 As Emporix offers full commerce functionality, order calculations and management can be handled end-to-end by our Commerce Orchestration Platform services. However, to support integrations with other systems, we have also introduced other capabilities. Order management with external systems can be approached using three different models:

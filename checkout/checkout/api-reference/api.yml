@@ -122,6 +122,12 @@ paths:
          * Creates an order
          * Handles the payment
          * Closes the cart
+
+
+      x-summary: |-
+        When the purchased product is a `DYNAMIC_VARIANT`, checkout also forwards these optional product fields to the created order entry snapshot when they are present on the source product or cart item product data: `parentVariantId`, `parentVariantPath`, `ownVariantAttributes`, `inheritedVariantAttributes`, and `sellable`.
+
+        Empty or null values for `parentVariantId`, `parentVariantPath`, `ownVariantAttributes`, and `inheritedVariantAttributes` are omitted. The `sellable` field is forwarded whenever it is present, including `false`.
       operationId: POST-checkout-trigger-checkout
       requestBody:
         content:
