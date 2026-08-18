@@ -226,9 +226,10 @@ Example successful response includes all the assigned details:
 
 ## How to import customers and migrate passwords
 
-You can import customers in bulk and migrate their passwords from a legacy system. Configure a tenant-level password migration retention window, import accounts with either `legacyAuth` or a native `passwordHash`, and remove the configuration when no `legacyAuth` records remain.
+You can import customers in bulk and migrate their passwords from a legacy system. Customers keep their existing passwords with either `legacyAuth` or `passwordHash`. Each imported account must include exactly one of these fields.
 
-Customers imported with `legacyAuth` keep their existing passwords. On the first successful login, Emporix verifies the password with the legacy algorithm and silently rehashes it to the native format.
+* `legacyAuth` – a password hash from a source system that is not compatible with the Emporix native hashing strategy, plus algorithm metadata. On the first successful login, Emporix verifies the password with the legacy algorithm and silently rehashes it to the native format. This option requires an active password migration retention configuration.
+* `passwordHash` – a precomputed hash that is already compatible with the Emporix native hashing strategy. The hash is stored as a native password immediately, so no retention configuration or first-login rehash is needed.
 
 {% hint style="info" %}
 For the retention timeline and customer email behavior, see [Password Migration Strategy](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/system-management/authentication-and-authorization/customer-authentication/password-migration-strategy).
@@ -325,7 +326,7 @@ If no configuration is set for the tenant, the endpoint returns `404 Not Found`.
 {% endstep %}
 
 {% step %}
-#### Import customers with `legacyAuth`
+#### Import customers with non-native `legacyAuth`
 
 Import up to 200 customers in one request by calling the [Importing customers in bulk](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#post-customer-tenant-customers-import) endpoint. Repeat the request until you import the full customer base.
 
