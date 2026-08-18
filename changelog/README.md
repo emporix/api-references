@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-08-18" tags="new-feature" %}
 
 ## Customer Service - password migration retention and bulk customer import
 
