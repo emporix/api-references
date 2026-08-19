@@ -25,6 +25,27 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="minor-change" %}
+<!-- emporix-ai-buddy:changelog:COP-5435 -->
+
+## AI Service - log severity classification
+
+#### Overview
+
+AI Service now classifies selected internal and outbound integration failures more precisely in logs. External-service `4xx` responses are now logged at `WARN`, while `5xx` and unexpected failures remain logged at `ERROR`, which reduces non-actionable production alert noise. In addition, selected repository and service log messages now use `err.getMessage()` instead of `err.getCause()` to improve log readability, and patch-related client errors handled through shared helpers are now logged at `WARN`.
+
+#### Affected endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| AI Service internal logging and repository flows | Logging behavior was updated for selected AI Agentic, AI RAG Indexer, Webhook Service, Configuration Service, Media Service, Schema Service, and Partner Library integration paths, as well as multiple Mongo-backed repository operations. No public API contract changes were introduced. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-18" tags="new-feature" %}
 
 ## Customer Service - password migration retention and bulk customer import
