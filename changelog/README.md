@@ -25,6 +25,39 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## AI Service - dynamic MCP servers
+
+#### Overview
+
+The MCP Server API accepts managed MCP servers with `type: dynamic` and inline `tools` that invoke Emporix cloud functions. Agents can attach those servers with `type: dynamic`, optionally restricting the attachment to a subset of tool names.
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Listing MCP servers](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#get-ai-service-tenant-agentic-mcp-servers) | Responses can include dynamic MCP servers with `type: dynamic` and inline `tools`. |
+| [Searching MCP servers](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#post-ai-service-tenant-agentic-mcp-servers-search) | Responses can include dynamic MCP servers with `type: dynamic` and inline `tools`. |
+| [Retrieving MCP server by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#get-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Returns dynamic MCP servers with `type: dynamic` and inline `tools`. |
+| [Upserting MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#put-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Accepts preview `type: dynamic` with `tools` that reference Automation functions. Validates each `functionId` when the server is enabled. |
+| [Partially updating MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#patch-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Supports partial updates to dynamic MCP server fields, including `tools`. |
+| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | Accepts `mcpServers` entries with `type: dynamic`, `mcpServer.id`, and optional `tools`. |
+| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Accepts `mcpServers` entries with `type: dynamic`, `mcpServer.id`, and optional `tools`. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | Returns dynamic MCP attachments. `expand=mcpServer` hydrates the MCP server document. |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents) | Returns dynamic MCP attachments. |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) | Returns dynamic MCP attachments. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-18" tags="new-feature" %}
 
 ## Customer Service - password migration retention and bulk customer import
