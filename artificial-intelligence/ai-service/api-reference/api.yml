@@ -3061,8 +3061,8 @@ components:
 
     McpServerType:
       type: string
-      enum: [ custom,predefined ]
-      description: Type of the MCP server. The `custom` type allows you to integrate with your own MCP server instance, while the `predefined` type allows you to integrate with one of the instances provided by Emporix.
+      enum: [ custom,predefined,dynamic ]
+      description: Type of the MCP server attachment on an agent. The `custom` type references a tenant-managed MCP server with a URL. The `predefined` type references an Emporix domain MCP server. The `dynamic` type references a tenant-managed dynamic MCP server and may include an optional tool-name allow-list.
     CustomMcpServerTransportType:
       type: string
       enum:
@@ -3109,29 +3109,61 @@ components:
                 - id
           required:
             - mcpServer
-    CustomAgentMcpServerResponse:
+    DynamicAgentMcpServerRequest:
       allOf:
-        - $ref: '#/components/schemas/CustomAgentMcpServerRequest'
+        - $ref: '#/components/schemas/BaseAgentMcpServer'
         - type: object
           properties:
+            type:
+              description: For a dynamic MCP server attachment it has to be set to `dynamic`.
+              example: dynamic
             mcpServer:
-              allOf:
-                - $ref: '#/components/schemas/McpServerResponse'
-                - description: The full response representing MCP server. If the `expand=mcpServer` is **not** used, then only `id` field is returned, otherwise all fields are returned.
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: ID of the dynamic MCP server.
+              required:
+                - id
+            tools:
+              type: array
+              description: Optional allow-list of tool names from the dynamic MCP server.
+              items:
+                type: string
+          required:
+            - mcpServer
+    AgentMcpServerResponse:
+      type: object
+      required:
+        - type
+      properties:
+        type:
+          $ref: '#/components/schemas/McpServerType'
+        mcpServer:
+          allOf:
+            - $ref: '#/components/schemas/McpServerResponse'
+            - description: Present for `custom` and `dynamic` attachments. If `expand=mcpServer` is **not** used, then only the `id` field is returned, otherwise all fields are returned.
+        domain:
+          enum: [ customer,extensibility,order,product,frontend ]
+          description: Present for `predefined` attachments.
+        tools:
+          type: array
+          description: Tool-name allow-list. Present for `predefined` attachments and for `dynamic` attachments when a subset is configured. Omitted on `dynamic` means all enabled tools on the MCP server.
+          items:
+            type: string
     AgentMcpServersRequest:
       type: array
       description: List of MCP servers which agents should have access to.
       items:
         oneOf:
           - $ref: '#/components/schemas/CustomAgentMcpServerRequest'
+          - $ref: '#/components/schemas/DynamicAgentMcpServerRequest'
           - $ref: '#/components/schemas/PredefinedAgentMcpServer'
     AgentMcpServersResponse:
       type: array
       description: List of MCP servers which agents should have access to.
       items:
-        oneOf:
-          - $ref: '#/components/schemas/CustomAgentMcpServerResponse'
-          - $ref: '#/components/schemas/PredefinedAgentMcpServer'
+        $ref: '#/components/schemas/AgentMcpServerResponse'
 
     # LLM Config:
     BaseLlm:
