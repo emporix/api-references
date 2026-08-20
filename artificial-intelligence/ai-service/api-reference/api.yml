@@ -643,9 +643,7 @@ paths:
               schema:
                 type: array
                 items:
-                  oneOf:
-                    - $ref: '#/components/schemas/AgentResponse'
-                    - $ref: '#/components/schemas/AgentHandOffResponse'
+                  $ref: '#/components/schemas/AgentResponse'
               examples:
                 Agents Response:
                   $ref: '#/components/examples/AgentsResponse'
@@ -682,9 +680,7 @@ paths:
               schema:
                 type: array
                 items:
-                  oneOf:
-                    - $ref: '#/components/schemas/AgentResponse'
-                    - $ref: '#/components/schemas/AgentHandOffResponse'
+                  $ref: '#/components/schemas/AgentResponse'
               examples:
                 Agents Response:
                   $ref: '#/components/examples/AgentsResponse'
@@ -722,9 +718,7 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - $ref: '#/components/schemas/AgentResponse'
-                  - $ref: '#/components/schemas/AgentHandOffResponse'
+                $ref: '#/components/schemas/AgentResponse'
               examples:
                 Agent Response:
                   $ref: '#/components/examples/AgentResponse'
@@ -1760,7 +1754,7 @@ paths:
         The `type: dynamic` value and its `tools` definitions are in preview. When upserting an enabled dynamic MCP server, each tool's `config.invocation.functionId` is validated against the Automation service. The request returns `400` when a referenced function does not exist on the tenant.
 
         {% hint style="danger" %}
-        Hosting of the extensions and cloud functions is not included in standard billing plans and is billed separately on a pay-as-you-go basis. If you're interested in getting access to the feature, contact the [Sales Team](mailto:support@emporix.com).
+        Hosting of cloud functions and use of dynamic MCP servers is not included in standard billing plans and is billed separately on a pay-as-you-go basis. If you're interested in getting access to these features, contact the [Sales Team](mailto:support@emporix.com).
         {% endhint %}
       security:
         - OAuth2:
@@ -2989,7 +2983,7 @@ components:
             Managed MCP server whose tools invoke Emporix cloud functions.
 
             {% hint style="danger" %}
-            Hosting of the extensions and cloud functions is not included in standard billing plans and is billed separately on a pay-as-you-go basis. If you're interested in getting access to the feature, contact the [Sales Team](mailto:support@emporix.com).
+            Hosting of cloud functions and use of dynamic MCP servers is not included in standard billing plans and is billed separately on a pay-as-you-go basis. If you're interested in getting access to these features, contact the [Sales Team](mailto:support@emporix.com).
             {% endhint %}
           properties:
             type:
@@ -3744,20 +3738,6 @@ components:
               $ref: '#/components/schemas/NativeToolsResponse'
             mcpServers:
               $ref: '#/components/schemas/AgentMcpServersResponse'
-    AgentHandOffResponse:
-      allOf:
-        - $ref: '#/components/schemas/BaseForAgentAndTemplateAndHandOff'
-        - type: object
-          properties:
-            id:
-              type: string
-              description: Identifier of the agent.
-            handOff:
-              allOf:
-                - $ref: '#/components/schemas/HandOff'
-              example: true
-            metadata:
-              $ref: '#/components/schemas/MetadataResponse'
     AgentRequest:
       allOf:
         - $ref: '#/components/schemas/BaseForAgentRequestAndResponse'
