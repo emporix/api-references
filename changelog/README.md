@@ -25,6 +25,29 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## AI Service - import job `details`
+
+#### Overview
+
+Import responses and stored import jobs now include per-entity `details`. Each detail has a `code` for localization, plus optional `objectId`, `objectName`, and `message`. `state` can be `FAILED` when a single entity upsert fails without aborting the rest of the import.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Importing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-import) | Summary entities include `details` and can return `state: FAILED`. |
+| [Listing available jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs) | Import job `importResult.summary` entities include `details`. |
+| [Searching jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#post-ai-service-tenant-jobs-search) | Import job `importResult.summary` entities include `details`. |
+| [Retrieving available job](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid) | Import job `importResult.summary` entities include `details`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-20" tags="new-feature" %}
 
 ## AI Service - dynamic MCP servers
