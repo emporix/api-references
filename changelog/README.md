@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-08-21" tags="improvement" %}
 
 ## AI Service - import job `details`
 
