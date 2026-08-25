@@ -31,6 +31,10 @@ Examples:
 {% update date="RELEASE_DATE" tags="improvement, deprecated" %}
 ```
 
+```
+{% update date="RELEASE_DATE" tags="major-change" %}
+```
+
 * Add the relevant changelog content, use the template:
 
 ```
@@ -92,7 +96,7 @@ Examples:
   * For names of settings, code-phrases etc. use backticks (\`\`).
 * `Added/New/Removed/Deprecated Endpoints` h4 sections:
   * Use the table format.
-  * Provide links to the changed endpoints.
+  * Provide links to the changed endpoints. Exception: for fully removed endpoints, see [Removal of deprecated items](#removal-of-deprecated-items).
   * For displayed link names, use the verb in gerund form (updating, deleting etc) - this should be consistent with the endpoint title in API reference.
   * Base the link URLs on the endpoints paths (not operationIDs) - Gitbook takes the paths defined in `yml` files to create URLs, for example: `patch/schema/{tenant}/custom-entities/{type}/instances/{id}` → `https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#patch-schema-tenant-custom-entities-type-instances-id`
   * Provide a description for each changed endpoint:
@@ -114,4 +118,54 @@ Example:
 
 This functionality is now fully operational.
 {% endhint %}
+```
+
+## Removal of deprecated items
+
+When previously deprecated endpoints or fields are removed, add a changelog entry in `changelog/README.md`. Do not create a separate changelog file.
+
+* Use the `major-change` tag. Do not use `deprecated` - that tag is for announcing deprecation, not completing it.
+* Title convention: `## {Service Name} - removal of deprecated {endpoints|fields|endpoints and fields}`
+* Overview: state that previously deprecated items are now removed, and link to the original deprecation changelog entry.
+* Table heading: `#### Removed endpoints & fields` when both apply. Use `#### Removed endpoints` or `#### Removed fields` if only one type is removed.
+* Fully removed endpoints:
+  * Put the gerund endpoint name in the Endpoint column as plain text. Do not link to the API reference - the page is gone.
+  * In the Description, write: `Endpoint removed. Previous documentation under [Creating a media]({old-url}) is no longer available.`
+  * If there is a replacement, add: `Please use [this endpoint]({new-url}) instead.`
+* Fields removed from surviving endpoints:
+  * Keep a live gerund link to the current path-based API reference.
+  * Name the removed fields in backticks.
+
+Example:
+
+```
+{% update date="RELEASE_DATE" tags="major-change" %}
+## Brand Service - removal of deprecated endpoints and fields
+
+#### Overview
+
+All previously deprecated endpoints and fields are now removed ([Brand Service - deprecations](https://developer.emporix.io/changelog/archive/changelog-2025/2025-03-04-brand)).
+
+#### Removed endpoints & fields
+
+| Endpoint                                                                                                                                                                | Description                                                                                                                                                                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Creating a media                                                                                                                                                        | Endpoint removed. Previous documentation under [Creating a media](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/media) is no longer available.                      |
+| Deleting a media                                                                                                                                                        | Endpoint removed. Previous documentation under [Deleting a media](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/media#delete-media-mediaid) is no longer available. |
+| [Creating a brand](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/brands#post-brands)                    | The `image` and `cloudinaryUrl` fields are removed from the request body.                                                                                                                                                           |
+| [Updating a brand](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/brands#put-brands-brandid)             | The `image` and `cloudinaryUrl` fields are removed from the request body.                                                                                                                                                           |
+| [Partially updating a brand](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/brands#patch-brands-brandid) | The `image` and `cloudinaryUrl` fields are removed from the request body.                                                                                                                                                           |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+```
+
+Replacement-endpoint example (use when a removed endpoint has a successor):
+
+```
+| Endpoint               | Description |
+|------------------------|-------------|
+| Retrieving all schemas | Endpoint removed. Previous documentation under [Retrieving all schemas](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-sequenceschemas) is no longer available. Please use [this endpoint](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-tenant-schemas) instead. |
 ```
