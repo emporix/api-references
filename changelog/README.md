@@ -25,6 +25,32 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="major-change" %}
+
+## SEPA Export Service - End of Life
+
+#### Overview
+
+The SEPA Export Service has reached End of Life and is no longer available. All previously deprecated endpoints are now removed ([SEPA Export Service - deprecation](https://developer.emporix.io/changelog/2026/readme#sepa-export-service-deprecation)).
+
+{% hint style="danger" %}
+The SEPA Export Service and all of its endpoints are no longer available.
+{% endhint %}
+
+#### Removed endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| Get SEPA Export file by ID for tenant | Endpoint removed. |
+| Retrieving a list of export jobs | Endpoint removed. |
+| Creating a new export job | Endpoint removed. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-21" tags="improvement" %}
 
 ## AI Service - import job `details`
