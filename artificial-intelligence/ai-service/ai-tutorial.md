@@ -406,7 +406,7 @@ You can also attach servers with the [Upserting agent](https://developer.emporix
 {% step %}
 #### Verify the attachment
 
-Call the [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) endpoint with `expand=mcpServers` to return the full `mcpServer` object for each attachment. Without `expand`, `mcpServer` typically contains only the `id`.
+Call the [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) endpoint with `expand=mcpServers` to return the full `mcpServer` object for `custom` and `dynamic` attachments. Without `expand`, `mcpServer` typically contains only the `id`.
 
 ```bash
 curl -L \
