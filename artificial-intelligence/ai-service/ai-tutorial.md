@@ -174,9 +174,352 @@ curl -L \
 
 You can use the retrieved details to establish the required connections and triggers for the AI Agent.
 
+## How to create an MCP server and attach it to an agent
+
+You can manage two types of tenant MCP servers through the API:
+
+* **Custom** (`type: custom`) – points at your own MCP implementation with a URL and transport. Use this to connect agents to an external system, such as an ERP.
+* **Dynamic** (`type: dynamic`) – defines `tools` inline. Each tool invokes an Emporix Cloud Function (`config.invocation.functionId`).
+
+The workflow is the same for both types: create the server, attach it to an agent, then verify. The examples below show requests for custom and dynamic MCP management.
+
+{% hint style="info" %}
+Emporix also provides predefined domain MCP servers (`type: predefined`) that you can attach to an agent. These domain MCP servers cannot be created through the API.
+{% endhint %}
+
+{% hint style="danger" %}
+**Dynamic MCP servers**
+This functionality is in preview mode - some of the features may not be fully operational yet.
+
+Hosting of cloud functions and use of dynamic MCP servers is not included in standard billing plans and is billed separately on a pay-as-you-go basis. If you're interested in getting access to these features, contact the [Sales Team](mailto:support@emporix.com).
+
+For more details, see [Hosting](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/administration/hosting) and [Extension and Cloud Function Hosting](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/extension-hosting).
+{% endhint %}
+
+To follow this workflow:
+
+* The OAuth2 access token must include the `ai.agent_manage` scope to create and attach the server, and `ai.agent_read` to retrieve the results.
+* For a custom MCP server, you need a reachable MCP endpoint. Use `streamable_http` as the transport type. If the server requires authorization, create an AI token first with the [Upserting token](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/token#put-ai-service-tenant-agentic-tokens-tokenid) endpoint and pass its ID as `config.authorizationHeaderToken.id`.
+* For a dynamic MCP server, a Cloud Function must already exist on the tenant. See [Extension and Cloud Function Hosting](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/extension-hosting) and [Hosting](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/administration/hosting) in the Management Dashboard. Use that function's ID as `functionId`. When the server is enabled, the API validates each `functionId`. The request returns `400` if a referenced function does not exist on the tenant.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+{% stepper %}
+{% step %}
+#### Create the MCP server
+
+Call the [Upserting MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#put-ai-service-tenant-agentic-mcp-servers-mcpserverid) endpoint. The request replaces all existing data for that server ID. A successful create returns `201` with the server ID. A successful update returns `204`.
+
+{% tabs %}
+{% tab title="Custom" %}
+
+Set the `type` to `custom` (if omitted, it defaults to `custom`). Provide the values for `name`, `transport`, and `config.url`. The `config.authorizationHeaderName` and `config.authorizationHeaderToken` fields are optional. The created MCP server stays disabled at first (`enabled` defaults to `false` if omitted). To enable it, set `enabled` to `true`.
+
+```bash
+curl -L \
+  --request PUT \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/mcp-servers/mcp-custom' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "Custom MCP Server",
+    "type": "custom",
+    "transport": "streamable_http",
+    "enabled": true,
+    "config": {
+      "url": "http://localhost:7900/mcp",
+      "authorizationHeaderName": "Authorization",
+      "authorizationHeaderToken": {
+        "id": "token-id"
+      }
+    }
+  }'
+```
+
+```
+{
+    "id": "mcp-custom"
+}
+```
+
+{% endtab %}
+
+{% tab title="Dynamic" %}
+
+Set the `type` to `dynamic` and provide the inline `tools`. The created MCP server stays disabled at first (`enabled` defaults to `false` if omitted). To enable it, set `enabled` to `true`.
+
+Each tool needs a unique `name` with no whitespace, a `prompt` that tells the agent when to call it, and a `config` with:
+
+* `inputSchema` – a JSON Schema document provided as a JSON string
+* `invocation.functionId` and `invocation.method` – the Cloud Function to call and the HTTP method
+* `invocation.argsLocation` – `query` or `body`. Defaults to `body` when omitted.
+* `requiredScopes` – optional OAuth scopes required to invoke the tool
+
+Each tool also stays disabled at first (`enabled` defaults to `false` if omitted). To enable a tool so the agent can call it, set `enabled` to `true`.
+
+```bash
+curl -L \
+  --request PUT \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/mcp-servers/mcp-dynamic' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "Dynamic MCP Server",
+    "type": "dynamic",
+    "enabled": true,
+    "tools": [
+      {
+        "name": "get-order",
+        "description": "Retrieves an order by ID.",
+        "prompt": "Use this tool when the user asks for order details.",
+        "enabled": true,
+        "config": {
+          "requiredScopes": [
+            "order.order_read"
+          ],
+          "inputSchema": "{\"type\":\"object\",\"properties\":{\"orderId\":{\"type\":\"string\"}},\"required\":[\"orderId\"]}",
+          "invocation": {
+            "functionId": "fn-get-order",
+            "method": "GET",
+            "argsLocation": "query"
+          }
+        }
+      }
+    ]
+  }'
+```
+
+```
+{
+    "id": "mcp-dynamic"
+}
+```
+
+{% endtab %}
+{% endtabs %}
+
+{% endstep %}
+
+{% step %}
+#### Attach the server to an agent
+
+Call the [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint to add the MCP server to an existing agent, for example an agent you created from a template. A successful request returns `204`.
+
+Use the same endpoint if you want to attach Emporix domain MCP servers (`type: predefined`) to an AI agent.
+
+{% tabs %}
+{% tab title="Custom" %}
+
+Set `type` to `custom` and pass the managed server ID in `mcpServer.id`.
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/complaint-agent' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "ADD",
+      "path": "/mcpServers",
+      "value": {
+        "type": "custom",
+        "mcpServer": {
+          "id": "mcp-custom"
+        }
+      }
+    }
+  ]'
+```
+
+{% endtab %}
+
+{% tab title="Dynamic" %}
+
+Set `type` to `dynamic` and pass the managed server ID in `mcpServer.id`. The `tools` array on the attachment is an optional allow-list of tool names from the dynamic MCP server. Omit `tools` to grant the agent all enabled tools on that server.
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/complaint-agent' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "ADD",
+      "path": "/mcpServers",
+      "value": {
+        "type": "dynamic",
+        "mcpServer": {
+          "id": "mcp-dynamic"
+        },
+        "tools": [
+          "get-order"
+        ]
+      }
+    }
+  ]'
+```
+
+{% endtab %}
+
+{% tab title="Predefined" %}
+
+Set the `type` to `predefined` and pass the Emporix domain. The `tools` array lists the tools from that domain MCP server that the agent uses.
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/complaint-agent' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "ADD",
+      "path": "/mcpServers",
+      "value": {
+        "type": "predefined",
+        "domain": "order",
+        "tools": [
+          "get-order",
+          "get-orders"
+        ]
+      }
+    }
+  ]'
+```
+
+The available `domain` values are `customer`, `extensibility`, `order`, `product`, or `frontend`.
+
+{% endtab %}
+{% endtabs %}
+
+If you replace the whole `mcpServers` array (`op: REPLACE` on `/mcpServers`), include any existing `predefined`, `custom`, or `dynamic` attachments you still need.
+
+You can also attach servers with the [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint. That `PUT` replaces the whole agent document. The body must include all required agent fields, including `userPrompt`, `triggers`, `llmConfig`, and `mcpServers`.
+{% endstep %}
+
+{% step %}
+#### Verify the attachment
+
+Call the [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) endpoint with `expand=mcpServers` to return the full `mcpServer` object for each attachment. Without `expand`, `mcpServer` typically contains only the `id`.
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/complaint-agent?expand=mcpServers' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Accept: application/json'
+```
+
+Listing and searching agents return the same `mcpServers` attachments, including `predefined`, and also support `expand=mcpServers`.
+
+To inspect the server itself, call the [Retrieving MCP server by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#get-ai-service-tenant-agentic-mcp-servers-mcpserverid) endpoint:
+
+{% tabs %}
+{% tab title="Custom" %}
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/mcp-servers/mcp-custom' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Accept: application/json'
+```
+
+{% endtab %}
+
+{% tab title="Dynamic" %}
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/mcp-servers/mcp-dynamic' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Accept: application/json'
+```
+
+The response includes the inline `tools`.
+
+{% endtab %}
+{% endtabs %}
+
+{% endstep %}
+
+{% step %}
+#### Update the MCP server
+
+Call the [Partially updating MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#patch-ai-service-tenant-agentic-mcp-servers-mcpserverid) endpoint. A successful request returns `204`.
+
+{% tabs %}
+{% tab title="Custom" %}
+
+For example, replace the server name:
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/mcp-servers/mcp-custom' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "REPLACE",
+      "path": "/name",
+      "value": "New Custom MCP Server"
+    }
+  ]'
+```
+
+You can also replace `config.url` in the same way.
+
+{% endtab %}
+
+{% tab title="Dynamic" %}
+
+For example, replace the tool list:
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/mcp-servers/mcp-dynamic' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "REPLACE",
+      "path": "/tools",
+      "value": [
+        {
+          "name": "get-order",
+          "prompt": "Use this tool to retrieve an order by ID.",
+          "enabled": true,
+          "config": {
+            "inputSchema": "{\"type\":\"object\",\"properties\":{\"orderId\":{\"type\":\"string\"}},\"required\":[\"orderId\"]}",
+            "invocation": {
+              "functionId": "fn-get-order",
+              "method": "GET",
+              "argsLocation": "query"
+            }
+          }
+        }
+      ]
+    }
+  ]'
+```
+
+{% endtab %}
+{% endtabs %}
+
+To set `enabled` to `false` when an enabled agent uses this MCP server, send `force=true` as a query parameter. The API then disables both the agent and the MCP server.
+
+{% endstep %}
+{% endstepper %}
+
 ## How to communicate with an Agent
 
-For some Agents, it is convenient to trigger their actions by API calls. To allow communication with the selected agent, you can use the dedicated endpoints.
+For some Agents, it is convenient to trigger their actions by API calls. To allow communication with the selected agent, you can use the dedicated endpoints. If the agent has a custom, dynamic, or predefined MCP server attached, it can invoke those tools during the chat without extra fields in the request body.
 
 {% hint style="info" %}
 Choose the chat endpoint based on how you want to receive the agent's response:
