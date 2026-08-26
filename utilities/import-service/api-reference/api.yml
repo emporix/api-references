@@ -44,7 +44,7 @@ paths:
     get:
       summary: Retrieving all import configurations
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -83,7 +83,7 @@ paths:
     get:
       summary: Retrieving an import configuration
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -122,7 +122,7 @@ paths:
     get:
       summary: Retrieving all streams of a configuration
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -161,7 +161,7 @@ paths:
     get:
       summary: Retrieving a stream
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -200,7 +200,7 @@ paths:
     get:
       summary: Retrieving a schedule
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -235,7 +235,7 @@ paths:
     put:
       summary: Scheduling an import job
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -283,7 +283,7 @@ paths:
     post:
       summary: Triggering an import run
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -308,7 +308,7 @@ paths:
                   enum:
                     - FULL
                     - DELTA
-                  description: The run mode. Defaults to `DELTA`.
+                  description: The run mode. When omitted, defaults to `DELTA`.
                   example: DELTA
                 dryRun:
                   type: boolean
@@ -348,7 +348,7 @@ paths:
     get:
       summary: Retrieving run history
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -388,7 +388,7 @@ paths:
     get:
       summary: Retrieving a run
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -427,7 +427,7 @@ paths:
     get:
       summary: Streaming run progress
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -470,7 +470,7 @@ paths:
     post:
       summary: Cancelling a run
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -518,7 +518,7 @@ paths:
     get:
       summary: Retrieving run errors
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -557,7 +557,7 @@ paths:
     get:
       summary: Retrieving imported data types
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -596,7 +596,7 @@ paths:
     get:
       summary: Searching imported records
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -664,7 +664,7 @@ paths:
     get:
       summary: Searching a stream's imported records
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -724,7 +724,7 @@ paths:
     get:
       summary: Retrieving import statistics
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -734,8 +734,11 @@ paths:
         bucketed by day, week, or month, per-stream health, the top failing streams, an error breakdown,
         and how many streams were added or removed.
 
-        Narrow the scope with `configId` (one configuration), `configIds` (several), or `streamId` (one
-        stream); with none of them the whole tenant is summarised. Use `sections` to fetch only the parts
+        To narrow the scope, use
+        - `configId` for one configuration
+        - `configIds` for several configurations
+        - `streamId` for one stream
+        When none of them are given, the whole tenant is summarised. Use `sections` to fetch only the parts
         you need — an unrequested section is returned as `null`.
       operationId: GET-importtool-stats
       tags:
@@ -769,7 +772,7 @@ paths:
         - name: from
           in: query
           required: false
-          description: The start of the window, as an ISO-8601 instant. Defaults to 30 days ago.
+          description: The start of the window, as an ISO-8601 instant. When omitted, defaults to 30 days ago.
           schema:
             type: string
             format: date-time
@@ -777,7 +780,7 @@ paths:
         - name: to
           in: query
           required: false
-          description: The end of the window, as an ISO-8601 instant. Exclusive. Defaults to now.
+          description: The end of the window, as an ISO-8601 instant. Exclusive. When omitted, defaults to now.
           schema:
             type: string
             format: date-time
@@ -834,7 +837,7 @@ paths:
     get:
       summary: Retrieving job groups
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -875,7 +878,7 @@ paths:
     get:
       summary: Retrieving the tenant's health thresholds
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -884,9 +887,9 @@ paths:
         Retrieves the tenant-wide thresholds that decide whether a stream is reported as `GREEN`, `AMBER`,
         or `RED` in the import statistics, together with the built-in defaults they fall back to.
 
-        Thresholds resolve field by field, from the most specific level to the least: a stream's own
-        setting, then its configuration's, then this tenant-wide one, then the built-in default. A field
-        left empty at one level inherits the next level's value rather than resetting to the default.
+        Thresholds resolve field by field, from the most specific level to the least specific: stream,
+        configuration, tenant, then the built-in default. An unset field falls back to the value at the
+        next less-specific level.
 
         Changing the tenant-wide thresholds requires the `importtool.import_manage` scope.
       operationId: GET-importtool-health-thresholds
@@ -917,17 +920,17 @@ paths:
     get:
       summary: Retrieving import limits
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
         {% endhint %}
 
-        Retrieves the import limits that apply to the tenant. Runs are throttled to these values: an import
-        that would exceed `maxRecordsPerEntity` skips the excess records and finishes as `PARTIAL`, and a
-        run requested while `maxConcurrentImports` runs are already active is rejected with `429`.
+        Retrieves the tenant's import limits. If an import exceeds `maxRecordsPerEntity`, excess records
+        are skipped and the run finishes with the `PARTIAL` status. If `maxConcurrentImports` runs are
+        already active, additional run requests are rejected with a `429 Too Many Requests` response.
 
-        Contact Emporix support to have a limit raised.
+        Contact [Emporix Support](mailto:support@emporix.com) to have a limit raised.
       operationId: GET-importtool-license
       tags:
         - License
@@ -957,7 +960,7 @@ paths:
     post:
       summary: Retrying the failed records of a run
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png" alt=""></p>
+        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -1592,9 +1595,9 @@ components:
       title: Health thresholds
       type: object
       description: >-
-        The limits that decide whether a stream is reported as `GREEN`, `AMBER`, or `RED`. Every field is
-        optional and resolves independently: a field left empty inherits the next level down — stream, then
-        configuration, then tenant, then the built-in default — rather than resetting to the default.
+        The limits that decide whether a stream is reported as `GREEN`, `AMBER`, or `RED`. Each field is
+        optional and resolves independently. An unset field falls back through the hierarchy, from the most
+        specific level to the least specific: stream, configuration, tenant, then the built-in default.
       properties:
         failureRatioAmber:
           type: number
@@ -1608,11 +1611,11 @@ components:
           example: 0.1
         staleAmberHours:
           type: integer
-          description: The age of the stream's newest data, in hours, at or above which it is `AMBER`.
+          description: The age threshold, in hours, for the stream's newest data. The stream is `AMBER` when the data's age reaches or exceeds this threshold.
           example: 48
         staleRedHours:
           type: integer
-          description: The age of the stream's newest data, in hours, at or above which it is `RED`.
+          description: The age threshold, in hours, for the stream's newest data. The stream is `RED` when the data's age reaches or exceeds this threshold.
           example: 168
         failedRunIsRed:
           type: boolean

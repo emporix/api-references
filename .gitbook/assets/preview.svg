@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="20" viewBox="0 0 60 20" role="img" aria-labelledby="title">
+  <title id="title">Preview</title>
+  <rect width="60" height="20" rx="4" fill="#326DE6"/>
+  <text x="30" y="14" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700" text-anchor="middle">Preview</text>
+</svg>

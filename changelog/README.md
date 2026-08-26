@@ -25,6 +25,46 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Import Service - analytics and failed-record retry
+
+#### Overview
+
+The Import Service API now provides aggregated import statistics, dashboard job groups, tenant health thresholds, and tenant import limits. You can also retry only the failed records from an earlier run. Configuration, stream, and run responses now document the current service schemas.
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving import statistics](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-stats) | Returns aggregated import metrics, time series, stream health, failing streams, errors, and stream changes for a selected time window. |
+| [Retrieving job groups](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-dashboard-job-groups) | Returns tenant job groups used to scope import analytics. |
+| [Retrieving the tenant's health thresholds](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-settings-health-thresholds) | Returns tenant health thresholds and the built-in defaults used to determine stream health. |
+| [Retrieving import limits](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/license#get-importtool-tenant-license) | Returns tenant limits for imported records, concurrent imports, batch size, and workers. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | Starts a new run that processes only records that failed in an earlier run. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving all import configurations](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs) | Responses include `aiEnabled`, `version`, `healthThresholds`, and `createdBy`. The `aiEnabled` field replaces `deltaEnabled` in the documented schema. |
+| [Retrieving an import configuration](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs-id) | Responses include `aiEnabled`, `version`, `healthThresholds`, and `createdBy`. The `aiEnabled` field replaces `deltaEnabled` in the documented schema. |
+| [Retrieving all streams of a configuration](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Responses include delta-import, composite-key, discriminator, target reappearance, health-threshold, and creation metadata fields. |
+| [Retrieving a stream](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Responses include delta-import, composite-key, discriminator, target reappearance, health-threshold, and creation metadata fields. |
+| [Triggering an import run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Responses include retry, force, dry-run, cancellation, and dry-run sample metadata. |
+| [Retrieving run history](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Run entries include retry, force, dry-run, cancellation, and dry-run sample metadata. |
+| [Retrieving a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Run details include retry, force, dry-run, cancellation, and dry-run sample metadata. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-21" tags="improvement" %}
 
 ## AI Service - import job `details`
