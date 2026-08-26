@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-08-26" tags="new-feature" %}
 
 ## Import Service - analytics and failed-record retry
 
