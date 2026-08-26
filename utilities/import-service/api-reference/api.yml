@@ -44,7 +44,7 @@ paths:
     get:
       summary: Retrieving all import configurations
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -83,7 +83,7 @@ paths:
     get:
       summary: Retrieving an import configuration
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -122,7 +122,7 @@ paths:
     get:
       summary: Retrieving all streams of a configuration
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -161,7 +161,7 @@ paths:
     get:
       summary: Retrieving a stream
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -200,7 +200,7 @@ paths:
     get:
       summary: Retrieving a schedule
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -235,7 +235,7 @@ paths:
     put:
       summary: Scheduling an import job
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -283,7 +283,7 @@ paths:
     post:
       summary: Triggering an import run
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -348,7 +348,7 @@ paths:
     get:
       summary: Retrieving run history
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -388,7 +388,7 @@ paths:
     get:
       summary: Retrieving a run
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -427,7 +427,7 @@ paths:
     get:
       summary: Streaming run progress
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -470,7 +470,7 @@ paths:
     post:
       summary: Cancelling a run
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -518,7 +518,7 @@ paths:
     get:
       summary: Retrieving run errors
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -557,7 +557,7 @@ paths:
     get:
       summary: Retrieving imported data types
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -596,7 +596,7 @@ paths:
     get:
       summary: Searching imported records
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -664,7 +664,7 @@ paths:
     get:
       summary: Searching a stream's imported records
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -724,7 +724,7 @@ paths:
     get:
       summary: Retrieving import statistics
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -734,10 +734,11 @@ paths:
         bucketed by day, week, or month, per-stream health, the top failing streams, an error breakdown,
         and how many streams were added or removed.
 
-        To narrow the scope, use
+        To narrow the scope, use:
         - `configId` for one configuration
         - `configIds` for several configurations
         - `streamId` for one stream
+        
         When none of them are given, the whole tenant is summarised. Use `sections` to fetch only the parts
         you need — an unrequested section is returned as `null`.
       operationId: GET-importtool-stats
@@ -802,7 +803,8 @@ paths:
           required: false
           description: >-
             A comma-separated list of the sections to compute: `TOTALS`, `STREAMS`, `ERRORS`, `CHANGES`.
-            Omit for all of them. A section that is not requested is returned as `null`.
+            When omitted, defaults to all sections. A section not requested through the `sections` parameter
+            is returned as `null`.
           schema:
             type: string
             example: 'TOTALS,ERRORS'
@@ -837,7 +839,7 @@ paths:
     get:
       summary: Retrieving job groups
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -878,7 +880,7 @@ paths:
     get:
       summary: Retrieving the tenant's health thresholds
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -920,7 +922,7 @@ paths:
     get:
       summary: Retrieving import limits
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -960,7 +962,7 @@ paths:
     post:
       summary: Retrying the failed records of a run
       description: |-
-        <p align="left"><img src="../../../.gitbook/assets/preview.svg" alt="Preview"></p>
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="Preview" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -1846,7 +1848,7 @@ components:
           example: '2024-05-14T02:00:00.000Z'
         watermarkAgeSeconds:
           type: integer
-          description: How long ago the stream last saw new data, in seconds.
+          description: The number of seconds since the stream last detected new data.
           example: 7200
         failureRatio:
           type: number
@@ -1921,7 +1923,7 @@ components:
     ImportStreamChanges:
       title: Stream changes
       type: object
-      description: How many streams were added or removed in the window.
+      description: The counts of streams added and removed during the time window.
       properties:
         added:
           type: integer
@@ -1972,7 +1974,7 @@ components:
             $ref: '#/components/schemas/ImportStreamHealth'
         topFailingStreams:
           type: array
-          description: The streams with the most errors in the window, most first.
+          description: The streams with the most errors during the time window, ordered by error count in descending order.
           items:
             $ref: '#/components/schemas/ImportStatsNamedCount'
         errorBreakdown:
