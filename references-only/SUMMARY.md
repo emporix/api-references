@@ -375,17 +375,6 @@
             kind: openapi
             spec: import-service-api
       ```
-  * [SEPA Export](../orders/sepa-export/api-reference/README.md)
-    * ```yaml
-      props:
-        models: true
-      type: builtin:openapi
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: sepa-export-api
-      ```
   * [Sequential ID](../utilities/sequential-id/api-reference/README.md)
     * ```yaml
       props:
