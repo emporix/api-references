@@ -287,17 +287,6 @@
             kind: openapi
             spec: payment-gateway-api
       ```
-  * [Pick Pack](../orders/pick-pack/api-reference/README.md)
-    * ```yaml
-      props:
-        models: true
-      type: builtin:openapi
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: pick-pack-api
-      ```
   * [Price](../prices-and-taxes/price-service/api-reference/README.md)
     * ```yaml
       props:
