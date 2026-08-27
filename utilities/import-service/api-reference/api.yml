@@ -1317,16 +1317,15 @@ components:
         duplicateKeys:
           type: integer
           description: >-
-            Source rows that repeated a natural key already imported by this run. The import keeps the last
-            row of each repeat, so where the repeated rows carry different values the earlier ones are
-            discarded. This is not a failure — the run still succeeds — but it means the source feed is not
-            unique on the key the stream imports by.
+            Source rows that repeat a key already imported in this run. The import keeps the last
+            row of each repeated key and discards earlier rows. Duplicate keys do not fail the run;
+            they mean the source feed is not unique on the key the stream imports by.
           example: 25907
         unresolvedParents:
           type: integer
           description: >-
-            Child records whose parent could not be found, so they attached to nothing and were NOT
-            imported. Counted separately from `skipped`, which means the record was already up to date.
+            Child records that were not imported because their parent could not be found.
+            Counted separately from `skipped`, which counts records that were already up to date.
           example: 25370
         message:
           type: string
@@ -1418,16 +1417,15 @@ components:
         duplicateKeys:
           type: integer
           description: >-
-            Source rows that repeated a natural key already imported by this run. The import keeps the last
-            row of each repeat, so where the repeated rows carry different values the earlier ones are
-            discarded. This is not a failure — the run still succeeds — but it means the source feed is not
-            unique on the key the stream imports by.
+            Source rows that repeat a key already imported in this run. The import keeps the last
+            row of each repeated key and discards earlier rows. Duplicate keys do not fail the run;
+            they mean the source feed is not unique on the key the stream imports by.
           example: 25907
         unresolvedParents:
           type: integer
           description: >-
-            Child records whose parent could not be found, so they attached to nothing and were NOT
-            imported. Counted separately from `skipped`, which means the record was already up to date.
+            Child records that were not imported because their parent could not be found.
+            Counted separately from `skipped`, which counts records that were already up to date.
           example: 25370
         message:
           type: string
@@ -2015,9 +2013,8 @@ components:
         sourceIssues:
           type: array
           description: >-
-            Streams whose SOURCE data is not what the import assumes, over the window. Neither signal is a
-            failure — the runs succeed — which is why they are reported separately: they are invisible in
-            the pass/fail counters while still costing data.
+            The source data does not match what the import process expects during the specified time window.
+            These issues are not failures: the runs succeed, so they do not appear in pass/fail counters.
           items:
             $ref: '#/components/schemas/ImportSourceIssue'
     ImportSourceIssue:
@@ -2033,18 +2030,18 @@ components:
           description: The configuration that owns the stream.
         name:
           type: string
-          description: Stream name.
+          description: The stream name.
           example: vendor
         duplicateKeys:
           type: integer
           description: >-
-            Source rows repeating a key already imported in the same run. Only the last row of each repeat
-            survives, so where the repeats differ the earlier values are lost.
+            Source rows that repeat a key already imported in the same run. The import
+            keeps the last row of each repeated key and discards earlier rows.
           example: 25907
         unresolvedParents:
           type: integer
           description: >-
-            Child records whose parent does not exist. They attached to nothing and were not imported.
+            Child records that were not imported because their parent could not be found.
           example: 25370
   responses:
     Unauthorized_401:
