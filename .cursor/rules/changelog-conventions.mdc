@@ -47,3 +47,13 @@ Use `####` for sections inside an entry (for example `#### Overview`, `#### New 
 ## Style and content
 
 For title, overview, endpoint tables, known problems, and hints, follow `.style-guide/templates/changelog.md`.
+
+## Drafting from a branch diff
+
+The `release-notes-drafter` skill can draft an entry from the changes on the current branch. It reads this rule to resolve the target file, the tag vocabulary, and the applicable template, so keep the facts above accurate.
+
+- Default branch for the diff is `main`.
+- Drafting is author-triggered. The skill presents a draft in chat and only writes after explicit confirmation.
+- Trigger phrase: `Draft a release note for my current changes.`
+
+The forward-looking `changelog/in-progress/in-progress.md` page is maintained by hand and is not a drafting target.
