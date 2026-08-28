@@ -27,6 +27,47 @@ layout:
 
 {% update date="RELEASE_DATE" tags="major-change" %}
 
+## Availability Service - removal of deprecated endpoints
+
+#### Overview
+
+All Availability Service endpoints that were [previously deprecated](https://developer.emporix.io/changelog/2026/readme#availability-service-deprecated-endpoints) are now removed. The deprecated availability endpoints that accepted `site` as a query parameter have been replaced by their path-parameter equivalents, and the location endpoints have been removed following the sunset of the related functionalities.
+
+{% hint style="danger" %}
+The deprecated availability endpoints accepting `site` as a query parameter and all Availability Service location endpoints are no longer available.
+{% endhint %}
+
+#### Removed endpoints
+
+**Availability endpoints accepting `site` as query parameter**
+
+| Endpoint | Description                                                                                                                                                                                                                                            |
+| --- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `[GET] /{tenant}/availability/{productId}?site` | Endpoint removed. Please use the endpoint [Retrieving a product availability](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-productid-site) instead.    |
+| `[POST] /{tenant}/availability/{productId}?site` | Endpoint removed. Please use the endpoint [Creating a new availability for a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site) instead.        |
+| `[PUT] /{tenant}/availability/{productId}?site` | Endpoint removed. Please use the endpoint [Upserting availability information of a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#put-availability-tenant-availability-productid-site) instead.   |
+| `[DELETE] /{tenant}/availability/{productId}?site` | Endpoint removed. Please use the endpoint [Deleting availability information of a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#delete-availability-tenant-availability-productid-site) instead. |
+| `[GET] /{tenant}/availability?site` | Endpoint removed. Please use the endpoint [Retrieving all availability information for a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-site-site) instead.     |
+| `[POST] /{tenant}/availability?site` | Endpoint removed. Please use the endpoint [Retrieving product availabilities](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) instead.                        |
+
+**Location endpoints**
+
+| Endpoint | Description |
+| --- | --- |
+| Retrieving all locations for a site | Endpoint removed. Previous documentation under [Retrieving all locations for a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/locations#get-availability-tenant-locations-site) is no longer available. |
+| Adding a new location to a site | Endpoint removed. Previous documentation under [Adding a new location to a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/locations#post-availability-tenant-locations-site) is no longer available. |
+| Updating locations | Endpoint removed. Previous documentation under [Updating locations](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/locations#put-availability-tenant-locations-site) is no longer available. |
+| Deleting a location | Endpoint removed. Previous documentation under [Deleting a location](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/locations#delete-availability-tenant-locations-location) is no longer available. |
+| Retrieving product locations | Endpoint removed. Previous documentation under [Retrieving product locations](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/locations#post-availability-tenant-search-locations) is no longer available. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="major-change" %}
+
 ## SEPA Export Service - removal of deprecated endpoints
 
 #### Overview
