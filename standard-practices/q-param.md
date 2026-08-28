@@ -41,6 +41,7 @@ The `compoundLogicalQuery` operator is only available for the below services:
 
 * Approval Service
 * Availability Service
+* Changelog Service
 * Product Service
 * Quote Service
 * Schema Service
