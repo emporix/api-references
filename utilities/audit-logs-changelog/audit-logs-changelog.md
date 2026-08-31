@@ -24,7 +24,9 @@ Request a service access token with one of these scopes:
 * `changelog.changelog_read`
 * `changelog.changelog_manage`
 
+{% hint style="info" %}
 See [Tokens and Scopes](../../quickstart/authentication-and-authorization/tokens-and-scopes.md) and the [OAuth Service](../../authentication/oauth-service/README.md).
+{% endhint %}
 
 ## How to retrieve logs
 
@@ -99,4 +101,6 @@ curl -L \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
+{% hint style="info" %}
 For general `q` syntax, see [Query Parameter](../../standard-practices/q-param.md).
+{% endhint %}
