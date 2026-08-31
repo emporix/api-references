@@ -6,6 +6,8 @@ title: Local Docs Review Checks
 
 Repo-specific completeness and fit checks for the **api-references** repository. The shared Copilot skill [`.github/skills/copilot-docs-code-review/`](../skills/copilot-docs-code-review/SKILL.md) applies these checks in addition to the shared style guide and [reference.md](../skills/copilot-docs-code-review/reference.md).
 
+Path-specific checklists live in [`.github/instructions/`](../instructions/) and are referenced from [`.github/copilot-instructions.md`](../copilot-instructions.md).
+
 ---
 
 ## Repository
@@ -40,10 +42,42 @@ Apply when `changelog/README.md` changes or when API specs change (see [When a c
 - Set change tags on the `{% update %}` block: `new-feature`, `improvement`, `major-change`, `minor-change`, `deprecated`
 - Title format: `## {Service Name} - {noun phrase}` — no date prefix, no verbs in the title (`.style-guide/templates/changelog.md`)
 - Inner sections use `####` headings: `Overview`, endpoint tables (`New endpoints`, `Updated endpoints`, `Deprecated endpoints`, `Removed endpoints`), and `Known problems`
-- Endpoint table links use path-based GitBook URLs, not `operationId` anchors
 - Endpoint link text uses gerund form matching the endpoint summary in the API reference
 - Changelog wording describes customer impact, not internal implementation details
 - Removal of previously deprecated endpoints or fields uses `major-change` (not `deprecated`) and follows `.style-guide/templates/changelog.md#removal-of-deprecated-items`
+
+#### Changelog link format and validity
+
+Apply to every markdown link in the **new** `{% update %}…{% endupdate %}` block (endpoint tables, Overview cross-references, removal descriptions, and hint blocks).
+
+**Direct absolute URLs (required)**
+
+- Use full developer-portal URLs starting with `https://developer.emporix.io/` — not relative paths (`/openapi/...`, `/api-references/...`), not repo-internal file paths, and not GitHub raw links
+- API reference links: `https://developer.emporix.io/api-references/api-guides/{domain}/{service}/api-reference/{tag-page}#{anchor}`
+- Changelog cross-reference links (for example in removal overviews): `https://developer.emporix.io/changelog/...`
+
+Example (correct):
+
+```markdown
+[Retrieving import statistics](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-stats)
+```
+
+**Path-based anchors (required)**
+
+- Anchor fragments must follow GitBook path-based convention derived from the OpenAPI path and HTTP method — not `operationId` anchors (`#operation/GET-...`)
+- Derive the anchor from `{method}-{path-with-braces-as-literal-segments}`: lowercase method, path segments joined with hyphens, `{tenant}` → `tenant`, `{id}` → `id`, etc.
+- Example: `GET /importtool/{tenant}/stats` → `#get-importtool-tenant-stats` (see `.style-guide/templates/changelog.md`)
+
+**Link validity checks**
+
+When reviewing a new changelog entry, verify every link:
+
+1. **Format** — Flag links that are relative, missing the `https://developer.emporix.io/` prefix, or use `#operation/` anchors
+2. **Target exists** — When the PR also changes the related `api.yml`, cross-check each endpoint link against the spec: confirm the path, method, and OpenAPI `tags` value resolve to the correct `{tag-page}` segment and path-based anchor
+3. **Published URL** — When the endpoint is not new in this PR, confirm the full URL matches a live developer-portal page (HTTP 200 or known published path); flag stale paths such as `api-guides-and-references` or other retired URL patterns
+4. **Removal entries** — Fully removed endpoints use plain text in the Endpoint column; links to previous documentation in the Description still use direct absolute URLs to the last published page
+
+**Flag as invalid link:** relative URL, `operationId` anchor, mismatched path/method anchor for the cited endpoint, or URL that does not resolve on the developer portal
 
 ### OpenAPI layout and structure
 
