@@ -25,6 +25,32 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Audit Logs (Changelog) Service - query API
+
+#### Overview
+
+The Audit Logs (Changelog) Service is now available. It provides a query API for tenant-wide change history of platform entities such as orders, customers, companies, products, segments, groups, coupons and custom entities.
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+
+If you have any questions, contact the [Emporix Support Team](mailto:support@emporix.com) or post directly in the [Community](https://community.emporix.io/) 
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving logs](https://developer.emporix.io/api-references/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) | Retrieves a paginated list of changed entries. Filter by entity, document ID, change type, actor, time range, and related entities with the `q` parameter. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="RELEASE_DATE" tags="major-change" %}
 
 ## SEPA Export Service - removal of deprecated endpoints

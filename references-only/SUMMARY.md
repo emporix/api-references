@@ -34,6 +34,17 @@
             kind: openapi
             spec: approval-api
       ```
+  * [Audit Logs (Changelog)](../utilities/audit-logs-changelog/api-reference/README.md)
+    * ```yaml
+      props:
+        models: true
+      type: builtin:openapi
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: changelog-api
+      ```
   * [Availability](../orders/availability/api-reference/README.md)
     * ```yaml
       props:
