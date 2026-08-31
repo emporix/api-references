@@ -59,7 +59,7 @@ paths:
       responses:
         '200':
           description: |-
-            The request was successful. A paginated list of changelog entries has been returned.
+            The request was successful. A paginated list of changed entries has been returned.
           content:
             application/json:
               schema:
@@ -170,7 +170,7 @@ components:
       properties:
         items:
           type: array
-          description: List of changelog entries for the requested page.
+          description: List of changed entries for the requested page.
           items:
             $ref: '#/components/schemas/ChangelogChangeItem'
         page:
@@ -182,7 +182,7 @@ components:
         totalElements:
           type: integer
           format: int64
-          description: Total number of changelog entries matching the query.
+          description: Total number of changed entries matching the query.
         totalPages:
           type: integer
           description: Total number of pages for the matching result set.

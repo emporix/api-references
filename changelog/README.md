@@ -35,6 +35,9 @@ The Audit Logs (Changelog) Service is now available. It provides a query API for
 
 {% hint style="danger" %}
 This functionality is in preview mode - some of the features may not be fully operational yet.
+
+If you have any questions, contact the [Emporix Support Team](mailto:support@emporix.com) or post directly in the [Community](https://community.emporix.io/) 
+
 {% endhint %}
 
 #### New endpoints
