@@ -604,9 +604,9 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/users-and-permissions/session-context/api-reference/api.yaml)
 * [Utilities](utilities/README.md)
-  * [Audit Logs (Changelog) Service](utilities/changelog/README.md)
-    * [Audit Logs (Changelog) Tutorial](utilities/changelog/changelog.md)
-    * [API Reference](utilities/changelog/api-reference/README.md)
+  * [Audit Logs (Changelog) Service](utilities/audit-logs-changelog/README.md)
+    * [Audit Logs (Changelog) Tutorial](utilities/audit-logs-changelog/audit-logs-changelog.md)
+    * [API Reference](utilities/audit-logs-changelog/api-reference/README.md)
       * ```yaml
         props:
           models: true
@@ -617,7 +617,7 @@
               kind: openapi
               spec: changelog-api
         ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/utilities/changelog/api-reference/api.yml)
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/utilities/audit-logs-changelog/api-reference/api.yml)
   * [Import Service](utilities/import-service/README.md)
     * [Import Service Tutorial](utilities/import-service/import-service.md)
     * [API Reference](utilities/import-service/api-reference/README.md)

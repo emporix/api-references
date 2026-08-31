@@ -41,7 +41,7 @@ This functionality is in preview mode - some of the features may not be fully op
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving logs](https://developer.emporix.io/api-references/api-guides/utilities/changelog/api-reference/changelogs#get-changelog-tenant-changelogs) | Retrieves a paginated list of changelog entries. Filter by entity, document ID, change type, actor, time range, and related entities with the `q` parameter. |
+| [Retrieving logs](https://developer.emporix.io/api-references/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) | Retrieves a paginated list of changelog entries. Filter by entity, document ID, change type, actor, time range, and related entities with the `q` parameter. |
 
 #### Known problems
 
