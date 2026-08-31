@@ -1,8 +1,8 @@
 ---
-title: Local docs review checks
+title: Local Docs Review Checks
 ---
 
-# Local docs review checks
+# Local Docs Review Checks
 
 Repo-specific completeness and fit checks for the **api-references** repository. The shared Copilot skill [`.github/skills/copilot-docs-code-review/`](../skills/copilot-docs-code-review/SKILL.md) applies these checks in addition to the shared style guide and [reference.md](../skills/copilot-docs-code-review/reference.md).
 
