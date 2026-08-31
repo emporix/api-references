@@ -43,7 +43,7 @@
         spec:
           ref:
             kind: openapi
-            spec: changelog-api
+            spec: audit-logs-changelog-api
       ```
   * [Availability](../orders/availability/api-reference/README.md)
     * ```yaml
