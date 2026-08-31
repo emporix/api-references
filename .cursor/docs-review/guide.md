@@ -50,6 +50,8 @@ docs-standards (source of truth)
 | `.github/skills/copilot-docs-code-review/` | docs-standards | Copilot skill for PR docs review |
 | `.cursor/rules/` | **local per repo** | Repo-specific Cursor rules (e.g. changelog conventions in api-references) |
 | `.github/copilot-docs-review/local-review-checks.md` | **local per repo** | Repo-specific Copilot review checks |
+| `.github/copilot-instructions.md` | **local per repo** | Repo-wide Copilot review behavior (copy from `copilot-instructions.template.md`) |
+| `.github/instructions/*.instructions.md` | **local per repo** | Path-specific Copilot checklists (copy from `.github/instructions/*.template.md`) |
 
 **Rule of thumb:** edit shared paths in `docs-standards`. Edit repo-specific paths in the consumer repo.
 
@@ -214,8 +216,10 @@ docs-standards/
 ├── .github/
 │   ├── skills/
 │   │   └── copilot-docs-code-review/  ← Copilot PR review skill
-│   └── copilot-docs-review/
-│       └── local-review-checks.template.md  ← template for per-repo review checks
+│   ├── copilot-docs-review/
+│   │   └── local-review-checks.template.md  ← template for per-repo review checks
+│   ├── copilot-instructions.template.md     ← template for per-repo Copilot instructions
+│   └── instructions/                        ← path-specific checklist templates
 ├── scripts/
 │   ├── bootstrap-subtrees.sh  ← first-time setup
 │   ├── refresh-splits.sh      ← regenerate split branches
