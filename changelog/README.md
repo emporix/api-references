@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-08-31" tags="new-feature" %}
 
 ## Audit Logs (Changelog) Service - query API
 
@@ -51,7 +51,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="major-change" %}
+{% update date="2026-08-31" tags="major-change" %}
 
 ## SEPA Export Service - removal of deprecated endpoints
 
