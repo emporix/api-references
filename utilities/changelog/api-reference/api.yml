@@ -25,7 +25,7 @@ paths:
       summary: Retrieving tenant changelogs
       operationId: GET-changelog-retrieve-tenant-changelogs
       description: |-
-        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
 
         {% hint style="danger" %}
         This functionality is in preview mode - some of the features may not be fully operational yet.
