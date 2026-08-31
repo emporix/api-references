@@ -25,6 +25,41 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="2026-08-31" tags="new-feature" %}
+
+## Widget Service - adds batch sync and "priorityQueue" support
+
+### Overview
+
+The widget service was updated so that batch synchronization can be performed by integrators. A new field called "priorityQueue" was added and the old sync endpoint was changed.
+
+{% hint style="success" %}
+
+This is a breaking change for all existing widget integrations.
+
+{% endhint %}
+
+#### Added endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Create widget batch sync job](/openapi/widget/#operation/POST-widget-batch-sync) | Allows a batch sync job to be created for multiple widgets |
+| [Get widget sync status](/openapi/widget/#operation/GET-widget-sync-status) | The sync status is returned for a given jobId |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Update widget configuration](/openapi/widget/#operation/PATCH-widget-config) | priorityQueue field added |
+
+#### Deprecated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Sync widgets manually](/openapi/widget/#operation/POST-widget-sync) | Replaced by batch sync |
+
+{% endupdate %}
+
 {% update date="RELEASE_DATE" tags="major-change" %}
 
 ## SEPA Export Service - removal of deprecated endpoints
