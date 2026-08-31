@@ -31,7 +31,7 @@ layout:
 
 #### Overview
 
-The Audit Logs (Changelog) Service is now available. It provides a query API for tenant-wide change history of platform entities such as orders, customers, companies, products, segments, groups, and coupons.
+The Audit Logs (Changelog) Service is now available. It provides a query API for tenant-wide change history of platform entities such as orders, customers, companies, products, segments, groups, coupons and custom entities.
 
 {% hint style="danger" %}
 This functionality is in preview mode - some of the features may not be fully operational yet.
