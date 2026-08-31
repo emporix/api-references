@@ -3,7 +3,7 @@ info:
   title: Availability Service
   version: ''
   description: |-
-    Manage the availability and physical location of a product.
+    Manage product availability and stock levels per site.
 
   contact:
     name: Emporix

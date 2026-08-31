@@ -1,7 +1,7 @@
 ---
 seo:
   title: Availability Service Tutorials
-  description: availability, location, stock level,
+  description: availability, stock level, popularity,
 icon: graduation-cap
 layout:
   width: wide
