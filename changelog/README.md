@@ -44,7 +44,7 @@ If you have any questions, contact the [Emporix Support Team](mailto:support@emp
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving logs](https://developer.emporix.io/api-references/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) | Retrieves a paginated list of change entries. Filter by entity, document ID, change type, actor, time range, and related entities with the `q` parameter. |
+| [Retrieving logs](https://developer.emporix.io/api-references/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) | Retrieves a paginated list of changed entries. Filter by entity, document ID, change type, actor, time range, and related entities with the `q` parameter. |
 
 #### Known problems
 
