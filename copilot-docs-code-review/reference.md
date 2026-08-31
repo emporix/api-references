@@ -2,15 +2,33 @@
 
 Apply these checks to changed files in the PR. Skip sections that do not apply to the file types in the diff.
 
+Complete every applicable checklist section before finishing the review. Post one inline comment per distinct issue.
+
 ## General completeness
 
 - Required sections for the doc type are present (introduction, prerequisites, steps, examples, related links as applicable)
-- Headings follow the style guide hierarchy and title-case rules
+- Headings follow the style guide hierarchy and casing rules (see [Headings](#headings))
 - Code samples are complete, syntactically valid, and use correct token placeholders (e.g. `{{OAUTH2_ACCESS_TOKEN}}`)
 - Links in changed pages resolve to valid targets within the repo or known external URLs
 - Cross-references to related docs are present when the topic depends on prior setup or related APIs
 - GitBook blocks (`{% hint %}`, `{% stepper %}`, `{% tabs %}`, etc.) are used correctly per `format-and-structure.md`
 - Images and diagrams have alt text or captions where required by the style guide
+- Navigation entries in `SUMMARY.md` contain only user-facing links — no HTML comments or editor notes
+
+## Frontmatter (user guides and conceptual pages)
+
+When frontmatter is present on a changed page, verify:
+
+- `description` is present, uses one or two full sentences (not a noun phrase), and is at most 200 characters
+- `icon` is present and matches a GitBook FontAwesome icon name (`format-and-structure#frontmatter-metadata`, `format-and-structure#page-icons`)
+- Descriptions and body text follow `word-choice.md` (including trademarks)
+
+## Headings
+
+- Page title (H1) uses **title case** (`format-and-structure#titles`)
+- Section headings use **sentence case**
+- Do not use em dashes (`—`) in markdown headings — they break GitBook subsection anchors (`format-and-structure#titles`)
+- Do not use `## Step 1 - ...` or similar pseudo-step headings for procedures
 
 ## Changelog and release notes
 
@@ -22,14 +40,17 @@ Changelog and release notes use the same GitBook update-block format. Both use `
 | File | `changelog/README.md` | `release-notes/README.md` |
 | Template | `.style-guide/templates/changelog.md` | `.style-guide/templates/release-notes.md` |
 
-When either file changes, verify:
+When either file changes, verify **each new** `{% update %}…{% endupdate %}` block:
 
-- A new `{% update date="RELEASE_DATE" ... %}…{% endupdate %}` block is added at the top, just under `{% updates format="full" %}`
+- Block is added at the top, just under `{% updates format="full" %}`
+- `date="RELEASE_DATE"` — flag any concrete date such as `2026-08-31`
 - Existing entries are not modified
 - `SUMMARY.md` is not updated
-- Tags and inner content follow the repo's template (changelog: API change tags and endpoint tables; release notes: product area tags such as `ce`, `vsm`, `aci`, and Overview / New features / Fixes and improvements sections)
+- `tags` includes the correct change-type tag(s)
+- Inner sections use `####` headings (not `###`)
+- Wording describes customer impact, not internal implementation (microservices, Kafka, Redis, feature flags, ETL, internal class names)
 
-Repo-specific requirements (for example when a changelog entry is mandatory for an API change, or which product area tag to use) belong in `.github/copilot-docs-review/local-review-checks.md`.
+Repo-specific requirements (product area tags, title format, placeholder text, Documentation and links grouping) belong in `.github/copilot-docs-review/local-review-checks.md` and `.github/instructions/*.instructions.md`.
 
 ## API tutorials
 
@@ -60,25 +81,68 @@ When OpenAPI or API reference files change, verify:
 When conceptual or product documentation pages change, verify:
 
 - Page purpose is clear in the opening paragraph
-- Terminology matches `.style-guide/writing-standards/word-choice.md`
-- Feature names and product terms use approved wording
+- Terminology matches `.style-guide/writing-standards/word-choice.md` on **every changed line**
+- Feature names and product terms use approved wording and trademark marks
 - Navigation context is sensible (page fits its section; links to parent/child topics where expected)
 - Procedures use step format from `format-and-structure.md` when describing sequential actions
+- UI element names are **bold** (`format-and-structure#ui-elements`)
+- Prefer active voice and direct instructions (`language-and-tone`)
+- Service overview pages in the documentation portal link to API tutorials/reference — do not author full API endpoint specs in the portal repo (see `local-review-checks.md`)
 
-## Word-choice quick checks
+## Word-choice checks
 
-Flag common violations from `.style-guide/writing-standards/word-choice.md`:
+Scan every changed line for discouraged terms. Post one comment per discouraged term (violation type) on the first offending line; you may mention additional occurrences in the same comment.
 
 | Avoid | Prefer |
 |-------|--------|
-| click | select |
-| auth | authentication |
-| webshop | storefront |
+| webshop | storefront, frontend (B2B Commerce Frontend context) |
+| app user | customer |
+| should | must (requirements), can (optional behavior) |
+| click | select (generic UI action) |
+| whitelist / blacklist | allowlist / blocklist |
+| e-mail | email |
+| logon (noun) | login or sign-in (noun), log in or sign in (verb) |
+| setup (verb) | set up |
+| auth | authentication (unless in code identifiers) |
+| payload data | payload |
+| API's | APIs |
 | e-commerce | commerce (context-dependent) |
-| simply, just, easily | (remove filler) |
+
+## Filler and tone
+
+Flag and suggest removal (`language-and-tone`):
+
+- simply, just, easily, obviously
+- it is important to note that, please note that
+- the user should (prefer direct instructions: "Select **Save**.")
+
+Flag unnecessary passive voice when the actor is known.
+
+## Trademarks
+
+Flag missing marks on product names (`word-choice#trademarks`):
+
+| Name | Required mark |
+|------|----------------|
+| ACE | ACE<sup>™</sup> |
+| Autonomous Commerce Execution | Autonomous Commerce Execution<sup>®</sup> |
+
+Use `<sup>™</sup>` and `<sup>®</sup>` in markdown. Do not trademark **Autonomous Commerce** on its own.
 
 ## Structural format
 
 Flag violations of `.style-guide/writing-standards/format-and-structure.md` — for example incorrect heading levels, hint blocks, or step layout.
 
-For sequential instructions, steps must use GitBook `{% stepper %}` blocks with `####` titles inside `{% step %}` (see `format-and-structure#steps`). Do not use `## Step 1 - ...` style headings.
+For sequential instructions, steps must use GitBook `{% stepper %}` blocks with `####` titles inside `{% step %}` (see `format-and-structure#steps`). Flag:
+
+- `## Step 1 - ...` / `## Step 2 - ...` headings
+- Bare numbered lists used as the primary procedure format when steps are required
+- Inconsistent bullet punctuation within the same list (`format-and-structure#bullet-lists`)
+
+## Cross-repo boundaries
+
+When a portal or conceptual page changes:
+
+- Do not document API endpoints, request/response schemas, or required headers inline — link to `api-references`
+- Flag legacy URL patterns such as `developer.emporix.io/docs/content/...`
+- Flag repo-relative links in release-notes Documentation and links sections when GitBook or developer portal URLs are expected
