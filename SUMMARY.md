@@ -615,7 +615,7 @@
           spec:
             ref:
               kind: openapi
-              spec: changelog-api
+              spec: audit-logs-changelog-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/utilities/audit-logs-changelog/api-reference/api.yml)
   * [Import Service](utilities/import-service/README.md)
