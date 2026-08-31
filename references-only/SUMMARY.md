@@ -34,6 +34,17 @@
             kind: openapi
             spec: approval-api
       ```
+  * [Audit Logs (Changelog)](../utilities/changelog/api-reference/README.md)
+    * ```yaml
+      props:
+        models: true
+      type: builtin:openapi
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: changelog-api
+      ```
   * [Availability](../orders/availability/api-reference/README.md)
     * ```yaml
       props:
@@ -88,17 +99,6 @@
           ref:
             kind: openapi
             spec: category-api
-      ```
-  * [Changelog](../utilities/changelog/api-reference/README.md)
-    * ```yaml
-      props:
-        models: true
-      type: builtin:openapi
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: changelog-api
       ```
   * [Checkout](../checkout/checkout/api-reference/README.md)
     * ```yaml

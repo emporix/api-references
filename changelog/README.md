@@ -27,11 +27,11 @@ layout:
 
 {% update date="RELEASE_DATE" tags="new-feature" %}
 
-## Changelog Service - query API
+## Audit Logs (Changelog) Service - query API
 
 #### Overview
 
-The Changelog Service is now available. It provides a query API for tenant-wide change history of platform entities such as orders, customers, companies, products, segments, groups, and coupons.
+The Audit Logs (Changelog) Service is now available. It provides a query API for tenant-wide change history of platform entities such as orders, customers, companies, products, segments, groups, and coupons.
 
 {% hint style="danger" %}
 This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -41,7 +41,7 @@ This functionality is in preview mode - some of the features may not be fully op
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving tenant changelogs](https://developer.emporix.io/api-references/api-guides/utilities/changelog/api-reference/changelogs#get-changelog-tenant-changelogs) | Retrieves a paginated list of changelog entries. Filter by entity, document ID, change type, actor, time range, and related entities with the `q` parameter. |
+| [Retrieving logs](https://developer.emporix.io/api-references/api-guides/utilities/changelog/api-reference/changelogs#get-changelog-tenant-changelogs) | Retrieves a paginated list of changelog entries. Filter by entity, document ID, change type, actor, time range, and related entities with the `q` parameter. |
 
 #### Known problems
 

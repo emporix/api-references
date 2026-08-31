@@ -4,7 +4,7 @@ layout:
 icon: clock-rotate-left
 ---
 
-# Changelog Service
+# Audit Logs (Changelog) Service
 
 Query tenant-wide change history for Emporix platform entities.
 

@@ -604,8 +604,8 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/users-and-permissions/session-context/api-reference/api.yaml)
 * [Utilities](utilities/README.md)
-  * [Changelog Service](utilities/changelog/README.md)
-    * [Changelog Tutorial](utilities/changelog/changelog.md)
+  * [Audit Logs (Changelog) Service](utilities/changelog/README.md)
+    * [Audit Logs (Changelog) Tutorial](utilities/changelog/changelog.md)
     * [API Reference](utilities/changelog/api-reference/README.md)
       * ```yaml
         props:

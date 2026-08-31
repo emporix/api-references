@@ -1,15 +1,15 @@
 ---
 seo:
-  title: Changelog Service Tutorials
-  description: Learn how to query tenant changelog history with the Changelog Service.
+  title: Audit Logs (Changelog) Service Tutorials
+  description: Learn how to query tenant change history with the Audit Logs (Changelog) Service.
 icon: graduation-cap
 layout:
   width: wide
 ---
 
-# Changelog Tutorial
+# Audit Logs (Changelog) Tutorial
 
-The Changelog Service exposes a query API for tenant-wide change history of platform entities such as orders, customers, companies, products, segments, groups, and coupons.
+The Audit Logs (Changelog) Service exposes a query API for tenant-wide change history of platform entities such as orders, customers, companies, products, segments, groups, coupons, and custom entities created with the Schema Service.
 
 {% hint style="danger" %}
 This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -24,9 +24,9 @@ Request a service access token with one of these scopes:
 
 See [Tokens and Scopes](../../quickstart/authentication-and-authorization/tokens-and-scopes.md) and the [OAuth Service](../../authentication/oauth-service/README.md).
 
-## How to retrieve tenant changelogs
+## How to retrieve logs
 
-Send a request to the [Retrieving tenant changelogs](https://developer.emporix.io/api-references/api-guides/utilities/changelog/api-reference/changelogs#get-changelog-tenant-changelogs) endpoint.
+Send a request to the [Retrieving logs](https://developer.emporix.io/api-references/api-guides/utilities/changelog/api-reference/changelogs#get-changelog-tenant-changelogs) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -79,7 +79,7 @@ Possible `type` values are `create`, `update`, and `delete`.
 
 ## How to query related entities
 
-Find changelog rows that reference another entity, for example group-assignment rows related to a group:
+Find changed entries that reference another entity, for example group-assignment entries related to a group:
 
 ```bash
 curl -L \
