@@ -45,31 +45,30 @@ General description of introduced changes, one or a few sentences.
 
 #### New endpoints
 
-| Endpoint                                                                                                          | Description                                          |
-|-------------------------------------------------------------------------------------------------------------------|------------------------------------------------------|
-| [Retrieving list of coupons by criteria](/openapi/coupon/#operation/GET-coupon-list-specified-coupons)            | New property `referralCoupon` added to the response. |
-| [Retrieving information about particular coupon by code](/openapi/coupon/#operation/GET-coupon-retrieve-coupon)   | New property `referralCoupon` added to the response. |
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving list of coupons by criteria](/openapi/coupon/#operation/GET-coupon-list-specified-coupons) | New property `referralCoupon` added to the response. |
+| [Retrieving information about particular coupon by code](/openapi/coupon/#operation/GET-coupon-retrieve-coupon) | New property `referralCoupon` added to the response. |
 
 #### Updated endpoints
 
-| Endpoint                                                                                                          | Description                                          |
-|-------------------------------------------------------------------------------------------------------------------|------------------------------------------------------|
-| [Retrieving list of coupons by criteria](/openapi/coupon/#operation/GET-coupon-list-specified-coupons)            | New property `referralCoupon` added to the response. |
-| [Retrieving information about particular coupon by code](/openapi/coupon/#operation/GET-coupon-retrieve-coupon)   | New property `referralCoupon` added to the response. |
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving list of coupons by criteria](/openapi/coupon/#operation/GET-coupon-list-specified-coupons) | New property `referralCoupon` added to the response. |
+| [Retrieving information about particular coupon by code](/openapi/coupon/#operation/GET-coupon-retrieve-coupon) | New property `referralCoupon` added to the response. |
 
 #### Removed endpoints
 
-| Endpoint                                                                                                          | Description                                          |
-|-------------------------------------------------------------------------------------------------------------------|------------------------------------------------------|
-| [Retrieving list of coupons by criteria](/openapi/coupon/#operation/GET-coupon-list-specified-coupons)            | New property `referralCoupon` added to the response. |
-| [Retrieving information about particular coupon by code](/openapi/coupon/#operation/GET-coupon-retrieve-coupon)   | New property `referralCoupon` added to the response. |
+| Endpoint | Description |
+| --- | --- |
+| Retrieving all locations for a site | Endpoint removed. The `GET /availability/{tenant}/locations/{site}` operation is no longer available. Use [Retrieving all availability information for a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-site-site) instead. |
 
 #### Deprecated endpoints
 
-| Endpoint                                                                                                          | Description                                          |
-|-------------------------------------------------------------------------------------------------------------------|------------------------------------------------------|
-| [Retrieving list of coupons by criteria](/openapi/coupon/#operation/GET-coupon-list-specified-coupons)            | New property `referralCoupon` added to the response. |
-| [Retrieving information about particular coupon by code](/openapi/coupon/#operation/GET-coupon-retrieve-coupon)   | New property `referralCoupon` added to the response. |
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving list of coupons by criteria](/openapi/coupon/#operation/GET-coupon-list-specified-coupons) | New property `referralCoupon` added to the response. |
+| [Retrieving information about particular coupon by code](/openapi/coupon/#operation/GET-coupon-retrieve-coupon) | New property `referralCoupon` added to the response. |
 
 #### Known problems
 
@@ -94,9 +93,9 @@ Examples:
   * Provide a short description with details of what has been changed and what effect it brings - one or a few sentences.
   * Use full sentences, try to use active voice, present or past simple tense.
   * For names of settings, code-phrases etc. use backticks (\`\`).
-* `Added/New/Removed/Deprecated Endpoints` h4 sections:
+* `New/Updated/Deprecated endpoints` h4 sections:
   * Use the table format.
-  * Provide links to the changed endpoints. Exception: for fully removed endpoints, see [Removal of deprecated items](#removal-of-deprecated-items).
+  * Provide links to the changed endpoints in the Endpoint column.
   * For displayed link names, use the verb in gerund form (updating, deleting etc) - this should be consistent with the endpoint title in API reference.
   * Base the link URLs on the endpoints paths (not operationIDs) - Gitbook takes the paths defined in `yml` files to create URLs, for example: `patch/schema/{tenant}/custom-entities/{type}/instances/{id}` → `https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#patch-schema-tenant-custom-entities-type-instances-id`
   * Provide a description for each changed endpoint:
@@ -106,6 +105,11 @@ Examples:
     * Use full sentences with a full stop at the end.
     * Focus on explaining the outcomes or the purpose of the change.
     * For code-phrases, use backticks (\`\`).
+* `Removed endpoints` h4 section:
+  * Use the table format.
+  * Do not link removed endpoints in the Endpoint column - the API reference page is gone.
+  * In the Description, name the removed operation as `` `OPERATION /path` `` and state that it is no longer available.
+  * If a substitute endpoint exists, link to it in the Description. For full rules and examples, see [Removal of deprecated items](#removal-of-deprecated-items).
 * `Known problems` h4 section:
   * Indicate if there are any problems at the time of release.
 
@@ -130,8 +134,10 @@ When previously deprecated endpoints or fields are removed, add a changelog entr
 * Table heading: `#### Removed endpoints & fields` when both apply. Use `#### Removed endpoints` or `#### Removed fields` if only one type is removed.
 * Fully removed endpoints:
   * Put the gerund endpoint name in the Endpoint column as plain text. Do not link to the API reference - the page is gone.
-  * In the Description, write: `Endpoint removed. Previous documentation under [Creating a media]({old-url}) is no longer available.`
-  * If there is a replacement, add: `Please use [this endpoint]({new-url}) instead.`
+  * In the Description, reference the removed endpoint by path, not by link. Use the format `` `OPERATION /path` `` (for example, `` `GET /availability/{tenant}/locations/{site}` ``).
+  * Write: ``Endpoint removed. The `OPERATION /path` operation is no longer available.``
+  * If a substitute endpoint exists, add: `Use [{gerund name}]({new-url}) instead.`
+  * If no substitute exists, stop after the first sentence.
 * Fields removed from surviving endpoints:
   * Keep a live gerund link to the current path-based API reference.
   * Name the removed fields in backticks.
@@ -148,13 +154,13 @@ All previously deprecated endpoints and fields are now removed ([Brand Service -
 
 #### Removed endpoints & fields
 
-| Endpoint                                                                                                                                                                | Description                                                                                                                                                                                                                         |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Creating a media                                                                                                                                                        | Endpoint removed. Previous documentation under [Creating a media](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/media) is no longer available.                      |
-| Deleting a media                                                                                                                                                        | Endpoint removed. Previous documentation under [Deleting a media](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/media#delete-media-mediaid) is no longer available. |
-| [Creating a brand](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/brands#post-brands)                    | The `image` and `cloudinaryUrl` fields are removed from the request body.                                                                                                                                                           |
-| [Updating a brand](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/brands#put-brands-brandid)             | The `image` and `cloudinaryUrl` fields are removed from the request body.                                                                                                                                                           |
-| [Partially updating a brand](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/brands#patch-brands-brandid) | The `image` and `cloudinaryUrl` fields are removed from the request body.                                                                                                                                                           |
+| Endpoint | Description |
+| --- | --- |
+| Creating a media | Endpoint removed. The `POST /media/{tenant}/assets` operation is no longer available. |
+| Deleting a media | Endpoint removed. The `DELETE /media/{tenant}/assets/{assetId}` operation is no longer available. |
+| [Creating a brand](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/brands#post-brands) | The `image` and `cloudinaryUrl` fields are removed from the request body. |
+| [Updating a brand](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/brands#put-brands-brandid) | The `image` and `cloudinaryUrl` fields are removed from the request body. |
+| [Partially updating a brand](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/brands#patch-brands-brandid) | The `image` and `cloudinaryUrl` fields are removed from the request body. |
 
 #### Known problems
 
@@ -162,10 +168,20 @@ There are no known problems.
 {% endupdate %}
 ```
 
-Replacement-endpoint example (use when a removed endpoint has a successor):
+Removed-endpoint examples:
+
+With a substitute:
 
 ```
-| Endpoint               | Description |
-|------------------------|-------------|
-| Retrieving all schemas | Endpoint removed. Previous documentation under [Retrieving all schemas](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-sequenceschemas) is no longer available. Please use [this endpoint](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-tenant-schemas) instead. |
+| Endpoint | Description |
+| --- | --- |
+| Retrieving all locations for a site | Endpoint removed. The `GET /availability/{tenant}/locations/{site}` operation is no longer available. Use [Retrieving all availability information for a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-site-site) instead. |
+```
+
+Without a substitute:
+
+```
+| Endpoint | Description |
+| --- | --- |
+| Retrieving all locations for a site | Endpoint removed. The `GET /availability/{tenant}/locations/{site}` operation is no longer available. |
 ```
