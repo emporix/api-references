@@ -272,15 +272,9 @@ paths:
                   $ref: '#/components/examples/Schedule_Example'
         '400':
           description: >-
-            The cron expression or time zone could not be used. The cron is a six-field expression
-            (second, minute, hour, day-of-month, month, day-of-week), so the familiar five-field
-            `0 * * * *` is rejected rather than stored and then never fired.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/errorMessage'
-        '404':
-          description: No import job with that ID, so there is nothing to schedule.
+            The `cron` expression or `timezone` value is invalid. The service expects a six-field cron
+            expression (`second minute hour day-of-month month day-of-week`). A five-field expression
+            such as `0 * * * *` is rejected. The service does not store it.
           content:
             application/json:
               schema:
@@ -289,6 +283,8 @@ paths:
           $ref: '#/components/responses/Unauthorized_401'
         '403':
           $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
     delete:
@@ -300,11 +296,11 @@ paths:
         This functionality is in preview mode - some of the features may not be fully operational yet.
         {% endhint %}
 
-        Removes the schedule so the job runs only when it is triggered.
+        Removes the schedule. The configuration then runs only when it is triggered.
 
-        The request is idempotent: removing a schedule that is not there also returns 204. Unlike
-        creating one, it does not require the configuration to exist — a schedule left behind by a
-        deleted job is exactly what needs removing.
+        The request is idempotent. Removing a schedule that does not exist also returns `204`.
+        Unlike creating a schedule, this request does not require the configuration to exist.
+        Use it to remove a schedule that remains after the configuration is deleted.
       operationId: deleteSchedule
       tags:
         - Schedules
@@ -313,7 +309,7 @@ paths:
             - importtool.import_trigger
       responses:
         '204':
-          description: The schedule has been removed. The job now runs only when triggered.
+          description: The schedule has been removed. The configuration now runs only when triggered.
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -375,17 +371,17 @@ paths:
                   type: string
                   maxLength: 40
                   description: >-
-                    What is asking for this run — for example `Dashboard`, the name of an integration
-                    scenario, or your own scheduler. `trigger` records only whether a run was started
-                    manually or by a schedule, so two systems that both call this endpoint cannot be told
-                    apart in the run history. Omitting it, or sending a blank value, falls back to the
-                    trigger. Values longer than 40 characters, or containing control characters, are
-                    rejected rather than shortened.
+                    What requested this run. Examples: `Dashboard`, an integration scenario name, or a scheduler name.
+                    The `trigger` field records only `MANUAL` or `SCHEDULED`. Use `origin` when more than one system
+                    calls this endpoint. If you omit `origin` or send a blank value, the service stores the `trigger`
+                    value. The service rejects values longer than 40 characters and values that contain control
+                    characters. It does not shorten them.
                   example: Make scenario 42
             examples:
               Full run:
                 value:
                   mode: FULL
+                  origin: Dashboard
               Delta dry run:
                 value:
                   mode: DELTA
@@ -1349,10 +1345,9 @@ components:
         origin:
           type: string
           description: >-
-            What asked for the run: the value supplied when it was triggered, otherwise the trigger name.
-            `trigger` distinguishes only a manual run from a scheduled one, so this is what tells a
-            dashboard run apart from one started by an integration scenario. Absent on runs recorded
-            before this field existed.
+            What requested the run. The `origin` value from the trigger request, or the `trigger` value when
+            `origin` was omitted. Use this field to distinguish a dashboard run from a run started by an
+            integration scenario. The field is absent on runs recorded before it existed.
           example: Dashboard
         status:
           type: string
@@ -2346,6 +2341,7 @@ components:
         configId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
         tenant: mytenant
         trigger: MANUAL
+        origin: Dashboard
         status: RUNNING
         mode: FULL
         startedAt: '2026-07-27T02:00:00.000Z'
@@ -2368,6 +2364,7 @@ components:
             configId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
             tenant: mytenant
             trigger: MANUAL
+            origin: Dashboard
             status: SUCCEEDED
             mode: DELTA
             startedAt: '2026-07-27T02:00:00.000Z'
@@ -2386,6 +2383,7 @@ components:
           configId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
           tenant: mytenant
           trigger: MANUAL
+          origin: Dashboard
           status: SUCCEEDED
           mode: DELTA
           startedAt: '2026-07-27T02:00:00.000Z'
