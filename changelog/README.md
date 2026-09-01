@@ -67,9 +67,9 @@ The SEPA Export Service and all of its endpoints are no longer available.
 
 | Endpoint | Description |
 | --- | --- |
-| Retrieving a SEPA Export file by ID for tenant | Endpoint removed. Previous documentation under [Retrieving a SEPA Export file by ID for tenant](https://developer.emporix.io/api-references/api-guides/orders/sepa-export/api-reference/files) is no longer available. |
-| Retrieving a list of export jobs | Endpoint removed. Previous documentation under [Retrieving a list of export jobs](https://developer.emporix.io/api-references/api-guides/orders/sepa-export/api-reference/jobs#get-sepa-export-tenant-jobs) is no longer available. |
-| Creating a new export job | Endpoint removed. Previous documentation under [Creating a new export job](https://developer.emporix.io/api-references/api-guides/orders/sepa-export/api-reference/jobs#post-sepa-export-tenant-jobs) is no longer available. |
+| Retrieving a SEPA Export file by ID for tenant | Endpoint removed. The `GET /sepa-export/{tenant}/files/{fileId}` operation is no longer available. |
+| Retrieving a list of export jobs | Endpoint removed. The `GET /sepa-export/{tenant}/jobs` operation is no longer available. |
+| Creating a new export job | Endpoint removed. The `POST /sepa-export/{tenant}/jobs` operation is no longer available. |
 
 #### Known problems
 

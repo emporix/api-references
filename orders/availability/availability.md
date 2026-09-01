@@ -1,7 +1,7 @@
 ---
 seo:
   title: Availability Service Tutorials
-  description: availability, location, stock level,
+  description: availability, stock level, popularity
 icon: graduation-cap
 layout:
   width: wide
@@ -23,7 +23,7 @@ layout:
 
 ## How to specify availability, popularity, or stock level for a product
 
-{% hint style="warning" %}
+{% hint style="info" %}
 This tutorial describes how to specify availability, popularity, and stock level for a single product.
 {% endhint %}
 
@@ -31,11 +31,61 @@ Information about a specific product's availability, popularity, and stock level
 
 Take a look at the relationships between the `Availability` object and other resources in the Emporix Commerce Engine:
 
-<figure><img src="../../.gitbook/assets/availability.svg" alt=""><figcaption></figcaption></figure>
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128"
+    edgeLabelTextColor: "#4C5359"
+---
+classDiagram
+    class Site {
+        _code : String
+        ...
+    }
+
+    class Product {
+        _id : String
+        ...
+    }
+
+    class Availability {
+        _id : String
+        site : String
+        stockLevel : Double
+        available : Boolean
+        productId : String
+        popularity : Integer
+        createdAt : String (ISO 8601)
+        modifiedAt : String (ISO 8601)
+        distributionChannel : DistributionChannel
+    }
+
+    class DistributionChannel {
+        ASSORTMENT
+        HOME_DELIVERY
+        PICKUP
+    }
+
+    Site --> Availability : site
+    Product --> Availability : productId
+    DistributionChannel --> Availability : distributionChannel
+
+    style Availability fill:#F2F6FA, stroke:#4C5359
+    style Product fill:#F2F6FA, stroke:#4C5359
+    style Site fill:#F2F6FA, stroke:#4C5359
+    style DistributionChannel fill:#F2F6FA, stroke:#4C5359
+```
 
 ### Before you start
 
-Make sure you created a product. For more information, check out [_How to add your first product_](../../products-labels-and-brands/product-service/product.md#how-to-add-your-first-product).
+Make sure you created a product. For more information, check out [How to add your first product](../../products-labels-and-brands/product-service/product.md#how-to-add-your-first-product).
 
 ### Create the `Availability` object
 
@@ -80,9 +130,8 @@ You can also manage multiple availabilities for a product at once. A single prod
 
 To create or update multiple product availabilities at once, send a request to one of the following endpoints:
 
-- [Creating multiple product availabilities](https://developer.emporix.io/api-references-1/readme/api-reference-2/availabilities#post-availability-tenant-availability-bulk)
-- [Upserting multiple availabilities information of a product](https://developer.emporix.io/api-references-1/readme/api-reference-2/availabilities#put-availability-tenant-availability-bulk)
-
+- [Creating multiple product availabilities](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-bulk)
+- [Upserting multiple availabilities information of a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#put-availability-tenant-availability-bulk)
 Example bulk request:
 
 ```bash
@@ -112,7 +161,7 @@ In this example, the same product has different availability on two sites: `site
 
 To check if a product's availability was added successfully, you need to send a request to the [Retrieving a product's availability](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) endpoint with the product's ID in the request body.
 
-{% hint style="warning" %}
+{% hint style="info" %}
 You can also retrieve availability information for multiple products at once by sending a request to the [Retrieving product availabilities for a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) endpoint.
 {% endhint %}
 
@@ -142,19 +191,19 @@ Make sure the following requirements are fulfilled:
 
 * You have already created all products that make up the bundle.
 
-{% hint style="warning" %}
-For instructions, check out [_How to add your first product_](../../products-labels-and-brands/product-service/product.md#how-to-add-your-first-product).
+{% hint style="info" %}
+For instructions, check out [How to add your first product](../../products-labels-and-brands/product-service/product.md#how-to-add-your-first-product).
 {% endhint %}
 
 * You have already specified stock levels for all products that make up the bundle.
 
-{% hint style="warning" %}
-For instructions, check out [_How to specify availability, popularity, or stock level for a product_](../../products-labels-and-brands/product-service/product.md#how-to-create-a-bundle-of-personalized-products).
+{% hint style="info" %}
+For instructions, check out [How to specify availability, popularity, or stock level for a product](#how-to-specify-availability-popularity-or-stock-level-for-a-product).
 {% endhint %}
 
 * You have already created a product bundle.
 
-{% hint style="warning" %}
+{% hint style="info" %}
 For instructions, check out [How to create a bundle of personalized products](../../products-labels-and-brands/product-service/product.md#how-to-create-a-bundle-of-personalized-products).
 {% endhint %}
 

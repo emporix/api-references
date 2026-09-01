@@ -25,7 +25,7 @@ It is vendored into consumer repos via **git subtree**:
 |---------------|--------------|
 | [api-references](https://github.com/emporix/api-references) | `.style-guide/`, `.cursor/docs-review/`, `.cursor/skills/`, `.github/skills/` |
 | [emporix-documentation-portal](https://github.com/emporix/emporix-documentation-portal) | same |
-| [learning-paths](https://github.com/emporix/learning-paths) | same |
+| [learning-certification](https://github.com/emporix/learning-certification) | same |
 
 ```text
 docs-standards (source of truth)
@@ -76,7 +76,7 @@ Squashed '.cursor/skills/' content from commit ...
 
 ### What you need to do
 
-Authors work in `api-references`, `emporix-documentation-portal`, or `learning-paths`. You do **not** run subtree commands.
+Authors work in `api-references`, `emporix-documentation-portal`, or `learning-certification`. You do **not** run subtree commands.
 
 1. `git pull` to get the latest shared standards
 2. Write or update documentation
@@ -255,7 +255,7 @@ cd ~/emporix/docs-standards
 # Or one repo at a time:
 ./scripts/update-subtrees.sh --repo api-references
 ./scripts/update-subtrees.sh --repo emporix-documentation-portal
-./scripts/update-subtrees.sh --repo learning-paths
+./scripts/update-subtrees.sh --repo learning-certification
 
 # 4) Push consumer repo branches and open PRs there if needed
 ```
@@ -266,7 +266,7 @@ cd ~/emporix/docs-standards
 |--------|-------------|
 | `bootstrap-subtrees.sh` | First-time setup only (new consumer repo) |
 | `refresh-splits.sh` | After every merge to `master` that changes shared content |
-| `update-subtrees.sh` | After `refresh-splits.sh` — pulls into api-references, portal, and learning-paths |
+| `update-subtrees.sh` | After `refresh-splits.sh` — pulls into api-references, portal, and learning-certification |
 
 Dry-run any script first:
 
@@ -344,7 +344,7 @@ Roll out the Copilot PR review skill to consumer repos after merging changes to 
 ### Rollout order
 
 1. **First:** [api-references](https://github.com/emporix/api-references) and [emporix-documentation-portal](https://github.com/emporix/emporix-documentation-portal)
-2. **Later:** [learning-paths](https://github.com/emporix/learning-paths) (same subtree path when ready)
+2. **Later:** [learning-certification](https://github.com/emporix/learning-certification) (same subtree path when ready)
 
 ### Steps per consumer repo
 
@@ -367,10 +367,10 @@ git push
 
 The shared skill at `.github/skills/copilot-docs-code-review/` is vendored via subtree. Only `.github/copilot-docs-review/local-review-checks.md` is maintained locally in each consumer repo.
 
-For learning-paths, repeat the same steps when ready:
+For learning-certification, repeat the same steps when ready:
 
 ```bash
-./scripts/update-subtrees.sh --repo learning-paths
+./scripts/update-subtrees.sh --repo learning-certification
 ```
 
 ## Planned: automatic Phase 1 trigger
