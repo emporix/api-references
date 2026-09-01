@@ -25,6 +25,31 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## Schema Service - support for `VENDOR_LOCATION` schema type
+
+#### Overview
+
+The Schema Service now supports the `VENDOR_LOCATION` schema type. You can create mixin schemas and references for vendor locations, and filter schemas and references by this type.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | `VENDOR_LOCATION` added to supported schema types. |
+| [Updating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) | `VENDOR_LOCATION` added to supported schema types. |
+| [Updating types of a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id-types) | `VENDOR_LOCATION` added to supported schema types. |
+| [Retrieving all schemas](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas) | The `type` query parameter accepts `VENDOR_LOCATION`. |
+| [Creating a reference](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/reference#post-schema-tenant-references) | `VENDOR_LOCATION` added to supported reference types. |
+| [Updating a reference](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/reference#put-schema-tenant-references-id) | `VENDOR_LOCATION` added to supported reference types. |
+| [Retrieving all references](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/reference#get-schema-tenant-references) | The `type` query parameter accepts `VENDOR_LOCATION`. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
 {% update date="2026-09-01" tags="new-feature" %}
 
 ## Import Service - schedule removal and run `origin`
