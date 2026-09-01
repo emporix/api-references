@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-09-01" tags="new-feature" %}
 
 ## Import Service - schedule removal and run `origin`
 
