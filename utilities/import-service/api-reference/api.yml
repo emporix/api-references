@@ -323,17 +323,17 @@ paths:
                   type: string
                   maxLength: 40
                   description: >-
-                    What is asking for this run — for example `Dashboard`, the name of an integration
-                    scenario, or your own scheduler. `trigger` records only whether a run was started
-                    manually or by a schedule, so two systems that both call this endpoint cannot be told
-                    apart in the run history. Omitting it, or sending a blank value, falls back to the
-                    trigger. Values longer than 40 characters, or containing control characters, are
-                    rejected rather than shortened.
+                    What requested this run. Examples: `Dashboard`, an integration scenario name, or a scheduler name.
+                    The `trigger` field records only `MANUAL` or `SCHEDULED`. Use `origin` when more than one system
+                    calls this endpoint. If you omit `origin` or send a blank value, the service stores the `trigger`
+                    value. The service rejects values longer than 40 characters and values that contain control
+                    characters. It does not shorten them.
                   example: Make scenario 42
             examples:
               Full run:
                 value:
                   mode: FULL
+                  origin: Dashboard
               Delta dry run:
                 value:
                   mode: DELTA
@@ -1276,10 +1276,9 @@ components:
         origin:
           type: string
           description: >-
-            What asked for the run: the value supplied when it was triggered, otherwise the trigger name.
-            `trigger` distinguishes only a manual run from a scheduled one, so this is what tells a
-            dashboard run apart from one started by an integration scenario. Absent on runs recorded
-            before this field existed.
+            What requested the run. The `origin` value from the trigger request, or the `trigger` value when
+            `origin` was omitted. Use this field to distinguish a dashboard run from a run started by an
+            integration scenario. The field is absent on runs recorded before it existed.
           example: Dashboard
         status:
           type: string
@@ -2273,6 +2272,7 @@ components:
         configId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
         tenant: mytenant
         trigger: MANUAL
+        origin: Dashboard
         status: RUNNING
         mode: FULL
         startedAt: '2026-07-27T02:00:00.000Z'
@@ -2295,6 +2295,7 @@ components:
             configId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
             tenant: mytenant
             trigger: MANUAL
+            origin: Dashboard
             status: SUCCEEDED
             mode: DELTA
             startedAt: '2026-07-27T02:00:00.000Z'
@@ -2313,6 +2314,7 @@ components:
           configId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
           tenant: mytenant
           trigger: MANUAL
+          origin: Dashboard
           status: SUCCEEDED
           mode: DELTA
           startedAt: '2026-07-27T02:00:00.000Z'
