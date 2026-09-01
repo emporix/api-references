@@ -41,21 +41,21 @@ The Supplier Service and all of its endpoints are no longer available.
 
 | Endpoint | Description |
 | --- | --- |
-| Retrieving all suppliers | Endpoint removed. The `GET /supplier/{tenant}/suppliers` endpoint is no longer available. |
-| Creating a supplier | Endpoint removed. The `POST /supplier/{tenant}/suppliers` endpoint is no longer available. |
-| Retrieving a supplier | Endpoint removed. The `GET /supplier/{tenant}/suppliers/{supplierId}` endpoint is no longer available. |
-| Updating a supplier | Endpoint removed. The `PUT /supplier/{tenant}/suppliers/{supplierId}` endpoint is no longer available. |
-| Partially updating a supplier | Endpoint removed. The `PATCH /supplier/{tenant}/suppliers/{supplierId}` endpoint is no longer available. |
-| Deleting a supplier | Endpoint removed. The `DELETE /supplier/{tenant}/suppliers/{supplierId}` endpoint is no longer available. |
-| Retrieving all product-supplier relations | Endpoint removed. The `GET /supplier/{tenant}/PSRelations` endpoint is no longer available. |
-| Creating a product-supplier relation | Endpoint removed. The `POST /supplier/{tenant}/PSRelations` endpoint is no longer available. |
-| Retrieving a product-supplier relation | Endpoint removed. The `GET /supplier/{tenant}/PSRelations/{psRelationId}` endpoint is no longer available. |
-| Updating a product-supplier relation | Endpoint removed. The `PUT /supplier/{tenant}/PSRelations/{psRelationId}` endpoint is no longer available. |
-| Deleting a product-supplier relation | Endpoint removed. The `DELETE /supplier/{tenant}/PSRelations/{psRelationId}` endpoint is no longer available. |
-| Retrieving a product-supplier relation by product ID and site code | Endpoint removed. The `GET /supplier/{tenant}/PSRelations/{productId}/{siteCode}` endpoint is no longer available. |
-| Updating a product-supplier relation by product ID and site code | Endpoint removed. The `PUT /supplier/{tenant}/PSRelations/{productId}/{siteCode}` endpoint is no longer available. |
-| Deleting a product-supplier relation by product ID and site code | Endpoint removed. The `DELETE /supplier/{tenant}/PSRelations/{productId}/{siteCode}` endpoint is no longer available. |
-| Searching product-supplier relations | Endpoint removed. The `POST /supplier/{tenant}/PSRelations/search` endpoint is no longer available. |
+| Retrieving all suppliers | Endpoint removed. The `GET /supplier/{tenant}/suppliers` operation is no longer available. |
+| Creating a supplier | Endpoint removed. The `POST /supplier/{tenant}/suppliers` operation is no longer available. |
+| Retrieving a supplier | Endpoint removed. The `GET /supplier/{tenant}/suppliers/{supplierId}` operation is no longer available. |
+| Updating a supplier | Endpoint removed. The `PUT /supplier/{tenant}/suppliers/{supplierId}` operation is no longer available. |
+| Partially updating a supplier | Endpoint removed. The `PATCH /supplier/{tenant}/suppliers/{supplierId}` operation is no longer available. |
+| Deleting a supplier | Endpoint removed. The `DELETE /supplier/{tenant}/suppliers/{supplierId}` operation is no longer available. |
+| Retrieving all product-supplier relations | Endpoint removed. The `GET /supplier/{tenant}/PSRelations` operation is no longer available. |
+| Creating a product-supplier relation | Endpoint removed. The `POST /supplier/{tenant}/PSRelations` operation is no longer available. |
+| Retrieving a product-supplier relation | Endpoint removed. The `GET /supplier/{tenant}/PSRelations/{psRelationId}` operation is no longer available. |
+| Updating a product-supplier relation | Endpoint removed. The `PUT /supplier/{tenant}/PSRelations/{psRelationId}` operation is no longer available. |
+| Deleting a product-supplier relation | Endpoint removed. The `DELETE /supplier/{tenant}/PSRelations/{psRelationId}` operation is no longer available. |
+| Retrieving a product-supplier relation by product ID and site code | Endpoint removed. The `GET /supplier/{tenant}/PSRelations/{productId}/{siteCode}` operation is no longer available. |
+| Updating a product-supplier relation by product ID and site code | Endpoint removed. The `PUT /supplier/{tenant}/PSRelations/{productId}/{siteCode}` operation is no longer available. |
+| Deleting a product-supplier relation by product ID and site code | Endpoint removed. The `DELETE /supplier/{tenant}/PSRelations/{productId}/{siteCode}` operation is no longer available. |
+| Searching product-supplier relations | Endpoint removed. The `POST /supplier/{tenant}/PSRelations/search` operation is no longer available. |
 
 #### Known problems
 
@@ -79,9 +79,9 @@ The SEPA Export Service and all of its endpoints are no longer available.
 
 | Endpoint | Description |
 | --- | --- |
-| Retrieving a SEPA Export file by ID for tenant | Endpoint removed. Previous documentation under [Retrieving a SEPA Export file by ID for tenant](https://developer.emporix.io/api-references/api-guides/orders/sepa-export/api-reference/files) is no longer available. |
-| Retrieving a list of export jobs | Endpoint removed. Previous documentation under [Retrieving a list of export jobs](https://developer.emporix.io/api-references/api-guides/orders/sepa-export/api-reference/jobs#get-sepa-export-tenant-jobs) is no longer available. |
-| Creating a new export job | Endpoint removed. Previous documentation under [Creating a new export job](https://developer.emporix.io/api-references/api-guides/orders/sepa-export/api-reference/jobs#post-sepa-export-tenant-jobs) is no longer available. |
+| Retrieving a SEPA Export file by ID for tenant | Endpoint removed. The `GET /sepa-export/{tenant}/files/{fileId}` operation is no longer available. |
+| Retrieving a list of export jobs | Endpoint removed. The `GET /sepa-export/{tenant}/jobs` operation is no longer available. |
+| Creating a new export job | Endpoint removed. The `POST /sepa-export/{tenant}/jobs` operation is no longer available. |
 
 #### Known problems
 
