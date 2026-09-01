@@ -270,6 +270,50 @@ paths:
               examples:
                 Schedule response:
                   $ref: '#/components/examples/Schedule_Example'
+        '400':
+          description: >-
+            The cron expression or time zone could not be used. The cron is a six-field expression
+            (second, minute, hour, day-of-month, month, day-of-week), so the familiar five-field
+            `0 * * * *` is rejected rather than stored and then never fired.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+        '404':
+          description: No import job with that ID, so there is nothing to schedule.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+    delete:
+      summary: Removing a schedule
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Removes the schedule so the job runs only when it is triggered.
+
+        The request is idempotent: removing a schedule that is not there also returns 204. Unlike
+        creating one, it does not require the configuration to exist — a schedule left behind by a
+        deleted job is exactly what needs removing.
+      operationId: deleteSchedule
+      tags:
+        - Schedules
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '204':
+          description: The schedule has been removed. The job now runs only when triggered.
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
