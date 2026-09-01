@@ -57,10 +57,10 @@ There are no known problems.
 
 #### Overview
 
-The Pick-pack Service has reached End of Life and is no longer available. All previously deprecated endpoints are now removed ([Pick-pack Service - service deprecation](https://developer.emporix.io/changelog/2026/readme#pick-pack-service-service-deprecation)).
+All previously deprecated endpoints are now removed ([Pick-pack Service - service deprecation](https://developer.emporix.io/changelog/2026/readme#pick-pack-service-service-deprecation)).
 
 {% hint style="danger" %}
-The Pick-pack Service and all of its endpoints are no longer available.
+The Pick-pack Service has reached End of Life and is no longer available.
 {% endhint %}
 
 #### Removed endpoints
