@@ -39,26 +39,19 @@ The deprecated availability endpoints accepting `site` as a query parameter and 
 
 #### Removed endpoints
 
-**Availability endpoints accepting `site` as query parameter**
-
-| Endpoint | Description                                                                                                                                                                                                                                            |
-| --- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `[GET] /{tenant}/availability/{productId}?site` | Endpoint removed. Please use the endpoint [Retrieving a product availability](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-productid-site) instead.    |
-| `[POST] /{tenant}/availability/{productId}?site` | Endpoint removed. Please use the endpoint [Creating a new availability for a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site) instead.        |
-| `[PUT] /{tenant}/availability/{productId}?site` | Endpoint removed. Please use the endpoint [Upserting availability information of a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#put-availability-tenant-availability-productid-site) instead.   |
-| `[DELETE] /{tenant}/availability/{productId}?site` | Endpoint removed. Please use the endpoint [Deleting availability information of a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#delete-availability-tenant-availability-productid-site) instead. |
-| `[GET] /{tenant}/availability?site` | Endpoint removed. Please use the endpoint [Retrieving all availability information for a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-site-site) instead.     |
-| `[POST] /{tenant}/availability?site` | Endpoint removed. Please use the endpoint [Retrieving product availabilities](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) instead.                        |
-
-**Location endpoints**
-
 | Endpoint | Description |
 | --- | --- |
-| Retrieving all locations for a site | Endpoint removed. Previous documentation under [Retrieving all locations for a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/locations#get-availability-tenant-locations-site) is no longer available. |
-| Adding a new location to a site | Endpoint removed. Previous documentation under [Adding a new location to a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/locations#post-availability-tenant-locations-site) is no longer available. |
-| Updating locations | Endpoint removed. Previous documentation under [Updating locations](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/locations#put-availability-tenant-locations-site) is no longer available. |
-| Deleting a location | Endpoint removed. Previous documentation under [Deleting a location](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/locations#delete-availability-tenant-locations-location) is no longer available. |
-| Retrieving product locations | Endpoint removed. Previous documentation under [Retrieving product locations](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/locations#post-availability-tenant-search-locations) is no longer available. |
+| Retrieving a product availability | Endpoint removed. The `GET /availability/{tenant}/availability/{productId}?site` operation is no longer available. Use [Retrieving a product availability](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-productid-site) instead. |
+| Creating a new availability for a product | Endpoint removed. The `POST /availability/{tenant}/availability/{productId}?site` operation is no longer available. Use [Creating a new availability for a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site) instead. |
+| Upserting availability information of a product | Endpoint removed. The `PUT /availability/{tenant}/availability/{productId}?site` operation is no longer available. Use [Upserting availability information of a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#put-availability-tenant-availability-productid-site) instead. |
+| Deleting availability information of a product | Endpoint removed. The `DELETE /availability/{tenant}/availability/{productId}?site` operation is no longer available. Use [Deleting availability information of a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#delete-availability-tenant-availability-productid-site) instead. |
+| Retrieving all availability information for a site | Endpoint removed. The `GET /availability/{tenant}/availability?site` operation is no longer available. Use [Retrieving all availability information for a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-site-site) instead. |
+| Retrieving product availabilities | Endpoint removed. The `POST /availability/{tenant}/availability?site` operation is no longer available. Use [Retrieving product availabilities](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) instead. |
+| Retrieving all locations for a site | Endpoint removed. The `GET /availability/{tenant}/locations/{site}` operation is no longer available. |
+| Adding a new location to a site | Endpoint removed. The `POST /availability/{tenant}/locations/{site}` operation is no longer available. |
+| Updating locations | Endpoint removed. The `PUT /availability/{tenant}/locations/{site}` operation is no longer available. |
+| Deleting a location | Endpoint removed. The `DELETE /availability/{tenant}/locations/{location}` operation is no longer available. |
+| Retrieving product locations | Endpoint removed. The `POST /availability/{tenant}/search/locations` operation is no longer available. |
 
 #### Known problems
 
@@ -82,9 +75,9 @@ The SEPA Export Service and all of its endpoints are no longer available.
 
 | Endpoint | Description |
 | --- | --- |
-| Retrieving a SEPA Export file by ID for tenant | Endpoint removed. Previous documentation under [Retrieving a SEPA Export file by ID for tenant](https://developer.emporix.io/api-references/api-guides/orders/sepa-export/api-reference/files) is no longer available. |
-| Retrieving a list of export jobs | Endpoint removed. Previous documentation under [Retrieving a list of export jobs](https://developer.emporix.io/api-references/api-guides/orders/sepa-export/api-reference/jobs#get-sepa-export-tenant-jobs) is no longer available. |
-| Creating a new export job | Endpoint removed. Previous documentation under [Creating a new export job](https://developer.emporix.io/api-references/api-guides/orders/sepa-export/api-reference/jobs#post-sepa-export-tenant-jobs) is no longer available. |
+| Retrieving a SEPA Export file by ID for tenant | Endpoint removed. The `GET /sepa-export/{tenant}/files/{fileId}` operation is no longer available. |
+| Retrieving a list of export jobs | Endpoint removed. The `GET /sepa-export/{tenant}/jobs` operation is no longer available. |
+| Creating a new export job | Endpoint removed. The `POST /sepa-export/{tenant}/jobs` operation is no longer available. |
 
 #### Known problems
 

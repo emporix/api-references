@@ -78,7 +78,7 @@ paths:
         Retrieves availabilities for specified products. The request body accepts one of two mutually exclusive formats:
 
         * **List of product IDs** — retrieves availabilities for the specified products. If the product ID refers to a product bundle, availability information for the entire bundle is returned. The `site` query parameter is optional.
-        * **Q-param object** — retrieves availabilities matching the provided query criteria. The response will **not** include avaialbilities for product bundles. The `site` query parameter must **not** be provided together with the Q-param body.
+        * **Q-param object** — retrieves availabilities matching the provided query criteria. The response will **not** include availabilities for product bundles. The `site` query parameter must **not** be provided together with the Q-param body.
 
         ***
 
