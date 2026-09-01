@@ -1,7 +1,7 @@
 ---
 seo:
   title: Availability Service Tutorials
-  description: availability, stock level, popularity,
+  description: availability, stock level, popularity
 icon: graduation-cap
 layout:
   width: wide
@@ -23,7 +23,7 @@ layout:
 
 ## How to specify availability, popularity, or stock level for a product
 
-{% hint style="warning" %}
+{% hint style="info" %}
 This tutorial describes how to specify availability, popularity, and stock level for a single product.
 {% endhint %}
 
@@ -161,7 +161,7 @@ In this example, the same product has different availability on two sites: `site
 
 To check if a product's availability was added successfully, you need to send a request to the [Retrieving a product's availability](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) endpoint with the product's ID in the request body.
 
-{% hint style="warning" %}
+{% hint style="info" %}
 You can also retrieve availability information for multiple products at once by sending a request to the [Retrieving product availabilities for a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) endpoint.
 {% endhint %}
 
@@ -191,19 +191,19 @@ Make sure the following requirements are fulfilled:
 
 * You have already created all products that make up the bundle.
 
-{% hint style="warning" %}
+{% hint style="info" %}
 For instructions, check out [How to add your first product](../../products-labels-and-brands/product-service/product.md#how-to-add-your-first-product).
 {% endhint %}
 
 * You have already specified stock levels for all products that make up the bundle.
 
-{% hint style="warning" %}
-For instructions, check out [How to specify availability, popularity, or stock level for a product](#how-to-create-a-bundle-of-personalized-products).
+{% hint style="info" %}
+For instructions, check out [How to specify availability, popularity, or stock level for a product](#how-to-specify-availability-popularity-or-stock-level-for-a-product).
 {% endhint %}
 
 * You have already created a product bundle.
 
-{% hint style="warning" %}
+{% hint style="info" %}
 For instructions, check out [How to create a bundle of personalized products](../../products-labels-and-brands/product-service/product.md#how-to-create-a-bundle-of-personalized-products).
 {% endhint %}
 
