@@ -25,6 +25,39 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Import Service - schedule removal and run `origin`
+
+#### Overview
+
+You can now remove a configuration's schedule. Triggering a run accepts an optional `origin` so run history identifies which system started the run. Scheduling an import job now documents `400` and `404` responses.
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Removing a schedule](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/schedules#delete-importtool-tenant-configs-configid-schedule) | Removes the schedule for a configuration. The request is idempotent and returns `204` even when no schedule exists. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Scheduling an import job](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/schedules#put-importtool-tenant-configs-configid-schedule) | Documents `400` when the `cron` expression or `timezone` value is invalid, and `404` when the configuration does not exist. |
+| [Triggering an import run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Accepts an optional `origin` field that identifies what requested the run. |
+| [Retrieving run history](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Run entries include `origin`. |
+| [Retrieving a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Run details include `origin`. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | The new run includes `origin`. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
 {% update date="2026-08-31" tags="new-feature" %}
 
 ## Audit Logs (Changelog) Service - query API
