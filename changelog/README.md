@@ -51,7 +51,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="major-change" %}
+{% update date="2026-08-31" tags="major-change" %}
 
 ## SEPA Export Service - removal of deprecated endpoints
 

@@ -68,7 +68,6 @@ classDiagram
     }
 
     class DistributionChannel {
-        <<enumeration>>
         ASSORTMENT
         HOME_DELIVERY
         PICKUP
