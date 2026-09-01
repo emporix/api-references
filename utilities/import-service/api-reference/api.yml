@@ -363,6 +363,14 @@ paths:
                   description: >-
                     When `true`, every extracted record is rewritten, even if unchanged. It bypasses the idempotency `skip-if-unchanged` check. Use it to force target IDs and values to be rewritten.
                   example: false
+                sampleSize:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
+                  description: >-
+                    Dry-run only. How many mapped records to sample per stream for the preview returned as
+                    `dryRunSample`. Clamped to 1-100; defaults to 25.
+                  example: 25
                 origin:
                   type: string
                   maxLength: 40
@@ -1317,6 +1325,27 @@ components:
             - SCHEDULED
           description: What triggered the run.
           example: MANUAL
+        dryRunSample:
+          type: array
+          description: >-
+            Dry-run only. A sample of the mapped records that would be written, so the mapping can be
+            previewed without a real import. Absent on normal runs.
+          items:
+            type: object
+            properties:
+              stream:
+                type: string
+                description: The stream that produced the sample record.
+              targetType:
+                type: string
+                description: The resolved target type the record would be written to.
+              key:
+                type: string
+                description: The record's natural/deterministic key.
+              fields:
+                type: object
+                additionalProperties: true
+                description: The mapped target fields that would be written.
         origin:
           type: string
           description: >-
