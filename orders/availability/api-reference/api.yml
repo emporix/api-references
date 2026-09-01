@@ -3,7 +3,7 @@ info:
   title: Availability Service
   version: ''
   description: |-
-    Manage product availability and stock levels per site.
+    Manage the availability and physical location of a product.
 
   contact:
     name: Emporix
@@ -13,8 +13,199 @@ info:
 servers:
   - url: 'https://api.emporix.io'
 tags:
+  - name: Locations
   - name: Availabilities
 paths:
+  /availability/{tenant}/locations/{site}:
+    parameters:
+      - $ref: '#/components/parameters/tenant-path'
+      - $ref: '#/components/parameters/site-path'
+    get:
+      tags:
+        - Locations
+      deprecated: true
+      summary: Retrieving all locations for a site
+      description: |-
+        Retrieves all locations for a specified site.
+      security:
+        - OAuth2:
+            - availability.availability_view
+      responses:
+        '200':
+          description: The request was successful. A list of locations is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationList'
+              examples:
+                Response example:
+                  $ref: '#/components/examples/LocationList'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse400'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse401'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse403'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse404'
+        '500':
+          $ref: '#/components/responses/ServerErrorResponse500'
+      operationId: GET-availability-retrieve-locations-site
+    post:
+      tags:
+        - Locations
+      deprecated: true
+      summary: Adding a new location to a site
+      description: |-
+        Adds a new location to a specified site.
+      security:
+        - OAuth2:
+            - availability.availability_manage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+            examples:
+              Request example:
+                $ref: '#/components/examples/Location'
+      responses:
+        '201':
+          description: ' The request was successful. The location has been added to the site.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              example:
+                message: 'Successfully created location with id: shop1:1234'
+                code: 201
+        '400':
+          $ref: '#/components/responses/BadRequestResponse400'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse401'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse403'
+        '409':
+          $ref: '#/components/responses/ConflictResponse409'
+        '500':
+          $ref: '#/components/responses/ServerErrorResponse500'
+      operationId: POST-availability-add-locations-site
+    put:
+      tags:
+        - Locations
+      deprecated: true
+      summary: Updating locations
+      description: |-
+        Updates locations for a specified site.
+      security:
+        - OAuth2:
+            - availability.availability_manage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationOrderList'
+            examples:
+              Request example:
+                $ref: '#/components/examples/LocationOrderList'
+      responses:
+        '200':
+          description: ' The request was successful. The locations have been updated.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              example:
+                message: Successfully modified 5 location(s)
+                code: 200
+        '400':
+          $ref: '#/components/responses/BadRequestResponse400'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse401'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse403'
+        '500':
+          $ref: '#/components/responses/ServerErrorResponse500'
+      operationId: PUT-availability-update-locations-site
+  /availability/{tenant}/locations/{location}:
+    description: Availability service
+    parameters:
+      - $ref: '#/components/parameters/tenant-path'
+    delete:
+      tags:
+        - Locations
+      deprecated: true
+      summary: Deleting a location
+      description: |-
+        Deletes a specified location.
+      security:
+        - OAuth2:
+            - availability.availability_manage
+      parameters:
+        - $ref: '#/components/parameters/tenant-path'
+        - $ref: '#/components/parameters/location-path'
+      responses:
+        '200':
+          description: ' The request was successful. The location has been deleted.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              example:
+                message: Successfully deleted 5 location(s)
+                code: 200
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse401'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse403'
+        '500':
+          $ref: '#/components/responses/ServerErrorResponse500'
+      operationId: DELETE-availability-remove-location
+  /availability/{tenant}/search/locations:
+    description: Availability service
+    post:
+      deprecated: true
+      summary: Retrieving product locations
+      description: |-
+        Retrieves locations of specified products.
+      security:
+        - OAuth2:
+            - availability.availability_view
+      parameters:
+        - $ref: '#/components/parameters/tenant-path'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocationSearch'
+            examples:
+              Request example:
+                $ref: '#/components/examples/LocationSearch'
+      responses:
+        '200':
+          description: The request was successful. A list of locations is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductLocationList'
+              examples:
+                Response example:
+                  $ref: '#/components/examples/ProductLocationList'
+        '400':
+          $ref: '#/components/responses/BadRequestResponse400'
+        '401':
+          $ref: '#/components/responses/UnauthorizedResponse401'
+        '403':
+          $ref: '#/components/responses/ForbiddenResponse403'
+        '404':
+          $ref: '#/components/responses/NotFoundResponse404'
+        '500':
+          $ref: '#/components/responses/ServerErrorResponse500'
+      operationId: POST-availability-search-locations
+      tags:
+        - Locations
+    parameters:
+      - $ref: '#/components/parameters/tenant-path'
   /availability/{tenant}/availability/site/{site}:
     description: Availability service
     parameters:
@@ -78,7 +269,7 @@ paths:
         Retrieves availabilities for specified products. The request body accepts one of two mutually exclusive formats:
 
         * **List of product IDs** — retrieves availabilities for the specified products. If the product ID refers to a product bundle, availability information for the entire bundle is returned. The `site` query parameter is optional.
-        * **Q-param object** — retrieves availabilities matching the provided query criteria. The response will **not** include availabilities for product bundles. The `site` query parameter must **not** be provided together with the Q-param body.
+        * **Q-param object** — retrieves availabilities matching the provided query criteria. The response will **not** include avaialbilities for product bundles. The `site` query parameter must **not** be provided together with the Q-param body.
 
         ***
 
@@ -510,6 +701,14 @@ components:
       schema:
         type: string
         example: 68ad7d45c42fc8121a611fec
+    location-path:
+      in: path
+      name: location
+      required: true
+      description: Location unique identifier.
+      schema:
+        type: string
+        example: 'shop1:1234'
     site:
       in: query
       name: site
@@ -816,12 +1015,141 @@ components:
         - HOME_DELIVERY
         - PICKUP
       example: ASSORTMENT
+    Location:
+      description: Physical location of the product.
+      type: object
+      properties:
+        id:
+          type: string
+          description: |-
+            Unique identifier of the location. 
+
+            **Note**: The value should be provided in the `site`:`rack` format.
+          example: 'shop1:1234'
+        site:
+          type: string
+          description: 'Site code, defined when the site is created. The value should match the `site` query/path parameter value.'
+          example: shop1
+        rack:
+          type: string
+          description: Rack number.
+          example: '1234'
+        rackName:
+          type: string
+          description: Name of the rack.
+          example: Tools
+        order:
+          type: number
+          description: 'Order of the location, expressed as a number.'
+          example: 1
+          minimum: 0
+      required:
+        - id
+        - site
+        - order
+    LocationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Location'
+    LocationOrder:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the location.
+          example: 'shop1:1234'
+        order:
+          type: number
+          description: 'Order of the location, expressed as a number.'
+          example: 1
+    LocationOrderList:
+      type: array
+      items:
+        $ref: '#/components/schemas/LocationOrder'
+    LocationSearch:
+      type: object
+      properties:
+        site:
+          type: string
+          description: 'Site code, defined when the site is created.'
+          example: shop1
+        productIds:
+          type: array
+          description: List of product IDs. A product IDs is generated when the product is created through the Product Service.
+          example:
+            - 5f7c996173fc281cdd412345
+            - 5f7c996173fc281cdd412345
+          items:
+            type: string
+    GenericLocation:
+      type: object
+      properties:
+        site:
+          type: string
+          description: 'Site code, defined when the site is created.'
+          example: shop1
+        zone:
+          type: string
+          description: Unique identifier of the zone.
+          example: zone1
+        rack:
+          type: string
+          description: Rack number.
+          example: '1'
+        rackName:
+          type: string
+          description: Name of the rack.
+          example: Tools
+        shelf:
+          type: string
+          description: Unique identifier of the shelf.
+          example: shelf1
+        section:
+          type: string
+          description: Unique identifier of the section.
+          example: section1
+        bin:
+          type: string
+          description: Unique identifier of the bin.
+          example: bin1
+        order:
+          type: number
+          description: 'Order of the location, expressed as a number.'
+          example: 1
+    ProductLocation:
+      type: object
+      properties:
+        productId:
+          type: string
+          description: 'Unique identifier of the product, generated when the product is created through the Product Service.'
+          example: 5f7c996173fc281cdd412345
+        locations:
+          type: array
+          description: List of product physical locations.
+          items:
+            $ref: '#/components/schemas/GenericLocation'
+    ProductLocationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ProductLocation'
+      description: ''
     IdResponse:
       type: object
       properties:
         id:
           type: string
           description: ID of the created resource.
+    SuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          description: The response message of the operation.
+          example: 'Successfully created location with id: shop1:1234'
+        code:
+          type: number
+          description: The result code of the operation.
+          example: 201
     BadRequest400:
       properties:
         code:
@@ -1147,6 +1475,44 @@ components:
           index: 1
           code: 204
           status: No Content
+    Location:
+      value:
+        id: 'shop1:1234'
+        site: shop1
+        rack: '1234'
+        rackName: Tools
+        order: 1
+    LocationList:
+      value:
+        - id: 'shop1:1234'
+          site: shop1
+          rack: '1234'
+          rackName: Tools
+          order: 1
+    LocationOrderList:
+      value:
+        - id: 'shop1:1234'
+          order: 1
+        - id: 'secondary:4321'
+          order: 10
+    LocationSearch:
+      value:
+        site: shop1
+        productIds:
+          - 5f7c996173fc281cdd412345
+          - 5f7c996173fc281cdd412345
+    ProductLocationList:
+      value:
+        - productId: 5f7c996173fc281cdd412345
+          locations:
+            - site: shop1
+              zone: zone1
+              rack: '1'
+              rackName: Tools
+              shelf: shelf1
+              section: section1
+              bin: bin1
+              order: 1
   securitySchemes:
     OAuth2:
       type: oauth2

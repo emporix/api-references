@@ -51,40 +51,6 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="2026-08-31" tags="major-change" %}
-
-## Availability Service - removal of deprecated endpoints
-
-#### Overview
-
-All Availability Service endpoints that were [previously deprecated](https://developer.emporix.io/changelog/2026/readme#availability-service-deprecated-endpoints) are now removed. The deprecated availability endpoints that accepted `site` as a query parameter have been replaced by their path-parameter equivalents, and the location endpoints have been removed following the sunset of the related functionalities.
-
-{% hint style="danger" %}
-The deprecated availability endpoints accepting `site` as a query parameter and all Availability Service location endpoints are no longer available.
-{% endhint %}
-
-#### Removed endpoints
-
-| Endpoint | Description |
-| --- | --- |
-| Retrieving a product availability | Endpoint removed. The `GET /availability/{tenant}/availability/{productId}?site` operation is no longer available. Use [Retrieving a product availability](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-productid-site) instead. |
-| Creating a new availability for a product | Endpoint removed. The `POST /availability/{tenant}/availability/{productId}?site` operation is no longer available. Use [Creating a new availability for a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site) instead. |
-| Upserting availability information of a product | Endpoint removed. The `PUT /availability/{tenant}/availability/{productId}?site` operation is no longer available. Use [Upserting availability information of a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#put-availability-tenant-availability-productid-site) instead. |
-| Deleting availability information of a product | Endpoint removed. The `DELETE /availability/{tenant}/availability/{productId}?site` operation is no longer available. Use [Deleting availability information of a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#delete-availability-tenant-availability-productid-site) instead. |
-| Retrieving all availability information for a site | Endpoint removed. The `GET /availability/{tenant}/availability?site` operation is no longer available. Use [Retrieving all availability information for a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-site-site) instead. |
-| Retrieving product availabilities | Endpoint removed. The `POST /availability/{tenant}/availability?site` operation is no longer available. Use [Retrieving product availabilities](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) instead. |
-| Retrieving all locations for a site | Endpoint removed. The `GET /availability/{tenant}/locations/{site}` operation is no longer available. |
-| Adding a new location to a site | Endpoint removed. The `POST /availability/{tenant}/locations/{site}` operation is no longer available. |
-| Updating locations | Endpoint removed. The `PUT /availability/{tenant}/locations/{site}` operation is no longer available. |
-| Deleting a location | Endpoint removed. The `DELETE /availability/{tenant}/locations/{location}` operation is no longer available. |
-| Retrieving product locations | Endpoint removed. The `POST /availability/{tenant}/search/locations` operation is no longer available. |
-
-#### Known problems
-
-There are no known problems.
-
-{% endupdate %}
-
 {% update date="RELEASE_DATE" tags="major-change" %}
 
 ## SEPA Export Service - removal of deprecated endpoints
