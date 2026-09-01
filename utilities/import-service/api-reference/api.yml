@@ -319,6 +319,17 @@ paths:
                   description: >-
                     When `true`, every extracted record is rewritten, even if unchanged. It bypasses the idempotency `skip-if-unchanged` check. Use it to force target IDs and values to be rewritten.
                   example: false
+                origin:
+                  type: string
+                  maxLength: 40
+                  description: >-
+                    What is asking for this run — for example `Dashboard`, the name of an integration
+                    scenario, or your own scheduler. `trigger` records only whether a run was started
+                    manually or by a schedule, so two systems that both call this endpoint cannot be told
+                    apart in the run history. Omitting it, or sending a blank value, falls back to the
+                    trigger. Values longer than 40 characters, or containing control characters, are
+                    rejected rather than shortened.
+                  example: Make scenario 42
             examples:
               Full run:
                 value:
@@ -1262,6 +1273,14 @@ components:
             - SCHEDULED
           description: What triggered the run.
           example: MANUAL
+        origin:
+          type: string
+          description: >-
+            What asked for the run: the value supplied when it was triggered, otherwise the trigger name.
+            `trigger` distinguishes only a manual run from a scheduled one, so this is what tells a
+            dashboard run apart from one started by an integration scenario. Absent on runs recorded
+            before this field existed.
+          example: Dashboard
         status:
           type: string
           enum:
