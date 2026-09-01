@@ -67,18 +67,18 @@ The Pick-pack Service has reached End of Life and is no longer available.
 
 | Endpoint | Description |
 | --- | --- |
-| Finishing an order | Endpoint removed. Previous documentation under [Finishing an order](https://developer.emporix.io/api-references/api-guides/orders/pick-pack/api-reference/orders#post-pick-pack-tenant-orders-orderid-finish) is no longer available. |
-| Retrieving all order cycles | Endpoint removed. Previous documentation under [Retrieving all order cycles](https://developer.emporix.io/api-references/api-guides/orders/pick-pack/api-reference/order-cycles) is no longer available. |
-| Retrieving a packlist | Endpoint removed. Previous documentation under [Retrieving a packlist](https://developer.emporix.io/api-references/api-guides/orders/pick-pack/api-reference/orders#get-pick-pack-tenant-orders) is no longer available. |
-| Retrieving an order | Endpoint removed. Previous documentation under [Retrieving an order](https://developer.emporix.io/api-references/api-guides/orders/pick-pack/api-reference/orders#get-pick-pack-tenant-orders-orderid) is no longer available. |
-| Updating an order | Endpoint removed. Previous documentation under [Updating an order](https://developer.emporix.io/api-references/api-guides/orders/pick-pack/api-reference/orders#patch-pick-pack-tenant-orders-orderid) is no longer available. |
-| Adding an assignee to an order | Endpoint removed. Previous documentation under [Adding an assignee to an order](https://developer.emporix.io/api-references/api-guides/orders/pick-pack/api-reference/assignees#post-pick-pack-tenant-orders-orderid-assignees) is no longer available. |
-| Deleting an assignee from an order | Endpoint removed. Previous documentation under [Deleting an assignee from an order](https://developer.emporix.io/api-references/api-guides/orders/pick-pack/api-reference/assignees#delete-pick-pack-tenant-orders-orderid-assignees-assigneeid) is no longer available. |
-| Updating packaging products for an order | Endpoint removed. Previous documentation under [Updating packaging products for an order](https://developer.emporix.io/api-references/api-guides/orders/pick-pack/api-reference/orders#put-pick-pack-tenant-orders-orderid-packaging) is no longer available. |
-| Creating a new packing event | Endpoint removed. Previous documentation under [Creating a new packing event](https://developer.emporix.io/api-references/api-guides/orders/pick-pack/api-reference/events#post-pick-pack-tenant-events) is no longer available. |
-| Retrieving all events | Endpoint removed. Previous documentation under [Retrieving all events](https://developer.emporix.io/api-references/api-guides/orders/pick-pack/api-reference/events#get-pick-pack-tenant-events) is no longer available. |
-| Triggering an order recalculation | Endpoint removed. Previous documentation under [Triggering an order recalculation](https://developer.emporix.io/api-references/api-guides/orders/pick-pack/api-reference/recalculations#post-pick-pack-tenant-jobs-recalculations) is no longer available. |
-| Retrieving a job | Endpoint removed. Previous documentation under [Retrieving a job](https://developer.emporix.io/api-references/api-guides/orders/pick-pack/api-reference/recalculations#get-pick-pack-tenant-jobs-recalculations-jobid) is no longer available. |
+| Finishing an order | Endpoint removed. The `POST /pick-pack/{tenant}/orders/{orderId}/finish` operation is no longer available. |
+| Retrieving all order cycles | Endpoint removed. The `GET /pick-pack/{tenant}/orderCycles` operation is no longer available. |
+| Retrieving a packlist | Endpoint removed. The `GET /pick-pack/{tenant}/orders` operation is no longer available. |
+| Retrieving an order | Endpoint removed. The `GET /pick-pack/{tenant}/orders/{orderId}` operation is no longer available. |
+| Updating an order | Endpoint removed. The `PATCH /pick-pack/{tenant}/orders/{orderId}` operation is no longer available. |
+| Adding an assignee to an order | Endpoint removed. The `POST /pick-pack/{tenant}/orders/{orderId}/assignees` operation is no longer available. |
+| Deleting an assignee from an order | Endpoint removed. The `DELETE /pick-pack/{tenant}/orders/{orderId}/assignees/{assigneeId}` operation is no longer available. |
+| Updating packaging products for an order | Endpoint removed. The `PUT /pick-pack/{tenant}/orders/{orderId}/packaging` operation is no longer available. |
+| Creating a new packing event | Endpoint removed. The `POST /pick-pack/{tenant}/events` operation is no longer available. |
+| Retrieving all events | Endpoint removed. The `GET /pick-pack/{tenant}/events` operation is no longer available. |
+| Triggering an order recalculation | Endpoint removed. The `POST /pick-pack/{tenant}/jobs/recalculations` operation is no longer available. |
+| Retrieving a job | Endpoint removed. The `GET /pick-pack/{tenant}/jobs/recalculations/{jobId}` operation is no longer available. |
 
 #### Known problems
 
@@ -102,9 +102,9 @@ The SEPA Export Service and all of its endpoints are no longer available.
 
 | Endpoint | Description |
 | --- | --- |
-| Retrieving a SEPA Export file by ID for tenant | Endpoint removed. Previous documentation under [Retrieving a SEPA Export file by ID for tenant](https://developer.emporix.io/api-references/api-guides/orders/sepa-export/api-reference/files) is no longer available. |
-| Retrieving a list of export jobs | Endpoint removed. Previous documentation under [Retrieving a list of export jobs](https://developer.emporix.io/api-references/api-guides/orders/sepa-export/api-reference/jobs#get-sepa-export-tenant-jobs) is no longer available. |
-| Creating a new export job | Endpoint removed. Previous documentation under [Creating a new export job](https://developer.emporix.io/api-references/api-guides/orders/sepa-export/api-reference/jobs#post-sepa-export-tenant-jobs) is no longer available. |
+| Retrieving a SEPA Export file by ID for tenant | Endpoint removed. The `GET /sepa-export/{tenant}/files/{fileId}` operation is no longer available. |
+| Retrieving a list of export jobs | Endpoint removed. The `GET /sepa-export/{tenant}/jobs` operation is no longer available. |
+| Creating a new export job | Endpoint removed. The `POST /sepa-export/{tenant}/jobs` operation is no longer available. |
 
 #### Known problems
 
