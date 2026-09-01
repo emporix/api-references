@@ -86,7 +86,7 @@ classDiagram
 
 ### Before you start
 
-Make sure you created a product. For more information, check out [_How to add your first product_](../../products-labels-and-brands/product-service/product.md#how-to-add-your-first-product).
+Make sure you created a product. For more information, check out [How to add your first product](../../products-labels-and-brands/product-service/product.md#how-to-add-your-first-product).
 
 ### Create the `Availability` object
 
