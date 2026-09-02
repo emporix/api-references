@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-09-02" tags="improvement" %}
 
 ## Schema Service - support for `VENDOR_LOCATION` schema type
 
