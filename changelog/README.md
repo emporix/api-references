@@ -27,6 +27,28 @@ layout:
 
 {% update date="2026-09-02" tags="improvement" %}
 
+## Indexing Service - Battery Included write-key preflight
+
+#### Overview
+
+Creating or updating a `BATTERY_INCLUDED` configuration now validates `indexName` and `writeKey` before the configuration is saved. Product reindex also validates stored Battery Included credentials before a reindex job is created. Validation uses Battery Included's document-delete API with an empty ID list, so no documents are removed. Invalid credentials return `400`; temporary Battery Included outages return `502`. Failed validation leaves configuration and reindex job state unchanged.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a new configuration](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Validates Battery Included credentials before storing the configuration. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Validates Battery Included credentials before updating the configuration. |
+| [Creating a reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) | Validates stored Battery Included credentials before creating a product reindex job. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-09-02" tags="improvement" %}
+
 ## Schema Service - support for `VENDOR_LOCATION` schema type
 
 #### Overview

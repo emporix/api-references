@@ -32,6 +32,12 @@ This functionality is in preview mode - some of the features may not be fully op
 
 Battery Included only supports the `MERGE` site-aware fields strategy. Tenants configured with the `SPLIT` strategy will have Battery Included indexing silently skipped.
 
+#### Write-key validation
+
+When you create or update a `BATTERY_INCLUDED` configuration, the indexing service validates `indexName` and `writeKey` before saving by issuing a Battery Included document-delete request with an empty ID list. No documents are removed. If validation fails, the request returns `400` (invalid credentials) or `502` (Battery Included unavailable) and the configuration is left unchanged.
+
+Starting a product reindex while `BATTERY_INCLUDED` is active runs the same check against stored credentials before a reindex job is created.
+
 #### Algolia limitations
 
 By default, Algolia indexes provided by Emporix support records up to 10kB in size. In order to support larger records, you must provide your own Algolia service. For more information, please refer to documents provided by Algolia:
@@ -109,6 +115,8 @@ curl -L \
   }'
 ```
 
+If `writeKey` or `indexName` is wrong, the create request fails with `400` and nothing is stored. Fix the credentials in Battery Included and retry.
+
 
 ## How to update the index configuration
 
@@ -178,6 +186,14 @@ curl -L
 ```
 
 This operation starts the full reindexing mode.
+
+For `BATTERY_INCLUDED` product reindexes, invalid stored credentials return:
+
+`Battery Included credentials are invalid. Verify the write key and index name.`
+
+No reindex job is created. Update the configuration first, then retry. If Battery Included is temporarily unreachable, the request returns `502` with:
+
+`Battery Included credential validation is temporarily unavailable. Try again later.`
 
 ## How to retrieve public search configuration
 
