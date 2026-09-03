@@ -25,13 +25,13 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="2026-09-02" tags="improvement" %}
+{% update date="RELEASE_DATE" tags="improvement" %}
 
-## Indexing Service - Battery Included write-key preflight
+## Indexing Service - Battery Included credential validation
 
 #### Overview
 
-Creating or updating a `BATTERY_INCLUDED` configuration now validates `indexName` and `writeKey` before the configuration is saved. Product reindex also validates stored Battery Included credentials before a reindex job is created. Validation uses Battery Included's document-delete API with an empty ID list, so no documents are removed. Invalid credentials return `400`; temporary Battery Included outages return `502`. Failed validation leaves configuration and reindex job state unchanged.
+Creating or updating a `BATTERY_INCLUDED` configuration now validates `indexName` and `writeKey` before the configuration is saved. Product reindex also validates stored Battery Included credentials before a reindex job is created. Invalid credentials return `400`. If credential validation is temporarily unavailable, the request returns `502`. Failed validation leaves configuration and reindex job state unchanged.
 
 #### Updated endpoints
 
