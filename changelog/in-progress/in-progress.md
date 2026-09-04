@@ -55,8 +55,7 @@ These announcements are intended to keep you informed about ongoing work and pot
 <tbody>
   <tr>
     <td class="tg-0pky">B2B Commerce Frontend</td>
-    <td class="tg-0pky"><p>Coupon support</p> <p>Segment support</p></td>
-  </tr>
+    <td class="tg-0pky">Optimization of coupon and segment support<td>
   <tr>
     <td class="tg-0pky">Schema Service</td>
     <td class="tg-0pky">Site awareness of mixins</td>
