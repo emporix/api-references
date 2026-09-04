@@ -55,7 +55,7 @@ These announcements are intended to keep you informed about ongoing work and pot
 <tbody>
   <tr>
     <td class="tg-0pky">B2B Commerce Frontend</td>
-    <td class="tg-0pky"><p>Product details page improvements</p> <p>User management</p> <p>Customer registration improvements</p> <p>Coupon support</p> <p>Segment support</p></td>
+    <td class="tg-0pky"><p>Coupon support</p> <p>Segment support</p></td>
   </tr>
   <tr>
     <td class="tg-0pky">Schema Service</td>
@@ -66,20 +66,12 @@ These announcements are intended to keep you informed about ongoing work and pot
     <td class="tg-0pky">Vendor-specific coupons</td>
   </tr>
   <tr>
-    <td class="tg-0pky">Audit Logs</td>
-    <td class="tg-0pky">Audit logs / changelogs for all existing entities</td>
-  </tr>
-  <tr>
-    <td class="tg-0pky">Microsoft Entra ID</td>
-    <td class="tg-0pky">Integration with Microsoft Entra ID</td>
-  </tr>
-  <tr>
     <td class="tg-0pky">Customer Segments</td>
     <td class="tg-0pky">Group-aware customer segments</td>
   </tr>
   <tr>
     <td class="tg-0pky">Agentic</td>
-    <td class="tg-0pky"><p>RAG for quotes</p><p>Generic MCP</p><p>Communication with MS Teams</p></td>
+    <td class="tg-0pky">Generic MCP</td>
   </tr>
 </tbody>
 </table>
