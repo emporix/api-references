@@ -25,6 +25,47 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement, deprecated" %}
+<!-- emporix-ai-buddy:changelog:COP-5317 -->
+
+## Cart, Fee, and Order Services - dual support for plain IDs
+
+#### Overview
+
+Cart, Fee, and Order Service contracts now support plain identifiers alongside legacy YRN-based fields. Cart item payloads now support `productId`, fee-related payloads now support `itemId` and `itemType`, and fee objects in cart and order payloads now expose `id`. The legacy `itemYrn`, `itemYrns`, and `yrn` fields are deprecated and remain supported for backward compatibility. Migrate to plain `productId`, `itemId` + `itemType`, and fee `id` fields.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) | The request now supports `productId` as an alternative to the deprecated `itemYrn`. |
+| [Adding multiple products to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-itemsbatch) | The request now supports `productId` as an alternative to the deprecated `itemYrn`. |
+| [Updating a cart item](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#put-cart-tenant-carts-cartid-items-itemid) | The request now supports `productId` as an alternative to the deprecated `itemYrn`. |
+| [Updating multiple products in cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#put-cart-tenant-carts-cartid-itemsbatch) | The request now supports `productId` as an alternative to the deprecated `itemYrn`. |
+| [Retrieving all products added to a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#get-cart-tenant-carts-cartid-items) | The response now includes `productId` on items. |
+| [Retrieving a cart item](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#get-cart-tenant-carts-cartid-items-itemid) | The response now includes `productId` on items. |
+| [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) | The response now includes `productId` on items and `id` on fee elements. |
+| [Retrieving cart details by criteria](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts) | The response now includes `productId` on items and `id` on fee elements. |
+| [Searching for carts](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-search) | The response now includes `productId` on items and `id` on fee elements. |
+| [Checking if a fee has been applied](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/item-fee-search#post-fee-tenant-itemfees-search) | The request now supports `items` with `id` and `type` as an alternative to the deprecated `itemYrns`, and the response can include `itemId` and `itemType`. |
+| [Retrieving all item fees](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/item-fee-management#get-fee-tenant-itemfees-itemyrn-fees) | The endpoint now supports the optional `itemType` query parameter to interpret the path value as a plain item ID. |
+| [Adding a list of fees to an item](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/item-fee-management#put-fee-tenant-itemfees-itemyrn-fees) | The endpoint now supports the optional `itemType` query parameter to interpret the path value as a plain item ID. |
+| [Deleting an item fee with itemYRN](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/item-fee-management#delete-fee-tenant-itemfees-itemyrn-fees) | The endpoint now supports the optional `itemType` query parameter to interpret the path value as a plain item ID. |
+| [Deleting a fee from the itemYRN](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/item-fee-management#delete-fee-tenant-itemfees-itemyrn-fees-feeid) | The endpoint now supports the optional `itemType` query parameter to interpret the path value as a plain item ID. |
+| [Retrieving tenant orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders) | The response now includes fee `id`, and `itemYrn` remains deprecated on order entries. |
+| [Retrieving a specific order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) | The response now includes fee `id`, and `itemYrn` remains deprecated on order entries. |
+| [Creating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) | Fee elements now support `id` alongside the deprecated `yrn`. |
+| [Updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid) | Fee elements now support `id` alongside the deprecated `yrn`. |
+| [Partially updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid) | Fee elements now support `id` alongside the deprecated `yrn`. |
+| [Retrieving an order (storefront)](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid) | The response now includes fee `id`, and `itemYrn` remains deprecated on order entries. |
+| [Retrieving orders (storefront)](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders) | The response now includes fee `id`, and `itemYrn` remains deprecated on order entries. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-04" tags="improvement" %}
 
 ## Indexing Service - Battery Included credential validation
