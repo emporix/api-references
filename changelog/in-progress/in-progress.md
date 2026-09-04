@@ -55,11 +55,15 @@ These announcements are intended to keep you informed about ongoing work and pot
 <tbody>
   <tr>
     <td class="tg-0pky">B2B Commerce Frontend</td>
-    <td class="tg-0pky"><p>Product details page improvements</p> <p>User management</p> <p>Customer registration improvements</p></td>
+    <td class="tg-0pky"><p>Product details page improvements</p> <p>User management</p> <p>Customer registration improvements</p> <p>Coupon support</p> <p>Segment support</p></td>
   </tr>
   <tr>
     <td class="tg-0pky">Schema Service</td>
-    <td class="tg-0pky">Improvements to mixins</td>
+    <td class="tg-0pky">Site awareness of mixins</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Vendor Management</td>
+    <td class="tg-0pky">Vendor-specific coupons</td>
   </tr>
   <tr>
     <td class="tg-0pky">Audit Logs</td>
