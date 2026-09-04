@@ -20,10 +20,9 @@ paths:
         Identifier of a newly created configuration is a provider name.
         Only one provider can be active per tenant at a time.
 
-        For `BATTERY_INCLUDED`, the service validates `indexName` and `writeKey` before saving
-        by calling Battery Included's document-delete API with an empty ID list. No documents
-        are removed. Invalid credentials return `400` and the configuration is not stored.
-        Temporary Battery Included outages return `502` and the configuration is not stored.
+        For `BATTERY_INCLUDED`, the service validates `indexName` and `writeKey` before saving.
+        Invalid credentials return `400`. If credential validation is temporarily unavailable,
+        the request returns `502`. In both cases, the configuration is not stored.
       security:
         - OAuth2:
             - indexing.search_manage
@@ -170,10 +169,9 @@ paths:
       description: |-
         Updates an existing index configuration.
 
-        For `BATTERY_INCLUDED`, the service validates `indexName` and `writeKey` before saving
-        by calling Battery Included's document-delete API with an empty ID list. No documents
-        are removed. Invalid credentials return `400` and the configuration is left unchanged.
-        Temporary Battery Included outages return `502` and the configuration is left unchanged.
+        For `BATTERY_INCLUDED`, the service validates `indexName` and `writeKey` before saving.
+        Invalid credentials return `400`. If credential validation is temporarily unavailable,
+        the request returns `502`. In both cases, the configuration is left unchanged.
       security:
         - OAuth2:
             - indexing.search_manage
@@ -336,7 +334,7 @@ paths:
         
         This endpoint is marked as deprecated. Use the [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead.
 
-        For tenants on `BATTERY_INCLUDED`, the same credential preflight runs before the reindex job is started.
+        For tenants on `BATTERY_INCLUDED`, the same credential validation runs before the reindex job is started.
       security:
         - OAuth2:
             - indexing.search_manage
@@ -403,7 +401,7 @@ paths:
       description: |-
         Triggers indexing process of given entities for the tenant. The reindex works with a `FULL` mode - all entities are reindexed. It returns a reindex job which allows to track the progress. The `SUCCESS` means that all entities events are indexed.
 
-        When the active search provider is `BATTERY_INCLUDED` and `entityType` is `PRODUCT`, the service validates stored credentials via an empty-ID Battery Included document-delete request before creating the job. Invalid credentials return `400` and no job is created. Temporary Battery Included outages return `502` and no job is created.
+        When the active search provider is `BATTERY_INCLUDED` and `entityType` is `PRODUCT`, the service validates stored credentials before creating the job. Invalid credentials return `400`. If credential validation is temporarily unavailable, the request returns `502`. In both cases, no job is created.
       security:
         - OAuth2:
             - indexing.search_manage
@@ -614,8 +612,8 @@ components:
             writeKey:
               type: string
               description: >-
-                API key used for write purposes. For `BATTERY_INCLUDED`, this key is validated on
-                create/update via a Battery Included empty-ID delete probe before the configuration is saved.
+                API key used for write purposes. For `BATTERY_INCLUDED`, this key is validated
+                before the configuration is created or updated.
             excludedMixinKeys:
               type: array
               items:

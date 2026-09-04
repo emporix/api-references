@@ -34,7 +34,7 @@ Battery Included only supports the `MERGE` site-aware fields strategy. Tenants c
 
 #### Write-key validation
 
-When you create or update a `BATTERY_INCLUDED` configuration, the indexing service validates `indexName` and `writeKey` before saving by issuing a Battery Included document-delete request with an empty ID list. No documents are removed. If validation fails, the request returns `400` (invalid credentials) or `502` (Battery Included unavailable) and the configuration is left unchanged.
+When you create or update a `BATTERY_INCLUDED` configuration, the indexing service validates `indexName` and `writeKey` before saving. Invalid credentials return `400`. If credential validation is temporarily unavailable, the request returns `502`. In both cases, the configuration is left unchanged.
 
 Starting a product reindex while `BATTERY_INCLUDED` is active runs the same check against stored credentials before a reindex job is created.
 
