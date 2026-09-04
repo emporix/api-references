@@ -504,7 +504,8 @@ curl -X POST 'https://api.emporix.io/site/{tenant}/sites' \
         "address": {
             "country": "NL",
             "zipCode": "1234 AB"
-        }
+        },
+        "timezone": "Europe/Amsterdam"
     },
     "shipToCountries": [
         "NL"
@@ -681,7 +682,8 @@ curl -X POST 'https://api.emporix.io/site/{tenant}/sites' \
         "address": {
             "country": "DE",
             "zipCode": "12345"
-        }
+        },
+        "timezone": "Europe/Berlin"
     },
     "shipToCountries": [
         "DE"
@@ -710,7 +712,8 @@ curl -X POST 'https://api.emporix.io/site/{tenant}/sites' \
         "address": {
             "country": "DE",
             "zipCode": "12345"
-        }
+        },
+        "timezone": "Europe/Berlin"
     },
     "shipToCountries": [
         "DE"

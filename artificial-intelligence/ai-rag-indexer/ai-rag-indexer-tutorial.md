@@ -18,14 +18,15 @@ layout:
 
 # AI RAG Indexer Tutorial
 
-You can use the AI RAG Indexer Service to keep your vector database in sync with Emporix data and to discover which attributes are available for Retrieval-Augmented Generation (RAG) and filtering. The service supports the built-in **product** entity type and **custom entity types** created in the [Schema Service](https://developer.emporix.io/api-references/api-guides/utilities/schema/).
+You can use the AI RAG Indexer Service to keep your vector database in sync with Emporix data and to discover which attributes are available for Retrieval-Augmented Generation (RAG) and filtering. The service supports the built-in **product** and **order** entity types, and **custom entity types** created in the [Schema Service](https://developer.emporix.io/api-references/api-guides/utilities/schema/).
 
 Follow this tutorial to learn how to create a RAG tool with indexable and filterable fields that you can use in an AI agent.
 
 ## Prerequisites
 
 * The OAuth2 access token must include the `ai.agent_read` and `ai.agent_manage` scopes.
-* For custom entities, the custom type must exist in Schema Service. The `{type}` in indexer URLs must match the `config.entityType`. 
+* For built-in entity types, use `product` or `order` as the `{type}` path parameter.
+* For custom entities, the custom type must exist in the Schema Service. The `{type}` in indexer URLs must match the `config.entityType`.
 
 {% hint style="warning" %}
 Note that removing a custom entity from the Emporix system results in automatic deletion of RAG tools that reference that entity.
@@ -61,6 +62,36 @@ Sample response:
   "labels.description.de",
   "mixins.additionalattributes.temperature",
   "segmentIds"
+]
+```
+
+{% endtab %}
+
+{% tab title="Order" %}
+
+```bash
+curl -L \
+  --request GET \
+  --url 'https://api.emporix.io/ai-rag-indexer/{{tenant}}/order/rag-metadata' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Accept: application/json'
+```
+
+Sample response:
+
+```json
+[
+  "id",
+  "status",
+  "customer.email",
+  "customer.firstName",
+  "customer.lastName",
+  "customer.company",
+  "siteCode",
+  "currency",
+  "entries",
+  "shippingAddress.city",
+  "billingAddress.city"
 ]
 ```
 
@@ -136,6 +167,31 @@ Sample response:
 
 {% endtab %}
 
+{% tab title="Order" %}
+
+```bash
+curl -L \
+  --request GET \
+  --url 'https://api.emporix.io/ai-rag-indexer/{{tenant}}/order/filter-metadata' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Accept: application/json'
+```
+
+Sample response:
+
+```json
+[
+  { "key": "id", "type": "string" },
+  { "key": "status", "type": "string" },
+  { "key": "customer.email", "type": "string" },
+  { "key": "siteCode", "type": "string" },
+  { "key": "currency", "type": "string" },
+  { "key": "legalEntityId", "type": "string" }
+]
+```
+
+{% endtab %}
+
 {% tab title="Custom Entity" %}
 
 ```bash
@@ -178,7 +234,7 @@ Use the returned field paths in `filterFields[].key` when creating a tool in the
 
 When you know which fields to index and filter, call the [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) endpoint to create or update a `rag_emporix` tool. 
 
-Set the `toolId` in the URL path (for example, `rag-product` or `rag-car-parts`). The `indexedFields` and `filterFields` are required for `rag_emporix` tools – specify the paths from the responses returned in previous steps:
+Set the `toolId` in the URL path (for example, `rag-product`, `rag-order`, or `rag-car-parts`). The `indexedFields` and `filterFields` are required for `rag_emporix` tools – specify the paths from the responses returned in previous steps:
 * The `indexedFields` can use optional name aliases. 
 * For the `filterFields`, add relevant descriptions so that the agent knows when to apply the filters.
 
@@ -220,6 +276,71 @@ curl --request PUT \
           "key": "segmentIds",
           "name": "Customer segments",
           "description": "List of segment IDs. Use when results must be limited to products available for specific customer segments."
+        }
+      ]
+    }
+  }'
+```
+
+{% endtab %}
+
+{% tab title="Order" %}
+
+```bash
+curl --request PUT \
+  'https://api.emporix.io/ai-service/{{tenant}}/agentic/tools/rag-order' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "Order Search RAG Tool",
+    "type": "rag_emporix",
+    "enabled": true,
+    "config": {
+      "prompt": "Use this tool when the user asks to find, look up, or filter orders by customer, status, site, or other order details.",
+      "entityType": "order",
+      "embeddingConfig": {
+        "provider": "emporix_openai"
+      },
+      "indexedFields": [
+        { "key": "id", "name": "Order ID" },
+        { "key": "status", "name": "Order status" },
+        { "key": "customer.email", "name": "Customer email" },
+        { "key": "customer.firstName", "name": "Customer first name" },
+        { "key": "customer.lastName", "name": "Customer last name" },
+        { "key": "customer.company", "name": "Customer company" },
+        { "key": "siteCode", "name": "Site code" },
+        { "key": "currency", "name": "Currency" }
+      ],
+      "filterFields": [
+        {
+          "key": "id",
+          "name": "Order ID",
+          "description": "Exact order identifier. Use when the user provides a specific order ID."
+        },
+        {
+          "key": "status",
+          "name": "Order status",
+          "description": "Order status. Possible values: IN_CHECKOUT, CREATED, CONFIRMED, DECLINED, SHIPPED, COMPLETED."
+        },
+        {
+          "key": "customer.email",
+          "name": "Customer email",
+          "description": "Customer email address. Use when the user asks for orders placed by a specific customer."
+        },
+        {
+          "key": "siteCode",
+          "name": "Site code",
+          "description": "Site identifier. Use when results must be limited to orders from a specific shop or site."
+        },
+        {
+          "key": "currency",
+          "name": "Currency",
+          "description": "Three-letter currency code (for example EUR or USD). Use when the user filters orders by currency."
+        },
+        {
+          "key": "legalEntityId",
+          "name": "Legal entity",
+          "description": "Legal entity ID. Use when results must be limited to orders placed on behalf of a specific legal entity."
         }
       ]
     }
@@ -348,6 +469,24 @@ For products, set `"rag": true` so the reindex job generates vector embeddings f
 
 {% endtab %}
 
+{% tab title="Order" %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/indexing/{{tenant}}/reindex-jobs' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "entityType": "ORDER",
+    "rag": true
+  }'
+```
+
+For orders, set `"rag": true` so the reindex job generates vector embeddings for your `rag_emporix` tool, using the `indexedFields` defined in the tool configuration.
+
+{% endtab %}
+
 {% tab title="Custom Entity" %}
 
 ```bash
@@ -364,10 +503,10 @@ curl -L \
 {% endtab %}
 {% endtabs %}
 
-The service fetches every entity of the specified type (`product` or custom entity type). Embeddings are generated per entity and vector database records are updated. You receive the `201` or `200` reponse with reindex job ID, which allows you to track the progress.
+The service fetches every entity of the specified type (`product`, `order`, or custom entity type). Embeddings are generated per entity and vector database records are updated. You receive a `201` or `200` response with a reindex job ID, which allows you to track the progress.
 
 {% hint style="danger" %}
-Reindexing is a computationally expensive and time-consuming operation, especially for large catalogs. It may significantly increase infrastructure costs, processing time, and overall system load. For this reason, perform reindexing only when truly necessary — for example, after major configuration changes, embedding model updates, or structural schema modifications. Avoid triggering it frequently or without clear intent.
+Reindexing is a computationally expensive and time-consuming operation, especially for large catalogs or high order volumes. It may significantly increase infrastructure costs, processing time, and overall system load. For this reason, perform reindexing only when truly necessary — for example, after major configuration changes, embedding model updates, or structural schema modifications. Avoid triggering it frequently or without clear intent.
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -381,7 +520,7 @@ Reindexing is a computationally expensive and time-consuming operation, especial
 {% step %}
 #### Attach the tool to an agent
 
-Assign the tool ID (for example, `rag-product`, `rag-car-parts`) to an AI agent so it can be invoked during agentic chat. Use the [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint or configure the agent in Management Dashboard.
+Assign the tool ID (for example, `rag-product`, `rag-order`, or `rag-car-parts`) to an AI agent so it can be invoked during agentic chat. Use the [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint or configure the agent in Management Dashboard.
 
 {% hint style="info" %}
 For broader agent setup and chat flows, see the [AI Service Tutorial](../ai-service/ai-tutorial.md).

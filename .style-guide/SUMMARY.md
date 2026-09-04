@@ -8,6 +8,7 @@
 * [Format and Structure](writing-standards/format-and-structure.md)
 * [Word Choice](writing-standards/word-choice.md)
 * [API Tutorials](writing-standards/api-tutorials.md)
+* [API References](writing-standards/api-references.md)
 
 ## Visuals
 
@@ -19,4 +20,5 @@
 
 * [Release Notes](templates/release-notes.md)
 * [Changelog](templates/changelog.md)
+* [API Reference](templates/api-reference.md)
 

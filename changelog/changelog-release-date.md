@@ -1,10 +1,10 @@
 # Changelog: automatic release date on merge
 
-When you add a changelog entry in a PR, use the placeholder **`RELEASE_DATE`** instead of a concrete date in the GitBook `{% update %}` block. When the PR is merged to `main`, a GitHub Action replaces it with the **merge date** (UTC) in `changelog/changelog.md`.
+When you add a changelog entry in a PR, use the placeholder **`RELEASE_DATE`** instead of a concrete date in the GitBook `{% update %}` block. When the PR is merged to `main`, a GitHub Action replaces it with the **merge date** (UTC) in `changelog/README.md`.
 
 ## How to use
 
-1. **Add a new `{% update %}` entry to `changelog/changelog.md`**, inside the existing `{% updates format="full" %}` block. Each PR must introduce its **own** `{% update %}…{% endupdate %}` block — do **not** edit or append to an existing entry. Place the new block **at the top**, directly after the opening `{% updates %}` tag, so the changelog stays newest-first.
+1. **Add a new `{% update %}` entry to `changelog/README.md`**, inside the existing `{% updates format="full" %}` block. Each PR must introduce its **own** `{% update %}…{% endupdate %}` block — do **not** edit or append to an existing entry. Place the new block **at the top**, directly after the opening `{% updates %}` tag, so the changelog stays newest-first.
 
 2. **Use `RELEASE_DATE` in the `{% update %}` tag** and pick the appropriate tag for the change type:
 
@@ -72,7 +72,7 @@ You never have to update the date manually on merge.
 
 - **Trigger:** Push to `main` that touches files under `changelog/`
 - **Condition:** Runs the replacement only if `RELEASE_DATE` appears in changelog files
-- **Result:** A follow-up commit on `main` that replaces `RELEASE_DATE` with the merge date (UTC) in `changelog/changelog.md`
+- **Result:** A follow-up commit on `main` that replaces `RELEASE_DATE` with the merge date (UTC) in `changelog/README.md`
 
 ## Manual run (optional)
 

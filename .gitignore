@@ -5,3 +5,8 @@
 *.iml
 .idea
 .gitbook/.DS_Store
+
+# MacOS
+.DS_Store
+.style-guide/.DS_Store
+.style-guide/.gitbook/.DS_Store

@@ -14,27 +14,428 @@ The Order Service is divided into two categories based on who manages the orders
 * **Tenant-Managed Orders** – This refers to the management of customer orders. Customers create the orders, which are then accessible to your employees for processing, status updates, and data modifications.
 * **Customer-Managed Orders** – These are orders submitted by your customers. When logged into their account, customers can view and access their order history.
 
+## Order statuses
+
+The Order Service supports the following status values:
+These statuses are aligned with the Management Dashboard Orders guide.
+
+| Status         | Description                            | Set By            | When Used                                                      |
+| -------------- | -------------------------------------- | ----------------- | -------------------------------------------------------------- |
+| `CREATED`      | New order that has been placed         | System/Customer   | Initial state after order creation                             |
+| `IN_CHECKOUT`  | Awaiting invoice payment               | System            | Payment flow is in progress and the order is not paid yet      |
+| `CONFIRMED`    | Paid order ready for fulfillment       | System/Employee   | Payment is confirmed and the order can be processed            |
+| `SHIPPED`      | Order has been dispatched              | Employee/Merchant | Fulfillment is complete and the shipment was sent to customer  |
+| `COMPLETED`    | Order request is finalized and realized| System/Employee   | Order lifecycle is finished successfully                       |
+| `DECLINED`     | Order could not be realized or canceled| Customer/Employee | Order is canceled by customer or declined during processing    |
+
+Possible status transitions:
+
+* `IN_CHECKOUT` -> `CREATED`
+* `IN_CHECKOUT` -> `DECLINED`
+* `CREATED` -> `CONFIRMED`
+* `CREATED` -> `DECLINED`
+* `CONFIRMED` -> `SHIPPED`
+* `CONFIRMED` -> `COMPLETED`
+* `CONFIRMED` -> `DECLINED`
+* `SHIPPED` -> `COMPLETED`
+
+{% hint style="info" %}
+The initial order status depends on the checkout flow. Standard checkout orders are typically created with `CREATED`, while invoice or payment flows can start in `IN_CHECKOUT`.
+
+To audit all status changes for an order, use the historical transitions endpoint described in [Check the status transitions](order.md#check-the-status-transitions).
+{% endhint %}
+
+### Add shipment data before changing status to `SHIPPED`
+
+To use the `CONFIRMED` -> `SHIPPED` transition, append shipment details to the order first by using [Updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid) or [Partially updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid).
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}?recalculate=false' \
+  --header 'Content-Type: application/json' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --data '{
+    "shipments": [
+      {
+        "shippedDate": "2026-07-28T00:00:00.000Z",
+        "carrier": "UPS",
+        "trackingNumber": "123456",
+        "expectDeliveryOn": "2026-07-30T00:00:00.000Z"
+      }
+    ]
+  }'
+```
+
+## Scopes
+
 Scopes necessary to work with orders are:
-* `order.order_post`: Needed to create new order as a customer.
-* `order.order_read`: Needed to read order.
-* `order.order_read_le`: Needed to read legal entity orders.
-* `order.order_update`: Needed to update an order.
-* `order.order_update_completed`: Needed to update an order with a `completed` status.
-* `order.order_create`: Needed to create new order by merchant.
-* `order.order_delete`: Needed to delete an order.
-* `order.history_view`: Needed to view order when logged as a customer.
-* `order.order_readascustomer`: Needed to read an order as a customer.
-* `order.order_updateascustomer`: Needed to update an order as a customer.
-* `order.order_read_by_vendor`: The scope allows vendor to read order with assigned vendor.
-* `order.order_manage_by_vendor`: The scope allows vendor to manage order with assigned vendor.
+
+| Scope                          | Description                                              | Used By           |
+| ------------------------------ | -------------------------------------------------------- | ----------------- |
+| `order.order_post`             | Create a new order as a customer                         | Customer          |
+| `order.order_read`             | Read an order                                            | Merchant/Employee |
+| `order.order_read_le`          | Read legal entity orders                                 | Customer          |
+| `order.order_update`           | Update an order                                          | Merchant/Employee |
+| `order.order_update_completed` | Update an order with a `COMPLETED` status                | Merchant/Employee |
+| `order.order_create`           | Create a new order as a merchant                         | Merchant/Employee |
+| `order.order_delete`           | Delete an order                                          | Merchant/Employee |
+| `order.history_view`           | View order history when logged in as a customer          | Customer          |
+| `order.order_readascustomer`   | Read an order as a customer                              | Customer          |
+| `order.order_updateascustomer` | Update an order as a customer                            | Customer          |
+| `order.order_read_by_vendor`   | Read an order with an assigned vendor                    | Vendor            |
+| `order.order_manage_by_vendor` | Manage an order with an assigned vendor                  | Vendor            |
+
+## How to create an order on behalf of a customer
+
+The Order Service functionality allows your employees to act on behalf of a customer and create an order for them. This way, merchants can facilitate order process for your customers. See the steps of the order process flow.
+
+### Get authorization
+
+To create an order, first get the credentials to log in as a customer on the storefront.
+
+{% stepper %}
+{% step %}
+#### Request a service access token
+
+Get the `access_token` by sending the request to the [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authentication/oauth-service/api-reference/service-access-token).
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/oauth/token' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "client_id": "{client_id}",
+    "client_secret": "{client_secret}",
+    "grant_type": "client_credentials",
+    "scope": "scope=order.order_read order.order_delete order.order_create order.order_update tenant={tenant}"
+  }'
+```
+{% endstep %}
+
+{% step %}
+#### Request an anonymous token
+
+Retrieve the `anonymous_token` by sending a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-login) endpoint.
+
+```bash
+curl 'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id&{client_id}'
+```
+{% endstep %}
+
+{% step %}
+#### Log in as a customer
+
+Log in as the customer by sending an authorization request to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.
+
+```bash
+curl 'https://api.emporix.io/customer/{tenant}/login' \
+  --request POST \
+  --header 'Authorization: Bearer {{ANONYMOUS_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "email": "customer@emporix.com",
+  "password": "Qwurmdch673;'"
+}'
+```
+{% endstep %}
+{% endstepper %}
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="../../authentication/oauth-service/api-reference/" %}
+[api-reference](../../authentication/oauth-service/api-reference/)
+{% endcontent-ref %}
+
+{% content-ref url="../../companies-and-customers/customer-management/api-reference/" %}
+[api-reference](../../companies-and-customers/customer-management/api-reference/)
+{% endcontent-ref %}
+
+### Create an order
+
+{% stepper %}
+{% step %}
+#### Create an order
+
+As a merchant acting on behalf of a customer, send the request to the [Creating a new order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) endpoint.
+
+```bash
+curl --location 'https://api.emporix.io/order-v2/{tenant}/salesorders' \
+  --header 'Content-Type: application/json' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --data-raw '{
+  "entries": [
+    {
+      "id": "5c336893a981210009900071",
+      "amount": 3,
+      "orderedAmount": 3,
+      "effectiveQuantity": 3,
+      "calculatedUnitPrice": {
+        "netValue": 294.118,
+        "grossValue": 350.0,
+        "taxValue": 55.882,
+        "taxCode": "STANDARD",
+        "taxRate": 19.0
+      },
+      "measurementUnit": {
+        "value": 1,
+        "unit": "H87"
+      },
+      "calculatedPrice": {
+        "price": {
+            "netValue": 882.354,
+            "grossValue": 1050.0,
+            "taxValue": 167.646,
+            "taxCode": "STANDARD",
+            "taxRate": 19.0
+        },
+        "finalPrice": {
+            "netValue": 882.354,
+            "grossValue": 1050.0,
+            "taxValue": 167.646
+        }
+      }
+    }
+  ],
+  "discounts": [],
+  "customer": {
+    "id": "{{first_customer_id}}",
+    "name": "John Dee",
+    "title": "MRS",
+    "firstName": "John",
+    "lastName": "Dee",
+    "email": "j.dee@emporix.com",
+    "metadata": {
+      "mixins": {
+        "generalAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/customerGeneralAttributesMixIn.v4.json",
+        "backofficeAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/accountBoMixIn.v3.json",
+        "payment": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/paymentMixIn.v3.json",
+        "marketing": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/accountMarketingMixIn.v4.json",
+        "administration": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/administrativeMixIn.v4.json",
+        "deliveryOptions": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryOptionsMixIn.v6.json"
+      }
+    }
+  },
+  "siteCode": "main",
+  "countryCode": "DE",
+  "billingAddress": {
+    "contactName": "John Dee",
+    "street": "Maximilianstrasse",
+    "streetNumber": "55",
+    "streetAppendix": "",
+    "zipCode": "70173",
+    "city": "Stuttgart-Mitte",
+    "country": "DE",
+    "metadata": {
+      "mixins": {
+        "customAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/addressMixIn.v4.json"
+      }
+    }
+  },
+  "shippingAddress": {
+    "contactName": "John Dee",
+    "street": "Maximilianstrasse",
+    "streetNumber": "55",
+    "streetAppendix": "",
+    "zipCode": "70173",
+    "city": "Stuttgart-Mitte",
+    "country": "DE",
+    "metadata": {
+      "mixins": {
+        "customAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/addressMixIn.v4.json"
+      }
+    }
+  },
+  "payments": [
+    {
+      "status": "PENDING",
+      "method": "cash-on-delivery",
+      "paidAmount": 0,
+      "currency": "EUR"
+    }
+  ],
+  "calculatedPrice": {
+        "price": {
+            "netValue": 882.354,
+            "grossValue": 1050.00,
+            "taxValue": 167.646
+        },
+        "finalPrice": {
+            "netValue": 882.354,
+            "grossValue": 1050.00,
+            "taxValue": 167.646
+        }
+  },
+  "channel": {}
+}
+```
+{% endstep %}
+
+{% step %}
+#### Confirm order creation
+
+You can retrieve the order details as a merchant or as the customer.
+
+* As a merchant, if you want to confirm that the order has been created, send the request to the [Retrieving a specific order by ID](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) endpoint.
+
+```bash
+curl 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
+
+* As a logged in customer, you can display your orders history in the store. Use the [Retrieving a list of orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders) to fetch your own orders.
+
+**Standard (customer token):**
+
+```bash
+curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
+  --header 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
+```
+
+**Alternatively (access token from client credentials + saas-token):**
+
+```bash
+curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'saas-token: {{SAAS_TOKEN}}'
+```
+{% endstep %}
+
+{% step %}
+#### Change the order status
+
+* As a merchant, when the order has been prepared and dispatched, change the order status to `SHIPPED`. Send the request to the [Partially updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid) endpoint.
+
+```bash
+curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}?recalculate=false' \
+  --header 'Content-Type: application/json' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --data '{
+  "status": "SHIPPED"
+  }'
+```
+
+* As a customer, you can only change the order status from `CREATED` to `DECLINED` if for any reason you need to cancel the order. To decline the order, send the request to the [Updating order status](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders-orderid-transitions) endpoint.
+
+**Standard (customer access token):**
+
+```bash
+curl -L --request POST \
+  'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
+  --header 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{"status": "DECLINED"}'
+```
+
+**Alternatively (access token from client credentials + saas-token):**
+
+```bash
+curl -L --request POST \
+  'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'saas-token: {{SAAS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{"status": "DECLINED"}'
+```
+{% endstep %}
+
+{% step %}
+#### Check the status transitions
+
+Order Service APIs provide tools for checking possible next statuses and reviewing status change history.
+
+* As a merchant, check which status transitions are currently available for an order by sending the request to the [Retrieving status transitions for an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid-transitions) endpoint.
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}/transitions' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Accept: */*'
+```
+
+* As a merchant, audit the status change history by sending the request to the [Retrieving historical status transitions for a specific order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid-historical-transitions) endpoint.
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}/historical-transitions' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Accept: */*'
+```
+
+* As a logged in customer, you can fetch possible status transitions for your order. Use the [Retrieving status transitions for an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid-transitions) endpoint.
+
+**Standard (customer access token):**
+
+```bash
+curl -L 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
+  --header 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
+```
+
+**Alternatively (access token from client credentials + saas-token):**
+
+```bash
+curl -L 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'saas-token: {{SAAS_TOKEN}}'
+```
+{% endstep %}
+{% endstepper %}
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+## Order splitting
+
+To enable order splitting, the Order Service works directly with the [Vendor Service](../../companies-and-customers/vendor-service/api-reference/).
+
+When a customer completes checkout, a single order is created containing all the selected products. Each order entry includes vendor information, making it a standard order with additional vendor details.
+
+If you need to separate this combined order into vendor-specific suborders, send the request to the [Splitting Order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders-orderid-split) endpoint.
+
+You can also use a Digital Process for the splitting mechanism, see the Order Splitting Digital Process template for reference:
+
+{% file src="../../.gitbook/assets/Order Splitting Digital Process.json" %}
+
+{% hint style="info" %}
+* Only orders in the CREATED status can be split.
+* Orders that are already suborders or have been split before cannot be split again.
+* Orders with discounts cannot be split.
+{% endhint %}
+
+To support this functionality, the following order attributes are introduced:
+
+* `entries.product.vendor` - marks a product as vendor dependent
+* `orderType` - populated only for orders involved in the splitting process
+* `masterOrder` - the identifier of a master order, available on suborders created after splitting the master order
+* `splitInfo` - information based on what was the suborder created
+* `subOrders` - list of suborders that were created after splitting the master order
+
+{% hint style="info" %}
+To check the end to end story for order splitting, see the [Vendor Tutorial - Order Split](../../companies-and-customers/vendor-service/vendor.md#order-split-example) example.
+{% endhint %}
+
+## Order calculation
 
 As Emporix offers full commerce functionality, order calculations and management can be handled end-to-end by our Commerce Orchestration Platform services. However, to support integrations with other systems, we have also introduced other capabilities. Order management with external systems can be approached using three different models:
 
 * asynchronous calculation
 * synchronous calculation
 * ERP calculated orders
+ 
 
-## Asynchronous calculation
+
+### Asynchronous calculation
 
 Emporix utilizes an asynchronous pricing model, where all price calculations are dynamically determined at the cart/checkout stage. Product prices are initially replicated from an ERP system and stored in the Emporix, ensuring consistency across the platform.
 
@@ -105,10 +506,10 @@ You have to register your listener in the Emporix Webhook Service so that the li
 {% endhint %}
 
 {% hint style="info" %}
-To learn how pricing is calculated at Emporix, see the [Cart Service Tutorials](../../checkout/cart/cart.md#pricing-calculations).
+To learn how pricing is calculated at Emporix, see the [Cart Service Tutorials](../../checkout/cart/cart.md#how-is-price-calculated).
 {% endhint %}
 
-## Synchronous calculation
+### Synchronous calculation
 
 In this approach, the Emporix cart interacts with an ERP system to retrieve real-time order calculations. Instead of using the Emporix calculation, the checkout uses the calculation provided by the ERP.
 
@@ -184,7 +585,7 @@ You have to register your listener in the Emporix Webhook Service so that the li
 For more information, see the [External Pricing](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) guides.
 {% endhint %}
 
-## ERP calculated order
+### ERP calculated order
 
 With this use case, the Commerce Orchestration Platform cart is used to collect products and customer details, such as addresses. However, instead of using COP for final price calculations at checkout, the BFF (Backend-for-Frontend) layer communicates with the ERP to simulate the order, ensuring that all pricing, discounts, and rules from the ERP are applied before order creation.
 
@@ -262,13 +663,13 @@ You have to register your listener in the Emporix Webhook Service so that the li
 | **Security**              | Secure – prices stored in Emporix cannot be altered.                                                    | Secure – only BFF can fetch external prices, preventing tampering.                            | Secure – BFF ensures price integrity before order creation.                                    |
 | **Use Case**              | Best for businesses that want Emporix to manage pricing and apply customer-specific rules at checkout.  | Ideal when ERP must control pricing in real time, and checkout happens in an external system. | Suitable when ERP validation is needed before order creation, but checkout remains in Emporix. |
 
-## Summary of differences
+### Summary of differences
 
 * **Asynchronous calculation** - Emporix controls pricing (replicated from ERP), and calculation happens at checkout.
 * **Synchronous calculation** - Pricing is provided by an external system, for example an ERP in real time, and checkout/order processing happens with external prices.
 * **ERP calculated order** - Emporix cart is used, but ERP simulates pricing at checkout before the order is created in Emporix.
 
-## Payload example
+### Payload example
 
 {% hint style="warning" %}
 <details>
@@ -1064,348 +1465,3 @@ You have to register your listener in the Emporix Webhook Service so that the li
 </details>
 {% endhint %}
 
-## How to create an order on behalf of a customer
-
-The Order Service functionality allows your employees to act on behalf of a customer and create an order for them. This way, merchants can facilitate order process for your customers. See the steps of the order process flow.
-
-### Create an order as a merchant
-
-#### Get authorization
-
-To create an order, first get the credentials to log in as a customer on the storefront:
-
-1. Get the `access_token` by sending the request to the [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authorization/oauth-service/api-reference/service-access-token).
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../../authorization/oauth-service/api-reference/" %}
-[api-reference](../../authorization/oauth-service/api-reference/)
-{% endcontent-ref %}
-
-```bash
-curl -L \
-  --request POST \
-  --url 'https://api.emporix.io/oauth/token' \
-  --header 'Content-Type: application/json' \
-  --data '{
-    "client_id": "{client_id}",
-    "client_secret": "{client_secret}",
-    "grant_type": "client_credentials",
-    "scope": "scope=order.order_read order.order_delete order.order_create order.order_update tenant={tenant}"
-  }'
-```
-
-2. Retrieve the `anonymous_token` by sending a request to the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-login) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../../companies-and-customers/customer-management/api-reference/" %}
-[api-reference](../../companies-and-customers/customer-management/api-reference/)
-{% endcontent-ref %}
-
-```bash
-curl 'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&client_id&{client_id}'
-```
-
-3. Log in as the customer by sending an authorization request to the [Logging in a customer](hhttps://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="../../companies-and-customers/customer-management/api-reference/" %}
-[api-reference](../../companies-and-customers/customer-management/api-reference/)
-{% endcontent-ref %}
-
-```bash
-curl 'https://api.emporix.io/customer/{tenant}/login' \
-  --request POST \
-  --header 'Authorization: Bearer {{ANONYMOUS_ACCESS_TOKEN}}' \
-  --header 'Content-Type: application/json' \
-  --data '{
-  "email": "customer@emporix.com",
-  "password": "Qwurmdch673;'"
-}'
-```
-
-#### Create an order
-
-As a merchant acting on behalf of a customer, send the request to the [Creating a new order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
-
-```bash
-curl --location 'https://api.emporix.io/order-v2/{tenant}/salesorders' 
---header 'Content-Type: application/json' 
---header 'Accept: application/json' 
---header 'Authorization: {customer_token}' 
---data-raw '{
-  "entries": [
-    {
-      "id": "5c336893a981210009900071",
-      "amount": 3,
-      "orderedAmount": 3,
-      "effectiveQuantity": 3,
-      "calculatedUnitPrice": {
-        "netValue": 294.118,
-        "grossValue": 350.0,
-        "taxValue": 55.882,
-        "taxCode": "STANDARD",
-        "taxRate": 19.0
-      },
-      "measurementUnit": {
-        "value": 1,
-        "unit": "H87"
-      },
-      "calculatedPrice": {
-        "price": {
-            "netValue": 882.354,
-            "grossValue": 1050.0,
-            "taxValue": 167.646,
-            "taxCode": "STANDARD",
-            "taxRate": 19.0
-        },
-        "finalPrice": {
-            "netValue": 882.354,
-            "grossValue": 1050.0,
-            "taxValue": 167.646
-        }
-      }
-    }
-  ],
-  "discounts": [],
-  "customer": {
-    "id": "{{first_customer_id}}",
-    "name": "John Dee",
-    "title": "MRS",
-    "firstName": "John",
-    "lastName": "Dee",
-    "email": "j.dee@emporix.com",
-    "metadata": {
-      "mixins": {
-        "generalAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/customerGeneralAttributesMixIn.v4.json",
-        "backofficeAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/accountBoMixIn.v3.json",
-        "payment": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/paymentMixIn.v3.json",
-        "marketing": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/accountMarketingMixIn.v4.json",
-        "administration": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/administrativeMixIn.v4.json",
-        "deliveryOptions": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryOptionsMixIn.v6.json"
-      }
-    }
-  },
-  "siteCode": "main",
-  "countryCode": "DE",
-  "billingAddress": {
-    "contactName": "John Dee",
-    "street": "Maximilianstrasse",
-    "streetNumber": "55",
-    "streetAppendix": "",
-    "zipCode": "70173",
-    "city": "Stuttgart-Mitte",
-    "country": "DE",
-    "metadata": {
-      "mixins": {
-        "customAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/addressMixIn.v4.json"
-      }
-    }
-  },
-  "shippingAddress": {
-    "contactName": "John Dee",
-    "street": "Maximilianstrasse",
-    "streetNumber": "55",
-    "streetAppendix": "",
-    "zipCode": "70173",
-    "city": "Stuttgart-Mitte",
-    "country": "DE",
-    "metadata": {
-      "mixins": {
-        "customAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/addressMixIn.v4.json"
-      }
-    }
-  },
-  "payments": [
-    {
-      "status": "PENDING",
-      "method": "cash-on-delivery",
-      "paidAmount": 0,
-      "currency": "EUR"
-    }
-  ],
-  "calculatedPrice": {
-        "price": {
-            "netValue": 882.354,
-            "grossValue": 1050.00,
-            "taxValue": 167.646
-        },
-        "finalPrice": {
-            "netValue": 882.354,
-            "grossValue": 1050.00,
-            "taxValue": 167.646
-        }
-  },
-  "channel": {}
-}
-
-```
-
-#### Confirm order creation
-
-You can retrieve the order details as a merchant or as the customer.
-
-* As a merchant, if you want to confirm that the order has been created, send the request to the [Retrieving a specific order by ID](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
-
-```bash
-curl 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}'
-```
-
-* As a logged in customer, you can display your orders history in the store. Use the [Retrieving a list of orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders) to fetch your own orders.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
-
-**Standard (customer token):**
-
-```bash
-curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
-  --header 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
-```
-
-**Alternatively (access token from client credentials + saas-token):**
-
-```bash
-curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
-  --header 'saas-token: {{SAAS_TOKEN}}'
-```
-
-### Change the order status
-
-* As a merchant, when the order has been prepared and dispatched, change the order status to `SHIPPED`. Send the request to the [Partially updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
-
-```bash
-curl --location --request PATCH 'https://api.emporix.io/order-v2/{tenant}/salesorders/{order_id}?recalculate=false' \
---header 'Content-Type: application/json' \
---header 'Accept: application/json' \
---header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
---data '{
-  "status": "SHIPPED"
-  }'
-```
-
-* As a customer, you can only change the order status from `CREATED` to `DECLINED` if for any reason you need to cancel the order. To decline the order, send the request to the [Updating order status](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#post-order-v2-tenant-orders-orderid-transitions) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
-
-**Standard (customer access token):**
-
-```bash
-curl -L --request POST 
-  'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
-  --header 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
-  --header 'Content-Type: application/json' \
-  --data '{"status": "DECLINED"}'
-```
-
-**Alternatively (access token from client credentials + saas-token):**
-
-```bash
-curl -L --request POST 
-  'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
-  --header 'saas-token: {{SAAS_TOKEN}}' \
-  --header 'Content-Type: application/json' \
-  --data '{"status": "DECLINED"}'
-```
-
-### Check the status transitions
-
-Order Service APIs provide also tools for controlling the status transitions logs.
-
-* As a merchant, check the status history of the order by sending the request to the [Retrieving status transitions for an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid-transitions) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
-
-```bash
-curl -L 
-  --url 'https://api.emporix.io/order-v2/{tenant}/salesorders/{orderId}/transitions' \
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
-  --header 'Accept: */*'
-```
-
-* As a logged in customer, you can fetch your own order status transitions history. Use the [Retrieving status transitions for an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid-transitions) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
-
-**Standard (customer access token):**
-
-```bash
-curl -L 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
-  --header 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
-```
-
-**Alternatively (access token from client credentials + saas-token):**
-
-```bash
-curl -L 'https://api.emporix.io/order-v2/{tenant}/orders/{orderId}/transitions' \
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
-  --header 'saas-token: {{SAAS_TOKEN}}'
-```
-
-## Order splitting
-
-To enable order splitting, the Order Service works directly with the [Vendor Service](../../companies-and-customers/vendor-service/api-reference/).
-
-When a customer completes checkout, a single order is created containing all the selected products. Each order entry includes vendor information, making it a standard order with additional vendor details.
-
-If you need to separate this combined order into vendor-specific suborders, send the request to the [Splitting Order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders-orderid-split) endpoint.
-
-You can also use a Digital Process for the splitting mechanism, see the Order Splitting Digital Process template for reference:
-
-{% file src="../../.gitbook/assets/Order Splitting Digital Process.json" %}
-
-{% hint style="info" %}
-* Only orders in the CREATED status can be split.
-* Orders that are already suborders or have been split before cannot be split again.
-* Orders with discounts cannot be split.
-{% endhint %}
-
-To support this functionality, the following order attributes are introduced:
-
-* `entries.product.vendor` - marks a product as vendor dependent
-* `orderType` - populated only for orders involved in the splitting process
-* `masterOrder` - the identifier of a master order, available on suborders created after splitting the master order
-* `splitInfo` - information based on what was the suborder created
-* `subOrders` - list of suborders that were created after splitting the master order
-
-{% hint style="info" %}
-To check the end to end story for order splitting, see the [Vendor Tutorial - Order Split](../../companies-and-customers/vendor-service/vendor.md#order-split-example) example.
-{% endhint %}
- 

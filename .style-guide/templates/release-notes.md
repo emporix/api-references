@@ -5,67 +5,68 @@ icon: rocket-launch
 
 # Release Notes
 
-* For a new entry add a new file in the `release-notes` directory. File name pattern is `YYYY-MM-DD-{product}-{feature-or-change-title}.md`
-* Use icons in frontmatter to mark the type of change:
-  * new feature: sparkles
-  * improvement: wand-sparkles
-  * major change: sliders-up
-  * minor change: sliders
+* For a new entry add a new `{% update %}…{% endupdate %}` block at the top of `release-notes/README.md`, just under the opening `{% updates format="full" %}`. Do not modify existing entries. Do not update `release-notes/SUMMARY.md`.
+* Add the date placeholder `RELEASE_DATE` in the update block.
+
+{% hint style="info" %}
+The date placeholder `RELEASE_DATE` is transformed into an actual date of release upon the PR merge to `master`.
+{% endhint %}
+
+* Add relevant tag or tags for the type of introduced changes (aligned with the API changelog):
+  * new feature: `new-feature`
+  * improvement: `improvement`
+  * major change: `major-change`
+  * minor change: `minor-change`
+  * deprecated: `deprecated`
+* Add a product area tag:
+  * Commerce Engine: `ce`
+  * Value Stream Modeller: `vsm`
+  * Agentic Commerce Intelligence: `aci`
+  * B2B Commerce Frontend: `b2b-frontend`
+  * Partner Library: `partner-library`
+  * Other: `other`
+
+Examples:
+
+```
+{% update date="RELEASE_DATE" tags="new-feature, vsm" %}
+```
+
+```
+{% update date="RELEASE_DATE" tags="improvement, aci" %}
+```
+
+* Use title format inside the update block (date goes on the `{% update %}` tag, not in the title): `## {change/feature}` — omit product prefixes (CE, VSM, ACI, etc.); use the product area tag instead.
 
 Example:
 
 ```
----
-icon: sparkles
----
-```
-
-* Use title format: `{date}: {product} - {change/feature}`
-
-Example:
-
-```
-# 2025-04-04: CE - B2C Quotes
-```
-
-* Define the title in `SUMMARY.md` under the current year folder with the relevant path to the file.
-
-```
-Example: 
-
-# Table of contents
-
-* [Release Notes](README.md)
-* [2025](2025/README.md)
-  * [2025-04-10: CE - Cart Validation and Configuration Improvement](2025/2025-04-10-cart.md)
-  * [2025-04-04: CE - B2C Quotes](2025/2025-04-04-ce-b2c-quotes.md)
-  * [2025-04-03: CE - Custom Entity Framework](2025/2025-04-03-ce-custom-entity.md)
-  * [2025-04-01: CE - Shared Orders](2025/2025-04-01-ce-shared-orders.md)
+## B2C Quotes
 ```
 
 * Use the following doc structure
 
 ```
-## Overview
+#### Overview
 
 ...
-## New features
+#### New features
 
-|Feature|Benefit|
-|---|---|
-|**Feature one**|One or more sentences for description of its benefits.|
-|**Feature two**|One or more sentences for description of its benefits.|
-| ... | ... |
+| Feature | Function | Benefit |
+| ------- | -------- | ------- |
+| **Feature one** | One or more sentences describing what the feature does or how it works. | One or more sentences describing its benefits. |
+| **Feature two** | One or more sentences describing what the feature does or how it works. | One or more sentences describing its benefits. |
+| ... | ... | ... |
 
-## Fixes and improvements
-
-None as this is a new feature/improvement.
-
-## Known problems
+#### Fixes and improvements
 
 None as this is a new feature/improvement.
 
-## Documentation and links
+#### Known problems
+
+No known problems at the time of release.
+
+#### Documentation and links
 
 User Guides:
 *
@@ -79,7 +80,8 @@ API Guides:
 
 * The table in `New features` section
   * Feature: bold, sentence case
+  * Function: one or more sentences describing what the feature does or how it works (capability/behavior, not user value).
   * Benefit: one or more sentences for description of its benefits.
 * `Fixes and improvements` section – if there are any fixes to the existing features, state briefly what they are. If not applicable, state "None as this is a new feature."
-* `Known problems` - if there are any known issues, state what they are. If there is nothing known, state "None as this is a new feature/improvement." (feature or improvement depending on the type of announcement).
+* `Known problems` - if there are any known issues, state what they are. If there are no known issues, state "No known problems at the time of release."
 * `Documentation and links` section – list all the relevant links to docs that have been created/updated in relation to the announcement.

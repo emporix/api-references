@@ -9,12 +9,41 @@ layout:
 
 # Indexing Tutorial
 
-The Indexing service is designed to manage indexing configuration. Currently, the index provider supported in Commerce Engine is [Algolia](https://www.algolia.com/).\
-Proper indexing allows you to enhance your search mechanism within Emporix system. By connecting your Algolia instance to Commerce Engine, you get an improved search functionality.
+The Indexing service is designed to manage indexing configuration. Currently supported index providers:
+
+* [Algolia](https://www.algolia.com)
+* [Battery Included](https://www.batteryincluded.io)
+
+Proper indexing allows you to enhance your search mechanism within the Emporix system. By connecting an index provider to Commerce Engine, you get improved search functionality.
 
 {% hint style="info" %}
 To learn more about the Indexing Service, see the [Indexing Service](./).
 {% endhint %}
+
+#### Provider mutual exclusivity
+
+Only one provider can be active at a time per tenant. This constraint is enforced by the configuration service.
+
+#### Battery Included limitations
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet. The payload sent to Battery Included is subject to change.
+{% endhint %}
+
+Battery Included only supports the `MERGE` site-aware fields strategy. Tenants configured with the `SPLIT` strategy will have Battery Included indexing silently skipped.
+
+#### Write-key validation
+
+When you create or update a `BATTERY_INCLUDED` configuration, the indexing service validates `indexName` and `writeKey` before saving. Invalid credentials return `400`. If credential validation is temporarily unavailable, the request returns `502`. In both cases, the configuration is left unchanged.
+
+Starting a product reindex while `BATTERY_INCLUDED` is active runs the same check against stored credentials before a reindex job is created.
+
+#### Algolia limitations
+
+By default, Algolia indexes provided by Emporix support records up to 10kB in size. In order to support larger records, you must provide your own Algolia service. For more information, please refer to documents provided by Algolia:
+
+* [Algolia documentation](https://www.algolia.com/doc/guides/scaling/algolia-service-limits#application-record-and-index-limits)
+* [Algolia FAQ](https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records)
 
 For every tenant, new Algolia credentials are created and kept as `AlgoliaClient`.
 
@@ -44,6 +73,50 @@ curl -L
     "provider": "ALGOLIA"
   }'
 ```
+
+For the `BATTERY_INCLUDED` provider, the same configuration endpoints also support mixin filtering options:
+
+- `excludedMixinKeys` - optional list of top-level mixin keys to exclude
+- `includedMixinPaths` - optional list of glob patterns that allowlist mixin paths
+
+The `includedMixinPaths` option is matched against full dot-notation mixin paths rooted at the mixin key, for example `class_EA673_toolsClassification.sk.OnlineIsService_P`.
+
+Supported glob syntax:
+
+- `*` matches any characters within a single path segment
+- `**` matches across one or more path segments
+- `.` separates path segments
+
+Matching is case sensitive and uses full-path matching. If a matched path points to an object, the whole subtree under that object is included.
+
+Behavior:
+
+- if `includedMixinPaths` is absent or an empty list (`[]`), allowlist filtering is inactive
+- if `includedMixinPaths` is non-empty, only matching mixin paths are sent to Battery Included
+- `includedMixinPaths` and `excludedMixinKeys` must not both be non-empty in the same request
+- malformed glob patterns are rejected with a `400` validation error on configuration writes
+
+Example of the Battery Included configuration:
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/indexing/{tenant}/configurations' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "active": true,
+    "indexName": "exampleTenant",
+    "writeKey": "51ebe89215dddcf85e5dacd5643d17e7",
+    "provider": "BATTERY_INCLUDED",
+    "includedMixinPaths": [
+      "*_siteAware.*.OnlineIsService_P",
+      "*_siteAware.**"
+    ]
+  }'
+```
+
+If `writeKey` or `indexName` is wrong, the create request fails with `400` and nothing is stored. Fix the credentials in Battery Included and retry.
+
 
 ## How to update the index configuration
 
@@ -85,6 +158,9 @@ curl -L
   }'
 ```
 
+For `BATTERY_INCLUDED`, `includedMixinPaths` filtering is applied to the raw source mixin tree before the localized and non-localized mixin split. The retained data is then written to the existing Battery Included mixin fields, such as `_product.mixins` and `_product_i18n.<lang>.mixins`.
+
+
 To apply your configuration changes to existing data, run the reindexing process. See the [How to reindex existing products](indexing.md#how_to_reindex_existing_products) section.
 
 ## How to reindex existing products <a href="#how_to_reindex_existing_products" id="how_to_reindex_existing_products"></a>
@@ -110,6 +186,14 @@ curl -L
 ```
 
 This operation starts the full reindexing mode.
+
+For `BATTERY_INCLUDED` product reindexes, invalid stored credentials return:
+
+`Battery Included credentials are invalid. Verify the write key and index name.`
+
+No reindex job is created. Update the configuration first, then retry. If Battery Included is temporarily unreachable, the request returns `502` with:
+
+`Battery Included credential validation is temporarily unavailable. Try again later.`
 
 ## How to retrieve public search configuration
 

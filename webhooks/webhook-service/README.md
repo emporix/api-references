@@ -18,7 +18,8 @@ layout:
 
 # Webhook Service
 
-Manage the webhook configuration to allow users to choose which events they want to receive via the Svix webhook provider.
+Manage the webhook configuration to allow users to choose which events they want to receive via the Svix or HTTP webhook provider.
+A tenant can have only one webhook configuration of each type: `svix`, `svix_shared`, and `http` at a time.
 
 ### Key features and benefits
 
@@ -26,6 +27,8 @@ Manage the webhook configuration to allow users to choose which events they want
 * Gives possibility to view configuration
 * Updates configuration
 * Subscribes and unsubscribes from events without having to provide the full configuration
+* Supports multiple webhook targets for the HTTP strategy: multiple `eventsConfiguration` entries per `eventType`, each with optional Jayway JsonPath `filter`, per-entry secrets/headers, and `excludedFields`
+* Supports filtering custom entity events (`schema.custom-instance-*`) with JsonPath predicates
 * Supports hooking into the following objects:
   * Availability
   * Catalog
@@ -47,4 +50,5 @@ Manage the webhook configuration to allow users to choose which events they want
   * Svix Emporix Shared Account
   * Svix Custom Account
   * HTTP Webhook (third-party provider)
+
  

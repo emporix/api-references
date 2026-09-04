@@ -22,6 +22,7 @@
 * [General Info](standard-practices/general-info.md)
 * [Mixins](standard-practices/mixins.md)
 * [Query Parameter](standard-practices/q-param.md)
+* [Pagination](standard-practices/pagination.md)
 * [Translations](standard-practices/translations.md)
 * [Custom ID](standard-practices/custom-id.md)
 * [Upsert](standard-practices/upsert.md)
@@ -42,7 +43,7 @@
 * [API Tutorials and References](api-guides-and-references/README.md)
 * [Artificial Intelligence](artificial-intelligence/README.md)
   * [AI Service](artificial-intelligence/ai-service/README.md)
-    * [AI Tutorials](artificial-intelligence/ai-service/ai-tutorial.md)
+    * [AI Tutorial](artificial-intelligence/ai-service/ai-tutorial.md)
     * [API Reference](artificial-intelligence/ai-service/api-reference/README.md)
       * ```yaml
         props:
@@ -457,19 +458,6 @@
               spec: returns-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/orders/returns/api-reference/api.yml)
-  * [SEPA Export Service](orders/sepa-export/README.md)
-    * [API Reference](orders/sepa-export/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: sepa-export-api
-        ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/orders/sepa-export/api-reference/api.yml)
 * [Prices and Taxes](prices-and-taxes/README.md)
   * [Price Service](prices-and-taxes/price-service/README.md)
     * [Price Tutorials](prices-and-taxes/price-service/price.md)
@@ -616,6 +604,34 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/users-and-permissions/session-context/api-reference/api.yaml)
 * [Utilities](utilities/README.md)
+  * [Audit Logs (Changelog) Service](utilities/audit-logs-changelog/README.md)
+    * [Audit Logs (Changelog) Tutorial](utilities/audit-logs-changelog/audit-logs-changelog.md)
+    * [API Reference](utilities/audit-logs-changelog/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: audit-logs-changelog-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/utilities/audit-logs-changelog/api-reference/api.yml)
+  * [Import Service](utilities/import-service/README.md)
+    * [Import Service Tutorial](utilities/import-service/import-service.md)
+    * [API Reference](utilities/import-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: import-service-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/utilities/import-service/api-reference/api.yml)
   * [Schema Service](utilities/schema/README.md)
     * [Schema Tutorial](utilities/schema/schema.md)
     * [API Reference](utilities/schema/api-reference/README.md)

@@ -38,7 +38,8 @@ curl -L
       "address": {
         "country": "GB",
         "zipCode": "12345"
-      }
+      },
+      "timezone": "Europe/London"
     },
     "shipToCountries": [
       "GB"

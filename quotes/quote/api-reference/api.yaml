@@ -113,6 +113,8 @@ paths:
                         shippingTaxCode: STANDARD
                       comment:
                         employeeComment: Employee comment
+                      customerReference: PO-12345
+                      customerComment: Please deliver before Friday
                       billingAddress:
                         id: 63440460cee2826d794fcb8a
                         name: ABC
@@ -330,6 +332,8 @@ paths:
                   cartId: 4472v8d2309b06d46d3cf19fe
                   billingAddressId: 4472v8d2309b06d46d3cf19dd
                   shippingAddressId: 4472v8d2309b06d46d3cf19dd
+                  customerReference: PO-12345
+                  customerComment: Please deliver before Friday
                   shipping:
                     value: 10
                     methodId: fedex-2dayground
@@ -669,6 +673,8 @@ paths:
                       validTo: '2023-03-25T09:36:55.974Z'
                     comment:
                       employeeComment: Employee comment
+                    customerReference: PO-12345
+                    customerComment: Please deliver before Friday
                     validTo: '2023-03-25T09:36:55.974Z'
                     totalPrice:
                       netValue: 205
@@ -852,7 +858,9 @@ paths:
         ### **Additional scope information**
         One of the scopes is required.
 
-        * The `quote.quote_manage_own` scope allows customers to modify only their own quotes by modifying the status to either `ACCEPTED` or `DECLINED`.
+        * The `quote.quote_manage_own` scope allows customers to modify only their own quotes.
+        * Customers can update the `status`, `customerReference`, and `customerComment` fields.
+        * Customer status updates are limited to `ACCEPTED`, `DECLINED`, and `IN_PROGRESS`.
 
         ***
       responses:
@@ -1069,6 +1077,18 @@ paths:
                       value: DECLINED
                       comment: new comment
                       quoteReasonId: 6437ed5dc0dc2925289a5bbd
+              Change customer reference:
+                value:
+                  - op: REPLACE
+                    path: /customerReference
+                    value:
+                      value: PO-12345
+              Change customer comment:
+                value:
+                  - op: REPLACE
+                    path: /customerComment
+                    value:
+                      value: Please deliver before Friday
               Accept quote:
                 value:
                   - op: REPLACE
@@ -1679,6 +1699,14 @@ components:
           enum:
             - B2B
             - B2C
+        customerReference:
+          type: string
+          description: Customer-provided reference stored on the quote.
+          example: PO-12345
+        customerComment:
+          type: string
+          description: Customer-provided comment stored on the quote.
+          example: Please deliver before Friday
         customer:
           type: object
           description: This attribute contains details about the customer for whom the quote was created.
@@ -2392,6 +2420,14 @@ components:
           description: For B2B customers, it represents the location which should specify the shipping address. For B2C customers, it represents identifier of customer's shipping address.
         shipping:
           $ref: '#/components/schemas/QuoteShipping'
+        customerReference:
+          type: string
+          description: Customer-provided reference stored on the quote.
+          example: PO-12345
+        customerComment:
+          type: string
+          description: Customer-provided comment stored on the quote.
+          example: Please deliver before Friday
   securitySchemes:
     OAuth2:
       type: oauth2

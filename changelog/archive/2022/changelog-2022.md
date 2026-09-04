@@ -14,9 +14,13 @@ layout:
     visible: true
   metadata:
     visible: true
+  tags:
+    visible: true
+  actions:
+    visible: true
 ---
 
-# Changelog 2022
+# 2022
 
 ## 2022-12-15: Media Service - public and private assets
 
@@ -30,10 +34,10 @@ The media assets functionality makes it possible to manage public and private as
 | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
 | [Creating a new asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets)                                       | It creates a new media asset.       |
 | [Updating an existing asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#put-media-tenant-assets-assetid) | It updates an existing media asset. |
-| [Deleting an existing asset](../../../openapi/media/#operation/DELETE-media-remove-asset)                                                             | It deletes an existing media asset. |
-| [Getting list of asset entities](../../../openapi/media/#operation/GET-media-list-assets)                                                             | It gets a list of media assets.     |
-| [Getting single asset entity](../../../openapi/media/#operation/GET-media-retrieve-asset)                                                             | It gets a single media asset.       |
-| [Downloading an asset](../../../openapi/media/#operation/GET-media-download-asset)                                                                    | It downloads a single media asset.  |
+| [Deleting an existing asset](https://github.com/emporix/api-references/blob/main/openapi/media/README.md#operation/DELETE-media-remove-asset)         | It deletes an existing media asset. |
+| [Getting list of asset entities](https://github.com/emporix/api-references/blob/main/openapi/media/README.md#operation/GET-media-list-assets)         | It gets a list of media assets.     |
+| [Getting single asset entity](https://github.com/emporix/api-references/blob/main/openapi/media/README.md#operation/GET-media-retrieve-asset)         | It gets a single media asset.       |
+| [Downloading an asset](https://github.com/emporix/api-references/blob/main/openapi/media/README.md#operation/GET-media-download-asset)                | It downloads a single media asset.  |
 
 **Known problems**
 
@@ -55,7 +59,7 @@ The Order Service API has been enhanced with the possibility of recalculating al
 
 | Endpoint                                                                                                                                                                       | Description                                                                                                                                                                                                 |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Updating an order](../../../openapi/order/#operation/PUT-order-update-order)                                                                                                  | This parameter allows for recalculation of all entries from the order. If set to `true`, the prices and coupons of the entries are recalculated. By default, the `recalculate` parameter is set to `false`. |
+| [Updating an order](https://github.com/emporix/api-references/blob/main/openapi/order/README.md#operation/PUT-order-update-order)                                              | This parameter allows for recalculation of all entries from the order. If set to `true`, the prices and coupons of the entries are recalculated. By default, the `recalculate` parameter is set to `false`. |
 | [Partially updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid) | This parameter allows for recalculation of all entries from the order. If set to `true`, the prices and coupons of the entries are recalculated. By default, the `recalculate` parameter is set to `false`. |
 
 **Known problems**
@@ -76,14 +80,14 @@ The Price Service API has been enhanced with the possibility of specifying custo
 
 **Updated endpoints**
 
-| Endpoint                                                                                                                     | Description                               |
-| ---------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
-| [Creating a new price model](../../../openapi/price/#operation/POST-price-create-model)                                      | It creates a new price model.             |
-| [Creating a new price](../../../openapi/price/#operation/POST-price-create-price)                                            | It creates a new price.                   |
-| [Creating new prices in bulk](../../../openapi/price/#operation/POST-price-create-multiple-prices)                           | It creates new prices in bulk.            |
-| [Creating a new price list](../../../openapi/price/#operation/POST-price-create-price-list)                                  | It creates a new price list.              |
-| [Creating a new price list price](../../../openapi/price/#operation/POST-price-create-price-in-price-list)                   | It creates a new price list price.        |
-| [Creating new price list prices in bulk](../../../openapi/price/#operation/POST-price-create-multiple-prices-for-price-list) | It creates new price list prices in bulk. |
+| Endpoint                                                                                                                                                                         | Description                               |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| [Creating a new price model](https://github.com/emporix/api-references/blob/main/openapi/price/README.md#operation/POST-price-create-model)                                      | It creates a new price model.             |
+| [Creating a new price](https://github.com/emporix/api-references/blob/main/openapi/price/README.md#operation/POST-price-create-price)                                            | It creates a new price.                   |
+| [Creating new prices in bulk](https://github.com/emporix/api-references/blob/main/openapi/price/README.md#operation/POST-price-create-multiple-prices)                           | It creates new prices in bulk.            |
+| [Creating a new price list](https://github.com/emporix/api-references/blob/main/openapi/price/README.md#operation/POST-price-create-price-list)                                  | It creates a new price list.              |
+| [Creating a new price list price](https://github.com/emporix/api-references/blob/main/openapi/price/README.md#operation/POST-price-create-price-in-price-list)                   | It creates a new price list price.        |
+| [Creating new price list prices in bulk](https://github.com/emporix/api-references/blob/main/openapi/price/README.md#operation/POST-price-create-multiple-prices-for-price-list) | It creates new price list prices in bulk. |
 
 **Known problems**
 
@@ -103,16 +107,16 @@ The Session Context Service provides the ability to manage a customer's browser 
 
 **New endpoints**
 
-| Endpoint                                                                                                                                          | Description                                       |
-| ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| [Retrieving a session context](../../../openapi/session-context/#operation/GET-session-context-retrieve-session-context)                          | It retrieves a session context.                   |
-| [Updating a session context](../../../openapi/session-context/#operation/PUT-session-context-update-session-context)                              | It updates a session context.                     |
-| [Adding a new attribute to a session context](../../../openapi/session-context/#operation/POST-session-context-add-attribute-sessionId)           | It adds a new attribute to session context.       |
-| [Deleting an attribute from a session context](../../../openapi/session-context/#operation/DELETE-session-context-remove-attribute)               | It deletes an attribute from a session context.   |
-| [Retrieving own session context](../../../openapi/session-context/#operation/GET-session-context-retrieve-session-context-by-sessionId)           | It retrieves own session context.                 |
-| [Partially updating own session context](../../../openapi/session-context/#operation/PATCH-session-context-update-attribute-sessionId-storefront) | It updates own session context.                   |
-| [Adding a new attribute to own session context](../../../openapi/session-context/#operation/POST-session-context-add-attribute-sessionId)         | It adds a new attribute to own session context.   |
-| [Deleting an attribute from own session context](../../../openapi/session-context/#operation/DELETE-session-context-remove-attribute-sessionId)   | It deletes an attribute from own session context. |
+| Endpoint                                                                                                                                                                                              | Description                                       |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| [Retrieving a session context](https://github.com/emporix/api-references/blob/main/openapi/session-context/README.md#operation/GET-session-context-retrieve-session-context)                          | It retrieves a session context.                   |
+| [Updating a session context](https://github.com/emporix/api-references/blob/main/openapi/session-context/README.md#operation/PUT-session-context-update-session-context)                              | It updates a session context.                     |
+| [Adding a new attribute to a session context](https://github.com/emporix/api-references/blob/main/openapi/session-context/README.md#operation/POST-session-context-add-attribute-sessionId)           | It adds a new attribute to session context.       |
+| [Deleting an attribute from a session context](https://github.com/emporix/api-references/blob/main/openapi/session-context/README.md#operation/DELETE-session-context-remove-attribute)               | It deletes an attribute from a session context.   |
+| [Retrieving own session context](https://github.com/emporix/api-references/blob/main/openapi/session-context/README.md#operation/GET-session-context-retrieve-session-context-by-sessionId)           | It retrieves own session context.                 |
+| [Partially updating own session context](https://github.com/emporix/api-references/blob/main/openapi/session-context/README.md#operation/PATCH-session-context-update-attribute-sessionId-storefront) | It updates own session context.                   |
+| [Adding a new attribute to own session context](https://github.com/emporix/api-references/blob/main/openapi/session-context/README.md#operation/POST-session-context-add-attribute-sessionId)         | It adds a new attribute to own session context.   |
+| [Deleting an attribute from own session context](https://github.com/emporix/api-references/blob/main/openapi/session-context/README.md#operation/DELETE-session-context-remove-attribute-sessionId)   | It deletes an attribute from own session context. |
 
 ***
 
@@ -124,13 +128,13 @@ The order return functionality makes it possible to manage a lifecycle of an ord
 
 **New endpoints**
 
-| Endpoint                                                                                               | Description                          |
-| ------------------------------------------------------------------------------------------------------ | ------------------------------------ |
-| [Creating a new return entity](../../../openapi/returns/#operation/POST-returns-create-return)         | It creates a new order return.       |
-| [Updating an existing return entity](../../../openapi/returns/#operation/PUT-returns-update-return)    | It updates an existing order return. |
-| [Deleting an existing return entity](../../../openapi/returns/#operation/DELETE-returns-remove-return) | It deletes an existing order return. |
-| [Getting list of return entities](../../../openapi/returns/#operation/GET-returns-list-returns)        | It gets a list of order returns.     |
-| [Getting single return entities](../../../openapi/returns/#operation/GET-returns-retrieve-return)      | It gets a single order return.       |
+| Endpoint                                                                                                                                                   | Description                          |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| [Creating a new return entity](https://github.com/emporix/api-references/blob/main/openapi/returns/README.md#operation/POST-returns-create-return)         | It creates a new order return.       |
+| [Updating an existing return entity](https://github.com/emporix/api-references/blob/main/openapi/returns/README.md#operation/PUT-returns-update-return)    | It updates an existing order return. |
+| [Deleting an existing return entity](https://github.com/emporix/api-references/blob/main/openapi/returns/README.md#operation/DELETE-returns-remove-return) | It deletes an existing order return. |
+| [Getting list of return entities](https://github.com/emporix/api-references/blob/main/openapi/returns/README.md#operation/GET-returns-list-returns)        | It gets a list of order returns.     |
+| [Getting single return entities](https://github.com/emporix/api-references/blob/main/openapi/returns/README.md#operation/GET-returns-retrieve-return)      | It gets a single order return.       |
 
 **Known problems**
 
@@ -151,16 +155,16 @@ The names and descriptions of brands present in the system can now be localized.
 The `q` param notation was introduced to the `Retrieving all brands` endpoint, so it is now possible to filter the results by every field.
 
 {% hint style="info" %}
-For more detailed information, check out the API Reference documentation for the [Retrieving all brands](../../../openapi/brand/#operation/GET-brand-list-brands) endpoint.
+For more detailed information, check out the API Reference documentation for the [Retrieving all brands](https://github.com/emporix/api-references/blob/main/openapi/brand/README.md#operation/GET-brand-list-brands) endpoint.
 {% endhint %}
 
 **Updated endpoints**
 
 | Endpoint                                                                                                                                                    | Description                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Retrieving all brands](../../../openapi/brand/#operation/GET-brand-list-brands)                                                                            | The response body contains two new fields `localizedName` and `localizedDescription`. Filtering is now supported using the `q` query parameter. |
+| [Retrieving all brands](https://github.com/emporix/api-references/blob/main/openapi/brand/README.md#operation/GET-brand-list-brands)                        | The response body contains two new fields `localizedName` and `localizedDescription`. Filtering is now supported using the `q` query parameter. |
 | [Adding a new brand](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/brands#post-brands)      | The response body contains two new optional fields — `localizedName` and `localizedDescription`.                                                |
-| [Retrieving a brand](../../../openapi/brand/#operation/GET-brand-retrieve-brand)                                                                            | The response body contains two new fields `localizedName` and `localizedDescription`.                                                           |
+| [Retrieving a brand](https://github.com/emporix/api-references/blob/main/openapi/brand/README.md#operation/GET-brand-retrieve-brand)                        | The response body contains two new fields `localizedName` and `localizedDescription`.                                                           |
 | [Updating a brand](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/brands#put-brands-brandid) | The response body contains two new optional fields `localizedName` and `localizedDescription`.                                                  |
 
 ***
@@ -212,12 +216,12 @@ The webhooks functionality makes it possible to subscribe to events that are bro
 
 **New endpoints**
 
-| Endpoint                                                                                                                  | Description                                                                                                                                                 |
-| ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Retrieving all subscriptions](../../../openapi/webhook/#operation/GET-webhook-list-all-event-subscriptions)              | It retrieves all events with associated subscription details.                                                                                               |
-| [Subscribing and unsubscribing from events](../../../openapi/webhook/#operation/PATCH-webhook-manage-event-subscriptions) | It updates the subscriptions list by either subscribing or unsubscribing from specified events.                                                             |
-| [Retrieving a dashboard access URL](../../../openapi/webhook/#operation/GET-webhook-access-tenant-svix)                   | It retrieves a Svix magic login link (authentication embedded) and an authentication token needed to connect a tenant to their consumer application portal. |
-| [Retrieving webhook statistics](../../../openapi/webhook/#operation/GET-webhook-retrieve-statistics)                      | It retrieves statistics on the number of emitted events and provides information on the limit of webhook notifications configured for a specific tenant.    |
+| Endpoint                                                                                                                                                                      | Description                                                                                                                                                 |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Retrieving all subscriptions](https://github.com/emporix/api-references/blob/main/openapi/webhook/README.md#operation/GET-webhook-list-all-event-subscriptions)              | It retrieves all events with associated subscription details.                                                                                               |
+| [Subscribing and unsubscribing from events](https://github.com/emporix/api-references/blob/main/openapi/webhook/README.md#operation/PATCH-webhook-manage-event-subscriptions) | It updates the subscriptions list by either subscribing or unsubscribing from specified events.                                                             |
+| [Retrieving a dashboard access URL](https://github.com/emporix/api-references/blob/main/openapi/webhook/README.md#operation/GET-webhook-access-tenant-svix)                   | It retrieves a Svix magic login link (authentication embedded) and an authentication token needed to connect a tenant to their consumer application portal. |
+| [Retrieving webhook statistics](https://github.com/emporix/api-references/blob/main/openapi/webhook/README.md#operation/GET-webhook-retrieve-statistics)                      | It retrieves statistics on the number of emitted events and provides information on the limit of webhook notifications configured for a specific tenant.    |
 
 ***
 
@@ -311,7 +315,7 @@ No new endpoints have been introduced.
 | [Retrieving details about an order (by a customer)](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid) | The response body schema of the `order.entries.product` model contains two optional fields `productType` and `bundledProducts`. |
 | [Retrieving a list of orders (for customer)](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed)                                           | The response body schema of the `order.entries.product` model contains two optional fields `productType` and `bundledProducts`. |
 | [Creating new order (by a merchant)](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)                    | The request body schema of the `order.entries.product` model contains two optional fields `productType` and `bundledProducts`.  |
-| [Updating order (by a merchant)](../../../openapi/order/#operation/PUT-order-update-order)                                                                                                        | The request body schema of the `order.entries.product` model contains two optional fields `productType` and `bundledProducts`.  |
+| [Updating order (by a merchant)](https://github.com/emporix/api-references/blob/main/openapi/order/README.md#operation/PUT-order-update-order)                                                    | The request body schema of the `order.entries.product` model contains two optional fields `productType` and `bundledProducts`.  |
 
 ***
 
@@ -327,13 +331,13 @@ The product template functionality makes it possible to define a set of attribut
 
 **New endpoints**
 
-| Endpoint                                                                                              | Description                                                                                                                                                                                                                                                                                                                                  |
-| ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Creating a new product template](../../../openapi/product/#operation/POST-product-create-template)   | It creates a new product template.                                                                                                                                                                                                                                                                                                           |
-| [Getting a product template](../../../openapi/product/#operation/PUT-product-update-template)         | It retrieves a single product template.                                                                                                                                                                                                                                                                                                      |
-| [Getting a list of product templates](../../../openapi/product/#operation/GET-product-list-templates) | It retrieves a list of product templates.                                                                                                                                                                                                                                                                                                    |
-| [Updating a product template](../../../openapi/product/#operation/PUT-product-update-template)        | It updates an existing product template. Each update creates a new version of the template. Products based on earlier versions of the template are not updated automatically. In order to see the changes (such as new attributes) on the product level, you need to update the product template's `version` in a relevant `Product` object. |
-| [Deleting a product template](../../../openapi/product/#operation/DELETE-product-remove-template)     | It deletes a product template. All products based on a deleted template will be unassigned from the template, but not deleted in a cascade way.                                                                                                                                                                                              |
+| Endpoint                                                                                                                                                  | Description                                                                                                                                                                                                                                                                                                                                  |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Creating a new product template](https://github.com/emporix/api-references/blob/main/openapi/product/README.md#operation/POST-product-create-template)   | It creates a new product template.                                                                                                                                                                                                                                                                                                           |
+| [Getting a product template](https://github.com/emporix/api-references/blob/main/openapi/product/README.md#operation/PUT-product-update-template)         | It retrieves a single product template.                                                                                                                                                                                                                                                                                                      |
+| [Getting a list of product templates](https://github.com/emporix/api-references/blob/main/openapi/product/README.md#operation/GET-product-list-templates) | It retrieves a list of product templates.                                                                                                                                                                                                                                                                                                    |
+| [Updating a product template](https://github.com/emporix/api-references/blob/main/openapi/product/README.md#operation/PUT-product-update-template)        | It updates an existing product template. Each update creates a new version of the template. Products based on earlier versions of the template are not updated automatically. In order to see the changes (such as new attributes) on the product level, you need to update the product template's `version` in a relevant `Product` object. |
+| [Deleting a product template](https://github.com/emporix/api-references/blob/main/openapi/product/README.md#operation/DELETE-product-remove-template)     | It deletes a product template. All products based on a deleted template will be unassigned from the template, but not deleted in a cascade way.                                                                                                                                                                                              |
 
 **Updated endpoints**
 
@@ -376,7 +380,7 @@ No new endpoints have been introduced.
 
 **Known problems**
 
-When particular endpoints become available, they will be announced in [Release Notes](../../../releases).
+When particular endpoints become available, they will be announced in [Release Notes](https://github.com/emporix/api-references/blob/main/releases?tag=all/README.md).
 
 ***
 
@@ -388,12 +392,12 @@ The customer management functionality makes it possible to manage information ab
 
 **New endpoints**
 
-| Endpoint                                                                                    | Description                                                                                                                                        |
-| ------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Legal entities management](../../../openapi/customer-management/#operation/Legal-Entities) | CRUD[^1] operations for managing legal entities. A legal entity is a representation of a company or its subsidiary.                                |
-| [Location management](../../../openapi/customer-management/#operation/Locations)            | CRUD operations for managing locations. A location is a physical address where a company operates, such as its headquarters, office, or warehouse. |
-| [Contact management](../../../openapi/customer-management/#operation/Contacts)              | CRUD operations for contact management. A contact is an employee of one or more legal entities who can be contacted regarding business matters.    |
-| [Contact assignments](../../../openapi/customer-management/#operation/Contact-Assignments)  | CRUD operations for assignments of contacts to legal entities. A contact can be assigned to a company or a subsidiary.                             |
+| Endpoint                                                                                                                                        | Description                                                                                                                                        |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Legal entities management](https://github.com/emporix/api-references/blob/main/openapi/customer-management/README.md#operation/Legal-Entities) | CRUD[^1] operations for managing legal entities. A legal entity is a representation of a company or its subsidiary.                                |
+| [Location management](https://github.com/emporix/api-references/blob/main/openapi/customer-management/README.md#operation/Locations)            | CRUD operations for managing locations. A location is a physical address where a company operates, such as its headquarters, office, or warehouse. |
+| [Contact management](https://github.com/emporix/api-references/blob/main/openapi/customer-management/README.md#operation/Contacts)              | CRUD operations for contact management. A contact is an employee of one or more legal entities who can be contacted regarding business matters.    |
+| [Contact assignments](https://github.com/emporix/api-references/blob/main/openapi/customer-management/README.md#operation/Contact-Assignments)  | CRUD operations for assignments of contacts to legal entities. A contact can be assigned to a company or a subsidiary.                             |
 
 **Known problems**
 
@@ -409,7 +413,7 @@ The following changes have been introduced to the Emporix Product Service:
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products)                                                         | <ul><li>Localized fields have been introduced.</li><li>The <code>Content-Language</code> header has been introduced. It can be set to one of the following values:</li></ul>                                                                                                           |
 | [Upserting a product](https://github.com/developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products/README.md#put-product-tenant-products-productid) | <ul><li>In case of a successful product update, a <code>204</code> status code is now returned. Before the changes, the status code was <code>200</code>.</li><li>Optimistic locking has been introduced. The <code>metadata.version</code> field is required during update.</li></ul> |
-| [Deleting a product](../../../openapi/product/#operation/DELETE-product-remove-product)                                                                                                                    | <p>The <code>204</code> status code is now returned in two cases:</p><ul><li>A successful product removal.</li><li>Removal of a product that does not exist.</li></ul>                                                                                                                 |
+| [Deleting a product](https://github.com/emporix/api-references/blob/main/openapi/product/README.md#operation/DELETE-product-remove-product)                                                                | <p>The <code>204</code> status code is now returned in two cases:</p><ul><li>A successful product removal.</li><li>Removal of a product that does not exist.</li></ul>                                                                                                                 |
 
 ***
 
@@ -421,11 +425,11 @@ The webhooks functionality makes it possible to subscribe to events that are bro
 
 **New endpoints**
 
-| Endpoint                                                                                                                  | Description                                                                                                                                                 |
-| ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Retrieving all subscriptions](../../../openapi/webhook/#operation/GET-webhook-list-all-event-subscriptions)              | It retrieves all events with associated subscription details.                                                                                               |
-| [Subscribing and unsubscribing from events](../../../openapi/webhook/#operation/PATCH-webhook-manage-event-subscriptions) | It updates the subscriptions list by either subscribing or unsubscribing from specified events.                                                             |
-| [Retrieving a dashboard access URL](../../../openapi/webhook/#operation/GET-webhook-access-tenant-svix)                   | It retrieves a Svix magic login link (authentication embedded) and an authentication token needed to connect a tenant to their consumer application portal. |
+| Endpoint                                                                                                                                                                      | Description                                                                                                                                                 |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Retrieving all subscriptions](https://github.com/emporix/api-references/blob/main/openapi/webhook/README.md#operation/GET-webhook-list-all-event-subscriptions)              | It retrieves all events with associated subscription details.                                                                                               |
+| [Subscribing and unsubscribing from events](https://github.com/emporix/api-references/blob/main/openapi/webhook/README.md#operation/PATCH-webhook-manage-event-subscriptions) | It updates the subscriptions list by either subscribing or unsubscribing from specified events.                                                             |
+| [Retrieving a dashboard access URL](https://github.com/emporix/api-references/blob/main/openapi/webhook/README.md#operation/GET-webhook-access-tenant-svix)                   | It retrieves a Svix magic login link (authentication embedded) and an authentication token needed to connect a tenant to their consumer application portal. |
 
 **Known problems**
 
@@ -439,9 +443,9 @@ Deprecated endpoint for deleting all products assigned to the tenant has been re
 
 **Removed endpoints**
 
-| Endpoint                                                                            | Description                                     |
-| ----------------------------------------------------------------------------------- | ----------------------------------------------- |
-| [Deleting all products](../../../openapi/product/#operation/DELETE_tenant-products) | It deletes all products assigned to the tenant. |
+| Endpoint                                                                                                                                | Description                                     |
+| --------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| [Deleting all products](https://github.com/emporix/api-references/blob/main/openapi/product/README.md#operation/DELETE_tenant-products) | It deletes all products assigned to the tenant. |
 
 ***
 
@@ -491,13 +495,13 @@ The product template functionality makes it possible to define a set of attribut
 
 **New endpoints**
 
-| Endpoint                                                                                              | Description                                                                                                                                                                                                                                                                                                                                  |
-| ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Creating a new product template](../../../openapi/product/#operation/POST-product-create-template)   | It creates a new product template.                                                                                                                                                                                                                                                                                                           |
-| [Getting a product template](../../../openapi/product/#operation/PUT-product-update-template)         | It retrieves a single product template.                                                                                                                                                                                                                                                                                                      |
-| [Getting a list of product templates](../../../openapi/product/#operation/GET-product-list-templates) | It retrieves a list of product templates.                                                                                                                                                                                                                                                                                                    |
-| [Updating a product template](../../../openapi/product/#operation/PUT-product-update-template)        | It updates an existing product template. Each update creates a new version of the template. Products based on earlier versions of the template are not updated automatically. In order to see the changes (such as new attributes) on the product level, you need to update the product template's `version` in a relevant `Product` object. |
-| [Deleting a product template](../../../openapi/product/#operation/DELETE-product-remove-template)     | It deletes a product template. All products based on a deleted template will be unassigned from the template, but not deleted in a cascade way.                                                                                                                                                                                              |
+| Endpoint                                                                                                                                                  | Description                                                                                                                                                                                                                                                                                                                                  |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Creating a new product template](https://github.com/emporix/api-references/blob/main/openapi/product/README.md#operation/POST-product-create-template)   | It creates a new product template.                                                                                                                                                                                                                                                                                                           |
+| [Getting a product template](https://github.com/emporix/api-references/blob/main/openapi/product/README.md#operation/PUT-product-update-template)         | It retrieves a single product template.                                                                                                                                                                                                                                                                                                      |
+| [Getting a list of product templates](https://github.com/emporix/api-references/blob/main/openapi/product/README.md#operation/GET-product-list-templates) | It retrieves a list of product templates.                                                                                                                                                                                                                                                                                                    |
+| [Updating a product template](https://github.com/emporix/api-references/blob/main/openapi/product/README.md#operation/PUT-product-update-template)        | It updates an existing product template. Each update creates a new version of the template. Products based on earlier versions of the template are not updated automatically. In order to see the changes (such as new attributes) on the product level, you need to update the product template's `version` in a relevant `Product` object. |
+| [Deleting a product template](https://github.com/emporix/api-references/blob/main/openapi/product/README.md#operation/DELETE-product-remove-template)     | It deletes a product template. All products based on a deleted template will be unassigned from the template, but not deleted in a cascade way.                                                                                                                                                                                              |
 
 **Updated endpoints**
 

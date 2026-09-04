@@ -55,8 +55,8 @@ layout:
 {% endcolumn %}
 
 {% column width="50%" %}
-{% content-ref url="../../authorization/" %}
-[authorization](../../authorization/)
+{% content-ref url="../../authentication/" %}
+[authentication](../../authentication/)
 {% endcontent-ref %}
 
 {% content-ref url="../../checkout/" %}

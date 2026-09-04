@@ -246,6 +246,7 @@ description: Webhook events related to the creation, update, cancellation, and s
   "siteCode": "String",
   "cartId": "String",
   "quoteId": "String",
+  "restriction": "String",
   "countryCode": "String",
   "billingAddress": {
     "contactName": "String",
@@ -647,6 +648,7 @@ description: Webhook events related to the creation, update, cancellation, and s
   "siteCode": "String",
   "cartId": "String",
   "quoteId": "String",
+  "restriction": "String",
   "countryCode": "String",
   "billingAddress": {
     "contactName": "String",

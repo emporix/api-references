@@ -21,7 +21,7 @@ if ! [[ "$RELEASE_DATE" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
   exit 1
 fi
 
-# Replace placeholder in changelog markdown files (e.g. changelog/changelog.md).
+# Replace placeholder in changelog markdown files (e.g. changelog/README.md).
 # Skips changelog-release-date.md, which documents the placeholder itself.
 grep -rl --include='*.md' "${PLACEHOLDER}" "${CHANGELOG_DIR}" 2>/dev/null | while IFS= read -r file_path; do
   if [[ "$(basename "$file_path")" == *"${PLACEHOLDER}"* ]] || [[ "$(basename "$file_path")" == "changelog-release-date.md" ]]; then

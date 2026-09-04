@@ -226,7 +226,7 @@ paths:
         - name: type
           in: query
           description: |
-            Filters schemas by type. Possible types to specify, CART, CART_ITEM, CATEGORY, COMPANY, COUPON, CUSTOMER, CUSTOMER_ADDRESS, ORDER, ORDER_ENTRY, PRODUCT, QUOTE, RETURN, PRICE_LIST, SITE, CUSTOM_ENTITY, VENDOR, MEDIA. When the newest version of the schema is of different type than the previous one and the previous one matches the type specified in this query param, then the previous version is returned.
+            Filters schemas by type. Possible types to specify, AVAILABILITY, CART, CART_ITEM, CATEGORY, COMPANY, COUPON, CUSTOMER, CUSTOMER_ADDRESS, LOCATION, ORDER, ORDER_ENTRY, PRODUCT, QUOTE, RETURN, PRICE_LIST, SITE, CUSTOM_ENTITY, VENDOR, VENDOR_LOCATION, MEDIA. When the newest version of the schema is of different type than the previous one and the previous one matches the type specified in this query param, then the previous version is returned.
           # DEV NOTE: If you add another type, the tutorial and MD guides have to be updated as well.
           schema:
             type: string
@@ -373,6 +373,7 @@ paths:
                 value:
                   - PRODUCT
                   - ORDER
+                  - AVAILABILITY
         description: ''
       responses:
         '204':
@@ -462,6 +463,8 @@ paths:
               examples:
                 Types:
                   value:
+                    - AVAILABILITY
+                    - LOCATION
                     - ORDER
                     - PRODUCT
                     - QUOTE
@@ -583,7 +586,7 @@ paths:
         - name: type
           in: query
           description: |
-            Filters references by type. Possible types to specify, CART, CART_ITEM, CATEGORY, COMPANY, COUPON, CUSTOMER, CUSTOMER_ADDRESS, ORDER, ORDER_ENTRY, PRODUCT, QUOTE, RETURN, PRICE_LIST, SITE, CUSTOM_ENTITY, VENDOR, MEDIA. When the newer version of a reference is of different type than the previous one and the previous one matches the type specified in this query param, then the previous version is returned.
+            Filters references by type. Possible types to specify, AVAILABILITY, CART, CART_ITEM, CATEGORY, COMPANY, COUPON, CUSTOMER, CUSTOMER_ADDRESS, LOCATION, ORDER, ORDER_ENTRY, PRODUCT, QUOTE, RETURN, PRICE_LIST, SITE, CUSTOM_ENTITY, VENDOR, VENDOR_LOCATION, MEDIA. When the newer version of a reference is of different type than the previous one and the previous one matches the type specified in this query param, then the previous version is returned.
           schema:
             type: string
   '/schema/{tenant}/references/{id}':
@@ -699,6 +702,8 @@ paths:
         Creates a custom type entity that can be later used for creating custom instances.
 
         **Note**: When a custom entity type is created, a set of custom scopes is created, which allow managing custom instances of that type.
+
+        Reserved built-in type IDs cannot be used as custom schema type IDs. This includes AVAILABILITY and LOCATION.
 
       operationId: POST-schema-create-custom-schema-type
       requestBody:
@@ -1014,6 +1019,15 @@ paths:
       description: |-
         Retrieves all custom instances associated with a specific custom schema type.
 
+        Supports offset pagination (`pageNumber`, `pageSize`) and cursor pagination (`next`, `prev`). Cursor pagination is active when `next` or `prev` is provided.
+
+        In cursor mode:
+        - `next` and `prev` cannot be used together and return `400`.
+        - `pageNumber` is ignored.
+        - the `X-Total-Count` request header is ignored and the `X-Total-Count` response header is not returned.
+
+        If no sort is provided, results are returned in `_id:ASC` order. If a sort is provided, `_id:ASC` is appended as a tie-breaker when `_id` is not already part of the sort.
+
       tags:
         - Custom Instance
       responses:
@@ -1021,10 +1035,18 @@ paths:
           description: ''
           headers:
             X-Total-Count:
-              description: Total amount of custom instances for given criteria.
+              description: Total amount of custom instances for given criteria. Returned only for offset pagination when requested with the `X-Total-Count` header.
               schema:
                 type: integer
                 format: int32
+            X-Next-Cursor:
+              description: Opaque cursor for retrieving the next page. Returned on non-empty responses when a next page exists.
+              schema:
+                type: string
+            X-Prev-Cursor:
+              description: Opaque cursor for retrieving the previous page. Returned on non-empty responses when a previous page exists.
+              schema:
+                type: string
           content:
             application/json:
               schema:
@@ -1146,6 +1168,8 @@ paths:
         - $ref: '#/components/parameters/trait_fields'
         - $ref: '#/components/parameters/trait_acceptLanguage_header'
         - $ref: '#/components/parameters/trait_expand_references'
+        - $ref: '#/components/parameters/trait_cursor_next'
+        - $ref: '#/components/parameters/trait_cursor_prev'
 
   '/schema/{tenant}/custom-entities/{type}/instances/{id}':
     parameters:
@@ -1419,6 +1443,15 @@ paths:
       description: |-
         Returns all custom instances for provided type that match specified criteria.
 
+        Supports offset pagination (`pageNumber`, `pageSize`) and cursor pagination (`next`, `prev`). Cursor pagination is active when `next` or `prev` is provided.
+
+        In cursor mode:
+        - `next` and `prev` cannot be used together and return `400`.
+        - `pageNumber` is ignored.
+        - the `X-Total-Count` request header is ignored and the `X-Total-Count` response header is not returned.
+
+        If no sort is provided, results are returned in `_id:ASC` order. If a sort is provided, `_id:ASC` is appended as a tie-breaker when `_id` is not already part of the sort.
+
       tags:
         - Custom Instance
       requestBody:
@@ -1435,6 +1468,20 @@ paths:
       responses:
         '200':
           description: 'Custom instances succesfully retrieved'
+          headers:
+            X-Total-Count:
+              description: Total amount of custom instances for given criteria. Returned only for offset pagination when requested with the `X-Total-Count` header.
+              schema:
+                type: integer
+                format: int32
+            X-Next-Cursor:
+              description: Opaque cursor for retrieving the next page. Returned on non-empty responses when a next page exists.
+              schema:
+                type: string
+            X-Prev-Cursor:
+              description: Opaque cursor for retrieving the previous page. Returned on non-empty responses when a previous page exists.
+              schema:
+                type: string
           content:
             application/json:
               schema:
@@ -1539,10 +1586,68 @@ paths:
         - $ref: '#/components/parameters/trait_acceptLanguage_header'
         - $ref: '#/components/parameters/trait_fields'
         - $ref: '#/components/parameters/trait_expand_references'
+        - $ref: '#/components/parameters/trait_cursor_next'
+        - $ref: '#/components/parameters/trait_cursor_prev'
   '/schema/{tenant}/custom-entities/{type}/instances/bulk':
     parameters:
       - $ref: '#/components/parameters/tenant'
       - $ref: '#/components/parameters/type'
+    patch:
+      summary: Patching custom instances in bulk
+      description: |-
+        Partially updates multiple custom instances in a single request. Each item must contain the custom instance `id` and a list of patch operations.
+
+        The maximum batch size is 200.
+      tags:
+        - Custom Instance
+      parameters:
+        - $ref: '#/components/parameters/trait_contentLanguage_header'
+        - $ref: '#/components/parameters/trait_validateReferences'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/BulkPatchCustomInstanceRequest'
+            example:
+              - id: Ford
+                data:
+                  - op: REPLACE
+                    path: /name/en
+                    value: Ford bulk patched
+              - id: Aston_Martin
+                data:
+                  - op: REPLACE
+                    path: /mixins/productCustomAttributes/minOrderQuantity
+                    value: 10
+      responses:
+        '207':
+          description: Bulk patch was processed. Each item contains its own result status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkResponse'
+              example:
+                - index: 0
+                  id: Ford
+                  code: 204
+                  status: No Content
+                - index: 1
+                  code: 404
+                  status: Not Found
+        '400':
+          $ref: '#/components/responses/Bad_request_400_mixins'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+      operationId: PATCH-schema-bulk-patch-custom-instances
+      security:
+        - OAuth2:
+            - schema.custominstance_manage
+            - 'custom.{lowerCaseType}_manage'
+            - 'custom.{lowerCaseType}_manage_own'
     post:
       summary: Creating custom instances in bulk
       description: |-
@@ -1892,6 +1997,8 @@ components:
             url: "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/64d35aa7fa54121ca47db657_v1.json"
     TypesResponse:
       value:
+        - AVAILABILITY
+        - LOCATION
         - ORDER
         - PRODUCT
         - QUOTE
@@ -1987,7 +2094,7 @@ components:
     SchemaType:
       type: string
       description: Type which the schema should be assigned to. Can be one of the predefined values or any custom schema type id.
-      enum: [CART, CART_ITEM, CATEGORY, COMPANY, COUPON, CUSTOMER, CUSTOMER_ADDRESS, ORDER, ORDER_ENTRY, PRODUCT, QUOTE, RETURN, PRICE_LIST, SITE, CUSTOM_ENTITY, VENDOR, MEDIA]
+      enum: [AVAILABILITY, CART, CART_ITEM, CATEGORY, COMPANY, COUPON, CUSTOMER, CUSTOMER_ADDRESS, LOCATION, ORDER, ORDER_ENTRY, PRODUCT, QUOTE, RETURN, PRICE_LIST, SITE, CUSTOM_ENTITY, VENDOR, VENDOR_LOCATION, MEDIA]
     SchemaTypes:
       type: array
       description: List of types to which assign the schema.
@@ -2060,6 +2167,18 @@ components:
           description: Localized schema description in a form of a map of translations.
         type:
           $ref: '#/components/schemas/SchemaAttributeType'
+        precision:
+          type: number
+          description: |
+            Decimal precision for attributes of `DECIMAL` type. Defines the allowed decimal step for attribute values
+            (for example `0.1`, `0.01`, `0.001`).
+            Allowed values:
+            * `-1` – no precision constraint
+            * a positive decimal step of the form `0.1`, `0.01`, `0.001`, and so on (`10^-n` where `n >= 1`)
+            This property can only be provided when `type` is `DECIMAL` (or, for arrays, when `arrayType.type` is `DECIMAL`).
+            If omitted for a `DECIMAL` attribute, the default precision `0.01` is applied.
+          default: 0.01
+          example: 0.01
         metadata:
           $ref: '#/components/schemas/SchemaAttributeMetadata'
         values:
@@ -2230,7 +2349,7 @@ components:
       properties:
         id:
           type: string
-          description: Unique code for the custom type. Can only contain uppercase letters and underscores.
+          description: Unique code for the custom type. Can contain uppercase letters, digits, and underscores. The first character must be a letter.
         name:
           type: object
           description: Localized custom type name in a form of a map of translations.
@@ -2420,6 +2539,20 @@ components:
                 message:
                   type: string
                   description: Error details.
+    BulkPatchCustomInstanceRequest:
+      type: object
+      required:
+        - id
+        - data
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the custom instance to patch.
+        data:
+          type: array
+          description: List of patch operations to apply to the custom instance.
+          items:
+            $ref: '#/components/schemas/PatchOperation'
     CustomInstanceMetadata:
       type: object
       properties:
@@ -2587,6 +2720,26 @@ components:
         default: 60
         minimum: 1
         type: integer
+    trait_cursor_next:
+      name: next
+      in: query
+      required: false
+      schema:
+        type: string
+        maxLength: 4096
+      description: |
+        Opaque cursor from the `X-Next-Cursor` response header. Use it to retrieve the next set of results.
+        Cannot be combined with `prev` in the same request; sending both returns `400 Bad Request`.
+        When provided, cursor pagination is active: `pageNumber` is ignored and the `X-Total-Count` request header is ignored (the `X-Total-Count` response header is not returned).
+    trait_cursor_prev:
+      name: prev
+      in: query
+      required: false
+      schema:
+        type: string
+        maxLength: 4096
+      description: |
+        Opaque cursor from the `X-Prev-Cursor` response header. Use it to retrieve the previous set of results. Cannot be combined with `next` in the same request; sending both returns `400 Bad Request`. When provided, cursor pagination is active and `pageNumber` is ignored.
     trait_fields:
       name: fields
       in: query

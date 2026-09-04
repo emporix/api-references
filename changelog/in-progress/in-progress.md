@@ -54,24 +54,24 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr></thead>
 <tbody>
   <tr>
-    <td class="tg-0pky">Value Stream Modeller</td>
-    <td class="tg-0pky"><p>Improvements</p><p>Direct invocation of Emporix APIs from VSM</p></td>
-  </tr>
-  <tr>
     <td class="tg-0pky">B2B Commerce Frontend</td>
-    <td class="tg-0pky"><p>B2B Quote Approval</p><p>Product Detail page and improvements in Product List page</p></td>
+    <td class="tg-0pky">Optimization of coupon and segment support</td>
+  </tr>  
+  <tr>
+    <td class="tg-0pky">Schema Service</td>
+    <td class="tg-0pky">Site awareness of mixins</td>
   </tr>
   <tr>
-    <td class="tg-0pky">SAP Integration</td>
-    <td class="tg-0pky">Quote integration from SAP into Emporix and from Emporix into SAP</td>
+    <td class="tg-0pky">Vendor Management</td>
+    <td class="tg-0pky">Vendor-specific coupons</td>
   </tr>
   <tr>
-    <td class="tg-0pky">Approval Service</td>
-    <td class="tg-0pky">Adaptation and enhancement of the existing approval process to include Employees' approvals</td>
+    <td class="tg-0pky">Customer Segments</td>
+    <td class="tg-0pky">Group-aware customer segments</td>
   </tr>
   <tr>
-    <td class="tg-0pky">Audit Logs</td>
-    <td class="tg-0pky">Audit logs / changelogs for all existing entities</td>
+    <td class="tg-0pky">Agentic</td>
+    <td class="tg-0pky">Generic MCP</td>
   </tr>
 </tbody>
 </table>

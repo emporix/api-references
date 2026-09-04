@@ -34,6 +34,17 @@
             kind: openapi
             spec: approval-api
       ```
+  * [Audit Logs (Changelog)](../utilities/audit-logs-changelog/api-reference/README.md)
+    * ```yaml
+      props:
+        models: true
+      type: builtin:openapi
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: audit-logs-changelog-api
+      ```
   * [Availability](../orders/availability/api-reference/README.md)
     * ```yaml
       props:
@@ -364,7 +375,7 @@
             kind: openapi
             spec: schema-api
       ```
-  * [SEPA Export](../orders/sepa-export/api-reference/README.md)
+  * [Import Service](../utilities/import-service/api-reference/README.md)
     * ```yaml
       props:
         models: true
@@ -373,7 +384,7 @@
         spec:
           ref:
             kind: openapi
-            spec: sepa-export-api
+            spec: import-service-api
       ```
   * [Sequential ID](../utilities/sequential-id/api-reference/README.md)
     * ```yaml
