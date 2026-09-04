@@ -133,6 +133,41 @@ There are no known problems.
 
 {% update date="2026-08-31" tags="major-change" %}
 
+## Pick-pack Service - removal of deprecated endpoints
+
+#### Overview
+
+All previously deprecated endpoints are now removed ([Pick-pack Service - service deprecation](https://developer.emporix.io/changelog/2026/readme#pick-pack-service-service-deprecation)).
+
+{% hint style="danger" %}
+The Pick-pack Service has reached End of Life and is no longer available.
+{% endhint %}
+
+#### Removed endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| Finishing an order | Endpoint removed. The `POST /pick-pack/{tenant}/orders/{orderId}/finish` operation is no longer available. |
+| Retrieving all order cycles | Endpoint removed. The `GET /pick-pack/{tenant}/orderCycles` operation is no longer available. |
+| Retrieving a packlist | Endpoint removed. The `GET /pick-pack/{tenant}/orders` operation is no longer available. |
+| Retrieving an order | Endpoint removed. The `GET /pick-pack/{tenant}/orders/{orderId}` operation is no longer available. |
+| Updating an order | Endpoint removed. The `PATCH /pick-pack/{tenant}/orders/{orderId}` operation is no longer available. |
+| Adding an assignee to an order | Endpoint removed. The `POST /pick-pack/{tenant}/orders/{orderId}/assignees` operation is no longer available. |
+| Deleting an assignee from an order | Endpoint removed. The `DELETE /pick-pack/{tenant}/orders/{orderId}/assignees/{assigneeId}` operation is no longer available. |
+| Updating packaging products for an order | Endpoint removed. The `PUT /pick-pack/{tenant}/orders/{orderId}/packaging` operation is no longer available. |
+| Creating a new packing event | Endpoint removed. The `POST /pick-pack/{tenant}/events` operation is no longer available. |
+| Retrieving all events | Endpoint removed. The `GET /pick-pack/{tenant}/events` operation is no longer available. |
+| Triggering an order recalculation | Endpoint removed. The `POST /pick-pack/{tenant}/jobs/recalculations` operation is no longer available. |
+| Retrieving a job | Endpoint removed. The `GET /pick-pack/{tenant}/jobs/recalculations/{jobId}` operation is no longer available. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="major-change" %}
+
 ## SEPA Export Service - removal of deprecated endpoints
 
 #### Overview
