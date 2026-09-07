@@ -25,6 +25,28 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## AI Service - automatic agent disable after consecutive configuration failures
+
+#### Overview
+
+When an agent repeatedly fails during chat execution or commerce event processing, AI Service disables it after a configured threshold (10 times in a row). An email with details about the disabled agent is sent to the tenant email address from tenant configuration.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) | Repeated failures can disable the agent and trigger a tenant notification email. |
+| [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Repeated failures can disable the agent and trigger a tenant notification email. |
+| [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) | Repeated failures can disable the agent and trigger a tenant notification email. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-04" tags="improvement" %}
 
 ## Indexing Service - Battery Included credential validation
