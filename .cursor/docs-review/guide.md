@@ -52,8 +52,9 @@ docs-standards (source of truth)
 | `.github/copilot-docs-review/local-review-checks.md` | **local per repo** | Repo-specific Copilot review checks |
 | `.github/copilot-instructions.md` | **local per repo** | Repo-wide Copilot review behavior (copy from `copilot-instructions.template.md`) |
 | `.github/instructions/*.instructions.md` | **local per repo** | Path-specific Copilot checklists (copy from `.github/instructions/*.template.md`) |
+| `.github/workflows/` and `.github/scripts/` | **docs-standards only** | Site-ops (Ask AI digest). Not a subtree prefix — listed in `scripts/subtree-paths.sh` as never-split. |
 
-**Rule of thumb:** edit shared paths in `docs-standards`. Edit repo-specific paths in the consumer repo.
+**Rule of thumb:** edit shared paths in `docs-standards`. Edit repo-specific paths in the consumer repo. Site-ops workflows stay in `docs-standards` and are never vendored.
 
 ### How to recognize a subtree path
 
