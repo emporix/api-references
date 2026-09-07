@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-09-07" tags="improvement" %}
 
 ## AI Service - automatic agent disablement after consecutive configuration failures
 
