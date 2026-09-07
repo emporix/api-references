@@ -25,13 +25,13 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="RELEASE_DATE" tags="improvement" %}
 
-## AI Service - automatic agent disable after consecutive configuration failures
+## AI Service - automatic agent disablement after consecutive configuration failures
 
 #### Overview
 
-When an agent repeatedly fails during chat execution or commerce event processing, AI Service disables it after a configured threshold (10 times in a row). An email with details about the disabled agent is sent to the tenant email address from tenant configuration.
+When an agent repeatedly fails due to configuration errors, AI Service disables it after 10 consecutive configuration failures. AI Service sends an email with details about the disabled agent to the tenant email address configured for the tenant.
 
 #### Updated endpoints
 
