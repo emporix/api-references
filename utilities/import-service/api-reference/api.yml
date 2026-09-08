@@ -2151,6 +2151,14 @@ components:
       description: |-
         One rule turning source data into one target attribute. In the simplest case it is one column onto
         one attribute; it can also combine several columns and apply a chain of transformations.
+
+        A mapping set is a small language, and its documents outlive any one release: they are exported,
+        kept, moved between tenants and replayed later. The schema is therefore only ever EXTENDED — new
+        capability arrives as new optional fields, and no field is renamed, repurposed or made required. A
+        mapping written against an earlier version always loads, and a document carrying fields a service
+        does not yet know is accepted rather than rejected, so an export is not a one-way door between
+        environments on different releases. Should a breaking change ever become unavoidable it will be
+        selected with an `X-Version` header, and the newer version will still read every older document.
       properties:
         id:
           type: string
