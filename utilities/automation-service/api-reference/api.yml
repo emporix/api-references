@@ -1,0 +1,1006 @@
+openapi: 3.0.0
+info:
+  title: Automation Service
+  version: ''
+  description: |-
+    The Emporix Automation Service runs tenant-defined rules when platform events occur, on a schedule, or on demand.
+    Each rule evaluates optional conditions and then executes one or more actions, such as an HTTP callback.
+  contact:
+    name: Emporix
+    url: 'https://www.emporix.com/contact-us'
+servers:
+  - url: 'https://api.emporix.io'
+security:
+  - OAuth2: []
+tags:
+  - name: Rules
+    description: Create and manage automation rules.
+  - name: Runs
+    description: Trigger and inspect automation runs.
+paths:
+  '/automation/{tenant}/rules':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    get:
+      summary: Retrieving all automation rules
+      operationId: GET-automation-retrieve-rules
+      description: |-
+        Retrieves all automation rules assigned to the tenant. You can filter the results with query parameters.
+      security:
+        - OAuth2:
+            - automation.rule_read
+      tags:
+        - Rules
+      parameters:
+        - $ref: '#/components/parameters/query_pageNumber'
+        - $ref: '#/components/parameters/query_pageSize'
+        - $ref: '#/components/parameters/query_siteCode'
+        - $ref: '#/components/parameters/header_X-Total-Count'
+      responses:
+        '200':
+          description: The request was successful. A list of automation rules is returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Rule'
+              examples:
+                List of rules:
+                  $ref: '#/components/examples/Rules_GET'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+    post:
+      summary: Creating an automation rule
+      operationId: POST-automation-create-rule
+      description: |-
+        Creates an automation rule. New rules are inactive until you activate them.
+      security:
+        - OAuth2:
+            - automation.rule_manage
+      tags:
+        - Rules
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RuleCreate'
+            examples:
+              High-value order rule:
+                $ref: '#/components/examples/RuleCreate_POST'
+      responses:
+        '201':
+          description: The request was successful. The automation rule has been created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResourceId'
+              examples:
+                Rule created:
+                  value:
+                    id: 68be1a2c9f3e4a0012c8d441
+        '400':
+          $ref: '#/components/responses/400_resp_rule'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+  '/automation/{tenant}/rules/{ruleId}':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/path_ruleId'
+    get:
+      summary: Retrieving an automation rule
+      operationId: GET-automation-retrieve-rule
+      description: |-
+        Retrieves a specified automation rule.
+      security:
+        - OAuth2:
+            - automation.rule_read
+      tags:
+        - Rules
+      responses:
+        '200':
+          description: The request was successful. The automation rule is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rule'
+              examples:
+                Rule:
+                  $ref: '#/components/examples/Rule_GET'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_rule'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+    put:
+      summary: Updating an automation rule
+      operationId: PUT-automation-update-rule
+      description: |-
+        Updates a specified automation rule by replacing all of its existing data with data from the request body.
+      security:
+        - OAuth2:
+            - automation.rule_manage
+      tags:
+        - Rules
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RuleUpdate'
+            examples:
+              Updated high-value order rule:
+                $ref: '#/components/examples/RuleUpdate_PUT'
+      responses:
+        '204':
+          description: The request was successful. No content is returned.
+        '400':
+          $ref: '#/components/responses/400_resp_rule'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_rule'
+        '409':
+          $ref: '#/components/responses/409_resp_version'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+    delete:
+      summary: Deleting an automation rule
+      operationId: DELETE-automation-delete-rule
+      description: |-
+        Deletes a specified automation rule. Historical runs remain available.
+      security:
+        - OAuth2:
+            - automation.rule_manage
+      tags:
+        - Rules
+      responses:
+        '204':
+          description: The request was successful. No content is returned.
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_rule'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+  '/automation/{tenant}/rules/{ruleId}/activate':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/path_ruleId'
+    post:
+      summary: Activating an automation rule
+      operationId: POST-automation-activate-rule
+      description: |-
+        Activates a specified automation rule so that matching events or the schedule can start runs. The rule must contain at least one action.
+      security:
+        - OAuth2:
+            - automation.rule_manage
+      tags:
+        - Rules
+      responses:
+        '200':
+          description: The request was successful. The activated automation rule is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rule'
+              examples:
+                Activated rule:
+                  $ref: '#/components/examples/Rule_GET_active'
+        '400':
+          $ref: '#/components/responses/400_resp_activate'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_rule'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+  '/automation/{tenant}/rules/{ruleId}/deactivate':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/path_ruleId'
+    post:
+      summary: Deactivating an automation rule
+      operationId: POST-automation-deactivate-rule
+      description: |-
+        Deactivates a specified automation rule. Runs that are already queued or running continue until they reach a terminal status.
+      security:
+        - OAuth2:
+            - automation.rule_manage
+      tags:
+        - Rules
+      responses:
+        '200':
+          description: The request was successful. The deactivated automation rule is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rule'
+              examples:
+                Deactivated rule:
+                  $ref: '#/components/examples/Rule_GET'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_rule'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+  '/automation/{tenant}/rules/{ruleId}/run':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/path_ruleId'
+    post:
+      summary: Triggering an automation run
+      operationId: POST-automation-trigger-run
+      description: |-
+        Starts a run for a specified automation rule. Set `dryRun` to `true` to evaluate conditions without executing actions.
+      security:
+        - OAuth2:
+            - automation.run_trigger
+      tags:
+        - Runs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunTrigger'
+            examples:
+              Dry run:
+                $ref: '#/components/examples/RunTrigger_POST'
+      responses:
+        '202':
+          description: The request was accepted. The automation run has been queued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunAccepted'
+              examples:
+                Queued run:
+                  value:
+                    id: 68be1b9e4c7d2f0018a91c02
+                    status: QUEUED
+                    dryRun: true
+        '400':
+          $ref: '#/components/responses/400_resp_rule'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_rule'
+        '409':
+          $ref: '#/components/responses/409_resp_run_active'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+  '/automation/{tenant}/runs':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    get:
+      summary: Retrieving all automation runs
+      operationId: GET-automation-retrieve-runs
+      description: |-
+        Retrieves automation runs assigned to the tenant. You can filter the results with query parameters.
+      security:
+        - OAuth2:
+            - automation.run_read
+      tags:
+        - Runs
+      parameters:
+        - $ref: '#/components/parameters/query_pageNumber'
+        - $ref: '#/components/parameters/query_pageSize'
+        - $ref: '#/components/parameters/query_ruleId'
+        - $ref: '#/components/parameters/header_X-Total-Count'
+      responses:
+        '200':
+          description: The request was successful. A list of automation runs is returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Run'
+              examples:
+                List of runs:
+                  $ref: '#/components/examples/Runs_GET'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+  '/automation/{tenant}/runs/{runId}':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/path_runId'
+    get:
+      summary: Retrieving an automation run
+      operationId: GET-automation-retrieve-run
+      description: |-
+        Retrieves a specified automation run, including action results and error details.
+      security:
+        - OAuth2:
+            - automation.run_read
+      tags:
+        - Runs
+      responses:
+        '200':
+          description: The request was successful. The automation run is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Run'
+              examples:
+                Run:
+                  $ref: '#/components/examples/Run_GET'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_run'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://api.emporix.io/oauth/token'
+          scopes:
+            automation.rule_read: Needed to retrieve automation rules.
+            automation.rule_manage: Needed to manage automation rules.
+            automation.run_read: Needed to retrieve automation runs.
+            automation.run_trigger: Needed to trigger automation runs.
+  parameters:
+    path_tenant:
+      name: tenant
+      in: path
+      required: true
+      description: |
+        Your Emporix tenant's name.
+        **Note**: The tenant should always be written in lowercase.
+      schema:
+        pattern: '^[a-z][a-z0-9]+$'
+        minLength: 3
+        maxLength: 16
+        type: string
+    path_ruleId:
+      name: ruleId
+      in: path
+      required: true
+      description: Unique identifier of the automation rule.
+      schema:
+        type: string
+        example: 68be1a2c9f3e4a0012c8d441
+    path_runId:
+      name: runId
+      in: path
+      required: true
+      description: Unique identifier of the automation run.
+      schema:
+        type: string
+        example: 68be1b9e4c7d2f0018a91c02
+    query_pageNumber:
+      name: pageNumber
+      in: query
+      description: |
+        Page number to be retrieved. The number of the first page is 1.
+        **Note:** If the `pageNumber` parameter is passed, size of the pages must be specified in the `pageSize` parameter.
+      schema:
+        default: 1
+        minimum: 1
+        type: integer
+    query_pageSize:
+      name: pageSize
+      in: query
+      description: Number of items to be retrieved per page.
+      schema:
+        default: 60
+        minimum: 1
+        type: integer
+    query_siteCode:
+      name: siteCode
+      in: query
+      description: Filters rules by site code.
+      schema:
+        type: string
+        example: main
+    query_ruleId:
+      name: ruleId
+      in: query
+      description: Filters runs by automation rule identifier.
+      schema:
+        type: string
+        example: 68be1a2c9f3e4a0012c8d441
+    header_X-Total-Count:
+      name: X-Total-Count
+      in: header
+      required: false
+      schema:
+        default: false
+        type: boolean
+      description: Flag indicating whether the total count of retrieved items should be returned.
+  schemas:
+    ResourceId:
+      type: object
+      description: Identifier of a created resource.
+      properties:
+        id:
+          type: string
+          description: Unique identifier generated when the resource is created.
+    RuleCreate:
+      type: object
+      description: Payload used when creating an automation rule.
+      required:
+        - name
+        - trigger
+        - actions
+      properties:
+        name:
+          type: string
+          description: Display name of the automation rule.
+        description:
+          type: string
+          description: Optional description of the automation rule.
+        siteCode:
+          type: string
+          description: Site code that scopes the rule. When omitted, the rule applies to all sites.
+        trigger:
+          $ref: '#/components/schemas/Trigger'
+        conditions:
+          type: array
+          description: Optional conditions evaluated against the trigger payload. All conditions must match for actions to run.
+          items:
+            $ref: '#/components/schemas/Condition'
+        actions:
+          type: array
+          description: Actions executed when the trigger fires and all conditions match.
+          items:
+            $ref: '#/components/schemas/Action'
+        retryPolicy:
+          $ref: '#/components/schemas/RetryPolicy'
+    RuleUpdate:
+      description: Payload used when fully updating an automation rule.
+      allOf:
+        - $ref: '#/components/schemas/RuleCreate'
+        - type: object
+          properties:
+            metadata:
+              $ref: '#/components/schemas/Metadata'
+    Rule:
+      description: Automation rule returned by read operations.
+      allOf:
+        - $ref: '#/components/schemas/ResourceId'
+        - $ref: '#/components/schemas/RuleCreate'
+        - type: object
+          properties:
+            active:
+              type: boolean
+              description: Indicates whether the rule can start new runs.
+            metadata:
+              $ref: '#/components/schemas/Metadata'
+    Trigger:
+      type: object
+      description: Event, schedule, or manual trigger that starts a run.
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          description: |
+            Trigger type.
+            Possible values:
+            * `EVENT`
+            * `SCHEDULE`
+            * `MANUAL`
+          enum:
+            - EVENT
+            - SCHEDULE
+            - MANUAL
+        eventType:
+          type: string
+          description: Platform event type that starts the run when `type` is `EVENT`, for example `order.created`.
+        cron:
+          type: string
+          description: Cron expression used when `type` is `SCHEDULE`.
+        timezone:
+          type: string
+          description: Time zone used to evaluate `cron`. Default is `UTC`.
+    Condition:
+      type: object
+      description: Condition evaluated against the trigger payload.
+      required:
+        - field
+        - operator
+        - value
+      properties:
+        field:
+          type: string
+          description: Dotted path in the trigger payload, for example `totalPrice.amount`.
+        operator:
+          type: string
+          description: |
+            Comparison operator.
+            Possible values:
+            * `EQUALS`
+            * `NOT_EQUALS`
+            * `GREATER_THAN`
+            * `LESS_THAN`
+            * `CONTAINS`
+          enum:
+            - EQUALS
+            - NOT_EQUALS
+            - GREATER_THAN
+            - LESS_THAN
+            - CONTAINS
+        value:
+          description: Value compared with the field. The type must match the field, for example a number for `GREATER_THAN`.
+    Action:
+      type: object
+      description: Action executed when the rule matches.
+      required:
+        - type
+      properties:
+        type:
+          type: string
+          description: |
+            Action type.
+            Possible values:
+            * `HTTP`
+            * `EMAIL`
+          enum:
+            - HTTP
+            - EMAIL
+        method:
+          type: string
+          description: HTTP method used when `type` is `HTTP`.
+          enum:
+            - POST
+            - PUT
+            - PATCH
+        destinationUrl:
+          type: string
+          description: Destination URL used when `type` is `HTTP`.
+        headers:
+          type: object
+          additionalProperties:
+            type: string
+          description: Optional HTTP headers sent with the request when `type` is `HTTP`.
+        emailTo:
+          type: string
+          description: Recipient address used when `type` is `EMAIL`.
+    RetryPolicy:
+      type: object
+      description: Retry settings applied to failed HTTP actions.
+      properties:
+        maxAttempts:
+          type: integer
+          minimum: 1
+          maximum: 10
+          description: Maximum number of delivery attempts, including the first attempt. Default is `3`.
+        backoffSeconds:
+          type: integer
+          minimum: 1
+          description: Delay in seconds between retry attempts. Default is `30`.
+    Metadata:
+      type: object
+      description: Resource metadata.
+      properties:
+        version:
+          type: integer
+          description: Version number of the resource. Incremented on each update.
+        createdAt:
+          type: string
+          format: date-time
+          description: Date and time when the resource was created.
+        modifiedAt:
+          type: string
+          format: date-time
+          description: Date and time when the resource was last modified.
+    RunTrigger:
+      type: object
+      description: Payload used when triggering an automation run.
+      properties:
+        dryRun:
+          type: boolean
+          description: When `true`, the service evaluates conditions without executing actions. Default is `false`.
+        payload:
+          type: object
+          additionalProperties: true
+          description: Sample trigger payload used to evaluate conditions for a manual or dry run.
+    RunAccepted:
+      type: object
+      description: Queued automation run returned after a trigger request.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the automation run.
+        status:
+          type: string
+          description: Initial run status. The value is `QUEUED` when the run is accepted.
+        dryRun:
+          type: boolean
+          description: Indicates whether the run is a dry run.
+    Run:
+      type: object
+      description: Automation run returned by read operations.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the automation run.
+        ruleId:
+          type: string
+          description: Identifier of the automation rule that started the run.
+        status:
+          type: string
+          description: |
+            Run status.
+            Possible values:
+            * `QUEUED`
+            * `RUNNING`
+            * `SUCCEEDED`
+            * `FAILED`
+            * `SKIPPED`
+          enum:
+            - QUEUED
+            - RUNNING
+            - SUCCEEDED
+            - FAILED
+            - SKIPPED
+        dryRun:
+          type: boolean
+          description: Indicates whether the run evaluated conditions without executing actions.
+        triggerType:
+          type: string
+          description: |
+            How the run started.
+            Possible values:
+            * `EVENT`
+            * `SCHEDULE`
+            * `MANUAL`
+          enum:
+            - EVENT
+            - SCHEDULE
+            - MANUAL
+        startedAt:
+          type: string
+          format: date-time
+          description: Date and time when the run started.
+        finishedAt:
+          type: string
+          format: date-time
+          description: Date and time when the run reached a terminal status.
+        actions:
+          type: array
+          description: Per-action results for the run.
+          items:
+            $ref: '#/components/schemas/ActionResult'
+    ActionResult:
+      type: object
+      description: Result of a single action within a run.
+      properties:
+        type:
+          type: string
+          description: Action type.
+        status:
+          type: string
+          description: |
+            Action result status.
+            Possible values:
+            * `SUCCEEDED`
+            * `FAILED`
+            * `SKIPPED`
+          enum:
+            - SUCCEEDED
+            - FAILED
+            - SKIPPED
+        message:
+          type: string
+          description: Additional information about the action result.
+    ErrorMessage:
+      type: object
+      description: Standard API error.
+      properties:
+        status:
+          type: integer
+          description: HTTP status code.
+        type:
+          type: string
+          description: Classification of the error type, for example `validation_failure`.
+        message:
+          type: string
+          description: Descriptive error message.
+    ErrorMessageFault:
+      type: object
+      description: OAuth error returned when the access token is invalid or expired.
+      properties:
+        fault:
+          type: object
+          properties:
+            faultstring:
+              type: string
+            detail:
+              type: object
+              properties:
+                errorcode:
+                  type: string
+  examples:
+    RuleCreate_POST:
+      value:
+        name: Notify warehouse on high-value orders
+        description: Sends high-value orders to the warehouse fulfillment endpoint.
+        siteCode: main
+        trigger:
+          type: EVENT
+          eventType: order.created
+        conditions:
+          - field: totalPrice.amount
+            operator: GREATER_THAN
+            value: 500
+        actions:
+          - type: HTTP
+            method: POST
+            destinationUrl: https://warehouse.example.com/hooks/orders
+            headers:
+              X-Source: emporix-automation
+        retryPolicy:
+          maxAttempts: 3
+          backoffSeconds: 30
+    RuleUpdate_PUT:
+      value:
+        name: Notify warehouse on high-value orders
+        description: Sends high-value orders to the warehouse fulfillment endpoint.
+        siteCode: main
+        trigger:
+          type: EVENT
+          eventType: order.created
+        conditions:
+          - field: totalPrice.amount
+            operator: GREATER_THAN
+            value: 1000
+        actions:
+          - type: HTTP
+            method: POST
+            destinationUrl: https://warehouse.example.com/hooks/orders
+            headers:
+              X-Source: emporix-automation
+        retryPolicy:
+          maxAttempts: 5
+          backoffSeconds: 45
+        metadata:
+          version: 1
+    Rule_GET:
+      value:
+        id: 68be1a2c9f3e4a0012c8d441
+        name: Notify warehouse on high-value orders
+        description: Sends high-value orders to the warehouse fulfillment endpoint.
+        siteCode: main
+        active: false
+        trigger:
+          type: EVENT
+          eventType: order.created
+        conditions:
+          - field: totalPrice.amount
+            operator: GREATER_THAN
+            value: 500
+        actions:
+          - type: HTTP
+            method: POST
+            destinationUrl: https://warehouse.example.com/hooks/orders
+            headers:
+              X-Source: emporix-automation
+        retryPolicy:
+          maxAttempts: 3
+          backoffSeconds: 30
+        metadata:
+          version: 1
+          createdAt: '2026-09-08T08:10:00Z'
+          modifiedAt: '2026-09-08T08:10:00Z'
+    Rule_GET_active:
+      value:
+        id: 68be1a2c9f3e4a0012c8d441
+        name: Notify warehouse on high-value orders
+        description: Sends high-value orders to the warehouse fulfillment endpoint.
+        siteCode: main
+        active: true
+        trigger:
+          type: EVENT
+          eventType: order.created
+        conditions:
+          - field: totalPrice.amount
+            operator: GREATER_THAN
+            value: 500
+        actions:
+          - type: HTTP
+            method: POST
+            destinationUrl: https://warehouse.example.com/hooks/orders
+            headers:
+              X-Source: emporix-automation
+        retryPolicy:
+          maxAttempts: 3
+          backoffSeconds: 30
+        metadata:
+          version: 2
+          createdAt: '2026-09-08T08:10:00Z'
+          modifiedAt: '2026-09-08T08:11:20Z'
+    Rules_GET:
+      value:
+        - id: 68be1a2c9f3e4a0012c8d441
+          name: Notify warehouse on high-value orders
+          siteCode: main
+          active: true
+          trigger:
+            type: EVENT
+            eventType: order.created
+          metadata:
+            version: 2
+            createdAt: '2026-09-08T08:10:00Z'
+            modifiedAt: '2026-09-08T08:11:20Z'
+    RunTrigger_POST:
+      value:
+        dryRun: true
+        payload:
+          id: order-100245
+          siteCode: main
+          totalPrice:
+            amount: 749.5
+            currency: EUR
+    Run_GET:
+      value:
+        id: 68be1b9e4c7d2f0018a91c02
+        ruleId: 68be1a2c9f3e4a0012c8d441
+        status: SUCCEEDED
+        dryRun: true
+        triggerType: MANUAL
+        startedAt: '2026-09-08T08:12:04Z'
+        finishedAt: '2026-09-08T08:12:05Z'
+        actions:
+          - type: HTTP
+            status: SKIPPED
+            message: Dry run did not execute the HTTP action.
+    Runs_GET:
+      value:
+        - id: 68be1b9e4c7d2f0018a91c02
+          ruleId: 68be1a2c9f3e4a0012c8d441
+          status: SUCCEEDED
+          dryRun: true
+          triggerType: MANUAL
+          startedAt: '2026-09-08T08:12:04Z'
+          finishedAt: '2026-09-08T08:12:05Z'
+  responses:
+    401_resp_common:
+      description: The authorization token is invalid or has expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessageFault'
+          examples:
+            Invalid access token:
+              value:
+                fault:
+                  faultstring: Invalid access token
+                  detail:
+                    errorcode: oauth.v2.InvalidAccessToken
+            Access token expired:
+              value:
+                fault:
+                  faultstring: Access Token expired
+                  detail:
+                    errorcode: keymanagement.service.access_token_expired
+    403_resp_common:
+      description: Authorization scopes of the access token are not sufficient and do not match the scopes required by the endpoint.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessage'
+          examples:
+            Access forbidden:
+              value:
+                status: 403
+                type: insufficient_permissions
+                message: Given request does not have required scopes. It is not authorized to perform this operation.
+    500_resp_common:
+      description: A server-side error occurred.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessage'
+          examples:
+            Internal Server Error:
+              value:
+                status: 500
+                message: Problem encountered while trying to connect to the database.
+    400_resp_rule:
+      description: The request was syntactically incorrect.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessage'
+          examples:
+            Missing name:
+              value:
+                status: 400
+                type: validation_failure
+                message: Validation problem with request body.
+    400_resp_activate:
+      description: The rule cannot be activated.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessage'
+          examples:
+            Missing actions:
+              value:
+                status: 400
+                type: validation_failure
+                message: A rule must contain at least one action before it can be activated.
+    404_resp_rule:
+      description: The requested automation rule was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessage'
+          examples:
+            Rule not found:
+              value:
+                status: 404
+                type: not_found
+                message: The rule with id 68be1a2c9f3e4a0012c8d441 has not been found.
+    404_resp_run:
+      description: The requested automation run was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessage'
+          examples:
+            Run not found:
+              value:
+                status: 404
+                type: not_found
+                message: The run with id 68be1b9e4c7d2f0018a91c02 has not been found.
+    409_resp_version:
+      description: The provided version does not match the current resource version.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessage'
+          examples:
+            Version conflict:
+              value:
+                status: 409
+                type: conflict
+                message: The provided metadata.version does not match the current rule version.
+    409_resp_run_active:
+      description: A run is already queued or running for the rule.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessage'
+          examples:
+            Active run:
+              value:
+                status: 409
+                type: conflict
+                message: A run is already active for this rule.

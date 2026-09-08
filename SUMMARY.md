@@ -604,6 +604,20 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/users-and-permissions/session-context/api-reference/api.yaml)
 * [Utilities](utilities/README.md)
+  * [Automation Service](utilities/automation-service/README.md)
+    * [Automation Tutorial](utilities/automation-service/automation-tutorial.md)
+    * [API Reference](utilities/automation-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: automation-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/utilities/automation-service/api-reference/api.yml)
   * [Audit Logs (Changelog) Service](utilities/audit-logs-changelog/README.md)
     * [Audit Logs (Changelog) Tutorial](utilities/audit-logs-changelog/audit-logs-changelog.md)
     * [API Reference](utilities/audit-logs-changelog/api-reference/README.md)

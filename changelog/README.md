@@ -25,6 +25,35 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Automation Service - event-driven rules and runs
+
+#### Overview
+
+The Automation Service is now available for running tenant-defined rules when platform events occur, on a schedule, or on demand. Each rule evaluates optional conditions and then executes one or more actions, such as an HTTP callback. You can trigger a dry run to validate a rule without executing its actions, and retrieve run history to inspect outcomes.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating an automation rule](https://developer.emporix.io/api-references/api-guides/utilities/automation-service/api-reference/rules#post-automation-tenant-rules) | Creates an inactive automation rule with a trigger, optional conditions, and actions. |
+| [Retrieving all automation rules](https://developer.emporix.io/api-references/api-guides/utilities/automation-service/api-reference/rules#get-automation-tenant-rules) | Returns automation rules defined for the tenant. |
+| [Retrieving an automation rule](https://developer.emporix.io/api-references/api-guides/utilities/automation-service/api-reference/rules#get-automation-tenant-rules-ruleid) | Returns a single automation rule by its identifier. |
+| [Updating an automation rule](https://developer.emporix.io/api-references/api-guides/utilities/automation-service/api-reference/rules#put-automation-tenant-rules-ruleid) | Replaces the configuration of an existing automation rule. |
+| [Deleting an automation rule](https://developer.emporix.io/api-references/api-guides/utilities/automation-service/api-reference/rules#delete-automation-tenant-rules-ruleid) | Deletes an automation rule. Historical runs remain available. |
+| [Activating an automation rule](https://developer.emporix.io/api-references/api-guides/utilities/automation-service/api-reference/rules#post-automation-tenant-rules-ruleid-activate) | Activates a rule so that matching events or the schedule can start runs. |
+| [Deactivating an automation rule](https://developer.emporix.io/api-references/api-guides/utilities/automation-service/api-reference/rules#post-automation-tenant-rules-ruleid-deactivate) | Stops new runs for a rule without deleting it. |
+| [Triggering an automation run](https://developer.emporix.io/api-references/api-guides/utilities/automation-service/api-reference/runs#post-automation-tenant-rules-ruleid-run) | Starts a run for a rule, with an optional `dryRun`. |
+| [Retrieving all automation runs](https://developer.emporix.io/api-references/api-guides/utilities/automation-service/api-reference/runs#get-automation-tenant-runs) | Returns automation runs for the tenant, with an optional `ruleId` filter. |
+| [Retrieving an automation run](https://developer.emporix.io/api-references/api-guides/utilities/automation-service/api-reference/runs#get-automation-tenant-runs-runid) | Returns a run's status together with per-action results. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-07" tags="improvement" %}
 
 ## AI Service - automatic agent disablement after consecutive configuration failures

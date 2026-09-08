@@ -45,6 +45,17 @@
             kind: openapi
             spec: audit-logs-changelog-api
       ```
+  * [Automation](../utilities/automation-service/api-reference/README.md)
+    * ```yaml
+      props:
+        models: true
+      type: builtin:openapi
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: automation-api
+      ```
   * [Availability](../orders/availability/api-reference/README.md)
     * ```yaml
       props:
