@@ -48,6 +48,11 @@ tags:
     description: |
       Define where data is read from and how to authenticate against it. **Scope:**
       `importtool.import_manage`.
+  - name: Purge (Administration)
+    description: |
+      Forget what an import loaded, and optionally delete what it wrote. **Scope:**
+      `importtool.import_manage`. These operations are irreversible — read the warnings on each before
+      using them.
   - name: Mappings (Administration)
     description: |
       Define what each source field becomes on the Emporix target, and check it against real data before
@@ -1684,9 +1689,416 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
 
+  '/importtool/{tenant}/streams/{streamId}/purge':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+      - name: mode
+        in: query
+        required: false
+        description: |-
+          `LEDGER` forgets what the stream imported, so a later load rebuilds from scratch. `FULL` also
+          deletes the target instances the ledger knows about. `SWEEP` is not available for a stream: it
+          deletes every instance of a type, which for a stream's type may include data another stream owns.
+        schema:
+          type: string
+          enum:
+            - LEDGER
+            - FULL
+          default: LEDGER
+    post:
+      summary: Purging a stream imported data
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        {% hint style="warning" %}
+        This is irreversible, and the ORDER of the two modes matters. `FULL` finds the instances to delete
+        through the import ledger, so anything the ledger has no row for cannot be reached. Running `LEDGER`
+        first therefore permanently forfeits the ability to `FULL`-purge those instances: they remain in the
+        target with nothing left that knows they came from an import.
+        {% endhint %}
+
+        Starts a background job that forgets what this stream imported. The response is the job; poll it to
+        follow progress. A purge is refused while a run is active for the configuration, and a run is refused
+        while a purge is live for it.
+
+      operationId: POST-importtool-purge-stream
+      tags:
+        - Purge (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '202':
+          description: The purge was accepted and is running. The job is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurgeJob'
+        '400':
+          description: The mode is not one this scope accepts.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+        '409':
+          $ref: '#/components/responses/Conflict_409'
+  '/importtool/{tenant}/purge':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - name: type
+        in: query
+        required: true
+        description: The target type to purge, tenant-wide.
+        schema:
+          type: string
+      - name: mode
+        in: query
+        required: false
+        description: |-
+          `LEDGER` forgets what was imported. `FULL` also deletes the instances the ledger knows about.
+          `SWEEP` deletes EVERY instance of the type, including ones no import created — the only mode that
+          can remove instances the ledger has lost track of.
+        schema:
+          type: string
+          enum:
+            - LEDGER
+            - FULL
+            - SWEEP
+          default: LEDGER
+    post:
+      summary: Purging a target type
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        {% hint style="warning" %}
+        This is irreversible. `SWEEP` deletes every instance of the type regardless of where it came from,
+        including data no import created. `LEDGER` run before `FULL` permanently forfeits the ability to
+        `FULL`-purge, because `FULL` reaches instances through the ledger it just discarded.
+        {% endhint %}
+
+        Starts a background job over every record of the target type. The response is the job; poll it to
+        follow progress. A `FULL` purge also reports how many instances of the type the ledger has no row
+        for, rather than reporting a clean success while they survive.
+
+      operationId: POST-importtool-purge-type
+      tags:
+        - Purge (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '202':
+          description: The purge was accepted and is running. The job is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurgeJob'
+        '400':
+          description: The mode is not one of LEDGER, FULL or SWEEP.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+        '409':
+          $ref: '#/components/responses/Conflict_409'
+  '/importtool/{tenant}/purges':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - name: limit
+        in: query
+        required: false
+        description: How many jobs to return, most recent first.
+        schema:
+          type: integer
+          default: 20
+    get:
+      summary: Retrieving recent purges
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves recent purge jobs for the tenant, most recent first.
+
+      operationId: GET-importtool-list-purges
+      tags:
+        - Purge (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The purge jobs are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PurgeJob'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/purges/{id}':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    get:
+      summary: Retrieving a purge
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves one purge job: its counters, and the batch-by-batch log including any per-item delete
+        errors. A purge of millions of records takes many minutes, so poll this rather than waiting on the
+        request that started it.
+
+      operationId: GET-importtool-get-purge
+      tags:
+        - Purge (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The purge job is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurgeJob'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/purges/latest':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - name: streamId
+        in: query
+        required: false
+        description: The stream whose most recent purge to return.
+        schema:
+          type: string
+          format: uuid
+      - name: type
+        in: query
+        required: false
+        description: The target type whose most recent purge to return.
+        schema:
+          type: string
+    get:
+      summary: Retrieving the latest purge for a scope
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves the most recent purge job for a stream or a target type. Use it to re-attach to a purge
+        that is still running after leaving the page that started it.
+
+      operationId: GET-importtool-latest-purge
+      tags:
+        - Purge (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The purge job is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurgeJob'
+        '204':
+          description: No purge has been run for that scope.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/mappings/export':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - name: configId
+        in: query
+        required: false
+        description: |-
+          The configuration to export. Repeat the parameter to export several; omit it to export every
+          configuration on the tenant.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+      - name: format
+        in: query
+        required: false
+        description: |-
+          `xlsx` documents a configuration for reading — an overview sheet plus one sheet per stream.
+          `postman` emits a collection that RECREATES the configuration on another tenant.
+        schema:
+          type: string
+          enum:
+            - xlsx
+            - postman
+          default: xlsx
+    get:
+      summary: Exporting field mappings
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Exports the field mappings of one or more configurations.
+
+        The `postman` collection creates each job and stream on the target tenant and captures the returned
+        identifiers, so it can be replayed against a different tenant. Connections are never exported —
+        they hold credentials — so the collection takes a `connectionId` variable to point at one that
+        already exists there.
+
+      operationId: GET-importtool-export-mappings
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The export is returned as a file.
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+            application/json:
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
 
 components:
   schemas:
+    PurgeJob:
+      type: object
+      description: |-
+        A background job that forgets what an import loaded, and optionally deletes what it wrote. Purging
+        millions of records takes many minutes, so the job reports progress as it goes and survives a
+        restart of the service that is running it.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier of the purge job.
+        scope:
+          type: string
+          enum:
+            - STREAM
+            - TYPE
+          description: Whether the purge covers one stream or a whole target type.
+        streamId:
+          type: string
+          format: uuid
+          description: The stream being purged, for a stream-scoped job.
+        targetType:
+          type: string
+          description: The target type being purged.
+        mode:
+          type: string
+          enum:
+            - LEDGER
+            - FULL
+            - SWEEP
+          description: |-
+            What the purge removes. `LEDGER` forgets the import record, so a later load rebuilds from
+            scratch and target-only data is preserved. `FULL` also deletes the instances the ledger knows
+            about. `SWEEP` deletes every instance of the type, including ones no import created.
+        status:
+          type: string
+          description: Where the job has got to — running, finished, or waiting to be resumed after a restart.
+        total:
+          type: integer
+          format: int64
+          description: How many records the purge has to work through, counted when it starts.
+        forgotten:
+          type: integer
+          description: |-
+            How many imported RECORDS have been forgotten. This counts entities, not the internal rows behind
+            them, so ten records read as ten.
+        deleted:
+          type: integer
+          description: How many target instances have been deleted, for `FULL` and `SWEEP`.
+        failed:
+          type: integer
+          description: How many could not be removed.
+        orphanedRemaining:
+          type: integer
+          description: |-
+            For a `FULL` purge, how many instances of the type the ledger has no row for and which therefore
+            survive. Reported rather than left silent, because the purge would otherwise finish successfully
+            with data still in place.
+        orphanedCapped:
+          type: boolean
+          description: Whether counting those stopped at a limit, so the number is a floor rather than a total.
+        incomplete:
+          type: boolean
+          description: Whether the purge finished without removing everything in its scope.
+        message:
+          type: string
+          description: A summary of the outcome, including why it is incomplete when it is.
+        log:
+          type: array
+          items:
+            type: string
+          description: The batch-by-batch progress log, including any per-item delete errors.
+        startedAt:
+          type: string
+          format: date-time
+          description: When the purge started.
+        finishedAt:
+          type: string
+          format: date-time
+          description: When it finished, if it has.
+
     SourceConnection:
       type: object
       description: Where a stream reads from, and how to authenticate against it.
