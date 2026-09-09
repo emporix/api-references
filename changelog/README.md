@@ -25,6 +25,36 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## AI Service - commerce event trigger `eventScopes`
+
+#### Overview
+
+The AI Service API now supports optional `eventScopes` on `commerce_events` agent triggers. When you set this field, AI Service obtains an Emporix token with the listed IAM scopes and forwards it as `emporix-token` when the agent runs from a commerce event. When you omit the field or leave it empty, the agent does not receive `emporix-token`. Each listed scope must be one the caller is allowed to grant.
+
+#### Updated types
+
+| Type | Description |
+| --- | --- |
+| AgentTrigger | Added optional `eventScopes` field for the `commerce_events` trigger variant. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | Response can now include `config.eventScopes` for `commerce_events` triggers. |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents) | Response can now include `config.eventScopes` for `commerce_events` triggers. |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) | Response can now include `config.eventScopes` for `commerce_events` triggers. |
+| [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | Request payload now supports optional `eventScopes` on `commerce_events` trigger configuration. |
+| [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Request payload now supports optional `eventScopes` on `commerce_events` trigger configuration. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-07" tags="improvement" %}
 
 ## AI Service - automatic agent disablement after consecutive configuration failures
