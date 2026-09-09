@@ -25,9 +25,9 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="RELEASE_DATE" tags="improvement" %}
 
-## AI Service - commerce event trigger eventScopes
+## AI Service - commerce event trigger `eventScopes`
 
 #### Overview
 
