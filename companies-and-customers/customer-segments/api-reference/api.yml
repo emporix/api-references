@@ -13,6 +13,8 @@ tags:
     description: Manage segments
   - name: Customers Assignments
     description: Manage customer assignments to segments
+  - name: Groups Assignments
+    description: Manage IAM group assignments to segments
   - name: Items Assignments
     description: Manage item assignments to segments
 paths:
@@ -146,6 +148,46 @@ paths:
       security:
         - CustomerAccessToken: 
             - customersegment.segment_read
+            - customersegment.segment_read_own
+  '/customer-segment/{tenant}/segments/me':
+    parameters:
+      - $ref: '#/components/parameters/tenant'
+    get:
+      summary: Retrieving own customer segments
+      tags:
+        - Segments
+      operationId: GET-customer-segment-retrieve-own-segments
+      description: |
+        Retrieves active customer segments assigned to the authenticated customer.
+
+        The response includes segments assigned directly to the customer and segments assigned through the customer's IAM groups.
+        Groups that are not bound to a legal entity, and groups bound to the customer's current legal entity, are taken into account.
+      parameters:
+        - $ref: '#/components/parameters/qParam'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/xTotalCount'
+        - $ref: '#/components/parameters/acceptLanguage'
+      responses:
+        '200':
+          description: Own customer segments were successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SegmentResponse'
+              examples:
+                Segments Response:
+                  $ref: '#/components/examples/SegmentsResponse'
+        '401':
+          $ref: '#/components/responses/Common_response_Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Common_response_Forbidden_403'
+      security:
+        - CustomerAccessToken:
             - customersegment.segment_read_own
   '/customer-segment/{tenant}/segments/{segmentId}':
     parameters:
@@ -824,6 +866,173 @@ paths:
           $ref: '#/components/responses/Common_response_Unauthorized_401'
         '403':
           $ref: '#/components/responses/Common_response_Forbidden_403'
+  '/customer-segment/{tenant}/segments/{segmentId}/groups':
+    parameters:
+      - $ref: '#/components/parameters/tenant'
+      - $ref: '#/components/parameters/segmentId'
+    get:
+      summary: Retrieving all group assignments for a customer segment
+      tags:
+        - Groups Assignments
+      operationId: GET-customer-segment-retrieve-groups
+      description: |
+        Retrieves all IAM group assignments for a given customer segment. You can filter the results with query parameters.
+      security:
+        - CustomerAccessToken:
+            - customersegment.segment_read
+      parameters:
+        - $ref: '#/components/parameters/qParam'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/xTotalCount'
+      responses:
+        '200':
+          description: Group assignments for a customer segment were successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GroupAssignmentResponse'
+              examples:
+                Group Assignments:
+                  $ref: '#/components/examples/GroupAssignmentsResponse'
+        '401':
+          $ref: '#/components/responses/Common_response_Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Common_response_Forbidden_403'
+  '/customer-segment/{tenant}/segments/{segmentId}/groups/search':
+    parameters:
+      - $ref: '#/components/parameters/tenant'
+      - $ref: '#/components/parameters/segmentId'
+    post:
+      summary: Searching with parameters for group assignments
+      tags:
+        - Groups Assignments
+      operationId: POST-customer-segment-search-groups
+      description: |
+        Returns all IAM group assignments that match the provided criteria.
+      security:
+        - CustomerAccessToken:
+            - customersegment.segment_read
+      parameters:
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/sort'
+        - $ref: '#/components/parameters/fields'
+        - $ref: '#/components/parameters/xTotalCount'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SegmentsSearch'
+            examples:
+              Search Group Assignments:
+                value:
+                  q: "group.id:1gr5e52e-6e27-4ac5-9471-2467d3fb7500"
+      responses:
+        '200':
+          description: Group assignments for a customer segment were successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GroupAssignmentResponse'
+              examples:
+                Group Assignments:
+                  $ref: '#/components/examples/GroupAssignmentsResponse'
+        '400':
+          $ref: '#/components/responses/Common_response_BadRequest_400'
+        '401':
+          $ref: '#/components/responses/Common_response_Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Common_response_Forbidden_403'
+  '/customer-segment/{tenant}/segments/{segmentId}/groups/{groupId}':
+    parameters:
+      - $ref: '#/components/parameters/tenant'
+      - $ref: '#/components/parameters/segmentId'
+      - $ref: '#/components/parameters/groupId'
+    get:
+      summary: Retrieving a group assignment for a customer segment
+      tags:
+        - Groups Assignments
+      operationId: GET-customer-segment-retrieve-group
+      description: |
+        Retrieves an IAM group assignment for a specified group and customer segment.
+      security:
+        - CustomerAccessToken:
+            - customersegment.segment_read
+      parameters:
+        - $ref: '#/components/parameters/fields'
+      responses:
+        '200':
+          description: Group assignment for a customer segment was successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupAssignmentResponse'
+              examples:
+                Group Assignment Response:
+                  $ref: '#/components/examples/GroupAssignmentResponse'
+        '401':
+          $ref: '#/components/responses/Common_response_Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Common_response_Forbidden_403'
+        '404':
+          $ref: '#/components/responses/Common_response_NotFound_404'
+    put:
+      summary: Upserting a group assignment for a customer segment
+      tags:
+        - Groups Assignments
+      operationId: PUT-customer-segment-update-group
+      description: |
+        Performs an `UPSERT` operation. Updates an IAM group assigned to a customer segment. A new group assignment is created if it is not present in the system.
+
+        Only IAM groups with `userType` `CUSTOMER` can be assigned to a segment.
+      security:
+        - CustomerAccessToken:
+            - customersegment.segment_manage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupAssignmentUpsert'
+            examples:
+              Group Assignment Update:
+                $ref: '#/components/examples/GroupAssignmentUpsert'
+      responses:
+        '201':
+          description: A new group assignment was successfully created.
+        '204':
+          description: Group assignment was successfully updated.
+        '400':
+          $ref: '#/components/responses/Common_response_BadRequest_400'
+        '401':
+          $ref: '#/components/responses/Common_response_Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Common_response_Forbidden_403'
+        '409':
+          $ref: '#/components/responses/Common_response_Conflict_409'
+    delete:
+      summary: Removing a group from a customer segment
+      tags:
+        - Groups Assignments
+      operationId: DELETE-customer-segment-remove-group
+      description: |
+        Removes an IAM group assignment from a customer segment.
+      security:
+        - CustomerAccessToken:
+            - customersegment.segment_manage
+      responses:
+        '204':
+          description: Group assignment was successfully removed.
+        '401':
+          $ref: '#/components/responses/Common_response_Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Common_response_Forbidden_403'
   '/customer-segment/{tenant}/segments/items/category-trees':
     parameters:
       - $ref: '#/components/parameters/tenant'
@@ -1314,6 +1523,43 @@ components:
             legalEntity:
               $ref: '#/components/schemas/LegalEntity'
         - $ref: '#/components/schemas/CustomerAssignmentB2CResponse'
+    GroupAssignmentUpsert:
+      type: object
+      description: |
+        Request body for creating or updating an IAM group assignment.
+      properties:
+        mixins:
+          type: object
+          description: A key-value map of additional attributes.
+          additionalProperties: true
+        metadata:
+          $ref: '#/components/schemas/MetadataUpdate'
+    Group:
+      type: object
+      description: IAM group assigned to the customer segment.
+      properties:
+        id:
+          type: string
+          description: Group's unique identifier.
+        name:
+          type: object
+          description: Localized name of the group.
+          additionalProperties:
+            type: string
+    GroupAssignmentResponse:
+      type: object
+      properties:
+        segmentId:
+          type: string
+          description: Unique identifier of the customer segment.
+        group:
+          $ref: '#/components/schemas/Group'
+        mixins:
+          type: object
+          description: A key-value map of additional attributes.
+          additionalProperties: true
+        metadata:
+          $ref: '#/components/schemas/MetadataResponse'
     ItemAssignmentUpsert:
       type: object
       description: |
@@ -1742,6 +1988,13 @@ components:
         The parameter is utilized for retrieving customer segments for a provided customer.
         
         **NOTE**: This parameter can only be used with `customersegment.segment_read` scope.
+    groupId:
+      schema:
+        type: string
+      name: groupId
+      in: path
+      required: true
+      description: Unique identifier of an existing IAM group.
   examples:
     Response_BadRequest_400:
       value:
@@ -2057,6 +2310,32 @@ components:
           legalEntityId: 628cd20c6e8b2432b6346ca6
           metadata:
             version: 1
+    GroupAssignmentResponse:
+      value: &groupAssignmentResponse
+        segmentId: 628cd20c6e8b2432b6346ca6
+        group:
+          id: 1gr5e52e-6e27-4ac5-9471-2467d3fb7500
+          name:
+            en: Buyers
+        metadata:
+          createdAt: 2024-10-12T12:00:00.000Z
+          modifiedAt: 2024-10-12T12:00:00.000Z
+          version: 1
+    GroupAssignmentsResponse:
+      value:
+        - *groupAssignmentResponse
+        - segmentId: 628cd20c6e8b2432b6346ca6
+          group:
+            id: 2ac869fc-d548-4ec8-8e06-c01491314124
+            name:
+              en: Requesters
+          metadata:
+            createdAt: 2024-10-16T12:00:00.000Z
+            modifiedAt: 2024-10-16T12:00:00.000Z
+            version: 1
+    GroupAssignmentUpsert:
+      value:
+        *mixins
   securitySchemes:
     OAuth2:
       type: oauth2
