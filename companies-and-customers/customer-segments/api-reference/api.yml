@@ -989,7 +989,7 @@ paths:
         - Groups Assignments
       operationId: PUT-customer-segment-update-group
       description: |
-        Performs an `UPSERT` operation. Updates an IAM group assigned to a customer segment. A new group assignment is created if it is not present in the system.
+        Performs an `UPSERT` operation. Updates an IAM group assignment for a customer segment. Creates the assignment if it is not present in the system.
 
         Only IAM groups with `userType` `CUSTOMER` can be assigned to a segment.
       security:
@@ -1540,7 +1540,7 @@ components:
       properties:
         id:
           type: string
-          description: Group's unique identifier.
+          description: Unique identifier of an existing IAM group, generated when the group is created through the IAM Service.
         name:
           type: object
           description: Localized name of the group.

@@ -16,7 +16,7 @@ Customers inherit segment membership through a direct assignment or through an I
 
 ## How to add a customer segment
 
-Create a segment, assign products or categories, then add customers. To assign IAM groups instead of individual customers, see [How to assign IAM groups to a customer segment](#how-to-assign-iam-groups-to-a-customer-segment).
+Create a segment, assign products or categories, then add customers. To assign IAM groups, see [How to assign IAM groups to a customer segment](#how-to-assign-iam-groups-to-a-customer-segment).
 
 {% hint style="warning" %}
 To create and configure a segment, you need the `customersegment.segment_manage` scope.
@@ -43,8 +43,8 @@ curl -i -X POST \
       "en": "Golden Segment"
     },
     "validity": {
-      "from": "2024-04-17T08:00:00.000Z",
-      "to": "2025-04-17T08:00:00.000Z"
+      "from": "2026-04-17T08:00:00.000Z",
+      "to": "2027-04-17T08:00:00.000Z"
     },
     "status": "ACTIVE",
     "siteCode": "main"
@@ -209,7 +209,7 @@ These operations perform an `UPSERT`. If the customer is already assigned to the
 
 ## How to assign IAM groups to a customer segment
 
-Assign an IAM customer group to a segment so every customer in that group inherits the segment membership. This is useful when you already organize B2B buyers by IAM groups, for example, Buyers or Requesters.
+Assign an IAM customer group to a segment so every customer in that group inherits the segment membership. This is useful when you already organize B2B buyers by IAM groups, for example, `Buyers` or `Requesters`.
 
 ### Prerequisites
 
@@ -292,7 +292,7 @@ The response includes `segmentId`, the group `id` and localized `name`, and assi
 {% step %}
 #### Search for a group assignment
 
-To find assignments that match specific criteria, send the request to the [Searching with parameters for group assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#post-customer-segment-tenant-segments-segmentid-groups-search) endpoint. Pass the criteria in the `q` parameter.
+To find assignments that match specific criteria, send the request to the [Searching with parameters for group assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#post-customer-segment-tenant-segments-segmentid-groups-search) endpoint. Pass the criteria in the `q` parameter in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -328,7 +328,7 @@ curl -i -X DELETE \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
-A successful removal returns `204`. Customers who inherited the segment only through this group lose that membership.
+A successful removal returns `204`. Customers who inherit the segment only through this group lose that membership.
 {% endstep %}
 {% endstepper %}
 

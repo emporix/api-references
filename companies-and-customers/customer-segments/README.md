@@ -7,7 +7,7 @@ icon: people-roof
 
 # Customer Segments
 
-The Customer Segment Service allows you to define segments for different customers so that you can prepare customer specific marketing campaigns, or prepare personalized content for different customers in each segment. You can assign individual customers or IAM groups to a segment.
+The Customer Segment Service allows you to define segments for different customers so that you can prepare customer-specific marketing campaigns, or prepare personalized content for different customers in each segment. You can assign individual customers or IAM groups to a segment.
 
 ### Key features and benefits
 
