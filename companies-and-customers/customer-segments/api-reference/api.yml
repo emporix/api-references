@@ -876,7 +876,7 @@ paths:
         - Groups Assignments
       operationId: GET-customer-segment-retrieve-groups
       description: |
-        Retrieves all IAM group assignments for a given customer segment. You can filter the results with query parameters.
+        Retrieves all IAM group assignments for a given customer segment.
       security:
         - CustomerAccessToken:
             - customersegment.segment_read
