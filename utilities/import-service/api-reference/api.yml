@@ -11,11 +11,16 @@ info:
     This functionality is in preview mode - some of the features may not be fully operational yet.
     {% endhint %}
 
-    This reference covers the operational surface available with the `importtool.import_trigger` scope:
-    triggering, scheduling, monitoring, and cancelling import runs, reading configurations, streams,
-    schedules, runs, and imported data, and reading the import analytics that summarise them.
-    Administrative operations (creating and changing configurations, connections, streams, and mappings)
-    require the `importtool.import_manage` scope.
+    The reference is in two halves, split by the scope each needs.
+
+    **Operating an import** requires `importtool.import_trigger`: triggering, scheduling, monitoring and
+    cancelling runs, reading configurations, streams, schedules, runs and imported data, and reading the
+    analytics that summarise them.
+
+    **Configuring one** requires `importtool.import_manage`, and is grouped under the sections marked
+    Administration: defining connections, and defining the field mappings that decide what each source
+    field becomes on the target. `importtool.import_manage` does not imply `importtool.import_trigger` —
+    a client that both configures and runs imports needs both.
   contact:
     name: Emporix
     url: https://emporix.com
@@ -35,6 +40,23 @@ tags:
     description: Read aggregated import statistics, health, and the settings behind them.
   - name: License
     description: Read the tenant's import limits.
+  - name: Configurations (Administration)
+    description: |
+      Change import configurations. **Scope:** these operations require `importtool.import_manage`, unlike
+      the read operations above.
+  - name: Connections (Administration)
+    description: |
+      Define where data is read from and how to authenticate against it. **Scope:**
+      `importtool.import_manage`.
+  - name: Purge (Administration)
+    description: |
+      Forget what an import loaded, and optionally delete what it wrote. **Scope:**
+      `importtool.import_manage`. These operations are irreversible — read the warnings on each before
+      using them.
+  - name: Mappings (Administration)
+    description: |
+      Define what each source field becomes on the Emporix target, and check it against real data before
+      running an import. **Scope:** `importtool.import_manage`.
 servers:
   - url: 'https://api.emporix.io'
 paths:
@@ -1058,8 +1080,1226 @@ paths:
           $ref: '#/components/responses/Conflict_409'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/connections':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    get:
+      summary: Retrieving all source connections
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves the source connections defined for the tenant. A connection holds where the data comes
+        from and how to authenticate; its credential is never returned.
+
+      operationId: GET-importtool-list-connections
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The connections are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SourceConnection'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+    post:
+      summary: Creating a source connection
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Creates a source connection. Supply the credential in `apiToken`: it is encrypted on write and never
+        returned by any read, which reports only `hasSecret`.
+
+      operationId: POST-importtool-create-connection
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourceConnection'
+      responses:
+        '201':
+          description: The connection was created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceConnection'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/connections/{id}':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    get:
+      summary: Retrieving a source connection
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves one source connection. The stored credential is not returned; `hasSecret` reports whether
+        one is held.
+
+      operationId: GET-importtool-get-connection
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The connection is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceConnection'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+    put:
+      summary: Updating a source connection
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Replaces a source connection. Omitting `apiToken` keeps the stored credential; sending one replaces it.
+
+      operationId: PUT-importtool-update-connection
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourceConnection'
+      responses:
+        '200':
+          description: The connection was updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceConnection'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+    delete:
+      summary: Deleting a source connection
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Deletes a source connection. Streams still pointing at it will fail to extract.
+
+      operationId: DELETE-importtool-delete-connection
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '204':
+          description: The connection was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/connections/{id}/test':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    post:
+      summary: Testing a source connection
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Reaches the source with the stored credential and reports whether it answered. Use this after
+        creating a connection, rather than discovering the problem during an import run.
+
+      operationId: POST-importtool-test-connection
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The test completed. The result reports whether the source was reachable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionTestResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/configs/{id}/clone':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    post:
+      summary: Cloning an import configuration
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Copies a configuration with its streams and their field mappings. The copy is created disabled and
+        with no run history.
+
+      operationId: POST-importtool-clone-config
+      tags:
+        - Configurations (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '201':
+          description: The configuration was cloned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportConfig'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+      - name: targetType
+        in: query
+        required: false
+        description: |-
+          For a stream that routes rows to several target types, the type whose mapping set to read or
+          replace. Omitted means the base set, which is used by the default type and as the fallback for
+          any routed type that has no set of its own.
+        schema:
+          type: string
+    get:
+      summary: Retrieving a stream field mappings
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves the field mappings of a stream: which source column becomes which target attribute, its
+        declared type, and any transformations applied on the way.
+
+      operationId: GET-importtool-get-mappings
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The mappings are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FieldMapping'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+    put:
+      summary: Replacing a stream field mappings
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Replaces the whole mapping set for the stream. The set is authoritative: any mapping not present is
+        removed. Every transformation is validated before anything is stored, so an invalid one rejects the
+        request rather than failing later during a run.
+
+      operationId: PUT-importtool-replace-mappings
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/FieldMapping'
+      responses:
+        '200':
+          description: The mappings were replaced. The stored set is returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FieldMapping'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/source-fields':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    get:
+      summary: Retrieving the available source fields
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Lists the fields the stream source provides, with an inferred type and a sample value. These are the
+        valid values for a mapping `sourcePath`. Nested structures are flattened to dotted paths, and an
+        array is offered both as a whole (`borders[]`) and, when it holds objects, by element field
+        (`currencies[].code`).
+
+      operationId: GET-importtool-source-fields
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The source fields are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SourceField'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/target-fields':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+      - name: targetType
+        in: query
+        required: false
+        description: The routed target type whose attributes to list. Omitted means the stream default type.
+        schema:
+          type: string
+    get:
+      summary: Retrieving the target type attributes
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Lists the attributes the target type actually declares, across every mixin schema that contributes to
+        it, with the Emporix data type of each. These are the valid values for a mapping `targetPath`.
+
+      operationId: GET-importtool-target-fields
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The target attributes are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TargetField'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/sample-records':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+      - name: limit
+        in: query
+        required: false
+        description: How many records to return (1-50).
+        schema:
+          type: integer
+          default: 10
+      - name: refresh
+        in: query
+        required: false
+        description: |-
+          Read fresh records from the source instead of what is already available. This performs a real,
+          bounded extraction, so it is slower and, for a source that charges for queries, not free. Use it
+          when no sample is available: a source that stages its data through an extraction may have had it
+          removed once the import completed.
+        schema:
+          type: boolean
+          default: false
+    get:
+      summary: Retrieving sample source records
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Returns whole records from the source, flattened exactly as the import reads them. Use them with the
+        preview operation to see what a mapping would write before running it.
+
+      operationId: GET-importtool-sample-records
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The sample records are returned.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/preview':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+      - name: targetType
+        in: query
+        required: false
+        description: The routed target type whose mapping set to apply. Omitted means the base set.
+        schema:
+          type: string
+    post:
+      summary: Previewing what a mapping writes
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Runs the stream stored mappings over the supplied source records and returns what each would write —
+        the result of combining several columns, of every transformation in the chain, and of coercion to the
+        declared type. Nothing is written to the target.
+
+      operationId: POST-importtool-preview-mappings
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                additionalProperties: true
+      responses:
+        '200':
+          description: The request was successful. The mapped output is returned, one object per supplied record.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/transforms':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    get:
+      summary: Retrieving the available transformations
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Lists every transformation a mapping can apply, with its syntax, what it does and an example. A
+        mapping applies these in the order given, each fed the output of the one before it.
+
+      operationId: GET-importtool-list-transforms
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The transformations are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransformInfo'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/target-entities':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    get:
+      summary: Retrieving the existing target types
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Lists the custom entity types that already exist on the tenant. These are the valid values for a
+        stream `targetType`. A type that does not exist yet is created by the first import that writes to it.
+
+      operationId: GET-importtool-list-target-entities
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The target types are returned.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/purge':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+      - name: mode
+        in: query
+        required: false
+        description: |-
+          `LEDGER` forgets what the stream imported, so a later load rebuilds from scratch. `FULL` also
+          deletes the target instances the ledger knows about. `SWEEP` is not available for a stream: it
+          deletes every instance of a type, which for a stream's type may include data another stream owns.
+        schema:
+          type: string
+          enum:
+            - LEDGER
+            - FULL
+          default: LEDGER
+    post:
+      summary: Purging a stream imported data
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        {% hint style="warning" %}
+        This is irreversible, and the ORDER of the two modes matters. `FULL` finds the instances to delete
+        through the import ledger, so anything the ledger has no row for cannot be reached. Running `LEDGER`
+        first therefore permanently forfeits the ability to `FULL`-purge those instances: they remain in the
+        target with nothing left that knows they came from an import.
+        {% endhint %}
+
+        Starts a background job that forgets what this stream imported. The response is the job; poll it to
+        follow progress. A purge is refused while a run is active for the configuration, and a run is refused
+        while a purge is live for it.
+
+      operationId: POST-importtool-purge-stream
+      tags:
+        - Purge (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '202':
+          description: The purge was accepted and is running. The job is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurgeJob'
+        '400':
+          description: The mode is not one this scope accepts.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+        '409':
+          $ref: '#/components/responses/Conflict_409'
+  '/importtool/{tenant}/purge':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - name: type
+        in: query
+        required: true
+        description: The target type to purge, tenant-wide.
+        schema:
+          type: string
+      - name: mode
+        in: query
+        required: false
+        description: |-
+          `LEDGER` forgets what was imported. `FULL` also deletes the instances the ledger knows about.
+          `SWEEP` deletes EVERY instance of the type, including ones no import created — the only mode that
+          can remove instances the ledger has lost track of.
+        schema:
+          type: string
+          enum:
+            - LEDGER
+            - FULL
+            - SWEEP
+          default: LEDGER
+    post:
+      summary: Purging a target type
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        {% hint style="warning" %}
+        This is irreversible. `SWEEP` deletes every instance of the type regardless of where it came from,
+        including data no import created. `LEDGER` run before `FULL` permanently forfeits the ability to
+        `FULL`-purge, because `FULL` reaches instances through the ledger it just discarded.
+        {% endhint %}
+
+        Starts a background job over every record of the target type. The response is the job; poll it to
+        follow progress. A `FULL` purge also reports how many instances of the type the ledger has no row
+        for, rather than reporting a clean success while they survive.
+
+      operationId: POST-importtool-purge-type
+      tags:
+        - Purge (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '202':
+          description: The purge was accepted and is running. The job is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurgeJob'
+        '400':
+          description: The mode is not one of LEDGER, FULL or SWEEP.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+        '409':
+          $ref: '#/components/responses/Conflict_409'
+  '/importtool/{tenant}/purges':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - name: limit
+        in: query
+        required: false
+        description: How many jobs to return, most recent first.
+        schema:
+          type: integer
+          default: 20
+    get:
+      summary: Retrieving recent purges
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves recent purge jobs for the tenant, most recent first.
+
+      operationId: GET-importtool-list-purges
+      tags:
+        - Purge (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The purge jobs are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PurgeJob'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/purges/{id}':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    get:
+      summary: Retrieving a purge
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves one purge job: its counters, and the batch-by-batch log including any per-item delete
+        errors. A purge of millions of records takes many minutes, so poll this rather than waiting on the
+        request that started it.
+
+      operationId: GET-importtool-get-purge
+      tags:
+        - Purge (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The purge job is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurgeJob'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/purges/latest':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - name: streamId
+        in: query
+        required: false
+        description: The stream whose most recent purge to return.
+        schema:
+          type: string
+          format: uuid
+      - name: type
+        in: query
+        required: false
+        description: The target type whose most recent purge to return.
+        schema:
+          type: string
+    get:
+      summary: Retrieving the latest purge for a scope
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves the most recent purge job for a stream or a target type. Use it to re-attach to a purge
+        that is still running after leaving the page that started it.
+
+      operationId: GET-importtool-latest-purge
+      tags:
+        - Purge (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The purge job is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurgeJob'
+        '204':
+          description: No purge has been run for that scope.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/mappings/export':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - name: configId
+        in: query
+        required: false
+        description: |-
+          The configuration to export. Repeat the parameter to export several; omit it to export every
+          configuration on the tenant.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+      - name: format
+        in: query
+        required: false
+        description: |-
+          `xlsx` documents a configuration for reading — an overview sheet plus one sheet per stream.
+          `postman` emits a collection that RECREATES the configuration on another tenant.
+        schema:
+          type: string
+          enum:
+            - xlsx
+            - postman
+          default: xlsx
+    get:
+      summary: Exporting field mappings
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Exports the field mappings of one or more configurations.
+
+        The `postman` collection creates each job and stream on the target tenant and captures the returned
+        identifiers, so it can be replayed against a different tenant. Connections are never exported —
+        they hold credentials — so the collection takes a `connectionId` variable to point at one that
+        already exists there.
+
+      operationId: GET-importtool-export-mappings
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The export is returned as a file.
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+            application/json:
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
 components:
   schemas:
+    PurgeJob:
+      type: object
+      description: |-
+        A background job that forgets what an import loaded, and optionally deletes what it wrote. Purging
+        millions of records takes many minutes, so the job reports progress as it goes and survives a
+        restart of the service that is running it.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier of the purge job.
+        scope:
+          type: string
+          enum:
+            - STREAM
+            - TYPE
+          description: Whether the purge covers one stream or a whole target type.
+        streamId:
+          type: string
+          format: uuid
+          description: The stream being purged, for a stream-scoped job.
+        targetType:
+          type: string
+          description: The target type being purged.
+        mode:
+          type: string
+          enum:
+            - LEDGER
+            - FULL
+            - SWEEP
+          description: |-
+            What the purge removes. `LEDGER` forgets the import record, so a later load rebuilds from
+            scratch and target-only data is preserved. `FULL` also deletes the instances the ledger knows
+            about. `SWEEP` deletes every instance of the type, including ones no import created.
+        status:
+          type: string
+          description: Where the job has got to — running, finished, or waiting to be resumed after a restart.
+        total:
+          type: integer
+          format: int64
+          description: How many records the purge has to work through, counted when it starts.
+        forgotten:
+          type: integer
+          description: |-
+            How many imported RECORDS have been forgotten. This counts entities, not the internal rows behind
+            them, so ten records read as ten.
+        deleted:
+          type: integer
+          description: How many target instances have been deleted, for `FULL` and `SWEEP`.
+        failed:
+          type: integer
+          description: How many could not be removed.
+        orphanedRemaining:
+          type: integer
+          description: |-
+            For a `FULL` purge, how many instances of the type the ledger has no row for and which therefore
+            survive. Reported rather than left silent, because the purge would otherwise finish successfully
+            with data still in place.
+        orphanedCapped:
+          type: boolean
+          description: Whether counting those stopped at a limit, so the number is a floor rather than a total.
+        incomplete:
+          type: boolean
+          description: Whether the purge finished without removing everything in its scope.
+        message:
+          type: string
+          description: A summary of the outcome, including why it is incomplete when it is.
+        log:
+          type: array
+          items:
+            type: string
+          description: The batch-by-batch progress log, including any per-item delete errors.
+        startedAt:
+          type: string
+          format: date-time
+          description: When the purge started.
+        finishedAt:
+          type: string
+          format: date-time
+          description: When it finished, if it has.
+
+    SourceConnection:
+      type: object
+      description: Where a stream reads from, and how to authenticate against it.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier of the connection. Assigned on creation.
+        name:
+          type: string
+          description: Human-readable name, shown when choosing a connection for a stream.
+        sourceType:
+          type: string
+          description: |-
+            The kind of source, which decides how the connection is read and which configuration it needs —
+            for example `http` for a REST or GraphQL API.
+        config:
+          type: object
+          additionalProperties: true
+          description: |-
+            Non-secret settings for the source type: the base URL, authentication mode, pagination, and any
+            discovered schema. What belongs here depends on `sourceType`.
+        apiToken:
+          type: string
+          description: |-
+            Write-only. The credential for the source. It is encrypted on write and never returned by a read;
+            omitting it on update keeps the one already stored.
+        hasSecret:
+          type: boolean
+          description: Whether a credential is stored for this connection. Read-only.
+        createdAt:
+          type: string
+          format: date-time
+          description: When the connection was created.
+
+    ConnectionTestResult:
+      type: object
+      description: The outcome of reaching a source with its stored credential.
+      additionalProperties: true
+      properties:
+        ok:
+          type: boolean
+          description: Whether the source answered.
+        reason:
+          type: string
+          description: Why it did not, when it did not — an authentication failure, an unreachable host, a rejected path.
+
+    FieldMapping:
+      type: object
+      description: |-
+        One rule turning source data into one target attribute. In the simplest case it is one column onto
+        one attribute; it can also combine several columns and apply a chain of transformations.
+
+        A mapping set is a small language, and its documents outlive any one release: they are exported,
+        kept, moved between tenants and replayed later. The schema is therefore only ever EXTENDED — new
+        capability arrives as new optional fields, and no field is renamed, repurposed or made required. A
+        mapping written against an earlier version always loads, and a document carrying fields a service
+        does not yet know is accepted rather than rejected, so an export is not a one-way door between
+        environments on different releases. Should a breaking change ever become unavoidable it will be
+        selected with an `X-Version` header, and the newer version will still read every older document.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier of the mapping. Assigned on save.
+        streamId:
+          type: string
+          format: uuid
+          description: The stream this mapping belongs to.
+        targetType:
+          type: string
+          description: |-
+            For a stream that routes rows to several target types, the type this mapping applies to. Absent
+            means the base set, used by the default type and as the fallback for any routed type with no set
+            of its own.
+        sourcePath:
+          type: string
+          description: |-
+            The source field to read. For a stream whose source is a document, an array element field is
+            addressed as `currencies[].code`, and an array as a whole as `borders[]`.
+        sourcePaths:
+          type: array
+          items:
+            type: string
+          description: |-
+            Several source columns combined into this one attribute, in order. Absent means `sourcePath`
+            alone. A column with no value is skipped rather than joined, and a combination that finds nothing
+            writes nothing rather than an empty value.
+        combine:
+          type: string
+          enum:
+            - CONCAT
+            - COALESCE
+            - TEMPLATE
+          description: |-
+            How several columns become one value. `CONCAT` joins them with `combineSeparator`, `COALESCE`
+            takes the first that has a value, and `TEMPLATE` lays them out using `combineTemplate`. Absent
+            means `CONCAT`.
+        combineSeparator:
+          type: string
+          description: What to put between the columns for `CONCAT`. Absent means a single space; an empty string joins them with nothing.
+        combineTemplate:
+          type: string
+          description: |-
+            The layout for `TEMPLATE`, where `{1}` is the first source column, `{2}` the second, and so on —
+            for example `{1} ({2})`. Required when `combine` is `TEMPLATE`.
+        targetPath:
+          type: string
+          description: |-
+            The target attribute to write. An array element field is addressed as `currencies[].code`, which
+            builds one object per element of the source array.
+        targetSchema:
+          type: string
+          description: |-
+            The mixin schema that owns the target attribute, since a type is composed of several. Absent
+            writes the attribute under the type own mixin.
+        transform:
+          type: string
+          description: A single transformation to apply. Absent means the value is written as it was read.
+        transforms:
+          type: array
+          items:
+            type: string
+          description: |-
+            Transformations applied in order, each fed the output of the one before it. Absent means the
+            single `transform`. Retrieve the available transformations to see the syntax of each.
+        dataType:
+          type: string
+          description: |-
+            The Emporix type of the target attribute, which is authoritative: the source value is coerced to
+            it, and a value that cannot be represented is omitted rather than written in the wrong type.
+        required:
+          type: boolean
+          description: Whether a record missing this value should be reported as an error rather than imported without it.
+        isKey:
+          type: boolean
+          description: Whether this mapping supplies the natural key that identifies the record.
+        sortOrder:
+          type: integer
+          description: Position of the mapping in the set.
+        origin:
+          type: string
+          enum:
+            - MANUAL
+            - AI_SUGGESTED
+            - AI_ACCEPTED
+          description: How the mapping came to exist.
+
+    SourceField:
+      type: object
+      description: A field the source provides, offered as a value for a mapping `sourcePath`.
+      properties:
+        name:
+          type: string
+          description: The path to the field, dotted for nested structures.
+        inferredType:
+          type: string
+          description: The Emporix type the value looks like, as a starting point for the mapping declared type.
+        sample:
+          type: string
+          description: An example value, which is often what distinguishes two similarly named fields.
+
+    TargetField:
+      type: object
+      description: An attribute the target type declares, offered as a value for a mapping `targetPath`.
+      properties:
+        key:
+          type: string
+          description: The attribute key. An array of objects contributes its element fields as `currencies[].code`.
+        dataType:
+          type: string
+          description: The Emporix type the attribute is declared as.
+        schemaId:
+          type: string
+          description: The mixin schema that owns the attribute.
+        label:
+          type: string
+          description: The readable name of the attribute, where it has one.
+
+    TransformInfo:
+      type: object
+      description: A transformation a mapping can apply, and how to write it.
+      properties:
+        name:
+          type: string
+          description: The transformation name.
+        takesArg:
+          type: boolean
+          description: Whether it takes an argument after a colon.
+        syntax:
+          type: string
+          description: |-
+            How to write it. Where the argument is one of a fixed set, they are listed —
+            `case:capitalize|title|camel|pascal|snake|kebab`.
+        description:
+          type: string
+          description: What it does.
+        example:
+          type: string
+          description: A complete example, ready to use.
+
     errorMessage:
       title: Error
       description: Schema for specific API errors.
