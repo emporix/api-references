@@ -28,12 +28,6 @@ To create and configure a segment, you need the `customersegment.segment_manage`
 
 Send the request to the [Creating a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments) endpoint.
 
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
-
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/customer-segment/{tenant}/segments' \
@@ -66,12 +60,6 @@ A successful request returns `201` with the segment `id`. If you omit `status`, 
 Assign products or categories so the segment can drive storefront assortment and campaigns.
 
 To assign one product or category, send the request to the [Updating an item assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#put-customer-segment-tenant-segments-segmentid-items-type-itemid) endpoint. Set `{type}` to `PRODUCT` or `CATEGORY`.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
 
 ```bash
 curl -i -X PUT \
@@ -133,12 +121,6 @@ These operations perform an `UPSERT`. If the item is already assigned to the seg
 Add B2B or B2C customers, depending on your setup.
 
 To add a B2B customer, send the request to the [Updating a customer assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/customers-assignments#put-customer-segment-tenant-segments-segmentid-customers-customerid-legalentityid) endpoint. Provide `customerId` and `legalEntityId` in the path.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-{% content-ref url="api-reference/" %}
-[api-reference](api-reference/)
-{% endcontent-ref %}
 
 ```bash
 curl -i -X PUT \
@@ -216,6 +198,13 @@ curl -i -X PUT \
 These operations perform an `UPSERT`. If the customer is already assigned to the segment, the assignment is updated. If the customer is not assigned, the service creates the assignment. A new assignment returns `201`. An update returns `204`.
 {% endhint %}
 {% endstep %}
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 {% endstepper %}
 
 ## How to assign IAM groups to a customer segment
