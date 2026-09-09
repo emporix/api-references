@@ -107,7 +107,6 @@ curl -i -X PUT
   -d '{
   "customerId": "87413250",
   "currency": "EUR",
-  "deliveryWindowId": "60006da77ec20a807cd6f065",
   "type": "shopping",
   "zipCode": "10115",
   "countryCode": "DE",
@@ -2189,10 +2188,16 @@ Always make sure that your site’s `homeBase.address` has the `country` and `zi
 Shipping costs are typically calculated during checkout, and not automatically on the cart object alone.
 {% endhint %}
 
-To get the shipping costs calculated and shown at the cart level, update the cart with shipping information. That means, provide an address of type `SHIPPING` to the cart and then assign a valid shipping method to the cart so that it can trigger the shipping cost calculation.
+To show a shipping estimate at cart level, provide a destination on the cart. Prefer an address of type `SHIPPING`. `countryCode` and `zipCode` remain compatible alternatives. You can also add an optional `deliveryWindow`.
+
+{% hint style="warning" %}
+Do not write `methodId`, `zoneId`, or a shipping amount to the cart. The cart model has no field for shipping method selection. Send the selected method and zone in the checkout request `shipping` object. See [Checkout Tutorial](../checkout/checkout.md).
+{% endhint %}
 
 {% stepper %}
 {% step %}
+#### Retrieve available delivery windows
+
 Fetch available delivery windows for a cart by calling the [Retrieving delivery windows by cart](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/delivery-windows#get-shipping-tenant-actualdeliverywindows-cartid) endpoint.
 
 {% hint style="warning" %}
@@ -2210,7 +2215,9 @@ curl -L
 {% endstep %}
 
 {% step %}
-Pick the delivery window you'd like to use and update the cart accordingly by calling the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint
+#### Update the cart with destination and delivery window
+
+Pick the delivery window you want to use and update the cart by calling the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -2223,7 +2230,6 @@ curl -L
   --data '{
         "countryCode": "DE",     
         "zipCode": "10115",
-        "deliveryWindowId": "1234567890abcdef",    
         "deliveryWindow": {       
             "id": "1234567890abcdef",       
             "deliveryDate": "2025-07-25T10:00:00.000Z",       
@@ -2234,6 +2240,8 @@ curl -L
 {% endstep %}
 
 {% step %}
+#### Verify the shipping estimate
+
 Verify the results by retrieving the cart. Call the [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -2247,7 +2255,7 @@ curl -L
 {% endstep %}
 {% endstepper %}
 
-As a result, the response includes the shipping costs details:
+As a result, the response includes the shipping estimate:
 
 ```bash
 {

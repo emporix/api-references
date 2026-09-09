@@ -334,10 +334,16 @@ An approval can be created (requested) only by a customer who does not have perm
 Cart checkout approval is the default B2B approval flow and does not require an extra tenant setting beyond roles and company limits.
 
 * Use `resourceType: CART` and the cart ID as `resourceId`.
-* Include `details` in the create request — shipping, addresses, currency, payment methods, and related checkout data are required. The Approval Service stores this payload for the approver; it does not load checkout data from the cart alone.
+* Include the full checkout payload in `details`. Include currency, payment methods, addresses, a delivery window when used, and the selected `details.shipping` object. The Approval Service stores this payload for the approver; it does not load checkout data from the cart alone.
+* Put the selected `methodId`, `zoneId`, `amount`, and applicable `shippingTaxCode` in `details.shipping`. Do not persist them on the cart.
 * The requestor must own an active cart with the items to purchase. On the storefront, the flow typically starts when checkout is blocked or when the integration creates an approval after a failed checkout attempt.
-* After the approver approves, complete checkout through the [Checkout Service](../../checkout/checkout/) using the cart ID and the data from the approval `details`.
+* Creating an approval does not execute checkout or create an order. The cart remains available until checkout closes it.
+* After the approver approves, complete checkout through the [Checkout Service](../../checkout/checkout/) using the cart ID and the stored approval `details`.
 * To verify permissions before checkout, call [Checking the resource approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approval#post-approval-tenant-approval-permitted) with `resourceType: CART`, the cart `resourceId`, and `action: CHECKOUT`.
+
+{% hint style="warning" %}
+`approval.resource.totalPrice` is a cart summary. It includes the cart's shipping estimate or snapshot, when available. It does not include the selected `details.shipping.amount`. Do not treat it as the final checkout total. Shipping and tax are finalized during checkout and order creation.
+{% endhint %}
 
 #### Quote checkout-specific rules
 
@@ -369,7 +375,7 @@ curl -L \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Content-Type: application/json' \
   --data '{
-    "resourceId": "cartId",
+    "resourceId": "9b36757a-5ea1-4689-9ed3-fb630eb5048c",
     "resourceType": "CART",
     "action": "CHECKOUT"
   }'
@@ -395,7 +401,7 @@ If a customer is in the `B2B_ADMIN` role, the create approval flow does not star
 {% tabs %}
 {% tab title="Order (cart checkout)" %}
 
-Use `resourceType: CART` and include `details` with shipping, payment, and address information required for checkout.
+Use `resourceType: CART` and include `details` with the shipping, payment, and address information required for checkout. After approval, submit checkout with this cart ID and the stored `details`. Creating the approval leaves the cart open.
 
 ```bash
 curl -i -X POST \
@@ -405,7 +411,7 @@ curl -i -X POST \
   -d '{
     "id": "64e241ced632aa413a27a318",
     "resourceType": "CART",
-    "resourceId": "cartId",
+    "resourceId": "9b36757a-5ea1-4689-9ed3-fb630eb5048c",
     "action": "CHECKOUT",
     "approver": {
       "userId": "aaa2f2b6-7dc8-45ff-9f20-4e6163c14cbb"
@@ -424,10 +430,10 @@ curl -i -X POST \
         }
       ],
       "shipping": {
-        "zoneId": "deliveryarea",
-        "methodId": "4-more_hours_timeframe",
+        "zoneId": "zone1",
+        "methodId": "fedex-2dayground",
         "amount": 10,
-        "methodName": "Delivery method name",
+        "methodName": "FedEx 2Day",
         "shippingTaxCode": "STANDARD"
       },
       "payment": {

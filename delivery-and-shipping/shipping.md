@@ -318,7 +318,7 @@ curl -i -X POST
 
 ## How to manage delivery and shipping information upon checkout
 
-You need to retrieve available delivery windows to be able to estimate the delivery time for a specific postal code. At checkout, updating the cart with delivery and shipping information is necessary for the order to be placed.
+Retrieve available delivery windows to estimate delivery time for a destination. Put the destination and an optional `deliveryWindow` on the cart. Send the selected shipping method and zone in the checkout request. Do not write `methodId`, `zoneId`, or a shipping amount to the cart.
 
 1. [Retrieve available delivery windows](shipping.md#retrieve-available-delivery-windows-for-a-particular-postal-code-and-cart)
 2. [Add delivery information to the customer's cart](shipping.md#update-the-cart-with-delivery-information)
@@ -342,7 +342,7 @@ Shipping times for particular postal codes are automatically calculated based on
 
 ```bash
 curl -i -X GET 
-  'https://api.emporix.io/shipping/{tenant}/{site}/cgrelations/{customerId}' 
+  'https://api.emporix.io/shipping/{tenant}/actualDeliveryWindows/{cartId}' 
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 {% endstep %}
@@ -350,7 +350,11 @@ curl -i -X GET
 {% step %}
 #### Update the cart with delivery information
 
-Add the delivery information to the cart by calling the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
+Add the destination and optional `deliveryWindow` to the cart by calling the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
+
+{% hint style="warning" %}
+Do not write `methodId`, `zoneId`, or a shipping amount to the cart. Send the selected method and zone in the checkout request `shipping` object. See [Checkout Tutorial](../checkout/checkout/checkout.md).
+{% endhint %}
 
 {% include "../.gitbook/includes/example-hint-text.md" %}
 
@@ -362,8 +366,7 @@ curl -i -X PUT
   -d '{
     "customerId": "87413250",
     "currency": "EUR",
-    "deliveryWindowId": "60006da77ec20a807cd6f065",
-    "type": "wishlist",
+    "type": "shopping",
     "zipCode": "10115",
     "countryCode": "DE",
     "status": "OPEN",

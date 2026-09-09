@@ -539,13 +539,30 @@ To complete the checkout, there are two options:
 
 Once a customer places the product in a cart, they can proceed with the checkout process.
 
-The checkout service validates the data that come from customer's session token, the cart, and tiered prices, and then proceeds with the delivery and payment details. Then, it handles the payment and creates an order in the system, closing the cart.
+Shipping method and zone belong in the checkout request, not on the cart. Before you trigger checkout:
+
+* Configure shipping and tax.
+* Create a cart with a destination, currency, and an optional `deliveryWindow`.
+* Retrieve eligible delivery options, then select a method and zone.
+* Send that selection in the checkout request `shipping` object.
+
+Prefer a cart address of type `SHIPPING` for the destination. `countryCode` and `zipCode` remain compatible alternatives.
+
+{% hint style="warning" %}
+Do not write `methodId`, `zoneId`, or a shipping amount to the cart. The cart model has no field for shipping method selection.
+{% endhint %}
+
+A cart can show a shipping estimate from the destination context. Checkout applies the selected shipping data and finalizes shipping and tax during checkout and order creation.
+
+The checkout service validates the data that comes from the customer's session token, the cart, and tiered prices, and then proceeds with the delivery and payment details. Then, it handles the payment and creates an order in the system, closing the cart.
 
 {% stepper %}
 {% step %}
 #### Start the checkout
 
 Send a request to the [Triggering a checkout](https://developer.emporix.io/api-references/api-guides/checkout/checkout/api-reference/checkouts) endpoint.
+
+The following example sends the shipping selection in the checkout request.
 
 ```bash
 curl -i -X POST 
@@ -567,9 +584,9 @@ curl -i -X POST
     ],
     "currency": "EUR",
     "shipping": {
-      "methodId": "4-more_hours_timeframe",
-      "zoneId": "deliveryarea",
-      "methodName": "Delivery method name",
+      "methodId": "fedex-2dayground",
+      "zoneId": "zone1",
+      "methodName": "FedEx 2Day",
       "amount": 10,
       "shippingTaxCode": "STANDARD"
     },
