@@ -25,6 +25,31 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Customer Segments Service - IAM group assignments
+
+#### Overview
+
+You can now assign IAM groups to customer segments. New endpoints create, retrieve, search, and remove group assignments. Customers inherit segment membership through their IAM group assignments, in addition to direct customer assignments. Retrieving own customer segments returns the authenticated customer's active segments, including segments assigned through groups that are not bound to a legal entity and groups bound to the customer's current legal entity.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving own customer segments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/segments#get-customer-segment-tenant-segments-me) | Returns active segments assigned directly to the authenticated customer and through the customer's IAM groups. |
+| [Retrieving all group assignments for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups) | Returns all IAM group assignments for a customer segment. |
+| [Searching with parameters for group assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#post-customer-segment-tenant-segments-segmentid-groups-search) | Returns IAM group assignments that match the provided search criteria. |
+| [Retrieving a group assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups-groupid) | Returns an IAM group assignment for a specified group and customer segment. |
+| [Upserting a group assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#put-customer-segment-tenant-segments-segmentid-groups-groupid) | Creates or updates an IAM group assignment. Only groups with `userType` `CUSTOMER` can be assigned. |
+| [Removing a group from a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#delete-customer-segment-tenant-segments-segmentid-groups-groupid) | Removes an IAM group assignment from a customer segment. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-07" tags="improvement" %}
 
 ## AI Service - automatic agent disablement after consecutive configuration failures
