@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-09-10" tags="new-feature" %}
 
 ## Media Service - JSON Patch for assets
 
@@ -52,7 +52,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-09-10" tags="improvement" %}
 
 ## AI Service - reuse of chat attachments
 
