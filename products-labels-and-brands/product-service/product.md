@@ -1500,6 +1500,201 @@ The `variants` map is now fully populated and ready for the storefront.
 The `attempts` field on a job tracks how many times the subscriber has attempted processing. If `status` is `FAILED` and `attempts` is greater than 1, the system has already retried. A `FAILED_PERMANENT` status indicates the job is not retried automatically and requires investigation.
 {% endhint %}
 
+## How to update product mixins
+
+To change mixin fields, send a request to the [Partially updating a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint. To remove a mixin, send a full replacement to the [Upserting a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint with `partial=false`.
+
+{% hint style="warning" %}
+The `product.product_manage` scope is required. The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the product on the update. The `product.product_read_unpublished` scope is only required if you retrieve an unpublished product.
+{% endhint %}
+
+When you include `mixins` in a PATCH request:
+
+* Mixin names that you omit remain on the product.
+* Fields that you send for a mixin are merged recursively. Fields that you omit inside that mixin remain unchanged.
+* A `null` value does not remove a mixin. The mixin remains on the product with the value `null`.
+
+{% hint style="warning" %}
+A PATCH request cannot remove a mixin. To remove a mixin, retrieve the product and send a full replacement. See [Removing a mixin](#removing-a-mixin).
+{% endhint %}
+
+### Changing mixin fields
+
+{% stepper %}
+{% step %}
+#### Update selected mixin fields
+
+This example updates `orderUnit` on `productCustomAttributes`. The product also has a `deliveryOptions` mixin.
+
+**Before the update:**
+
+```json
+{
+  "mixins": {
+    "productCustomAttributes": {
+      "orderUnit": "H87",
+      "minOrderQuantity": 1
+    },
+    "deliveryOptions": {
+      "packaging": "Paper"
+    }
+  }
+}
+```
+
+Send a request to the [Partially updating a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint:
+
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/product/{{tenant}}/products/{{productId}}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "mixins": {
+      "productCustomAttributes": {
+        "orderUnit": "KGM"
+      }
+    },
+    "metadata": {
+      "version": 1
+    }
+  }'
+```
+
+As a result, `orderUnit` is updated to `KGM`. `minOrderQuantity` and the `deliveryOptions` mixin remain unchanged.
+
+```json
+{
+  "mixins": {
+    "productCustomAttributes": {
+      "orderUnit": "KGM",
+      "minOrderQuantity": 1
+    },
+    "deliveryOptions": {
+      "packaging": "Paper"
+    }
+  }
+}
+```
+{% endstep %}
+{% endstepper %}
+
+### Removing a mixin
+
+{% hint style="warning" %}
+Sending `"deliveryOptions": null` in a PATCH request does not remove the mixin. The mixin remains on the product with the value `null`.
+{% endhint %}
+
+Retrieve the product, omit the mixin from `mixins` and `metadata.mixins`, then send a full replacement.
+
+{% stepper %}
+{% step %}
+#### Retrieve the product
+
+Send a request to the [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint:
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/product/{{tenant}}/products/{{productId}}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
+
+The response includes the mixins and their schema URLs. Use the current `metadata.version` in the replacement request.
+
+```json
+{
+  "id": "{{productId}}",
+  "name": {
+    "en": "Cordless Drill"
+  },
+  "code": "DRILL-001",
+  "description": {
+    "en": "18V cordless drill"
+  },
+  "published": true,
+  "productType": "BASIC",
+  "taxClasses": {
+    "EN": "STANDARD"
+  },
+  "mixins": {
+    "productCustomAttributes": {
+      "orderUnit": "KGM",
+      "minOrderQuantity": 1
+    },
+    "deliveryOptions": {
+      "packaging": "Paper"
+    }
+  },
+  "metadata": {
+    "version": 1,
+    "mixins": {
+      "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json",
+      "deliveryOptions": "https://res.cloudinary.com/saas-ag/raw/upload/schemata/deliveryOptionsMixIn.v6.json"
+    }
+  }
+}
+```
+{% endstep %}
+
+{% step %}
+#### Replace the product without the mixin
+
+Omit `deliveryOptions` from `mixins` and `metadata.mixins`. Send the remaining product document to the [Upserting a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint with `partial=false`.
+
+{% hint style="warning" %}
+A full replacement (`partial=false`) replaces the entire product. The request body must include the complete product, including the current `metadata.version`.
+{% endhint %}
+
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/product/{{tenant}}/products/{{productId}}?partial=false' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": {
+      "en": "Cordless Drill"
+    },
+    "code": "DRILL-001",
+    "description": {
+      "en": "18V cordless drill"
+    },
+    "published": true,
+    "productType": "BASIC",
+    "taxClasses": {
+      "EN": "STANDARD"
+    },
+    "mixins": {
+      "productCustomAttributes": {
+        "orderUnit": "KGM",
+        "minOrderQuantity": 1
+      }
+    },
+    "metadata": {
+      "version": 1,
+      "mixins": {
+        "productCustomAttributes": "https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json"
+      }
+    }
+  }'
+```
+
+As a result, the `deliveryOptions` mixin is no longer on the product.
+
+```json
+{
+  "mixins": {
+    "productCustomAttributes": {
+      "orderUnit": "KGM",
+      "minOrderQuantity": 1
+    }
+  }
+}
+```
+{% endstep %}
+{% endstepper %}
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
 ## How to handle classification of products
 
 Classification categories allow you to organize products with consistent attributes across your catalog. By assigning products to classification categories, they automatically receive reusable attribute schemas that ensure data quality and consistency while reducing manual work.
@@ -1533,6 +1728,10 @@ curl -L \
 ### Update product with classification mixin attributes
 
 Update the product with classification mixin attributes using the [Partially updating a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint. Use the `mixinPath` from the classification category's `classificationMixins` field:
+
+{% hint style="info" %}
+Omitted mixin names remain on the product. You can send only the classification mixin that you want to change.
+{% endhint %}
 
 ```bash
 curl -L \

@@ -12,7 +12,7 @@ With the Schema Service you can easily create and manage customized/industry-spe
 
 ## Supported entity types for schema creation
 
-When creating a mixin schema through the Schema Service API, you can select from the following entity types: `availability`, `cart`, `cart_item`, `category`, `company`, `coupon`, `customer`, `customer_address`, `custom_entity`, `location`, `media`, `order`, `order_entry`, `price_list`, `product`, `quote`, `return`, `site`, and `vendor`.
+When creating a mixin schema through the Schema Service API, you can select from the following entity types: `availability`, `cart`, `cart_item`, `category`, `company`, `coupon`, `customer`, `customer_address`, `custom_entity`, `location`, `media`, `order`, `order_entry`, `price_list`, `product`, `quote`, `return`, `site`, `vendor`, and `vendor_location`.
 
 {% hint style="info" %}
 **Important distinction:** The list above shows which entity types support mixin schema creation through the Schema Service API. APIs that support mixins but are not listed there still require you to create mixin schemas manually (as JSON schemas) and reference them when using those APIs. See the [Mixins standard practices](../../standard-practices/mixins.md) page for a complete list of APIs that support mixins.

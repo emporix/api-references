@@ -25,6 +25,277 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="2026-09-10" tags="new-feature" %}
+
+## Media Service - JSON Patch for assets
+
+#### Overview
+
+The Media Service now supports partial updates of assets with JSON Patch documents that follow RFC 6902. You can change fields such as `refIds` without replacing the full asset or re-uploading a `BLOB` file. The `type` and `access` fields remain immutable. The `AGENT` reference type is now documented for private assets.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Partially updating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#patch-media-tenant-assets-assetid) | Applies RFC 6902 operations to an asset. Use `/refIds/-` to append one reference and keep the existing list. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) | The `refIds.type` field now documents the `AGENT` type. Private assets can be linked to `AGENT`. |
+| [Updating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#put-media-tenant-assets-assetid) | The `refIds.type` field now documents the `AGENT` type. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-09-10" tags="improvement" %}
+
+## AI Service - reuse of chat attachments
+
+#### Overview
+
+You can reuse an existing chat attachment with another agent. Send `attachmentId` instead of a file on the attachments endpoint, together with the session that already contains the attachment. AI Service assigns the agent to the media asset by adding an `AGENT` reference. The response is `204`.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) | Accepts `attachmentId` to reuse a session attachment and assign the agent. Send exactly one of `attachment` or `attachmentId`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-09-09" tags="improvement" %}
+
+## AI Service - commerce event trigger `eventScopes`
+
+#### Overview
+
+The AI Service API now supports optional `eventScopes` on `commerce_events` agent triggers. When you set this field, AI Service obtains an Emporix token with the listed IAM scopes and forwards it as `emporix-token` when the agent runs from a commerce event. When you omit the field or leave it empty, the agent does not receive `emporix-token`. Each listed scope must be one the caller is allowed to grant.
+
+#### Updated types
+
+| Type | Description |
+| --- | --- |
+| AgentTrigger | Added optional `eventScopes` field for the `commerce_events` trigger variant. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | Response can now include `config.eventScopes` for `commerce_events` triggers. |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents) | Response can now include `config.eventScopes` for `commerce_events` triggers. |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) | Response can now include `config.eventScopes` for `commerce_events` triggers. |
+| [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | Request payload now supports optional `eventScopes` on `commerce_events` trigger configuration. |
+| [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Request payload now supports optional `eventScopes` on `commerce_events` trigger configuration. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-09-07" tags="improvement" %}
+
+## AI Service - automatic agent disablement after consecutive configuration failures
+
+#### Overview
+
+When an agent repeatedly fails due to configuration errors, AI Service disables it after 10 consecutive configuration failures. AI Service sends an email with details about the disabled agent to the tenant email address configured for the tenant.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) | Repeated failures can disable the agent and trigger a tenant notification email. |
+| [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Repeated failures can disable the agent and trigger a tenant notification email. |
+| [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) | Repeated failures can disable the agent and trigger a tenant notification email. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-09-04" tags="improvement" %}
+
+## Indexing Service - Battery Included credential validation
+
+#### Overview
+
+Creating or updating a `BATTERY_INCLUDED` configuration now validates `indexName` and `writeKey` before the configuration is saved. Product reindex also validates stored Battery Included credentials before a reindex job is created. Invalid credentials return `400`. If credential validation is temporarily unavailable, the request returns `502`. Failed validation leaves configuration and reindex job state unchanged.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a new configuration](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Validates Battery Included credentials before storing the configuration. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Validates Battery Included credentials before updating the configuration. |
+| [Creating a reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) | Validates stored Battery Included credentials before creating a product reindex job. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-09-02" tags="improvement" %}
+
+## Schema Service - support for `VENDOR_LOCATION` schema type
+
+#### Overview
+
+The Schema Service now supports the `VENDOR_LOCATION` schema type. You can create mixin schemas and references for vendor locations, and filter schemas and references by this type.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | The `types` field now accepts the `VENDOR_LOCATION` schema type. |
+| [Updating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) | The `types` field now accepts the `VENDOR_LOCATION` schema type. |
+| [Updating types of a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/type#put-schema-tenant-schemas-id-types) | The list of assigned types now accepts the `VENDOR_LOCATION` schema type. |
+| [Retrieving all schemas](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas) | The `type` query parameter accepts `VENDOR_LOCATION`. |
+| [Creating a reference](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/reference#post-schema-tenant-references) | The `types` field now accepts the `VENDOR_LOCATION` schema type. |
+| [Updating a reference](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/reference#put-schema-tenant-references-id) | The `types` field now accepts the `VENDOR_LOCATION` schema type. |
+| [Retrieving all references](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/reference#get-schema-tenant-references) | The `type` query parameter accepts `VENDOR_LOCATION`. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
+{% update date="2026-09-01" tags="new-feature" %}
+
+## Import Service - schedule removal and run `origin`
+
+#### Overview
+
+You can now remove a configuration's schedule. Triggering a run accepts an optional `origin` so run history identifies which system started the run. Scheduling an import job now documents `400` and `404` responses.
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Removing a schedule](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/schedules#delete-importtool-tenant-configs-configid-schedule) | Removes the schedule for a configuration. The request is idempotent and returns `204` even when no schedule exists. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Scheduling an import job](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/schedules#put-importtool-tenant-configs-configid-schedule) | Documents `400` when the `cron` expression or `timezone` value is invalid, and `404` when the configuration does not exist. |
+| [Triggering an import run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Accepts an optional `origin` field that identifies what requested the run. |
+| [Retrieving run history](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Run entries include `origin`. |
+| [Retrieving a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Run details include `origin`. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | The new run includes `origin`. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
+{% update date="2026-08-31" tags="new-feature" %}
+
+## Audit Logs (Changelog) Service - query API
+
+#### Overview
+
+The Audit Logs (Changelog) Service is now available. It provides a query API for tenant-wide change history of platform entities such as orders, customers, companies, products, segments, groups, coupons and custom entities.
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+
+If you have any questions, contact the [Emporix Support Team](mailto:support@emporix.com) or post directly in the [Community](https://community.emporix.io/) 
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving logs](https://developer.emporix.io/api-references/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) | Retrieves a paginated list of changed entries. Filter by entity, document ID, change type, actor, time range, and related entities with the `q` parameter. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-08-31" tags="major-change" %}
+
+## SEPA Export Service - removal of deprecated endpoints
+
+#### Overview
+
+The SEPA Export Service has reached End of Life and is no longer available. All previously deprecated endpoints are now removed ([SEPA Export Service - deprecation](https://developer.emporix.io/changelog/2026/readme#sepa-export-service-deprecation)).
+
+{% hint style="danger" %}
+The SEPA Export Service and all of its endpoints are no longer available.
+{% endhint %}
+
+#### Removed endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| Retrieving a SEPA Export file by ID for tenant | Endpoint removed. The `GET /sepa-export/{tenant}/files/{fileId}` operation is no longer available. |
+| Retrieving a list of export jobs | Endpoint removed. The `GET /sepa-export/{tenant}/jobs` operation is no longer available. |
+| Creating a new export job | Endpoint removed. The `POST /sepa-export/{tenant}/jobs` operation is no longer available. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-08-26" tags="new-feature" %}
+
+## Import Service - analytics and failed-record retry
+
+#### Overview
+
+The Import Service API now provides aggregated import statistics, dashboard job groups, tenant health thresholds, and tenant import limits. You can also retry only the failed records from an earlier run. Configuration, stream, and run responses now document the current service schemas.
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving import statistics](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-stats) | Returns aggregated import metrics, time series, stream health, failing streams, errors, and stream changes for a selected time window. |
+| [Retrieving job groups](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-dashboard-job-groups) | Returns tenant job groups used to scope import analytics. |
+| [Retrieving the tenant's health thresholds](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-settings-health-thresholds) | Returns tenant health thresholds and the built-in defaults used to determine stream health. |
+| [Retrieving import limits](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/license#get-importtool-tenant-license) | Returns tenant limits for imported records, concurrent imports, batch size, and workers. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | Starts a new run that processes only records that failed in an earlier run. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving all import configurations](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs) | Responses include `aiEnabled`, `version`, `healthThresholds`, and `createdBy`. The `aiEnabled` field replaces `deltaEnabled` in the documented schema. |
+| [Retrieving an import configuration](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs-id) | Responses include `aiEnabled`, `version`, `healthThresholds`, and `createdBy`. The `aiEnabled` field replaces `deltaEnabled` in the documented schema. |
+| [Retrieving all streams of a configuration](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Responses include delta-import, composite-key, discriminator, target reappearance, health-threshold, and creation metadata fields. |
+| [Retrieving a stream](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Responses include delta-import, composite-key, discriminator, target reappearance, health-threshold, and creation metadata fields. |
+| [Triggering an import run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Responses include retry, force, dry-run, cancellation, and dry-run sample metadata. |
+| [Retrieving run history](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Run entries include retry, force, dry-run, cancellation, and dry-run sample metadata. |
+| [Retrieving a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Run details include retry, force, dry-run, cancellation, and dry-run sample metadata. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-08-21" tags="improvement" %}
 
 ## AI Service - import job `details`

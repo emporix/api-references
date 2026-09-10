@@ -40,6 +40,7 @@ The special operator `compoundLogicalQuery` allows to compound complex queries w
 The `compoundLogicalQuery` operator is only available for the below services:
 
 * Approval Service
+* Audit Logs (Changelog) Service
 * Availability Service
 * Product Service
 * Quote Service

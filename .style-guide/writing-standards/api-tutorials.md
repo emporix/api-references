@@ -128,3 +128,12 @@ For tokens in example requests, use:
     <div data-gb-custom-block data-tag="hint" data-style="danger" class="hint hint-danger"><p><strong>The SEPA service is deprecated as of 20 May 2026</strong> and will be removed from the Emporix platform on <strong>24 August 2026</strong>.</p><p>If you currently use <strong>Orders → SEPA</strong> to generate SEPA-XML files, plan an alternative workflow before the removal date. For assistance, contact <a href="mailto:support@emporix.com">Emporix Support</a>.</p></div>
 
     * Add deprecation to all service endpoints.
+
+### Removal
+
+When the announced removal date arrives:
+
+* Delete the removed paths, operations, and fields from the OpenAPI spec.
+* Remove related tutorial coverage and deprecation tags or hints that no longer apply.
+* Do not leave stub pages for deleted endpoints.
+* Announce the removal in the changelog. Use the `major-change` tag, not `deprecated`. For title, table, and linking rules, see [Removal of deprecated items](../templates/changelog.md#removal-of-deprecated-items).

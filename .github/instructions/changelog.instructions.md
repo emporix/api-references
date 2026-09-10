@@ -2,7 +2,9 @@
 applyTo: "changelog/README.md"
 ---
 
-# Changelog Conventions
+# Changelog — Copilot review checklist
+
+Apply to every **new** `{% update %}…{% endupdate %}` block. Post **one comment per failed item** on the offending line.
 
 ## Where to add entries
 
@@ -10,39 +12,24 @@ All changelog entries go in **`changelog/README.md`**, inside the existing `{% u
 
 Do **not** create separate changelog files. Do **not** update `changelog/SUMMARY.md`.
 
-## Release date placeholder
+## Update block
 
-New entries never use a concrete date. Use the `RELEASE_DATE` placeholder in the `{% update %}` tag — a GitHub Action replaces it with the actual merge date when the PR lands on `main`.
+- [ ] `date="RELEASE_DATE"` only — never a hard-coded date (`local-review-checks#changelog-workflow`)
+- [ ] `tags` includes the correct change-type tag (`new-feature`, `improvement`, `major-change`, `minor-change`, `deprecated`)
+- [ ] Block is at the top of `{% updates format="full" %}`; existing entries are not modified
 
-Apply `RELEASE_DATE` in the `{% update %}` block:
+## Title and sections
 
-```markdown
-{% update date="RELEASE_DATE" tags="new-feature" %}
+- [ ] Title is `## {Service Name} - {noun phrase}` — no date prefix, no verbs in the title (`.style-guide/templates/changelog.md`)
+- [ ] Inner sections use `####` headings (Overview, New endpoints, Updated endpoints, Deprecated endpoints, Removed endpoints, Known problems)
 
-## Cart Service - batch update endpoint for cart items
-```
+## Content
 
-must not use: `{% update date="2026-05-13" tags="new-feature" %}`
-must use: `{% update date="RELEASE_DATE" tags="new-feature" %}`
+- [ ] Overview and endpoint tables describe customer impact — not internal implementation details
+- [ ] Endpoint table links use path-based GitBook URLs, not `operationId` anchors
+- [ ] Endpoint link text uses gerund form matching the endpoint summary in the API reference
+- [ ] Known problems uses the standard placeholder when none apply
 
-Titles are plain `##` headings **without** a date prefix.
+## Style reference
 
-## Change type tags
-
-Use the `tags` attribute on the `{% update %}` block. Do **not** add an `icon` to frontmatter.
-
-| Change type | Tag |
-|---|---|
-| New feature | `new-feature` |
-| Improvement | `improvement` |
-| Major change | `major-change` |
-| Minor change | `minor-change` |
-| Deprecation | `deprecated` |
-
-## Section headings
-
-Use `####` for sections inside an entry (for example `#### Overview`, `#### New endpoints`, `#### Updated endpoints`, `#### Known problems`).
-
-## Style and content
-
-For title, overview, endpoint tables, known problems, and hints, follow `.style-guide/templates/changelog.md`.
+For title, overview, endpoint tables, known problems, and hints, follow `.style-guide/templates/changelog.md` and `.github/copilot-docs-review/local-review-checks.md`.
