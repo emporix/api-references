@@ -590,7 +590,6 @@ curl -i -X POST
       "amount": 10,
       "shippingTaxCode": "STANDARD"
     },
-    "deliveryWindowId": "cbda2a28-f0cc-11ed-a05b-0242ac120003",
     "addresses": [
       {
         "contactName": "John Doe",

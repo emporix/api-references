@@ -334,7 +334,7 @@ An approval can be created (requested) only by a customer who does not have perm
 Cart checkout approval is the default B2B approval flow and does not require an extra tenant setting beyond roles and company limits.
 
 * Use `resourceType: CART` and the cart ID as `resourceId`.
-* Include the full checkout payload in `details`. Include currency, payment methods, addresses, a delivery window when used, and the selected `details.shipping` object. The Approval Service stores this payload for the approver; it does not load checkout data from the cart alone.
+* Include in `details` the checkout data that the schema supports: currency, payment methods, payment information, addresses, and the selected `details.shipping` object. Keep the delivery window on the cart. After approval, map the stored `details` into the Checkout request. The Approval Service does not load checkout data from the cart alone.
 * Put the selected `methodId`, `zoneId`, `amount`, and applicable `shippingTaxCode` in `details.shipping`. Do not persist them on the cart.
 * The requestor must own an active cart with the items to purchase. On the storefront, the flow typically starts when checkout is blocked or when the integration creates an approval after a failed checkout attempt.
 * Creating an approval does not execute checkout or create an order. The cart remains available until checkout closes it.

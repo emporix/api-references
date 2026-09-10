@@ -2191,7 +2191,7 @@ Shipping costs are typically calculated during checkout, and not automatically o
 To show a shipping estimate at cart level, provide a destination on the cart. Prefer an address of type `SHIPPING`. `countryCode` and `zipCode` remain compatible alternatives. You can also add an optional `deliveryWindow`.
 
 {% hint style="warning" %}
-Do not write `methodId`, `zoneId`, or a shipping amount to the cart. The cart model has no field for shipping method selection. Send the selected method and zone in the checkout request `shipping` object. See [Checkout Tutorial](../checkout/checkout.md).
+Do not write `methodId`, `zoneId`, or a shipping amount to the cart. The cart model has no field for shipping method selection. Send the selected method and zone in the checkout request `shipping` object. See [Checkout Tutorial](../../checkout/checkout/checkout.md).
 {% endhint %}
 
 {% stepper %}
