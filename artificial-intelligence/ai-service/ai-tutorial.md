@@ -366,7 +366,7 @@ The agent now can process the data according to its rules and code of conduct.
 
 {% step %}
 ### Reuse an attachment with another agent
-To assign an existing session attachment to another agent, call [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentId-attachments) again with `attachmentId` instead of a file. Send the same `session-id` header. The response is `204`.
+To assign an existing session attachment to another agent, call [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) again with `attachmentId` instead of a file. Send the same `session-id` header. The response is `204`.
 
 AI Service adds an `AGENT` reference on the media asset. The attachment must already belong to the session.
 

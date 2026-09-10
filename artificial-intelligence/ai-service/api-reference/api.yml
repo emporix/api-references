@@ -495,19 +495,33 @@ paths:
           - txt
 
         **Reuse an attachment:** send the `attachmentId` form field and the `session-id` header of the session that already contains the attachment. The response is `204`.
+      security:
+        - OAuth2:
+            - ai.agentexecution_manage_own
+            - ai.agentexecution_manage
       requestBody:
+        required: true
         content:
           multipart/form-data:
             schema:
-              type: object
-              properties:
-                attachment:
-                  type: string
-                  format: binary
-                  description: Content of the file. Required when you upload a new file. Do not send this field together with `attachmentId`.
-                attachmentId:
-                  type: string
-                  description: Identifier of an existing attachment to reuse in the current session. Required when you reuse a file. Do not send this field together with `attachment`.
+              oneOf:
+                - type: object
+                  required:
+                    - attachment
+                  additionalProperties: false
+                  properties:
+                    attachment:
+                      type: string
+                      format: binary
+                      description: Content of the file. Use this field to upload a new file.
+                - type: object
+                  required:
+                    - attachmentId
+                  additionalProperties: false
+                  properties:
+                    attachmentId:
+                      type: string
+                      description: Identifier of an existing attachment to reuse in the current session.
       tags:
         - Agent Chat
   '/ai-service/{tenant}/agentic/templates':
