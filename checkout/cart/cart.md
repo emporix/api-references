@@ -60,6 +60,238 @@ curl -i -X POST
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
+## How to add an item and retrieve the calculated cart in one request
+
+Use [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-execute) to add an item and retrieve the calculated cart in one HTTP request. The existing [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) followed by [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) still works.
+
+{% hint style="warning" %}
+Request duration is the sum of the chained commands. Set client and API gateway timeouts to cover the full chain, especially when `GetCart` runs cart calculation.
+{% endhint %}
+
+One `/execute` request uses one `session-id` (or `hybris-session-id`) and one `legal-entity-id`. Commands cannot override those headers. To act as a different session or legal entity, send another request. Default `versioning=skip` ignores `options.resourceVersion`.
+
+### Prerequisites
+
+* An existing cart `cartId`
+* A customer access token, or a service token with `cart.cart_manage`
+* `cart.cart_manage_external_prices` when a command includes an external price, product, fee, or discount
+* `session-id` or `hybris-session-id` for an anonymous cart
+
+{% stepper %}
+{% step %}
+#### Send AddCartItem and GetCart in one request
+
+Send `AddCartItem` then `GetCart` with `expandCalculation` set to `true`. The 207 `results` array contains the created item and the calculated cart, so you do not need a follow-up GET unless you want a later refresh.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/cart/{tenant}/execute?onError=fail' \
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -H 'session-id: 4f8a2c1e9b7d6a0c3e5f8b12' \
+  -d '{
+    "commands": [
+      {
+        "type": "AddCartItem",
+        "data": {
+          "itemYrn": "urn:yaas:saasag:caasproduct:product:yourTenant;mobile-phone-s24-gross",
+          "quantity": 2,
+          "price": {
+            "priceId": "679ca63dbcdefe5b380c98bc",
+            "originalAmount": 350,
+            "effectiveAmount": 350,
+            "currency": "EUR"
+          }
+        },
+        "options": {
+          "cartId": "6a86b20c2f5961330a8b3eb6"
+        }
+      },
+      {
+        "type": "GetCart",
+        "options": {
+          "cartId": "6a86b20c2f5961330a8b3eb6",
+          "expandCalculation": true
+        }
+      }
+    ]
+  }'
+```
+{% endstep %}
+
+{% step %}
+#### Read the 207 results
+
+The HTTP status is 207 Multi-Status when the chain is accepted. `results` is ordered. `results[0].data` is the same JSON as `POST .../items` (`itemId`, `yrn`). `results[1].data` is the same JSON as `GET .../carts/{cartId}` including `calculatedPrice`.
+
+```json
+{
+  "results": [
+    {
+      "index": 0,
+      "type": "AddCartItem",
+      "code": 201,
+      "status": "Created",
+      "data": {
+        "itemId": "3",
+        "yrn": "urn:yaas:saasag:caascart:item:yourTenant;6a86b20c2f5961330a8b3eb6;3"
+      }
+    },
+    {
+      "index": 1,
+      "type": "GetCart",
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "id": "6a86b20c2f5961330a8b3eb6",
+        "items": [
+          {
+            "id": "3",
+            "quantity": 2
+          }
+        ],
+        "calculatedPrice": {
+          "finalPrice": {
+            "netValue": 588.24,
+            "grossValue": 700,
+            "taxValue": 111.76
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+With `onError=fail`, a later command is omitted from `results` after the first non-2xx command. Earlier successful mutations stay committed:
+
+```json
+{
+  "results": [
+    {
+      "index": 0,
+      "type": "AddCartItem",
+      "code": 201,
+      "status": "Created",
+      "data": {
+        "itemId": "3",
+        "yrn": "urn:yaas:saasag:caascart:item:yourTenant;6a86b20c2f5961330a8b3eb6;3"
+      }
+    },
+    {
+      "index": 1,
+      "type": "UpdateCartItem",
+      "code": 404,
+      "status": "Not Found",
+      "data": {
+        "code": 404,
+        "status": "Not Found",
+        "message": "Cart item not found in cart 6a86b20c2f5961330a8b3eb6 with code 9"
+      }
+    }
+  ]
+}
+```
+
+A request accepts at most 10 commands. 11 or more commands return `400` for the whole request and no command runs. An empty `commands` array, an unknown `type`, an invalid `versioning` value, and `versioning=explicit` with a participating write missing `resourceVersion` also return `400` before any command runs.
+{% endstep %}
+{% endstepper %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+## How to follow cart resource versions in a command chain
+
+`versioning=follow` keeps a cursor per `cartId`. Seed the first participating write (`AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`), then omit `resourceVersion` on later writes for that cart. Follow never copies one cart's version onto another cart.
+
+Use `versioning=explicit` only when every participating write sends `resourceVersion`. A missing version on `explicit` returns `400` for the whole request. That is a client error, not a last-write-wins strategy.
+
+{% stepper %}
+{% step %}
+#### Follow resource versions on one cart
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/cart/{tenant}/execute?onError=fail&versioning=follow' \
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "commands": [
+      {
+        "type": "UpdateCartItem",
+        "data": { "quantity": 2 },
+        "options": { "cartId": "612cc4783cff1d66f699b6a1", "itemId": "1", "resourceVersion": 5 }
+      },
+      {
+        "type": "UpdateCartItem",
+        "data": { "quantity": 1 },
+        "options": { "cartId": "612cc4783cff1d66f699b6a1", "itemId": "2" }
+      },
+      {
+        "type": "GetCart",
+        "options": { "cartId": "612cc4783cff1d66f699b6a1", "expandCalculation": true }
+      },
+      {
+        "type": "UpdateCartItem",
+        "data": { "quantity": 3 },
+        "options": { "cartId": "612cc4783cff1d66f699b6a1", "itemId": "3" }
+      }
+    ]
+  }'
+```
+
+Cursor: PUT item 1 uses `5` and stores `6`; PUT item 2 uses `6` and stores `7`; GetCart leaves the cursor at `7`; PUT item 3 uses `7` and stores `8`.
+{% endstep %}
+
+{% step %}
+#### Follow resource versions on two carts
+
+Seed each `cartId` separately. The first cart's `5` to `6` to `7` is never the If-Match for the second cart.
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/cart/{tenant}/execute?onError=fail&versioning=follow' \
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "commands": [
+      {
+        "type": "UpdateCartItem",
+        "data": { "quantity": 2 },
+        "options": { "cartId": "612cc4783cff1d66f699b6a1", "itemId": "1", "resourceVersion": 5 }
+      },
+      {
+        "type": "UpdateCartItem",
+        "data": { "quantity": 1 },
+        "options": { "cartId": "68481e9e8bf22744fc578572", "itemId": "1", "resourceVersion": 10 }
+      },
+      {
+        "type": "UpdateCartItem",
+        "data": { "quantity": 1 },
+        "options": { "cartId": "612cc4783cff1d66f699b6a1", "itemId": "2" }
+      },
+      {
+        "type": "GetCart",
+        "options": { "cartId": "68481e9e8bf22744fc578572", "expandCalculation": true }
+      },
+      {
+        "type": "UpdateCartItem",
+        "data": { "quantity": 3 },
+        "options": { "cartId": "68481e9e8bf22744fc578572", "itemId": "2" }
+      }
+    ]
+  }'
+```
+{% endstep %}
+{% endstepper %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ## How to add custom attributes to a cart
 
 You can define custom attributes for a cart through `mixins`.
