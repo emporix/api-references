@@ -12,7 +12,7 @@ layout:
 You can upload or link to media files and other documents by using the Emporix Media Service. The files can be associated with specific resources within the Emporix database, or remain unassigned.
 
 {% hint style="info" %}
-It is possible to assign assets to `BRAND`, `CATEGORY`, `LABEL`, `PRODUCT`, `MODULE`, or any custom schema type. To associate an asset with a predefined resource type, set `access` to `PUBLIC`. Private assets can be linked only to custom schema types, or remain unassigned.
+It is possible to assign assets to `BRAND`, `CATEGORY`, `LABEL`, `PRODUCT`, `MODULE`, `AGENT`, or any custom schema type. To associate an asset with a predefined resource type such as `CATEGORY` or `PRODUCT`, set `access` to `PUBLIC`. Private assets can be linked to `AGENT`, custom schema types, or remain unassigned.
 {% endhint %}
 
 ## How to manage public and internal assets
@@ -96,7 +96,7 @@ curl -L \
 
 Private assets are intended for tenant-internal use and are not exposed on the storefront. Typical use cases include supplier contracts, technical specification sheets, or compliance documents that your employees need to access from the Management Dashboard or through the API.
 
-Create a private asset without `refIds`, or associate it with a custom schema type in `refIds`. Private assets cannot be linked to predefined types such as `CATEGORY` or `PRODUCT`. After creation, retrieve the file through the [Downloading an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download) endpoint with the `media.asset_read` scope.
+Create a private asset without `refIds`, or associate it with `AGENT` or a custom schema type in `refIds`. Private assets cannot be linked to predefined types such as `CATEGORY` or `PRODUCT`. After creation, retrieve the file through the [Downloading an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download) endpoint with the `media.asset_read` scope.
 
 ### Upload an unassociated private asset
 
@@ -162,4 +162,36 @@ curl -L \
   --url 'https://api.emporix.io/media/{{tenant}}/assets?pageNumber=1&pageSize=60&q=refIds.id:123e06ecf0452c2d6c0b81392' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'X-Total-Count: false'
+```
+
+## How to append a reference to an existing asset
+
+Use the [Partially updating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#patch-media-tenant-assets-assetid) endpoint when you need to change fields such as `refIds` without replacing the full asset. This works for `BLOB` assets without a file re-upload.
+
+To add one reference and keep the existing list, send `add` with the path `/refIds/-` and a single object as `value`. If you send `add` with the path `/refIds` and an array as `value`, the operation replaces the whole list.
+
+The `type` and `access` fields are immutable.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/media/{{tenant}}/assets/222222222222222222222222' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "add",
+      "path": "/refIds/-",
+      "value": {
+        "id": "agent-3",
+        "type": "AGENT"
+      }
+    }
+  ]'
 ```
