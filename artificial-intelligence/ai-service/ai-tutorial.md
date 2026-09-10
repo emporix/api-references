@@ -257,7 +257,7 @@ Each tool needs a unique `name` with no whitespace, a `prompt` that tells the ag
 * `inputSchema` – a JSON Schema document provided as a JSON string
 * `invocation.functionId` and `invocation.method` – the Cloud Function to call and the HTTP method
 * `invocation.argsLocation` – `query` or `body`. Defaults to `body` when omitted.
-* `requiredScopes` – optional OAuth scopes required to invoke the tool
+* `requiredScopes` – optional OAuth scopes required to invoke the tool. See [Cloud Function identity headers](#cloud-function-identity-headers).
 
 Each tool also stays disabled at first (`enabled` defaults to `false` if omitted). To enable a tool so the agent can call it, set `enabled` to `true`.
 
@@ -517,9 +517,80 @@ To set `enabled` to `false` when an enabled agent uses this MCP server, send `fo
 {% endstep %}
 {% endstepper %}
 
+### Cloud Function identity headers
+
+When a tool on a dynamic MCP server runs, Emporix injects identity headers into the Cloud Function so the function can call Emporix APIs without embedding credentials.
+
+Emporix sets these headers on the function request:
+
+* `emporix-token` – Token used to call Emporix APIs. It is the HTTP caller's token, a token obtained from the commerce event trigger's eventScopes, or the token used by an external MCP client.
+* `emporix-tenant` – Always set. Identifies the tenant that invoked the function.
+* `emporix-scopes` – Scopes assigned to that token. Use it to see which resources the function can access.
+* `emporix-user-id` – Set for employee tokens on HTTP agent calls and for customer tokens. Not set for service tokens, commerce events, or external MCP clients.
+* `emporix-session-id` – Set when the tool runs inside an agent session.
+* `emporix-legal-entity-id` – Set only for customer tokens when the customer is assigned to a legal entity. Not set for service tokens, commerce events, or external MCP clients.
+
+For the full header table, see [Invoking cloud functions](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/extension-hosting#invoking-cloud-functions). For how these headers are set in the Management Dashboard, see [Cloud Function context for dynamic MCP tools](https://app.gitbook.com/s/8GgoeZEZYjZrpjOU6w52/agentic-intelligence/configuration/custom-mcp#cloud-function-context-for-dynamic-mcp-tools).
+
+## How to set event scopes for a commerce event trigger
+
+When a commerce event triggers an agent, for example `product.product-created`, there is no caller token to pass to a Cloud Function on a dynamic MCP server. Set `eventScopes` on the `commerce_events` trigger so AI Service can obtain an Emporix token with those IAM scopes and forward it as `emporix-token`.
+
+* If you omit `eventScopes` or leave it empty, the Cloud Function receives no `emporix-token`.
+* Each listed scope must be a scope the caller is allowed to grant.
+
+{% hint style="info" %}
+Note the `eventScopes` is not the same as the `requiredScopes`. On the agent, the `requiredScopes` controls who may trigger the agent. On a dynamic MCP tool, the `requiredScopes` controls who may invoke the tool.
+{% endhint %}
+
+The OAuth2 access token must include the `ai.agent_manage` scope.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+Call the [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint to add a commerce event trigger with `eventScopes`. A successful request returns `204`.
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/complaint-agent' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "ADD",
+      "path": "/triggers",
+      "value": {
+        "type": "commerce_events",
+        "config": {
+          "events": "product.product-created",
+          "eventScopes": [
+            "product.product_read"
+          ]
+        }
+      }
+    }
+  ]'
+```
+
+If the agent already has a `commerce_events` trigger, replace the `triggers` array and keep any other trigger types you still need, for example `endpoint`. You can also set `eventScopes` when you create or replace the whole agent with the [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint. That `PUT` replaces the whole agent document.
+
 ## How to communicate with an Agent
 
 For some Agents, it is convenient to trigger their actions by API calls. To allow communication with the selected agent, you can use the dedicated endpoints. If the agent has a custom, dynamic, or predefined MCP server attached, it can invoke those tools during the chat without extra fields in the request body.
+
+When the agent invokes a dynamic MCP tool during chat, Emporix forwards the caller's identity to the Cloud Function:
+
+* `emporix-token` – Token used to call the chat endpoint. The function has the same access as the agent's caller.
+* `emporix-scopes` – Always populated.
+* `emporix-user-id` – Set for employee tokens and for customer tokens.
+* `emporix-legal-entity-id` – Set for customer tokens when the customer is assigned to a legal entity.
+* `emporix-session-id` – Set when the chat runs in a session.
+
+See [Cloud Function identity headers](#cloud-function-identity-headers).
 
 {% hint style="info" %}
 Choose the chat endpoint based on how you want to receive the agent's response:
