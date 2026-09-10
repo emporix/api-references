@@ -57,7 +57,7 @@ A successful request returns `201` with the segment `id`. If you omit `status`, 
 {% step %}
 #### Assign products or categories
 
-Assign products or categories so the segment can drive storefront assortment and campaigns.
+Assign products or categories so the segment can drive customized storefront assortment and campaigns.
 
 To assign one product or category, send the request to the [Updating an item assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#put-customer-segment-tenant-segments-segmentid-items-type-itemid) endpoint. Set `{type}` to `PRODUCT` or `CATEGORY`.
 

@@ -31,7 +31,9 @@ layout:
 
 #### Overview
 
-You can now assign IAM groups to customer segments. New endpoints let you create, retrieve, search, and remove group assignments. Customers inherit segment membership through their IAM group assignments, in addition to direct customer assignments. Retrieving own customer segments returns the authenticated customer's active segments. That list includes segments assigned through groups that are not bound to a legal entity, and through groups bound to the customer's current legal entity.
+You can now assign IAM groups to customer segments. The new Customer Segments Service endpoints let you create, retrieve, search, and remove group assignments. Customers inherit segment membership through their IAM group assignments, in addition to direct customer assignments. 
+
+Retrieving own customer segments returns the authenticated customer's active segments. That list includes segments assigned through groups that are not bound to a legal entity, and through groups bound to the customer's current legal entity.
 
 #### New endpoints
 
