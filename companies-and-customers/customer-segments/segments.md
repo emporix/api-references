@@ -9,8 +9,8 @@ layout:
 
 # Segments Tutorial
 
-Customer Segment Service allows you to group your customers in many convenient ways that suit different purposes.\
-You can assign products or categories to create targeted marketing campaigns and display the relevant items on the storefront.\
+Customer Segment Service allows you to group your customers in many convenient ways that suit different purposes.
+You can assign products or categories to create targeted marketing campaigns and display the relevant items on the storefront.
 The flexible service's API facilitates configuring and managing customer segments.
 
 ## How to add a customer segment
