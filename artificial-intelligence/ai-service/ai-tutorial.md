@@ -363,6 +363,23 @@ curl -L \
 
 The agent now can process the data according to its rules and code of conduct.
 {% endstep %}
+
+{% step %}
+### Reuse an attachment with another agent
+To assign an existing session attachment to another agent, call [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) again with `attachmentId` instead of a file. Send the same `session-id` header. The response is `204`.
+
+AI Service adds an `AGENT` reference on the media asset. The attachment must already belong to the session.
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/{agentId}/attachments' \
+  --header 'Content-Type: multipart/form-data' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'session-id: bdec151b-303f-4344-b41d-ccf307fb7907' \
+  --form 'attachmentId="6a1d5961a8c0af22364a2c54"'
+```
+{% endstep %}
 {% endstepper %}
 
 ## How to export and import AI agents

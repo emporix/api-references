@@ -25,6 +25,53 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Media Service - JSON Patch for assets
+
+#### Overview
+
+The Media Service now supports partial updates of assets with JSON Patch documents that follow RFC 6902. You can change fields such as `refIds` without replacing the full asset or re-uploading a `BLOB` file. The `type` and `access` fields remain immutable. The `AGENT` reference type is now documented for private assets.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Partially updating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#patch-media-tenant-assets-assetid) | Applies RFC 6902 operations to an asset. Use `/refIds/-` to append one reference and keep the existing list. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) | The `refIds.type` field now documents the `AGENT` type. Private assets can be linked to `AGENT`. |
+| [Updating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#put-media-tenant-assets-assetid) | The `refIds.type` field now documents the `AGENT` type. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## AI Service - reuse of chat attachments
+
+#### Overview
+
+You can reuse an existing chat attachment with another agent. Send `attachmentId` instead of a file on the attachments endpoint, together with the session that already contains the attachment. AI Service assigns the agent to the media asset by adding an `AGENT` reference. The response is `204`.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) | Accepts `attachmentId` to reuse a session attachment and assign the agent. Send exactly one of `attachment` or `attachmentId`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-09" tags="improvement" %}
 
 ## AI Service - commerce event trigger `eventScopes`
