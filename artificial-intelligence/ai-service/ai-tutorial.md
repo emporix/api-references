@@ -191,7 +191,7 @@ Emporix also provides predefined domain MCP servers (`type: predefined`) that yo
 **Dynamic MCP servers**
 This functionality is in preview mode - some of the features may not be fully operational yet.
 
-Hosting of cloud functions and use of dynamic MCP servers is not included in standard billing plans and is billed separately on a pay-as-you-go basis. If you're interested in getting access to these features, contact the [Sales Team](mailto:support@emporix.com).
+Hosting of cloud functions and use of dynamic MCP servers are not included in standard billing plans and are billed separately on a pay-as-you-go basis. If you're interested in getting access to these features, contact the [Sales Team](mailto:support@emporix.com).
 
 For more details, see [Hosting](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/administration/hosting) and [Extension and Cloud Function Hosting](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/extension-hosting).
 {% endhint %}
@@ -231,7 +231,7 @@ curl -L \
     "transport": "streamable_http",
     "enabled": true,
     "config": {
-      "url": "http://localhost:7900/mcp",
+      "url": "https://example.com/mcp",
       "authorizationHeaderName": "Authorization",
       "authorizationHeaderToken": {
         "id": "token-id"
@@ -273,7 +273,7 @@ curl -L \
     "enabled": true,
     "tools": [
       {
-        "name": "get-order",
+        "name": "get_order",
         "description": "Retrieves an order by ID.",
         "prompt": "Use this tool when the user asks for order details.",
         "enabled": true,
@@ -540,7 +540,7 @@ When a commerce event triggers an agent, for example `product.product-created`, 
 * Each listed scope must be a scope the caller is allowed to grant.
 
 {% hint style="info" %}
-Note the `eventScopes` is not the same as the `requiredScopes`. On the agent, the `requiredScopes` controls who may trigger the agent. On a dynamic MCP tool, the `requiredScopes` controls who may invoke the tool.
+Note that `eventScopes` is not the same as the `requiredScopes`. On the agent, the `requiredScopes` controls who may trigger the agent. On a dynamic MCP tool, the `requiredScopes` controls who may invoke the tool.
 {% endhint %}
 
 The OAuth2 access token must include the `ai.agent_manage` scope.
