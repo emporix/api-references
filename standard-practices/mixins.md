@@ -179,4 +179,4 @@ To remove a mixin, retrieve the product and send a full replacement to the [Upse
 
 ### Quote Service and Schema Service
 
-The Quote Service uses `ADD`, `REPLACE`, and `REMOVE` operations on mixin paths, while the Schema Service uses lowercase JSON Patch operations (`add`, `replace`, and `remove`). Both endpoints can remove a mixin without replacing the entire resource.
+The [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid) and [Patching a custom instance](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#patch-schema-tenant-custom-entities-type-instances-id) endpoints use `add`, `replace`, and `remove` operations on mixin paths. You can send the operation names in lowercase or uppercase. Both endpoints can remove a mixin without replacing the entire resource.
