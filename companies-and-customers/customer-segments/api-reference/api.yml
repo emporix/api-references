@@ -2346,6 +2346,10 @@ components:
             customersegment.segment_manage: Needed to create or update customer segments.
             customersegment.segment_read: Needed to read customer segments.
             customersegment.segment_read_own: Needed to read own customer segments.
+    CustomerAccessToken:
+      type: http
+      scheme: bearer
+      description: 'To generate a customer access token, go to the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.'
   links: {}
   callbacks: {}
 security:
