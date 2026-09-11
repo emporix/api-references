@@ -2162,20 +2162,12 @@ See the sections below for shipping, payment fee, tax and discounts calculations
 
 ## How to calculate shipping cost at cart level
 
-Shipping is calculated at two moments, and each moment answers a different question.
+Shipping is calculated at two moments, depending on the stage at which it is performed.
 
-| When | Question the platform answers | What the customer sees |
-| --- | --- | --- |
-| On the cart | What is the cheapest shipping for this destination, or for this delivery slot? | A preview amount |
-| At checkout | What does this shipping method, in this zone, cost? | The amount that is charged |
+* On the cart, Cart Service calculates an **estimate**: the cheapest matching fee for this destination, or the fee for a delivery slot. The customer sees a preview amount. No method is selected.
+* At checkout, Checkout Service uses a **quote**: the list of methods and fees for a destination. The customer chooses a method and zone, and sees the amount that is charged.
 
 Both answers come from Shipping Service configuration (zones, methods, and fees). The cart amount is a real estimate, not a placeholder. Cart Service does not send a method or zone, and it never calls `POST /quote`.
-
-{% hint style="info" %}
-**Estimate** — lowest matching fee, or the fee for a delivery slot. Used on the cart. No method selected.
-
-**Quote** — list of methods and fees for a destination. Used to present choices and to price the selected method at checkout.
-{% endhint %}
 
 ```mermaid
 ---
@@ -2194,19 +2186,19 @@ graph TD
     shopper(Shopper)
 
     subgraph cartStage [Cart stage: preview]
-        cartApi["Cart Service GET or PUT cart"]
-        minQuote["Shipping Service POST /quote/minimum"]
-        slotQuote["Shipping Service POST /quote/slot"]
-        cartTotal["Cart shows estimated shipping"]
+        cartApi("Cart Service GET or PUT cart")
+        minQuote("Shipping Service POST /quote/minimum")
+        slotQuote("Shipping Service POST /quote/slot")
+        cartTotal("Cart shows estimated shipping")
     end
 
     subgraph checkoutStage [Checkout stage: final charge]
-        listMethods["Storefront POST /quote"]
-        pickMethod["Shopper picks method and zone"]
-        checkoutApi["Checkout Service POST /checkouts/order"]
-        finalQuote["Shipping Service POST /quote"]
-        validate["Checkout checks submitted amount"]
-        orderCreated["Order is created"]
+        listMethods("Storefront POST /quote")
+        pickMethod("Shopper picks method and zone")
+        checkoutApi("Checkout Service POST /checkouts/order")
+        finalQuote("Shipping Service POST /quote")
+        validate("Checkout checks submitted amount")
+        orderCreated("Order is created")
     end
 
     shopper --> cartApi
@@ -2262,7 +2254,49 @@ Cart Service then calls Shipping Service:
 * [Calculating the minimum shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) (`POST /shipping/{tenant}/{site}/quote/minimum`) when no delivery window is set
 * [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) (`POST /shipping/{tenant}/{site}/quote/slot`) when the cart has a delivery window and a slot
 
-The storefront does **not** call Shipping Service for the cart preview. Provide a destination on the cart. Prefer an address of type `SHIPPING`. `countryCode` and `zipCode` remain compatible alternatives. You do not assign a shipping method.
+When no delivery window is set, Cart Service sends a request to the [Calculating the minimum shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/shipping/{tenant}/{site}/quote/minimum' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "customerId": "8765472",
+    "cartTotal": {
+      "amount": 85.00,
+      "currency": "EUR"
+    },
+    "shipFromAddress": {
+      "street": "Fritz-Elsas-Straße",
+      "streetNumber": "20",
+      "zipCode": "70173",
+      "city": "Stuttgart",
+      "country": "DE"
+    },
+    "shipToAddress": {
+      "zipCode": "10115",
+      "country": "DE"
+    }
+  }'
+```
+
+The response is a single fee, not a list of methods. That amount appears on the cart as shipping:
+
+```json
+{
+  "fee": {
+    "amount": 4.90,
+    "currency": "EUR"
+  },
+  "shippingTaxCode": "STANDARD"
+}
+```
+
+The storefront does not call Shipping Service for the cart preview. Cart Service requests the estimate when the cart has a destination. Provide that destination as an address of type `SHIPPING` when you have one, or as `countryCode` and `zipCode`. Do not assign a shipping method.
 
 The storefront calls these public Cart APIs:
 
@@ -2276,6 +2310,35 @@ Do not write `methodId`, `zoneId`, or a shipping amount to the cart. The cart mo
 ### Optional: refine the estimate with a delivery slot
 
 Setting a delivery window does not mean the customer selected a shipping method. It asks Shipping Service for the fee that belongs to that slot.
+
+After the cart has a delivery window and a slot, Cart Service sends a request to the [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/shipping/{tenant}/{site}/quote/slot' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "customerId": "8765472",
+    "cartTotal": {
+      "amount": 85.00,
+      "currency": "EUR"
+    },
+    "shipFromAddress": {
+      "zipCode": "70173",
+      "country": "DE"
+    },
+    "shipToAddress": {
+      "zipCode": "10115",
+      "country": "DE"
+    },
+    "deliveryWindowId": "1234567890abcdef",
+    "slotId": "slot123"
+  }'
+```
 
 {% stepper %}
 {% step %}
@@ -2354,6 +2417,70 @@ As a result, the response includes the shipping estimate:
 ### At checkout: final shipping quote
 
 When the customer is ready to order, they choose a shipping method. The storefront calls [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote) (`POST /shipping/{tenant}/{site}/quote`) to list methods and fees for the checkout address.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/shipping/{tenant}/{site}/quote' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "customerId": "8765472",
+    "cartTotal": {
+      "amount": 85.00,
+      "currency": "EUR"
+    },
+    "shipFromAddress": {
+      "street": "Fritz-Elsas-Straße",
+      "streetNumber": "20",
+      "zipCode": "70173",
+      "city": "Stuttgart",
+      "country": "DE"
+    },
+    "shipToAddress": {
+      "street": "Unter den Linden",
+      "streetNumber": "1",
+      "zipCode": "10115",
+      "city": "Berlin",
+      "country": "DE"
+    }
+  }'
+```
+
+The response lists matching methods, grouped by zone:
+
+```json
+[
+  {
+    "zone": {
+      "id": "deliveryarea",
+      "name": "Germany"
+    },
+    "methods": [
+      {
+        "id": "standard",
+        "name": "Standard delivery",
+        "fee": {
+          "amount": 4.90,
+          "currency": "EUR"
+        },
+        "shippingTaxCode": "STANDARD"
+      },
+      {
+        "id": "express",
+        "name": "Express delivery",
+        "fee": {
+          "amount": 9.90,
+          "currency": "EUR"
+        },
+        "shippingTaxCode": "STANDARD"
+      }
+    ]
+  }
+]
+```
 
 The checkout request must include the chosen `methodId`, `zoneId`, `amount`, and `shippingTaxCode`. Checkout Service calls `/quote` again, keeps the matching method, and checks that the submitted `amount` is correct. If it is not, checkout fails.
 

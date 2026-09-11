@@ -580,17 +580,17 @@ curl -i -X POST
       "currency": "EUR"
     },
     "shipFromAddress": {
-      "street": "Fritz-Elsas",
+      "street": "Fritz-Elsas-Straße",
       "streetNumber": "20",
       "zipCode": "70173",
       "city": "Stuttgart",
       "country": "DE"
     },
     "shipToAddress": {
-      "street": "Fritz-Elsas",
-      "streetNumber": "20",
-      "zipCode": "70173",
-      "city": "Stuttgart",
+      "street": "Unter den Linden",
+      "streetNumber": "1",
+      "zipCode": "10115",
+      "city": "Berlin",
       "country": "DE"
     }
   }'
