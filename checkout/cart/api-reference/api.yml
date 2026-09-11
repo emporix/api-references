@@ -58,10 +58,10 @@ paths:
 
         ### Error handling (`onError`)
 
-        * `fail` (default) – stops after the first non-2xx command. `results` contains only the commands that ran, including the failed one. Earlier successful mutations stay committed.
+        * `fail` (default) – stops after the first non-2xx command. `results` contains only the commands that ran, including the failed one. Earlier successful mutations stay committed. Command `code` 207 is success for `onError`. `UpdateCartItemsBatch` always returns 207, even when every entry failed, so `fail` continues. Inspect `data[].status`. `AddCartItemsBatch` uses a mixed global status (400 or 500) so `fail` does stop.
         * `resume` – runs every command. Later commands still see earlier successful mutations.
 
-        When the chain is accepted, the HTTP status is always **207 Multi-Status**, including all-2xx chains. `results` is ordered. Each `data` field is the same JSON the equivalent endpoint would return. Commands that return 204 omit `data`. Failures put the existing error shape (`code`, `status`, `message`) in `data`. Optional `headers` echo `hybris-resource-version` or `Location` when the REST call would set them. `UpdateCartItemsBatch` can use command `code` 207; that value is an entry in `results`, and the outer execute response is still one 207.
+        When the chain is accepted, the HTTP status is always **207 Multi-Status**, including all-2xx chains. `results` is ordered. Each `data` field is the same JSON the equivalent endpoint would return. Commands that return 204 omit `data`. Failures put the existing error shape (`code`, `status`, `message`) in `data`. Optional `headers` echo `hybris-resource-version` when a participating write applied If-Match. On `/execute`, create commands synthesize followable `Location` values (tenant kept): `AddCartItem` uses `/{tenant}/carts/{cartId}/items/{itemId}`, `ApplyCartDiscount` uses `/{tenant}/carts/{cartId}/discounts/{index}`, and `AddCartItemsBatch` sets each `data[].headers.location` to `/{tenant}/carts/{cartId}/items/{id}`. REST `POST .../items` and `POST .../discounts` still return the collection URL. REST `POST .../itemsBatch` still strips the tenant (`//carts`). `UpdateCartItemsBatch` can use command `code` 207; that value is an entry in `results`, and the outer execute response is still one 207.
 
         ### Session and legal entity
 
@@ -73,9 +73,11 @@ paths:
 
         `/execute` reuses the existing If-Match mechanism (`hybris-resource-version` on REST writes). On execute, the version is `options.resourceVersion` plus a request-level `versioning` query parameter. A single execute-level If-Match would make the second write on the same cart always 409, because the client submits the whole command array at once and cannot see command 1’s result before composing command 2.
 
-        Participating writes (consume and bump the follow cursor): `AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`.
+        Participating writes (send If-Match and bump the follow cursor): `AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`.
 
-        Do not consume or bump the cursor: `GetCart`, deletes, `AddCartItemsBatch`, `UpdateCartItemsBatch`.
+        `GetCart` does not send If-Match and does not bump the cursor.
+
+        Deletes, `AddCartItemsBatch`, and `UpdateCartItemsBatch` do not send If-Match and cannot seed the cursor. If a follow cursor is already seeded for that `cartId`, a successful mutating delete or batch still bumps the cursor by 1 so a later participating write does not 409. Mixed `AddCartItemsBatch` (command 400) does not bump. `UpdateCartItemsBatch` bumps only when at least one entry is 2xx. Extra `resourceVersion` on these commands is ignored.
 
         * `skip` (default) – never passes a version. Ignores `options.resourceVersion` if present. The add-then-GET storefront flow uses this.
         * `explicit` – every participating command must send `options.resourceVersion`. The service checks the whole `commands` array before command 1. If any participating write is missing a version, the request returns **400**, `results` is empty, and nothing is mutated. `explicit` is not `skip`: omitting `resourceVersion` on a participating write is a client error, not a last-write-wins strategy. Later commands are not rewritten; the client pre-computes `N`, `N+1`, and so on. The same `N` on two writes after a valid preflight yields 409 on the second command; the first write stays committed. GetCart, deletes, and itemsBatch do not require a version. Extra `resourceVersion` on them is ignored. A chain of only GetCart or deletes has no participating writes, so preflight passes. Mixing `explicit` and `skip` behavior for different writes in one request is not supported; use `skip` or two requests.
@@ -87,6 +89,7 @@ paths:
         * Later `follow` commands on that cart omit `resourceVersion`. A differing value versus the cursor returns **400** for that command. A matching value is accepted.
         * The bump is `+1`, the same as REST. Concurrent REST or `/execute` on the same cart still returns 409 through the existing check.
         * GetCart does not bump the cursor and does not seed the version from stored cart metadata.
+        * Deletes and itemsBatch do not send If-Match. They cannot seed the cursor. After a participating write has seeded that `cartId`, a successful mutating delete or batch still bumps the cursor by 1. Mixed `AddCartItemsBatch` (command 400) does not bump. `UpdateCartItemsBatch` bumps only when at least one entry is 2xx.
         * If a write returns 409, the cursor does not bump. `onError=fail` stops; `resume` leaves later writes on that cart trying the old cursor.
 
         `follow` example – the client knows cart `612cc4783cff1d66f699b6a1` is at version `5`; later writes omit `resourceVersion`:
@@ -176,6 +179,7 @@ paths:
         * unknown `type`
         * invalid `onError` or `versioning` query value
         * `versioning=explicit` with a participating command missing `resourceVersion`
+        * request-body Bean Validation failures (for example a missing `options.cartId` or an invalid `zipCode` length). `results` is empty and command 0 does not run. This is schema-invalid for the whole request, not a per-command 400.
 
         ### Additional scopes information
 
@@ -352,6 +356,8 @@ paths:
                         data:
                           itemId: '3'
                           yrn: 'urn:yaas:saasag:caascart:item:yourTenant;6a86b20c2f5961330a8b3eb6;3'
+                        headers:
+                          Location: 'https://api.emporix.io/cart/yourTenant/carts/6a86b20c2f5961330a8b3eb6/items/3'
                       - index: 1
                         type: GetCart
                         code: 200
@@ -380,6 +386,8 @@ paths:
                         data:
                           itemId: '3'
                           yrn: 'urn:yaas:saasag:caascart:item:yourTenant;6a86b20c2f5961330a8b3eb6;3'
+                        headers:
+                          Location: 'https://api.emporix.io/cart/yourTenant/carts/6a86b20c2f5961330a8b3eb6/items/3'
                       - index: 1
                         type: UpdateCartItem
                         code: 404
@@ -6157,7 +6165,14 @@ components:
           additionalProperties:
             type: string
           description: |
-            Response headers the REST call would set, such as `hybris-resource-version`. `Location` is set for create-item and apply-discount when the request URI is the REST collection URL; it is omitted on `/execute`.
+            Response headers for this command. `hybris-resource-version` is set when a participating write applied If-Match.
+
+            On `/execute`, create commands synthesize followable `Location` values (tenant kept):
+            * `AddCartItem` – `/{tenant}/carts/{cartId}/items/{itemId}`
+            * `ApplyCartDiscount` – `/{tenant}/carts/{cartId}/discounts/{index}`
+            * `AddCartItemsBatch` – each `data[].headers.location` is `/{tenant}/carts/{cartId}/items/{id}`
+
+            REST `POST .../items` and `POST .../discounts` still return the collection URL. REST `POST .../itemsBatch` still strips the tenant (`//carts`).
     ErrorMessage:
       title: error
       description: Schema for API-specific errors.

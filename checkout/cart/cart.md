@@ -124,7 +124,7 @@ curl -i -X POST \
 {% step %}
 #### Read the 207 results
 
-The HTTP status is 207 Multi-Status when the chain is accepted. `results` is ordered. `results[0].data` is the same JSON as `POST .../items` (`itemId`, `yrn`). `results[1].data` is the same JSON as `GET .../carts/{cartId}` including `calculatedPrice`.
+The HTTP status is 207 Multi-Status when the chain is accepted. `results` is ordered. `results[0].data` is the same JSON as `POST .../items` (`itemId`, `yrn`). `results[0].headers.Location` is the created item URL (`/{tenant}/carts/{cartId}/items/{itemId}`). REST `POST .../items` still returns the collection URL. `results[1].data` is the same JSON as `GET .../carts/{cartId}` including `calculatedPrice`.
 
 ```json
 {
@@ -137,6 +137,9 @@ The HTTP status is 207 Multi-Status when the chain is accepted. `results` is ord
       "data": {
         "itemId": "3",
         "yrn": "urn:yaas:saasag:caascart:item:yourTenant;6a86b20c2f5961330a8b3eb6;3"
+      },
+      "headers": {
+        "Location": "https://api.emporix.io/cart/yourTenant/carts/6a86b20c2f5961330a8b3eb6/items/3"
       }
     },
     {
@@ -178,6 +181,9 @@ With `onError=fail`, a later command is omitted from `results` after the first n
       "data": {
         "itemId": "3",
         "yrn": "urn:yaas:saasag:caascart:item:yourTenant;6a86b20c2f5961330a8b3eb6;3"
+      },
+      "headers": {
+        "Location": "https://api.emporix.io/cart/yourTenant/carts/6a86b20c2f5961330a8b3eb6/items/3"
       }
     },
     {
@@ -195,7 +201,7 @@ With `onError=fail`, a later command is omitted from `results` after the first n
 }
 ```
 
-A request accepts at most 10 commands. 11 or more commands return `400` for the whole request and no command runs. An empty `commands` array, an unknown `type`, an invalid `versioning` value, and `versioning=explicit` with a participating write missing `resourceVersion` also return `400` before any command runs.
+A request accepts at most 10 commands. 11 or more commands return `400` for the whole request and no command runs. An empty `commands` array, an unknown `type`, an invalid `versioning` value, `versioning=explicit` with a participating write missing `resourceVersion`, and request-body Bean Validation failures (for example a missing `options.cartId`) also return `400` before any command runs. `onError=fail` treats command `code` 207 as success. `UpdateCartItemsBatch` always returns 207, even when every entry failed, so inspect `data[].status`.
 {% endstep %}
 {% endstepper %}
 
@@ -205,7 +211,7 @@ A request accepts at most 10 commands. 11 or more commands return `400` for the 
 
 ## How to follow cart resource versions in a command chain
 
-`versioning=follow` keeps a cursor per `cartId`. Seed the first participating write (`AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`), then omit `resourceVersion` on later writes for that cart. Follow never copies one cart's version onto another cart.
+`versioning=follow` keeps a cursor per `cartId`. Seed the first participating write (`AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`), then omit `resourceVersion` on later writes for that cart. Follow never copies one cart's version onto another cart. Deletes and itemsBatch do not send If-Match and cannot seed the cursor. After a participating write has seeded that cart, a successful mutating delete or batch still bumps the cursor by 1.
 
 Use `versioning=explicit` only when every participating write sends `resourceVersion`. A missing version on `explicit` returns `400` for the whole request. That is a client error, not a last-write-wins strategy.
 

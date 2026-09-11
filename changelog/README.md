@@ -25,6 +25,26 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## Cart Service - followable Location on execute creates
+
+#### Overview
+
+`POST /cart/{tenant}/execute` now returns followable `Location` values on create commands. `AddCartItem` and `ApplyCartDiscount` set `results[].headers.Location` to the created item or discount URL with the tenant kept. `AddCartItemsBatch` sets each `data[].headers.location` the same way. REST `POST .../items` and `POST .../discounts` still return the collection URL. With `versioning=follow`, a successful delete or itemsBatch after a seeded cursor bumps that cart's cursor by 1 so a later participating write does not 409.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-execute) | Create commands synthesize followable `Location` headers. A seeded `versioning=follow` cursor also advances after a successful delete or itemsBatch. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="RELEASE_DATE" tags="new-feature" %}
 
 ## Cart Service - command chain endpoint for cart operations
