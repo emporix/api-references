@@ -27,6 +27,10 @@ layout:
 
 # Cart Tutorial
 
+The Cart Service stores the products a customer intends to buy and calculates prices, shipping estimates, fees, tax, and discounts on that cart.
+
+This tutorial shows how to create and update carts, add items and custom attributes, merge carts, and work with those cart-level calculations.
+
 ## How to create a new cart
 
 {% stepper %}
@@ -68,30 +72,61 @@ You can define custom attributes for a cart through `mixins`.
 {% step %}
 #### Define your custom attributes schema
 
-First, define your custom attributes schema in the form of a JSON schema.
+Create a schema that defines the custom cart fields by sending a request to the [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) endpoint.
 
-```json
-{
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "type": "object",
-    "properties": {
-      "cartInstructions": {
-        "type": "object",
-        "properties": {
-          "instruction": {
-            "type": "string"
-            }
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST 
+  'https://api.emporix.io/schema/{tenant}/schemas' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+  -H 'Content-Type: application/json' 
+  -d '{
+    "name": {
+      "en": "Cart instructions"
+    },
+    "types": [
+      "CART"
+    ],
+    "attributes": [
+      {
+        "key": "cartInstructions",
+        "name": {
+          "en": "Cart instructions"
+        },
+        "description": {
+          "en": "Delivery instructions for the cart."
+        },
+        "type": "OBJECT",
+        "metadata": {},
+        "attributes": [
+          {
+            "key": "instruction",
+            "name": {
+              "en": "Instruction"
+            },
+            "type": "TEXT",
+            "metadata": {}
           }
+        ]
       }
-    }
-}
+    ]
+  }'
 ```
 {% endstep %}
 
 {% step %}
-#### Upload schema
+#### Retrieve the schema URL
 
-Upload your schema to a hosting service and save its URL.
+Retrieve the created schema to get the schema URL by calling the [Retrieving a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-id) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X GET 
+  'https://api.emporix.io/schema/{tenant}/schemas/{id}' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
 {% endstep %}
 
 {% step %}
@@ -2296,7 +2331,7 @@ The response is a single fee, not a list of methods. That amount appears on the 
 }
 ```
 
-The storefront does not call Shipping Service for the cart preview. Cart Service requests the estimate when the cart has a destination. Provide that destination as an address of type `SHIPPING` when you have one, or as `countryCode` and `zipCode`. Do not assign a shipping method.
+The storefront does not call Shipping Service for the cart preview. Cart Service requests the estimate when the cart has a destination. Provide that destination as an address of type `SHIPPING` when you have one — the address uses `country` and `zipCode`. If you only have a country and postal code, set cart-level `countryCode` and `zipCode` instead. Do not assign a shipping method.
 
 The storefront calls these public Cart APIs:
 
@@ -2309,36 +2344,9 @@ Do not write `methodId`, `zoneId`, or a shipping amount to the cart. The cart mo
 
 ### Optional: refine the estimate with a delivery slot
 
-Setting a delivery window does not mean the customer selected a shipping method. It asks Shipping Service for the fee that belongs to that slot.
+Use these steps when you want a slot-specific shipping estimate on the cart. The storefront retrieves available delivery windows, puts one on the cart, and then retrieves the cart to see the updated estimate. Setting a delivery window does not mean the customer selected a shipping method.
 
-After the cart has a delivery window and a slot, Cart Service sends a request to the [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) endpoint.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/shipping/{tenant}/{site}/quote/slot' 
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  --header 'Content-Type: application/json' 
-  --data '{
-    "customerId": "8765472",
-    "cartTotal": {
-      "amount": 85.00,
-      "currency": "EUR"
-    },
-    "shipFromAddress": {
-      "zipCode": "70173",
-      "country": "DE"
-    },
-    "shipToAddress": {
-      "zipCode": "10115",
-      "country": "DE"
-    },
-    "deliveryWindowId": "1234567890abcdef",
-    "slotId": "slot123"
-  }'
-```
+After you update the cart with a window and slot, Cart Service calls [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot). The storefront does not send that request.
 
 {% stepper %}
 {% step %}
@@ -2401,9 +2409,9 @@ curl -L
 {% endstep %}
 {% endstepper %}
 
-As a result, the response includes the shipping estimate:
+As a result, the cart response includes the shipping estimate:
 
-```bash
+```json
 {
     "calculatedPrice": {   
         "shipping": {     
@@ -2412,6 +2420,35 @@ As a result, the response includes the shipping estimate:
         } 
     }
 }
+```
+
+Cart Service obtained that amount by sending a request like this to the [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) endpoint:
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L 
+  --request POST 
+  --url 'https://api.emporix.io/shipping/{tenant}/{site}/quote/slot' 
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+  --header 'Content-Type: application/json' 
+  --data '{
+    "customerId": "8765472",
+    "cartTotal": {
+      "amount": 85.00,
+      "currency": "EUR"
+    },
+    "shipFromAddress": {
+      "zipCode": "70173",
+      "country": "DE"
+    },
+    "shipToAddress": {
+      "zipCode": "10115",
+      "country": "DE"
+    },
+    "deliveryWindowId": "1234567890abcdef",
+    "slotId": "slot123"
+  }'
 ```
 
 ### At checkout: final shipping quote

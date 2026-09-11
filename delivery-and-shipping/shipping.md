@@ -47,22 +47,23 @@ A Delivery Cycle defines the structured schedule and availability of delivery op
 To see how Delivery Cycle Management works in practice, check the [Delivery Cycle Management](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/delivery-cycle-management) user guides.
 {% endhint %}
 
+## How to calculate shipping cost on the cart and at checkout
+
+Shipping Service prices a shipment in two moments. On the cart, Cart Service requests an estimate: the cheapest matching fee, or the fee for a delivery slot. No shipping method is selected. At checkout, the storefront lists methods with `POST /quote`, the customer chooses a method and zone, and Checkout Service re-prices that choice as the amount that is charged.
+
+Do not write `methodId`, `zoneId`, or a shipping amount to the cart. Send the selected method in the checkout request.
+
+* Cart estimate – [How to calculate shipping cost at cart level](../checkout/cart/cart.md#how-to-calculate-shipping-cost-at-cart-level) in the [Cart Tutorial](../checkout/cart/cart.md)
+* Checkout quote – [Trigger the checkout](../checkout/checkout/checkout.md#trigger-the-checkout) in the [Checkout Tutorial](../checkout/checkout/checkout.md)
+
 ## How to configure delivery and shipping settings
 
-To allow customers to place orders, you need to configure delivery and shipping settings by following the process below:
+To allow customers to place orders, you need to configure delivery and shipping settings by following the process below.
 
-1. [Create a shipping zone](shipping.md#create-a-shipping-zone)
-2. [Create a shipping group](shipping.md#create-a-shipping-group)
-3. [Assign customers to a shipping group](shipping.md#assign-customers-to-shipping-groups)
-4. [Add shipping methods and define shipping fees](shipping.md#add-shipping-methods-and-define-fees)
-5. [Add delivery times](shipping.md#add-delivery-times)
-6. [Add delivery slots](shipping.md#add-delivery-slots)
-
-{% hint style="success" %}
-**Before you start**
+### Prerequisite
 
 Ensure that you have created at least one customer.
-{% endhint %}
+
 
 {% hint style="warning" %}
 A customer account can be created by the employee themselves or from your Emporix tenant's side. For more information, check out the following endpoints in the Emporix API Reference:
