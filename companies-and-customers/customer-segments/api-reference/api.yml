@@ -59,7 +59,6 @@ paths:
       parameters:
         - $ref: '#/components/parameters/contentLanguage'
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
     get:
@@ -270,7 +269,6 @@ paths:
         
         Performs the `UPSERT` operation. If a segment with specified ID exists in the system, then it is updated. If it doesn't exist, a new customer segment is created.
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
     patch:
@@ -326,7 +324,6 @@ paths:
         The patch request consists of set of operation, that should be defined according to [RFC-6902](https://datatracker.ietf.org/doc/html/rfc6902) standard.
         
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
     delete:
@@ -350,7 +347,6 @@ paths:
         **Important**: If you want to delete a segment that has items or customers assigned to it, you need to set the `forceDelete` query parameter to `true`. In this case, all items and customers assignments will be deleted as well.
         
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
   '/customer-segment/{tenant}/segments/bulk':
@@ -366,7 +362,6 @@ paths:
         Creates multiple customer segments. The maximum batch size is 200.
 
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
       requestBody:
@@ -411,7 +406,6 @@ paths:
         The maximum batch size is 200.
 
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
       requestBody:
@@ -462,7 +456,6 @@ paths:
         **Important**: If you want to delete a segment that has items or customers assigned to it, you need to set the `forceDelete` query parameter to `true`. In this case, all items and customers assignments will be deleted as well.
 
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
       responses:
@@ -496,7 +489,6 @@ paths:
 
         Checks if the provided items match specified criteria - if ids of the products are assigned directly to one of the provided segments or indirectly through the category assignment. Only items assigned to the active segments will be returned.
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
       requestBody:
@@ -583,7 +575,6 @@ paths:
         
         Returns all customer assignments that match provided criteria.
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_read
       requestBody:
@@ -638,7 +629,6 @@ paths:
         
         Retrieves a customer with specified customerId assigned to a customer segment.
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_read
       responses:
@@ -669,7 +659,6 @@ paths:
         
         Performs `UPSERT` operation. Updates a customer assigned to a customer segment. A new customer assignment is created if it's not present in the system.
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
       requestBody:
@@ -702,7 +691,6 @@ paths:
         
         Removes customer assignment.
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
       responses:
@@ -736,7 +724,6 @@ paths:
         
         Retrieves a customer with specified customerId and companyId assigned to a customer segment.
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_read
       responses:
@@ -767,7 +754,6 @@ paths:
         
         Performs `UPSERT` operation. Updates a customer assigned to a customer segment. A new customer assignment is created if it's not present in the system.
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
       requestBody:
@@ -800,7 +786,6 @@ paths:
         
         Removes customer assignment.
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
       responses:
@@ -824,7 +809,6 @@ paths:
         Performs `UPSERT` operation. Updates multiple customer assignments to a customer segment. The maximum batch size is 200.
 
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
       requestBody:
@@ -867,7 +851,6 @@ paths:
         ### The request body for this endpoint is array of objects with `customerId` and `legalEntityId` fields.
         #### Example: `[{"customerId": "firstCustomerId", "legalEntityId": "firstLegalEntityId"}, {"customerId": "secondCustomerId", "legalEntityId": "secondLegalEntityId"}, {"customerId": "thirdCustomerId", "legalEntityId": "thirdLegalEntityId"}]`
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
       responses:
@@ -900,7 +883,6 @@ paths:
       description: |
         Retrieves all IAM group assignments for a given customer segment.
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_read
       parameters:
@@ -938,7 +920,6 @@ paths:
       description: |
         Returns all IAM group assignments that match the provided criteria.
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_read
       parameters:
@@ -987,7 +968,6 @@ paths:
       description: |
         Retrieves an IAM group assignment for a specified group and customer segment.
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_read
       parameters:
@@ -1018,7 +998,6 @@ paths:
 
         Only IAM groups with `userType` `CUSTOMER` can be assigned to a segment.
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
       requestBody:
@@ -1050,7 +1029,6 @@ paths:
       description: |
         Removes an IAM group assignment from a customer segment.
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
       responses:
@@ -1279,7 +1257,6 @@ paths:
         
         Performs `UPSERT` operation. Updates an item assignment to a customer segment. A new item assignment is created if it's not present in the system.
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
       requestBody:
@@ -1312,7 +1289,6 @@ paths:
         
         Removes an item assignment.
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
       responses:
@@ -1337,7 +1313,6 @@ paths:
         Performs `UPSERT` operation. Updates multiple item assignments to a customer segments. The maximum batch size is 200.
 
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
       requestBody:
@@ -1380,7 +1355,6 @@ paths:
         * The IDs of items should be defined in the request body as an array of strings.
         Example: `["firstItemId", "secondItemId", "thirdItemId"]`
       security:
-        - CustomerAccessToken: []
         - OAuth2:
             - customersegment.segment_manage
       responses:
@@ -2390,4 +2364,3 @@ components:
   callbacks: {}
 security:
   - OAuth2: []
-  - CustomerAccessToken: []
