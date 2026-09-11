@@ -77,10 +77,10 @@ Create a schema that defines the custom cart fields by sending a request to the 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/schema/{tenant}/schemas' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/schema/{tenant}/schemas' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "name": {
       "en": "Cart instructions"
@@ -123,8 +123,8 @@ Retrieve the created schema to get the schema URL by calling the [Retrieving a s
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -i -X GET 
-  'https://api.emporix.io/schema/{tenant}/schemas/{id}' 
+curl -i -X GET \
+  'https://api.emporix.io/schema/{tenant}/schemas/{id}' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 {% endstep %}
@@ -135,10 +135,10 @@ curl -i -X GET
 To add custom attributes to a cart, send a request to the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
 ```bash
-curl -i -X PUT 
-  'https://api.emporix.io/cart/{tenant}/carts/{cartId}' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Type: application/json' 
+curl -i -X PUT \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
   "customerId": "87413250",
   "currency": "EUR",
@@ -2294,11 +2294,11 @@ When no delivery window is set, Cart Service sends a request to the [Calculating
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/shipping/{tenant}/{site}/quote/minimum' 
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/shipping/{tenant}/{site}/quote/minimum' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{
     "customerId": "8765472",
     "cartTotal": {
@@ -2326,8 +2326,7 @@ The response is a single fee, not a list of methods. That amount appears on the 
   "fee": {
     "amount": 4.90,
     "currency": "EUR"
-  },
-  "shippingTaxCode": "STANDARD"
+  }
 }
 ```
 
@@ -2361,9 +2360,9 @@ Make sure the shipping zone is properly stored in the delivery times object.
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -L 
-  --url 'https://api.emporix.io/shipping/{tenant}/actualDeliveryWindows/{cartId}' 
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+curl -L \
+  --url 'https://api.emporix.io/shipping/{tenant}/actualDeliveryWindows/{cartId}' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: */*'
 ```
 {% endstep %}
@@ -2376,11 +2375,11 @@ Pick the delivery window you want to use and update the cart by calling the [Upd
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -L 
-  --request PUT 
-  --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}' 
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request PUT \
+  --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{
         "countryCode": "DE",     
         "zipCode": "10115",
@@ -2401,9 +2400,9 @@ Verify the results by retrieving the cart. Call the [Retrieving cart details by 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -L 
-  --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}'
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+curl -L \
+  --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: */*'
 ```
 {% endstep %}
@@ -2427,11 +2426,11 @@ Cart Service obtained that amount by sending a request like this to the [Calcula
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/shipping/{tenant}/{site}/quote/slot' 
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/shipping/{tenant}/{site}/quote/slot' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{
     "customerId": "8765472",
     "cartTotal": {
@@ -2458,11 +2457,11 @@ When the customer is ready to order, they choose a shipping method. The storefro
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/shipping/{tenant}/{site}/quote' 
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/shipping/{tenant}/{site}/quote' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{
     "customerId": "8765472",
     "cartTotal": {
@@ -2519,7 +2518,7 @@ The response lists matching methods, grouped by zone:
 ]
 ```
 
-The checkout request must include the chosen `methodId`, `zoneId`, `amount`, and `shippingTaxCode`. Checkout Service calls `/quote` again, keeps the matching method, and checks that the submitted `amount` is correct. If it is not, checkout fails.
+The checkout request must map the selected method's `zone.id`, `methods[].id`, `methods[].name`, and `methods[].fee.amount` to `zoneId`, `methodId`, `methodName`, and `amount`. Include `shippingTaxCode` when the quote returns it. Checkout Service calls `/quote` again, keeps the matching method, and checks that the submitted `amount` is correct. If it is not, checkout fails.
 
 Do not send the cart estimate as the checkout amount unless the customer selected that same cheapest method.
 

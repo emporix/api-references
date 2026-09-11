@@ -546,7 +546,7 @@ Before you trigger checkout:
 * Configure shipping and tax.
 * Create a cart with a destination, currency, and an optional `deliveryWindow`.
 * Call [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote) (`POST /shipping/{tenant}/{site}/quote`) and present the methods.
-* Send the selected `methodId`, `zoneId`, `amount`, and `shippingTaxCode` in the checkout request `shipping` object.
+* Send the selected method in the checkout request `shipping` object. Map `zone.id`, `methods[].id`, `methods[].name`, and `methods[].fee.amount` to `zoneId`, `methodId`, `methodName`, and `amount`. Include `shippingTaxCode` when the quote returns it.
 
 Prefer a cart address of type `SHIPPING` for the destination. `countryCode` and `zipCode` remain compatible alternatives.
 
@@ -569,10 +569,10 @@ Call [Calculating the final shipping cost](https://developer.emporix.io/api-refe
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/shipping/{tenant}/{site}/quote' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/shipping/{tenant}/{site}/quote' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
     "customerId": "8765472",
     "cartTotal": {
@@ -587,13 +587,37 @@ curl -i -X POST
       "country": "DE"
     },
     "shipToAddress": {
-      "street": "Unter den Linden",
-      "streetNumber": "1",
-      "zipCode": "10115",
-      "city": "Berlin",
+      "street": "Fritz-Elsas-Straße",
+      "streetNumber": "20",
+      "zipCode": "70173",
+      "city": "Stuttgart",
       "country": "DE"
     }
   }'
+```
+
+The response lists matching methods, grouped by zone:
+
+```json
+[
+  {
+    "zone": {
+      "id": "zone1",
+      "name": "Zone 1"
+    },
+    "methods": [
+      {
+        "id": "fedex-2dayground",
+        "name": "FedEx 2Day",
+        "fee": {
+          "amount": 10,
+          "currency": "EUR"
+        },
+        "shippingTaxCode": "STANDARD"
+      }
+    ]
+  }
+]
 ```
 {% endstep %}
 
@@ -602,13 +626,13 @@ curl -i -X POST
 
 Send a request to the [Triggering a checkout](https://developer.emporix.io/api-references/api-guides/checkout/checkout/api-reference/checkouts) endpoint.
 
-The following example sends the shipping selection in the checkout request. The submitted `amount` must match the quotation for that method and zone.
+The following example maps that quote to the checkout `shipping` object: `zone.id` to `zoneId`, `methods[].id` to `methodId`, `methods[].name` to `methodName`, and `methods[].fee.amount` to `amount`. It includes `shippingTaxCode` because the quote returned it. The submitted `amount` must match the quotation for that method and zone.
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/checkout/{tenant}/checkouts/order' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/checkout/{tenant}/checkouts/order' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -H 'saas-token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MTQ0MzU2MyIsImV4cCI6MTY5Nzk3MDUyOH0.F0b5jr6KeSoBCj-suTLuasmydaJEudc1ZrESkQXSCGk' \
   -d '{
     "cartId": "9b36757a-5ea1-4689-9ed3-fb630eb5048c",
