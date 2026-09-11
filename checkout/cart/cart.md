@@ -2162,37 +2162,120 @@ See the sections below for shipping, payment fee, tax and discounts calculations
 
 ## How to calculate shipping cost at cart level
 
-The shipping calculation depends on the stage at which it is performed.
+Shipping is calculated at two moments, and each moment answers a different question.
 
-* In the cart, where the delivery method and zone are not yet available, the calculation uses the minimum shipping estimate. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`.
-*   The `shipToAddress` is determined in the following way:
+| When | Question the platform answers | What the customer sees |
+| --- | --- | --- |
+| On the cart | What is the cheapest shipping for this destination, or for this delivery slot? | A preview amount |
+| At checkout | What does this shipping method, in this zone, cost? | The amount that is charged |
 
-    * cart address with origin `REQUEST` and type `SHIPPING`
-    * cart `countryCode` and `zipCode` — kept for backward compatibility from when it was not possible to define addresses at the cart level
-    * cart address with origin `LEGAL_ENTITY`, `CUSTOMER`, or `SITE`, and type `SHIPPING`
+Both answers come from Shipping Service configuration (zones, methods, and fees). The cart amount is a real estimate, not a placeholder. Cart Service does not send a method or zone, and it never calls `POST /quote`.
 
-    When an address is not explicitly provided in the request, the Cart Service automatically populates it based on the following priority order:
+{% hint style="info" %}
+**Estimate** — lowest matching fee, or the fee for a delivery slot. Used on the cart. No method selected.
 
-    1. **Legal Entity Address** — If the cart is associated with a legal entity, the first location containing both `country`, `zipCode`, and the required address type is used (origin: `LEGAL_ENTITY`).
-    2. **Customer Address** — If the cart has a logged-in customer, the default address matching the required type is used (origin: `CUSTOMER`).
-    3. **Site Homebase Address** — If none of the above are available, the site's homebase address is used (origin: `SITE`).
+**Quote** — list of methods and fees for a destination. Used to present choices and to price the selected method at checkout.
+{% endhint %}
 
-    See the [Calculating the minimum shipping costs](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) endpoint.
-* In the checkout, where information about the delivery window and zone is already available, the calculation uses the following endpoints: [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote), or [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) accordingly.
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128"
+    edgeLabelTextColor: "#4C5359"
+---
+graph TD
+    shopper(Shopper)
+
+    subgraph cartStage [Cart stage: preview]
+        cartApi["Cart Service GET or PUT cart"]
+        minQuote["Shipping Service POST /quote/minimum"]
+        slotQuote["Shipping Service POST /quote/slot"]
+        cartTotal["Cart shows estimated shipping"]
+    end
+
+    subgraph checkoutStage [Checkout stage: final charge]
+        listMethods["Storefront POST /quote"]
+        pickMethod["Shopper picks method and zone"]
+        checkoutApi["Checkout Service POST /checkouts/order"]
+        finalQuote["Shipping Service POST /quote"]
+        validate["Checkout checks submitted amount"]
+        orderCreated["Order is created"]
+    end
+
+    shopper --> cartApi
+    cartApi -->|"no delivery window"| minQuote
+    cartApi -->|"delivery window and slot"| slotQuote
+    minQuote --> cartTotal
+    slotQuote --> cartTotal
+
+    shopper --> listMethods
+    listMethods --> pickMethod
+    pickMethod --> checkoutApi
+    checkoutApi --> finalQuote
+    finalQuote --> validate
+    validate --> orderCreated
+
+    style shopper fill:#A1BDDC, stroke:#4C5359
+    style cartApi fill:#DDE6EE, stroke:#4C5359
+    style minQuote fill:#F2F6FA, stroke:#4C5359
+    style slotQuote fill:#F2F6FA, stroke:#4C5359
+    style cartTotal fill:#DDE6EE, stroke:#4C5359
+    style listMethods fill:#A1BDDC, stroke:#4C5359
+    style pickMethod fill:#A1BDDC, stroke:#4C5359
+    style checkoutApi fill:#DDE6EE, stroke:#4C5359
+    style finalQuote fill:#F2F6FA, stroke:#4C5359
+    style validate fill:#DDE6EE, stroke:#4C5359
+    style orderCreated fill:#DDE6EE, stroke:#4C5359
+```
 
 {% hint style="danger" %}
 Always make sure that your site’s `homeBase.address` has the `country` and `zip-code` information included. It's mandatory for shipping calculations.
 {% endhint %}
 
-{% hint style="warning" %}
-Shipping costs are typically calculated during checkout, and not automatically on the cart object alone.
-{% endhint %}
+### On the cart: estimated shipping
 
-To show a shipping estimate at cart level, provide a destination on the cart. Prefer an address of type `SHIPPING`. `countryCode` and `zipCode` remain compatible alternatives. You can also add an optional `deliveryWindow`.
+While the customer is still shopping, they have usually not chosen a delivery method and zone yet. Cart Service therefore calculates an **estimate**, not a final charge.
+
+* The shipment is always treated as coming from `sites.homeBase.address`.
+* The destination is the cart shipping address, or `countryCode` and `zipCode` if that is all that is available.
+* If no destination was provided, Cart Service fills one in this order:
+
+    1. **Legal entity address** – If the cart is associated with a legal entity, the first location containing `country`, `zipCode`, and the required address type is used (origin: `LEGAL_ENTITY`).
+    2. **Customer address** – If the cart has a logged-in customer, the default address matching the required type is used (origin: `CUSTOMER`).
+    3. **Site home base address** – If none of the above are available, the site's home base address is used (origin: `SITE`).
+
+The `shipToAddress` is determined in the following way:
+
+* cart address with origin `REQUEST` and type `SHIPPING`
+* cart `countryCode` and `zipCode` — kept for backward compatibility from when it was not possible to define addresses at the cart level
+* cart address with origin `LEGAL_ENTITY`, `CUSTOMER`, or `SITE`, and type `SHIPPING`
+
+Cart Service then calls Shipping Service:
+
+* [Calculating the minimum shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) (`POST /shipping/{tenant}/{site}/quote/minimum`) when no delivery window is set
+* [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) (`POST /shipping/{tenant}/{site}/quote/slot`) when the cart has a delivery window and a slot
+
+The storefront does **not** call Shipping Service for the cart preview. Provide a destination on the cart. Prefer an address of type `SHIPPING`. `countryCode` and `zipCode` remain compatible alternatives. You do not assign a shipping method.
+
+The storefront calls these public Cart APIs:
+
+* [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) (`GET /cart/{tenant}/carts/{cartId}`)
+* [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) (`PUT /cart/{tenant}/carts/{cartId}`)
 
 {% hint style="warning" %}
 Do not write `methodId`, `zoneId`, or a shipping amount to the cart. The cart model has no field for shipping method selection. Send the selected method and zone in the checkout request `shipping` object. See [Checkout Tutorial](../../checkout/checkout/checkout.md).
 {% endhint %}
+
+### Optional: refine the estimate with a delivery slot
+
+Setting a delivery window does not mean the customer selected a shipping method. It asks Shipping Service for the fee that belongs to that slot.
 
 {% stepper %}
 {% step %}
@@ -2267,6 +2350,16 @@ As a result, the response includes the shipping estimate:
     }
 }
 ```
+
+### At checkout: final shipping quote
+
+When the customer is ready to order, they choose a shipping method. The storefront calls [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote) (`POST /shipping/{tenant}/{site}/quote`) to list methods and fees for the checkout address.
+
+The checkout request must include the chosen `methodId`, `zoneId`, `amount`, and `shippingTaxCode`. Checkout Service calls `/quote` again, keeps the matching method, and checks that the submitted `amount` is correct. If it is not, checkout fails.
+
+Do not send the cart estimate as the checkout amount unless the customer selected that same cheapest method.
+
+See [Checkout Tutorial](../../checkout/checkout/checkout.md) for the full contract and request example.
 
 Cart API reference:
 

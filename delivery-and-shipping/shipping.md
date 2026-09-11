@@ -41,7 +41,7 @@ A Delivery Cycle defines the structured schedule and availability of delivery op
 
 * Delivery Times: Configurable time ranges (for example days of the week, business hours) during which deliveries are operationally feasible. These are scoped according to shipping zones or regions and form the upper-level availability constraints.
 * Delivery Slots: Smaller time intervals nested within Delivery Times, representing granular windows customers can select for order fulfillment. Slots enable scheduling precision and enhance customer choice.
-* Delivery Windows: Combinations of delivery times and slots filtered dynamically based on factors such as postal code, cart contents, and business rules, used to present valid delivery options during checkout.
+* Delivery Windows: Combinations of delivery times and slots filtered dynamically based on factors such as postal code, cart contents, and business rules – used on the cart to refine the shipping estimate.
 
 {% hint style="success" %}
 To see how Delivery Cycle Management works in practice, check the [Delivery Cycle Management](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/delivery-cycle-management) user guides.
@@ -318,10 +318,15 @@ curl -i -X POST
 
 ## How to manage delivery and shipping information upon checkout
 
-Retrieve available delivery windows to estimate delivery time for a destination. Put the destination and an optional `deliveryWindow` on the cart. Send the selected shipping method and zone in the checkout request. Do not write `methodId`, `zoneId`, or a shipping amount to the cart.
+Delivery windows on the cart refine the shipping **estimate**. Method and zone belong in the checkout request.
+
+* Put the destination and an optional `deliveryWindow` on the cart. Cart Service then uses [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) (`POST /shipping/{tenant}/{site}/quote/slot`) when a window and slot are set, or [Calculating the minimum shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) (`POST /shipping/{tenant}/{site}/quote/minimum`) otherwise.
+* At checkout, the storefront lists methods with [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote) (`POST /shipping/{tenant}/{site}/quote`), then sends the selected `methodId`, `zoneId`, and `amount` in the checkout request. Checkout Service re-prices that method and rejects a mismatched `amount`. See [Checkout Tutorial](../checkout/checkout/checkout.md).
+* Do not write `methodId`, `zoneId`, or a shipping amount to the cart.
 
 1. [Retrieve available delivery windows](shipping.md#retrieve-available-delivery-windows-for-a-particular-postal-code-and-cart)
 2. [Add delivery information to the customer's cart](shipping.md#update-the-cart-with-delivery-information)
+3. [List methods and trigger checkout](../checkout/checkout/checkout.md#trigger-the-checkout)
 
 {% hint style="success" %}
 **Before you start**

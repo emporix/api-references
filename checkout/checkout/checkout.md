@@ -539,12 +539,14 @@ To complete the checkout, there are two options:
 
 Once a customer places the product in a cart, they can proceed with the checkout process.
 
-Shipping method and zone belong in the checkout request, not on the cart. Before you trigger checkout:
+Shipping method and zone belong in the checkout request, not on the cart. Checkout Service does not call `/quote/minimum` or `/quote/slot`. A delivery window on the cart is reserved and validated separately; it is not used to pick the shipping fee.
+
+Before you trigger checkout:
 
 * Configure shipping and tax.
 * Create a cart with a destination, currency, and an optional `deliveryWindow`.
-* Retrieve eligible delivery options, then select a method and zone.
-* Send that selection in the checkout request `shipping` object.
+* Call [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote) (`POST /shipping/{tenant}/{site}/quote`) and present the methods.
+* Send the selected `methodId`, `zoneId`, `amount`, and `shippingTaxCode` in the checkout request `shipping` object.
 
 Prefer a cart address of type `SHIPPING` for the destination. `countryCode` and `zipCode` remain compatible alternatives.
 
@@ -552,17 +554,55 @@ Prefer a cart address of type `SHIPPING` for the destination. `countryCode` and 
 Do not write `methodId`, `zoneId`, or a shipping amount to the cart. The cart model has no field for shipping method selection.
 {% endhint %}
 
-A cart can show a shipping estimate from the destination context. Checkout applies the selected shipping data and finalizes shipping and tax during checkout and order creation.
+A cart can show a shipping estimate from the destination context. Do not reuse that estimate as `shipping.amount` unless the customer selected that same cheapest method.
 
-The checkout service validates the data that comes from the customer's session token, the cart, and tiered prices, and then proceeds with the delivery and payment details. Then, it handles the payment and creates an order in the system, closing the cart.
+Checkout Service calls `/quote` again, keeps the method whose `methodId` and `zoneId` match, and rejects the request if the submitted `amount` does not equal the recalculated fee. If a free-shipping discount applies, the recalculated fee must be `0`. If the method or zone does not match exactly one result, checkout fails with invalid shipping information.
+
+Checkout Service validates the data that comes from the customer's session token, the cart, and tiered prices, and then proceeds with the delivery and payment details. Then, it handles the payment and creates an order in the system, closing the cart.
 
 {% stepper %}
+{% step %}
+#### List available shipping methods
+
+Call [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote) to list methods and fees for the checkout address and cart total.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST 
+  'https://api.emporix.io/shipping/{tenant}/{site}/quote' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+  -H 'Content-Type: application/json' 
+  -d '{
+    "customerId": "8765472",
+    "cartTotal": {
+      "amount": 85.00,
+      "currency": "EUR"
+    },
+    "shipFromAddress": {
+      "street": "Fritz-Elsas",
+      "streetNumber": "20",
+      "zipCode": "70173",
+      "city": "Stuttgart",
+      "country": "DE"
+    },
+    "shipToAddress": {
+      "street": "Fritz-Elsas",
+      "streetNumber": "20",
+      "zipCode": "70173",
+      "city": "Stuttgart",
+      "country": "DE"
+    }
+  }'
+```
+{% endstep %}
+
 {% step %}
 #### Start the checkout
 
 Send a request to the [Triggering a checkout](https://developer.emporix.io/api-references/api-guides/checkout/checkout/api-reference/checkouts) endpoint.
 
-The following example sends the shipping selection in the checkout request.
+The following example sends the shipping selection in the checkout request. The submitted `amount` must match the quotation for that method and zone.
 
 ```bash
 curl -i -X POST 
