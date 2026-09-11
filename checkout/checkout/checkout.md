@@ -539,19 +539,100 @@ To complete the checkout, there are two options:
 
 Once a customer places the product in a cart, they can proceed with the checkout process.
 
-The checkout service validates the data that come from customer's session token, the cart, and tiered prices, and then proceeds with the delivery and payment details. Then, it handles the payment and creates an order in the system, closing the cart.
+Shipping method and zone belong in the checkout request, not on the cart. Checkout Service does not call `/quote/minimum` or `/quote/slot`. A delivery window on the cart is reserved and validated separately; it is not used to pick the shipping fee.
+
+Before you trigger checkout:
+
+* Configure shipping and tax.
+* Create a cart with a destination, currency, and an optional `deliveryWindow`.
+* Call [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote) (`POST /shipping/{tenant}/{site}/quote`) and present the methods.
+* Send the selected method in the checkout request `shipping` object. Map `zone.id`, `methods[].id`, `methods[].name`, and `methods[].fee.amount` to `zoneId`, `methodId`, `methodName`, and `amount`. Include `shippingTaxCode` when the quote returns it.
+
+Prefer a cart address of type `SHIPPING` for the destination. `countryCode` and `zipCode` remain compatible alternatives.
+
+{% hint style="warning" %}
+Do not write `methodId`, `zoneId`, or a shipping amount to the cart. The cart model has no field for shipping method selection.
+{% endhint %}
+
+A cart can show a shipping estimate from the destination context. Do not reuse that estimate as `shipping.amount` unless the customer selected that same cheapest method.
+
+Checkout Service calls `/quote` again, keeps the method whose `methodId` and `zoneId` match, and rejects the request if the submitted `amount` does not equal the recalculated fee. If a free-shipping discount applies, the recalculated fee must be `0`. If the method or zone does not match exactly one result, checkout fails with invalid shipping information.
+
+Checkout Service validates the data that comes from the customer's session token, the cart, and tiered prices, and then proceeds with the delivery and payment details. Then, it handles the payment and creates an order in the system, closing the cart.
 
 {% stepper %}
+{% step %}
+#### List available shipping methods
+
+Call [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote) to list methods and fees for the checkout address and cart total.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/shipping/{tenant}/{site}/quote' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "customerId": "8765472",
+    "cartTotal": {
+      "amount": 85.00,
+      "currency": "EUR"
+    },
+    "shipFromAddress": {
+      "street": "Fritz-Elsas-Straße",
+      "streetNumber": "20",
+      "zipCode": "70173",
+      "city": "Stuttgart",
+      "country": "DE"
+    },
+    "shipToAddress": {
+      "street": "Fritz-Elsas-Straße",
+      "streetNumber": "20",
+      "zipCode": "70173",
+      "city": "Stuttgart",
+      "country": "DE"
+    }
+  }'
+```
+
+The response lists matching methods, grouped by zone:
+
+```json
+[
+  {
+    "zone": {
+      "id": "zone1",
+      "name": "Zone 1"
+    },
+    "methods": [
+      {
+        "id": "fedex-2dayground",
+        "name": "FedEx 2Day",
+        "fee": {
+          "amount": 10,
+          "currency": "EUR"
+        },
+        "shippingTaxCode": "STANDARD"
+      }
+    ]
+  }
+]
+```
+{% endstep %}
+
 {% step %}
 #### Start the checkout
 
 Send a request to the [Triggering a checkout](https://developer.emporix.io/api-references/api-guides/checkout/checkout/api-reference/checkouts) endpoint.
 
+The following example maps that quote to the checkout `shipping` object: `zone.id` to `zoneId`, `methods[].id` to `methodId`, `methods[].name` to `methodName`, and `methods[].fee.amount` to `amount`. It includes `shippingTaxCode` because the quote returned it. The submitted `amount` must match the quotation for that method and zone.
+
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/checkout/{tenant}/checkouts/order' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/checkout/{tenant}/checkouts/order' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -H 'saas-token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MTQ0MzU2MyIsImV4cCI6MTY5Nzk3MDUyOH0.F0b5jr6KeSoBCj-suTLuasmydaJEudc1ZrESkQXSCGk' \
   -d '{
     "cartId": "9b36757a-5ea1-4689-9ed3-fb630eb5048c",
@@ -567,13 +648,12 @@ curl -i -X POST
     ],
     "currency": "EUR",
     "shipping": {
-      "methodId": "4-more_hours_timeframe",
-      "zoneId": "deliveryarea",
-      "methodName": "Delivery method name",
+      "methodId": "fedex-2dayground",
+      "zoneId": "zone1",
+      "methodName": "FedEx 2Day",
       "amount": 10,
       "shippingTaxCode": "STANDARD"
     },
-    "deliveryWindowId": "cbda2a28-f0cc-11ed-a05b-0242ac120003",
     "addresses": [
       {
         "contactName": "John Doe",

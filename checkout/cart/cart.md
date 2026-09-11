@@ -27,6 +27,10 @@ layout:
 
 # Cart Tutorial
 
+The Cart Service stores the products a customer intends to buy and calculates prices, shipping estimates, fees, tax, and discounts on that cart.
+
+This tutorial shows how to create and update carts, add items and custom attributes, merge carts, and work with those cart-level calculations.
+
 ## How to create a new cart
 
 {% stepper %}
@@ -68,30 +72,61 @@ You can define custom attributes for a cart through `mixins`.
 {% step %}
 #### Define your custom attributes schema
 
-First, define your custom attributes schema in the form of a JSON schema.
+Create a schema that defines the custom cart fields by sending a request to the [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) endpoint.
 
-```json
-{
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "type": "object",
-    "properties": {
-      "cartInstructions": {
-        "type": "object",
-        "properties": {
-          "instruction": {
-            "type": "string"
-            }
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/schema/{tenant}/schemas' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": {
+      "en": "Cart instructions"
+    },
+    "types": [
+      "CART"
+    ],
+    "attributes": [
+      {
+        "key": "cartInstructions",
+        "name": {
+          "en": "Cart instructions"
+        },
+        "description": {
+          "en": "Delivery instructions for the cart."
+        },
+        "type": "OBJECT",
+        "metadata": {},
+        "attributes": [
+          {
+            "key": "instruction",
+            "name": {
+              "en": "Instruction"
+            },
+            "type": "TEXT",
+            "metadata": {}
           }
+        ]
       }
-    }
-}
+    ]
+  }'
 ```
 {% endstep %}
 
 {% step %}
-#### Upload schema
+#### Retrieve the schema URL
 
-Upload your schema to a hosting service and save its URL.
+Retrieve the created schema to get the schema URL by calling the [Retrieving a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-id) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/schema/{tenant}/schemas/{id}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
 {% endstep %}
 
 {% step %}
@@ -100,14 +135,13 @@ Upload your schema to a hosting service and save its URL.
 To add custom attributes to a cart, send a request to the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
 ```bash
-curl -i -X PUT 
-  'https://api.emporix.io/cart/{tenant}/carts/{cartId}' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Type: application/json' 
+curl -i -X PUT \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
   "customerId": "87413250",
   "currency": "EUR",
-  "deliveryWindowId": "60006da77ec20a807cd6f065",
   "type": "shopping",
   "zipCode": "10115",
   "countryCode": "DE",
@@ -2163,36 +2197,160 @@ See the sections below for shipping, payment fee, tax and discounts calculations
 
 ## How to calculate shipping cost at cart level
 
-The shipping calculation depends on the stage at which it is performed.
+Shipping is calculated at two moments, depending on the stage at which it is performed.
 
-* In the cart, where the delivery method and zone are not yet available, the calculation uses the minimum shipping estimate. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`.
-*   The `shipToAddress` is determined in the following way:
+* On the cart, Cart Service calculates an **estimate**: the cheapest matching fee for this destination, or the fee for a delivery slot. The customer sees a preview amount. No method is selected.
+* At checkout, Checkout Service uses a **quote**: the list of methods and fees for a destination. The customer chooses a method and zone, and sees the amount that is charged.
 
-    * cart address with origin `REQUEST` and type `SHIPPING`
-    * cart `countryCode` and `zipCode` — kept for backward compatibility from when it was not possible to define addresses at the cart level
-    * cart address with origin `LEGAL_ENTITY`, `CUSTOMER`, or `SITE`, and type `SHIPPING`
+Both answers come from Shipping Service configuration (zones, methods, and fees). The cart amount is a real estimate, not a placeholder. Cart Service does not send a method or zone, and it never calls `POST /quote`.
 
-    When an address is not explicitly provided in the request, the Cart Service automatically populates it based on the following priority order:
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128"
+    edgeLabelTextColor: "#4C5359"
+---
+graph TD
+    shopper(Shopper)
 
-    1. **Legal Entity Address** — If the cart is associated with a legal entity, the first location containing both `country`, `zipCode`, and the required address type is used (origin: `LEGAL_ENTITY`).
-    2. **Customer Address** — If the cart has a logged-in customer, the default address matching the required type is used (origin: `CUSTOMER`).
-    3. **Site Homebase Address** — If none of the above are available, the site's homebase address is used (origin: `SITE`).
+    subgraph cartStage [Cart stage: preview]
+        cartApi("Cart Service GET or PUT cart")
+        minQuote("Shipping Service POST /quote/minimum")
+        slotQuote("Shipping Service POST /quote/slot")
+        cartTotal("Cart shows estimated shipping")
+    end
 
-    See the [Calculating the minimum shipping costs](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) endpoint.
-* In the checkout, where information about the delivery window and zone is already available, the calculation uses the following endpoints: [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote), or [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) accordingly.
+    subgraph checkoutStage [Checkout stage: final charge]
+        listMethods("Storefront POST /quote")
+        pickMethod("Shopper picks method and zone")
+        checkoutApi("Checkout Service POST /checkouts/order")
+        finalQuote("Shipping Service POST /quote")
+        validate("Checkout checks submitted amount")
+        orderCreated("Order is created")
+    end
+
+    shopper --> cartApi
+    cartApi -->|"no delivery window"| minQuote
+    cartApi -->|"delivery window and slot"| slotQuote
+    minQuote --> cartTotal
+    slotQuote --> cartTotal
+
+    shopper --> listMethods
+    listMethods --> pickMethod
+    pickMethod --> checkoutApi
+    checkoutApi --> finalQuote
+    finalQuote --> validate
+    validate --> orderCreated
+
+    style shopper fill:#A1BDDC, stroke:#4C5359
+    style cartApi fill:#DDE6EE, stroke:#4C5359
+    style minQuote fill:#F2F6FA, stroke:#4C5359
+    style slotQuote fill:#F2F6FA, stroke:#4C5359
+    style cartTotal fill:#DDE6EE, stroke:#4C5359
+    style listMethods fill:#A1BDDC, stroke:#4C5359
+    style pickMethod fill:#A1BDDC, stroke:#4C5359
+    style checkoutApi fill:#DDE6EE, stroke:#4C5359
+    style finalQuote fill:#F2F6FA, stroke:#4C5359
+    style validate fill:#DDE6EE, stroke:#4C5359
+    style orderCreated fill:#DDE6EE, stroke:#4C5359
+```
 
 {% hint style="danger" %}
 Always make sure that your site’s `homeBase.address` has the `country` and `zip-code` information included. It's mandatory for shipping calculations.
 {% endhint %}
 
+### On the cart: estimated shipping
+
+While the customer is still shopping, they have usually not chosen a delivery method and zone yet. Cart Service therefore calculates an **estimate**, not a final charge.
+
+* The shipment is always treated as coming from `sites.homeBase.address`.
+* The destination is the cart shipping address, or `countryCode` and `zipCode` if that is all that is available.
+* If no destination was provided, Cart Service fills one in this order:
+
+    1. **Legal entity address** – If the cart is associated with a legal entity, the first location containing `country`, `zipCode`, and the required address type is used (origin: `LEGAL_ENTITY`).
+    2. **Customer address** – If the cart has a logged-in customer, the default address matching the required type is used (origin: `CUSTOMER`).
+    3. **Site home base address** – If none of the above are available, the site's home base address is used (origin: `SITE`).
+
+The `shipToAddress` is determined in the following way:
+
+* cart address with origin `REQUEST` and type `SHIPPING`
+* cart `countryCode` and `zipCode` — kept for backward compatibility from when it was not possible to define addresses at the cart level
+* cart address with origin `LEGAL_ENTITY`, `CUSTOMER`, or `SITE`, and type `SHIPPING`
+
+Cart Service then calls Shipping Service:
+
+* [Calculating the minimum shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) (`POST /shipping/{tenant}/{site}/quote/minimum`) when no delivery window is set
+* [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) (`POST /shipping/{tenant}/{site}/quote/slot`) when the cart has a delivery window and a slot
+
+When no delivery window is set, Cart Service sends a request to the [Calculating the minimum shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/shipping/{tenant}/{site}/quote/minimum' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "customerId": "8765472",
+    "cartTotal": {
+      "amount": 85.00,
+      "currency": "EUR"
+    },
+    "shipFromAddress": {
+      "street": "Fritz-Elsas-Straße",
+      "streetNumber": "20",
+      "zipCode": "70173",
+      "city": "Stuttgart",
+      "country": "DE"
+    },
+    "shipToAddress": {
+      "zipCode": "10115",
+      "country": "DE"
+    }
+  }'
+```
+
+The response is a single fee, not a list of methods. That amount appears on the cart as shipping:
+
+```json
+{
+  "fee": {
+    "amount": 4.90,
+    "currency": "EUR"
+  }
+}
+```
+
+The storefront does not call Shipping Service for the cart preview. Cart Service requests the estimate when the cart has a destination. Provide that destination as an address of type `SHIPPING` when you have one — the address uses `country` and `zipCode`. If you only have a country and postal code, set cart-level `countryCode` and `zipCode` instead. Do not assign a shipping method.
+
+The storefront calls these public Cart APIs:
+
+* [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) (`GET /cart/{tenant}/carts/{cartId}`)
+* [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) (`PUT /cart/{tenant}/carts/{cartId}`)
+
 {% hint style="warning" %}
-Shipping costs are typically calculated during checkout, and not automatically on the cart object alone.
+Do not write `methodId`, `zoneId`, or a shipping amount to the cart. The cart model has no field for shipping method selection. Send the selected method and zone in the checkout request `shipping` object. See [Checkout Tutorial](../../checkout/checkout/checkout.md).
 {% endhint %}
 
-To get the shipping costs calculated and shown at the cart level, update the cart with shipping information. That means, provide an address of type `SHIPPING` to the cart and then assign a valid shipping method to the cart so that it can trigger the shipping cost calculation.
+### Optional: refine the estimate with a delivery slot
+
+Use these steps when you want a slot-specific shipping estimate on the cart. The storefront retrieves available delivery windows, puts one on the cart, and then retrieves the cart to see the updated estimate. Setting a delivery window does not mean the customer selected a shipping method.
+
+After you update the cart with a window and slot, Cart Service calls [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot). The storefront does not send that request.
 
 {% stepper %}
 {% step %}
+#### Retrieve available delivery windows
+
 Fetch available delivery windows for a cart by calling the [Retrieving delivery windows by cart](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/delivery-windows#get-shipping-tenant-actualdeliverywindows-cartid) endpoint.
 
 {% hint style="warning" %}
@@ -2202,28 +2360,29 @@ Make sure the shipping zone is properly stored in the delivery times object.
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -L 
-  --url 'https://api.emporix.io/shipping/{tenant}/actualDeliveryWindows/{cartId}' 
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+curl -L \
+  --url 'https://api.emporix.io/shipping/{tenant}/actualDeliveryWindows/{cartId}' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: */*'
 ```
 {% endstep %}
 
 {% step %}
-Pick the delivery window you'd like to use and update the cart accordingly by calling the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint
+#### Update the cart with destination and delivery window
+
+Pick the delivery window you want to use and update the cart by calling the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -L 
-  --request PUT 
-  --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}' 
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request PUT \
+  --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{
         "countryCode": "DE",     
         "zipCode": "10115",
-        "deliveryWindowId": "1234567890abcdef",    
         "deliveryWindow": {       
             "id": "1234567890abcdef",       
             "deliveryDate": "2025-07-25T10:00:00.000Z",       
@@ -2234,22 +2393,24 @@ curl -L
 {% endstep %}
 
 {% step %}
+#### Verify the shipping estimate
+
 Verify the results by retrieving the cart. Call the [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -L 
-  --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}'
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+curl -L \
+  --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: */*'
 ```
 {% endstep %}
 {% endstepper %}
 
-As a result, the response includes the shipping costs details:
+As a result, the cart response includes the shipping estimate:
 
-```bash
+```json
 {
     "calculatedPrice": {   
         "shipping": {     
@@ -2259,6 +2420,109 @@ As a result, the response includes the shipping costs details:
     }
 }
 ```
+
+Cart Service obtained that amount by sending a request like this to the [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) endpoint:
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/shipping/{tenant}/{site}/quote/slot' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "customerId": "8765472",
+    "cartTotal": {
+      "amount": 85.00,
+      "currency": "EUR"
+    },
+    "shipFromAddress": {
+      "zipCode": "70173",
+      "country": "DE"
+    },
+    "shipToAddress": {
+      "zipCode": "10115",
+      "country": "DE"
+    },
+    "deliveryWindowId": "1234567890abcdef",
+    "slotId": "slot123"
+  }'
+```
+
+### At checkout: final shipping quote
+
+When the customer is ready to order, they choose a shipping method. The storefront calls [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote) (`POST /shipping/{tenant}/{site}/quote`) to list methods and fees for the checkout address.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/shipping/{tenant}/{site}/quote' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "customerId": "8765472",
+    "cartTotal": {
+      "amount": 85.00,
+      "currency": "EUR"
+    },
+    "shipFromAddress": {
+      "street": "Fritz-Elsas-Straße",
+      "streetNumber": "20",
+      "zipCode": "70173",
+      "city": "Stuttgart",
+      "country": "DE"
+    },
+    "shipToAddress": {
+      "street": "Unter den Linden",
+      "streetNumber": "1",
+      "zipCode": "10115",
+      "city": "Berlin",
+      "country": "DE"
+    }
+  }'
+```
+
+The response lists matching methods, grouped by zone:
+
+```json
+[
+  {
+    "zone": {
+      "id": "deliveryarea",
+      "name": "Germany"
+    },
+    "methods": [
+      {
+        "id": "standard",
+        "name": "Standard delivery",
+        "fee": {
+          "amount": 4.90,
+          "currency": "EUR"
+        },
+        "shippingTaxCode": "STANDARD"
+      },
+      {
+        "id": "express",
+        "name": "Express delivery",
+        "fee": {
+          "amount": 9.90,
+          "currency": "EUR"
+        },
+        "shippingTaxCode": "STANDARD"
+      }
+    ]
+  }
+]
+```
+
+The checkout request must map the selected method's `zone.id`, `methods[].id`, `methods[].name`, and `methods[].fee.amount` to `zoneId`, `methodId`, `methodName`, and `amount`. Include `shippingTaxCode` when the quote returns it. Checkout Service calls `/quote` again, keeps the matching method, and checks that the submitted `amount` is correct. If it is not, checkout fails.
+
+Do not send the cart estimate as the checkout amount unless the customer selected that same cheapest method.
+
+See [Checkout Tutorial](../../checkout/checkout/checkout.md) for the full contract and request example.
 
 Cart API reference:
 
