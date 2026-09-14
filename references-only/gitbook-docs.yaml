@@ -165,6 +165,8 @@ site:
           key: section-11
           title: Product Features
           path: product-features
+          description: ""
+          icon: lightbulb
           children:
             - type: space
               key: space-11
