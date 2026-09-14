@@ -67,6 +67,7 @@ site:
       title: Partner Library
       path: partner-library
       description: ""
+      icon: album-collection
       children:
         - type: space
           key: space-9
