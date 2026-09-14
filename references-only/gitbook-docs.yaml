@@ -20,6 +20,7 @@ site:
     - type: section-group
       key: section-group-1
       title: Commerce Orchestration
+      icon: gift
       children:
         - type: section
           key: section-3
