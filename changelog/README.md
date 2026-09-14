@@ -47,7 +47,7 @@ There are no known problems.
 
 #### Links
 
-* [Events - Client Management](https://developer.emporix.io/api-references/readme/webhook-events/events-client-management)
+* [Events - Client Management](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/webhooks/webhook-events/events-client-management)
 
 {% endupdate %}
 
