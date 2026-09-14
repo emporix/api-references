@@ -99,6 +99,8 @@ site:
           key: section-13
           title: Order Intake Cockpit
           path: order-intake-cockpit
+          description: ""
+          icon: file-lines
           children:
             - type: space
               key: space-13
