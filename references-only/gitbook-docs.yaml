@@ -12,10 +12,10 @@ site:
         - type: space
           key: space-1
           title: Welcome
-          path: welcome-1
+          path: welcome
           default: true
           content:
-            directory: ./welcome/welcome-1
+            directory: ./welcome
     - type: section-group
       key: section-group-1
       title: Commerce Orchestration
