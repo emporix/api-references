@@ -25,6 +25,36 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Import Service - stream order and run plans
+
+#### Overview
+
+The Import Service API now returns the computed run order of a configuration's streams, together with each stream's prerequisites. Triggering a run accepts an optional `streamIds` list so you can run only selected streams. Omit `streamIds` to run every stream in the configuration, which remains the default.
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving the stream run order](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-stream-order) | Retrieves stream names in run order and the prerequisite streams for each. Use this endpoint rather than calculating the order yourself. Mapping transformations can change the order at run time. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Triggering an import run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Accepts an optional `streamIds` list to run only those streams. Send stream IDs, not names. The service rejects an empty list, a plan with no streams from the configuration, and streams that cannot produce data without their parent. Listed streams still run in the computed stream order. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-10" tags="new-feature" %}
 
 ## Media Service - JSON Patch for assets
