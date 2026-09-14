@@ -159,6 +159,7 @@ site:
       key: section-12
       title: Certifications
       path: certifications
+      description: ""
       children:
         - type: space
           key: space-12
