@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="RELEASE_DATE" tags="improvement" %}
 
 ## AI Service - prompt and completion tokens on agent logs
 
