@@ -87,3 +87,8 @@ site:
           draft: true
           content:
             directory: ./value-stream-modeller
+    - type: section-group
+      key: section-group-2
+      title: Frontend
+      draft: true
+      children: []
