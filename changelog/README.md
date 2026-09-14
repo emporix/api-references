@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-09-14" tags="new-feature" %}
 
 ## Import Service - stream order and run plans
 
