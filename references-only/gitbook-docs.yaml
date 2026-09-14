@@ -132,6 +132,19 @@ site:
       title: What's new
       children:
         - type: section
+          key: section-11
+          title: Product Features
+          path: product-features
+          children:
+            - type: space
+              key: space-11
+              title: Product Features
+              path: product-features
+              default: true
+              draft: true
+              content:
+                directory: ./product-features
+        - type: section
           key: section-10
           title: Changelog
           path: changelog
