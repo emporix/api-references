@@ -6,11 +6,12 @@ site:
       key: section-1
       title: API Reference
       path: api-reference
+      description: ""
       default: true
       children:
         - type: space
           key: space-2
-          title: Welcome
+          title: API Reference
           path: welcome
           default: true
           content:
@@ -22,7 +23,7 @@ site:
       children:
         - type: space
           key: space-1
-          title: Welcome
+          title: API Reference
           path: welcome
           default: true
           draft: true
