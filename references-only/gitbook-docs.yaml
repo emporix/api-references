@@ -97,6 +97,18 @@ site:
               default: true
               content:
                 directory: ./commerce-frontend
+        - type: section
+          key: section-13
+          title: Order Intake Cockpit
+          path: order-intake-cockpit
+          children:
+            - type: space
+              key: space-13
+              title: Order Intake Cockpit
+              path: order-intake-cockpit
+              default: true
+              content:
+                directory: ./order-intake-cockpit
     - type: section-group
       key: section-group-3
       title: API Documentation
