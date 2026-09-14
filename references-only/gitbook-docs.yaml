@@ -30,7 +30,6 @@ site:
               title: CE
               path: ce
               default: true
-              draft: true
               content:
                 directory: ./ce
         - type: section
