@@ -25,6 +25,30 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## AI Service - prompt and completion tokens on agent logs
+
+#### Overview
+
+Agent request and session log responses now include `promptTokens` and `completionTokens`. These fields expose cumulative LLM token usage for a single request and the rolled-up totals for a session.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Listing agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests) | The response now includes `promptTokens` and `completionTokens`. |
+| [Retrieving agent request by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests-requestid) | The response now includes `promptTokens` and `completionTokens`. |
+| [Searching agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-requests-search) | The response now includes `promptTokens` and `completionTokens`. |
+| [Listing agent sessions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions) | The response now includes `promptTokens` and `completionTokens`. |
+| [Retrieving agent session by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions-sessionid) | The response now includes `promptTokens` and `completionTokens`. |
+| [Searching agent sessions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-sessions-search) | The response now includes `promptTokens` and `completionTokens`. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
 {% update date="2026-09-14" tags="new-feature" %}
 
 ## Import Service - stream order and run plans
