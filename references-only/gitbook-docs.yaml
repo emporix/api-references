@@ -7,6 +7,7 @@ site:
       title: Welcome
       path: welcome
       description: ""
+      icon: plane-up
       default: true
       children:
         - type: space
