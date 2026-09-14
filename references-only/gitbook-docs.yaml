@@ -67,6 +67,7 @@ site:
       title: Value Stream Modeller
       path: value-stream-modeller
       description: ""
+      icon: chart-mixed-up-circle-dollar
       children:
         - type: space
           key: space-6
