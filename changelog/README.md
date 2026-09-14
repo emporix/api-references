@@ -25,6 +25,32 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Webhook Service - new location events
+
+#### Overview
+
+The Webhook Service now emits events when a location is created, updated, or deleted.
+
+#### Added events
+
+| Event | Description |
+| --- | --- |
+| `client-management.location-created` | The event is emitted when a location is created. |
+| `client-management.location-updated` | The event is emitted when a location is updated. |
+| `client-management.location-deleted` | The event is emitted when a location is deleted. |
+
+#### Known problems
+
+There are no known problems.
+
+#### Links
+
+* [Events - Client Management](https://developer.emporix.io/api-references/readme/webhook-events/events-client-management)
+
+{% endupdate %}
+
 {% update date="2026-09-10" tags="new-feature" %}
 
 ## Media Service - JSON Patch for assets
