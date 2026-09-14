@@ -73,3 +73,16 @@ site:
           draft: true
           content:
             directory: ./agentic-commerce-intelligence
+    - type: section
+      key: section-6
+      title: Value Stream Modeller
+      path: value-stream-modeller
+      children:
+        - type: space
+          key: space-6
+          title: Value Stream Modeller
+          path: value-stream-modeller
+          default: true
+          draft: true
+          content:
+            directory: ./value-stream-modeller
