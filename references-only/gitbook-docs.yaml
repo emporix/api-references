@@ -9,12 +9,12 @@ site:
       default: true
       children:
         - type: space
-          key: space-api-reference
-          title: API Reference
-          path: api-reference
+          key: space-2
+          title: Welcome
+          path: welcome
           default: true
           content:
-            directory: ./
+            directory: ./welcome
     - type: section
       key: section-2
       title: Welcome
