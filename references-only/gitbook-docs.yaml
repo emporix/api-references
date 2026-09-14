@@ -6,15 +6,15 @@ site:
       key: section-2
       title: Welcome
       path: welcome
+      description: ""
       children:
         - type: space
           key: space-1
-          title: API Reference
-          path: welcome
+          title: Welcome
+          path: welcome-1
           default: true
-          draft: true
           content:
-            directory: ./welcome
+            directory: ./welcome/welcome-1
     - type: section-group
       key: section-group-1
       title: Commerce Orchestration
