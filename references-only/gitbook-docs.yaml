@@ -27,7 +27,7 @@ site:
           title: Commerce Engine
           path: ce
           description: ""
-          icon: gift
+          icon: cart-shopping
           children:
             - type: space
               key: space-3
