@@ -95,13 +95,11 @@ site:
               title: Commerce Frontend
               path: commerce-frontend
               default: true
-              draft: true
               content:
                 directory: ./commerce-frontend
     - type: section-group
       key: section-group-3
       title: API Documentation
-      draft: true
       children:
         - type: section
           key: section-8
@@ -113,7 +111,6 @@ site:
               title: API Documentation
               path: api-documentation
               default: true
-              draft: true
               content:
                 directory: ./api-documentation
         - type: section
