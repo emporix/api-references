@@ -91,4 +91,17 @@ site:
       key: section-group-2
       title: Frontend
       draft: true
-      children: []
+      children:
+        - type: section
+          key: section-7
+          title: Commerce Frontend
+          path: commerce-frontend
+          children:
+            - type: space
+              key: space-7
+              title: Commerce Frontend
+              path: commerce-frontend
+              default: true
+              draft: true
+              content:
+                directory: ./commerce-frontend
