@@ -132,6 +132,8 @@ site:
           key: section-8
           title: API Documentation
           path: api-documentation
+          description: ""
+          icon: memo-pad
           children:
             - type: space
               key: space-8
