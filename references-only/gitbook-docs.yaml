@@ -77,6 +77,7 @@ site:
       key: section-6
       title: Value Stream Modeller
       path: value-stream-modeller
+      description: ""
       children:
         - type: space
           key: space-6
