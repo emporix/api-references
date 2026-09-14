@@ -79,6 +79,7 @@ site:
     - type: section-group
       key: section-group-2
       title: Frontend
+      icon: shop
       children:
         - type: section
           key: section-7
