@@ -707,22 +707,29 @@ The following MIME types are supported:
 
 Media file size can be up to 10 MB.
 
+Upload and the later chat request must reuse the same `agentId` and the same `sessionId`:
+
+* `agentId` – the path parameter on [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentId-attachments) must match `agentId` in the chat request body.
+* `sessionId` – send the upload response value as the `session-id` header on the chat request, not in the body.
+
+The same pairing applies to [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat), [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream), and [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async). To use the file with a different agent, assign it first with `attachmentId` on [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentId-attachments), then chat with that agent. See [Reuse an attachment with another agent](#reuse-an-attachment-with-another-agent).
+
 {% stepper %}
 {% step %}
 ### Upload a file to an agent
-To upload a file to an agent, use the dedicated [Uploading attachments to agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentId-attachments)
+To upload a file to an agent, use the dedicated [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentId-attachments) endpoint. The `agentId` in the path assigns the file to that agent.
 
 ```bash
 curl -L \
   --request POST \
-  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/{agentId}/attachments' \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/order-assistant-agent/attachments' \
   --header 'Content-Type: multipart/form-data' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --form 'attachment=@"order_request.pdf"'
 
 ```
 
-The successful response returns an attachment `id` and a `sessionId` that scopes the upload to your chat session. Save both values as you need them when you call agent chat in the subsequent step. 
+The successful response returns an attachment `id` and a `sessionId` that scopes the upload to your chat session. Save both values as you need them when you call agent chat in the subsequent step. Use the same `order-assistant-agent` identifier in the chat body. 
 
 How the `sessionId` in the response is set:
 * If you send a `session-id` header on the upload request (optional), the response returns the exact same value.
@@ -753,7 +760,7 @@ Attaching a media file of an unsupported type results in the `400` error, for ex
 
 {% step %}
 ### Refer to the attachment in agent chat
-The agent already has access to the attached file. Now you can point to it and give additional instructions in the agent chat request. Call the agent, for example with the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) endpoint. Include the upload `id` as the `attachmentId` parameter in the request body and provide the `session-id` in the header to ensure secure access to the attachment:
+The agent already has access to the attached file. Now you can point to it and give additional instructions in the agent chat request. Call the agent, for example with the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) endpoint. Include the upload `id` as `attachments[].attachmentId` in the request body. Send the same `session-id` header and the same `agentId` as the upload path:
 
 ```bash
 curl -L \
@@ -776,18 +783,30 @@ curl -L \
 ```
 
 The agent now can process the data according to its rules and code of conduct.
+
+If the chat `agentId` does not match the agent that received the upload, the request returns `400`:
+
+```
+{
+    "resourceId": null,
+    "message": "Agent chat attachment with id=6a1d5961a8c0af22364a2c54 cannot be used to chat with agentId=complaint-agent",
+    "code": 400,
+    "status": "Bad Request",
+    "details": []
+}
+```
 {% endstep %}
 
 {% step %}
 ### Reuse an attachment with another agent
-To assign an existing session attachment to another agent, call [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) again with `attachmentId` instead of a file. Send the same `session-id` header. The response is `204`.
+To assign an existing session attachment to another agent, call [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) again with `attachmentId` instead of a file. Send the same `session-id` header and the new agent's `agentId` in the path. The response is `204`.
 
-AI Service adds an `AGENT` reference on the media asset. The attachment must already belong to the session.
+AI Service adds an `AGENT` reference on the media asset. The attachment must already belong to the session. After this call, chat with the new `agentId`, the same `session-id` header, and the same `attachments[].attachmentId`.
 
 ```bash
 curl -L \
   --request POST \
-  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/{agentId}/attachments' \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/invoice-agent/attachments' \
   --header 'Content-Type: multipart/form-data' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'session-id: bdec151b-303f-4344-b41d-ccf307fb7907' \
