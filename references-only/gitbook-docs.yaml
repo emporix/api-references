@@ -83,12 +83,14 @@ site:
       children:
         - type: section
           key: section-7
-          title: Commerce Frontend
+          title: B2B Commerce Frontend
           path: commerce-frontend
+          description: ""
+          icon: store
           children:
             - type: space
               key: space-7
-              title: Commerce Frontend
+              title: B2B Commerce Frontend
               path: commerce-frontend
               default: true
               content:
