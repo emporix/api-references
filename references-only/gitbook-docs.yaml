@@ -179,6 +179,8 @@ site:
           key: section-10
           title: Changelog
           path: changelog
+          description: ""
+          icon: hourglass
           children:
             - type: space
               key: space-10
