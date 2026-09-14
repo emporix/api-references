@@ -155,3 +155,15 @@ site:
               default: true
               content:
                 directory: ./changelog
+    - type: section
+      key: section-12
+      title: Certifications
+      path: certifications
+      children:
+        - type: space
+          key: space-12
+          title: Certifications
+          path: certifications
+          default: true
+          content:
+            directory: ./certifications
