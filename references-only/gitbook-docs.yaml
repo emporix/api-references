@@ -128,6 +128,18 @@ site:
               default: true
               content:
                 directory: ./api-documentation
+        - type: section
+          key: section-1
+          title: API References
+          path: api-references
+          children:
+            - type: space
+              key: space-2
+              title: API References
+              path: api-references
+              default: true
+              content:
+                directory: ./api-references
     - type: section-group
       key: section-group-4
       title: What's new
