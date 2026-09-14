@@ -141,7 +141,6 @@ site:
               title: Product Features
               path: product-features
               default: true
-              draft: true
               content:
                 directory: ./product-features
         - type: section
