@@ -321,7 +321,7 @@ paths:
       - $ref: '#/components/parameters/trait_tenant'
       - $ref: '#/components/parameters/trait_configId'
     get:
-      summary: Retrieving the order streams run in
+      summary: Retrieving the stream run order
       description: |-
         <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
 
@@ -329,17 +329,20 @@ paths:
         This functionality is in preview mode - some of the features may not be fully operational yet.
         {% endhint %}
 
-        Returns the order in which the configuration's streams run, and the dependencies behind that order.
+        Retrieves the order in which the configuration's streams run, and the dependencies behind that order.
 
-        The order is decided by the dependencies between streams, with each stream's `seq` breaking ties.
-        The dependencies come from four sources: an explicit `dependsOn`; a stream whose mapping references
-        a type another stream produces; an embedded composite child, which runs before the parent that
-        embeds it; and a patched composite child or a composite merge, which run after the parent whose
-        instances they write onto.
+        Dependencies between streams decide the order. Sequence breaks ties.
 
-        Use this endpoint rather than deriving the order yourself. The reference-derived dependencies come
-        from mapping transformations and cannot be worked out from a stream alone, so an order calculated
-        without them may be reordered when the import actually runs.
+        Dependencies come from four sources:
+
+        * an explicit dependency on another stream
+        * a mapping that references a type another stream produces
+        * a `COMPOSITE_CHILD` stream with `childStrategy` set to `EMBED` – runs before the parent that embeds it
+        * a `COMPOSITE_CHILD` stream with `childStrategy` set to `PATCH`, or a `COMPOSITE_MERGE` stream – run after the parent they update
+
+        Use this endpoint rather than calculating the order yourself. Mapping transformations add
+        dependencies that a single stream definition does not show. An order calculated without those
+        dependencies can differ from the order used at run time.
       operationId: GET-importtool-stream-order
       tags:
         - Streams
@@ -348,7 +351,7 @@ paths:
             - importtool.import_trigger
       responses:
         '200':
-          description: The request was successful.
+          description: The request was successful. The stream order is returned.
           content:
             application/json:
               schema:
@@ -358,7 +361,7 @@ paths:
                     type: array
                     items:
                       type: string
-                    description: The stream names, in the order they run.
+                    description: Stream names in the order they run.
                   prereqs:
                     type: object
                     additionalProperties:
@@ -367,7 +370,7 @@ paths:
                         type: string
                     description: >-
                       For each stream name, the streams that must run before it. A stream with no
-                      dependencies maps to an empty list.
+                      dependencies has an empty list.
               examples:
                 Stream order:
                   value:
@@ -381,6 +384,12 @@ paths:
                         - vendor
                       purchaseOrderLine:
                         - purchaseOrder
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
   '/importtool/{tenant}/configs/{configId}/runs':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -448,16 +457,18 @@ paths:
                     type: string
                     format: uuid
                   description: >-
-                    A run plan: the streams to execute. Omit it to run every stream in the configuration,
-                    which is the default and the behaviour of every caller that predates this field. Send an
-                    explicit list to run only those streams; the service rejects an empty list rather than
-                    treating it as "all". The streams still run in the order the configuration gives them,
-                    and a plan that names no stream belonging to this configuration is rejected.
+                    The stream identifiers to run. Omit the field to run every stream in the configuration.
+                    Send a list of stream IDs to run only those streams. Do not send stream names; use the
+                    `id` values from the stream resource.
 
-                    A stream that cannot produce data on its own is also rejected rather than run: an
-                    embedded composite child is written by its parent, and a child chained to its parent
-                    reads values captured while the parent runs, so either without its parent would report
-                    success having imported nothing.
+                    The service rejects an empty list. It also rejects a list that includes no stream from
+                    this configuration. Listed streams still run in the computed stream order, not in list
+                    order.
+
+                    The service also rejects a stream that cannot produce data on its own. A `COMPOSITE_CHILD`
+                    stream with `childStrategy` set to `EMBED` is written by its parent. A child that reads
+                    values captured during the parent run also cannot run alone. Either stream without its
+                    parent would complete successfully without importing records.
                   example:
                     - 8f1b6a5c-2d7e-4a91-9c33-0b5e4d2a7f10
             examples:
