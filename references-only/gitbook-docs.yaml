@@ -1,6 +1,6 @@
 $schema: https://api.gitbook.com/gitbook-docs.yaml
 site:
-  title: API Reference
+  title: Emporix Documentation Portal
   structure:
     - type: section
       key: section-2
