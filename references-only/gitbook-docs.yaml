@@ -7,6 +7,7 @@ site:
       title: Welcome
       path: welcome
       description: ""
+      default: true
       children:
         - type: space
           key: space-1
@@ -127,20 +128,6 @@ site:
               default: true
               content:
                 directory: ./api-documentation
-        - type: section
-          key: section-1
-          title: API Reference
-          path: api-reference
-          description: ""
-          default: true
-          children:
-            - type: space
-              key: space-2
-              title: API Reference
-              path: welcome
-              default: true
-              content:
-                directory: ./welcome
     - type: section-group
       key: section-group-4
       title: What's new
