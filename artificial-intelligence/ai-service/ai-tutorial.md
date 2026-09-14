@@ -540,7 +540,7 @@ When a commerce event triggers an agent, for example `product.product-created`, 
 * Each listed scope must be a scope the caller is allowed to grant.
 
 {% hint style="info" %}
-The `eventScopes` is not the same as the `requiredScopes`. On the agent, `requiredScopes` controls who may trigger the agent. On a dynamic MCP tool, `requiredScopes` controls who may invoke the tool.
+The `eventScopes` are not the same as the `requiredScopes`.
 {% endhint %}
 
 The OAuth2 access token must include the `ai.agent_manage` scope.
