@@ -39,6 +39,7 @@ site:
           title: Orchestration Engine
           path: oe
           description: ""
+          icon: arrow-progress
           children:
             - type: space
               key: space-4
@@ -51,6 +52,8 @@ site:
       key: section-5
       title: Agentic Commerce Intelligence
       path: agentic-commerce-intelligence
+      description: ""
+      icon: robot-astromech
       children:
         - type: space
           key: space-5
