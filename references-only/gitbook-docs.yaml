@@ -73,6 +73,19 @@ site:
           draft: true
           content:
             directory: ./value-stream-modeller
+    - type: section
+      key: section-9
+      title: Partner Library
+      path: partner-library
+      children:
+        - type: space
+          key: space-9
+          title: Partner Library
+          path: partner-library
+          default: true
+          draft: true
+          content:
+            directory: ./partner-library
     - type: section-group
       key: section-group-2
       title: Frontend
