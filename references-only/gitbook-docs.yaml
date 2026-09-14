@@ -33,4 +33,17 @@ site:
       key: section-group-1
       title: Commerce Orchestration
       draft: true
-      children: []
+      children:
+        - type: section
+          key: section-3
+          title: CE
+          path: ce
+          children:
+            - type: space
+              key: space-3
+              title: CE
+              path: ce
+              default: true
+              draft: true
+              content:
+                directory: ./ce
