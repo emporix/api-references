@@ -1,0 +1,11 @@
+$schema: https://api.gitbook.com/gitbook-docs.yaml
+site:
+  title: API Reference
+  structure:
+    - type: space
+      key: space-api-reference
+      title: API Reference
+      path: api-reference
+      default: true
+      content:
+        directory: ./
