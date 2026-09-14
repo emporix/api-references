@@ -126,6 +126,7 @@ site:
     - type: section-group
       key: section-group-3
       title: API Documentation
+      icon: code-merge
       children:
         - type: section
           key: section-8
