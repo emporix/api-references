@@ -339,7 +339,7 @@ paths:
                       message: Found an order with its details.
                       sessionId: fe91d168-4ce9-4b4d-8451-0029035b34a5
         '400':
-          $ref: '#/components/responses/400_resp_agent_chat_attachment'
+          $ref: '#/components/responses/400_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
@@ -349,7 +349,7 @@ paths:
       description: |-
         Allows for communication with Emporix agents.
 
-        When the request includes `attachments`, each `attachments[].attachmentId` must reference a file already uploaded in this session. Send the upload `sessionId` as the `session-id` header, not in the request body. The body `agentId` must match the `agentId` used in the upload path. If the identifiers differ, the request returns `400`. To use the file with a different agent, assign it first with `attachmentId` on `POST /ai-service/{tenant}/agentic/{agentId}/attachments`, then chat with that agent.
+        When the request includes `attachments`, each `attachments[].attachmentId` must reference a file already uploaded in this session. Send the upload `sessionId` as the `session-id` header, not in the request body. The body `agentId` must match the agent assigned to the attachment. After a file upload, use the upload path `agentId`. After reuse, use the target path `agentId`. If the identifiers differ, the request returns `400`. To use the file with a different agent, first assign it with `attachmentId` on `POST /ai-service/{tenant}/agentic/{agentId}/attachments` using the target `agentId` in the path, then chat with that target agent.
       security:
         - OAuth2:
             - ai.agentexecution_manage_own
@@ -385,7 +385,7 @@ paths:
               schema:
                 type: string
         '400':
-          $ref: '#/components/responses/400_resp_agent_chat_attachment'
+          $ref: '#/components/responses/400_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
@@ -395,7 +395,7 @@ paths:
       description: |-
         Allows for communication with Emporix agents using a Server-Sent Events stream.
 
-        Attachment rules match Starting agent chat. The body `agentId` must match the agent assigned to the attachment, and the `session-id` header must match the upload `sessionId`.
+        Attachment rules are the same as for Starting agent chat. The body `agentId` must match the agent assigned to the attachment, and the `session-id` header must match the upload `sessionId`.
       security:
         - OAuth2:
             - ai.agentexecution_manage_own
@@ -428,7 +428,7 @@ paths:
                   value:
                     jobId: 68835cc3ef4e8e1425c360ad
         '400':
-          $ref: '#/components/responses/400_resp_agent_chat_attachment'
+          $ref: '#/components/responses/400_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
@@ -438,7 +438,7 @@ paths:
       description: |-
         Allows for communication with Emporix agents in async way.
 
-        Attachment rules match Starting agent chat. The body `agentId` must match the agent assigned to the attachment, and the `session-id` header must match the upload `sessionId`.
+        Attachment rules are the same as for Starting agent chat. The body `agentId` must match the agent assigned to the attachment, and the `session-id` header must match the upload `sessionId`.
       security:
         - OAuth2:
             - ai.agentexecution_manage_own
@@ -455,7 +455,7 @@ paths:
         name: agentId
         in: path
         required: true
-        description: Unique identifier of the agent that receives the attachment. For a file upload, a later chat request must send this same value in the body `agentId` field. For reuse, this path value is the target agent, and the later chat request must send that target `agentId`.
+        description: Unique identifier of the agent that receives the attachment. For a file upload, a later chat request must send this same value in the body `agentId` field. When you reuse an attachment, this path value is the target agent. The later chat request must send that target `agentId`.
       - schema:
           type: string
           format: uuid
@@ -503,7 +503,7 @@ paths:
 
         **Reuse an attachment:** send the `attachmentId` form field, the `session-id` header of the session that already contains the attachment, and the target agent's `agentId` in the path. The response is `204`. Then chat with that target `agentId`.
 
-        A later chat, chat-stream, or chat-async request must send the `agentId` of the agent assigned to the attachment, and the same `session-id` header as the upload `sessionId`. After a file upload, that is this path `agentId`. After reuse, that is the target path `agentId`. If the chat `agentId` is not assigned to the attachment, the API returns `400` with the message `Agent chat attachment with id={attachmentId} cannot be used to chat with agentId={agentId}`.
+        A later request to Starting agent chat, Starting agent chat stream, or Starting agent async chat must send the `agentId` of the agent assigned to the attachment, and the same `session-id` header as the upload `sessionId`. After a file upload, use this path `agentId`. After reuse, use the target path `agentId`. If the chat `agentId` is not assigned to the attachment, the API returns `400` with the message `Agent chat attachment with id={attachmentId} cannot be used to chat with agentId={agentId}`.
       security:
         - OAuth2:
             - ai.agentexecution_manage_own
@@ -2246,7 +2246,7 @@ components:
       properties:
         agentId:
           type: string
-          description: Unique identifier of the agent. When the request includes `attachments`, this value must match the agent assigned to the attachment. After a file upload, that is the upload path `agentId`. After reuse, that is the target path `agentId`.
+          description: Unique identifier of the agent. When the request includes `attachments`, this value must match the agent assigned to the attachment. After a file upload, use the upload path `agentId`. After reuse, use the target path `agentId`.
         message:
           type: string
           description: The user message to the agent.
@@ -4018,7 +4018,7 @@ components:
           description: Unique identifier of the created attachment.
         sessionId:
           type: string
-          description: Unique identifier of the session. The same sessionId must be used when calling chat endpoints to ensure the correct attachment is found. The chat `agentId` must match the agent assigned to the attachment.
+          description: Unique identifier of the session. The same `sessionId` must be used when calling chat endpoints to ensure the correct attachment is found. The chat `agentId` must match the agent assigned to the attachment.
 
     # Agent Logs:
     LogSeverity:
@@ -4587,25 +4587,6 @@ components:
                 message: Validation problem with request body.
                 details:
                   - message: code must not be null nor blank
-    400_resp_agent_chat_attachment:
-      description: The request was syntactically incorrect. Returned when an attachment is not assigned to the chat agent, or is missing from the session.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorMessage'
-          examples:
-            Agent identifiers differ:
-              value:
-                code: 400
-                status: Bad Request
-                message: Agent chat attachment with id=6a1d5961a8c0af22364a2c54 cannot be used to chat with agentId=complaint-agent
-                details: []
-            Attachment not in session:
-              value:
-                code: 400
-                status: Bad Request
-                message: Attachment with id=6a1d5961a8c0af22364a2c54 does not exist or has not been attached to the session
-                details: []
     404_resp_common:
       description: Example response
       content:
@@ -4813,7 +4794,7 @@ components:
                 attachments:
                   - attachmentId: 6a1d5961a8c0af22364a2c54
                     caption: Order Request
-                    purpose: Serves as basis to create an order with the data, customer and products mentioned in the file.
+                    purpose: Serves as a basis to create an order with the data, customer, and products mentioned in the file.
     Completion:
       content:
         application/json:
