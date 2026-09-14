@@ -21,24 +21,26 @@ site:
       children:
         - type: section
           key: section-3
-          title: CE
+          title: Commerce Engine
           path: ce
+          description: ""
           children:
             - type: space
               key: space-3
-              title: CE
+              title: Commerce Engine
               path: ce
               default: true
               content:
                 directory: ./ce
         - type: section
           key: section-4
-          title: OE
+          title: Orchestration Engine
           path: oe
+          description: ""
           children:
             - type: space
               key: space-4
-              title: OE
+              title: Orchestration Engine
               path: oe
               default: true
               content:
