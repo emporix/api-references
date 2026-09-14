@@ -29,3 +29,8 @@ site:
           draft: true
           content:
             directory: ./welcome
+    - type: section-group
+      key: section-group-1
+      title: Commerce Orchestration
+      draft: true
+      children: []
