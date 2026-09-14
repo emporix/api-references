@@ -63,20 +63,6 @@ site:
           content:
             directory: ./agentic-commerce-intelligence
     - type: section
-      key: section-9
-      title: Partner Library
-      path: partner-library
-      description: ""
-      icon: album-collection
-      children:
-        - type: space
-          key: space-9
-          title: Partner Library
-          path: partner-library
-          default: true
-          content:
-            directory: ./partner-library
-    - type: section
       key: section-6
       title: Value Stream Modeller
       path: value-stream-modeller
@@ -117,6 +103,20 @@ site:
               default: true
               content:
                 directory: ./order-intake-cockpit
+    - type: section
+      key: section-9
+      title: Partner Library
+      path: partner-library
+      description: ""
+      icon: album-collection
+      children:
+        - type: space
+          key: space-9
+          title: Partner Library
+          path: partner-library
+          default: true
+          content:
+            directory: ./partner-library
     - type: section-group
       key: section-group-3
       title: API Documentation
