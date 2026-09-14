@@ -47,3 +47,16 @@ site:
               draft: true
               content:
                 directory: ./ce
+        - type: section
+          key: section-4
+          title: OE
+          path: oe
+          children:
+            - type: space
+              key: space-4
+              title: OE
+              path: oe
+              default: true
+              draft: true
+              content:
+                directory: ./oe
