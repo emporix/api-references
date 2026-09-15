@@ -9,7 +9,7 @@ layout:
 
 # Audit Logs (Changelog) Tutorial
 
-The Audit Logs (Changelog) Service exposes a query API for tenant-wide change history of platform entities such as orders, customers, companies, products, segments, groups, coupons, and custom entities created with the Schema Service.
+The Audit Logs (Changelog) Service exposes a query API for tenant-wide change history of platform entities such as orders, customers, companies, products, segments, groups, coupons, quotes, sites, and custom entities created with the Schema Service.
 
 {% hint style="danger" %}
 This functionality is in preview mode - some of the features may not be fully operational yet.
