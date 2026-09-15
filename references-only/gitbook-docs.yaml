@@ -7,6 +7,7 @@ site:
       title: Welcome
       path: welcome
       description: ""
+      icon: plane-up
       default: true
       children:
         - type: space
@@ -19,12 +20,14 @@ site:
     - type: section-group
       key: section-group-1
       title: Commerce Orchestration
+      icon: gift
       children:
         - type: section
           key: section-3
           title: Commerce Engine
           path: ce
           description: ""
+          icon: cart-shopping
           children:
             - type: space
               key: space-3
@@ -38,6 +41,7 @@ site:
           title: Orchestration Engine
           path: oe
           description: ""
+          icon: arrow-progress
           children:
             - type: space
               key: space-4
@@ -50,6 +54,8 @@ site:
       key: section-5
       title: Agentic Commerce Intelligence
       path: agentic-commerce-intelligence
+      description: ""
+      icon: robot-astromech
       children:
         - type: space
           key: space-5
@@ -59,23 +65,11 @@ site:
           content:
             directory: ./agentic-commerce-intelligence
     - type: section
-      key: section-9
-      title: Partner Library
-      path: partner-library
-      description: ""
-      children:
-        - type: space
-          key: space-9
-          title: Partner Library
-          path: partner-library
-          default: true
-          content:
-            directory: ./partner-library
-    - type: section
       key: section-6
       title: Value Stream Modeller
       path: value-stream-modeller
       description: ""
+      icon: chart-mixed-up-circle-dollar
       children:
         - type: space
           key: space-6
@@ -87,15 +81,18 @@ site:
     - type: section-group
       key: section-group-2
       title: Frontend
+      icon: shop
       children:
         - type: section
           key: section-7
-          title: Commerce Frontend
+          title: B2B Commerce Frontend
           path: commerce-frontend
+          description: ""
+          icon: store
           children:
             - type: space
               key: space-7
-              title: Commerce Frontend
+              title: B2B Commerce Frontend
               path: commerce-frontend
               default: true
               content:
@@ -104,6 +101,8 @@ site:
           key: section-13
           title: Order Intake Cockpit
           path: order-intake-cockpit
+          description: ""
+          icon: file-lines
           children:
             - type: space
               key: space-13
@@ -112,14 +111,31 @@ site:
               default: true
               content:
                 directory: ./order-intake-cockpit
+    - type: section
+      key: section-9
+      title: Partner Library
+      path: partner-library
+      description: ""
+      icon: album-collection
+      children:
+        - type: space
+          key: space-9
+          title: Partner Library
+          path: partner-library
+          default: true
+          content:
+            directory: ./partner-library
     - type: section-group
       key: section-group-3
       title: API Documentation
+      icon: code-merge
       children:
         - type: section
           key: section-8
           title: API Documentation
           path: api-documentation
+          description: ""
+          icon: memo-pad
           children:
             - type: space
               key: space-8
@@ -132,6 +148,8 @@ site:
           key: section-1
           title: API References
           path: api-references
+          description: ""
+          icon: code
           children:
             - type: space
               key: space-2
@@ -143,11 +161,14 @@ site:
     - type: section-group
       key: section-group-4
       title: What's new
+      icon: wand-sparkles
       children:
         - type: section
           key: section-11
           title: Product Features
           path: product-features
+          description: ""
+          icon: lightbulb
           children:
             - type: space
               key: space-11
@@ -160,6 +181,8 @@ site:
           key: section-10
           title: Changelog
           path: changelog
+          description: ""
+          icon: hourglass
           children:
             - type: space
               key: space-10
@@ -173,6 +196,7 @@ site:
       title: Certifications
       path: certifications
       description: ""
+      icon: file-certificate
       children:
         - type: space
           key: space-12

@@ -46,6 +46,32 @@ There are no known problems.
 
 {% update date="2026-09-14" tags="improvement" %}
 
+## Webhook Service - new location events
+
+#### Overview
+
+The Webhook Service now emits events when a location is created, updated, or deleted.
+
+#### Added events
+
+| Event | Description |
+| --- | --- |
+| `client-management.location-created` | The event is emitted when a location is created. |
+| `client-management.location-updated` | The event is emitted when a location is updated. |
+| `client-management.location-deleted` | The event is emitted when a location is deleted. |
+
+#### Known problems
+
+There are no known problems.
+
+#### Links
+
+* [Events - Client Management](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/webhooks/webhook-events/events-client-management)
+
+{% endupdate %}
+
+{% update date="2026-09-14" tags="improvement" %}
+
 ## AI Service - prompt and completion tokens on agent logs
 
 #### Overview
@@ -95,7 +121,6 @@ This functionality is in preview mode - some of the features may not be fully op
 #### Known problems
 
 There are no known problems.
-
 {% endupdate %}
 
 {% update date="2026-09-10" tags="new-feature" %}
