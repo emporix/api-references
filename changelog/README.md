@@ -37,7 +37,7 @@ The Audit Logs (Changelog) Service now records change history for quotes and sit
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving logs](https://developer.emporix.io/api-references/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) | Returns change history for `quote` and `site` entities in addition to the previously supported types. |
+| [Retrieving logs](https://developer.emporix.io/api-documentation/api-guides/utilities/audit-logs-changelog/api-reference/changelogs) | Returns change history for `quote` and `site` entities in addition to the previously supported types. |
 
 #### Known problems
 
