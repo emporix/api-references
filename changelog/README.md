@@ -25,6 +25,25 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## Audit Logs (Changelog) Service - quote and site history
+
+#### Overview
+
+The Audit Logs (Changelog) Service now records change history for quotes and sites. Filter results with `entity:quote` or `entity:site` in the `q` parameter. For quotes, `entityId` is the quote ID. For sites, `entityId` is the site code.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving logs](https://developer.emporix.io/api-references/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) | Returns change history for `quote` and `site` entities in addition to the previously supported types. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
 {% update date="2026-09-14" tags="improvement" %}
 
 ## Webhook Service - new location events
