@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-09-15" tags="improvement" %}
 
 ## Audit Logs (Changelog) Service - quote and site history
 
