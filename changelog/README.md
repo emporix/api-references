@@ -25,6 +25,72 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="major-change" %}
+
+## Cart Service - cart-scoped execute path
+
+#### Overview
+
+The command chain endpoint moves from `POST /cart/{tenant}/execute` to `POST /cart/{tenant}/carts/{cartId}/execute`. Command JSON no longer includes `options.cartId`; the path identifies the cart. Mixed-cart command chains are no longer supported.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) | Runs the command chain on the cart in the path. `options.cartId` is removed from command JSON. |
+
+#### Removed endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| Executing a chain of cart commands | `POST /cart/{tenant}/execute` is no longer available. Use [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) instead. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## Cart Service - followable Location on execute creates
+
+#### Overview
+
+`POST /cart/{tenant}/execute` now returns followable `Location` values on create commands. `AddCartItem` and `ApplyCartDiscount` set `results[].headers.Location` to the created item or discount URL with the tenant kept. `AddCartItemsBatch` sets each `data[].headers.location` the same way. REST `POST .../items` and `POST .../discounts` still return the collection URL. With `versioning=follow`, a successful delete or itemsBatch after a seeded cursor bumps that cart's cursor by 1 so a later participating write does not 409.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-execute) | Create commands synthesize followable `Location` headers. A seeded `versioning=follow` cursor also advances after a successful delete or itemsBatch. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Cart Service - command chain endpoint for cart operations
+
+#### Overview
+
+The Cart Service adds an opt-in `POST /cart/{tenant}/execute` endpoint that runs existing cart operations in one request while leaving cart, item, and discount endpoints unchanged. A storefront can add an item and retrieve the calculated cart without a second round trip; duration is the sum of at most 10 commands, and the response is HTTP 207 with a `results` array. `versioning=explicit` preflights participating writes for `resourceVersion`, `versioning=follow` keeps a cursor per `cartId`, and session and legal-entity headers apply to the whole chain.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-execute) | Runs up to 10 existing cart operations sequentially in one request. The response is 207 with a `results` array. Duration is the sum of the chained commands. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-15" tags="improvement" %}
 
 ## Audit Logs (Changelog) Service - quote and site history
