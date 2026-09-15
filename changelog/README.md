@@ -25,6 +25,32 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="major-change" %}
+
+## Cart Service - cart-scoped execute path
+
+#### Overview
+
+The command chain endpoint moves from `POST /cart/{tenant}/execute` to `POST /cart/{tenant}/carts/{cartId}/execute`. Command JSON no longer includes `options.cartId`; the path identifies the cart. Mixed-cart command chains are no longer supported.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) | Runs the command chain on the cart in the path. `options.cartId` is removed from command JSON. |
+
+#### Removed endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| Executing a chain of cart commands | `POST /cart/{tenant}/execute` is no longer available. Use [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) instead. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="RELEASE_DATE" tags="improvement" %}
 
 ## Cart Service - followable Location on execute creates

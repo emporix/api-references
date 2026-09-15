@@ -62,20 +62,20 @@ curl -i -X POST
 
 ## How to add an item and retrieve the calculated cart in one request
 
-Use [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-execute) to add an item and retrieve the calculated cart in one HTTP request. The existing [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) followed by [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) still works.
+Use [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) to add an item and retrieve the calculated cart in one HTTP request. The existing [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) followed by [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) still works.
 
 {% hint style="warning" %}
 Request duration is the sum of the chained commands. Set client and API gateway timeouts to cover the full chain, especially when `GetCart` runs cart calculation.
 {% endhint %}
 
-One `/execute` request uses one `session-id` (or `hybris-session-id`) and one `legal-entity-id`. Commands cannot override those headers. To act as a different session or legal entity, send another request. Default `versioning=skip` ignores `options.resourceVersion`.
+One `/execute` request uses one `session-id` and one `legal-entity-id`. Commands cannot override those headers. To act as a different session or legal entity, send another request. Default `versioning=skip` ignores `options.resourceVersion`.
 
 ### Prerequisites
 
 * An existing cart `cartId`
 * A customer access token, or a service token with `cart.cart_manage`
 * `cart.cart_manage_external_prices` when a command includes an external price, product, fee, or discount
-* `session-id` or `hybris-session-id` for an anonymous cart
+* `session-id` for an anonymous cart
 
 {% stepper %}
 {% step %}
@@ -87,7 +87,7 @@ Send `AddCartItem` then `GetCart` with `expandCalculation` set to `true`. The 20
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/cart/{tenant}/execute?onError=fail' \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/execute?onError=fail' \
   -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -H 'session-id: 4f8a2c1e9b7d6a0c3e5f8b12' \
@@ -104,15 +104,11 @@ curl -i -X POST \
             "effectiveAmount": 350,
             "currency": "EUR"
           }
-        },
-        "options": {
-          "cartId": "6a86b20c2f5961330a8b3eb6"
         }
       },
       {
         "type": "GetCart",
         "options": {
-          "cartId": "6a86b20c2f5961330a8b3eb6",
           "expandCalculation": true
         }
       }
@@ -201,7 +197,7 @@ With `onError=fail`, a later command is omitted from `results` after the first n
 }
 ```
 
-A request accepts at most 10 commands. 11 or more commands return `400` for the whole request and no command runs. An empty `commands` array, an unknown `type`, an invalid `versioning` value, `versioning=explicit` with a participating write missing `resourceVersion`, and request-body Bean Validation failures (for example a missing `options.cartId`) also return `400` before any command runs. `onError=fail` treats command `code` 207 as success. `UpdateCartItemsBatch` always returns 207, even when every entry failed, so inspect `data[].status`.
+A request accepts at most 10 commands. 11 or more commands return `400` for the whole request and no command runs. An empty `commands` array, an unknown `type`, an invalid `versioning` value, `versioning=explicit` with a participating write missing `resourceVersion`, and request-body Bean Validation failures (for example a missing `options.itemId`) also return `400` before any command runs. `onError=fail` treats command `code` 207 as success. `UpdateCartItemsBatch` always returns 207, even when every entry failed, so inspect `data[].status`.
 {% endstep %}
 {% endstepper %}
 
@@ -211,7 +207,7 @@ A request accepts at most 10 commands. 11 or more commands return `400` for the 
 
 ## How to follow cart resource versions in a command chain
 
-`versioning=follow` keeps a cursor per `cartId`. Seed the first participating write (`AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`), then omit `resourceVersion` on later writes for that cart. Follow never copies one cart's version onto another cart. Deletes and itemsBatch do not send If-Match and cannot seed the cursor. After a participating write has seeded that cart, a successful mutating delete or batch still bumps the cursor by 1.
+`versioning=follow` keeps a cursor for the cart in the URL. Seed the first participating write (`AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`), then omit `resourceVersion` on later writes. Deletes and itemsBatch do not send If-Match and cannot seed the cursor. After a participating write has seeded the cart, a successful mutating delete or batch still bumps the cursor by 1.
 
 Use `versioning=explicit` only when every participating write sends `resourceVersion`. A missing version on `explicit` returns `400` for the whole request. That is a client error, not a last-write-wins strategy.
 
@@ -221,7 +217,7 @@ Use `versioning=explicit` only when every participating write sends `resourceVer
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/cart/{tenant}/execute?onError=fail&versioning=follow' \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/execute?onError=fail&versioning=follow' \
   -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -229,68 +225,27 @@ curl -i -X POST \
       {
         "type": "UpdateCartItem",
         "data": { "quantity": 2 },
-        "options": { "cartId": "612cc4783cff1d66f699b6a1", "itemId": "1", "resourceVersion": 5 }
+        "options": { "itemId": "1", "resourceVersion": 5 }
       },
       {
         "type": "UpdateCartItem",
         "data": { "quantity": 1 },
-        "options": { "cartId": "612cc4783cff1d66f699b6a1", "itemId": "2" }
+        "options": { "itemId": "2" }
       },
       {
         "type": "GetCart",
-        "options": { "cartId": "612cc4783cff1d66f699b6a1", "expandCalculation": true }
+        "options": { "expandCalculation": true }
       },
       {
         "type": "UpdateCartItem",
         "data": { "quantity": 3 },
-        "options": { "cartId": "612cc4783cff1d66f699b6a1", "itemId": "3" }
+        "options": { "itemId": "3" }
       }
     ]
   }'
 ```
 
 Cursor: PUT item 1 uses `5` and stores `6`; PUT item 2 uses `6` and stores `7`; GetCart leaves the cursor at `7`; PUT item 3 uses `7` and stores `8`.
-{% endstep %}
-
-{% step %}
-#### Follow resource versions on two carts
-
-Seed each `cartId` separately. The first cart's `5` to `6` to `7` is never the If-Match for the second cart.
-
-```bash
-curl -i -X POST \
-  'https://api.emporix.io/cart/{tenant}/execute?onError=fail&versioning=follow' \
-  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "commands": [
-      {
-        "type": "UpdateCartItem",
-        "data": { "quantity": 2 },
-        "options": { "cartId": "612cc4783cff1d66f699b6a1", "itemId": "1", "resourceVersion": 5 }
-      },
-      {
-        "type": "UpdateCartItem",
-        "data": { "quantity": 1 },
-        "options": { "cartId": "68481e9e8bf22744fc578572", "itemId": "1", "resourceVersion": 10 }
-      },
-      {
-        "type": "UpdateCartItem",
-        "data": { "quantity": 1 },
-        "options": { "cartId": "612cc4783cff1d66f699b6a1", "itemId": "2" }
-      },
-      {
-        "type": "GetCart",
-        "options": { "cartId": "68481e9e8bf22744fc578572", "expandCalculation": true }
-      },
-      {
-        "type": "UpdateCartItem",
-        "data": { "quantity": 3 },
-        "options": { "cartId": "68481e9e8bf22744fc578572", "itemId": "2" }
-      }
-    ]
-  }'
-```
 {% endstep %}
 {% endstepper %}
 
