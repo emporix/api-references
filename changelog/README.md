@@ -45,11 +45,102 @@ Retrieving own customer segments returns the authenticated customer's active seg
 | [Retrieving a group assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups-groupid) | Returns an IAM group assignment for a specified group and customer segment. |
 | [Upserting a group assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#put-customer-segment-tenant-segments-segmentid-groups-groupid) | Creates or updates an IAM group assignment. Only groups with `userType` `CUSTOMER` can be assigned. |
 | [Removing a group from a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#delete-customer-segment-tenant-segments-segmentid-groups-groupid) | Removes an IAM group assignment from a customer segment. |
+{% update date="2026-09-15" tags="improvement" %}
+
+## Audit Logs (Changelog) Service - quote and site history
+
+#### Overview
+
+The Audit Logs (Changelog) Service now records change history for quotes and sites. Filter results with `entity:quote` or `entity:site` in the `q` parameter. For quotes, `entityId` is the quote ID. For sites, `entityId` is the site code.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving logs](https://developer.emporix.io/api-documentation/api-guides/utilities/audit-logs-changelog/api-reference/changelogs) | Returns change history for `quote` and `site` entities in addition to the previously supported types. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
+{% update date="2026-09-14" tags="improvement" %}
+
+## Webhook Service - new location events
+
+#### Overview
+
+The Webhook Service now emits events when a location is created, updated, or deleted.
+
+#### Added events
+
+| Event | Description |
+| --- | --- |
+| `client-management.location-created` | The event is emitted when a location is created. |
+| `client-management.location-updated` | The event is emitted when a location is updated. |
+| `client-management.location-deleted` | The event is emitted when a location is deleted. |
 
 #### Known problems
 
 There are no known problems.
 
+#### Links
+
+* [Events - Client Management](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/webhooks/webhook-events/events-client-management)
+
+{% endupdate %}
+
+{% update date="2026-09-14" tags="improvement" %}
+
+## AI Service - prompt and completion tokens on agent logs
+
+#### Overview
+
+Agent request and session log responses now include `promptTokens` and `completionTokens`. These fields expose cumulative LLM token usage for a single request and the rolled-up totals for a session.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Listing agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests) | The response now includes `promptTokens` and `completionTokens`. |
+| [Retrieving agent request by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests-requestid) | The response now includes `promptTokens` and `completionTokens`. |
+| [Searching agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-requests-search) | The response now includes `promptTokens` and `completionTokens`. |
+| [Listing agent sessions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions) | The response now includes `promptTokens` and `completionTokens`. |
+| [Retrieving agent session by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions-sessionid) | The response now includes `promptTokens` and `completionTokens`. |
+| [Searching agent sessions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-sessions-search) | The response now includes `promptTokens` and `completionTokens`. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
+{% update date="2026-09-14" tags="new-feature" %}
+
+## Import Service - stream order and run plans
+
+#### Overview
+
+The Import Service API now returns the computed run order of a configuration's streams, together with each stream's prerequisites. Triggering a run accepts an optional `streamIds` list so you can run only selected streams. Omit `streamIds` to run every stream in the configuration, which remains the default.
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving the stream run order](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-stream-order) | Retrieves stream names in run order and the prerequisite streams for each. Use this endpoint rather than calculating the order yourself. Mapping transformations can change the order at run time. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Triggering an import run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Accepts an optional `streamIds` list to run only those streams. Send stream IDs, not names. The service rejects an empty list, a plan with no streams from the configuration, and streams that cannot produce data without their parent. Listed streams still run in the computed stream order. |
+
+#### Known problems
+
+There are no known problems.
 {% endupdate %}
 
 {% update date="2026-09-10" tags="new-feature" %}
