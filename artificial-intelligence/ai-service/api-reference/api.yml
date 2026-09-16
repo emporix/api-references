@@ -349,7 +349,7 @@ paths:
       description: |-
         Allows for communication with Emporix agents.
 
-        When the request includes `attachments`, each `attachments[].attachmentId` must reference a file already uploaded in this session. Send the upload `sessionId` as the `session-id` header. The attachment must already be attached to the `agentId` in the request body. After a file upload, use the upload path `agentId`. After reuse, use the target path `agentId`. If the identifiers differ, the request returns `400`. To use the file with a different agent, first assign it with `attachmentId` on `POST /ai-service/{tenant}/agentic/{agentId}/attachments` using the target `agentId` in the path, then chat with that target agent.
+        When the request includes `attachments`, each `attachments[].attachmentId` must reference a file already uploaded in this session. Send the upload `sessionId` as the `session-id` header. The attachment must already be attached to the `agentId` in the request body. After a file upload, send that same path `agentId` in the chat body. After reuse, send the target agent's path `agentId` in the chat body. If they differ, the request returns `400`. To use the file with a different agent, first assign the attachment to that agent with `attachmentId` on `POST /ai-service/{tenant}/agentic/{agentId}/attachments` using the target `agentId` in the path, then chat with that target agent.
       security:
         - OAuth2:
             - ai.agentexecution_manage_own
@@ -395,7 +395,7 @@ paths:
       description: |-
         Allows for communication with Emporix agents using a Server-Sent Events stream.
 
-        When the request includes `attachments`, each `attachments[].attachmentId` must reference a file already uploaded in this session. Send the upload `sessionId` as the `session-id` header. The attachment must already be attached to the `agentId` in the request body. After a file upload, use the upload path `agentId`. After reuse, use the target path `agentId`. If the identifiers differ, the request returns `400`. To use the file with a different agent, first assign it with `attachmentId` on `POST /ai-service/{tenant}/agentic/{agentId}/attachments` using the target `agentId` in the path, then chat with that target agent.
+        When the request includes `attachments`, each `attachments[].attachmentId` must reference a file already uploaded in this session. Send the upload `sessionId` as the `session-id` header. The attachment must already be attached to the `agentId` in the request body. After a file upload, send that same path `agentId` in the chat body. After reuse, send the target agent's path `agentId` in the chat body. If they differ, the request returns `400`. To use the file with a different agent, first assign the attachment to that agent with `attachmentId` on `POST /ai-service/{tenant}/agentic/{agentId}/attachments` using the target `agentId` in the path, then chat with that target agent.
       security:
         - OAuth2:
             - ai.agentexecution_manage_own
@@ -438,7 +438,7 @@ paths:
       description: |-
         Allows for communication with Emporix agents in async way.
 
-        When the request includes `attachments`, each `attachments[].attachmentId` must reference a file already uploaded in this session. Send the upload `sessionId` as the `session-id` header. The attachment must already be attached to the `agentId` in the request body. After a file upload, use the upload path `agentId`. After reuse, use the target path `agentId`. If the identifiers differ, the request returns `400`. To use the file with a different agent, first assign it with `attachmentId` on `POST /ai-service/{tenant}/agentic/{agentId}/attachments` using the target `agentId` in the path, then chat with that target agent.
+        When the request includes `attachments`, each `attachments[].attachmentId` must reference a file already uploaded in this session. Send the upload `sessionId` as the `session-id` header. The attachment must already be attached to the `agentId` in the request body. After a file upload, send that same path `agentId` in the chat body. After reuse, send the target agent's path `agentId` in the chat body. If they differ, the request returns `400`. To use the file with a different agent, first assign the attachment to that agent with `attachmentId` on `POST /ai-service/{tenant}/agentic/{agentId}/attachments` using the target `agentId` in the path, then chat with that target agent.
       security:
         - OAuth2:
             - ai.agentexecution_manage_own
@@ -492,7 +492,7 @@ paths:
 
         Send exactly one of `attachment` or `attachmentId`. Sending both or neither returns `400`.
 
-        **Upload a file:** send the `attachment` form field. The response is `201` with the new attachment `id` and `sessionId`. Supported file extensions:
+        **Upload a file:** Send the `attachment` form field. The response is `201` with the new attachment `id` and `sessionId`. Supported file extensions:
           - jpg
           - jpeg
           - png
@@ -503,7 +503,7 @@ paths:
 
         **Reuse an attachment:** Send the `attachmentId` form field, the `session-id` header of the session that already contains the attachment, and the target agent's `agentId` in the path. The response is `204`.
 
-        **Chat with the attachment:** Call Starting agent chat, Starting agent chat stream, or Starting agent async chat. Send the upload `sessionId` as the `session-id` header. If the chat `agentId` is not the agent in this path, the API returns `400` with the message `Agent chat attachment with id={attachmentId} cannot be used to chat with agentId={agentId}`.
+        **Chat with the attachment:** Call the Starting agent chat, Starting agent chat stream, or Starting agent async chat endpoint. Send the upload `sessionId` as the `session-id` header. If the chat `agentId` is not the agent in this path, the API returns `400` with the message `Agent chat attachment with id={attachmentId} cannot be used to chat with agentId={agentId}`.
       security:
         - OAuth2:
             - ai.agentexecution_manage_own
