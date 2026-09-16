@@ -45,6 +45,12 @@ Retrieving own customer segments returns the authenticated customer's active seg
 | [Retrieving a group assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups-groupid) | Returns an IAM group assignment for a specified group and customer segment. |
 | [Upserting a group assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#put-customer-segment-tenant-segments-segmentid-groups-groupid) | Creates or updates an IAM group assignment. Only groups with `userType` `CUSTOMER` can be assigned. |
 | [Removing a group from a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#delete-customer-segment-tenant-segments-segmentid-groups-groupid) | Removes an IAM group assignment from a customer segment. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
 {% update date="2026-09-15" tags="improvement" %}
 
 ## Audit Logs (Changelog) Service - quote and site history
