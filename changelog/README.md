@@ -25,25 +25,37 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="2026-08-31" tags="new-feature" %}
+{% update date="RELEASE_DATE" tags="major-change" %}
 
-## Audit Logs (Changelog) Service - query API
+## Supplier Service - removal of deprecated endpoints
 
 #### Overview
 
-The Audit Logs (Changelog) Service is now available. It provides a query API for tenant-wide change history of platform entities such as orders, customers, companies, products, segments, groups, coupons and custom entities.
+The Supplier Service has reached End of Life and is no longer available. All previously deprecated endpoints are now removed ([Supplier Service - deprecation](https://developer.emporix.io/changelog/2026/readme#supplier-service-deprecation)).
 
 {% hint style="danger" %}
-This functionality is in preview mode - some of the features may not be fully operational yet.
-
-If you have any questions, contact the [Emporix Support Team](mailto:support@emporix.com) or post directly in the [Community](https://community.emporix.io/) 
+The Supplier Service and all of its endpoints are no longer available.
 {% endhint %}
 
-#### New endpoints
+#### Removed endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving logs](https://developer.emporix.io/api-references/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) | Retrieves a paginated list of changed entries. Filter by entity, document ID, change type, actor, time range, and related entities with the `q` parameter. |
+| Retrieving all suppliers | Endpoint removed. The `GET /supplier/{tenant}/suppliers` operation is no longer available. |
+| Creating a supplier | Endpoint removed. The `POST /supplier/{tenant}/suppliers` operation is no longer available. |
+| Retrieving a supplier | Endpoint removed. The `GET /supplier/{tenant}/suppliers/{supplierId}` operation is no longer available. |
+| Updating a supplier | Endpoint removed. The `PUT /supplier/{tenant}/suppliers/{supplierId}` operation is no longer available. |
+| Partially updating a supplier | Endpoint removed. The `PATCH /supplier/{tenant}/suppliers/{supplierId}` operation is no longer available. |
+| Deleting a supplier | Endpoint removed. The `DELETE /supplier/{tenant}/suppliers/{supplierId}` operation is no longer available. |
+| Retrieving all product-supplier relations | Endpoint removed. The `GET /supplier/{tenant}/PSRelations` operation is no longer available. |
+| Creating a product-supplier relation | Endpoint removed. The `POST /supplier/{tenant}/PSRelations` operation is no longer available. |
+| Retrieving a product-supplier relation | Endpoint removed. The `GET /supplier/{tenant}/PSRelations/{psRelationId}` operation is no longer available. |
+| Updating a product-supplier relation | Endpoint removed. The `PUT /supplier/{tenant}/PSRelations/{psRelationId}` operation is no longer available. |
+| Deleting a product-supplier relation | Endpoint removed. The `DELETE /supplier/{tenant}/PSRelations/{psRelationId}` operation is no longer available. |
+| Retrieving a product-supplier relation by product ID and site code | Endpoint removed. The `GET /supplier/{tenant}/PSRelations/{productId}/{siteCode}` operation is no longer available. |
+| Updating a product-supplier relation by product ID and site code | Endpoint removed. The `PUT /supplier/{tenant}/PSRelations/{productId}/{siteCode}` operation is no longer available. |
+| Deleting a product-supplier relation by product ID and site code | Endpoint removed. The `DELETE /supplier/{tenant}/PSRelations/{productId}/{siteCode}` operation is no longer available. |
+| Searching product-supplier relations | Endpoint removed. The `POST /supplier/{tenant}/PSRelations/search` operation is no longer available. |
 
 #### Known problems
 
@@ -51,7 +63,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="2026-08-31" tags="major-change" %}
+{% update date="2026-09-16" tags="major-change" %}
 
 ## Pick-pack Service - removal of deprecated endpoints
 
@@ -86,7 +98,336 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="major-change" %}
+{% update date="2026-09-16" tags="new-feature" %}
+
+## Customer Segments Service - IAM group assignments
+
+#### Overview
+
+You can now assign IAM groups to customer segments. The new Customer Segments Service endpoints let you create, retrieve, search, and remove group assignments. Customers inherit segment membership through their IAM group assignments, in addition to direct customer assignments. 
+
+Retrieving own customer segments returns the authenticated customer's active segments. That list includes segments assigned through groups that are not bound to a legal entity, and through groups bound to the customer's current legal entity.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving own customer segments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/segments#get-customer-segment-tenant-segments-me) | Returns active segments assigned directly to the authenticated customer and segments assigned through the customer's IAM groups. |
+| [Retrieving all group assignments for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups) | Returns all IAM group assignments for a customer segment. |
+| [Searching with parameters for group assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#post-customer-segment-tenant-segments-segmentid-groups-search) | Returns IAM group assignments that match the provided search criteria. |
+| [Retrieving a group assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups-groupid) | Returns an IAM group assignment for a specified group and customer segment. |
+| [Upserting a group assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#put-customer-segment-tenant-segments-segmentid-groups-groupid) | Creates or updates an IAM group assignment. Only groups with `userType` `CUSTOMER` can be assigned. |
+| [Removing a group from a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#delete-customer-segment-tenant-segments-segmentid-groups-groupid) | Removes an IAM group assignment from a customer segment. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
+{% update date="2026-09-15" tags="improvement" %}
+
+## Audit Logs (Changelog) Service - quote and site history
+
+#### Overview
+
+The Audit Logs (Changelog) Service now records change history for quotes and sites. Filter results with `entity:quote` or `entity:site` in the `q` parameter. For quotes, `entityId` is the quote ID. For sites, `entityId` is the site code.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving logs](https://developer.emporix.io/api-documentation/api-guides/utilities/audit-logs-changelog/api-reference/changelogs) | Returns change history for `quote` and `site` entities in addition to the previously supported types. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
+{% update date="2026-09-14" tags="improvement" %}
+
+## Webhook Service - new location events
+
+#### Overview
+
+The Webhook Service now emits events when a location is created, updated, or deleted.
+
+#### Added events
+
+| Event | Description |
+| --- | --- |
+| `client-management.location-created` | The event is emitted when a location is created. |
+| `client-management.location-updated` | The event is emitted when a location is updated. |
+| `client-management.location-deleted` | The event is emitted when a location is deleted. |
+
+#### Known problems
+
+There are no known problems.
+
+#### Links
+
+* [Events - Client Management](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/webhooks/webhook-events/events-client-management)
+
+{% endupdate %}
+
+{% update date="2026-09-14" tags="improvement" %}
+
+## AI Service - prompt and completion tokens on agent logs
+
+#### Overview
+
+Agent request and session log responses now include `promptTokens` and `completionTokens`. These fields expose cumulative LLM token usage for a single request and the rolled-up totals for a session.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Listing agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests) | The response now includes `promptTokens` and `completionTokens`. |
+| [Retrieving agent request by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests-requestid) | The response now includes `promptTokens` and `completionTokens`. |
+| [Searching agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-requests-search) | The response now includes `promptTokens` and `completionTokens`. |
+| [Listing agent sessions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions) | The response now includes `promptTokens` and `completionTokens`. |
+| [Retrieving agent session by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions-sessionid) | The response now includes `promptTokens` and `completionTokens`. |
+| [Searching agent sessions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-sessions-search) | The response now includes `promptTokens` and `completionTokens`. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
+{% update date="2026-09-14" tags="new-feature" %}
+
+## Import Service - stream order and run plans
+
+#### Overview
+
+The Import Service API now returns the computed run order of a configuration's streams, together with each stream's prerequisites. Triggering a run accepts an optional `streamIds` list so you can run only selected streams. Omit `streamIds` to run every stream in the configuration, which remains the default.
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving the stream run order](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-stream-order) | Retrieves stream names in run order and the prerequisite streams for each. Use this endpoint rather than calculating the order yourself. Mapping transformations can change the order at run time. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Triggering an import run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Accepts an optional `streamIds` list to run only those streams. Send stream IDs, not names. The service rejects an empty list, a plan with no streams from the configuration, and streams that cannot produce data without their parent. Listed streams still run in the computed stream order. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
+{% update date="2026-09-10" tags="new-feature" %}
+
+## Media Service - JSON Patch for assets
+
+#### Overview
+
+The Media Service now supports partial updates of assets with JSON Patch documents that follow RFC 6902. You can change fields such as `refIds` without replacing the full asset or re-uploading a `BLOB` file. The `type` and `access` fields remain immutable. The `AGENT` reference type is now documented for private assets.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Partially updating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#patch-media-tenant-assets-assetid) | Applies RFC 6902 operations to an asset. Use `/refIds/-` to append one reference and keep the existing list. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) | The `refIds.type` field now documents the `AGENT` type. Private assets can be linked to `AGENT`. |
+| [Updating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#put-media-tenant-assets-assetid) | The `refIds.type` field now documents the `AGENT` type. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-09-10" tags="improvement" %}
+
+## AI Service - reuse of chat attachments
+
+#### Overview
+
+You can reuse an existing chat attachment with another agent. Send `attachmentId` instead of a file on the attachments endpoint, together with the session that already contains the attachment. AI Service assigns the agent to the media asset by adding an `AGENT` reference. The response is `204`.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) | Accepts `attachmentId` to reuse a session attachment and assign the agent. Send exactly one of `attachment` or `attachmentId`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-09-09" tags="improvement" %}
+
+## AI Service - commerce event trigger `eventScopes`
+
+#### Overview
+
+The AI Service API now supports optional `eventScopes` on `commerce_events` agent triggers. When you set this field, AI Service obtains an Emporix token with the listed IAM scopes and forwards it as `emporix-token` when the agent runs from a commerce event. When you omit the field or leave it empty, the agent does not receive `emporix-token`. Each listed scope must be one the caller is allowed to grant.
+
+#### Updated types
+
+| Type | Description |
+| --- | --- |
+| AgentTrigger | Added optional `eventScopes` field for the `commerce_events` trigger variant. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | Response can now include `config.eventScopes` for `commerce_events` triggers. |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents) | Response can now include `config.eventScopes` for `commerce_events` triggers. |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) | Response can now include `config.eventScopes` for `commerce_events` triggers. |
+| [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | Request payload now supports optional `eventScopes` on `commerce_events` trigger configuration. |
+| [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Request payload now supports optional `eventScopes` on `commerce_events` trigger configuration. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-09-07" tags="improvement" %}
+
+## AI Service - automatic agent disablement after consecutive configuration failures
+
+#### Overview
+
+When an agent repeatedly fails due to configuration errors, AI Service disables it after 10 consecutive configuration failures. AI Service sends an email with details about the disabled agent to the tenant email address configured for the tenant.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) | Repeated failures can disable the agent and trigger a tenant notification email. |
+| [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Repeated failures can disable the agent and trigger a tenant notification email. |
+| [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) | Repeated failures can disable the agent and trigger a tenant notification email. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-09-04" tags="improvement" %}
+
+## Indexing Service - Battery Included credential validation
+
+#### Overview
+
+Creating or updating a `BATTERY_INCLUDED` configuration now validates `indexName` and `writeKey` before the configuration is saved. Product reindex also validates stored Battery Included credentials before a reindex job is created. Invalid credentials return `400`. If credential validation is temporarily unavailable, the request returns `502`. Failed validation leaves configuration and reindex job state unchanged.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a new configuration](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Validates Battery Included credentials before storing the configuration. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Validates Battery Included credentials before updating the configuration. |
+| [Creating a reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) | Validates stored Battery Included credentials before creating a product reindex job. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-09-02" tags="improvement" %}
+
+## Schema Service - support for `VENDOR_LOCATION` schema type
+
+#### Overview
+
+The Schema Service now supports the `VENDOR_LOCATION` schema type. You can create mixin schemas and references for vendor locations, and filter schemas and references by this type.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | The `types` field now accepts the `VENDOR_LOCATION` schema type. |
+| [Updating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) | The `types` field now accepts the `VENDOR_LOCATION` schema type. |
+| [Updating types of a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/type#put-schema-tenant-schemas-id-types) | The list of assigned types now accepts the `VENDOR_LOCATION` schema type. |
+| [Retrieving all schemas](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas) | The `type` query parameter accepts `VENDOR_LOCATION`. |
+| [Creating a reference](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/reference#post-schema-tenant-references) | The `types` field now accepts the `VENDOR_LOCATION` schema type. |
+| [Updating a reference](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/reference#put-schema-tenant-references-id) | The `types` field now accepts the `VENDOR_LOCATION` schema type. |
+| [Retrieving all references](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/reference#get-schema-tenant-references) | The `type` query parameter accepts `VENDOR_LOCATION`. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
+{% update date="2026-09-01" tags="new-feature" %}
+
+## Import Service - schedule removal and run `origin`
+
+#### Overview
+
+You can now remove a configuration's schedule. Triggering a run accepts an optional `origin` so run history identifies which system started the run. Scheduling an import job now documents `400` and `404` responses.
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Removing a schedule](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/schedules#delete-importtool-tenant-configs-configid-schedule) | Removes the schedule for a configuration. The request is idempotent and returns `204` even when no schedule exists. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Scheduling an import job](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/schedules#put-importtool-tenant-configs-configid-schedule) | Documents `400` when the `cron` expression or `timezone` value is invalid, and `404` when the configuration does not exist. |
+| [Triggering an import run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Accepts an optional `origin` field that identifies what requested the run. |
+| [Retrieving run history](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Run entries include `origin`. |
+| [Retrieving a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Run details include `origin`. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | The new run includes `origin`. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
+{% update date="2026-08-31" tags="new-feature" %}
+
+## Audit Logs (Changelog) Service - query API
+
+#### Overview
+
+The Audit Logs (Changelog) Service is now available. It provides a query API for tenant-wide change history of platform entities such as orders, customers, companies, products, segments, groups, coupons and custom entities.
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+
+If you have any questions, contact the [Emporix Support Team](mailto:support@emporix.com) or post directly in the [Community](https://community.emporix.io/) 
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving logs](https://developer.emporix.io/api-references/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) | Retrieves a paginated list of changed entries. Filter by entity, document ID, change type, actor, time range, and related entities with the `q` parameter. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-08-31" tags="major-change" %}
 
 ## SEPA Export Service - removal of deprecated endpoints
 

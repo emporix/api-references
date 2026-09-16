@@ -460,7 +460,7 @@ paths:
       operationId: POST-ai-agents-upload-attachment
       responses:
         '201':
-          description: Attachment response.
+          description: Attachment created.
           content:
             application/json:
               schema:
@@ -470,6 +470,8 @@ paths:
                   value:
                     id: 68835cc3ef4e8e1425c360ad
                     sessionId: 0499bef6-a4d2-45b9-86a0-2edf7d70d726
+        '204':
+          description: Existing attachment reused and assigned to the agent.
         '400':
           $ref: '#/components/responses/400_resp_common'
         '401':
@@ -479,7 +481,11 @@ paths:
         '500':
           $ref: '#/components/responses/500_resp_common'
       description: |-
-        Allows for upload of a file and assign it to the agent. Supported file extensions:
+        Uploads a new file and assigns it to the agent, or reuses an existing attachment in the current session.
+
+        Send exactly one of `attachment` or `attachmentId`. Sending both or neither returns `400`.
+
+        **Upload a file:** send the `attachment` form field. The response is `201` with the new attachment `id` and `sessionId`. Supported file extensions:
           - jpg
           - jpeg
           - png
@@ -487,18 +493,35 @@ paths:
           - csv
           - text
           - txt
+
+        **Reuse an attachment:** send the `attachmentId` form field and the `session-id` header of the session that already contains the attachment. The response is `204`.
+      security:
+        - OAuth2:
+            - ai.agentexecution_manage_own
+            - ai.agentexecution_manage
       requestBody:
+        required: true
         content:
           multipart/form-data:
             schema:
-              type: object
-              properties:
-                attachment:
-                  type: string
-                  format: binary
-                  description: Content of the file.
-              required:
-                - attachment
+              oneOf:
+                - type: object
+                  required:
+                    - attachment
+                  additionalProperties: false
+                  properties:
+                    attachment:
+                      type: string
+                      format: binary
+                      description: Content of the file. Use this field to upload a new file.
+                - type: object
+                  required:
+                    - attachmentId
+                  additionalProperties: false
+                  properties:
+                    attachmentId:
+                      type: string
+                      description: Identifier of an existing attachment to reuse in the current session.
       tags:
         - Agent Chat
   '/ai-service/{tenant}/agentic/templates':
@@ -3212,8 +3235,23 @@ components:
         authorizationHeaderName:
           type: string
           description: Name of the header required for authorization e.g. `Authorization`.
+        fileProcessingConfig:
+          $ref: '#/components/schemas/FileProcessingConfig'
       required:
         - url
+    FileProcessingConfig:
+      description: |-
+        Optional additional config for file processing (preview).
+
+        **The `fileProcessingConfig` field is in preview mode** - some of the features may not be fully operational yet.
+      type: object
+      properties:
+        useResponsesApi:
+          type: boolean
+          description: When true, file processing uses the Responses API on the self-hosted LLM.
+        extraModelKey:
+          type: string
+          description: Optional extra model identifier used for file processing.
     SelfHostedParamsRequest:
       allOf:
         - $ref: '#/components/schemas/SelfHostedParams'
@@ -3624,6 +3662,19 @@ components:
                   description: List of events that trigger the agent.
                 filter:
                   $ref: '#/components/schemas/CommerceEventTriggerFilter'
+                eventScopes:
+                  type: array
+                  description: >-
+                    Optional IAM scopes used to obtain an Emporix token when the agent
+                    runs from a Commerce Event. When omitted or empty, the agent does
+                    not receive `emporix-token`. Each value must be a scope the caller
+                    is allowed to grant.
+                  items:
+                    type: string
+                  uniqueItems: true
+                  example:
+                    - order.order_read
+                    - product.product_read
               required:
                 - events
           required:
@@ -4020,6 +4071,14 @@ components:
           type: integer
           format: int64
           description: Duration of the request in seconds.
+        promptTokens:
+          type: integer
+          format: int64
+          description: Cumulative LLM prompt token count for this request.
+        completionTokens:
+          type: integer
+          format: int64
+          description: Cumulative LLM completion token count for this request.
         metadata:
           $ref: '#/components/schemas/MetadataResponse'
     AgentSessionResponse:
@@ -4047,6 +4106,14 @@ components:
           type: integer
           format: int64
           description: Duration of the session in seconds.
+        promptTokens:
+          type: integer
+          format: int64
+          description: Cumulative LLM prompt token count for this session.
+        completionTokens:
+          type: integer
+          format: int64
+          description: Cumulative LLM completion token count for this session.
         metadata:
           $ref: '#/components/schemas/MetadataResponse'
 
@@ -4599,6 +4666,8 @@ components:
                       requestId: req-123e4567-e89b-12d3-a456-426614174000
                       isBusinessLog: true
                   duration: 45
+                  promptTokens: 1234
+                  completionTokens: 567
                   metadata:
                     version: 1
                     createdAt: '2025-01-15T10:30:27.167Z'
@@ -4633,6 +4702,8 @@ components:
                     requestId: req-123e4567-e89b-12d3-a456-426614174000
                     isBusinessLog: false
                 duration: 45
+                promptTokens: 1234
+                completionTokens: 567
                 metadata:
                   version: 1
                   createdAt: '2025-01-15T10:30:27.167Z'
@@ -4668,6 +4739,8 @@ components:
                       requestId: req-123e4567-e89b-12d3-a456-426614174000
                       isBusinessLog: true
                   duration: 120
+                  promptTokens: 2468
+                  completionTokens: 890
                   metadata:
                     version: 1
                     createdAt: '2025-01-15T10:30:27.167Z'
@@ -4701,6 +4774,8 @@ components:
                     requestId: req-123e4567-e89b-12d3-a456-426614174000
                     isBusinessLog: false
                 duration: 120
+                promptTokens: 2468
+                completionTokens: 890
                 metadata:
                   version: 1
                   createdAt: '2025-01-15T10:30:27.167Z'

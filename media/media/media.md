@@ -12,7 +12,7 @@ layout:
 You can upload or link to media files and other documents by using the Emporix Media Service. The files can be associated with specific resources within the Emporix database, or remain unassigned.
 
 {% hint style="info" %}
-It is possible to assign assets to `BRAND`, `CATEGORY`, `LABEL`, `PRODUCT`, `MODULE`, or any custom schema type. To associate an asset with a predefined resource type, set `access` to `PUBLIC`. Private assets can be linked only to custom schema types, or remain unassigned.
+It is possible to assign assets to `BRAND`, `CATEGORY`, `LABEL`, `PRODUCT`, `MODULE`, `AGENT`, or any custom schema type. To associate an asset with a predefined resource type such as `CATEGORY` or `PRODUCT`, set `access` to `PUBLIC`. Private assets can be linked to `AGENT`, custom schema types, or remain unassigned.
 {% endhint %}
 
 ## How to manage public and internal assets
@@ -96,7 +96,7 @@ curl -L \
 
 Private assets are intended for tenant-internal use and are not exposed on the storefront. Typical use cases include supplier contracts, technical specification sheets, or compliance documents that your employees need to access from the Management Dashboard or through the API.
 
-Create a private asset without `refIds`, or associate it with a custom schema type in `refIds`. Private assets cannot be linked to predefined types such as `CATEGORY` or `PRODUCT`. After creation, retrieve the file through the [Downloading an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download) endpoint with the `media.asset_read` scope.
+Create a private asset without `refIds`, or associate it with `AGENT` or a custom schema type in `refIds`. Private assets cannot be linked to predefined types such as `CATEGORY` or `PRODUCT`. After creation, retrieve the file through the [Downloading an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download) endpoint with the `media.asset_read` scope.
 
 ### Upload an unassociated private asset
 

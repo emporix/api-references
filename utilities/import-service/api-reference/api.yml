@@ -270,6 +270,120 @@ paths:
               examples:
                 Schedule response:
                   $ref: '#/components/examples/Schedule_Example'
+        '400':
+          description: >-
+            The `cron` expression or `timezone` value is invalid. The service expects a six-field cron
+            expression (`second minute hour day-of-month month day-of-week`). A five-field expression
+            such as `0 * * * *` is rejected. The service does not store it.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+    delete:
+      summary: Removing a schedule
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Removes the schedule. The configuration then runs only when it is triggered.
+
+        The request is idempotent. Removing a schedule that does not exist also returns `204`.
+        Unlike creating a schedule, this request does not require the configuration to exist.
+        Use it to remove a schedule that remains after the configuration is deleted.
+      operationId: deleteSchedule
+      tags:
+        - Schedules
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '204':
+          description: The schedule has been removed. The configuration now runs only when triggered.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/configs/{configId}/stream-order':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_configId'
+    get:
+      summary: Retrieving the stream run order
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves the order in which the configuration's streams run, and the dependencies behind that order.
+
+        Dependencies between streams decide the order. Sequence breaks ties.
+
+        Dependencies come from four sources:
+
+        * an explicit dependency on another stream
+        * a mapping that references a type another stream produces
+        * a `COMPOSITE_CHILD` stream with `childStrategy` set to `EMBED` – runs before the parent that embeds it
+        * a `COMPOSITE_CHILD` stream with `childStrategy` set to `PATCH`, or a `COMPOSITE_MERGE` stream – run after the parent they update
+
+        Use this endpoint rather than calculating the order yourself. Mapping transformations add
+        dependencies that a single stream definition does not show. An order calculated without those
+        dependencies can differ from the order used at run time.
+      operationId: GET-importtool-stream-order
+      tags:
+        - Streams
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The request was successful. The stream order is returned.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  order:
+                    type: array
+                    items:
+                      type: string
+                    description: Stream names in the order they run.
+                  prereqs:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+                    description: >-
+                      For each stream name, the streams that must run before it. A stream with no
+                      dependencies has an empty list.
+              examples:
+                Stream order:
+                  value:
+                    order:
+                      - vendor
+                      - purchaseOrder
+                      - purchaseOrderLine
+                    prereqs:
+                      vendor: []
+                      purchaseOrder:
+                        - vendor
+                      purchaseOrderLine:
+                        - purchaseOrder
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -319,14 +433,59 @@ paths:
                   description: >-
                     When `true`, every extracted record is rewritten, even if unchanged. It bypasses the idempotency `skip-if-unchanged` check. Use it to force target IDs and values to be rewritten.
                   example: false
+                sampleSize:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
+                  description: >-
+                    Dry-run only. How many mapped records to sample per stream for the preview returned as
+                    `dryRunSample`. Clamped to 1-100; defaults to 25.
+                  example: 25
+                origin:
+                  type: string
+                  maxLength: 40
+                  description: >-
+                    What requested this run. Examples: `Dashboard`, an integration scenario name, or a scheduler name.
+                    The `trigger` field records only `MANUAL` or `SCHEDULED`. Use `origin` when more than one system
+                    calls this endpoint. If you omit `origin` or send a blank value, the service stores the `trigger`
+                    value. The service rejects values longer than 40 characters and values that contain control
+                    characters. It does not shorten them.
+                  example: Make scenario 42
+                streamIds:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: >-
+                    The stream identifiers to run. Omit the field to run every stream in the configuration.
+                    Send a list of stream IDs to run only those streams. Do not send stream names; use the
+                    `id` values from the stream resource.
+
+                    The service rejects an empty list. It also rejects a list that includes no stream from
+                    this configuration. Listed streams still run in the computed stream order, not in list
+                    order.
+
+                    The service also rejects a stream that cannot produce data on its own. A `COMPOSITE_CHILD`
+                    stream with `childStrategy` set to `EMBED` is written by its parent. A child that reads
+                    values captured during the parent run also cannot run alone. Either stream without its
+                    parent would complete successfully without importing records.
+                  example:
+                    - 8f1b6a5c-2d7e-4a91-9c33-0b5e4d2a7f10
             examples:
               Full run:
                 value:
                   mode: FULL
+                  origin: Dashboard
               Delta dry run:
                 value:
                   mode: DELTA
                   dryRun: true
+              Run only two streams:
+                value:
+                  mode: DELTA
+                  streamIds:
+                    - 8f1b6a5c-2d7e-4a91-9c33-0b5e4d2a7f10
+                    - 1c9d3e77-45ab-4f02-8e6d-77a1b0c9e254
       responses:
         '200':
           description: The request was successful. The run has been started.
@@ -1262,6 +1421,34 @@ components:
             - SCHEDULED
           description: What triggered the run.
           example: MANUAL
+        dryRunSample:
+          type: array
+          description: >-
+            Dry-run only. A sample of the mapped records that would be written, so the mapping can be
+            previewed without a real import. Absent on normal runs.
+          items:
+            type: object
+            properties:
+              stream:
+                type: string
+                description: The stream that produced the sample record.
+              targetType:
+                type: string
+                description: The resolved target type the record would be written to.
+              key:
+                type: string
+                description: The record's natural/deterministic key.
+              fields:
+                type: object
+                additionalProperties: true
+                description: The mapped target fields that would be written.
+        origin:
+          type: string
+          description: >-
+            What requested the run. The `origin` value from the trigger request, or the `trigger` value when
+            `origin` was omitted. Use this field to distinguish a dashboard run from a run started by an
+            integration scenario. The field is absent on runs recorded before it existed.
+          example: Dashboard
         status:
           type: string
           enum:
@@ -2254,6 +2441,7 @@ components:
         configId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
         tenant: mytenant
         trigger: MANUAL
+        origin: Dashboard
         status: RUNNING
         mode: FULL
         startedAt: '2026-07-27T02:00:00.000Z'
@@ -2276,6 +2464,7 @@ components:
             configId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
             tenant: mytenant
             trigger: MANUAL
+            origin: Dashboard
             status: SUCCEEDED
             mode: DELTA
             startedAt: '2026-07-27T02:00:00.000Z'
@@ -2294,6 +2483,7 @@ components:
           configId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
           tenant: mytenant
           trigger: MANUAL
+          origin: Dashboard
           status: SUCCEEDED
           mode: DELTA
           startedAt: '2026-07-27T02:00:00.000Z'
