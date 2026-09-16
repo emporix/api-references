@@ -540,7 +540,7 @@ When a commerce event triggers an agent, for example `product.product-created`, 
 * Each listed scope must be a scope the caller is allowed to grant.
 
 {% hint style="info" %}
-The `eventScopes` are not the same as the `requiredScopes`.
+The `eventScopes` are not the same as the `requiredScopes`. On the agent, the `requiredScopes` controls who may trigger the agent. On a dynamic MCP tool, the `requiredScopes` controls who may invoke the tool.
 {% endhint %}
 
 The OAuth2 access token must include the `ai.agent_manage` scope.
@@ -710,9 +710,9 @@ Media file size can be up to 10 MB.
 The upload and the later chat request must use the same `agentId` and `sessionId`:
 
 * `agentId` – The path parameter on [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) must match `agentId` in the chat request body.
-* `sessionId` – Send the upload response value as the `session-id` header on the chat request, not in the body.
+* `sessionId` – Send the upload response value as the `session-id` header on the chat request.
 
-The same pairing applies to [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat), [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream), and [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async). To use the file with a different agent, assign it first with `attachmentId` on [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments), then chat with that agent. See [Reuse an attachment with another agent](#reuse-an-attachment-with-another-agent).
+The same pairing applies to [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat), [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream), and [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async). To use the file with a different agent, first assign the attachment to that agent with `attachmentId` on [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments), then chat with that agent. See [Reuse an attachment with another agent](#reuse-an-attachment-with-another-agent).
 
 {% stepper %}
 {% step %}
@@ -722,14 +722,14 @@ To upload a file to an agent, use the dedicated [Uploading attachment](https://d
 ```bash
 curl -L \
   --request POST \
-  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/order-assistant-agent/attachments' \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/{agentId}/attachments' \
   --header 'Content-Type: multipart/form-data' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --form 'attachment=@"order_request.pdf"'
 
 ```
 
-The successful response returns an attachment `id` and a `sessionId` that scopes the upload to your chat session. Save both values as you need them when you call agent chat in the subsequent step. Use the same `order-assistant-agent` identifier in the chat body. 
+The successful response returns an attachment `id` and a `sessionId` that scopes the upload to your chat session. Save both values as you need them when you call agent chat in the subsequent step. Use the same `{agentId}` in the chat body. 
 
 How the `sessionId` in the response is set:
 * If you send a `session-id` header on the upload request (optional), the response returns the exact same value.
@@ -770,7 +770,7 @@ curl -L \
   --header 'Content-Type: application/json' \
   --header 'session-id: bdec151b-303f-4344-b41d-ccf307fb7907' \
   --data '{
-    "agentId": "order-assistant-agent",
+    "agentId": "{agentId}",
     "message": "Find products or equivalents from the attached order request and create an order for the customer",
     "attachments": [
       {
@@ -806,7 +806,7 @@ AI Service adds an `AGENT` reference on the media asset. The attachment must alr
 ```bash
 curl -L \
   --request POST \
-  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/invoice-agent/attachments' \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/{agentId}}/attachments' \
   --header 'Content-Type: multipart/form-data' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'session-id: bdec151b-303f-4344-b41d-ccf307fb7907' \

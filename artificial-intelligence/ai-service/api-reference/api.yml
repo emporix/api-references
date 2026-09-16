@@ -349,7 +349,7 @@ paths:
       description: |-
         Allows for communication with Emporix agents.
 
-        When the request includes `attachments`, each `attachments[].attachmentId` must reference a file already uploaded in this session. Send the upload `sessionId` as the `session-id` header, not in the request body. The body `agentId` must match the agent assigned to the attachment. After a file upload, use the upload path `agentId`. After reuse, use the target path `agentId`. If the identifiers differ, the request returns `400`. To use the file with a different agent, first assign it with `attachmentId` on `POST /ai-service/{tenant}/agentic/{agentId}/attachments` using the target `agentId` in the path, then chat with that target agent.
+        When the request includes `attachments`, each `attachments[].attachmentId` must reference a file already uploaded in this session. Send the upload `sessionId` as the `session-id` header. The attachment must already be attached to the `agentId` in the request body. After a file upload, use the upload path `agentId`. After reuse, use the target path `agentId`. If the identifiers differ, the request returns `400`. To use the file with a different agent, first assign it with `attachmentId` on `POST /ai-service/{tenant}/agentic/{agentId}/attachments` using the target `agentId` in the path, then chat with that target agent.
       security:
         - OAuth2:
             - ai.agentexecution_manage_own
@@ -395,7 +395,7 @@ paths:
       description: |-
         Allows for communication with Emporix agents using a Server-Sent Events stream.
 
-        Attachment rules are the same as for Starting agent chat. The body `agentId` must match the agent assigned to the attachment, and the `session-id` header must match the upload `sessionId`.
+        When the request includes `attachments`, each `attachments[].attachmentId` must reference a file already uploaded in this session. Send the upload `sessionId` as the `session-id` header. The attachment must already be attached to the `agentId` in the request body. After a file upload, use the upload path `agentId`. After reuse, use the target path `agentId`. If the identifiers differ, the request returns `400`. To use the file with a different agent, first assign it with `attachmentId` on `POST /ai-service/{tenant}/agentic/{agentId}/attachments` using the target `agentId` in the path, then chat with that target agent.
       security:
         - OAuth2:
             - ai.agentexecution_manage_own
@@ -438,7 +438,7 @@ paths:
       description: |-
         Allows for communication with Emporix agents in async way.
 
-        Attachment rules are the same as for Starting agent chat. The body `agentId` must match the agent assigned to the attachment, and the `session-id` header must match the upload `sessionId`.
+        When the request includes `attachments`, each `attachments[].attachmentId` must reference a file already uploaded in this session. Send the upload `sessionId` as the `session-id` header. The attachment must already be attached to the `agentId` in the request body. After a file upload, use the upload path `agentId`. After reuse, use the target path `agentId`. If the identifiers differ, the request returns `400`. To use the file with a different agent, first assign it with `attachmentId` on `POST /ai-service/{tenant}/agentic/{agentId}/attachments` using the target `agentId` in the path, then chat with that target agent.
       security:
         - OAuth2:
             - ai.agentexecution_manage_own
@@ -461,7 +461,7 @@ paths:
           format: uuid
         name: session-id
         in: header
-        description: Unique session identifier which allows for storing the context of the chat. If not provided, the system generates it. A later chat request that references this attachment must send the same value as the `session-id` header.
+        description: Unique session identifier which allows for storing the context of the chat. If not provided, the system generates it. A later chat request that references this attachment must send the same value as the `session-id` header. Attaching the file to another agent keeps this same session.
     post:
       summary: Uploading attachment
       operationId: POST-ai-agents-upload-attachment
@@ -501,9 +501,9 @@ paths:
           - text
           - txt
 
-        **Reuse an attachment:** send the `attachmentId` form field, the `session-id` header of the session that already contains the attachment, and the target agent's `agentId` in the path. The response is `204`. Then chat with that target `agentId`.
+        **Reuse an attachment:** Send the `attachmentId` form field, the `session-id` header of the session that already contains the attachment, and the target agent's `agentId` in the path. The response is `204`.
 
-        A later request to Starting agent chat, Starting agent chat stream, or Starting agent async chat must send the `agentId` of the agent assigned to the attachment, and the same `session-id` header as the upload `sessionId`. After a file upload, use this path `agentId`. After reuse, use the target path `agentId`. If the chat `agentId` is not assigned to the attachment, the API returns `400` with the message `Agent chat attachment with id={attachmentId} cannot be used to chat with agentId={agentId}`.
+        **Chat with the attachment:** Call Starting agent chat, Starting agent chat stream, or Starting agent async chat. Send the upload `sessionId` as the `session-id` header. If the chat `agentId` is not the agent in this path, the API returns `400` with the message `Agent chat attachment with id={attachmentId} cannot be used to chat with agentId={agentId}`.
       security:
         - OAuth2:
             - ai.agentexecution_manage_own
@@ -2246,7 +2246,7 @@ components:
       properties:
         agentId:
           type: string
-          description: Unique identifier of the agent. When the request includes `attachments`, this value must match the agent assigned to the attachment. After a file upload, use the upload path `agentId`. After reuse, use the target path `agentId`.
+          description: Unique identifier of the agent.
         message:
           type: string
           description: The user message to the agent.
@@ -2257,7 +2257,7 @@ components:
             properties:
               attachmentId:
                 type: string
-                description: Identifier returned by the upload. Required for each attached file. The attachment must belong to the current session and to this request's `agentId`.
+                description: Identifier returned by the upload. Required for each attached file. The attachment must belong to the current session and be attached to this request's `agentId`.
               caption:
                 type: string
                 description: Caption of the attachment.
@@ -4018,7 +4018,7 @@ components:
           description: Unique identifier of the created attachment.
         sessionId:
           type: string
-          description: Unique identifier of the session. The same `sessionId` must be used when calling chat endpoints to ensure the correct attachment is found. The chat `agentId` must match the agent assigned to the attachment.
+          description: Unique identifier of the session. Send this value as the `session-id` header on later chat requests so the API can find the attachment. Attaching the file to another agent does not change the session; keep this same `sessionId`.
 
     # Agent Logs:
     LogSeverity:
