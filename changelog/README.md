@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="major-change" %}
+{% update date="2026-09-16" tags="major-change" %}
 
 ## Supplier Service - removal of deprecated endpoints
 
