@@ -806,7 +806,7 @@ AI Service adds an `AGENT` reference on the media asset. The attachment must alr
 ```bash
 curl -L \
   --request POST \
-  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/{agentId}}/attachments' \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/{agentId}/attachments' \
   --header 'Content-Type: multipart/form-data' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'session-id: bdec151b-303f-4344-b41d-ccf307fb7907' \
