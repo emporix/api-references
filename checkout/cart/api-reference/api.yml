@@ -51,8 +51,10 @@ paths:
         | `GetCartDiscounts` | none | none | `GET /cart/{tenant}/carts/{cartId}/discounts` | 200 list of discounts |
         | `DeleteCartDiscounts` | none | optional `codes` | `DELETE /cart/{tenant}/carts/{cartId}/discounts` | 204 |
         | `DeleteCartDiscount` | none | `discountIndex` | `DELETE /cart/{tenant}/carts/{cartId}/discounts/{discountIndex}` | 204 |
+        | `RefreshCart` | none | none | `PUT /cart/{tenant}/carts/{cartId}/refresh` | 204, no `data` |
+        | `ValidateCart` | none | none | `GET /cart/{tenant}/carts/{cartId}/validate` | 200 `cartValidationResult` |
 
-        Create cart, delete cart, merge, change site, change currency, refresh, search, validate, and retrieving cart items are not command types in this release.
+        Create cart, delete cart, merge, change site, change currency, search, and retrieving cart items are not command types in this release.
 
         The chain accepts at most 10 commands. A `commands` array of 1 through 10 items is valid. 11 or more commands return **400** and no command runs. An empty `commands` array also returns **400**. This cap is independent of the itemsBatch payload limit of 50.
 
@@ -75,12 +77,12 @@ paths:
 
         Participating writes (send If-Match and bump the follow cursor): `AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`.
 
-        `GetCart` does not send If-Match and does not bump the cursor.
+        `GetCart` and `ValidateCart` do not send If-Match and do not bump the cursor.
 
-        Deletes, `AddCartItemsBatch`, and `UpdateCartItemsBatch` do not send If-Match and cannot seed the cursor. If a follow cursor is already seeded for that `cartId`, a successful mutating delete or batch still bumps the cursor by 1 so a later participating write does not 409. Mixed `AddCartItemsBatch` (command 400) does not bump. `UpdateCartItemsBatch` bumps only when at least one entry is 2xx. Extra `resourceVersion` on these commands is ignored.
+        Deletes, `AddCartItemsBatch`, `UpdateCartItemsBatch`, and `RefreshCart` do not send If-Match and cannot seed the cursor. If a follow cursor is already seeded for that `cartId`, a successful mutating delete, batch, or refresh still bumps the cursor by 1 so a later participating write does not 409. Mixed `AddCartItemsBatch` (command 400) does not bump. `UpdateCartItemsBatch` bumps only when at least one entry is 2xx. Extra `resourceVersion` on these commands is ignored.
 
         * `skip` (default) – never passes a version. Ignores `options.resourceVersion` if present. The add-then-GET storefront flow uses this.
-        * `explicit` – every participating command must send `options.resourceVersion`. The service checks the whole `commands` array before command 1. If any participating write is missing a version, the request returns **400**, `results` is empty, and nothing is mutated. `explicit` is not `skip`: omitting `resourceVersion` on a participating write is a client error, not a last-write-wins strategy. Later commands are not rewritten; the client pre-computes `N`, `N+1`, and so on. The same `N` on two writes after a valid preflight yields 409 on the second command; the first write stays committed. GetCart, deletes, and itemsBatch do not require a version. Extra `resourceVersion` on them is ignored. A chain of only GetCart or deletes has no participating writes, so preflight passes. Mixing `explicit` and `skip` behavior for different writes in one request is not supported; use `skip` or two requests.
+        * `explicit` – every participating command must send `options.resourceVersion`. The service checks the whole `commands` array before command 1. If any participating write is missing a version, the request returns **400**, `results` is empty, and nothing is mutated. `explicit` is not `skip`: omitting `resourceVersion` on a participating write is a client error, not a last-write-wins strategy. Later commands are not rewritten; the client pre-computes `N`, `N+1`, and so on. The same `N` on two writes after a valid preflight yields 409 on the second command; the first write stays committed. GetCart, ValidateCart, deletes, itemsBatch, and RefreshCart do not require a version. Extra `resourceVersion` on them is ignored. A chain of only GetCart, ValidateCart, deletes, or RefreshCart has no participating writes, so preflight passes. Mixing `explicit` and `skip` behavior for different writes in one request is not supported; use `skip` or two requests.
         * `follow` – seeds from the first participating write. After that write succeeds, later writes use `sent + 1`. Follow state is an internal cursor and is not part of the HTTP body.
 
         `follow` rules:
@@ -88,8 +90,8 @@ paths:
         * The first participating write must have `options.resourceVersion`. Missing version returns **400 for that command** (not a whole-request preflight).
         * Later `follow` commands omit `resourceVersion`. A differing value versus the cursor returns **400** for that command. A matching value is accepted.
         * The bump is `+1`, the same as REST. Concurrent REST or `/execute` on the same cart still returns 409 through the existing check.
-        * GetCart does not bump the cursor and does not seed the version from stored cart metadata.
-        * Deletes and itemsBatch do not send If-Match. They cannot seed the cursor. After a participating write has seeded the cart, a successful mutating delete or batch still bumps the cursor by 1. Mixed `AddCartItemsBatch` (command 400) does not bump. `UpdateCartItemsBatch` bumps only when at least one entry is 2xx.
+        * GetCart and ValidateCart do not bump the cursor and do not seed the version from stored cart metadata.
+        * Deletes, itemsBatch, and RefreshCart do not send If-Match. They cannot seed the cursor. After a participating write has seeded the cart, a successful mutating delete, batch, or refresh still bumps the cursor by 1. Mixed `AddCartItemsBatch` (command 400) does not bump. `UpdateCartItemsBatch` bumps only when at least one entry is 2xx.
         * If a write returns 409, the cursor does not bump. `onError=fail` stops; `resume` leaves later writes trying the old cursor.
 
         `follow` example – the client knows the cart is at version `5`; later writes omit `resourceVersion`:
@@ -5912,6 +5914,8 @@ components:
             * `GetCartDiscounts`
             * `DeleteCartDiscounts`
             * `DeleteCartDiscount`
+            * `RefreshCart`
+            * `ValidateCart`
           enum:
             - AddCartItem
             - UpdateCartItem
@@ -5925,6 +5929,8 @@ components:
             - GetCartDiscounts
             - DeleteCartDiscounts
             - DeleteCartDiscount
+            - RefreshCart
+            - ValidateCart
         data:
           description: |
             Request body of the equivalent REST operation.
@@ -5936,7 +5942,7 @@ components:
             * `UpdateCart` – cart update body
             * `ApplyCartDiscount` – discount body
 
-            Omit `data` for `GetCart`, deletes, `GetCartDiscounts`, `DeleteCartDiscounts`, and `DeleteCartDiscount`.
+            Omit `data` for `GetCart`, deletes, `GetCartDiscounts`, `DeleteCartDiscounts`, `DeleteCartDiscount`, `RefreshCart`, and `ValidateCart`.
           oneOf:
             - $ref: '#/components/schemas/cartItemRequest'
             - $ref: '#/components/schemas/updateCartItem'
@@ -5995,7 +6001,7 @@ components:
             * `versioning=explicit` – required on every participating command (whole-request preflight)
             * `versioning=follow` – required to seed the first participating write; omit on later writes
 
-            Extra `resourceVersion` on GetCart, deletes, and itemsBatch is ignored.
+            Extra `resourceVersion` on GetCart, ValidateCart, deletes, itemsBatch, and RefreshCart is ignored.
         codes:
           type: array
           items:

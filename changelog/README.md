@@ -25,6 +25,26 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## Cart Service - `RefreshCart` and `ValidateCart` execute commands
+
+#### Overview
+
+The Cart Service adds `RefreshCart` and `ValidateCart` command types to `POST /cart/{tenant}/carts/{cartId}/execute`. You can refresh item prices or validate cart items in the same command chain as other cart operations. Existing `PUT .../refresh` and `GET .../validate` endpoints stay unchanged.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) | Adds `RefreshCart` and `ValidateCart` command types. `RefreshCart` rematches item prices (204). `ValidateCart` returns the cart validation result (200). |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="RELEASE_DATE" tags="major-change" %}
 
 ## Cart Service - cart-scoped execute path
