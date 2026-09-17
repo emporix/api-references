@@ -4105,7 +4105,11 @@ components:
           type: string
           title: YRN
           minLength: 1
-          description: 'A unique identifier of a global resource, which stores information about the resource, such as its type, ID or name of the tenant. This field should not be provided when itemType is EXTERNAL and request contains external product.'
+          deprecated: true
+          description: 'A unique identifier of a global resource, which stores information about the resource, such as its type, ID or name of the tenant. This field should not be provided when itemType is EXTERNAL and request contains external product. **This field is deprecated**. Use `productId` instead.'
+        productId:
+          type: string
+          description: Plain product identifier. Can be provided as an alternative to `itemYrn`.
         externalFees:
           type: array
           items:
@@ -4352,7 +4356,14 @@ components:
         product:
           $ref: '#/components/schemas/cartItemResponseProduct'
         itemYrn:
-          $ref: '#/components/schemas/YRN'
+          allOf:
+            - $ref: '#/components/schemas/YRN'
+            - type: object
+              description: '**This field is deprecated**. Use `productId` instead.'
+          deprecated: true
+        productId:
+          type: string
+          description: Plain product identifier.
         type:
           $ref: '#/components/schemas/itemType'
         quantity:
@@ -4881,8 +4892,15 @@ components:
       title: fee
       type: object
       properties:
+        id:
+          type: string
+          description: Unique identifier of the fee.
         yrn:
-          $ref: '#/components/schemas/YRN'
+          allOf:
+            - $ref: '#/components/schemas/YRN'
+            - type: object
+              description: '**This field is deprecated**. Use `id` instead.'
+          deprecated: true
         name:
           $ref: '#/components/schemas/localizedValue'
         taxCode:
@@ -5425,7 +5443,14 @@ components:
         product:
           $ref: '#/components/schemas/updateProduct'
         itemYrn:
-          $ref: '#/components/schemas/YRN'
+          allOf:
+            - $ref: '#/components/schemas/YRN'
+            - type: object
+              description: '**This field is deprecated**. Use `productId` instead.'
+          deprecated: true
+        productId:
+          type: string
+          description: Plain product identifier. Can be provided as an alternative to `itemYrn`.
         itemType:
           allOf:
             - $ref: '#/components/schemas/itemType'
