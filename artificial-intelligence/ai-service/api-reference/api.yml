@@ -279,12 +279,7 @@ paths:
   '/ai-service/{tenant}/agentic/chat':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
-      - schema:
-          type: string
-          format: uuid
-        name: session-id
-        in: header
-        description: Unique session identifier which allows for storing the context of the chat. If not provided, the system generates it. When the request includes `attachments`, send the same value returned as `sessionId` from the upload. Do not send `sessionId` in the request body.
+      - $ref: '#/components/parameters/header_session-id'
     post:
       summary: Starting agent chat
       operationId: POST-ai-agents-chat
@@ -313,7 +308,7 @@ paths:
         '500':
           $ref: '#/components/responses/500_resp_common'
       description: |-
-        Allows for communication with Emporix agents.
+        Allows for communication with Emporix agents. Conversational continuity requires both the `session-id` header and `enabledMemory` set to `true` on the agent. Collaborations configured in `agentCollaborations` run in the same session.
 
         When the request includes `attachments`, each `attachments[].attachmentId` must reference a file already uploaded in this session. Send the upload `sessionId` as the `session-id` header. The attachment must already be attached to the `agentId` in the request body. After a file upload, send that same path `agentId` in the chat body. After reuse, send the target agent's path `agentId` in the chat body. If they differ, the request returns `400`. To use the file with a different agent, first assign the attachment to that agent with `attachmentId` on `POST /ai-service/{tenant}/agentic/{agentId}/attachments` using the target `agentId` in the path, then chat with that target agent.
       security:
@@ -327,12 +322,7 @@ paths:
   '/ai-service/{tenant}/agentic/chat-stream':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
-      - schema:
-          type: string
-          format: uuid
-        name: session-id
-        in: header
-        description: Unique session identifier which allows for storing the context of the chat. If not provided, the system generates it. When the request includes `attachments`, send the same value returned as `sessionId` from the upload. Do not send `sessionId` in the request body.
+      - $ref: '#/components/parameters/header_session-id'
       - schema:
           type: string
           example: text/event-stream
@@ -359,7 +349,7 @@ paths:
         '500':
           $ref: '#/components/responses/500_resp_common'
       description: |-
-        Allows for communication with Emporix agents using a Server-Sent Events stream.
+        Allows for communication with Emporix agents using a Server-Sent Events stream. Conversational continuity requires both the `session-id` header and `enabledMemory` set to `true` on the agent. Collaborations configured in `agentCollaborations` run in the same session.
 
         When the request includes `attachments`, each `attachments[].attachmentId` must reference a file already uploaded in this session. Send the upload `sessionId` as the `session-id` header. The attachment must already be attached to the `agentId` in the request body. After a file upload, send that same path `agentId` in the chat body. After reuse, send the target agent's path `agentId` in the chat body. If they differ, the request returns `400`. To use the file with a different agent, first assign the attachment to that agent with `attachmentId` on `POST /ai-service/{tenant}/agentic/{agentId}/attachments` using the target `agentId` in the path, then chat with that target agent.
       security:
@@ -373,12 +363,7 @@ paths:
   '/ai-service/{tenant}/agentic/chat-async':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
-      - schema:
-          type: string
-          format: uuid
-        name: session-id
-        in: header
-        description: Unique session identifier which allows for storing the context of the chat. If not provided, the system generates it. When the request includes `attachments`, send the same value returned as `sessionId` from the upload. Do not send `sessionId` in the request body.
+      - $ref: '#/components/parameters/header_session-id'
     post:
       summary: Starting agent async chat
       operationId: POST-ai-agents-chat-async
@@ -402,7 +387,7 @@ paths:
         '500':
           $ref: '#/components/responses/500_resp_common'
       description: |-
-        Allows for communication with Emporix agents in async way.
+        Allows for communication with Emporix agents in async way. Conversational continuity requires both the `session-id` header and `enabledMemory` set to `true` on the agent. Collaborations configured in `agentCollaborations` run in the same session.
 
         When the request includes `attachments`, each `attachments[].attachmentId` must reference a file already uploaded in this session. Send the upload `sessionId` as the `session-id` header. The attachment must already be attached to the `agentId` in the request body. After a file upload, send that same path `agentId` in the chat body. After reuse, send the target agent's path `agentId` in the chat body. If they differ, the request returns `400`. To use the file with a different agent, first assign the attachment to that agent with `attachmentId` on `POST /ai-service/{tenant}/agentic/{agentId}/attachments` using the target `agentId` in the path, then chat with that target agent.
       security:
@@ -422,12 +407,7 @@ paths:
         in: path
         required: true
         description: Unique identifier of the agent that receives the attachment. For a file upload, a later chat request must send this same value in the body `agentId` field. When you reuse an attachment, this path value is the target agent. The later chat request must send that target `agentId`.
-      - schema:
-          type: string
-          format: uuid
-        name: session-id
-        in: header
-        description: Unique session identifier which allows for storing the context of the chat. If not provided, the system generates it. A later chat request that references this attachment must send the same value as the `session-id` header. Attaching the file to another agent keeps this same session.
+      - $ref: '#/components/parameters/header_session-id'
     post:
       summary: Uploading attachment
       operationId: POST-ai-agents-upload-attachment
@@ -3506,7 +3486,7 @@ components:
 
     AgentCollaborations:
       type: array
-      description: List of agent collaborations which allows an agent to hand off its task to other agents.
+      description: List of agent collaborations which allows an agent to hand off its task to other agents. Collaborations remain in the caller's session and do not enable memory by themselves.
       items:
         type: object
         properties:
@@ -3703,7 +3683,7 @@ components:
 
     HandOff:
       type: boolean
-      description: Indicates whether the agent is handOff or not. HandOff agents are special types of agents which can be called by other agents through `agentCollaborations` property and their configuration is hidden.
+      description: Indicates whether the agent is a hand-off agent. A hand-off agent can be called by other agents through `agentCollaborations`, its configuration is hidden, and it still runs in the caller's session.
 
     BaseForAgentAndTemplateAndHandOff:
       type: object
@@ -3789,7 +3769,7 @@ components:
               maximum: 50
             enabledMemory:
               type: boolean
-              description: Defines whether the session memory should be stored between different agent calls.
+              description: Defines whether session memory is stored between different agent calls. Memory is stored only for that agent and only within one `session-id`. The default is `false`. To keep conversational memory for targets in `agentCollaborations`, it is recommended to set the flag to `true` on each target as well.
               default: false
           required:
             - userPrompt
@@ -3912,7 +3892,7 @@ components:
           $ref: '#/components/schemas/ImportResult'
         sessionId:
           type: string
-          description: Unique identifier of the session.
+          description: Unique identifier of the session. Send this value back as the `session-id` header on later chat and attachment calls.
         agentId:
           type: string
           description: Unique identifier of the agent.
@@ -4016,7 +3996,7 @@ components:
           $ref: '#/components/schemas/AgentType'
         sessionId:
           type: string
-          description: Unique identifier of the session.
+          description: Unique identifier of the session. Send this value back as the `session-id` header on later chat and attachment calls.
         message:
           type: string
           description: Agent message.
@@ -4441,6 +4421,19 @@ components:
         Your Emporix tenant name.
 
         **Note**: The tenant name should always be provided in lowercase.
+    header_session-id:
+      name: session-id
+      in: header
+      required: false
+      schema:
+        type: string
+        format: uuid
+      description: |
+        Optional UUID of the AI Service chat session. If omitted, the system generates one.
+
+        Reuse the same value on later chat and attachment calls to continue the same session, access attachments from that session, and keep conversational memory when `enabledMemory` is `true` on the agent. A new value starts a new session.
+
+        When a chat request includes `attachments`, send the same value returned as `sessionId` from the upload. Do not send `sessionId` in the request body. Attaching a file to another agent keeps this same session.
     header_Accept-Language:
       name: Accept-Language
       in: header
