@@ -25,6 +25,32 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="2026-09-17" tags="improvement" %}
+
+## AI Service - cursor-based pagination for agent logs and jobs
+
+#### Overview
+
+AI Service now supports cursor-based pagination for agent request and session listing and search, and for job listing and search. Clients can use the `next` and `prev` query parameters together with the `X-Next-Cursor` and `X-Prev-Cursor` response headers to navigate large result sets without relying on deep offset pagination.
+
+Offset pagination with `pageNumber` and `pageSize` remains supported. In cursor mode, `pageNumber` is ignored, `X-Total-Count` is not calculated or returned, and requests that send both `next` and `prev` return `400`. When no sort is provided, results default to `_id:ASC`; when a sort is provided, `_id:ASC` is appended as a tie-breaker.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Listing agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Searching agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-requests-search) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Listing agent sessions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Searching agent sessions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-sessions-search) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Listing available jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Searching jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#post-ai-service-tenant-jobs-search) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
 {% update date="2026-09-16" tags="major-change" %}
 
 ## Supplier Service - removal of deprecated endpoints

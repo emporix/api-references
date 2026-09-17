@@ -125,6 +125,8 @@ paths:
       - $ref: '#/components/parameters/qParam'
       - $ref: '#/components/parameters/pageSize'
       - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/trait_cursor_next'
+      - $ref: '#/components/parameters/trait_cursor_prev'
       - $ref: '#/components/parameters/sort'
       - $ref: '#/components/parameters/fields'
       - $ref: '#/components/parameters/header_xTotalCount'
@@ -133,35 +135,7 @@ paths:
       operationId: GET-ai-list-jobs
       responses:
         '200':
-          description: List of available jobs.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Job'
-              examples:
-                Jobs:
-                  value:
-                    - id: 68835cc3ef4e8e1425c360ad
-                      status: success
-                      sessionId: 123e4567-e89b-12d3-a456-426614174000
-                      agentType: complaint
-                      type: AGENT_CHAT
-                      agentId: complaint-agent
-                      commerceEvent: product.product-updated
-                      message: |-
-                        Dear Customer,
-                        
-                        We have successfully processed your support request regarding the incorrect information on invoice EIN251131 for order EON1031. Our team has verified the order and customer details, confirming both the order and legal entity were found.
-                        Thank you for your patience and cooperation.
-                        
-                        Best regards,  
-                        [Your Support Team]
-                      metadata:
-                        version: 1
-                        createdAt: '2025-07-25T10:30:27.167Z'
-                        modifiedAt: '2025-07-25T10:31:14.509Z'
+          $ref: '#/components/responses/200_resp_GET_jobs'
         '400':
           $ref: '#/components/responses/400_resp_common'
         '401':
@@ -170,6 +144,15 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Retrieves agent jobs.
+
+        Supports offset pagination (`pageNumber`, `pageSize`) and cursor pagination (`next`, `prev`). Cursor pagination is active when `next` or `prev` is provided.
+
+        In cursor mode:
+        - `next` and `prev` cannot be used together and return `400`.
+        - `pageNumber` is ignored.
+        - the `X-Total-Count` request header is ignored and the `X-Total-Count` response header is not returned.
+
+        If no sort is provided, results are returned in `_id:ASC` order. If a sort is provided, `_id:ASC` is appended as a tie-breaker when `_id` is not already part of the sort.
       security:
         - OAuth2:
             - ai.agent_read
@@ -182,6 +165,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/trait_cursor_next'
+        - $ref: '#/components/parameters/trait_cursor_prev'
         - $ref: '#/components/parameters/sort'
         - $ref: '#/components/parameters/fields'
         - $ref: '#/components/parameters/header_xTotalCount'
@@ -189,50 +174,31 @@ paths:
       operationId: POST-ai-search-jobs
       responses:
         '200':
-          description: List of available jobs.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Job'
-              examples:
-                Jobs:
-                  value:
-                    - id: 68835cc3ef4e8e1425c360ad
-                      status: success
-                      sessionId: 123e4567-e89b-12d3-a456-426614174000
-                      agentType: complaint
-                      type: AGENT_CHAT
-                      agentId: complaint-agent
-                      commerceEvent: product.product-updated
-                      message: |-
-                        Dear Customer,
-                        
-                        We have successfully processed your support request regarding the incorrect information on invoice EIN251131 for order EON1031. Our team has verified the order and customer details, confirming both the order and legal entity were found.
-                        Thank you for your patience and cooperation.
-                        
-                        Best regards,  
-                        [Your Support Team]
-                      metadata:
-                        version: 1
-                        createdAt: '2025-07-25T10:30:27.167Z'
-                        modifiedAt: '2025-07-25T10:31:14.509Z'
+          $ref: '#/components/responses/200_resp_GET_jobs'
         '400':
           $ref: '#/components/responses/400_resp_common'
         '401':
           $ref: '#/components/responses/401_resp_common'
         '403':
           $ref: '#/components/responses/403_resp_common'
-      requestBody:
-        $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
-        Searches for agent jobs based on the provided query.
+        Searches agent jobs based on the provided query in the request body.
+
+        Supports offset pagination (`pageNumber`, `pageSize`) and cursor pagination (`next`, `prev`). Cursor pagination is active when `next` or `prev` is provided.
+
+        In cursor mode:
+        - `next` and `prev` cannot be used together and return `400`.
+        - `pageNumber` is ignored.
+        - the `X-Total-Count` request header is ignored and the `X-Total-Count` response header is not returned.
+
+        If no sort is provided, results are returned in `_id:ASC` order. If a sort is provided, `_id:ASC` is appended as a tie-breaker when `_id` is not already part of the sort.
       security:
         - OAuth2:
             - ai.agent_read
       tags:
         - Job
+      requestBody:
+        $ref: '#/components/requestBodies/QParamSearchBody'
   '/ai-service/{tenant}/jobs/{jobId}':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -1926,6 +1892,8 @@ paths:
       - $ref: '#/components/parameters/qParam'
       - $ref: '#/components/parameters/pageSize'
       - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/trait_cursor_next'
+      - $ref: '#/components/parameters/trait_cursor_prev'
       - $ref: '#/components/parameters/sort'
       - $ref: '#/components/parameters/fields'
       - $ref: '#/components/parameters/header_xTotalCount'
@@ -1943,6 +1911,15 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Retrieves agent requests based on the provided query.
+
+        Supports offset pagination (`pageNumber`, `pageSize`) and cursor pagination (`next`, `prev`). Cursor pagination is active when `next` or `prev` is provided.
+
+        In cursor mode:
+        - `next` and `prev` cannot be used together and return `400`.
+        - `pageNumber` is ignored.
+        - the `X-Total-Count` request header is ignored and the `X-Total-Count` response header is not returned.
+
+        If no sort is provided, results are returned in `_id:ASC` order. If a sort is provided, `_id:ASC` is appended as a tie-breaker when `_id` is not already part of the sort.
       security:
         - OAuth2:
             - ai.agent_read
@@ -1984,6 +1961,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/trait_cursor_next'
+        - $ref: '#/components/parameters/trait_cursor_prev'
         - $ref: '#/components/parameters/sort'
         - $ref: '#/components/parameters/fields'
         - $ref: '#/components/parameters/header_xTotalCount'
@@ -2002,6 +1981,15 @@ paths:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
         Searches for agent requests based on the provided query.
+
+        Supports offset pagination (`pageNumber`, `pageSize`) and cursor pagination (`next`, `prev`). Cursor pagination is active when `next` or `prev` is provided.
+
+        In cursor mode:
+        - `next` and `prev` cannot be used together and return `400`.
+        - `pageNumber` is ignored.
+        - the `X-Total-Count` request header is ignored and the `X-Total-Count` response header is not returned.
+
+        If no sort is provided, results are returned in `_id:ASC` order. If a sort is provided, `_id:ASC` is appended as a tie-breaker when `_id` is not already part of the sort.
       security:
         - OAuth2:
             - ai.agent_read
@@ -2013,6 +2001,8 @@ paths:
       - $ref: '#/components/parameters/qParam'
       - $ref: '#/components/parameters/pageSize'
       - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/trait_cursor_next'
+      - $ref: '#/components/parameters/trait_cursor_prev'
       - $ref: '#/components/parameters/sort'
       - $ref: '#/components/parameters/fields'
       - $ref: '#/components/parameters/header_xTotalCount'
@@ -2030,6 +2020,15 @@ paths:
           $ref: '#/components/responses/403_resp_common'
       description: |-
         Retrieves agent sessions based on the provided query.
+
+        Supports offset pagination (`pageNumber`, `pageSize`) and cursor pagination (`next`, `prev`). Cursor pagination is active when `next` or `prev` is provided.
+
+        In cursor mode:
+        - `next` and `prev` cannot be used together and return `400`.
+        - `pageNumber` is ignored.
+        - the `X-Total-Count` request header is ignored and the `X-Total-Count` response header is not returned.
+
+        If no sort is provided, results are returned in `_id:ASC` order. If a sort is provided, `_id:ASC` is appended as a tie-breaker when `_id` is not already part of the sort.
       security:
         - OAuth2:
             - ai.agent_read
@@ -2071,6 +2070,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/trait_cursor_next'
+        - $ref: '#/components/parameters/trait_cursor_prev'
         - $ref: '#/components/parameters/sort'
         - $ref: '#/components/parameters/fields'
         - $ref: '#/components/parameters/header_xTotalCount'
@@ -2089,6 +2090,15 @@ paths:
         $ref: '#/components/requestBodies/QParamSearchBody'
       description: |-
         Searches for agent sessions based on the provided query.
+
+        Supports offset pagination (`pageNumber`, `pageSize`) and cursor pagination (`next`, `prev`). Cursor pagination is active when `next` or `prev` is provided.
+
+        In cursor mode:
+        - `next` and `prev` cannot be used together and return `400`.
+        - `pageNumber` is ignored.
+        - the `X-Total-Count` request header is ignored and the `X-Total-Count` response header is not returned.
+
+        If no sort is provided, results are returned in `_id:ASC` order. If a sort is provided, `_id:ASC` is appended as a tie-breaker when `_id` is not already part of the sort.
       security:
         - OAuth2:
             - ai.agent_read
@@ -4477,6 +4487,26 @@ components:
       in: query
       name: pageNumber
       description: The page number to be retrieved. The size of the pages should be specified by the `pageSize` parameter.
+    trait_cursor_next:
+      name: next
+      in: query
+      required: false
+      schema:
+        type: string
+        maxLength: 4096
+      description: |
+        Opaque cursor from the `X-Next-Cursor` response header. Use it to retrieve the next set of results.
+        Cannot be combined with `prev` in the same request; sending both returns `400 Bad Request`.
+        When provided, cursor pagination is active: `pageNumber` is ignored and the `X-Total-Count` request header is ignored (the `X-Total-Count` response header is not returned).
+    trait_cursor_prev:
+      name: prev
+      in: query
+      required: false
+      schema:
+        type: string
+        maxLength: 4096
+      description: |
+        Opaque cursor from the `X-Prev-Cursor` response header. Use it to retrieve the previous set of results. Cannot be combined with `next` in the same request; sending both returns `400 Bad Request`. When provided, cursor pagination is active and `pageNumber` is ignored.
     sort:
       schema:
         type: string
@@ -4636,8 +4666,66 @@ components:
               value:
                 id: en
                 result: 'Mini pipe cutters are small cutting tools that are designed to precisely and effectively cut through pipes ranging in size from 3 to 16 millimeters. Unlike some larger pipe cutters, these mini versions are conveniently small and light enough to be carried around easily and used in places where a standard-sized cutter may not be able to fit. They are typically made of hardened steel and are designed to work on most types of tubing and thin-walled plastic piping. The continuous interlocking jaws hold the pipe securely while the cutting blade smoothly and accurately creates a precise and neat cutting edge. Mini pipe cutters are the perfect tool for plumbers and those tackling smaller scale pipe work in hard-to-reach places.'
+    200_resp_GET_jobs:
+      description: List of available jobs.
+      headers:
+        X-Total-Count:
+          description: Total number of jobs for the given criteria. Returned only for offset pagination when requested with the `X-Total-Count` header.
+          schema:
+            type: integer
+            format: int32
+        X-Next-Cursor:
+          description: Opaque cursor for retrieving the next page. Returned on non-empty responses when a next page exists.
+          schema:
+            type: string
+        X-Prev-Cursor:
+          description: Opaque cursor for retrieving the previous page. Returned on non-empty responses when a previous page exists.
+          schema:
+            type: string
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Job'
+          examples:
+            Jobs:
+              value:
+                - id: 68835cc3ef4e8e1425c360ad
+                  status: success
+                  sessionId: 123e4567-e89b-12d3-a456-426614174000
+                  agentType: complaint
+                  type: AGENT_CHAT
+                  agentId: complaint-agent
+                  commerceEvent: product.product-updated
+                  message: |-
+                    Dear Customer,
+
+                    We have successfully processed your support request regarding the incorrect information on invoice EIN251131 for order EON1031. Our team has verified the order and customer details, confirming both the order and legal entity were found.
+                    Thank you for your patience and cooperation.
+
+                    Best regards,
+                    [Your Support Team]
+                  metadata:
+                    version: 1
+                    createdAt: '2025-07-25T10:30:27.167Z'
+                    modifiedAt: '2025-07-25T10:31:14.509Z'
     200_resp_GET_agent_requests:
       description: List of agent requests.
+      headers:
+        X-Total-Count:
+          description: Total number of agent requests for the given criteria. Returned only for offset pagination when requested with the `X-Total-Count` header.
+          schema:
+            type: integer
+            format: int32
+        X-Next-Cursor:
+          description: Opaque cursor for retrieving the next page. Returned on non-empty responses when a next page exists.
+          schema:
+            type: string
+        X-Prev-Cursor:
+          description: Opaque cursor for retrieving the previous page. Returned on non-empty responses when a previous page exists.
+          schema:
+            type: string
       content:
         application/json:
           schema:
@@ -4712,6 +4800,20 @@ components:
                   modifiedAt: '2025-01-15T10:30:29.456Z'
     200_resp_GET_agent_sessions:
       description: List of agent sessions.
+      headers:
+        X-Total-Count:
+          description: Total number of agent sessions for the given criteria. Returned only for offset pagination when requested with the `X-Total-Count` header.
+          schema:
+            type: integer
+            format: int32
+        X-Next-Cursor:
+          description: Opaque cursor for retrieving the next page. Returned on non-empty responses when a next page exists.
+          schema:
+            type: string
+        X-Prev-Cursor:
+          description: Opaque cursor for retrieving the previous page. Returned on non-empty responses when a previous page exists.
+          schema:
+            type: string
       content:
         application/json:
           schema:
