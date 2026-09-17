@@ -178,7 +178,7 @@ You can use the retrieved details to establish the required connections and trig
 
 You can manage two types of tenant MCP servers through the API:
 
-* **Custom** (`type: custom`) – points at your own MCP implementation with a URL and transport. Use this to connect agents to an external system, such as an ERP.
+* **Custom** (`type: custom`) – points to your own MCP implementation with a URL and transport. Use this to connect agents to an external system, such as an ERP.
 * **Dynamic** (`type: dynamic`) – defines `tools` inline. Each tool invokes an Emporix Cloud Function (`config.invocation.functionId`).
 
 The workflow is the same for both types: create the server, attach it to an agent, then verify. The examples below show requests for custom and dynamic MCP management.
@@ -191,7 +191,7 @@ Emporix also provides predefined domain MCP servers (`type: predefined`) that yo
 **Dynamic MCP servers**
 This functionality is in preview mode - some of the features may not be fully operational yet.
 
-Hosting of cloud functions and use of dynamic MCP servers are not included in standard billing plans and are billed separately on a pay-as-you-go basis. If you're interested in getting access to these features, contact the [Sales Team](mailto:support@emporix.com).
+Hosting of Cloud Functions and the use of dynamic MCP servers are not included in standard billing plans and are billed separately on a pay-as-you-go basis. If you're interested in getting access to these features, contact the [Sales Team](mailto:support@emporix.com).
 
 For more details, see [Hosting](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/administration/hosting) and [Extension and Cloud Function Hosting](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/extension-hosting).
 {% endhint %}
@@ -252,12 +252,12 @@ curl -L \
 
 Set the `type` to `dynamic` and provide the inline `tools`. The created MCP server stays disabled at first (`enabled` defaults to `false` if omitted). To enable it, set `enabled` to `true`.
 
-Each tool needs a unique `name` with no whitespace, a `prompt` that tells the agent when to call it, and a `config` with:
+Each tool needs a unique `name` that contains only letters, numbers, and underscores, a `prompt` that tells the agent when to call it, and a `config` with:
 
 * `inputSchema` – a JSON Schema document provided as a JSON string
 * `invocation.functionId` and `invocation.method` – the Cloud Function to call and the HTTP method
-* `invocation.argsLocation` – `query` or `body`. Defaults to `body` when omitted.
-* `requiredScopes` – optional OAuth scopes required to invoke the tool. See [Cloud Function identity headers](#cloud-function-identity-headers).
+* `invocation.argsLocation` – `query` or `body`; defaults to `body` when omitted
+* `requiredScopes` – optional OAuth scopes required to invoke the tool (see [Cloud Function identity headers](#cloud-function-identity-headers))
 
 Each tool also stays disabled at first (`enabled` defaults to `false` if omitted). To enable a tool so the agent can call it, set `enabled` to `true`.
 
@@ -340,7 +340,7 @@ curl -L \
 
 {% tab title="Dynamic" %}
 
-Set `type` to `dynamic` and pass the managed server ID in `mcpServer.id`. The `tools` array on the attachment is an optional allow-list of tool names from the dynamic MCP server. Omit `tools` to grant the agent all enabled tools on that server.
+Set `type` to `dynamic` and pass the managed server ID in `mcpServer.id`. The `tools` array on the attachment is an optional allowlist of tool names from the dynamic MCP server. Omit `tools` to grant the agent all enabled tools on that server.
 
 ```bash
 curl -L \
@@ -358,7 +358,7 @@ curl -L \
           "id": "mcp-dynamic"
         },
         "tools": [
-          "get-order"
+          "get_order"
         ]
       }
     }
@@ -492,7 +492,7 @@ curl -L \
       "path": "/tools",
       "value": [
         {
-          "name": "get-order",
+          "name": "get_order",
           "prompt": "Use this tool to retrieve an order by ID.",
           "enabled": true,
           "config": {
@@ -523,7 +523,7 @@ When a tool on a dynamic MCP server runs, Emporix injects identity headers into 
 
 Emporix sets these headers on the function request:
 
-* `emporix-token` – Token used to call Emporix APIs. It is the HTTP caller's token, a token obtained from the commerce event trigger's eventScopes, or the token used by an external MCP client.
+* `emporix-token` – Token used to call Emporix APIs. It is the HTTP caller's token, a token obtained from the commerce event trigger's `eventScopes`, or the token used by an external MCP client.
 * `emporix-tenant` – Always set. Identifies the tenant that invoked the function.
 * `emporix-scopes` – Scopes assigned to that token. Use it to see which resources the function can access.
 * `emporix-user-id` – Set for employee tokens on HTTP agent calls and for customer tokens. Not set for service tokens, commerce events, or external MCP clients.
@@ -540,7 +540,7 @@ When a commerce event triggers an agent, for example `product.product-created`, 
 * Each listed scope must be a scope the caller is allowed to grant.
 
 {% hint style="info" %}
-Note that `eventScopes` is not the same as the `requiredScopes`. On the agent, the `requiredScopes` controls who may trigger the agent. On a dynamic MCP tool, the `requiredScopes` controls who may invoke the tool.
+The `eventScopes` field is not the same as `requiredScopes`. On the agent, `requiredScopes` controls who may trigger the agent. On a dynamic MCP tool, `requiredScopes` controls who may invoke the tool.
 {% endhint %}
 
 The OAuth2 access token must include the `ai.agent_manage` scope.
@@ -787,10 +787,20 @@ The following MIME types are supported:
 
 Media file size can be up to 10 MB.
 
+The later chat request must send the same `sessionId` as the upload. The chat `agentId` must be an agent that already has the attachment assigned:
+
+* `agentId` – The path parameter of [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) must match `agentId` in the chat request body. After reuse, match the target agent instead.
+* `sessionId` – Send the upload response value as the `session-id` header on the chat request.
+
+This pairing applies to [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat), [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream), and [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async). 
+
+To use the file with a different agent, first assign the attachment to that agent. See [Reuse an attachment with another agent](#reuse-an-attachment-with-another-agent).
+
 {% stepper %}
 {% step %}
-### Upload a file to an agent
-To upload a file to an agent, use the dedicated [Uploading attachments to agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentId-attachments)
+#### Upload a file to an agent
+
+To upload a file to an agent, use the dedicated [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) endpoint. The `agentId` in the path assigns the file to that agent.
 
 ```bash
 curl -L \
@@ -802,7 +812,7 @@ curl -L \
 
 ```
 
-The successful response returns an attachment `id` and a `sessionId` that scopes the upload to your chat session. Save both values as you need them when you call agent chat in the subsequent step. The same `session-id` is required for attachments and for session memory. See [How to reuse session memory in agent chat](#how-to-reuse-session-memory-in-agent-chat). 
+The successful response returns an attachment `id` and a `sessionId` that scopes the upload to your chat session. Save both values. You need them when you call agent chat in the next step. Use the same `{agentId}` in the chat body. The same `session-id` is required for attachments and for session memory. See [How to reuse session memory in agent chat](#how-to-reuse-session-memory-in-agent-chat).
 
 How the `sessionId` in the response is set:
 * If you send a `session-id` header on the upload request (optional), the response returns the exact same value.
@@ -832,8 +842,9 @@ Attaching a media file of an unsupported type results in the `400` error, for ex
 {% endstep %}
 
 {% step %}
-### Refer to the attachment in agent chat
-The agent already has access to the attached file. Now you can point to it and give additional instructions in the agent chat request. Call the agent, for example with the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) endpoint. Include the upload `id` as the `attachmentId` parameter in the request body and provide the `session-id` in the header to ensure secure access to the attachment:
+#### Refer to the attachment in agent chat
+
+The file is assigned to the agent. In the chat request, reference it and add any extra instructions. Call the agent, for example with the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) endpoint. Include the upload `id` as `attachments[].attachmentId` in the request body. Send the same `session-id` header and the same `agentId` as the upload path:
 
 ```bash
 curl -L \
@@ -843,26 +854,39 @@ curl -L \
   --header 'Content-Type: application/json' \
   --header 'session-id: bdec151b-303f-4344-b41d-ccf307fb7907' \
   --data '{
-    "agentId": "order-assistant-agent",
+    "agentId": "{agentId}",
     "message": "Find products or equivalents from the attached order request and create an order for the customer",
     "attachments": [
       {
         "attachmentId": "6a1d5961a8c0af22364a2c54",
         "caption": "Order Request",
-        "purpose": "Serves as basis to create an order with the data, customer and products mentioned in the file."
+        "purpose": "Serves as a basis to create an order with the data, customer, and products mentioned in the file."
       }
     ]
   }'
 ```
 
-The agent now can process the data according to its rules and code of conduct.
+The agent can now process the data according to its rules and code of conduct.
+
+If the chat `agentId` does not match the agent that received the upload, the request returns `400`:
+
+```
+{
+    "resourceId": null,
+    "message": "Agent chat attachment with id=6a1d5961a8c0af22364a2c54 cannot be used to chat with agentId=complaint-agent",
+    "code": 400,
+    "status": "Bad Request",
+    "details": []
+}
+```
 {% endstep %}
 
 {% step %}
-### Reuse an attachment with another agent
-To assign an existing session attachment to another agent, call [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) again with `attachmentId` instead of a file. Send the same `session-id` header. The response is `204`.
+#### Reuse an attachment with another agent
 
-AI Service adds an `AGENT` reference on the media asset. The attachment must already belong to the session.
+To assign an existing session attachment to another agent, call [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) again with `attachmentId` instead of a file. Send the same `session-id` header and the new agent's `agentId` in the path. The response is `204`.
+
+AI Service adds an `AGENT` reference on the media asset. The attachment must already belong to the session. After this call, chat with the new `agentId`, the same `session-id` header, and the same `attachments[].attachmentId`.
 
 ```bash
 curl -L \
