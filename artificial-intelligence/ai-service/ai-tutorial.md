@@ -725,7 +725,7 @@ curl -L \
   ]'
 ```
 
-A successful request returns `204`. Repeat this for the calling agent and every collaboration target.
+A successful request returns `204`. To keep conversational memory for collaborations, repeat this for every collaboration target.
 {% endstep %}
 
 {% step %}
@@ -748,13 +748,15 @@ curl -L \
   }'
 ```
 
-If you omit `session-id` on a follow-up call, the API starts a new session even when memory is enabled.
+If you omit `session-id` on a follow-up call, the API starts a new session.
 {% endstep %}
 
 {% step %}
 #### Keep collaborations in the same session
 
-If the agent lists `agentCollaborations`, those collaborations stay in the caller's session. Set `enabledMemory` to `true` on the calling agent (the supervisor) and every collaboration target. Listing an agent in `agentCollaborations` does not enable memory for it.
+If the agent lists `agentCollaborations`, those collaborations stay in the caller's session. To keep conversational memory across those agents, it is recommended to set the flag to `true` on the calling agent (the supervisor) and each collaboration target. Listing an agent in `agentCollaborations` does not enable memory for it.
+
+When `enabledMemory` is `false`, the supervisor has no stored conversation history to pass to a hand-off agent. State in the supervisor `userPrompt` the exact information to forward, such as an order ID, customer number, or complaint details. Incomplete or ambiguous instructions result in extra collaboration cycles between the supervisor and the called agent until the required context is available.
 
 To inspect which agents participated, call the [Retrieving agent session by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions-sessionid) endpoint.
 

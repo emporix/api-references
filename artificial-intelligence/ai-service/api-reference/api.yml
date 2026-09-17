@@ -3759,7 +3759,7 @@ components:
               maximum: 50
             enabledMemory:
               type: boolean
-              description: Defines whether the session memory should be stored between different agent calls. Memory is stored only for that agent and only within one `session-id`. The default is `false`. Each collaboration target in `agentCollaborations` must also have this flag set to `true`.
+              description: Defines whether session memory is stored between different agent calls. Memory is stored only for that agent and only within one `session-id`. The default is `false`. To keep conversational memory for targets in `agentCollaborations`, it is recommended to set the flag to `true` on each target as well.
               default: false
           required:
             - userPrompt
