@@ -646,6 +646,8 @@ Choose the chat endpoint based on how you want to receive the agent's response:
   }
   ```
 
+  Save `sessionId` and send it as the `session-id` header when you need conversational continuity. See [How to reuse session memory in agent chat](#how-to-reuse-session-memory-in-agent-chat).
+
 * When you want progressive output as the agent's response is generated, stream the request to the [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) endpoint.
 
   ```bash
@@ -694,6 +696,84 @@ Choose the chat endpoint based on how you want to receive the agent's response:
 
   The job entity contains information about the request and response from the agent.
 
+## How to reuse session memory in agent chat
+
+Session memory keeps conversational data across chat turns within one `session-id`. Memory is opt-in per agent. Reusing the `session-id` header without enabling memory continues the session identity but does not store chat memory.
+
+The OAuth2 access token must include `ai.agent_manage` to set `enabledMemory` on the agent, `ai.agentexecution_manage_own` or `ai.agentexecution_manage` to call the chat endpoints, and `ai.agent_read` to retrieve a session by ID.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% stepper %}
+{% step %}
+#### Enable memory on the agent
+
+Set `enabledMemory` to `true` on the agent. The default is `false`. You can set the flag when you create or replace the agent with the [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint, or update an existing agent with the [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint.
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/complaint-agent' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "REPLACE",
+      "path": "/enabledMemory",
+      "value": true
+    }
+  ]'
+```
+
+A successful request returns `204`. Repeat this for the calling agent and every collaboration target.
+{% endstep %}
+
+{% step %}
+#### Reuse the `session-id` header
+
+Call a chat endpoint, for example [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat). Save `sessionId` from the response. On later turns, send that value as the `session-id` header.
+
+The [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) and [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) endpoints use the same header.
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/chat' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --header 'session-id: 33a550d0-d812-4fb2-bb0d-d50dbfe3627b' \
+  --data '{
+    "agentId": "complaint-agent",
+    "message": "Use the same customer as in my previous request."
+  }'
+```
+
+If you omit `session-id` on a follow-up call, the API starts a new session even when memory is enabled.
+{% endstep %}
+
+{% step %}
+#### Keep collaborations in the same session
+
+If the agent lists `agentCollaborations`, those collaborations stay in the caller's session. Set `enabledMemory` to `true` on the calling agent (the supervisor) and every collaboration target. Listing an agent in `agentCollaborations` does not enable memory for it.
+
+To inspect which agents participated, call the [Retrieving agent session by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions-sessionid) endpoint.
+
+```bash
+curl -L \
+  --request GET \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/logs/sessions/33a550d0-d812-4fb2-bb0d-d50dbfe3627b' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Accept: application/json'
+```
+
+A successful response includes `agents`, the list of agent IDs that participated in the session. For the supervisor collaboration model, see [Agents collaboration](https://developer.emporix.io/agentic-commerce-intelligence/agentic-intelligence/best-practices#agents-collaboration).
+{% endstep %}
+{% endstepper %}
+
+{% hint style="info" %}
+This `session-id` is the AI Service conversation key. It is not the Session Context `session-id` or the cart `session-id`. The same value also scopes attachments and is forwarded as `emporix-session-id` when a tool runs inside an agent session. See [How to pass a media file for the agents to process](#how-to-pass-a-media-file-for-the-agents-to-process).
+{% endhint %}
+
 ## How to pass a media file for the agents to process
 
 Agents are able to retrieve data from media attachments and use that data to execute some steps or pass it over to other agents to process. You can attach media files and then use them in the agent chat. 
@@ -722,7 +802,7 @@ curl -L \
 
 ```
 
-The successful response returns an attachment `id` and a `sessionId` that scopes the upload to your chat session. Save both values as you need them when you call agent chat in the subsequent step. 
+The successful response returns an attachment `id` and a `sessionId` that scopes the upload to your chat session. Save both values as you need them when you call agent chat in the subsequent step. The same `session-id` is required for attachments and for session memory. See [How to reuse session memory in agent chat](#how-to-reuse-session-memory-in-agent-chat). 
 
 How the `sessionId` in the response is set:
 * If you send a `session-id` header on the upload request (optional), the response returns the exact same value.
