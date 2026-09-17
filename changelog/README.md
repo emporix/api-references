@@ -25,30 +25,6 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
-
-## Audit Logs (Changelog) Service - general availability
-
-#### Overview
-
-The Audit Logs (Changelog) Service is now fully operational and no longer in preview mode.
-
-{% hint style="warning" %}
-This functionality is now fully operational.
-{% endhint %}
-
-#### Updated endpoints
-
-| Endpoint | Description |
-| --- | --- |
-| [Retrieving logs](https://developer.emporix.io/api-references/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) | The endpoint is now fully operational. |
-
-#### Known problems
-
-There are no known problems.
-
-{% endupdate %}
-
 {% update date="2026-09-16" tags="major-change" %}
 
 ## Supplier Service - removal of deprecated endpoints
