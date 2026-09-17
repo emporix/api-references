@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-09-17" tags="improvement" %}
 
 ## AI Service - cursor-based pagination for agent logs and jobs
 
