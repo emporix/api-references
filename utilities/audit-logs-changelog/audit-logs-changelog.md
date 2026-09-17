@@ -11,12 +11,6 @@ layout:
 
 The Audit Logs (Changelog) Service exposes a query API for tenant-wide change history of platform entities such as orders, customers, companies, products, segments, groups, coupons, quotes, sites, and custom entities created with the Schema Service.
 
-{% hint style="danger" %}
-This functionality is in preview mode - some of the features may not be fully operational yet.
-
-If you have any questions, contact the [Emporix Support Team](mailto:support@emporix.com) or post directly in the [Community](https://community.emporix.io/) 
-{% endhint %}
-
 ## Authentication
 
 Request a service access token with one of these scopes:
