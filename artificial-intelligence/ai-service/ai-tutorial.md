@@ -700,7 +700,7 @@ Choose the chat endpoint based on how you want to receive the agent's response:
 
 Session memory keeps conversational data across chat turns within one `session-id`. Memory is opt-in per agent. Reusing the `session-id` header without enabling memory continues the session identity but does not store chat memory.
 
-The OAuth2 access token must include `ai.agent_manage` to set `enabledMemory` on the agent, `ai.agentexecution_manage_own` or `ai.agentexecution_manage` to call the chat endpoints, and `ai.agent_read` to retrieve a session by ID.
+The OAuth2 access token must include `ai.agent_manage` to set `enabledMemory` on the agent. Chat endpoints require `ai.agentexecution_manage_own` for customer callers, or `ai.agentexecution_manage` for employee and integration callers. Retrieving a session by ID requires `ai.agent_read`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
