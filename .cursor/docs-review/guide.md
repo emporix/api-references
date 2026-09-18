@@ -103,71 +103,65 @@ Run self-review **before peer review**, after you have finished a meaningful doc
 Run docs style self-review for my current changes.
 ```
 
+Similar phrasing also works (for example `run self review on the changes`). Optionally include a task description, acceptance criteria, or a GitHub PR/issue URL in the same chat so the review can check task-fit.
+
 ### Self-review flow
 
-Two phases. Phase 2 only runs if you confirm.
+One turn: review, apply unambiguous auto-fixes, then report. You Keep or Undo each edit in Cursor. There is no "Reply Yes" gate.
 
 ```text
-Phase 1 — Review (readonly)
+Review (readonly subagent)
   │
-  ├─ Scans your changed docs against .style-guide/
-  ├─ Returns a structured chat report (no file writes)
-  └─ Ends with: "Apply auto-fixable fixes?" → reply Yes or No
+  ├─ Scans changed docs against .style-guide/ and sufficiency-and-fit.md
+  ├─ Checks task-fit when this chat includes AC, a task description, or a PR/issue URL
+  └─ Returns findings (no file writes)
         │
         ▼
-Phase 2 — Apply fixes (optional, on your confirmation)
+Apply (same turn)
   │
   ├─ Applies Auto-fixable: yes findings only
-  ├─ One edit per fix — Keep or Undo each in Cursor
-  └─ Returns "Phase 2 Complete" with remaining manual items
+  └─ One edit per fix — Keep or Undo each in Cursor
+        │
+        ▼
+Unified report
+  │
+  ├─ Applied auto-fixes (what was wrong and what changed)
+  ├─ Needs your decision (remaining items)
+  └─ Needs more information (when judgment is blocked)
 ```
 
-#### Phase 1 report
+#### Report
 
 The report includes:
 
-- **Verdict:** `blocked` | `pass-with-warnings` | `pass`
+- **Verdict:** `blocked` | `pass-with-warnings` | `pass` (from remaining items after apply)
 - **Ready for peer review:** `yes` | `no`
-- Findings grouped by severity: `critical`, `major`, `minor`
-- Every finding at `path/to/file.md:LINE` (or `:START-END` for ranges)
-- `Auto-fixable: yes | no` per finding
+- **Task context:** none (task-fit skipped) or listed sources
+- **Applied auto-fixes** at `path/to/file.md:LINE` with the issue and the change
+- **Needs your decision** grouped by severity: `critical`, `major`, `minor`
+- **Needs more information** when a source is too thin, a URL could not be fetched, or product confirmation is required
 
-**Readiness rules:**
+**Readiness rules** (remaining findings after apply):
 
 | Verdict | Ready for peer review? |
 |---------|------------------------|
-| Any `critical` finding | **No** — fix first |
-| Only `major` / `minor` | Yes (with warnings) |
-| No findings | Yes |
+| Any remaining `critical` finding | **No** — fix first |
+| Only remaining `major` / `minor` | Yes (with warnings) |
+| No remaining findings | Yes |
 
-#### Phase 1 closing prompt
+#### What is applied vs left for you
 
-When auto-fixable findings exist:
-
-```markdown
-## Apply auto-fixable fixes?
-
-**N finding(s)** are marked `Auto-fixable: yes` ...
-
-**Reply "Yes"** to apply them in Phase 2 (one edit per fix, Keep/Undo each).
-
-**Reply "No"** to fix everything yourself.
-```
-
-#### Phase 2 — if you reply Yes
-
-- Only `Auto-fixable: yes` items are applied (title case, word choice, typos, token placeholders, etc.)
-- `Auto-fixable: no` items stay for you to fix manually (structure, missing sections, product judgment)
-- You get a **Phase 2 Complete** summary listing what was applied and what still needs your action
+- `Auto-fixable: yes` items are applied in the same turn (title case, word choice, typos, token placeholders, unambiguous grammar)
+- `Auto-fixable: no` items stay for you (structure, missing sections, product judgment, reader sufficiency, task-fit)
+- If you want structural rewrites applied, reply to apply the structural suggestions (guided mode; each change still uses Keep/Undo)
 
 #### Author checklist
 
 - [ ] Update docs content
-- [ ] Run: `Run docs style self-review for my current changes.`
-- [ ] Read all findings (note `file:line` references)
-- [ ] Reply **Yes** or **No** to auto-fixable prompt
-- [ ] Keep/Undo each proposed edit
-- [ ] Fix remaining manual items
+- [ ] Run: `Run docs style self-review for my current changes.` (include AC/task/PR URL in chat when you have them)
+- [ ] Read the unified report (note `file:line` references)
+- [ ] Keep/Undo each auto-applied edit
+- [ ] Fix remaining decision items (and supply more information when asked)
 - [ ] Re-run self-review after significant changes
 - [ ] Open PR when verdict is `pass` or `pass-with-warnings`
 
@@ -180,6 +174,8 @@ When auto-fixable findings exist:
 - Changelog / release-notes template conformance (when relevant) — changelog entries go in `changelog/README.md` with `date="RELEASE_DATE"` placeholders
 - API tutorial completeness (when relevant)
 - API reference completeness (when relevant) — OpenAPI structure, gerund summaries, scopes on `security`, schema/example quality
+- Reader sufficiency (always) — purpose, prerequisites, complete procedures, coverage, understandability
+- Task-fit (when this chat includes a task description, AC, or PR/issue URL) — coverage vs the request, no contradictions with the provided source
 
 ### Mermaid diagrams skill
 
@@ -195,7 +191,7 @@ Copilot review runs **after** the PR is open. It does not replace Cursor self-re
 |--|-------------------|-------------------|
 | When | Before opening PR | After PR is open |
 | Location | `.cursor/skills/docs-style-review-subagent/` | `.github/skills/copilot-docs-code-review/` |
-| Output | Chat report + optional auto-fix | PR review comments |
+| Output | Unified chat report + same-turn auto-fix | PR review comments |
 | Local overlay | `.cursor/rules/` | `.github/copilot-docs-review/local-review-checks.md` |
 
 ---
@@ -330,10 +326,11 @@ git subtree pull --prefix=.cursor/skills docs-standards split/skills --squash
 
 | File | Purpose |
 |------|---------|
-| [workflow.md](workflow.md) | Self-review phase details |
-| [review-contract.md](review-contract.md) | Output contract for Phase 1 and Phase 2 |
-| [subagent-prompt.md](subagent-prompt.md) | Phase 1 subagent instructions |
-| [fix-prompt.md](fix-prompt.md) | Phase 2 fix instructions |
+| [workflow.md](workflow.md) | Self-review flow details |
+| [review-contract.md](review-contract.md) | Output contract for review, apply, and unified report |
+| [subagent-prompt.md](subagent-prompt.md) | Readonly subagent instructions |
+| [fix-prompt.md](fix-prompt.md) | Same-turn auto-fix instructions |
+| [sufficiency-and-fit.md](sufficiency-and-fit.md) | Reader sufficiency and optional task-fit checks |
 | [../skills/docs-style-review-subagent/SKILL.md](../skills/docs-style-review-subagent/SKILL.md) | Cursor skill entry point |
 | [../../.github/skills/copilot-docs-code-review/SKILL.md](../../.github/skills/copilot-docs-code-review/SKILL.md) | Copilot PR review skill |
 | [../../.github/copilot-docs-review/local-review-checks.template.md](../../.github/copilot-docs-review/local-review-checks.template.md) | Template for per-repo Copilot review checks |
@@ -374,6 +371,6 @@ For learning-certification, repeat the same steps when ready:
 ./scripts/update-subtrees.sh --repo learning-certification
 ```
 
-## Planned: automatic Phase 1 trigger
+## Planned: automatic review-only trigger
 
-Phase 3 (not active yet) will auto-run Phase 1 via Cursor hooks when docs files change. Phase 2 will remain author-confirmed. See [workflow.md](workflow.md).
+Not active yet. A future Cursor stop hook may auto-run a **review-only** self-review when docs files change. Hooks must not apply file edits. See [workflow.md](workflow.md).
