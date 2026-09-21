@@ -4133,6 +4133,13 @@ components:
       title: Done event data
       type: object
       description: JSON object in the SSE `data` field when `event` is `done`. At least one of `agent_id`, `agent_type`, or `session_id` is present. Send `session_id` as the `session-id` header on later chat and attachment calls. This event does not repeat the full assistant message.
+      anyOf:
+        - required:
+            - agent_id
+        - required:
+            - agent_type
+        - required:
+            - session_id
       properties:
         agent_id:
           type: string
