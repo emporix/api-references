@@ -661,7 +661,50 @@ Choose the chat endpoint based on how you want to receive the agent's response:
   }'
   ```
 
-  The request body uses the same `agentId` and `message` fields as the synchronous chat request. The endpoint returns the response as a Server-Sent Events stream (`text/event-stream`), so clients receive incremental output instead of waiting for the full message.
+  The request body uses the same `agentId` and `message` fields as the synchronous chat request. The endpoint returns the response as a Server-Sent Events stream (`text/event-stream`). Each frame has an `event` name and a JSON object in `data`. Concatenate successive `token` `content` values to build the assistant reply. Save `session_id` from the `done` event and send it as the `session-id` header on later turns. See [How to reuse session memory in agent chat](#how-to-reuse-session-memory-in-agent-chat).
+
+  Example stream:
+
+  ```
+  event: thinking
+  data: {"content":"Looking up delivery options for order EON1243."}
+
+  event: tool_start
+  data: {"tool_name":"get-quotes","tool_call_id":"call-1"}
+
+  event: tool_result
+  data: {"tool_name":"get-quotes","tool_call_id":"call-1","output":{"quotes":[{"id":"Q1"}]}}
+
+  event: tool_end
+  data: {"tool_name":"get-quotes","tool_call_id":"call-1"}
+
+  event: token
+  data: {"content":"Standard "}
+
+  event: token
+  data: {"content":"delivery is available for order EON1243."}
+
+  event: done
+  data: {"agent_id":"generic-agent","agent_type":"generic","session_id":"33a550d0-d812-4fb2-bb0d-d50dbfe3627b"}
+  ```
+
+  In this example, the user-facing reply is `Standard delivery is available for order EON1243.` The `thinking` event is optional reasoning and is not part of that reply unless the client displays it. An in-stream failure arrives as `event: error` with `message` and/or `code` in `data`, for example `{"code":"AGENT_SETUP","message":"Agent setup failed"}`. HTTP `400`, `401`, `403`, and `500` remain JSON problem bodies when the request is rejected before the stream starts.
+
+  Continue the same session on a later streaming turn:
+
+  ```bash
+  curl -N -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-stream' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: text/event-stream' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'session-id: 33a550d0-d812-4fb2-bb0d-d50dbfe3627b' \
+  -d '{
+      "agentId": "generic-agent",
+      "message": "What is the latest delivery date for that order?"
+  }'
+  ```
+
+  For the full event list and JSON `data` schemas, see [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream).
 
 * When it is more pragmatic to wait for the agent's response, for example, when the agent needs to process more data which takes more time, or the agent needs to wait for another task to be completed, use the asynchronous communication. Send the request to the agent using the [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async).
 
@@ -731,7 +774,7 @@ A successful request returns `204`. To keep conversational memory for collaborat
 {% step %}
 #### Reuse the `session-id` header
 
-Call a chat endpoint, for example [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat). Save `sessionId` from the response. On later turns, send that value as the `session-id` header.
+Call a chat endpoint, for example [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat). Save `sessionId` from the JSON response. On [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream), save `session_id` from the SSE `done` event. On later turns, send that value as the `session-id` header.
 
 The [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) and [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) endpoints use the same header.
 
