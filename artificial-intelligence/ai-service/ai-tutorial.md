@@ -661,7 +661,7 @@ Choose the chat endpoint based on how you want to receive the agent's response:
   }'
   ```
 
-  The request body uses the same `agentId` and `message` fields as the synchronous chat request. The endpoint returns the response as a Server-Sent Events stream (`text/event-stream`). Each frame has an `event` name and a JSON object in `data`. Concatenate successive `token` `content` values to build the assistant reply. Save `session_id` from the `done` event and send it as the `session-id` header on later turns. See [How to reuse session memory in agent chat](#how-to-reuse-session-memory-in-agent-chat).
+  The request body uses the same `agentId` and `message` fields as the synchronous chat request. The endpoint returns the response as a Server-Sent Events stream (`text/event-stream`). Each frame has an `event` name and a JSON object in `data`. Concatenate successive `token` `content` values to build the assistant reply. When present, save `session_id` from the `done` event and send it as the `session-id` header on later turns. See [How to reuse session memory in agent chat](#how-to-reuse-session-memory-in-agent-chat).
 
   Example stream:
 
