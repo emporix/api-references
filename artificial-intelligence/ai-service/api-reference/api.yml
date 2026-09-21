@@ -339,16 +339,18 @@ paths:
           content:
             text/event-stream:
               schema:
-                description: >-
-                  JSON object sent in the SSE `data` field. The object shape depends on the SSE event name.
-                  The wire format is an SSE event name followed by a JSON `data` payload.
-                oneOf:
-                  - $ref: '#/components/schemas/ChatStreamTokenData'
-                  - $ref: '#/components/schemas/ChatStreamThinkingData'
-                  - $ref: '#/components/schemas/ChatStreamToolMetaData'
-                  - $ref: '#/components/schemas/ChatStreamToolResultData'
-                  - $ref: '#/components/schemas/ChatStreamDoneData'
-                  - $ref: '#/components/schemas/ChatStreamErrorData'
+                type: string
+                description: |-
+                  Complete Server-Sent Events body. The HTTP entity is `event:` / `data:` text, not a JSON object.
+
+                  Each `data` line is a JSON object. The object shape depends on the event name and is documented by `ChatStreamEventData`:
+
+                  * `token` — `ChatStreamTokenData`
+                  * `thinking` — `ChatStreamThinkingData`
+                  * `tool_start` and `tool_end` — `ChatStreamToolMetaData`
+                  * `tool_result` — `ChatStreamToolResultData`
+                  * `done` — `ChatStreamDoneData`
+                  * `error` — `ChatStreamErrorData`
               examples:
                 TokenDeltasAndCompletion:
                   summary: Incremental assistant text followed by session metadata
@@ -4062,6 +4064,16 @@ components:
         message:
           type: string
           description: Agent message.
+    ChatStreamEventData:
+      title: SSE data payload
+      description: JSON object in one SSE `data` field. This is not the HTTP response body. The response body is `text/event-stream` text; each named event carries one of these objects in `data`.
+      oneOf:
+        - $ref: '#/components/schemas/ChatStreamTokenData'
+        - $ref: '#/components/schemas/ChatStreamThinkingData'
+        - $ref: '#/components/schemas/ChatStreamToolMetaData'
+        - $ref: '#/components/schemas/ChatStreamToolResultData'
+        - $ref: '#/components/schemas/ChatStreamDoneData'
+        - $ref: '#/components/schemas/ChatStreamErrorData'
     ChatStreamTokenData:
       title: Token event data
       type: object
