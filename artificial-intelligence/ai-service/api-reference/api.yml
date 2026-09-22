@@ -347,10 +347,14 @@ paths:
 
                   * `token` — `ChatStreamTokenData`
                   * `thinking` — `ChatStreamThinkingData`
+
+                    **The `thinking` event is in preview mode** - some of the features may not be fully operational yet.
                   * `tool_start` and `tool_end` — `ChatStreamToolMetaData`
                   * `tool_result` — `ChatStreamToolResultData`
                   * `done` — `ChatStreamDoneData`
                   * `error` — `ChatStreamErrorData`
+
+                    **The `error` event is in preview mode** - some of the features may not be fully operational yet.
               examples:
                 TokenDeltasAndCompletion:
                   summary: Incremental assistant text followed by session metadata
@@ -407,11 +411,15 @@ paths:
 
         * `token` — Incremental text of the assistant reply. `data` is `{ "content": "..." }`.
         * `thinking` — Optional reasoning text. `data` is `{ "content": "..." }`. Do not treat this as part of the user-facing reply unless the client displays reasoning.
+
+          **The `thinking` event is in preview mode** - some of the features may not be fully operational yet.
         * `tool_start` — The agent started a tool. `data` is `{ "tool_name": "...", "tool_call_id": "..." }`.
         * `tool_end` — The agent finished a tool. `data` uses the same fields as `tool_start`.
         * `tool_result` — Tool output. `data` is `{ "tool_name": "...", "tool_call_id": "...", "output": {} }`. `output` is a JSON object or array. Credential-like keys in `output` are omitted.
         * `done` — The stream completed. `data` includes `agent_id`, `agent_type`, and `session_id` when present. At least one of these fields is sent.
         * `error` — A failure during generation. `data` includes `message` and/or `code`. Example codes are `AGENT_SETUP` and `RECURSION_LIMIT`.
+
+          **The `error` event is in preview mode** - some of the features may not be fully operational yet.
 
         SSE `data` fields use snake_case (`session_id`, `agent_id`, `agent_type`). They are not the camelCase fields of the synchronous chat `ChatResponse` (`sessionId`, `agentId`, `agentType`).
 
@@ -4087,7 +4095,10 @@ components:
     ChatStreamThinkingData:
       title: Thinking event data
       type: object
-      description: JSON object in the SSE `data` field when `event` is `thinking`. Optional reasoning text. Do not treat this as part of the user-facing reply unless the client displays reasoning.
+      description: |-
+        JSON object in the SSE `data` field when `event` is `thinking`. Optional reasoning text. Do not treat this as part of the user-facing reply unless the client displays reasoning.
+
+        **The `thinking` event is in preview mode** - some of the features may not be fully operational yet.
       required:
         - content
       properties:
@@ -4153,7 +4164,10 @@ components:
     ChatStreamErrorData:
       title: Error event data
       type: object
-      description: JSON object in the SSE `data` field when `event` is `error`. At least one of `message` or `code` is present. This is an in-stream failure. HTTP `400`, `401`, `403`, and `500` remain JSON problem bodies when the request is rejected before the stream starts.
+      description: |-
+        JSON object in the SSE `data` field when `event` is `error`. At least one of `message` or `code` is present. This is an in-stream failure. HTTP `400`, `401`, `403`, and `500` remain JSON problem bodies when the request is rejected before the stream starts.
+
+        **The `error` event is in preview mode** - some of the features may not be fully operational yet.
       properties:
         message:
           type: string
