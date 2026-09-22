@@ -431,19 +431,6 @@
               spec: order-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/orders/order/api-reference/api.yml)
-  * [Pick-pack Service](orders/pick-pack/README.md)
-    * [API Reference](orders/pick-pack/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: pick-pack-api
-        ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/orders/pick-pack/api-reference/api.yml)
   * [Returns Service](orders/returns/README.md)
     * [Returns Tutorial](orders/returns/returns.md)
     * [API Reference](orders/returns/api-reference/README.md)

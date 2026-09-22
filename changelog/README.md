@@ -45,6 +45,131 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-09-17" tags="improvement" %}
+
+## AI Service - cursor-based pagination for agent logs and jobs
+
+#### Overview
+
+AI Service now supports cursor-based pagination for agent request and session listing and search, and for job listing and search. Clients can use the `next` and `prev` query parameters together with the `X-Next-Cursor` and `X-Prev-Cursor` response headers to navigate large result sets without relying on deep offset pagination.
+
+Offset pagination with `pageNumber` and `pageSize` remains supported. In cursor mode, `pageNumber` is ignored, `X-Total-Count` is not calculated or returned, and requests that send both `next` and `prev` return `400`. When no sort is provided, results default to `_id:ASC`; when a sort is provided, `_id:ASC` is appended as a tie-breaker.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Listing agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Searching agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-requests-search) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Listing agent sessions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Searching agent sessions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-sessions-search) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Listing available jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Searching jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#post-ai-service-tenant-jobs-search) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
+{% update date="2026-09-16" tags="major-change" %}
+
+## Supplier Service - removal of deprecated endpoints
+
+#### Overview
+
+The Supplier Service has reached End of Life and is no longer available. All previously deprecated endpoints are now removed ([Supplier Service - deprecation](https://developer.emporix.io/changelog/2026/readme#supplier-service-deprecation)).
+
+{% hint style="danger" %}
+The Supplier Service and all of its endpoints are no longer available.
+{% endhint %}
+
+#### Removed endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| Retrieving all suppliers | Endpoint removed. The `GET /supplier/{tenant}/suppliers` operation is no longer available. |
+| Creating a supplier | Endpoint removed. The `POST /supplier/{tenant}/suppliers` operation is no longer available. |
+| Retrieving a supplier | Endpoint removed. The `GET /supplier/{tenant}/suppliers/{supplierId}` operation is no longer available. |
+| Updating a supplier | Endpoint removed. The `PUT /supplier/{tenant}/suppliers/{supplierId}` operation is no longer available. |
+| Partially updating a supplier | Endpoint removed. The `PATCH /supplier/{tenant}/suppliers/{supplierId}` operation is no longer available. |
+| Deleting a supplier | Endpoint removed. The `DELETE /supplier/{tenant}/suppliers/{supplierId}` operation is no longer available. |
+| Retrieving all product-supplier relations | Endpoint removed. The `GET /supplier/{tenant}/PSRelations` operation is no longer available. |
+| Creating a product-supplier relation | Endpoint removed. The `POST /supplier/{tenant}/PSRelations` operation is no longer available. |
+| Retrieving a product-supplier relation | Endpoint removed. The `GET /supplier/{tenant}/PSRelations/{psRelationId}` operation is no longer available. |
+| Updating a product-supplier relation | Endpoint removed. The `PUT /supplier/{tenant}/PSRelations/{psRelationId}` operation is no longer available. |
+| Deleting a product-supplier relation | Endpoint removed. The `DELETE /supplier/{tenant}/PSRelations/{psRelationId}` operation is no longer available. |
+| Retrieving a product-supplier relation by product ID and site code | Endpoint removed. The `GET /supplier/{tenant}/PSRelations/{productId}/{siteCode}` operation is no longer available. |
+| Updating a product-supplier relation by product ID and site code | Endpoint removed. The `PUT /supplier/{tenant}/PSRelations/{productId}/{siteCode}` operation is no longer available. |
+| Deleting a product-supplier relation by product ID and site code | Endpoint removed. The `DELETE /supplier/{tenant}/PSRelations/{productId}/{siteCode}` operation is no longer available. |
+| Searching product-supplier relations | Endpoint removed. The `POST /supplier/{tenant}/PSRelations/search` operation is no longer available. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-09-16" tags="major-change" %}
+
+## Pick-pack Service - removal of deprecated endpoints
+
+#### Overview
+
+All previously deprecated endpoints are now removed ([Pick-pack Service - service deprecation](https://developer.emporix.io/changelog/2026/readme#pick-pack-service-service-deprecation)).
+
+{% hint style="danger" %}
+The Pick-pack Service has reached End of Life and is no longer available.
+{% endhint %}
+
+#### Removed endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| Finishing an order | Endpoint removed. The `POST /pick-pack/{tenant}/orders/{orderId}/finish` operation is no longer available. |
+| Retrieving all order cycles | Endpoint removed. The `GET /pick-pack/{tenant}/orderCycles` operation is no longer available. |
+| Retrieving a packlist | Endpoint removed. The `GET /pick-pack/{tenant}/orders` operation is no longer available. |
+| Retrieving an order | Endpoint removed. The `GET /pick-pack/{tenant}/orders/{orderId}` operation is no longer available. |
+| Updating an order | Endpoint removed. The `PATCH /pick-pack/{tenant}/orders/{orderId}` operation is no longer available. |
+| Adding an assignee to an order | Endpoint removed. The `POST /pick-pack/{tenant}/orders/{orderId}/assignees` operation is no longer available. |
+| Deleting an assignee from an order | Endpoint removed. The `DELETE /pick-pack/{tenant}/orders/{orderId}/assignees/{assigneeId}` operation is no longer available. |
+| Updating packaging products for an order | Endpoint removed. The `PUT /pick-pack/{tenant}/orders/{orderId}/packaging` operation is no longer available. |
+| Creating a new packing event | Endpoint removed. The `POST /pick-pack/{tenant}/events` operation is no longer available. |
+| Retrieving all events | Endpoint removed. The `GET /pick-pack/{tenant}/events` operation is no longer available. |
+| Triggering an order recalculation | Endpoint removed. The `POST /pick-pack/{tenant}/jobs/recalculations` operation is no longer available. |
+| Retrieving a job | Endpoint removed. The `GET /pick-pack/{tenant}/jobs/recalculations/{jobId}` operation is no longer available. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-09-16" tags="new-feature" %}
+
+## Customer Segments Service - IAM group assignments
+
+#### Overview
+
+You can now assign IAM groups to customer segments. The new Customer Segments Service endpoints let you create, retrieve, search, and remove group assignments. Customers inherit segment membership through their IAM group assignments, in addition to direct customer assignments. 
+
+Retrieving own customer segments returns the authenticated customer's active segments. That list includes segments assigned through groups that are not bound to a legal entity, and through groups bound to the customer's current legal entity.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving own customer segments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/segments#get-customer-segment-tenant-segments-me) | Returns active segments assigned directly to the authenticated customer and segments assigned through the customer's IAM groups. |
+| [Retrieving all group assignments for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups) | Returns all IAM group assignments for a customer segment. |
+| [Searching with parameters for group assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#post-customer-segment-tenant-segments-segmentid-groups-search) | Returns IAM group assignments that match the provided search criteria. |
+| [Retrieving a group assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups-groupid) | Returns an IAM group assignment for a specified group and customer segment. |
+| [Upserting a group assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#put-customer-segment-tenant-segments-segmentid-groups-groupid) | Creates or updates an IAM group assignment. Only groups with `userType` `CUSTOMER` can be assigned. |
+| [Removing a group from a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#delete-customer-segment-tenant-segments-segmentid-groups-groupid) | Removes an IAM group assignment from a customer segment. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
 {% update date="2026-09-15" tags="improvement" %}
 
 ## Audit Logs (Changelog) Service - quote and site history

@@ -5,12 +5,13 @@ title: Docs Style Review Contract
 # Docs Style Review Contract
 
 ## Purpose
-Review updated or newly added documentation against the project style guide and return actionable guidance before peer review.
+Review updated or newly added documentation against the project style guide, reader sufficiency, and optional task context. Apply unambiguous auto-fixes in the same turn, then return actionable remaining items before peer review.
 
-## Two-phase flow
+## Single-turn flow
 
-1. **Phase 1 — Review (readonly):** Chat-only structured report. No file writes.
-2. **Phase 2 — Apply fixes (optional):** On author confirmation (`Yes`), apply auto-fixable findings via agent `StrReplace` edits (native Keep/Undo).
+1. **Review (readonly subagent):** Structured findings only. No file writes.
+2. **Apply (parent, same turn):** Apply findings marked `Auto-fixable: yes` via agent `StrReplace` edits (native Keep/Undo). Do not wait for author confirmation.
+3. **Report (parent):** Unified chat report — applied changes, remaining decisions, and items that need more information.
 
 ## Manual trigger
 Run this review only when the author explicitly asks for it in chat.
@@ -18,11 +19,22 @@ Run this review only when the author explicitly asks for it in chat.
 Suggested trigger phrase:
 - `Run docs style self-review for my current changes.`
 
+Similar phrasing also works (for example `run self review on the changes`).
+
 ## Input scope
 - Include only changed documentation files from the current branch/working tree.
 - Exclude style-guide sources in `.style-guide/` from being reviewed as target content.
 - Exclude review infrastructure files (`.cursor/docs-review/`, `.cursor/skills/docs-style-review-subagent/`).
 - Prioritize markdown pages, changelog entries, release notes, and tutorial pages.
+
+## Task context
+Collect from the triggering message and this conversation only:
+- Pasted task description or acceptance criteria
+- GitHub PR or issue URLs (fetch body, linked issues, and changed-file list)
+
+Do not hunt branch names, Jira IDs in commits, or unrelated open PRs.
+
+If nothing is found, set `Task context: none` and skip the task-fit lane.
 
 ## Rule sources
 - `.style-guide/README.md`
@@ -34,6 +46,7 @@ Suggested trigger phrase:
 - `.style-guide/templates/changelog.md`
 - `.style-guide/templates/release-notes.md`
 - `.style-guide/templates/api-reference.md`
+- `.cursor/docs-review/sufficiency-and-fit.md`
 
 ## Required checks
 - Structure and formatting (headings, sections, hints, list style).
@@ -44,75 +57,123 @@ Suggested trigger phrase:
 - Changelog location and release-date placeholder when `changelog/` files change: entries go in `changelog/README.md` (not `changelog/changelog.md` or new per-release files); new entries use `{% update date="RELEASE_DATE" ... %}` at the top of the `{% updates %}` block; do not edit existing entries or `changelog/SUMMARY.md`.
 - API tutorial completeness when relevant (auth, headers, examples, behavior notes).
 - API reference completeness when relevant (OpenAPI structure, gerund summaries, scopes on `security`, schema/example quality, common parameters).
+- Reader sufficiency (always) — see `sufficiency-and-fit.md`.
+- Task-fit (only when task context is provided) — see `sufficiency-and-fit.md`.
 
 ## Severity model (hybrid gate)
 - `critical` -> blocks readiness for peer review.
 - `major` -> non-blocking, but should be fixed before peer review.
 - `minor` -> non-blocking polish recommendation.
 
-## Phase 1 output contract (chat only)
+Verdict and readiness are computed **after** auto-fixes are applied, from remaining open items only.
 
-Return a structured chat report. **Do not write to documentation files.**
+## Finding fields (subagent)
+
+The subagent returns structured findings. **Do not write to documentation files.**
 
 Each finding must include:
 1. File path and line reference (e.g. `path/to/file.md:8` or `path/to/file.md:42-58` for multi-line issues). **Never omit line numbers.**
 2. Severity: `critical`, `major`, or `minor`
-3. Rule reference (e.g. `format-and-structure#titles`)
-4. Issue: what is wrong and why it matters
-5. Suggested fix: ready-to-paste replacement text when possible
-6. Auto-fixable: `yes` or `no`
+3. Lane: `style` | `sufficiency` | `task-fit`
+4. Rule reference (e.g. `format-and-structure#titles`, `sufficiency#prerequisites`, `task-fit#acceptance-criteria`)
+5. Issue: what is wrong and why it matters
+6. Suggested fix: ready-to-paste replacement text when possible
+7. Auto-fixable: `yes` or `no`
 
 For structural findings marked `Auto-fixable: no`, include:
-7. Reworked structure suggestion: a concrete block-level rewrite blueprint that follows the applicable style rule and can be copied/adapted directly (for example `{% stepper %}` + `{% step %}` + `####` titles for `format-and-structure#steps`)
+8. Reworked structure suggestion: a concrete block-level rewrite blueprint that follows the applicable style rule and can be copied/adapted directly (for example `{% stepper %}` + `{% step %}` + `####` titles for `format-and-structure#steps`)
 
 Grammar and spelling findings must include the original snippet and corrected snippet in the suggested fix field when auto-fixable.
 
-Report header:
-1. `Verdict`: `blocked`, `pass-with-warnings`, or `pass`
-2. `Ready for peer review`: `yes` or `no`
-3. Counts by severity
-4. Count of auto-fixable findings
-5. List of reviewed files
+Sufficiency and task-fit findings are always `Auto-fixable: no`.
 
-End Phase 1 with the structured call-to-action from `subagent-prompt.md` (never a vague one-liner):
+If `Task context: none`, skip task-fit and include `Task-fit: skipped` in the findings payload.
 
-- When **auto-fixable N > 0**: use the **Apply auto-fixable fixes?** block — bold count, preview (up to 5 items), reply **"Yes"** or **"No"**, Keep/Undo explanation, and note that `Auto-fixable: no` items are excluded.
-- When **auto-fixable N = 0**: use the **Next step** block — manual fixes only, optional guided structural lane phrase.
+Subagent findings header:
+1. `Reviewed files`: list of paths
+2. Counts by severity
+3. Count of auto-fixable findings
+4. `Task-fit`: `skipped` | `ran`
+5. Findings grouped by severity
 
-Phase 2 starts only after the author replies **"Yes"** to the auto-fixable CTA (a longer confirmation phrase is also accepted).
+The subagent does **not** present the user-facing report or ask to apply fixes. The parent owns the unified report.
 
-## Phase 2 output contract (on confirmation)
+## Apply lane (parent, same turn)
 
 Follow `.cursor/docs-review/fix-prompt.md`:
 - Apply only findings marked `Auto-fixable: yes`
 - One `StrReplace` per fix (enables per-change Keep/Undo)
+- Do not wait for "Yes"
 - Do not modify files for non-auto-fixable findings
 
-Optional guided structural lane (author-confirmed):
-- Allowed only when the author explicitly confirms applying approved structural suggestions from Phase 1.
-- Source of truth is the `Reworked structure suggestion` from Phase 1 findings.
-- Keep structural findings classified as `Auto-fixable: no` in Phase 1.
+Optional guided structural lane (author-confirmed follow-up):
+- Allowed only when the author explicitly confirms applying approved structural suggestions.
+- Source of truth is the `Reworked structure suggestion` from review findings.
+- Keep structural findings classified as `Auto-fixable: no`.
 - Apply as targeted, reviewable edits per logical section so each change remains clear in Keep/Undo.
 - Do not rewrite behavior or product meaning while restructuring format.
 
-After applying fixes, return the structured **Phase 2 Complete** summary (see `fix-prompt.md`). Required sections:
+## Unified report (parent)
 
-1. **Fixes applied** — every applied fix with `file:line` and rule reference
-2. **Fixes skipped/rejected** — any `Auto-fixable: yes` finding not kept (author Undo) or not attempted
-3. **Still requires your action** — all remaining items grouped by severity:
-   - every Phase 1 finding with `Auto-fixable: no` not resolved in guided structural mode
-   - any rejected auto-fixable finding
-   - each item must include `file:line`, issue, and suggested fix
-4. **Ready for peer review** — restated based on remaining open items (`no` if any critical item remains)
-5. **Next step** — re-run Phase 1 review or fix remaining issues manually
+After applying auto-fixes, return the structured **Docs Self-Review** report. Do not end with a vague one-liner. Do not ask "Apply auto-fixable fixes?".
 
-Never omit line numbers from remaining items. Offer to re-run Phase 1 review.
+Required sections:
+
+1. Header: Verdict, Ready for peer review, Reviewed files, Task context, Counts
+2. **Applied auto-fixes** — every applied fix with `file:line`, rule reference, what was wrong, and what changed. Note Keep/Undo.
+3. **Needs your decision** — remaining items grouped by severity (style structural, product judgment, sufficiency, task-fit). Include `file:line`, issue, and suggested fix. Structural items include the `Reworked structure suggestion` when available.
+4. **Needs more information** — items that cannot be judged without extra input. Omit the section if N = 0.
+5. **Next step** — fix remaining items, optional guided structural phrase, or re-run self-review
+
+Applied items must not be repeated as remaining blockers.
+
+Chat report format:
+
+```markdown
+## Docs Self-Review
+
+**Verdict:** blocked | pass-with-warnings | pass
+**Ready for peer review:** yes | no
+**Reviewed files:** list of paths
+**Task context:** none (task-fit skipped) | listed sources
+**Counts:** applied N, remaining critical N, remaining major N, remaining minor N
+
+### Applied auto-fixes (N)
+1. `path/to/file.md:LINE` — rule-reference
+   - Issue: what was wrong
+   - Change: what was applied
+
+Keep or Undo each edit in Cursor.
+
+### Needs your decision (N)
+
+#### Critical (N)
+1. `path/to/file.md:LINE` — rule-reference (`lane`)
+   - Issue: what is wrong and why it matters
+   - Suggested fix: replacement text or concrete steps
+
+#### Major (N)
+...
+
+#### Minor (N)
+...
+
+### Needs more information (N)
+1. `path/to/file.md:LINE` — why judgment is blocked and what input is needed
+
+**Ready for peer review:** yes | no
+**Next step:** Fix remaining items | Reply to apply structural suggestions | Re-run self-review
+```
+
+Omit **Needs more information** when N = 0. Omit **Applied auto-fixes** body items when N = 0 (keep the heading with `(0)`).
+
+Never omit line numbers from remaining items.
 
 ## Decision rules
-- If any `critical` finding exists -> Verdict `blocked`, Ready `no`
-- If only `major`/`minor` findings exist -> Verdict `pass-with-warnings`, Ready `yes`
-- If no findings -> Verdict `pass`, Ready `yes`
+- If any remaining `critical` finding exists -> Verdict `blocked`, Ready `no`
+- If only remaining `major`/`minor` findings exist -> Verdict `pass-with-warnings`, Ready `yes`
+- If no remaining findings -> Verdict `pass`, Ready `yes`
 
 ## Notes
 
-Inline HTML comment annotations are not used in this workflow. Phase 1 is chat-only; Phase 2 uses native agent edits with Keep/Undo.
+Inline HTML comment annotations are not used in this workflow. The review subagent is chat-only; the parent applies native agent edits with Keep/Undo in the same turn.
