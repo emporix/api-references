@@ -3167,7 +3167,7 @@ components:
       enum:
         - streamable_http
         - sse
-      description: Type of the communication between the agent and the MCP server. The `streamable_http` protocol is recommended, since the `sse` protocol is deprecated.
+      description: Type of the communication between the agent and the MCP server. The `streamable_http` protocol is recommended, since the `sse` protocol is deprecated as transport for custom MCP servers.
     BaseAgentMcpServer:
       type: object
       properties:
