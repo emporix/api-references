@@ -4168,6 +4168,11 @@ components:
         **The `error` event is in preview mode** - some of the features may not be fully operational yet.
 
         JSON object in the SSE `data` field when `event` is `error`. At least one of `message` or `code` is present. This is an in-stream failure. HTTP `400`, `401`, `403`, and `500` remain JSON problem bodies when the request is rejected before the stream starts.
+anyOf:
+        - required:
+            - message
+        - required:
+            - code
       properties:
         message:
           type: string
