@@ -663,6 +663,10 @@ Choose the chat endpoint based on how you want to receive the agent's response:
 
   The request body uses the same `agentId` and `message` fields as the synchronous chat request. The endpoint returns the response as a Server-Sent Events stream (`text/event-stream`). Each frame has an `event` name and a JSON object in `data`. Concatenate successive `token` `content` values to build the assistant reply. When present, save `session_id` from the `done` event and send it as the `session-id` header on later turns. See [How to reuse session memory in agent chat](#how-to-reuse-session-memory-in-agent-chat).
 
+  {% hint style="danger" %}
+  The `thinking` and `error` events are in preview mode - some of the features may not be fully operational yet.
+  {% endhint %}
+
   Example stream:
 
   ```
@@ -689,10 +693,6 @@ Choose the chat endpoint based on how you want to receive the agent's response:
   ```
 
   In this example, the user-facing reply is `Standard delivery is available for order EON1243.` The `thinking` event is optional reasoning and is not part of that reply unless the client displays it. An in-stream failure arrives as `event: error` with `message` and/or `code` in `data`, for example `{"code":"AGENT_SETUP","message":"Agent setup failed"}`. HTTP `400`, `401`, `403`, and `500` remain JSON problem bodies when the request is rejected before the stream starts.
-
-  {% hint style="danger" %}
-  The `thinking` and `error` events are in preview mode - some of the features may not be fully operational yet.
-  {% endhint %}
 
   Continue the same session on a later streaming turn:
 
