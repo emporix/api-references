@@ -423,8 +423,17 @@ paths:
                   value:
                     id: 68835cc3ef4e8e1425c360ad
                     sessionId: 0499bef6-a4d2-45b9-86a0-2edf7d70d726
-        '204':
-          description: Existing attachment reused and assigned to the agent.
+        '200':
+          description: Existing media assigned to the agent. The body contains the attachment `id` and the `sessionId` to send on later chat requests.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttachmentResponse'
+              examples:
+                AttachmentId:
+                  value:
+                    id: 68835cc3ef4e8e1425c360ad
+                    sessionId: 0499bef6-a4d2-45b9-86a0-2edf7d70d726
         '400':
           $ref: '#/components/responses/400_resp_common'
         '401':
@@ -434,7 +443,7 @@ paths:
         '500':
           $ref: '#/components/responses/500_resp_common'
       description: |-
-        Uploads a new file and assigns it to the agent, or reuses an existing attachment in the current session.
+        Uploads a new file and assigns it to the agent, or assigns an existing media asset to the agent.
 
         Send exactly one of `attachment` or `attachmentId`. Sending both or neither returns `400`.
 
@@ -447,9 +456,13 @@ paths:
           - text
           - txt
 
-        **Reuse an attachment:** Send the `attachmentId` form field, the `session-id` header of the session that already contains the attachment, and the target agent's `agentId` in the path. The response is `204`.
+        **Assign existing media:** Send the `attachmentId` form field and the target agent's `agentId` in the path. The response is `200` with the attachment `id` and `sessionId`. If you omit the `session-id` header, the response includes the generated `sessionId`.
 
-        **Chat with the attachment:** Call the Starting agent chat, Starting agent chat stream, or Starting agent async chat endpoint. Send the upload `sessionId` as the `session-id` header. If the chat `agentId` is not the agent in this path, the API returns `400` with the message `Agent chat attachment with id={attachmentId} cannot be used to chat with agentId={agentId}`.
+        With the `ai.agentexecution_manage` scope, `attachmentId` can be any existing media asset. The asset does not have to belong to the session and does not have to already have references. AI Service adds an `AGENT` reference and attaches the file to the session in the response.
+
+        With only the `ai.agentexecution_manage_own` scope, the attachment must already belong to the `session-id` session.
+
+        **Chat with the attachment:** Call the Starting agent chat, Starting agent chat stream, or Starting agent async chat endpoint. Send the returned `sessionId` as the `session-id` header and the path `agentId` in the chat body. If the chat `agentId` is not the agent in this path, the API returns `400` with the message `Agent chat attachment with id={attachmentId} cannot be used to chat with agentId={agentId}`.
       security:
         - OAuth2:
             - ai.agentexecution_manage_own
@@ -476,7 +489,7 @@ paths:
                   properties:
                     attachmentId:
                       type: string
-                      description: Identifier of an existing attachment to reuse in the current session.
+                      description: Identifier of an existing media asset. With `ai.agentexecution_manage`, any media id can be assigned to the path agent. With only `ai.agentexecution_manage_own`, the attachment must already belong to the session.
       tags:
         - Agent Chat
   '/ai-service/{tenant}/agentic/templates':
@@ -4008,7 +4021,7 @@ components:
           description: Unique identifier of the created attachment.
         sessionId:
           type: string
-          description: Unique identifier of the session. Send this value as the `session-id` header on later chat requests so the API can find the attachment. Attaching the file to another agent does not change the session; keep this same `sessionId`.
+          description: Unique identifier of the session the attachment is on. Send this value as the `session-id` header on later chat requests. If the assign request omits `session-id`, this value is the generated session.
 
     # Agent Logs:
     LogSeverity:
@@ -4433,7 +4446,7 @@ components:
 
         Reuse the same value on later chat and attachment calls to continue the same session, access attachments from that session, and keep conversational memory when `enabledMemory` is `true` on the agent. A new value starts a new session.
 
-        When a chat request includes `attachments`, send the same value returned as `sessionId` from the upload. Do not send `sessionId` in the request body. Attaching a file to another agent keeps this same session.
+        When a chat request includes `attachments`, send the same value returned as `sessionId` from the upload or from assigning existing media. Do not send `sessionId` in the request body. Omitting `session-id` when you assign media starts a new session and returns that `sessionId`.
     header_Accept-Language:
       name: Accept-Language
       in: header
