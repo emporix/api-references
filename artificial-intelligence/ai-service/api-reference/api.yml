@@ -335,7 +335,7 @@ paths:
       operationId: POST-ai-agents-chat-stream
       responses:
         '200':
-          description: Chat response stream as Server-Sent Events. Each named event carries a JSON object in `data`. Concatenate `token` `content` values for the assistant reply. Read `session_id` from the `done` event and send it as the `session-id` header on later calls.
+          description: Chat response stream as Server-Sent Events. Each named event carries a JSON object in `data`. Concatenate `token` `content` values for the assistant reply. When `session_id` is present on the `done` event, send it as the `session-id` header on later calls.
           content:
             text/event-stream:
               schema:
@@ -4088,7 +4088,7 @@ components:
     ChatStreamEventData:
       title: SSE data payload
       description: JSON object in one SSE `data` field. This is not the HTTP response body. The response body is `text/event-stream` text; each named event carries one of these objects in `data`.
-      oneOf:
+      anyOf:
         - $ref: '#/components/schemas/ChatStreamTokenData'
         - $ref: '#/components/schemas/ChatStreamThinkingData'
         - $ref: '#/components/schemas/ChatStreamToolMetaData'
