@@ -1,6 +1,6 @@
 ---
-name: copilot-docs-code-review
-description: Review documentation pull requests against the Emporix style guide, shared completeness checks, and repo-specific fit rules. Use when reviewing docs PRs, markdown changes, changelog entries, API tutorials, or release notes in Emporix documentation repositories.
+name: code-review
+description: Copilot code review for documentation pull requests. Review docs PRs against the Emporix style guide, reader sufficiency, task-fit to the PR description, shared completeness checks, and repo-specific fit rules. Use when reviewing markdown, changelog entries, API tutorials, OpenAPI specs, or release notes.
 ---
 
 # Copilot docs code review
@@ -34,22 +34,31 @@ Read and apply:
 - `.style-guide/templates/changelog.md`
 - `.style-guide/templates/release-notes.md`
 - `.style-guide/templates/api-reference.md`
-- [reference.md](reference.md) — shared completeness checks
+- `.cursor/docs-review/sufficiency-and-fit.md` — reader sufficiency (always) and task-fit (when PR context exists)
+- [reference.md](reference.md) — shared completeness, sufficiency, and task-fit checks for this review
 
 If `.github/copilot-docs-review/local-review-checks.md` exists, apply those repo-specific checks too.
 
 Update-block rules for changelog and release notes are in [reference.md](reference.md).
+
+Never invent product facts. If a claim needs confirmation the PR does not provide, comment with `sufficiency#needs-confirmation` or `task-fit#needs-confirmation` instead of guessing.
+
+## Sufficiency and task-fit
+
+Run **reader sufficiency** on every changed docs page (`sufficiency#purpose`, `sufficiency#prerequisites`, `sufficiency#steps`, `sufficiency#supporting`, `sufficiency#coverage`, `sufficiency#clarity`). Ask whether a typical reader can understand the page and complete the task it describes.
+
+Run **task-fit** against this pull request's title, body, linked issues, and changed-file list (`task-fit#acceptance-criteria`, `task-fit#source`, `task-fit#implementation-pr`, `task-fit#scope`). Skip task-fit only when that context is too thin to judge coverage; then post one comment citing `task-fit#insufficient-context` and say what is missing. Do not hunt Jira IDs or unrelated PRs.
 
 ## Comment format
 
 Post **one inline comment per distinct issue** on the exact line in the diff.
 
 - Do **not** merge unrelated rules into a single comment (for example, do not combine frontmatter, word choice, and step format in one comment).
-- If the same violation type appears on multiple lines, you may note other locations in that comment — but each **violation type** still needs its own comment on the first offending line.
+- If the same rule is violated on multiple lines, you may note other locations in that comment — but each **distinct rule** still needs its own comment on the first offending line.
 
 Each comment:
 1. States what is wrong and why (one or two sentences)
-2. Cites the rule (e.g. `format-and-structure#titles`, `word-choice`, `local-review-checks#release-notes-workflow`)
+2. Cites the rule (e.g. `format-and-structure#titles`, `sufficiency#prerequisites`, `task-fit#acceptance-criteria`, `word-choice`, `local-review-checks#release-notes-workflow`)
 3. Includes a suggested fix when possible
 
 Example:
@@ -72,8 +81,10 @@ A documentation review is **incomplete** unless you verify every item below for 
 1. Run the matching checklist in `.github/instructions/*.instructions.md` (when present).
 2. Run repo-specific checks in `.github/copilot-docs-review/local-review-checks.md` (when present).
 3. Run shared checks in [reference.md](reference.md) for the file type (portal page, changelog, release notes, tutorial, OpenAPI).
-4. Scan **every changed line** for terms in the Avoid column of `word-choice.md` and for filler phrases in `language-and-tone.md`.
+4. Run reader sufficiency for each changed page.
+5. Run task-fit against the PR description, or post `task-fit#insufficient-context` once if the PR text is too thin.
+6. Scan **every changed line** for terms in the Avoid column of `word-choice.md` and for filler phrases in `language-and-tone.md`.
 
-If you found issues in only one or two categories (for example, frontmatter and release date), continue scanning for structure, step format, cross-repo boundaries, heading rules, and language/tone before finishing.
+If you found issues in only one or two categories (for example, frontmatter and release date), continue scanning for structure, step format, sufficiency, task-fit, cross-repo boundaries, heading rules, and language/tone before finishing.
 
 If no issues are found after all checklists pass, one brief comment is enough: `No documentation style issues found in the changed files.`

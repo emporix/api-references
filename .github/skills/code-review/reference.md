@@ -1,8 +1,8 @@
-# Copilot docs code review — shared completeness and fit
+# Copilot docs code review — shared completeness, sufficiency, and fit
 
 Apply these checks to changed files in the PR. Skip sections that do not apply to the file types in the diff.
 
-Complete every applicable checklist section before finishing the review. Post one inline comment per distinct issue.
+Complete every applicable checklist section before finishing the review. Post one inline comment per distinct issue. Never invent product facts.
 
 ## General completeness
 
@@ -14,6 +14,64 @@ Complete every applicable checklist section before finishing the review. Post on
 - GitBook blocks (`{% hint %}`, `{% stepper %}`, `{% tabs %}`, etc.) are used correctly per `format-and-structure.md`
 - Images and diagrams have alt text or captions where required by the style guide
 - Navigation entries in `SUMMARY.md` contain only user-facing links — no HTML comments or editor notes
+
+## Reader sufficiency (always)
+
+Run this lane on every changed documentation page, even when the PR description is thin. Ask whether a typical docs reader can understand the page and complete the task it describes. Cite `sufficiency#...` on each comment. Full checklist: `.cursor/docs-review/sufficiency-and-fit.md`.
+
+### Purpose (`sufficiency#purpose`)
+- The opening paragraph states what the page is for.
+- Body content matches the title/H1. Flag pages that drift off-topic or never explain the titled subject.
+
+### Audience can follow (`sufficiency#prerequisites`)
+- Prerequisites, setup, or prior reading are present when the page depends on them.
+- Unexplained concepts, product terms, or UI/API context that a typical reader would need are introduced or linked.
+- Missing authentication, environment, or access context is flagged when the procedure requires it.
+
+### Procedures (`sufficiency#steps`)
+- Sequential procedures are complete and ordered.
+- Flag gaps that would block a reader (missing result of a step, skipped configuration, unspecified where to click or which endpoint to call).
+- Step **markup** still follows `format-and-structure#steps`; this lane is about missing or incomplete actions.
+
+### Supporting pieces (`sufficiency#supporting`)
+- Examples, request/response samples, or related links are present when the topic needs them to be usable.
+- Do not require extras that the doc type does not need.
+
+### Coverage (`sufficiency#coverage`)
+- Coverage matches the topic implied by the title (and by the PR, when task-fit runs).
+- Flag both under-coverage (the reader cannot do the thing) and stuffing unrelated material.
+
+### Understandability (`sufficiency#clarity`)
+- Ambiguous steps, unspecified actors, or unexplained outcomes are flagged.
+- Prefer comments that name what the reader still cannot do or cannot tell.
+
+If a claim needs product confirmation the PR does not provide, comment with `sufficiency#needs-confirmation` instead of guessing.
+
+## Task-fit (when PR context exists)
+
+Use this pull request as task context: title, body, linked issues, and changed-file list. Do not hunt Jira IDs or unrelated PRs.
+
+Skip the rest of this lane only when that text is too thin to judge coverage. Then post **one** comment citing `task-fit#insufficient-context` and say what input would unblock the check.
+
+When context is usable, check that the docs satisfy the request. Cite `task-fit#...` on each comment.
+
+### Acceptance criteria (`task-fit#acceptance-criteria`)
+- Requested topics and AC items in the PR/issue are covered, or the docs explicitly mark them out of scope.
+- Flag AC items that are missing with no explanation.
+
+### Source of truth (`task-fit#source`)
+- Documented behavior does not contradict the PR or linked issue.
+- Do not treat silence in the docs as a contradiction unless the source required that behavior to be documented.
+
+### Implementation PRs (`task-fit#implementation-pr`)
+- Compare against PR title, body, and changed-file list — not a full code re-review.
+- Flag docs that omit user-facing behavior implied by the PR, or that describe behavior the PR does not support.
+
+### Scope (`task-fit#scope`)
+- Flag under-scoping (task not satisfied) and over-scoping (material the request did not ask for, if it confuses the page).
+- Flag unverifiable claims that go beyond the provided sources.
+
+If a URL in the PR cannot be fetched, comment with `task-fit#unfetched-source`. If a claim needs product confirmation the sources do not provide, comment with `task-fit#needs-confirmation`.
 
 ## Frontmatter (user guides and conceptual pages)
 
@@ -91,7 +149,7 @@ When conceptual or product documentation pages change, verify:
 
 ## Word-choice checks
 
-Scan every changed line for discouraged terms. Post one comment per discouraged term (violation type) on the first offending line; you may mention additional occurrences in the same comment.
+Scan every changed line for discouraged terms. Post one comment per discouraged term (distinct rule) on the first offending line; you may mention additional occurrences in the same comment.
 
 | Avoid | Prefer |
 |-------|--------|
