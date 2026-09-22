@@ -281,13 +281,13 @@ There are no known problems.
 
 #### Overview
 
-You can reuse an existing chat attachment with another agent. Send `attachmentId` instead of a file on the attachments endpoint, together with the session that already contains the attachment. AI Service assigns the agent to the media asset by adding an `AGENT` reference. The response is `204`.
+You can assign an existing media asset to an agent. Send `attachmentId` instead of a file on the attachments endpoint. Callers with the `ai.agentexecution_manage` scope can assign any existing media asset to the path `agentId`. The asset does not have to belong to the session. Callers with only the `ai.agentexecution_manage_own` scope can assign an attachment that already belongs to the session. AI Service adds an `AGENT` reference on the media asset. The response is `200` and includes the attachment `id` and the `sessionId` to send on later chat requests.
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) | Accepts `attachmentId` to reuse a session attachment and assign the agent. Send exactly one of `attachment` or `attachmentId`. |
+| [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) | Accepts `attachmentId` to assign existing media to the target `agentId`. Callers with `ai.agentexecution_manage` can assign any media asset. Callers with only `ai.agentexecution_manage_own` can assign an attachment that already belongs to the session. The response is `200` and includes `id` and `sessionId`. |
 
 #### Known problems
 
