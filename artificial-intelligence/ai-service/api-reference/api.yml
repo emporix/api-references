@@ -346,11 +346,15 @@ paths:
                   Each `data` line is a JSON object. The object shape depends on the event name and is documented by `ChatStreamEventData`:
 
                   * `token` — `ChatStreamTokenData`
-                  * `thinking` — **The `thinking` event is in preview mode** - some of the features may not be fully operational yet. `ChatStreamThinkingData`
+                  * `thinking` — **The `thinking` event is in preview mode** - some of the features may not be fully operational yet.
+
+                    `ChatStreamThinkingData`
                   * `tool_start` and `tool_end` — `ChatStreamToolMetaData`
                   * `tool_result` — `ChatStreamToolResultData`
                   * `done` — `ChatStreamDoneData`
-                  * `error` — **The `error` event is in preview mode** - some of the features may not be fully operational yet. `ChatStreamErrorData`
+                  * `error` — **The `error` event is in preview mode** - some of the features may not be fully operational yet.
+
+                    `ChatStreamErrorData`
               examples:
                 TokenDeltasAndCompletion:
                   summary: Incremental assistant text followed by session metadata
@@ -406,12 +410,16 @@ paths:
         Named events:
 
         * `token` — Incremental text of the assistant reply. `data` is `{ "content": "..." }`.
-        * `thinking` — **The `thinking` event is in preview mode** - some of the features may not be fully operational yet. Optional reasoning text. `data` is `{ "content": "..." }`. Do not treat this as part of the user-facing reply unless the client displays reasoning.
+        * `thinking` — **The `thinking` event is in preview mode** - some of the features may not be fully operational yet.
+
+          Optional reasoning text. `data` is `{ "content": "..." }`. Do not treat this as part of the user-facing reply unless the client displays reasoning.
         * `tool_start` — The agent started a tool. `data` is `{ "tool_name": "...", "tool_call_id": "..." }`.
         * `tool_end` — The agent finished a tool. `data` uses the same fields as `tool_start`.
         * `tool_result` — Tool output. `data` is `{ "tool_name": "...", "tool_call_id": "...", "output": {} }`. `output` is a JSON object or array. Credential-like keys in `output` are omitted.
         * `done` — The stream completed. `data` includes `agent_id`, `agent_type`, and `session_id` when present. At least one of these fields is sent.
-        * `error` — **The `error` event is in preview mode** - some of the features may not be fully operational yet. A failure during generation. `data` includes `message` and/or `code`. Example codes are `AGENT_SETUP` and `RECURSION_LIMIT`.
+        * `error` — **The `error` event is in preview mode** - some of the features may not be fully operational yet.
+
+          A failure during generation. `data` includes `message` and/or `code`. Example codes are `AGENT_SETUP` and `RECURSION_LIMIT`.
 
         SSE `data` fields use snake_case (`session_id`, `agent_id`, `agent_type`). They are not the camelCase fields of the synchronous chat `ChatResponse` (`sessionId`, `agentId`, `agentType`).
 
