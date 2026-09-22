@@ -287,7 +287,7 @@ You can assign an existing media asset to an agent. Send `attachmentId` instead 
 
 | Endpoint | Description |
 | --- | --- |
-| [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) | Accepts `attachmentId` to assign existing media to the path agent. Callers with `ai.agentexecution_manage` can assign any media asset. Callers with only `ai.agentexecution_manage_own` can assign an attachment that already belongs to the session. The response is `200` and includes `id` and `sessionId`. |
+| [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) | Accepts `attachmentId` to assign existing media to the target `agentId`. Callers with `ai.agentexecution_manage` can assign any media asset. Callers with only `ai.agentexecution_manage_own` can assign an attachment that already belongs to the session. The response is `200` and includes `id` and `sessionId`. |
 
 #### Known problems
 
