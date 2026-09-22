@@ -25,6 +25,25 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## AI Service - chat stream event payloads
+
+#### Overview
+
+Starting agent chat stream returns named Server-Sent Events. Each frame has an `event` name and a JSON object in `data`. Clients concatenate successive `token` `content` values to build the assistant reply. When the `done` event includes `session_id`, clients send that value as the `session-id` header on later chat and attachment calls. The `thinking` and `error` events are in preview.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Returns `token`, `thinking`, `tool_start`, `tool_end`, `tool_result`, `done`, and `error` events. The `done` event uses snake_case `session_id`, `agent_id`, and `agent_type`. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
 {% update date="2026-09-17" tags="improvement" %}
 
 ## AI Service - cursor-based pagination for agent logs and jobs
