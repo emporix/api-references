@@ -36,7 +36,7 @@ docs-standards (source of truth)
     │                                 ├── docs-style-review-subagent/
     │                                 └── mermaid-brand-diagrams/
     └── split/github-skills    ──►  .github/skills/
-                                      └── copilot-docs-code-review/
+                                      └── code-review/
 ```
 
 ### What is shared vs local
@@ -47,7 +47,7 @@ docs-standards (source of truth)
 | `.cursor/docs-review/` | docs-standards | Self-review prompts and contract |
 | `.cursor/skills/docs-style-review-subagent/` | docs-standards | Cursor skill for self-review (before PR) |
 | `.cursor/skills/mermaid-brand-diagrams/` | docs-standards | Cursor skill for Mermaid diagrams |
-| `.github/skills/copilot-docs-code-review/` | docs-standards | Copilot skill for PR docs review |
+| `.github/skills/code-review/` | docs-standards | Copilot skill for PR docs review |
 | `.cursor/rules/` | **local per repo** | Repo-specific Cursor rules (e.g. changelog conventions in api-references) |
 | `.github/copilot-docs-review/local-review-checks.md` | **local per repo** | Repo-specific Copilot review checks |
 | `.github/copilot-instructions.md` | **local per repo** | Repo-wide Copilot review behavior (copy from `copilot-instructions.template.md`) |
@@ -183,16 +183,16 @@ The shared **mermaid-brand-diagrams** skill is available automatically in Cursor
 
 ### Copilot PR docs review
 
-After you open a PR, **GitHub Copilot code review** can apply the shared **copilot-docs-code-review** skill from `.github/skills/copilot-docs-code-review/`. It checks the same style guide as Cursor self-review, plus shared completeness/fit rules and any repo-specific checks in `.github/copilot-docs-review/local-review-checks.md`.
+After you open a PR, **GitHub Copilot code review** can apply the shared **code-review** skill from `.github/skills/code-review/`. GitHub looks for that directory name. It checks the same style guide, reader sufficiency, and task-fit as Cursor self-review, plus shared completeness/fit rules and any repo-specific checks in `.github/copilot-docs-review/local-review-checks.md`.
 
 Copilot review runs **after** the PR is open. It does not replace Cursor self-review before peer review.
 
 | | Cursor self-review | Copilot PR review |
 |--|-------------------|-------------------|
 | When | Before opening PR | After PR is open |
-| Location | `.cursor/skills/docs-style-review-subagent/` | `.github/skills/copilot-docs-code-review/` |
+| Location | `.cursor/skills/docs-style-review-subagent/` | `.github/skills/code-review/` |
 | Output | Unified chat report + same-turn auto-fix | PR review comments |
-| Local overlay | `.cursor/rules/` | `.github/copilot-docs-review/local-review-checks.md` |
+| Local overlay | `.cursor/rules/` | `.github/copilot-docs-review/local-review-checks.md` and `.github/instructions/*.instructions.md` |
 
 ---
 
@@ -212,11 +212,13 @@ docs-standards/
 │       └── mermaid-brand-diagrams/
 ├── .github/
 │   ├── skills/
-│   │   └── copilot-docs-code-review/  ← Copilot PR review skill
+│   │   └── code-review/  ← Copilot PR review skill (GitHub-discoverable name)
 │   ├── copilot-docs-review/
 │   │   └── local-review-checks.template.md  ← template for per-repo review checks
 │   ├── copilot-instructions.template.md     ← template for per-repo Copilot instructions
-│   └── instructions/                        ← path-specific checklist templates
+│   └── instructions/                        ← path-specific Copilot checklist templates
+│       ├── portal-guides, release-notes, navigation
+│       ├── changelog, openapi
 ├── scripts/
 │   ├── bootstrap-subtrees.sh  ← first-time setup
 │   ├── refresh-splits.sh      ← regenerate split branches
@@ -304,7 +306,8 @@ Or use `./scripts/bootstrap-subtrees.sh` from `docs-standards`.
 | `can't squash-merge: was never added` | Trying `subtree pull` before first `subtree add` | Run `subtree add` once; `update-subtrees.sh` does this automatically |
 | Consumer repo differs from docs-standards | Local edits to shared paths | Revert local edits; pull from docs-standards |
 | Self-review not triggered | Skill not loaded | Confirm `.cursor/skills/docs-style-review-subagent/SKILL.md` exists after `git pull` |
-| Copilot review ignores style guide | Skill not in consumer repo | Confirm `.github/skills/copilot-docs-code-review/SKILL.md` exists; run `update-subtrees.sh` |
+| Copilot review ignores style guide | Skill not in consumer repo | Confirm `.github/skills/code-review/SKILL.md` exists; run `update-subtrees.sh` |
+| Copilot prompts to create a review skill | Folder is not named `code-review` | Skill must live at `.github/skills/code-review/SKILL.md` (not `copilot-docs-code-review`) |
 
 ### Verifying sync
 
@@ -332,8 +335,9 @@ git subtree pull --prefix=.cursor/skills docs-standards split/skills --squash
 | [fix-prompt.md](fix-prompt.md) | Same-turn auto-fix instructions |
 | [sufficiency-and-fit.md](sufficiency-and-fit.md) | Reader sufficiency and optional task-fit checks |
 | [../skills/docs-style-review-subagent/SKILL.md](../skills/docs-style-review-subagent/SKILL.md) | Cursor skill entry point |
-| [../../.github/skills/copilot-docs-code-review/SKILL.md](../../.github/skills/copilot-docs-code-review/SKILL.md) | Copilot PR review skill |
+| [../../.github/skills/code-review/SKILL.md](../../.github/skills/code-review/SKILL.md) | Copilot PR review skill |
 | [../../.github/copilot-docs-review/local-review-checks.template.md](../../.github/copilot-docs-review/local-review-checks.template.md) | Template for per-repo Copilot review checks |
+| [../../.github/instructions/](../../.github/instructions/) | Path-specific Copilot checklist templates (portal, release notes, navigation, changelog, OpenAPI) |
 
 ## Copilot skill rollout
 
@@ -363,7 +367,7 @@ git push
 # 4) Verify on a docs PR that Copilot code review picks up the skill
 ```
 
-The shared skill at `.github/skills/copilot-docs-code-review/` is vendored via subtree. Only `.github/copilot-docs-review/local-review-checks.md` is maintained locally in each consumer repo.
+The shared skill at `.github/skills/code-review/` is vendored via subtree. After a subtree pull that renames the skill, update the local `.github/copilot-instructions.md` path to `.github/skills/code-review/` if it still points at the old folder name. Only `.github/copilot-docs-review/local-review-checks.md` and `.github/instructions/*.instructions.md` are maintained locally in each consumer repo.
 
 For learning-certification, repeat the same steps when ready:
 
