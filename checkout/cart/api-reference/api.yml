@@ -18,14 +18,14 @@ tags:
 servers:
   - url: 'https://api.emporix.io'
 paths:
-  '/cart/{tenant}/carts/{cartId}/execute':
+  '/cart/{tenant}/execute':
     post:
       tags:
         - Execute
       summary: Executing a chain of cart commands
       operationId: POST-cart-execute
       description: |-
-        Runs a sequence of existing cart operations in one HTTP request. Cart, item, and discount REST endpoints stay unchanged. `POST /cart/{tenant}/carts/{cartId}/execute` is an additional, opt-in way to call the same operations.
+        Runs a sequence of existing cart operations in one HTTP request. Cart, item, and discount REST endpoints stay unchanged. `POST /cart/{tenant}/execute` is an additional, opt-in way to call the same operations. The cart id is `options.cartId` on each command, not a path parameter.
 
         A typical storefront flow is `AddCartItem` followed by `GetCart` with `expandCalculation` set to `true`. The 207 `results` array already contains the created item and the calculated cart, so the client does not send a second GET unless it wants a later refresh. The two-call sequence (`POST .../items` then `GET .../carts/{cartId}`) continues to work.
 
@@ -35,26 +35,24 @@ paths:
 
         ### Command types
 
-        Each command has a `type`, optional `data` (the REST request body), and `options` (remaining path and query equivalents). `cartId` is the URL path, not a command field. Commands do not carry session or legal-entity fields.
+        Each command has a `type`, optional `data` (the REST request body), and `options`. Every command requires `options.cartId`. Other option fields are the remaining path and query equivalents. Commands do not carry session or legal-entity fields. One chain may include commands for different carts. The follow cursor is stored per `cartId`.
 
         | type | data | options | REST equivalent | Success `code` / `data` |
         |---|---|---|---|---|
-        | `AddCartItem` | Item body | optional `resourceVersion` | `POST /cart/{tenant}/carts/{cartId}/items` | 201 `{itemId, yrn}` |
-        | `UpdateCartItem` | Item update body | `itemId`, `partial`, optional `resourceVersion` | `PUT /cart/{tenant}/carts/{cartId}/items/{itemId}` | 204, no `data` |
-        | `DeleteCartItem` | none | `itemId` | `DELETE /cart/{tenant}/carts/{cartId}/items/{itemId}` | 204 |
-        | `DeleteCartItems` | none | none | `DELETE /cart/{tenant}/carts/{cartId}/items` | 204 |
-        | `GetCart` | none | `expandCalculation` (default `true`), `zipCode`, `countryCode` | `GET /cart/{tenant}/carts/{cartId}` | 200 full cart |
-        | `AddCartItemsBatch` | List of item bodies | none | `POST /cart/{tenant}/carts/{cartId}/itemsBatch` | Same mixed status as REST; `data` is the batch entry list |
-        | `UpdateCartItemsBatch` | List of item updates (max 50) | `partial` | `PUT /cart/{tenant}/carts/{cartId}/itemsBatch` | Command `code` 207; `data` is the entry list |
-        | `UpdateCart` | Cart update body | optional `resourceVersion` | `PUT /cart/{tenant}/carts/{cartId}` | 204, no `data` |
-        | `ApplyCartDiscount` | Discount body | optional `resourceVersion` | `POST /cart/{tenant}/carts/{cartId}/discounts` | 201 applied discount |
-        | `GetCartDiscounts` | none | none | `GET /cart/{tenant}/carts/{cartId}/discounts` | 200 list of discounts |
-        | `DeleteCartDiscounts` | none | optional `codes` | `DELETE /cart/{tenant}/carts/{cartId}/discounts` | 204 |
-        | `DeleteCartDiscount` | none | `discountIndex` | `DELETE /cart/{tenant}/carts/{cartId}/discounts/{discountIndex}` | 204 |
-        | `RefreshCart` | none | none | `PUT /cart/{tenant}/carts/{cartId}/refresh` | 204, no `data` |
-        | `ValidateCart` | none | none | `GET /cart/{tenant}/carts/{cartId}/validate` | 200 `cartValidationResult` |
+        | `AddCartItem` | Item body | `cartId`, optional `resourceVersion` | `POST /cart/{tenant}/carts/{cartId}/items` | 201 `{itemId, yrn}` |
+        | `UpdateCartItem` | Item update body | `cartId`, `itemId`, `partial`, optional `resourceVersion` | `PUT /cart/{tenant}/carts/{cartId}/items/{itemId}` | 204, no `data` |
+        | `DeleteCartItem` | none | `cartId`, `itemId` | `DELETE /cart/{tenant}/carts/{cartId}/items/{itemId}` | 204 |
+        | `DeleteCartItems` | none | `cartId` | `DELETE /cart/{tenant}/carts/{cartId}/items` | 204 |
+        | `GetCart` | none | `cartId`, `expandCalculation` (default `true`), `zipCode`, `countryCode` | `GET /cart/{tenant}/carts/{cartId}` | 200 full cart |
+        | `AddCartItemsBatch` | List of item bodies | `cartId` | `POST /cart/{tenant}/carts/{cartId}/itemsBatch` | Same mixed status as REST; `data` is the batch entry list |
+        | `UpdateCartItemsBatch` | List of item updates (max 50) | `cartId`, `partial` | `PUT /cart/{tenant}/carts/{cartId}/itemsBatch` | Command `code` 207; `data` is the entry list |
+        | `UpdateCart` | Cart update body | `cartId`, optional `resourceVersion` | `PUT /cart/{tenant}/carts/{cartId}` | 204, no `data` |
+        | `ApplyCartDiscount` | Discount body | `cartId`, optional `resourceVersion` | `POST /cart/{tenant}/carts/{cartId}/discounts` | 201 applied discount |
+        | `GetCartDiscounts` | none | `cartId` | `GET /cart/{tenant}/carts/{cartId}/discounts` | 200 list of discounts |
+        | `DeleteCartDiscounts` | none | `cartId`, optional `codes` | `DELETE /cart/{tenant}/carts/{cartId}/discounts` | 204 |
+        | `DeleteCartDiscount` | none | `cartId`, `discountIndex` | `DELETE /cart/{tenant}/carts/{cartId}/discounts/{discountIndex}` | 204 |
 
-        Create cart, delete cart, merge, change site, change currency, search, and retrieving cart items are not command types in this release.
+        Create cart, delete cart, merge, change site, change currency, search, retrieving cart items, refresh, and validate are not command types in this release.
 
         The chain accepts at most 10 commands. A `commands` array of 1 through 10 items is valid. 11 or more commands return **400** and no command runs. An empty `commands` array also returns **400**. This cap is independent of the itemsBatch payload limit of 50.
 
@@ -63,41 +61,40 @@ paths:
         * `fail` (default) – stops after the first non-2xx command. `results` contains only the commands that ran, including the failed one. Earlier successful mutations stay committed. Command `code` 207 is success for `onError`. `UpdateCartItemsBatch` always returns 207, even when every entry failed, so `fail` continues. Inspect `data[].status`. `AddCartItemsBatch` uses a mixed global status (400 or 500) so `fail` does stop.
         * `resume` – runs every command. Later commands still see earlier successful mutations.
 
-        When the chain is accepted, the HTTP status is always **207 Multi-Status**, including all-2xx chains. `results` is ordered. Each `data` field is the same JSON the equivalent endpoint would return. Commands that return 204 omit `data`. Failures put the existing error shape (`code`, `status`, `message`) in `data`. Optional `headers` echo the If-Match resource version when a participating write applied If-Match. On `/execute`, create commands synthesize followable `Location` values (tenant kept): `AddCartItem` uses `/{tenant}/carts/{cartId}/items/{itemId}`, `ApplyCartDiscount` uses `/{tenant}/carts/{cartId}/discounts/{index}`, and `AddCartItemsBatch` sets each `data[].headers.location` to `/{tenant}/carts/{cartId}/items/{id}`. REST `POST .../items` and `POST .../discounts` still return the collection URL. REST `POST .../itemsBatch` still strips the tenant (`//carts`). `UpdateCartItemsBatch` can use command `code` 207; that value is an entry in `results`, and the outer execute response is still one 207.
+        When the chain is accepted, the HTTP status is always **207 Multi-Status**, including all-2xx chains and including a command whose `code` is 409. `results` is ordered. Each `data` field is the same JSON the equivalent endpoint would return. Commands that return 204 omit `data`. Failures put the existing error shape (`code`, `status`, `message`) in `data`. A conflict stays inside that 207 body as command `code` 409. The execute call itself does not return HTTP 409.
+
+        When a participating write applied If-Match, `headers` contains `hybris-resource-version` set to the version after the write (the version that was sent, plus 1). `versioning=skip` does not send If-Match, so that header is absent. `AddCartItem` and `ApplyCartDiscount` do not set `Location` on `/execute`. REST `POST .../items` and `POST .../discounts` still return the collection URL. `AddCartItemsBatch` sets each `data[].headers.location` with the same tenant-stripped items URL as REST `POST .../itemsBatch` (`//carts/.../items/{id}`). `UpdateCartItemsBatch` can use command `code` 207; that value is an entry in `results`, and the outer execute response is still one 207.
 
         ### Session and legal entity
 
         `session-id` and `legal-entity-id` are request headers shared by every command. Commands cannot override them. One `/execute` call is one shopper context. To act as a different session or legal entity, send another request. A B2B legal-entity switch remains a token refresh, not a per-command header.
 
-        The path `cartId` applies to every command. Mixed identity is not allowed. Authorization is checked per command, the same as the equivalent REST calls, not as a preflight for the whole chain. A storefront token without `cart.cart_manage` can run commands only on a cart it owns. A service token with `cart.cart_manage` can touch any cart in the tenant, the same as two separate REST calls. `cart.cart_manage_external_prices` is required when a command payload includes an external price, product, fee, or discount.
+        Authorization is checked per command, the same as the equivalent REST calls, not as a preflight for the whole chain. A storefront token without `cart.cart_manage` can run commands only on a cart it owns. A service token with `cart.cart_manage` can touch any cart in the tenant, the same as two separate REST calls. `cart.cart_manage_external_prices` is required when a command payload includes an external price, product, fee, or discount.
 
         ### Versioning
 
-        `/execute` reuses the existing If-Match mechanism on REST writes. On execute, the version is `options.resourceVersion` plus a request-level `versioning` query parameter. A single execute-level If-Match would make the second write on the same cart always 409, because the client submits the whole command array at once and cannot see command 1’s result before composing command 2.
+        `/execute` reuses the existing If-Match mechanism on REST writes. On execute, the version is `options.resourceVersion` plus a request-level `versioning` query parameter. A single execute-level If-Match would make the second write on the same cart fail the version check, because the client submits the whole command array at once and cannot see command 1’s result before composing command 2.
 
         Participating writes (send If-Match and bump the follow cursor): `AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`.
 
-        `GetCart` and `ValidateCart` do not send If-Match and do not bump the cursor.
-
-        Deletes, `AddCartItemsBatch`, `UpdateCartItemsBatch`, and `RefreshCart` do not send If-Match and cannot seed the cursor. If a follow cursor is already seeded for that `cartId`, a successful mutating delete, batch, or refresh still bumps the cursor by 1 so a later participating write does not 409. Mixed `AddCartItemsBatch` (command 400) does not bump. `UpdateCartItemsBatch` bumps only when at least one entry is 2xx. Extra `resourceVersion` on these commands is ignored.
+        `GetCart`, deletes, `AddCartItemsBatch`, and `UpdateCartItemsBatch` do not send If-Match and do not bump the cursor. They cannot seed it. Extra `resourceVersion` on these commands is ignored.
 
         * `skip` (default) – never passes a version. Ignores `options.resourceVersion` if present. The add-then-GET storefront flow uses this.
-        * `explicit` – every participating command must send `options.resourceVersion`. The service checks the whole `commands` array before command 1. If any participating write is missing a version, the request returns **400**, `results` is empty, and nothing is mutated. `explicit` is not `skip`: omitting `resourceVersion` on a participating write is a client error, not a last-write-wins strategy. Later commands are not rewritten; the client pre-computes `N`, `N+1`, and so on. The same `N` on two writes after a valid preflight yields 409 on the second command; the first write stays committed. GetCart, ValidateCart, deletes, itemsBatch, and RefreshCart do not require a version. Extra `resourceVersion` on them is ignored. A chain of only GetCart, ValidateCart, deletes, or RefreshCart has no participating writes, so preflight passes. Mixing `explicit` and `skip` behavior for different writes in one request is not supported; use `skip` or two requests.
-        * `follow` – seeds from the first participating write. After that write succeeds, later writes use `sent + 1`. Follow state is an internal cursor and is not part of the HTTP body.
+        * `explicit` – every participating command must send `options.resourceVersion`. The service checks the whole `commands` array before command 1. If any participating write is missing a version, the request returns **400** and `results` is not returned. Nothing is mutated. `explicit` is not `skip`: omitting `resourceVersion` on a participating write is a client error, not a last-write-wins strategy. Later commands are not rewritten; the client pre-computes `N`, `N+1`, and so on. The same `N` on two writes after a valid preflight yields command `code` 409 on the second command; the execute HTTP status stays 207 and the first write stays committed. GetCart, deletes, and itemsBatch do not require a version. A chain of only those commands has no participating writes, so preflight passes. Mixing `explicit` and `skip` behavior for different writes in one request is not supported; use `skip` or two requests.
+        * `follow` – seeds from the first participating write for that `cartId`. After that write succeeds, later participating writes on the same `cartId` use `sent + 1`. Follow state is an internal cursor and is not part of the HTTP body.
 
         `follow` rules:
 
-        * The first participating write must have `options.resourceVersion`. Missing version returns **400 for that command** (not a whole-request preflight).
-        * Later `follow` commands omit `resourceVersion`. A differing value versus the cursor returns **400** for that command. A matching value is accepted.
-        * The bump is `+1`, the same as REST. Concurrent REST or `/execute` on the same cart still returns 409 through the existing check.
-        * GetCart and ValidateCart do not bump the cursor and do not seed the version from stored cart metadata.
-        * Deletes, itemsBatch, and RefreshCart do not send If-Match. They cannot seed the cursor. After a participating write has seeded the cart, a successful mutating delete, batch, or refresh still bumps the cursor by 1. Mixed `AddCartItemsBatch` (command 400) does not bump. `UpdateCartItemsBatch` bumps only when at least one entry is 2xx.
+        * The first participating write for a `cartId` must have `options.resourceVersion`. Missing version returns **400 for that command** (not a whole-request preflight).
+        * Later `follow` commands on that `cartId` omit `resourceVersion`. A differing value versus the cursor returns **400** for that command. A matching value is accepted.
+        * The bump is `+1`, the same as REST, and only participating writes bump it. A concurrent REST or `/execute` conflict is command `code` 409 inside the 207 body.
+        * GetCart, deletes, and itemsBatch do not bump the cursor and do not seed it.
         * If a write returns 409, the cursor does not bump. `onError=fail` stops; `resume` leaves later writes trying the old cursor.
 
         `follow` example – the client knows the cart is at version `5`; later writes omit `resourceVersion`:
 
         ```
-        POST /cart/{tenant}/carts/{cartId}/execute?onError=fail&versioning=follow
+        POST /cart/{tenant}/execute?onError=fail&versioning=follow
         ```
 
         ```
@@ -106,21 +103,21 @@ paths:
             {
               "type": "UpdateCartItem",
               "data": { "quantity": 2 },
-              "options": { "itemId": "1", "resourceVersion": 5 }
+              "options": { "cartId": "6a86b20c2f5961330a8b3eb6", "itemId": "1", "resourceVersion": 5 }
             },
             {
               "type": "UpdateCartItem",
               "data": { "quantity": 1 },
-              "options": { "itemId": "2" }
+              "options": { "cartId": "6a86b20c2f5961330a8b3eb6", "itemId": "2" }
             },
             {
               "type": "GetCart",
-              "options": { "expandCalculation": true }
+              "options": { "cartId": "6a86b20c2f5961330a8b3eb6", "expandCalculation": true }
             },
             {
               "type": "UpdateCartItem",
               "data": { "quantity": 3 },
-              "options": { "itemId": "3" }
+              "options": { "cartId": "6a86b20c2f5961330a8b3eb6", "itemId": "3" }
             }
           ]
         }
@@ -128,7 +125,7 @@ paths:
 
         Cursor: PUT item 1 uses `5` and stores `6`; PUT item 2 uses `6` and stores `7`; GetCart leaves the cursor at `7`; PUT item 3 uses `7` and stores `8`.
 
-        Sequential commands run one after another. Concurrent `/execute` or REST on the same cart still returns 409 if the cart is locked. A lock is not held across the whole chain.
+        Sequential commands run one after another. A concurrent REST or `/execute` conflict on the same cart is command `code` 409 inside the 207 body. A lock is not held across the whole chain.
 
         ### Whole-request 400
 
@@ -138,7 +135,7 @@ paths:
         * unknown `type`
         * invalid `onError` or `versioning` query value
         * `versioning=explicit` with a participating command missing `resourceVersion`
-        * request-body Bean Validation failures (for example a missing `options.itemId` or an invalid `zipCode` length). `results` is empty and command 0 does not run. This is schema-invalid for the whole request, not a per-command 400.
+        * request-body Bean Validation failures (for example a missing `options.cartId` or an invalid `zipCode` length). The response is the error body. `results` is not returned. This is schema-invalid for the whole request, not a per-command 400.
 
         ### Additional scopes information
 
@@ -149,7 +146,6 @@ paths:
         - OAuth2:
             - cart.cart_manage
       parameters:
-        - $ref: '#/components/parameters/cartId'
         - $ref: '#/components/parameters/trait_tenant'
         - name: onError
           in: query
@@ -221,8 +217,11 @@ paths:
                           originalAmount: 350
                           effectiveAmount: 350
                           currency: EUR
+                      options:
+                        cartId: 6a86b20c2f5961330a8b3eb6
                     - type: GetCart
                       options:
+                        cartId: 6a86b20c2f5961330a8b3eb6
                         expandCalculation: true
               Follow resource versions:
                 summary: Seed version 5 then omit resourceVersion on later writes
@@ -232,20 +231,24 @@ paths:
                       data:
                         quantity: 2
                       options:
+                        cartId: 6a86b20c2f5961330a8b3eb6
                         itemId: '1'
                         resourceVersion: 5
                     - type: UpdateCartItem
                       data:
                         quantity: 1
                       options:
+                        cartId: 6a86b20c2f5961330a8b3eb6
                         itemId: '2'
                     - type: GetCart
                       options:
+                        cartId: 6a86b20c2f5961330a8b3eb6
                         expandCalculation: true
                     - type: UpdateCartItem
                       data:
                         quantity: 3
                       options:
+                        cartId: 6a86b20c2f5961330a8b3eb6
                         itemId: '3'
       responses:
         '207':
@@ -269,8 +272,6 @@ paths:
                         data:
                           itemId: '3'
                           yrn: 'urn:yaas:saasag:caascart:item:yourTenant;6a86b20c2f5961330a8b3eb6;3'
-                        headers:
-                          Location: 'https://api.emporix.io/cart/yourTenant/carts/6a86b20c2f5961330a8b3eb6/items/3'
                       - index: 1
                         type: GetCart
                         code: 200
@@ -326,8 +327,6 @@ paths:
                         data:
                           itemId: '3'
                           yrn: 'urn:yaas:saasag:caascart:item:yourTenant;6a86b20c2f5961330a8b3eb6;3'
-                        headers:
-                          Location: 'https://api.emporix.io/cart/yourTenant/carts/6a86b20c2f5961330a8b3eb6/items/3'
                       - index: 1
                         type: UpdateCartItem
                         code: 404
@@ -5903,7 +5902,7 @@ components:
       description: List of items added to cart.
     executeRequest:
       type: object
-      description: Body of `POST /cart/{tenant}/carts/{cartId}/execute`. Between 1 and 10 commands.
+      description: Body of `POST /cart/{tenant}/execute`. Between 1 and 10 commands.
       required:
         - commands
       properties:
@@ -5914,17 +5913,18 @@ components:
           description: |
             Commands to run sequentially. Maximum 10. Request duration is approximately the sum of the chained commands.
 
-            Each item needs `type`. `data` is the REST request body and is omitted for commands that have no body. `options` holds remaining path and query equivalents (`itemId`, `partial`, `expandCalculation`, `zipCode`, `countryCode`, `resourceVersion`, `codes`, `discountIndex`). `cartId` is the URL path, not a command field.
+            Each item needs `type` and `options.cartId`. `data` is the REST request body and is omitted for commands that have no body. `options` also holds remaining path and query equivalents (`itemId`, `partial`, `expandCalculation`, `zipCode`, `countryCode`, `resourceVersion`, `codes`, `discountIndex`).
           items:
             $ref: '#/components/schemas/executeCommand'
     executeCommand:
       type: object
       description: |
-        One operation in the execute chain. `type` selects the REST equivalent. `data` is that endpoint’s request body. `options` holds remaining path and query equivalents (`itemId`, `partial`, `expandCalculation`, `zipCode`, `countryCode`, `resourceVersion`, `codes`, `discountIndex`).
+        One operation in the execute chain. `type` selects the REST equivalent. `data` is that endpoint’s request body. `options.cartId` selects the cart. Other `options` fields are remaining path and query equivalents (`itemId`, `partial`, `expandCalculation`, `zipCode`, `countryCode`, `resourceVersion`, `codes`, `discountIndex`).
 
-        Session and legal-entity identity are request headers, not command fields. `cartId` is the execute URL path.
+        Session and legal-entity identity are request headers, not command fields.
       required:
         - type
+        - options
       properties:
         type:
           type: string
@@ -5944,8 +5944,6 @@ components:
             * `GetCartDiscounts`
             * `DeleteCartDiscounts`
             * `DeleteCartDiscount`
-            * `RefreshCart`
-            * `ValidateCart`
           enum:
             - AddCartItem
             - UpdateCartItem
@@ -5959,8 +5957,6 @@ components:
             - GetCartDiscounts
             - DeleteCartDiscounts
             - DeleteCartDiscount
-            - RefreshCart
-            - ValidateCart
         data:
           description: |
             Request body of the equivalent REST operation.
@@ -5972,20 +5968,27 @@ components:
             * `UpdateCart` – cart update body
             * `ApplyCartDiscount` – discount body
 
-            Omit `data` for `GetCart`, deletes, `GetCartDiscounts`, `DeleteCartDiscounts`, `DeleteCartDiscount`, `RefreshCart`, and `ValidateCart`.
+            Omit `data` for `GetCart`, deletes, `GetCartDiscounts`, `DeleteCartDiscounts`, and `DeleteCartDiscount`.
+
+            The service selects the body type from `type`. A single item body is an object. Batch commands send an array.
           oneOf:
-            - $ref: '#/components/schemas/cartItemRequest'
-            - $ref: '#/components/schemas/updateCartItem'
-            - $ref: '#/components/schemas/updateCart'
-            - $ref: '#/components/schemas/discount'
-            - $ref: '#/components/schemas/cartItemsBatchRequest'
-            - $ref: '#/components/schemas/cartItemsBatchUpdateRequest'
+            - type: object
+              additionalProperties: true
+            - type: array
+              items:
+                type: object
+                additionalProperties: true
         options:
           $ref: '#/components/schemas/executeCommandOptions'
     executeCommandOptions:
       type: object
-      description: Remaining path and query equivalents for the command. Required fields depend on `type`. `cartId` is the execute URL path, not an options field.
+      description: Path and query equivalents for the command. `cartId` is required on every command. Other required fields depend on `type`.
+      required:
+        - cartId
       properties:
+        cartId:
+          type: string
+          description: Cart unique identifier. Required on every command. A chain may use different cart ids. The follow cursor is stored per `cartId`.
         itemId:
           type: string
           description: |
@@ -6031,7 +6034,7 @@ components:
             * `versioning=explicit` – required on every participating command (whole-request preflight)
             * `versioning=follow` – required to seed the first participating write; omit on later writes
 
-            Extra `resourceVersion` on GetCart, ValidateCart, deletes, itemsBatch, and RefreshCart is ignored.
+            Extra `resourceVersion` on GetCart, deletes, and itemsBatch is ignored.
         codes:
           type: array
           items:
@@ -6084,31 +6087,25 @@ components:
           description: |
             Response body of the equivalent REST operation. Omitted when that endpoint returns 204.
 
-            Failures use the same error shape as REST (`code`, `status`, `message`).
+            A single-object body (`AddCartItem`, `GetCart`, `ApplyCartDiscount`, or an error) is an object. `GetCartDiscounts`, `AddCartItemsBatch`, and `UpdateCartItemsBatch` return an array. Failures use the same error shape as REST (`code`, `status`, `message`).
           nullable: true
           oneOf:
-            - $ref: '#/components/schemas/createdCartItem'
-            - $ref: '#/components/schemas/cart'
-            - $ref: '#/components/schemas/appliedDiscount'
-            - $ref: '#/components/schemas/batchResponse'
-            - $ref: '#/components/schemas/cartItemsBatchUpdateResponse'
-            - $ref: '#/components/schemas/ErrorMessage'
+            - type: object
+              additionalProperties: true
             - type: array
               items:
-                $ref: '#/components/schemas/discountResponse'
+                type: object
+                additionalProperties: true
         headers:
           type: object
           additionalProperties:
             type: string
           description: |
-            Response headers for this command. The If-Match resource version is set when a participating write applied If-Match.
+            Response headers for this command.
 
-            On `/execute`, create commands synthesize followable `Location` values (tenant kept):
-            * `AddCartItem` – `/{tenant}/carts/{cartId}/items/{itemId}`
-            * `ApplyCartDiscount` – `/{tenant}/carts/{cartId}/discounts/{index}`
-            * `AddCartItemsBatch` – each `data[].headers.location` is `/{tenant}/carts/{cartId}/items/{id}`
+            When a participating write applied If-Match, this object contains `hybris-resource-version` set to the version after the write. `versioning=skip` does not send If-Match, so the header is absent. `AddCartItem` and `ApplyCartDiscount` do not set `Location` on `/execute`.
 
-            REST `POST .../items` and `POST .../discounts` still return the collection URL. REST `POST .../itemsBatch` still strips the tenant (`//carts`).
+            `AddCartItemsBatch` does not use this object for item locations. Each created item's `data[].headers.location` uses the same tenant-stripped items URL as REST `POST .../itemsBatch`.
     ErrorMessage:
       title: error
       description: Schema for API-specific errors.

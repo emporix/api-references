@@ -66,7 +66,7 @@ curl -i -X POST
 
 ## How to add an item and retrieve the calculated cart in one request
 
-Use [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) to add an item and retrieve the calculated cart in one HTTP request. The existing [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) followed by [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) still works.
+Use [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-execute) to add an item and retrieve the calculated cart in one HTTP request. The existing [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) followed by [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) still works. Each command sends `options.cartId`.
 
 {% hint style="warning" %}
 Request duration is the sum of the chained commands. Set client and API gateway timeouts to cover the full chain, especially when `GetCart` runs cart calculation.
@@ -91,7 +91,7 @@ Send `AddCartItem` then `GetCart` with `expandCalculation` set to `true`. The 20
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/execute?onError=fail' \
+  'https://api.emporix.io/cart/{tenant}/execute?onError=fail' \
   -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -H 'session-id: 4f8a2c1e9b7d6a0c3e5f8b12' \
@@ -108,11 +108,15 @@ curl -i -X POST \
             "effectiveAmount": 350,
             "currency": "EUR"
           }
+        },
+        "options": {
+          "cartId": "{cartId}"
         }
       },
       {
         "type": "GetCart",
         "options": {
+          "cartId": "{cartId}",
           "expandCalculation": true
         }
       }
@@ -124,7 +128,7 @@ curl -i -X POST \
 {% step %}
 #### Read the 207 results
 
-The HTTP status is 207 Multi-Status when the chain is accepted. `results` is ordered. `results[0].data` is the same JSON as `POST .../items` (`itemId`, `yrn`). `results[0].headers.Location` is the created item URL (`/{tenant}/carts/{cartId}/items/{itemId}`). REST `POST .../items` still returns the collection URL. `results[1].data` is the same JSON as `GET .../carts/{cartId}` including `calculatedPrice`.
+The HTTP status is 207 Multi-Status when the chain is accepted. `results` is ordered. `results[0].data` is the same JSON as `POST .../items` (`itemId`, `yrn`). With default `versioning=skip`, that result has no `headers`, and `Location` is not set. REST `POST .../items` still returns the collection URL. `results[1].data` is the same JSON as `GET .../carts/{cartId}` including item `calculatedPrice`.
 
 ```json
 {
@@ -137,9 +141,6 @@ The HTTP status is 207 Multi-Status when the chain is accepted. `results` is ord
       "data": {
         "itemId": "3",
         "yrn": "urn:yaas:saasag:caascart:item:yourTenant;6a86b20c2f5961330a8b3eb6;3"
-      },
-      "headers": {
-        "Location": "https://api.emporix.io/cart/yourTenant/carts/6a86b20c2f5961330a8b3eb6/items/3"
       }
     },
     {
@@ -152,14 +153,37 @@ The HTTP status is 207 Multi-Status when the chain is accepted. `results` is ord
         "items": [
           {
             "id": "3",
-            "quantity": 2
+            "quantity": 2,
+            "calculatedPrice": {
+              "price": {
+                "netValue": 588.235,
+                "grossValue": 700,
+                "taxValue": 111.765,
+                "taxCode": "STANDARD",
+                "taxRate": 19,
+                "calculated": "INTERNAL"
+              },
+              "finalPrice": {
+                "netValue": 588.235,
+                "grossValue": 700,
+                "taxValue": 111.765,
+                "taxCode": "STANDARD",
+                "taxRate": 19,
+                "calculated": "INTERNAL"
+              }
+            }
           }
         ],
         "calculatedPrice": {
-          "finalPrice": {
-            "netValue": 588.24,
+          "price": {
+            "netValue": 588.235,
             "grossValue": 700,
-            "taxValue": 111.76
+            "taxValue": 111.765
+          },
+          "finalPrice": {
+            "netValue": 588.235,
+            "grossValue": 700,
+            "taxValue": 111.765
           }
         }
       }
@@ -181,9 +205,6 @@ With `onError=fail`, a later command is omitted from `results` after the first n
       "data": {
         "itemId": "3",
         "yrn": "urn:yaas:saasag:caascart:item:yourTenant;6a86b20c2f5961330a8b3eb6;3"
-      },
-      "headers": {
-        "Location": "https://api.emporix.io/cart/yourTenant/carts/6a86b20c2f5961330a8b3eb6/items/3"
       }
     },
     {
@@ -211,7 +232,7 @@ A request accepts at most 10 commands. 11 or more commands return `400` for the 
 
 ## How to follow cart resource versions in a command chain
 
-`versioning=follow` keeps a cursor for the cart in the URL. Seed the first participating write (`AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`), then omit `resourceVersion` on later writes. Deletes and itemsBatch do not send If-Match and cannot seed the cursor. After a participating write has seeded the cart, a successful mutating delete or batch still bumps the cursor by 1.
+`versioning=follow` keeps a cursor per `options.cartId`. Seed the first participating write (`AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`), then omit `resourceVersion` on later writes for that cart. `GetCart`, deletes, and itemsBatch do not send If-Match and do not bump the cursor.
 
 Use `versioning=explicit` only when every participating write sends `resourceVersion`. A missing version on `explicit` returns `400` for the whole request. That is a client error, not a last-write-wins strategy.
 
@@ -221,7 +242,7 @@ Use `versioning=explicit` only when every participating write sends `resourceVer
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/execute?onError=fail&versioning=follow' \
+  'https://api.emporix.io/cart/{tenant}/execute?onError=fail&versioning=follow' \
   -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -229,21 +250,21 @@ curl -i -X POST \
       {
         "type": "UpdateCartItem",
         "data": { "quantity": 2 },
-        "options": { "itemId": "1", "resourceVersion": 5 }
+        "options": { "cartId": "{cartId}", "itemId": "1", "resourceVersion": 5 }
       },
       {
         "type": "UpdateCartItem",
         "data": { "quantity": 1 },
-        "options": { "itemId": "2" }
+        "options": { "cartId": "{cartId}", "itemId": "2" }
       },
       {
         "type": "GetCart",
-        "options": { "expandCalculation": true }
+        "options": { "cartId": "{cartId}", "expandCalculation": true }
       },
       {
         "type": "UpdateCartItem",
         "data": { "quantity": 3 },
-        "options": { "itemId": "3" }
+        "options": { "cartId": "{cartId}", "itemId": "3" }
       }
     ]
   }'
