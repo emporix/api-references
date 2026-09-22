@@ -257,6 +257,9 @@ paths:
               examples:
                 Add item then calculated cart:
                   summary: All commands succeeded
+                  description: |-
+                    `GetCart` `data` is the cart from `GET /cart/{tenant}/carts/{cartId}` with `expandCalculation=true`.
+                    This sample is that cart for the added line. Discount and fee fields are omitted because this cart has none.
                   value:
                     results:
                       - index: 0
@@ -280,11 +283,38 @@ paths:
                           items:
                             - id: '3'
                               quantity: 2
+                              effectiveQuantity: 2
+                              itemYrn: urn:yaas:saasag:caasproduct:product:yourTenant;mobile-phone-s24-gross
+                              unitPrice:
+                                netValue: 294.118
+                                grossValue: 350
+                                taxValue: 55.882
+                                taxCode: STANDARD
+                                taxRate: 19
+                              calculatedPrice:
+                                price:
+                                  netValue: 588.235
+                                  grossValue: 700
+                                  taxValue: 111.765
+                                  taxCode: STANDARD
+                                  taxRate: 19
+                                  calculated: INTERNAL
+                                finalPrice:
+                                  netValue: 588.235
+                                  grossValue: 700
+                                  taxValue: 111.765
+                                  taxCode: STANDARD
+                                  taxRate: 19
+                                  calculated: INTERNAL
                           calculatedPrice:
-                            finalPrice:
-                              netValue: 588.24
+                            price:
+                              netValue: 588.235
                               grossValue: 700
-                              taxValue: 111.76
+                              taxValue: 111.765
+                            finalPrice:
+                              netValue: 588.235
+                              grossValue: 700
+                              taxValue: 111.765
                 Stop after first failure:
                   summary: onError=fail omits later commands from results
                   value:
