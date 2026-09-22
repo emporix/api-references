@@ -25,6 +25,26 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Cart Service - command chain endpoint for cart operations
+
+#### Overview
+
+The Cart Service adds an opt-in `POST /cart/{tenant}/execute` endpoint that runs existing cart operations in one request while leaving cart, item, and discount endpoints unchanged. Each command sends `options.cartId`. A storefront can chain a write with `GetCart` without a second round trip. Duration is the sum of at most 10 commands, and the response is HTTP 207 with a `results` array. `versioning=explicit` preflights participating writes for `resourceVersion`, and `versioning=follow` keeps a cursor per cart id.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-execute) | Runs up to 10 existing cart operations sequentially. Each command sends `options.cartId`. Command types cover item, cart, and discount operations. The response is 207 with a `results` array. Duration is the sum of the chained commands. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-17" tags="improvement" %}
 
 ## AI Service - cursor-based pagination for agent logs and jobs
