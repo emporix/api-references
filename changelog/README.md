@@ -25,6 +25,37 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature, major-change" %}
+
+## Import Service - run diagnostics and delete configuration
+
+#### Overview
+
+A run reports how many source rows repeated a natural key and how many child lines had no parent to attach to. Those counters said how many, never which. Two new endpoints return the rows behind them: the record's key, the linking field and the value it pointed at, and how many lines were waiting on each missing parent — as JSON, or as a CSV file to open in a spreadsheet or attach to a ticket.
+
+The rows are a capped sample rather than the complete set. The response states how many were recorded and whether a stream reached the cap, and the CSV carries the same caveat as comment lines above its header, because the file travels further than the request that produced it. The run's own counters remain the authoritative totals.
+
+The stream schema now documents `deleteConfig`, which controls how deletes are detected in the source and propagated to the target.
+
+`targetDeleteSubscriptionEnabled` and `onTargetReappear` have been removed from the stream schema. Reacting to target objects being deleted outside the import is no longer supported, and both fields are ignored if sent.
+
+#### New endpoints
+
+| Endpoint | Description |
+| -------- | ----------- |
+| [Retrieving run diagnostics](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-diagnostics) | Returns the rows behind a run's repeated-key and unresolved-parent counters. |
+| [Downloading run diagnostics as CSV](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-diagnostics-csv) | Returns the same rows as a CSV attachment. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| -------- | ----------- |
+| [Creating a stream](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#post-importtool-tenant-configs-configid-streams) | Documents `deleteConfig`; removes `targetDeleteSubscriptionEnabled` and `onTargetReappear`. |
+| [Updating a stream](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#put-importtool-tenant-streams-id) | Documents `deleteConfig`; removes `targetDeleteSubscriptionEnabled` and `onTargetReappear`. |
+
+{% endupdate %}
+
+
 {% update date="2026-09-17" tags="improvement" %}
 
 ## AI Service - cursor-based pagination for agent logs and jobs
