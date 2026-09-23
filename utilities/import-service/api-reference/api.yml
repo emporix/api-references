@@ -723,18 +723,18 @@ paths:
         This functionality is in preview mode - some of the features may not be fully operational yet.
         {% endhint %}
 
-        Retrieves the rows behind a run's feed-quality counters, so a number can be acted on.
+        Retrieves the source rows represented by a run's feed-quality counters.
 
         A run reports how many source rows repeated a natural key (`duplicateKeys`) and how many child
-        lines had no parent to attach to (`unresolvedParents`). This endpoint returns which ones: the
-        record's key, the linking field and the value it pointed at, and how many lines were waiting on
-        each missing parent.
+        lines had no parent to attach to (`unresolvedParents`). This endpoint identifies the affected rows
+        and returns each record's key, its parent-linking field and value, and the number of lines waiting
+        for each missing parent.
 
         Neither counter is a failure, so these rows are kept separately from run errors.
 
         The rows are a capped SAMPLE, not necessarily the whole set — `recorded` gives how many were
-        stored and `sampleTruncated` says whether a stream hit the cap. The run's own counters remain the
-        authoritative totals; do not read the row count as the size of the problem.
+        stored and `sampleTruncated` says whether a stream hit the cap. The run's own counters show the
+        total number of affected rows; do not use the returned row count to measure the size of the problem.
 
       operationId: GET-importtool-list-run-diagnostics
       tags:
@@ -782,12 +782,12 @@ paths:
 
         Returns the same rows as a CSV attachment, for opening in a spreadsheet or attaching to a ticket.
 
-        The file carries its own caveats as comment lines above the header row: one when the response is
-        page-limited, and one when a stream hit the recording cap. The file travels further than the
-        request that produced it, so it has to state what it is.
+        Comment lines above the header indicate whether the `limit` parameter restricted the response or
+        a stream reached the recording cap. These comments preserve that context when the file is shared
+        independently of the request.
 
-        Values are quoted, and any value beginning with `=`, `+`, `-` or `@` is prefixed with an
-        apostrophe so a source-controlled key cannot execute as a spreadsheet formula.
+        Values are quoted. Any value beginning with `=`, `+`, `-`, or `@` is prefixed with an apostrophe
+        so that spreadsheet software does not interpret source-provided data as a formula.
 
       operationId: GET-importtool-download-run-diagnostics-csv
       tags:
@@ -821,7 +821,7 @@ paths:
               schema:
                 type: string
               example: |-
-                # capped sample: 2000 rows recorded (cap 2000 per stream) - the run's counters are the authoritative totals
+                # capped sample: 2000 rows recorded (cap 2000 per stream) - the run's counters show the total number of affected rows
                 stream,kind,key,linkingField,linkingValue,targetType,waitingLines,occurrence
                 poLine,UNRESOLVED_PARENT,ID:PO-4711,HEADER_ID,PO-4711,PURCHASE_ORDER,7,
         '401':
@@ -1464,7 +1464,7 @@ components:
           description: |-
             How deletes are detected in the source and propagated to the target. Omit for an upsert-only
             stream. `MARKER`: a field on the record flags it as deleted. `TOMBSTONE`: a separate source
-            record lists the deleted ids.
+            record lists the deleted IDs.
           properties:
             mode:
               type: string
@@ -1483,10 +1483,10 @@ components:
             record:
               type: string
               description: |-
-                `TOMBSTONE` only. The source record that lists the deleted ids, named explicitly. Omit it to
-                derive the name from the imported record instead, by adding a prefix or suffix — for example
-                an `invoice` stream deriving `invoice_deleted`. Supply this when the delete record does not
-                follow that naming convention.
+                `TOMBSTONE` only. The explicit name of the source record that lists deleted IDs. Omit this
+                property when the name can be derived from the imported record by adding a prefix or suffix —
+                for example, `invoice_deleted` for an `invoice` stream. Specify it when the deletion record
+                does not follow that naming convention.
           example:
             mode: MARKER
             markerField: DELETIONINDICATOR
@@ -1928,10 +1928,10 @@ components:
                 $ref: '#/components/schemas/ImportRun'
     DiagnosticPage:
       type: object
-      description: |-
-        A page of diagnostic rows, with enough context to know what it is NOT. A bare list cannot tell a
-        caller whether it is everything or the first slice of a capped sample, and acting on a partial
-        figure is the mistake these rows exist to prevent.
+      description: >-
+        A page of diagnostic rows with metadata that indicates whether the response contains all recorded
+        rows or only part of a capped sample. Use `recorded`, `cap`, and `sampleTruncated` to interpret the
+        page. The run's counters show the total number of affected rows.
       properties:
         rows:
           type: array
@@ -1952,8 +1952,8 @@ components:
         sampleTruncated:
           type: boolean
           description: |-
-            Whether at least one stream reached the cap. When true these rows are a sample and the run's
-            own counters are the authoritative totals.
+            Whether at least one stream reached the cap. When true, these rows are a sample, and the run's
+            own counters show the total number of affected rows.
           example: true
         note:
           type: string
@@ -2012,9 +2012,7 @@ components:
           description: The target type the row was headed for.
         waitingLines:
           type: integer
-          description: |-
-            `UNRESOLVED_PARENT` only. How many child lines were waiting on this parent. One stranded line
-            and two thousand are different problems.
+          description: '`UNRESOLVED_PARENT` only. The number of child lines waiting for this parent.'
         occurrence:
           type: integer
           description: '`REPEATED_KEY` only. How many times this key had already been seen in this run.'

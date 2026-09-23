@@ -27,13 +27,13 @@ layout:
 
 {% update date="RELEASE_DATE" tags="new-feature, major-change" %}
 
-## Import Service - run diagnostics and delete configuration
+## Import Service - run diagnostics and deletion settings
 
 #### Overview
 
-A run reports how many source rows repeated a natural key and how many child lines had no parent to attach to. Those counters said how many, never which. Two new endpoints return the rows behind them: the record's key, the linking field and the value it pointed at, and how many lines were waiting on each missing parent — as JSON, or as a CSV file to open in a spreadsheet or attach to a ticket.
+A run reports how many source rows repeated a natural key and how many child lines had no parent to attach to. These counters show how many rows are affected, but not which rows. Two new endpoints return details about the affected rows, including each record's key, its parent-linking field and value, and the number of lines waiting for each missing parent. The details are available as JSON or as a CSV file that you can open in a spreadsheet or attach to a ticket.
 
-The rows are a capped sample rather than the complete set. The response states how many were recorded and whether a stream reached the cap, and the CSV carries the same caveat as comment lines above its header, because the file travels further than the request that produced it. The run's own counters remain the authoritative totals.
+The rows are a capped sample rather than the complete set. The JSON response states how many rows were recorded and whether a stream reached the cap. The CSV includes the same information in comment lines above its header so that the context remains available when the file is shared. The run's own counters show the total number of affected rows.
 
 The stream schema now documents `deleteConfig`, which controls how deletes are detected in the source and propagated to the target.
 
