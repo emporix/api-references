@@ -37,7 +37,7 @@ The rows are a capped sample rather than the complete set. The response states h
 
 The stream schema now documents `deleteConfig`, which controls how deletes are detected in the source and propagated to the target.
 
-`targetDeleteSubscriptionEnabled` and `onTargetReappear` have been removed from the stream schema. Reacting to target objects being deleted outside the import is no longer supported, and both fields are ignored if sent.
+`targetDeleteSubscriptionEnabled` and `onTargetReappear` have been removed from the stream schema. Reacting to target objects being deleted outside the import is no longer supported.
 
 #### New endpoints
 
@@ -52,6 +52,10 @@ The stream schema now documents `deleteConfig`, which controls how deletes are d
 | -------- | ----------- |
 | [Retrieving all streams of a configuration](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Documents `deleteConfig`; removes `targetDeleteSubscriptionEnabled` and `onTargetReappear`. |
 | [Retrieving a stream](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Documents `deleteConfig`; removes `targetDeleteSubscriptionEnabled` and `onTargetReappear`. |
+
+#### Known problems
+
+There are no known problems.
 
 {% endupdate %}
 

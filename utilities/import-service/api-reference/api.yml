@@ -740,26 +740,12 @@ paths:
       tags:
         - Runs
       parameters:
-        - name: streamId
-          in: query
-          required: false
-          description: Only return rows recorded for this stream.
-          schema:
-            type: string
-            format: uuid
-        - name: kind
-          in: query
-          required: false
-          description: Only return rows of this kind.
-          schema:
-            type: string
-            enum:
-              - UNRESOLVED_PARENT
-              - REPEATED_KEY
+        - $ref: '#/components/parameters/trait_diagnosticsStreamId'
+        - $ref: '#/components/parameters/trait_diagnosticsKind'
         - name: limit
           in: query
           required: false
-          description: Maximum number of rows to return.
+          description: Maximum number of rows to return. Defaults differ between the JSON and CSV operations.
           schema:
             type: integer
             default: 500
@@ -807,26 +793,12 @@ paths:
       tags:
         - Runs
       parameters:
-        - name: streamId
-          in: query
-          required: false
-          description: Only include rows recorded for this stream.
-          schema:
-            type: string
-            format: uuid
-        - name: kind
-          in: query
-          required: false
-          description: Only include rows of this kind.
-          schema:
-            type: string
-            enum:
-              - UNRESOLVED_PARENT
-              - REPEATED_KEY
+        - $ref: '#/components/parameters/trait_diagnosticsStreamId'
+        - $ref: '#/components/parameters/trait_diagnosticsKind'
         - name: limit
           in: query
           required: false
-          description: Maximum number of rows to include.
+          description: Maximum number of rows to include. Defaults differ between the JSON and CSV operations.
           schema:
             type: integer
             default: 50000
@@ -1510,7 +1482,11 @@ components:
               description: '`MARKER` only. The values of `markerField` that mean deleted.'
             record:
               type: string
-              description: '`TOMBSTONE` only. The source record listing deleted ids, when it is not derived by affix.'
+              description: |-
+                `TOMBSTONE` only. The source record that lists the deleted ids, named explicitly. Omit it to
+                derive the name from the imported record instead, by adding a prefix or suffix — for example
+                an `invoice` stream deriving `invoice_deleted`. Supply this when the delete record does not
+                follow that naming convention.
           example:
             mode: MARKER
             markerField: DELETIONINDICATOR
@@ -2559,6 +2535,24 @@ components:
             Internal service error:
               $ref: '#/components/examples/InternalServiceError500_Example'
   parameters:
+    trait_diagnosticsStreamId:
+      name: streamId
+      in: query
+      required: false
+      description: Restrict the rows to those recorded for this stream.
+      schema:
+        type: string
+        format: uuid
+    trait_diagnosticsKind:
+      name: kind
+      in: query
+      required: false
+      description: Restrict the rows to this kind.
+      schema:
+        type: string
+        enum:
+          - UNRESOLVED_PARENT
+          - REPEATED_KEY
     trait_tenant:
       name: tenant
       in: path
