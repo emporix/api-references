@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-09-23" tags="new-feature" %}
 
 ## Webhook Service - `customer.sign-up` event
 
