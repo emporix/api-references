@@ -25,6 +25,27 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6623 -->
+
+## Invoice Intake cockpit - approval button cloud function chains
+
+#### Overview
+
+Invoice Intake cockpit now allows approval-type document actions to be configured with an ordered chain of cloud functions instead of a single function only. This lets approvers trigger multiple follow-up steps from one approve or reject submission, while preserving existing single-function approval buttons and existing execution behavior such as stop-on-failure and optional final refresh.
+
+#### Affected endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Invoking a cloud function](https://developer.emporix.io/api-references/api-guides/platform-services/cloud-functions/api-reference/functions#post-cloud-functions-tenant-functions-functionid) | Approval actions can now invoke multiple cloud functions sequentially through repeated calls to the existing endpoint. No endpoint contract changes were introduced. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-17" tags="improvement" %}
 
 ## AI Service - cursor-based pagination for agent logs and jobs
