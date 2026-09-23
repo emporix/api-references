@@ -25,6 +25,30 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Webhook Service - `customer.sign-up` event
+
+#### Overview
+
+The Webhook Service now emits the `customer.sign-up` event when a customer signs up.
+
+#### Added events
+
+| Event | Description |
+| --- | --- |
+| `customer.sign-up` | The event is emitted when a customer signs up. |
+
+#### Known problems
+
+There are no known problems.
+
+#### Links
+
+* [Events - Customer](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-events/events-customer)
+
+{% endupdate %}
+
 {% update date="2026-09-23" tags="new-feature, major-change" %}
 
 ## Import Service - run diagnostics and deletion settings
