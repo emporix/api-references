@@ -50,8 +50,8 @@ The stream schema now documents `deleteConfig`, which controls how deletes are d
 
 | Endpoint | Description |
 | -------- | ----------- |
-| [Creating a stream](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#post-importtool-tenant-configs-configid-streams) | Documents `deleteConfig`; removes `targetDeleteSubscriptionEnabled` and `onTargetReappear`. |
-| [Updating a stream](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#put-importtool-tenant-streams-id) | Documents `deleteConfig`; removes `targetDeleteSubscriptionEnabled` and `onTargetReappear`. |
+| [Retrieving all streams of a configuration](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Documents `deleteConfig`; removes `targetDeleteSubscriptionEnabled` and `onTargetReappear`. |
+| [Retrieving a stream](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Documents `deleteConfig`; removes `targetDeleteSubscriptionEnabled` and `onTargetReappear`. |
 
 {% endupdate %}
 
