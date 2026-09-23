@@ -45,7 +45,7 @@ There are no known problems.
 
 #### Links
 
-* [Events - Customer](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/webhooks/webhook-events/events-customer)
+* [Events - Customer](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-events/events-customer)
 
 {% endupdate %}
 
