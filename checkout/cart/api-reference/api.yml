@@ -5955,7 +5955,7 @@ components:
             - $ref: '#/components/schemas/calculatedPrice'
             - type: object
               description: |
-                The price is calculated by multiplying the unit price (taken from priceMatch) by the quantity. The result is rounded to the number of decimal places defined in the site's `cartCalculationScale` setting.
+                For internally calculated lines (`calculated: INTERNAL`), the price is calculated by multiplying the unit price (taken from priceMatch) by the quantity. The result is rounded to the number of decimal places defined in the site's `cartCalculationScale` setting.
 
                 By default, the unit price is multiplied by the quantity first and the resulting line values are rounded. Alternatively, the unit price can be rounded to the configured scale before the multiplication by the quantity. The alternative method is disabled by default and can be enabled for a tenant on request - contact Emporix Support.
             - properties:
