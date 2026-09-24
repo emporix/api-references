@@ -3696,7 +3696,8 @@ components:
 
     HandOff:
       type: boolean
-      description: Indicates whether the agent is a hand-off agent. A hand-off agent can be called by other agents through `agentCollaborations`, its configuration is hidden, and it still runs in the caller's session.
+      deprecated: true
+      description: Deprecated. Indicates whether the agent is a hand-off agent. This field is no longer used. Clients should ignore it.
 
     BaseForAgentAndTemplateAndHandOff:
       type: object
@@ -3842,6 +3843,7 @@ components:
             mcpServers:
               $ref: '#/components/schemas/AgentMcpServersResponse'
             handOff:
+              deprecated: true
               allOf:
                 - $ref: '#/components/schemas/HandOff'
               example: false

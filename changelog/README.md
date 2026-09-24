@@ -25,6 +25,27 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="deprecated" %}
+
+## AI Service - deprecated `handOff` field
+
+#### Overview
+
+The `handOff` field on agent responses is deprecated and is no longer used. Clients should ignore it.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents) | The `handOff` field in the response is deprecated. |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) | The `handOff` field in the response is deprecated. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | The `handOff` field in the response is deprecated. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
 {% update date="2026-09-23" tags="new-feature" %}
 
 ## Webhook Service - `customer.sign-up` event
@@ -82,7 +103,6 @@ The stream schema now documents `deleteConfig`, which controls how deletes are d
 There are no known problems.
 
 {% endupdate %}
-
 
 {% update date="2026-09-17" tags="improvement" %}
 
