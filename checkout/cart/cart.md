@@ -553,6 +553,23 @@ To ensure that both net and gross prices are available, along with clear details
 
 At the item level, there's a `calculatedPrice` attribute, which contains detailed price calculations for a specific item. Additionally, a `calculatedPrice` is also available at the cart level, summarizing the price calculations for all items in the cart.
 
+### Line item price calculation methods
+
+The line item `calculatedPrice.price` is the unit price taken from `priceMatch` multiplied by the item quantity. The calculated values are rounded half up to the number of decimal places defined in the `cartCalculationScale` site setting, which is `2` by default. The Cart Service supports two methods of calculating the line item price. They differ in the moment when the rounding is applied.
+
+| Method | Description | Example for a unit net price of `0.333` and quantity `3` with the default scale |
+| --- | --- | --- |
+| Rounding after multiplication (default) | The unit net, gross, and tax values are multiplied by the quantity first. The resulting line values are rounded to the configured scale. | `0.333 × 3 = 0.999`, rounded to `1.00` |
+| Rounding before multiplication | The unit net, gross, and tax values are first rounded to the configured scale. The rounded values are then multiplied by the quantity. The line price matches the rounded unit price displayed to the customer multiplied by the quantity. | `0.333` rounded to `0.33`, `0.33 × 3 = 0.99` |
+
+The selected method affects the item `calculatedPrice.price` and all values derived from it, such as discounted prices, fees, cart totals, and the tax aggregate. It applies to all endpoints that return a calculated cart, for example [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) and [Retrieving cart details by criteria](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts).
+
+{% hint style="info" %}
+The rounding after multiplication method is used by default. The rounding before multiplication method can be enabled for your tenant on request - contact Emporix Support to switch the calculation method.
+{% endhint %}
+
+Line items with an externally provided `linePrice` and `lineTax` are not affected by the calculation method. The externally calculated values are used as provided. For details, see [How to pass externally calculated line price and line tax to items added or updated in the cart?](#how-to-pass-externally-calculated-line-price-and-line-tax-to-items-added-or-updated-in-the-cart).
+
 {% hint style="warning" %}
 **Examples**
 
@@ -1787,7 +1804,7 @@ This calculation method provides a comprehensive breakdown of prices, including 
 
 ### Pricing glossary - calculated price on item level
 
-<table data-full-width="false"><thead><tr><th width="150">Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A unit price from <code>priceMatch</code>, it's multiplied by item quantity.</p><pre><code>{
+<table data-full-width="false"><thead><tr><th width="150">Term</th><th>Definition</th></tr></thead><tbody><tr><td><code>price</code></td><td><p>A unit price from <code>priceMatch</code>, it's multiplied by item quantity. By default, the unit price is multiplied by the quantity and the result is rounded to the configured <code>cartCalculationScale</code>. Optionally, the unit price can be rounded before the multiplication - see <a href="#line-item-price-calculation-methods">Line item price calculation methods</a>.</p><pre><code>{
   "calculatedPrice": {
     "price": {
       "netValue": 588.235,

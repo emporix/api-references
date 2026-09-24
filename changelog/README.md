@@ -25,6 +25,38 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## Cart Service - optional rounding of unit prices before multiplying by quantity
+
+#### Overview
+
+The Cart Service now supports an alternative method of calculating the line item `calculatedPrice.price`. By default, the unit net, gross, and tax values taken from `priceMatch` are multiplied by the item quantity first, and the resulting line values are rounded to the `cartCalculationScale` configured for the site. With the new method, the unit values are rounded to the configured scale before they are multiplied by the quantity, so the line price matches the rounded unit price displayed to the customer multiplied by the quantity.
+
+The selected method affects the item `calculatedPrice.price` and all values derived from it, such as discounted prices, fees, cart totals, and the tax aggregate. Line items with an externally provided `linePrice` and `lineTax` are not affected.
+
+{% hint style="info" %}
+The default calculation method remains unchanged. The rounding before multiplication method is disabled by default and can be enabled for a tenant on request - contact Emporix Support.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint | Description                                                                                                                                                             |
+| --- |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) | The item `calculatedPrice.price` and derived totals are calculated with the calculation method enabled for the tenant. The default calculation method remains unchanged. |
+| [Retrieving cart details by criteria](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts) | The item `calculatedPrice.price` and derived totals are calculated with the calculation method enabled for the tenant. The default calculation method remains unchanged.                                                  |
+| [Searching for carts](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-search) | The returned `calculatedPrice` values reflect the calculation method enabled for the tenant at the time of the last cart calculation. The default calculation method remains unchanged.                                    |
+
+#### Known problems
+
+There are no known problems.
+
+#### Links
+
+* [Cart Tutorial - Line item price calculation methods](https://developer.emporix.io/api-references/api-guides/checkout/cart/cart#line-item-price-calculation-methods)
+
+{% endupdate %}
+
 {% update date="2026-09-23" tags="new-feature" %}
 
 ## Webhook Service - `customer.sign-up` event
