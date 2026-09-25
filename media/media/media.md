@@ -458,7 +458,7 @@ You can also specify the access type of each asset:
 The [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint supports two request formats, each creating a different asset type:
 
 - `application/json` – Creates a `LINK` asset. Provide a `url` to a file hosted externally; Emporix stores the reference, not the file itself.
-- `multipart/form-data` – Creates a `BLOB` asset. The current service configuration accepts files up to 50 MB.
+- `multipart/form-data` – Creates a `BLOB` asset. Upload the file binary; Emporix stores the asset (max 30 MB).
 {% endhint %}
 
 Classic multipart uploads remain available as a compatibility alternative. In this flow, file bytes pass through the Media API. Classic downloads also remain available, but they stream through the Media API and therefore stay slower than a direct download. The classic download also applies the 30 MiB default streaming limit described above.

@@ -18,7 +18,7 @@ paths:
     post:
       summary: Creating an asset
       description: |-
-        Creates a new asset for the tenant. An asset represents a digital (max 10MB) object in the system, for example a video, image, or a document.
+        Creates a new asset for the tenant. An asset represents a digital (max 30 MB) object in the system, for example a video, image, or a document.
         - To create an asset of the `BLOB` type, use the `multipart/form-data` request body. 
         - To create an asset of the `LINK` type, use the `application/json` request body.
 
@@ -211,7 +211,7 @@ paths:
     put:
       summary: Updating an asset
       description: |-
-        Updates a given asset. The `type` and `access` properties are immutable. Accepts files of up to 10MB.
+        Updates a given asset. The `type` and `access` properties are immutable. Accepts files of up to 30 MB.
         - To update an asset of the `BLOB` type, use `multipart/form-data` request body. 
         - To update an asset of the `LINK` type, use `application/json` request body.
       security:
@@ -471,7 +471,7 @@ paths:
                     expiresAt: '2026-09-25T14:15:00Z'
                     upload:
                       method: PUT
-                      url: 'https://storage.googleapis.com/example-media-assets/acme-demo/assets/68d67e9a3f7c2b1e4a8d6501?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=%5Bredacted%5D&X-Goog-Date=20260925T131500Z&X-Goog-Expires=900&X-Goog-SignedHeaders=content-type%3Bhost%3Bx-goog-meta-emporix-upload&ifGenerationMatch=0&X-Goog-Signature=%5Bredacted%5D'
+                      url: 'https://storage.googleapis.com/{{GCS_BUCKET}}/{{tenant}}/assets/68d67e9a3f7c2b1e4a8d6501?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=%5Bredacted%5D&X-Goog-Date=20260925T131500Z&X-Goog-Expires=900&X-Goog-SignedHeaders=content-type%3Bhost%3Bx-goog-meta-emporix-upload&ifGenerationMatch=0&X-Goog-Signature=%5Bredacted%5D'
                       headers:
                         Content-Type: application/pdf
                         x-goog-meta-emporix-upload: session
@@ -483,9 +483,9 @@ paths:
                     expiresAt: '2026-09-25T14:20:00Z'
                     upload:
                       method: POST
-                      url: 'https://storage.googleapis.com/example-media-assets'
+                      url: 'https://storage.googleapis.com/{{GCS_BUCKET}}'
                       fields:
-                        key: acme-demo/assets/68d67ec13f7c2b1e4a8d6502
+                        key: '{{tenant}}/assets/68d67ec13f7c2b1e4a8d6502'
                         content-type: application/pdf
                         x-goog-meta-emporix-upload: session
                         success_action_status: '204'
@@ -502,13 +502,13 @@ paths:
                     expiresAt: '2026-09-25T14:25:00Z'
                     upload:
                       method: POST
-                      url: 'https://api.cloudinary.com/v1_1/example-cloud/auto/upload'
+                      url: 'https://api.cloudinary.com/v1_1/{{CLOUDINARY_CLOUD}}/auto/upload'
                       fields:
                         api_key: '[redacted]'
                         timestamp: '1790342700'
                         signature: '[redacted]'
                         public_id: 68d67ef03f7c2b1e4a8d6503
-                        folder: acme-demo/media
+                        folder: '{{tenant}}/media'
                         use_filename: 'true'
                         unique_filename: 'false'
                         overwrite: 'false'
@@ -570,12 +570,12 @@ paths:
                 Private download URL:
                   value:
                     provider: GCS
-                    url: 'https://storage.googleapis.com/example-media-assets/acme-demo/assets/68d67e9a3f7c2b1e4a8d6501?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=%5Bredacted%5D&X-Goog-Date=20260925T133000Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%22installation-guide.pdf%22&response-content-type=application%2Fpdf&X-Goog-Signature=%5Bredacted%5D'
+                    url: 'https://storage.googleapis.com/{{GCS_BUCKET}}/{{tenant}}/assets/68d67e9a3f7c2b1e4a8d6501?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=%5Bredacted%5D&X-Goog-Date=20260925T133000Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%3D%22installation-guide.pdf%22&response-content-type=application%2Fpdf&X-Goog-Signature=%5Bredacted%5D'
                     expiresAt: '2026-09-25T13:45:00Z'
                 Public download URL:
                   value:
                     provider: CLOUDINARY
-                    url: 'https://res.cloudinary.com/example-cloud/image/upload/v1790342400/acme-demo/media/68d67ef03f7c2b1e4a8d6503.png'
+                    url: 'https://res.cloudinary.com/{{CLOUDINARY_CLOUD}}/image/upload/v1790342400/{{tenant}}/media/68d67ef03f7c2b1e4a8d6503.png'
                 Link asset download URL:
                   value:
                     provider: LINK
@@ -773,7 +773,7 @@ components:
         file:
           type: object
           format: binary
-          description: Content of the file. The max file size is 10MB.
+          description: Content of the file. The max file size is 30 MB.
         body:
           description: Asset JSON creation payload.
           allOf:
@@ -1108,7 +1108,7 @@ components:
                 access: PRIVATE
                 type: BLOB
                 status: READY
-                url: 'https://api.emporix.io/media/acme-demo/assets/68d67e9a3f7c2b1e4a8d6501/download'
+                url: 'https://api.emporix.io/media/{{tenant}}/assets/68d67e9a3f7c2b1e4a8d6501/download'
                 details:
                   filename: installation-guide.pdf
                   mimeType: application/pdf
@@ -1124,7 +1124,7 @@ components:
                 access: PUBLIC
                 type: BLOB
                 status: READY
-                url: 'https://res.cloudinary.com/example-cloud/image/upload/v1790342400/acme-demo/media/68d67ef03f7c2b1e4a8d6503.png'
+                url: 'https://res.cloudinary.com/{{CLOUDINARY_CLOUD}}/image/upload/v1790342400/{{tenant}}/media/68d67ef03f7c2b1e4a8d6503.png'
                 details:
                   filename: product-image.png
                   mimeType: image/png
