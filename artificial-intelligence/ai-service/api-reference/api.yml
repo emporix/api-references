@@ -456,7 +456,7 @@ paths:
           - text
           - txt
 
-        **Assign existing media:** Send the `attachmentId` form field and the target agent's `agentId` in the path. The response is `200` with the attachment `id` and `sessionId`. If you omit the `session-id` header, the response includes the generated `sessionId`.
+        **Assign existing media:** Send `attachmentId` and the target agent's `agentId` in the path. Use either the `attachmentId` form field or an `application/json` body with `attachmentId`. The response is `200` with the attachment `id` and `sessionId`. If you omit the `session-id` header, the response includes the generated `sessionId`.
 
         With the `ai.agentexecution_manage` scope, `attachmentId` can be any existing media asset. The asset does not have to belong to the session and does not have to already have references. AI Service adds an `AGENT` reference and attaches the file to the session in the response.
 
@@ -490,6 +490,16 @@ paths:
                     attachmentId:
                       type: string
                       description: Identifier of an existing media asset. With `ai.agentexecution_manage`, any media id can be assigned to the path agent. With only `ai.agentexecution_manage_own`, the attachment must already belong to the session.
+          application/json:
+            schema:
+              type: object
+              required:
+                - attachmentId
+              additionalProperties: false
+              properties:
+                attachmentId:
+                  type: string
+                  description: Identifier of an existing media asset. With `ai.agentexecution_manage`, any media id can be assigned to the path agent. With only `ai.agentexecution_manage_own`, the attachment must already belong to the session.
       tags:
         - Agent Chat
   '/ai-service/{tenant}/agentic/templates':
