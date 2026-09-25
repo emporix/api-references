@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="deprecated" %}
+{% update date="2026-09-25" tags="deprecated" %}
 
 ## AI Service - deprecated `handOff` field
 
