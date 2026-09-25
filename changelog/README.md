@@ -25,6 +25,46 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Coupon, Cart, and Order Services - vendor-restricted coupons
+
+#### Overview
+
+A coupon can apply only to products from selected vendors. Set `vendorRestricted` to `true` and list the vendor identifiers in `restrictions.vendors`. A vendor restriction can be combined with other restriction types.
+
+The cart stores that restriction on the applied discount. The discount applies to line items from those vendors. When `discountCalculationType` is `TOTAL` and at least one of those lines is in the cart, the discount also applies to the fees on those lines and to shipping. When the coupon has a minimum order value, that value is checked against the total of those vendor lines. Checkout uses the same rules. The created order keeps `vendorRestricted` and `restrictions.vendors` on the discount.
+
+When a vendor is deleted, that vendor is removed from the coupons that reference it.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a new coupon](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/coupon-management#post-coupon-tenant-coupons) | Accepts `vendorRestricted` and `restrictions.vendors` so a coupon can apply only to selected vendors. |
+| [Retrieving list of coupons by criteria](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/coupon-management#get-coupon-tenant-coupons) | Returns `vendorRestricted` and `restrictions.vendors`. |
+| [Retrieving information about particular coupon by code](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/coupon-management#get-coupon-tenant-coupons-code) | Returns `vendorRestricted` and `restrictions.vendors`. |
+| [Updating the coupon by code](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/coupon-management#put-coupon-tenant-coupons-code) | Accepts `vendorRestricted` and `restrictions.vendors`. |
+| [Partially updating the coupon by code](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/coupon-management#patch-coupon-tenant-coupons-code) | Accepts `vendorRestricted` and `restrictions.vendors`. |
+| [Applying a discount to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/discounts#post-cart-tenant-carts-cartid-discounts) | Stores the coupon vendor restriction on the applied discount. |
+| [Returning all discounts from the cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/discounts#get-cart-tenant-carts-cartid-discounts) | Returns `vendorRestricted` and `restrictions.vendors` for each discount. |
+| [Retrieving cart details by criteria](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts) | Returns `vendorRestricted` and `restrictions.vendors` on each applied discount. |
+| [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) | Returns `vendorRestricted` and `restrictions.vendors` on each applied discount. |
+| [Creating a new order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) | Stores `vendorRestricted` and `restrictions.vendors` on the order discount. |
+| [Retrieving orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders) | Returns `vendorRestricted` and `restrictions.vendors` on each discount. |
+| [Searching for orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders-search) | Returns `vendorRestricted` and `restrictions.vendors` on each discount. |
+| [Retrieving a specific order by ID](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) | Returns `vendorRestricted` and `restrictions.vendors` on each discount. |
+| [Updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid) | Accepts `vendorRestricted` and `restrictions.vendors` on the order discount. |
+| [Partially updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid) | Accepts `vendorRestricted` and `restrictions.vendors` on the order discount. |
+| [Retrieving a list of orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders) | Returns `vendorRestricted` and `restrictions.vendors` on each discount. |
+| [Retrieving order details](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid) | Returns `vendorRestricted` and `restrictions.vendors` on each discount. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-23" tags="new-feature" %}
 
 ## Webhook Service - `customer.sign-up` event
