@@ -886,7 +886,7 @@ If the chat `agentId` does not match the agent that received the upload, the req
 {% step %}
 #### Reuse an attachment with another agent
 
-To assign existing media to an agent, call [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) with `attachmentId` instead of a file. Put the target agent's `agentId` in the path. The response is `200` with the attachment `id` and `sessionId`. If you omit the `session-id` header, save the `sessionId` from the response for later chat requests.
+To assign existing media to an agent, call [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) with `attachmentId` instead of a file. Put the target agent's `agentId` in the path. Send `attachmentId` in an `application/json` body. The `attachmentId` form field is also supported. The response is `200` with the attachment `id` and `sessionId`. If you omit the `session-id` header, save the `sessionId` from the response for later chat requests.
 
 With the `ai.agentexecution_manage` scope, `attachmentId` can be any existing media asset. The asset does not have to belong to the session. With only the `ai.agentexecution_manage_own` scope, the attachment must already belong to the `session-id` session.
 
@@ -896,10 +896,12 @@ AI Service adds an `AGENT` reference on the media asset. After this call, chat w
 curl -L \
   --request POST \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/{agentId}/attachments' \
-  --header 'Content-Type: multipart/form-data' \
+  --header 'Content-Type: application/json' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'session-id: bdec151b-303f-4344-b41d-ccf307fb7907' \
-  --form 'attachmentId="6a1d5961a8c0af22364a2c54"'
+  --data '{
+    "attachmentId": "6a1d5961a8c0af22364a2c54"
+  }'
 ```
 {% endstep %}
 {% endstepper %}
