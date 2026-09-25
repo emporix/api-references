@@ -25,6 +25,26 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## AI Service - JSON body for attachment reuse
+
+#### Overview
+
+You can assign an existing media asset by sending `attachmentId` in an `application/json` request body on the attachments endpoint. The multipart file upload and the `attachmentId` form field remain supported. The response is `200` and includes the attachment `id` and the `sessionId`.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) | Accepts `attachmentId` in an `application/json` body to assign existing media. The multipart `attachment` file and `attachmentId` form field stay supported. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-23" tags="new-feature" %}
 
 ## Webhook Service - `customer.sign-up` event
