@@ -33,7 +33,7 @@ layout:
 
 An import run executes each stream's published mappings. Saved mapping changes are draft mappings and take effect only after they are published. Publishing mappings is an administrative operation that requires the `importtool.import_manage` scope. The run fixes each stream's published mapping version when it starts and reports it in the new `mappingVersions` field, so a version published during a run applies from the next run.
 
-A stream whose mappings have never been published is not run. Its entry in the run details has the new `ABORTED` status, and the run finishes with the `PARTIAL` status. When `streamIds` names such a stream, or when every enabled stream is in that state, the service refuses the whole run: the trigger request still returns `200`, and the run finishes with the `ABORTED` status and a `message` that names the streams.
+A stream whose mappings have never been published is not run. Its entry in the run details has the new `ABORTED` status, and the run finishes with the `PARTIAL` status. When `streamIds` includes such a stream, or when every enabled stream is in that state, the service refuses the whole run: the trigger request still returns `200`, and the run finishes with the `ABORTED` status and a `message` that names the streams.
 
 A dry run uses the published mappings by default. Set the new `mappings` field to `draft` to check draft mappings before they are published. A real run ignores `mappings` and always uses the published mappings.
 
