@@ -44,7 +44,7 @@ The classic download endpoint remains available as a compatibility alternative. 
 | Endpoint | Description |
 | --- | --- |
 | [Starting an upload session](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets-upload-session) | Creates a pending asset and returns instructions for a private GCS signed `PUT`, a private GCS multipart `POST`, or a public Cloudinary multipart `POST`. |
-| [Retrieving a download URL](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download-url) | Returns an expiring signed URL for a private asset or a permanent URL for a public asset. Prefer this endpoint for every download. It is always faster than streaming the file through the Media API. Private signed URLs support `attachment` and `inline` disposition. |
+| [Retrieving a download URL](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download-url) | Returns an expiring signed URL for a private asset or a permanent URL for a public asset. Use this endpoint as the default method for downloading assets. It is always faster than streaming the file through the Media API. Private signed URLs support `attachment` and `inline` disposition. |
 
 #### Updated endpoints
 

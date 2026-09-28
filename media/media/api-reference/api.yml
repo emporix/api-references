@@ -546,7 +546,7 @@ paths:
       description: |-
         Returns a URL for an asset that is already stored.
 
-        Prefer this endpoint for every download. It is always faster than [Downloading an asset](#get-media-tenant-assets-assetid-download) because the file travels from storage to the client and does not pass through the Media API. This operation is not controlled by the direct-upload tenant setting and has no file-size limit.
+        Use this endpoint as the default method for downloading assets. It is always faster than [Downloading an asset](#get-media-tenant-assets-assetid-download) because the file travels from storage to the client and does not pass through the Media API. This operation is not controlled by the direct-upload tenant setting and has no file-size limit.
 
         A private `BLOB` returns a Google Cloud Storage signed `GET`. The URL works without an Emporix access token and expires after 15 minutes by default. A public `BLOB` returns its permanent Cloudinary URL, with no expiry. A `LINK` asset returns its stored URL.
 

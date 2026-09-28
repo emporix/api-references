@@ -362,7 +362,7 @@ Unused upload sessions expire after one hour by default. Cleanup removes an expi
 
 ## How to download assets directly from storage
 
-Prefer [Retrieving a download URL](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download-url) for every download. Direct download is always faster than streaming the file through the Media API, because the client fetches the file from storage. Use a service OAuth2 token that has the `media.asset_read` scope. This endpoint is available regardless of whether direct upload is enabled.
+Use [Retrieving a download URL](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download-url) as the default method for downloading assets. Direct download is always faster than streaming the file through the Media API, because the client fetches the file from storage. Use a service OAuth2 token that has the `media.asset_read` scope. This endpoint is available regardless of whether direct upload is enabled.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
