@@ -37,7 +37,7 @@ Directly uploaded assets remain `PENDING` until storage confirms the upload, and
 
 The new direct-download endpoint returns expiring signed URLs for private GCS assets and permanent URLs for public Cloudinary assets. Prefer this endpoint for every download. Direct download is always faster because the file travels from storage to the client and does not pass through the Media API. For private assets, clients can request `attachment` or `inline` content disposition.
 
-The classic download endpoint remains available as a compatibility alternative. It now has a configurable size limit for files with a known size. The default is 31,457,280 bytes (30 MiB).
+The classic download endpoint remains available as a compatibility alternative. It now has a configurable size limit for files with a known size. The default is 31,457,280 bytes (30 MB).
 
 #### New endpoints
 
@@ -50,7 +50,9 @@ The classic download endpoint remains available as a compatibility alternative. 
 
 | Endpoint | Description |
 | --- | --- |
-| [Downloading an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download) | Remains available as a compatibility alternative and is slower than a direct download. Rejects files with a known size above the configurable streaming limit, which is 30 MiB by default. |
+| [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) | The classic multipart upload supports files up to 30 MB. |
+| [Updating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#put-media-tenant-assets-assetid) | The classic multipart upload supports files up to 30 MB. |
+| [Downloading an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download) | Remains available as a compatibility alternative and is slower than a direct download. Rejects files with a known size above the configurable streaming limit, which is 30 MB by default. |
 
 #### Known problems
 

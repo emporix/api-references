@@ -360,9 +360,11 @@ paths:
       description: |-
         Downloads an asset by its unique identifier.
 
-        Prefer [Retrieving a download URL](#get-media-tenant-assets-assetid-download-url). That call is always faster because the file travels from storage to the client and does not pass through the Media API.
+        {% hint style="info" %}
+        **Recommendation:** Use [Retrieving a download URL](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download-url) for every download. That call is always faster because the file travels from storage to the client and does not pass through the Media API.
+        {% endhint %}
 
-        If the asset is `PENDING` and its file is not yet available in storage, this endpoint returns `409`. If the known value of `details.bytes` exceeds the configured streaming limit, it returns `413`. The default limit is 31,457,280 bytes (30 MiB). Assets without a known byte count are not rejected by this size check. The download URL endpoint has no size limit.
+        If the asset is `PENDING` and its file is not yet available in storage, this endpoint returns `409`. If the known value of `details.bytes` exceeds the configured streaming limit, it returns `413`. The default limit is 31,457,280 bytes (30 MB). Assets without a known byte count are not rejected by this size check. The download URL endpoint has no size limit.
       security:
         - OAuth2:
             - media.asset_read
@@ -389,7 +391,7 @@ paths:
                 Upload is not complete:
                   $ref: '#/components/examples/UploadNotComplete409_Example'
         '413':
-          description: The known file size exceeds the configured streaming download limit, which is 31,457,280 bytes (30 MiB) by default.
+          description: The known file size exceeds the configured streaming download limit, which is 31,457,280 bytes (30 MB) by default.
           content:
             application/json:
               schema:
@@ -414,7 +416,9 @@ paths:
       description: |-
         Starts an upload session for a `BLOB` asset and returns a short-lived upload instruction. The file is sent directly to storage. The Media API does not receive the file bytes.
 
-        Direct upload is enabled separately for each tenant. Contact Emporix Support to activate it. A caller receives `403` with the message `direct upload is not enabled for this tenant` when it is not active, and the service does not create a pending asset.
+        {% hint style="info" %}
+        Direct upload is enabled separately for each tenant. Contact Emporix Support to activate it. If direct upload is not active, the endpoint returns `403` with the message `direct upload is not enabled for this tenant` and does not create a pending asset.
+        {% endhint %}
 
         For a private asset, omit `uploadType` or set it to `put` to receive a signed Google Cloud Storage `PUT` request. Send the file with every returned header. Set `uploadType` to `form` to receive a Google Cloud Storage multipart `POST` policy. For a public asset, the service always returns a Cloudinary multipart `POST` form, regardless of `uploadType`. For either multipart flow, send every returned field unchanged and append the file part last. Google Cloud Storage form fields do not include `x-goog-if-generation-match`.
 
@@ -1350,8 +1354,8 @@ components:
         clientCredentials:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
-            media.asset_read: Needed to read assets
-            media.asset_manage: Needed to manage assets
+            media.asset_read: Needed to read assets.
+            media.asset_manage: Needed to manage assets.
             media.asset_read_by_vendor: Needed to read assets that belong to the vendor.
             media.asset_manage_by_vendor: Needed to manage assets that belong to the vendor.
   examples:

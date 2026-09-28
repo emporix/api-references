@@ -15,12 +15,34 @@ You can upload or link to media files and other documents by using the Emporix M
 It is possible to assign assets to `BRAND`, `CATEGORY`, `LABEL`, `PRODUCT`, `MODULE`, `AGENT`, or any custom schema type. To associate an asset with a predefined resource type such as `CATEGORY` or `PRODUCT`, set `access` to `PUBLIC`. Private assets can be linked to `AGENT`, custom schema types, or remain unassigned.
 {% endhint %}
 
+## How to use classic asset operations
+
+The assets can either be linked to an external website where they are stored, or uploaded in the form of blob data by using a `multipart/form-data` request.
+
+You can also specify the access type of each asset:
+
+- `PUBLIC` – Stored on public storage and accessible from an external URL. Use this access type for storefront-visible media, such as category banners or product images.
+- `PRIVATE` – Stored on private storage and accessible through an authenticated download request or a temporary signed URL. Use this access type for internal documents, such as contracts or specification sheets.
+
+{% hint style="warning" %}
+The [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint supports two request formats, each creating a different asset type:
+
+- `application/json` – Creates a `LINK` asset. Provide a `url` to a file hosted externally; Emporix stores the reference, not the file itself.
+- `multipart/form-data` – Creates a `BLOB` asset. Upload the file binary; Emporix stores the asset (max 30 MB).
+{% endhint %}
+
+Classic multipart uploads remain available as a compatibility alternative. In this flow, file bytes pass through the Media API. Classic downloads also remain available, but they stream through the Media API and therefore stay slower than a direct download. The classic download also applies the configurable 30 MB default streaming limit described in [Classic download compatibility](#classic-download-compatibility).
+
 ## How to upload assets directly to storage
 
 Direct upload lets your application send file bytes to the storage provider instead of through the Media API. Private blobs are stored in Google Cloud Storage (GCS), while public blobs are stored in Cloudinary.
 
 {% hint style="warning" %}
 Direct upload is enabled separately for each tenant. Contact Emporix Support to request activation before you call `POST /media/{tenant}/assets/upload-session`. Without activation, the endpoint returns `403` with `direct upload is not enabled for this tenant`, and no pending asset is created.
+{% endhint %}
+
+{% hint style="info" %}
+Direct uploads are not subject to the 30 MB classic multipart request limit because the file bytes go directly to storage.
 {% endhint %}
 
 Use a service OAuth2 token with the `media.asset_manage` scope to create upload sessions.
@@ -281,7 +303,7 @@ Follow the [Wait for the uploaded asset](#wait-for-the-uploaded-asset) procedure
 
 ### Wait for the uploaded asset
 
-Storage confirmation is asynchronous. After a successful storage upload, retrieve the asset with the [Retrieving an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid) endpoint until `status` is `READY`. Use a service OAuth2 token with the `media.asset_read` scope.
+Storage confirmation is asynchronous. After a successful storage upload, retrieve the asset with the [Retrieving an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid) endpoint and check whether `status` is `READY`. If the status is `PENDING`, completion is still in progress, although the response can already contain asset fields. Use a service OAuth2 token with the `media.asset_read` scope.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -307,7 +329,7 @@ While completion is pending, the response can contain:
 }
 ```
 
-Retry after a reasonable delay until the asset status is `READY`:
+Retrieve the asset again while its status is `PENDING`. When completion finishes, the response contains `status: READY`:
 
 ```json
 {
@@ -429,7 +451,7 @@ curl -L \
 
 The classic `GET /media/{tenant}/assets/{assetId}/download` endpoint remains available as a compatibility alternative. It streams file content through the Media API, so it is slower than a direct download.
 
-When the known `details.bytes` value exceeds the configurable default of 31,457,280 bytes (30 MiB), the classic endpoint returns `413`. Assets without a known byte count are not rejected by this check. The direct-download endpoint has no corresponding file-size gate.
+When the known `details.bytes` value exceeds the configurable default of 31,457,280 bytes (30 MB), the classic endpoint returns `413`. Assets without a known byte count are not rejected by this check. The direct-download endpoint has no corresponding file-size gate.
 
 ## How to clean up uploaded assets
 
@@ -444,24 +466,6 @@ curl -i -X DELETE \
 ```
 
 A successful deletion returns `204 No Content`.
-
-## How to use classic asset operations
-
-The assets can either be linked to an external website where they are stored, or uploaded in the form of blob data by using a `multipart/form-data` request.
-
-You can also specify the access type of each asset:
-
-- `PUBLIC` – Stored on public storage and accessible from an external URL. Use this access type for storefront-visible media, such as category banners or product images.
-- `PRIVATE` – Stored on private storage and accessible through an authenticated download request or a temporary signed URL. Use this access type for internal documents, such as contracts or specification sheets.
-
-{% hint style="warning" %}
-The [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint supports two request formats, each creating a different asset type:
-
-- `application/json` – Creates a `LINK` asset. Provide a `url` to a file hosted externally; Emporix stores the reference, not the file itself.
-- `multipart/form-data` – Creates a `BLOB` asset. Upload the file binary; Emporix stores the asset (max 30 MB).
-{% endhint %}
-
-Classic multipart uploads remain available as a compatibility alternative. In this flow, file bytes pass through the Media API. Classic downloads also remain available, but they stream through the Media API and therefore stay slower than a direct download. The classic download also applies the 30 MiB default streaming limit described above.
 
 ## How to associate a public asset with a resource
 
