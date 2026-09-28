@@ -25,6 +25,28 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6672 -->
+
+## Schema Service - exact numeric zero matching
+
+#### Overview
+
+Exact `q` searches now correctly match numeric fields when the searched value is `0`, `0.0`, or `0.5`. This improves search result accuracy for Schema Service endpoints that use shared filtering logic, while preserving text-only matching for values with meaningful leading zeros such as `00` and `007`.
+
+#### Affected endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Retrieving custom instances](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances) | Exact `q` searches for `0`, `0.0`, and `0.5` now match stored numeric values, while leading-zero text values remain string-only matches. |
+| [Retrieving custom types](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-type#get-schema-tenant-custom-types) | Exact `q` searches now return records with numeric zero-like values more reliably without changing the request or response contract. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-25" tags="deprecated" %}
 
 ## AI Service - deprecated `handOff` field
