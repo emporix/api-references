@@ -37,7 +37,7 @@ Starting agent chat stream returns named Server-Sent Events. Each frame has an `
 
 | Endpoint | Description |
 | --- | --- |
-| [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Returns `token`, `thinking`, `tool_start`, `tool_end`, `tool_result`, `done`, and `error` events. The `done` event uses snake_case `session_id`, `agent_id`, and `agent_type`. |
+| [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Returns `token`, `thinking`, `tool_start`, `tool_end`, `tool_result`, `done`, and `error` events. The `done` event uses snake_case `session_id`, `agent_id`, and `agent_type`. |
 
 #### Known problems
 
