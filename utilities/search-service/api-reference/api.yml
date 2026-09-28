@@ -242,6 +242,8 @@ components:
               $ref: '#/components/examples/phraseSearchRequest'
             Autocomplete search:
               $ref: '#/components/examples/autocompleteSearchRequest'
+            Wildcard search:
+              $ref: '#/components/examples/wildcardSearchRequest'
             Boosted fields:
               $ref: '#/components/examples/boostedFieldsRequest'
             Filter only:
@@ -317,7 +319,7 @@ components:
         fields:
           type: array
           description: |-
-            Fields to match, with an optional boost. At least one field is required for `TEXT` and `PHRASE`. `AUTOCOMPLETE` requires exactly one field.
+            Fields to match, with an optional boost. At least one field is required for `TEXT`, `PHRASE`, and `WILDCARD`. `AUTOCOMPLETE` requires exactly one field.
 
             `name` is localized. The search uses the field path as sent. It does not expand `name` with the `Accept-Language` value.
           items:
@@ -333,11 +335,13 @@ components:
 
         * `TEXT` matches the query tokens.
         * `PHRASE` matches the query as adjacent words in order.
-        * `AUTOCOMPLETE` matches one field.
+        * `AUTOCOMPLETE` matches the start of a word in one field.
+        * `WILDCARD` matches a pattern. `*` matches any number of characters. `?` matches one character. Fuzzy matching is not supported.
       enum:
         - TEXT
         - PHRASE
         - AUTOCOMPLETE
+        - WILDCARD
     SearchField:
       type: object
       description: One field that the query is matched against.
@@ -547,6 +551,15 @@ components:
         index: custom-entities
         search:
           type: AUTOCOMPLETE
+          fields:
+            - field: name
+    wildcardSearchRequest:
+      summary: Wildcard search
+      value:
+        query: '*iese*'
+        index: custom-entities
+        search:
+          type: WILDCARD
           fields:
             - field: name
     filterSearchRequest:
