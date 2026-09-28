@@ -45,6 +45,88 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-09-28" tags="new-feature, major-change" %}
+
+## Media Service - direct storage uploads and downloads
+
+#### Overview
+
+Direct upload is available as an opt-in tenant feature. Customers can contact Emporix Support to enable it. Upload sessions let clients send private assets directly to Google Cloud Storage (GCS) with a signed `PUT` request or, when `uploadType` is `form`, a multipart `POST`. Public assets use a Cloudinary multipart `POST`.
+
+Directly uploaded assets remain `PENDING` until storage confirms the upload, and then become `READY`. Upload sessions and upload credentials expire, and cleanup removes expired pending assets when no uploaded file exists.
+
+The new direct-download endpoint returns expiring signed URLs for private GCS assets and permanent URLs for public Cloudinary assets. We recommend to choose this endpoint for every download. Direct download is always faster because the file travels from storage to the client and does not pass through the Media API. For private assets, clients can request `attachment` or `inline` content disposition.
+
+The classic download endpoint remains available as a compatibility alternative. It now has a configurable size limit for files with a known size. The default is 31,457,280 bytes (30 MB).
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Starting an upload session](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets-upload-session) | Creates a pending asset and returns instructions for a private GCS signed `PUT`, a private GCS multipart `POST`, or a public Cloudinary multipart `POST`. |
+| [Retrieving a download URL](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download-url) | Returns an expiring signed URL for a private asset or a permanent URL for a public asset. Use this endpoint as the default method for downloading assets. It is always faster than streaming the file through the Media API. Private signed URLs support `attachment` and `inline` disposition. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) | The classic multipart upload supports files up to 30 MB. |
+| [Updating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#put-media-tenant-assets-assetid) | The classic multipart upload supports files up to 30 MB. |
+| [Downloading an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download) | Remains available as a compatibility alternative and is slower than a direct download. Rejects files with a known size above the configurable streaming limit, which is 30 MB by default. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-09-28" tags="improvement" %}
+
+## AI Service - chat stream event payloads
+
+#### Overview
+
+Starting agent chat stream returns named Server-Sent Events. Each frame has an `event` name and a JSON object in `data`. Clients concatenate successive `token` `content` values to build the assistant reply. When the `done` event includes `session_id`, clients send that value as the `session-id` header on later chat and attachment calls. The `thinking` and `error` events are in preview.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Returns `token`, `thinking`, `tool_start`, `tool_end`, `tool_result`, `done`, and `error` events. The `done` event uses snake_case `session_id`, `agent_id`, and `agent_type`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-09-28" tags="new-feature, major-change" %}
+
+## Import Service - published mappings for import runs
+
+#### Overview
+
+An import run executes each stream's published mappings. Saved mapping changes are draft mappings and take effect only after they are published. Publishing mappings is an administrative operation that requires the `importtool.import_manage` scope. The run fixes each stream's published mapping version when it starts and reports it in the new `mappingVersions` field, so a version published during a run applies from the next run.
+
+A stream whose mappings have never been published is not run. Its entry in the run details has the new `ABORTED` status, and the run finishes with the `PARTIAL` status. When `streamIds` includes such a stream, or when every enabled stream is in that state, the service refuses the whole run: the trigger request still returns `200`, and the run finishes with the `ABORTED` status and a `message` that names the streams.
+
+A dry run uses the published mappings by default. Set the new `mappings` field to `draft` to check draft mappings before they are published. A real run ignores `mappings` and always uses the published mappings.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Accepts an optional `mappings` field (`published` or `draft`) that selects the mappings a dry run uses. Returns `400` when a dry-run request sends another value. The response includes `mappingVersions` and `dryRunPublished`. |
+| [Retrieving run history](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Run entries include `mappingVersions` and `dryRunPublished`. The run status includes `ABORTED`. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | The new run includes `mappingVersions`, and it can finish with the `ABORTED` status. |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Run details include `mappingVersions` and `dryRunPublished`. The run status and the per-stream status include `ABORTED`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-25" tags="deprecated" %}
 
 ## AI Service - deprecated `handOff` field
