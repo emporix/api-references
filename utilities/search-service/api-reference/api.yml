@@ -1,0 +1,632 @@
+openapi: 3.0.0
+info:
+  title: Search Service
+  version: ''
+  description: The Emporix API Search Service allows you to search documents for a tenant.
+  contact:
+    name: Emporix
+    url: 'https://www.emporix.com/contact-us'
+servers:
+  - url: 'https://api.emporix.io'
+security:
+  - OAuth2: []
+paths:
+  '/search/{tenant}/search/{type}':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/path_type'
+    post:
+      summary: Searching documents
+      operationId: POST-search-tenant-type
+      tags:
+        - Search
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Searches documents of one type. The `search.search_read` scope is required.
+
+        The body names an index and supplies a text clause, a filter, or both. The response is a JSON array of matching documents. When `fields` is omitted, each document also includes `_score`.
+
+        When the `X-Total-Count` request header is `true`, the response includes the `X-Total-Count` header with the number of matching documents. The response body stays an array.
+
+        A caller without `schema.custominstance_read`, `custom.{type}_read`, or `custom.{type}_read_own` receives `403 Forbidden`. `{type}` is the path value in lowercase.
+
+        Filter and sort fields must be indexed on the index named by `index`.
+      security:
+        - OAuth2:
+            - search.search_read
+      parameters:
+        - $ref: '#/components/parameters/query_pageNumber'
+        - $ref: '#/components/parameters/query_pageSize'
+        - $ref: '#/components/parameters/query_sort'
+        - $ref: '#/components/parameters/query_fields'
+        - $ref: '#/components/parameters/header_Accept-Language'
+        - $ref: '#/components/parameters/header_X-Total-Count'
+      requestBody:
+        $ref: '#/components/requestBodies/search_POST'
+      responses:
+        '200':
+          description: The search succeeded. The body is the current page of matching documents.
+          headers:
+            X-Total-Count:
+              description: Number of matching documents. Present only when the request `X-Total-Count` header is `true`.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SearchHit'
+              examples:
+                Text search:
+                  $ref: '#/components/examples/searchHits'
+        '400':
+          description: The request is invalid, or a filter or sort field is not indexed on the named index.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+              examples:
+                Index is required:
+                  value:
+                    code: 400
+                    status: '400'
+                    message: Index is required.
+                Search or filters are required:
+                  value:
+                    code: 400
+                    status: '400'
+                    message: Search or filters are required.
+                Type is not a custom entity:
+                  value:
+                    code: 400
+                    status: '400'
+                    message: Type is not a custom entity.
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          description: The access token does not include the required `search.search_read` scope, or a scope required to read the documents.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+              examples:
+                Missing search scope:
+                  value:
+                    code: 403
+                    status: '403'
+                    message: User not authorized.
+                    details:
+                      - message: Missing one of required scopes '[search.search_read]'
+                Missing custom entity scope:
+                  value:
+                    code: 403
+                    status: '403'
+                    message: Missing one of required scopes '[schema.custominstance_read, custom.vehicle_read, custom.vehicle_read_own]'.
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+        '502':
+          description: The Schema Service could not confirm that the type is a custom entity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+              examples:
+                Schema service unavailable:
+                  value:
+                    code: 502
+                    status: '502'
+                    message: Error while fetching custom entity='vehicle' for tenant='acme'. Error=Connection refused
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://api.emporix.io/oauth/token'
+          scopes:
+            search.search_read: Needed to search documents.
+            schema.custominstance_read: Needed to read every custom entity instance. When this scope is absent, `custom.{type}_read` or `custom.{type}_read_own` can still allow the search.
+  parameters:
+    path_tenant:
+      name: tenant
+      in: path
+      required: true
+      description: |
+        Your Emporix tenant's name.
+        **Note**: The tenant should always be written in lowercase.
+      schema:
+        pattern: '^[a-z][a-z0-9]+$'
+        minLength: 3
+        maxLength: 16
+        type: string
+    path_type:
+      name: type
+      in: path
+      required: true
+      description: |
+        Type of documents to search.
+
+        For now, only custom schema types are supported.
+      schema:
+        type: string
+        example: vehicle
+    query_pageNumber:
+      name: pageNumber
+      in: query
+      description: |
+        Page number to be retrieved. The number of the first page is 1.
+      schema:
+        default: 1
+        minimum: 1
+        type: integer
+    query_pageSize:
+      name: pageSize
+      in: query
+      description: Number of documents to be retrieved per page.
+      schema:
+        default: 60
+        minimum: 1
+        maximum: 2000
+        type: integer
+    query_sort:
+      name: sort
+      in: query
+      description: |-
+        List of properties used to sort the results, separated by commas. The order of properties indicates their priority in sorting.
+
+        Possible values:
+
+        * `{fieldName}`
+        * `{fieldName}:ASC`
+        * `{fieldName}:DESC`
+
+        When the direction is omitted, the field is sorted in ascending order.
+
+        For the localized `name` field, the language can be included as `name.{language}`. When the language is omitted, the service uses the language from `Accept-Language`.
+
+        When `sort` is omitted, results are ordered by search relevance.
+      schema:
+        type: string
+        example: 'name:ASC,id:DESC'
+    query_fields:
+      name: fields
+      in: query
+      description: |-
+        Comma-separated list of fields to return. When the parameter is omitted, the stored document is returned.
+
+        `id` selects the document identifier. `_score` selects the relevance score.
+      schema:
+        type: string
+        example: 'id,name,_score'
+    header_Accept-Language:
+      name: Accept-Language
+      in: header
+      required: false
+      schema:
+        type: string
+      description: |
+        List of language codes acceptable for the response. You can specify factors that indicate which language should be retrieved if the one with a higher factor was not found in the localized fields.
+
+        * If the header is set to a specific language or a list of languages, localized fields are retrieved as maps containing a single translation, where the key is a language code and the value is the field in the specified language.
+        * If the header is set to `*`, localized fields are retrieved as maps of translations, where the keys are language codes and values are the fields in their respective languages.
+        * If the header is empty, localized fields are retrieved as maps containing a single translation, where the key is a language code and the value is the field in the specified language. The endpoint will assume that localized fields should be retrieved in the tenant's default language defined in the Configuration Service.
+    header_X-Total-Count:
+      name: X-Total-Count
+      in: header
+      required: false
+      description: Flag indicating whether the total count of retrieved items should be returned.
+      schema:
+        default: false
+        type: boolean
+  requestBodies:
+    search_POST:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SearchRequest'
+          examples:
+            Text search:
+              $ref: '#/components/examples/textSearchRequest'
+            Fuzzy search:
+              $ref: '#/components/examples/fuzzySearchRequest'
+            Fuzzy search with two edits:
+              $ref: '#/components/examples/fuzzyTwoEditsRequest'
+            Phrase search:
+              $ref: '#/components/examples/phraseSearchRequest'
+            Autocomplete search:
+              $ref: '#/components/examples/autocompleteSearchRequest'
+            Boosted fields:
+              $ref: '#/components/examples/boostedFieldsRequest'
+            Filter only:
+              $ref: '#/components/examples/filterSearchRequest'
+            Range filter:
+              $ref: '#/components/examples/rangeFilterRequest'
+            List filter:
+              $ref: '#/components/examples/inFilterRequest'
+            Exists filter:
+              $ref: '#/components/examples/existsFilterRequest'
+            Nested filters:
+              $ref: '#/components/examples/nestedFilterRequest'
+  responses:
+    401_resp_common:
+      description: The authorization token is invalid or has expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessageFault'
+          examples:
+            Invalid access token:
+              value:
+                fault:
+                  faultstring: Invalid access token
+                  detail:
+                    errorcode: oauth.v2.InvalidAccessToken
+            Access token expired:
+              value:
+                fault:
+                  faultstring: Access Token expired
+                  detail:
+                    errorcode: keymanagement.service.access_token_expired
+    500_resp_common:
+      description: A server-side error occurred.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessage'
+          examples:
+            Internal Server Error:
+              value:
+                code: 500
+                status: '500'
+                message: The server has encountered an error during processing the request data while trying to connect to the database.
+  schemas:
+    SearchRequest:
+      type: object
+      description: |-
+        Search criteria. Provide `search`, `filters`, or both. `index` is always required. Unknown properties are rejected.
+
+        When `search` is present, `query` is required.
+      properties:
+        query:
+          type: string
+          description: Text matched by the search clause. Required when `search` is present.
+          example: diesel engine
+        search:
+          $ref: '#/components/schemas/SearchClause'
+        filters:
+          $ref: '#/components/schemas/FilterNode'
+        index:
+          type: string
+          description: Name of the index to query.
+          example: custom-entities
+      required:
+        - index
+    SearchClause:
+      type: object
+      description: How `query` is matched against the named fields.
+      properties:
+        type:
+          $ref: '#/components/schemas/SearchType'
+        fields:
+          type: array
+          description: |-
+            Fields to match, with an optional boost. At least one field is required for `TEXT` and `PHRASE`. `AUTOCOMPLETE` requires exactly one field.
+
+            `name` is localized. The search uses the field path as sent. It does not expand `name` with the `Accept-Language` value.
+          items:
+            $ref: '#/components/schemas/SearchField'
+        fuzzy:
+          $ref: '#/components/schemas/Fuzzy'
+      required:
+        - type
+    SearchType:
+      type: string
+      description: |-
+        Match mode.
+
+        * `TEXT` matches the query tokens.
+        * `PHRASE` matches the query as adjacent words in order.
+        * `AUTOCOMPLETE` matches one field.
+      enum:
+        - TEXT
+        - PHRASE
+        - AUTOCOMPLETE
+    SearchField:
+      type: object
+      description: One field that the query is matched against.
+      properties:
+        field:
+          type: string
+          description: Document field to match. `id` is stored as `_id`.
+          example: name
+        boost:
+          type: number
+          minimum: 0
+          exclusiveMinimum: true
+          default: 1
+          description: Score multiplier for matches on this field. The default is 1.
+          example: 2
+      required:
+        - field
+    Fuzzy:
+      type: object
+      description: Edit-distance matching. Supported only when `search.type` is `TEXT` and `enabled` is `true`.
+      properties:
+        enabled:
+          type: boolean
+          description: When `true`, matches that are one or two edits from the query are included.
+        maxEdits:
+          type: integer
+          description: Maximum edit distance. Required when `enabled` is `true`. Allowed values are 1 and 2.
+          enum:
+            - 1
+            - 2
+    FilterNode:
+      type: object
+      description: |-
+        One filter node. A node is an `and` group, an `or` group, or a comparison. Do not combine those forms in the same object.
+
+        Comparison fields must be indexed on the index named by `index`.
+      properties:
+        and:
+          type: array
+          description: Every child must match. The group must not be empty.
+          items:
+            $ref: '#/components/schemas/FilterNode'
+        or:
+          type: array
+          description: At least one child must match. The group must not be empty.
+          items:
+            $ref: '#/components/schemas/FilterNode'
+        field:
+          type: string
+          description: Document field to compare. `id` is stored as `_id`.
+          example: status
+        operator:
+          $ref: '#/components/schemas/FilterOperator'
+        value:
+          description: |-
+            Comparison value. The shape depends on `operator`.
+
+            * `EQ`, `NEQ`, `GT`, `GTE`, `LT`, and `LTE` require one value.
+            * `BETWEEN` requires an array of two values. The range is inclusive.
+            * `IN` and `NOT_IN` require a non-empty array.
+            * `EXISTS` requires a boolean. `true` matches documents where the field is present. `false` matches documents where the field is absent.
+    FilterOperator:
+      type: string
+      description: Comparison applied to `field` and `value`.
+      enum:
+        - EQ
+        - NEQ
+        - GT
+        - GTE
+        - LT
+        - LTE
+        - BETWEEN
+        - IN
+        - NOT_IN
+        - EXISTS
+    SearchHit:
+      type: object
+      description: |-
+        A matching document. Stored fields are returned with their API names. The identifier is `id`.
+
+        `name` is localized. Other stored fields are returned as they are stored. When `fields` limits the response, only the requested fields are present.
+      properties:
+        id:
+          type: string
+          description: Document identifier.
+          example: 64f1c2a8e4b0a1d2c3e4f5a6
+        name:
+          type: object
+          additionalProperties:
+            type: string
+          description: Localized name. A specific `Accept-Language` value keeps one language. `*` keeps every stored language.
+          example:
+            en: Diesel engine
+        _score:
+          type: number
+          description: Search relevance score. Included when `fields` is omitted, or when `fields` lists `_score`.
+          example: 4.2
+      additionalProperties: true
+    ErrorMessage:
+      type: object
+      description: Error returned for a failed request.
+      properties:
+        code:
+          type: integer
+          description: HTTP status code.
+        status:
+          type: string
+          description: HTTP status code as text.
+        message:
+          type: string
+          description: Explanation of the failure.
+        details:
+          type: array
+          description: Field-level or scope-level messages, when the failure has more than one part.
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                description: One part of the failure.
+    ErrorMessageFault:
+      type: object
+      description: Authorization error returned by the API gateway.
+      properties:
+        fault:
+          type: object
+          properties:
+            faultstring:
+              type: string
+              description: Authorization failure.
+            detail:
+              type: object
+              properties:
+                errorcode:
+                  type: string
+                  description: Gateway error code.
+  examples:
+    textSearchRequest:
+      summary: Text search with a status filter
+      value:
+        query: diesel engine
+        index: custom-entities
+        search:
+          type: TEXT
+          fields:
+            - field: name
+        filters:
+          field: status
+          operator: EQ
+          value: ACTIVE
+    fuzzySearchRequest:
+      summary: Text search that allows one edit
+      value:
+        query: diesel
+        index: custom-entities
+        search:
+          type: TEXT
+          fields:
+            - field: name
+          fuzzy:
+            enabled: true
+            maxEdits: 1
+    fuzzyTwoEditsRequest:
+      summary: Text search that allows two edits
+      value:
+        query: diesel engine
+        index: custom-entities
+        search:
+          type: TEXT
+          fields:
+            - field: name
+              boost: 3
+            - field: description
+              boost: 1
+          fuzzy:
+            enabled: true
+            maxEdits: 2
+        filters:
+          field: status
+          operator: NEQ
+          value: ARCHIVED
+    boostedFieldsRequest:
+      summary: Text search with field boosts
+      value:
+        query: diesel
+        index: custom-entities
+        search:
+          type: TEXT
+          fields:
+            - field: name
+              boost: 5
+            - field: brand
+              boost: 1
+    phraseSearchRequest:
+      summary: Phrase search
+      value:
+        query: diesel engine
+        index: custom-entities
+        search:
+          type: PHRASE
+          fields:
+            - field: name
+    autocompleteSearchRequest:
+      summary: Autocomplete search
+      value:
+        query: dies
+        index: custom-entities
+        search:
+          type: AUTOCOMPLETE
+          fields:
+            - field: name
+    filterSearchRequest:
+      summary: Filter without a text query
+      value:
+        index: custom-entities
+        filters:
+          or:
+            - field: status
+              operator: EQ
+              value: ACTIVE
+            - field: status
+              operator: EQ
+              value: DRAFT
+    rangeFilterRequest:
+      summary: Inclusive numeric range
+      value:
+        index: custom-entities
+        filters:
+          field: horsepower
+          operator: BETWEEN
+          value:
+            - 120
+            - 250
+    inFilterRequest:
+      summary: Match any listed value
+      value:
+        query: engine
+        index: custom-entities
+        search:
+          type: TEXT
+          fields:
+            - field: name
+        filters:
+          field: status
+          operator: IN
+          value:
+            - ACTIVE
+            - DRAFT
+    existsFilterRequest:
+      summary: Field must be present
+      value:
+        index: custom-entities
+        filters:
+          field: brand
+          operator: EXISTS
+          value: true
+    nestedFilterRequest:
+      summary: And group that contains an or group
+      value:
+        query: diesel
+        index: custom-entities
+        search:
+          type: TEXT
+          fields:
+            - field: name
+        filters:
+          and:
+            - field: horsepower
+              operator: GTE
+              value: 150
+            - or:
+                - field: status
+                  operator: EQ
+                  value: ACTIVE
+                - field: status
+                  operator: EQ
+                  value: DRAFT
+    searchHits:
+      summary: Matching documents
+      value:
+        - id: 64f1c2a8e4b0a1d2c3e4f5a6
+          name:
+            en: Diesel engine
+          status: ACTIVE
+          horsepower: 180
+          _score: 4.2
+        - id: 64f1c2a8e4b0a1d2c3e4f5b7
+          name:
+            en: Diesel generator
+          status: ACTIVE
+          horsepower: 220
+          _score: 3.1

@@ -25,6 +25,30 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Search Service - document search
+
+#### Overview
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+The Search Service adds a preview endpoint that searches documents for a tenant. The request names an index and supplies a text clause, a filter, or both. The `search.search_read` scope is required. For now, the `type` path parameter supports only custom schema types.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Searching documents](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type) | Returns a page of matching documents. Set the `X-Total-Count` header to `true` to receive the total number of matches. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-28" tags="new-feature, major-change" %}
 
 ## Media Service - direct storage uploads and downloads
