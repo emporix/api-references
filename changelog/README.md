@@ -41,10 +41,10 @@ A dry run uses the published mappings by default. Set the new `mappings` field t
 
 | Endpoint | Description |
 | --- | --- |
-| [Triggering an import run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Accepts an optional `mappings` field (`published` or `draft`) that selects the mappings a dry run uses. Returns `400` when a dry-run request sends another value. The response includes `mappingVersions` and `dryRunPublished`. |
-| [Retrieving run history](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Run entries include `mappingVersions` and `dryRunPublished`. The run status includes `ABORTED`. |
-| [Retrying the failed records of a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | The new run includes `mappingVersions`, and it can finish with the `ABORTED` status. |
-| [Retrieving a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Run details include `mappingVersions` and `dryRunPublished`. The run status and the per-stream status include `ABORTED`. |
+| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Accepts an optional `mappings` field (`published` or `draft`) that selects the mappings a dry run uses. Returns `400` when a dry-run request sends another value. The response includes `mappingVersions` and `dryRunPublished`. |
+| [Retrieving run history](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Run entries include `mappingVersions` and `dryRunPublished`. The run status includes `ABORTED`. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | The new run includes `mappingVersions`, and it can finish with the `ABORTED` status. |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Run details include `mappingVersions` and `dryRunPublished`. The run status and the per-stream status include `ABORTED`. |
 
 #### Known problems
 
