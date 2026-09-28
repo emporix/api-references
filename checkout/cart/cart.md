@@ -78,14 +78,14 @@ One `/execute` request uses one `session-id` and one `legal-entity-id`. Commands
 
 * An existing cart ID (`cartId`)
 * A customer access token, or a service token with `cart.cart_manage`
-* `cart.cart_manage_external_prices` when a command includes an external price, product, fee, or discount
-* `session-id` for an anonymous cart
+* `cart.cart_manage_external_prices` – required when a command includes an external price, product, fee, or discount
+* `session-id` – required for an anonymous cart
 
 {% stepper %}
 {% step %}
 #### Send AddCartItem and GetCart in one request
 
-Send `AddCartItem` then `GetCart` with `expandCalculation` set to `true`. The 207 `results` array contains the created item and the calculated cart, so you do not need a follow-up GET unless you want a later refresh.
+Send `AddCartItem`, then send `GetCart` with `expandCalculation` set to `true`. The 207 `results` array contains the created item and the calculated cart, so you do not need a follow-up GET unless you want a later refresh.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -124,7 +124,7 @@ curl -i -X POST \
 {% step %}
 #### Read the 207 results
 
-The HTTP status is 207 Multi-Status when the chain is accepted. `results` is ordered. `results[0].data` is the same JSON as `POST .../items` (`itemId`, `yrn`). With default `versioning=skip`, that result has no version header. `results[1].data` is the same JSON as `GET .../carts/{cartId}` including item `calculatedPrice`.
+The HTTP status is 207 Multi-Status when the chain is accepted. `results` is ordered. `results[0].data` is the same JSON as `POST .../items` (`itemId`, `yrn`). With default `versioning=skip`, that result has no `hybris-resource-version` header. `results[1].data` is the same JSON as `GET .../carts/{cartId}` including item `calculatedPrice`.
 
 ```json
 {
@@ -187,8 +187,15 @@ The HTTP status is 207 Multi-Status when the chain is accepted. `results` is ord
   ]
 }
 ```
+{% endstep %}
+{% endstepper %}
 
-With `onError=fail`, a later command is omitted from `results` after the first non-2xx command. Earlier successful mutations stay committed:
+{% hint style="info" %}
+A request accepts at most 10 commands. 11 or more commands return `400` for the whole request, and no command runs. An empty `commands` array, an unknown `type`, an invalid `versioning` value, and `versioning=explicit` with a participating write missing `resourceVersion` also return `400` before any command runs. Request-body validation failures (for example a missing `options.itemId`) also return `400` before any command runs. `onError=fail` treats command `code` 207 as success. `UpdateCartItemsBatch` always returns `207`, even when every entry failed, so inspect `data[].status`.
+{% endhint %}
+
+{% hint style="info" %}
+On a different chain (`AddCartItem` then a missing `UpdateCartItem`), `onError=fail` omits later commands from `results` after the first non-2xx command. Earlier successful mutations stay committed:
 
 ```json
 {
@@ -217,10 +224,7 @@ With `onError=fail`, a later command is omitted from `results` after the first n
   ]
 }
 ```
-
-A request accepts at most 10 commands. 11 or more commands return `400` for the whole request and no command runs. An empty `commands` array, an unknown `type`, an invalid `versioning` value, `versioning=explicit` with a participating write missing `resourceVersion`, and request-body Bean Validation failures (for example a missing `options.itemId`) also return `400` before any command runs. `onError=fail` treats command `code` 207 as success. `UpdateCartItemsBatch` always returns 207, even when every entry failed, so inspect `data[].status`.
-{% endstep %}
-{% endstepper %}
+{% endhint %}
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
@@ -228,15 +232,40 @@ A request accepts at most 10 commands. 11 or more commands return `400` for the 
 
 ## How to follow cart resource versions in a command chain
 
-`versioning=follow` keeps a cursor for the cart in the path. Seed the first participating write (`AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`), then omit `resourceVersion` on later writes. `GetCart` and `ValidateCart` do not send If-Match and do not bump the cursor. After a cursor exists, a successful `RefreshCart`, delete, or itemsBatch also bumps it.
-
-Read the current cart with [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) or a prior `GetCart`, and use `metadata.version` as `options.resourceVersion` on that first participating write. The sample below uses `5` as that value.
+`versioning=follow` keeps an internal version cursor for the cart identified by `{cartId}`. Set `options.resourceVersion` on the first participating write (`AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`) to seed that cursor, then omit `resourceVersion` on later writes. `GetCart` and `ValidateCart` do not send If-Match and do not bump the cursor. After a cursor exists, a successful `RefreshCart`, delete, or itemsBatch also bumps it.
 
 Use `versioning=explicit` only when every participating write sends `resourceVersion`. A missing version on `explicit` returns `400` for the whole request. That is a client error, not a last-write-wins strategy.
 
 {% stepper %}
 {% step %}
-#### Follow resource versions on one cart
+#### Read `metadata.version` from the cart
+
+Call [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) to read `metadata.version`. Use that value as `options.resourceVersion` on the first participating write. You can also take it from a prior `GetCart`.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}' \
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
+```
+
+```json
+{
+  "id": "6a86b20c2f5961330a8b3eb6",
+  "metadata": {
+    "version": 5
+  }
+}
+```
+{% endstep %}
+
+{% step %}
+#### Send the follow chain
+
+Send [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) with `versioning=follow`. Set `options.resourceVersion` on the first participating write to the `metadata.version` you read, and omit `resourceVersion` on later writes.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
 curl -i -X POST \

@@ -2494,7 +2494,7 @@ paths:
 
         `/execute` reuses the existing If-Match mechanism on REST writes. On execute, the version is `options.resourceVersion` plus a request-level `versioning` query parameter. A single execute-level If-Match would make the second write on the same cart fail the version check, because the client submits the whole command array at once and cannot see command 1’s result before composing command 2.
 
-        Participating writes (send If-Match and bump the follow cursor): `AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`.
+        Participating writes (send If-Match and bump the follow cursor): `AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`. For `versioning=follow` or `versioning=explicit`, set `options.resourceVersion` on the first participating write to the cart `metadata.version` from `GET /cart/{tenant}/carts/{cartId}` or a prior `GetCart`.
 
         `GetCart` and `ValidateCart` do not send If-Match and do not bump the cursor. They cannot seed it. Extra `resourceVersion` on these commands is ignored.
 
@@ -2502,7 +2502,7 @@ paths:
 
         * `skip` (default) – never passes a version. Ignores `options.resourceVersion` if present. The add-then-GET storefront flow uses this.
         * `explicit` – every participating command must send `options.resourceVersion`. The service checks the whole `commands` array before command 1. If any participating write is missing a version, the request returns **400** and `results` is not returned. Nothing is mutated. `explicit` is not `skip`: omitting `resourceVersion` on a participating write is a client error, not a last-write-wins strategy. Later commands are not rewritten; the client pre-computes `N`, `N+1`, and so on. The same `N` on two writes after a valid preflight yields command `code` 409 on the second command; the execute HTTP status stays 207 and the first write stays committed. `GetCart`, `ValidateCart`, `RefreshCart`, deletes, and itemsBatch do not require a version. A chain of only those commands has no participating writes, so preflight passes. Mixing `explicit` and `skip` behavior for different writes in one request is not supported; use `skip` or two requests.
-        * `follow` – seeds from the first participating write. After that write succeeds, later participating writes use `sent + 1`. Follow state is an internal cursor and is not part of the HTTP body.
+        * `follow` – seeds from the first participating write. After that write succeeds, later participating writes use the version that was sent, plus 1. Follow state is an internal cursor and is not part of the HTTP body.
 
         `follow` rules:
 
@@ -2512,7 +2512,7 @@ paths:
         * `GetCart` and `ValidateCart` do not bump the cursor and do not seed it.
         * If a write returns 409, the cursor does not bump. `onError=fail` stops; `resume` leaves later writes trying the old cursor.
 
-        `follow` example – the client knows the cart is at version `5`; later writes omit `resourceVersion`:
+        `follow` example – the cart `metadata.version` is `5`; later writes omit `resourceVersion`:
 
         ```
         POST /cart/{tenant}/carts/{cartId}/execute?onError=fail&versioning=follow
