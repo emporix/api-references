@@ -57,7 +57,8 @@ Site-specific language configuration is stored in the `defaultLanguage` and `lan
   "defaultLanguage": "de",
   "languages": [
     "de",
-    "en"
+    "en",
+    "fr-ca"
   ]
 }
 ```
@@ -149,7 +150,11 @@ curl -L
   --url 'https://api.emporix.io/site/{tenant}/sites/{siteCode}' 
   --header 'Content-Type: application/json' 
   --data '{
-    "defaultLanguage": "en"
+    "defaultLanguage": "fr-ca",
+    "languages": [
+      "en",
+      "fr-ca"
+    ]
   }'
 ```
  
