@@ -409,8 +409,10 @@ paths:
         A run executes each stream's published mappings. Saved mapping changes that are not published yet are
         the draft mappings, and they take effect only after they are published. Publishing mappings is an
         administrative operation that requires the `importtool.import_manage` scope and is not covered in this
-        reference. The run fixes the published mapping version of each stream when it starts, so a version
-        published during the run applies from the next run. The run reports these versions in `mappingVersions`.
+        reference. A real run, or a dry run that uses the published mappings, fixes the published mapping version of
+        each stream when it starts, so a version published during the run applies from the next run. The run
+        reports these versions in `mappingVersions`. A dry run of the draft mappings does not use published
+        versions and does not report `mappingVersions`.
 
         A stream whose mappings have never been published is not run. Its entry in the run details (`streams` in
         the response of retrieving a run) has the `ABORTED` status and a `message` that gives the reason, and the
@@ -453,9 +455,8 @@ paths:
                     Dry-run only. Which mappings the dry run uses. `published` uses each stream's published
                     mappings, which is what a real run executes. `draft` uses the draft mappings, so you can check
                     them before publishing. When omitted, defaults to `published`. A dry run with `published`
-                    handles streams whose mappings have never been published in the same way as a real run. The
-                    service ignores this field when `dryRun` is `false`, because a real run always uses the
-                    published mappings.
+                    handles streams whose mappings have never been published in the same way as a real run. The field
+                    has no effect when `dryRun` is `false`, because a real run always uses the published mappings.
                   example: published
                 force:
                   type: boolean
@@ -537,7 +538,28 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/errorMessage'
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: When the error occurred.
+                  status:
+                    type: integer
+                    description: HTTP status code.
+                  error:
+                    type: string
+                    description: HTTP status reason phrase.
+                  path:
+                    type: string
+                    description: The request path.
+              examples:
+                Invalid mappings value:
+                  value:
+                    timestamp: '2026-09-28T09:15:02.118+00:00'
+                    status: 400
+                    error: Bad Request
+                    path: /mytenant/configs/7c9e6679-7425-40de-944b-e07fc1f90ae7/runs
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
