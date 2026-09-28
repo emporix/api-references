@@ -417,7 +417,7 @@ paths:
         Starts an upload session for a `BLOB` asset and returns a short-lived upload instruction. The file is sent directly to storage. The Media API does not receive the file bytes.
 
         {% hint style="info" %}
-        Direct upload is enabled separately for each tenant. Contact Emporix Support to activate it. If direct upload is not active, the endpoint returns `403` with the message `direct upload is not enabled for this tenant` and does not create a pending asset.
+        Direct upload is enabled separately for each tenant. Contact [Emporix Support](mailto:support@emporix.com) to activate it. If direct upload is not active, the endpoint returns `403` with the message `direct upload is not enabled for this tenant` and does not create a pending asset.
         {% endhint %}
 
         For a private asset, omit `uploadType` or set it to `put` to receive a signed Google Cloud Storage `PUT` request. Send the file with every returned header. Set `uploadType` to `form` to receive a Google Cloud Storage multipart `POST` policy. For a public asset, the service always returns a Cloudinary multipart `POST` form, regardless of `uploadType`. For either multipart flow, send every returned field unchanged and append the file part last. Google Cloud Storage form fields do not include `x-goog-if-generation-match`.
