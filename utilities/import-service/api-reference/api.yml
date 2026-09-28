@@ -559,7 +559,7 @@ paths:
                     timestamp: '2026-09-28T09:15:02.118+00:00'
                     status: 400
                     error: Bad Request
-                    path: /mytenant/configs/7c9e6679-7425-40de-944b-e07fc1f90ae7/runs
+                    path: /importtool/mytenant/configs/7c9e6679-7425-40de-944b-e07fc1f90ae7/runs
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
