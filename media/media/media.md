@@ -15,7 +15,7 @@ You can upload or link to media files and other documents by using the Emporix M
 It is possible to assign assets to `BRAND`, `CATEGORY`, `LABEL`, `PRODUCT`, `MODULE`, `AGENT`, or any custom schema type. To associate an asset with a predefined resource type such as `CATEGORY` or `PRODUCT`, set `access` to `PUBLIC`. Private assets can be linked to `AGENT`, custom schema types, or remain unassigned.
 {% endhint %}
 
-## How to use classic asset operations
+## How to manage public and internal assets
 
 The assets can either be linked to an external website where they are stored, or uploaded in the form of blob data by using a `multipart/form-data` request.
 
@@ -453,20 +453,6 @@ The classic `GET /media/{tenant}/assets/{assetId}/download` endpoint remains ava
 
 When the known `details.bytes` value exceeds the configurable default of 31,457,280 bytes (30 MB), the classic endpoint returns `413`. Assets without a known byte count are not rejected by this check. The direct-download endpoint has no corresponding file-size gate.
 
-## How to clean up uploaded assets
-
-Delete assets that were created only for a temporary workflow by calling the [Deleting an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#delete-media-tenant-assets-assetid) endpoint with the `media.asset_manage` scope.
-
-{% include "../../.gitbook/includes/example-hint-text.md" %}
-
-```bash
-curl -i -X DELETE \
-  'https://api.emporix.io/media/{{tenant}}/assets/68d67e9a3f7c2b1e4a8d6501' \
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
-```
-
-A successful deletion returns `204 No Content`.
-
 ## How to associate a public asset with a resource
 
 To link media to a category, product, or other predefined resource type, create the asset with `"access": "PUBLIC"` and provide the target in `refIds`. Requests that combine `PRIVATE` access with predefined `refIds` types (such as `CATEGORY` or `PRODUCT`) are rejected with a `400` response.
@@ -599,3 +585,17 @@ curl -L \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'X-Total-Count: false'
 ```
+
+## How to clean up uploaded assets
+
+Delete assets that were created only for a temporary workflow by calling the [Deleting an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#delete-media-tenant-assets-assetid) endpoint with the `media.asset_manage` scope.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X DELETE \
+  'https://api.emporix.io/media/{{tenant}}/assets/68d67e9a3f7c2b1e4a8d6501' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
+
+A successful deletion returns `204 No Content`.
