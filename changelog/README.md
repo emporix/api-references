@@ -35,7 +35,7 @@ Direct upload is available as an opt-in tenant feature. Customers can contact Em
 
 Directly uploaded assets remain `PENDING` until storage confirms the upload, and then become `READY`. Upload sessions and upload credentials expire, and cleanup removes expired pending assets when no uploaded file exists.
 
-The new direct-download endpoint returns expiring signed URLs for private GCS assets and permanent URLs for public Cloudinary assets. Prefer this endpoint for every download. Direct download is always faster because the file travels from storage to the client and does not pass through the Media API. For private assets, clients can request `attachment` or `inline` content disposition.
+The new direct-download endpoint returns expiring signed URLs for private GCS assets and permanent URLs for public Cloudinary assets. We recommend to choose this endpoint for every download. Direct download is always faster because the file travels from storage to the client and does not pass through the Media API. For private assets, clients can request `attachment` or `inline` content disposition.
 
 The classic download endpoint remains available as a compatibility alternative. It now has a configurable size limit for files with a known size. The default is 31,457,280 bytes (30 MB).
 
