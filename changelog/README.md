@@ -44,6 +44,131 @@ Starting agent chat stream returns named Server-Sent Events. Each frame has an `
 There are no known problems.
 {% endupdate %}
 
+{% update date="2026-09-28" tags="new-feature, major-change" %}
+
+## Import Service - published mappings for import runs
+
+#### Overview
+
+An import run executes each stream's published mappings. Saved mapping changes are draft mappings and take effect only after they are published. Publishing mappings is an administrative operation that requires the `importtool.import_manage` scope. The run fixes each stream's published mapping version when it starts and reports it in the new `mappingVersions` field, so a version published during a run applies from the next run.
+
+A stream whose mappings have never been published is not run. Its entry in the run details has the new `ABORTED` status, and the run finishes with the `PARTIAL` status. When `streamIds` includes such a stream, or when every enabled stream is in that state, the service refuses the whole run: the trigger request still returns `200`, and the run finishes with the `ABORTED` status and a `message` that names the streams.
+
+A dry run uses the published mappings by default. Set the new `mappings` field to `draft` to check draft mappings before they are published. A real run ignores `mappings` and always uses the published mappings.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Accepts an optional `mappings` field (`published` or `draft`) that selects the mappings a dry run uses. Returns `400` when a dry-run request sends another value. The response includes `mappingVersions` and `dryRunPublished`. |
+| [Retrieving run history](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Run entries include `mappingVersions` and `dryRunPublished`. The run status includes `ABORTED`. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | The new run includes `mappingVersions`, and it can finish with the `ABORTED` status. |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Run details include `mappingVersions` and `dryRunPublished`. The run status and the per-stream status include `ABORTED`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-09-25" tags="deprecated" %}
+
+## AI Service - deprecated `handOff` field
+
+#### Overview
+
+The `handOff` field on agent responses is deprecated and is no longer used. Clients should ignore it.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents) | The `handOff` field in the response is deprecated. |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) | The `handOff` field in the response is deprecated. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | The `handOff` field in the response is deprecated. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
+{% update date="2026-09-25" tags="improvement" %}
+
+## AI Service - JSON body for attachment reuse
+
+#### Overview
+
+You can assign an existing media asset by sending `attachmentId` in an `application/json` request body on the attachments endpoint. The multipart file upload and the `attachmentId` form field remain supported. The response is `200` and includes the attachment `id` and the `sessionId`.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) | Accepts `attachmentId` in an `application/json` body to assign existing media. The multipart `attachment` file and `attachmentId` form field stay supported. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
+{% update date="2026-09-23" tags="new-feature" %}
+
+## Webhook Service - `customer.sign-up` event
+
+#### Overview
+
+The Webhook Service now emits the `customer.sign-up` event when a customer signs up.
+
+#### Added events
+
+| Event | Description |
+| --- | --- |
+| `customer.sign-up` | The event is emitted when a customer signs up. |
+
+#### Known problems
+
+There are no known problems.
+
+#### Links
+
+* [Events - Customer](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-events/events-customer)
+
+{% endupdate %}
+
+{% update date="2026-09-23" tags="new-feature, major-change" %}
+
+## Import Service - run diagnostics and deletion settings
+
+#### Overview
+
+A run reports how many source rows repeated a natural key and how many child lines had no parent to attach to. These counters show how many rows are affected, but not which rows. Two new endpoints return details about the affected rows, including each record's key, its parent-linking field and value, and the number of lines waiting for each missing parent. The details are available as JSON or as a CSV file that you can open in a spreadsheet or attach to a ticket.
+
+The rows are a capped sample rather than the complete set. The JSON response states how many rows were recorded and whether a stream reached the cap. The CSV includes the same information in comment lines above its header so that the context remains available when the file is shared. The run's own counters show the total number of affected rows.
+
+The stream schema now documents `deleteConfig`, which controls how deletes are detected in the source and propagated to the target.
+
+`targetDeleteSubscriptionEnabled` and `onTargetReappear` have been removed from the stream schema. Reacting to target objects being deleted outside the import is no longer supported.
+
+#### New endpoints
+
+| Endpoint | Description |
+| -------- | ----------- |
+| [Retrieving run diagnostics](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-diagnostics) | Returns the rows behind a run's repeated-key and unresolved-parent counters. |
+| [Downloading run diagnostics as CSV](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-diagnostics-csv) | Returns the same rows as a CSV attachment. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| -------- | ----------- |
+| [Retrieving all streams of a configuration](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Documents `deleteConfig`; removes `targetDeleteSubscriptionEnabled` and `onTargetReappear`. |
+| [Retrieving a stream](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Documents `deleteConfig`; removes `targetDeleteSubscriptionEnabled` and `onTargetReappear`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-17" tags="improvement" %}
 
 ## AI Service - cursor-based pagination for agent logs and jobs

@@ -3,7 +3,7 @@ seo:
   title: Customer Service events
   description: Webhooks, customer events
 icon: webhook
-description: Webhook events related to the creation, update and deletion of customer, sending a request to reset a customer's password and resending an account activation link to a customer.
+description: Webhook events related to the creation, update and deletion of a customer, customer sign-up, sending a request to reset a customer's password and resending an account activation link to a customer.
 ---
 
 # Events - Customer
@@ -99,6 +99,15 @@ description: Webhook events related to the creation, update and deletion of cust
   "token": "String",
   "email": "String",
   "newEmail": "String"
+}
+</code></pre></td></tr><tr><td>customer.sign-up</td><td><pre class="language-json"><code class="lang-json">{
+  "tenant": "String",
+  "email": "String",
+  "providerId": "String",
+  "providerAccountId": "String",
+  "customerNumber": "String",
+  "createdBySeller": "Boolean",
+  "createdBy": "String"
 }
 </code></pre></td></tr></tbody></table>
  
