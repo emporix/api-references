@@ -31,13 +31,111 @@ layout:
 
 #### Overview
 
-The Cart Service adds an opt-in `POST /cart/{tenant}/execute` endpoint that runs existing cart operations in one request while leaving cart, item, and discount endpoints unchanged. Each command sends `options.cartId`. A storefront can chain a write with `GetCart` without a second round trip. Duration is the sum of at most 10 commands, and the response is HTTP 207 with a `results` array. `versioning=explicit` preflights participating writes for `resourceVersion`, and `versioning=follow` keeps a cursor per cart id.
+The Cart Service adds an opt-in `POST /cart/{tenant}/carts/{cartId}/execute` endpoint that runs existing cart operations in one request while leaving cart, item, and discount endpoints unchanged. The cart id is the path parameter. A storefront can chain a write with `GetCart` without a second round trip. Request duration is the sum of the chained commands (at most 10), and the response is HTTP 207 with a `results` array. `versioning=explicit` preflights participating writes for `resourceVersion`, and `versioning=follow` keeps a cursor for that cart.
 
 #### New endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-execute) | Runs up to 10 existing cart operations sequentially. Each command sends `options.cartId`. Command types cover item, cart, and discount operations. The response is 207 with a `results` array. Duration is the sum of the chained commands. |
+| [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) | Runs up to 10 existing cart operations sequentially on one cart. Command types cover item, cart, and discount operations. The response is 207 with a `results` array. Duration is the sum of the chained commands. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-09-25" tags="deprecated" %}
+
+## AI Service - deprecated `handOff` field
+
+#### Overview
+
+The `handOff` field on agent responses is deprecated and is no longer used. Clients should ignore it.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents) | The `handOff` field in the response is deprecated. |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) | The `handOff` field in the response is deprecated. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | The `handOff` field in the response is deprecated. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
+{% update date="2026-09-25" tags="improvement" %}
+
+## AI Service - JSON body for attachment reuse
+
+#### Overview
+
+You can assign an existing media asset by sending `attachmentId` in an `application/json` request body on the attachments endpoint. The multipart file upload and the `attachmentId` form field remain supported. The response is `200` and includes the attachment `id` and the `sessionId`.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) | Accepts `attachmentId` in an `application/json` body to assign existing media. The multipart `attachment` file and `attachmentId` form field stay supported. |
+
+#### Known problems
+
+There are no known problems.
+{% endupdate %}
+
+{% update date="2026-09-23" tags="new-feature" %}
+
+## Webhook Service - `customer.sign-up` event
+
+#### Overview
+
+The Webhook Service now emits the `customer.sign-up` event when a customer signs up.
+
+#### Added events
+
+| Event | Description |
+| --- | --- |
+| `customer.sign-up` | The event is emitted when a customer signs up. |
+
+#### Known problems
+
+There are no known problems.
+
+#### Links
+
+* [Events - Customer](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-events/events-customer)
+
+{% endupdate %}
+
+{% update date="2026-09-23" tags="new-feature, major-change" %}
+
+## Import Service - run diagnostics and deletion settings
+
+#### Overview
+
+A run reports how many source rows repeated a natural key and how many child lines had no parent to attach to. These counters show how many rows are affected, but not which rows. Two new endpoints return details about the affected rows, including each record's key, its parent-linking field and value, and the number of lines waiting for each missing parent. The details are available as JSON or as a CSV file that you can open in a spreadsheet or attach to a ticket.
+
+The rows are a capped sample rather than the complete set. The JSON response states how many rows were recorded and whether a stream reached the cap. The CSV includes the same information in comment lines above its header so that the context remains available when the file is shared. The run's own counters show the total number of affected rows.
+
+The stream schema now documents `deleteConfig`, which controls how deletes are detected in the source and propagated to the target.
+
+`targetDeleteSubscriptionEnabled` and `onTargetReappear` have been removed from the stream schema. Reacting to target objects being deleted outside the import is no longer supported.
+
+#### New endpoints
+
+| Endpoint | Description |
+| -------- | ----------- |
+| [Retrieving run diagnostics](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-diagnostics) | Returns the rows behind a run's repeated-key and unresolved-parent counters. |
+| [Downloading run diagnostics as CSV](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-diagnostics-csv) | Returns the same rows as a CSV attachment. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| -------- | ----------- |
+| [Retrieving all streams of a configuration](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Documents `deleteConfig`; removes `targetDeleteSubscriptionEnabled` and `onTargetReappear`. |
+| [Retrieving a stream](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Documents `deleteConfig`; removes `targetDeleteSubscriptionEnabled` and `onTargetReappear`. |
 
 #### Known problems
 
@@ -301,13 +399,13 @@ There are no known problems.
 
 #### Overview
 
-You can reuse an existing chat attachment with another agent. Send `attachmentId` instead of a file on the attachments endpoint, together with the session that already contains the attachment. AI Service assigns the agent to the media asset by adding an `AGENT` reference. The response is `204`.
+You can assign an existing media asset to an agent. Send `attachmentId` instead of a file on the attachments endpoint. Callers with the `ai.agentexecution_manage` scope can assign any existing media asset to the path `agentId`. The asset does not have to belong to the session. Callers with only the `ai.agentexecution_manage_own` scope can assign an attachment that already belongs to the session. AI Service adds an `AGENT` reference on the media asset. The response is `200` and includes the attachment `id` and the `sessionId` to send on later chat requests.
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) | Accepts `attachmentId` to reuse a session attachment and assign the agent. Send exactly one of `attachment` or `attachmentId`. |
+| [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) | Accepts `attachmentId` to assign existing media to the target `agentId`. Callers with `ai.agentexecution_manage` can assign any media asset. Callers with only `ai.agentexecution_manage_own` can assign an attachment that already belongs to the session. The response is `200` and includes `id` and `sessionId`. |
 
 #### Known problems
 

@@ -66,17 +66,17 @@ curl -i -X POST
 
 ## How to add an item and retrieve the calculated cart in one request
 
-Use [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-execute) to add an item and retrieve the calculated cart in one HTTP request. The existing [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) followed by [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) still works. Each command sends `options.cartId`.
+Use [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) to add an item and retrieve the calculated cart in one HTTP request. The existing two-call sequence of [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) then [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) still works. The cart id is the path parameter.
 
 {% hint style="warning" %}
 Request duration is the sum of the chained commands. Set client and API gateway timeouts to cover the full chain, especially when `GetCart` runs cart calculation.
 {% endhint %}
 
-One `/execute` request uses one `session-id` and one `legal-entity-id`. Commands cannot override those headers. To act as a different session or legal entity, send another request. Default `versioning=skip` ignores `options.resourceVersion`.
+One `/execute` request uses one `session-id` and one `legal-entity-id`. Commands cannot override those headers. To act as a different session or legal entity, send another request. The default `versioning=skip` value ignores `options.resourceVersion`.
 
 ### Prerequisites
 
-* An existing cart `cartId`
+* An existing cart ID (`cartId`)
 * A customer access token, or a service token with `cart.cart_manage`
 * `cart.cart_manage_external_prices` when a command includes an external price, product, fee, or discount
 * `session-id` for an anonymous cart
@@ -91,7 +91,7 @@ Send `AddCartItem` then `GetCart` with `expandCalculation` set to `true`. The 20
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/cart/{tenant}/execute?onError=fail' \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/execute?onError=fail' \
   -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -H 'session-id: 4f8a2c1e9b7d6a0c3e5f8b12' \
@@ -108,15 +108,11 @@ curl -i -X POST \
             "effectiveAmount": 350,
             "currency": "EUR"
           }
-        },
-        "options": {
-          "cartId": "{cartId}"
         }
       },
       {
         "type": "GetCart",
         "options": {
-          "cartId": "{cartId}",
           "expandCalculation": true
         }
       }
@@ -128,7 +124,7 @@ curl -i -X POST \
 {% step %}
 #### Read the 207 results
 
-The HTTP status is 207 Multi-Status when the chain is accepted. `results` is ordered. `results[0].data` is the same JSON as `POST .../items` (`itemId`, `yrn`). With default `versioning=skip`, that result has no `headers`, and `Location` is not set. REST `POST .../items` still returns the collection URL. `results[1].data` is the same JSON as `GET .../carts/{cartId}` including item `calculatedPrice`.
+The HTTP status is 207 Multi-Status when the chain is accepted. `results` is ordered. `results[0].data` is the same JSON as `POST .../items` (`itemId`, `yrn`). With default `versioning=skip`, that result has no version header. `results[1].data` is the same JSON as `GET .../carts/{cartId}` including item `calculatedPrice`.
 
 ```json
 {
@@ -232,7 +228,9 @@ A request accepts at most 10 commands. 11 or more commands return `400` for the 
 
 ## How to follow cart resource versions in a command chain
 
-`versioning=follow` keeps a cursor per `options.cartId`. Seed the first participating write (`AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`), then omit `resourceVersion` on later writes for that cart. `GetCart`, deletes, and itemsBatch do not send If-Match and do not bump the cursor.
+`versioning=follow` keeps a cursor for the cart in the path. Seed the first participating write (`AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`), then omit `resourceVersion` on later writes. `GetCart` and `ValidateCart` do not send If-Match and do not bump the cursor. After a cursor exists, a successful `RefreshCart`, delete, or itemsBatch also bumps it.
+
+Read the current cart with [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) or a prior `GetCart`, and use `metadata.version` as `options.resourceVersion` on that first participating write. The sample below uses `5` as that value.
 
 Use `versioning=explicit` only when every participating write sends `resourceVersion`. A missing version on `explicit` returns `400` for the whole request. That is a client error, not a last-write-wins strategy.
 
@@ -242,7 +240,7 @@ Use `versioning=explicit` only when every participating write sends `resourceVer
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/cart/{tenant}/execute?onError=fail&versioning=follow' \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/execute?onError=fail&versioning=follow' \
   -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -250,21 +248,21 @@ curl -i -X POST \
       {
         "type": "UpdateCartItem",
         "data": { "quantity": 2 },
-        "options": { "cartId": "{cartId}", "itemId": "1", "resourceVersion": 5 }
+        "options": { "itemId": "1", "resourceVersion": 5 }
       },
       {
         "type": "UpdateCartItem",
         "data": { "quantity": 1 },
-        "options": { "cartId": "{cartId}", "itemId": "2" }
+        "options": { "itemId": "2" }
       },
       {
         "type": "GetCart",
-        "options": { "cartId": "{cartId}", "expandCalculation": true }
+        "options": { "expandCalculation": true }
       },
       {
         "type": "UpdateCartItem",
         "data": { "quantity": 3 },
-        "options": { "cartId": "{cartId}", "itemId": "3" }
+        "options": { "itemId": "3" }
       }
     ]
   }'
