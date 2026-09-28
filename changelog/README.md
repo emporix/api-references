@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature, major-change" %}
+{% update date="2026-09-28" tags="new-feature, major-change" %}
 
 ## Import Service - published mappings for import runs
 
