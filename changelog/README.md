@@ -35,7 +35,7 @@ layout:
 This functionality is in preview mode - some of the features may not be fully operational yet.
 {% endhint %}
 
-The Search Service adds a preview endpoint that searches documents for a tenant. The request names an index and supplies a text clause, a filter, or both. The `search.search_read` scope is required. For now, the `type` path parameter supports only custom schema types.
+The Search Service adds a preview endpoint that searches documents for a tenant. The request names an index and supplies a text clause, a filter, or both. The `search.search_read` scope is required.
 
 #### New endpoints
 
