@@ -4009,7 +4009,7 @@ components:
             - EXTERNAL
             - SYSTEM
           description: |
-            Identity recorded for the change. `EXTERNAL` is used for requests made by with the api-token. `SYSTEM` is used for automatic updates.
+            Identity recorded for the change. `EXTERNAL` is assigned when the request authenticates with an API token. `SYSTEM` is used for automatic updates.
         id:
           type: string
           description: Identifier of the customer or employee. Omitted for `EXTERNAL` and `SYSTEM`. `id` is the `Hybris-User-Id` header value when `CUSTOMER` or `EMPLOYEE`.
@@ -4379,7 +4379,7 @@ components:
         agentVersion:
           type: integer
           minimum: 1
-          description: Live agent version captured when the request ran. It is the trigger agent's version, then the collaborating agent's version after a handoff.
+          description: Live version of the agent that wrote the latest log entry for this request. It starts as the trigger agent's version and, after a handoff, becomes the live version of the collaborating agent that is active. `collaborationAgents` lists the agent IDs for the request.
         metadata:
           $ref: '#/components/schemas/MetadataResponse'
     AgentSessionResponse:
@@ -5633,7 +5633,9 @@ components:
             type: EMPLOYEE
             id: jane.doe
         versions:
-          - userPrompt: "Use get-order tool to fetch order."
+          - name:
+              en: Complaint Agent
+            userPrompt: "Use get-order tool to fetch order."
             enabled: false
             triggers:
               - type: endpoint
