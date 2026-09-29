@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="RELEASE_DATE" tags="new-feature, improvement" %}
 
 ## AI Service - agent version history
 
@@ -47,7 +47,9 @@ Agent request logs include `agentVersion` on the request and on each separate me
 | [Listing agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests) | The response includes `agentVersion` on the request and on each message. The root-level `agentVersion` is the version of the agent that triggered the request. Each message `agentVersion` is the version of the agent that wrote that message. |
 | [Retrieving agent request by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests-requestid) | The response includes `agentVersion` on the request and on each message. The root-level `agentVersion` remains the version of the agent that triggered the request, as recorded on the first log entry. Each message `agentVersion` is the version of the agent that wrote that message. |
 | [Searching agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-requests-search) | The response includes `agentVersion` on the request and on each message. The root-level `agentVersion` remains the version of the agent that triggered the request, as recorded on the first log entry. Each message `agentVersion` is the version of the agent that wrote that message. |
+| [Listing agent sessions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions) | Each message includes `agentVersion`, which is the version of the agent that wrote that message. |
 | [Retrieving agent session by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions-sessionid) | Each message includes `agentVersion`, which is the version of the agent that wrote that message. |
+| [Searching agent sessions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-sessions-search) | Each message includes `agentVersion`, which is the version of the agent that wrote that message. |
 
 #### Known problems
 

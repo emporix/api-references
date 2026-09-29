@@ -4334,7 +4334,7 @@ components:
         agentVersion:
           type: integer
           minimum: 1
-          description: Live version of the agent that wrote this log line.
+          description: Version of the agent that wrote this log message.
         requestId:
           type: string
           description: Unique identifier of the request associated with the log.
