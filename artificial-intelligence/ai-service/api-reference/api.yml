@@ -4331,6 +4331,10 @@ components:
         agentId:
           type: string
           description: Unique identifier of the agent that generated the log.
+        agentVersion:
+          type: integer
+          minimum: 1
+          description: Live version of the agent that wrote this log line.
         requestId:
           type: string
           description: Unique identifier of the request associated with the log.
@@ -4379,7 +4383,7 @@ components:
         agentVersion:
           type: integer
           minimum: 1
-          description: Live version of the agent that wrote the latest log entry for this request. It starts as the trigger agent's version and, after a handoff, becomes the live version of the collaborating agent that is active. `collaborationAgents` lists the agent IDs for the request.
+          description: Version of the agent which triggered the request.
         metadata:
           $ref: '#/components/schemas/MetadataResponse'
     AgentSessionResponse:
@@ -5070,12 +5074,14 @@ components:
                       severity: INFO
                       message: Agent started processing request
                       agentId: complaint-agent
+                      agentVersion: 3
                       requestId: req-123e4567-e89b-12d3-a456-426614174000
                       isBusinessLog: false
                     - timestamp: '2025-01-15T10:30:28.234Z'
                       severity: INFO
                       message: Retrieved order details successfully
                       agentId: complaint-agent
+                      agentVersion: 3
                       requestId: req-123e4567-e89b-12d3-a456-426614174000
                       isBusinessLog: true
                   duration: 45
@@ -5107,12 +5113,14 @@ components:
                     severity: INFO
                     message: Retrieved order details successfully
                     agentId: complaint-agent
+                    agentVersion: 3
                     requestId: req-123e4567-e89b-12d3-a456-426614174000
                     isBusinessLog: true
                   - timestamp: '2025-01-15T10:30:29.456Z'
                     severity: WARNING
                     message: Order status check returned unexpected value
                     agentId: complaint-agent
+                    agentVersion: 3
                     requestId: req-123e4567-e89b-12d3-a456-426614174000
                     isBusinessLog: false
                 duration: 45
@@ -5159,12 +5167,14 @@ components:
                       severity: INFO
                       message: Session started
                       agentId: complaint-agent
+                      agentVersion: 3
                       requestId: req-123e4567-e89b-12d3-a456-426614174000
                       isBusinessLog: false
                     - timestamp: '2025-01-15T10:30:28.234Z'
                       severity: INFO
                       message: Handed off to categorization agent
                       agentId: complaint-agent
+                      agentVersion: 3
                       requestId: req-123e4567-e89b-12d3-a456-426614174000
                       isBusinessLog: true
                   duration: 120
@@ -5194,12 +5204,14 @@ components:
                     severity: INFO
                     message: Retrieved order details successfully
                     agentId: complaint-agent
+                    agentVersion: 3
                     requestId: req-123e4567-e89b-12d3-a456-426614174000
                     isBusinessLog: true
                   - timestamp: '2025-01-15T10:30:30.789Z'
                     severity: INFO
                     message: Categorization agent processing request
                     agentId: complaint-agent-categorization
+                    agentVersion: 2
                     requestId: req-123e4567-e89b-12d3-a456-426614174000
                     isBusinessLog: false
                 duration: 120

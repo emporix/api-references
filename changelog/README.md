@@ -31,7 +31,9 @@ layout:
 
 #### Overview
 
-AI Service stores a version history for each agent. Every successful update increments `metadata.version` and keeps the previous configuration. Each entry in `versions[]` stores its snapshot number on `metadata.version`, not as a root field. You can read one stored version or the full history. Agent responses include `metadata.modifiedBy`, which records who last changed the agent. For `EMPLOYEE` and `CUSTOMER`, `modifiedBy` also includes `firstName` and `lastName`. A user update may set `metadata.changeNote`. Agent request logs include `agentVersion`, the live agent version for that request.
+AI Service stores a version history for each agent. Every successful update increments `metadata.version` and keeps the previous configuration. Each entry in `versions[]` stores its snapshot number on `metadata.version`, not as a root field. You can read one stored version or the full history. Agent responses include `metadata.modifiedBy`, which records who last changed the agent. For `EMPLOYEE` and `CUSTOMER`, `modifiedBy` also includes `firstName` and `lastName`. A user update may set `metadata.changeNote`. 
+
+Agent request logs include `agentVersion` on the request and on each separate message.
 
 #### Updated endpoints
 
@@ -42,9 +44,10 @@ AI Service stores a version history for each agent. Every successful update incr
 | [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) | The response includes `metadata.modifiedBy`. |
 | [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | A successful update increments `metadata.version` and stores the previous configuration. A stale `metadata.version` returns `409`. `modifiedBy.firstName` and `modifiedBy.lastName` are stored when available. Optional `metadata.changeNote` is stored on the new version. |
 | [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | A successful update increments `metadata.version` and stores the previous configuration. A stale `metadata.version` returns `409`. `modifiedBy.firstName` and `modifiedBy.lastName` are stored when available. |
-| [Listing agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests) | The response includes `agentVersion`. |
-| [Retrieving agent request by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests-requestid) | The response includes `agentVersion`. |
-| [Searching agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-requests-search) | The response includes `agentVersion`. |
+| [Listing agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests) | The response includes `agentVersion` on the request and on each message. The root-level `agentVersion` is the version of the agent that triggered the request. Each message `agentVersion` is the version of the agent that wrote that message. |
+| [Retrieving agent request by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests-requestid) | The response includes `agentVersion` on the request and on each message. The root-level `agentVersion` remains the version of the agent that triggered the request, as recorded on the first log entry. Each message `agentVersion` is the version of the agent that wrote that message. |
+| [Searching agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-requests-search) | The response includes `agentVersion` on the request and on each message. The root-level `agentVersion` remains the version of the agent that triggered the request, as recorded on the first log entry. Each message `agentVersion` is the version of the agent that wrote that message. |
+| [Retrieving agent session by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions-sessionid) | Each message includes `agentVersion`, which is the version of the agent that wrote that message. |
 
 #### Known problems
 
