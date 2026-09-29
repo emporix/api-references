@@ -60,6 +60,33 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## AI Service - agent version history
+
+#### Overview
+
+AI Service stores a version history for each agent. Every successful update increments `metadata.version` and keeps the previous configuration. Each entry in `versions[]` stores its snapshot number on `metadata.version`, not as a root field. You can read one stored version or the full history. Agent responses include `metadata.modifiedBy`, which records who last changed the agent. For `EMPLOYEE` and `CUSTOMER`, `modifiedBy` also includes `firstName` and `lastName`. Agent request logs include `agentVersion`, the live agent version for that request.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | Accepts `version` to return one stored configuration and `allVersions` to include the `versions` history. `version` and `allVersions` cannot be combined. The response includes `metadata.modifiedBy`. |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents) | The response includes `metadata.modifiedBy`. |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) | The response includes `metadata.modifiedBy`. |
+| [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | A successful update increments `metadata.version` and stores the previous configuration. A stale `metadata.version` returns `409`. `modifiedBy.firstName` and `modifiedBy.lastName` are stored when the profile lookup succeeds. |
+| [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | A successful update increments `metadata.version` and stores the previous configuration. A stale `metadata.version` returns `409`. `modifiedBy.firstName` and `modifiedBy.lastName` are stored when the profile lookup succeeds. |
+| [Listing agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests) | The response includes `agentVersion`. |
+| [Retrieving agent request by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests-requestid) | The response includes `agentVersion`. |
+| [Searching agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-requests-search) | The response includes `agentVersion`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-28" tags="improvement" %}
 
 ## AI Service - chat stream event payloads
