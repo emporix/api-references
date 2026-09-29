@@ -139,6 +139,46 @@ curl -i -X POST
  }'
 ```
 
+### Creating a vendor-restricted coupon with a percentage discount
+
+To limit a coupon to products from selected vendors, set `vendorRestricted` to `true` and provide the vendor IDs in the `restrictions.vendors` array. You can combine a vendor restriction with other restriction types.
+
+If you specify `restrictions.minOrderValue`, the Cart Service checks the minimum value against the total of the cart items from the selected vendors. If `discountCalculationType` is `TOTAL` and the cart contains at least one matching item, the discount also applies to the fees on matching items and to shipping.
+
+Use an OAuth2 access token with the `coupon.coupon_manage` scope.
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/coupon/{tenant}/coupons' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "code": "VENDOR10",
+    "name": "Vendor sale",
+    "description": "10 percent off products from selected vendors",
+    "discountType": "PERCENT",
+    "discountPercentage": 10,
+    "discountCalculationType": "TOTAL",
+    "allowAnonymous": false,
+    "maxRedemptions": -1,
+    "maxRedemptionsPerCustomer": -1,
+    "categoryRestricted": false,
+    "segmentRestricted": false,
+    "vendorRestricted": true,
+    "restrictions": {
+      "vendors": [
+        "5f6a1c2b3d4e5f6789012345"
+      ],
+      "minOrderValue": {
+        "amount": 50,
+        "currency": "EUR"
+      }
+    }
+  }'
+```
+
+The endpoint returns `201 Created` when the coupon is created.
+
 ## How to update an existing coupon
 
 To update an existing coupon, you need to send a request to the [Partially updating a coupon](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/coupon-management#patch-coupon-tenant-coupons-code) endpoint.
