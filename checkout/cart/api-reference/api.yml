@@ -5938,6 +5938,9 @@ components:
           type: array
           items:
             type: string
+          example:
+            - code1
+            - code2
           description: |
             Discount codes to remove. If omitted, `DeleteCartDiscounts` removes all discounts. Same meaning as the REST `codes` query parameter.
 
