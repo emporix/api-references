@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature, improvement" %}
+{% update date="2026-09-30" tags="new-feature, improvement" %}
 
 ## AI Service - agent version history
 
