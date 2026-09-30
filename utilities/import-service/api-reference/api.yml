@@ -98,6 +98,43 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+    post:
+      summary: Creating an import configuration
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Creates an import configuration — the job that groups the streams executed together, in dependency order, under one run.
+
+      operationId: POST-importtool-create-config
+      tags:
+        - Configurations (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportConfig'
+      responses:
+        '200':
+          description: The request was successful. The configuration was created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportConfig'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
   '/importtool/{tenant}/configs/{id}':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -137,6 +174,76 @@ paths:
           $ref: '#/components/responses/NotFound_404'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+    put:
+      summary: Updating an import configuration
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Updates an import configuration. The streams it contains are edited through their own endpoints.
+
+      operationId: PUT-importtool-update-config
+      tags:
+        - Configurations (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportConfig'
+      responses:
+        '200':
+          description: The request was successful. The configuration was updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportConfig'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+    delete:
+      summary: Deleting an import configuration
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Deletes an import configuration together with its streams, mappings and schedule. The data already imported into the target is not removed; use the purge endpoints for that.
+
+      operationId: DELETE-importtool-delete-config
+      tags:
+        - Configurations (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '204':
+          description: The request was successful. The resource was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '409':
+          $ref: '#/components/responses/Conflict_409'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
   '/importtool/{tenant}/configs/{configId}/streams':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -176,6 +283,47 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+    post:
+      summary: Creating a stream
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Creates a stream within an import configuration. A stream names one source dataset, the target it writes to, and how the two are related.
+
+        A composite child names its parent by NAME, so the parent must already exist.
+
+      operationId: POST-importtool-create-stream
+      tags:
+        - Streams
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportStream'
+      responses:
+        '200':
+          description: The request was successful. The stream was created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportStream'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
   '/importtool/{tenant}/streams/{id}':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -215,6 +363,76 @@ paths:
           $ref: '#/components/responses/NotFound_404'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+    put:
+      summary: Updating a stream
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Updates a stream. Identity fields — the source key columns — may only be changed while the stream has imported nothing, because changing them re-keys every record it has already written.
+
+      operationId: PUT-importtool-update-stream
+      tags:
+        - Streams
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportStream'
+      responses:
+        '200':
+          description: The request was successful. The stream was updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportStream'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '409':
+          $ref: '#/components/responses/Conflict_409'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+    delete:
+      summary: Deleting a stream
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Deletes a stream and its mappings. Records it has already imported are left in the target.
+
+      operationId: DELETE-importtool-delete-stream
+      tags:
+        - Streams
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '204':
+          description: The request was successful. The resource was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
   '/importtool/{tenant}/configs/{configId}/schedule':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -1239,6 +1457,43 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+    post:
+      summary: Creating a job group
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Creates a job group — a label used to arrange import configurations on the dashboard. It has no effect on execution.
+
+      operationId: POST-importtool-create-job-group
+      tags:
+        - Configurations (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobGroup'
+      responses:
+        '200':
+          description: The request was successful. The job group was created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobGroup'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
   '/importtool/{tenant}/settings/health-thresholds':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -1281,6 +1536,43 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+    put:
+      summary: Updating the health thresholds
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Updates the tenant's failure-ratio thresholds, which decide when a run is reported as amber or red. Sending an empty body restores the service defaults.
+
+      operationId: PUT-importtool-update-health-thresholds
+      tags:
+        - Analytics
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HealthThresholds'
+      responses:
+        '200':
+          description: The request was successful. The effective thresholds are returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthSettings'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
   '/importtool/{tenant}/license':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -2299,9 +2591,1176 @@ paths:
           $ref: '#/components/responses/NotFound_404'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/dashboard/job-groups/{id}':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    put:
+      summary: Updating a job group
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Updates a job group's name or the configurations assigned to it.
+
+      operationId: PUT-importtool-update-job-group
+      tags:
+        - Configurations (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobGroup'
+      responses:
+        '200':
+          description: The request was successful. The job group was updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobGroup'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+    delete:
+      summary: Deleting a job group
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Deletes a job group. The import configurations it grouped are not affected.
+
+      operationId: DELETE-importtool-delete-job-group
+      tags:
+        - Configurations (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '204':
+          description: The request was successful. The resource was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/configs/dashboard':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    get:
+      summary: Retrieving the administration overview
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves one row per import configuration with its current status, last and next run, and error count — the administration overview of every job on the tenant.
+
+      operationId: GET-importtool-config-dashboard
+      tags:
+        - Configurations (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The overview rows are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConfigDashboardRow'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/configs/{configId}/mapping-states':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_configId'
+    get:
+      summary: Retrieving the mapping publish state of each stream
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves, for every stream in the configuration, whether its mappings are published and whether the draft has since moved ahead of what runs execute.
+
+      operationId: GET-importtool-mapping-states
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The states are returned, keyed by stream identifier.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/MappingPublishState'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/adapters':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    get:
+      summary: Retrieving the available source adapters
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves the source adapters this deployment provides, with the capabilities and configuration fields each one expects. A connection names one of these by its code.
+
+      operationId: GET-importtool-list-adapters
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The adapters are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AdapterDescriptor'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/target-writers':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    get:
+      summary: Retrieving the available target writers
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves the target writers this deployment provides — the destinations a stream can write to, such as Emporix custom entities.
+
+      operationId: GET-importtool-list-target-writers
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The target writers are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/transforms/validate':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    get:
+      summary: Validating a transformation expression
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Checks a transformation expression without saving it, reporting whether it parses and what it would produce.
+
+      operationId: GET-importtool-validate-transform
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      parameters:
+        - name: transform
+          in: query
+          required: false
+          description: The transformation expression to check.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request was successful. The validation outcome is returned.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Whether the expression is valid, and the reason when it is not.
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/connections/{id}/browse/{kind}':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+      - name: kind
+        in: path
+        required: true
+        description: The kind of object to list, as advertised by the adapter — for example `records` or `kpis`.
+        schema:
+          type: string
+    post:
+      summary: Browsing the objects a connection exposes
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Lists the objects available through a connection — the source records a stream can be built on, and any computed metrics the adapter exposes alongside them.
+
+      operationId: POST-importtool-browse-connection
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Adapter-specific parameters narrowing what is listed.
+              additionalProperties: true
+      responses:
+        '200':
+          description: The request was successful. The objects are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/connections/{id}/sample':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    post:
+      summary: Sampling records from a connection
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Reads a small sample of records through a connection, so a stream's fields can be inspected before any mapping is written. Nothing is imported.
+
+      operationId: POST-importtool-sample-connection
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              description: The dataset to sample and how many records to read.
+              additionalProperties: true
+      responses:
+        '200':
+          description: The request was successful. The sample is returned.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/connections/{id}/preview':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    post:
+      summary: Previewing a request through a connection
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Issues one request through a connection exactly as an import would, and returns what came back. Used to confirm paging, authentication and record paths before a stream is built.
+
+      operationId: POST-importtool-preview-connection
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              description: The request to issue — dataset, paging and parameters.
+              additionalProperties: true
+      responses:
+        '200':
+          description: The request was successful. The response is returned.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/connections/{id}/spec':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    post:
+      summary: Supplying an API specification for a connection
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Supplies the API description a connection should be read from — either uploaded directly as a file, or discovered from a URL. The returned summary reports the operations found.
+
+        Send the document as `multipart/form-data` to upload it, or as JSON to have it fetched.
+
+      operationId: POST-importtool-connection-spec
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The specification document.
+                format:
+                  type: string
+                  description: The document's format, when it cannot be inferred.
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: Where to fetch the specification from.
+      responses:
+        '200':
+          description: The request was successful. A summary of the specification is returned.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/schema-drift':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    post:
+      summary: Checking a stream for source schema drift
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Compares the source's current columns against the ones recorded when the stream was last checked, reporting what has been added or removed, which new columns are unmapped, and which mappings now point at columns that no longer exist. The baseline advances on each check.
+
+      operationId: POST-importtool-schema-drift
+      tags:
+        - Streams
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The drift report is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaDrift'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/hash-debug':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    get:
+      summary: Explaining why records are being rewritten
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Explains why a stream's records are not being skipped as unchanged. Change detection stores a hash of the source content together with a fingerprint of the mapping configuration; either moving causes a rewrite, and from the outside the two are indistinguishable. This reports the stored values against what the stream computes now, with a plain-words verdict.
+
+        Read-only, and deliberately reports no record content — only hashes, key names and the fingerprint inputs.
+
+      operationId: GET-importtool-hash-debug
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      parameters:
+        - name: naturalKey
+          in: query
+          required: false
+          description: Restricts the sample to one record's natural key.
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          description: How many ledger rows to sample.
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: The request was successful. The diagnosis is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HashDebug'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/generate':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    post:
+      summary: Generating mappings from the source and target
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Proposes mappings by matching the source's fields against the attributes the target type actually has. Only real target attributes are proposed, each with the type the target declares. Fields with no match are left unmapped rather than invented.
+
+        Non-destructive: when neither a source sample nor target attributes can be read, the existing mappings are kept.
+
+      operationId: POST-importtool-generate-mappings
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      parameters:
+        - name: targetType
+          in: query
+          required: false
+          description: The resolved target type whose mapping set is addressed. Omit for the base set.
+          schema:
+            type: string
+        - name: versions
+          in: query
+          required: false
+          description: The schema versions to validate against, as `SCHEMA:version` pairs.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request was successful. The proposed mappings are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FieldMapping'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/suggest':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    post:
+      summary: Suggesting mappings with the AI agent
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Asks the Emporix AI agent to propose mappings for the supplied source fields. Opt-in, and used only from the mapping editor — imports never invoke it.
+
+      operationId: POST-importtool-suggest-mappings
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      parameters:
+        - name: targetType
+          in: query
+          required: false
+          description: The resolved target type whose mapping set is addressed. Omit for the base set.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: The source fields and target context to reason about.
+              additionalProperties: true
+      responses:
+        '200':
+          description: The request was successful. The suggested mappings are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FieldMapping'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/schema-versions':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    get:
+      summary: Retrieving the target schema versions a stream is pinned to
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves each mixin schema of the stream's target type with its current version and the version the mappings were authored against. An instance is validated against the version it was written under, so a stream pinned behind current is reported as stale.
+
+      operationId: GET-importtool-mapping-schema-versions
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      parameters:
+        - name: targetType
+          in: query
+          required: false
+          description: The resolved target type whose mapping set is addressed. Omit for the base set.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request was successful. The schema versions are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SchemaVersionState'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/publish-impact':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    get:
+      summary: Retrieving what publishing the draft would change
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Reports what publishing the current draft would do before it is done: whether a published version exists, whether the draft differs from it, and how many records the change would cause to be written again.
+
+        Mappings take part in change detection, so altering them makes unchanged source records re-push on the next run. This is how many.
+
+      operationId: GET-importtool-publish-impact
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The impact is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublishImpact'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/publish':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    post:
+      summary: Publishing a stream's mappings
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Publishes the draft as a new version and makes it the set that runs execute. A stream whose mappings have never been published is skipped by real runs, so a recreated configuration must be published before it will import anything.
+
+      operationId: POST-importtool-publish-mappings
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              description: An optional note recorded against the version.
+              additionalProperties: true
+      responses:
+        '200':
+          description: The request was successful. The published version is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MappingVersion'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '409':
+          $ref: '#/components/responses/Conflict_409'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/versions':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    get:
+      summary: Retrieving a stream's published mapping versions
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves the mapping versions published for the stream, newest first, with the one currently live marked active.
+
+      operationId: GET-importtool-list-mapping-versions
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The versions are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MappingVersion'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/versions/{version}':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+      - name: version
+        in: path
+        required: true
+        description: The published version number.
+        schema:
+          type: integer
+    get:
+      summary: Retrieving one published mapping version
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves a single published mapping version, including the mappings it contains and the target schema versions they were authored against.
+
+      operationId: GET-importtool-get-mapping-version
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The version is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MappingVersion'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/versions/{version}/restore':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+      - name: version
+        in: path
+        required: true
+        description: The published version number.
+        schema:
+          type: integer
+    post:
+      summary: Restoring a published mapping version into the draft
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Replaces the draft with the mappings of an earlier published version. The restored set becomes the draft — it does not become live until it is published.
+
+      operationId: POST-importtool-restore-mapping-version
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The restored mappings are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FieldMapping'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
 
 components:
   schemas:
+    MappingPublishState:
+      type: string
+      description: |-
+        Where a stream's mapping draft stands relative to what real runs execute.
+        `NONE` — no mappings at all, so every extracted field is written as-is.
+        `UNPUBLISHED` — mappings exist but were never published, and a real run is refused.
+        `DRAFT_AHEAD` — a version is live and the draft has edits it does not contain.
+        `PUBLISHED` — the draft is what runs.
+      enum:
+        - NONE
+        - UNPUBLISHED
+        - DRAFT_AHEAD
+        - PUBLISHED
+      example: DRAFT_AHEAD
+
+    MappingVersion:
+      type: object
+      description: One published snapshot of a stream's mappings — the set a run executes.
+      properties:
+        id:
+          type: string
+          format: uuid
+        streamId:
+          type: string
+          format: uuid
+        version:
+          type: integer
+          description: The version number, increasing by one on each publish.
+          example: 4
+        mappings:
+          type: array
+          description: The mappings this version contains.
+          items:
+            $ref: '#/components/schemas/FieldMapping'
+        mappingSchemaVersions:
+          type: object
+          description: The target schema versions these mappings were authored against, keyed by schema identifier.
+          additionalProperties:
+            type: integer
+          example:
+            ZG_VENDOR: 26
+        active:
+          type: boolean
+          description: Whether this is the version runs currently execute.
+        publishedAt:
+          type: string
+          format: date-time
+        publishedBy:
+          type: string
+        adopted:
+          type: boolean
+          description: Whether the version was adopted from a pre-versioning draft rather than published deliberately.
+        note:
+          type: string
+          description: An optional note recorded when the version was published.
+
+    PublishImpact:
+      type: object
+      description: What publishing the current draft would change.
+      properties:
+        state:
+          $ref: '#/components/schemas/MappingPublishState'
+        hasPublishedVersion:
+          type: boolean
+        currentVersion:
+          type: integer
+          example: 4
+        draftDiffersFromPublished:
+          type: boolean
+        rePushCount:
+          type: integer
+          description: |-
+            How many already-imported records would be written again. Mappings take part in change
+            detection, so altering them makes unchanged source records re-push once.
+          example: 43342
+
+    SchemaVersionState:
+      type: object
+      description: One mixin schema of the target type, with the version the mappings are pinned to.
+      properties:
+        schemaId:
+          type: string
+          example: ZG_VENDOR
+        currentVersion:
+          type: integer
+          example: 26
+        pinnedVersion:
+          type: integer
+          description: The version the mappings were authored against, or null when they are not pinned.
+          example: 25
+        stale:
+          type: boolean
+          description: Whether the pinned version is behind the current one.
+
+    SchemaDrift:
+      type: object
+      description: How a stream's mappings stand against the source's current columns.
+      properties:
+        current:
+          type: array
+          description: The columns the source exposes now.
+          items:
+            type: string
+        added:
+          type: array
+          description: Columns present now that were not in the recorded baseline.
+          items:
+            type: string
+        removed:
+          type: array
+          description: Columns in the baseline that the source no longer exposes.
+          items:
+            type: string
+        unmappedNew:
+          type: array
+          description: Newly added columns that no mapping reads.
+          items:
+            type: string
+        danglingMappings:
+          type: array
+          description: Mappings whose source column no longer exists.
+          items:
+            type: string
+        baselineExisted:
+          type: boolean
+          description: Whether a baseline had been recorded before this check.
+        sourceAvailable:
+          type: boolean
+          description: Whether the source could be read. When false, nothing is compared.
+        checkedAt:
+          type: string
+          format: date-time
+
+    AdapterDescriptor:
+      type: object
+      description: A source adapter this deployment provides.
+      properties:
+        code:
+          type: string
+          description: The identifier a connection names.
+          example: http
+        name:
+          type: string
+          example: HTTP / REST API
+        capabilities:
+          type: object
+          description: What the adapter supports — for example whether it can fetch records by identifier.
+          additionalProperties: true
+        configFields:
+          type: array
+          description: The configuration fields a connection of this type expects.
+          items:
+            type: object
+            additionalProperties: true
+
+    ConfigDashboardRow:
+      type: object
+      description: One import configuration as it appears on the administration overview.
+      properties:
+        configId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        sourceType:
+          type: string
+          example: celonis
+        targets:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          description: The status of the most recent run.
+        lastRun:
+          type: string
+          format: date-time
+        nextRun:
+          type: string
+          format: date-time
+          description: When the schedule will next fire, or null when the job is not scheduled.
+        errorCount:
+          type: integer
+        enabled:
+          type: boolean
+        activeRunId:
+          type: string
+          format: uuid
+          description: The run currently executing, or null when none is.
+
+    HashDebug:
+      type: object
+      description: |-
+        Why a stream's records are being written again rather than skipped as unchanged. The stored hash
+        is the source content combined with a fingerprint of the mapping configuration; either half moving
+        defeats the skip.
+      properties:
+        streamId:
+          type: string
+          format: uuid
+        streamName:
+          type: string
+        targetEntity:
+          type: string
+          description: The target entities this stream can write under.
+        sourceEntity:
+          type: string
+          description: The source entity the sampled ledger rows are keyed by.
+        fingerprintNow:
+          type: string
+          description: The mapping fingerprint the stream's current configuration produces.
+        fingerprintByTargetType:
+          type: object
+          additionalProperties:
+            type: string
+        mappingCountByTargetType:
+          type: object
+          additionalProperties:
+            type: integer
+        mappingSchemaVersions:
+          type: object
+          additionalProperties:
+            type: integer
+        autoMap:
+          type: boolean
+        mappingCount:
+          type: integer
+        sampled:
+          type: integer
+          description: How many ledger rows were examined.
+        rowsWithStaleFingerprint:
+          type: integer
+          description: |-
+            How many sampled rows carry a different mapping fingerprint. When this equals the number
+            sampled, the cause is the configuration rather than the data.
+        verdict:
+          type: string
+          description: The reading in plain words, so the answer does not depend on interpreting counts.
+        rows:
+          type: array
+          description: The sampled ledger rows, with their stored hash split into its two halves.
+          items:
+            type: object
+            additionalProperties: true
     PurgeJob:
       type: object
       description: |-
