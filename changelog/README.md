@@ -31,7 +31,12 @@ layout:
 
 #### Overview
 
-The Cart Service adds an opt-in `POST /cart/{tenant}/carts/{cartId}/execute` endpoint that runs existing cart operations in one request while leaving cart, item, and discount endpoints unchanged. The cart id is the path parameter. A storefront can chain a write with `GetCart` without a second round trip. Request duration is the sum of the chained commands (at most 10), and the response is HTTP 207 with a `results` array. `versioning=explicit` preflights participating writes for `resourceVersion`, and `versioning=follow` keeps a cursor for that cart.
+The Cart Service adds an opt-in `POST /cart/{tenant}/carts/{cartId}/execute` endpoint that runs existing cart operations in one request
+while leaving cart, item, and discount endpoints unchanged. The cart ID is the path parameter. A storefront can chain a write operation
+with `GetCart` in a single request, avoiding an additional round trip. The request duration is the combined execution time of all chained
+commands, with a maximum of 10 commands per request. The response uses HTTP `207` and includes a results array containing the outcome of
+each command. The `versioning=explicit` preflights participating writes for `resourceVersion`, and `versioning=follow` keeps a cursor for
+that cart.
 
 #### New endpoints
 
