@@ -3,7 +3,7 @@ seo:
   title: Client Management Service events
   description: Webhooks, client management events
 icon: webhook
-description: Webhook events related to the creation, update and deletion of legal entity and assigning user to legal entity.
+description: Webhook events related to the creation, update, and deletion of a legal entity or location, and to assigning a user to a legal entity.
 ---
 
 # Events - Client Management
@@ -55,6 +55,29 @@ description: Webhook events related to the creation, update and deletion of lega
   "type": "String",
   "primary": "Boolean",
   "assignmentId": "String"
+}
+</code></pre></td></tr><tr><td>client-management.location-created</td><td><pre class="language-json"><code class="lang-json">{
+  "locationId": "String",
+  "name": "String",
+  "type": "String",
+  "contactDetails": "Object",
+  "mixins": "Map",
+  "metadata": "Object",
+  "tenant": "String"
+}
+</code></pre></td></tr><tr><td>client-management.location-updated</td><td><pre class="language-json"><code class="lang-json">{
+  "locationId": "String",
+  "name": "String",
+  "type": "String",
+  "contactDetails": "Object",
+  "mixins": "Map",
+  "metadata": "Object",
+  "previousLocation": "Object",
+  "tenant": "String"
+}
+</code></pre></td></tr><tr><td>client-management.location-deleted</td><td><pre class="language-json"><code class="lang-json">{
+  "locationId": "String",
+  "tenant": "String"
 }
 </code></pre></td></tr></tbody></table>
  

@@ -174,9 +174,423 @@ curl -L \
 
 You can use the retrieved details to establish the required connections and triggers for the AI Agent.
 
+## How to create an MCP server and attach it to an agent
+
+You can manage two types of tenant MCP servers through the API:
+
+* **Custom** (`type: custom`) – points to your own MCP implementation with a URL and transport. Use this to connect agents to an external system, such as an ERP.
+* **Dynamic** (`type: dynamic`) – defines `tools` inline. Each tool invokes an Emporix Cloud Function (`config.invocation.functionId`).
+
+The workflow is the same for both types: create the server, attach it to an agent, then verify. The examples below show requests for custom and dynamic MCP management.
+
+{% hint style="info" %}
+Emporix also provides predefined domain MCP servers (`type: predefined`) that you can attach to an agent. These domain MCP servers cannot be created through the API.
+{% endhint %}
+
+{% hint style="danger" %}
+**Dynamic MCP servers**
+This functionality is in preview mode - some of the features may not be fully operational yet.
+
+Hosting of Cloud Functions and the use of dynamic MCP servers are not included in standard billing plans and are billed separately on a pay-as-you-go basis. If you're interested in getting access to these features, contact the [Sales Team](mailto:support@emporix.com).
+
+For more details, see [Hosting](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/administration/hosting) and [Extension and Cloud Function Hosting](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/extension-hosting).
+{% endhint %}
+
+To follow this workflow:
+
+* The OAuth2 access token must include the `ai.agent_manage` scope to create and attach the server, and `ai.agent_read` to retrieve the results.
+* For a custom MCP server, you need a reachable MCP endpoint. Use `streamable_http` as the transport type. If the server requires authorization, create an AI token first with the [Upserting token](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/token#put-ai-service-tenant-agentic-tokens-tokenid) endpoint and pass its ID as `config.authorizationHeaderToken.id`.
+* For a dynamic MCP server, a Cloud Function must already exist on the tenant. See [Extension and Cloud Function Hosting](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/extension-hosting) and [Hosting](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/administration/hosting) in the Management Dashboard. Use that function's ID as `functionId`. When the server is enabled, the API validates each `functionId`. The request returns `400` if a referenced function does not exist on the tenant.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+{% stepper %}
+{% step %}
+#### Create the MCP server
+
+Call the [Upserting MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#put-ai-service-tenant-agentic-mcp-servers-mcpserverid) endpoint. The request replaces all existing data for that server ID. A successful create returns `201` with the server ID. A successful update returns `204`.
+
+{% tabs %}
+{% tab title="Custom" %}
+
+Set the `type` to `custom` (if omitted, it defaults to `custom`). Provide the values for `name`, `transport`, and `config.url`. The `config.authorizationHeaderName` and `config.authorizationHeaderToken` fields are optional. The created MCP server stays disabled at first (`enabled` defaults to `false` if omitted). To enable it, set `enabled` to `true`.
+
+```bash
+curl -L \
+  --request PUT \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/mcp-servers/mcp-custom' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "Custom MCP Server",
+    "type": "custom",
+    "transport": "streamable_http",
+    "enabled": true,
+    "config": {
+      "url": "https://example.com/mcp",
+      "authorizationHeaderName": "Authorization",
+      "authorizationHeaderToken": {
+        "id": "token-id"
+      }
+    }
+  }'
+```
+
+```
+{
+    "id": "mcp-custom"
+}
+```
+
+{% endtab %}
+
+{% tab title="Dynamic" %}
+
+Set the `type` to `dynamic` and provide the inline `tools`. The created MCP server stays disabled at first (`enabled` defaults to `false` if omitted). To enable it, set `enabled` to `true`.
+
+Each tool needs a unique `name` that contains only letters, numbers, and underscores, a `prompt` that tells the agent when to call it, and a `config` with:
+
+* `inputSchema` – a JSON Schema document provided as a JSON string
+* `invocation.functionId` and `invocation.method` – the Cloud Function to call and the HTTP method
+* `invocation.argsLocation` – `query` or `body`; defaults to `body` when omitted
+* `requiredScopes` – optional OAuth scopes required to invoke the tool (see [Cloud Function identity headers](#cloud-function-identity-headers))
+
+Each tool also stays disabled at first (`enabled` defaults to `false` if omitted). To enable a tool so the agent can call it, set `enabled` to `true`.
+
+```bash
+curl -L \
+  --request PUT \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/mcp-servers/mcp-dynamic' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "Dynamic MCP Server",
+    "type": "dynamic",
+    "enabled": true,
+    "tools": [
+      {
+        "name": "get_order",
+        "description": "Retrieves an order by ID.",
+        "prompt": "Use this tool when the user asks for order details.",
+        "enabled": true,
+        "config": {
+          "requiredScopes": [
+            "order.order_read"
+          ],
+          "inputSchema": "{\"type\":\"object\",\"properties\":{\"orderId\":{\"type\":\"string\"}},\"required\":[\"orderId\"]}",
+          "invocation": {
+            "functionId": "fn-get-order",
+            "method": "GET",
+            "argsLocation": "query"
+          }
+        }
+      }
+    ]
+  }'
+```
+
+```
+{
+    "id": "mcp-dynamic"
+}
+```
+
+{% endtab %}
+{% endtabs %}
+
+{% endstep %}
+
+{% step %}
+#### Attach the server to an agent
+
+Call the [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint to add the MCP server to an existing agent, for example an agent you created from a template. A successful request returns `204`.
+
+Use the same endpoint if you want to attach Emporix domain MCP servers (`type: predefined`) to an AI agent.
+
+{% tabs %}
+{% tab title="Custom" %}
+
+Set `type` to `custom` and pass the managed server ID in `mcpServer.id`.
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/complaint-agent' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "ADD",
+      "path": "/mcpServers",
+      "value": {
+        "type": "custom",
+        "mcpServer": {
+          "id": "mcp-custom"
+        }
+      }
+    }
+  ]'
+```
+
+{% endtab %}
+
+{% tab title="Dynamic" %}
+
+Set `type` to `dynamic` and pass the managed server ID in `mcpServer.id`. The `tools` array on the attachment is an optional allowlist of tool names from the dynamic MCP server. Omit `tools` to grant the agent all enabled tools on that server.
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/complaint-agent' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "ADD",
+      "path": "/mcpServers",
+      "value": {
+        "type": "dynamic",
+        "mcpServer": {
+          "id": "mcp-dynamic"
+        },
+        "tools": [
+          "get_order"
+        ]
+      }
+    }
+  ]'
+```
+
+{% endtab %}
+
+{% tab title="Predefined" %}
+
+Set the `type` to `predefined` and pass the Emporix domain. The `tools` array lists the tools from that domain MCP server that the agent uses.
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/complaint-agent' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "ADD",
+      "path": "/mcpServers",
+      "value": {
+        "type": "predefined",
+        "domain": "order",
+        "tools": [
+          "get-order",
+          "get-orders"
+        ]
+      }
+    }
+  ]'
+```
+
+The available `domain` values are `customer`, `extensibility`, `order`, `product`, or `frontend`.
+
+{% endtab %}
+{% endtabs %}
+
+If you replace the whole `mcpServers` array (`op: REPLACE` on `/mcpServers`), include any existing `predefined`, `custom`, or `dynamic` attachments you still need.
+
+You can also attach servers with the [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint. That `PUT` replaces the whole agent document. The body must include all required agent fields, including `userPrompt`, `triggers`, `llmConfig`, and `mcpServers`.
+{% endstep %}
+
+{% step %}
+#### Verify the attachment
+
+Call the [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) endpoint with `expand=mcpServers` to return the full `mcpServer` object for `custom` and `dynamic` attachments. Without `expand`, `mcpServer` typically contains only the `id`.
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/complaint-agent?expand=mcpServers' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Accept: application/json'
+```
+
+Listing and searching agents return the same `mcpServers` attachments, including `predefined`, and also support `expand=mcpServers`.
+
+To inspect the server itself, call the [Retrieving MCP server by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#get-ai-service-tenant-agentic-mcp-servers-mcpserverid) endpoint:
+
+{% tabs %}
+{% tab title="Custom" %}
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/mcp-servers/mcp-custom' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Accept: application/json'
+```
+
+{% endtab %}
+
+{% tab title="Dynamic" %}
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/mcp-servers/mcp-dynamic' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Accept: application/json'
+```
+
+The response includes the inline `tools`.
+
+{% endtab %}
+{% endtabs %}
+
+{% endstep %}
+
+{% step %}
+#### Update the MCP server
+
+Call the [Partially updating MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#patch-ai-service-tenant-agentic-mcp-servers-mcpserverid) endpoint. A successful request returns `204`.
+
+{% tabs %}
+{% tab title="Custom" %}
+
+For example, replace the server name:
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/mcp-servers/mcp-custom' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "REPLACE",
+      "path": "/name",
+      "value": "New Custom MCP Server"
+    }
+  ]'
+```
+
+You can also replace `config.url` in the same way.
+
+{% endtab %}
+
+{% tab title="Dynamic" %}
+
+For example, replace the tool list:
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/mcp-servers/mcp-dynamic' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "REPLACE",
+      "path": "/tools",
+      "value": [
+        {
+          "name": "get_order",
+          "prompt": "Use this tool to retrieve an order by ID.",
+          "enabled": true,
+          "config": {
+            "inputSchema": "{\"type\":\"object\",\"properties\":{\"orderId\":{\"type\":\"string\"}},\"required\":[\"orderId\"]}",
+            "invocation": {
+              "functionId": "fn-get-order",
+              "method": "GET",
+              "argsLocation": "query"
+            }
+          }
+        }
+      ]
+    }
+  ]'
+```
+
+{% endtab %}
+{% endtabs %}
+
+To set `enabled` to `false` when an enabled agent uses this MCP server, send `force=true` as a query parameter. The API then disables both the agent and the MCP server.
+
+{% endstep %}
+{% endstepper %}
+
+### Cloud Function identity headers
+
+When a tool on a dynamic MCP server runs, Emporix injects identity headers into the Cloud Function so the function can call Emporix APIs without embedding credentials.
+
+Emporix sets these headers on the function request:
+
+* `emporix-token` – Token used to call Emporix APIs. It is the HTTP caller's token, a token obtained from the commerce event trigger's `eventScopes`, or the token used by an external MCP client.
+* `emporix-tenant` – Always set. Identifies the tenant that invoked the function.
+* `emporix-scopes` – Scopes assigned to that token. Use it to see which resources the function can access.
+* `emporix-user-id` – Set for employee tokens on HTTP agent calls and for customer tokens. Not set for service tokens, commerce events, or external MCP clients.
+* `emporix-session-id` – Set when the tool runs inside an agent session.
+* `emporix-legal-entity-id` – Set only for customer tokens when the customer is assigned to a legal entity. Not set for service tokens, commerce events, or external MCP clients.
+
+For the full header table, see [Invoking cloud functions](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/extension-hosting#invoking-cloud-functions). For how these headers are set in the Management Dashboard, see [Cloud Function context for dynamic MCP tools](https://app.gitbook.com/s/8GgoeZEZYjZrpjOU6w52/agentic-intelligence/configuration/custom-mcp#cloud-function-context-for-dynamic-mcp-tools).
+
+## How to set event scopes for a commerce event trigger
+
+When a commerce event triggers an agent, for example `product.product-created`, there is no caller token to pass to a Cloud Function on a dynamic MCP server. Set `eventScopes` on the `commerce_events` trigger so AI Service can obtain an Emporix token with those IAM scopes and forward it as `emporix-token`.
+
+* If you omit `eventScopes` or leave it empty, the Cloud Function receives no `emporix-token`.
+* Each listed scope must be a scope the caller is allowed to grant.
+
+{% hint style="info" %}
+The `eventScopes` field is not the same as `requiredScopes`. On the agent, `requiredScopes` controls who may trigger the agent. On a dynamic MCP tool, `requiredScopes` controls who may invoke the tool.
+{% endhint %}
+
+The OAuth2 access token must include the `ai.agent_manage` scope.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+Call the [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint to add a commerce event trigger with `eventScopes`. A successful request returns `204`.
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/complaint-agent' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "ADD",
+      "path": "/triggers",
+      "value": {
+        "type": "commerce_events",
+        "config": {
+          "events": "product.product-created",
+          "eventScopes": [
+            "product.product_read"
+          ]
+        }
+      }
+    }
+  ]'
+```
+
+If the agent already has a `commerce_events` trigger, replace the `triggers` array and keep any other trigger types you still need, for example `endpoint`. You can also set `eventScopes` when you create or replace the whole agent with the [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint. That `PUT` replaces the whole agent document.
+
 ## How to communicate with an Agent
 
-For some Agents, it is convenient to trigger their actions by API calls. To allow communication with the selected agent, you can use the dedicated endpoints.
+For some Agents, it is convenient to trigger their actions by API calls. To allow communication with the selected agent, you can use the dedicated endpoints. If the agent has a custom, dynamic, or predefined MCP server attached, it can invoke those tools during the chat without extra fields in the request body.
+
+When the agent invokes a dynamic MCP tool during chat, Emporix forwards the caller's identity to the Cloud Function:
+
+* `emporix-token` – Token used to call the chat endpoint. The function has the same access as the agent's caller.
+* `emporix-scopes` – Always populated.
+* `emporix-user-id` – Set for employee tokens and for customer tokens.
+* `emporix-legal-entity-id` – Set for customer tokens when the customer is assigned to a legal entity.
+* `emporix-session-id` – Set when the chat runs in a session.
+
+See [Cloud Function identity headers](#cloud-function-identity-headers).
 
 {% hint style="info" %}
 Choose the chat endpoint based on how you want to receive the agent's response:
@@ -232,6 +646,8 @@ Choose the chat endpoint based on how you want to receive the agent's response:
   }
   ```
 
+  Save `sessionId` and send it as the `session-id` header when you need conversational continuity. See [How to reuse session memory in agent chat](#how-to-reuse-session-memory-in-agent-chat).
+
 * When you want progressive output as the agent's response is generated, stream the request to the [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) endpoint.
 
   ```bash
@@ -245,7 +661,54 @@ Choose the chat endpoint based on how you want to receive the agent's response:
   }'
   ```
 
-  The request body uses the same `agentId` and `message` fields as the synchronous chat request. The endpoint returns the response as a Server-Sent Events stream (`text/event-stream`), so clients receive incremental output instead of waiting for the full message.
+  The request body uses the same `agentId` and `message` fields as the synchronous chat request. The endpoint returns the response as a Server-Sent Events stream (`text/event-stream`). Each frame has an `event` name and a JSON object in `data`. Concatenate successive `token` `content` values to build the assistant reply. When present, save `session_id` from the `done` event and send it as the `session-id` header on later turns. See [How to reuse session memory in agent chat](#how-to-reuse-session-memory-in-agent-chat).
+
+  {% hint style="danger" %}
+  The `thinking` and `error` events are in preview mode - some of the features may not be fully operational yet.
+  {% endhint %}
+
+  Example stream:
+
+  ```
+  event: thinking
+  data: {"content":"Looking up delivery options for order EON1243."}
+
+  event: tool_start
+  data: {"tool_name":"get-quotes","tool_call_id":"call-1"}
+
+  event: tool_result
+  data: {"tool_name":"get-quotes","tool_call_id":"call-1","output":{"quotes":[{"id":"Q1"}]}}
+
+  event: tool_end
+  data: {"tool_name":"get-quotes","tool_call_id":"call-1"}
+
+  event: token
+  data: {"content":"Standard "}
+
+  event: token
+  data: {"content":"delivery is available for order EON1243."}
+
+  event: done
+  data: {"agent_id":"generic-agent","agent_type":"generic","session_id":"33a550d0-d812-4fb2-bb0d-d50dbfe3627b"}
+  ```
+
+  In this example, the user-facing reply is `Standard delivery is available for order EON1243.` The `thinking` event is optional reasoning and is not part of that reply unless the client displays it. An in-stream failure arrives as `event: error` with `message` and/or `code` in `data`, for example `{"code":"AGENT_SETUP","message":"Agent setup failed"}`. HTTP `400`, `401`, `403`, and `500` remain JSON problem bodies when the request is rejected before the stream starts.
+
+  Continue the same session on a later streaming turn:
+
+  ```bash
+  curl -N -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-stream' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: text/event-stream' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'session-id: 33a550d0-d812-4fb2-bb0d-d50dbfe3627b' \
+  -d '{
+      "agentId": "generic-agent",
+      "message": "What is the latest delivery date for that order?"
+  }'
+  ```
+
+  For the full event list and JSON `data` schemas, see [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream).
 
 * When it is more pragmatic to wait for the agent's response, for example, when the agent needs to process more data which takes more time, or the agent needs to wait for another task to be completed, use the asynchronous communication. Send the request to the agent using the [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async).
 
@@ -280,6 +743,86 @@ Choose the chat endpoint based on how you want to receive the agent's response:
 
   The job entity contains information about the request and response from the agent.
 
+## How to reuse session memory in agent chat
+
+Session memory keeps conversational data across chat turns within one `session-id`. Memory is opt-in per agent. Reusing the `session-id` header without enabling memory continues the session identity but does not store chat memory.
+
+The OAuth2 access token must include `ai.agent_manage` to set `enabledMemory` on the agent. Chat endpoints require `ai.agentexecution_manage_own` for customer callers, or `ai.agentexecution_manage` for employee and integration callers. Retrieving a session by ID requires `ai.agent_read`.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% stepper %}
+{% step %}
+#### Enable memory on the agent
+
+Set `enabledMemory` to `true` on the agent. The default is `false`. You can set the flag when you create or replace the agent with the [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint, or update an existing agent with the [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint.
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/complaint-agent' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "REPLACE",
+      "path": "/enabledMemory",
+      "value": true
+    }
+  ]'
+```
+
+A successful request returns `204`. To keep conversational memory for collaborations, repeat this for every collaboration target.
+{% endstep %}
+
+{% step %}
+#### Reuse the `session-id` header
+
+Call a chat endpoint, for example [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat). Save `sessionId` from the JSON response. On [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream), save `session_id` from the SSE `done` event. On later turns, send that value as the `session-id` header.
+
+The [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) and [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) endpoints use the same header.
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/chat' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --header 'session-id: 33a550d0-d812-4fb2-bb0d-d50dbfe3627b' \
+  --data '{
+    "agentId": "complaint-agent",
+    "message": "Use the same customer as in my previous request."
+  }'
+```
+
+If you omit `session-id` on a follow-up call, the API starts a new session.
+{% endstep %}
+
+{% step %}
+#### Keep collaborations in the same session
+
+If the agent lists `agentCollaborations`, those collaborations stay in the caller's session. To keep conversational memory across those agents, it is recommended to set the flag to `true` on the calling agent (the supervisor) and each collaboration target. Listing an agent in `agentCollaborations` does not enable memory for it.
+
+When `enabledMemory` is `false`, the supervisor has no stored conversation history to pass to a hand-off agent. State in the supervisor `userPrompt` the exact information to forward, such as an order ID, customer number, or complaint details. Incomplete or ambiguous instructions result in extra collaboration cycles between the supervisor and the called agent until the required context is available.
+
+To inspect which agents participated, call the [Retrieving agent session by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions-sessionid) endpoint.
+
+```bash
+curl -L \
+  --request GET \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/logs/sessions/33a550d0-d812-4fb2-bb0d-d50dbfe3627b' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Accept: application/json'
+```
+
+A successful response includes `agents`, the list of agent IDs that participated in the session. For the supervisor collaboration model, see [Agents collaboration](https://developer.emporix.io/agentic-commerce-intelligence/agentic-intelligence/best-practices#agents-collaboration).
+{% endstep %}
+{% endstepper %}
+
+{% hint style="info" %}
+This `session-id` is the AI Service conversation key. It is not the Session Context `session-id` or the cart `session-id`. The same value also scopes attachments and is forwarded as `emporix-session-id` when a tool runs inside an agent session. See [How to pass a media file for the agents to process](#how-to-pass-a-media-file-for-the-agents-to-process).
+{% endhint %}
+
 ## How to pass a media file for the agents to process
 
 Agents are able to retrieve data from media attachments and use that data to execute some steps or pass it over to other agents to process. You can attach media files and then use them in the agent chat. 
@@ -293,10 +836,20 @@ The following MIME types are supported:
 
 Media file size can be up to 10 MB.
 
+The later chat request must send the same `sessionId` as the upload. The chat `agentId` must be an agent that already has the attachment assigned:
+
+* `agentId` – The path parameter of [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) must match `agentId` in the chat request body. After reuse, match the target agent instead.
+* `sessionId` – Send the upload response value as the `session-id` header on the chat request.
+
+This pairing applies to [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat), [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream), and [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async). 
+
+To use the file with a different agent, first assign the attachment to that agent. See [Reuse an attachment with another agent](#reuse-an-attachment-with-another-agent).
+
 {% stepper %}
 {% step %}
-### Upload a file to an agent
-To upload a file to an agent, use the dedicated [Uploading attachments to agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentId-attachments)
+#### Upload a file to an agent
+
+To upload a file to an agent, use the dedicated [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) endpoint. The `agentId` in the path assigns the file to that agent.
 
 ```bash
 curl -L \
@@ -308,7 +861,7 @@ curl -L \
 
 ```
 
-The successful response returns an attachment `id` and a `sessionId` that scopes the upload to your chat session. Save both values as you need them when you call agent chat in the subsequent step. 
+The successful response returns an attachment `id` and a `sessionId` that scopes the upload to your chat session. Save both values. You need them when you call agent chat in the next step. Use the same `{agentId}` in the chat body. The same `session-id` is required for attachments and for session memory. See [How to reuse session memory in agent chat](#how-to-reuse-session-memory-in-agent-chat).
 
 How the `sessionId` in the response is set:
 * If you send a `session-id` header on the upload request (optional), the response returns the exact same value.
@@ -338,8 +891,9 @@ Attaching a media file of an unsupported type results in the `400` error, for ex
 {% endstep %}
 
 {% step %}
-### Refer to the attachment in agent chat
-The agent already has access to the attached file. Now you can point to it and give additional instructions in the agent chat request. Call the agent, for example with the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) endpoint. Include the upload `id` as the `attachmentId` parameter in the request body and provide the `session-id` in the header to ensure secure access to the attachment:
+#### Refer to the attachment in agent chat
+
+The file is assigned to the agent. In the chat request, reference it and add any extra instructions. Call the agent, for example with the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) endpoint. Include the upload `id` as `attachments[].attachmentId` in the request body. Send the same `session-id` header and the same `agentId` as the upload path:
 
 ```bash
 curl -L \
@@ -349,19 +903,53 @@ curl -L \
   --header 'Content-Type: application/json' \
   --header 'session-id: bdec151b-303f-4344-b41d-ccf307fb7907' \
   --data '{
-    "agentId": "order-assistant-agent",
+    "agentId": "{agentId}",
     "message": "Find products or equivalents from the attached order request and create an order for the customer",
     "attachments": [
       {
         "attachmentId": "6a1d5961a8c0af22364a2c54",
         "caption": "Order Request",
-        "purpose": "Serves as basis to create an order with the data, customer and products mentioned in the file."
+        "purpose": "Serves as a basis to create an order with the data, customer, and products mentioned in the file."
       }
     ]
   }'
 ```
 
-The agent now can process the data according to its rules and code of conduct.
+The agent can now process the data according to its rules and code of conduct.
+
+If the chat `agentId` does not match the agent that received the upload, the request returns `400`:
+
+```
+{
+    "resourceId": null,
+    "message": "Agent chat attachment with id=6a1d5961a8c0af22364a2c54 cannot be used to chat with agentId=complaint-agent",
+    "code": 400,
+    "status": "Bad Request",
+    "details": []
+}
+```
+{% endstep %}
+
+{% step %}
+#### Reuse an attachment with another agent
+
+To assign existing media to an agent, call [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) with `attachmentId` instead of a file. Put the target agent's `agentId` in the path. Send `attachmentId` in an `application/json` body. The `attachmentId` form field is also supported. The response is `200` with the attachment `id` and `sessionId`. If you omit the `session-id` header, save the `sessionId` from the response for later chat requests.
+
+With the `ai.agentexecution_manage` scope, `attachmentId` can be any existing media asset. The asset does not have to belong to the session. With only the `ai.agentexecution_manage_own` scope, the attachment must already belong to the `session-id` session.
+
+AI Service adds an `AGENT` reference on the media asset. After this call, chat with the new `agentId`, the returned `sessionId` as the `session-id` header, and the same `attachments[].attachmentId`.
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/{agentId}/attachments' \
+  --header 'Content-Type: application/json' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'session-id: bdec151b-303f-4344-b41d-ccf307fb7907' \
+  --data '{
+    "attachmentId": "6a1d5961a8c0af22364a2c54"
+  }'
+```
 {% endstep %}
 {% endstepper %}
 

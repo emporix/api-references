@@ -45,7 +45,7 @@ These entities support mixin schema creation through the [Schema Service API](..
 
 ### Additional mixin support 
 These services accept mixins in their API requests and responses, but require manually created JSON schemas (not supported through Schema Service schema creation):
-- **Customer and Item Assignments** - Customer Segments Service
+- **Customer, Item, and Group Assignments** - Customer Segments Service
 - **Customer Segments** - Customer Segments Service
 - **Groups** - IAM Service (supports `mixins` field directly, without `metadata.mixins`)
 - **Locations and Contact Assignment** - Client Management Service 
@@ -166,4 +166,17 @@ curl -i -X PATCH \
     }
   }
 ```
- 
+
+## Updating and removing mixins
+
+How you update or remove mixins depends on the API.
+
+### Product Service
+
+The [Partially updating a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint keeps mixin names that you omit from the request. It merges sent mixin fields recursively. A `null` value does not remove a mixin.
+
+To remove a mixin, retrieve the product and send a full replacement to the [Upserting a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint with `partial=false`. Omit the mixin from `mixins` and `metadata.mixins`. For the full procedure, see [How to update product mixins](../products-labels-and-brands/product-service/product.md#how-to-update-product-mixins).
+
+### Quote Service and Schema Service
+
+The [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid) and [Patching a custom instance](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#patch-schema-tenant-custom-entities-type-instances-id) endpoints use `add`, `replace`, and `remove` operations on mixin paths. You can send the operation names in lowercase or uppercase. Both endpoints can remove a mixin without replacing the entire resource.

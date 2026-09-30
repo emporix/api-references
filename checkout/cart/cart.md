@@ -27,6 +27,10 @@ layout:
 
 # Cart Tutorial
 
+The Cart Service stores the products a customer intends to buy and calculates prices, shipping estimates, fees, tax, and discounts on that cart.
+
+This tutorial shows how to create and update carts, add items and custom attributes, merge carts, and work with those cart-level calculations.
+
 ## How to create a new cart
 
 {% stepper %}
@@ -60,6 +64,360 @@ curl -i -X POST
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
+## How to add an item and retrieve the calculated cart in one request
+
+Use [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) to add an item and retrieve the calculated cart in one HTTP request. The existing two-call sequence of [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) then [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) still works. The cart id is the path parameter.
+
+{% hint style="warning" %}
+Request duration is the sum of the chained commands. Set client and API gateway timeouts to cover the full chain, especially when `GetCart` runs cart calculation.
+{% endhint %}
+
+One `/execute` request uses one `session-id` and one `legal-entity-id`. Commands cannot override those headers. To act as a different session or legal entity, send another request. The default `versioning=skip` value ignores `options.resourceVersion`.
+
+### Prerequisites
+
+* An existing cart ID (`cartId`)
+* A customer access token, or a service token with `cart.cart_manage`
+* `cart.cart_manage_external_prices` – required when a command includes an external price, product, fee, or discount
+* `session-id` – required for an anonymous cart
+
+{% stepper %}
+{% step %}
+#### Send AddCartItem and GetCart in one request
+
+Send `AddCartItem`, then send `GetCart` with `expandCalculation` set to `true`. The 207 `results` array contains the created item and the calculated cart, so you do not need a follow-up GET unless you want a later refresh.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/execute?onError=fail' \
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -H 'session-id: 4f8a2c1e9b7d6a0c3e5f8b12' \
+  -d '{
+    "commands": [
+      {
+        "type": "AddCartItem",
+        "data": {
+          "itemYrn": "urn:yaas:saasag:caasproduct:product:yourTenant;mobile-phone-s24-gross",
+          "quantity": 2,
+          "price": {
+            "priceId": "679ca63dbcdefe5b380c98bc",
+            "originalAmount": 350,
+            "effectiveAmount": 350,
+            "currency": "EUR"
+          }
+        }
+      },
+      {
+        "type": "GetCart",
+        "options": {
+          "expandCalculation": true
+        }
+      }
+    ]
+  }'
+```
+{% endstep %}
+
+{% step %}
+#### Read the 207 results
+
+The HTTP status is 207 Multi-Status when the chain is accepted. `results` is ordered. `results[0].data` is the same JSON as `POST .../items` (`itemId`, `yrn`). With default `versioning=skip`, that result has no `hybris-resource-version` header. `results[1].data` is the same JSON as `GET .../carts/{cartId}` including item `calculatedPrice`.
+
+```json
+{
+  "results": [
+    {
+      "index": 0,
+      "type": "AddCartItem",
+      "code": 201,
+      "status": "Created",
+      "data": {
+        "itemId": "3",
+        "yrn": "urn:yaas:saasag:caascart:item:yourTenant;6a86b20c2f5961330a8b3eb6;3"
+      }
+    },
+    {
+      "index": 1,
+      "type": "GetCart",
+      "code": 200,
+      "status": "OK",
+      "data": {
+        "id": "6a86b20c2f5961330a8b3eb6",
+        "items": [
+          {
+            "id": "3",
+            "quantity": 2,
+            "calculatedPrice": {
+              "price": {
+                "netValue": 588.235,
+                "grossValue": 700,
+                "taxValue": 111.765,
+                "taxCode": "STANDARD",
+                "taxRate": 19,
+                "calculated": "INTERNAL"
+              },
+              "finalPrice": {
+                "netValue": 588.235,
+                "grossValue": 700,
+                "taxValue": 111.765,
+                "taxCode": "STANDARD",
+                "taxRate": 19,
+                "calculated": "INTERNAL"
+              }
+            }
+          }
+        ],
+        "calculatedPrice": {
+          "price": {
+            "netValue": 588.235,
+            "grossValue": 700,
+            "taxValue": 111.765
+          },
+          "finalPrice": {
+            "netValue": 588.235,
+            "grossValue": 700,
+            "taxValue": 111.765
+          }
+        }
+      }
+    }
+  ]
+}
+```
+{% endstep %}
+{% endstepper %}
+
+{% hint style="info" %}
+For request-level validation rules, see [Whole-request validation errors](#whole-request-validation-errors). `onError=fail` treats command
+`code` 207 as success. `UpdateCartItemsBatch` always returns `207`, even when every entry failed, so inspect `data[].status`.
+{% endhint %}
+
+{% hint style="info" %}
+On a different chain (`AddCartItem` then a missing `UpdateCartItem`), `onError=fail` omits later commands from `results` after the first non-2xx command. Earlier successful mutations stay committed:
+
+```json
+{
+  "results": [
+    {
+      "index": 0,
+      "type": "AddCartItem",
+      "code": 201,
+      "status": "Created",
+      "data": {
+        "itemId": "3",
+        "yrn": "urn:yaas:saasag:caascart:item:yourTenant;6a86b20c2f5961330a8b3eb6;3"
+      }
+    },
+    {
+      "index": 1,
+      "type": "UpdateCartItem",
+      "code": 404,
+      "status": "Not Found",
+      "data": {
+        "code": 404,
+        "status": "Not Found",
+        "message": "Cart item not found in cart 6a86b20c2f5961330a8b3eb6 with code 9"
+      }
+    }
+  ]
+}
+```
+{% endhint %}
+
+### Command types
+
+Each command has a `type`, optional `data` (the REST request body), and `options`. Option fields are the remaining path and query
+equivalents of the REST operation. Commands do not send `cartId`, session, or legal-entity fields.
+
+| `type` | `data` | `options` | REST equivalent | Success `code` / `data` |
+|---|---|---|---|---|
+| `AddCartItem` | Item body | optional `resourceVersion`. Does not take `siteCode`; the cart already stores it. | `POST /cart/{tenant}/carts/{cartId}/items` | 201 `{itemId, yrn}` |
+| `UpdateCartItem` | Item update body | `itemId`, `partial`, optional `resourceVersion` | `PUT /cart/{tenant}/carts/{cartId}/items/{itemId}` | 204, no `data` |
+| `DeleteCartItem` | none | `itemId` | `DELETE /cart/{tenant}/carts/{cartId}/items/{itemId}` | 204 |
+| `DeleteCartItems` | none | none | `DELETE /cart/{tenant}/carts/{cartId}/items` | 204 |
+| `GetCart` | none | `expandCalculation` (default `true`), `zipCode`, `countryCode` | `GET /cart/{tenant}/carts/{cartId}` | 200 full cart |
+| `AddCartItemsBatch` | List of item bodies | none | `POST /cart/{tenant}/carts/{cartId}/itemsBatch` | Same mixed status as REST; `data` is the batch entry list |
+| `UpdateCartItemsBatch` | List of item updates (max 50) | `partial` | `PUT /cart/{tenant}/carts/{cartId}/itemsBatch` | Command `code` 207; `data` is the entry list |
+| `UpdateCart` | Cart update body | optional `resourceVersion` | `PUT /cart/{tenant}/carts/{cartId}` | 204, no `data` |
+| `ApplyCartDiscount` | Discount body | optional `resourceVersion` | `POST /cart/{tenant}/carts/{cartId}/discounts` | 201 applied discount |
+| `GetCartDiscounts` | none | none | `GET /cart/{tenant}/carts/{cartId}/discounts` | 200 list of discounts |
+| `DeleteCartDiscounts` | none | optional `codes` | `DELETE /cart/{tenant}/carts/{cartId}/discounts` | 204 |
+| `DeleteCartDiscount` | none | `discountIndex` | `DELETE /cart/{tenant}/carts/{cartId}/discounts/{discountIndex}` | 204 |
+| `RefreshCart` | none | none | `PUT /cart/{tenant}/carts/{cartId}/refresh` | 204 |
+| `ValidateCart` | none | none | `GET /cart/{tenant}/carts/{cartId}/validate` | 200 cart validation result |
+
+Creating or deleting carts, merging carts, changing the site or currency, searching, and retrieving cart items are not supported command
+operations in this release.
+
+The chain accepts at most 10 commands. A `commands` array of 1 through 10 items is valid. 11 or more commands return **400** and no
+command runs. An empty `commands` array also returns **400**. This cap is independent of the `UpdateCartItemsBatch` payload limit of 50.
+
+### Error handling
+
+* `fail` (default) – stops after the first non-2xx command. `results` contains only the commands that ran, including the failed one.
+  Earlier successful mutations stay committed. A command `code` of `207` counts as success for `onError`. `UpdateCartItemsBatch` always
+  returns 207, even when every entry failed, so `fail` continues. Inspect `data[].status`. `AddCartItemsBatch` uses a mixed global status
+  (400 or 500) so `fail` does stop.
+* `resume` – runs every command. Later commands still see earlier successful mutations.
+
+When the chain is accepted, the HTTP status is always **207 Multi-Status**, including all-2xx chains and including a command whose `code`
+is 409. `results` is ordered. Each `data` field is the same JSON the equivalent endpoint would return. Commands that return 204 omit
+`data`. Failures put the existing error shape (`code`, `status`, `message`) in `data`. A conflict stays inside that 207 body as command
+`code` 409. The execute call itself does not return HTTP 409.
+
+When a participating write applied If-Match, `headers` contains `hybris-resource-version` set to the version after the write (the version
+that was sent, plus 1). `versioning=skip` does not send If-Match, so that header is absent. `AddCartItemsBatch` sets each
+`data[].headers.location` the same way as REST `POST .../itemsBatch`. `UpdateCartItemsBatch` can use command `code` 207; that value is an
+entry in `results`, and the outer execute response is still one 207.
+
+### Session and legal entity
+
+`session-id` and `legal-entity-id` are request headers shared by every command. Commands cannot override them. One `/execute` call is one
+shopper context. To act as a different session or legal entity, send another request. A B2B legal-entity switch remains a token refresh,
+not a per-command header.
+
+Authorization is checked per command, the same as the equivalent REST calls, not as a preflight for the whole chain. A storefront token
+without `cart.cart_manage` can run commands only on a cart it owns. A service token with `cart.cart_manage` can touch any cart in the
+tenant, the same as two separate REST calls. `cart.cart_manage_external_prices` is required when a command payload includes an external
+price, product, fee, or discount.
+
+### Versioning
+
+`/execute` reuses the existing If-Match mechanism on REST writes. On execute, the version is `options.resourceVersion` plus a request-level
+`versioning` query parameter. A single execute-level If-Match would make the second write on the same cart fail the version check, because
+the client submits the whole command array at once and cannot see command 1’s result before composing command 2.
+
+Participating writes (send If-Match and bump the follow cursor): `AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`. For
+`versioning=follow` or `versioning=explicit`, set `options.resourceVersion` on the first participating write to the cart
+`metadata.version` from `GET /cart/{tenant}/carts/{cartId}` or a prior `GetCart`.
+
+`GetCart` and `ValidateCart` do not send If-Match and do not bump the cursor. They cannot seed it. Extra `resourceVersion` on these
+commands is ignored.
+
+After a follow cursor exists for the cart, a successful `RefreshCart`, delete, or itemsBatch also bumps that cursor. Those commands cannot
+seed the cursor. Extra `resourceVersion` on them is ignored.
+
+* `skip` (default) – never passes a version. Ignores `options.resourceVersion` if present. The add-then-GET storefront flow uses this.
+* `explicit` – every participating command must send `options.resourceVersion`. The service checks the whole `commands` array before
+  command 1. If any participating write is missing a version, the request returns **400** and `results` is not returned. Nothing is
+  mutated. `explicit` is not `skip`: omitting `resourceVersion` on a participating write is a client error, not a last-write-wins
+  strategy. Later commands are not rewritten; the client pre-computes `N`, `N+1`, and so on. The same `N` on two writes after a valid
+  preflight yields command `code` 409 on the second command; the execute HTTP status stays 207 and the first write stays committed.
+  `GetCart`, `ValidateCart`, `RefreshCart`, deletes, and itemsBatch do not require a version. A chain of only those commands has no
+  participating writes, so preflight passes. Mixing `explicit` and `skip` behavior for different writes in one request is not supported;
+  use `skip` or two requests.
+* `follow` – seeds from the first participating write. After that write succeeds, later participating writes use the version that was
+  sent, plus 1. Follow state is an internal cursor and is not part of the HTTP body.
+
+`follow` rules:
+
+* The first participating write must have `options.resourceVersion`. Missing version returns **400 for that command** (not a
+  whole-request preflight).
+* Later participating `follow` writes omit `resourceVersion`. A differing value versus the cursor returns **400** for that command. A
+  matching value is accepted.
+* The bump is `+1`, the same as REST, for participating writes. After the cursor is seeded, a successful `RefreshCart`, delete, or
+  itemsBatch also bumps it. A concurrent REST or `/execute` conflict is command `code` 409 inside the 207 body.
+* `GetCart` and `ValidateCart` do not bump the cursor and do not seed it.
+* If a write returns 409, the cursor does not bump. `onError=fail` stops; `resume` leaves later writes trying the old cursor.
+
+For an example, see [How to follow cart resource versions in a command chain](#how-to-follow-cart-resource-versions-in-a-command-chain).
+
+Sequential commands run one after another. A concurrent REST or `/execute` conflict on the same cart is command `code` 409 inside the
+207 body. A lock is not held across the whole chain.
+
+### Whole-request validation errors
+
+The following fail with **400** for the entire call (not 207) before any command runs:
+
+* empty `commands` or more than 10 commands
+* unknown `type`
+* invalid `onError` or `versioning` query value
+* `versioning=explicit` with a participating command missing `resourceVersion`
+* request-body Bean Validation failures (for example a missing `options.itemId` or an invalid `zipCode` length). The response is the
+  error body. `results` is not returned. This is schema-invalid for the whole request, not a per-command 400.
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+## How to follow cart resource versions in a command chain
+
+`versioning=follow` keeps an internal version cursor for the cart identified by `{cartId}`. Set `options.resourceVersion` on the first participating write (`AddCartItem`, `UpdateCartItem`, `UpdateCart`, `ApplyCartDiscount`) to seed that cursor, then omit `resourceVersion` on later writes. `GetCart` and `ValidateCart` do not send If-Match and do not bump the cursor. After a cursor exists, a successful `RefreshCart`, delete, or itemsBatch also bumps it.
+
+Use `versioning=explicit` only when every participating write sends `resourceVersion`. A missing version on `explicit` returns `400` for the whole request. That is a client error, not a last-write-wins strategy.
+
+{% stepper %}
+{% step %}
+#### Read `metadata.version` from the cart
+
+Call [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) to read `metadata.version`. Use that value as `options.resourceVersion` on the first participating write. You can also take it from a prior `GetCart`.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}' \
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}'
+```
+
+```json
+{
+  "id": "6a86b20c2f5961330a8b3eb6",
+  "metadata": {
+    "version": 5
+  }
+}
+```
+{% endstep %}
+
+{% step %}
+#### Send the follow chain
+
+Send [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) with `versioning=follow`. Set `options.resourceVersion` on the first participating write to the `metadata.version` you read, and omit `resourceVersion` on later writes.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}/execute?onError=fail&versioning=follow' \
+  -H 'Authorization: Bearer {{CUSTOMER_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "commands": [
+      {
+        "type": "UpdateCartItem",
+        "data": { "quantity": 2 },
+        "options": { "itemId": "1", "resourceVersion": 5 }
+      },
+      {
+        "type": "UpdateCartItem",
+        "data": { "quantity": 1 },
+        "options": { "itemId": "2" }
+      },
+      {
+        "type": "GetCart",
+        "options": { "expandCalculation": true }
+      },
+      {
+        "type": "UpdateCartItem",
+        "data": { "quantity": 3 },
+        "options": { "itemId": "3" }
+      }
+    ]
+  }'
+```
+
+Cursor: PUT item 1 uses `5` and stores `6`; PUT item 2 uses `6` and stores `7`; GetCart leaves the cursor at `7`; PUT item 3 uses `7` and stores `8`.
+{% endstep %}
+{% endstepper %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
 ## How to add custom attributes to a cart
 
 You can define custom attributes for a cart through `mixins`.
@@ -68,30 +426,61 @@ You can define custom attributes for a cart through `mixins`.
 {% step %}
 #### Define your custom attributes schema
 
-First, define your custom attributes schema in the form of a JSON schema.
+Create a schema that defines the custom cart fields by sending a request to the [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) endpoint.
 
-```json
-{
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "type": "object",
-    "properties": {
-      "cartInstructions": {
-        "type": "object",
-        "properties": {
-          "instruction": {
-            "type": "string"
-            }
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/schema/{tenant}/schemas' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": {
+      "en": "Cart instructions"
+    },
+    "types": [
+      "CART"
+    ],
+    "attributes": [
+      {
+        "key": "cartInstructions",
+        "name": {
+          "en": "Cart instructions"
+        },
+        "description": {
+          "en": "Delivery instructions for the cart."
+        },
+        "type": "OBJECT",
+        "metadata": {},
+        "attributes": [
+          {
+            "key": "instruction",
+            "name": {
+              "en": "Instruction"
+            },
+            "type": "TEXT",
+            "metadata": {}
           }
+        ]
       }
-    }
-}
+    ]
+  }'
 ```
 {% endstep %}
 
 {% step %}
-#### Upload schema
+#### Retrieve the schema URL
 
-Upload your schema to a hosting service and save its URL.
+Retrieve the created schema to get the schema URL by calling the [Retrieving a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-id) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/schema/{tenant}/schemas/{id}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
 {% endstep %}
 
 {% step %}
@@ -100,14 +489,13 @@ Upload your schema to a hosting service and save its URL.
 To add custom attributes to a cart, send a request to the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
 ```bash
-curl -i -X PUT 
-  'https://api.emporix.io/cart/{tenant}/carts/{cartId}' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Type: application/json' 
+curl -i -X PUT \
+  'https://api.emporix.io/cart/{tenant}/carts/{cartId}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
   "customerId": "87413250",
   "currency": "EUR",
-  "deliveryWindowId": "60006da77ec20a807cd6f065",
   "type": "shopping",
   "zipCode": "10115",
   "countryCode": "DE",
@@ -2163,36 +2551,160 @@ See the sections below for shipping, payment fee, tax and discounts calculations
 
 ## How to calculate shipping cost at cart level
 
-The shipping calculation depends on the stage at which it is performed.
+Shipping is calculated at two moments, depending on the stage at which it is performed.
 
-* In the cart, where the delivery method and zone are not yet available, the calculation uses the minimum shipping estimate. At this stage, `sites.homeBase.Address` is used as the `shipFromAddress`.
-*   The `shipToAddress` is determined in the following way:
+* On the cart, Cart Service calculates an **estimate**: the cheapest matching fee for this destination, or the fee for a delivery slot. The customer sees a preview amount. No method is selected.
+* At checkout, Checkout Service uses a **quote**: the list of methods and fees for a destination. The customer chooses a method and zone, and sees the amount that is charged.
 
-    * cart address with origin `REQUEST` and type `SHIPPING`
-    * cart `countryCode` and `zipCode` — kept for backward compatibility from when it was not possible to define addresses at the cart level
-    * cart address with origin `LEGAL_ENTITY`, `CUSTOMER`, or `SITE`, and type `SHIPPING`
+Both answers come from Shipping Service configuration (zones, methods, and fees). The cart amount is a real estimate, not a placeholder. Cart Service does not send a method or zone, and it never calls `POST /quote`.
 
-    When an address is not explicitly provided in the request, the Cart Service automatically populates it based on the following priority order:
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128"
+    edgeLabelTextColor: "#4C5359"
+---
+graph TD
+    shopper(Shopper)
 
-    1. **Legal Entity Address** — If the cart is associated with a legal entity, the first location containing both `country`, `zipCode`, and the required address type is used (origin: `LEGAL_ENTITY`).
-    2. **Customer Address** — If the cart has a logged-in customer, the default address matching the required type is used (origin: `CUSTOMER`).
-    3. **Site Homebase Address** — If none of the above are available, the site's homebase address is used (origin: `SITE`).
+    subgraph cartStage [Cart stage: preview]
+        cartApi("Cart Service GET or PUT cart")
+        minQuote("Shipping Service POST /quote/minimum")
+        slotQuote("Shipping Service POST /quote/slot")
+        cartTotal("Cart shows estimated shipping")
+    end
 
-    See the [Calculating the minimum shipping costs](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) endpoint.
-* In the checkout, where information about the delivery window and zone is already available, the calculation uses the following endpoints: [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote), or [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) accordingly.
+    subgraph checkoutStage [Checkout stage: final charge]
+        listMethods("Storefront POST /quote")
+        pickMethod("Shopper picks method and zone")
+        checkoutApi("Checkout Service POST /checkouts/order")
+        finalQuote("Shipping Service POST /quote")
+        validate("Checkout checks submitted amount")
+        orderCreated("Order is created")
+    end
+
+    shopper --> cartApi
+    cartApi -->|"no delivery window"| minQuote
+    cartApi -->|"delivery window and slot"| slotQuote
+    minQuote --> cartTotal
+    slotQuote --> cartTotal
+
+    shopper --> listMethods
+    listMethods --> pickMethod
+    pickMethod --> checkoutApi
+    checkoutApi --> finalQuote
+    finalQuote --> validate
+    validate --> orderCreated
+
+    style shopper fill:#A1BDDC, stroke:#4C5359
+    style cartApi fill:#DDE6EE, stroke:#4C5359
+    style minQuote fill:#F2F6FA, stroke:#4C5359
+    style slotQuote fill:#F2F6FA, stroke:#4C5359
+    style cartTotal fill:#DDE6EE, stroke:#4C5359
+    style listMethods fill:#A1BDDC, stroke:#4C5359
+    style pickMethod fill:#A1BDDC, stroke:#4C5359
+    style checkoutApi fill:#DDE6EE, stroke:#4C5359
+    style finalQuote fill:#F2F6FA, stroke:#4C5359
+    style validate fill:#DDE6EE, stroke:#4C5359
+    style orderCreated fill:#DDE6EE, stroke:#4C5359
+```
 
 {% hint style="danger" %}
 Always make sure that your site’s `homeBase.address` has the `country` and `zip-code` information included. It's mandatory for shipping calculations.
 {% endhint %}
 
+### On the cart: estimated shipping
+
+While the customer is still shopping, they have usually not chosen a delivery method and zone yet. Cart Service therefore calculates an **estimate**, not a final charge.
+
+* The shipment is always treated as coming from `sites.homeBase.address`.
+* The destination is the cart shipping address, or `countryCode` and `zipCode` if that is all that is available.
+* If no destination was provided, Cart Service fills one in this order:
+
+    1. **Legal entity address** – If the cart is associated with a legal entity, the first location containing `country`, `zipCode`, and the required address type is used (origin: `LEGAL_ENTITY`).
+    2. **Customer address** – If the cart has a logged-in customer, the default address matching the required type is used (origin: `CUSTOMER`).
+    3. **Site home base address** – If none of the above are available, the site's home base address is used (origin: `SITE`).
+
+The `shipToAddress` is determined in the following way:
+
+* cart address with origin `REQUEST` and type `SHIPPING`
+* cart `countryCode` and `zipCode` — kept for backward compatibility from when it was not possible to define addresses at the cart level
+* cart address with origin `LEGAL_ENTITY`, `CUSTOMER`, or `SITE`, and type `SHIPPING`
+
+Cart Service then calls Shipping Service:
+
+* [Calculating the minimum shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) (`POST /shipping/{tenant}/{site}/quote/minimum`) when no delivery window is set
+* [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) (`POST /shipping/{tenant}/{site}/quote/slot`) when the cart has a delivery window and a slot
+
+When no delivery window is set, Cart Service sends a request to the [Calculating the minimum shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/shipping/{tenant}/{site}/quote/minimum' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "customerId": "8765472",
+    "cartTotal": {
+      "amount": 85.00,
+      "currency": "EUR"
+    },
+    "shipFromAddress": {
+      "street": "Fritz-Elsas-Straße",
+      "streetNumber": "20",
+      "zipCode": "70173",
+      "city": "Stuttgart",
+      "country": "DE"
+    },
+    "shipToAddress": {
+      "zipCode": "10115",
+      "country": "DE"
+    }
+  }'
+```
+
+The response is a single fee, not a list of methods. That amount appears on the cart as shipping:
+
+```json
+{
+  "fee": {
+    "amount": 4.90,
+    "currency": "EUR"
+  }
+}
+```
+
+The storefront does not call Shipping Service for the cart preview. Cart Service requests the estimate when the cart has a destination. Provide that destination as an address of type `SHIPPING` when you have one — the address uses `country` and `zipCode`. If you only have a country and postal code, set cart-level `countryCode` and `zipCode` instead. Do not assign a shipping method.
+
+The storefront calls these public Cart APIs:
+
+* [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) (`GET /cart/{tenant}/carts/{cartId}`)
+* [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) (`PUT /cart/{tenant}/carts/{cartId}`)
+
 {% hint style="warning" %}
-Shipping costs are typically calculated during checkout, and not automatically on the cart object alone.
+Do not write `methodId`, `zoneId`, or a shipping amount to the cart. The cart model has no field for shipping method selection. Send the selected method and zone in the checkout request `shipping` object. See [Checkout Tutorial](../../checkout/checkout/checkout.md).
 {% endhint %}
 
-To get the shipping costs calculated and shown at the cart level, update the cart with shipping information. That means, provide an address of type `SHIPPING` to the cart and then assign a valid shipping method to the cart so that it can trigger the shipping cost calculation.
+### Optional: refine the estimate with a delivery slot
+
+Use these steps when you want a slot-specific shipping estimate on the cart. The storefront retrieves available delivery windows, puts one on the cart, and then retrieves the cart to see the updated estimate. Setting a delivery window does not mean the customer selected a shipping method.
+
+After you update the cart with a window and slot, Cart Service calls [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot). The storefront does not send that request.
 
 {% stepper %}
 {% step %}
+#### Retrieve available delivery windows
+
 Fetch available delivery windows for a cart by calling the [Retrieving delivery windows by cart](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/delivery-windows#get-shipping-tenant-actualdeliverywindows-cartid) endpoint.
 
 {% hint style="warning" %}
@@ -2202,28 +2714,29 @@ Make sure the shipping zone is properly stored in the delivery times object.
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -L 
-  --url 'https://api.emporix.io/shipping/{tenant}/actualDeliveryWindows/{cartId}' 
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+curl -L \
+  --url 'https://api.emporix.io/shipping/{tenant}/actualDeliveryWindows/{cartId}' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: */*'
 ```
 {% endstep %}
 
 {% step %}
-Pick the delivery window you'd like to use and update the cart accordingly by calling the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint
+#### Update the cart with destination and delivery window
+
+Pick the delivery window you want to use and update the cart by calling the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -L 
-  --request PUT 
-  --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}' 
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  --header 'Content-Type: application/json' 
+curl -L \
+  --request PUT \
+  --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
   --data '{
         "countryCode": "DE",     
         "zipCode": "10115",
-        "deliveryWindowId": "1234567890abcdef",    
         "deliveryWindow": {       
             "id": "1234567890abcdef",       
             "deliveryDate": "2025-07-25T10:00:00.000Z",       
@@ -2234,22 +2747,24 @@ curl -L
 {% endstep %}
 
 {% step %}
+#### Verify the shipping estimate
+
 Verify the results by retrieving the cart. Call the [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
-curl -L 
-  --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}'
-  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+curl -L \
+  --url 'https://api.emporix.io/cart/{tenant}/carts/{cartId}' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Accept: */*'
 ```
 {% endstep %}
 {% endstepper %}
 
-As a result, the response includes the shipping costs details:
+As a result, the cart response includes the shipping estimate:
 
-```bash
+```json
 {
     "calculatedPrice": {   
         "shipping": {     
@@ -2259,6 +2774,109 @@ As a result, the response includes the shipping costs details:
     }
 }
 ```
+
+Cart Service obtained that amount by sending a request like this to the [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) endpoint:
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/shipping/{tenant}/{site}/quote/slot' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "customerId": "8765472",
+    "cartTotal": {
+      "amount": 85.00,
+      "currency": "EUR"
+    },
+    "shipFromAddress": {
+      "zipCode": "70173",
+      "country": "DE"
+    },
+    "shipToAddress": {
+      "zipCode": "10115",
+      "country": "DE"
+    },
+    "deliveryWindowId": "1234567890abcdef",
+    "slotId": "slot123"
+  }'
+```
+
+### At checkout: final shipping quote
+
+When the customer is ready to order, they choose a shipping method. The storefront calls [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote) (`POST /shipping/{tenant}/{site}/quote`) to list methods and fees for the checkout address.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/shipping/{tenant}/{site}/quote' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "customerId": "8765472",
+    "cartTotal": {
+      "amount": 85.00,
+      "currency": "EUR"
+    },
+    "shipFromAddress": {
+      "street": "Fritz-Elsas-Straße",
+      "streetNumber": "20",
+      "zipCode": "70173",
+      "city": "Stuttgart",
+      "country": "DE"
+    },
+    "shipToAddress": {
+      "street": "Unter den Linden",
+      "streetNumber": "1",
+      "zipCode": "10115",
+      "city": "Berlin",
+      "country": "DE"
+    }
+  }'
+```
+
+The response lists matching methods, grouped by zone:
+
+```json
+[
+  {
+    "zone": {
+      "id": "deliveryarea",
+      "name": "Germany"
+    },
+    "methods": [
+      {
+        "id": "standard",
+        "name": "Standard delivery",
+        "fee": {
+          "amount": 4.90,
+          "currency": "EUR"
+        },
+        "shippingTaxCode": "STANDARD"
+      },
+      {
+        "id": "express",
+        "name": "Express delivery",
+        "fee": {
+          "amount": 9.90,
+          "currency": "EUR"
+        },
+        "shippingTaxCode": "STANDARD"
+      }
+    ]
+  }
+]
+```
+
+The checkout request must map the selected method's `zone.id`, `methods[].id`, `methods[].name`, and `methods[].fee.amount` to `zoneId`, `methodId`, `methodName`, and `amount`. Include `shippingTaxCode` when the quote returns it. Checkout Service calls `/quote` again, keeps the matching method, and checks that the submitted `amount` is correct. If it is not, checkout fails.
+
+Do not send the cart estimate as the checkout amount unless the customer selected that same cheapest method.
+
+See [Checkout Tutorial](../../checkout/checkout/checkout.md) for the full contract and request example.
 
 Cart API reference:
 

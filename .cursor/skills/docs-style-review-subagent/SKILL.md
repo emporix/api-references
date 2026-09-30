@@ -1,48 +1,52 @@
 ---
 name: docs-style-review-subagent
-description: Run a two-phase docs style review — Phase 1 readonly chat report with file/line findings, Phase 2 optional native StrReplace fixes with Keep/Undo on author confirmation.
+description: Review changed documentation for style, grammar, reader sufficiency, and optional task-fit; apply unambiguous auto-fixes in the same turn via StrReplace (Keep/Undo). Use when the user asks to run docs style self-review, self review on the changes, or similar before peer review.
 ---
 
 # Docs Style Review Subagent
 
 Use this skill when the user asks to review documentation quality or style compliance before peer review.
-This includes also grammar and spelling checks.
+This includes grammar, spelling, reader sufficiency, and task-fit when context is available.
+
+Parent agent applies auto-fixes. The review subagent is readonly and must not write files.
 
 ## Inputs
 - Changed docs files from current working tree/branch.
 - Style rules from `.style-guide/`.
-- Phase 1: `.cursor/docs-review/subagent-prompt.md`
-- Phase 2: `.cursor/docs-review/fix-prompt.md`
+- Review: `.cursor/docs-review/subagent-prompt.md`
+- Apply: `.cursor/docs-review/fix-prompt.md`
 - Contract: `.cursor/docs-review/review-contract.md`
+- Sufficiency and task-fit: `.cursor/docs-review/sufficiency-and-fit.md`
 
-## Phase 1 — Review (readonly)
+## Single-turn flow
+
 1. Identify changed documentation files (exclude `.style-guide/` and review infra).
-2. Launch one `generalPurpose` subagent with `readonly: true`.
-3. Pass the review contract and subagent prompt.
-4. Subagent returns structured chat report only — no file writes.
-5. Every finding must include a file path and line reference in the heading (e.g. `quotes/quote/foo.md:42`). Use a range for multi-line issues (e.g. `:42-58`). Never omit line numbers.
-6. For structural findings (`Auto-fixable: no`), require a concrete `Reworked structure suggestion` blueprint (for example GitBook `{% stepper %}`/`{% step %}` with `####` step titles for step-format issues).
-7. Before presenting the report, verify every finding heading matches `path/to/file.md:LINE` (or `:START-END`). If any finding lacks a line reference, ask the subagent to re-run with line numbers filled in.
-8. Parent agent presents the report and ends with the structured **Apply auto-fixable fixes?** call-to-action from `subagent-prompt.md` (use **Next step** when auto-fixable N = 0).
-
-## Phase 2 — Apply fixes (on confirmation)
-1. Wait for explicit author confirmation: **"Yes"** in reply to the Phase 1 auto-fixable CTA (longer phrases are also accepted).
-2. Apply only findings marked `Auto-fixable: yes`.
-3. Use one `StrReplace` per fix (native Keep/Undo per change).
-4. Follow `.cursor/docs-review/fix-prompt.md`.
-5. End with the structured **Phase 2 Complete** summary from `fix-prompt.md` — list every applied fix, any skipped/rejected fix, and all remaining author-action items with `file:line` references.
-6. Restate peer-review readiness based on what is still open.
-7. Offer to re-run Phase 1 review.
+2. Collect **task context** from the triggering message **and this conversation**:
+   - Pasted task description or acceptance criteria
+   - GitHub PR or issue URLs
+   - If URLs are present, fetch with `gh pr view` / `gh issue view` (body, linked issues, changed-file list)
+   - Do not hunt branch names, Jira IDs in commits, or unrelated open PRs
+   - If nothing is found, set `Task context: none`
+3. Launch one `generalPurpose` subagent with `readonly: true`.
+4. Pass the review contract, subagent prompt, sufficiency-and-fit checklist, and the `Task context` block.
+5. Subagent returns structured findings only — no file writes.
+6. Every finding must include a file path and line reference in the heading (e.g. `quotes/quote/foo.md:42`). Use a range for multi-line issues (e.g. `:42-58`). Never omit line numbers.
+7. For structural findings (`Auto-fixable: no`), require a concrete `Reworked structure suggestion` blueprint (for example GitBook `{% stepper %}`/`{% step %}` with `####` step titles for step-format issues).
+8. Before applying or presenting, verify every finding heading matches `path/to/file.md:LINE` (or `:START-END`). If any finding lacks a line reference, ask the subagent to re-run with line numbers filled in.
+9. Immediately apply findings marked `Auto-fixable: yes`. Follow `.cursor/docs-review/fix-prompt.md`. Use one `StrReplace` per fix (native Keep/Undo per change). Briefly list which fixes you are about to apply before editing.
+10. Present the unified **Docs Self-Review** report from `review-contract.md`. Do **not** ask "Apply auto-fixable fixes?" or wait for "Yes".
+11. Compute **Verdict** and **Ready for peer review** from remaining open items only (after apply). Applied findings are not remaining blockers.
 
 Optional guided structural lane:
-- If author explicitly confirms, apply approved structural suggestions from Phase 1 as targeted section-level edits.
+- If the author explicitly confirms in a follow-up, apply approved structural suggestions as targeted section-level edits.
 - Keep structural findings classified as `Auto-fixable: no`; this lane is guided, not automatic.
 
-Grammar and spelling corrections are included in Phase 2 when they are unambiguous.
+Grammar and spelling corrections are applied in the same turn when they are unambiguous.
 
 ## Gating behavior
-- `critical` findings block readiness for peer review.
-- `major` and `minor` findings are warnings in phase 1.
+- Remaining `critical` findings block readiness for peer review.
+- Remaining `major` and `minor` findings are warnings.
 
 ## Manual trigger phrase
 - `Run docs style self-review for my current changes.`
+- Similar phrasing also works (for example `run self review on the changes`).
