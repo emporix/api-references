@@ -45,6 +45,38 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-09-30" tags="new-feature, improvement" %}
+
+## AI Service - agent version history
+
+#### Overview
+
+AI Service stores a version history for each agent. Every successful update increments `metadata.version` and keeps the previous configuration. Each entry in `versions[]` stores its snapshot number on `metadata.version`, not as a root field. You can read one stored version or the full history. Agent responses include `metadata.modifiedBy`, which records who last changed the agent. For `EMPLOYEE` and `CUSTOMER`, `modifiedBy` also includes `firstName` and `lastName`. A user update may set `metadata.changeNote`. 
+
+Agent request logs include `agentVersion` on the request and on each separate message.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving agent by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | Accepts `version` to return one stored configuration and `allVersions` to include the `versions` history. `version` and `allVersions` cannot be combined. The response includes `metadata.modifiedBy`. |
+| [Listing agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents) | The response includes `metadata.modifiedBy`. |
+| [Searching agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) | The response includes `metadata.modifiedBy`. |
+| [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | A successful update increments `metadata.version` and stores the previous configuration. A stale `metadata.version` returns `409`. `modifiedBy.firstName` and `modifiedBy.lastName` are stored when available. Optional `metadata.changeNote` is stored on the new version. |
+| [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | A successful update increments `metadata.version` and stores the previous configuration. A stale `metadata.version` returns `409`. `modifiedBy.firstName` and `modifiedBy.lastName` are stored when available. |
+| [Listing agent requests](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests) | The response includes `agentVersion` on the request and on each message. The root-level `agentVersion` is the version of the agent that triggered the request. Each message `agentVersion` is the version of the agent that wrote that message. |
+| [Retrieving agent request by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests-requestid) | The response includes `agentVersion` on the request and on each message. The root-level `agentVersion` remains the version of the agent that triggered the request, as recorded on the first log entry. Each message `agentVersion` is the version of the agent that wrote that message. |
+| [Searching agent requests](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-requests-search) | The response includes `agentVersion` on the request and on each message. The root-level `agentVersion` remains the version of the agent that triggered the request, as recorded on the first log entry. Each message `agentVersion` is the version of the agent that wrote that message. |
+| [Listing agent sessions](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions) | Each message includes `agentVersion`, which is the version of the agent that wrote that message. |
+| [Retrieving agent session by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions-sessionid) | Each message includes `agentVersion`, which is the version of the agent that wrote that message. |
+| [Searching agent sessions](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-sessions-search) | Each message includes `agentVersion`, which is the version of the agent that wrote that message. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-28" tags="new-feature, major-change" %}
 
 ## Media Service - direct storage uploads and downloads
@@ -63,16 +95,16 @@ The classic download endpoint remains available as a compatibility alternative. 
 
 | Endpoint | Description |
 | --- | --- |
-| [Starting an upload session](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets-upload-session) | Creates a pending asset and returns instructions for a private GCS signed `PUT`, a private GCS multipart `POST`, or a public Cloudinary multipart `POST`. |
-| [Retrieving a download URL](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download-url) | Returns an expiring signed URL for a private asset or a permanent URL for a public asset. Use this endpoint as the default method for downloading assets. It is always faster than streaming the file through the Media API. Private signed URLs support `attachment` and `inline` disposition. |
+| [Starting an upload session](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#post-media-tenant-assets-upload-session) | Creates a pending asset and returns instructions for a private GCS signed `PUT`, a private GCS multipart `POST`, or a public Cloudinary multipart `POST`. |
+| [Retrieving a download URL](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download-url) | Returns an expiring signed URL for a private asset or a permanent URL for a public asset. Use this endpoint as the default method for downloading assets. It is always faster than streaming the file through the Media API. Private signed URLs support `attachment` and `inline` disposition. |
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) | The classic multipart upload supports files up to 30 MB. |
-| [Updating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#put-media-tenant-assets-assetid) | The classic multipart upload supports files up to 30 MB. |
-| [Downloading an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download) | Remains available as a compatibility alternative and is slower than a direct download. Rejects files with a known size above the configurable streaming limit, which is 30 MB by default. |
+| [Creating an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#post-media-tenant-assets) | The classic multipart upload supports files up to 30 MB. |
+| [Updating an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#put-media-tenant-assets-assetid) | The classic multipart upload supports files up to 30 MB. |
+| [Downloading an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download) | Remains available as a compatibility alternative and is slower than a direct download. Rejects files with a known size above the configurable streaming limit, which is 30 MB by default. |
 
 #### Known problems
 
@@ -139,9 +171,9 @@ The `handOff` field on agent responses is deprecated and is no longer used. Clie
 
 | Endpoint | Description |
 | --- | --- |
-| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents) | The `handOff` field in the response is deprecated. |
-| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) | The `handOff` field in the response is deprecated. |
-| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | The `handOff` field in the response is deprecated. |
+| [Listing agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents) | The `handOff` field in the response is deprecated. |
+| [Searching agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) | The `handOff` field in the response is deprecated. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | The `handOff` field in the response is deprecated. |
 
 #### Known problems
 
@@ -160,7 +192,7 @@ You can assign an existing media asset by sending `attachmentId` in an `applicat
 
 | Endpoint | Description |
 | --- | --- |
-| [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) | Accepts `attachmentId` in an `application/json` body to assign existing media. The multipart `attachment` file and `attachmentId` form field stay supported. |
+| [Uploading attachment](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) | Accepts `attachmentId` in an `application/json` body to assign existing media. The multipart `attachment` file and `attachmentId` form field stay supported. |
 
 #### Known problems
 
@@ -209,15 +241,15 @@ The stream schema now documents `deleteConfig`, which controls how deletes are d
 
 | Endpoint | Description |
 | -------- | ----------- |
-| [Retrieving run diagnostics](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-diagnostics) | Returns the rows behind a run's repeated-key and unresolved-parent counters. |
-| [Downloading run diagnostics as CSV](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-diagnostics-csv) | Returns the same rows as a CSV attachment. |
+| [Retrieving run diagnostics](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-diagnostics) | Returns the rows behind a run's repeated-key and unresolved-parent counters. |
+| [Downloading run diagnostics as CSV](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-diagnostics-csv) | Returns the same rows as a CSV attachment. |
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | -------- | ----------- |
-| [Retrieving all streams of a configuration](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Documents `deleteConfig`; removes `targetDeleteSubscriptionEnabled` and `onTargetReappear`. |
-| [Retrieving a stream](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Documents `deleteConfig`; removes `targetDeleteSubscriptionEnabled` and `onTargetReappear`. |
+| [Retrieving all streams of a configuration](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Documents `deleteConfig`; removes `targetDeleteSubscriptionEnabled` and `onTargetReappear`. |
+| [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Documents `deleteConfig`; removes `targetDeleteSubscriptionEnabled` and `onTargetReappear`. |
 
 #### Known problems
 
@@ -239,12 +271,12 @@ Offset pagination with `pageNumber` and `pageSize` remains supported. In cursor 
 
 | Endpoint | Description |
 | --- | --- |
-| [Listing agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
-| [Searching agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-requests-search) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
-| [Listing agent sessions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
-| [Searching agent sessions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-sessions-search) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
-| [Listing available jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
-| [Searching jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#post-ai-service-tenant-jobs-search) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Listing agent requests](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Searching agent requests](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-requests-search) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Listing agent sessions](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Searching agent sessions](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-sessions-search) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Listing available jobs](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Searching jobs](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/job#post-ai-service-tenant-jobs-search) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
 
 #### Known problems
 
@@ -338,12 +370,12 @@ Retrieving own customer segments returns the authenticated customer's active seg
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving own customer segments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/segments#get-customer-segment-tenant-segments-me) | Returns active segments assigned directly to the authenticated customer and segments assigned through the customer's IAM groups. |
-| [Retrieving all group assignments for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups) | Returns all IAM group assignments for a customer segment. |
-| [Searching with parameters for group assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#post-customer-segment-tenant-segments-segmentid-groups-search) | Returns IAM group assignments that match the provided search criteria. |
-| [Retrieving a group assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups-groupid) | Returns an IAM group assignment for a specified group and customer segment. |
-| [Upserting a group assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#put-customer-segment-tenant-segments-segmentid-groups-groupid) | Creates or updates an IAM group assignment. Only groups with `userType` `CUSTOMER` can be assigned. |
-| [Removing a group from a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#delete-customer-segment-tenant-segments-segmentid-groups-groupid) | Removes an IAM group assignment from a customer segment. |
+| [Retrieving own customer segments](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/segments#get-customer-segment-tenant-segments-me) | Returns active segments assigned directly to the authenticated customer and segments assigned through the customer's IAM groups. |
+| [Retrieving all group assignments for a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups) | Returns all IAM group assignments for a customer segment. |
+| [Searching with parameters for group assignments](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#post-customer-segment-tenant-segments-segmentid-groups-search) | Returns IAM group assignments that match the provided search criteria. |
+| [Retrieving a group assignment for a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups-groupid) | Returns an IAM group assignment for a specified group and customer segment. |
+| [Upserting a group assignment for a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#put-customer-segment-tenant-segments-segmentid-groups-groupid) | Creates or updates an IAM group assignment. Only groups with `userType` `CUSTOMER` can be assigned. |
+| [Removing a group from a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#delete-customer-segment-tenant-segments-segmentid-groups-groupid) | Removes an IAM group assignment from a customer segment. |
 
 #### Known problems
 
@@ -407,12 +439,12 @@ Agent request and session log responses now include `promptTokens` and `completi
 
 | Endpoint | Description |
 | --- | --- |
-| [Listing agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests) | The response now includes `promptTokens` and `completionTokens`. |
-| [Retrieving agent request by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests-requestid) | The response now includes `promptTokens` and `completionTokens`. |
-| [Searching agent requests](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-requests-search) | The response now includes `promptTokens` and `completionTokens`. |
-| [Listing agent sessions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions) | The response now includes `promptTokens` and `completionTokens`. |
-| [Retrieving agent session by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions-sessionid) | The response now includes `promptTokens` and `completionTokens`. |
-| [Searching agent sessions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-sessions-search) | The response now includes `promptTokens` and `completionTokens`. |
+| [Listing agent requests](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests) | The response now includes `promptTokens` and `completionTokens`. |
+| [Retrieving agent request by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-requests-requestid) | The response now includes `promptTokens` and `completionTokens`. |
+| [Searching agent requests](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-requests-search) | The response now includes `promptTokens` and `completionTokens`. |
+| [Listing agent sessions](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions) | The response now includes `promptTokens` and `completionTokens`. |
+| [Retrieving agent session by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions-sessionid) | The response now includes `promptTokens` and `completionTokens`. |
+| [Searching agent sessions](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#post-ai-service-tenant-agentic-logs-sessions-search) | The response now includes `promptTokens` and `completionTokens`. |
 
 #### Known problems
 
@@ -435,13 +467,13 @@ This functionality is in preview mode - some of the features may not be fully op
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving the stream run order](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-stream-order) | Retrieves stream names in run order and the prerequisite streams for each. Use this endpoint rather than calculating the order yourself. Mapping transformations can change the order at run time. |
+| [Retrieving the stream run order](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-stream-order) | Retrieves stream names in run order and the prerequisite streams for each. Use this endpoint rather than calculating the order yourself. Mapping transformations can change the order at run time. |
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Triggering an import run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Accepts an optional `streamIds` list to run only those streams. Send stream IDs, not names. The service rejects an empty list, a plan with no streams from the configuration, and streams that cannot produce data without their parent. Listed streams still run in the computed stream order. |
+| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Accepts an optional `streamIds` list to run only those streams. Send stream IDs, not names. The service rejects an empty list, a plan with no streams from the configuration, and streams that cannot produce data without their parent. Listed streams still run in the computed stream order. |
 
 #### Known problems
 
@@ -460,14 +492,14 @@ The Media Service now supports partial updates of assets with JSON Patch documen
 
 | Endpoint | Description |
 | --- | --- |
-| [Partially updating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#patch-media-tenant-assets-assetid) | Applies RFC 6902 operations to an asset. Use `/refIds/-` to append one reference and keep the existing list. |
+| [Partially updating an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#patch-media-tenant-assets-assetid) | Applies RFC 6902 operations to an asset. Use `/refIds/-` to append one reference and keep the existing list. |
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) | The `refIds.type` field now documents the `AGENT` type. Private assets can be linked to `AGENT`. |
-| [Updating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#put-media-tenant-assets-assetid) | The `refIds.type` field now documents the `AGENT` type. |
+| [Creating an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#post-media-tenant-assets) | The `refIds.type` field now documents the `AGENT` type. Private assets can be linked to `AGENT`. |
+| [Updating an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#put-media-tenant-assets-assetid) | The `refIds.type` field now documents the `AGENT` type. |
 
 #### Known problems
 
@@ -487,7 +519,7 @@ You can assign an existing media asset to an agent. Send `attachmentId` instead 
 
 | Endpoint | Description |
 | --- | --- |
-| [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) | Accepts `attachmentId` to assign existing media to the target `agentId`. Callers with `ai.agentexecution_manage` can assign any media asset. Callers with only `ai.agentexecution_manage_own` can assign an attachment that already belongs to the session. The response is `200` and includes `id` and `sessionId`. |
+| [Uploading attachment](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) | Accepts `attachmentId` to assign existing media to the target `agentId`. Callers with `ai.agentexecution_manage` can assign any media asset. Callers with only `ai.agentexecution_manage_own` can assign an attachment that already belongs to the session. The response is `200` and includes `id` and `sessionId`. |
 
 #### Known problems
 
@@ -513,11 +545,11 @@ The AI Service API now supports optional `eventScopes` on `commerce_events` agen
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | Response can now include `config.eventScopes` for `commerce_events` triggers. |
-| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents) | Response can now include `config.eventScopes` for `commerce_events` triggers. |
-| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) | Response can now include `config.eventScopes` for `commerce_events` triggers. |
-| [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | Request payload now supports optional `eventScopes` on `commerce_events` trigger configuration. |
-| [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Request payload now supports optional `eventScopes` on `commerce_events` trigger configuration. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | Response can now include `config.eventScopes` for `commerce_events` triggers. |
+| [Listing agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents) | Response can now include `config.eventScopes` for `commerce_events` triggers. |
+| [Searching agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) | Response can now include `config.eventScopes` for `commerce_events` triggers. |
+| [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | Request payload now supports optional `eventScopes` on `commerce_events` trigger configuration. |
+| [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Request payload now supports optional `eventScopes` on `commerce_events` trigger configuration. |
 
 #### Known problems
 
@@ -537,9 +569,9 @@ When an agent repeatedly fails due to configuration errors, AI Service disables 
 
 | Endpoint | Description |
 | --- | --- |
-| [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) | Repeated failures can disable the agent and trigger a tenant notification email. |
-| [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Repeated failures can disable the agent and trigger a tenant notification email. |
-| [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) | Repeated failures can disable the agent and trigger a tenant notification email. |
+| [Starting agent chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) | Repeated failures can disable the agent and trigger a tenant notification email. |
+| [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Repeated failures can disable the agent and trigger a tenant notification email. |
+| [Starting agent async chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) | Repeated failures can disable the agent and trigger a tenant notification email. |
 
 #### Known problems
 
@@ -559,9 +591,9 @@ Creating or updating a `BATTERY_INCLUDED` configuration now validates `indexName
 
 | Endpoint | Description |
 | --- | --- |
-| [Creating a new configuration](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Validates Battery Included credentials before storing the configuration. |
-| [Updating configuration by provider name](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Validates Battery Included credentials before updating the configuration. |
-| [Creating a reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) | Validates stored Battery Included credentials before creating a product reindex job. |
+| [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Validates Battery Included credentials before storing the configuration. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Validates Battery Included credentials before updating the configuration. |
+| [Creating a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) | Validates stored Battery Included credentials before creating a product reindex job. |
 
 #### Known problems
 
@@ -581,13 +613,13 @@ The Schema Service now supports the `VENDOR_LOCATION` schema type. You can creat
 
 | Endpoint | Description |
 | --- | --- |
-| [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | The `types` field now accepts the `VENDOR_LOCATION` schema type. |
-| [Updating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) | The `types` field now accepts the `VENDOR_LOCATION` schema type. |
-| [Updating types of a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/type#put-schema-tenant-schemas-id-types) | The list of assigned types now accepts the `VENDOR_LOCATION` schema type. |
-| [Retrieving all schemas](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas) | The `type` query parameter accepts `VENDOR_LOCATION`. |
-| [Creating a reference](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/reference#post-schema-tenant-references) | The `types` field now accepts the `VENDOR_LOCATION` schema type. |
-| [Updating a reference](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/reference#put-schema-tenant-references-id) | The `types` field now accepts the `VENDOR_LOCATION` schema type. |
-| [Retrieving all references](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/reference#get-schema-tenant-references) | The `type` query parameter accepts `VENDOR_LOCATION`. |
+| [Creating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | The `types` field now accepts the `VENDOR_LOCATION` schema type. |
+| [Updating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) | The `types` field now accepts the `VENDOR_LOCATION` schema type. |
+| [Updating types of a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/type#put-schema-tenant-schemas-id-types) | The list of assigned types now accepts the `VENDOR_LOCATION` schema type. |
+| [Retrieving all schemas](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas) | The `type` query parameter accepts `VENDOR_LOCATION`. |
+| [Creating a reference](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/reference#post-schema-tenant-references) | The `types` field now accepts the `VENDOR_LOCATION` schema type. |
+| [Updating a reference](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/reference#put-schema-tenant-references-id) | The `types` field now accepts the `VENDOR_LOCATION` schema type. |
+| [Retrieving all references](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/reference#get-schema-tenant-references) | The `type` query parameter accepts `VENDOR_LOCATION`. |
 
 #### Known problems
 
@@ -610,17 +642,17 @@ This functionality is in preview mode - some of the features may not be fully op
 
 | Endpoint | Description |
 | --- | --- |
-| [Removing a schedule](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/schedules#delete-importtool-tenant-configs-configid-schedule) | Removes the schedule for a configuration. The request is idempotent and returns `204` even when no schedule exists. |
+| [Removing a schedule](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/schedules#delete-importtool-tenant-configs-configid-schedule) | Removes the schedule for a configuration. The request is idempotent and returns `204` even when no schedule exists. |
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Scheduling an import job](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/schedules#put-importtool-tenant-configs-configid-schedule) | Documents `400` when the `cron` expression or `timezone` value is invalid, and `404` when the configuration does not exist. |
-| [Triggering an import run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Accepts an optional `origin` field that identifies what requested the run. |
-| [Retrieving run history](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Run entries include `origin`. |
-| [Retrieving a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Run details include `origin`. |
-| [Retrying the failed records of a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | The new run includes `origin`. |
+| [Scheduling an import job](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/schedules#put-importtool-tenant-configs-configid-schedule) | Documents `400` when the `cron` expression or `timezone` value is invalid, and `404` when the configuration does not exist. |
+| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Accepts an optional `origin` field that identifies what requested the run. |
+| [Retrieving run history](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Run entries include `origin`. |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Run details include `origin`. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | The new run includes `origin`. |
 
 #### Known problems
 
@@ -645,7 +677,7 @@ If you have any questions, contact the [Emporix Support Team](mailto:support@emp
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving logs](https://developer.emporix.io/api-references/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) | Retrieves a paginated list of changed entries. Filter by entity, document ID, change type, actor, time range, and related entities with the `q` parameter. |
+| [Retrieving logs](https://developer.emporix.io/api-documentation/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) | Retrieves a paginated list of changed entries. Filter by entity, document ID, change type, actor, time range, and related entities with the `q` parameter. |
 
 #### Known problems
 
@@ -695,23 +727,23 @@ This functionality is in preview mode - some of the features may not be fully op
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving import statistics](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-stats) | Returns aggregated import metrics, time series, stream health, failing streams, errors, and stream changes for a selected time window. |
-| [Retrieving job groups](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-dashboard-job-groups) | Returns tenant job groups used to scope import analytics. |
-| [Retrieving the tenant's health thresholds](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-settings-health-thresholds) | Returns tenant health thresholds and the built-in defaults used to determine stream health. |
-| [Retrieving import limits](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/license#get-importtool-tenant-license) | Returns tenant limits for imported records, concurrent imports, batch size, and workers. |
-| [Retrying the failed records of a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | Starts a new run that processes only records that failed in an earlier run. |
+| [Retrieving import statistics](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-stats) | Returns aggregated import metrics, time series, stream health, failing streams, errors, and stream changes for a selected time window. |
+| [Retrieving job groups](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-dashboard-job-groups) | Returns tenant job groups used to scope import analytics. |
+| [Retrieving the tenant's health thresholds](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-settings-health-thresholds) | Returns tenant health thresholds and the built-in defaults used to determine stream health. |
+| [Retrieving import limits](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/license#get-importtool-tenant-license) | Returns tenant limits for imported records, concurrent imports, batch size, and workers. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | Starts a new run that processes only records that failed in an earlier run. |
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving all import configurations](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs) | Responses include `aiEnabled`, `version`, `healthThresholds`, and `createdBy`. The `aiEnabled` field replaces `deltaEnabled` in the documented schema. |
-| [Retrieving an import configuration](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs-id) | Responses include `aiEnabled`, `version`, `healthThresholds`, and `createdBy`. The `aiEnabled` field replaces `deltaEnabled` in the documented schema. |
-| [Retrieving all streams of a configuration](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Responses include delta-import, composite-key, discriminator, target reappearance, health-threshold, and creation metadata fields. |
-| [Retrieving a stream](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Responses include delta-import, composite-key, discriminator, target reappearance, health-threshold, and creation metadata fields. |
-| [Triggering an import run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Responses include retry, force, dry-run, cancellation, and dry-run sample metadata. |
-| [Retrieving run history](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Run entries include retry, force, dry-run, cancellation, and dry-run sample metadata. |
-| [Retrieving a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Run details include retry, force, dry-run, cancellation, and dry-run sample metadata. |
+| [Retrieving all import configurations](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs) | Responses include `aiEnabled`, `version`, `healthThresholds`, and `createdBy`. The `aiEnabled` field replaces `deltaEnabled` in the documented schema. |
+| [Retrieving an import configuration](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs-id) | Responses include `aiEnabled`, `version`, `healthThresholds`, and `createdBy`. The `aiEnabled` field replaces `deltaEnabled` in the documented schema. |
+| [Retrieving all streams of a configuration](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Responses include delta-import, composite-key, discriminator, target reappearance, health-threshold, and creation metadata fields. |
+| [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Responses include delta-import, composite-key, discriminator, target reappearance, health-threshold, and creation metadata fields. |
+| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Responses include retry, force, dry-run, cancellation, and dry-run sample metadata. |
+| [Retrieving run history](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Run entries include retry, force, dry-run, cancellation, and dry-run sample metadata. |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Run details include retry, force, dry-run, cancellation, and dry-run sample metadata. |
 
 #### Known problems
 
@@ -731,10 +763,10 @@ Import responses and stored import jobs now include per-entity `details`. Each d
 
 | Endpoint | Description |
 | --- | --- |
-| [Importing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-import) | Summary entities include `details` and can return `state: FAILED`. |
-| [Listing available jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs) | Import job `importResult.summary` entities include `details`. |
-| [Searching jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#post-ai-service-tenant-jobs-search) | Import job `importResult.summary` entities include `details`. |
-| [Retrieving available job](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid) | Import job `importResult.summary` entities include `details`. |
+| [Importing agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-import) | Summary entities include `details` and can return `state: FAILED`. |
+| [Listing available jobs](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs) | Import job `importResult.summary` entities include `details`. |
+| [Searching jobs](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/job#post-ai-service-tenant-jobs-search) | Import job `importResult.summary` entities include `details`. |
+| [Retrieving available job](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid) | Import job `importResult.summary` entities include `details`. |
 
 #### Known problems
 
@@ -758,16 +790,16 @@ This functionality is in preview mode - some of the features may not be fully op
 
 | Endpoint | Description |
 | --- | --- |
-| [Listing MCP servers](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#get-ai-service-tenant-agentic-mcp-servers) | Responses can include dynamic MCP servers with `type: dynamic` and inline `tools`. |
-| [Searching MCP servers](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#post-ai-service-tenant-agentic-mcp-servers-search) | Responses can include dynamic MCP servers with `type: dynamic` and inline `tools`. |
-| [Retrieving MCP server by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#get-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Returns dynamic MCP servers with `type: dynamic` and inline `tools`. |
-| [Upserting MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#put-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Accepts preview `type: dynamic` with `tools` that reference Automation functions. Validates each `functionId` when the server is enabled. |
-| [Partially updating MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#patch-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Supports partial updates to dynamic MCP server fields, including `tools`. |
-| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | Accepts `mcpServers` entries with `type: dynamic`, `mcpServer.id`, and optional `tools`. |
-| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Accepts `mcpServers` entries with `type: dynamic`, `mcpServer.id`, and optional `tools`. |
-| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | Returns dynamic MCP attachments. `expand=mcpServer` hydrates the MCP server document. |
-| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents) | Returns dynamic MCP attachments. |
-| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) | Returns dynamic MCP attachments. |
+| [Listing MCP servers](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#get-ai-service-tenant-agentic-mcp-servers) | Responses can include dynamic MCP servers with `type: dynamic` and inline `tools`. |
+| [Searching MCP servers](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#post-ai-service-tenant-agentic-mcp-servers-search) | Responses can include dynamic MCP servers with `type: dynamic` and inline `tools`. |
+| [Retrieving MCP server by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#get-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Returns dynamic MCP servers with `type: dynamic` and inline `tools`. |
+| [Upserting MCP server](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#put-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Accepts preview `type: dynamic` with `tools` that reference Automation functions. Validates each `functionId` when the server is enabled. |
+| [Partially updating MCP server](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#patch-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Supports partial updates to dynamic MCP server fields, including `tools`. |
+| [Upserting an agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | Accepts `mcpServers` entries with `type: dynamic`, `mcpServer.id`, and optional `tools`. |
+| [Partially updating an agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Accepts `mcpServers` entries with `type: dynamic`, `mcpServer.id`, and optional `tools`. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | Returns dynamic MCP attachments. `expand=mcpServer` hydrates the MCP server document. |
+| [Listing agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents) | Returns dynamic MCP attachments. |
+| [Searching agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) | Returns dynamic MCP attachments. |
 
 #### Known problems
 
@@ -791,10 +823,10 @@ Importing customers with `legacyAuth` requires an active password migration rete
 
 | Endpoint                                                                                                                                                                                                                                                             | Description                                                                                                                          |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
-| [Retrieving password migration retention configuration](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#get-customer-tenant-config-password-migration-retention)                   | Returns the tenant password migration retention configuration, or `404` when none is set.                                            |
-| [Configuring password migration retention](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#post-customer-tenant-config-password-migration-retention)                                 | Creates or updates the tenant password migration retention configuration, including `retentionEndDate` and optional `emailReminderDate`. |
-| [Removing password migration retention configuration](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#delete-customer-tenant-config-password-migration-retention)                   | Removes the password migration retention configuration when no accounts with `legacyAuth` remain.                                    |
-| [Importing customers in bulk](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#post-customer-tenant-customers-import)                                                                  | Imports up to 200 customers in one request, with either native `passwordHash` or `legacyAuth` credentials.                           |
+| [Retrieving password migration retention configuration](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#get-customer-tenant-config-password-migration-retention)                   | Returns the tenant password migration retention configuration, or `404` when none is set.                                            |
+| [Configuring password migration retention](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#post-customer-tenant-config-password-migration-retention)                                 | Creates or updates the tenant password migration retention configuration, including `retentionEndDate` and optional `emailReminderDate`. |
+| [Removing password migration retention configuration](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#delete-customer-tenant-config-password-migration-retention)                   | Removes the password migration retention configuration when no accounts with `legacyAuth` remain.                                    |
+| [Importing customers in bulk](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#post-customer-tenant-customers-import)                                                                  | Imports up to 200 customers in one request, with either native `passwordHash` or `legacyAuth` credentials.                           |
 
 #### Known problems
 
@@ -809,7 +841,7 @@ There are no known problems.
 
 #### Overview
 
-Sequential ID Service now supports custom placeholders that resolve from site data when a `nextId` request includes `siteCode`. Use `sitePath` to point at a field from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) or [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins), for example `mixins.customConfig.region`. This makes site-specific prefixes possible without supplying the placeholder in the `nextId` request.
+Sequential ID Service now supports custom placeholders that resolve from site data when a `nextId` request includes `siteCode`. Use `sitePath` to point at a field from [Retrieving a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) or [Retrieving site mixins](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins), for example `mixins.customConfig.region`. This makes site-specific prefixes possible without supplying the placeholder in the `nextId` request.
 
 Placeholder definitions also accept optional `arrayLimit` and `delimiter` properties for array values. Placeholder names on a schema must start and end with `__`. Request-supplied placeholder values still take precedence. Built-in placeholders (`__year__`, `__month__`, `__day__`, `__hour__`, `__minute__`, `__second__`, and `__country__`) keep their current behavior.
 
@@ -817,11 +849,11 @@ Placeholder definitions also accept optional `arrayLimit` and `delimiter` proper
 
 | Endpoint | Description |
 |----------|-------------|
-| [Creating a sequence schema](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas) | Accepts optional `sitePath`, `arrayLimit`, and `delimiter` on placeholder definitions. The service validates `sitePath` against the Site schema, except for `mixins.*` paths, which are format-validated only. |
-| [Retrieving all sequence schemas](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-tenant-schemas) | Returns the new placeholder properties when they are defined on a schema. |
-| [Retrieving a sequence schema](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-tenant-schemas-schemaid) | Returns the new placeholder properties when they are defined on a schema. |
-| [Creating a nextId for a sequence schema type](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-types-schematype-nextid) | Resolves custom `sitePath` placeholders from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) or [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins) when `siteCode` is provided. |
-| [Creating nextIds for sequence schema types](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-sequenceschemabatch-nextids) | Resolves custom `sitePath` placeholders from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) or [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins) when `siteCode` is provided. |
+| [Creating a sequence schema](https://developer.emporix.io/api-documentation/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas) | Accepts optional `sitePath`, `arrayLimit`, and `delimiter` on placeholder definitions. The service validates `sitePath` against the Site schema, except for `mixins.*` paths, which are format-validated only. |
+| [Retrieving all sequence schemas](https://developer.emporix.io/api-documentation/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-tenant-schemas) | Returns the new placeholder properties when they are defined on a schema. |
+| [Retrieving a sequence schema](https://developer.emporix.io/api-documentation/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-tenant-schemas-schemaid) | Returns the new placeholder properties when they are defined on a schema. |
+| [Creating a nextId for a sequence schema type](https://developer.emporix.io/api-documentation/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-types-schematype-nextid) | Resolves custom `sitePath` placeholders from [Retrieving a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) or [Retrieving site mixins](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins) when `siteCode` is provided. |
+| [Creating nextIds for sequence schema types](https://developer.emporix.io/api-documentation/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-sequenceschemabatch-nextids) | Resolves custom `sitePath` placeholders from [Retrieving a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) or [Retrieving site mixins](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins) when `siteCode` is provided. |
 
 #### Known problems
 
@@ -858,10 +890,10 @@ The `GET`, `POST`, `PUT`, and `PATCH` config endpoints now expose and accept the
 
 | Endpoint | Description |
 |----------|-------------|
-| [Creating a single webhook config](https://developer.emporix.io/api-references/api-guides/webhooks/webhook-service/api-reference/config#post-webhook-tenant-config) | HTTP webhook configs now accept multiple `eventsConfiguration` entries for the same event type, with optional `filter` and `excludedFields`. |
-| [Updating a single webhook config](https://developer.emporix.io/api-references/api-guides/webhooks/webhook-service/api-reference/config#put-webhook-tenant-config-code) | The endpoint now preserves or assigns per-entry `id` values and accepts the new `filter` and `excludedFields` fields. |
-| [Retrieving a webhook config](https://developer.emporix.io/api-references/api-guides/webhooks/webhook-service/api-reference/config#get-webhook-tenant-config-code) | HTTP event configuration entries now return `id`, `filter`, and `excludedFields`, while `secretKey` remains hidden behind `secretKeyExists`. |
-| [Partially updating a webhook config](https://developer.emporix.io/api-references/api-guides/webhooks/webhook-service/api-reference/config#patch-webhook-tenant-config-code) | PATCH operations can now address HTTP event configuration entries by entry `id`, including updates to `destinationUrl`, `secretKey`, `headers`, `filter`, and `excludedFields`. Legacy event-type-based PATCH paths still work when only one entry exists for the event type and return `409` when multiple entries exist. |
+| [Creating a single webhook config](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/config#post-webhook-tenant-config) | HTTP webhook configs now accept multiple `eventsConfiguration` entries for the same event type, with optional `filter` and `excludedFields`. |
+| [Updating a single webhook config](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/config#put-webhook-tenant-config-code) | The endpoint now preserves or assigns per-entry `id` values and accepts the new `filter` and `excludedFields` fields. |
+| [Retrieving a webhook config](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/config#get-webhook-tenant-config-code) | HTTP event configuration entries now return `id`, `filter`, and `excludedFields`, while `secretKey` remains hidden behind `secretKeyExists`. |
+| [Partially updating a webhook config](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/config#patch-webhook-tenant-config-code) | PATCH operations can now address HTTP event configuration entries by entry `id`, including updates to `destinationUrl`, `secretKey`, `headers`, `filter`, and `excludedFields`. Legacy event-type-based PATCH paths still work when only one entry exists for the event type and return `409` when multiple entries exist. |
 
 #### Known problems
 
@@ -885,10 +917,10 @@ Migration has already been applied for existing tenants. Agents formerly stored 
 
 | Endpoint                                                                                                                                                                                    | Description                                                                 |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
-| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)        | Returned `type` is one of `generic`, `complaint`, or `anti_fraud`.          |
-| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                        | Returned `type` is one of `generic`, `complaint`, or `anti_fraud`.          |
-| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)              | Returned `type` is one of `generic`, `complaint`, or `anti_fraud`.          |
-| [Listing available agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#get-ai-service-tenant-agentic-templates) | Template `type` no longer includes `support`. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)        | Returned `type` is one of `generic`, `complaint`, or `anti_fraud`.          |
+| [Listing agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                        | Returned `type` is one of `generic`, `complaint`, or `anti_fraud`.          |
+| [Searching agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)              | Returned `type` is one of `generic`, `complaint`, or `anti_fraud`.          |
+| [Listing available agent templates](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#get-ai-service-tenant-agentic-templates) | Template `type` no longer includes `support`. |
 
 #### Known problems
 
@@ -910,11 +942,11 @@ can apply the correct request and response conventions. The property is ignored 
 
 | Endpoint                                                                                                                                                                                    | Description                                                              |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------|
-| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid)            | Accepts optional `llmConfig.baseProvider` for self-hosted LLM providers. |
-| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Accepts optional `llmConfig.baseProvider` for self-hosted LLM providers. |
-| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)        | Returns `llmConfig.baseProvider` when set for a self-hosted LLM.         |
-| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                        | Returns `llmConfig.baseProvider` when set for a self-hosted LLM.         |
-| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)              | Returns `llmConfig.baseProvider` when set for a self-hosted LLM.         |
+| [Upserting an agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid)            | Accepts optional `llmConfig.baseProvider` for self-hosted LLM providers. |
+| [Partially updating an agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Accepts optional `llmConfig.baseProvider` for self-hosted LLM providers. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)        | Returns `llmConfig.baseProvider` when set for a self-hosted LLM.         |
+| [Listing agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                        | Returns `llmConfig.baseProvider` when set for a self-hosted LLM.         |
+| [Searching agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)              | Returns `llmConfig.baseProvider` when set for a self-hosted LLM.         |
 
 #### Known problems
 
@@ -942,11 +974,11 @@ Migration has already been applied for existing tenants. New tenants receive the
 
 | Endpoint | Description |
 | --- | --- |
-| [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Slack preview `config.defaultInboundAgentId` and `config.allowedOperations`. |
-| [Listing tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools) | Slack tool responses can include preview `config.defaultInboundAgentId` and `config.allowedOperations`. |
-| [Retrieving tool by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Slack tool responses can include preview `config.defaultInboundAgentId` and `config.allowedOperations`. |
-| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` override applies to Slack (preview) as well as MS Teams. |
-| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` override applies to Slack (preview) as well as MS Teams. |
+| [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Slack preview `config.defaultInboundAgentId` and `config.allowedOperations`. |
+| [Listing tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools) | Slack tool responses can include preview `config.defaultInboundAgentId` and `config.allowedOperations`. |
+| [Retrieving tool by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Slack tool responses can include preview `config.defaultInboundAgentId` and `config.allowedOperations`. |
+| [Upserting an agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` override applies to Slack (preview) as well as MS Teams. |
+| [Partially updating an agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` override applies to Slack (preview) as well as MS Teams. |
 
 #### Known problems
 
@@ -969,8 +1001,8 @@ Offset pagination with `pageNumber` and `pageSize` remains supported. In cursor 
 
 | Endpoint | Description |
 |----------|-------------|
-| [Retrieving custom instances](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
-| [Searching custom instances](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-search) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Retrieving custom instances](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
+| [Searching custom instances](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-search) | Added support for `next` and `prev` cursor parameters and `X-Next-Cursor` and `X-Prev-Cursor` response headers for stable next and previous page navigation. |
 
 #### Known problems
 
@@ -990,10 +1022,10 @@ Schema attributes of type `DECIMAL` now support an optional `precision` property
 
 | Endpoint | Description |
 | --- | --- |
-| [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Accepts `precision` on `DECIMAL` attributes in the request. |
-| [Updating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) | Accepts `precision` on `DECIMAL` attributes in the request. |
-| [Retrieving a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-id) | Returns `precision` for `DECIMAL` attributes in the response. |
-| [Retrieving all schemas](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas) | Returns `precision` for `DECIMAL` attributes in the response. |
+| [Creating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Accepts `precision` on `DECIMAL` attributes in the request. |
+| [Updating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) | Accepts `precision` on `DECIMAL` attributes in the request. |
+| [Retrieving a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-id) | Returns `precision` for `DECIMAL` attributes in the response. |
+| [Retrieving all schemas](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas) | Returns `precision` for `DECIMAL` attributes in the response. |
 
 #### Known problems
 
@@ -1019,21 +1051,21 @@ This release covers the operational surface available with the `importtool.impor
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving all import configurations](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs) | Returns all import configurations defined for the tenant. |
-| [Retrieving an import configuration](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs-id) | Returns a single import configuration by its identifier. |
-| [Retrieving all streams of a configuration](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Returns the streams belonging to a configuration, ordered by sequence. |
-| [Retrieving a stream](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Returns a single stream by its identifier, including resolved target types. |
-| [Retrieving a schedule](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/schedules#get-importtool-tenant-configs-configid-schedule) | Returns the cron schedule for a configuration, or `204` when none is set. |
-| [Scheduling an import job](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/schedules#put-importtool-tenant-configs-configid-schedule) | Creates or updates the cron schedule that runs a configuration automatically. |
-| [Triggering an import run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Starts an import run in `FULL` or `DELTA` mode, with an optional `dryRun`. |
-| [Retrieving run history](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Returns the run history for a configuration, most recent first. |
-| [Retrieving a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Returns a run's status together with its per-stream progress. |
-| [Streaming run progress](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-events) | Streams run progress as Server-Sent Events (`snapshot`, `stream`, and final `run`). |
-| [Cancelling a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-cancel) | Requests cancellation of an active run; `force=true` stops the run immediately. |
-| [Retrieving run errors](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-errors) | Returns the errors recorded during a run, paginated. |
-| [Retrieving imported data types](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-types) | Returns the distinct target types that currently hold imported records. |
-| [Searching imported records](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-records) | Searches imported records of a given type with an optional `search` filter on the natural key. |
-| [Searching a stream's imported records](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-streams-streamid-records) | Searches the imported records produced by a specific stream with an optional `search` filter. |
+| [Retrieving all import configurations](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs) | Returns all import configurations defined for the tenant. |
+| [Retrieving an import configuration](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs-id) | Returns a single import configuration by its identifier. |
+| [Retrieving all streams of a configuration](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Returns the streams belonging to a configuration, ordered by sequence. |
+| [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Returns a single stream by its identifier, including resolved target types. |
+| [Retrieving a schedule](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/schedules#get-importtool-tenant-configs-configid-schedule) | Returns the cron schedule for a configuration, or `204` when none is set. |
+| [Scheduling an import job](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/schedules#put-importtool-tenant-configs-configid-schedule) | Creates or updates the cron schedule that runs a configuration automatically. |
+| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Starts an import run in `FULL` or `DELTA` mode, with an optional `dryRun`. |
+| [Retrieving run history](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Returns the run history for a configuration, most recent first. |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Returns a run's status together with its per-stream progress. |
+| [Streaming run progress](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-events) | Streams run progress as Server-Sent Events (`snapshot`, `stream`, and final `run`). |
+| [Cancelling a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-cancel) | Requests cancellation of an active run; `force=true` stops the run immediately. |
+| [Retrieving run errors](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-errors) | Returns the errors recorded during a run, paginated. |
+| [Retrieving imported data types](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-types) | Returns the distinct target types that currently hold imported records. |
+| [Searching imported records](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-records) | Searches imported records of a given type with an optional `search` filter on the natural key. |
+| [Searching a stream's imported records](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-streams-streamid-records) | Searches the imported records produced by a specific stream with an optional `search` filter. |
 
 #### Known problems
 
@@ -1053,11 +1085,11 @@ The `rag_emporix` native tool type now accepts `ORDER` as a predefined `entityTy
 
 | Endpoint                                                                                                                                                                                     | Description                                                                 |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
-| [Listing tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools)                           | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
-| [Searching tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#post-ai-service-tenant-agentic-tools-search)                  | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
-| [Retrieving tool by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid)             | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
-| [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid)                    | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
-| [Partially updating tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#patch-ai-service-tenant-agentic-tools-toolid)         | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
+| [Listing tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools)                           | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
+| [Searching tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#post-ai-service-tenant-agentic-tools-search)                  | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
+| [Retrieving tool by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid)             | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
+| [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid)                    | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
+| [Partially updating tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#patch-ai-service-tenant-agentic-tools-toolid)         | `entityType` of `rag_emporix` tools supports the predefined `ORDER` type. |
 
 #### Known problems
 
@@ -1077,9 +1109,9 @@ Reindex jobs now support `ORDER` as an `entityType` alongside `PRODUCT` and cust
 
 | Endpoint                                                                                                                                                                                       | Description                                      |
 |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------|
-| [Creating a reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs)                       | Accepts `ORDER` as a valid `entityType`.         |
-| [Retrieving reindex jobs](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs)                        | Returns jobs with `entityType` set to `ORDER`.   |
-| [Retrieving a reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid)          | Returns jobs with `entityType` set to `ORDER`.   |
+| [Creating a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs)                       | Accepts `ORDER` as a valid `entityType`.         |
+| [Retrieving reindex jobs](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs)                        | Returns jobs with `entityType` set to `ORDER`.   |
+| [Retrieving a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid)          | Returns jobs with `entityType` set to `ORDER`.   |
 
 #### Known problems
 
@@ -1098,9 +1130,9 @@ Schema Service now supports `LOCATION` and `AVAILABILITY` as valid entity types 
 
 | Endpoint | Description |
 |----------|-------------|
-| [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Added support for `LOCATION` and `AVAILABILITY` in schema `types`. |
-| [Updating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-schemaid) | Added support for `LOCATION` and `AVAILABILITY` in schema `types`. |
-| [Partially updating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#patch-schema-tenant-schemas-schemaid) | Added support for `LOCATION` and `AVAILABILITY` in schema `types`. |
+| [Creating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Added support for `LOCATION` and `AVAILABILITY` in schema `types`. |
+| [Updating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-schemaid) | Added support for `LOCATION` and `AVAILABILITY` in schema `types`. |
+| [Partially updating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#patch-schema-tenant-schemas-schemaid) | Added support for `LOCATION` and `AVAILABILITY` in schema `types`. |
 
 #### Known problems
 
@@ -1130,22 +1162,22 @@ Currently only the `client_credentials` grant type is supported. Deleting an OAu
 
 | Endpoint                                                                                                                                                                                               | Description                                                                           |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|
-| [Listing OAuth configurations](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/oauth#get-ai-service-tenant-agentic-oauths)                     | Returns OAuth configurations for the tenant.                                          |
-| [Searching OAuth configurations](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/oauth#post-ai-service-tenant-agentic-oauths-search)           | Searches OAuth configurations for the tenant.                                         |
-| [Retrieving OAuth configuration by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/oauth#get-ai-service-tenant-agentic-oauths-oauthid)     | Returns a single OAuth configuration by ID.                                           |
-| [Upserting OAuth configuration](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/oauth#put-ai-service-tenant-agentic-oauths-oauthid)            | Creates or replaces an OAuth configuration.                                           |
-| [Partially updating OAuth configuration](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/oauth#patch-ai-service-tenant-agentic-oauths-oauthid) | Applies a partial update to an OAuth configuration.                                   |
-| [Deleting OAuth configuration](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/oauth#delete-ai-service-tenant-agentic-oauths-oauthid)          | Deletes an OAuth configuration. Use `force=true` when it is still assigned to agents. |
+| [Listing OAuth configurations](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/oauth#get-ai-service-tenant-agentic-oauths)                     | Returns OAuth configurations for the tenant.                                          |
+| [Searching OAuth configurations](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/oauth#post-ai-service-tenant-agentic-oauths-search)           | Searches OAuth configurations for the tenant.                                         |
+| [Retrieving OAuth configuration by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/oauth#get-ai-service-tenant-agentic-oauths-oauthid)     | Returns a single OAuth configuration by ID.                                           |
+| [Upserting OAuth configuration](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/oauth#put-ai-service-tenant-agentic-oauths-oauthid)            | Creates or replaces an OAuth configuration.                                           |
+| [Partially updating OAuth configuration](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/oauth#patch-ai-service-tenant-agentic-oauths-oauthid) | Applies a partial update to an OAuth configuration.                                   |
+| [Deleting OAuth configuration](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/oauth#delete-ai-service-tenant-agentic-oauths-oauthid)          | Deletes an OAuth configuration. Use `force=true` when it is still assigned to agents. |
 
 #### Updated endpoints
 
 | Endpoint                                                                                                                                                                                    | Description                                                                                 |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
-| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)        | Supports `llmConfig.selfHostedParams.oauth` and `expand=oauth`.                             |
-| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                        | Supports `llmConfig.selfHostedParams.oauth` and `expand=oauth`.                             |
-| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)              | Supports `llmConfig.selfHostedParams.oauth` and `expand=oauth`.                             |
-| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid)            | Accepts `llmConfig.selfHostedParams.oauth` as a reference to a managed OAuth configuration. |
-| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Accepts `llmConfig.selfHostedParams.oauth` as a reference to a managed OAuth configuration. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)        | Supports `llmConfig.selfHostedParams.oauth` and `expand=oauth`.                             |
+| [Listing agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                        | Supports `llmConfig.selfHostedParams.oauth` and `expand=oauth`.                             |
+| [Searching agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)              | Supports `llmConfig.selfHostedParams.oauth` and `expand=oauth`.                             |
+| [Upserting an agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid)            | Accepts `llmConfig.selfHostedParams.oauth` as a reference to a managed OAuth configuration. |
+| [Partially updating an agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Accepts `llmConfig.selfHostedParams.oauth` as a reference to a managed OAuth configuration. |
 
 #### Known problems
 
@@ -1169,18 +1201,18 @@ This functionality is in preview mode - some of the features may not be fully op
 
 | Endpoint | Description |
 | --- | --- |
-| [Listing conversations](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/conversation#get-ai-service-tenant-agentic-conversations) | Returns agent conversations for the tenant. |
-| [Searching conversations](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/conversation#post-ai-service-tenant-agentic-conversations-search) | Searches agent conversations for the tenant. |
+| [Listing conversations](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/conversation#get-ai-service-tenant-agentic-conversations) | Returns agent conversations for the tenant. |
+| [Searching conversations](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/conversation#post-ai-service-tenant-agentic-conversations-search) | Searches agent conversations for the tenant. |
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Supports the preview `teams` native tool type with `config.teamId`, `config.tenantId`, `config.defaultInboundAgentId`, and `config.allowedOperations`. |
-| [Listing tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools) | Responses can include `teams` tools with the new configuration fields. |
-| [Retrieving tool by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Responses can return a `teams` tool with the new configuration fields. |
-| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | `nativeTools` items now accept `id` and optional preview `allowedOperations` per assigned tool. |
-| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | `nativeTools` items now accept `id` and optional preview `allowedOperations` per assigned tool. |
+| [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Supports the preview `teams` native tool type with `config.teamId`, `config.tenantId`, `config.defaultInboundAgentId`, and `config.allowedOperations`. |
+| [Listing tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools) | Responses can include `teams` tools with the new configuration fields. |
+| [Retrieving tool by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Responses can return a `teams` tool with the new configuration fields. |
+| [Upserting an agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | `nativeTools` items now accept `id` and optional preview `allowedOperations` per assigned tool. |
+| [Partially updating an agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | `nativeTools` items now accept `id` and optional preview `allowedOperations` per assigned tool. |
 
 #### Known problems
 
@@ -1199,7 +1231,7 @@ The Category Tree service now supports rebuilding a category tree for a given ro
 
 | Endpoint | Description |
 |---|---|
-| [Rebuilding a category tree](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#post-category-tenant-category-trees-rootcategoryid-rebuild) | Triggers a rebuild of the category tree for the given root category and returns the result. |
+| [Rebuilding a category tree](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#post-category-tenant-category-trees-rootcategoryid-rebuild) | Triggers a rebuild of the category tree for the given root category and returns the result. |
 
 #### Known problems
 
@@ -1243,8 +1275,8 @@ The endpoints `/filter-metadata` and `/rag-metadata` of AI Rag Indexer have been
 
 | Endpoint                                                                                                                                                                                                          | Description               |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------|
-| [Listing fields for RAG search](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-rag-metadata)                 | Support for `ORDER` type. |
-| [Listing fields for vector search filtering](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-filter-metadata) | Support for `ORDER` type. |
+| [Listing fields for RAG search](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-rag-metadata)                 | Support for `ORDER` type. |
+| [Listing fields for vector search filtering](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-filter-metadata) | Support for `ORDER` type. |
 
 #### Known problems
 
@@ -1262,10 +1294,10 @@ The `IndexConfiguration` object has been extended with a new optional `includedM
 
 | Endpoint | Description |
 |---|---|
-| [Creating a new configuration](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Property `includedMixinPaths` can be provided for the `BATTERY_INCLUDED` provider. |
-| [Getting all configurations](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations) | Property `includedMixinPaths` is returned. |
-| [Getting configuration by provider name](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) | Property `includedMixinPaths` is returned. |
-| [Updating configuration by provider name](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Property `includedMixinPaths` can be updated. |
+| [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Property `includedMixinPaths` can be provided for the `BATTERY_INCLUDED` provider. |
+| [Getting all configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations) | Property `includedMixinPaths` is returned. |
+| [Getting configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) | Property `includedMixinPaths` is returned. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Property `includedMixinPaths` can be updated. |
 
 #### Known problems
 
@@ -1284,7 +1316,7 @@ The Schema Service now supports partially updating multiple custom instances in 
 
 | Endpoint                                                                                                                                                                                     | Description                                                                                              |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| [Patching custom instances in bulk](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#patch-schema-tenant-custom-entities-type-instances-bulk) | Partially updates up to 200 custom instances in one request by applying patch operations to each item. |
+| [Patching custom instances in bulk](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#patch-schema-tenant-custom-entities-type-instances-bulk) | Partially updates up to 200 custom instances in one request by applying patch operations to each item. |
 
 #### Known problems
 
@@ -1307,11 +1339,11 @@ These properties can be set when creating a quote, creating a quote from a cart,
 
 | Endpoint                                                                                                                                                            | Description                                                                                                   |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| [Creating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes)                     | Properties `customerReference` and `customerComment` can be provided.                                         |
-| [Creating a quote from a cart](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes-from-cart) | Properties `customerReference` and `customerComment` can be provided.                                         |
-| [Retrieving quotes](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes)                     | Properties `customerReference` and `customerComment` are returned.                                            |
-| [Retrieving a single quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid)     | Properties `customerReference` and `customerComment` are returned.                                            |
-| [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid)  | Properties `customerReference` and `customerComment` can be updated. Customers can update these on own quotes. |
+| [Creating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes)                     | Properties `customerReference` and `customerComment` can be provided.                                         |
+| [Creating a quote from a cart](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes-from-cart) | Properties `customerReference` and `customerComment` can be provided.                                         |
+| [Retrieving quotes](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes)                     | Properties `customerReference` and `customerComment` are returned.                                            |
+| [Retrieving a single quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid)     | Properties `customerReference` and `customerComment` are returned.                                            |
+| [Partially updating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid)  | Properties `customerReference` and `customerComment` can be updated. Customers can update these on own quotes. |
 
 #### Known problems
 
@@ -1329,7 +1361,7 @@ AI Service now supports streaming LLM responses for endpoint-triggered agents th
 
 | Endpoint                                                                                                                                                                                      | Description                                                                                                 |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Adds `POST /ai-service/{tenant}/agentic/chat-stream` for streaming chat responses over `text/event-stream`. |
+| [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Adds `POST /ai-service/{tenant}/agentic/chat-stream` for streaming chat responses over `text/event-stream`. |
 
 #### Known problems
 
@@ -1347,9 +1379,9 @@ Custom entity IDs in the Schema Service and scope IDs in the IAM Service now acc
 
 | Endpoint                                                                                                                                                                        | Description                                      |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| [Creating a custom schema type](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-schema-type#post-schema-tenant-custom-entities)    | The `id` field now accepts digits.               |
-| [Upserting a custom schema type](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-schema-type#put-schema-tenant-custom-entities-id) | The `id` field now accepts digits.               |
-| [Upserting a custom scope](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/scopes#put-iam-tenant-scopes-scopeid)                 | The `scopeId` path parameter now accepts digits. |
+| [Creating a custom schema type](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-schema-type#post-schema-tenant-custom-entities)    | The `id` field now accepts digits.               |
+| [Upserting a custom schema type](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-schema-type#put-schema-tenant-custom-entities-id) | The `id` field now accepts digits.               |
+| [Upserting a custom scope](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/scopes#put-iam-tenant-scopes-scopeid)                 | The `scopeId` path parameter now accepts digits. |
 
 #### Known problems
 
@@ -1367,13 +1399,13 @@ The AI Service API now accepts a JSON Schema (as a JSON string) in the `outputFo
 
 | Endpoint                                                                                                                                                                                            | Description                                     |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)                | Response now includes the `outputFormat` field. |
-| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                                | Response now includes the `outputFormat` field. |
-| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)                      | Response now includes the `outputFormat` field. |
-| [Upserting an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid)                    | Request now includes the `outputFormat` field.  |
-| [Partially updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid)         | Request now includes the `outputFormat` field.  |
-| [Listing available agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#get-ai-service-tenant-agentic-templates) | Response now includes the `outputFormat` field. |
-| [Searching agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#post-ai-service-tenant-agentic-templates-search) | Response now includes the `outputFormat` field. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)                | Response now includes the `outputFormat` field. |
+| [Listing agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                                | Response now includes the `outputFormat` field. |
+| [Searching agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search)                      | Response now includes the `outputFormat` field. |
+| [Upserting an agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid)                    | Request now includes the `outputFormat` field.  |
+| [Partially updating an agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid)         | Request now includes the `outputFormat` field.  |
+| [Listing available agent templates](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#get-ai-service-tenant-agentic-templates) | Response now includes the `outputFormat` field. |
+| [Searching agent templates](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#post-ai-service-tenant-agentic-templates-search) | Response now includes the `outputFormat` field. |
 {% endupdate %}
 
 {% update date="2026-06-30" tags="improvement" %}
@@ -1387,11 +1419,11 @@ The `X-Version` header is no longer required for Country Service endpoints.
 
 | Endpoint                                                                                                                                                                      | Description                                   |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| [Retrieving all countries](https://developer.emporix.io/api-references/api-guides/configuration/country-service/api-reference/countries#get-country-tenant-countries)         | The `X-Version` header is no longer required. |
-| [Retrieving a country](https://developer.emporix.io/api-references/api-guides/configuration/country-service/api-reference/countries#get-country-tenant-countries-countrycode) | The `X-Version` header is no longer required. |
-| [Updating a country](https://developer.emporix.io/api-references/api-guides/configuration/country-service/api-reference/countries#patch-country-tenant-countries-countrycode) | The `X-Version` header is no longer required. |
-| [Get all regions](https://developer.emporix.io/api-references/api-guides/configuration/country-service/api-reference/regions#get-country-tenant-regions)                      | The `X-Version` header is no longer required. |
-| [Retrieving a region](https://developer.emporix.io/api-references/api-guides/configuration/country-service/api-reference/regions#get-country-tenant-regions-regioncode)       | The `X-Version` header is no longer required. |
+| [Retrieving all countries](https://developer.emporix.io/api-documentation/api-guides/configuration/country-service/api-reference/countries#get-country-tenant-countries)         | The `X-Version` header is no longer required. |
+| [Retrieving a country](https://developer.emporix.io/api-documentation/api-guides/configuration/country-service/api-reference/countries#get-country-tenant-countries-countrycode) | The `X-Version` header is no longer required. |
+| [Updating a country](https://developer.emporix.io/api-documentation/api-guides/configuration/country-service/api-reference/countries#patch-country-tenant-countries-countrycode) | The `X-Version` header is no longer required. |
+| [Get all regions](https://developer.emporix.io/api-documentation/api-guides/configuration/country-service/api-reference/regions#get-country-tenant-regions)                      | The `X-Version` header is no longer required. |
+| [Retrieving a region](https://developer.emporix.io/api-documentation/api-guides/configuration/country-service/api-reference/regions#get-country-tenant-regions-regioncode)       | The `X-Version` header is no longer required. |
 
 #### Known problems
 
@@ -1409,17 +1441,17 @@ Media assets now support mixins, consistent with other Emporix entities. The Sch
 
 | Endpoint                                                                                                                                                                                                 | Description                                       |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets)                                                                    | Request accepts `mixins` and `metadata.mixins`.   |
-| [Updating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#put-media-tenant-assets-assetid)                                                             | Request accepts `mixins` and `metadata.mixins`.   |
-| [Retrieving all assets](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets)                                                                 | Response includes `mixins` and `metadata.mixins`. |
-| [Retrieving an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid)                                                           | Response includes `mixins` and `metadata.mixins`. |
-| [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas)                                                             | `MEDIA` added to supported schema types.          |
-| [Updating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id)                                                           | `MEDIA` added to supported schema types.          |
-| [Retrieving a list of categories](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#get-category-tenant-categories)          | Response `media` items include a `mixins` field.  |
-| [Retrieving a category details](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#get-category-tenant-categories-categoryid) | Response `media` items include a `mixins` field.  |
-| [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid)                   | Response `media` items include a `mixins` field.  |
-| [Retrieving all products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products)                          | Response `media` items include a `mixins` field.  |
-| [Searching for products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-search)                   | Response `media` items include a `mixins` field.  |
+| [Creating an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#post-media-tenant-assets)                                                                    | Request accepts `mixins` and `metadata.mixins`.   |
+| [Updating an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#put-media-tenant-assets-assetid)                                                             | Request accepts `mixins` and `metadata.mixins`.   |
+| [Retrieving all assets](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#get-media-tenant-assets)                                                                 | Response includes `mixins` and `metadata.mixins`. |
+| [Retrieving an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid)                                                           | Response includes `mixins` and `metadata.mixins`. |
+| [Creating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas)                                                             | `MEDIA` added to supported schema types.          |
+| [Updating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id)                                                           | `MEDIA` added to supported schema types.          |
+| [Retrieving a list of categories](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#get-category-tenant-categories)          | Response `media` items include a `mixins` field.  |
+| [Retrieving a category details](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#get-category-tenant-categories-categoryid) | Response `media` items include a `mixins` field.  |
+| [Retrieving a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid)                   | Response `media` items include a `mixins` field.  |
+| [Retrieving all products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products)                          | Response `media` items include a `mixins` field.  |
+| [Searching for products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-search)                   | Response `media` items include a `mixins` field.  |
 
 #### Known problems
 
@@ -1431,13 +1463,13 @@ There are no known problems.
 
 #### Overview
 
-The AI Rag Indexer Service endpoint for reindexing has been marked as deprecated and will be removed on **2026-12-01**. Instead, use the [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint.
+The AI Rag Indexer Service endpoint for reindexing has been marked as deprecated and will be removed on **2026-12-01**. Instead, use the [Creating reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint.
 
 #### Deprecated endpoints
 
 | Endpoint                                                                                                                                                                                             | Description                                                                                                                                                                                     |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Reindexing the entities of given type](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/reindex#post-ai-rag-indexer-tenant-type-reindex) | Use the [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead. |
+| [Reindexing the entities of given type](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/reindex#post-ai-rag-indexer-tenant-type-reindex) | Use the [Creating reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead. |
 
 #### Known problems
 
@@ -1449,13 +1481,13 @@ There are no known problems.
 
 #### Overview
 
-The Indexing Service endpoint for reindexing has been marked as deprecated and will be removed on **2026-12-01**. Use the [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead.
+The Indexing Service endpoint for reindexing has been marked as deprecated and will be removed on **2026-12-01**. Use the [Creating reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead.
 
 #### Deprecated endpoints
 
 | Endpoint                                                                                                                                               | Description                                                                                                                                                                                     |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Reindexing](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex) | Use the [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead. |
+| [Reindexing](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex) | Use the [Creating reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint instead. |
 
 #### Known problems
 
@@ -1473,9 +1505,9 @@ The Indexing Service was extended with new endpoints for creating and fetching r
 
 | Endpoint                                                                                                                                                                          | Description                         |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs)             | Endpoint for creating reindex job.  |
-| [Fetching reindex jobs](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs)             | Endpoint for fetching reindex jobs. |
-| [Fetching reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid) | Endpoint for fetching reindex job.  |
+| [Creating reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs)             | Endpoint for creating reindex job.  |
+| [Fetching reindex jobs](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs)             | Endpoint for fetching reindex jobs. |
+| [Fetching reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid) | Endpoint for fetching reindex job.  |
 {% endupdate %}
 
 {% update date="2026-06-10" tags="improvement" %}
@@ -1496,13 +1528,13 @@ The AI Service API now supports payload-level filtering for `commerce_events` ag
 
 | Endpoint                                                                                                                                                                                 | Description                                                                   |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)     | Response can now include `trigger.filter` for `commerce_events` triggers.     |
-| [Listing Agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                     | Response can now include `trigger.filter` for `commerce_events` triggers.     |
-| [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid)            | Request payload now supports `trigger.filter` for `commerce_events` triggers. |
-| [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Request payload now supports `trigger.filter` for `commerce_events` triggers. |
-| [Listing available jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs)                         | Job responses can now return `status: skipped`.                               |
-| [Searching jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#post-ai-service-tenant-jobs-search)                         | Job responses can now return `status: skipped`.                               |
-| [Retrieving available job](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid)                 | Job response can now return `status: skipped`.                                |
+| [Retrieving agent by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid)     | Response can now include `trigger.filter` for `commerce_events` triggers.     |
+| [Listing Agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents)                     | Response can now include `trigger.filter` for `commerce_events` triggers.     |
+| [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid)            | Request payload now supports `trigger.filter` for `commerce_events` triggers. |
+| [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Request payload now supports `trigger.filter` for `commerce_events` triggers. |
+| [Listing available jobs](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs)                         | Job responses can now return `status: skipped`.                               |
+| [Searching jobs](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/job#post-ai-service-tenant-jobs-search)                         | Job responses can now return `status: skipped`.                               |
+| [Retrieving available job](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid)                 | Job response can now return `status: skipped`.                                |
 {% endupdate %}
 
 {% update date="2026-06-10" tags="improvement" %}
@@ -1518,7 +1550,7 @@ All Category Service endpoints are affected. The `X-Version` request header is n
 
 | Endpoint                                                                                                                           | Description                                                                        |
 | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| [Category Service API](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference) | The `X-Version` request header is no longer required and is ignored when provided. |
+| [Category Service API](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference) | The `X-Version` request header is no longer required and is ignored when provided. |
 
 #### Known problems
 
@@ -1564,7 +1596,7 @@ New and updated approvals store `legalEntity` on the document and are filtered b
 
 #### Behavior change (not backward compatible)
 
-When the `Legal-Entity-Id` request header is sent (injected for B2B customer tokens — see [B2B token and legal entity](https://developer.emporix.io/api-references/api-guides/quickstart/authentication-and-authorization/tokens-and-scopes#b2b-token)), the service:
+When the `Legal-Entity-Id` request header is sent (injected for B2B customer tokens — see [B2B token and legal entity](https://developer.emporix.io/api-documentation/api-guides/quickstart/authentication-and-authorization/tokens-and-scopes#b2b-token)), the service:
 
 * **Creates** approvals for that legal entity only (requestor and approver contact assignments are resolved for the given entity).
 * **Returns** only approvals whose stored `legalEntity.id` matches the `legal-entity-id` from token.
@@ -1575,13 +1607,13 @@ When the `Legal-Entity-Id` request header is sent (injected for B2B customer tok
 
 | Endpoint                                                                                                                                                                                                  | Description                                                                                                 |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| [Creating an approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#post-approval-tenant-approvals)                   | Respects `Legal-Entity-Id`; persists `legalEntity` on the approval.                                         |
-| [Retrieving a list of approvals](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#get-approval-tenant-approvals)          | Filtered by `Legal-Entity-Id` when present; response includes `legalEntity` and optional `createdResource`. |
-| [Retrieving an approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#get-approval-tenant-approvals-approvalid)       | Filtered by `Legal-Entity-Id` when present; response includes `legalEntity` and optional `createdResource`. |
-| [Updating an approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#patch-approval-tenant-approvals-approvalid)       | Filtered by `Legal-Entity-Id` when present.                                                                 |
-| [Deleting an approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#delete-approval-tenant-approvals-approvalid)      | Filtered by `Legal-Entity-Id` when present.                                                                 |
-| [Checking the resource approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approval#post-approval-tenant-approval-permitted) | Respects `Legal-Entity-Id` when checking existing approvals.                                                |
-| [Searching for approver users](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/search#post-approval-tenant-search-users)           | Respects `Legal-Entity-Id` for contact assignment and approver resolution.                                  |
+| [Creating an approval](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#post-approval-tenant-approvals)                   | Respects `Legal-Entity-Id`; persists `legalEntity` on the approval.                                         |
+| [Retrieving a list of approvals](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#get-approval-tenant-approvals)          | Filtered by `Legal-Entity-Id` when present; response includes `legalEntity` and optional `createdResource`. |
+| [Retrieving an approval](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#get-approval-tenant-approvals-approvalid)       | Filtered by `Legal-Entity-Id` when present; response includes `legalEntity` and optional `createdResource`. |
+| [Updating an approval](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#patch-approval-tenant-approvals-approvalid)       | Filtered by `Legal-Entity-Id` when present.                                                                 |
+| [Deleting an approval](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#delete-approval-tenant-approvals-approvalid)      | Filtered by `Legal-Entity-Id` when present.                                                                 |
+| [Checking the resource approval](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/approval#post-approval-tenant-approval-permitted) | Respects `Legal-Entity-Id` when checking existing approvals.                                                |
+| [Searching for approver users](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/search#post-approval-tenant-search-users)           | Respects `Legal-Entity-Id` for contact assignment and approver resolution.                                  |
 
 #### Schema updates
 
@@ -1648,14 +1680,14 @@ The AI Service has been enhanced with a new endpoint that allows you to upload a
 
 | Endpoint                                                                                                                                                                                      | Description                  |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
-| [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentId-attachments) | Attaches a file to the agent |
+| [Uploading attachment](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentId-attachments) | Attaches a file to the agent |
 
 #### Updated endpoints
 
 | Endpoint                                                                                                                                                                                  | Description                                     |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat)             | Request body extended with `attachments` field. |
-| [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) | Request body extended with `attachments` field. |
+| [Starting agent chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat)             | Request body extended with `attachments` field. |
+| [Starting agent async chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) | Request body extended with `attachments` field. |
 
 #### Known problems
 
@@ -1677,7 +1709,7 @@ Each model entry includes an identifier, display name, optional description, and
 
 | Endpoint                                                                                                                                                                        | Description                                                                                     |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| [Listing LLM models from supported providers](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/model#GET-ai-list-models) | Returns models grouped by provider (`openai`, `anthropic`, `google`). Requires `ai.agent_read`. |
+| [Listing LLM models from supported providers](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/model#GET-ai-list-models) | Returns models grouped by provider (`openai`, `anthropic`, `google`). Requires `ai.agent_read`. |
 
 #### Known problems
 
@@ -1697,12 +1729,12 @@ This feature is in a `preview` state and payload sent to battery included is sub
 
 | Endpoint                                                                                                                                                                                      | Description                                                                                                                         |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| [Creating a new configuration](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference#post-indexing-create-config)                               | Added `BATTERY_INCLUDED` provider support with new `excludedMixinKeys` field. Only one provider can be active per tenant at a time. |
-| [Retrieving all configurations](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference#get-indexing-list-configs)                                | Response may include Battery Included configurations with `excludedMixinKeys`.                                                      |
-| [Retrieving a configuration by provider name](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference#get-indexing-retrieve-config)               | `provider` path parameter now accepts `BATTERY_INCLUDED`.                                                                           |
-| [Updating a configuration](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference#put-indexing-update-config)                                    | Supports updating Battery Included configurations with `excludedMixinKeys`.                                                         |
-| [Retrieving all public configurations](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference#get-indexing-list-public-configs)                  | Response may include Battery Included public configurations.                                                                        |
-| [Retrieving a public configuration by provider name](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference#get-indexing-retrieve-public-config) | `provider` path parameter now accepts `BATTERY_INCLUDED`.                                                                           |
+| [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#post-indexing-create-config)                               | Added `BATTERY_INCLUDED` provider support with new `excludedMixinKeys` field. Only one provider can be active per tenant at a time. |
+| [Retrieving all configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#get-indexing-list-configs)                                | Response may include Battery Included configurations with `excludedMixinKeys`.                                                      |
+| [Retrieving a configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#get-indexing-retrieve-config)               | `provider` path parameter now accepts `BATTERY_INCLUDED`.                                                                           |
+| [Updating a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#put-indexing-update-config)                                    | Supports updating Battery Included configurations with `excludedMixinKeys`.                                                         |
+| [Retrieving all public configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#get-indexing-list-public-configs)                  | Response may include Battery Included public configurations.                                                                        |
+| [Retrieving a public configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#get-indexing-retrieve-public-config) | `provider` path parameter now accepts `BATTERY_INCLUDED`.                                                                           |
 
 #### Known problems
 
@@ -1723,17 +1755,17 @@ The Availability Service endpoints for managing locations have been marked as de
 
 | Endpoint                                                                                                                                                                         | Description                                                                                                                                                                                                                               |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `[GET] /{tenant}/availability/{productId}?site`                                                                                                                                  | Deprecated. Use [Retrieving a product availability](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-productid-site) instead.                 |
-| `[POST] /{tenant}/availability/{productId}?site`                                                                                                                                 | Deprecated. Use [Creating a new availability for a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site) instead.        |
-| `[PUT] /{tenant}/availability/{productId}?site`                                                                                                                                  | Deprecated. Use [Upserting availability information of a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#put-availability-tenant-availability-productid-site) instead.   |
-| `[DELETE] /{tenant}/availability/{productId}?site`                                                                                                                               | Deprecated. Use [Deleting availability information of a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#delete-availability-tenant-availability-productid-site) instead. |
-| `[GET] /{tenant}/availability?site`                                                                                                                                              | Deprecated. Use [Retrieving all availability information for a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-site-site) instead.     |
-| `[POST] /{tenant}/availability?site`                                                                                                                                             | Deprecated. Use [Retrieving product availabilities](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site) instead.                |
-| [Retrieving all locations for a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/locations#get-availability-tenant-locations-site) | Deprecated due to planned sunset of related functionalities.                                                                                                                                                                              |
-| [Adding a new location to a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/locations#post-availability-tenant-locations-site)    | Deprecated due to planned sunset of related functionalities.                                                                                                                                                                              |
-| [Updating locations](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/locations#put-availability-tenant-locations-site)                  | Deprecated due to planned sunset of related functionalities.                                                                                                                                                                              |
-| [Deleting a location](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/locations#delete-availability-tenant-locations-location)          | Deprecated due to planned sunset of related functionalities.                                                                                                                                                                              |
-| [Retrieving product locations](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/locations#post-availability-tenant-search-locations)     | Deprecated due to planned sunset of related functionalities.                                                                                                                                                                              |
+| `[GET] /{tenant}/availability/{productId}?site`                                                                                                                                  | Deprecated. Use [Retrieving a product availability](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-productid-site) instead.                 |
+| `[POST] /{tenant}/availability/{productId}?site`                                                                                                                                 | Deprecated. Use [Creating a new availability for a product](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site) instead.        |
+| `[PUT] /{tenant}/availability/{productId}?site`                                                                                                                                  | Deprecated. Use [Upserting availability information of a product](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#put-availability-tenant-availability-productid-site) instead.   |
+| `[DELETE] /{tenant}/availability/{productId}?site`                                                                                                                               | Deprecated. Use [Deleting availability information of a product](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#delete-availability-tenant-availability-productid-site) instead. |
+| `[GET] /{tenant}/availability?site`                                                                                                                                              | Deprecated. Use [Retrieving all availability information for a site](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-site-site) instead.     |
+| `[POST] /{tenant}/availability?site`                                                                                                                                             | Deprecated. Use [Retrieving product availabilities](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site) instead.                |
+| [Retrieving all locations for a site](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/locations#get-availability-tenant-locations-site) | Deprecated due to planned sunset of related functionalities.                                                                                                                                                                              |
+| [Adding a new location to a site](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/locations#post-availability-tenant-locations-site)    | Deprecated due to planned sunset of related functionalities.                                                                                                                                                                              |
+| [Updating locations](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/locations#put-availability-tenant-locations-site)                  | Deprecated due to planned sunset of related functionalities.                                                                                                                                                                              |
+| [Deleting a location](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/locations#delete-availability-tenant-locations-location)          | Deprecated due to planned sunset of related functionalities.                                                                                                                                                                              |
+| [Retrieving product locations](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/locations#post-availability-tenant-search-locations)     | Deprecated due to planned sunset of related functionalities.                                                                                                                                                                              |
 
 #### Known problems
 
@@ -1771,8 +1803,8 @@ The following limitations apply when providing `owner`:
 
 | Endpoint                                                                                                                                                                                 | Description                                             |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| [Creating a custom instance](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances)    | The request body now accepts an optional `owner`.       |
-| [Upserting a custom instance](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#put-schema-tenant-custom-entities-type-instances-id) | The request body now accepts an optional `owner` field. |
+| [Creating a custom instance](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances)    | The request body now accepts an optional `owner`.       |
+| [Upserting a custom instance](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#put-schema-tenant-custom-entities-type-instances-id) | The request body now accepts an optional `owner` field. |
 
 #### Known problems
 
@@ -1790,11 +1822,11 @@ The tool of `RAG_EMPORIX` type allow specifying the custom entity type by using 
 
 | Endpoint                                                                                                                                                     | Description                                                                 |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
-| [Listing tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#GET-ai-list-tools)              | Field `entityType` of `RAG_EMPORIX` tool type supports custom entity types. |
-| [Searching tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#POST-ai-search-tools)         | Field `entityType` of `RAG_EMPORIX` tool type supports custom entity types. |
-| [Retrieving tool by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#GET-ai-retrieve-tool)   | Field `entityType` of `RAG_EMPORIX` tool type supports custom entity types. |
-| [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#PUT-ai-upsert-tool)            | Field `entityType` of `RAG_EMPORIX` tool type supports custom entity types. |
-| [Partially updating tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#PATCH-ai-update-tool) | Field `entityType` of `RAG_EMPORIX` tool type supports custom entity types. |
+| [Listing tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#GET-ai-list-tools)              | Field `entityType` of `RAG_EMPORIX` tool type supports custom entity types. |
+| [Searching tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#POST-ai-search-tools)         | Field `entityType` of `RAG_EMPORIX` tool type supports custom entity types. |
+| [Retrieving tool by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#GET-ai-retrieve-tool)   | Field `entityType` of `RAG_EMPORIX` tool type supports custom entity types. |
+| [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#PUT-ai-upsert-tool)            | Field `entityType` of `RAG_EMPORIX` tool type supports custom entity types. |
+| [Partially updating tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#PATCH-ai-update-tool) | Field `entityType` of `RAG_EMPORIX` tool type supports custom entity types. |
 
 #### Known problems
 
@@ -1894,8 +1926,8 @@ The endpoints `/filter-metadata` and `/rag-metadata` of AI Rag Indexer have been
 
 | Endpoint                                                                                                                                                                                                          | Description                      |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
-| [Listing fields for vector search filtering](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-tenant-type-filter-metadata) | Support for custom entity types. |
-| [Listing fields for RAG search](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-retrieve-rag-metadata)                    | Support for custom entity types. |
+| [Listing fields for vector search filtering](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-tenant-type-filter-metadata) | Support for custom entity types. |
+| [Listing fields for RAG search](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-retrieve-rag-metadata)                    | Support for custom entity types. |
 
 #### Known problems
 
@@ -1913,7 +1945,7 @@ The fields `name` and `description` from the response of `/filter-metadata` endp
 
 | Endpoint                                                                                                                                                                                                          | Description                                                                 |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| [Listing fields for vector search filtering](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-tenant-type-filter-metadata) | Fields `name` and `description` from the response are marked as deprecated. |
+| [Listing fields for vector search filtering](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-tenant-type-filter-metadata) | Fields `name` and `description` from the response are marked as deprecated. |
 
 #### Known problems
 
@@ -1931,11 +1963,11 @@ The tool of `RAG_EMPORIX` type has been enhanced with a `filterFields` field, wh
 
 | Endpoint                                                                                                                                                     | Description                                      |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------ |
-| [Listing tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#GET-ai-list-tools)              | Response enhanced with `filterFields` field.     |
-| [Searching tools](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#POST-ai-search-tools)         | Response enhanced with `filterFields` field.     |
-| [Retrieving tool by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#GET-ai-retrieve-tool)   | Response enhanced with `filterFields` field.     |
-| [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#PUT-ai-upsert-tool)            | Request body enhanced with `filterFields` field. |
-| [Partially updating tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#PATCH-ai-update-tool) | Request body enhanced with `filterFields` field. |
+| [Listing tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#GET-ai-list-tools)              | Response enhanced with `filterFields` field.     |
+| [Searching tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#POST-ai-search-tools)         | Response enhanced with `filterFields` field.     |
+| [Retrieving tool by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#GET-ai-retrieve-tool)   | Response enhanced with `filterFields` field.     |
+| [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#PUT-ai-upsert-tool)            | Request body enhanced with `filterFields` field. |
+| [Partially updating tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#PATCH-ai-update-tool) | Request body enhanced with `filterFields` field. |
 
 #### Known problems
 
@@ -1963,7 +1995,7 @@ The SEPA Export Service and all of its endpoints are no longer maintained and wi
 
 #### Deprecated endpoints
 
-All endpoints under the `/sepa-export/{tenant}/` base path are deprecated. For the full list of affected endpoints, refer to the [SEPA Export Service API Reference](https://developer.emporix.io/api-references/api-guides/orders/sepa-export/api-reference).
+All endpoints under the `/sepa-export/{tenant}/` base path are deprecated. For the full list of affected endpoints, refer to the [SEPA Export Service API Reference](https://developer.emporix.io/api-documentation/api-guides/orders/sepa-export/api-reference).
 
 #### Known problems
 
@@ -1975,7 +2007,7 @@ There are no known problems.
 
 #### Overview
 
-The [Pick-pack Service](https://developer.emporix.io/api-references/api-guides/orders/pick-pack) is now deprecated in its entirety. All endpoints exposed by the service are deprecated and the service is scheduled to be officially removed on **2026-08-24**.
+The [Pick-pack Service](https://developer.emporix.io/api-documentation/api-guides/orders/pick-pack) is now deprecated in its entirety. All endpoints exposed by the service are deprecated and the service is scheduled to be officially removed on **2026-08-24**.
 
 {% hint style="warning" %}
 The Pick-pack Service and all of its endpoints are no longer maintained and will be officially removed on **2026-08-24**. Make sure to migrate any integrations that still rely on the service before that date.
@@ -1983,7 +2015,7 @@ The Pick-pack Service and all of its endpoints are no longer maintained and will
 
 #### Deprecated endpoints
 
-All endpoints under the `/pick-pack/{tenant}` base path are deprecated, including those used to manage pick-pack orders, order cycles, assignees, recalculations, and events. For the full list of affected endpoints, refer to the [Pick-pack Service API Reference](https://developer.emporix.io/api-references/api-guides/orders/pick-pack/api-reference).
+All endpoints under the `/pick-pack/{tenant}` base path are deprecated, including those used to manage pick-pack orders, order cycles, assignees, recalculations, and events. For the full list of affected endpoints, refer to the [Pick-pack Service API Reference](https://developer.emporix.io/api-documentation/api-guides/orders/pick-pack/api-reference).
 
 #### Known problems
 
@@ -2001,7 +2033,7 @@ The Price Service search endpoint now supports a new `siteCodes` field, which al
 
 | Endpoint                                                                                                                                                           | Description                                                                                                                  |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| [Searching for prices](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices-search) | New attribute `siteCodes` added to request payload. Accepts an array of site codes for which the prices should be retrieved. |
+| [Searching for prices](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices-search) | New attribute `siteCodes` added to request payload. Accepts an array of site codes for which the prices should be retrieved. |
 
 #### Known problems
 
@@ -2141,27 +2173,27 @@ The deprecated endpoints, properties, and query parameters listed above are no l
 
 | Endpoint                                                                                                                                                                                                    | Description                                                                                                                                                                                                                |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Retrieving all access controls](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/access-controls#get-iam-tenant-access-controls)                             | Property `restrictedTo` introduced. Property `domain` replaced with `domains`. Response properties `roleId` and `resourceId` are now deprecated. Query parameters `expand`, `roleId`, and `resourceId` are now deprecated. |
-| [Retrieving an access control](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/access-controls#get-iam-tenant-access-controls-accesscontrolid)               | Property `restrictedTo` introduced. Property `domain` replaced with `domains`. Response properties `roleId` and `resourceId` are now deprecated. Query parameter `expand` is now deprecated.                               |
-| [Upserting an access control](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/access-controls#put-iam-tenant-access-controls-accesscontrolid)                | Property `restrictedTo` introduced. Property `domain` replaced with `domains`. Predefined scopes can now be used when creating or updating access controls.                                                                |
-| [Retrieving all access controls assigned to a group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups-groupid-access-controls)   | Property `restrictedTo` introduced. Property `domain` replaced with `domains`. Response properties `roleId` and `resourceId` are now deprecated. Query parameter `expand` is now deprecated.                               |
-| [Retrieving all access controls assigned to a user](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-access-controls)       | Property `restrictedTo` introduced. Property `domain` replaced with `domains`. Response properties `roleId` and `resourceId` are now deprecated. Query parameter `expand` is now deprecated.                               |
-| [Retrieving all access controls assigned to a requested user](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-me-access-controls) | Property `restrictedTo` introduced. Property `domain` replaced with `domains`. Response properties `roleId` and `resourceId` are now deprecated. Query parameter `expand` is now deprecated.                               |
-| [Retrieving all scopes](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/custom-scopes#get-iam-tenant-scopes)                                                 | Response now includes the read-only `predefined` flag. The endpoint now also returns predefined access control scopes in addition to user-created custom scopes.                                                           |
-| [Retrieving a scope](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/custom-scopes#get-iam-tenant-scopes-scopeid)                                            | Response now includes the read-only `predefined` flag. The endpoint now also returns predefined access control scopes in addition to user-created custom scopes.                                                           |
+| [Retrieving all access controls](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#get-iam-tenant-access-controls)                             | Property `restrictedTo` introduced. Property `domain` replaced with `domains`. Response properties `roleId` and `resourceId` are now deprecated. Query parameters `expand`, `roleId`, and `resourceId` are now deprecated. |
+| [Retrieving an access control](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#get-iam-tenant-access-controls-accesscontrolid)               | Property `restrictedTo` introduced. Property `domain` replaced with `domains`. Response properties `roleId` and `resourceId` are now deprecated. Query parameter `expand` is now deprecated.                               |
+| [Upserting an access control](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#put-iam-tenant-access-controls-accesscontrolid)                | Property `restrictedTo` introduced. Property `domain` replaced with `domains`. Predefined scopes can now be used when creating or updating access controls.                                                                |
+| [Retrieving all access controls assigned to a group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups-groupid-access-controls)   | Property `restrictedTo` introduced. Property `domain` replaced with `domains`. Response properties `roleId` and `resourceId` are now deprecated. Query parameter `expand` is now deprecated.                               |
+| [Retrieving all access controls assigned to a user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-access-controls)       | Property `restrictedTo` introduced. Property `domain` replaced with `domains`. Response properties `roleId` and `resourceId` are now deprecated. Query parameter `expand` is now deprecated.                               |
+| [Retrieving all access controls assigned to a requested user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-me-access-controls) | Property `restrictedTo` introduced. Property `domain` replaced with `domains`. Response properties `roleId` and `resourceId` are now deprecated. Query parameter `expand` is now deprecated.                               |
+| [Retrieving all scopes](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/custom-scopes#get-iam-tenant-scopes)                                                 | Response now includes the read-only `predefined` flag. The endpoint now also returns predefined access control scopes in addition to user-created custom scopes.                                                           |
+| [Retrieving a scope](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/custom-scopes#get-iam-tenant-scopes-scopeid)                                            | Response now includes the read-only `predefined` flag. The endpoint now also returns predefined access control scopes in addition to user-created custom scopes.                                                           |
 
 #### Deprecated endpoints
 
 | Endpoint                                                                                                                                                                                                      | Description          |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
-| [Retrieving all permissions](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/permissions#get-iam-tenant-permissions)                                           | Endpoint deprecated. |
-| [Retrieving a permission](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/permissions#get-iam-tenant-permissions-permissionid)                                 | Endpoint deprecated. |
-| [Retrieving all resources](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/resources#get-iam-tenant-resources)                                                 | Endpoint deprecated. |
-| [Retrieving a resource](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/resources#get-iam-tenant-resources-resourceid)                                         | Endpoint deprecated. |
-| [Retrieving a list of roles](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/roles#get-iam-tenant-roles)                                                       | Endpoint deprecated. |
-| [Retrieving a role](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/roles#get-iam-tenant-roles-roleid)                                                         | Endpoint deprecated. |
-| [Retrieving user access controls for a resource](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-access-controls-resourceid) | Endpoint deprecated. |
-| [Retrieving user permissions for a resource](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-permissions-resourceid)         | Endpoint deprecated. |
+| [Retrieving all permissions](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/permissions#get-iam-tenant-permissions)                                           | Endpoint deprecated. |
+| [Retrieving a permission](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/permissions#get-iam-tenant-permissions-permissionid)                                 | Endpoint deprecated. |
+| [Retrieving all resources](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/resources#get-iam-tenant-resources)                                                 | Endpoint deprecated. |
+| [Retrieving a resource](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/resources#get-iam-tenant-resources-resourceid)                                         | Endpoint deprecated. |
+| [Retrieving a list of roles](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/roles#get-iam-tenant-roles)                                                       | Endpoint deprecated. |
+| [Retrieving a role](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/roles#get-iam-tenant-roles-roleid)                                                         | Endpoint deprecated. |
+| [Retrieving user access controls for a resource](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-access-controls-resourceid) | Endpoint deprecated. |
+| [Retrieving user permissions for a resource](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-permissions-resourceid)         | Endpoint deprecated. |
 
 #### Known problems
 
@@ -2255,13 +2287,13 @@ The Cart Service API reference now documents a new batch update endpoint for car
 
 | Endpoint                                                                                                                                                                   | Description                                                                                                                                |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| [Updating multiple products in cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#put-cart-update-multiple-items-in-cart) | New endpoint for updating multiple cart items in one request. The number of cart items that can be edited in one request is limited to 50. |
+| [Updating multiple products in cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#put-cart-update-multiple-items-in-cart) | New endpoint for updating multiple cart items in one request. The number of cart items that can be edited in one request is limited to 50. |
 
 #### Updated endpoints
 
 | Endpoint                                                                                                                                                               | Description                                                                                                               |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| [Adding multiple products to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-add-multiple-items-to-cart) | Response for `POST /cart/{tenant}/carts/{cartId}/itemsBatch` was extended with the `index` property for each batch entry. |
+| [Adding multiple products to cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#post-cart-add-multiple-items-to-cart) | Response for `POST /cart/{tenant}/carts/{cartId}/itemsBatch` was extended with the `index` property for each batch entry. |
 
 #### Known problems
 
@@ -2279,8 +2311,8 @@ The Schema Service has been extended with endpoints for exporting and importing 
 
 | Endpoint                                                                                                                                                                   | Description                                 |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| [Exporting custom entities](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/export-import#post-schema-tenant-custom-entities-export) | New endpoint for exporting custom entities. |
-| [Importing custom entities](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/export-import#post-schema-tenant-custom-entities-import) | New endpoint for importing custom entities. |
+| [Exporting custom entities](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/export-import#post-schema-tenant-custom-entities-export) | New endpoint for exporting custom entities. |
+| [Importing custom entities](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/export-import#post-schema-tenant-custom-entities-import) | New endpoint for importing custom entities. |
 
 #### Known problems
 
@@ -2350,8 +2382,8 @@ The Availability Service has been updated with support for the standard Q-param 
 
 | Endpoint                                                                                                                                                                                                     | Description                                                                                                                                         |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Retrieving all availability information for a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-site-site) | The response now includes the `X-Total-Count` header. Added support for the standard `q` query parameter.                                           |
-| [Retrieving product availabilities](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search)                    | The response now includes the `X-Total-Count` header. Added support for the standard `q` request body attribute as an alternative filtering method. |
+| [Retrieving all availability information for a site](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-site-site) | The response now includes the `X-Total-Count` header. Added support for the standard `q` query parameter.                                           |
+| [Retrieving product availabilities](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search)                    | The response now includes the `X-Total-Count` header. Added support for the standard `q` request body attribute as an alternative filtering method. |
 
 #### Known problems
 
@@ -2386,20 +2418,20 @@ See the tutorial section [How to work with dynamic variant products](https://app
 
 | Endpoint                                                                                                                                                                                                                | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Triggering dynamic variant recalculation](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-trigger-dynamic-variant-recalculation) | Accepts up to 1000 product IDs at any hierarchy level and triggers asynchronous recalculation of the variant tree. The system resolves the root for each submitted ID and creates one recalculation job per unique root product. Returns `202 Accepted` with the list of created jobs. If a job for a given root is already `PENDING` or `PROCESSING`, the affected IDs are returned in `skippedProductIds`. Intended to be called after a full batch import, not per individual product write. |
-| [Listing recalculation jobs](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-list-recalculation-jobs)                              | Retrieves all dynamic variant recalculation jobs for the tenant. Supports optional filtering by job `status` (`PENDING`, `PROCESSING`, `FINISHED`, `FAILED`, `FAILED_PERMANENT`). Jobs are retained for approximately 30 days after reaching a terminal state and then automatically removed.                                                                                                                                                                                                   |
-| [Retrieving a recalculation job](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-get-recalculation-job)                            | Retrieves the current status and details of a specific recalculation job by its ID. Use this endpoint to poll for job completion. Returns `404` if the job does not exist or has been removed after 30 days.                                                                                                                                                                                                                                                                                    |
+| [Triggering dynamic variant recalculation](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-trigger-dynamic-variant-recalculation) | Accepts up to 1000 product IDs at any hierarchy level and triggers asynchronous recalculation of the variant tree. The system resolves the root for each submitted ID and creates one recalculation job per unique root product. Returns `202 Accepted` with the list of created jobs. If a job for a given root is already `PENDING` or `PROCESSING`, the affected IDs are returned in `skippedProductIds`. Intended to be called after a full batch import, not per individual product write. |
+| [Listing recalculation jobs](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-list-recalculation-jobs)                              | Retrieves all dynamic variant recalculation jobs for the tenant. Supports optional filtering by job `status` (`PENDING`, `PROCESSING`, `FINISHED`, `FAILED`, `FAILED_PERMANENT`). Jobs are retained for approximately 30 days after reaching a terminal state and then automatically removed.                                                                                                                                                                                                   |
+| [Retrieving a recalculation job](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-get-recalculation-job)                            | Retrieves the current status and details of a specific recalculation job by its ID. Use this endpoint to poll for job completion. Returns `404` if the job does not exist or has been removed after 30 days.                                                                                                                                                                                                                                                                                    |
 
 #### Modified endpoints
 
 | Endpoint                                                                                                                                                                                         | Description                                                                                                                                                                                                                                                                                               |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products)                  | Now accepts `DYNAMIC_VARIANT` as a valid `productType`. New fields: `parentVariantId`, `dynamicVariantType`, `sellable`, `ownVariantAttributes`.                                                                                                                                                          |
-| [Upserting a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid)            | Now accepts `DYNAMIC_VARIANT` product creation and update payloads.                                                                                                                                                                                                                                       |
-| [Partially updating a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) | Now accepts partial updates for `DYNAMIC_VARIANT` products.                                                                                                                                                                                                                                               |
-| [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk)         | Now accepts `DYNAMIC_VARIANT` products in bulk creation payloads.                                                                                                                                                                                                                                         |
-| [Upserting multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk)         | Now accepts `DYNAMIC_VARIANT` products in bulk upsert payloads.                                                                                                                                                                                                                                           |
-| [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid)           | Response now includes `DYNAMIC_VARIANT`-specific fields: `variants` (root product, accumulated attributes), `ownVariantAttributes`, `inheritedVariantAttributes`, `parentVariantId`, `parentVariantPath`, `dynamicVariantType`, `sellable`, and extended `metadata` with hierarchy integrity information. |
+| [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products)                  | Now accepts `DYNAMIC_VARIANT` as a valid `productType`. New fields: `parentVariantId`, `dynamicVariantType`, `sellable`, `ownVariantAttributes`.                                                                                                                                                          |
+| [Upserting a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid)            | Now accepts `DYNAMIC_VARIANT` product creation and update payloads.                                                                                                                                                                                                                                       |
+| [Partially updating a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) | Now accepts partial updates for `DYNAMIC_VARIANT` products.                                                                                                                                                                                                                                               |
+| [Creating multiple products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk)         | Now accepts `DYNAMIC_VARIANT` products in bulk creation payloads.                                                                                                                                                                                                                                         |
+| [Upserting multiple products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk)         | Now accepts `DYNAMIC_VARIANT` products in bulk upsert payloads.                                                                                                                                                                                                                                           |
+| [Retrieving a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid)           | Response now includes `DYNAMIC_VARIANT`-specific fields: `variants` (root product, accumulated attributes), `ownVariantAttributes`, `inheritedVariantAttributes`, `parentVariantId`, `parentVariantPath`, `dynamicVariantType`, `sellable`, and extended `metadata` with hierarchy integrity information. |
 
 #### New schemas
 
@@ -2451,10 +2483,10 @@ The `customerGroups` object in Legal Entity responses now includes an optional `
 
 | Endpoint                                                                                                                                                                                                                                                      | Description                                                     |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| [Retrieving all legal entities](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/legal-entities#get-customer-management-tenant-legal-entities)                                                  | Property `customerGroups.role` is now returned in the response. |
-| [Searching with parameters for legal entities](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/legal-entities#post-customer-management-tenant-legal-entities-search)                           | Property `customerGroups.role` is now returned in the response. |
-| [Retrieving a legal entity](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/legal-entities#get-customer-management-tenant-legal-entities-legalentityid)                                        | Property `customerGroups.role` is now returned in the response. |
-| [Retrieving a legal entity with parent hierarchy](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/legal-entities#get-customer-management-tenant-legal-entities-legalentityid-parent-hierarchy) | Property `customerGroups.role` is now returned in the response. |
+| [Retrieving all legal entities](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/client-management/api-reference/legal-entities#get-customer-management-tenant-legal-entities)                                                  | Property `customerGroups.role` is now returned in the response. |
+| [Searching with parameters for legal entities](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/client-management/api-reference/legal-entities#post-customer-management-tenant-legal-entities-search)                           | Property `customerGroups.role` is now returned in the response. |
+| [Retrieving a legal entity](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/client-management/api-reference/legal-entities#get-customer-management-tenant-legal-entities-legalentityid)                                        | Property `customerGroups.role` is now returned in the response. |
+| [Retrieving a legal entity with parent hierarchy](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/client-management/api-reference/legal-entities#get-customer-management-tenant-legal-entities-legalentityid-parent-hierarchy) | Property `customerGroups.role` is now returned in the response. |
 
 #### Known problems
 
@@ -2472,19 +2504,19 @@ The Cart Service now emits the `cart.updated` event whenever a cart is modified.
 
 | Endpoint                                                                                                                                                                           | Description                                             |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
-| [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid)                                           | Emits `cart.updated` when cart-level data is changed.   |
-| [Changing a cart site](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-changesite)                          | Emits `cart.updated` when the cart site is changed.     |
-| [Changing a cart currency](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-changecurrency)                  | Emits `cart.updated` when the cart currency is changed. |
-| [Refreshing a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid-refresh)                                 | Emits `cart.updated` when the cart is refreshed.        |
-| [Merging carts](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-merge)                                      | Emits `cart.updated` when carts are merged.             |
-| [Adding a cart item to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items)                    | Emits `cart.updated` when a new item is added.          |
-| [Adding multiple cart items to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-itemsbatch)       | Emits `cart.updated` when items are added in batch.     |
-| [Updating a cart item](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#put-cart-tenant-carts-cartid-items-itemid)                    | Emits `cart.updated` when an item is updated.           |
-| [Deleting a cart item](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#delete-cart-tenant-carts-cartid-items-itemid)                 | Emits `cart.updated` when an item is removed.           |
-| [Deleting all items from cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#delete-cart-tenant-carts-cartid-items)                | Emits `cart.updated` when cart items are cleared.       |
-| [Applying a discount to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/discounts#post-cart-tenant-carts-cartid-discounts)                | Emits `cart.updated` when a discount is applied.        |
-| [Removing all discounts from cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/discounts#delete-cart-tenant-carts-cartid-discounts)         | Emits `cart.updated` when all discounts are removed.    |
-| [Removing a discount from cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/discounts#delete-cart-tenant-carts-cartid-discounts-discountid) | Emits `cart.updated` when a single discount is removed. |
+| [Updating a cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid)                                           | Emits `cart.updated` when cart-level data is changed.   |
+| [Changing a cart site](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-changesite)                          | Emits `cart.updated` when the cart site is changed.     |
+| [Changing a cart currency](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-changecurrency)                  | Emits `cart.updated` when the cart currency is changed. |
+| [Refreshing a cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid-refresh)                                 | Emits `cart.updated` when the cart is refreshed.        |
+| [Merging carts](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-merge)                                      | Emits `cart.updated` when carts are merged.             |
+| [Adding a cart item to cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items)                    | Emits `cart.updated` when a new item is added.          |
+| [Adding multiple cart items to cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-itemsbatch)       | Emits `cart.updated` when items are added in batch.     |
+| [Updating a cart item](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#put-cart-tenant-carts-cartid-items-itemid)                    | Emits `cart.updated` when an item is updated.           |
+| [Deleting a cart item](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#delete-cart-tenant-carts-cartid-items-itemid)                 | Emits `cart.updated` when an item is removed.           |
+| [Deleting all items from cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#delete-cart-tenant-carts-cartid-items)                | Emits `cart.updated` when cart items are cleared.       |
+| [Applying a discount to cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/discounts#post-cart-tenant-carts-cartid-discounts)                | Emits `cart.updated` when a discount is applied.        |
+| [Removing all discounts from cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/discounts#delete-cart-tenant-carts-cartid-discounts)         | Emits `cart.updated` when all discounts are removed.    |
+| [Removing a discount from cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/discounts#delete-cart-tenant-carts-cartid-discounts-discountid) | Emits `cart.updated` when a single discount is removed. |
 
 #### Known problems
 
@@ -2581,18 +2613,18 @@ Custom instance responses include a read-only `owner` object indicating who crea
 
 | Endpoint                                                                                                                                                                                          | Description                                                                                                 |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| [Creating a custom schema type](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-schema-type#post-schema-tenant-custom-entities)                      | Creating a new type provisions scopes for reading and managing custom instances of that type.               |
-| [Upserting a custom schema type](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-schema-type#put-schema-tenant-custom-entities-id)                   | When the upsert creates a new type, scopes are provisioned for that type’s custom instances.                |
-| [Retrieving all custom instances](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances)         | Authorization now accepts type-specific `read` / `read_own` scopes; each item includes an `owner` property. |
-| [Retrieving a custom instance](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances-id)         | Authorization now accepts type-specific `read` / `read_own` scopes; each item includes an `owner` property. |
-| [Searching for custom instances](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-search)  | Authorization now accepts type-specific `read` / `read_own` scopes; each item includes an `owner` property. |
-| [Creating a custom instance](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances)             | Authorization now accepts type-specific `manage` / `manage_own` scopes.                                     |
-| [Upserting a custom instance](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#put-schema-tenant-custom-entities-type-instances-id)          | Authorization now accepts type-specific `manage` / `manage_own` scopes.                                     |
-| [Patching a custom instance](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#patch-schema-tenant-custom-entities-type-instances-id)         | Authorization now accepts type-specific `manage` / `manage_own` scopes.                                     |
-| [Deleting a custom instance](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#delete-schema-tenant-custom-entities-type-instances-id)        | Authorization now accepts type-specific `manage` / `manage_own` scopes.                                     |
-| [Creating custom instances in bulk](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-bulk) | Authorization now accepts type-specific `manage` / `manage_own` scopes.                                     |
-| [Upserting custom instances in bulk](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#put-schema-tenant-custom-entities-type-instances-bulk) | Authorization now accepts type-specific `manage` / `manage_own` scopes.                                     |
-| [Deleting custom instances in bulk](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#delete-schema-tenant-custom-entities-type-instances-bulk)        | Authorization now accepts type-specific `manage` / `manage_own` scopes.                                     |
+| [Creating a custom schema type](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-schema-type#post-schema-tenant-custom-entities)                      | Creating a new type provisions scopes for reading and managing custom instances of that type.               |
+| [Upserting a custom schema type](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-schema-type#put-schema-tenant-custom-entities-id)                   | When the upsert creates a new type, scopes are provisioned for that type’s custom instances.                |
+| [Retrieving all custom instances](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances)         | Authorization now accepts type-specific `read` / `read_own` scopes; each item includes an `owner` property. |
+| [Retrieving a custom instance](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances-id)         | Authorization now accepts type-specific `read` / `read_own` scopes; each item includes an `owner` property. |
+| [Searching for custom instances](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-search)  | Authorization now accepts type-specific `read` / `read_own` scopes; each item includes an `owner` property. |
+| [Creating a custom instance](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances)             | Authorization now accepts type-specific `manage` / `manage_own` scopes.                                     |
+| [Upserting a custom instance](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#put-schema-tenant-custom-entities-type-instances-id)          | Authorization now accepts type-specific `manage` / `manage_own` scopes.                                     |
+| [Patching a custom instance](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#patch-schema-tenant-custom-entities-type-instances-id)         | Authorization now accepts type-specific `manage` / `manage_own` scopes.                                     |
+| [Deleting a custom instance](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#delete-schema-tenant-custom-entities-type-instances-id)        | Authorization now accepts type-specific `manage` / `manage_own` scopes.                                     |
+| [Creating custom instances in bulk](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-bulk) | Authorization now accepts type-specific `manage` / `manage_own` scopes.                                     |
+| [Upserting custom instances in bulk](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#put-schema-tenant-custom-entities-type-instances-bulk) | Authorization now accepts type-specific `manage` / `manage_own` scopes.                                     |
+| [Deleting custom instances in bulk](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#delete-schema-tenant-custom-entities-type-instances-bulk)        | Authorization now accepts type-specific `manage` / `manage_own` scopes.                                     |
 
 #### Known problems
 
@@ -2622,19 +2654,19 @@ The endpoint for listing access controls supports the `q` search parameter. Addi
 
 | Endpoint                                                                                                                                                                                       | Description                                 |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| [Retrieving all scopes](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/scopes#get-iam-tenant-scopes)                                           | New endpoint for retrieving scopes.         |
-| [Retrieving a scope](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/scopes#get-iam-tenant-scopes-scopeid)                                      | New endpoint for retrieving a scope.        |
-| [Upserting a custom scope](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/scopes#put-iam-tenant-scopes-scopeid)                                | New endpoint for upserting custom scopes.   |
-| [Deleting a custom scope](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/scopes#delete-iam-tenant-scopes-scopeid)                              | New endpoint for deleting custom scopes.    |
-| [Upserting an access control](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/access-controls#put-iam-tenant-access-controls-accesscontrolid)   | New endpoint for upserting access controls. |
-| [Deleting an access control](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/access-controls#delete-iam-tenant-access-controls-accesscontrolid) | New endpoint for deleting access controls.  |
+| [Retrieving all scopes](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/scopes#get-iam-tenant-scopes)                                           | New endpoint for retrieving scopes.         |
+| [Retrieving a scope](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/scopes#get-iam-tenant-scopes-scopeid)                                      | New endpoint for retrieving a scope.        |
+| [Upserting a custom scope](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/scopes#put-iam-tenant-scopes-scopeid)                                | New endpoint for upserting custom scopes.   |
+| [Deleting a custom scope](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/scopes#delete-iam-tenant-scopes-scopeid)                              | New endpoint for deleting custom scopes.    |
+| [Upserting an access control](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#put-iam-tenant-access-controls-accesscontrolid)   | New endpoint for upserting access controls. |
+| [Deleting an access control](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#delete-iam-tenant-access-controls-accesscontrolid) | New endpoint for deleting access controls.  |
 
 #### Updated Endpoints
 
 | Endpoint                                                                                                                                                                                      | Description                                                                                                                                   |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Retrieving all access controls](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/access-controls#get-iam-tenant-access-controls)               | Access control response now includes `domain`, `predefined`, and `vendorAware` properties; the endpoint now supports the `q` query parameter. |
-| [Retrieving an access control](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/access-controls#get-iam-tenant-access-controls-accesscontrolid) | Access control response now includes `domain`, `predefined`, and `vendorAware`.                                                               |
+| [Retrieving all access controls](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#get-iam-tenant-access-controls)               | Access control response now includes `domain`, `predefined`, and `vendorAware` properties; the endpoint now supports the `q` query parameter. |
+| [Retrieving an access control](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#get-iam-tenant-access-controls-accesscontrolid) | Access control response now includes `domain`, `predefined`, and `vendorAware`.                                                               |
 
 #### Known problems
 
@@ -2652,7 +2684,7 @@ Order Service has been enhanced by exposing information about history of order s
 
 | Endpoint                                                                                                                                                                                                                                | Description                                                              |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| [Retrieving historical status transitions for a specific order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid-historical-transitions) | New endpoint returning historical order status transitions and metadata. |
+| [Retrieving historical status transitions for a specific order](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid-historical-transitions) | New endpoint returning historical order status transitions and metadata. |
 
 #### Known problems
 
@@ -2753,8 +2785,8 @@ Schema Service has been extended with new schema types - `CART_ITEM`, `ORDER_ENT
 
 | Endpoint                                                                                                                                       | Description                                                                                           |
 | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas)   | The `CART_ITEM` and `ORDER_ENTRY` schema type has been added and can now be used in the request body. |
-| [Updating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) | The `CART_ITEM` and `ORDER_ENTRY` schema type has been added and can now be used in the request body. |
+| [Creating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas)   | The `CART_ITEM` and `ORDER_ENTRY` schema type has been added and can now be used in the request body. |
+| [Updating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) | The `CART_ITEM` and `ORDER_ENTRY` schema type has been added and can now be used in the request body. |
 
 #### Known problems
 
@@ -2800,8 +2832,8 @@ Each calculated price object contains `netValue`, `grossValue`, `taxValue`, `tax
 
 | Endpoint                                                                                                                                                     | Description                                                                                                            |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
-| [Retrieving a list of returns](https://developer.emporix.io/api-references/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns)        | New properties `calculatedUnitPrice` and `calculatedPrice` on return items, and `calculatedPrice` on the return level. |
-| [Retrieving a single return](https://developer.emporix.io/api-references/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns-returnid) | New properties `calculatedUnitPrice` and `calculatedPrice` on return items, and `calculatedPrice` on the return level. |
+| [Retrieving a list of returns](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns)        | New properties `calculatedUnitPrice` and `calculatedPrice` on return items, and `calculatedPrice` on the return level. |
+| [Retrieving a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns-returnid) | New properties `calculatedUnitPrice` and `calculatedPrice` on return items, and `calculatedPrice` on the return level. |
 
 #### Known problems
 
@@ -2842,10 +2874,10 @@ The sales order resource has been extended with a new `checkout` boolean field.
 
 | Endpoint                                                                                                                                                                             | Description                              |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------- |
-| [Creating a new order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)                     | Property `checkout` has been introduced. |
-| [Retrieving orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders)                         | Property `checkout` has been introduced. |
-| [Searching for orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders-search)              | Property `checkout` has been introduced. |
-| [Retrieving a specific order by ID](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) | Property `checkout` has been introduced. |
+| [Creating a new order](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)                     | Property `checkout` has been introduced. |
+| [Retrieving orders](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders)                         | Property `checkout` has been introduced. |
+| [Searching for orders](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders-search)              | Property `checkout` has been introduced. |
+| [Retrieving a specific order by ID](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) | Property `checkout` has been introduced. |
 
 #### Known problems
 
@@ -2868,9 +2900,9 @@ The `hybris-count` response header:
 
 | Endpoint                                                                                                                                                                    | Description                                                                           |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| [Retrieving a list of orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders)         | Response header `hybris-count` is deprecated, `X-Total-Count` should be used instead. |
-| [Retrieving orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders)                | Response header `hybris-count` is deprecated, `X-Total-Count` should be used instead. |
-| [Retrieving the number of orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#head-order-v2-tenant-salesorders) | Response header `hybris-count` is deprecated, `X-Total-Count` should be used instead. |
+| [Retrieving a list of orders](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders)         | Response header `hybris-count` is deprecated, `X-Total-Count` should be used instead. |
+| [Retrieving orders](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders)                | Response header `hybris-count` is deprecated, `X-Total-Count` should be used instead. |
+| [Retrieving the number of orders](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-tenant-managed#head-order-v2-tenant-salesorders) | Response header `hybris-count` is deprecated, `X-Total-Count` should be used instead. |
 
 #### Known problems
 
@@ -2888,7 +2920,7 @@ The Customer Service exposes a new endpoint that provides the possibility to aut
 
 | Endpoint                                                                                                                                                                                                                                                    | Description                                                 |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| [Exchanging an external access token for an Emporix customer token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/authentication-and-authorization#post-customer--tenant-exchangeauthtoken) | A new endpoint for token exchange authentication mechanism. |
+| [Exchanging an external access token for an Emporix customer token](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/authentication-and-authorization#post-customer--tenant-exchangeauthtoken) | A new endpoint for token exchange authentication mechanism. |
 
 #### Known problems
 
@@ -2938,11 +2970,11 @@ A new query parameter `skipRelatedItemsValidation` has been added to product cre
 
 | Endpoint                                                                                                                                                                                         | Description                                             |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------- |
-| [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products)                  | New query parameter `skipRelatedItemsValidation` added. |
-| [Upserting a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid)            | New query parameter `skipRelatedItemsValidation` added. |
-| [Partially updating a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) | New query parameter `skipRelatedItemsValidation` added. |
-| [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk)         | New query parameter `skipRelatedItemsValidation` added. |
-| [Upserting multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk)         | New query parameter `skipRelatedItemsValidation` added. |
+| [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products)                  | New query parameter `skipRelatedItemsValidation` added. |
+| [Upserting a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid)            | New query parameter `skipRelatedItemsValidation` added. |
+| [Partially updating a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) | New query parameter `skipRelatedItemsValidation` added. |
+| [Creating multiple products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk)         | New query parameter `skipRelatedItemsValidation` added. |
+| [Upserting multiple products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk)         | New query parameter `skipRelatedItemsValidation` added. |
 
 #### New system setting
 
@@ -2993,13 +3025,13 @@ The Price Service has been enhanced with a new search endpoint that allows searc
 
 | Endpoint                                                                                                                                                                                                                                    | Description                                                                   |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| [Searching for prices assigned to a price list](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/prices-assigned-to-price-lists#post-price-tenant-price-lists-pricelistid-prices-search) | New endpoint that allows searching for price list prices with a request body. |
+| [Searching for prices assigned to a price list](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/prices-assigned-to-price-lists#post-price-tenant-price-lists-pricelistid-prices-search) | New endpoint that allows searching for price list prices with a request body. |
 
 #### Updated endpoints
 
 | Endpoint                                                                                                                                                                                                                             | Description                                                                     |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------- |
-| [Retrieving all prices assigned to a price list](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/prices-assigned-to-price-lists#get-price-tenant-price-lists-pricelistid-prices) | Added support for the standard `q` query parameter to filter price list prices. |
+| [Retrieving all prices assigned to a price list](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/prices-assigned-to-price-lists#get-price-tenant-price-lists-pricelistid-prices) | Added support for the standard `q` query parameter to filter price list prices. |
 
 #### Known problems
 
@@ -3050,11 +3082,11 @@ The `restriction` field:
 
 | Endpoint                                                                                                                                                            | Description                                 |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| [Creating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes)                     | Property `restriction` has been introduced. |
-| [Retrieving quotes](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes)                     | Property `restriction` has been introduced. |
-| [Retrieving a single quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid)     | Property `restriction` has been introduced. |
-| [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid)  | Property `restriction` has been introduced. |
-| [Retrieving quote history](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-history#get-quote-tenant-quotes-quoteid-history) | Property `restriction` has been introduced. |
+| [Creating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes)                     | Property `restriction` has been introduced. |
+| [Retrieving quotes](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes)                     | Property `restriction` has been introduced. |
+| [Retrieving a single quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid)     | Property `restriction` has been introduced. |
+| [Partially updating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid)  | Property `restriction` has been introduced. |
+| [Retrieving quote history](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-history#get-quote-tenant-quotes-quoteid-history) | Property `restriction` has been introduced. |
 
 #### Known problems
 
@@ -3077,12 +3109,12 @@ The `restriction` field:
 
 | Endpoint                                                                                                                                                                                                        | Description                                 |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| [Creating a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#post-customer-tenant-customers)                         | Property `restriction` has been introduced. |
-| [Retrieving all customers](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#get-customer-tenant-customers)                     | Property `restriction` has been introduced. |
-| [Searching for customers](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#post-customer-tenant-customers-search)              | Property `restriction` has been introduced. |
-| [Retrieving a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#get-customer-tenant-customers-customernumber)         | Property `restriction` has been introduced. |
-| [Upserting a customer profile](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#put-customer-tenant-customers-customernumber)  | Property `restriction` has been introduced. |
-| [Updating a customer profile](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#patch-customer-tenant-customers-customernumber) | Property `restriction` has been introduced. |
+| [Creating a customer](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#post-customer-tenant-customers)                         | Property `restriction` has been introduced. |
+| [Retrieving all customers](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#get-customer-tenant-customers)                     | Property `restriction` has been introduced. |
+| [Searching for customers](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#post-customer-tenant-customers-search)              | Property `restriction` has been introduced. |
+| [Retrieving a customer](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#get-customer-tenant-customers-customernumber)         | Property `restriction` has been introduced. |
+| [Upserting a customer profile](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#put-customer-tenant-customers-customernumber)  | Property `restriction` has been introduced. |
+| [Updating a customer profile](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#patch-customer-tenant-customers-customernumber) | Property `restriction` has been introduced. |
 
 #### Known problems
 
@@ -3105,14 +3137,14 @@ The `restriction` field:
 
 | Endpoint                                                                                                                                                                             | Description                                 |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
-| [Creating a new order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)                     | Property `restriction` has been introduced. |
-| [Retrieving orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders)                         | Property `restriction` has been introduced. |
-| [Searching for orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders-search)              | Property `restriction` has been introduced. |
-| [Retrieving a specific order by ID](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) | Property `restriction` has been introduced. |
-| [Updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid)                 | Property `restriction` has been introduced. |
-| [Partially updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid)     | Property `restriction` has been introduced. |
-| [Retrieving a list of orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders)                  | Property `restriction` has been introduced. |
-| [Retrieving order details](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid)             | Property `restriction` has been introduced. |
+| [Creating a new order](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders)                     | Property `restriction` has been introduced. |
+| [Retrieving orders](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders)                         | Property `restriction` has been introduced. |
+| [Searching for orders](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders-search)              | Property `restriction` has been introduced. |
+| [Retrieving a specific order by ID](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) | Property `restriction` has been introduced. |
+| [Updating an order](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid)                 | Property `restriction` has been introduced. |
+| [Partially updating an order](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid)     | Property `restriction` has been introduced. |
+| [Retrieving a list of orders](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders)                  | Property `restriction` has been introduced. |
+| [Retrieving order details](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid)             | Property `restriction` has been introduced. |
 
 #### Known problems
 
@@ -3135,11 +3167,11 @@ The `restriction` field:
 
 | Endpoint                                                                                                                                      | Description                                 |
 | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| [Creating a new cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts)        | Property `restriction` has been introduced. |
-| [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid)      | Property `restriction` has been introduced. |
-| [Retrieving all carts](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts)        | Property `restriction` has been introduced. |
-| [Retrieving a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid)    | Property `restriction` has been introduced. |
-| [Searching for carts](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-search) | Property `restriction` has been introduced. |
+| [Creating a new cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts)        | Property `restriction` has been introduced. |
+| [Updating a cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid)      | Property `restriction` has been introduced. |
+| [Retrieving all carts](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts)        | Property `restriction` has been introduced. |
+| [Retrieving a cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid)    | Property `restriction` has been introduced. |
+| [Searching for carts](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-search) | Property `restriction` has been introduced. |
 
 #### Known problems
 
@@ -3162,14 +3194,14 @@ The `restrictions` field:
 
 | Endpoint                                                                                                                                                                                                                                                      | Description                                              |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| [Retrieving all legal entities](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/legal-entities#get-customer-management-tenant-legal-entities)                                                  | Property `restrictions` has been introduced.             |
-| [Creating legal entity](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/legal-entities#post-customer-management-tenant-legal-entities)                                                         | Property `restrictions` has been introduced.             |
-| [Searching with parameters for legal entities](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/legal-entities#post-customer-management-tenant-legal-entities-search)                           | Property `restrictions` has been introduced.             |
-| [Retrieving a legal entity](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/legal-entities#get-customer-management-tenant-legal-entities-legalentityid)                                        | Property `restrictions` has been introduced.             |
-| [Upserting a legal entity](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/legal-entities#put-customer-management-tenant-legal-entities-legalentityid)                                         | Property `restrictions` has been introduced.             |
-| [Retrieving a legal entity with parent hierarchy](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/legal-entities#get-customer-management-tenant-legal-entities-legalentityid-parent-hierarchy) | Property `restrictions` has been introduced.             |
-| [Retrieving all contact assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/contact-assignments#get-customer-management-tenant-contact-assignments)                                   | Property `legalEntity.restrictions` has been introduced. |
-| [Retrieving a contact assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/client-management/api-reference/contact-assignments#get-customer-management-tenant-contact-assignments-contactassignmentid)                  | Property `legalEntity.restrictions` has been introduced. |
+| [Retrieving all legal entities](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/client-management/api-reference/legal-entities#get-customer-management-tenant-legal-entities)                                                  | Property `restrictions` has been introduced.             |
+| [Creating legal entity](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/client-management/api-reference/legal-entities#post-customer-management-tenant-legal-entities)                                                         | Property `restrictions` has been introduced.             |
+| [Searching with parameters for legal entities](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/client-management/api-reference/legal-entities#post-customer-management-tenant-legal-entities-search)                           | Property `restrictions` has been introduced.             |
+| [Retrieving a legal entity](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/client-management/api-reference/legal-entities#get-customer-management-tenant-legal-entities-legalentityid)                                        | Property `restrictions` has been introduced.             |
+| [Upserting a legal entity](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/client-management/api-reference/legal-entities#put-customer-management-tenant-legal-entities-legalentityid)                                         | Property `restrictions` has been introduced.             |
+| [Retrieving a legal entity with parent hierarchy](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/client-management/api-reference/legal-entities#get-customer-management-tenant-legal-entities-legalentityid-parent-hierarchy) | Property `restrictions` has been introduced.             |
+| [Retrieving all contact assignments](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/client-management/api-reference/contact-assignments#get-customer-management-tenant-contact-assignments)                                   | Property `legalEntity.restrictions` has been introduced. |
+| [Retrieving a contact assignment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/client-management/api-reference/contact-assignments#get-customer-management-tenant-contact-assignments-contactassignmentid)                  | Property `legalEntity.restrictions` has been introduced. |
 
 #### Known problems
 
@@ -3197,22 +3229,22 @@ When `restrictionAware` is set to `true`, the generated scopes will include rest
 
 | Endpoint                                                                                                                                                  | Description                                  |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| [Creating a new group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups)      | Property `restrictions` has been introduced. |
-| [Upserting a group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#put-iam-tenant-groups-groupid)  | Property `restrictions` has been introduced. |
-| [Retrieving all groups](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups)      | Property `restrictions` has been introduced. |
-| [Retrieving a group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups-groupid) | Property `restrictions` has been introduced. |
+| [Creating a new group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups)      | Property `restrictions` has been introduced. |
+| [Upserting a group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#put-iam-tenant-groups-groupid)  | Property `restrictions` has been introduced. |
+| [Retrieving all groups](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups)      | Property `restrictions` has been introduced. |
+| [Retrieving a group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups-groupid) | Property `restrictions` has been introduced. |
 
 **Access Controls**
 
 | Endpoint                                                                                                                                                                                                      | Description                                                                  |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| [Retrieving all access controls](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/access-controls#get-iam-tenant-access-controls)                               | Property `restrictionAware` has been introduced.                             |
-| [Retrieving an access control](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/access-controls#get-iam-tenant-access-controls-accesscontrolid)                 | Property `restrictionAware` has been introduced.                             |
-| [Retrieving all access controls assigned to a group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups-groupid-access-controls)     | Property `restrictionAware` has been introduced.                             |
-| [Retrieving all access controls assigned to a user](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-access-controls)         | Property `restrictionAware` has been introduced.                             |
-| [Retrieving user access controls for a resource](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-access-controls-resourceid) | Property `restrictionAware` has been introduced.                             |
-| [Retrieving all access controls assigned to the current user](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-me-access-controls)   | Property `restrictionAware` has been introduced.                             |
-| [Retrieving all access control templates](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/access-control-templates#get-iam-tenant-templates)                   | Property `restrictionAware` has been introduced in expanded access controls. |
+| [Retrieving all access controls](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#get-iam-tenant-access-controls)                               | Property `restrictionAware` has been introduced.                             |
+| [Retrieving an access control](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#get-iam-tenant-access-controls-accesscontrolid)                 | Property `restrictionAware` has been introduced.                             |
+| [Retrieving all access controls assigned to a group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups-groupid-access-controls)     | Property `restrictionAware` has been introduced.                             |
+| [Retrieving all access controls assigned to a user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-access-controls)         | Property `restrictionAware` has been introduced.                             |
+| [Retrieving user access controls for a resource](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-access-controls-resourceid) | Property `restrictionAware` has been introduced.                             |
+| [Retrieving all access controls assigned to the current user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-me-access-controls)   | Property `restrictionAware` has been introduced.                             |
+| [Retrieving all access control templates](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-control-templates#get-iam-tenant-templates)                   | Property `restrictionAware` has been introduced in expanded access controls. |
 
 #### Known problems
 
@@ -3230,7 +3262,7 @@ A new endpoint has been added to allow users to retrieve their own user informat
 
 | Endpoint                                                                                                                                                                 | Description                                                                            |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
-| [Retrieving own user](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/management-dashboard-users#get-iam-tenant-users-me) | Retrieves the currently authenticated user along with the groups this user belongs to. |
+| [Retrieving own user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/management-dashboard-users#get-iam-tenant-users-me) | Retrieves the currently authenticated user along with the groups this user belongs to. |
 
 #### Known problems
 
@@ -3248,9 +3280,9 @@ The `customerSegmentIds` and `categoryIds` fields in product retrieval responses
 
 | Endpoint                                                                                                                                                                               | Description                                                                      |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| [Searching for products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-search) | The `customerSegmentIds` and `categoryIds` attributes are now fully operational. |
-| [Retrieving all products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products)        | The `customerSegmentIds` and `categoryIds` attributes are now fully operational. |
-| [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) | The `customerSegmentIds` and `categoryIds` attributes are now fully operational. |
+| [Searching for products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-search) | The `customerSegmentIds` and `categoryIds` attributes are now fully operational. |
+| [Retrieving all products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products)        | The `customerSegmentIds` and `categoryIds` attributes are now fully operational. |
+| [Retrieving a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) | The `customerSegmentIds` and `categoryIds` attributes are now fully operational. |
 
 #### Known problems
 
@@ -3273,15 +3305,15 @@ The `Configuration` and `Client Configuration` objects were extended with follow
 
 | Endpoint                                                                                                                                                                                                                               | Description                                                                              |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| [Retrieving configurations](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations)                                    | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
-| [Creating configurations](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#post-configuration-tenant-configurations)                                     | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
-| [Retrieving a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey)                       | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
-| [Updating a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey)                         | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
-| [Retrieving client configurations](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/client-configurations#get-configuration-tenant-clients-client-configurations)              | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
-| [Creating client configurations](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/client-configurations#post-configuration-tenant-clients-client-configurations)               | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
-| [Retrieving a client configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/client-configurations#get-configuration-tenant-clients-client-configurations-propertykey) | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
-| [Updating a client configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/client-configurations#put-configuration-tenant-clients-client-configurations-propertykey)   | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
-| [Retrieving global configurations](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/global-configurations)                                                                     | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
+| [Retrieving configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations)                                    | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
+| [Creating configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#post-configuration-tenant-configurations)                                     | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
+| [Retrieving a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey)                       | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
+| [Updating a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey)                         | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
+| [Retrieving client configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/client-configurations#get-configuration-tenant-clients-client-configurations)              | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
+| [Creating client configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/client-configurations#post-configuration-tenant-clients-client-configurations)               | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
+| [Retrieving a client configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/client-configurations#get-configuration-tenant-clients-client-configurations-propertykey) | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
+| [Updating a client configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/client-configurations#put-configuration-tenant-clients-client-configurations-propertykey)   | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
+| [Retrieving global configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/global-configurations)                                                                     | Properties `readOnly`, `restricted`, `description` and `schemaUrl` have been introduced. |
 
 #### Known problems
 
