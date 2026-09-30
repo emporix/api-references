@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-09-30" tags="new-feature" %}
 
 ## Cart Service - command chain endpoint for cart operations
 
