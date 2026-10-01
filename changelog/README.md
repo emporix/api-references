@@ -25,6 +25,27 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6679 -->
+
+## Hosting documentation - cloud function hosting guidance
+
+#### Overview
+
+The Hosting documentation and release note were updated to match the current Management Dashboard behavior for hosted cloud functions and extensions. The updated guidance covers the `Hosting ID` length limit, optional localized cloud function `Description` and `Tags`, card and table views, Node.js package testing before deployment, `Build History` actions, the distinction between extension rollback and cloud function redeploy, and cloud function deletion semantics.
+
+#### Affected endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| N/A | This change is documentation-only and does not introduce or modify any API endpoints, schemas, or webhook events. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-09-30" tags="new-feature" %}
 
 ## Cart Service - command chain endpoint for cart operations
