@@ -23,8 +23,8 @@ A new `customerId` query parameter has been added to the customer segments retri
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving all customer segments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/segments#get-customer-segment-tenant-segments) | Added `customerId` query parameter. |
-| [Searching with parameters for customer segments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments-search) | Added `customerId` query parameter. |
+| [Retrieving all customer segments](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/segments#get-customer-segment-tenant-segments) | Added `customerId` query parameter. |
+| [Searching with parameters for customer segments](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments-search) | Added `customerId` query parameter. |
 
 ## Known problems
 

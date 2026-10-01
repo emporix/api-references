@@ -11,7 +11,7 @@ layout:
 
 ## How to calculate net and gross values for prices
 
-You can calculate net and gross values for prices through the [Calculating net and gross values for prices](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/tax-service/api-reference/tax-calculation) endpoint.
+You can calculate net and gross values for prices through the [Calculating net and gross values for prices](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/tax-service/api-reference/tax-calculation) endpoint.
 
 ### Before you start
 
@@ -38,7 +38,7 @@ To calculate a price's net value based on its gross value, put the following dat
 }
 ```
 
-Then, send a request to the [Calculating net and gross values for prices](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/tax-service/api-reference/tax-calculation) endpoint:
+Then, send a request to the [Calculating net and gross values for prices](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/tax-service/api-reference/tax-calculation) endpoint:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -82,7 +82,7 @@ To calculate a price's gross value based on its net value, put the following dat
 }
 ```
 
-Then, send a request to the [Calculating net and gross values for prices](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/tax-service/api-reference/tax-calculation) endpoint:
+Then, send a request to the [Calculating net and gross values for prices](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/tax-service/api-reference/tax-calculation) endpoint:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -112,7 +112,7 @@ The calculated gross value is returned in the `output.grossPrice` field.
 
 ## How to calculate gross values between countries
 
-You can calculate a gross price in one country to a gross price in another country through the [Calculating net and gross values for prices](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/tax-service/api-reference/tax-calculation) endpoint.
+You can calculate a gross price in one country to a gross price in another country through the [Calculating net and gross values for prices](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/tax-service/api-reference/tax-calculation) endpoint.
 
 {% hint style="warning" %}
 This tutorial presents how to calculate gross prices between countries based on specific values.
@@ -149,7 +149,7 @@ To calculate a gross price between countries based on its applicable tax classes
 }
 ```
 
-Then, send a request to the [Calculating net and gross values for prices](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/tax-service/api-reference/tax-calculation) endpoint:
+Then, send a request to the [Calculating net and gross values for prices](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/tax-service/api-reference/tax-calculation) endpoint:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
