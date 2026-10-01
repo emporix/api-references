@@ -18,7 +18,7 @@ layout:
 
 # AI RAG Indexer Tutorial
 
-You can use the AI RAG Indexer Service to keep your vector database in sync with Emporix data and to discover which attributes are available for Retrieval-Augmented Generation (RAG) and filtering. The service supports the built-in **product** and **order** entity types, and **custom entity types** created in the [Schema Service](https://developer.emporix.io/api-references/api-guides/utilities/schema/).
+You can use the AI RAG Indexer Service to keep your vector database in sync with Emporix data and to discover which attributes are available for Retrieval-Augmented Generation (RAG) and filtering. The service supports the built-in **product** and **order** entity types, and **custom entity types** created in the [Schema Service](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/).
 
 Follow this tutorial to learn how to create a RAG tool with indexable and filterable fields that you can use in an AI agent.
 
@@ -40,7 +40,7 @@ Note that removing a custom entity from the Emporix system results in automatic 
 
 Before creating a RAG tool, call the AI RAG Indexer metadata endpoints for your entity type.
 
-Call the [Listing fields for RAG search](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-retrieve-rag-metadata) endpoint to get the RAG fields. 
+Call the [Listing fields for RAG search](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-retrieve-rag-metadata) endpoint to get the RAG fields. 
 
 {% tabs %}
 {% tab title="Product" %}
@@ -141,7 +141,7 @@ create a RAG tool in the upcoming step.
 {% step %}
 #### Discover filterable fields
 
-Call the [Listing fields for vector search filtering](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-tenant-type-filter-metadata) endpoint to retrieve the field paths for filtering search.
+Call the [Listing fields for vector search filtering](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-tenant-type-filter-metadata) endpoint to retrieve the field paths for filtering search.
 
 {% tabs %}
 {% tab title="Product" %}
@@ -232,7 +232,7 @@ Use the returned field paths in `filterFields[].key` when creating a tool in the
 {% step %}
 #### Create an AI tool using RAG functionality
 
-When you know which fields to index and filter, call the [Upserting tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) endpoint to create or update a `rag_emporix` tool. 
+When you know which fields to index and filter, call the [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) endpoint to create or update a `rag_emporix` tool. 
 
 Set the `toolId` in the URL path (for example, `rag-product`, `rag-order`, or `rag-car-parts`). The `indexedFields` and `filterFields` are required for `rag_emporix` tools – specify the paths from the responses returned in previous steps:
 * The `indexedFields` can use optional name aliases. 
@@ -448,7 +448,7 @@ Align `indexedFields` and `filterFields` with the output of `rag-metadata` and `
 {% step %}
 #### Trigger a reindex job
 
-When the tool is configured, call the [Creating a reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint to regenerate embeddings for the selected entity type. The reindex endpoint currently performs a full rebuild.
+When the tool is configured, call the [Creating a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint to regenerate embeddings for the selected entity type. The reindex endpoint currently performs a full rebuild.
 
 {% tabs %}
 {% tab title="Product" %}
@@ -520,7 +520,7 @@ Reindexing is a computationally expensive and time-consuming operation, especial
 {% step %}
 #### Attach the tool to an agent
 
-Assign the tool ID (for example, `rag-product`, `rag-order`, or `rag-car-parts`) to an AI agent so it can be invoked during agentic chat. Use the [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint or configure the agent in Management Dashboard.
+Assign the tool ID (for example, `rag-product`, `rag-order`, or `rag-car-parts`) to an AI agent so it can be invoked during agentic chat. Use the [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint or configure the agent in Management Dashboard.
 
 {% hint style="info" %}
 For broader agent setup and chat flows, see the [AI Service Tutorial](../ai-service/ai-tutorial.md).

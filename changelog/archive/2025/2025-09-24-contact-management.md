@@ -31,8 +31,8 @@ New validation rules:
 
 | Endpoint                                                                                                                                                                       | Description                                                                                     |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
-| [Creating contact assignment](https://developer.emporix.io/api-references-1/readme/api-reference-13/contact-assignments#post-tenant-contact-assignments)                       | New contact type and validation added - customer can be assigned only once to the legal entity. |
-| [Upserting a contact assignment](https://developer.emporix.io/api-references-1/readme/api-reference-13/contact-assignments#put-tenant-contact-assignments-contactassignmentid) | New contact type and validation added - customer can be assigned only once to the legal entity. |
+| [Creating contact assignment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/client-management/api-reference/contact-assignments#post-tenant-contact-assignments)                       | New contact type and validation added - customer can be assigned only once to the legal entity. |
+| [Upserting a contact assignment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/client-management/api-reference/contact-assignments#put-tenant-contact-assignments-contactassignmentid) | New contact type and validation added - customer can be assigned only once to the legal entity. |
 
 ## Known problems
 
