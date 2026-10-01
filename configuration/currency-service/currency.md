@@ -162,7 +162,7 @@ curl -L
 
 ### How to change a particular site's currency configuration
 
-To change a particular site's currency configuration, you need to call the [Partially updating a site ](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode)endpoint with the currency code of your choice in the request body.
+To change a particular site's currency configuration, you need to call the [Partially updating a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode) endpoint with the currency code of your choice in the request body.
 
 {% hint style="warning" %}
 The currency code must be compliant with the [ISO 4217 standard](https://en.wikipedia.org/wiki/ISO_4217).

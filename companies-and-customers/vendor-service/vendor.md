@@ -218,7 +218,7 @@ If you have created a vendor earlier for the tenant, you should see all the rele
   }
 ```
 
-Each vendor group has it's own ID. To assign a user to the vendor group, send the request to [Adding a user to a group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/group-assignments#post-iam-tenant-groups-groupid-users) endpoint. Provide the vendor group's ID and user's ID in the request.
+Each vendor group has its own ID. To assign a user to the vendor group, send the request to [Adding a user to a group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/group-assignments#post-iam-tenant-groups-groupid-users) endpoint. Provide the vendor group's ID and user's ID in the request.
 
 {% hint style="info" %}
 A single user can belong to only one vendor group.

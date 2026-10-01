@@ -102,7 +102,7 @@ curl -L
 
 ### How to check which country is configured for a particular site
 
-To retrieve a particular site's country configuration, you need to send a request to the [Retrieving a site ](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode)endpoint. The country configuration will be returned under the `homeBase` field in the response body.
+To retrieve a particular site's country configuration, you need to send a request to the [Retrieving a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) endpoint. The country configuration will be returned under the `homeBase` field in the response body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

@@ -59,7 +59,7 @@ On the storefront, a customer fills in the applicable fields in the return reque
 
 Based on your tenant's configuration settings and customer's oauth token, the remaining fields are populated automatically.
 
-When a customer sends a return request, the [Creating a single return entity](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#post-return-tenant-returns) endpoint is called.
+When a customer sends a return request, the [Creating a single return entity](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#put-return-tenant-returns-returnid) endpoint is called.
 
 {% hint style="warning" %}
 The following set of scopes is granted to a customer group:
@@ -125,7 +125,7 @@ curl -i -X POST
 
 ### Create a return on behalf of a customer
 
-To create a return on behalf of a customer, you need to send a request to the [Creating a single return entity](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#post-return-tenant-returns) endpoint.
+To create a return on behalf of a customer, you need to send a request to the [Creating a single return entity](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#put-return-tenant-returns-returnid) endpoint.
 
 {% hint style="warning" %}
 The following set of scopes is required for an employee group:
@@ -195,7 +195,7 @@ The `approvalStatus` field is automatically populated during the creation of a r
 
 ### Update the return request by a customer
 
-Customers can update their return request only when the approval status of the request is `PENDING`. When a customer updates a return, the [Updating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#post-return-tenant-returns) endpoint is called.
+Customers can update their return request only when the approval status of the request is `PENDING`. When a customer updates a return, the [Updating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#put-return-tenant-returns-returnid) endpoint is called.
 
 {% hint style="warning" %}
 The following set of scopes is granted to a customer group:

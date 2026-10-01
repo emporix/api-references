@@ -759,7 +759,7 @@ components:
           type: string
           description: |
             Payment provider, possible values: 
-              * `payment-gateway` - When the Emporix Payment-Gateway service should be used to handle a payment. For details about custom attributes that are required for a particular payment mode, check https://developer.emporix.io/api-documentation/api-guides/checkout/payment-gateway. 
+              * `payment-gateway` - When the Emporix Payment-Gateway service is used to handle a payment. For details about custom attributes that are required for a particular payment mode, check https://developer.emporix.io/api-documentation/api-guides/checkout/payment-gateway. 
               * `custom` - When a custom provider is used. In this case the created order has the `IN_CHECKOUT` status.
               * `none` - For payment by cash or invoice.
           minLength: 0

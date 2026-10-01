@@ -40,7 +40,7 @@ Note that removing a custom entity from the Emporix system results in automatic 
 
 Before creating a RAG tool, call the AI RAG Indexer metadata endpoints for your entity type.
 
-Call the [Listing fields for RAG search](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-retrieve-rag-metadata) endpoint to get the RAG fields. 
+Call the [Listing fields for RAG search](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-rag-metadata) endpoint to get the RAG fields. 
 
 {% tabs %}
 {% tab title="Product" %}
@@ -141,7 +141,7 @@ create a RAG tool in the upcoming step.
 {% step %}
 #### Discover filterable fields
 
-Call the [Listing fields for vector search filtering](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#GET-ai-rag-indexer-tenant-type-filter-metadata) endpoint to retrieve the field paths for filtering search.
+Call the [Listing fields for vector search filtering](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-filter-metadata) endpoint to retrieve the field paths for filtering search.
 
 {% tabs %}
 {% tab title="Product" %}

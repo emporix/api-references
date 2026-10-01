@@ -41,7 +41,7 @@ To be able to manage a user session and its corresponding session context file, 
 
 ### Create an anonymous user session
 
-An anonymous user session starts when a non-logged user enters the storefront and sends a request to the [Requesting an anonymous token](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-refresh) endpoint. That request returns only an anonymous access token, no session context is created yet.
+An anonymous user session starts when a non-logged user enters the storefront and sends a request to the [Requesting an anonymous token](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-login) endpoint. That request returns only an anonymous access token, no session context is created yet.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -116,7 +116,7 @@ The customer's session is terminated when the customer logs out.
 {% step %}
 ### Get the session ID
 
-When retrieving the session-context details, you must supply the `sessionId`. It can be retrieved from the storefront or by sending the request to the [Retrieving own session context](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/session-context/api-reference/own-session-management#get-session-context-tenant-me-context) endpoint with the `customerToken` -  in the request. Then, the response includes the `sessionId`.
+When retrieving the session-context details, you must supply the `sessionId`. It can be retrieved from the storefront or by sending the request to the [Retrieving own session context](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/session-context/api-reference/own-session-management#get-session-context-tenant-me-context) endpoint with the `customerToken` in the request. Then, the response includes the `sessionId`.
 
 **Example**:
 

@@ -313,7 +313,7 @@ The system automatically adds the `metadata.mixins.class_CATEGORY_CODE_mixinName
 This autopopulation feature is tested in the codebase and ensures that classification mixin schemas are always synchronized with category definitions, even if you don't explicitly provide them in update requests.
 {% endhint %}
 
-For example, use the [Partially updateing a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint without the schema URL in the request.
+For example, use the [Partially updating a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint without the schema URL in the request.
 
 ```bash
 curl -L 

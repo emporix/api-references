@@ -67,7 +67,7 @@ This updated token is passed to other services to determine the correct scopes a
 {% endstep %}
 {% step %}
 ### Seamless switching
-If the customer needs to change the legal entity they are acting on behalf of, they do not need to log in again. The storefront simply triggers the [Refreshing a customer token](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken) endpoint to generate a new token based on the previous one, but with the updated `legalEntityId` information.
+If the customer needs to change the legal entity they are acting on behalf of, they do not need to log in again. The storefront triggers the [Refreshing a customer token](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken) endpoint to generate a new token based on the previous one, but with the updated `legalEntityId` information.
 {% endstep %}
 {% endstepper %}
 
