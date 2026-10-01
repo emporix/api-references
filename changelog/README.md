@@ -61,10 +61,10 @@ There are no known problems.
 #### Overview
 
 {% hint style="danger" %}
-This functionality is in preview mode - some of the features may not be fully operational yet.
+The service and this functionality are in preview mode - some of the features may not be fully operational yet.
 {% endhint %}
 
-The Search Service adds a preview endpoint that searches documents for a tenant. The request names an index and supplies a text clause, a filter, or both. The `search.search_read` scope is required.
+The Search Service adds a preview endpoint that searches documents for a tenant. The request names an index and supplies a text clause, a filter, or both. For now, only custom schema types are supported.
 
 #### New endpoints
 
