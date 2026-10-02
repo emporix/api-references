@@ -25,6 +25,49 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="deprecated" %}
+
+## Quote Service - deprecated company fields
+
+#### Overview
+
+The `company` object and the create field `companyName` are deprecated and will be removed on **2027-04-15**. Use `legalEntityId` to identify the company linked to a quote. `company.name` remains in responses. A migration has been executed, and existing quotes now contain the correct `legalEntityId`.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) | `companyName` is deprecated. Send `legalEntityId` instead. |
+| [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid) | `/companyName` is deprecated. Use `/legalEntityId` instead. |
+| [Retrieving quotes](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes) | The `company` object is deprecated. Use `legalEntityId`. |
+| [Retrieving a single quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid) | The `company` object is deprecated. Use `legalEntityId`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Quote Service - legal entity link on quotes
+
+#### Overview
+
+Quotes now store `legalEntityId` at the root of the quote. This identifier is the source of truth for the company linked to a quote. The existing `company` object and the create field `companyName` stay available. `company.name` is still returned. It is the name stored when the quote was linked and can differ from the current legal-entity name.
+
+A quote created from a cart copies `cart.legalEntityId`. A quote created from a request accepts an optional `legalEntityId`. When that identifier is sent, it must exist and be assigned to the request billing address, and it is used instead of `companyName`. When only `companyName` is sent, the previous exact name check remains. If exactly one legal entity assigned to the billing address has that name, the quote is linked to it. If several legal entities share the name, the quote stores the name only.
+
+`PATCH` accepts `/legalEntityId`. The identifier must be assigned to the quote billing address. Replacing `/billingAddressId` on a quote that already has `legalEntityId` succeeds only when the new address is assigned to that legal entity. The `/companyName` path still replaces the company name. A unique assigned name also sets `legalEntityId`. A name that matches none or more than one assigned legal entity stays name-only and clears a previously stored `legalEntityId`. Removing `/companyName` clears both the company and `legalEntityId`.
+
+Checkout copies the quote `legalEntityId` onto the order created from that quote. `quote.created` and `quote.updated` event payloads include `legalEntityId`.
+
+#### Documentation
+
+[Quote Service](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes)
+
+{% endupdate %}
+
 {% update date="2026-09-30" tags="new-feature" %}
 
 ## Cart Service - command chain endpoint for cart operations

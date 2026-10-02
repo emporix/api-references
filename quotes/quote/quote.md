@@ -319,7 +319,7 @@ curl -i -X POST \
     "employeeId": "7ytw5533f0mo335mfr0l3336",
     "billingAddressId": "64672a8f9939d331699cbe6e",
     "shippingAddressId": "64672a8f943440ft63j995yh",
-    "companyName": "ABC",
+    "legalEntityId": "le-1",
     "siteCode": "main",
     "currency": "USD",
     "validTo": "2022-04-01T04:37:04.301Z",
