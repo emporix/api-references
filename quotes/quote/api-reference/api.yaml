@@ -2310,7 +2310,7 @@ components:
           path:
             type: string
             description: |-
-              **This path is deprecated**: Use `/legalEntityId` instead.
+              JSON Pointer path of the quote field to update. The `/companyName` value is deprecated; use `/legalEntityId` instead.
             enum:
               - /status
               - /validTo
