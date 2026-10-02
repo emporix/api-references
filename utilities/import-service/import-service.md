@@ -23,10 +23,6 @@ layout:
 
 The Import Service imports external master data into Emporix. A configuration groups one or more streams, where each stream extracts from a source connection, maps fields to an Emporix target type, and upserts idempotently. Imports run asynchronously and stream per-stream progress over Server-Sent Events (SSE).
 
-{% hint style="danger" %}
-This functionality is in preview mode - some of the features may not be fully operational yet.
-{% endhint %}
-
 {% hint style="warning" %}
 This tutorial covers triggering, scheduling, monitoring, cancelling, and inspecting import runs. An import configuration must already exist for your tenant.
 

@@ -8,10 +8,6 @@ icon: file-import
 
 Imports external master data into Emporix. A configuration groups one or more streams; each stream extracts from a source connection, maps fields to an Emporix target type, and upserts idempotently.
 
-{% hint style="danger" %}
-This functionality is in preview mode - some of the features may not be fully operational yet.
-{% endhint %}
-
 ### Key features and benefits
 
 * Imports external master data into Emporix through configured streams
