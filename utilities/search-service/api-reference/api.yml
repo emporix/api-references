@@ -457,7 +457,7 @@ paths:
                     - id: 66f1a2b3c4d5e6f708192a3b
                       status: in_progress
                       type: create_index
-                      indexId: vehicles--vehicle
+                      indexId: vehicles
                       message: Creating index vehicles--vehicle for type vehicle
                       metadata:
                         version: 1
@@ -504,7 +504,7 @@ paths:
                     id: 66f1a2b3c4d5e6f708192a3b
                     status: success
                     type: create_index
-                    indexId: vehicles--vehicle
+                    indexId: vehicles
                     message: Creating index vehicles--vehicle for type vehicle
                     response: Index created.
                     metadata:
@@ -937,7 +937,7 @@ components:
         indexId:
           type: string
           description: Index id.
-          example: vehicles--vehicle
+          example: vehicles
         message:
           type: string
           description: Text recorded when the job started.
