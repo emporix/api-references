@@ -2309,6 +2309,8 @@ components:
               - REPLACE
           path:
             type: string
+            description: |-
+              **This path is deprecated**: Use `/legalEntityId` instead.
             enum:
               - /status
               - /validTo

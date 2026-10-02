@@ -48,7 +48,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="RELEASE_DATE" tags="improvement" %}
 
 ## Quote Service - legal entity link on quotes
 
