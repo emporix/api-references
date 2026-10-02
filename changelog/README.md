@@ -31,9 +31,9 @@ layout:
 
 #### Overview
 
-The `company` object and the create field `companyName` are deprecated and will be removed on **2027-04-15**. Use `legalEntityId` to identify the company linked to a quote. `company.name` remains in responses. A migration has been executed, and existing quotes now contain the correct `legalEntityId`.
+The `company` object and the create field `companyName` are deprecated and will be removed on **2027-04-15**. Use `legalEntityId` to identify the company linked to a quote. Existing quotes now contain `legalEntityId`, and `company.name` remains in responses.
 
-#### Updated endpoints
+#### Deprecated endpoints
 
 | Endpoint | Description |
 | --- | --- |
@@ -54,7 +54,7 @@ There are no known problems.
 
 #### Overview
 
-Quotes now store `legalEntityId` at the root of the quote. This identifier is the source of truth for the company linked to a quote. The existing `company` object and the create field `companyName` stay available. `company.name` is still returned. It is the name stored when the quote was linked and can differ from the current legal-entity name.
+Quotes now store `legalEntityId` at the root of the quote. This identifier is the source of truth for the company linked to a quote. The existing `company` object and the create field `companyName` stay available. `company.name` is still returned. It is the company name stored on the quote and can differ from the current legal-entity name.
 
 A quote created from a cart copies `cart.legalEntityId`. A quote created from a request accepts an optional `legalEntityId`. When that identifier is sent, it must exist and be assigned to the request billing address, and it is used instead of `companyName`. When only `companyName` is sent, the previous exact name check remains. If exactly one legal entity assigned to the billing address has that name, the quote is linked to it. If several legal entities share the name, the quote stores the name only.
 
@@ -62,9 +62,18 @@ A quote created from a cart copies `cart.legalEntityId`. A quote created from a 
 
 Checkout copies the quote `legalEntityId` onto the order created from that quote. `quote.created` and `quote.updated` event payloads include `legalEntityId`.
 
-#### Documentation
+#### Updated endpoints
 
-[Quote Service](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes)
+| Endpoint | Description |
+| --- | --- |
+| [Creating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) | Requests can provide `legalEntityId`, and quotes created from carts copy the cart's `legalEntityId`. |
+| [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid) | The `/legalEntityId` path changes the legal entity linked to a quote. |
+| [Retrieving quotes](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes) | Responses include `legalEntityId`. |
+| [Retrieving a single quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid) | Responses include `legalEntityId`. |
+
+#### Known problems
+
+There are no known problems.
 
 {% endupdate %}
 

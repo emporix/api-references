@@ -280,7 +280,6 @@ paths:
                   billingAddressId: 64672a8f9939d331699cbe6e
                   shippingAddressId: 64672a8f9939d331699cbe6e
                   legalEntityId: le-1
-                  companyName: ABC
                   siteCode: main
                   currency: USD
                   validTo: '2022-04-01T04:37:04.301Z'
@@ -1769,12 +1768,12 @@ components:
           description: The ID of the cart from which the quote was created (not available when the quote was created manually)
         legalEntityId:
           type: string
-          description: The legal entity linked to the quote.
+          description: Identifier of the legal entity linked to the quote.
         company:
           type: object
           deprecated: true
           description: |-
-            **This field is deprecated**. Use `legalEntityId` to identify the company. The object remains populated for compatibility and contains the company name stored when the quote was linked.
+            **This field is deprecated**. Use `legalEntityId` to identify the company. The object remains populated for compatibility and contains the company name stored on the quote.
           properties:
             name:
               type: string
