@@ -1853,6 +1853,10 @@ paths:
         Reaches the source with the stored credential and reports whether it answered. Use this after
         creating a connection, rather than discovering the problem during an import run.
 
+        For an HTTP connection, the test calls the base URL, or the endpoint named in the connection's
+        optional `config.testPath` under it. An API root often proves nothing about the credential, so name an
+        endpoint that requires it, for example `/v1/account`. The result's `url` is the URL that was called.
+
       operationId: POST-importtool-test-connection
       tags:
         - Connections (Administration)
@@ -2025,9 +2029,32 @@ paths:
         array is offered both as a whole (`borders[]`) and, when it holds objects, by element field
         (`currencies[].code`).
 
+        For an HTTP stream, the fields come from sampling the stream's own endpoint, plus the connection's spec
+        when it has one. Without `refresh`, if the sample fails, the endpoint returns the fields that are still
+        known — which can be none.
+
       operationId: GET-importtool-source-fields
       tags:
         - Mappings (Administration)
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          description: How many records to sample when inferring the fields and their sample values.
+          schema:
+            type: integer
+            default: 10
+        - name: refresh
+          in: query
+          required: false
+          description: |-
+            If set to `true`, the stream's endpoint is sampled again now. For an HTTP stream, a failed sample then
+            returns `502` with the reason, rather than a shorter list. For other sources, and for an HTTP stream
+            that names a parent attribute in its request (`{parent.<attr>}`), which has no parent values to sample
+            with, a failed sample still returns the fields that are still known instead of an error.
+          schema:
+            type: boolean
+            default: false
       security:
         - OAuth2:
             - importtool.import_manage
@@ -2048,6 +2075,20 @@ paths:
           $ref: '#/components/responses/NotFound_404'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+        '502':
+          description: >-
+            With `refresh=true`, the stream's endpoint could not be sampled. The message names the reason, for
+            example the status the endpoint answered with.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+              examples:
+                Endpoint not found:
+                  value:
+                    code: 502
+                    status: Bad Gateway
+                    message: "Could not sample the stream's endpoint: HTTP 404 from https://api.example.com/v1/planets/"
 
   '/importtool/{tenant}/streams/{streamId}/mappings/target-fields':
     parameters:
@@ -2911,7 +2952,7 @@ paths:
       - $ref: '#/components/parameters/trait_tenant'
       - $ref: '#/components/parameters/trait_id'
     post:
-      summary: Sampling records from a connection
+      summary: Sampling a connection's base URL
       description: |-
         <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
 
@@ -2919,7 +2960,12 @@ paths:
         This functionality is in preview mode - some of the features may not be fully operational yet.
         {% endhint %}
 
-        Reads a small sample of records through a connection, so a stream's fields can be inspected before any mapping is written. Nothing is imported.
+        Samples the connection's base URL, or an optional `path` under it, and stores the inferred fields on the
+        connection. Nothing is imported.
+
+        The stored fields are not offered to streams: a base URL is often only the API root, so its fields
+        describe no stream. To find the fields of a stream's own endpoint, saved or not, use the
+        **Sampling a stream's endpoint** operation.
 
       operationId: POST-importtool-sample-connection
       tags:
@@ -2933,16 +2979,150 @@ paths:
           application/json:
             schema:
               type: object
-              description: The dataset to sample and how many records to read.
-              additionalProperties: true
+              properties:
+                path:
+                  type: string
+                  description: A path under the base URL to sample. If omitted, the base URL itself is sampled.
+            examples:
+              Sample a sub-path:
+                value:
+                  path: /people/
       responses:
         '200':
-          description: The request was successful. The sample is returned.
+          description: The request was successful. The inferred fields are returned and stored on the connection.
           content:
             application/json:
               schema:
                 type: object
-                additionalProperties: true
+                properties:
+                  count:
+                    type: integer
+                    description: How many fields were found.
+                  fields:
+                    type: array
+                    description: The fields found, each with the type inferred from its values.
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: The path to the field, dotted for nested structures.
+                        type:
+                          type: string
+                          description: The Emporix type the values look like.
+              examples:
+                Fields found:
+                  value:
+                    count: 2
+                    fields:
+                      - name: name
+                        type: TEXT
+                      - name: homeworld
+                        type: TEXT
+        '400':
+          description: >-
+            The sample failed. The message names the reason — for example a missing credential, an unreachable
+            host, or a path that does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+              examples:
+                Path not found:
+                  value:
+                    code: 400
+                    status: Bad Request
+                    message: 'Live sample failed: HTTP 404 from https://api.example.com/v1/people/'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/connections/{id}/sample-stream':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    post:
+      summary: Sampling a stream's endpoint
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Samples a stream definition against an HTTP connection: one request to the stream's own endpoint, with
+        its path, method, parameters, headers, body and records path. Returns the fields found there, each
+        with an inferred type and a sample value. Nothing is stored.
+
+        The stream does not have to exist yet, so use this to see a new stream's fields before saving it, or
+        to check a changed definition before saving the change. This is how an HTTP connection that is only an
+        API root gets its fields: each stream samples its own endpoint.
+
+      operationId: POST-importtool-sample-stream
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StreamSampleRequest'
+            examples:
+              Sample a REST endpoint:
+                value:
+                  sourceEntity: planet
+                  sourceDataset:
+                    path: /planets/
+                    method: GET
+                    recordsPath: ''
+      responses:
+        '200':
+          description: The request was successful. The fields found at the endpoint are returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamSample'
+              examples:
+                Fields found:
+                  value:
+                    records: 20
+                    fields:
+                      - name: name
+                        inferredType: TEXT
+                        sample: Tatooine
+                      - name: climate
+                        inferredType: TEXT
+                        sample: arid
+                      - name: population
+                        inferredType: TEXT
+                        sample: '200000'
+        '400':
+          description: >-
+            The sample failed, or the connection is not an HTTP connection. The message names the reason, for
+            example the status the endpoint answered with.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+              examples:
+                Endpoint not found:
+                  value:
+                    code: 400
+                    status: Bad Request
+                    message: 'Sample failed: HTTP 404 from https://api.example.com/v1/planets/'
+                Not an HTTP connection:
+                  value:
+                    code: 400
+                    status: Bad Request
+                    message: Sampling a stream's endpoint applies to HTTP connections only
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -3864,6 +4044,11 @@ components:
           description: |-
             Non-secret settings for the source type: the base URL, authentication mode, pagination, and any
             discovered schema. What belongs here depends on `sourceType`.
+
+            For an `http` connection:
+            * `testPath` (optional) — the endpoint, under the base URL, that testing the connection calls.
+            * `schemaSourceKind` — where the API's fields come from. `SAMPLE` means the connection has no spec:
+              each stream samples its own endpoint, and a spec stored earlier is not offered to streams.
         apiToken:
           type: string
           description: |-
@@ -3885,6 +4070,12 @@ components:
         ok:
           type: boolean
           description: Whether the source answered.
+        status:
+          type: integer
+          description: The HTTP status the source answered with, for an HTTP connection.
+        url:
+          type: string
+          description: The URL that was called — the base URL, or the connection's test endpoint under it.
         reason:
           type: string
           description: Why it did not, when it did not — an authentication failure, an unreachable host, a rejected path.
@@ -3989,6 +4180,37 @@ components:
             - AI_SUGGESTED
             - AI_ACCEPTED
           description: How the mapping came to exist.
+
+    StreamSampleRequest:
+      type: object
+      description: A stream definition to sample, saved or not.
+      properties:
+        sourceEntity:
+          type: string
+          description: The logical name of what the stream imports. Optional; used only to label the sample.
+        sourceDataset:
+          type: object
+          additionalProperties: true
+          description: |-
+            The stream's source settings, as a stream stores them: `path`, `method`, `queryParams`, `headers`,
+            `bodyTemplate`, `recordsPath`, `format` and so on.
+      required:
+        - sourceDataset
+
+    StreamSample:
+      type: object
+      description: What sampling a stream's endpoint found.
+      properties:
+        records:
+          type: integer
+          description: |-
+            How many records the sample held. At most 20 records are read. `0` with no fields usually means the
+            records path is wrong.
+        fields:
+          type: array
+          description: The fields found, offered as values for a mapping `sourcePath`.
+          items:
+            $ref: '#/components/schemas/SourceField'
 
     SourceField:
       type: object
