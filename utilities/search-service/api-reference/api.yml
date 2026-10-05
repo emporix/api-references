@@ -1331,6 +1331,7 @@ components:
       properties:
         query:
           type: string
+          minLength: 1
           description: Text applied to every search term in the saved search. The value must not be blank.
           example: diesel engine
         searchQueryId:
@@ -1380,6 +1381,11 @@ components:
           $ref: '#/components/schemas/QueryMetadataRequest'
       required:
         - index
+      anyOf:
+        - required:
+            - queries
+        - required:
+            - filters
     QueryMetadataRequest:
       type: object
       description: Optimistic lock for a saved search update. Required when the saved search already exists.
@@ -1461,7 +1467,7 @@ components:
         field:
           type: string
           description: Document field to match. `id` is stored as `_id`.
-          example: name
+          example: name.en
         boost:
           type: number
           minimum: 0
@@ -1507,11 +1513,13 @@ components:
       properties:
         and:
           type: array
+          minItems: 1
           description: Every child must match. The group must not be empty.
           items:
             $ref: '#/components/schemas/FilterNode'
         or:
           type: array
+          minItems: 1
           description: At least one child must match. The group must not be empty.
           items:
             $ref: '#/components/schemas/FilterNode'
