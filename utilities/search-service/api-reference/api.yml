@@ -921,12 +921,12 @@ components:
       schema:
         type: string
       description: |
-        List of language codes acceptable for the response. You can specify factors that indicate which language should be retrieved if the one with a higher factor was not found in the localized fields.
+        List of language codes acceptable for the response.
 
-        * If the header is set to a specific language or a list of languages, localized fields are retrieved as maps containing a single translation, where the key is a language code and the value is the field in the specified language.
+        * If the header is set to a language or a list of languages, the service returns the first requested language that has a translation. Localized fields are maps with that language code as the key.
         * If the header is set to `*`, localized fields are retrieved as maps of translations, where the keys are language codes and values are the fields in their respective languages.
         * If the header is empty, localized fields are retrieved as maps containing a single translation, where the key is a language code and the value is the field in the specified language. The endpoint assumes that localized fields are to be retrieved in the tenant's default language defined in the Configuration Service.
-        * If the header is set to a specific language, but the translation is not available, the localized fields are omitted from the response.
+        * If none of the requested languages has a translation, the localized fields are omitted from the response.
     header_X-Total-Count:
       name: X-Total-Count
       in: header
@@ -1319,6 +1319,11 @@ components:
           example: custom-entities
       required:
         - index
+      anyOf:
+        - required:
+            - queries
+        - required:
+            - filters
     SavedSearchCall:
       type: object
       description: |-
@@ -1543,7 +1548,7 @@ components:
       description: |-
         A matching document. Stored fields are returned with their API names. The identifier is `id`.
 
-        `name` is localized. Other stored fields are returned as they are stored. When `fields` limits the response, only the requested fields are present.
+        The `name` is localized. Other stored fields are returned as they are stored. When `fields` limits the response, the response includes the requested fields and `id`.
       properties:
         id:
           type: string
@@ -1612,7 +1617,7 @@ components:
         queries:
           - type: TEXT
             query: diesel engine
-            field: name
+            field: name.en
         filters:
           field: status
           operator: EQ
@@ -1624,7 +1629,7 @@ components:
         queries:
           - type: TEXT
             query: diesel
-            field: name
+            field: name.en
             fuzzy:
               enabled: true
               maxEdits: 1
@@ -1635,7 +1640,7 @@ components:
         queries:
           - type: TEXT
             query: diesel engine
-            field: name
+            field: name.en
             boost: 3
             fuzzy:
               enabled: true
@@ -1651,7 +1656,7 @@ components:
         queries:
           - type: TEXT
             query: diesel
-            field: name
+            field: name.en
             boost: 5
           - type: TEXT
             query: diesel
@@ -1664,7 +1669,7 @@ components:
         queries:
           - type: TEXT
             query: red
-            field: name
+            field: name.en
           - type: WILDCARD
             query: 'SKU-*'
             field: code
@@ -1676,7 +1681,7 @@ components:
           and:
             - type: WILDCARD
               query: '*red*'
-              field: name
+              field: name.en
             - type: WILDCARD
               query: '*Hybrid*'
               field: brand
@@ -1687,7 +1692,7 @@ components:
         queries:
           - type: PHRASE
             query: diesel engine
-            field: name
+            field: name.en
     autocompleteSearchRequest:
       summary: Autocomplete search
       value:
@@ -1695,7 +1700,7 @@ components:
         queries:
           - type: AUTOCOMPLETE
             query: dies
-            field: name
+            field: name.en
     wildcardSearchRequest:
       summary: Wildcard search
       value:
@@ -1703,7 +1708,7 @@ components:
         queries:
           - type: WILDCARD
             query: '*iese*'
-            field: name
+            field: name.en
     filterSearchRequest:
       summary: Filter without a text query
       value:
@@ -1733,7 +1738,7 @@ components:
         queries:
           - type: TEXT
             query: engine
-            field: name
+            field: name.en
         filters:
           field: status
           operator: IN
@@ -1755,7 +1760,7 @@ components:
         queries:
           - type: TEXT
             query: diesel
-            field: name
+            field: name.en
         filters:
           and:
             - field: horsepower
