@@ -26,11 +26,11 @@ layout:
 {% updates format="full" %}
 
 {% update date="RELEASE_DATE" tags="improvement" %}
-## AI Service - MS Teams native tool general availability
+## AI Service - MS Teams and Slack native tool general availability
 
 #### Overview
 
-The MS Teams native tool type (`teams`) is generally available. Conversation listing and search operations for MS Teams collaboration are generally available.
+The MS Teams native tool type (`teams`) is generally available. Conversation listing and search operations for MS Teams collaboration are generally available. Slack `config.defaultInboundAgentId` and `config.allowedOperations` are generally available. Per-agent `nativeTools[].allowedOperations` overrides for MS Teams and Slack are generally available.
 
 #### Updated endpoints
 
@@ -38,11 +38,11 @@ The MS Teams native tool type (`teams`) is generally available. Conversation lis
 | --- | --- |
 | [Listing conversations](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/conversation#get-ai-service-tenant-agentic-conversations) | Lists agent conversations created during MS Teams collaboration. The operation is generally available. |
 | [Searching conversations](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/conversation#post-ai-service-tenant-agentic-conversations-search) | Searches agent conversations created during MS Teams collaboration. The operation is generally available. |
-| [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Accepts the generally available `teams` native tool type. |
-| [Listing tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools) | Responses can include generally available `teams` tools. |
-| [Retrieving tool by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Responses can return a generally available `teams` tool. |
-| [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` overrides for MS Teams are generally available. |
-| [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` overrides for MS Teams are generally available. |
+| [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Accepts the generally available `teams` native tool type. Slack `config.defaultInboundAgentId` and `config.allowedOperations` are generally available. |
+| [Listing tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools) | Responses can include generally available `teams` tools and Slack tools with `config.defaultInboundAgentId` and `config.allowedOperations`. |
+| [Retrieving tool by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Responses can return a generally available `teams` tool or a Slack tool with `config.defaultInboundAgentId` and `config.allowedOperations`. |
+| [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` overrides for MS Teams and Slack are generally available. |
+| [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` overrides for MS Teams and Slack are generally available. |
 
 #### Known problems
 
