@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-10-06" tags="improvement" %}
 ## AI Service - MS Teams and Slack native tool general availability
 
 #### Overview
