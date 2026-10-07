@@ -33,9 +33,7 @@ layout:
 
 A coupon can apply only to products from selected vendors. Set `vendorRestricted` to `true` and list the vendor identifiers in `restrictions.vendors`. A vendor restriction can be combined with other restriction types.
 
-The cart stores that restriction on the applied discount. The discount applies to line items from those vendors. When `discountCalculationType` is `TOTAL` and at least one of those lines is in the cart, the discount also applies to the fees on those lines and to shipping. When the coupon has a minimum order value, that value is checked against the total of those vendor lines. Checkout uses the same rules. The created order keeps `vendorRestricted` and `restrictions.vendors` on the discount.
-
-When a vendor is deleted, that vendor is removed from the coupons that reference it.
+The cart stores that restriction on the applied discount. The discount applies to line items from those vendors. When the coupon has a minimum order value, that value is checked against the total of those vendor lines. The created order keeps `vendorRestricted` and `restrictions.vendors` on the discount.
 
 #### Updated endpoints
 

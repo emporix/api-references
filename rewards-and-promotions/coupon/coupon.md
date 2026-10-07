@@ -143,7 +143,7 @@ curl -i -X POST
 
 To limit a coupon to products from selected vendors, set `vendorRestricted` to `true` and provide the vendor IDs in the `restrictions.vendors` array. You can combine a vendor restriction with other restriction types.
 
-If you specify `restrictions.minOrderValue`, the Cart Service checks the minimum value against the total of the cart items from the selected vendors. If `discountCalculationType` is `TOTAL` and the cart contains at least one matching item, the discount also applies to the fees on matching items and to shipping.
+If you specify `restrictions.minOrderValue`, the Cart Service checks the minimum value against the total of the cart items from the selected vendors.
 
 Use an OAuth2 access token with the `coupon.coupon_manage` scope.
 
