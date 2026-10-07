@@ -17,8 +17,8 @@ Both approaches allow clients to retrieve large result sets in smaller chunks, b
 {% hint style="info" %}
 Cursor-based pagination is currently available for Schema Service custom instance queries:
 
-* [Retrieving all custom instances](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances)
-* [Searching for custom instances](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-search)
+* [Retrieving all custom instances](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances)
+* [Searching for custom instances](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-search)
 {% endhint %}
 
 ## Offset-based pagination

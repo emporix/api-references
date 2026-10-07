@@ -24,7 +24,7 @@ With Emporix support for AI, you can enhance text for product descriptions and g
 
 Make sure to configure your API token. To do that, you can use the [Configuration Service](../../configuration/configuration-service/api-reference/) and store the token under `openAiApiToken` key.
 
-Send the request to the [Creating Configurations](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#post-configuration-tenant-configurations) endpoint.
+Send the request to the [Creating Configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#post-configuration-tenant-configurations) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -50,7 +50,7 @@ curl -L \
 
 ## How to generate an AI supported text for a product
 
-You can generate the text by sending a request based on a provided prompt. To send the request, use the [Text Generation](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/text-generation) endpoint.
+You can generate the text by sending a request based on a provided prompt. To send the request, use the [Text Generation](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/text-generation) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -72,7 +72,7 @@ curl -i -X POST \
 
 ## How to generate an AI completion
 
-Completion is generated based on chat history. It's a generated response or continuation of a conversation, crafted by the AI to address the given input in context. It can include answering questions, providing suggestions, or completing a sentence or thought. The currently supported AI engine for the completion is [OpenAI](https://platform.openai.com/). To generate the AI completion, send the request using the [AI Completions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/ai-completions) endpoint.
+Completion is generated based on chat history. It's a generated response or continuation of a conversation, crafted by the AI to address the given input in context. It can include answering questions, providing suggestions, or completing a sentence or thought. The currently supported AI engine for the completion is [OpenAI](https://platform.openai.com/). To generate the AI completion, send the request using the [AI Completions](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/ai-completions) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -104,7 +104,7 @@ Create an AI agent using one of Emporix agent template.
 
 To create an agent, you'll need a template ID.
 
-* Either, retrieve all the available agent templates by calling the [Listing available agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#get-ai-service-tenant-agentic-templates) endpoint.
+* Either, retrieve all the available agent templates by calling the [Listing available agent templates](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#get-ai-service-tenant-agentic-templates) endpoint.
 
 ```bash
 curl -L \
@@ -112,7 +112,7 @@ curl -L \
   --header 'Accept: */*'
 ```
 
-* Use the [Searching agent templates](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#post-ai-service-tenant-agentic-templates-search) endpoint to find the specific agent template.
+* Use the [Searching agent templates](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#post-ai-service-tenant-agentic-templates-search) endpoint to find the specific agent template.
 
 ```bash
 curl -L \
@@ -128,7 +128,7 @@ Copy and note down the template ID of your interest.
 
 #### Create an agent
 
-Call the [Creating agent instance based on the template](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#post-ai-service-tenant-agentic-templates-templateid-agent) endpoint to add an agent to your system. In the path parameter, provide the `templateID` you have copied.
+Call the [Creating agent instance based on the template](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-template#post-ai-service-tenant-agentic-templates-templateid-agent) endpoint to add an agent to your system. In the path parameter, provide the `templateID` you have copied.
 
 ```bash
 curl -L \
@@ -150,7 +150,7 @@ curl -L \
 
 When you want to add a trigger for an enabled AI agent through API, for example as a part of a digital process or from an external system, you need to fetch the specific agent details.
 
-* Use the [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) endpoint to pass a query parameter against the agents in your system.
+* Use the [Searching agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) endpoint to pass a query parameter against the agents in your system.
 
 For example, to find agents of `Complaint` type:
 
@@ -164,7 +164,7 @@ curl -L \
   }'
 ```
 
-* If you know the agent's ID, you can use the [Retrieving the agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) endpoint.
+* If you know the agent's ID, you can use the [Retrieving the agent by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) endpoint.
 
 ```bash
 curl -L \
@@ -199,7 +199,7 @@ For more details, see [Hosting](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/m
 To follow this workflow:
 
 * The OAuth2 access token must include the `ai.agent_manage` scope to create and attach the server, and `ai.agent_read` to retrieve the results.
-* For a custom MCP server, you need a reachable MCP endpoint. Use `streamable_http` as the transport type. If the server requires authorization, create an AI token first with the [Upserting token](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/token#put-ai-service-tenant-agentic-tokens-tokenid) endpoint and pass its ID as `config.authorizationHeaderToken.id`.
+* For a custom MCP server, you need a reachable MCP endpoint. Use `streamable_http` as the transport type. If the server requires authorization, create an AI token first with the [Upserting token](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/token#put-ai-service-tenant-agentic-tokens-tokenid) endpoint and pass its ID as `config.authorizationHeaderToken.id`.
 * For a dynamic MCP server, a Cloud Function must already exist on the tenant. See [Extension and Cloud Function Hosting](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/extension-hosting) and [Hosting](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/administration/hosting) in the Management Dashboard. Use that function's ID as `functionId`. When the server is enabled, the API validates each `functionId`. The request returns `400` if a referenced function does not exist on the tenant.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -212,7 +212,7 @@ To follow this workflow:
 {% step %}
 #### Create the MCP server
 
-Call the [Upserting MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#put-ai-service-tenant-agentic-mcp-servers-mcpserverid) endpoint. The request replaces all existing data for that server ID. A successful create returns `201` with the server ID. A successful update returns `204`.
+Call the [Upserting MCP server](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#put-ai-service-tenant-agentic-mcp-servers-mcpserverid) endpoint. The request replaces all existing data for that server ID. A successful create returns `201` with the server ID. A successful update returns `204`.
 
 {% tabs %}
 {% tab title="Custom" %}
@@ -307,7 +307,7 @@ curl -L \
 {% step %}
 #### Attach the server to an agent
 
-Call the [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint to add the MCP server to an existing agent, for example an agent you created from a template. A successful request returns `204`.
+Call the [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint to add the MCP server to an existing agent, for example an agent you created from a template. A successful request returns `204`.
 
 Use the same endpoint if you want to attach Emporix domain MCP servers (`type: predefined`) to an AI agent.
 
@@ -400,13 +400,13 @@ The available `domain` values are `customer`, `extensibility`, `order`, `product
 
 If you replace the whole `mcpServers` array (`op: REPLACE` on `/mcpServers`), include any existing `predefined`, `custom`, or `dynamic` attachments you still need.
 
-You can also attach servers with the [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint. That `PUT` replaces the whole agent document. The body must include all required agent fields, including `userPrompt`, `triggers`, `llmConfig`, and `mcpServers`.
+You can also attach servers with the [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint. That `PUT` replaces the whole agent document. The body must include all required agent fields, including `userPrompt`, `triggers`, `llmConfig`, and `mcpServers`.
 {% endstep %}
 
 {% step %}
 #### Verify the attachment
 
-Call the [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) endpoint with `expand=mcpServers` to return the full `mcpServer` object for `custom` and `dynamic` attachments. Without `expand`, `mcpServer` typically contains only the `id`.
+Call the [Retrieving agent by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) endpoint with `expand=mcpServers` to return the full `mcpServer` object for `custom` and `dynamic` attachments. Without `expand`, `mcpServer` typically contains only the `id`.
 
 ```bash
 curl -L \
@@ -417,7 +417,7 @@ curl -L \
 
 Listing and searching agents return the same `mcpServers` attachments, including `predefined`, and also support `expand=mcpServers`.
 
-To inspect the server itself, call the [Retrieving MCP server by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#get-ai-service-tenant-agentic-mcp-servers-mcpserverid) endpoint:
+To inspect the server itself, call the [Retrieving MCP server by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#get-ai-service-tenant-agentic-mcp-servers-mcpserverid) endpoint:
 
 {% tabs %}
 {% tab title="Custom" %}
@@ -450,7 +450,7 @@ The response includes the inline `tools`.
 {% step %}
 #### Update the MCP server
 
-Call the [Partially updating MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#patch-ai-service-tenant-agentic-mcp-servers-mcpserverid) endpoint. A successful request returns `204`.
+Call the [Partially updating MCP server](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#patch-ai-service-tenant-agentic-mcp-servers-mcpserverid) endpoint. A successful request returns `204`.
 
 {% tabs %}
 {% tab title="Custom" %}
@@ -551,7 +551,7 @@ The OAuth2 access token must include the `ai.agent_manage` scope.
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
-Call the [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint to add a commerce event trigger with `eventScopes`. A successful request returns `204`.
+Call the [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint to add a commerce event trigger with `eventScopes`. A successful request returns `204`.
 
 ```bash
 curl -L \
@@ -576,7 +576,7 @@ curl -L \
   ]'
 ```
 
-If the agent already has a `commerce_events` trigger, replace the `triggers` array and keep any other trigger types you still need, for example `endpoint`. You can also set `eventScopes` when you create or replace the whole agent with the [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint. That `PUT` replaces the whole agent document.
+If the agent already has a `commerce_events` trigger, replace the `triggers` array and keep any other trigger types you still need, for example `endpoint`. You can also set `eventScopes` when you create or replace the whole agent with the [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint. That `PUT` replaces the whole agent document.
 
 ## How to communicate with an Agent
 
@@ -595,12 +595,12 @@ See [Cloud Function identity headers](#cloud-function-identity-headers).
 {% hint style="info" %}
 Choose the chat endpoint based on how you want to receive the agent's response:
 
-* [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) – when you need a single complete JSON response right away.
-* [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) – when you build interactive experiences, such as chat UIs, storefront assistants, or backoffice tools, that display the agent's reply as it is written and benefit from improved responsiveness.
-* [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) – when the agent may take longer to process data or wait for another task, and you want to poll the result using the `jobId`.
+* [Starting agent chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) – when you need a single complete JSON response right away.
+* [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) – when you build interactive experiences, such as chat UIs, storefront assistants, or backoffice tools, that display the agent's reply as it is written and benefit from improved responsiveness.
+* [Starting agent async chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) – when the agent may take longer to process data or wait for another task, and you want to poll the result using the `jobId`.
 {% endhint %}
 
-* When instant responses are required from the agent, send the request to the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat)
+* When instant responses are required from the agent, send the request to the [Starting agent chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat)
 
   ```bash
   curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat' \
@@ -648,7 +648,7 @@ Choose the chat endpoint based on how you want to receive the agent's response:
 
   Save `sessionId` and send it as the `session-id` header when you need conversational continuity. See [How to reuse session memory in agent chat](#how-to-reuse-session-memory-in-agent-chat).
 
-* When you want progressive output as the agent's response is generated, stream the request to the [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) endpoint.
+* When you want progressive output as the agent's response is generated, stream the request to the [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) endpoint.
 
   ```bash
   curl -N -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-stream' \
@@ -708,9 +708,9 @@ Choose the chat endpoint based on how you want to receive the agent's response:
   }'
   ```
 
-  For the full event list and JSON `data` schemas, see [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream).
+  For the full event list and JSON `data` schemas, see [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream).
 
-* When it is more pragmatic to wait for the agent's response, for example, when the agent needs to process more data which takes more time, or the agent needs to wait for another task to be completed, use the asynchronous communication. Send the request to the agent using the [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async).
+* When it is more pragmatic to wait for the agent's response, for example, when the agent needs to process more data which takes more time, or the agent needs to wait for another task to be completed, use the asynchronous communication. Send the request to the agent using the [Starting agent async chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async).
 
   ```bash
   curl -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-async' \
@@ -733,7 +733,7 @@ Choose the chat endpoint based on how you want to receive the agent's response:
   }
   ```
 
-  Use the `jobId` to check details of the job through the [Retrieving agent job by its ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid) endpoint. For example:
+  Use the `jobId` to check details of the job through the [Retrieving agent job by its ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid) endpoint. For example:
 
   ```bash
   curl -X 'GET' \
@@ -755,7 +755,7 @@ The OAuth2 access token must include `ai.agent_manage` to set `enabledMemory` on
 {% step %}
 #### Enable memory on the agent
 
-Set `enabledMemory` to `true` on the agent. The default is `false`. You can set the flag when you create or replace the agent with the [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint, or update an existing agent with the [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint.
+Set `enabledMemory` to `true` on the agent. The default is `false`. You can set the flag when you create or replace the agent with the [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint, or update an existing agent with the [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint.
 
 ```bash
 curl -L \
@@ -778,9 +778,9 @@ A successful request returns `204`. To keep conversational memory for collaborat
 {% step %}
 #### Reuse the `session-id` header
 
-Call a chat endpoint, for example [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat). Save `sessionId` from the JSON response. On [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream), save `session_id` from the SSE `done` event. On later turns, send that value as the `session-id` header.
+Call a chat endpoint, for example [Starting agent chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat). Save `sessionId` from the JSON response. On [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream), save `session_id` from the SSE `done` event. On later turns, send that value as the `session-id` header.
 
-The [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) and [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) endpoints use the same header.
+The [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) and [Starting agent async chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) endpoints use the same header.
 
 ```bash
 curl -L \
@@ -805,7 +805,7 @@ If the agent lists `agentCollaborations`, those collaborations stay in the calle
 
 When `enabledMemory` is `false`, the supervisor has no stored conversation history to pass to a hand-off agent. State in the supervisor `userPrompt` the exact information to forward, such as an order ID, customer number, or complaint details. Incomplete or ambiguous instructions result in extra collaboration cycles between the supervisor and the called agent until the required context is available.
 
-To inspect which agents participated, call the [Retrieving agent session by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions-sessionid) endpoint.
+To inspect which agents participated, call the [Retrieving agent session by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-logs#get-ai-service-tenant-agentic-logs-sessions-sessionid) endpoint.
 
 ```bash
 curl -L \
@@ -838,10 +838,10 @@ Media file size can be up to 10 MB.
 
 The later chat request must send the same `sessionId` as the upload. The chat `agentId` must be an agent that already has the attachment assigned:
 
-* `agentId` – The path parameter of [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) must match `agentId` in the chat request body. After reuse, match the target agent instead.
+* `agentId` – The path parameter of [Uploading attachment](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) must match `agentId` in the chat request body. After reuse, match the target agent instead.
 * `sessionId` – Send the upload response value as the `session-id` header on the chat request.
 
-This pairing applies to [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat), [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream), and [Starting agent async chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async). 
+This pairing applies to [Starting agent chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat), [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream), and [Starting agent async chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async). 
 
 To use the file with a different agent, first assign the attachment to that agent. See [Reuse an attachment with another agent](#reuse-an-attachment-with-another-agent).
 
@@ -849,7 +849,7 @@ To use the file with a different agent, first assign the attachment to that agen
 {% step %}
 #### Upload a file to an agent
 
-To upload a file to an agent, use the dedicated [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) endpoint. The `agentId` in the path assigns the file to that agent.
+To upload a file to an agent, use the dedicated [Uploading attachment](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) endpoint. The `agentId` in the path assigns the file to that agent.
 
 ```bash
 curl -L \
@@ -893,7 +893,7 @@ Attaching a media file of an unsupported type results in the `400` error, for ex
 {% step %}
 #### Refer to the attachment in agent chat
 
-The file is assigned to the agent. In the chat request, reference it and add any extra instructions. Call the agent, for example with the [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) endpoint. Include the upload `id` as `attachments[].attachmentId` in the request body. Send the same `session-id` header and the same `agentId` as the upload path:
+The file is assigned to the agent. In the chat request, reference it and add any extra instructions. Call the agent, for example with the [Starting agent chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) endpoint. Include the upload `id` as `attachments[].attachmentId` in the request body. Send the same `session-id` header and the same `agentId` as the upload path:
 
 ```bash
 curl -L \
@@ -933,7 +933,7 @@ If the chat `agentId` does not match the agent that received the upload, the req
 {% step %}
 #### Reuse an attachment with another agent
 
-To assign existing media to an agent, call [Uploading attachment](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) with `attachmentId` instead of a file. Put the target agent's `agentId` in the path. Send `attachmentId` in an `application/json` body. The `attachmentId` form field is also supported. The response is `200` with the attachment `id` and `sessionId`. If you omit the `session-id` header, save the `sessionId` from the response for later chat requests.
+To assign existing media to an agent, call [Uploading attachment](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) with `attachmentId` instead of a file. Put the target agent's `agentId` in the path. Send `attachmentId` in an `application/json` body. The `attachmentId` form field is also supported. The response is `200` with the attachment `id` and `sessionId`. If you omit the `session-id` header, save the `sessionId` from the response for later chat requests.
 
 With the `ai.agentexecution_manage` scope, `attachmentId` can be any existing media asset. The asset does not have to belong to the session. With only the `ai.agentexecution_manage_own` scope, the attachment must already belong to the `session-id` session.
 
@@ -968,7 +968,7 @@ You can use the export and import to:
 {% step %}
 #### Export agents
 
-Collect the `agentIds` you want to export, then call the [Exporting agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-export) endpoint.
+Collect the `agentIds` you want to export, then call the [Exporting agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-export) endpoint.
 
 ```bash
 curl -L \
@@ -987,7 +987,7 @@ The response contains:
 
 * `data`: a Base64-encoded JSON payload with the exported agents, tools, and MCP servers.
 * `checksum`: a hash of the decoded `data` string.
-* `jobId`: the export job identifier (you can poll the [Retrieving agent job by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid) endpoint if you need job status updates).
+* `jobId`: the export job identifier (you can poll the [Retrieving agent job by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid) endpoint if you need job status updates).
 
 Store both `data` and `checksum`. You will need them when importing.
 {% endstep %}
@@ -995,7 +995,7 @@ Store both `data` and `checksum`. You will need them when importing.
 {% step %}
 #### Import agents
 
-Use the payload obtained during export and call the [Importing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-import) endpoint. Import requires the `ai.agent_manage` scope.
+Use the payload obtained during export and call the [Importing agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-import) endpoint. Import requires the `ai.agent_manage` scope.
 
 ```bash
 curl -L \

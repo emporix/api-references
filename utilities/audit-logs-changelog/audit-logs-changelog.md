@@ -24,7 +24,7 @@ See [Tokens and Scopes](../../quickstart/authentication-and-authorization/tokens
 
 ## How to retrieve logs
 
-Send a request to the [Retrieving logs](https://developer.emporix.io/api-references/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) endpoint.
+Send a request to the [Retrieving logs](https://developer.emporix.io/api-documentation/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

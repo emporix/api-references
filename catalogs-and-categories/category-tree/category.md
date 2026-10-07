@@ -39,7 +39,7 @@ If you want to create a root category, choose one from the following:
 
 If you want to create a subcategory, include the `parentId` of the root category in the request body.
 
-To create a new category, you need to send a request to the [Creating a new category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint.
+To create a new category, you need to send a request to the [Creating a new category](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint.
 
 {% hint style="danger" %}
 The `localizedSlug` field must not contain any diacritics.
@@ -99,7 +99,7 @@ Make sure you have already finished the following tutorials:
 
 ### Assign a product to a category
 
-To assign a product to a category, you need to send a request to the [Assigning a resource to a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#post-category-tenant-categories-categoryid-assignments) endpoint and do the following:
+To assign a product to a category, you need to send a request to the [Assigning a resource to a category](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#post-category-tenant-categories-categoryid-assignments) endpoint and do the following:
 
 * Set the `ref.type` field to `"PRODUCT"`.
 * Provide the product ID in the `ref.id` field.
@@ -126,7 +126,7 @@ curl -L \
 
 ### Retrieve the category assignments
 
-To check whether the resource was properly assigned to the category, you can send a request to the [Retrieving resources assigned to a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#get-category-tenant-categories-categoryid-assignments) endpoint.
+To check whether the resource was properly assigned to the category, you can send a request to the [Retrieving resources assigned to a category](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#get-category-tenant-categories-categoryid-assignments) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -151,7 +151,7 @@ As a result of this procedure, only category assignments are deleted; the catego
 
 #### Option one: Delete all product assignments
 
-To delete all assignments for a specific category, you need to send a request to the [Deleting all category assignments](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#delete-category-tenant-categories-categoryid-assignments) endpoint and set the `assignmentType` query parameter to `PRODUCT`.
+To delete all assignments for a specific category, you need to send a request to the [Deleting all category assignments](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#delete-category-tenant-categories-categoryid-assignments) endpoint and set the `assignmentType` query parameter to `PRODUCT`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -169,7 +169,7 @@ curl -L \
 
 ### Option two: Delete a specific product assignment
 
-To delete only a specific assignment, you need to send a request to the [Deleting a category assignment by reference ID](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#delete-category-tenant-categories-categoryid-assignments-assignmentid) and enter the ID of the resource in the `referenceId` path parameter.
+To delete only a specific assignment, you need to send a request to the [Deleting a category assignment by reference ID](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#delete-category-tenant-categories-categoryid-assignments-assignmentid) and enter the ID of the resource in the `referenceId` path parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -187,9 +187,9 @@ curl -L \
 
 ## How to publish/unpublish a category
 
-To publish or unpublish a category, you need to send a request to the [Upserting a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#put-category-tenant-categories-categoryid) endpoint and set the `published` property to `true` or `false`.
+To publish or unpublish a category, you need to send a request to the [Upserting a category](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#put-category-tenant-categories-categoryid) endpoint and set the `published` property to `true` or `false`.
 
-Category tree [Retrieving the category trees](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees)  and [Retrieving a specific category tree](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees-categoryid) endpoints exclude trees in which the root category has `published=false`, when only published categories are requested (`showUnpublished=false`).
+Category tree [Retrieving the category trees](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees)  and [Retrieving a specific category tree](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees-categoryid) endpoints exclude trees in which the root category has `published=false`, when only published categories are requested (`showUnpublished=false`).
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -230,7 +230,7 @@ Category trees are built every time you create or update a category. The `parent
 It is only possible to retrieve a category tree for a root category. It is not possible to get it for a category that lies lower in a hierarchy.
 {% endhint %}
 
-To retrieve a specific category tree, you need to send a request to the [Retrieving a specific category tree](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees-categoryid) endpoint and provide the category ID in the `categoryId` path parameter.
+To retrieve a specific category tree, you need to send a request to the [Retrieving a specific category tree](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees-categoryid) endpoint and provide the category ID in the `categoryId` path parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -247,7 +247,7 @@ curl -L \
 
 **Option two: Retrieve all category trees belonging to the tenant**
 
-To retrieve all category trees, you need to send a request to the [Retrieving the category trees](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees) endpoint.
+To retrieve all category trees, you need to send a request to the [Retrieving the category trees](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -264,7 +264,7 @@ curl -L \
 
 **Option three: Retrieve a list of subcategories of a category**
 
-To retrieve a list of subcategories for a specific category, you need to send a request to the [Retrieving subcategories for a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#get-category-tenant-categories-categoryid-subcategories) endpoint.
+To retrieve a list of subcategories for a specific category, you need to send a request to the [Retrieving subcategories for a category](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#get-category-tenant-categories-categoryid-subcategories) endpoint.
 
 {% hint style="warning" %}
 You can limit the depth of retrieved subcategories with the `depth` parameter.
@@ -294,7 +294,7 @@ You can move a category by modifying its `parentId` value.
 When you move a category, all its subcategories and assigned references move along with it.
 {% endhint %}
 
-To move a category to be a child of another category, you need to send a request to the [Upserting a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#put-category-tenant-categories-categoryid) endpoint and provide the desired parent category ID in the `parentId` field.
+To move a category to be a child of another category, you need to send a request to the [Upserting a category](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#put-category-tenant-categories-categoryid) endpoint and provide the desired parent category ID in the `parentId` field.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -329,7 +329,7 @@ Classification categories allow you to organize products with consistent attribu
 
 ### Creating a classification category
 
-To create a classification category, send a request to the [Creating a new category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint with the `type` field set to `"CLASSIFICATION"` and define `ownClassificationMixins`.
+To create a classification category, send a request to the [Creating a new category](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint with the `type` field set to `"CLASSIFICATION"` and define `ownClassificationMixins`.
 
 ```bash
 curl -L \

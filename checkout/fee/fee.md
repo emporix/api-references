@@ -43,7 +43,7 @@ Follow these steps to create a fee and connect it to a product.
 {% step %}
 #### Create a fee
 
-Send the request to the [Creating a fee](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/fee-management#post-fee-tenant-fees) endpoint.
+Send the request to the [Creating a fee](https://developer.emporix.io/api-documentation/api-guides/checkout/fee/api-reference/fee-management#post-fee-tenant-fees) endpoint.
 
 ```bash
 curl -i -X POST 
@@ -76,7 +76,7 @@ Make sure you provide the relevant `siteCode` of a site that you want to apply t
 {% step %}
 #### Copy the `feeId` of the created fee
 
-To add the fee to the specific product, send the request to the [Adding a list of fees to a product](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/product-fees-management#put-fee-tenant-productfees-productid-fees) endpoint. You need to add the `feeId` in the request.
+To add the fee to the specific product, send the request to the [Adding a list of fees to a product](https://developer.emporix.io/api-documentation/api-guides/checkout/fee/api-reference/product-fees-management#put-fee-tenant-productfees-productid-fees) endpoint. You need to add the `feeId` in the request.
 
 ```bash
 curl -i -X PUT 
@@ -97,7 +97,7 @@ In the request path parameter, provide the `productId` to add the fee to. The `s
 {% step %}
 #### Review the fee
 
-To make sure the fee has been added properly, you can send the request to the [Retrieving all fees with the given productId](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/product-fees-management#get-fee-tenant-productfees-productid-fees) endpoint.
+To make sure the fee has been added properly, you can send the request to the [Retrieving all fees with the given productId](https://developer.emporix.io/api-documentation/api-guides/checkout/fee/api-reference/product-fees-management#get-fee-tenant-productfees-productid-fees) endpoint.
 
 ```bash
 curl -i -X GET 
@@ -108,7 +108,7 @@ curl -i -X GET
 
 In the query parameter, provide the `siteCode` of the specific site the fee was applied to, for example `?siteCode=DE`.
 
-Or, you can check if the fee was applied by sending the request to the [Searching itemFees by productId](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/item-fee-search#post-fee-tenant-itemfees-searchbyproductid) endpoint.
+Or, you can check if the fee was applied by sending the request to the [Searching itemFees by productId](https://developer.emporix.io/api-documentation/api-guides/checkout/fee/api-reference/item-fee-search#post-fee-tenant-itemfees-searchbyproductid) endpoint.
 
 ```bash
 curl -i -X POST 
@@ -141,7 +141,7 @@ The Fee Service supports adding fees to payments methods. See the example of cre
 {% step %}
 #### Create a fee
 
-Send the request to the [Creating a fee](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/fee-management#post-fee-tenant-fees) endpoint.
+Send the request to the [Creating a fee](https://developer.emporix.io/api-documentation/api-guides/checkout/fee/api-reference/fee-management#post-fee-tenant-fees) endpoint.
 
 ```bash
 curl -i -X POST 
@@ -166,7 +166,7 @@ curl -i -X POST
   }'
 ```
 
-When creating a payment fee, the fee `code` has to be identical with the payment mode `code`. To check the available payment modes for a given site, make a call to the [Retrieving all the payment modes](https://developer.emporix.io/api-references/api-guides/checkout/payment-gateway/api-reference/payment-mode-frontend#get-payment-gateway-tenant-paymentmodes-frontend) endpoint first.
+When creating a payment fee, the fee `code` has to be identical with the payment mode `code`. To check the available payment modes for a given site, make a call to the [Retrieving all the payment modes](https://developer.emporix.io/api-documentation/api-guides/checkout/payment-gateway/api-reference/payment-mode-frontend#get-payment-gateway-tenant-paymentmodes-frontend) endpoint first.
 
 Notice the `code` in the above payload corresponds to the payment mode `code` we want ta apply the fee to.
 {% endstep %}
@@ -174,7 +174,7 @@ Notice the `code` in the above payload corresponds to the payment mode `code` we
 {% step %}
 #### Copy the `feeId` of the created fee
 
-To connect the fee to the specific payment type, create the item fee by sending the request to the [Creating itemFee](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/item-fee-management#post-fee-tenant-itemfees) endpoint and specify the `itemYrn` of the chosen payment type in the request body.
+To connect the fee to the specific payment type, create the item fee by sending the request to the [Creating itemFee](https://developer.emporix.io/api-documentation/api-guides/checkout/fee/api-reference/item-fee-management#post-fee-tenant-itemfees) endpoint and specify the `itemYrn` of the chosen payment type in the request body.
 
 ```bash
 curl -i -X POST 
@@ -191,7 +191,7 @@ Note that the part of `itemYrn` contains the payment mode `code` which is identi
 {% step %}
 #### Apply the fee to the payment mode
 
-Send a request to the [Adding a list of fees to an item](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/item-fee-management#put-fee-tenant-itemfees-itemyrn-fees) endpoint. You need to specify the `itemYrn` of the chosen payment type in the request path and pass the `feeId` in the body.
+Send a request to the [Adding a list of fees to an item](https://developer.emporix.io/api-documentation/api-guides/checkout/fee/api-reference/item-fee-management#put-fee-tenant-itemfees-itemyrn-fees) endpoint. You need to specify the `itemYrn` of the chosen payment type in the request path and pass the `feeId` in the body.
 
 ```bash
 curl -i -X PUT 
@@ -214,7 +214,7 @@ This operation overwrites the item's fees. For each payment mode you can create 
 {% step %}
 #### Review the fee
 
-Send the request to the [Checking of a fee has been applied](https://developer.emporix.io/api-references/api-guides/checkout/fee/api-reference/item-fee-search#post-fee-tenant-itemfees-search) endpoint.
+Send the request to the [Checking of a fee has been applied](https://developer.emporix.io/api-documentation/api-guides/checkout/fee/api-reference/item-fee-search#post-fee-tenant-itemfees-search) endpoint.
 
 ```bash
 curl -i -X POST 
