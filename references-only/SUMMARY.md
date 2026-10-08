@@ -364,6 +364,17 @@
             kind: openapi
             spec: schema-api
       ```
+  * [Search](../utilities/search-service/api-reference/README.md)
+    * ```yaml
+      props:
+        models: true
+      type: builtin:openapi
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: search-api
+      ```
   * [Import Service](../utilities/import-service/api-reference/README.md)
     * ```yaml
       props:

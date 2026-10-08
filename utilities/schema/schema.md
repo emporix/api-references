@@ -24,7 +24,7 @@ This tutorial explains how to add custom fields for a product entity.
 
 ### Create a schema
 
-To extend the product entity in Management Dashboard with some industry-specific fields, create a schema that defines the required fields and generates JSON file representation by sending a request to the [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) endpoint.
+To extend the product entity in Management Dashboard with some industry-specific fields, create a schema that defines the required fields and generates JSON file representation by sending a request to the [Creating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -107,7 +107,7 @@ curl -L
 
 ### Retrieve a schema
 
-Retrieve the created schema to get the schema URL by calling the [Retrieving a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-id) endpoint.
+Retrieve the created schema to get the schema URL by calling the [Retrieving a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-id) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -209,7 +209,7 @@ When you create a product, the validation mechanism runs against the schema stor
 
 ### Create a product
 
-Now, create a product that contains additional fields by sending a request to [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
+Now, create a product that contains additional fields by sending a request to [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 The product should contain "metadata.mixins.\{{id\}}: \{{cloudinaryUrl\}}", where `id` is the schema URL you retrieved with `GET` operation in the previous step.
 
@@ -399,7 +399,7 @@ See the example JSON file that defines fields of different types:
 
 ### Create a reference
 
-To use the schema in Emporix Commerce Engine, send a request to the [Creating a reference](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/reference#post-schema-tenant-references) endpoint. This action creates a reference to your schema so that you use the extended type.
+To use the schema in Emporix Commerce Engine, send a request to the [Creating a reference](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/reference#post-schema-tenant-references) endpoint. This action creates a reference to your schema so that you use the extended type.
 The schema reference is used to create or edit product objects.
 
 {% hint style="warning" %}
@@ -444,7 +444,7 @@ JSON example:
 
 ### Create a product
 
-Now, create a product and provide values for the customized fields by sending a request to [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
+Now, create a product and provide values for the customized fields by sending a request to [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 See the example payload for creating a product basing on the schema from the previous step:
 

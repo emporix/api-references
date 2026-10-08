@@ -27,7 +27,7 @@ Changes to units propagate across the platform within ~5 minutes after create/up
 
 ## How to add a new unit
 
-To add a new measurement unit to your configuration, send a request to the [Adding a new unit](https://developer.emporix.io/api-references/api-guides/configuration/unit-handling-service/api-reference/unit-management#post-unit-handling-tenant-units) endpoint.
+To add a new measurement unit to your configuration, send a request to the [Adding a new unit](https://developer.emporix.io/api-documentation/api-guides/configuration/unit-handling-service/api-reference/unit-management#post-unit-handling-tenant-units) endpoint.
 
 {% hint style="warning" %}
 Unit names are localized. When creating a new unit, you can specify the unit name in two different ways — in one language or in multiple languages.
@@ -61,7 +61,7 @@ curl -L
 
 You can convert between any measurement units that share the same base unit, such as kilograms to grams, or centimeters to meters.
 
-To convert between units, send a request to the [Converting units ](https://developer.emporix.io/api-references/api-guides/configuration/unit-handling-service/api-reference/unit-conversion#put-unit-handling-tenant-units-convert-unit-commands)endpoint.
+To convert between units, send a request to the [Converting units](https://developer.emporix.io/api-documentation/api-guides/configuration/unit-handling-service/api-reference/unit-conversion#put-unit-handling-tenant-units-convert-unit-commands) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -95,7 +95,7 @@ When creating or updating a price model, the `unitCode` in the `measurementUnit`
 
 **Example: Creating a price model with unit validation**
 
-Before creating a price model with `unitCode: "kg"`, first verify if the unit exists, by sending a request to the [Finding units by filters with sorting and paging](https://developer.emporix.io/api-references/api-guides/configuration/unit-handling-service/api-reference/unit-management#get-unit-handling-tenant-units) endpoint.
+Before creating a price model with `unitCode: "kg"`, first verify if the unit exists, by sending a request to the [Finding units by filters with sorting and paging](https://developer.emporix.io/api-documentation/api-guides/configuration/unit-handling-service/api-reference/unit-management#get-unit-handling-tenant-units) endpoint.
 
 ```bash
 curl -L 

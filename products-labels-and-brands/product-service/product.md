@@ -36,8 +36,8 @@ Take a look at the relationships between prices and other resources in the Empor
 {% hint style="warning" %}
 Countries and regions are predefined in the Emporix API [Country Service](../../configuration/country-service/). You can check which countries and regions are available by sending requests to the following endpoints:
 
-* [Retrieving all countries](https://developer.emporix.io/api-references/api-guides/configuration/country-service/api-reference/countries#get-country-tenant-countries)
-* [Retrieving all regions](https://developer.emporix.io/api-references/api-guides/configuration/country-service/api-reference/regions#get-country-tenant-regions)
+* [Retrieving all countries](https://developer.emporix.io/api-documentation/api-guides/configuration/country-service/api-reference/countries#get-country-tenant-countries)
+* [Retrieving all regions](https://developer.emporix.io/api-documentation/api-guides/configuration/country-service/api-reference/regions#get-country-tenant-regions)
 {% endhint %}
 
 Creating your first product is a process made up of defining sales tax rates, adding the product and adding media files for a product.
@@ -54,7 +54,7 @@ You can manage your tax configurations through the Emporix API [Tax Service](../
 For more information, check out the [Tax classes guide](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/taxes-v2).
 {% endhint %}
 
-To define sales tax rates for a country, send a request to the [Creating a new tax configuration](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/tax-service/api-reference/taxes#post-tax-tenant-taxes) endpoint.
+To define sales tax rates for a country, send a request to the [Creating a new tax configuration](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/tax-service/api-reference/taxes#post-tax-tenant-taxes) endpoint.
 
 ```bash
 curl -i -X POST \
@@ -100,7 +100,7 @@ curl -i -X POST \
 {% step %}
 ### Add products
 
-To add a single basic product, send a request to the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
+To add a single basic product, send a request to the [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 **Simple product example:**
 
@@ -121,7 +121,7 @@ curl -i -X POST \
   }'
 ```
 
-You can also add multiple basic products at the same time. To achieve that, send a request to the [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
+You can also add multiple basic products at the same time. To achieve that, send a request to the [Creating multiple products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
 
 ```bash
 curl -i -X POST \
@@ -154,7 +154,7 @@ curl -i -X POST \
 {% step %}
 ### Add media for a product
 
-To add media files, for example images or videos, for a particular product, upload them directly to the Emporix database, or link to their location on an external website. In this example, create a `PUBLIC` `BLOB` asset and associate it with a product by sending a request to the [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint with the `media.asset_manage` scope.
+To add media files, for example images or videos, for a particular product, upload them directly to the Emporix database, or link to their location on an external website. In this example, create a `PUBLIC` `BLOB` asset and associate it with a product by sending a request to the [Creating an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint with the `media.asset_manage` scope.
 
 {% hint style="warning" %}
 To upload a file, send a `multipart/form-data` request and create a `BLOB` asset with `PUBLIC` access. To reference an external URL without uploading the file, send an `application/json` request and create a `LINK` asset. Storefront-visible product media requires `PUBLIC` access. For more information, check out the [Media Tutorial](../../media/media/media.md).
@@ -179,7 +179,7 @@ You can create a product template that contains additional attributes describing
 {% step %}
 ### Create a product template
 
-To create a new product template, call the [Creating a new product template](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#post-product-tenant-product-templates) endpoint.
+To create a new product template, call the [Creating a new product template](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#post-product-tenant-product-templates) endpoint.
 
 ```bash
 curl -i -X POST \
@@ -229,7 +229,7 @@ When creating a product template for a basic product, do not set `variantAttribu
 
 By applying a product template, you can create a product that contains additional attributes, which are included in the product's `mixins.productTemplateAttributes` field.
 
-To create a new product by applying a product template to it, call the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint and provide the template's ID in the request body.
+To create a new product by applying a product template to it, call the [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint and provide the template's ID in the request body.
 
 ```bash
 curl -i -X POST \
@@ -279,7 +279,7 @@ To create a product bundle, perform the following steps:
 {% step %}
 ### Create a bundle of products
 
-You can group together two or more products that already exist in the system so that they can be sold at one collective price. To achieve that, call the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
+You can group together two or more products that already exist in the system so that they can be sold at one collective price. To achieve that, call the [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 In this example, we create a bundle containing a T-shirt product and socks product that already exist in the system.
 
@@ -332,7 +332,7 @@ The value of the `productId` from the response is the \{{bundle\_Id\}}.
 
 ## How to update multiple products in one operation
 
-If you want to update multiple products, use the bulk update feature to update several products in one operation. Send a request to the [Upserting multiple](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk) products endpoint.
+If you want to update multiple products, use the bulk update feature to update several products in one operation. Send a request to the [Upserting multiple](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk) products endpoint.
 
 {% hint style="warning" %}
 The `product.product_update` scope is required. The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the products on the update.
@@ -518,7 +518,7 @@ The `product.product_publish` scope is only required if you want to publish the 
 
 Create a product template that defines the variant attributes (for example, `color` and `size`) and their allowed values. Set `variantAttribute` to `true` in the attribute metadata so they can be used for variant generation.
 
-Call the [Creating a new product template](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#post-product-tenant-product-templates) endpoint.
+Call the [Creating a new product template](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#post-product-tenant-product-templates) endpoint.
 
 ```bash
 curl -i -X POST \
@@ -591,7 +591,7 @@ When creating or updating a product of the `PARENT_VARIANT` type, by default, pr
 The product template can contain more attributes and values than are needed to create a parent variant. In the `variantAttributes` field, specify the attributes and values from the product template that are relevant to the particular parent variant product and its variants.
 {% endhint %}
 
-To create a single `parent_variant` type of product with variants, send a request to the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
+To create a single `parent_variant` type of product with variants, send a request to the [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 ```bash
 curl -i -X POST \
@@ -633,7 +633,7 @@ curl -i -X POST \
 {% step %}
 ### Optional: Create multiple parent variant products 
 
-If you want to create multiple `parent_variant` products at the same time, send a request to the [Creating multiple products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
+If you want to create multiple `parent_variant` products at the same time, send a request to the [Creating multiple products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -752,7 +752,7 @@ The `product.product_publish` scope is only required if you want to publish the 
 {% step %}
 ### Update a product template with new attributes and values
 
-To add new variant attribute values to your product template, update the template by calling the [Updating a product template](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#put-product-tenant-product-templates-product-template-id) endpoint. In this example, we add `PURPLE` to the existing `color` attribute values.
+To add new variant attribute values to your product template, update the template by calling the [Updating a product template](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/product-templates#put-product-tenant-product-templates-product-template-id) endpoint. In this example, we add `PURPLE` to the existing `color` attribute values.
 
 {% hint style="warning" %}
 Each of the attributes has its own metadata element, where you can specify whether the attribute is mandatory, if it can be used as a variant attribute, and what its default value is.
@@ -837,7 +837,7 @@ curl -i -X PUT \
 {% step %}
 ### Update the existing parent variant product with the new product template
 
-Since updating the product template results in it being assigned a new version, update the parent variant by sending a request to the [Partially updating a product endpoint](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) and providing the new `template.version` value.
+Since updating the product template results in it being assigned a new version, update the parent variant by sending a request to the [Partially updating a product endpoint](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) and providing the new `template.version` value.
 
 {% hint style="warning" %}
 In the `variantAttributes` field, specify the attributes and attribute values that the variant products will assume. Based on the specified attributes, variant product combinations will be created automatically.
@@ -903,7 +903,7 @@ You cannot override the following attributes: `id`, `code`, `template`, `variant
 The `parentVariantId` field cannot be updated. It can only be set when creating a new variant product. When updating an existing variant, this field should be omitted or will be ignored if included.
 {% endhint %}
 
-Update a specific variant product by sending a request to the [Upserting a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint.
+Update a specific variant product by sending a request to the [Upserting a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint.
 
 In the following example, we override the following fields:
 
@@ -994,7 +994,7 @@ Root product (DYNAMIC_VARIANT, no parentVariantId)
 ### Create the root product
 
 The root is a `DYNAMIC_VARIANT` product with no `parentVariantId`. It acts as the anchor for the entire tree and is the product your storefront links to.
-To create the root product, call the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
+To create the root product, call the [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 ```bash
 curl -i -X POST \
@@ -1023,7 +1023,7 @@ curl -i -X POST \
 {% step %}
 ### Create L1 variant products
 
-To create an L1 variant product, call the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
+To create an L1 variant product, call the [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 L1 variants are direct children of the root. Set `parentVariantId` to the root product ID and declare the attributes that distinguish this variant from the root in `ownVariantAttributes`. Set `sellable: false` if this variant is an intermediate grouping level.
 
@@ -1084,7 +1084,7 @@ curl -i -X POST \
 {% step %}
 ### Create L2 leaf variants
 
-To create an L2 variant product, call the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
+To create an L2 variant product, call the [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 L2 variants are children of L1 variants. They declare only the attributes they introduce at their own level, the L1 attributes are inherited automatically. Set `sellable: true` on variants that can be purchased.
 
@@ -1121,7 +1121,7 @@ curl -i -X POST \
 {% step %}
 ### Retrieve the root product - the storefront view
 
-To retrieve the root product with its complete variant tree, call the [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint. The `variants` map on the root contains every descendant with accumulated attributes, each entry already has its own attributes merged with all ancestor attributes up the chain.
+To retrieve the root product with its complete variant tree, call the [Retrieving a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint. The `variants` map on the root contains every descendant with accumulated attributes, each entry already has its own attributes merged with all ancestor attributes up the chain.
 
 ```bash
 curl -i -X GET \
@@ -1219,7 +1219,7 @@ When you fetch a child product directly, the response separates its attributes i
 
 - `ownVariantAttributes` - the attributes stored on this product. These are writable: you can change them via PUT or PATCH.
 - `inheritedVariantAttributes` - the attributes inherited from ancestor products. These are read-only on this product. To change an inherited attribute, update the ancestor that owns it.
-To retrieve a child product, call the [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint.
+To retrieve a child product, call the [Retrieving a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint.
 
 ```bash
 curl -i -X GET \
@@ -1266,7 +1266,7 @@ curl -i -X GET \
 ### Updating a dynamic variant
 
 To update a variant's own attributes, send a PUT or PATCH request with the new `ownVariantAttributes`. Only the attributes in `ownVariantAttributes` are accepted - any attempt to modify `inheritedVariantAttributes` is ignored.
-To update a dynamic variant, call the [Upserting a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint.
+To update a dynamic variant, call the [Upserting a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint.
 
 For a single product write, the `variants` map on all ancestor products is updated synchronously and inline — no recalculation job is needed.
 
@@ -1340,7 +1340,7 @@ Call the recalculation endpoint **after** the entire batch has been ingested, no
 {% step %}
 ### Trigger recalculation
 
-To trigger recalculation, call the [Triggering dynamic variant recalculation](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-recalculate) endpoint with a list of up to 1000 product IDs at any hierarchy level. You do not need to know which products are roots, the system resolves the root for each submitted ID automatically and creates one job per unique root product.
+To trigger recalculation, call the [Triggering dynamic variant recalculation](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-recalculate) endpoint with a list of up to 1000 product IDs at any hierarchy level. You do not need to know which products are roots, the system resolves the root for each submitted ID automatically and creates one job per unique root product.
 
 ```bash
 curl -i -X POST \
@@ -1398,7 +1398,7 @@ If a recalculation job for a given root is already `PENDING` or `PROCESSING`, th
 {% step %}
 ### Poll for job completion
 
-Use the job ID from the response and call the [Retrieving a recalculation job](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-recalculate-jobs-jobid) endpoint to poll for completion. Jobs move through the following lifecycle:
+Use the job ID from the response and call the [Retrieving a recalculation job](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-recalculate-jobs-jobid) endpoint to poll for completion. Jobs move through the following lifecycle:
 
 | Status | Meaning |
 |---|---|
@@ -1453,7 +1453,7 @@ Returns `404` if the job does not exist or has been automatically removed. Jobs 
 {% step %}
 ### List all jobs (optional)
 
-To monitor the overall import progress, call the [Listing recalculation jobs](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-recalculate-jobs) endpoint. Filter by `status` to focus on jobs that need attention.
+To monitor the overall import progress, call the [Listing recalculation jobs](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-recalculate-jobs) endpoint. Filter by `status` to focus on jobs that need attention.
 
 ```bash
 curl -i -X GET \
@@ -1502,7 +1502,7 @@ The `attempts` field on a job tracks how many times the subscriber has attempted
 
 ## How to update product mixins
 
-To change mixin fields, send a request to the [Partially updating a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint. To remove a mixin, send a full replacement to the [Upserting a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint with `partial=false`.
+To change mixin fields, send a request to the [Partially updating a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint. To remove a mixin, send a full replacement to the [Upserting a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint with `partial=false`.
 
 {% hint style="warning" %}
 The `product.product_manage` scope is required. The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the product on the update. The `product.product_read_unpublished` scope is only required if you retrieve an unpublished product.
@@ -1542,7 +1542,7 @@ This example updates `orderUnit` on `productCustomAttributes`. The product also 
 }
 ```
 
-Send a request to the [Partially updating a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint:
+Send a request to the [Partially updating a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint:
 
 ```bash
 curl -i -X PATCH \
@@ -1591,7 +1591,7 @@ Retrieve the product, omit the mixin from `mixins` and `metadata.mixins`, then s
 {% step %}
 #### Retrieve the product
 
-Send a request to the [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint:
+Send a request to the [Retrieving a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint:
 
 ```bash
 curl -i -X GET \
@@ -1639,7 +1639,7 @@ The response includes the mixins and their schema URLs. Use the current `metadat
 {% step %}
 #### Replace the product without the mixin
 
-Omit `deliveryOptions` from `mixins` and `metadata.mixins`. Send the remaining product document to the [Upserting a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint with `partial=false`.
+Omit `deliveryOptions` from `mixins` and `metadata.mixins`. Send the remaining product document to the [Upserting a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint with `partial=false`.
 
 {% hint style="warning" %}
 A full replacement (`partial=false`) replaces the entire product. The request body must include the complete product, including the current `metadata.version`.
@@ -1707,7 +1707,7 @@ To create a product with classification mixins, assign it first to a classificat
 {% step %}
 ### Assign your product to classification category
 
-Assign the product to a classification category using the [Assigning a resource to a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#post-category-tenant-categories-categoryid-assignments) endpoint:
+Assign the product to a classification category using the [Assigning a resource to a category](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#post-category-tenant-categories-categoryid-assignments) endpoint:
 
 ```bash
 curl -L \
@@ -1727,7 +1727,7 @@ curl -L \
 {% step %}
 ### Update product with classification mixin attributes
 
-Update the product with classification mixin attributes using the [Partially updating a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint. Use the `mixinPath` from the classification category's `classificationMixins` field:
+Update the product with classification mixin attributes using the [Partially updating a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint. Use the `mixinPath` from the classification category's `classificationMixins` field:
 
 {% hint style="info" %}
 Omitted mixin names remain on the product. You can send only the classification mixin that you want to change.
@@ -1769,7 +1769,7 @@ When updating a product with classification mixins, you don't need to provide th
 
 ### Product response with classification mixins
 
-To retrieve a product that is assigned to a classification category, send a request to the [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint. The response includes the `classificationMixins` field in the metadata:
+To retrieve a product that is assigned to a classification category, send a request to the [Retrieving a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint. The response includes the `classificationMixins` field in the metadata:
 
 ```bash
 curl -L \
