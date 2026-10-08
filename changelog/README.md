@@ -25,6 +25,28 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## Import Service - embedded child records in dry-run samples
+
+#### Overview
+
+A dry run's `dryRunSample` now shows embedded child records inside their parent records, as a real import writes them. A parent stream's sampled records include the records of its composite child streams, with `childStrategy` set to `EMBED` or `PATCH`, in the parent attribute named by the child stream's `embedAttribute`. Previously, this attribute was empty in the sample.
+
+Each stream is sampled separately, up to the `sampleSize` set in the run request. A sampled parent record shows only the child records that are also in the child stream's sample, so it can show fewer child records than the source contains for that parent, or none.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | The `dryRunSample` of a dry run includes child records inside their parent records. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-08" tags="new-feature" %}
 
 ## Search Service - search, indexes, and saved searches

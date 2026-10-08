@@ -7,11 +7,16 @@ info:
     streams; each stream extracts from a source connection, maps fields to an Emporix target type, and
     upserts idempotently. Imports run asynchronously and stream per-stream progress over Server-Sent Events.
 
-    This reference covers the operational surface available with the `importtool.import_trigger` scope:
-    triggering, scheduling, monitoring, and cancelling import runs, reading configurations, streams,
-    schedules, runs, and imported data, and reading the import analytics that summarise them.
-    Administrative operations (creating and changing configurations, connections, streams, and mappings)
-    require the `importtool.import_manage` scope.
+    The reference is in two halves, split by the scope each needs.
+
+    **Operating an import** requires `importtool.import_trigger`: triggering, scheduling, monitoring and
+    cancelling runs, reading configurations, streams, schedules, runs and imported data, and reading the
+    analytics that summarise them.
+
+    **Configuring one** requires `importtool.import_manage`, and is grouped under the sections marked
+    Administration: defining connections, and defining the field mappings that decide what each source
+    field becomes on the target. `importtool.import_manage` does not imply `importtool.import_trigger` —
+    a client that both configures and runs imports needs both.
   contact:
     name: Emporix
     url: https://emporix.com
@@ -31,6 +36,23 @@ tags:
     description: Read aggregated import statistics, health, and the settings behind them.
   - name: License
     description: Read the tenant's import limits.
+  - name: Configurations (Administration)
+    description: |
+      Change import configurations. **Scope:** these operations require `importtool.import_manage`, unlike
+      the read operations above.
+  - name: Connections (Administration)
+    description: |
+      Define where data is read from and how to authenticate against it. **Scope:**
+      `importtool.import_manage`.
+  - name: Purge (Administration)
+    description: |
+      Forget what an import loaded, and optionally delete what it wrote. **Scope:**
+      `importtool.import_manage`. These operations are irreversible — read the warnings on each before
+      using them.
+  - name: Mappings (Administration)
+    description: |
+      Define what each source field becomes on the Emporix target, and check it against real data before
+      running an import. **Scope:** `importtool.import_manage`.
 servers:
   - url: 'https://api.emporix.io'
 paths:
@@ -66,6 +88,37 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+    post:
+      summary: Creating an import configuration
+      description: |-
+        Creates an import configuration — the job that groups the streams executed together, in dependency order, under one run.
+
+      operationId: POST-importtool-create-config
+      tags:
+        - Configurations (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportConfig'
+      responses:
+        '200':
+          description: The request was successful. The configuration was created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportConfig'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
   '/importtool/{tenant}/configs/{id}':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -99,6 +152,64 @@ paths:
           $ref: '#/components/responses/NotFound_404'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+    put:
+      summary: Updating an import configuration
+      description: |-
+        Updates an import configuration. The streams it contains are edited through their own endpoints.
+
+      operationId: PUT-importtool-update-config
+      tags:
+        - Configurations (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportConfig'
+      responses:
+        '200':
+          description: The request was successful. The configuration was updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportConfig'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+    delete:
+      summary: Deleting an import configuration
+      description: |-
+        Deletes an import configuration together with its streams, mappings and schedule. The data already imported into the target is not removed; use the purge endpoints for that.
+
+      operationId: DELETE-importtool-delete-config
+      tags:
+        - Configurations (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '204':
+          description: The request was successful. The resource was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '409':
+          $ref: '#/components/responses/Conflict_409'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
   '/importtool/{tenant}/configs/{configId}/streams':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -132,6 +243,41 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+    post:
+      summary: Creating a stream
+      description: |-
+        Creates a stream within an import configuration. A stream names one source dataset, the target it writes to, and how the two are related.
+
+        A composite child names its parent by NAME, so the parent must already exist.
+
+      operationId: POST-importtool-create-stream
+      tags:
+        - Streams
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportStream'
+      responses:
+        '200':
+          description: The request was successful. The stream was created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportStream'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
   '/importtool/{tenant}/streams/{id}':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -165,6 +311,64 @@ paths:
           $ref: '#/components/responses/NotFound_404'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+    put:
+      summary: Updating a stream
+      description: |-
+        Updates a stream. Identity fields — the source key columns — may only be changed while the stream has imported nothing, because changing them re-keys every record it has already written.
+
+      operationId: PUT-importtool-update-stream
+      tags:
+        - Streams
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportStream'
+      responses:
+        '200':
+          description: The request was successful. The stream was updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportStream'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '409':
+          $ref: '#/components/responses/Conflict_409'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+    delete:
+      summary: Deleting a stream
+      description: |-
+        Deletes a stream and its mappings. Records it has already imported are left in the target.
+
+      operationId: DELETE-importtool-delete-stream
+      tags:
+        - Streams
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '204':
+          description: The request was successful. The resource was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
   '/importtool/{tenant}/configs/{configId}/schedule':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -1087,6 +1291,37 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+    post:
+      summary: Creating a job group
+      description: |-
+        Creates a job group — a label used to arrange import configurations on the dashboard. It has no effect on execution.
+
+      operationId: POST-importtool-create-job-group
+      tags:
+        - Configurations (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobGroup'
+      responses:
+        '200':
+          description: The request was successful. The job group was created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobGroup'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
   '/importtool/{tenant}/settings/health-thresholds':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -1123,6 +1358,37 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+    put:
+      summary: Updating the health thresholds
+      description: |-
+        Updates the tenant's failure-ratio thresholds, which decide when a run is reported as amber or red. Sending an empty body restores the service defaults.
+
+      operationId: PUT-importtool-update-health-thresholds
+      tags:
+        - Analytics
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HealthThresholds'
+      responses:
+        '200':
+          description: The request was successful. The effective thresholds are returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthSettings'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
   '/importtool/{tenant}/license':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -1194,8 +1460,2418 @@ paths:
           $ref: '#/components/responses/Conflict_409'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/connections':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    get:
+      summary: Retrieving all source connections
+      description: |-
+        Retrieves the source connections defined for the tenant. A connection holds where the data comes
+        from and how to authenticate; its credential is never returned.
+
+      operationId: GET-importtool-list-connections
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The connections are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SourceConnection'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+    post:
+      summary: Creating a source connection
+      description: |-
+        Creates a source connection. Supply the credential in `apiToken`: it is encrypted on write and never
+        returned by any read, which reports only `hasSecret`.
+
+      operationId: POST-importtool-create-connection
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourceConnection'
+      responses:
+        '201':
+          description: The connection was created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceConnection'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/connections/{id}':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    get:
+      summary: Retrieving a source connection
+      description: |-
+        Retrieves one source connection. The stored credential is not returned; `hasSecret` reports whether
+        one is held.
+
+      operationId: GET-importtool-get-connection
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The connection is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceConnection'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+    put:
+      summary: Updating a source connection
+      description: |-
+        Replaces a source connection. Omitting `apiToken` keeps the stored credential; sending one replaces it.
+
+      operationId: PUT-importtool-update-connection
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SourceConnection'
+      responses:
+        '200':
+          description: The connection was updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SourceConnection'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+    delete:
+      summary: Deleting a source connection
+      description: |-
+        Deletes a source connection. Streams still pointing at it will fail to extract.
+
+      operationId: DELETE-importtool-delete-connection
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '204':
+          description: The connection was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/connections/{id}/test':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    post:
+      summary: Testing a source connection
+      description: |-
+        Reaches the source with the stored credential and reports whether it answered. Use this after
+        creating a connection, rather than discovering the problem during an import run.
+
+        For an HTTP connection, the test calls the base URL, or the endpoint named in the connection's
+        optional `config.testPath` under it. An API root often proves nothing about the credential, so name an
+        endpoint that requires it, for example `/v1/account`. The result's `url` is the URL that was called.
+
+      operationId: POST-importtool-test-connection
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The test completed. The result reports whether the source was reachable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionTestResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/configs/{id}/clone':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    post:
+      summary: Cloning an import configuration
+      description: |-
+        Copies a configuration with its streams and their field mappings. The copy is created disabled and
+        with no run history.
+
+      operationId: POST-importtool-clone-config
+      tags:
+        - Configurations (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '201':
+          description: The configuration was cloned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportConfig'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+      - name: targetType
+        in: query
+        required: false
+        description: |-
+          For a stream that routes rows to several target types, the type whose mapping set to read or
+          replace. Omitted means the base set, which is used by the default type and as the fallback for
+          any routed type that has no set of its own.
+        schema:
+          type: string
+    get:
+      summary: Retrieving a stream field mappings
+      description: |-
+        Retrieves the field mappings of a stream: which source column becomes which target attribute, its
+        declared type, and any transformations applied on the way.
+
+      operationId: GET-importtool-get-mappings
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The mappings are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FieldMapping'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+    put:
+      summary: Replacing a stream field mappings
+      description: |-
+        Replaces the whole mapping set for the stream. The set is authoritative: any mapping not present is
+        removed. Every transformation is validated before anything is stored, so an invalid one rejects the
+        request rather than failing later during a run.
+
+      operationId: PUT-importtool-replace-mappings
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/FieldMapping'
+      responses:
+        '200':
+          description: The mappings were replaced. The stored set is returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FieldMapping'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/source-fields':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    get:
+      summary: Retrieving the available source fields
+      description: |-
+        Lists the fields the stream source provides, with an inferred type and a sample value. These are the
+        valid values for a mapping `sourcePath`. Nested structures are flattened to dotted paths, and an
+        array is offered both as a whole (`borders[]`) and, when it holds objects, by element field
+        (`currencies[].code`).
+
+        For an HTTP stream, the fields come from sampling the stream's own endpoint, plus the connection's spec
+        when it has one. Without `refresh`, if the sample fails, the endpoint returns the fields that are still
+        known — which can be none.
+
+      operationId: GET-importtool-source-fields
+      tags:
+        - Mappings (Administration)
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          description: How many records to sample when inferring the fields and their sample values.
+          schema:
+            type: integer
+            default: 10
+        - name: refresh
+          in: query
+          required: false
+          description: |-
+            If set to `true`, the stream's endpoint is sampled again now. For an HTTP stream, a failed sample then
+            returns `502` with the reason, rather than a shorter list. For other sources, and for an HTTP stream
+            that names a parent attribute in its request (`{parent.<attr>}`), which has no parent values to sample
+            with, a failed sample still returns the fields that are still known instead of an error.
+          schema:
+            type: boolean
+            default: false
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The source fields are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SourceField'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+        '502':
+          description: >-
+            With `refresh=true`, the stream's endpoint could not be sampled. The message names the reason, for
+            example the status the endpoint answered with.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+              examples:
+                Endpoint not found:
+                  value:
+                    code: 502
+                    status: Bad Gateway
+                    message: "Could not sample the stream's endpoint: HTTP 404 from https://api.example.com/v1/planets/"
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/target-fields':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+      - name: targetType
+        in: query
+        required: false
+        description: The routed target type whose attributes to list. Omitted means the stream default type.
+        schema:
+          type: string
+    get:
+      summary: Retrieving the target type attributes
+      description: |-
+        Lists the attributes the target type actually declares, across every mixin schema that contributes to
+        it, with the Emporix data type of each. These are the valid values for a mapping `targetPath`.
+
+      operationId: GET-importtool-target-fields
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The target attributes are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TargetField'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/sample-records':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+      - name: limit
+        in: query
+        required: false
+        description: How many records to return, from 1 to 50. A value outside that range is clamped to it.
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 10
+      - name: refresh
+        in: query
+        required: false
+        description: |-
+          Read fresh records from the source instead of what is already available. This performs a real,
+          bounded extraction, so it is slower and, for a source that charges for queries, not free. Use it
+          when no sample is available: a source that stages its data through an extraction may have had it
+          removed once the import completed.
+        schema:
+          type: boolean
+          default: false
+    get:
+      summary: Retrieving sample source records
+      description: |-
+        Returns whole records from the source, flattened exactly as the import reads them. Use them with the
+        preview operation to see what a mapping would write before running it.
+
+      operationId: GET-importtool-sample-records
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The sample records are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                description: Source records, one object per record, flattened as the import reads them.
+                items:
+                  type: object
+                  additionalProperties: true
+              examples:
+                Sample records:
+                  value:
+                    - id: 1
+                      title: sunt aut facere repellat provident occaecati excepturi optio reprehenderit
+                      body: quia et suscipit suscipit recusandae consequuntur expedita et cum
+                      userId: 1
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/preview':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+      - name: targetType
+        in: query
+        required: false
+        description: The routed target type whose mapping set to apply. Omitted means the base set.
+        schema:
+          type: string
+    post:
+      summary: Previewing what a mapping writes
+      description: |-
+        Runs the stream stored mappings over the supplied source records and returns what each would write —
+        the result of combining several columns, of every transformation in the chain, and of coercion to the
+        declared type. Nothing is written to the target.
+
+      operationId: POST-importtool-preview-mappings
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                additionalProperties: true
+      responses:
+        '200':
+          description: The request was successful. The mapped output is returned, one object per supplied record.
+          content:
+            application/json:
+              schema:
+                type: array
+                description: The target fields each supplied record maps to, in the order the records were sent.
+                items:
+                  type: object
+                  additionalProperties: true
+              examples:
+                Mapped output:
+                  value:
+                    - name: sunt aut facere repellat provident occaecati excepturi optio reprehenderit
+                      postId: 1
+                      title: sunt aut facere repellat provident occaecati excepturi optio reprehenderit
+                      body: quia et suscipit suscipit recusandae consequuntur expedita et cum
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/transforms':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    get:
+      summary: Retrieving the available transformations
+      description: |-
+        Lists every transformation a mapping can apply, with its syntax, what it does and an example. A
+        mapping applies these in the order given, each fed the output of the one before it.
+
+      operationId: GET-importtool-list-transforms
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The transformations are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransformInfo'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/target-entities':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    get:
+      summary: Retrieving the existing target types
+      description: |-
+        Lists the custom entity types that already exist on the tenant. These are the valid values for a
+        stream `targetType`. A type that does not exist yet is created by the first import that writes to it.
+
+      operationId: GET-importtool-list-target-entities
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The target types are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                description: The IDs of the tenant's custom entity types, sorted alphabetically.
+                items:
+                  type: string
+              examples:
+                Target types:
+                  value:
+                    - AP_VENDOR
+                    - JP_POST
+                    - JP_USER
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/purge':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+      - name: mode
+        in: query
+        required: false
+        description: |-
+          `LEDGER` forgets what the stream imported, so a later load rebuilds from scratch. `FULL` also
+          deletes the target instances the ledger knows about. `SWEEP` is not available for a stream: it
+          deletes every instance of a type, which for a stream's type may include data another stream owns.
+        schema:
+          type: string
+          enum:
+            - LEDGER
+            - FULL
+          default: LEDGER
+    post:
+      summary: Purging a stream imported data
+      description: |-
+        {% hint style="warning" %}
+        This is irreversible, and the ORDER of the two modes matters. `FULL` finds the instances to delete
+        through the import ledger, so anything the ledger has no row for cannot be reached. Running `LEDGER`
+        first therefore permanently forfeits the ability to `FULL`-purge those instances: they remain in the
+        target with nothing left that knows they came from an import.
+        {% endhint %}
+
+        Starts a background job that forgets what this stream imported. The response is the job; poll it to
+        follow progress. A purge is refused while a run is active for the configuration, and a run is refused
+        while a purge is live for it.
+
+      operationId: POST-importtool-purge-stream
+      tags:
+        - Purge (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '202':
+          description: The purge was accepted and is running. The job is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurgeJob'
+        '400':
+          description: The mode is not one this scope accepts.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+        '409':
+          $ref: '#/components/responses/Conflict_409'
+  '/importtool/{tenant}/purge':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - name: type
+        in: query
+        required: true
+        description: The target type to purge, tenant-wide.
+        schema:
+          type: string
+      - name: mode
+        in: query
+        required: false
+        description: |-
+          `LEDGER` forgets what was imported. `FULL` also deletes the instances the ledger knows about.
+          `SWEEP` deletes EVERY instance of the type, including ones no import created — the only mode that
+          can remove instances the ledger has lost track of.
+        schema:
+          type: string
+          enum:
+            - LEDGER
+            - FULL
+            - SWEEP
+          default: LEDGER
+    post:
+      summary: Purging a target type
+      description: |-
+        {% hint style="warning" %}
+        This is irreversible. `SWEEP` deletes every instance of the type regardless of where it came from,
+        including data no import created. `LEDGER` run before `FULL` permanently forfeits the ability to
+        `FULL`-purge, because `FULL` reaches instances through the ledger it just discarded.
+        {% endhint %}
+
+        Starts a background job over every record of the target type. The response is the job; poll it to
+        follow progress. A `FULL` purge also reports how many instances of the type the ledger has no row
+        for, rather than reporting a clean success while they survive.
+
+      operationId: POST-importtool-purge-type
+      tags:
+        - Purge (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '202':
+          description: The purge was accepted and is running. The job is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurgeJob'
+        '400':
+          description: The mode is not one of LEDGER, FULL or SWEEP.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+        '409':
+          $ref: '#/components/responses/Conflict_409'
+  '/importtool/{tenant}/purges':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - name: limit
+        in: query
+        required: false
+        description: How many jobs to return, most recent first.
+        schema:
+          type: integer
+          default: 20
+    get:
+      summary: Retrieving recent purges
+      description: |-
+        Retrieves recent purge jobs for the tenant, most recent first.
+
+      operationId: GET-importtool-list-purges
+      tags:
+        - Purge (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The purge jobs are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PurgeJob'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/purges/{id}':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    get:
+      summary: Retrieving a purge
+      description: |-
+        Retrieves one purge job: its counters, and the batch-by-batch log including any per-item delete
+        errors. A purge of millions of records takes many minutes, so poll this rather than waiting on the
+        request that started it.
+
+      operationId: GET-importtool-get-purge
+      tags:
+        - Purge (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The purge job is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurgeJob'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/purges/latest':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - name: streamId
+        in: query
+        required: false
+        description: The stream whose most recent purge to return.
+        schema:
+          type: string
+          format: uuid
+      - name: type
+        in: query
+        required: false
+        description: The target type whose most recent purge to return.
+        schema:
+          type: string
+    get:
+      summary: Retrieving the latest purge for a scope
+      description: |-
+        Retrieves the most recent purge job for a stream or a target type. Use it to re-attach to a purge
+        that is still running after leaving the page that started it.
+
+      operationId: GET-importtool-latest-purge
+      tags:
+        - Purge (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The purge job is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PurgeJob'
+        '204':
+          description: No purge has been run for that scope.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/mappings/export':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - name: configId
+        in: query
+        required: false
+        description: |-
+          The configuration to export. Repeat the parameter to export several; omit it to export every
+          configuration on the tenant.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+      - name: format
+        in: query
+        required: false
+        description: |-
+          `xlsx` documents a configuration for reading — an overview sheet plus one sheet per stream.
+          `postman` emits a collection that RECREATES the configuration on another tenant.
+        schema:
+          type: string
+          enum:
+            - xlsx
+            - postman
+          default: xlsx
+    get:
+      summary: Exporting field mappings
+      description: |-
+        Exports the field mappings of one or more configurations.
+
+        The `postman` collection creates each job and stream on the target tenant and captures the returned
+        identifiers, so it can be replayed against a different tenant. Connections are never exported —
+        they hold credentials — so the collection takes a `connectionId` variable to point at one that
+        already exists there.
+
+      operationId: GET-importtool-export-mappings
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The export is returned as a file.
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
+                format: binary
+            application/json:
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/dashboard/job-groups/{id}':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    put:
+      summary: Updating a job group
+      description: |-
+        Updates a job group's name or the configurations assigned to it.
+
+      operationId: PUT-importtool-update-job-group
+      tags:
+        - Configurations (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobGroup'
+      responses:
+        '200':
+          description: The request was successful. The job group was updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobGroup'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+    delete:
+      summary: Deleting a job group
+      description: |-
+        Deletes a job group. The import configurations it grouped are not affected.
+
+      operationId: DELETE-importtool-delete-job-group
+      tags:
+        - Configurations (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '204':
+          description: The request was successful. The resource was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/configs/dashboard':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    get:
+      summary: Retrieving the administration overview
+      description: |-
+        Retrieves one row per import configuration with its current status, last and next run, and error count — the administration overview of every job on the tenant.
+
+      operationId: GET-importtool-config-dashboard
+      tags:
+        - Configurations (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The overview rows are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConfigDashboardRow'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/configs/{configId}/mapping-states':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_configId'
+    get:
+      summary: Retrieving the mapping publish state of each stream
+      description: |-
+        Retrieves, for every stream in the configuration, whether its mappings are published and whether the draft has since moved ahead of what runs execute.
+
+      operationId: GET-importtool-mapping-states
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The states are returned, keyed by stream identifier.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/MappingPublishState'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/adapters':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    get:
+      summary: Retrieving the available source adapters
+      description: |-
+        Retrieves the source adapters this deployment provides, with the capabilities and configuration fields each one expects. A connection names one of these by its code.
+
+      operationId: GET-importtool-list-adapters
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The adapters are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AdapterDescriptor'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/target-writers':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    get:
+      summary: Retrieving the available target writers
+      description: |-
+        Retrieves the target writers this deployment provides — the destinations a stream can write to, such as Emporix custom entities.
+
+      operationId: GET-importtool-list-target-writers
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The target writers are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/transforms/validate':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    get:
+      summary: Validating a transformation expression
+      description: |-
+        Checks a transformation expression without saving it, reporting whether it parses and what it would produce.
+
+      operationId: GET-importtool-validate-transform
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      parameters:
+        - name: transform
+          in: query
+          required: false
+          description: The transformation expression to check.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request was successful. The validation outcome is returned.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Whether the expression is valid, and the reason when it is not.
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/connections/{id}/browse/{kind}':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+      - name: kind
+        in: path
+        required: true
+        description: The kind of object to list, as advertised by the adapter — for example `records` or `kpis`.
+        schema:
+          type: string
+    post:
+      summary: Browsing the objects a connection exposes
+      description: |-
+        Lists the objects available through a connection — the source records a stream can be built on, and any computed metrics the adapter exposes alongside them.
+
+      operationId: POST-importtool-browse-connection
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Adapter-specific parameters narrowing what is listed.
+              additionalProperties: true
+      responses:
+        '200':
+          description: The request was successful. The objects are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/connections/{id}/sample':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    post:
+      summary: Sampling a connection's base URL
+      description: |-
+        Samples the connection's base URL, or an optional `path` under it, and stores the inferred fields on the
+        connection. Nothing is imported.
+
+        The stored fields are not offered to streams: a base URL is often only the API root, so its fields
+        describe no stream. To find the fields of a stream's own endpoint, saved or not, use the
+        **Sampling a stream's endpoint** operation.
+
+      operationId: POST-importtool-sample-connection
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                path:
+                  type: string
+                  description: A path under the base URL to sample. If omitted, the base URL itself is sampled.
+            examples:
+              Sample a sub-path:
+                value:
+                  path: /people/
+      responses:
+        '200':
+          description: The request was successful. The inferred fields are returned and stored on the connection.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: How many fields were found.
+                  fields:
+                    type: array
+                    description: The fields found, each with the type inferred from its values.
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          description: The path to the field, dotted for nested structures.
+                        type:
+                          type: string
+                          description: The Emporix type the values look like.
+              examples:
+                Fields found:
+                  value:
+                    count: 2
+                    fields:
+                      - name: name
+                        type: TEXT
+                      - name: homeworld
+                        type: TEXT
+        '400':
+          description: >-
+            The sample failed. The message names the reason — for example a missing credential, an unreachable
+            host, or a path that does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+              examples:
+                Path not found:
+                  value:
+                    code: 400
+                    status: Bad Request
+                    message: 'Live sample failed: HTTP 404 from https://api.example.com/v1/people/'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/connections/{id}/sample-stream':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    post:
+      summary: Sampling a stream's endpoint
+      description: |-
+        Samples a stream definition against an HTTP connection: one request to the stream's own endpoint, with
+        its path, method, parameters, headers, body and records path. Returns the fields found there, each
+        with an inferred type and a sample value. Nothing is stored.
+
+        The stream does not have to exist yet, so use this to see a new stream's fields before saving it, or
+        to check a changed definition before saving the change. This is how an HTTP connection that is only an
+        API root gets its fields: each stream samples its own endpoint.
+
+      operationId: POST-importtool-sample-stream
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StreamSampleRequest'
+            examples:
+              Sample a REST endpoint:
+                value:
+                  sourceEntity: planet
+                  sourceDataset:
+                    path: /planets/
+                    method: GET
+                    recordsPath: ''
+      responses:
+        '200':
+          description: The request was successful. The fields found at the endpoint are returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamSample'
+              examples:
+                Fields found:
+                  value:
+                    records: 20
+                    fields:
+                      - name: name
+                        inferredType: TEXT
+                        sample: Tatooine
+                      - name: climate
+                        inferredType: TEXT
+                        sample: arid
+                      - name: population
+                        inferredType: TEXT
+                        sample: '200000'
+        '400':
+          description: >-
+            The sample failed, or the connection is not an HTTP connection. The message names the reason, for
+            example the status the endpoint answered with.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+              examples:
+                Endpoint not found:
+                  value:
+                    code: 400
+                    status: Bad Request
+                    message: 'Sample failed: HTTP 404 from https://api.example.com/v1/planets/'
+                Not an HTTP connection:
+                  value:
+                    code: 400
+                    status: Bad Request
+                    message: Sampling a stream's endpoint applies to HTTP connections only
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/connections/{id}/preview':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    post:
+      summary: Previewing a request through a connection
+      description: |-
+        Issues one request through a connection exactly as an import would, and returns what came back. Used to confirm paging, authentication and record paths before a stream is built.
+
+      operationId: POST-importtool-preview-connection
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              description: The request to issue — dataset, paging and parameters.
+              additionalProperties: true
+      responses:
+        '200':
+          description: The request was successful. The response is returned.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/connections/{id}/spec':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    post:
+      summary: Supplying an API specification for a connection
+      description: |-
+        Supplies the API description a connection should be read from — either uploaded directly as a file, or discovered from a URL. The returned summary reports the operations found.
+
+        Send the document as `multipart/form-data` to upload it, or as JSON to have it fetched.
+
+      operationId: POST-importtool-connection-spec
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The specification document.
+                format:
+                  type: string
+                  description: The document's format, when it cannot be inferred.
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              description: Where to fetch the specification from.
+      responses:
+        '200':
+          description: The request was successful. A summary of the specification is returned.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/schema-drift':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    post:
+      summary: Checking a stream for source schema drift
+      description: |-
+        Compares the source's current columns against the ones recorded when the stream was last checked, reporting what has been added or removed, which new columns are unmapped, and which mappings now point at columns that no longer exist. The baseline advances on each check.
+
+      operationId: POST-importtool-schema-drift
+      tags:
+        - Streams
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The drift report is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaDrift'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/hash-debug':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    get:
+      summary: Explaining why records are being rewritten
+      description: |-
+        Explains why a stream's records are not being skipped as unchanged. Change detection stores a hash of the source content together with a fingerprint of the mapping configuration; either moving causes a rewrite, and from the outside the two are indistinguishable. This reports the stored values against what the stream computes now, with a plain-words verdict.
+
+        Read-only, and deliberately reports no record content — only hashes, key names and the fingerprint inputs.
+
+      operationId: GET-importtool-hash-debug
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      parameters:
+        - name: naturalKey
+          in: query
+          required: false
+          description: Restricts the sample to one record's natural key.
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          description: How many ledger rows to sample.
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: The request was successful. The diagnosis is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HashDebug'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/generate':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    post:
+      summary: Generating mappings from the source and target
+      description: |-
+        Proposes mappings by matching the source's fields against the attributes the target type actually has. Only real target attributes are proposed, each with the type the target declares. Fields with no match are left unmapped rather than invented.
+
+        By default, the proposed mappings replace the stream's stored mapping set for the addressed target type and are returned. Stored mappings that the proposal does not include, such as manually created mappings, are removed. If `persist` is set to `false`, the proposal is returned without being stored and the stored set is unchanged. You can review the proposal, then save it with `PUT /importtool/{tenant}/streams/{streamId}/mappings` using the same `targetType`, or discard it.
+
+        If nothing can be proposed, nothing is stored and the response contains the mapping set that is already stored. This happens when no source field matches a target attribute, or when the source sample or the target attributes cannot be read.
+
+      operationId: POST-importtool-generate-mappings
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      parameters:
+        - name: targetType
+          in: query
+          required: false
+          description: The resolved target type whose mapping set is addressed. Omit for the base set.
+          schema:
+            type: string
+        - name: versions
+          in: query
+          required: false
+          description: The schema versions to validate against, as `SCHEMA:version` pairs.
+          schema:
+            type: string
+        - name: persist
+          in: query
+          required: false
+          description: |-
+            If set to `false`, the proposed mappings are returned without being stored. The stored mapping set is unchanged.
+            If omitted or set to `true`, the proposed mappings replace the stored mapping set for the addressed target type. If nothing can be proposed, the stored set is kept.
+          schema:
+            type: boolean
+            default: true
+      responses:
+        '200':
+          description: The request was successful. The proposed mappings are returned. Unless `persist` is `false`, they are also stored. If nothing can be proposed, the mapping set that is already stored is returned instead.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FieldMapping'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/suggest':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    post:
+      summary: Suggesting mappings with the AI agent
+      description: |-
+        Asks the Emporix AI agent to propose mappings for the supplied source fields. Opt-in, and used only from the mapping editor — imports never invoke it.
+
+      operationId: POST-importtool-suggest-mappings
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      parameters:
+        - name: targetType
+          in: query
+          required: false
+          description: The resolved target type whose mapping set is addressed. Omit for the base set.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: The source fields and target context to reason about.
+              additionalProperties: true
+      responses:
+        '200':
+          description: The request was successful. The suggested mappings are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FieldMapping'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/schema-versions':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    get:
+      summary: Retrieving the target schema versions a stream is pinned to
+      description: |-
+        Retrieves each mixin schema of the stream's target type with its current version and the version the mappings were authored against. An instance is validated against the version it was written under, so a stream pinned behind current is reported as stale.
+
+      operationId: GET-importtool-mapping-schema-versions
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      parameters:
+        - name: targetType
+          in: query
+          required: false
+          description: The resolved target type whose mapping set is addressed. Omit for the base set.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request was successful. The schema versions are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SchemaVersionState'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/publish-impact':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    get:
+      summary: Retrieving what publishing the draft would change
+      description: |-
+        Reports what publishing the current draft would do before it is done: whether a published version exists, whether the draft differs from it, and how many records the change would cause to be written again.
+
+        Mappings take part in change detection, so altering them makes unchanged source records re-push on the next run. This is how many.
+
+      operationId: GET-importtool-publish-impact
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The impact is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublishImpact'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/publish':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    post:
+      summary: Publishing a stream's mappings
+      description: |-
+        Publishes the draft as a new version and makes it the set that runs execute. A stream whose mappings have never been published is skipped by real runs, so a recreated configuration must be published before it will import anything.
+
+      operationId: POST-importtool-publish-mappings
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              description: An optional note recorded against the version.
+              additionalProperties: true
+      responses:
+        '200':
+          description: The request was successful. The published version is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MappingVersion'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '409':
+          $ref: '#/components/responses/Conflict_409'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/versions':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    get:
+      summary: Retrieving a stream's published mapping versions
+      description: |-
+        Retrieves the mapping versions published for the stream, newest first, with the one currently live marked active.
+
+      operationId: GET-importtool-list-mapping-versions
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The versions are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MappingVersion'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/versions/{version}':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+      - name: version
+        in: path
+        required: true
+        description: The published version number.
+        schema:
+          type: integer
+    get:
+      summary: Retrieving one published mapping version
+      description: |-
+        Retrieves a single published mapping version, including the mappings it contains and the target schema versions they were authored against.
+
+      operationId: GET-importtool-get-mapping-version
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The version is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MappingVersion'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+  '/importtool/{tenant}/streams/{streamId}/mappings/versions/{version}/restore':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+      - name: version
+        in: path
+        required: true
+        description: The published version number.
+        schema:
+          type: integer
+    post:
+      summary: Restoring a published mapping version into the draft
+      description: |-
+        Replaces the draft with the mappings of an earlier published version. The restored set becomes the draft — it does not become live until it is published.
+
+      operationId: POST-importtool-restore-mapping-version
+      tags:
+        - Mappings (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      responses:
+        '200':
+          description: The request was successful. The restored mappings are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FieldMapping'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
+
 components:
   schemas:
+    MappingPublishState:
+      type: string
+      description: |-
+        Where a stream's mapping draft stands relative to what real runs execute.
+        `NONE` — no mappings at all, so every extracted field is written as-is.
+        `UNPUBLISHED` — mappings exist but were never published, and a real run is refused.
+        `DRAFT_AHEAD` — a version is live and the draft has edits it does not contain.
+        `PUBLISHED` — the draft is what runs.
+      enum:
+        - NONE
+        - UNPUBLISHED
+        - DRAFT_AHEAD
+        - PUBLISHED
+      example: DRAFT_AHEAD
+
+    MappingVersion:
+      type: object
+      description: One published snapshot of a stream's mappings — the set a run executes.
+      properties:
+        id:
+          type: string
+          format: uuid
+        streamId:
+          type: string
+          format: uuid
+        version:
+          type: integer
+          description: The version number, increasing by one on each publish.
+          example: 4
+        mappings:
+          type: array
+          description: The mappings this version contains.
+          items:
+            $ref: '#/components/schemas/FieldMapping'
+        mappingSchemaVersions:
+          type: object
+          description: The target schema versions these mappings were authored against, keyed by schema identifier.
+          additionalProperties:
+            type: integer
+          example:
+            ZG_VENDOR: 26
+        active:
+          type: boolean
+          description: Whether this is the version runs currently execute.
+        publishedAt:
+          type: string
+          format: date-time
+        publishedBy:
+          type: string
+        adopted:
+          type: boolean
+          description: Whether the version was adopted from a pre-versioning draft rather than published deliberately.
+        note:
+          type: string
+          description: An optional note recorded when the version was published.
+
+    PublishImpact:
+      type: object
+      description: What publishing the current draft would change.
+      properties:
+        state:
+          $ref: '#/components/schemas/MappingPublishState'
+        hasPublishedVersion:
+          type: boolean
+        currentVersion:
+          type: integer
+          example: 4
+        draftDiffersFromPublished:
+          type: boolean
+        rePushCount:
+          type: integer
+          description: |-
+            How many already-imported records would be written again. Mappings take part in change
+            detection, so altering them makes unchanged source records re-push once.
+          example: 43342
+
+    SchemaVersionState:
+      type: object
+      description: One mixin schema of the target type, with the version the mappings are pinned to.
+      properties:
+        schemaId:
+          type: string
+          example: ZG_VENDOR
+        currentVersion:
+          type: integer
+          example: 26
+        pinnedVersion:
+          type: integer
+          nullable: true
+          description: The version the mappings were authored against, or null when they are not pinned.
+          example: 25
+        stale:
+          type: boolean
+          description: Whether the pinned version is behind the current one.
+
+    SchemaDrift:
+      type: object
+      description: How a stream's mappings stand against the source's current columns.
+      properties:
+        current:
+          type: array
+          description: The columns the source exposes now.
+          items:
+            type: string
+        added:
+          type: array
+          description: Columns present now that were not in the recorded baseline.
+          items:
+            type: string
+        removed:
+          type: array
+          description: Columns in the baseline that the source no longer exposes.
+          items:
+            type: string
+        unmappedNew:
+          type: array
+          description: Newly added columns that no mapping reads.
+          items:
+            type: string
+        danglingMappings:
+          type: array
+          description: Mappings whose source column no longer exists.
+          items:
+            type: string
+        baselineExisted:
+          type: boolean
+          description: Whether a baseline had been recorded before this check.
+        sourceAvailable:
+          type: boolean
+          description: Whether the source could be read. When false, nothing is compared.
+        checkedAt:
+          type: string
+          format: date-time
+
+    AdapterDescriptor:
+      type: object
+      description: A source adapter this deployment provides.
+      properties:
+        code:
+          type: string
+          description: The identifier a connection names.
+          example: http
+        name:
+          type: string
+          example: HTTP / REST API
+        capabilities:
+          type: object
+          description: What the adapter supports — for example whether it can fetch records by identifier.
+          additionalProperties: true
+        configFields:
+          type: array
+          description: The configuration fields a connection of this type expects.
+          items:
+            type: object
+            additionalProperties: true
+
+    ConfigDashboardRow:
+      type: object
+      description: One import configuration as it appears on the administration overview.
+      properties:
+        configId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        sourceType:
+          type: string
+          example: celonis
+        targets:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          description: The status of the most recent run.
+        lastRun:
+          type: string
+          format: date-time
+        nextRun:
+          type: string
+          format: date-time
+          nullable: true
+          description: When the schedule will next fire, or null when the job is not scheduled.
+        errorCount:
+          type: integer
+        enabled:
+          type: boolean
+        activeRunId:
+          type: string
+          format: uuid
+          nullable: true
+          description: The run currently executing, or null when none is.
+
+    HashDebug:
+      type: object
+      description: |-
+        Why a stream's records are being written again rather than skipped as unchanged. The stored hash
+        is the source content combined with a fingerprint of the mapping configuration; either half moving
+        defeats the skip.
+      properties:
+        streamId:
+          type: string
+          format: uuid
+        streamName:
+          type: string
+        targetEntity:
+          type: string
+          description: The target entities this stream can write under.
+        sourceEntity:
+          type: string
+          description: The source entity the sampled ledger rows are keyed by.
+        fingerprintNow:
+          type: string
+          description: The mapping fingerprint the stream's current configuration produces.
+        fingerprintByTargetType:
+          type: object
+          additionalProperties:
+            type: string
+        mappingCountByTargetType:
+          type: object
+          additionalProperties:
+            type: integer
+        mappingSchemaVersions:
+          type: object
+          additionalProperties:
+            type: integer
+        autoMap:
+          type: boolean
+        mappingCount:
+          type: integer
+        sampled:
+          type: integer
+          description: How many ledger rows were examined.
+        rowsWithStaleFingerprint:
+          type: integer
+          description: |-
+            How many sampled rows carry a different mapping fingerprint. When this equals the number
+            sampled, the cause is the configuration rather than the data.
+        verdict:
+          type: string
+          description: The reading in plain words, so the answer does not depend on interpreting counts.
+        rows:
+          type: array
+          description: The sampled ledger rows, with their stored hash split into its two halves.
+          items:
+            type: object
+            additionalProperties: true
+    PurgeJob:
+      type: object
+      description: |-
+        A background job that forgets what an import loaded, and optionally deletes what it wrote. Purging
+        millions of records takes many minutes, so the job reports progress as it goes and survives a
+        restart of the service that is running it.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier of the purge job.
+        scope:
+          type: string
+          enum:
+            - STREAM
+            - TYPE
+          description: Whether the purge covers one stream or a whole target type.
+        streamId:
+          type: string
+          format: uuid
+          description: The stream being purged, for a stream-scoped job.
+        targetType:
+          type: string
+          description: The target type being purged.
+        mode:
+          type: string
+          enum:
+            - LEDGER
+            - FULL
+            - SWEEP
+          description: |-
+            What the purge removes. `LEDGER` forgets the import record, so a later load rebuilds from
+            scratch and target-only data is preserved. `FULL` also deletes the instances the ledger knows
+            about. `SWEEP` deletes every instance of the type, including ones no import created.
+        status:
+          type: string
+          description: Where the job has got to — running, finished, or waiting to be resumed after a restart.
+        total:
+          type: integer
+          format: int64
+          description: How many records the purge has to work through, counted when it starts.
+        forgotten:
+          type: integer
+          description: |-
+            How many imported RECORDS have been forgotten. This counts entities, not the internal rows behind
+            them, so ten records read as ten.
+        deleted:
+          type: integer
+          description: How many target instances have been deleted, for `FULL` and `SWEEP`.
+        failed:
+          type: integer
+          description: How many could not be removed.
+        orphanedRemaining:
+          type: integer
+          description: |-
+            For a `FULL` purge, how many instances of the type the ledger has no row for and which therefore
+            survive. Reported rather than left silent, because the purge would otherwise finish successfully
+            with data still in place.
+        orphanedCapped:
+          type: boolean
+          description: Whether counting those stopped at a limit, so the number is a floor rather than a total.
+        incomplete:
+          type: boolean
+          description: Whether the purge finished without removing everything in its scope.
+        message:
+          type: string
+          description: A summary of the outcome, including why it is incomplete when it is.
+        log:
+          type: array
+          items:
+            type: string
+          description: The batch-by-batch progress log, including any per-item delete errors.
+        startedAt:
+          type: string
+          format: date-time
+          description: When the purge started.
+        finishedAt:
+          type: string
+          format: date-time
+          description: When it finished, if it has.
+
+    SourceConnection:
+      type: object
+      description: Where a stream reads from, and how to authenticate against it.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier of the connection. Assigned on creation.
+        name:
+          type: string
+          description: Human-readable name, shown when choosing a connection for a stream.
+        sourceType:
+          type: string
+          description: |-
+            The kind of source, which decides how the connection is read and which configuration it needs —
+            for example `http` for a REST or GraphQL API.
+        config:
+          type: object
+          additionalProperties: true
+          description: |-
+            Non-secret settings for the source type: the base URL, authentication mode, pagination, and any
+            discovered schema. What belongs here depends on `sourceType`.
+
+            For an `http` connection:
+            * `testPath` (optional) — the endpoint, under the base URL, that testing the connection calls.
+            * `schemaSourceKind` — where the API's fields come from. `SAMPLE` means the connection has no spec:
+              each stream samples its own endpoint, and a spec stored earlier is not offered to streams.
+        apiToken:
+          type: string
+          writeOnly: true
+          description: |-
+            Write-only. The credential for the source. It is encrypted on write and never returned by a read;
+            omitting it on update keeps the one already stored.
+        hasSecret:
+          type: boolean
+          readOnly: true
+          description: Whether a credential is stored for this connection. Read-only.
+        createdAt:
+          type: string
+          format: date-time
+          description: When the connection was created.
+
+    ConnectionTestResult:
+      type: object
+      description: The outcome of reaching a source with its stored credential.
+      additionalProperties: true
+      properties:
+        ok:
+          type: boolean
+          description: Whether the source answered.
+        status:
+          type: integer
+          description: The HTTP status the source answered with, for an HTTP connection.
+        url:
+          type: string
+          description: The URL that was called — the base URL, or the connection's test endpoint under it.
+        reason:
+          type: string
+          description: Why it did not, when it did not — an authentication failure, an unreachable host, a rejected path.
+
+    FieldMapping:
+      type: object
+      description: |-
+        One rule turning source data into one target attribute. In the simplest case it is one column onto
+        one attribute; it can also combine several columns and apply a chain of transformations.
+
+        A mapping set is a small language, and its documents outlive any one release: they are exported,
+        kept, moved between tenants and replayed later. The schema is therefore only ever EXTENDED — new
+        capability arrives as new optional fields, and no field is renamed, repurposed or made required. A
+        mapping written against an earlier version always loads, and a document carrying fields a service
+        does not yet know is accepted rather than rejected, so an export is not a one-way door between
+        environments on different releases. Should a breaking change ever become unavoidable it will be
+        selected with an `X-Version` header, and the newer version will still read every older document.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identifier of the mapping. Assigned on save.
+        streamId:
+          type: string
+          format: uuid
+          description: The stream this mapping belongs to.
+        targetType:
+          type: string
+          description: |-
+            For a stream that routes rows to several target types, the type this mapping applies to. Absent
+            means the base set, used by the default type and as the fallback for any routed type with no set
+            of its own.
+        sourcePath:
+          type: string
+          description: |-
+            The source field to read. For a stream whose source is a document, an array element field is
+            addressed as `currencies[].code`, and an array as a whole as `borders[]`.
+        sourcePaths:
+          type: array
+          items:
+            type: string
+          description: |-
+            Several source columns combined into this one attribute, in order. Absent means `sourcePath`
+            alone. A column with no value is skipped rather than joined, and a combination that finds nothing
+            writes nothing rather than an empty value.
+        combine:
+          type: string
+          enum:
+            - CONCAT
+            - COALESCE
+            - TEMPLATE
+          description: |-
+            How several columns become one value. `CONCAT` joins them with `combineSeparator`, `COALESCE`
+            takes the first that has a value, and `TEMPLATE` lays them out using `combineTemplate`. Absent
+            means `CONCAT`.
+        combineSeparator:
+          type: string
+          description: What to put between the columns for `CONCAT`. Absent means a single space; an empty string joins them with nothing.
+        combineTemplate:
+          type: string
+          description: |-
+            The layout for `TEMPLATE`, where `{1}` is the first source column, `{2}` the second, and so on —
+            for example `{1} ({2})`. Required when `combine` is `TEMPLATE`.
+        targetPath:
+          type: string
+          description: |-
+            The target attribute to write. An array element field is addressed as `currencies[].code`, which
+            builds one object per element of the source array.
+        targetSchema:
+          type: string
+          description: |-
+            The mixin schema that owns the target attribute, since a type is composed of several. Absent
+            writes the attribute under the type own mixin.
+        transform:
+          type: string
+          description: A single transformation to apply. Absent means the value is written as it was read.
+        transforms:
+          type: array
+          items:
+            type: string
+          description: |-
+            Transformations applied in order, each fed the output of the one before it. Absent means the
+            single `transform`. Retrieve the available transformations to see the syntax of each.
+        dataType:
+          type: string
+          description: |-
+            The Emporix type of the target attribute, which is authoritative: the source value is coerced to
+            it, and a value that cannot be represented is omitted rather than written in the wrong type.
+        required:
+          type: boolean
+          description: Whether a record missing this value should be reported as an error rather than imported without it.
+        isKey:
+          type: boolean
+          description: Whether this mapping supplies the natural key that identifies the record.
+        sortOrder:
+          type: integer
+          description: Position of the mapping in the set.
+        origin:
+          type: string
+          enum:
+            - MANUAL
+            - AI_SUGGESTED
+            - AI_ACCEPTED
+          description: How the mapping came to exist.
+
+    StreamSampleRequest:
+      type: object
+      description: A stream definition to sample, saved or not.
+      properties:
+        sourceEntity:
+          type: string
+          description: The logical name of what the stream imports. Optional; used only to label the sample.
+        sourceDataset:
+          type: object
+          additionalProperties: true
+          description: |-
+            The stream's source settings, as a stream stores them: `path`, `method`, `queryParams`, `headers`,
+            `bodyTemplate`, `recordsPath`, `format` and so on.
+      required:
+        - sourceDataset
+
+    StreamSample:
+      type: object
+      description: What sampling a stream's endpoint found.
+      properties:
+        records:
+          type: integer
+          description: |-
+            How many records the sample held. At most 20 records are read. `0` with no fields usually means the
+            records path is wrong.
+        fields:
+          type: array
+          description: The fields found, offered as values for a mapping `sourcePath`.
+          items:
+            $ref: '#/components/schemas/SourceField'
+
+    SourceField:
+      type: object
+      description: A field the source provides, offered as a value for a mapping `sourcePath`.
+      properties:
+        name:
+          type: string
+          description: The path to the field, dotted for nested structures.
+        inferredType:
+          type: string
+          description: The Emporix type the value looks like, as a starting point for the mapping declared type.
+        sample:
+          type: string
+          description: An example value, which is often what distinguishes two similarly named fields.
+
+    TargetField:
+      type: object
+      description: An attribute the target type declares, offered as a value for a mapping `targetPath`.
+      properties:
+        key:
+          type: string
+          description: The attribute key. An array of objects contributes its element fields as `currencies[].code`.
+        dataType:
+          type: string
+          description: The Emporix type the attribute is declared as.
+        schemaId:
+          type: string
+          description: The mixin schema that owns the attribute.
+        label:
+          type: string
+          description: The readable name of the attribute, where it has one.
+
+    TransformInfo:
+      type: object
+      description: A transformation a mapping can apply, and how to write it.
+      properties:
+        name:
+          type: string
+          description: The transformation name.
+        takesArg:
+          type: boolean
+          description: Whether it takes an argument after a colon.
+        syntax:
+          type: string
+          description: |-
+            How to write it. Where the argument is one of a fixed set, they are listed —
+            `case:capitalize|title|camel|pascal|snake|kebab`.
+        description:
+          type: string
+          description: What it does.
+        example:
+          type: string
+          description: A complete example, ready to use.
+
     errorMessage:
       title: Error
       description: Schema for specific API errors.
@@ -1483,7 +4159,13 @@ components:
           type: array
           description: >-
             Dry-run only. A sample of the mapped records that would be written, so the mapping can be
-            previewed without a real import. Absent on normal runs.
+            previewed without a real import. Absent on normal runs. Each stream is sampled separately, up
+            to the `sampleSize` set in the run request. A parent stream's records include the records of
+            its composite child streams, with `childStrategy` set to `EMBED` or `PATCH`, in the parent
+            attribute named by the child stream's `embedAttribute`, as a real import writes them. Only child
+            records inside the child stream's own sample are included, so a sampled parent record can show
+            fewer child records than the source contains for that parent, or none. Child records are also
+            sampled under their own stream.
           items:
             type: object
             properties:
@@ -2857,6 +5539,7 @@ components:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
             importtool.import_trigger: Needed to trigger, schedule, monitor, and cancel import runs and to read configurations, streams, schedules, runs, and imported data.
+            importtool.import_manage: Needed to configure imports, including defining and changing configurations, streams, connections, and field mappings, exporting mappings, checking schema drift, and purging imported data.
 security:
   - OAuth2:
       - importtool.import_trigger
