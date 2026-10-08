@@ -1483,7 +1483,13 @@ components:
           type: array
           description: >-
             Dry-run only. A sample of the mapped records that would be written, so the mapping can be
-            previewed without a real import. Absent on normal runs.
+            previewed without a real import. Absent on normal runs. Each stream is sampled separately, up
+            to `sampleSize` records. A parent stream's records include the records of its composite
+            children that use the `EMBED` child strategy, in the child's `embedAttribute` array, as a real
+            import writes them. Only the children inside the child stream's own sample are included, so a
+            sampled parent can show fewer children than it has, or none. Children that use the `PATCH`
+            child strategy are not included in the parent's records. Child records are also sampled under
+            their own stream.
           items:
             type: object
             properties:
