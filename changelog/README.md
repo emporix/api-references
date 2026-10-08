@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-10-08" tags="new-feature" %}
 
 ## Search Service - search, indexes, and saved searches
 
