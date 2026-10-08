@@ -35,7 +35,7 @@ layout:
 The service and this functionality are in preview mode - some of the features may not be fully operational yet.
 {% endhint %}
 
-The Search Service adds preview endpoints that search documents for a tenant, store a search and run it later with new text, and manage the indexes and jobs used by that search. Two read endpoints return every search index and every saved search for the tenant. Each item includes `type`. For now, only custom schema types are supported. Saving or deleting a saved search does not start an index build.
+The Search Service adds preview endpoints that search documents for a tenant, store a search and run it later with new text, and manage the indexes and jobs used by that search. Two read endpoints return a page of search indexes and a page of saved searches for the tenant. Each item includes `type`. For now, only custom schema types are supported. Saving or deleting a saved search does not start an index build.
 
 #### New endpoints
 
@@ -52,7 +52,7 @@ The Search Service adds preview endpoints that search documents for a tenant, st
 | [Retrieving all search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#get-search-tenant-search-indexes)      | Returns a page of search indexes for every custom schema type on the tenant.                                                                                             |
 | [Retrieving a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#get-search-tenant-search-type-indexes-id)  | Returns one index by its index id.                                                                                                                                       |
 | [Deleting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#delete-search-tenant-search-type-indexes-id) | Starts a job that removes one index.                                                                                                                                     |
-| [Retrieving index jobs](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/index-jobs#get-search-tenant-jobs)                            | Returns a page of index jobs. A job is removed 30 days after `metadata.createdAt`.                                                                                       |
+| [Retrieving index jobs](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/index-jobs#get-search-tenant-jobs)                            | Returns a page of index jobs.                                                                                       |
 | [Retrieving an index job](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/index-jobs#get-search-tenant-jobs-id)                       | Returns one index job.                                                                                                                                                   |
 
 #### Known problems
