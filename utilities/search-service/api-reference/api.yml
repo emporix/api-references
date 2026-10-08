@@ -152,6 +152,86 @@ paths:
                     code: 404
                     status: '404'
                     message: The search query with id='red-cars' has not been found on tenant='acme'.
+  '/search/{tenant}/search/queries':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    get:
+      summary: Retrieving all saved searches
+      operationId: GET-search-tenant-queries
+      tags:
+        - Saved Searches
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves the saved searches for every custom schema type on the tenant. Each item includes `type`.
+      security:
+        - OAuth2:
+            - search.search_read
+      parameters:
+        - $ref: '#/components/parameters/query_pageNumber'
+        - $ref: '#/components/parameters/query_pageSize'
+        - $ref: '#/components/parameters/query_sort_createdAt'
+        - $ref: '#/components/parameters/query_q'
+        - $ref: '#/components/parameters/query_fields_query'
+        - $ref: '#/components/parameters/header_Accept-Language'
+        - $ref: '#/components/parameters/header_X-Total-Count'
+      responses:
+        '200':
+          description: The request succeeded. The body is the current page of saved searches.
+          headers:
+            X-Total-Count:
+              description: Number of saved searches. Present only when the request `X-Total-Count` header is `true`.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SavedQuery'
+              examples:
+                Saved searches for a tenant:
+                  value:
+                    - id: red-cars
+                      type: vehicle
+                      name:
+                        en: Red cars
+                      description:
+                        en: Vehicles whose name contains red
+                      indexId: vehicles
+                      queries:
+                        type: TEXT
+                        query: red
+                        field: name.en
+                      metadata:
+                        version: 1
+                        createdAt: '2026-03-12T10:00:00.000Z'
+                        modifiedAt: '2026-03-12T10:00:00.000Z'
+                    - id: city-bikes
+                      type: bike
+                      name:
+                        en: City bikes
+                      description:
+                        en: Bikes whose name contains city
+                      indexId: bikes
+                      queries:
+                        type: TEXT
+                        query: city
+                        field: name.en
+                      metadata:
+                        version: 1
+                        createdAt: '2026-03-13T10:00:00.000Z'
+                        modifiedAt: '2026-03-13T10:00:00.000Z'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_search_read'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
   '/search/{tenant}/search/{type}/queries':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -434,6 +514,80 @@ paths:
                     code: 404
                     status: '404'
                     message: The search query with id='red-cars' has not been found on tenant='acme'.
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+  '/search/{tenant}/search/indexes':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+    get:
+      summary: Retrieving all search indexes
+      operationId: GET-search-tenant-indexes
+      tags:
+        - Search Indexes
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves the search indexes for every custom schema type on the tenant. Each item includes `type`.
+
+        When `sort` is omitted, indexes are ordered by `metadata.createdAt` descending. When the `X-Total-Count` request header is `true`, the response includes the `X-Total-Count` header with the number of indexes. The response body stays an array.
+      security:
+        - OAuth2:
+            - search.search_read
+      parameters:
+        - $ref: '#/components/parameters/query_pageNumber'
+        - $ref: '#/components/parameters/query_pageSize'
+        - $ref: '#/components/parameters/query_sort_createdAt'
+        - $ref: '#/components/parameters/query_q'
+        - $ref: '#/components/parameters/query_fields_index'
+        - $ref: '#/components/parameters/header_Accept-Language'
+        - $ref: '#/components/parameters/header_X-Total-Count'
+      responses:
+        '200':
+          description: The request succeeded. The body is the current page of indexes.
+          headers:
+            X-Total-Count:
+              description: Number of indexes. Present only when the request `X-Total-Count` header is `true`.
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SearchIndex'
+              examples:
+                Indexes for a tenant:
+                  value:
+                    - id: vehicles
+                      type: vehicle
+                      name:
+                        en: Vehicles
+                      description:
+                        en: Search vehicles by name and power
+                      status: ready
+                      metadata:
+                        version: 1
+                        createdAt: '2026-03-12T10:00:00.000Z'
+                        modifiedAt: '2026-03-12T10:00:00.000Z'
+                    - id: bikes
+                      type: bike
+                      name:
+                        en: Bikes
+                      description:
+                        en: Search bikes by name
+                      status: ready
+                      metadata:
+                        version: 1
+                        createdAt: '2026-03-13T10:00:00.000Z'
+                        modifiedAt: '2026-03-13T10:00:00.000Z'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_search_read'
         '500':
           $ref: '#/components/responses/500_resp_common'
   '/search/{tenant}/search/{type}/indexes':
@@ -733,8 +887,6 @@ paths:
         {% endhint %}
 
         Retrieves index jobs for the tenant.
-
-        A job is removed 30 days after `metadata.createdAt`. When `sort` is omitted, jobs are ordered by `metadata.createdAt` descending. When the `X-Total-Count` request header is `true`, the response includes the `X-Total-Count` header with the number of jobs. The response body stays an array.
       security:
         - OAuth2:
             - search.search_read
