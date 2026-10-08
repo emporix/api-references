@@ -23,13 +23,13 @@ Category tree endpoints now support filtering by category IDs. When the category
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving the category trees](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees) | Added `categoryIds` query parameter. |
+| [Retrieving the category trees](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees) | Added `categoryIds` query parameter. |
 
 ## New endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Searching for category trees](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#post-category-tenant-category-trees-search) | New endpoint for searching category trees, which accepts `categoryIds` in the request body. |
+| [Searching for category trees](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#post-category-tenant-category-trees-search) | New endpoint for searching category trees, which accepts `categoryIds` in the request body. |
 
 ## Known problems
 

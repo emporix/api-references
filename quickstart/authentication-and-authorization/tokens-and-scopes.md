@@ -37,7 +37,7 @@ The Service Access Token serves for backend operations and administrative tasks.
 
 * Purpose: A service access token is required to manage core Emporix services, granting the ability to perform actions such as adding new products, modifying prices, or managing categories.
 * Required credentials: Service access tokens are generated using relevant backend API credentials (such as a backend Client ID and Secret).
-* Endpoint: `POST /oauth/token` [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authentication/oauth-service/api-reference/service-access-token)
+* Endpoint: `POST /oauth/token` [Requesting a service access token](https://developer.emporix.io/api-documentation/api-guides/authentication/oauth-service/api-reference/service-access-token)
 
 {% hint style="info" %}
 Learn more about the Service Access Token in the [OAuth Service Tutorial](../../authentication/oauth-service/oauth.md).
@@ -68,7 +68,7 @@ The Anonymous Token is required on a storefront for guest customers browsing and
 
 * Purpose: The anonymous token contains the `session_id` which bears the information about an unauthenticated customer's session, including the viewed products or items placed to cart, so that when the customer chooses to log in or register, their recent operations are persisted.
 * Required credentials: The Storefront API `Client_ID` credential is required in the request.
-* Endpoint: `GET /customerlogin/auth/anonymous/login` [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-login).
+* Endpoint: `GET /customerlogin/auth/anonymous/login` [Requesting an anonymous token](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-login).
 
 ### Customer token 
 
@@ -76,7 +76,7 @@ The Customer Token contains encrypted data associated with a specific, authentic
 
 * Purpose: A customer token allows the user to perform personal storefront actions associated with their account, such as completing a checkout or viewing their own orders.
 * Required credentials: Customer tokens are generated using storefront credentials. When a guest shopper logs in using their email/password credentials or using SSO authentication, the system also requires an existing **anonymous token** to generate the customer token, ensuring that the user's guest shopping session (like their cart and preferences) is preserved after they authenticate. The customer token is associated with the same `session_id` as anonymous token.
-* Endpoint: `POST /customer/{tenant}/login` [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login). 
+* Endpoint: `POST /customer/{tenant}/login` [Logging in a customer](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login). 
 
   The response includes:
     * `accessToken` - authenticates a specific customer
@@ -114,14 +114,14 @@ For more information, see the API tutorials:
 
 The Saas Token is a token associated with an authenticated customer and is further required for triggering checkout operation. It is obtained together with the customer access token.
 
-* Endpoint: `POST /customer/{tenant}/login` [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login). 
+* Endpoint: `POST /customer/{tenant}/login` [Logging in a customer](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login). 
 
 ### Refresh token
 
 A Refresh Token is a specific type of access token in the Emporix API used to generate a new customer token without forcing the user to log in again. 
 
 * Purpose: A refresh token is used to maintain a seamless customer's session. Before the customer's session expires, requesting a refresh token can extend the session so that the customer remains authenticated. The refresh token is particularly useful in B2B environments as it can also update the customer's session with their legal entity selection during the session. See also [B2B Token](#b2b-token).
-* Endpoint: `GET /customer/{tenant}/refreshauthtoken` [Requesting a refresh token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken).
+* Endpoint: `GET /customer/{tenant}/refreshauthtoken` [Requesting a refresh token](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken).
 
 ### B2B token
 
@@ -130,7 +130,7 @@ In B2B scenarios, customers often represent multiple companies and can act on be
 This token-based approach guarantees a consistent user experience and centralized security enforcement while maintaining the required legal entity-based access control. Because the system updates the token securely in the background, the customer is not forced to log in again to access the relevant data and scopes for the new entity.
 
 * Purpose: The B2B token ensures that a B2B customer's access to company-related resources is properly determined in accordance to the defined customer's roles and permissions. Once the customer access token has been issued, and the customer wants to make a purchase on behalf of a specific entity, the customer access token has to be refreshed with the `legalEntityId` provided as a parameter.
-* Endpoint: `GET https://api.emporix.io/customer/{tenant}/refreshauthtoken` [Refreshing a customer token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken).
+* Endpoint: `GET https://api.emporix.io/customer/{tenant}/refreshauthtoken` [Refreshing a customer token](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken).
 
 The token-based approach to pass the `legalEntityId` parameter guarantees that the relevant services use that information to retrieve relevant data. The `legalEntityId` header is injected in the requests. 
 
@@ -388,7 +388,7 @@ The following flow describes how to enable a service-to-service integration to a
 {% step %}
 ### Create or upsert a custom entity type in Schema
 
-To create a custom entity type, call the [Creating a custom schema type](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-schema-type#post-schema-tenant-custom-entities) endpoint. 
+To create a custom entity type, call the [Creating a custom schema type](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-schema-type#post-schema-tenant-custom-entities) endpoint. 
 
 This step automatically creates the custom scopes - `custom.{lowerCaseType}_*`.
 
@@ -421,7 +421,7 @@ For step-by-step instructions, refer to the [Manage API Keys](https://app.gitboo
 {% step %}
 ### Request OAuth2 tokens and call Schema custom-instance APIs
 
-To request a service access token with the configured scopes, call the [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authentication/oauth-service/api-reference/service-access-token) endpoint, using the `Client_ID` and `Secret` of your custom API credentials.
+To request a service access token with the configured scopes, call the [Requesting a service access token](https://developer.emporix.io/api-documentation/api-guides/authentication/oauth-service/api-reference/service-access-token) endpoint, using the `Client_ID` and `Secret` of your custom API credentials.
 
 ```bash
 curl -i -X POST \
@@ -433,7 +433,7 @@ curl -i -X POST \
   --data-urlencode 'scope=custom.document_manage'
 ```
 
-Then call the [Creating a custom instance](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances) endpoint to validate that the configured scope is enforced end-to-end. A successful call confirms that the scope authorizes the operation, while `403 Forbidden` indicates that the scope is missing from the credentials or from the token request.
+Then call the [Creating a custom instance](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances) endpoint to validate that the configured scope is enforced end-to-end. A successful call confirms that the scope authorizes the operation, while `403 Forbidden` indicates that the scope is missing from the credentials or from the token request.
 
 ```bash
 curl -i -X POST \

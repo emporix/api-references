@@ -39,26 +39,50 @@ The Search Service adds preview endpoints that search documents for a tenant, st
 
 #### New endpoints
 
-| Endpoint                                                                                                                                                                            | Description                                                                                                                                                              |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Searching documents](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type)                          | Returns a page of matching documents. The request names an index and supplies queries, a filter, or both, or it sends `searchQueryId` and `query` to run a saved search. |
-| [Upserting a saved search](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/saved-searches#put-search-tenant-search-type-queries-id)   | Creates or replaces one saved search. A new saved search returns its id.                                                                                                 |
-| [Retrieving saved searches](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/saved-searches#get-search-tenant-search-type-queries)     | Returns a page of saved searches for one schema type.                                                                                                                    |
-| [Retrieving all saved searches](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/saved-searches#get-search-tenant-search-queries)      | Returns a page of saved searches for every custom schema type on the tenant.                                                                                             |
-| [Retrieving a saved search](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/saved-searches#get-search-tenant-search-type-queries-id)  | Returns one saved search by its id.                                                                                                                                      |
-| [Deleting a saved search](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/saved-searches#delete-search-tenant-search-type-queries-id) | Removes one saved search.                                                                                                                                                |
-| [Upserting a search index](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/search-indexes#put-search-tenant-search-type-indexes-id)   | Creates or updates one index for a schema type. A changed field definition starts a job.                                                                                 |
-| [Retrieving search indexes](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/search-indexes#get-search-tenant-search-type-indexes)     | Returns a page of indexes for one schema type.                                                                                                                           |
-| [Retrieving all search indexes](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/search-indexes#get-search-tenant-search-indexes)      | Returns a page of search indexes for every custom schema type on the tenant.                                                                                             |
-| [Retrieving a search index](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/search-indexes#get-search-tenant-search-type-indexes-id)  | Returns one index by its index id.                                                                                                                                       |
-| [Deleting a search index](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/search-indexes#delete-search-tenant-search-type-indexes-id) | Starts a job that removes one index.                                                                                                                                     |
-| [Retrieving index jobs](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/index-jobs#get-search-tenant-jobs)                            | Returns a page of index jobs. A job is removed 30 days after `metadata.createdAt`.                                                                                       |
-| [Retrieving an index job](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/index-jobs#get-search-tenant-jobs-id)                       | Returns one index job.                                                                                                                                                   |
+| Endpoint                                                                                                                                                                               | Description                                                                                                                                                              |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Searching documents](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type)                          | Returns a page of matching documents. The request names an index and supplies queries, a filter, or both, or it sends `searchQueryId` and `query` to run a saved search. |
+| [Upserting a saved search](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#put-search-tenant-search-type-queries-id)   | Creates or replaces one saved search. A new saved search returns its id.                                                                                                 |
+| [Retrieving saved searches](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#get-search-tenant-search-type-queries)     | Returns a page of saved searches for one schema type.                                                                                                                    |
+| [Retrieving all saved searches](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#get-search-tenant-search-queries)      | Returns a page of saved searches for every custom schema type on the tenant.                                                                                             |
+| [Retrieving a saved search](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#get-search-tenant-search-type-queries-id)  | Returns one saved search by its id.                                                                                                                                      |
+| [Deleting a saved search](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#delete-search-tenant-search-type-queries-id) | Removes one saved search.                                                                                                                                                |
+| [Upserting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#put-search-tenant-search-type-indexes-id)   | Creates or updates one index for a schema type. A changed field definition starts a job.                                                                                 |
+| [Retrieving search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#get-search-tenant-search-type-indexes)     | Returns a page of indexes for one schema type.                                                                                                                           |
+| [Retrieving all search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#get-search-tenant-search-indexes)      | Returns a page of search indexes for every custom schema type on the tenant.                                                                                             |
+| [Retrieving a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#get-search-tenant-search-type-indexes-id)  | Returns one index by its index id.                                                                                                                                       |
+| [Deleting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#delete-search-tenant-search-type-indexes-id) | Starts a job that removes one index.                                                                                                                                     |
+| [Retrieving index jobs](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/index-jobs#get-search-tenant-jobs)                            | Returns a page of index jobs. A job is removed 30 days after `metadata.createdAt`.                                                                                       |
+| [Retrieving an index job](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/index-jobs#get-search-tenant-jobs-id)                       | Returns one index job.                                                                                                                                                   |
 
 #### Known problems
 
 There are no known problems.
 
+{% endupdate %}
+
+{% update date="2026-10-06" tags="improvement" %}
+## AI Service - MS Teams and Slack native tool general availability
+
+#### Overview
+
+The MS Teams native tool type (`teams`) is generally available. Conversation listing and search operations for MS Teams collaboration are generally available. Slack `config.defaultInboundAgentId` and `config.allowedOperations` are generally available. Per-agent `nativeTools[].allowedOperations` overrides for MS Teams and Slack are generally available.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Listing conversations](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/conversation#get-ai-service-tenant-agentic-conversations) | Lists agent conversations created during MS Teams collaboration. The operation is generally available. |
+| [Searching conversations](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/conversation#post-ai-service-tenant-agentic-conversations-search) | Searches agent conversations created during MS Teams collaboration. The operation is generally available. |
+| [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Accepts the generally available `teams` native tool type. Slack `config.defaultInboundAgentId` and `config.allowedOperations` are generally available. |
+| [Listing tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools) | Responses can include generally available `teams` tools and Slack tools with `config.defaultInboundAgentId` and `config.allowedOperations`. |
+| [Retrieving tool by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Responses can return a generally available `teams` tool or a Slack tool with `config.defaultInboundAgentId` and `config.allowedOperations`. |
+| [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` overrides for MS Teams and Slack are generally available. |
+| [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | `nativeTools[].allowedOperations` overrides for MS Teams and Slack are generally available. |
+
+#### Known problems
+
+There are no known problems.
 {% endupdate %}
 
 {% update date="2026-09-30" tags="new-feature" %}
@@ -78,7 +102,7 @@ that cart.
 
 | Endpoint | Description |
 | --- | --- |
-| [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) | Runs up to 10 existing cart operations sequentially on one cart. Command types cover item, cart, and discount operations. The response is 207 with a `results` array. Duration is the sum of the chained commands. |
+| [Executing a chain of cart commands](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) | Runs up to 10 existing cart operations sequentially on one cart. Command types cover item, cart, and discount operations. The response is 207 with a `results` array. Duration is the sum of the chained commands. |
 
 #### Known problems
 
@@ -1637,7 +1661,7 @@ New and updated approvals store `legalEntity` on the document and are filtered b
 
 #### Behavior change (not backward compatible)
 
-When the `Legal-Entity-Id` request header is sent (injected for B2B customer tokens — see [B2B token and legal entity](https://developer.emporix.io/api-documentation/api-guides/quickstart/authentication-and-authorization/tokens-and-scopes#b2b-token)), the service:
+When the `Legal-Entity-Id` request header is sent (injected for B2B customer tokens — see [B2B token and legal entity](https://developer.emporix.io/api-documentation/quickstart/authentication-and-authorization/tokens-and-scopes#b2b-token)), the service:
 
 * **Creates** approvals for that legal entity only (requestor and approver contact assignments are resolved for the given entity).
 * **Returns** only approvals whose stored `legalEntity.id` matches the `legal-entity-id` from token.
@@ -1908,11 +1932,11 @@ The Approval Service supports quote checkout approvals alongside cart approvals.
 
 | Endpoint                                                                                                                                                       | Description                                                           |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| [Creating an approval](https://developer.emporix.io/api-references-1/readme/approval-api-reference/approvals#post-approval-tenant-approvals)                   | Supports `resourceType: QUOTE` with quote `resourceId`.               |
-| [Retrieving a list of approvals](https://developer.emporix.io/api-references-1/readme/approval-api-reference/approvals#get-approval-tenant-approvals)          | Response resource payloads align with updated item and price schemas. |
-| [Retrieving an approval](https://developer.emporix.io/api-references-1/readme/approval-api-reference/approvals#get-approval-tenant-approvals-approvalid)       | Response resource payloads align with updated item and price schemas. |
-| [Checking the resource approval](https://developer.emporix.io/api-references-1/readme/approval-api-reference/approval#post-approval-tenant-approval-permitted) | Request may use `resourceType: QUOTE` and a quote `resourceId`.       |
-| [Searching for approver users](https://developer.emporix.io/api-references-1/readme/approval-api-reference/search#post-approval-tenant-search-users)           | Request may use `resourceType: QUOTE` and a quote `resourceId`.       |
+| [Creating an approval](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#post-approval-tenant-approvals)                   | Supports `resourceType: QUOTE` with quote `resourceId`.               |
+| [Retrieving a list of approvals](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#get-approval-tenant-approvals)          | Response resource payloads align with updated item and price schemas. |
+| [Retrieving an approval](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#get-approval-tenant-approvals-approvalid)       | Response resource payloads align with updated item and price schemas. |
+| [Checking the resource approval](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/approval#post-approval-tenant-approval-permitted) | Request may use `resourceType: QUOTE` and a quote `resourceId`.       |
+| [Searching for approver users](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/search#post-approval-tenant-search-users)           | Request may use `resourceType: QUOTE` and a quote `resourceId`.       |
 
 #### Schema updates
 
@@ -1948,8 +1972,8 @@ All deprecations will be removed on 2026-11-30. Several fields in the approval r
 
 | Endpoint                                                                                                                                                 | Description                                                                            |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| [Retrieving a list of approvals](https://developer.emporix.io/api-references-1/readme/approval-api-reference/approvals#get-approval-tenant-approvals)    | Deprecated response fields in favor of new more comprehensive way to represent prices. |
-| [Retrieving an approval](https://developer.emporix.io/api-references-1/readme/approval-api-reference/approvals#get-approval-tenant-approvals-approvalid) | Deprecated response fields in favor of new more comprehensive way to represent prices. |
+| [Retrieving a list of approvals](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#get-approval-tenant-approvals)    | Deprecated response fields in favor of new more comprehensive way to represent prices. |
+| [Retrieving an approval](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#get-approval-tenant-approvals-approvalid) | Deprecated response fields in favor of new more comprehensive way to represent prices. |
 
 #### Known problems
 
@@ -2036,7 +2060,7 @@ The SEPA Export Service and all of its endpoints are no longer maintained and wi
 
 #### Deprecated endpoints
 
-All endpoints under the `/sepa-export/{tenant}/` base path are deprecated. For the full list of affected endpoints, refer to the [SEPA Export Service API Reference](https://developer.emporix.io/api-documentation/api-guides/orders/sepa-export/api-reference).
+All endpoints under the `/sepa-export/{tenant}/` base path are deprecated. The service has since reached End of Life; see [SEPA Export Service - removal of deprecated endpoints](https://developer.emporix.io/changelog/2026/readme#sepa-export-service-removal-of-deprecated-endpoints).
 
 #### Known problems
 
@@ -2048,7 +2072,7 @@ There are no known problems.
 
 #### Overview
 
-The [Pick-pack Service](https://developer.emporix.io/api-documentation/api-guides/orders/pick-pack) is now deprecated in its entirety. All endpoints exposed by the service are deprecated and the service is scheduled to be officially removed on **2026-08-24**.
+The Pick-pack Service is now deprecated in its entirety. All endpoints exposed by the service are deprecated and the service is scheduled to be officially removed on **2026-08-24**. The service has since reached End of Life; see [Pick-pack Service - removal of deprecated endpoints](https://developer.emporix.io/changelog/2026/readme#pick-pack-service-removal-of-deprecated-endpoints).
 
 {% hint style="warning" %}
 The Pick-pack Service and all of its endpoints are no longer maintained and will be officially removed on **2026-08-24**. Make sure to migrate any integrations that still rely on the service before that date.
@@ -2056,7 +2080,7 @@ The Pick-pack Service and all of its endpoints are no longer maintained and will
 
 #### Deprecated endpoints
 
-All endpoints under the `/pick-pack/{tenant}` base path are deprecated, including those used to manage pick-pack orders, order cycles, assignees, recalculations, and events. For the full list of affected endpoints, refer to the [Pick-pack Service API Reference](https://developer.emporix.io/api-documentation/api-guides/orders/pick-pack/api-reference).
+All endpoints under the `/pick-pack/{tenant}` base path are deprecated, including those used to manage pick-pack orders, order cycles, assignees, recalculations, and events. The service has since reached End of Life; see [Pick-pack Service - removal of deprecated endpoints](https://developer.emporix.io/changelog/2026/readme#pick-pack-service-removal-of-deprecated-endpoints).
 
 #### Known problems
 
@@ -2220,8 +2244,8 @@ The deprecated endpoints, properties, and query parameters listed above are no l
 | [Retrieving all access controls assigned to a group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups-groupid-access-controls)   | Property `restrictedTo` introduced. Property `domain` replaced with `domains`. Response properties `roleId` and `resourceId` are now deprecated. Query parameter `expand` is now deprecated.                               |
 | [Retrieving all access controls assigned to a user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-access-controls)       | Property `restrictedTo` introduced. Property `domain` replaced with `domains`. Response properties `roleId` and `resourceId` are now deprecated. Query parameter `expand` is now deprecated.                               |
 | [Retrieving all access controls assigned to a requested user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-me-access-controls) | Property `restrictedTo` introduced. Property `domain` replaced with `domains`. Response properties `roleId` and `resourceId` are now deprecated. Query parameter `expand` is now deprecated.                               |
-| [Retrieving all scopes](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/custom-scopes#get-iam-tenant-scopes)                                                 | Response now includes the read-only `predefined` flag. The endpoint now also returns predefined access control scopes in addition to user-created custom scopes.                                                           |
-| [Retrieving a scope](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/custom-scopes#get-iam-tenant-scopes-scopeid)                                            | Response now includes the read-only `predefined` flag. The endpoint now also returns predefined access control scopes in addition to user-created custom scopes.                                                           |
+| [Retrieving all scopes](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/scopes#get-iam-tenant-scopes)                                                 | Response now includes the read-only `predefined` flag. The endpoint now also returns predefined access control scopes in addition to user-created custom scopes.                                                           |
+| [Retrieving a scope](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/scopes#get-iam-tenant-scopes-scopeid)                                            | Response now includes the read-only `predefined` flag. The endpoint now also returns predefined access control scopes in addition to user-created custom scopes.                                                           |
 
 #### Deprecated endpoints
 
@@ -2505,8 +2529,8 @@ The Customer Service has been updated so that the `contactEmail` field can no lo
 
 | Endpoint                                                                                                                                                                            | Description                                                              |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| [Updating a customer profile (by customer)](https://developer.emporix.io/api-references-1/readme/api-reference-12/account-and-profile#patch-customer-tenant-me)                     | The `contactEmail` field can no longer be unset once a value is present. |
-| [Updating a customer profile (by tenant)](https://developer.emporix.io/api-references-1/readme/api-reference-11/account-and-profile#patch-customer-tenant-customers-customernumber) | The `contactEmail` field can no longer be unset once a value is present. |
+| [Updating a customer profile (by customer)](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/account-and-profile#patch-customer-tenant-me)                     | The `contactEmail` field can no longer be unset once a value is present. |
+| [Updating a customer profile (by tenant)](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#patch-customer-tenant-customers-customernumber) | The `contactEmail` field can no longer be unset once a value is present. |
 
 #### Known problems
 
@@ -2575,8 +2599,8 @@ The AI Service has been enhanced with new analytics capabilities for agents. New
 
 | Endpoint                                                                                                                                                                                                           | Description                                                                                                                             |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
-| [Retrieving agent analytics bundle for last four weeks](https://developer.emporix.io/api-references/artificial-intelligence/ai-service/api-reference/agent-analytics#get-ai-service-tenant-agentic-analytics)      | Returns a single bundle of analytics for dashboards including request and session aggregates, resolution efficiency, and weekly trends. |
-| [Retrieving per-agent execution counts by period](https://developer.emporix.io/api-references/artificial-intelligence/ai-service/api-reference/agent-analytics#get-ai-service-tenant-agentic-analytics-executions) | Returns execution counts per agent for each calendar period (quarter, month, or week).                                                  |
+| [Retrieving agent analytics bundle for last four weeks](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-analytics#get-ai-service-tenant-agentic-analytics)      | Returns a single bundle of analytics for dashboards including request and session aggregates, resolution efficiency, and weekly trends. |
+| [Retrieving per-agent execution counts by period](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-analytics#get-ai-service-tenant-agentic-analytics-executions) | Returns execution counts per agent for each calendar period (quarter, month, or week).                                                  |
 
 #### Known problems
 
@@ -2594,10 +2618,10 @@ The Session Context Service has been updated with a new `language` attribute in 
 
 | Endpoint                                                                                                                                                                       | Description                                                                |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
-| [Retrieving a session context](https://developer.emporix.io/api-references-1/readme/api-reference-34/session-management#get-session-context-tenant-context-sessionid)          | The response now includes the `language` attribute in the session context. |
-| [Retrieving own session context](https://developer.emporix.io/api-references-1/readme/api-reference-34/own-session-management#get-session-context-tenant-me-context)           | The response now includes the `language` attribute in the session context. |
-| [Partially updating own session context](https://developer.emporix.io/api-references-1/readme/api-reference-34/own-session-management#patch-session-context-tenant-me-context) | The `language` attribute is now accepted as an updatable field.            |
-| [Updating a session context](https://developer.emporix.io/api-references-1/readme/api-reference-34/session-management#put-session-context-tenant-context-sessionid)            | The `language` attribute is now accepted as an updatable field.            |
+| [Retrieving a session context](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/session-context/api-reference/session-management#get-session-context-tenant-context-sessionid)          | The response now includes the `language` attribute in the session context. |
+| [Retrieving own session context](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/session-context/api-reference/own-session-management#get-session-context-tenant-me-context)           | The response now includes the `language` attribute in the session context. |
+| [Partially updating own session context](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/session-context/api-reference/own-session-management#patch-session-context-tenant-me-context) | The `language` attribute is now accepted as an updatable field.            |
+| [Updating a session context](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/session-context/api-reference/session-management#put-session-context-tenant-context-sessionid)            | The `language` attribute is now accepted as an updatable field.            |
 
 #### Known problems
 
@@ -2615,7 +2639,7 @@ The Customer Service has been updated to support passing optional session attrib
 
 | Endpoint                                                                                                                                                                       | Description                                                                                                                               |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| [Requesting an anonymous token](https://developer.emporix.io/api-references-1/readme/api-reference-12/authentication-and-authorization#get-customerlogin-auth-anonymous-login) | New optional parameters, updating session context upon anonymous token acquisition: `currency`, `siteCode`, `language`, `targetLocation`. |
+| [Requesting an anonymous token](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-login) | New optional parameters, updating session context upon anonymous token acquisition: `currency`, `siteCode`, `language`, `targetLocation`. |
 
 #### Known problems
 
@@ -2773,7 +2797,7 @@ A new `AvailabilityClient` has been introduced, providing full access to the Ava
 
 #### Known problems
 
-We recommend to avoid creating new availabilities for the site `main`. More details in [API Reference](https://developer.emporix.io/api-references-1/readme/api-reference-2/availabilities#post-availability-tenant-availability-productid-site).
+We recommend to avoid creating new availabilities for the site `main`. More details in [API Reference](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site).
 {% endupdate %}
 
 {% update date="2026-04-02" tags="new-feature" %}
@@ -2787,9 +2811,9 @@ The Availability Service has been enhanced with bulk processing endpoints allowi
 
 | Endpoint                                                                                                                                                                                    | Description                                                              |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| [Creating multiple product availabilities](https://developer.emporix.io/api-references-1/readme/api-reference-2/availabilities#post-availability-tenant-availability-bulk)                  | Creates new product availabilities specified by product ID and site.     |
-| [Upserting multiple product availabilities](https://developer.emporix.io/api-references-1/readme/api-reference-2/availabilities#put-availability-tenant-availability-bulk)                  | Creates/updates product availabilities specified by product ID and site. |
-| [Deleting multiple availability information of a product](https://developer.emporix.io/api-references-1/readme/api-reference-2/availabilities#delete-availability-tenant-availability-bulk) | Deletes product availabilities specified by product ID and site.         |
+| [Creating multiple product availabilities](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-bulk)                  | Creates new product availabilities specified by product ID and site.     |
+| [Upserting multiple product availabilities](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#put-availability-tenant-availability-bulk)                  | Creates/updates product availabilities specified by product ID and site. |
+| [Deleting multiple availability information of a product](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#delete-availability-tenant-availability-bulk) | Deletes product availabilities specified by product ID and site.         |
 
 #### Known problems
 
@@ -2807,8 +2831,8 @@ IAM Service has been enhanced by exposing information about user's last login in
 
 | Endpoint                                                                                                                                                                 | Description                                             |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------- |
-| [Retrieving a list of users](https://developer.emporix.io/api-references-1/readme/api-reference-17/management-dashboard-users#get-iam-tenant-users)                      | The `lastLogin` field has been added the response body. |
-| [Retrieving a user of the `EMPLOYEE` type](https://developer.emporix.io/api-references-1/readme/api-reference-17/management-dashboard-users#get-iam-tenant-users-userid) | The `lastLogin` field has been added the response body. |
+| [Retrieving a list of users](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/management-dashboard-users#get-iam-tenant-users)                      | The `lastLogin` field has been added the response body. |
+| [Retrieving a user of the `EMPLOYEE` type](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/management-dashboard-users#get-iam-tenant-users-userid) | The `lastLogin` field has been added the response body. |
 
 #### Known problems
 
@@ -2892,7 +2916,7 @@ The Sequential ID Service has been enhanced with a new delete endpoint that allo
 
 | Endpoint                                                                                                                                                              | Description                                        |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| [Removing schema by ID](https://developer.emporix.io/api-references-1/readme/api-reference-33/sequential-ids-management#delete-sequential-id-tenant-schemas-schemaid) | New endpoint that allows for schema removal by ID. |
+| [Removing schema by ID](https://developer.emporix.io/api-documentation/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#delete-sequential-id-tenant-schemas-schemaid) | New endpoint that allows for schema removal by ID. |
 
 #### Known problems
 
@@ -2961,7 +2985,7 @@ The Customer Service exposes a new endpoint that provides the possibility to aut
 
 | Endpoint                                                                                                                                                                                                                                                    | Description                                                 |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| [Exchanging an external access token for an Emporix customer token](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/authentication-and-authorization#post-customer--tenant-exchangeauthtoken) | A new endpoint for token exchange authentication mechanism. |
+| [Exchanging an external access token for an Emporix customer token](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer--tenant-exchangeauthtoken) | A new endpoint for token exchange authentication mechanism. |
 
 #### Known problems
 

@@ -27,8 +27,8 @@ Category tree endpoints exclude trees in which the root category has `published=
 
 | Endpoint                                                                                                                                                                          | Description                                                                                              |
 |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
-| [Retrieving the category trees](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees)                  |When `showUnpublished=false` is set in the query parameters, trees with an unpublished root node are not returned.|
-| [Retrieving a specific category tree](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees-categoryid) | When `showUnpublished=false` is set in the query parameters, trees with an unpublished root node are not returned.|
+| [Retrieving the category trees](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees)                  |When `showUnpublished=false` is set in the query parameters, trees with an unpublished root node are not returned.|
+| [Retrieving a specific category tree](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees-categoryid) | When `showUnpublished=false` is set in the query parameters, trees with an unpublished root node are not returned.|
 
 ## Known problems
 

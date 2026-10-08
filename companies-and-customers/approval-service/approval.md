@@ -323,7 +323,7 @@ Only customers from the `B2B_REQUESTER` and `B2B_BUYER` groups can create an app
 
 An approval for a given resource can only be created by the resource owner — the customer who owns the cart or quote and does not have sufficient permissions to complete checkout. Approvals can be updated while their status is `PENDING`. Customers can manage only the approvals assigned to them.
 
-Scopes are granted automatically when a customer logs in, depending on their group. If a token needs to be generated based on an API key, use the Customer Service to get the token: [Customer Service – Customer Token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-validateauthtoken).
+Scopes are granted automatically when a customer logs in, depending on their group. If a token needs to be generated based on an API key, use the Customer Service to get the token: [Customer Service – Customer Token](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-validateauthtoken).
 
 #### Checkout-specific rules (cart and quote)
 
@@ -339,7 +339,7 @@ Cart checkout approval is the default B2B approval flow and does not require an 
 * The requestor must own an active cart with the items to purchase. On the storefront, the flow typically starts when checkout is blocked or when the integration creates an approval after a failed checkout attempt.
 * Creating an approval does not execute checkout or create an order. The cart remains available until checkout closes it.
 * After the approver approves, complete checkout through the [Checkout Service](../../checkout/checkout/) using the cart ID and the stored approval `details`.
-* To verify permissions before checkout, call [Checking the resource approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approval#post-approval-tenant-approval-permitted) with `resourceType: CART`, the cart `resourceId`, and `action: CHECKOUT`.
+* To verify permissions before checkout, call [Checking the resource approval](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/approval#post-approval-tenant-approval-permitted) with `resourceType: CART`, the cart `resourceId`, and `action: CHECKOUT`.
 
 {% hint style="warning" %}
 `approval.resource.totalPrice` is a cart summary. It includes the cart's shipping estimate or snapshot, when available. It does not include the selected `details.shipping.amount`. Do not treat it as the final checkout total. Shipping and tax are finalized during checkout and order creation.
@@ -360,7 +360,7 @@ You can check the approval rights with the Approval Service API.
 
 Perform the check during cart or quote checkout. If the user lacks the necessary rights, the approval flow can be triggered after checkout fails. This approach requires first distinguishing between B2B and B2C users to verify whether they belong to a B2B legal entity or group.
 
-To check for the eligible approvers from your company, use the dedicated [Search for the users eligible to act as approvers](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/search) endpoint.
+To check for the eligible approvers from your company, use the dedicated [Search for the users eligible to act as approvers](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/search) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -387,7 +387,7 @@ Depending on the use case, provide the `CART` or `QUOTE` resource details.
 
 To start the flow, create an approval.
 
-Send a request to the [Creating a single approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#post-approval-tenant-approvals) endpoint.
+Send a request to the [Creating a single approval](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#post-approval-tenant-approvals) endpoint.
 
 Only customers with the `B2B_REQUESTER` or `B2B_BUYER` roles can initiate the flow. They are the users with the `approval.approval_manage_own` scope.
 If a customer is in the `B2B_ADMIN` role, the create approval flow does not start.
@@ -502,7 +502,7 @@ After approval, trigger checkout from the quote through the Checkout Service. Se
 
 After creating the approval, items can be updated by the PATCH endpoint. Customers can change the status, details, delivery window and comment of the approval.
 
-To update an approval, send a request to the [Updating a single approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#patch-approval-tenant-approvals-approvalid) endpoint.
+To update an approval, send a request to the [Updating a single approval](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#patch-approval-tenant-approvals-approvalid) endpoint.
 
 {% hint style="info" %}
 For quote approvals (`resourceType: QUOTE`), the service manages resource data from the quote. Update status and comments rather than line items unless your integration explicitly supports patch operations on quote-backed approvals.
@@ -530,7 +530,7 @@ The response includes:
 * `legalEntity` — the company the approval belongs to (`id` is the legal entity identifier). It is set when the approval is created from the requestor's contact assignment for the active B2B legal entity.
 * `createdResource` — the resource created when the approval flow completes (`id` is that resource's identifier). For checkout approvals, `id` is typically the order ID (for example, `64ef8d12b6385140afea1603`). The field is omitted until the approved action produces a linked resource; other actions may reference invoices, contracts, or similar entities in the future.
 
-To retrieve an approval, send a request to the [Retrieving a single approval](https://developer.emporix.io/api-references/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#get-approval-tenant-approvals-approvalid) endpoint.
+To retrieve an approval, send a request to the [Retrieving a single approval](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/approval-service/approval-api-reference/approvals#get-approval-tenant-approvals-approvalid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

@@ -144,7 +144,7 @@ There are four default reasons that your customers and employees can select for 
 The quote reason of the `DECLINE` type can only be used for the `DECLINED` or `DECLINED_BY_MERCHANT` actions, while the `CHANGE` type can only be used for the `IN_PROGRESS` change of status.
 {% endhint %}
 
-If you need custom quote status change reasons, create them by sending a request to the [Creating a reason for changing the quote status](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-reason#post-quote-tenant-quote-reasons) endpoint.
+If you need custom quote status change reasons, create them by sending a request to the [Creating a reason for changing the quote status](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-reason#post-quote-tenant-quote-reasons) endpoint.
 
 ```bash
 curl -i -X POST \
@@ -181,7 +181,7 @@ The following merchant information is necessary for the pdf file with quote to b
 {% step %}
 #### Retrieve your site's mixins
 
-First, you need to check the current site mixin configuration for the `merchantInfo` parameter by sending a request to the [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
+First, you need to check the current site mixin configuration for the `merchantInfo` parameter by sending a request to the [Retrieving site mixins](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
 
 {% hint style="warning" %}
 The following scope is required:
@@ -199,7 +199,7 @@ curl -i -X GET \
 {% step %}
 #### Update merchant information
 
-Update the merchant information for your tenant's site by sending a request to the [Partially updating a site mixin](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#patch-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
+Update the merchant information for your tenant's site by sending a request to the [Partially updating a site mixin](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/mixins#patch-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
 
 {% hint style="warning" %}
 The following scope is required:
@@ -223,7 +223,7 @@ curl -i -X PATCH \
 
 There are four default reasons that your customers and employees can select for the `DECLINED` or `CHANGED` quote statuses, as mentioned in [Quote decision reasons](quote.md#quote-decision-reasons).
 
-You can create new quote status change reasons, by sending a request to the [Creating a reason for changing the quote status](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-reason#post-quote-tenant-quote-reasons) endpoint.
+You can create new quote status change reasons, by sending a request to the [Creating a reason for changing the quote status](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-reason#post-quote-tenant-quote-reasons) endpoint.
 
 ```bash
 curl -i -X POST \
@@ -263,7 +263,7 @@ A quote request can be created both by a customer directly on your business' sto
 
 ### Creating a quote by a customer
 
-On the storefront, a customer adds selected products to cart. At checkout, they can proceed to purchasing the items, or requesting a quote. If a customer places a quote request, the [Creating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) endpoint is called.
+On the storefront, a customer adds selected products to cart. At checkout, they can proceed to purchasing the items, or requesting a quote. If a customer places a quote request, the [Creating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) endpoint is called.
 
 {% hint style="warning" %}
 The following scope is granted to a customer group:
@@ -301,7 +301,7 @@ When a quote is created from a cart, the cart `status` is automatically changed 
 
 ### Creating a quote on behalf of a customer
 
-To create a quote request on behalf of a customer, send a request to the [Creating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) endpoint.
+To create a quote request on behalf of a customer, send a request to the [Creating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) endpoint.
 
 {% hint style="warning" %}
 The following scope is required:
@@ -376,7 +376,7 @@ There are two scenarios when an employee may need to update a quote:
 * A customer can contact your Customer Service so that an employee updates the quote request on their behalf
 * Employee updates the quote request with new information for the customer to review, such as price or status change
 
-To achieve that, the employee needs to send a request to the [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid) endpoint.
+To achieve that, the employee needs to send a request to the [Partially updating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid) endpoint.
 
 {% hint style="warning" %}
 The following scope is required:
@@ -499,7 +499,7 @@ curl -i -X PATCH \
 
 ### Accepting a quote by a customer
 
-When a customer accepts a quote on the storefront, or accepts a quote as an approver, the following endpoint is called: [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
+When a customer accepts a quote on the storefront, or accepts a quote as an approver, the following endpoint is called: [Partially updating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
 
 {% hint style="warning" %}
 The following scope is required:
@@ -525,7 +525,7 @@ curl -i -X PATCH \
 
 ### Declining a quote by a customer
 
-When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action. On the storefront, when a customer declines the quote, a request to the following endpoint is sent: [Partially updating a quote](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
+When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action. On the storefront, when a customer declines the quote, a request to the following endpoint is sent: [Partially updating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
 
 {% hint style="warning" %}
 The following scope is granted to the customer group:
@@ -643,7 +643,7 @@ PATCH operations support adding, replacing, and removing mixin values at all the
 
 ## Quote pdf generation
 
-To generate a quote pdf, send a request to the [Creating a quote PDF](https://developer.emporix.io/api-references/api-guides/quotes/quote/api-reference/quote-pdf) endpoint. The request does not require any body, you only need a tenant name and quote ID.
+To generate a quote pdf, send a request to the [Creating a quote PDF](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-pdf) endpoint. The request does not require any body, you only need a tenant name and quote ID.
 
 ```bash
 curl -L \
