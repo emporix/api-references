@@ -25,6 +25,42 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Search Service - search, indexes, and saved searches
+
+#### Overview
+
+{% hint style="danger" %}
+The service and this functionality are in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+The Search Service adds preview endpoints that search documents for a tenant, store a search and run it later with new text, and manage the indexes and jobs used by that search. Two read endpoints return a page of search indexes and a page of saved searches for the tenant. Each item includes `type`. For now, only custom schema types are supported. Saving or deleting a saved search does not start an index build.
+
+#### New endpoints
+
+| Endpoint                                                                                                                                                                               | Description                                                                                                                                                              |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Searching documents](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type)                          | Returns a page of matching documents. The request names an index and supplies queries, a filter, or both, or it sends `searchQueryId` and `query` to run a saved search. |
+| [Upserting a saved search](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#put-search-tenant-search-type-queries-id)   | Creates or replaces one saved search. A new saved search returns its id.                                                                                                 |
+| [Retrieving saved searches](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#get-search-tenant-search-type-queries)     | Returns a page of saved searches for one schema type.                                                                                                                    |
+| [Retrieving all saved searches](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#get-search-tenant-search-queries)      | Returns a page of saved searches for every custom schema type on the tenant.                                                                                             |
+| [Retrieving a saved search](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#get-search-tenant-search-type-queries-id)  | Returns one saved search by its id.                                                                                                                                      |
+| [Deleting a saved search](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#delete-search-tenant-search-type-queries-id) | Removes one saved search.                                                                                                                                                |
+| [Upserting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#put-search-tenant-search-type-indexes-id)   | Creates or updates one index for a schema type. A changed field definition starts a job.                                                                                 |
+| [Retrieving search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#get-search-tenant-search-type-indexes)     | Returns a page of indexes for one schema type.                                                                                                                           |
+| [Retrieving all search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#get-search-tenant-search-indexes)      | Returns a page of search indexes for every custom schema type on the tenant.                                                                                             |
+| [Retrieving a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#get-search-tenant-search-type-indexes-id)  | Returns one index by its index id.                                                                                                                                       |
+| [Deleting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#delete-search-tenant-search-type-indexes-id) | Starts a job that removes one index.                                                                                                                                     |
+| [Retrieving index jobs](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/index-jobs#get-search-tenant-jobs)                            | Returns a page of index jobs.                                                                                       |
+| [Retrieving an index job](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/index-jobs#get-search-tenant-jobs-id)                       | Returns one index job.                                                                                                                                                   |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-06" tags="improvement" %}
 ## AI Service - MS Teams and Slack native tool general availability
 
