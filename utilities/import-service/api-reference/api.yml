@@ -1881,9 +1881,11 @@ paths:
       - name: limit
         in: query
         required: false
-        description: How many records to return (1-50).
+        description: How many records to return, from 1 to 50. A value outside that range is clamped to it.
         schema:
           type: integer
+          minimum: 1
+          maximum: 50
           default: 10
       - name: refresh
         in: query
@@ -1911,6 +1913,21 @@ paths:
       responses:
         '200':
           description: The request was successful. The sample records are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                description: Source records, one object per record, flattened as the import reads them.
+                items:
+                  type: object
+                  additionalProperties: true
+              examples:
+                Sample records:
+                  value:
+                    - id: 1
+                      title: sunt aut facere repellat provident occaecati excepturi optio reprehenderit
+                      body: quia et suscipit suscipit recusandae consequuntur expedita et cum
+                      userId: 1
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -1955,6 +1972,21 @@ paths:
       responses:
         '200':
           description: The request was successful. The mapped output is returned, one object per supplied record.
+          content:
+            application/json:
+              schema:
+                type: array
+                description: The target fields each supplied record maps to, in the order the records were sent.
+                items:
+                  type: object
+                  additionalProperties: true
+              examples:
+                Mapped output:
+                  value:
+                    - name: sunt aut facere repellat provident occaecati excepturi optio reprehenderit
+                      postId: 1
+                      title: sunt aut facere repellat provident occaecati excepturi optio reprehenderit
+                      body: quia et suscipit suscipit recusandae consequuntur expedita et cum
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -2013,6 +2045,19 @@ paths:
       responses:
         '200':
           description: The request was successful. The target types are returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                description: The IDs of the tenant's custom entity types, sorted alphabetically.
+                items:
+                  type: string
+              examples:
+                Target types:
+                  value:
+                    - AP_VENDOR
+                    - JP_POST
+                    - JP_USER
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -3342,6 +3387,7 @@ components:
           example: 26
         pinnedVersion:
           type: integer
+          nullable: true
           description: The version the mappings were authored against, or null when they are not pinned.
           example: 25
         stale:
@@ -3434,6 +3480,7 @@ components:
         nextRun:
           type: string
           format: date-time
+          nullable: true
           description: When the schedule will next fire, or null when the job is not scheduled.
         errorCount:
           type: integer
@@ -3442,6 +3489,7 @@ components:
         activeRunId:
           type: string
           format: uuid
+          nullable: true
           description: The run currently executing, or null when none is.
 
     HashDebug:
@@ -3608,11 +3656,13 @@ components:
               each stream samples its own endpoint, and a spec stored earlier is not offered to streams.
         apiToken:
           type: string
+          writeOnly: true
           description: |-
             Write-only. The credential for the source. It is encrypted on write and never returned by a read;
             omitting it on update keeps the one already stored.
         hasSecret:
           type: boolean
+          readOnly: true
           description: Whether a credential is stored for this connection. Read-only.
         createdAt:
           type: string
