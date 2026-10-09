@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="deprecated" %}
+{% update date="2026-10-09" tags="deprecated" %}
 
 ## Quote Service - deprecated company fields
 
@@ -48,7 +48,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-10-09" tags="improvement" %}
 
 ## Quote Service - legal entity link on quotes
 
