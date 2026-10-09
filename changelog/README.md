@@ -25,6 +25,37 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature, improvement" %}
+
+## Search Service - index configuration export and import
+
+#### Overview
+
+{% hint style="danger" %}
+The service and this functionality are in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+The Search Service copies search index configuration from one tenant to another. Export returns one package for the selected indexes. The package carries the index configuration as base64 JSON and the time of the export. Import creates an index that does not exist yet and updates an index that already exists.
+
+#### New endpoints
+
+| Endpoint                                                                                                                                                                            | Description                                   |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
+| [Exporting search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/export-import#post-search-tenant-search-indexes-export) | Returns one package for the selected indexes. |
+| [Importing search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/export-import#post-search-tenant-search-indexes-import) | Creates or updates each index in the package. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Upserting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#put-search-tenant-search-type-indexes-id) | An update can omit `metadata.version`. A version sent in the request is the optimistic lock. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-08" tags="new-feature" %}
 
 ## Search Service - search, indexes, and saved searches
