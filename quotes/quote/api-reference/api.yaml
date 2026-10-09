@@ -22,7 +22,7 @@ paths:
       description: |-
         Retrieves quotes. The response includes either all quotes or a subset of quotes based on the assigned access token scopes.
 
-        When the request uses a B2B customer token, the response includes only quotes that are linked to the legal entity from the token or have no legal entity.
+        When the request uses a B2B customer token, the response includes only quotes that are linked to the legal entity from the token.
         ***
 
         ### **Additional scope information**
@@ -389,7 +389,7 @@ paths:
       description: |
         Generates a pdf for a given quote and returns its contents.
 
-        When the request uses a B2B customer token, the quote must be linked to the legal entity from the token or have no legal entity; otherwise, the request fails with the `404` status code.
+        When the request uses a B2B customer token, the quote must be linked to the legal entity from the token; otherwise, the request fails with the `404` status code.
       operationId: POST-quote-generate-quote-pdf
       parameters:
         - name: tenant
@@ -451,7 +451,7 @@ paths:
       description: |
         Retrieves changes related to a quote with a given ID.
 
-        When the request uses a B2B customer token, the quote must be linked to the legal entity from the token or have no legal entity; otherwise, the request fails with the `404` status code.
+        When the request uses a B2B customer token, the quote must be linked to the legal entity from the token; otherwise, the request fails with the `404` status code.
       operationId: GET-quote-retrieve-quote-history
       parameters:
         - name: tenant
@@ -615,7 +615,7 @@ paths:
       description: |
         Retrieves a quote by a given id.
 
-        When the request uses a B2B customer token, the quote must be linked to the legal entity from the token or have no legal entity; otherwise, the request fails with the `404` status code. When the approval process is enabled, a customer who is not the quote owner can retrieve the quote only if the approval service permits it for the legal entity from the token; otherwise, the request fails with the `403` status code.
+        When the request uses a B2B customer token, the quote must be linked to the legal entity from the token; otherwise, the request fails with the `404` status code. When the approval process is enabled, a customer who is not the quote owner can retrieve the quote only if the approval service permits it for the legal entity from the token; otherwise, the request fails with the `403` status code.
 
         ***
 
@@ -869,7 +869,7 @@ paths:
 
         The `/legalEntityId` path links the quote to a legal entity and fills the company name from it. The legal entity must be assigned to the quote billing address; otherwise, the request fails with the `400` status code. Removing `/legalEntityId` or `/companyName` clears both the company and `legalEntityId`, and changes the quote to B2C.
 
-        When the request uses a B2B customer token, the quote must be linked to the legal entity from the token or have no legal entity; otherwise, the request fails with the `404` status code. When the approval process is enabled, a customer who is not the quote owner can update the quote only if the approval service permits it for the legal entity from the token, and a quote can be accepted only after the approval check passes. Otherwise, the request fails with the `403` status code.
+        When the request uses a B2B customer token, the quote must be linked to the legal entity from the token; otherwise, the request fails with the `404` status code. When the approval process is enabled, a customer who is not the quote owner can update the quote only if the approval service permits it for the legal entity from the token, and a quote can be accepted only after the approval check passes. Otherwise, the request fails with the `403` status code.
 
         ***
 
@@ -1199,7 +1199,7 @@ paths:
       description: |-
         Deletes a quote with a given quote ID.
 
-        When the request uses a B2B customer token, only a quote that is linked to the legal entity from the token, or has no legal entity, can be deleted. A quote linked to another legal entity is not deleted.
+        When the request uses a B2B customer token, only a quote that is linked to the legal entity from the token can be deleted. A quote linked to another legal entity is not deleted.
       responses:
         '204':
           description: Quote has been deleted successfully.
