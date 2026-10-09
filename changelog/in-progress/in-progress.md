@@ -54,8 +54,8 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr></thead>
 <tbody>
   <tr>
-    <td class="tg-0pky">Coupon, Cart, and Order Services</td>
-    <td class="tg-0pky">Vendor-restricted coupons</td>
+    <td class="tg-0pky">B2B Commerce Frontend</td>
+    <td class="tg-0pky">Optimization of coupon and segment support</td>
   </tr>  
   <tr>
     <td class="tg-0pky">Schema Service</td>
@@ -67,7 +67,7 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr>
   <tr>
     <td class="tg-0pky">Customer Segments</td>
-    <td class="tg-0pky">Excluding single products</td>
+    <td class="tg-0pky">Group-aware customer segments</td>
   </tr>
   <tr>
     <td class="tg-0pky">Agentic</td>
