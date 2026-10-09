@@ -309,6 +309,10 @@ The following scope is required:
 `quote.quote_manage`
 {% endhint %}
 
+Use `legalEntityId` to link the quote to a company. The legal entity must be assigned to the `billingAddressId` of the quote, and the company name is filled in from it. The `companyName` field is deprecated.
+
+Requests made with a B2B customer token work only with quotes linked to the legal entity from that token, or with quotes that have no legal entity. Approval checks use the same legal entity.
+
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/quote/{tenant}/quotes' \
