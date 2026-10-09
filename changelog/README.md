@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature, improvement" %}
+{% update date="2026-10-09" tags="new-feature, improvement" %}
 
 ## Search Service - index configuration export and import
 
