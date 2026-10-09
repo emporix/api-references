@@ -25,6 +25,63 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="deprecated" %}
+
+## Quote Service - deprecated company fields
+
+#### Overview
+
+The `company` object and the create field `companyName` are deprecated. Use `legalEntityId` to identify the company linked to a quote. Responses now include `legalEntityId` when a quote is linked to a legal entity, and `company.name` remains in responses. The deprecated fields stay available for backward compatibility.
+
+#### Deprecated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) | `companyName` is deprecated. Send `legalEntityId` instead. |
+| [Partially updating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid) | `/companyName` is deprecated. Use `/legalEntityId` instead. |
+| [Retrieving quotes](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes) | The `company` object is deprecated. Use `legalEntityId`. |
+| [Retrieving a single quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid) | The `company` object is deprecated. Use `legalEntityId`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## Quote Service - legal entity link on quotes
+
+#### Overview
+
+Quotes now store `legalEntityId` at the root of the quote. This identifier is the source of truth for the company linked to a quote. The existing `company` object and the create field `companyName` stay available. `company.name` is still returned. It is the company name stored on the quote and can differ from the current legal-entity name.
+
+A quote created from a cart copies `cart.legalEntityId`. A quote created from a request accepts an optional `legalEntityId`. When that identifier is sent, it must exist and be assigned to the request billing address, and it is used instead of `companyName`. The company name is filled in from the legal entity. When only `companyName` is sent, the previous exact name check remains. If exactly one legal entity assigned to the billing address has that name, the quote is linked to it. If several legal entities share the name, the quote stores the name only.
+
+`PATCH` accepts `/legalEntityId`. The identifier must be assigned to the quote billing address. Replacing `/billingAddressId` on a quote that already has `legalEntityId` succeeds only when the new address is assigned to that legal entity. The `/companyName` path still replaces the company name. A unique assigned name also sets `legalEntityId`. A name that matches no assigned legal entity, or more than one, stays name-only and clears a previously stored `legalEntityId`. Removing `/companyName` or `/legalEntityId` clears both the company and `legalEntityId` and changes the quote to B2C. The billing address check is skipped when the same request also replaces `/legalEntityId` or `/companyName`.
+
+Checkout copies the quote `legalEntityId` onto the order created from that quote. `quote.created` and `quote.updated` event payloads include `legalEntityId`.
+
+Quote operations and approval checks also use the legal entity from the `legal-entity-id` request header, which is injected for B2B customer tokens. For details, see [B2B token and legal entity](https://developer.emporix.io/api-documentation/api-guides/quickstart/authentication-and-authorization/tokens-and-scopes#b2b-token). When the header is sent, the service handles only quotes that are linked to that legal entity. A quote linked to another legal entity is not returned in lists and is treated as not found by the other operations. When the approval process is enabled, a customer who does not own a quote can read or update it only when the approval service permits it for that legal entity. Accepting a quote requires the same approval check.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) | Requests can provide `legalEntityId`, and quotes created from carts copy the cart's `legalEntityId`. |
+| [Partially updating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid) | The `/legalEntityId` path changes the legal entity linked to a quote and fills the company name. With the `legal-entity-id` header, a quote linked to another legal entity returns `404`. Approval checks use the legal entity from the header. |
+| [Retrieving quotes](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes) | Responses include `legalEntityId`. With the `legal-entity-id` header, the list contains only quotes linked to that legal entity. Quotes in the `CREATING` status are no longer returned to customers who have only the `quote.quote_read_own` scope, and pagination of customer quotes is fixed. |
+| [Retrieving a single quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid) | Responses include `legalEntityId`. With the `legal-entity-id` header, a quote linked to another legal entity returns `404`. |
+| [Deleting a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#delete-quote-tenant-quotes-quoteid) | With the `legal-entity-id` header, a quote linked to another legal entity is not deleted. |
+| [Retrieving quote history](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-history#get-quote-tenant-quotes-quoteid-history) | With the `legal-entity-id` header, a quote linked to another legal entity returns `404`. |
+| [Creating a quote PDF](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-pdf#post-quote-tenant-quotes-quoteid-pdf) | With the `legal-entity-id` header, a quote linked to another legal entity returns `404`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-09" tags="new-feature, improvement" %}
 
 ## Search Service - index configuration export and import
