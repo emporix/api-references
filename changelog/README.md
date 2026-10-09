@@ -31,7 +31,7 @@ layout:
 
 #### Overview
 
-The `company` object and the create field `companyName` are deprecated. Use `legalEntityId` to identify the company linked to a quote. Existing quotes now contain `legalEntityId`, and `company.name` remains in responses. The deprecated fields stay available for backward compatibility.
+The `company` object and the create field `companyName` are deprecated. Use `legalEntityId` to identify the company linked to a quote. Responses now include `legalEntityId` when a quote is linked to a legal entity, and `company.name` remains in responses. The deprecated fields stay available for backward compatibility.
 
 #### Deprecated endpoints
 
