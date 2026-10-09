@@ -25,6 +25,30 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6634 -->
+
+## Cart Service - category-restricted coupon evaluation
+
+#### Overview
+
+Cart Service now optimizes category-restricted coupon and discount evaluation during cart calculation. The service prefetches category membership for distinct cart items once per calculation and reuses the result across discount filtering, which reduces repeated category lookups and improves calculation performance for carts with category-restricted discounts.
+
+This optimization applies to the non-Algolia category resolution path. Algolia-enabled tenants continue to use the existing per-item category lookup flow.
+
+#### Affected endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) | Category-restricted coupon and discount evaluation is optimized during cart recalculation, reducing repeated category lookups for eligible cart items. |
+| [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) | Cart calculation now reuses prefetched category membership when category-restricted discounts are applied, improving performance without changing the public response schema. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-09" tags="improvement" %}
 
 ## Import Service - embedded child records in dry-run samples
