@@ -67,7 +67,7 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr>
   <tr>
     <td class="tg-0pky">Segment Service</td>
-    <td class="tg-0pky">Item assignments support to INCLUDE and EXCLUDE</td>
+    <td class="tg-0pky">Item assignments support INCLUDE and EXCLUDE options</td>
   </tr>
   <tr>
     <td class="tg-0pky">Agentic</td>
