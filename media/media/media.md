@@ -25,7 +25,7 @@ You can also specify the access type of each asset:
 - `PRIVATE` – Stored on private storage and accessible through an authenticated download request or a temporary signed URL. Use this access type for internal documents, such as contracts or specification sheets.
 
 {% hint style="warning" %}
-The [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint supports two request formats, each creating a different asset type:
+The [Creating an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint supports two request formats, each creating a different asset type:
 
 - `application/json` – Creates a `LINK` asset. Provide a `url` to a file hosted externally; Emporix stores the reference, not the file itself.
 - `multipart/form-data` – Creates a `BLOB` asset. Upload the file binary; Emporix stores the asset (max 30 MB).
@@ -59,7 +59,7 @@ An upload session creates an asset with the `PENDING` status and returns short-l
 {% step %}
 #### Start the upload session
 
-Start an upload session by sending an `application/json` request to the [Starting an upload session](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets-upload-session) endpoint.
+Start an upload session by sending an `application/json` request to the [Starting an upload session](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#post-media-tenant-assets-upload-session) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -303,7 +303,7 @@ Follow the [Wait for the uploaded asset](#wait-for-the-uploaded-asset) procedure
 
 ### Wait for the uploaded asset
 
-Storage confirmation is asynchronous. After a successful storage upload, retrieve the asset with the [Retrieving an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid) endpoint and check whether `status` is `READY`. If the status is `PENDING`, completion is still in progress, although the response can already contain asset fields. Use a service OAuth2 token with the `media.asset_read` scope.
+Storage confirmation is asynchronous. After a successful storage upload, retrieve the asset with the [Retrieving an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid) endpoint and check whether `status` is `READY`. If the status is `PENDING`, completion is still in progress, although the response can already contain asset fields. Use a service OAuth2 token with the `media.asset_read` scope.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -362,7 +362,7 @@ Unused upload sessions expire after one hour by default. Cleanup removes an expi
 
 ## How to download assets directly from storage
 
-Use [Retrieving a download URL](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download-url) as the default method for downloading assets. Direct download is always faster than streaming the file through the Media API, because the client fetches the file from storage. Use a service OAuth2 token that has the `media.asset_read` scope. This endpoint is available regardless of whether direct upload is enabled.
+Use [Retrieving a download URL](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download-url) as the default method for downloading assets. Direct download is always faster than streaming the file through the Media API, because the client fetches the file from storage. Use a service OAuth2 token that has the `media.asset_read` scope. This endpoint is available regardless of whether direct upload is enabled.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -465,7 +465,7 @@ After association, you can manage the asset in the Management Dashboard from the
 
 ### Associate a public asset by link
 
-To add a linked asset for a category, or other resource, send an `application/json` request to the [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint with the `media.asset_manage` scope.
+To add a linked asset for a category, or other resource, send an `application/json` request to the [Creating an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint with the `media.asset_manage` scope.
 
 In this example, create a `PUBLIC` `LINK` asset and associate it with a category.
 
@@ -497,7 +497,7 @@ curl -L \
 
 ### Upload a public asset as a blob
 
-You can create a public asset for a category, or other resource, for example an image, by uploading the file and its metadata. Send a `multipart/form-data` request to the [Creating an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint with the `media.asset_manage` scope.
+You can create a public asset for a category, or other resource, for example an image, by uploading the file and its metadata. Send a `multipart/form-data` request to the [Creating an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#post-media-tenant-assets) endpoint with the `media.asset_manage` scope.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -518,7 +518,7 @@ curl -L \
 
 Private assets are intended for tenant-internal use and are not exposed on the storefront. Typical use cases include supplier contracts, technical specification sheets, or compliance documents that your employees need to access from the Management Dashboard or through the API.
 
-Create a private asset without `refIds`, or associate it with `AGENT` or a custom schema type in `refIds`. Private assets cannot be linked to predefined types such as `CATEGORY` or `PRODUCT`. After creation, retrieve the file through the [Downloading an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download) endpoint with the `media.asset_read` scope.
+Create a private asset without `refIds`, or associate it with `AGENT` or a custom schema type in `refIds`. Private assets cannot be linked to predefined types such as `CATEGORY` or `PRODUCT`. After creation, retrieve the file through the [Downloading an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download) endpoint with the `media.asset_read` scope.
 
 ### Upload an unassociated private asset
 
@@ -544,7 +544,7 @@ curl -L \
 If you model business objects with the [Schema Service](../../utilities/schema/schema.md), you can attach private files to a custom instance. Set `refIds.type` to your custom schema type ID (for example, `DOCUMENT`) and `refIds.id` to the custom instance ID.
 
 {% hint style="warning" %}
-Before you begin, create the custom schema type and instance through the Schema Service. For more information, see [Creating a Custom Schema Type](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-schema-type#post-schema-tenant-custom-entities) and [Creating a Custom Instance](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances).
+Before you begin, create the custom schema type and instance through the Schema Service. For more information, see [Creating a Custom Schema Type](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-schema-type#post-schema-tenant-custom-entities) and [Creating a Custom Instance](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances).
 {% endhint %}
 
 In this example, attach a signed agreement PDF to a `DOCUMENT` custom instance as a `PRIVATE` `BLOB` asset.
@@ -568,7 +568,7 @@ curl -L \
 
 By providing query values, you can retrieve assets that fulfil specific criteria.
 
-In this example, retrieve all assets that belong to a particular category by providing the category ID in the `q` parameter. Send a request to the [Retrieving all assets](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#get-media-tenant-assets) endpoint with the `media.asset_read` scope.
+In this example, retrieve all assets that belong to a particular category by providing the category ID in the `q` parameter. Send a request to the [Retrieving all assets](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#get-media-tenant-assets) endpoint with the `media.asset_read` scope.
 
 Provide the `q` parameter in the following format: `q=refIds.id:123e06ecf0452c2d6c0b81392`, where `123e06ecf0452c2d6c0b81392` is the category ID.
 
@@ -588,7 +588,7 @@ curl -L \
 
 ## How to clean up uploaded assets
 
-Delete assets that were created only for a temporary workflow by calling the [Deleting an asset](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#delete-media-tenant-assets-assetid) endpoint with the `media.asset_manage` scope.
+Delete assets that were created only for a temporary workflow by calling the [Deleting an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#delete-media-tenant-assets-assetid) endpoint with the `media.asset_manage` scope.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

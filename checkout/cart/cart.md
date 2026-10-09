@@ -35,7 +35,7 @@ This tutorial shows how to create and update carts, add items and custom attribu
 
 {% stepper %}
 {% step %}
-To create a new cart, send a request to the [Creating a new cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
+To create a new cart, send a request to the [Creating a new cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -66,7 +66,7 @@ curl -i -X POST
 
 ## How to add an item and retrieve the calculated cart in one request
 
-Use [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) to add an item and retrieve the calculated cart in one HTTP request. The existing two-call sequence of [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) then [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) still works. The cart id is the path parameter.
+Use [Executing a chain of cart commands](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) to add an item and retrieve the calculated cart in one HTTP request. The existing two-call sequence of [Adding a product to cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) then [Retrieving cart details by ID](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) still works. The cart id is the path parameter.
 
 {% hint style="warning" %}
 Request duration is the sum of the chained commands. Set client and API gateway timeouts to cover the full chain, especially when `GetCart` runs cart calculation.
@@ -353,7 +353,7 @@ Use `versioning=explicit` only when every participating write sends `resourceVer
 {% step %}
 #### Read `metadata.version` from the cart
 
-Call [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) to read `metadata.version`. Use that value as `options.resourceVersion` on the first participating write. You can also take it from a prior `GetCart`.
+Call [Retrieving cart details by ID](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) to read `metadata.version`. Use that value as `options.resourceVersion` on the first participating write. You can also take it from a prior `GetCart`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -376,7 +376,7 @@ curl -i -X GET \
 {% step %}
 #### Send the follow chain
 
-Send [Executing a chain of cart commands](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) with `versioning=follow`. Set `options.resourceVersion` on the first participating write to the `metadata.version` you read, and omit `resourceVersion` on later writes.
+Send [Executing a chain of cart commands](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) with `versioning=follow`. Set `options.resourceVersion` on the first participating write to the `metadata.version` you read, and omit `resourceVersion` on later writes.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -426,7 +426,7 @@ You can define custom attributes for a cart through `mixins`.
 {% step %}
 #### Define your custom attributes schema
 
-Create a schema that defines the custom cart fields by sending a request to the [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) endpoint.
+Create a schema that defines the custom cart fields by sending a request to the [Creating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -472,7 +472,7 @@ curl -i -X POST \
 {% step %}
 #### Retrieve the schema URL
 
-Retrieve the created schema to get the schema URL by calling the [Retrieving a schema](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-id) endpoint.
+Retrieve the created schema to get the schema URL by calling the [Retrieving a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-id) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -486,7 +486,7 @@ curl -i -X GET \
 {% step %}
 #### Update a cart with custom attributes
 
-To add custom attributes to a cart, send a request to the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
+To add custom attributes to a cart, send a request to the [Updating a cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
 ```bash
 curl -i -X PUT \
@@ -538,7 +538,7 @@ curl -i -X PUT \
 
 {% stepper %}
 {% step %}
-To merge an anonymous cart with a customer cart, send a request to the [Merging carts](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-merge) endpoint. Provide the customer cart's ID in the `cartId` path parameter and the anonymous cart's ID in the request body.
+To merge an anonymous cart with a customer cart, send a request to the [Merging carts](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts-cartid-merge) endpoint. Provide the customer cart's ID in the `cartId` path parameter and the anonymous cart's ID in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -582,7 +582,7 @@ The steps required for such a case are described in the [External Products, Pric
 
 {% stepper %}
 {% step %}
-Once external pricing is enabled, you can add a product that is available within Commerce Engine, but with an external price. Send the request to the [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint. Provide the customer cart's ID in the `cartId` path parameter.
+Once external pricing is enabled, you can add a product that is available within Commerce Engine, but with an external price. Send the request to the [Adding a product to cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint. Provide the customer cart's ID in the `cartId` path parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -683,7 +683,7 @@ You need to generate a dedicated scope that serves as the authorization token fo
 
 {% stepper %}
 {% step %}
-To add a custom fee to the cart, send the request to the [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint. Provide the customer cart's ID in the `cartId` path parameter. Custom fee can be configured both for EXTERNAL and INTERNAL products, the payload should include the `"itemType" : "EXTERNAL"` or `"itemType" : "INTERNAL"` parameter. If the parameter is not provided, then "INTERNAL" is taken as default.
+To add a custom fee to the cart, send the request to the [Adding a product to cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint. Provide the customer cart's ID in the `cartId` path parameter. Custom fee can be configured both for EXTERNAL and INTERNAL products, the payload should include the `"itemType" : "EXTERNAL"` or `"itemType" : "INTERNAL"` parameter. If the parameter is not provided, then "INTERNAL" is taken as default.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -733,7 +733,7 @@ To apply external discounts to a cart, you need the `cart.cart_manage_external_p
 
 {% stepper %}
 {% step %}
-To apply an external discount to a cart, use the `externalDiscounts` attribute when creating or updating a cart. Send a request to the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
+To apply an external discount to a cart, use the `externalDiscounts` attribute when creating or updating a cart. Send a request to the [Updating a cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -828,7 +828,7 @@ Externally calculated pricing and tax amounts for cart items require the `lineTa
 
 The attributes are only allowed when `itemType = EXTERNAL`. If these values are provided, they are stored and returned unchanged in cart responses.
 
-Payload example for [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items):
+Payload example for [Adding a product to cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items):
 
 ```bash
 {
@@ -895,7 +895,7 @@ When you use `linePrice` and `lineTax` in cart operations, the following rules a
 *   If the item’s **quantity is updated after an external** `linePrice` **was set**, the cart recalculates it internally (`calculated = INTERNAL`) and ignores the previous external value. To restore external pricing, a new `linePrice` must be provided that matches the new quantity.
 
     If the `linePrice` is provided, the quantity of the provided `linePrice` values has to much the quantity of items in the cart. Otherwise, the additional items are calculated internally.
-*   In [Retrieving all products added to a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#get-cart-tenant-carts-cartid-items) or [Retrieving a cart item](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#get-cart-tenant-carts-cartid-items-itemid), any externally provided `linePrice` and `lineTax` are returned unchanged.
+*   In [Retrieving all products added to a cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#get-cart-tenant-carts-cartid-items) or [Retrieving a cart item](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#get-cart-tenant-carts-cartid-items-itemid), any externally provided `linePrice` and `lineTax` are returned unchanged.
 
     A `quantity` field is included on `lineTax` in responses, reflecting the quantity used when the external tax was calculated.
 
@@ -2640,10 +2640,10 @@ The `shipToAddress` is determined in the following way:
 
 Cart Service then calls Shipping Service:
 
-* [Calculating the minimum shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) (`POST /shipping/{tenant}/{site}/quote/minimum`) when no delivery window is set
-* [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) (`POST /shipping/{tenant}/{site}/quote/slot`) when the cart has a delivery window and a slot
+* [Calculating the minimum shipping cost](https://developer.emporix.io/api-documentation/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) (`POST /shipping/{tenant}/{site}/quote/minimum`) when no delivery window is set
+* [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-documentation/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) (`POST /shipping/{tenant}/{site}/quote/slot`) when the cart has a delivery window and a slot
 
-When no delivery window is set, Cart Service sends a request to the [Calculating the minimum shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) endpoint.
+When no delivery window is set, Cart Service sends a request to the [Calculating the minimum shipping cost](https://developer.emporix.io/api-documentation/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-minimum) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -2688,8 +2688,8 @@ The storefront does not call Shipping Service for the cart preview. Cart Service
 
 The storefront calls these public Cart APIs:
 
-* [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) (`GET /cart/{tenant}/carts/{cartId}`)
-* [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) (`PUT /cart/{tenant}/carts/{cartId}`)
+* [Retrieving cart details by ID](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) (`GET /cart/{tenant}/carts/{cartId}`)
+* [Updating a cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) (`PUT /cart/{tenant}/carts/{cartId}`)
 
 {% hint style="warning" %}
 Do not write `methodId`, `zoneId`, or a shipping amount to the cart. The cart model has no field for shipping method selection. Send the selected method and zone in the checkout request `shipping` object. See [Checkout Tutorial](../../checkout/checkout/checkout.md).
@@ -2699,13 +2699,13 @@ Do not write `methodId`, `zoneId`, or a shipping amount to the cart. The cart mo
 
 Use these steps when you want a slot-specific shipping estimate on the cart. The storefront retrieves available delivery windows, puts one on the cart, and then retrieves the cart to see the updated estimate. Setting a delivery window does not mean the customer selected a shipping method.
 
-After you update the cart with a window and slot, Cart Service calls [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot). The storefront does not send that request.
+After you update the cart with a window and slot, Cart Service calls [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-documentation/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot). The storefront does not send that request.
 
 {% stepper %}
 {% step %}
 #### Retrieve available delivery windows
 
-Fetch available delivery windows for a cart by calling the [Retrieving delivery windows by cart](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/delivery-windows#get-shipping-tenant-actualdeliverywindows-cartid) endpoint.
+Fetch available delivery windows for a cart by calling the [Retrieving delivery windows by cart](https://developer.emporix.io/api-documentation/api-guides/delivery-and-shipping/shipping-1/api-reference/delivery-windows#get-shipping-tenant-actualdeliverywindows-cartid) endpoint.
 
 {% hint style="warning" %}
 Make sure the shipping zone is properly stored in the delivery times object.
@@ -2724,7 +2724,7 @@ curl -L \
 {% step %}
 #### Update the cart with destination and delivery window
 
-Pick the delivery window you want to use and update the cart by calling the [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
+Pick the delivery window you want to use and update the cart by calling the [Updating a cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -2749,7 +2749,7 @@ curl -L \
 {% step %}
 #### Verify the shipping estimate
 
-Verify the results by retrieving the cart. Call the [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) endpoint.
+Verify the results by retrieving the cart. Call the [Retrieving cart details by ID](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -2775,7 +2775,7 @@ As a result, the cart response includes the shipping estimate:
 }
 ```
 
-Cart Service obtained that amount by sending a request like this to the [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) endpoint:
+Cart Service obtained that amount by sending a request like this to the [Calculating the shipping cost for a given slot](https://developer.emporix.io/api-documentation/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote-slot) endpoint:
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -2806,7 +2806,7 @@ curl -L \
 
 ### At checkout: final shipping quote
 
-When the customer is ready to order, they choose a shipping method. The storefront calls [Calculating the final shipping cost](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote) (`POST /shipping/{tenant}/{site}/quote`) to list methods and fees for the checkout address.
+When the customer is ready to order, they choose a shipping method. The storefront calls [Calculating the final shipping cost](https://developer.emporix.io/api-documentation/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote) (`POST /shipping/{tenant}/{site}/quote`) to list methods and fees for the checkout address.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -2951,7 +2951,7 @@ For some cases, you might need to calculate and charge additional fees, for exam
 
 To achieve the communication between Commerce Engine and the fee management tool, you have to configure both systems accordingly. The steps required for such a case are described in the [External Products, Pricing and Fees](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/external-pricing-and-products) documentation. You need to generate a dedicated scope that serves as the authorization token for the API calls.
 
-To add a custom fee to the cart, send the request to the endpoint. Provide the customer cart's ID in the cartId path parameter. The payload has to include the "itemType" : "EXTERNAL" parameter - see the [Adding a product to a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) documentation.
+To add a custom fee to the cart, send the request to the endpoint. Provide the customer cart's ID in the cartId path parameter. The payload has to include the "itemType" : "EXTERNAL" parameter - see the [Adding a product to a cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) documentation.
 
 ## How to apply separation of the same line items in the cart
 
@@ -3069,7 +3069,7 @@ item1: productA, internal, priceY, qty:1, keepAsSeparateLineItem=true
 ```
 
 {% hint style="warning" %}
-When the cart item validation is not executed on `add to cart`, you can use the [cart validation](https://developer.emporix.io/api-references/api-guides/~/revisions/yWwHvejmTq395ReuRRIQ/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid-validate) endpoint. It should return errors informing that the prices are duplicated.
+When the cart item validation is not executed on `add to cart`, you can use the [cart validation](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid-validate) endpoint. It should return errors informing that the prices are duplicated.
 
 EXTERNAL pricing products can have different prices in the cart, INTERNAL pricing products can't.
 {% endhint %}

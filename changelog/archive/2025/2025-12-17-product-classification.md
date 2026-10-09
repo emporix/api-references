@@ -47,9 +47,9 @@ All product retrieval endpoints now include the `classificationMixins` field in 
 
 | Endpoint | Description |
 |----------|-------------|
-| [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-resources#get-product-tenant-products-productid) | Response now includes `classificationMixins` in the metadata for products assigned to classification categories. |
-| [Retrieving all products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-resources#get-product-tenant-products) | Response now includes `classificationMixins` in the metadata for products assigned to classification categories. |
-| [Searching for products](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/product-resources#post-product-search-products) | Response now includes `classificationMixins` in the metadata for products assigned to classification categories. |
+| [Retrieving a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) | Response now includes `classificationMixins` in the metadata for products assigned to classification categories. |
+| [Retrieving all products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products) | Response now includes `classificationMixins` in the metadata for products assigned to classification categories. |
+| [Searching for products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-search-products) | Response now includes `classificationMixins` in the metadata for products assigned to classification categories. |
 
 ## Known problems
 

@@ -93,7 +93,7 @@ Make sure you created a product. For more information, check out [How to add you
 We recommend not to create a new product availability for a `main` sitecode. A site named `main` works as an aggregator of availability data from other sites. It's not possible to later retrieve availability for a single site when it's called `main`. Use a different sitecode for creating product availabilities.
 {% endhint %}
 
-To add availability-related information for a specific product, you need to send a request to the [Creating a new availability for a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site) endpoint.
+To add availability-related information for a specific product, you need to send a request to the [Creating a new availability for a product](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -130,8 +130,8 @@ You can also manage multiple availabilities for a product at once. A single prod
 
 To create or update multiple product availabilities at once, send a request to one of the following endpoints:
 
-- [Creating multiple product availabilities](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-bulk)
-- [Upserting multiple availabilities information of a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#put-availability-tenant-availability-bulk)
+- [Creating multiple product availabilities](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-bulk)
+- [Upserting multiple availabilities information of a product](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#put-availability-tenant-availability-bulk)
 Example bulk request:
 
 ```bash
@@ -159,10 +159,10 @@ In this example, the same product has different availability on two sites: `site
 
 ### Retrieve the availability information of a product
 
-To check if a product's availability was added successfully, you need to send a request to the [Retrieving a product's availability](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) endpoint with the product's ID in the request body.
+To check if a product's availability was added successfully, you need to send a request to the [Retrieving a product's availability](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) endpoint with the product's ID in the request body.
 
 {% hint style="info" %}
-You can also retrieve availability information for multiple products at once by sending a request to the [Retrieving product availabilities for a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) endpoint.
+You can also retrieve availability information for multiple products at once by sending a request to the [Retrieving product availabilities for a site](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-search) endpoint.
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -209,7 +209,7 @@ For instructions, check out [How to create a bundle of personalized products](..
 
 ### Retrieve the product bundle's availability information
 
-To find out what the stock level of a product bundle is, you need to send a request to the [Retrieving a product's availability](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-productid-site) endpoint with the product bundle's ID in the path.
+To find out what the stock level of a product bundle is, you need to send a request to the [Retrieving a product's availability](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-productid-site) endpoint with the product bundle's ID in the path.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
