@@ -54,24 +54,28 @@ These announcements are intended to keep you informed about ongoing work and pot
   </tr></thead>
 <tbody>
   <tr>
-    <td class="tg-0pky">Coupon, Cart, and Order Services</td>
-    <td class="tg-0pky">Vendor-restricted coupons</td>
-  </tr>  
+    <td class="tg-0pky">B2B Commerce Frontend</td>
+    <td class="tg-0pky">SEO Optimization PDP</td>
+  </tr>
   <tr>
     <td class="tg-0pky">Schema Service</td>
     <td class="tg-0pky">Site awareness of mixins</td>
   </tr>
   <tr>
-    <td class="tg-0pky">Vendor Management</td>
-    <td class="tg-0pky">Vendor-specific coupons</td>
+    <td class="tg-0pky">Return Service</td>
+    <td class="tg-0pky">Site awareness returns</td>
   </tr>
   <tr>
-    <td class="tg-0pky">Customer Segments</td>
-    <td class="tg-0pky">Excluding single products</td>
+    <td class="tg-0pky">Segment Service</td>
+    <td class="tg-0pky">Item assignments support INCLUDE and EXCLUDE options</td>
   </tr>
   <tr>
     <td class="tg-0pky">Agentic</td>
-    <td class="tg-0pky">Generic MCP</td>
+    <td class="tg-0pky">Support A2A protocol</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Cockpits</td>
+    <td class="tg-0pky">Deployment Center</td>
   </tr>
 </tbody>
 </table>
