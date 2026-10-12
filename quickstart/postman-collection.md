@@ -35,8 +35,6 @@ Open the Emporix Commerce Orchestration Platform workspace on Postman:
 
 {% embed url="https://www.postman.com/emporix/emporix-commerce-orchestration-platform/overview" %}
 
-[Emporix Postman Collection — Commerce Orchestration Platform](https://www.postman.com/emporix/emporix-commerce-orchestration-platform/overview)
-
 ## Before you run requests
 
 To run requests from the Postman Collection, perform the following steps:
