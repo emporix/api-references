@@ -349,7 +349,7 @@ paths:
         status. The run starts when a worker of the Import Service is free, usually within moments, and then
         has the `RUNNING` status. If `maxConcurrentImports` runs are already executing for the tenant, the run
         waits until one of them finishes. `queueWaitingFor` says what a queued run waits for. To follow the
-        run's progress, retrieve the run.
+        run's progress, retrieve the run or stream its progress events.
 
         A configuration has at most one run executing and at most one run queued. The service rejects a
         request with a `409 Conflict` response while the configuration has a run in the `QUEUED`, `RUNNING`, or
