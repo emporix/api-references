@@ -5,6 +5,7 @@
 ## Quickstart
 
 * [Emporix API](quickstart/api-intro.md)
+* [Postman Collection](quickstart/postman-collection.md)
 * [List of API Services](quickstart/list-of-api-services.md)
 * [OpenAPI Generator](quickstart/openapi-generator.md)
 * [Emporix Terraform Provider](quickstart/emporix-terraform-provider.md)
