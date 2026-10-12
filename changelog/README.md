@@ -25,6 +25,42 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement, major-change" %}
+
+## Import Service - queued import runs
+
+#### Overview
+
+Import runs now wait in a queue that all workers of the Import Service share, so a run starts as soon as any worker is free. Triggering or retrying a run returns the run in the `QUEUED` status instead of `RUNNING`. A configuration has at most one run executing and at most one run queued.
+
+The `maxConcurrentImports` limit now applies to runs that are executing. A run requested beyond the limit is no longer rejected with a `429 Too Many Requests` response. It waits in the queue until one of the tenant's runs finishes.
+
+A scheduled run is no longer skipped when its configuration is busy. It waits behind the configuration's current run. If the schedule requests another run while a real run of the whole configuration is still queued, the service adds the request to that run and counts it in `supersededRequests`.
+
+Runs report the new `RESUMABLE` status, for a run that resumes automatically after an interruption such as a service restart. The new `executionStartedAt` field shows when a run began executing, and `startedAt` shows when the run was requested. For a queued run, `queueWaitingFor` and `queuePosition` show what the run waits for and its place in the queue.
+
+{% hint style="warning" %}
+If your integration expects a triggered or retried run to have the `RUNNING` status, update it to accept the `QUEUED` status. The trigger endpoint no longer returns `429`: a run beyond `maxConcurrentImports` is queued instead, with `queueWaitingFor` set to `TENANT_LIMIT`.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Returns the run in the `QUEUED` status. Returns `409` while the configuration has a run in the `QUEUED`, `RUNNING`, or `RESUMABLE` status, and no longer returns `429`. The response no longer includes `mappingVersions`, because the versions are fixed when the run starts executing. Retrieve the run to read them. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | Returns the new run in the `QUEUED` status. |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | The run includes the `RESUMABLE` status and the new `executionStartedAt`, `queuePosition`, `queueWaitingFor`, `supersededRequests`, and `lastRequestedAt` fields. |
+| [Retrieving run history](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Run entries include the `RESUMABLE` status and the new `executionStartedAt`, `queuePosition`, `queueWaitingFor`, `supersededRequests`, and `lastRequestedAt` fields. |
+| [Cancelling a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-cancel) | A queued run is cancelled immediately. A run in the `RESUMABLE` status can be stopped only with `force=true`. |
+| [Retrieving import limits](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/license#get-importtool-tenant-license) | The `maxConcurrentImports` limit applies to runs that are executing. Runs beyond it wait in the queue. |
+| [Retrieving import statistics](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-stats) | The `activeRuns` count includes runs in the `QUEUED`, `RUNNING`, and `RESUMABLE` status. `avgRunDurationSec` excludes the time a run spent in the queue. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-12" tags="improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-6667 -->
 
