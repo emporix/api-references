@@ -45,6 +45,20 @@ Run this lane on every changed documentation page, even when the PR description 
 - Ambiguous steps, unspecified actors, or unexplained outcomes are flagged.
 - Prefer comments that name what the reader still cannot do or cannot tell.
 
+### User goal (`sufficiency#user-goal`)
+- The page is written from the reader's goal, task, and flow, not from what was implemented or how a view changed.
+- Flag sections that describe views, tabs, fields, or buttons one by one without saying why a reader would use them.
+- Flag "where to find it" information that replaces the reason to look for an option, button, icon, or dialog window.
+
+### Fit in the documentation set (`sufficiency#fit-in-set`)
+- The page or section sits in the right space and section, and the form suits the content (`planning-and-structure`).
+- Terminology, depth, and structure match neighbouring pages. Flag information that duplicates another page instead of linking to it.
+- New pages are linked from `SUMMARY.md` and from at least one related page.
+
+### Obvious statements (`sufficiency#obvious`)
+- Flag sentences and steps that only restate what the reader sees in the UI.
+- Flag quoted UI text (notifications, hints, tooltips, empty or error messages). Suggest describing what happens and what the reader can do next.
+
 If a claim needs product confirmation the PR does not provide, comment with `sufficiency#needs-confirmation` instead of guessing.
 
 ## Task-fit (when PR context exists)
@@ -196,6 +210,20 @@ For sequential instructions, steps must use GitBook `{% stepper %}` blocks with 
 - `## Step 1 - ...` / `## Step 2 - ...` headings
 - Bare numbered lists used as the primary procedure format when steps are required
 - Inconsistent bullet punctuation within the same list (`format-and-structure#bullet-lists`)
+- Lists without a full lead-in sentence, or with a broken phrase that reads correctly only together with each item (`format-and-structure#lead-in-sentence`); not applicable to release notes
+- Lists that mix noun phrases, commands, and descriptions, or mix capitalization conventions (`format-and-structure#consistent-items`)
+- Verbose figure captions, or captions that overuse colons, semicolons, and dashes (`images-and-icons#placing-pictures-in-docs`)
+- Release note titles not in title case (`release-notes` template)
+- Mermaid diagrams that do not use the Emporix brand configuration and palette (`diagrams`)
+
+## Links
+
+Check every new or changed link against `.style-guide/writing-standards/links.md`:
+
+- Same-space links are relative file paths with `.md`; absolute URLs for same-space pages are flagged
+- Links to another space use `https://app.gitbook.com/s/<spaceId>/<path>` with the space ID from the registry in `links.md`
+- Links to API reference endpoints use the path-based `https://developer.emporix.io/api-documentation/...#<method>-<endpoint-path>` form from `links.md` (not an app path, not an `operationId` anchor)
+- Link targets and section anchors exist
 
 ## Cross-repo boundaries
 

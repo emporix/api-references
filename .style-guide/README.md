@@ -19,7 +19,8 @@ This style guide defines how to plan, write, and maintain documentation in the E
 
 ## How to use this guide
 
-* Start with writing standards for language, structure, and terminology.
+* Start with [Planning and Structure](writing-standards/planning-and-structure.md) to decide where the content fits and which form suits it.
+* Continue with writing standards for language, structure, terminology, and links.
 * Apply visual standards for diagrams, images, and videos.
 * Use API tutorials and API references standards when writing how-tos or OpenAPI specs in `api-references`.
 * Use templates for repeatable document types such as changelogs, release notes, and API references.

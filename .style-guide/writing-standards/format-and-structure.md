@@ -171,6 +171,60 @@ Example:
 * third – description
 ```
 
+### Lead-in sentence
+
+* Introduce every list with a full sentence that explains what the list contains. The list items must never be the only carrier of the context.
+* Do not start a list with a broken sentence that only reads correctly together with each item. Each item and the lead-in must also make sense when read on their own.
+* Use a lead-in such as "The following ... {what exactly}:" and end it with a colon.
+* **Exception: release notes.** Lists in release notes do not need a full lead-in sentence. Short labels such as `User Guides:` and `API Guides:` introduce the link lists under "Documentation and links". All other list rules still apply, including consistent items (see [Consistent items](#consistent-items)).
+
+Example:
+
+```
+The following statuses are available for an imported order:
+
+* Pending – the order waits for validation.
+* Imported – the order was created in the system.
+```
+
+Avoid:
+
+```
+Orders can be:
+
+* validated
+* imported
+```
+
+### Consistent items
+
+* All items in one list follow one pattern that suits the content. Noun phrases are fine, full sentences are fine, and imperative steps are fine, but do not mix them in one list.
+  * Do not mix noun phrases, commands, and explanatory descriptions in one list.
+  * Use one capitalization convention in the whole list: either every item starts with a capital letter or none does. Choose the convention that matches the lead-in and the neighbouring lists.
+  * Use one punctuation convention in the whole list: either every item ends with a full stop or none does (see the full stop rules above).
+* Items with a description (`item – description`) keep the same structure and the same capitalization of the description in every item.
+* The same rules apply to numbered lists. Use a numbered list only when the order matters. For sequential tasks use the stepper (see [Steps](#steps)).
+
+Example:
+
+```
+The following settings are required to create a connection:
+
+* Connection name
+* Server address
+* Authentication method
+```
+
+Avoid:
+
+```
+The following settings are required to create a connection:
+
+* Connection name
+* Enter the server address.
+* you also need to choose how users sign in
+```
+
 ## Hyphens/Dashes
 
 ### Hyphens
