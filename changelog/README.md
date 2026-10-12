@@ -25,6 +25,27 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6667 -->
+
+## Standard Practices - `q` parameter not-equal operator
+
+#### Overview
+
+The shared `q` parameter documentation now includes the `!=` operator for excluding entities by field value on endpoints that support standard `q` filtering. This update documents the new query syntax with a Schema Service example: `q=id:!=64d35aa7fa54121ca47db657`.
+
+#### Updated documentation
+
+| Page | Description |
+|------|-------------|
+| [Standard Practices - Query parameter](https://developer.emporix.io/api-documentation/standard-practices/q-param) | Adds the `!=` operator with an example that excludes a schema by `id`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-09" tags="improvement" %}
 
 ## Import Service - embedded child records in dry-run samples
