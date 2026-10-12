@@ -32,7 +32,16 @@ layout:
 
 #### Overview
 
-The shared `q` parameter documentation now includes the `!=` operator for excluding entities by field value on endpoints that support standard `q` filtering. This update documents the new query syntax with a Schema Service example: `q=id:!=64d35aa7fa54121ca47db657`.
+The shared `q` parameter documentation now includes the `!=` operator for excluding entities by field value on endpoints that support standard `q` filtering. This update documents the new query syntax with a Schema Service example: `q=id:!=64d35aa7fa54121ca47db657`. The `q` parameter description in the Schema Service API reference also includes the new operator.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Retrieving all schemas](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas) | The `q` parameter description now includes the `!=` operator. |
+| [Retrieving all references](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/reference#get-schema-tenant-references) | The `q` parameter description now includes the `!=` operator. |
+| [Retrieving all custom schema types](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-schema-type#get-schema-tenant-custom-entities) | The `q` parameter description now includes the `!=` operator. |
+| [Retrieving all custom instances](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances) | The `q` parameter description now includes the `!=` operator. |
 
 #### Updated documentation
 
