@@ -25,6 +25,36 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6667 -->
+
+## Schema Service - `!=` operator in the `q` parameter
+
+#### Overview
+
+The Schema Service `q` parameter now supports the `!=` operator for excluding entities by field value, for example `q=id:!=64d35aa7fa54121ca47db657`. The operator is documented in the descriptions of the endpoints listed below and on the shared Standard Practices page for the `q` parameter.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Retrieving all schemas](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas) | The `q` parameter description now includes the `!=` operator. |
+| [Retrieving all references](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/reference#get-schema-tenant-references) | The `q` parameter description now includes the `!=` operator. |
+| [Retrieving all custom schema types](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-schema-type#get-schema-tenant-custom-entities) | The `q` parameter description now includes the `!=` operator. |
+| [Retrieving all custom instances](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances) | The `q` parameter description now includes the `!=` operator. |
+
+#### Updated documentation
+
+| Page | Description |
+|------|-------------|
+| [Standard Practices - Query parameter](https://developer.emporix.io/api-documentation/standard-practices/q-param) | Adds the `!=` operator with an example that excludes a schema by `id`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-09" tags="improvement" %}
 
 ## Import Service - embedded child records in dry-run samples
