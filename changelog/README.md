@@ -34,11 +34,11 @@ layout:
 
 The shared `q` parameter documentation now includes the `!=` operator for excluding entities by field value on endpoints that support standard `q` filtering. This update documents the new query syntax with a Schema Service example: `q=id:!=64d35aa7fa54121ca47db657`.
 
-#### Updated endpoints
+#### Updated documentation
 
-| Endpoint | Description |
-|----------|-------------|
-| [Using the q parameter](https://developer.emporix.io/api-references/standard-practices/q-param) | Added documentation for the `!=` operator with an example that excludes a schema by `id`. |
+| Page | Description |
+|------|-------------|
+| [Standard Practices - Query parameter](https://developer.emporix.io/api-documentation/standard-practices/q-param) | Adds the `!=` operator with an example that excludes a schema by `id`. |
 
 #### Known problems
 
