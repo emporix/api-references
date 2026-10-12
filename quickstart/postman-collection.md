@@ -39,9 +39,25 @@ Open the Emporix Commerce Orchestration Platform workspace on Postman:
 
 ## Before you run requests
 
-1. Fork or import the collection into your Postman workspace.
-2. Configure your tenant credentials and environment variables for the Emporix API base URL `https://api.emporix.io`.
-3. Obtain an access token. See [Tokens and Scopes](authentication-and-authorization/tokens-and-scopes.md).
+To run requests from the Postman Collection, perform the following steps:
+
+{% stepper %}
+{% step %}
+Fork or import the collection into your Postman workspace.
+{% endstep %}
+
+{% step %}
+Retrieve your Emporix API keys. Log in to the [Emporix Developer Portal](https://app.emporix.io), go to **Manage API Keys**, and copy the **Client ID** and **Secret** for the Emporix API.
+{% endstep %}
+
+{% step %}
+Set your tenant credentials and environment variables in Postman for the Emporix API base URL `https://api.emporix.io`.
+{% endstep %}
+
+{% step %}
+Obtain an access token. See [Tokens and Scopes](authentication-and-authorization/tokens-and-scopes.md).
+{% endstep %}
+{% endstepper %}
 
 {% hint style="info" %}
 For the API overview, downloadable OpenAPI specs, and base URL details, see [Getting Started with Emporix API](api-intro.md).
