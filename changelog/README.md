@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-10-12" tags="improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-6667 -->
 
 ## Schema Service - `!=` operator in the `q` parameter
