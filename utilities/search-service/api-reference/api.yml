@@ -640,7 +640,7 @@ paths:
                 Exported indexes:
                   value:
                     exportedAt: '2026-03-12T10:00:00.000Z'
-                    data: W3siaWQiOiJ2ZWhpY2xlcyIsInR5cGUiOiJ2ZWhpY2xlIiwibmFtZSI6eyJlbiI6IlZlaGljbGVzIn0sImRlc2NyaXB0aW9uIjp7ImVuIjoiU2VhcmNoIHZlaGljbGVzIGJ5IG5hbWUgYW5kIHBvd2VyIn0sImZpZWxkcyI6W3sicGF0aCI6Im5hbWUuZW4iLCJ0ZXh0Ijp0cnVlLCJhdXRvY29tcGxldGUiOiJQUkVGSVgifSx7InBhdGgiOiJjb2RlIiwidGV4dCI6dHJ1ZSwiZXhhY3QiOnRydWV9XX1d
+                    data: W3siaWQiOiJ2ZWhpY2xlcyIsInR5cGUiOiJ2ZWhpY2xlIiwibmFtZSI6eyJlbiI6IlZlaGljbGVzIn0sImRlc2NyaXB0aW9uIjp7ImVuIjoiU2VhcmNoIHZlaGljbGVzIGJ5IG5hbWUgYW5kIHBvd2VyIn0sImZpZWxkcyI6W3sicGF0aCI6Im5hbWUuZW4iLCJ0ZXh0Ijp0cnVlLCJhdXRvY29tcGxldGUiOiJQUkVGSVgifSx7InBhdGgiOiJjb2RlIiwidGV4dCI6dHJ1ZSwiZXhhY3QiOnRydWV9XX0seyJpZCI6ImJpa2VzIiwidHlwZSI6ImJpa2UiLCJuYW1lIjp7ImVuIjoiQmlrZXMifSwiZGVzY3JpcHRpb24iOnsiZW4iOiJTZWFyY2ggYmlrZXMgYnkgbmFtZSJ9LCJmaWVsZHMiOlt7InBhdGgiOiJuYW1lLmVuIiwidGV4dCI6dHJ1ZX1dfV0=
         '400':
           description: The selection is empty, an item is null, or an item is missing `type` or `id`.
           content:
@@ -711,7 +711,7 @@ paths:
               Import a package:
                 value:
                   exportedAt: '2026-03-12T10:00:00.000Z'
-                  data: W3siaWQiOiJ2ZWhpY2xlcyIsInR5cGUiOiJ2ZWhpY2xlIiwibmFtZSI6eyJlbiI6IlZlaGljbGVzIn0sImRlc2NyaXB0aW9uIjp7ImVuIjoiU2VhcmNoIHZlaGljbGVzIGJ5IG5hbWUgYW5kIHBvd2VyIn0sImZpZWxkcyI6W3sicGF0aCI6Im5hbWUuZW4iLCJ0ZXh0Ijp0cnVlLCJhdXRvY29tcGxldGUiOiJQUkVGSVgifSx7InBhdGgiOiJjb2RlIiwidGV4dCI6dHJ1ZSwiZXhhY3QiOnRydWV9XX1d
+                  data: W3siaWQiOiJ2ZWhpY2xlcyIsInR5cGUiOiJ2ZWhpY2xlIiwibmFtZSI6eyJlbiI6IlZlaGljbGVzIn0sImRlc2NyaXB0aW9uIjp7ImVuIjoiU2VhcmNoIHZlaGljbGVzIGJ5IG5hbWUgYW5kIHBvd2VyIn0sImZpZWxkcyI6W3sicGF0aCI6Im5hbWUuZW4iLCJ0ZXh0Ijp0cnVlLCJhdXRvY29tcGxldGUiOiJQUkVGSVgifSx7InBhdGgiOiJjb2RlIiwidGV4dCI6dHJ1ZSwiZXhhY3QiOnRydWV9XX0seyJpZCI6ImJpa2VzIiwidHlwZSI6ImJpa2UiLCJuYW1lIjp7ImVuIjoiQmlrZXMifSwiZGVzY3JpcHRpb24iOnsiZW4iOiJTZWFyY2ggYmlrZXMgYnkgbmFtZSJ9LCJmaWVsZHMiOlt7InBhdGgiOiJuYW1lLmVuIiwidGV4dCI6dHJ1ZX1dfV0=
       responses:
         '200':
           description: The request succeeded. The body lists one result for each index in the package.
@@ -1375,6 +1375,8 @@ components:
               $ref: '#/components/examples/andQueriesRequest'
             Filter only:
               $ref: '#/components/examples/filterSearchRequest'
+            Contains filter:
+              $ref: '#/components/examples/containsFilterRequest'
             Range filter:
               $ref: '#/components/examples/rangeFilterRequest'
             List filter:
@@ -1551,7 +1553,7 @@ components:
         data:
           type: string
           description: Base64-encoded JSON array of index configurations.
-          example: W3siaWQiOiJ2ZWhpY2xlcyIsInR5cGUiOiJ2ZWhpY2xlIiwibmFtZSI6eyJlbiI6IlZlaGljbGVzIn0sImRlc2NyaXB0aW9uIjp7ImVuIjoiU2VhcmNoIHZlaGljbGVzIGJ5IG5hbWUgYW5kIHBvd2VyIn0sImZpZWxkcyI6W3sicGF0aCI6Im5hbWUuZW4iLCJ0ZXh0Ijp0cnVlLCJhdXRvY29tcGxldGUiOiJQUkVGSVgifSx7InBhdGgiOiJjb2RlIiwidGV4dCI6dHJ1ZSwiZXhhY3QiOnRydWV9XX1d
+          example: W3siaWQiOiJ2ZWhpY2xlcyIsInR5cGUiOiJ2ZWhpY2xlIiwibmFtZSI6eyJlbiI6IlZlaGljbGVzIn0sImRlc2NyaXB0aW9uIjp7ImVuIjoiU2VhcmNoIHZlaGljbGVzIGJ5IG5hbWUgYW5kIHBvd2VyIn0sImZpZWxkcyI6W3sicGF0aCI6Im5hbWUuZW4iLCJ0ZXh0Ijp0cnVlLCJhdXRvY29tcGxldGUiOiJQUkVGSVgifSx7InBhdGgiOiJjb2RlIiwidGV4dCI6dHJ1ZSwiZXhhY3QiOnRydWV9XX0seyJpZCI6ImJpa2VzIiwidHlwZSI6ImJpa2UiLCJuYW1lIjp7ImVuIjoiQmlrZXMifSwiZGVzY3JpcHRpb24iOnsiZW4iOiJTZWFyY2ggYmlrZXMgYnkgbmFtZSJ9LCJmaWVsZHMiOlt7InBhdGgiOiJuYW1lLmVuIiwidGV4dCI6dHJ1ZX1dfV0=
       required:
         - exportedAt
         - data
@@ -1932,9 +1934,13 @@ components:
             * `BETWEEN` requires an array of two values. The range is inclusive.
             * `IN` and `NOT_IN` require a non-empty array.
             * `EXISTS` requires a boolean. `true` matches documents where the field is present. `false` matches documents where the field is absent.
+            * `CONTAINS` requires a non-blank string. The field must have `text: true` in the index.
     FilterOperator:
       type: string
-      description: Comparison applied to `field` and `value`.
+      description: |-
+        Comparison applied to `field` and `value`.
+
+        `CONTAINS` performs a case- and diacritic-insensitive whole-value wildcard match. The service wraps the value in `*` and escapes `\`, `*`, and `?` within it. Spaces remain part of the value.
       enum:
         - EQ
         - NEQ
@@ -1946,6 +1952,7 @@ components:
         - IN
         - NOT_IN
         - EXISTS
+        - CONTAINS
     SearchHit:
       type: object
       description: |-
