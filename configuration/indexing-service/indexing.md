@@ -32,7 +32,9 @@ This functionality is in preview mode - some of the features may not be fully op
 
 Battery Included only supports the `MERGE` site-aware fields strategy. Tenants configured with the `SPLIT` strategy will have Battery Included indexing silently skipped.
 
+{% hint style="info" %}
 For details on how Battery Included builds product documents under `MERGE`, including behavior when the default site is or is not `main`, see [How Battery Included indexes products](#how-battery-included-indexes-products).
+{% endhint %}
 
 #### Write-key validation
 
@@ -219,7 +221,11 @@ curl -L
 
 You can choose between two indexing strategies for your search index configuration: `MERGE` and `SPLIT`. `MERGE` strategy creates a single index for all sites declared in the system, while `SPLIT` creates a separate index for each site.
 
-Battery Included supports only `MERGE`. If the strategy is `SPLIT`, Battery Included product indexing is skipped. See [How Battery Included indexes products](#how-battery-included-indexes-products).
+Battery Included supports only `MERGE`. If the strategy is `SPLIT`, Battery Included product indexing is skipped.
+
+{% hint style="info" %}
+For details on how Battery Included indexes products under `MERGE`, see [How Battery Included indexes products](#how-battery-included-indexes-products).
+{% endhint %}
 
 To choose the right mode for your index, send the request to the [Updating a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint.
 
@@ -246,7 +252,7 @@ curl -L
 
 In the request parameters, for the `propertyKey` choose `indexing_siteAwareFieldsStrategy`. In the request body, pass the chosen strategy value.Please remain patient as propagating changes to the index strategy may take up to 1 hour, so you might not be able to see the changes instantly.
 
-## How Battery Included indexes products <a href="#how-battery-included-indexes-products" id="how-battery-included-indexes-products"></a>
+## How Battery Included indexes products
 
 When the tenant uses `MERGE`, the Indexing Service builds one Battery Included search document per product. Core product fields come from a single base site.
 
@@ -254,11 +260,15 @@ The Battery Included document stores site-specific data in `_product_siteAware`.
 Each value can contain prices grouped by currency, availability, and segment IDs for that site. Availability can appear for a site
 even when that site has no prices.
 
-If your tenant uses `SPLIT`, Battery Included product indexing is skipped. To set the strategy, see [How to choose indexing strategy](#how-to-choose-indexing-strategy).
+If your tenant uses `SPLIT`, Battery Included product indexing is skipped.
+
+{% hint style="info" %}
+To set the strategy, see [How to choose indexing strategy](#how-to-choose-indexing-strategy).
+{% endhint %}
 
 ### How the base site is chosen
 
-When the service merges per-site product data into one document, it picks the base site in this order:
+When the Indexing Service merges per-site product data into one document, it picks the base site in this order:
 
 1. A site that matches one of the tenant default sites
 2. The `main` site, if no matching default-site data is available
@@ -268,9 +278,9 @@ The merged document is stored under site code `main`, which is how `MERGE` keeps
 
 ### Special rules for the `main` site
 
-For site `main`, a product can still be indexed when it is unpublished, has no prices, or is unavailable.
+For the `main` site, a product can still be indexed when it is unpublished, has no prices, or is unavailable.
 
-For any other site, those conditions mean that site does not contribute prices, availability, or segments to the merged document. If the chosen base site is such a site, the product is removed from Battery Included.
+For any other site, those conditions mean that site does not contribute prices, availability, or segment IDs to the merged document. If the chosen base site is such a site, the product is removed from Battery Included.
 
 ### When the default site is `main`
 
