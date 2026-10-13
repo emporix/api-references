@@ -238,10 +238,10 @@ Choose the field options according to how you want to search:
 
 | Option | Use |
 | --- | --- |
-| `text: true` | Match a string with `TEXT`, `PHRASE`, or `WILDCARD`. |
+| `text: true` | Match a string with `TEXT`, `PHRASE`, `WILDCARD`, or `CONTAINS`. |
 | `autocomplete: PREFIX` | Match the beginning of a word with `AUTOCOMPLETE`. |
 | `autocomplete: NGRAM` | Match a character sequence inside a word with `AUTOCOMPLETE`. |
-| `exact: true` | Filter, sort, or check ranges and existence. Number, Boolean, and date fields support only this option. |
+| `exact: true` | Sort, or filter with equality, range, list, or existence operators. Number, Boolean, and date fields support only this option. |
 
 Use full stored paths such as `name.en` and `mixins.vehicleSearchAttributes.code`. A path must exist on the custom schema type.
 {% endstep %}
@@ -328,7 +328,7 @@ curl -i -X POST \
   }'
 ```
 
-The response body is an array of matching custom instances. When the `X-Total-Count` request header is `true`, the response also includes the `X-Total-Count` header. Filters and sort fields must use fields that have `exact: true` in the index.
+The response body is an array of matching custom instances. When the `X-Total-Count` request header is `true`, the response also includes the `X-Total-Count` header. Equality, range, list, existence, and sort fields must have `exact: true`. A `CONTAINS` filter must use a field with `text: true`.
 {% endstep %}
 {% endstepper %}
 
