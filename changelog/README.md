@@ -25,6 +25,33 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+<!-- emporix-ai-buddy:changelog:COP-6766 -->
+
+## Search Service - `CONTAINS` filter documentation
+
+{% hint style="warning" %}
+This functionality is in preview mode — some of the features may not be fully operational yet.
+{% endhint %}
+
+#### Overview
+
+The Search Service API reference and guides now document preview search support for custom instances, including the `CONTAINS` filter operator on search requests. This update makes the existing capability easier to discover and use when creating indexes, searching custom instances, saving searches, and copying index configuration between tenants.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Searching documents](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type) | Added documentation for the `CONTAINS` filter operator, including its constraints, matching behavior, and request example. |
+| [Upserting a search index](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/search-indexes#put-search-tenant-search-type-indexes-id) | Documented in the new tutorial as part of the preview flow for configuring searchable custom-instance fields. |
+| [Retrieving an index job](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/index-jobs#get-search-tenant-jobs-id) | Documented in the new tutorial as part of monitoring asynchronous index creation and update jobs. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-12" tags="improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-6667 -->
 
