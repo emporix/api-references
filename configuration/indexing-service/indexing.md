@@ -32,6 +32,8 @@ This functionality is in preview mode - some of the features may not be fully op
 
 Battery Included only supports the `MERGE` site-aware fields strategy. Tenants configured with the `SPLIT` strategy will have Battery Included indexing silently skipped.
 
+For details on how Battery Included builds product documents under `MERGE`, including behavior when the default site is or is not `main`, see [How Battery Included indexes products](#how-battery-included-indexes-products).
+
 #### Write-key validation
 
 When you create or update a `BATTERY_INCLUDED` configuration, the indexing service validates `indexName` and `writeKey` before saving. Invalid credentials return `400`. If credential validation is temporarily unavailable, the request returns `502`. In both cases, the configuration is left unchanged.
@@ -216,6 +218,9 @@ curl -L
 ## How to choose indexing strategy
 
 You can choose between two indexing strategies for your search index configuration: `MERGE` and `SPLIT`. `MERGE` strategy creates a single index for all sites declared in the system, while `SPLIT` creates a separate index for each site.
+
+Battery Included supports only `MERGE`. If the strategy is `SPLIT`, Battery Included product indexing is skipped. See [How Battery Included indexes products](#how-battery-included-indexes-products).
+
 To choose the right mode for your index, send the request to the [Updating a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -240,4 +245,47 @@ curl -L
 ```
 
 In the request parameters, for the `propertyKey` choose `indexing_siteAwareFieldsStrategy`. In the request body, pass the chosen strategy value.Please remain patient as propagating changes to the index strategy may take up to 1 hour, so you might not be able to see the changes instantly.
- 
+
+## How Battery Included indexes products <a href="#how-battery-included-indexes-products" id="how-battery-included-indexes-products"></a>
+
+Battery Included always indexes products with the `MERGE` site-aware fields strategy. The Indexing Service builds one search
+document per product in Battery Included. Core product fields come from a single base site.
+
+The Battery Included document stores site-specific data in `_product_siteAware`. This field is a map whose keys are site codes.
+Each value can contain prices grouped by currency, availability, and segment IDs for that site. Availability can appear for a site
+even when that site has no prices.
+
+If your tenant uses `SPLIT`, Battery Included product indexing is skipped. To set the strategy, see [How to choose indexing strategy](#how-to-choose-indexing-strategy).
+
+### How the base site is chosen
+
+When the service merges per-site product data into one document, it picks the base site in this order:
+
+1. A site that matches one of the tenant default sites
+2. The `main` site, if no matching default-site data is available
+3. The first available site, if neither of the above matches
+
+The merged document is stored under site code `main`, which is how `MERGE` keeps a single per-product document.
+
+### Special rules for the `main` site
+
+For site `main`, a product can still be indexed when it is unpublished, has no prices, or is unavailable.
+
+For any other site, those conditions mean that site does not contribute prices, availability, or segments to the merged document. If the chosen base site is such a site, the product is removed from Battery Included.
+
+### When the default site is `main`
+
+When a tenant default site is `main`, the following applies:
+
+- Base product fields come from `main`.
+- The `main` site rules above apply to the base site, so unpublished, no-price, or unavailable status on that default site does not by itself remove the product from Battery Included.
+- Sites that still contribute data write their prices, availability, and segment IDs to `_product_siteAware`.
+
+### When the default site is not `main`
+
+When the matching tenant default site is not `main`, the following applies:
+
+- Base product fields come from that default site when it still contributes data.
+- If that default site would not index the product (for example because it is unpublished, has no price, or is unavailable), the product is removed from Battery Included.
+- Otherwise, `_product_siteAware` still includes every site that contributed prices, availability, or segment IDs.
+
