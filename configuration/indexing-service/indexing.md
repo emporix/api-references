@@ -248,8 +248,7 @@ In the request parameters, for the `propertyKey` choose `indexing_siteAwareField
 
 ## How Battery Included indexes products <a href="#how-battery-included-indexes-products" id="how-battery-included-indexes-products"></a>
 
-Battery Included always indexes products with the `MERGE` site-aware fields strategy. The Indexing Service builds one search
-document per product in Battery Included. Core product fields come from a single base site.
+When the tenant uses `MERGE`, the Indexing Service builds one Battery Included search document per product. Core product fields come from a single base site.
 
 The Battery Included document stores site-specific data in `_product_siteAware`. This field is a map whose keys are site codes.
 Each value can contain prices grouped by currency, availability, and segment IDs for that site. Availability can appear for a site
