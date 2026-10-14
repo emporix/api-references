@@ -63,6 +63,218 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-10-14" tags="improvement, major-change" %}
+
+## Import Service - queued import runs
+
+#### Overview
+
+Import runs now wait in a queue that all workers of the Import Service share, so a run starts as soon as any worker is free. Triggering or retrying a run returns the run in the `QUEUED` status instead of `RUNNING`. A configuration has at most one run executing and at most one run queued.
+
+The `maxConcurrentImports` limit now applies to runs that are executing. A run requested beyond the limit is no longer rejected with a `429 Too Many Requests` response. It waits in the queue until one of the tenant's runs finishes.
+
+A scheduled run is no longer skipped when its configuration is busy. It waits behind the configuration's current run. If the schedule requests another run while a real run of the whole configuration is still queued, the service adds the request to that run and counts it in `supersededRequests`.
+
+Runs report the new `RESUMABLE` status, for a run that resumes automatically after an interruption such as a service restart. The new `executionStartedAt` field shows when a run began executing, and `startedAt` shows when the run was requested. For a queued run, `queueWaitingFor` and `queuePosition` show what the run waits for and its place in the queue.
+
+{% hint style="warning" %}
+If your integration expects a triggered or retried run to have the `RUNNING` status, update it to accept the `QUEUED` status. The trigger endpoint no longer returns `429`: a run beyond `maxConcurrentImports` is queued instead, with `queueWaitingFor` set to `TENANT_LIMIT`.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Returns the run in the `QUEUED` status. Returns `409` while the configuration has a run in the `QUEUED`, `RUNNING`, or `RESUMABLE` status, and no longer returns `429`. The response no longer includes `mappingVersions`, because the versions are fixed when the run starts executing. Retrieve the run to read them. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | Returns the new run in the `QUEUED` status. |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | The run includes the `RESUMABLE` status and the new `executionStartedAt`, `queuePosition`, `queueWaitingFor`, `supersededRequests`, and `lastRequestedAt` fields. |
+| [Retrieving run history](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Run entries include the `RESUMABLE` status and the new `executionStartedAt`, `queuePosition`, `queueWaitingFor`, `supersededRequests`, and `lastRequestedAt` fields. |
+| [Cancelling a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-cancel) | A queued run is cancelled immediately. A run in the `RESUMABLE` status can be stopped only with `force=true`. |
+| [Retrieving import limits](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/license#get-importtool-tenant-license) | The `maxConcurrentImports` limit applies to runs that are executing. Runs beyond it wait in the queue. |
+| [Retrieving import statistics](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-stats) | The `activeRuns` count includes runs in the `QUEUED`, `RUNNING`, and `RESUMABLE` status. `avgRunDurationSec` excludes the time a run spent in the queue. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-10-12" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6667 -->
+
+## Schema Service - `!=` operator in the `q` parameter
+
+#### Overview
+
+The Schema Service `q` parameter now supports the `!=` operator for excluding entities by field value, for example `q=id:!=64d35aa7fa54121ca47db657`. The operator is documented in the descriptions of the endpoints listed below and on the shared Standard Practices page for the `q` parameter.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Retrieving all schemas](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas) | The `q` parameter description now includes the `!=` operator. |
+| [Retrieving all references](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/reference#get-schema-tenant-references) | The `q` parameter description now includes the `!=` operator. |
+| [Retrieving all custom schema types](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-schema-type#get-schema-tenant-custom-entities) | The `q` parameter description now includes the `!=` operator. |
+| [Retrieving all custom instances](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances) | The `q` parameter description now includes the `!=` operator. |
+
+#### Updated documentation
+
+| Page | Description |
+|------|-------------|
+| [Standard Practices - Query parameter](https://developer.emporix.io/api-documentation/standard-practices/q-param) | Adds the `!=` operator with an example that excludes a schema by `id`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-10-09" tags="improvement" %}
+
+## Import Service - embedded child records in dry-run samples
+
+#### Overview
+
+A dry run's `dryRunSample` now shows embedded child records inside their parent records, as a real import writes them. A parent stream's sampled records include the records of its composite child streams that have `childStrategy` set to `EMBED` or `PATCH`. Those child records appear in the parent attribute named by the child stream's `embedAttribute`. Previously, this attribute was empty in the sample.
+
+Each stream is sampled separately, up to the `sampleSize` set in the run request. A sampled parent record shows only the child records that are also in the child stream's sample, so it can show fewer child records than the source contains for that parent, or none.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | The `dryRunSample` of a dry run includes child records inside their parent records. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-10-09" tags="deprecated" %}
+
+## Quote Service - deprecated company fields
+
+#### Overview
+
+The `company` object and the create field `companyName` are deprecated. Use `legalEntityId` to identify the company linked to a quote. Responses now include `legalEntityId` when a quote is linked to a legal entity, and `company.name` remains in responses. The deprecated fields stay available for backward compatibility.
+
+#### Deprecated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) | `companyName` is deprecated. Send `legalEntityId` instead. |
+| [Partially updating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid) | `/companyName` is deprecated. Use `/legalEntityId` instead. |
+| [Retrieving quotes](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes) | The `company` object is deprecated. Use `legalEntityId`. |
+| [Retrieving a single quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid) | The `company` object is deprecated. Use `legalEntityId`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-10-09" tags="improvement" %}
+
+## Quote Service - legal entity link on quotes
+
+#### Overview
+
+Quotes now store `legalEntityId` at the root of the quote. This identifier is the source of truth for the company linked to a quote. The existing `company` object and the create field `companyName` stay available. `company.name` is still returned. It is the company name stored on the quote and can differ from the current legal-entity name.
+
+A quote created from a cart copies `cart.legalEntityId`. A quote created from a request accepts an optional `legalEntityId`. When that identifier is sent, it must exist and be assigned to the request billing address, and it is used instead of `companyName`. The company name is filled in from the legal entity. When only `companyName` is sent, the previous exact name check remains. If exactly one legal entity assigned to the billing address has that name, the quote is linked to it. If several legal entities share the name, the quote stores the name only.
+
+`PATCH` accepts `/legalEntityId`. The identifier must be assigned to the quote billing address. Replacing `/billingAddressId` on a quote that already has `legalEntityId` succeeds only when the new address is assigned to that legal entity. The `/companyName` path still replaces the company name. A unique assigned name also sets `legalEntityId`. A name that matches no assigned legal entity, or more than one, stays name-only and clears a previously stored `legalEntityId`. Removing `/companyName` or `/legalEntityId` clears both the company and `legalEntityId` and changes the quote to B2C. The billing address check is skipped when the same request also replaces `/legalEntityId` or `/companyName`.
+
+Checkout copies the quote `legalEntityId` onto the order created from that quote. `quote.created` and `quote.updated` event payloads include `legalEntityId`.
+
+Quote operations and approval checks also use the legal entity from the `legal-entity-id` request header, which is injected for B2B customer tokens. For details, see [B2B token and legal entity](https://developer.emporix.io/api-documentation/api-guides/quickstart/authentication-and-authorization/tokens-and-scopes#b2b-token). When the header is sent, the service handles only quotes that are linked to that legal entity. A quote linked to another legal entity is not returned in lists and is treated as not found by the other operations. When the approval process is enabled, a customer who does not own a quote can read or update it only when the approval service permits it for that legal entity. Accepting a quote requires the same approval check.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#post-quote-tenant-quotes) | Requests can provide `legalEntityId`, and quotes created from carts copy the cart's `legalEntityId`. |
+| [Partially updating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid) | The `/legalEntityId` path changes the legal entity linked to a quote and fills the company name. With the `legal-entity-id` header, a quote linked to another legal entity returns `404`. Approval checks use the legal entity from the header. |
+| [Retrieving quotes](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes) | Responses include `legalEntityId`. With the `legal-entity-id` header, the list contains only quotes linked to that legal entity. Quotes in the `CREATING` status are no longer returned to customers who have only the `quote.quote_read_own` scope, and pagination of customer quotes is fixed. |
+| [Retrieving a single quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#get-quote-tenant-quotes-quoteid) | Responses include `legalEntityId`. With the `legal-entity-id` header, a quote linked to another legal entity returns `404`. |
+| [Deleting a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#delete-quote-tenant-quotes-quoteid) | With the `legal-entity-id` header, a quote linked to another legal entity is not deleted. |
+| [Retrieving quote history](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-history#get-quote-tenant-quotes-quoteid-history) | With the `legal-entity-id` header, a quote linked to another legal entity returns `404`. |
+| [Creating a quote PDF](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-pdf#post-quote-tenant-quotes-quoteid-pdf) | With the `legal-entity-id` header, a quote linked to another legal entity returns `404`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-10-09" tags="new-feature, improvement" %}
+
+## Search Service - index configuration export and import
+
+#### Overview
+
+{% hint style="danger" %}
+The service and this functionality are in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+The Search Service copies search index configuration from one tenant to another. Export returns one package for the selected indexes. The package carries the index configuration as base64 JSON and the time of the export. Import creates an index that does not exist yet and updates an index that already exists.
+
+#### New endpoints
+
+| Endpoint                                                                                                                                                                            | Description                                   |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
+| [Exporting search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/export-import#post-search-tenant-search-indexes-export) | Returns one package for the selected indexes. |
+| [Importing search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/export-import#post-search-tenant-search-indexes-import) | Creates or updates each index in the package. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Upserting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#put-search-tenant-search-type-indexes-id) | An update can omit `metadata.version`. A version sent in the request is the optimistic lock. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-10-08" tags="new-feature" %}
+
+## Search Service - search, indexes, and saved searches
+
+#### Overview
+
+{% hint style="danger" %}
+The service and this functionality are in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+The Search Service adds preview endpoints that search documents for a tenant, store a search and run it later with new text, and manage the indexes and jobs used by that search. Two read endpoints return a page of search indexes and a page of saved searches for the tenant. Each item includes `type`. For now, only custom schema types are supported. Saving or deleting a saved search does not start an index build.
+
+#### New endpoints
+
+| Endpoint                                                                                                                                                                               | Description                                                                                                                                                              |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Searching documents](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type)                          | Returns a page of matching documents. The request names an index and supplies queries, a filter, or both, or it sends `searchQueryId` and `query` to run a saved search. |
+| [Upserting a saved search](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#put-search-tenant-search-type-queries-id)   | Creates or replaces one saved search. A new saved search returns its id.                                                                                                 |
+| [Retrieving saved searches](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#get-search-tenant-search-type-queries)     | Returns a page of saved searches for one schema type.                                                                                                                    |
+| [Retrieving all saved searches](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#get-search-tenant-search-queries)      | Returns a page of saved searches for every custom schema type on the tenant.                                                                                             |
+| [Retrieving a saved search](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#get-search-tenant-search-type-queries-id)  | Returns one saved search by its id.                                                                                                                                      |
+| [Deleting a saved search](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#delete-search-tenant-search-type-queries-id) | Removes one saved search.                                                                                                                                                |
+| [Upserting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#put-search-tenant-search-type-indexes-id)   | Creates or updates one index for a schema type. A changed field definition starts a job.                                                                                 |
+| [Retrieving search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#get-search-tenant-search-type-indexes)     | Returns a page of indexes for one schema type.                                                                                                                           |
+| [Retrieving all search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#get-search-tenant-search-indexes)      | Returns a page of search indexes for every custom schema type on the tenant.                                                                                             |
+| [Retrieving a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#get-search-tenant-search-type-indexes-id)  | Returns one index by its index id.                                                                                                                                       |
+| [Deleting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#delete-search-tenant-search-type-indexes-id) | Starts a job that removes one index.                                                                                                                                     |
+| [Retrieving index jobs](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/index-jobs#get-search-tenant-jobs)                            | Returns a page of index jobs.                                                                                       |
+| [Retrieving an index job](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/index-jobs#get-search-tenant-jobs-id)                       | Returns one index job.                                                                                                                                                   |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-06" tags="improvement" %}
 ## AI Service - MS Teams and Slack native tool general availability
 

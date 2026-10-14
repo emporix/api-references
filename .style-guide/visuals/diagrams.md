@@ -7,17 +7,27 @@ icon: diagram-project
 
 * Use Mermaid code format.
 * Add general configuration to adapt to the specific style.
+* Every diagram must use the Emporix branding: the configuration, the transparent background, and the color palette described on this page. Do not publish a diagram with the default Mermaid theme or with colors outside the palette.
+* Create and validate diagrams with the `mermaid-brand-diagrams` skill (it applies the configuration below and validates the code with Mermaid-MCP). Do not write Mermaid styling by hand.
+* Keep labels short and use the same name for the same element across the page.
+* Add a figure caption that follows [Images & Icons](images-and-icons.md#placing-pictures-in-docs) when the diagram needs one.
 
 ## Flowchart
 
-* Config:
+* Config (`theme: base` is required for the brand colors and the transparent background, see "Transparent background" below):
 
 ```
 ---
 config:
   layout: fixed
-  theme: default
+  theme: base
   look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128"
+    edgeLabelTextColor: "#4C5359"
 ---
 ```
 
@@ -29,14 +39,12 @@ classDef Class_02 stroke-width:1px, stroke-dasharray: 0, stroke:#DDE6EE, fill:#D
 classDef Class_03 stroke-width:1px, stroke-dasharray: 0, stroke:#3B73BB, fill:#3B73BB
 ```
 
-````
 * Font color change:
 
 ```
 style subGraph0 color:#FFFFFF
 style subGraph1 color:#FFFFFF
 ```
-````
 
 *   Diagram elements
 
@@ -230,3 +238,7 @@ graph TD
 * \#F2F6FA
 * \#3B73BB - Block background
 * \#E86C07 - Signals in sequence, Borders on darker background
+* \#99ACBC - Muted accent for node fills
+* \#7B8B99 - Signal text in sequence diagrams
+* \#F2FAFE - Light node fill
+* \#FFFFFF - Text on dark blocks

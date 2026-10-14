@@ -5,6 +5,7 @@
 ## Quickstart
 
 * [Emporix API](quickstart/api-intro.md)
+* [Postman Collection](quickstart/postman-collection.md)
 * [List of API Services](quickstart/list-of-api-services.md)
 * [OpenAPI Generator](quickstart/openapi-generator.md)
 * [Emporix Terraform Provider](quickstart/emporix-terraform-provider.md)
@@ -633,6 +634,19 @@
               spec: schema-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/utilities/schema/api-reference/api.yml)
+  * [Search Service](utilities/search-service/README.md)
+    * [API Reference](utilities/search-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: search-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/utilities/search-service/api-reference/api.yml)
   * [Sequential-id Service](utilities/sequential-id/README.md)
     * [Sequential-id Tutorial](utilities/sequential-id/sequentialid.md)
     * [API Reference](utilities/sequential-id/api-reference/README.md)
