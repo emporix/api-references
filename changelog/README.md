@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-10-14" tags="new-feature" %}
 
 ## Coupon, Cart, and Order Services - vendor-restricted coupons
 
