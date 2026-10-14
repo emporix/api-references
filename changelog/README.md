@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement, major-change" %}
+{% update date="2026-10-14" tags="improvement, major-change" %}
 
 ## Import Service - queued import runs
 
