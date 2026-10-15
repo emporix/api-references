@@ -83,3 +83,30 @@ From the repo root you can run the script locally with a given date (e.g. for te
 ```
 
 Then commit the changes yourself. The workflow uses the same script with the merge date.
+
+## Resolving changelog conflicts
+
+Every PR adds its entry at the same place, so two open PRs that both change `changelog/README.md` conflict as soon as one of them is merged. The `Resolve changelog conflicts` workflow resolves these conflicts for you. The resolved file keeps everything that is on `main` and puts your PR's entries on top, directly after `{% updates format="full" %}`.
+
+- **Automatic:** After every push to `main` that touches `changelog/`, the workflow merges `main` into each open PR that changes `changelog/README.md` and has a changelog conflict, then pushes the merge commit to the PR branch.
+- **On request:** Comment `/fix-changelog` on the PR to run it for that PR only.
+- **When other files conflict too:** The workflow pushes nothing and comments on the PR with the list of files.
+- **PRs from forks:** The workflow skips them. Resolve the conflict locally.
+
+To resolve the conflict locally, run the script from the repo root on your PR branch, with a clean working tree:
+
+```bash
+python3 .github/scripts/resolve-changelog-conflict.py
+```
+
+The script merges `origin/main`, resolves `changelog/README.md`, and commits the merge. If other files still conflict, it lists them and leaves the merge in progress, so you can resolve them by hand and run `git commit`.
+
+If you already started a merge, rebase, or cherry-pick, resolve only the changelog with:
+
+```bash
+python3 .github/scripts/resolve-changelog-conflict.py --in-merge
+```
+
+Do not resolve `changelog/README.md` conflicts by hand. If your PR edited an existing entry, the script keeps the version on `main` and prints a warning, so you can re-apply the edit. `changelog/SUMMARY.md` conflicts are not handled by the script.
+
+To test the script, run `.github/scripts/test-resolve-changelog-conflict.sh`.
