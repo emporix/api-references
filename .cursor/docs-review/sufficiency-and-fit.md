@@ -4,7 +4,10 @@ title: Sufficiency and Task-Fit Checks
 
 # Sufficiency and Task-Fit Checks
 
-Use these checks during Cursor docs self-review. They complement the style guide. Do not auto-apply findings from this file — they are always `Auto-fixable: no`. Never invent product facts.
+Use these checks during Cursor docs self-review and GitHub Copilot PR docs review. They complement the style guide. Never invent product facts.
+
+- Cursor self-review: do not auto-apply findings from this file — they are always `Auto-fixable: no`.
+- Copilot PR review: post one inline comment per finding; cite `sufficiency#...` or `task-fit#...`. See `.github/skills/code-review/reference.md`.
 
 Rule prefixes:
 - Sufficiency: `sufficiency#...`
@@ -40,16 +43,36 @@ Run this lane even when no task context is provided. Ask whether a typical docs 
 - Ambiguous steps, unspecified actors, or unexplained outcomes are flagged.
 - Prefer findings that name what the reader still cannot do or cannot tell.
 
+### User goal (`sufficiency#user-goal`)
+- The page is written from the reader's goal, task, and flow (see `language-and-tone#write-from-the-users-goal` and `planning-and-structure`), not from what was implemented or how a view changed.
+- Flag sections that describe views, tabs, fields, or buttons one by one without saying why a reader would use them or what they achieve.
+- Flag "where to find it" information that replaces the reason to look for the option, button, icon, or dialog window.
+- Flag descriptions of what changed in the UI (before and after) on pages that should describe how to complete a task.
+
+### Fit in the documentation set (`sufficiency#fit-in-set`)
+- The page or section sits in the right space and section. Check the `SUMMARY.md` of the space and the neighbouring pages when they are available.
+- The form suits the content (concept, procedure, reference, tutorial; see `planning-and-structure#choose-the-form`).
+- Terminology, depth, and structure match the neighbouring pages. Flag information that duplicates another page instead of linking to it.
+- New pages are linked from `SUMMARY.md` and from at least one related page.
+- If the surrounding pages are not available for the check, emit a `Needs more information` finding instead of guessing.
+
+### Obvious statements (`sufficiency#obvious`)
+- Flag sentences and steps that only restate what the reader sees in the UI (see `language-and-tone#skip-the-obvious`).
+- Flag quoted UI text such as notifications, hints, tooltips, and empty or error messages (see `language-and-tone#describe-what-happens-do-not-quote-the-screen`). Suggest describing what happens and what the reader can do next.
+
 Severity guidance:
 - `critical` — a reader cannot complete the main task of the page, or the page does not address its titled topic
 - `major` — important gaps (missing prerequisites, incomplete procedure, unexplained required concept)
-- `minor` — clarity polish that does not block the main task
+- `minor` — clarity polish that does not block the main task (the user-goal, fit-in-set, and obvious-statements findings are normally `major` when they affect the main task and `minor` otherwise)
 
 ## Task-fit (only when context exists)
 
-Skip this entire lane when `Task context: none`. Include `Task-fit: skipped` in the findings payload.
+Skip this entire lane when `Task context: none`. Include `Task-fit: skipped` in the Cursor findings payload.
 
-When context is provided (pasted task description, acceptance criteria, GitHub PR/issue body and file list), check that the docs satisfy that request.
+When context is provided, check that the docs satisfy that request.
+
+- Cursor: pasted task description, acceptance criteria, or GitHub PR/issue body and file list in the chat
+- Copilot PR review: this pull request's title, body, linked issues, and changed-file list (skip only when that text is too thin; then comment `task-fit#insufficient-context`)
 
 ### Acceptance criteria (`task-fit#acceptance-criteria`)
 - Requested topics and AC items are covered, or the docs explicitly mark them out of scope.

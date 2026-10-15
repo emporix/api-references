@@ -135,7 +135,10 @@ description: Webhook events related to the creation, update, and deletion of a q
     "postcode": "String",
     "state": "String"
   },
-  "company": "String"
+  "company": {
+    "name": "String"
+  },
+  "legalEntityId": "String"
 }
 </code></pre></td></tr><tr><td>quote.updated</td><td><pre class="language-json"><code class="lang-json">{
   "previousStatus": "String",
@@ -263,7 +266,10 @@ description: Webhook events related to the creation, update, and deletion of a q
     "postcode": "String",
     "state": "String"
   },
-  "company": "String"
+  "company": {
+    "name": "String"
+  },
+  "legalEntityId": "String"
 }
 </code></pre></td></tr><tr><td>quote.deleted</td><td><pre class="language-json"><code class="lang-json">{
  "quoteId": "String"

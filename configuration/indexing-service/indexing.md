@@ -32,6 +32,10 @@ This functionality is in preview mode - some of the features may not be fully op
 
 Battery Included only supports the `MERGE` site-aware fields strategy. Tenants configured with the `SPLIT` strategy will have Battery Included indexing silently skipped.
 
+{% hint style="info" %}
+For details on how Battery Included builds product documents under `MERGE`, including behavior when the default site is or is not `main`, see [How Battery Included indexes products](#how-battery-included-indexes-products).
+{% endhint %}
+
 #### Write-key validation
 
 When you create or update a `BATTERY_INCLUDED` configuration, the indexing service validates `indexName` and `writeKey` before saving. Invalid credentials return `400`. If credential validation is temporarily unavailable, the request returns `502`. In both cases, the configuration is left unchanged.
@@ -51,7 +55,7 @@ The Indexing service uses separate API keys for every tenant, so that you get mo
 
 ## How to configure search indexing
 
-To create indexing configuration, send a request to the [Creating new configuration](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) endpoint.
+To create indexing configuration, send a request to the [Creating new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -121,7 +125,7 @@ If `writeKey` or `indexName` is wrong, the create request fails with `400` and n
 ## How to update the index configuration
 
 To update the index configuration you need to retrieve the `writeKey` first.
-Send the request to the [Get configuration by provider name](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) endpoint.
+Send the request to the [Get configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -135,7 +139,7 @@ curl -L
   --header 'Accept: */*'
 ```
 
-To change configuration, make a call to the [Update configuration by provider name](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) endpoint, providing the `writeKey` from the previous step.
+To change configuration, make a call to the [Update configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) endpoint, providing the `writeKey` from the previous step.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -167,7 +171,7 @@ To apply your configuration changes to existing data, run the reindexing process
 
 Usually, reindexing runs upon the update of a product or its dependant entity, such as category, price, or media. The scheduler job discovers what has been changed and pushes the changes to index frequently.
 But, if you change your index configuration, you need to trigger the reindexing process to apply your configuration changes.
-You can run the reindex without the need to update all your resource data by sending the request to the [Reindex](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex) endpoint.
+You can run the reindex without the need to update all your resource data by sending the request to the [Reindex](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -199,7 +203,7 @@ No reindex job is created. Update the configuration first, then retry. If Batter
 
 How to retrieve public search configuration
 
-If you want to get your storefront index configuration without the need to update, you can call the public endpoint to get the `searchKey`. Send the request to the [Get all public configurations](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/public-configuration#get-indexing-tenant-public-configurations) endpoint.
+If you want to get your storefront index configuration without the need to update, you can call the public endpoint to get the `searchKey`. Send the request to the [Get all public configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/public-configuration#get-indexing-tenant-public-configurations) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -216,7 +220,14 @@ curl -L
 ## How to choose indexing strategy
 
 You can choose between two indexing strategies for your search index configuration: `MERGE` and `SPLIT`. `MERGE` strategy creates a single index for all sites declared in the system, while `SPLIT` creates a separate index for each site.
-To choose the right mode for your index, send the request to the [Updating a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint.
+
+Battery Included supports only `MERGE`. If the strategy is `SPLIT`, Battery Included product indexing is skipped.
+
+{% hint style="info" %}
+For details on how Battery Included indexes products under `MERGE`, see [How Battery Included indexes products](#how-battery-included-indexes-products).
+{% endhint %}
+
+To choose the right mode for your index, send the request to the [Updating a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -240,4 +251,50 @@ curl -L
 ```
 
 In the request parameters, for the `propertyKey` choose `indexing_siteAwareFieldsStrategy`. In the request body, pass the chosen strategy value.Please remain patient as propagating changes to the index strategy may take up to 1 hour, so you might not be able to see the changes instantly.
- 
+
+## How Battery Included indexes products
+
+When the tenant uses `MERGE`, the Indexing Service builds one Battery Included search document per product. Core product fields come from a single base site.
+
+The Battery Included document stores site-specific data in `_product_siteAware`. This field is a map whose keys are site codes.
+Each value can contain prices grouped by currency, availability, and segment IDs for that site. Availability can appear for a site
+even when that site has no prices.
+
+If your tenant uses `SPLIT`, Battery Included product indexing is skipped.
+
+{% hint style="info" %}
+To set the strategy, see [How to choose indexing strategy](#how-to-choose-indexing-strategy).
+{% endhint %}
+
+### How the base site is chosen
+
+When the Indexing Service merges per-site product data into one document, it picks the base site in this order:
+
+1. A site that matches one of the tenant default sites
+2. The `main` site, if no matching default-site data is available
+3. The first available site, if neither of the above matches
+
+The merged document is stored under site code `main`, which is how `MERGE` keeps a single per-product document.
+
+### Special rules for the `main` site
+
+For the `main` site, a product can still be indexed when it is unpublished, has no prices, or is unavailable.
+
+For any other site, those conditions mean that site does not contribute prices, availability, or segment IDs to the merged document. If the chosen base site is such a site, the product is removed from Battery Included.
+
+### When the default site is `main`
+
+When a tenant default site is `main`, the following applies:
+
+- Base product fields come from `main`.
+- The `main` site rules above apply to the base site, so unpublished, no-price, or unavailable status on that default site does not by itself remove the product from Battery Included.
+- Sites that still contribute data write their prices, availability, and segment IDs to `_product_siteAware`.
+
+### When the default site is not `main`
+
+When the matching tenant default site is not `main`, the following applies:
+
+- Base product fields come from that default site when it still contributes data.
+- If that default site would not index the product (for example because it is unpublished, has no price, or is unavailable), the product is removed from Battery Included.
+- Otherwise, `_product_siteAware` still includes every site that contributed prices, availability, or segment IDs.
+

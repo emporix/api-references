@@ -21,11 +21,7 @@ layout:
 
 # Import Service Tutorial
 
-The Import Service imports external master data into Emporix. A configuration groups one or more streams, where each stream extracts from a source connection, maps fields to an Emporix target type, and upserts idempotently. Imports run asynchronously and stream per-stream progress over Server-Sent Events (SSE).
-
-{% hint style="danger" %}
-This functionality is in preview mode - some of the features may not be fully operational yet.
-{% endhint %}
+The Import Service imports external master data into Emporix. A configuration groups one or more streams, where each stream extracts from a source connection, maps fields to an Emporix target type, and upserts idempotently. Imports run asynchronously. A requested run waits in a shared queue until a worker is free, then executes and streams per-stream progress over Server-Sent Events (SSE).
 
 {% hint style="warning" %}
 This tutorial covers triggering, scheduling, monitoring, cancelling, and inspecting import runs. An import configuration must already exist for your tenant.
@@ -88,7 +84,7 @@ Make sure you have the following:
 
 Before triggering a run, verify that the configuration you want to use exists and is enabled.
 
-To list all import configurations for your tenant, send a request to the [Retrieving all import configurations](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs) endpoint.
+To list all import configurations for your tenant, send a request to the [Retrieving all import configurations](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs) endpoint.
 
 ```bash
 curl -i -X GET \
@@ -96,7 +92,7 @@ curl -i -X GET \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
-To retrieve a single configuration by its identifier, send a request to the [Retrieving an import configuration](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs-id) endpoint.
+To retrieve a single configuration by its identifier, send a request to the [Retrieving an import configuration](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/configurations#get-importtool-tenant-configs-id) endpoint.
 
 ```bash
 curl -i -X GET \
@@ -116,7 +112,7 @@ The response includes fields such as `name`, `enabled`, `deltaEnabled`, and `sou
 
 Each configuration contains one or more streams. A stream defines which source entity is extracted, how fields are mapped, and which Emporix target type receives the upserted records.
 
-To list the streams for a configuration, ordered by sequence, send a request to the [Retrieving all streams of a configuration](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) endpoint.
+To list the streams for a configuration, ordered by sequence, send a request to the [Retrieving all streams of a configuration](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) endpoint.
 
 ```bash
 curl -i -X GET \
@@ -124,7 +120,7 @@ curl -i -X GET \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
-To retrieve a single stream, including its resolved target types, send a request to the [Retrieving a stream](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) endpoint.
+To retrieve a single stream, including its resolved target types, send a request to the [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) endpoint.
 
 ```bash
 curl -i -X GET \
@@ -148,7 +144,7 @@ Each stream response includes `sourceEntity`, `targetWriter`, `targetType`, and 
 
 You can run a configuration automatically on a cron schedule.
 
-To check whether a schedule already exists, send a request to the [Retrieving a schedule](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/schedules#get-importtool-tenant-configs-configid-schedule) endpoint. If no schedule is configured, the endpoint returns `204 No Content`.
+To check whether a schedule already exists, send a request to the [Retrieving a schedule](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/schedules#get-importtool-tenant-configs-configid-schedule) endpoint. If no schedule is configured, the endpoint returns `204 No Content`.
 
 ```bash
 curl -i -X GET \
@@ -156,7 +152,7 @@ curl -i -X GET \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
-To create or update a schedule, send a request to the [Scheduling an import run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/schedules#put-importtool-tenant-configs-configid-schedule) endpoint with a Spring cron expression (six fields), time zone, and `enabled` flag.
+To create or update a schedule, send a request to the [Scheduling an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/schedules#put-importtool-tenant-configs-configid-schedule) endpoint with a Spring cron expression (six fields), time zone, and `enabled` flag.
 
 ```bash
 curl -i -X PUT \
@@ -172,6 +168,8 @@ curl -i -X PUT \
 
 In this example, the configuration runs every day at 02:00 in the `Europe/Berlin` time zone. The saved schedule response includes `nextFireAt` when a next run time can be calculated.
 
+If the configuration already has a run executing or queued when the schedule fires, the scheduled run waits behind that run instead of being skipped. A later scheduled request is folded into a queued real run of the whole configuration and counted in `supersededRequests`, with `lastRequestedAt` set to the time of that latest request. If the queued run is a dry run, a run of selected streams, or a retry, the scheduled run waits until that run starts and is then queued behind it.
+
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 {% content-ref url="api-reference/" %}
@@ -180,7 +178,7 @@ In this example, the configuration runs every day at 02:00 in the `Europe/Berlin
 
 ## How to trigger an import run
 
-To start an import manually, send a request to the [Triggering an import run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) endpoint. The endpoint returns immediately with the run in a `RUNNING` state; progress is available through polling or SSE.
+To start an import manually, send a request to the [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) endpoint. The endpoint returns immediately with the run in the `QUEUED` status. The run usually starts within moments, when a worker is free, and then has the `RUNNING` status.
 
 ```bash
 curl -i -X POST \
@@ -188,7 +186,7 @@ curl -i -X POST \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
-    "mode": "FULL"
+    "mode": "DELTA"
   }'
 ```
 
@@ -212,13 +210,13 @@ curl -i -X POST \
   }'
 ```
 
-{% hint style="warning" %}
-If a run is already active for the configuration, the endpoint returns `409 Conflict` with the message `An import run is already active for this configuration.`
-{% endhint %}
+A configuration has at most one run executing and at most one run queued. While the configuration has a run in the `QUEUED`, `RUNNING`, or `RESUMABLE` status, a manual trigger returns `409 Conflict`.
 
-On success, the response includes the run `id`, `status`, `mode`, and counters such as `recordsRead`, `created`, `updated`, `skipped`, `failed`, and `deleted`. Save the run `id` for monitoring and troubleshooting.
+If the tenant already has `maxConcurrentImports` runs executing, the new run stays queued until one finishes instead of returning `429 Too Many Requests`. Read the limit from the [Retrieving import limits](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/license#get-importtool-tenant-license) endpoint.
 
-To list previous runs for a configuration, send a request to the [Retrieving run history](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) endpoint.
+On success, the response includes the run `id`, `status`, `mode`, and counters such as `recordsRead`, `created`, `updated`, `skipped`, `failed`, and `deleted`. Save the run `id` for monitoring and troubleshooting. The trigger response does not include `mappingVersions`; those versions are fixed when the run starts executing and appear when you retrieve the run.
+
+To list previous runs for a configuration, send a request to the [Retrieving run history](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) endpoint.
 
 ```bash
 curl -i -X GET \
@@ -238,7 +236,7 @@ You can monitor a run by polling its status or by subscribing to the SSE progres
 
 ### Poll run status
 
-To retrieve a run together with per-stream progress, send a request to the [Retrieving a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) endpoint.
+To retrieve a run together with per-stream progress, send a request to the [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) endpoint.
 
 ```bash
 curl -i -X GET \
@@ -246,11 +244,19 @@ curl -i -X GET \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
-The response contains a `run` object and a `streams` array. Each stream entry includes its own `status` and counters. Terminal run statuses are `SUCCEEDED`, `PARTIAL`, `FAILED`, and `CANCELLED`.
+The response contains a `run` object and a `streams` array. Each stream entry includes its own `status` and counters.
+
+While the run is `QUEUED`, it has no per-stream progress. Check these fields on the retrieved run:
+
+* `queueWaitingFor` – `WORKER` (use `queuePosition` for its place in the shared queue), `PREVIOUS_RUN` (the configuration's current run), or `TENANT_LIMIT` (`maxConcurrentImports` is reached).
+* `startedAt` – when the run was requested.
+* `executionStartedAt` – when execution began. `null` while the run is still queued.
+
+A run can also report the `RESUMABLE` status after an interruption such as a service restart. That status is not final: the run resumes automatically from its last checkpoint. Terminal run statuses are `SUCCEEDED`, `PARTIAL`, `FAILED`, `CANCELLED`, and `ABORTED`. `ABORTED` means the service refused to start the run because of the import configuration, for example unpublished mappings. Nothing was read or written.
 
 ### Stream run progress over SSE
 
-To receive live progress updates, open the [Streaming run progress](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-events) endpoint. The stream sends:
+To receive live progress updates, open the [Streaming run progress](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-events) endpoint. You can open the stream while the run is still queued. The stream sends:
 
 1. An initial `snapshot` event with the run and stream state.
 2. A `stream` event for each processed batch.
@@ -275,7 +281,7 @@ curl -i -N -X GET \
 
 ## How to cancel an import run
 
-To request cancellation of an active run, send a request to the [Cancelling a run](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-cancel) endpoint.
+To request cancellation of an active run, send a request to the [Cancelling a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-cancel) endpoint.
 
 ```bash
 curl -i -X POST \
@@ -283,13 +289,17 @@ curl -i -X POST \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
-By default, cancellation is **cooperative** — the run stops after the current batch completes. To stop the run immediately and unblock the configuration, pass `force=true`:
+A `QUEUED` run is cancelled immediately and gets the `CANCELLED` status, with or without `force`.
+
+For a run that is already executing, cancellation is cooperative by default — the run stops after the current batch completes. To stop the run immediately and unblock the configuration, pass `force=true`:
 
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/importtool/{tenant}/runs/{runId}/cancel?force=true' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
+
+A run in the `RESUMABLE` status can be stopped only with `force=true`. Without `force`, the request returns `409 Conflict`.
 
 On success, the endpoint returns `202 Accepted` with `accepted: true`. If the run is already finished or unknown, `accepted` is `false`.
 
@@ -305,7 +315,7 @@ After a successful or partial run, verify what was imported.
 
 ### List imported data types
 
-To see which target types currently hold imported records, send a request to the [Retrieving imported data types](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-types) endpoint.
+To see which target types currently hold imported records, send a request to the [Retrieving imported data types](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-types) endpoint.
 
 ```bash
 curl -i -X GET \
@@ -315,7 +325,7 @@ curl -i -X GET \
 
 ### Search imported records by type
 
-To search records of a given target type, send a request to the [Searching imported records](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-records) endpoint. The `type` query parameter is required. The optional `search` parameter filters by natural key.
+To search records of a given target type, send a request to the [Searching imported records](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-records) endpoint. The `type` query parameter is required. The optional `search` parameter filters by natural key.
 
 {% hint style="warning" %}
 The `search` parameter performs a case-insensitive substring match on the record's natural key only. It is not the Emporix query language, so field selectors and operators (for example `field:value`, comparisons, or boolean logic) are not supported.
@@ -331,7 +341,7 @@ Each record includes `naturalKey`, `targetType`, `fields`, `outcome` (for exampl
 
 ### Search records for a specific stream
 
-To search only the records produced by one stream, send a request to the [Searching a stream's imported records](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-streams-streamid-records) endpoint. The optional `search` parameter uses the same natural-key substring filter as the type-based search endpoint.
+To search only the records produced by one stream, send a request to the [Searching a stream's imported records](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-streams-streamid-records) endpoint. The optional `search` parameter uses the same natural-key substring filter as the type-based search endpoint.
 
 ```bash
 curl -i -X GET \
@@ -349,7 +359,7 @@ curl -i -X GET \
 
 When a run finishes with status `PARTIAL` or `FAILED`, inspect the recorded errors.
 
-To retrieve paginated errors for a run, send a request to the [Retrieving run errors](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-errors) endpoint.
+To retrieve paginated errors for a run, send a request to the [Retrieving run errors](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-errors) endpoint.
 
 ```bash
 curl -i -X GET \

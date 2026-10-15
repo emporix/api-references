@@ -26,7 +26,7 @@ This tutorial demonstrates creating and using sequential IDs for order numbers.
 
 ### Create a sequence schema
 
-To create a schema for sequential IDs creation, send the request to the [Creating a schema](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas) endpoint.
+To create a schema for sequential IDs creation, send the request to the [Creating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -58,7 +58,7 @@ curl -i -X POST
   }'
 ```
 
-The schema can use these built-in placeholders, which Sequential ID resolves from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) when you pass `siteCode`:
+The schema can use these built-in placeholders, which Sequential ID resolves from [Retrieving a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) when you pass `siteCode`:
 
 | Placeholder | Source |
 | --- | --- |
@@ -73,7 +73,7 @@ Each placeholder object can include these properties in addition to `required` a
 
 | Property | Type | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | --- | --- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `sitePath` | string | Dotted path used to resolve the placeholder. Paths that start with `mixins.` come from [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins), for example `mixins.customConfig.region`. Other paths come from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) and must match the Site schema, for example `homeBase.address.country`. Use numeric segments to index arrays, for example `shipping.0.id`. |
+| `sitePath` | string | Dotted path used to resolve the placeholder. Paths that start with `mixins.` come from [Retrieving site mixins](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins), for example `mixins.customConfig.region`. Other paths come from [Retrieving a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode) and must match the Site schema, for example `homeBase.address.country`. Use numeric segments to index arrays, for example `shipping.0.id`. |
 | `arrayLimit` | integer | Maximum number of array elements to include when `sitePath` resolves to an array. Minimum value is `1`. Default: `3`. Ignored for scalar values.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | `delimiter` | string | Separator used when joining array values. Default: `-`. Ignored for scalar values.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 
@@ -128,23 +128,23 @@ Example placeholder resolved from an array field:
 
 When you create a schema, Sequential ID validates every `sitePath`:
 
-* Standard site paths must match the known Site schema from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode), for example `homeBase.address.country`, `currency`, `shipToCountries`, or `shipping.0.id`.
-* Paths that start with `mixins.` are format-validated only, because mixin content is tenant-defined. These paths are resolved from [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins).
+* Standard site paths must match the known Site schema from [Retrieving a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode), for example `homeBase.address.country`, `currency`, `shipToCountries`, or `shipping.0.id`.
+* Paths that start with `mixins.` are format-validated only, because mixin content is tenant-defined. These paths are resolved from [Retrieving site mixins](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins).
 * The service rejects malformed paths, bracket notation such as `shipping[0].id`, unknown non-mixin properties, the bare `mixins` root, any `metadata` path, and `arrayLimit` values that are not positive.
 
 {% hint style="warning" %}
 Placeholder values can be resolved dynamically from site data when you pass `siteCode`:
 
-* Built-in date and time placeholders (`__year__`, `__month__`, `__day__`, `__hour__`, `__minute__`, `__second__`) use `homeBase.timezone` from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode). If no timezone is defined, `UTC` is used.
+* Built-in date and time placeholders (`__year__`, `__month__`, `__day__`, `__hour__`, `__minute__`, `__second__`) use `homeBase.timezone` from [Retrieving a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode). If no timezone is defined, `UTC` is used.
 * The built-in `__country__` placeholder uses `homeBase.address.country` from the same response. If no country is defined, `DE` is used.
-* Custom placeholders that declare `sitePath` are resolved from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode), or from [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins) when the path starts with `mixins.`.
+* Custom placeholders that declare `sitePath` are resolved from [Retrieving a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode), or from [Retrieving site mixins](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins) when the path starts with `mixins.`.
 * `sitePath` must resolve to a scalar value or to an array of scalars.
 * Singular array elements can be addressed with numeric segments, for example `shipping.0.id`. If `sitePath` resolves to an array, the service joins the values using the configured `delimiter` and `arrayLimit`.
 {% endhint %}
 
 ### Retrieve the created schema
 
-To get the created schema details, make a call to the [Retrieving a schema](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-tenant-schemas-schemaid) endpoint.
+To get the created schema details, make a call to the [Retrieving a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#get-sequential-id-tenant-schemas-schemaid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -162,7 +162,7 @@ Copy the schema ID.
 
 ### Activate the schema
 
-Activate the schema to apply it in the system so that the order numbers follow the new pattern. Send the request to the [Activating a schema](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-schemaid-setactive) endpoint.
+Activate the schema to apply it in the system so that the order numbers follow the new pattern. Send the request to the [Activating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-schemaid-setactive) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -180,7 +180,7 @@ Provide the `sequenceSchemaID` in the request.
 
 ### Generate a sequence ID based on the schema
 
-Now, you can generate the order IDs that follow the new schema. To create a sequence ID, make a call to the [Creating a nextId for schema type](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-types-schematype-nextid) endpoint.
+Now, you can generate the order IDs that follow the new schema. To create a sequence ID, make a call to the [Creating a nextId for schema type](https://developer.emporix.io/api-documentation/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas-types-schematype-nextid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -208,7 +208,7 @@ Providing `siteCode` is required when the schema uses a required `sitePath` plac
 
 This endpoint creates and returns the `nextId` value. When you send an empty body in the request, the `nextId` is generated following the pattern defined in the schema and the placeholders are replaced with values from the site settings.
 
-If a placeholder defines `sitePath`, Sequential ID resolves it from [Retrieving a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode), or from [Retrieving site mixins](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins) when the path starts with `mixins.`. Values supplied in the request body take precedence over `sitePath` resolution.
+If a placeholder defines `sitePath`, Sequential ID resolves it from [Retrieving a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#get-site-tenant-sites-sitecode), or from [Retrieving site mixins](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins) when the path starts with `mixins.`. Values supplied in the request body take precedence over `sitePath` resolution.
 
 For example, for a schema with `"preText": "EC-__region__-"` and `"sitePath": "mixins.customConfig.region"`, a site mixin value of `"EU"` produces an ID such as:
 

@@ -110,7 +110,7 @@ The Configuration Service supports various configuration keys for different purp
 
 ### How to retrieve all tenant configurations
 
-To retrieve a list of all tenant configurations, send a request to the [Retrieving configurations](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations) endpoint.
+To retrieve a list of all tenant configurations, send a request to the [Retrieving configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -136,7 +136,7 @@ curl -L
 
 ### How to retrieve a specific tenant configuration
 
-To retrieve a specific tenant configuration by its key, send a request to the [Retrieving a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey) endpoint.
+To retrieve a specific tenant configuration by its key, send a request to the [Retrieving a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#get-configuration-tenant-configurations-propertykey) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -173,7 +173,7 @@ The example response looks like:
 
 ### How to create tenant configurations
 
-To create new tenant configurations, send a request to the [Creating configurations](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#post-configuration-tenant-configurations) endpoint.
+To create new tenant configurations, send a request to the [Creating configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#post-configuration-tenant-configurations) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -259,7 +259,7 @@ When creating configurations, make sure the `version` field is set to `1` for ne
 
 ### How to update a tenant configuration
 
-To update an existing tenant configuration, send a request to the [Updating a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint.
+To update an existing tenant configuration, send a request to the [Updating a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -388,7 +388,7 @@ curl -L
 
 ### How to delete a tenant configuration
 
-To delete a tenant configuration, send a request to the [Deleting a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#delete-configuration-tenant-configurations-propertykey) endpoint.
+To delete a tenant configuration, send a request to the [Deleting a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#delete-configuration-tenant-configurations-propertykey) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -409,7 +409,7 @@ Client configurations are service-specific settings that apply to particular ser
 
 ### How to retrieve available clients
 
-To retrieve a list of available clients for your tenant, send a request to the [Retrieving clients](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/client-configurations#get-configuration-tenant-clients) endpoint.
+To retrieve a list of available clients for your tenant, send a request to the [Retrieving clients](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/client-configurations#get-configuration-tenant-clients) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -434,7 +434,7 @@ The example response looks like:
 
 ### How to retrieve client configurations
 
-To retrieve all configurations for a specific client, send a request to the [Retrieving client configurations](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/client-configurations#get-configuration-tenant-clients-client-configurations) endpoint.
+To retrieve all configurations for a specific client, send a request to the [Retrieving client configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/client-configurations#get-configuration-tenant-clients-client-configurations) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -491,7 +491,7 @@ curl -L
 
 ### How to retrieve a specific client configuration
 
-To retrieve a specific client configuration by its key, send a request to the [Retrieving a client configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/client-configurations#get-configuration-tenant-clients-client-configurations-propertykey) endpoint.
+To retrieve a specific client configuration by its key, send a request to the [Retrieving a client configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/client-configurations#get-configuration-tenant-clients-client-configurations-propertykey) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -531,7 +531,7 @@ The example response looks like:
 
 ### How to create client configurations
 
-To create new client configurations, send a request to the [Creating client configurations](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/client-configurations#post-configuration-tenant-clients-client-configurations) endpoint.
+To create new client configurations, send a request to the [Creating client configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/client-configurations#post-configuration-tenant-clients-client-configurations) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -589,7 +589,7 @@ The response looks like:
 
 ### How to update a client configuration
 
-To update an existing client configuration, send a request to the [Updating a client configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/client-configurations#put-configuration-tenant-clients-client-configurations-propertykey) endpoint.
+To update an existing client configuration, send a request to the [Updating a client configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/client-configurations#put-configuration-tenant-clients-client-configurations-propertykey) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -612,7 +612,7 @@ curl -L
 
 ### How to delete a client configuration
 
-To delete a client configuration, send a request to the [Deleting a client configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/client-configurations#delete-configuration-tenant-clients-client-configurations-propertykey) endpoint.
+To delete a client configuration, send a request to the [Deleting a client configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/client-configurations#delete-configuration-tenant-clients-client-configurations-propertykey) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -633,7 +633,7 @@ Global configurations are read-only configurations that are associated with all 
 
 ### How to retrieve global configurations
 
-To retrieve a list of global configurations, send a request to the [Retrieving global configurations](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/global-configurations#get-configuration-tenant-global-configurations) endpoint.
+To retrieve a list of global configurations, send a request to the [Retrieving global configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/global-configurations#get-configuration-tenant-global-configurations) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

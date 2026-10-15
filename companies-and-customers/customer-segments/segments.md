@@ -26,7 +26,7 @@ To create and configure a segment, you need the `customersegment.segment_manage`
 {% step %}
 #### Create a customer segment
 
-Send the request to the [Creating a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments) endpoint.
+Send the request to the [Creating a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments) endpoint.
 
 ```bash
 curl -i -X POST \
@@ -59,7 +59,7 @@ A successful request returns `201` with the segment `id`. If you omit `status`, 
 
 Assign products or categories so the segment can drive customized storefront assortment and campaigns.
 
-To assign one product or category, send the request to the [Updating an item assignment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#put-customer-segment-tenant-segments-segmentid-items-type-itemid) endpoint. Set `{type}` to `PRODUCT` or `CATEGORY`.
+To assign one product or category, send the request to the [Updating an item assignment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#put-customer-segment-tenant-segments-segmentid-items-type-itemid) endpoint. Set `{type}` to `PRODUCT` or `CATEGORY`.
 
 ```bash
 curl -i -X PUT \
@@ -80,7 +80,7 @@ curl -i -X PUT \
   }'
 ```
 
-To assign multiple items, send the request to the [Updating item assignments to a customer segment in bulk](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#put-customer-segment-tenant-segments-segmentid-items-type-bulk) endpoint. The maximum batch size is 200.
+To assign multiple items, send the request to the [Updating item assignments to a customer segment in bulk](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#put-customer-segment-tenant-segments-segmentid-items-type-bulk) endpoint. The maximum batch size is 200.
 
 ```bash
 curl -i -X PUT \
@@ -120,7 +120,7 @@ These operations perform an `UPSERT`. If the item is already assigned to the seg
 
 Add B2B or B2C customers, depending on your setup.
 
-To add a B2B customer, send the request to the [Updating a customer assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/customers-assignments#put-customer-segment-tenant-segments-segmentid-customers-customerid-legalentityid) endpoint. Provide `customerId` and `legalEntityId` in the path.
+To add a B2B customer, send the request to the [Updating a customer assignment for a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/customers-assignments#put-customer-segment-tenant-segments-segmentid-customers-customerid-legalentityid) endpoint. Provide `customerId` and `legalEntityId` in the path.
 
 ```bash
 curl -i -X PUT \
@@ -141,7 +141,7 @@ curl -i -X PUT \
   }'
 ```
 
-To add a B2C customer, send the request to the [Updating a customer assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/customers-assignments#put-customer-segment-tenant-segments-segmentid-customers-customerid) endpoint. Provide `customerId` only.
+To add a B2C customer, send the request to the [Updating a customer assignment for a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/customers-assignments#put-customer-segment-tenant-segments-segmentid-customers-customerid) endpoint. Provide `customerId` only.
 
 ```bash
 curl -i -X PUT \
@@ -162,7 +162,7 @@ curl -i -X PUT \
   }'
 ```
 
-To add multiple customers, send the request to the [Updating customer assignments for a customer segment in bulk](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/customers-assignments#put-customer-segment-tenant-segments-segmentid-customers-bulk) endpoint. The maximum batch size is 200.
+To add multiple customers, send the request to the [Updating customer assignments for a customer segment in bulk](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/customers-assignments#put-customer-segment-tenant-segments-segmentid-customers-bulk) endpoint. The maximum batch size is 200.
 
 ```bash
 curl -i -X PUT \
@@ -216,7 +216,7 @@ Assign an IAM customer group to a segment so every customer in that group inheri
 Ensure you have:
 
 * An existing customer segment – see [How to add a customer segment](#how-to-add-a-customer-segment)
-* An IAM group with `userType` `CUSTOMER` – see [Creating a new group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups)
+* An IAM group with `userType` `CUSTOMER` – see [Creating a new group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups)
 
 {% hint style="warning" %}
 To assign and remove groups, you need the `customersegment.segment_manage` scope. To retrieve group assignments, you need the `customersegment.segment_read` scope.
@@ -230,7 +230,7 @@ Only IAM groups with `userType` `CUSTOMER` can be assigned to a segment. Assigni
 {% step %}
 #### Assign a group to a segment
 
-Send the request to the [Upserting a group assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#put-customer-segment-tenant-segments-segmentid-groups-groupid) endpoint. Provide the segment ID and the IAM group ID in the path.
+Send the request to the [Upserting a group assignment for a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#put-customer-segment-tenant-segments-segmentid-groups-groupid) endpoint. Provide the segment ID and the IAM group ID in the path.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -263,7 +263,7 @@ A new assignment returns `201`. An update of an existing assignment returns `204
 {% step %}
 #### Retrieve group assignments
 
-To list all IAM groups assigned to a segment, send the request to the [Retrieving all group assignments for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups) endpoint.
+To list all IAM groups assigned to a segment, send the request to the [Retrieving all group assignments for a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -278,7 +278,7 @@ curl -i -X GET \
   -H 'X-Total-Count: true'
 ```
 
-To retrieve a single assignment, send the request to the [Retrieving a group assignment for a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups-groupid) endpoint.
+To retrieve a single assignment, send the request to the [Retrieving a group assignment for a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups-groupid) endpoint.
 
 ```bash
 curl -i -X GET \
@@ -292,7 +292,7 @@ The response includes `segmentId`, the group `id` and localized `name`, and assi
 {% step %}
 #### Search for a group assignment
 
-To find assignments that match specific criteria, send the request to the [Searching with parameters for group assignments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#post-customer-segment-tenant-segments-segmentid-groups-search) endpoint. Pass the criteria in the `q` parameter in the request body.
+To find assignments that match specific criteria, send the request to the [Searching with parameters for group assignments](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#post-customer-segment-tenant-segments-segmentid-groups-search) endpoint. Pass the criteria in the `q` parameter in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -314,7 +314,7 @@ curl -i -X POST \
 {% step %}
 #### Remove a group from a segment
 
-To remove an IAM group assignment, send the request to the [Removing a group from a customer segment](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#delete-customer-segment-tenant-segments-segmentid-groups-groupid) endpoint.
+To remove an IAM group assignment, send the request to the [Removing a group from a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#delete-customer-segment-tenant-segments-segmentid-groups-groupid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -338,7 +338,7 @@ A successful removal returns `204`. Customers who inherit the segment only throu
 To search for segments, you need the `customersegment.segment_read` scope.
 {% endhint %}
 
-Send the request to the [Searching with parameters for customer segments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments-search) endpoint. Pass the criteria in the `q` parameter in the request body.
+Send the request to the [Searching with parameters for customer segments](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments-search) endpoint. Pass the criteria in the `q` parameter in the request body.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -363,14 +363,14 @@ curl -i -X POST \
 To display the right products and categories on the storefront, resolve which active segments apply to the authenticated customer. The response includes segments assigned directly to the customer and segments assigned through the customer's IAM groups.
 
 {% hint style="warning" %}
-This request uses a customer access token with the `customersegment.segment_read_own` scope. Use [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) to obtain the token.
+This request uses a customer access token with the `customersegment.segment_read_own` scope. Use [Logging in a customer](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) to obtain the token.
 {% endhint %}
 
 {% hint style="info" %}
 Resolved segments include those from groups that are not bound to a legal entity, and from groups bound to the customer's current legal entity.
 {% endhint %}
 
-Send the request to the [Retrieving own customer segments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/segments#get-customer-segment-tenant-segments-me) endpoint.
+Send the request to the [Retrieving own customer segments](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/segments#get-customer-segment-tenant-segments-me) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -391,7 +391,7 @@ The response lists the active segments that apply to the customer. Pass those se
 
 Create a coupon that applies only to the products or categories assigned to a segment, and only for customers who are members of that segment.
 
-Send the request to the [Creating a new coupon](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/coupon-management#post-coupon-tenant-coupons) endpoint. Set `segmentRestricted` to `true` and list the segment IDs in `restrictions.segments`.
+Send the request to the [Creating a new coupon](https://developer.emporix.io/api-documentation/api-guides/rewards-and-promotions/coupon/api-reference/coupon-management#post-coupon-tenant-coupons) endpoint. Set `segmentRestricted` to `true` and list the segment IDs in `restrictions.segments`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -446,7 +446,7 @@ To resolve which active segments apply to the authenticated customer, including 
 {% step %}
 #### Retrieve assigned products or categories
 
-Retrieve the products or categories assigned to the segments that apply to the customer. Send the request to the [Retrieving all items assignments for all customer segments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items) endpoint.
+Retrieve the products or categories assigned to the segments that apply to the customer. Send the request to the [Retrieving all items assignments for all customer segments](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -468,7 +468,7 @@ You can limit the results with the `q` parameter, for example `q=type:PRODUCT` o
 {% step %}
 #### Build a segment-based category tree
 
-To restrict storefront navigation to categories assigned to the customer's segments, send the request to the [Retrieving category trees for a customer segments](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items-category-trees) endpoint. The tree is built from `ACTIVE` segments only.
+To restrict storefront navigation to categories assigned to the customer's segments, send the request to the [Retrieving category trees for a customer segments](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items-category-trees) endpoint. The tree is built from `ACTIVE` segments only.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -489,7 +489,7 @@ The response includes categories assigned to the segment and their parent catego
 {% step %}
 #### Filter products in a category
 
-To return only products in a category that is assigned to the customer's segments, send the request to the [Retrieving resources assigned to a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#get-category-tenant-categories-categoryid-assignments) endpoint. Pass the segment IDs in the `segmentsIds` query parameter.
+To return only products in a category that is assigned to the customer's segments, send the request to the [Retrieving resources assigned to a category](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#get-category-tenant-categories-categoryid-assignments) endpoint. Pass the segment IDs in the `segmentsIds` query parameter.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
