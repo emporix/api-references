@@ -13,6 +13,7 @@ description: You can use a standard q-param to filter search by string, localize
 ## Searching for items by string-based properties
 
 * By field value: `q=name:apple_logo`, where `name` is the field name and `apple_logo` is the desired value.
+* By a value that is not equal to the specified value in Schema Service: `q=id:!=64d35aa7fa54121ca47db657`, where `id` is the field name and `64d35aa7fa54121ca47db657` is the excluded schema ID.
 * By localized field value: `q=name.en:apple_logo`, where `name` is the field name, `en` is the language code, and `apple_logo` is the value expressed in the specified language.
 
   {% hint style="info" %}

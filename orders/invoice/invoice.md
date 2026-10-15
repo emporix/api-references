@@ -55,7 +55,7 @@ Use the parameters for an order query in case of an automatic job type:
 * `status` - the order status for which the order should be found (CREATED)
 * `extendedOrderStatus` - the extended order status for which the order should be found (70)
 
-To set up the invoice configuration, call the [Creating new configurations](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#post-configuration-tenant-configurations) endpoint.
+To set up the invoice configuration, call the [Creating new configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#post-configuration-tenant-configurations) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -82,7 +82,7 @@ curl -i -X POST
 
 ## Set up the Sequential ID service
 
-This configuration is used to set up the format of invoice numbers. Set up the numbers by invoking the sequential id service with the [Creating a new sequential schema](https://developer.emporix.io/api-references/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas) endpoint.
+This configuration is used to set up the format of invoice numbers. Set up the numbers by invoking the sequential id service with the [Creating a new sequential schema](https://developer.emporix.io/api-documentation/api-guides/utilities/sequential-id/api-reference/sequential-ids-management#post-sequential-id-tenant-schemas) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -113,7 +113,7 @@ curl -i -X POST
 ## Set up the Site Settings service
 
 The logo URL configuration allows to upload a custom logo that should be visible on the invoice header.\
-Add your company logo to the invoice with the [Creating a site mixin](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/mixins#post-site-tenant-sites-sitecode-mixins) endpoint.
+Add your company logo to the invoice with the [Creating a site mixin](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/mixins#post-site-tenant-sites-sitecode-mixins) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -138,7 +138,7 @@ curl -i -X POST
 
 ## How to trigger the invoice creation process
 
-To trigger the invoice creation process, initiate a job by making a call to the [Creating a job](https://developer.emporix.io/api-references/api-guides/orders/invoice/api-reference/invoice-jobs#post-invoice-tenant-jobs-invoices) endpoint. 
+To trigger the invoice creation process, initiate a job by making a call to the [Creating a job](https://developer.emporix.io/api-documentation/api-guides/orders/invoice/api-reference/invoice-jobs#post-invoice-tenant-jobs-invoices) endpoint. 
 
 Two types of jobs can be started:
 

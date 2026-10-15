@@ -167,14 +167,16 @@ The report includes:
 
 ### What self-review checks
 
-- Structure and formatting (headings, sections, hints, lists)
+- Structure and formatting (headings, sections, hints, lists with lead-in sentences and consistent items)
+- Figure captions, diagram branding, and links (same-space paths, cross-space GitBook app paths with the space ID)
+- Release note titles in title case
 - Tone and clarity
 - Grammar and spelling
 - Word-choice compliance (see `.style-guide/writing-standards/word-choice.md`)
 - Changelog / release-notes template conformance (when relevant) — changelog entries go in `changelog/README.md` with `date="RELEASE_DATE"` placeholders
 - API tutorial completeness (when relevant)
 - API reference completeness (when relevant) — OpenAPI structure, gerund summaries, scopes on `security`, schema/example quality
-- Reader sufficiency (always) — purpose, prerequisites, complete procedures, coverage, understandability
+- Reader sufficiency (always) — purpose, prerequisites, complete procedures, coverage, understandability, user goal, fit in the documentation set, obvious or quoted UI statements
 - Task-fit (when this chat includes a task description, AC, or PR/issue URL) — coverage vs the request, no contradictions with the provided source
 
 ### Mermaid diagrams skill

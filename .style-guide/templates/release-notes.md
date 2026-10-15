@@ -37,11 +37,22 @@ Examples:
 ```
 
 * Use title format inside the update block (date goes on the `{% update %}` tag, not in the title): `## {change/feature}` — omit product prefixes (CE, VSM, ACI, etc.); use the product area tag instead.
+* Write the title that introduces the main change in title case: capitalize all the words except prepositions (and, as in page titles, articles and short conjunctions). The first and the last word are always capitalized.
 
 Example:
 
 ```
 ## B2C Quotes
+```
+
+```
+## Approval Workflow for Purchase Orders
+```
+
+Avoid:
+
+```
+## Approval workflow for purchase orders
 ```
 
 * Use the following doc structure
@@ -84,4 +95,4 @@ API Guides:
   * Benefit: one or more sentences for description of its benefits.
 * `Fixes and improvements` section – if there are any fixes to the existing features, state briefly what they are. If not applicable, state "None as this is a new feature."
 * `Known problems` - if there are any known issues, state what they are. If there are no known issues, state "No known problems at the time of release."
-* `Documentation and links` section – list all the relevant links to docs that have been created/updated in relation to the announcement.
+* `Documentation and links` section – list all the relevant links to docs that have been created/updated in relation to the announcement. Introduce each group with the label `User Guides:` or `API Guides:`. Release notes are exempt from the full lead-in sentence rule (see [Lead-in sentence](../writing-standards/format-and-structure.md#lead-in-sentence)).

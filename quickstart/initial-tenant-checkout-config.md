@@ -51,7 +51,7 @@ For the configuration steps (tenant setup, data import, and customer setup), the
 {% stepper %}
 {% step %}
 ### Get authorization token
-To obtain proper access, send the authorization request to the [Requesting a service access token](https://developer.emporix.io/api-references/api-guides/authorization/oauth-service/api-reference/service-access-token) endpoint.
+To obtain proper access, send the authorization request to the [Requesting a service access token](https://developer.emporix.io/api-documentation/api-guides/authentication/oauth-service/api-reference/service-access-token) endpoint.
 
 ```bash
 curl --location 'https://api.emporix.io/oauth/token' 
@@ -63,8 +63,8 @@ curl --location 'https://api.emporix.io/oauth/token'
 
 {% include "../.gitbook/includes/example-hint-text.md" %}
 
-{% content-ref url="../authorization/oauth-service/api-reference/" %}
-[api-reference](../authorization/oauth-service/api-reference/)
+{% content-ref url="../authentication/oauth-service/api-reference/" %}
+[api-reference](../authentication/oauth-service/api-reference/)
 {% endcontent-ref %}
 {% endstep %}
 {% endstepper %}
@@ -76,13 +76,13 @@ curl --location 'https://api.emporix.io/oauth/token'
 Follow these steps to provide basic configuration for your tenant, such as payment, site, language, currency, tax, and shipping zones and methods. 
 
 {% hint style="success" %}
-There is also a convenient alternative way for initial tenant configuration. You can use the [Emporix Terraform Provider](/quickstart/emporix-terraform-provider.md) to automate the process. 
+There is also a convenient alternative way for initial tenant configuration. You can use the [Emporix Terraform Provider](emporix-terraform-provider.md) to automate the process. 
 {% endhint %}
 
 {% stepper %}
 {% step %}
 ### Configure payment method
-Create `invoice` for a minimal setup of payments. To create a new payment method, call the [Creating a single payment mode entity](https://developer.emporix.io/api-references/api-guides/checkout/payment-gateway/api-reference/payment-mode#post-payment-gateway-tenant-paymentmodes-config) endpoint.
+Create `invoice` for a minimal setup of payments. To create a new payment method, call the [Creating a single payment mode entity](https://developer.emporix.io/api-documentation/api-guides/checkout/payment-gateway/api-reference/payment-mode#post-payment-gateway-tenant-paymentmodes-config) endpoint.
 For real payments, configure a provider-specific mode with its required credentials.
 
 ```bash
@@ -111,7 +111,7 @@ curl 'https://api.emporix.io/payment-gateway/{{tenant}}/paymentmodes/config' \
 ### Activate a country, currency and language
 You need to activate countries where you want to operate, as well as add relevant currency and language.
 
-* Activate a country with the [Updating a country](https://developer.emporix.io/api-references/api-guides/configuration/country-service/api-reference/countries#patch-country-tenant-countries-countrycode) request, for example Poland:
+* Activate a country with the [Updating a country](https://developer.emporix.io/api-documentation/api-guides/configuration/country-service/api-reference/countries#patch-country-tenant-countries-countrycode) request, for example Poland:
 
 ```bash
 curl 'https://api.emporix.io/country/{{tenant}}/countries/PL' \
@@ -133,7 +133,7 @@ curl 'https://api.emporix.io/country/{{tenant}}/countries/PL' \
 {% endcontent-ref %}
 
 * You need to activate currencies relevant for the countries where your business operates or relevant to your business model. Ensure currency codes are ISO 4217 compliant.
-Create a `Polish Zloty` currency with the [Creating a new currency](https://developer.emporix.io/api-references/api-guides/configuration/currency-service/api-reference/currencies#post-currency-tenant-currencies) endpoint:
+Create a `Polish Zloty` currency with the [Creating a new currency](https://developer.emporix.io/api-documentation/api-guides/configuration/currency-service/api-reference/currencies#post-currency-tenant-currencies) endpoint:
 
 ```bash
 curl 'https://api.emporix.io/currency/{{tenant}}/currencies' \
@@ -154,7 +154,7 @@ curl 'https://api.emporix.io/currency/{{tenant}}/currencies' \
 {% endcontent-ref %}
 
 * Specify the languages that your business communicates with suppliers and customers. Emporix supports  a broad choice of languages, including regional language variants. The tenant's language configuration is stored under the `project_lang` key, while site-specific language configuration is stored in the `defaultLanguage` and `languages` fields, inside the `Site` object.
-To set `Polish` and `English` as project languages, use the [Updating a configuration](https://developer.emporix.io/api-references/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint:
+To set `Polish` and `English` as project languages, use the [Updating a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint:
 
 ```bash
 curl 'https://api.emporix.io/configuration/{{tenant}}/configurations/project_lang' \
@@ -177,7 +177,7 @@ curl 'https://api.emporix.io/configuration/{{tenant}}/configurations/project_lan
 {% step %}
 ### Add relevant tax calculation configuration
 Tax rates define the checkout calculations relevant to a given country.
-Create tax classes with rates applicable in Poland using the [Creating a new tax configuration](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/tax-service/api-reference/taxes#post-tax-tenant-taxes) endpoint.
+Create tax classes with rates applicable in Poland using the [Creating a new tax configuration](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/tax-service/api-reference/taxes#post-tax-tenant-taxes) endpoint.
 Ensure your rates reflect the desired gross/net calculation strategy for your storefront.
 
 ```bash
@@ -245,7 +245,7 @@ curl 'https://api.emporix.io/tax/{{tenant}}/taxes' \
 {% step %}
 ### Create a site
 Determine a site by a country you operate in or by a brand you want to sell in your store. 
-Create a `PL` site for the Polish market by sending a request to the [Creating a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites) endpoint. Include the `homeBase` address country, which is required for shipping calculations. Keep site, country, currency, tax, and shipping zone aligned.
+Create a `PL` site for the Polish market by sending a request to the [Creating a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites) endpoint. Include the `homeBase` address country, which is required for shipping calculations. Keep site, country, currency, tax, and shipping zone aligned.
 
 ```bash
 curl 'https://api.emporix.io/site/{{tenant}}/sites' \
@@ -293,7 +293,7 @@ curl 'https://api.emporix.io/site/{{tenant}}/sites' \
 ### Configure a shipping zone, method and delivery times
 Define where you want to ship your goods and how. 
 
-* First, set the ship-to location for the site using the [Creating a shipping zone](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-zones#post-shipping-tenant-site-zones). Set as the default zone if needed.
+* First, set the ship-to location for the site using the [Creating a shipping zone](https://developer.emporix.io/api-documentation/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-zones#post-shipping-tenant-site-zones). Set as the default zone if needed.
 Save the `id` from the response for the next step.
 
 ```bash
@@ -322,7 +322,7 @@ curl 'https://api.emporix.io/shipping/{{tenant}}/PL/zones' \
 [api-reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
-* Then, configure a shipping method with the [Creating a shipping method](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-methods#post-shipping-tenant-site-zones-zoneid-methods) endpoint.
+* Then, configure a shipping method with the [Creating a shipping method](https://developer.emporix.io/api-documentation/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-methods#post-shipping-tenant-site-zones-zoneid-methods) endpoint.
 Save the `id` from the response for the checkout step.
 
 ```bash
@@ -362,7 +362,7 @@ curl 'https://api.emporix.io/shipping/{{tenant}}/PL/zones/{{zoneId}}/methods' \
 [api-reference](../delivery-and-shipping/shipping/api-reference/)
 {% endcontent-ref %}
 
-* Define the delivery times and connect them with the shipping information. Use the [Creating a delivery time](https://developer.emporix.io/api-references/api-guides/delivery-and-shipping/shipping-1/api-reference/delivery-times-management#post-shipping-tenant-delivery-times) endpoint. The `validateOverlap` flag enables checks to see whether delivery time ranges for slots of the same shipping method overlap each other.
+* Define the delivery times and connect them with the shipping information. Use the [Creating a delivery time](https://developer.emporix.io/api-documentation/api-guides/delivery-and-shipping/shipping-1/api-reference/delivery-times-management#post-shipping-tenant-delivery-times) endpoint. The `validateOverlap` flag enables checks to see whether delivery time ranges for slots of the same shipping method overlap each other.
 The `deliveryWindowId` and `slotId` used later in cart creation come from this response.
 
 ```bash
@@ -418,7 +418,7 @@ Once your tenant and site are ready, it's time to import and organize the projec
 {% step %}
 ### Create a category
 Define a category or a category hierarchy to make it easier for customers to find the products.
-Create a `Tools` category by sending a request to the [Creating a new category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint.
+Create a `Tools` category by sending a request to the [Creating a new category](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint.
 Copy the returned `id` for catalog assignment.
 
 ```bash
@@ -463,7 +463,7 @@ curl https://api.emporix.io/category/{{tenant}}/categories?publish=true \
 {% step %}
 ### Create a catalog
 A catalog determines which categories and category trees are available on your site or sites.
-Create a `Home` catalog and publish it on the `PL` site. Use the [Creating a catalog](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/catalog/api-reference/catalog-management#post-catalog-tenant-catalogs) request.
+Create a `Home` catalog and publish it on the `PL` site. Use the [Creating a catalog](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/catalog/api-reference/catalog-management#post-catalog-tenant-catalogs) request.
 Use the category `id` from the previous step.
 
 ```bash
@@ -502,7 +502,7 @@ curl https://api.emporix.io/catalog/{{tenant}}/catalogs \
 
 {% step %}
 ### Create a product
-Add a product to the database with the [Creating a new product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
+Add a product to the database with the [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 Copy the product `id` and `yrn` from the response for the price and cart steps.
 
 ```bash 
@@ -545,7 +545,7 @@ curl 'https://api.emporix.io/product/{{tenant}}/products' \
 ### Configure a price
 Prices are associated with a particular site, so you can set different price configurations for the same product for each site it is visible at. Setting a price allows you to define a tier structure (BASIC, QUANTITY, etc.).
 
-* Create a price model using the [Creating a new price model](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/price-models#post-price-tenant-pricemodels) endpoint.
+* Create a price model using the [Creating a new price model](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/price-models#post-price-tenant-pricemodels) endpoint.
 Save the returned price model `id`.
 
 ```bash
@@ -581,7 +581,7 @@ curl 'https://api.emporix.io/price/{{tenant}}/priceModels' \
 [api-reference](../prices-and-taxes/price-service/api-reference/)
 {% endcontent-ref %}
 
-* Create a price for the product on the `PL` site and connect it with the price model by sending a request to the [Creating a new price](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint.
+* Create a price for the product on the `PL` site and connect it with the price model by sending a request to the [Creating a new price](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint.
 Save the returned price `id`.
 
 ```bash
@@ -621,7 +621,7 @@ curl 'https://api.emporix.io/price/{{tenant}}/prices' \
 
 {% step %}
 ### Assign a category
-Add the product to a category tree for its better searchability. Call the [Assigning a resource to a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#post-category-tenant-categories-categoryid-assignments).
+Add the product to a category tree for its better searchability. Call the [Assigning a resource to a category](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#post-category-tenant-categories-categoryid-assignments).
 
 ```bash
 curl 'https://api.emporix.io/category/{{tenant}}/categories/{{categoryId}}/assignments' \
@@ -645,7 +645,7 @@ curl 'https://api.emporix.io/category/{{tenant}}/categories/{{categoryId}}/assig
 
 {% step %}
 ### Define availability
-Availability determines stock level of a product for a given site. Define the availability by calling the [Creating a new availability for a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site).
+Availability determines stock level of a product for a given site. Define the availability by calling the [Creating a new availability for a product](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-productid-site).
 
 ```bash
 curl https://api.emporix.io/availability/{{tenant}}/availability/{{productId}}/PL \
@@ -673,7 +673,7 @@ The tenant and products are ready, so it's time to add customers who can test ou
 {% stepper %}
 {% step %}
 ### Create a customer
-Create a B2B customer with the [Creating a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#post-customer-tenant-customers) request, providing basic customer's details.
+Create a B2B customer with the [Creating a customer](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#post-customer-tenant-customers) request, providing basic customer's details.
 Set `active` to `true` if you plan to log in with this account.
 
 ```bash
@@ -723,7 +723,7 @@ curl 'https://api.emporix.io/customer/{{tenant}}/customers' \
 
 {% step %}
 ### Specify a customer's address
-Add and assign an address to the customer's profile. You can define separate addresses for shipping and billing purposes, marking them with relevant tags. Use the [Adding a customer address](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-service/api-reference/addresses#post-customer-tenant-customers-customernumber-addresses) endpoint.
+Add and assign an address to the customer's profile. You can define separate addresses for shipping and billing purposes, marking them with relevant tags. Use the [Adding a customer address](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/addresses#post-customer-tenant-customers-customernumber-addresses) endpoint.
 
 ```bash
 curl 'https://api.emporix.io/customer/{{tenant}}/customers/{{customerNumber}}/addresses' \
@@ -781,7 +781,7 @@ The example checkout flow on the storefront side includes the following steps.
 {% step %}
 ### Start an anonymous session
 An anonymous session begins when a user enters your storefront, before they choose to log in. 
-Get an anonymous access token with the [Requesting an anonymous token](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-login) endpoint. Pass the `Storefront Client ID`.
+Get an anonymous access token with the [Requesting an anonymous token](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-login) endpoint. Pass the `Storefront Client ID`.
 
 ```bash
 curl -i -X GET \
@@ -800,7 +800,7 @@ This request creates a new session-context document. The anonymous token is vali
 
 {% step %}
 ### Enable customer login
-To allow your customers to authorize themselves, enable the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint on the storefront. Authorize the request with the `anonymous_token`.
+To allow your customers to authorize themselves, enable the [Logging in a customer](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint on the storefront. Authorize the request with the `anonymous_token`.
 
 ```bash
 curl -L \
@@ -830,7 +830,7 @@ This operation returns `Customer access token` and `Customer SaaS token`, which 
 
 {% step %}
 ### Create a cart
-Creating a cart operation gathers the customer's session details, including for anonymous customers. Enable cart creation on the storefront using the [Creating a new cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint. The request needs to be authorized with the `Customer Access Token` or `Anonymous Access Token`, depending on whether a customer is already logged in.
+Creating a cart operation gathers the customer's session details, including for anonymous customers. Enable cart creation on the storefront using the [Creating a new cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint. The request needs to be authorized with the `Customer Access Token` or `Anonymous Access Token`, depending on whether a customer is already logged in.
 Use the `deliveryWindow` values from the delivery times response.
 
 ```bash
@@ -867,7 +867,7 @@ curl -i -X POST
 
 {% step %}
 ### Add items to the cart
-To allow customers to place some items in the cart, use the [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
+To allow customers to place some items in the cart, use the [Adding a product to cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
 Use the product `yrn` and price `id` created earlier.
 
 ```bash
@@ -896,7 +896,7 @@ curl -i -X POST \
 
 {% step %}
 ### Enable the price matching mechanism
-Price matching allows your customers to find the best price calculated on the fly during their session, including discounts, offers, segments or similar information. To that end, use the [Matching prices for session context](https://developer.emporix.io/api-references/api-guides/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices-by-context) endpoint in our storefront setup. The request is authorized with the `CustomerAccessToken`, so make sure you pass that data from the customer entering your store.
+Price matching allows your customers to find the best price calculated on the fly during their session, including discounts, offers, segments or similar information. To that end, use the [Matching prices for session context](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices-by-context) endpoint in our storefront setup. The request is authorized with the `CustomerAccessToken`, so make sure you pass that data from the customer entering your store.
 Call this before checkout when you need to recalculate prices based on session context.
 
 ```bash
@@ -928,7 +928,7 @@ curl 'https://api.emporix.io/price/{{tenant}}/match-prices-by-context' \
 {% step %}
 ### Proceed to checkout
 Once the customer wants to finalize the purchase, enable the checkout option. The checkout does several validation checks on the provided data, including cart details, product availability, customer details, payment method, price calculations, shipping information and delivery. The operation creates an order, handles the payment, and closes the cart. 
-To enable checkout operation on your storefront, use the [Triggering a checkout](https://developer.emporix.io/api-references/api-guides/checkout/checkout/api-reference/checkouts) endpoint.
+To enable checkout operation on your storefront, use the [Triggering a checkout](https://developer.emporix.io/api-documentation/api-guides/checkout/checkout/api-reference/checkouts) endpoint.
 
 ```bash
 curl -i -X POST \
@@ -1020,7 +1020,7 @@ curl -i -X POST \
 {% step %}
 ### Verify order creation
 As a last step, verify if the order placed by a customer is created accordingly. 
-To display the order details to the customer on the storefront, use the [Retrieving order details](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid) endpoint. Authorize the request with the `customer access token`.
+To display the order details to the customer on the storefront, use the [Retrieving order details](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid) endpoint. Authorize the request with the `customer access token`.
 
 ```bash
 curl -L \

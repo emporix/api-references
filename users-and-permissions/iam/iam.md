@@ -34,7 +34,7 @@ To create users, check out the **Manage Users** tab in the [Emporix Developer Po
 There's a set of access controls that are predefined and designed to cover all necessary scenarios. It is not possible to change the built-in access controls, but you can create new custom ones. See section [How to manage custom scopes](#how-to-manage-custom-scopes).
 {% endhint %}
 
-To assign specific access control level to a group, first you need to retrieve a list of predefined access controls available for your tenant by sending a request to the [Retrieving all access controls](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/access-controls) endpoint.
+To assign specific access control level to a group, first you need to retrieve a list of predefined access controls available for your tenant by sending a request to the [Retrieving all access controls](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -52,7 +52,7 @@ curl -i -X GET
 
 ### Create an employee group
 
-Employee groups aggregate users that share the same access control within a particular service and resource. Create an employee group and assign access controls to it by sending a request to the [Creating a new group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups) endpoint.
+Employee groups aggregate users that share the same access control within a particular service and resource. Create an employee group and assign access controls to it by sending a request to the [Creating a new group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups) endpoint.
 
 {% hint style="warning" %}
 The user type in the `userType` parameter can be specified as `CUSTOMER` or `EMPLOYEE`. For the purposes of this tutorial, set the `userType` parameter as `EMPLOYEE`.
@@ -95,7 +95,7 @@ curl -i -X POST
 
 ### Assign users to an employee group
 
-By assigning a user to a particular employee group, you grant them a specific access control level. Create assignments by calling the [Adding a user to a group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups-groupid-users) endpoint.
+By assigning a user to a particular employee group, you grant them a specific access control level. Create assignments by calling the [Adding a user to a group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups-groupid-users) endpoint.
 
 {% hint style="warning" %}
 The user type in the `userType` parameter can be specified as `customer` or `employee`. For the purposes of this tutorial, set the `userType` parameter as `employee`.
@@ -141,7 +141,7 @@ Typical flow:
 {% step %}
 ### Create or update a custom scope
 
-To create or update a custom scope, call the [Upserting a custom scope](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/scopes#put-iam-tenant-scopes-scopeid) endpoint.
+To create or update a custom scope, call the [Upserting a custom scope](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/scopes#put-iam-tenant-scopes-scopeid) endpoint.
 
 ```bash
 curl -i -X PUT \
@@ -160,7 +160,7 @@ curl -i -X PUT \
 {% step %}
 ### Create or update an access control that uses custom scopes
 
-Access controls map roles and resources to resolved scopes and are assigned to groups. To create or update an access control, call the [Upserting an access control](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/access-controls#put-iam-tenant-access-controls-accesscontrolid) endpoint.
+Access controls map roles and resources to resolved scopes and are assigned to groups. To create or update an access control, call the [Upserting an access control](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#put-iam-tenant-access-controls-accesscontrolid) endpoint.
 
 ```bash
 curl -i -X PUT \
@@ -181,7 +181,7 @@ curl -i -X PUT \
 {% step %}
 ### Assign access controls through groups
 
-To assign access controls, call the [Creating a new group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups) endpoint and include your access control IDs in the payload.
+To assign access controls, call the [Creating a new group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups) endpoint and include your access control IDs in the payload.
 
 ```bash
 curl -i -X POST \
@@ -199,7 +199,7 @@ curl -i -X POST \
   }'
 ```
 
-Then call the [Adding a user to a group](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups-groupid-users) endpoint.
+Then call the [Adding a user to a group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups-groupid-users) endpoint.
 
 ```bash
 curl -i -X POST \
@@ -216,7 +216,7 @@ curl -i -X POST \
 {% step %}
 ### Verify resolved scopes for a user
 
-To validate IAM configuration, call the [Retrieving all scopes granted to a user](https://developer.emporix.io/api-references/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-scopes) endpoint.
+To validate IAM configuration, call the [Retrieving all scopes granted to a user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-scopes) endpoint.
 
 ```bash
 curl -i -X GET \
