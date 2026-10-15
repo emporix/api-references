@@ -28,7 +28,7 @@ layout:
 {% update date="RELEASE_DATE" tags="improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-6766 -->
 
-## Search Service - `CONTAINS` filter documentation
+## Search Service - `CONTAINS` filter operator
 
 #### Overview
 
