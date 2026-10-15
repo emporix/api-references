@@ -201,6 +201,35 @@ expect_titles "renamed middle entry" "Mine,Theirs,A,B,C"
 echo "$warning" | grep -q "edited the existing entry 'B'" \
   && pass "renamed middle entry: warned" || fail "renamed middle entry: no warning"
 
+# 14. A new entry on top and an in-place edit of an older entry share a title: keep the new one.
+new_repo same-title-edit
+write_changelog "$(entry X 2026-01-02)" "$(entry Repeat 2026-01-01)"; commit_all base
+git switch -qc pr
+write_changelog "$(entry Repeat | sed 's/Details/New details/')" "$(entry X 2026-01-02)" \
+  "$(entry Repeat 2026-01-01 | sed 's/Details/Edited details/')"; commit_all mine
+git switch -q main
+write_changelog "$(entry Theirs 2026-02-01)" "$(entry X 2026-01-02)" "$(entry Repeat 2026-01-01)"; commit_all theirs
+git switch -q pr
+warning="$(run 2>&1 >/dev/null || true)"
+expect_titles "same title, new entry and edit" "Repeat,Theirs,X,Repeat"
+grep -q 'New details' changelog/README.md && ! grep -q 'Edited details' changelog/README.md \
+  && echo "$warning" | grep -q "edited the existing entry 'Repeat'" \
+  && pass "same title, new entry and edit: new kept, edit warned" || fail "same title, new entry and edit: wrong result"
+
+# 15. Two top entries share the title of an edited existing entry: stop for manual review.
+new_repo same-title-top
+write_changelog "$(entry Repeat 2026-01-01)"; commit_all base
+git switch -qc pr
+write_changelog "$(entry Repeat | sed 's/Details/New details/')" \
+  "$(entry Repeat 2026-01-01 | sed 's/Details/Edited details/')"; commit_all mine
+git switch -q main
+write_changelog "$(entry Theirs 2026-02-01)" "$(entry Repeat 2026-01-01)"; commit_all theirs
+git switch -q pr
+set +e; run > /dev/null 2>&1; rc=$?; set -e
+[ "$rc" = 3 ] && grep -q '^<<<<<<<' changelog/README.md \
+  && pass "same title twice at the top: stops for manual review" || fail "same title twice at the top: rc=$rc"
+git merge --abort
+
 echo
 if [ "$failures" -gt 0 ]; then
   echo "$failures test(s) failed."

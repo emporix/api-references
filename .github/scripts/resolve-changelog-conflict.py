@@ -119,11 +119,24 @@ def resolve_text(base_text, ours_text, theirs_text):
     top = [b for b in ours_blocks[:first_kept] if block_key(b) not in base_keys]
     in_place = [b for b in ours_blocks[first_kept:] if block_key(b) not in base_keys]
 
+    # Match in-place blocks first: they can only be edits, while a top block
+    # with the same title may be a new announcement.
     edits = []
     for old in list(missing):
-        match = next((b for b in top if block_title(b) == block_title(old)), None)
+        match = next((b for b in in_place if block_title(b) == block_title(old)), None)
         if match is not None:
-            top.remove(match)
+            in_place.remove(match)
+            missing.remove(old)
+            edits.append(old)
+    for old in list(missing):
+        matches = [b for b in top if block_title(b) == block_title(old)]
+        if len(matches) > 1:
+            raise AmbiguousError(
+                "Several entries at the top use the title '{}', and one of them "
+                "edits an existing entry.".format(block_title(old))
+            )
+        if matches:
+            top.remove(matches[0])
             missing.remove(old)
             edits.append(old)
     while missing and in_place:
