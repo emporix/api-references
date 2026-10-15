@@ -26,10 +26,10 @@ Based on the official deprecation, we are deprecating the `sse` transport protoc
 
 | Endpoint                                                                                                                                                                                                    | Description                                 |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------|
-| [Searching MCP servers](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#post-ai-service-tenant-agentic-mcp-servers-search)               | The `SSE` transport protocol is deprecated. |
-| [Retrieving MCP server by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#get-ai-service-tenant-agentic-mcp-servers-mcpserverid)     | The `SSE` transport protocol is deprecated. |
-| [Upserting MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#put-ai-service-tenant-agentic-mcp-servers-mcpserverid)            | The `SSE` transport protocol is deprecated. |
-| [Partially updating MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#patch-ai-service-tenant-agentic-mcp-servers-mcpserverid) | The `SSE` transport protocol is deprecated. |
+| [Searching MCP servers](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#post-ai-service-tenant-agentic-mcp-servers-search)               | The `SSE` transport protocol is deprecated. |
+| [Retrieving MCP server by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#get-ai-service-tenant-agentic-mcp-servers-mcpserverid)     | The `SSE` transport protocol is deprecated. |
+| [Upserting MCP server](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#put-ai-service-tenant-agentic-mcp-servers-mcpserverid)            | The `SSE` transport protocol is deprecated. |
+| [Partially updating MCP server](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#patch-ai-service-tenant-agentic-mcp-servers-mcpserverid) | The `SSE` transport protocol is deprecated. |
 
 ## Known problems
 

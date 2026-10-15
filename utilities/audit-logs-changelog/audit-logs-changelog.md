@@ -9,13 +9,7 @@ layout:
 
 # Audit Logs (Changelog) Tutorial
 
-The Audit Logs (Changelog) Service exposes a query API for tenant-wide change history of platform entities such as orders, customers, companies, products, segments, groups, coupons, and custom entities created with the Schema Service.
-
-{% hint style="danger" %}
-This functionality is in preview mode - some of the features may not be fully operational yet.
-
-If you have any questions, contact the [Emporix Support Team](mailto:support@emporix.com) or post directly in the [Community](https://community.emporix.io/) 
-{% endhint %}
+The Audit Logs (Changelog) Service exposes a query API for tenant-wide change history of platform entities such as orders, customers, companies, products, segments, groups, coupons, quotes, sites, and custom entities created with the Schema Service.
 
 ## Authentication
 
@@ -30,7 +24,7 @@ See [Tokens and Scopes](../../quickstart/authentication-and-authorization/tokens
 
 ## How to retrieve logs
 
-Send a request to the [Retrieving logs](https://developer.emporix.io/api-references/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) endpoint.
+Send a request to the [Retrieving logs](https://developer.emporix.io/api-documentation/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

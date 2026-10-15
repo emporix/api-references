@@ -5,6 +5,7 @@
 ## Quickstart
 
 * [Emporix API](quickstart/api-intro.md)
+* [Postman Collection](quickstart/postman-collection.md)
 * [List of API Services](quickstart/list-of-api-services.md)
 * [OpenAPI Generator](quickstart/openapi-generator.md)
 * [Emporix Terraform Provider](quickstart/emporix-terraform-provider.md)
@@ -431,19 +432,6 @@
               spec: order-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/orders/order/api-reference/api.yml)
-  * [Pick-pack Service](orders/pick-pack/README.md)
-    * [API Reference](orders/pick-pack/api-reference/README.md)
-      * ```yaml
-        props:
-          models: true
-        type: builtin:openapi
-        dependencies:
-          spec:
-            ref:
-              kind: openapi
-              spec: pick-pack-api
-        ```
-    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/orders/pick-pack/api-reference/api.yml)
   * [Returns Service](orders/returns/README.md)
     * [Returns Tutorial](orders/returns/returns.md)
     * [API Reference](orders/returns/api-reference/README.md)
@@ -646,6 +634,19 @@
               spec: schema-api
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/utilities/schema/api-reference/api.yml)
+  * [Search Service](utilities/search-service/README.md)
+    * [API Reference](utilities/search-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: search-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/utilities/search-service/api-reference/api.yml)
   * [Sequential-id Service](utilities/sequential-id/README.md)
     * [Sequential-id Tutorial](utilities/sequential-id/sequentialid.md)
     * [API Reference](utilities/sequential-id/api-reference/README.md)

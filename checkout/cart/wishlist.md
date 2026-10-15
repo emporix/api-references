@@ -34,7 +34,7 @@ Wishlists require a `customerId` so saved items persist across visits. Unlike a 
 
 ## Prerequisites
 
-Log in the customer with the [Logging in a customer](https://developer.emporix.io/api-references/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint to get the `{{CUSTOMER_ACCESS_TOKEN}}` to authenticate subsequent requests. Use the customer identity from the login response as `{{customerId}}` when retrieving carts.
+Log in the customer with the [Logging in a customer](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint to get the `{{CUSTOMER_ACCESS_TOKEN}}` to authenticate subsequent requests. Use the customer identity from the login response as `{{customerId}}` when retrieving carts.
 
 ## How to manage a wishlist for a logged-in customer
 
@@ -46,7 +46,7 @@ The steps below use `wishlist` as the cart `type` in all examples. This is not a
 {% step %}
 #### Create or retrieve a wishlist cart
 
-Retrieve an existing wishlist cart or create one if none exists by calling the [Retrieving a cart by criteria](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts) with `type=wishlist` and `create=true`. If the customer has several wishlists, use the appropriate `type` in the query parameters (or create the cart with [Creating a new cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts)) so you target the correct list.
+Retrieve an existing wishlist cart or create one if none exists by calling the [Retrieving a cart by criteria](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts) with `type=wishlist` and `create=true`. If the customer has several wishlists, use the appropriate `type` in the query parameters (or create the cart with [Creating a new cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts)) so you target the correct list.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -68,7 +68,7 @@ Use the cart `id` from the response as `{{wishlistCartId}}` in the following ste
 
 Use the same cart item endpoints as for a shopping cart. Provide the wishlist cart ID in the `cartId` path parameter.
 
-To add a product, call the [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
+To add a product, call the [Adding a product to cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -97,7 +97,7 @@ curl -i -X POST \
 {% step %}
 #### Remove a wishlist item
 
-To remove a single item, call the [Deleting a cart item](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#delete-cart-tenant-carts-cartid-items-itemid) endpoint with the wishlist cart ID and item ID. Use the item `id` from the wishlist cart response as `{{itemId}}`.
+To remove a single item, call the [Deleting a cart item](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#delete-cart-tenant-carts-cartid-items-itemid) endpoint with the wishlist cart ID and item ID. Use the item `id` from the wishlist cart response as `{{itemId}}`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -121,7 +121,7 @@ To move a wishlist item to the shopping cart, add the product to the customer's 
 {% step %}
 #### Add the product to the shopping cart
 
-* Retrieve the shopping cart and wishlist cart independently using the `type` query parameter on the [Retrieving a cart by criteria](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts) endpoint (`shopping` and `wishlist`). Use `create=true` on the shopping cart request if the customer does not have an open shopping cart yet.
+* Retrieve the shopping cart and wishlist cart independently using the `type` query parameter on the [Retrieving a cart by criteria](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts) endpoint (`shopping` and `wishlist`). Use `create=true` on the shopping cart request if the customer does not have an open shopping cart yet.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -142,7 +142,7 @@ curl -i -X GET \
 
 Use the shopping cart `id` as `{{shoppingCartId}}`, the wishlist cart `id` as `{{wishlistCartId}}`, and the wishlist item `id` as `{{itemId}}`.
 
-* Add the product to the customer's `type: "shopping"` cart by calling the [Adding a product to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
+* Add the product to the customer's `type: "shopping"` cart by calling the [Adding a product to cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#post-cart-tenant-carts-cartid-items) endpoint.
 
 {% content-ref url="api-reference/" %}
 [api-reference](api-reference/)
@@ -169,7 +169,7 @@ curl -i -X POST \
 {% step %}
 #### Remove the product from the wishlist
 
-Remove the product from the `type: "wishlist"` cart by calling the [Deleting a cart item](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-items#delete-cart-tenant-carts-cartid-items-itemid) endpoint.
+Remove the product from the `type: "wishlist"` cart by calling the [Deleting a cart item](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#delete-cart-tenant-carts-cartid-items-itemid) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 

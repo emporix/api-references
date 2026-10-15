@@ -23,7 +23,7 @@ In the Emporix Commerce Engine, localized fields are stored in the form of Strin
 {% hint style="warning" %}
 Language codes must match the ones defined in your language configurations.
 
-For more information on language configurations, check out the [Language Configuration Tutorials](../content/language/).
+For more information on language configurations, check out the [Language Tutorials](../configuration/configuration-service/language.md).
 {% endhint %}
 
 ## How to create a localized object in a specific language
