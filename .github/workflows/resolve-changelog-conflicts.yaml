@@ -141,11 +141,16 @@ jobs:
             else
               files="$(git diff --name-only --diff-filter=U | sed 's/^/- `/; s/$/`/' || true)"
               git merge --abort 2>/dev/null || true
+              if [ "$rc" = 3 ]; then
+                advice="This PR renames or removes an existing changelog entry, so the script cannot tell which entries are new. Merge \`main\` and resolve \`changelog/README.md\` by hand, keeping every entry from \`main\`."
+              else
+                advice="Run \`python3 .github/scripts/resolve-changelog-conflict.py\` locally to merge \`main\` and resolve \`changelog/README.md\`, then resolve the other files by hand."
+              fi
               comment "$pr" "$(printf '%s\n\n%s\n\n%s\n\n%s' \
                 "Could not resolve the merge conflict with \`main\` automatically. Nothing was pushed." \
                 "Files that still conflict:" \
                 "${files:-- (see the workflow log)}" \
-                "Run \`python3 .github/scripts/resolve-changelog-conflict.py\` locally to merge \`main\` and resolve \`changelog/README.md\`, then resolve the other files by hand.")"
+                "$advice")"
               echo "PR #$pr: not resolved (exit code $rc)"
             fi
 

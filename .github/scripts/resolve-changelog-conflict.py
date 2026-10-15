@@ -16,6 +16,8 @@ Exit codes:
   0  resolved, or nothing to do
   1  error
   2  other files still conflict; the merge is left in progress
+  3  the branch renamed or removed an existing entry; the changelog is left
+     with its conflict markers for manual review
 """
 
 import argparse
@@ -34,6 +36,10 @@ DATE_ATTR = re.compile(r'date="[^"]*"')
 
 
 class ResolveError(Exception):
+    pass
+
+
+class AmbiguousError(ResolveError):
     pass
 
 
@@ -100,25 +106,43 @@ def resolve_text(base_text, ours_text, theirs_text):
     ours_blocks = parse_blocks(ours_text)
     base_keys = {block_key(b) for b in base_blocks}
     ours_keys = {block_key(b) for b in ours_blocks}
-    edited_titles = {
-        block_title(b) for b in base_blocks if block_key(b) not in ours_keys
-    } - {None}
     theirs_keys = {block_key(b) for b in parse_blocks(theirs_text)}
 
-    to_insert = []
-    warnings = []
-    for block in ours_blocks:
-        key = block_key(block)
-        if key in base_keys or key in theirs_keys:
-            continue
-        title = block_title(block)
-        if title in edited_titles:
-            warnings.append(
-                "The branch edited the existing entry '{}'. Kept main's version; "
-                "re-apply the edit by hand if it is still needed.".format(title)
+    # Existing entries the branch changed, renamed, or removed.
+    missing = [b for b in base_blocks if block_key(b) not in ours_keys]
+    # New entries go at the top; a changed block below the first unchanged
+    # existing entry is an in-place edit of an existing one.
+    first_kept = next(
+        (i for i, b in enumerate(ours_blocks) if block_key(b) in base_keys),
+        len(ours_blocks),
+    )
+    top = [b for b in ours_blocks[:first_kept] if block_key(b) not in base_keys]
+    in_place = [b for b in ours_blocks[first_kept:] if block_key(b) not in base_keys]
+
+    edits = []
+    for old in list(missing):
+        match = next((b for b in top if block_title(b) == block_title(old)), None)
+        if match is not None:
+            top.remove(match)
+            missing.remove(old)
+            edits.append(old)
+    while missing and in_place:
+        in_place.pop(0)
+        edits.append(missing.pop(0))
+    if missing:
+        raise AmbiguousError(
+            "The branch changed or removed existing entries ({}), and it is not "
+            "clear which of its other entries are new.".format(
+                ", ".join("'{}'".format(block_title(b) or b[0]) for b in missing)
             )
-            continue
-        to_insert.append(block)
+        )
+
+    warnings = [
+        "The branch edited the existing entry '{}'. Kept main's version; "
+        "re-apply the edit by hand if it is still needed.".format(block_title(b) or b[0])
+        for b in edits
+    ]
+    to_insert = [b for b in top if block_key(b) not in theirs_keys]
 
     theirs_lines = theirs_text.splitlines()
     anchor = next(
@@ -259,6 +283,14 @@ def main():
         if args.in_merge:
             return run_in_merge(args.file)
         return run_merge(args.file, args.base, args.skip_clean)
+    except AmbiguousError as error:
+        print("Error: {}".format(error), file=sys.stderr)
+        print(
+            "{} was left unchanged with its conflict markers and the merge is still "
+            "in progress. Resolve it by hand, keeping main's entries.".format(args.file),
+            file=sys.stderr,
+        )
+        return 3
     except ResolveError as error:
         print("Error: {}".format(error), file=sys.stderr)
         return 1
