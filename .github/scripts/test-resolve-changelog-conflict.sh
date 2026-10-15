@@ -149,7 +149,21 @@ run --skip-clean > /dev/null
 [ "$(git rev-parse HEAD)" = "$before" ] && [ ! -f "$(git rev-parse --git-path MERGE_HEAD)" ] \
   && pass "--skip-clean" || fail "--skip-clean changed the branch"
 
-# 10. An edit to an existing entry keeps main's version and warns.
+# Runs the resolver and expects it to stop for manual review (exit 3),
+# leaving the conflict markers and the merge in progress.
+expect_stop() {
+  local name="$1" rc
+  set +e; run > /dev/null 2>&1; rc=$?; set -e
+  if [ "$rc" = 3 ] && grep -q '^<<<<<<<' changelog/README.md \
+    && [ -f "$(git rev-parse --git-path MERGE_HEAD)" ]; then
+    pass "$name: stops for manual review"
+  else
+    fail "$name: rc=$rc"
+  fi
+  git merge --abort 2>/dev/null || true
+}
+
+# 10. Editing an existing entry stops.
 new_repo edited
 write_changelog "$(entry Old 2026-01-01)"; commit_all base
 git switch -qc pr
@@ -157,10 +171,7 @@ write_changelog "$(entry Mine)" "$(entry Old 2026-01-01 | sed 's/Details/Edited 
 git switch -q main
 write_changelog "$(entry Theirs 2026-02-01)" "$(entry Old 2026-01-01)"; commit_all theirs
 git switch -q pr
-warning="$(run 2>&1 >/dev/null || true)"
-expect_titles "edited entry" "Mine,Theirs,Old"
-echo "$warning" | grep -q "edited the existing entry 'Old'" && ! grep -q 'Edited details' changelog/README.md \
-  && pass "edited entry: warned, main's version kept" || fail "edited entry: no warning or edit kept"
+expect_stop "edited entry"
 
 # 11. A new entry that reuses the title of an unchanged older entry is kept.
 new_repo same-title
@@ -170,12 +181,12 @@ write_changelog "$(entry Repeat | sed 's/Details/New details/')" "$(entry Repeat
 git switch -q main
 write_changelog "$(entry Theirs 2026-02-01)" "$(entry Repeat 2026-01-01)"; commit_all theirs
 git switch -q pr
-warning="$(run 2>&1 >/dev/null || true)"
+run > /dev/null
 expect_titles "same-title addition" "Repeat,Theirs,Repeat"
-grep -q 'New details' changelog/README.md && [ -z "$warning" ] \
-  && pass "same-title addition: kept without warning" || fail "same-title addition: dropped or warned"
+grep -q 'New details' changelog/README.md \
+  && pass "same-title addition: new entry kept" || fail "same-title addition: new entry dropped"
 
-# 12. Renaming the top existing entry next to a new one is ambiguous: stop, write nothing.
+# 12. Renaming the top existing entry stops.
 new_repo renamed-top
 write_changelog "$(entry Old 2026-01-01)"; commit_all base
 git switch -qc pr
@@ -183,12 +194,9 @@ write_changelog "$(entry Mine)" "$(entry Old 2026-01-01 | sed 's/## Old/## Renam
 git switch -q main
 write_changelog "$(entry Theirs 2026-02-01)" "$(entry Old 2026-01-01)"; commit_all theirs
 git switch -q pr
-set +e; run > /dev/null 2>&1; rc=$?; set -e
-[ "$rc" = 3 ] && grep -q '^<<<<<<<' changelog/README.md && [ -f "$(git rev-parse --git-path MERGE_HEAD)" ] \
-  && pass "renamed top entry: stops for manual review" || fail "renamed top entry: rc=$rc"
-git merge --abort
+expect_stop "renamed top entry"
 
-# 13. Renaming an entry below an unchanged one is an in-place edit: keep main's version and warn.
+# 13. Renaming an entry further down stops.
 new_repo renamed-middle
 write_changelog "$(entry A 2026-01-03)" "$(entry B 2026-01-02)" "$(entry C 2026-01-01)"; commit_all base
 git switch -qc pr
@@ -196,12 +204,9 @@ write_changelog "$(entry Mine)" "$(entry A 2026-01-03)" "$(entry B 2026-01-02 | 
 git switch -q main
 write_changelog "$(entry Theirs 2026-02-01)" "$(entry A 2026-01-03)" "$(entry B 2026-01-02)" "$(entry C 2026-01-01)"; commit_all theirs
 git switch -q pr
-warning="$(run 2>&1 >/dev/null || true)"
-expect_titles "renamed middle entry" "Mine,Theirs,A,B,C"
-echo "$warning" | grep -q "edited the existing entry 'B'" \
-  && pass "renamed middle entry: warned" || fail "renamed middle entry: no warning"
+expect_stop "renamed middle entry"
 
-# 14. A new entry on top and an in-place edit of an older entry share a title: keep the new one.
+# 14. A new entry plus an edit of an older entry with the same title stops.
 new_repo same-title-edit
 write_changelog "$(entry X 2026-01-02)" "$(entry Repeat 2026-01-01)"; commit_all base
 git switch -qc pr
@@ -210,25 +215,53 @@ write_changelog "$(entry Repeat | sed 's/Details/New details/')" "$(entry X 2026
 git switch -q main
 write_changelog "$(entry Theirs 2026-02-01)" "$(entry X 2026-01-02)" "$(entry Repeat 2026-01-01)"; commit_all theirs
 git switch -q pr
-warning="$(run 2>&1 >/dev/null || true)"
-expect_titles "same title, new entry and edit" "Repeat,Theirs,X,Repeat"
-grep -q 'New details' changelog/README.md && ! grep -q 'Edited details' changelog/README.md \
-  && echo "$warning" | grep -q "edited the existing entry 'Repeat'" \
-  && pass "same title, new entry and edit: new kept, edit warned" || fail "same title, new entry and edit: wrong result"
+expect_stop "same title, new entry and edit"
 
-# 15. Two top entries share the title of an edited existing entry: stop for manual review.
-new_repo same-title-top
-write_changelog "$(entry Repeat 2026-01-01)"; commit_all base
+# 15. A new entry plus a rename of an older entry with the same title stops.
+new_repo same-title-rename
+write_changelog "$(entry X 2026-01-02)" "$(entry Repeat 2026-01-01)"; commit_all base
 git switch -qc pr
-write_changelog "$(entry Repeat | sed 's/Details/New details/')" \
-  "$(entry Repeat 2026-01-01 | sed 's/Details/Edited details/')"; commit_all mine
+write_changelog "$(entry Repeat | sed 's/Details/New details/')" "$(entry X 2026-01-02)" \
+  "$(entry Repeat 2026-01-01 | sed 's/## Repeat/## Renamed/')"; commit_all mine
 git switch -q main
-write_changelog "$(entry Theirs 2026-02-01)" "$(entry Repeat 2026-01-01)"; commit_all theirs
+write_changelog "$(entry Theirs 2026-02-01)" "$(entry X 2026-01-02)" "$(entry Repeat 2026-01-01)"; commit_all theirs
 git switch -q pr
-set +e; run > /dev/null 2>&1; rc=$?; set -e
-[ "$rc" = 3 ] && grep -q '^<<<<<<<' changelog/README.md \
-  && pass "same title twice at the top: stops for manual review" || fail "same title twice at the top: rc=$rc"
-git merge --abort
+expect_stop "same title, new entry and rename"
+
+# 16. Removing an existing entry stops.
+new_repo removed
+write_changelog "$(entry A 2026-01-02)" "$(entry B 2026-01-01)"; commit_all base
+git switch -qc pr
+write_changelog "$(entry Mine)" "$(entry A 2026-01-02)"; commit_all mine
+git switch -q main
+write_changelog "$(entry Theirs 2026-02-01)" "$(entry A 2026-01-02)" "$(entry B 2026-01-01)"; commit_all theirs
+git switch -q pr
+expect_stop "removed entry"
+
+# 17. Changing text outside the entries stops.
+new_repo outside
+write_changelog "$(entry Old 2026-01-01)"; commit_all base
+git switch -qc pr
+write_changelog "$(entry Mine)" "$(entry Old 2026-01-01)"
+sed 's/^description: Changelog\./description: Updated changelog./' changelog/README.md > tmp && mv tmp changelog/README.md
+commit_all mine
+git switch -q main
+write_changelog "$(entry Theirs 2026-02-01)" "$(entry Old 2026-01-01)"; commit_all theirs
+git switch -q pr
+expect_stop "text outside the entries"
+
+# 18. A fix to an existing entry on main is kept.
+new_repo main-fix
+write_changelog "$(entry Old 2026-01-01)"; commit_all base
+git switch -qc pr
+write_changelog "$(entry Mine)" "$(entry Old 2026-01-01)"; commit_all mine
+git switch -q main
+write_changelog "$(entry Theirs 2026-02-01)" "$(entry Old 2026-01-01 | sed 's/Details/Fixed details/')"; commit_all theirs
+git switch -q pr
+run > /dev/null
+expect_titles "fix on main" "Mine,Theirs,Old"
+grep -q 'Fixed details' changelog/README.md \
+  && pass "fix on main: main's version kept" || fail "fix on main: main's fix lost"
 
 echo
 if [ "$failures" -gt 0 ]; then

@@ -5,6 +5,10 @@ The resolved file is main's version, unchanged, with the branch's new
 {% update %}...{% endupdate %} blocks inserted directly after the opening
 {% updates format="full" %} tag, in the order the branch has them.
 
+This only happens when the branch added entries and changed nothing else in
+the file. If it also changed, renamed, or removed an existing entry, or changed
+text outside the entries, the script stops so nothing from the branch is lost.
+
 Usage:
   # Merge origin/main into the current branch and resolve the changelog:
   python3 .github/scripts/resolve-changelog-conflict.py
@@ -16,8 +20,8 @@ Exit codes:
   0  resolved, or nothing to do
   1  error
   2  other files still conflict; the merge is left in progress
-  3  the branch renamed or removed an existing entry; the changelog is left
-     with its conflict markers for manual review
+  3  the branch changed more than adding entries; the changelog is left with
+     its conflict markers for manual review
 """
 
 import argparse
@@ -25,6 +29,7 @@ import os
 import re
 import subprocess
 import sys
+from collections import Counter
 
 DEFAULT_FILE = "changelog/README.md"
 DEFAULT_BASE = "origin/main"
@@ -100,62 +105,58 @@ def block_title(block):
     return None
 
 
+def outside_blocks(text):
+    """Return the non-blank lines outside {% update %} blocks."""
+    lines = []
+    inside = False
+    for line in text.splitlines():
+        if not inside and UPDATE_OPEN.match(line):
+            inside = True
+        elif inside and UPDATE_CLOSE.match(line):
+            inside = False
+        elif not inside and line.strip():
+            lines.append(line.rstrip())
+    return lines
+
+
 def resolve_text(base_text, ours_text, theirs_text):
-    """Return (resolved_text, inserted_titles, warnings)."""
+    """Return (resolved_text, inserted_titles).
+
+    Only a branch that added entries, and changed nothing else in the file, is
+    resolved automatically. Anything else raises AmbiguousError, because
+    rebuilding the file from main would lose the branch's other changes.
+    """
     base_blocks = parse_blocks(base_text)
     ours_blocks = parse_blocks(ours_text)
-    base_keys = {block_key(b) for b in base_blocks}
-    ours_keys = {block_key(b) for b in ours_blocks}
-    theirs_keys = {block_key(b) for b in parse_blocks(theirs_text)}
 
-    # Existing entries the branch changed, renamed, or removed.
-    missing = [b for b in base_blocks if block_key(b) not in ours_keys]
-    # New entries go at the top; a changed block below the first unchanged
-    # existing entry is an in-place edit of an existing one.
-    first_kept = next(
-        (i for i, b in enumerate(ours_blocks) if block_key(b) in base_keys),
-        len(ours_blocks),
-    )
-    top = [b for b in ours_blocks[:first_kept] if block_key(b) not in base_keys]
-    in_place = [b for b in ours_blocks[first_kept:] if block_key(b) not in base_keys]
-
-    # Match in-place blocks first: they can only be edits, while a top block
-    # with the same title may be a new announcement.
-    edits = []
-    for old in list(missing):
-        match = next((b for b in in_place if block_title(b) == block_title(old)), None)
-        if match is not None:
-            in_place.remove(match)
-            missing.remove(old)
-            edits.append(old)
-    for old in list(missing):
-        matches = [b for b in top if block_title(b) == block_title(old)]
-        if len(matches) > 1:
-            raise AmbiguousError(
-                "Several entries at the top use the title '{}', and one of them "
-                "edits an existing entry.".format(block_title(old))
-            )
-        if matches:
-            top.remove(matches[0])
-            missing.remove(old)
-            edits.append(old)
-    while missing and in_place:
-        in_place.pop(0)
-        edits.append(missing.pop(0))
-    if missing:
+    remaining = Counter(block_key(b) for b in ours_blocks)
+    changed = []
+    for block in base_blocks:
+        key = block_key(block)
+        if remaining[key] > 0:
+            remaining[key] -= 1
+        else:
+            changed.append(block_title(block) or block[0])
+    if changed:
         raise AmbiguousError(
-            "The branch changed or removed existing entries ({}), and it is not "
-            "clear which of its other entries are new.".format(
-                ", ".join("'{}'".format(block_title(b) or b[0]) for b in missing)
+            "The branch changed, renamed, or removed existing entries: {}.".format(
+                ", ".join("'{}'".format(title) for title in changed)
             )
         )
+    if outside_blocks(base_text) != outside_blocks(ours_text):
+        raise AmbiguousError(
+            "The branch changed text outside the entries, such as the front matter "
+            "or a heading."
+        )
 
-    warnings = [
-        "The branch edited the existing entry '{}'. Kept main's version; "
-        "re-apply the edit by hand if it is still needed.".format(block_title(b) or b[0])
-        for b in edits
-    ]
-    to_insert = [b for b in top if block_key(b) not in theirs_keys]
+    added = []
+    for block in ours_blocks:
+        key = block_key(block)
+        if remaining[key] > 0:
+            remaining[key] -= 1
+            added.append(block)
+    theirs_keys = {block_key(b) for b in parse_blocks(theirs_text)}
+    to_insert = [b for b in added if block_key(b) not in theirs_keys]
 
     theirs_lines = theirs_text.splitlines()
     anchor = next(
@@ -172,7 +173,7 @@ def resolve_text(base_text, ours_text, theirs_text):
     if theirs_text.endswith("\n"):
         text += "\n"
     titles = [block_title(b) or b[0] for b in to_insert]
-    return text, titles, warnings
+    return text, titles
 
 
 def operation_refs():
@@ -195,14 +196,12 @@ def operation_refs():
 
 def resolve_file(path, refs):
     ours, theirs, base, _ = refs
-    text, titles, warnings = resolve_text(
+    text, titles = resolve_text(
         show(base, path) if base else "", show(ours, path), show(theirs, path)
     )
     with open(path, "w", encoding="utf-8") as handle:
         handle.write(text)
     git("add", "--", path)
-    for warning in warnings:
-        print("Warning: " + warning, file=sys.stderr)
     if titles:
         print("Resolved {} with the branch's entries on top:".format(path))
         for title in titles:
@@ -299,14 +298,21 @@ def main():
     except AmbiguousError as error:
         print("Error: {}".format(error), file=sys.stderr)
         print(
-            "{} was left unchanged with its conflict markers and the merge is still "
-            "in progress. Resolve it by hand, keeping main's entries.".format(args.file),
+            "{} was left unchanged with its conflict markers. Resolve it by hand, "
+            "keeping every entry from main.".format(args.file),
             file=sys.stderr,
         )
-        return 3
+        code = 3
     except ResolveError as error:
         print("Error: {}".format(error), file=sys.stderr)
-        return 1
+        code = 1
+    try:
+        refs = operation_refs()
+    except ResolveError:
+        refs = None
+    if refs is not None:
+        print("The {} is still in progress.".format(refs[3]), file=sys.stderr)
+    return code
 
 
 if __name__ == "__main__":

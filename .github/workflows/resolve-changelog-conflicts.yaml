@@ -106,7 +106,7 @@ jobs:
           fi
 
           for pr in $prs; do
-            info="$(gh pr view "$pr" --json state,headRefName,isCrossRepository,baseRefName,files)"
+            info="$(gh pr view "$pr" --json state,headRefName,isCrossRepository,baseRefName)"
             head="$(jq -r '.headRefName' <<< "$info")"
             if [ "$(jq -r '.state' <<< "$info")" != "OPEN" ] \
               || [ "$(jq -r '.isCrossRepository' <<< "$info")" = "true" ] \
@@ -114,13 +114,19 @@ jobs:
               echo "PR #$pr: skipped (closed, from a fork, or not based on main)"
               continue
             fi
-            if ! jq -e '.files[] | select(.path == "changelog/README.md")' <<< "$info" > /dev/null; then
+            if ! git fetch -q origin "$head"; then
+              echo "PR #$pr: skipped (could not fetch $head)"
+              continue
+            fi
+            if git diff --quiet "origin/main...origin/$head" -- changelog/README.md; then
               echo "PR #$pr: skipped (does not change changelog/README.md)"
+              if [ "$EVENT_NAME" = "issue_comment" ]; then
+                comment "$pr" "This PR does not change \`changelog/README.md\`. Nothing to do."
+              fi
               continue
             fi
 
             echo "::group::PR #$pr ($head)"
-            git fetch -q origin "$head"
             git switch -q -C "resolve-pr-$pr" "origin/$head"
 
             set +e
@@ -129,20 +135,24 @@ jobs:
             set -e
 
             if [ "$rc" = 0 ]; then
-              if [ "$(git rev-parse HEAD)" != "$(git rev-parse "origin/$head")" ]; then
-                git push origin "HEAD:refs/heads/$head"
-                echo "PR #$pr: changelog conflict resolved and pushed"
-              else
+              if [ "$(git rev-parse HEAD)" = "$(git rev-parse "origin/$head")" ]; then
                 echo "PR #$pr: no changelog conflict"
                 if [ "$EVENT_NAME" = "issue_comment" ]; then
                   comment "$pr" "\`changelog/README.md\` has no merge conflict with \`main\`. Nothing to do."
+                fi
+              elif git push origin "HEAD:refs/heads/$head"; then
+                echo "PR #$pr: changelog conflict resolved and pushed"
+              else
+                echo "PR #$pr: push failed; the branch probably moved. The next run retries."
+                if [ "$EVENT_NAME" = "issue_comment" ]; then
+                  comment "$pr" "Resolved the changelog conflict, but the push failed because the branch changed in the meantime. Comment \`/fix-changelog\` again."
                 fi
               fi
             else
               files="$(git diff --name-only --diff-filter=U | sed 's/^/- `/; s/$/`/' || true)"
               git merge --abort 2>/dev/null || true
               if [ "$rc" = 3 ]; then
-                advice="This PR renames or removes an existing changelog entry, so the script cannot tell which entries are new. Merge \`main\` and resolve \`changelog/README.md\` by hand, keeping every entry from \`main\`."
+                advice="Besides adding entries, this PR changes, renames, or removes an existing changelog entry, or changes text outside the entries, so it cannot be resolved automatically without losing that change. Merge \`main\` and resolve \`changelog/README.md\` by hand, keeping every entry from \`main\`."
               else
                 advice="Run \`python3 .github/scripts/resolve-changelog-conflict.py\` locally to merge \`main\` and resolve \`changelog/README.md\`, then resolve the other files by hand."
               fi

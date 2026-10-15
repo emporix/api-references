@@ -114,6 +114,10 @@ If you already started a merge, rebase, or cherry-pick, resolve only the changel
 python3 .github/scripts/resolve-changelog-conflict.py --in-merge
 ```
 
-Do not resolve `changelog/README.md` conflicts by hand. If your PR edited an existing entry, the script keeps the version on `main` and prints a warning, so you can re-apply the edit. If your PR renamed or removed an existing entry and the script cannot tell which entries are new, it stops with exit code 3 and leaves the conflict markers in place. In that case, resolve the file by hand and keep every entry from `main`. `changelog/SUMMARY.md` conflicts are not handled by the script.
+Do not resolve `changelog/README.md` conflicts by hand when your PR only adds entries. The script and the workflow resolve those automatically.
+
+If your PR also changes, renames, or removes an existing entry, or changes text outside the entries, such as the front matter or a heading, rebuilding the file from `main` would lose that change. The script then stops with exit code 3, leaves the conflict markers in place, and the workflow pushes nothing. In that case, resolve the file by hand and keep every entry from `main`.
+
+`changelog/SUMMARY.md` conflicts are not handled by the script.
 
 To test the script, run `.github/scripts/test-resolve-changelog-conflict.sh`.
