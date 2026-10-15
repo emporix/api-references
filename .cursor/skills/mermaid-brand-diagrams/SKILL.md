@@ -42,7 +42,7 @@ description: Create Mermaid diagrams from user-provided content and instructions
   - `edgeLabelBackground: "#FFC128"`
   - `edgeLabelTextColor: "#4C5359"`
 - Use palette values from style guide:
-  - `#9CBBE3`, `#FFC128`, `#4C5359`, `#DDE6EE`, `#A1BDDC`, `#F2F6FA`, `#3B73BB`, `#E86C07`
+  - `#9CBBE3`, `#FFC128`, `#4C5359`, `#DDE6EE`, `#A1BDDC`, `#F2F6FA`, `#3B73BB`, `#E86C07`, `#99ACBC`, `#7B8B99`, `#F2FAFE`, `#FFFFFF`
 
 ## Additional Resources
 

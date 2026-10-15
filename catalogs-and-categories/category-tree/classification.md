@@ -48,7 +48,7 @@ The `code` field is mandatory for classification categories. It's used to constr
 
 ### Basic classification category
 
-To create a classification category, send a request to the [Creating a new category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint, set the `type` field to `"CLASSIFICATION"`, provide a `code`, and define `ownClassificationMixins`.
+To create a classification category, send a request to the [Creating a new category](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories) endpoint, set the `type` field to `"CLASSIFICATION"`, provide a `code`, and define `ownClassificationMixins`.
 
 ```bash
 curl -L 
@@ -201,7 +201,7 @@ Notice that:
 
 When you assign a product to a classification category, the product automatically receives all classification mixins from that category and its parent categories.
 
-Send a request to the [Assigning a resource to a category](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#post-category-tenant-categories-categoryid-assignments) endpoint with the defined `type` and `id`.
+Send a request to the [Assigning a resource to a category](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#post-category-tenant-categories-categoryid-assignments) endpoint with the defined `type` and `id`.
 
 ```bash
 curl -L 
@@ -216,7 +216,7 @@ curl -L
   }'
 ```
 
-Then, when you retrieve a product assigned to a classification category with the [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint, the response includes the `classificationMixins` field in the metadata:
+Then, when you retrieve a product assigned to a classification category with the [Retrieving a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint, the response includes the `classificationMixins` field in the metadata:
 
 ```json
 {
@@ -313,7 +313,7 @@ The system automatically adds the `metadata.mixins.class_CATEGORY_CODE_mixinName
 This autopopulation feature is tested in the codebase and ensures that classification mixin schemas are always synchronized with category definitions, even if you don't explicitly provide them in update requests.
 {% endhint %}
 
-For example, use the [Partially updateing a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint without the schema URL in the request.
+For example, use the [Partially updating a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint without the schema URL in the request.
 
 ```bash
 curl -L 
