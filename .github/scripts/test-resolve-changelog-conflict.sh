@@ -162,6 +162,19 @@ expect_titles "edited entry" "Mine,Theirs,Old"
 echo "$warning" | grep -q "edited the existing entry 'Old'" && ! grep -q 'Edited details' changelog/README.md \
   && pass "edited entry: warned, main's version kept" || fail "edited entry: no warning or edit kept"
 
+# 11. A new entry that reuses the title of an unchanged older entry is kept.
+new_repo same-title
+write_changelog "$(entry Repeat 2026-01-01)"; commit_all base
+git switch -qc pr
+write_changelog "$(entry Repeat | sed 's/Details/New details/')" "$(entry Repeat 2026-01-01)"; commit_all mine
+git switch -q main
+write_changelog "$(entry Theirs 2026-02-01)" "$(entry Repeat 2026-01-01)"; commit_all theirs
+git switch -q pr
+warning="$(run 2>&1 >/dev/null || true)"
+expect_titles "same-title addition" "Repeat,Theirs,Repeat"
+grep -q 'New details' changelog/README.md && [ -z "$warning" ] \
+  && pass "same-title addition: kept without warning" || fail "same-title addition: dropped or warned"
+
 echo
 if [ "$failures" -gt 0 ]; then
   echo "$failures test(s) failed."

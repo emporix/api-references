@@ -89,7 +89,7 @@ Then commit the changes yourself. The workflow uses the same script with the mer
 Every PR adds its entry at the same place, so two open PRs that both change `changelog/README.md` conflict as soon as one of them is merged. The `Resolve changelog conflicts` workflow resolves these conflicts for you. The resolved file keeps everything that is on `main` and puts your PR's entries on top, directly after `{% updates format="full" %}`.
 
 - **Automatic:** After every push to `main` that touches `changelog/`, the workflow merges `main` into each open PR that changes `changelog/README.md` and has a changelog conflict, then pushes the merge commit to the PR branch.
-- **On request:** Comment `/fix-changelog` on the PR to run it for that PR only.
+- **On request:** Comment `/fix-changelog` on the PR to run it for that PR only. You need write access to the repository. Without it, the workflow stops, so ask someone with write access to comment, or resolve the conflict locally.
 - **When other files conflict too:** The workflow pushes nothing and comments on the PR with the list of files.
 - **PRs from forks:** The workflow skips them. Resolve the conflict locally.
 
@@ -97,6 +97,13 @@ To resolve the conflict locally, run the script from the repo root on your PR br
 
 ```bash
 python3 .github/scripts/resolve-changelog-conflict.py
+```
+
+The script merges `origin/main` by default. In a fork clone, `origin` is your fork, so its `main` can be behind the PR's target. Add the main repository as a remote and pass its `main` instead. The script fetches it before merging:
+
+```bash
+git remote add upstream https://github.com/emporix/api-references.git
+python3 .github/scripts/resolve-changelog-conflict.py --base upstream/main
 ```
 
 The script merges `origin/main`, resolves `changelog/README.md`, and commits the merge. If other files still conflict, it lists them and leaves the merge in progress, so you can resolve them by hand and run `git commit`.

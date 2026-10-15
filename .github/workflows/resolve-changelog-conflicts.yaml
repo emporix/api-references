@@ -47,6 +47,23 @@ jobs:
       cancel-in-progress: true
 
     steps:
+      # author_association does not prove write access, so check the real repository permission.
+      - name: Check commenter permission
+        if: github.event_name == 'issue_comment'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMENTER: ${{ github.event.comment.user.login }}
+        run: |
+          set -euo pipefail
+          if ! permission="$(gh api "repos/$GITHUB_REPOSITORY/collaborators/$COMMENTER/permission" --jq '.permission')"; then
+            echo "Could not look up the repository permission of $COMMENTER."
+            exit 1
+          fi
+          case "$permission" in
+            admin|write) echo "$COMMENTER has $permission permission." ;;
+            *) echo "$COMMENTER has $permission permission; write access is required."; exit 1 ;;
+          esac
+
       - name: Checkout main
         uses: actions/checkout@v4
         with:

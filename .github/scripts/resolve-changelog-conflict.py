@@ -99,7 +99,10 @@ def resolve_text(base_text, ours_text, theirs_text):
     base_blocks = parse_blocks(base_text)
     ours_blocks = parse_blocks(ours_text)
     base_keys = {block_key(b) for b in base_blocks}
-    base_titles = {block_title(b) for b in base_blocks} - {None}
+    ours_keys = {block_key(b) for b in ours_blocks}
+    edited_titles = {
+        block_title(b) for b in base_blocks if block_key(b) not in ours_keys
+    } - {None}
     theirs_keys = {block_key(b) for b in parse_blocks(theirs_text)}
 
     to_insert = []
@@ -109,7 +112,7 @@ def resolve_text(base_text, ours_text, theirs_text):
         if key in base_keys or key in theirs_keys:
             continue
         title = block_title(block)
-        if title in base_titles:
+        if title in edited_titles:
             warnings.append(
                 "The branch edited the existing entry '{}'. Kept main's version; "
                 "re-apply the edit by hand if it is still needed.".format(title)
