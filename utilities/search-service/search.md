@@ -387,14 +387,54 @@ Assume the index contains the following values:
 
 Place one of the following objects in `queries`:
 
-| Type | Example | Matches | Notes |
-| --- | --- | --- | --- |
-| `TEXT` | `{"type":"TEXT","query":"diesel","field":"name.en"}` | Vehicle A | `diesel` is an analyzed word in its name. |
-| `PHRASE` | `{"type":"PHRASE","query":"diesel engine","field":"name.en"}` | Vehicle A | Both words are adjacent and in that order. A value such as `Diesel-powered engine` does not match. |
-| `AUTOCOMPLETE` | `{"type":"AUTOCOMPLETE","query":"elec","field":"name.en"}` | Vehicle B | Requires `autocomplete: PREFIX` on `name.en`. Does not match `Bioelectric car` because `elec` is not at the start of that word. |
-| `WILDCARD` | `{"type":"WILDCARD","query":"VH-?00","field":"mixins.vehicleSearchAttributes.code"}` | Vehicle A | `?` replaces the single character `9`. Does not match `vh-900` (case-sensitive) or `PRE-VH-900` (pattern evaluates the whole stored value). |
-| `TEXT` (fuzzy) | `{"type":"TEXT","query":"deisel","field":"name.en","fuzzy":{"enabled":true,"maxEdits":1}}` | Vehicle A | Swapping the adjacent `i` and `e` counts as one edit. |
-| `TEXT` (fuzzy) | `{"type":"TEXT","query":"dieselxx","field":"name.en","fuzzy":{"enabled":true,"maxEdits":2}}` | Vehicle A | Allows the two extra characters. Does not match with `maxEdits` set to `1`. |
+<table>
+<thead>
+<tr>
+<th width="110">Type</th>
+<th>Example</th>
+<th width="100">Matches</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TEXT</code></td>
+<td><code>{"type":"TEXT","query":"diesel","field":"name.en"}</code></td>
+<td>Vehicle A</td>
+<td><code>diesel</code> is an analyzed word in its name.</td>
+</tr>
+<tr>
+<td><code>PHRASE</code></td>
+<td><code>{"type":"PHRASE","query":"diesel engine","field":"name.en"}</code></td>
+<td>Vehicle A</td>
+<td>Both words are adjacent and in that order. A value such as <code>Diesel-powered engine</code> does not match.</td>
+</tr>
+<tr>
+<td><code>AUTOCOMPLETE</code></td>
+<td><code>{"type":"AUTOCOMPLETE","query":"elec","field":"name.en"}</code></td>
+<td>Vehicle B</td>
+<td>Requires <code>autocomplete: PREFIX</code> on <code>name.en</code>. Does not match <code>Bioelectric car</code> because <code>elec</code> is not at the start of that word.</td>
+</tr>
+<tr>
+<td><code>WILDCARD</code></td>
+<td><code>{"type":"WILDCARD","query":"VH-?00","field":"mixins.vehicleSearchAttributes.code"}</code></td>
+<td>Vehicle A</td>
+<td><code>?</code> replaces the single character <code>9</code>. Does not match <code>vh-900</code> (case-sensitive) or <code>PRE-VH-900</code> (pattern evaluates the whole stored value).</td>
+</tr>
+<tr>
+<td><code>TEXT</code> (fuzzy)</td>
+<td><code>{"type":"TEXT","query":"deisel","field":"name.en","fuzzy":{"enabled":true,"maxEdits":1}}</code></td>
+<td>Vehicle A</td>
+<td>Swapping the adjacent <code>i</code> and <code>e</code> counts as one edit.</td>
+</tr>
+<tr>
+<td><code>TEXT</code> (fuzzy)</td>
+<td><code>{"type":"TEXT","query":"dieselxx","field":"name.en","fuzzy":{"enabled":true,"maxEdits":2}}</code></td>
+<td>Vehicle A</td>
+<td>Allows the two extra characters. Does not match with <code>maxEdits</code> set to <code>1</code>.</td>
+</tr>
+</tbody>
+</table>
 
 The following filter operators are available:
 
@@ -410,18 +450,78 @@ Assume Vehicle C has `status` set to `ACTIVE`, `horsepower` set to `180`, `code`
 
 Place one of the following objects in `filters`:
 
-| Operator | Example | Matches | Notes |
-| --- | --- | --- | --- |
-| `EQ` | `{"field":"mixins.vehicleSearchAttributes.status","operator":"EQ","value":"ACTIVE"}` | Vehicle C | Exact equality. |
-| `NEQ` | `{"field":"mixins.vehicleSearchAttributes.status","operator":"NEQ","value":"ARCHIVED"}` | Vehicle C | Excludes the given value. |
-| `GT` / `GTE` | `{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"GT","value":150}` · `{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"GTE","value":180}` | Vehicle C | Greater than, or greater than or equal to. |
-| `LT` / `LTE` | `{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"LT","value":200}` · `{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"LTE","value":180}` | Vehicle C | Less than, or less than or equal to. |
-| `BETWEEN` | `{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"BETWEEN","value":[150,200]}` | Vehicle C | Inclusive range. |
-| `IN` | `{"field":"mixins.vehicleSearchAttributes.status","operator":"IN","value":["ACTIVE","DRAFT"]}` | Vehicle C | Value is one of the listed items. |
-| `NOT_IN` | `{"field":"mixins.vehicleSearchAttributes.status","operator":"NOT_IN","value":["ARCHIVED","DELETED"]}` | Vehicle C | Value is none of the listed items. |
-| `EXISTS` | `{"field":"mixins.vehicleSearchAttributes.code","operator":"EXISTS","value":true}` | Vehicle C | `code` is present. |
-| `CONTAINS` | `{"field":"name.en","operator":"CONTAINS","value":"tres long"}` | Vehicle C | Ignores case and diacritics; matches `Très Long Description`. |
-| `CONTAINS` | `{"field":"name.en","operator":"CONTAINS","value":"*"}` | Values such as `Model * Special` | Treats `*` as a literal character; does not match `Model X Special`. |
+<table>
+<thead>
+<tr>
+<th width="110">Operator</th>
+<th>Example</th>
+<th width="100">Matches</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EQ</code></td>
+<td><code>{"field":"mixins.vehicleSearchAttributes.status","operator":"EQ","value":"ACTIVE"}</code></td>
+<td>Vehicle C</td>
+<td>Exact equality.</td>
+</tr>
+<tr>
+<td><code>NEQ</code></td>
+<td><code>{"field":"mixins.vehicleSearchAttributes.status","operator":"NEQ","value":"ARCHIVED"}</code></td>
+<td>Vehicle C</td>
+<td>Excludes the given value.</td>
+</tr>
+<tr>
+<td><code>GT</code> / <code>GTE</code></td>
+<td><code>{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"GT","value":150}</code> · <code>{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"GTE","value":180}</code></td>
+<td>Vehicle C</td>
+<td>Greater than, or greater than or equal to.</td>
+</tr>
+<tr>
+<td><code>LT</code> / <code>LTE</code></td>
+<td><code>{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"LT","value":200}</code> · <code>{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"LTE","value":180}</code></td>
+<td>Vehicle C</td>
+<td>Less than, or less than or equal to.</td>
+</tr>
+<tr>
+<td><code>BETWEEN</code></td>
+<td><code>{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"BETWEEN","value":[150,200]}</code></td>
+<td>Vehicle C</td>
+<td>Inclusive range.</td>
+</tr>
+<tr>
+<td><code>IN</code></td>
+<td><code>{"field":"mixins.vehicleSearchAttributes.status","operator":"IN","value":["ACTIVE","DRAFT"]}</code></td>
+<td>Vehicle C</td>
+<td>Value is one of the listed items.</td>
+</tr>
+<tr>
+<td><code>NOT_IN</code></td>
+<td><code>{"field":"mixins.vehicleSearchAttributes.status","operator":"NOT_IN","value":["ARCHIVED","DELETED"]}</code></td>
+<td>Vehicle C</td>
+<td>Value is none of the listed items.</td>
+</tr>
+<tr>
+<td><code>EXISTS</code></td>
+<td><code>{"field":"mixins.vehicleSearchAttributes.code","operator":"EXISTS","value":true}</code></td>
+<td>Vehicle C</td>
+<td><code>code</code> is present.</td>
+</tr>
+<tr>
+<td><code>CONTAINS</code></td>
+<td><code>{"field":"name.en","operator":"CONTAINS","value":"tres long"}</code></td>
+<td>Vehicle C</td>
+<td>Ignores case and diacritics; matches <code>Très Long Description</code>.</td>
+</tr>
+<tr>
+<td><code>CONTAINS</code></td>
+<td><code>{"field":"name.en","operator":"CONTAINS","value":"*"}</code></td>
+<td>Values such as <code>Model * Special</code></td>
+<td>Treats <code>*</code> as a literal character; does not match <code>Model X Special</code>.</td>
+</tr>
+</tbody>
+</table>
 
 For example, this filter matches values such as `Hybrid-999`:
 
