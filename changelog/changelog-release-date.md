@@ -116,7 +116,7 @@ python3 .github/scripts/resolve-changelog-conflict.py --in-merge
 
 Do not resolve `changelog/README.md` conflicts by hand when your PR only adds entries. The script and the workflow resolve those automatically.
 
-If your PR also changes, renames, or removes an existing entry, or changes text outside the entries, such as the front matter or a heading, rebuilding the file from `main` would lose that change. The script then stops with exit code 3, leaves the conflict markers in place, and the workflow pushes nothing. In that case, resolve the file by hand and keep every entry from `main`.
+If your PR also changes, renames, reorders, or removes an existing entry, or changes text outside the entries, such as the front matter or a heading, rebuilding the file from `main` would lose that change. The script then stops with exit code 3, leaves the conflict markers in place, and the workflow pushes nothing. In that case, resolve the file by hand and keep every entry from `main`.
 
 `changelog/SUMMARY.md` conflicts are not handled by the script.
 

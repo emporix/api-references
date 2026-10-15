@@ -263,6 +263,27 @@ expect_titles "fix on main" "Mine,Theirs,Old"
 grep -q 'Fixed details' changelog/README.md \
   && pass "fix on main: main's version kept" || fail "fix on main: main's fix lost"
 
+# 19. Reordering existing entries stops (would be lost when rebuilt from main).
+new_repo reordered
+write_changelog "$(entry A 2026-01-02)" "$(entry B 2026-01-01)"; commit_all base
+git switch -qc pr
+write_changelog "$(entry Mine)" "$(entry B 2026-01-01)" "$(entry A 2026-01-02)"; commit_all mine
+git switch -q main
+write_changelog "$(entry Theirs 2026-02-01)" "$(entry A 2026-01-02)" "$(entry B 2026-01-01)"; commit_all theirs
+git switch -q pr
+expect_stop "reordered existing entries"
+
+# 20. A Markdown hard line break (two trailing spaces) inside an existing entry stops.
+new_repo hard-break
+write_changelog "$(entry Old 2026-01-01)"; commit_all base
+git switch -qc pr
+write_changelog "$(entry Mine)" "$(entry Old 2026-01-01 | sed 's/Details for Old\./Details for Old.  /')"
+commit_all mine
+git switch -q main
+write_changelog "$(entry Theirs 2026-02-01)" "$(entry Old 2026-01-01)"; commit_all theirs
+git switch -q pr
+expect_stop "trailing whitespace hard break"
+
 echo
 if [ "$failures" -gt 0 ]; then
   echo "$failures test(s) failed."

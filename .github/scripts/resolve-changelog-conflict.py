@@ -93,9 +93,13 @@ def parse_blocks(text):
 
 
 def block_key(block):
-    lines = [line.rstrip() for line in block]
-    lines[0] = DATE_ATTR.sub('date=""', lines[0])
-    return "\n".join(lines).strip()
+    # Keep trailing spaces on body lines (Markdown hard breaks use two spaces).
+    # Only normalise the date on the opening tag line.
+    lines = list(block)
+    lines[0] = DATE_ATTR.sub('date=""', lines[0].rstrip())
+    while lines and lines[-1] == "":
+        lines.pop()
+    return "\n".join(lines)
 
 
 def block_title(block):
@@ -115,7 +119,8 @@ def outside_blocks(text):
         elif inside and UPDATE_CLOSE.match(line):
             inside = False
         elif not inside and line.strip():
-            lines.append(line.rstrip())
+            # Keep trailing spaces (Markdown hard breaks).
+            lines.append(line)
     return lines
 
 
@@ -143,6 +148,20 @@ def resolve_text(base_text, ours_text, theirs_text):
                 ", ".join("'{}'".format(title) for title in changed)
             )
         )
+
+    # Existing entries must keep their relative order. A reorder would be lost
+    # when the file is rebuilt from main with only the added entries on top.
+    base_key_list = [block_key(b) for b in base_blocks]
+    order_counts = Counter(base_key_list)
+    seen = []
+    for block in ours_blocks:
+        key = block_key(block)
+        if order_counts[key] > 0:
+            order_counts[key] -= 1
+            seen.append(key)
+    if seen != base_key_list:
+        raise AmbiguousError("The branch reordered existing entries.")
+
     if outside_blocks(base_text) != outside_blocks(ours_text):
         raise AmbiguousError(
             "The branch changed text outside the entries, such as the front matter "

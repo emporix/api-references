@@ -152,7 +152,7 @@ jobs:
               files="$(git diff --name-only --diff-filter=U | sed 's/^/- `/; s/$/`/' || true)"
               git merge --abort 2>/dev/null || true
               if [ "$rc" = 3 ]; then
-                advice="Besides adding entries, this PR changes, renames, or removes an existing changelog entry, or changes text outside the entries, so it cannot be resolved automatically without losing that change. Merge \`main\` and resolve \`changelog/README.md\` by hand, keeping every entry from \`main\`."
+                advice="Besides adding entries, this PR changes, renames, reorders, or removes an existing changelog entry, or changes text outside the entries, so it cannot be resolved automatically without losing that change. Merge \`main\` and resolve \`changelog/README.md\` by hand, keeping every entry from \`main\`."
               else
                 advice="Run \`python3 .github/scripts/resolve-changelog-conflict.py\` locally to merge \`main\` and resolve \`changelog/README.md\`, then resolve the other files by hand."
               fi
