@@ -25,31 +25,6 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
-<!-- emporix-ai-buddy:changelog:COP-6766 -->
-
-## Search Service - `CONTAINS` filter operator
-
-#### Overview
-
-{% hint style="danger" %}
-This functionality is in preview mode - some of the features may not be fully operational yet.
-{% endhint %}
-
-Search requests support the `CONTAINS` filter operator for case- and diacritic-insensitive substring matching on indexed text fields. The operator requires `text: true` on the field in the index and treats `\`, `*`, and `?` in the value as literal characters.
-
-#### Updated endpoints
-
-| Endpoint | Description |
-| --- | --- |
-| [Searching documents](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type) | Adds the `CONTAINS` filter operator, including its constraints, matching behavior, and a request example. |
-
-#### Known problems
-
-There are no known problems.
-
-{% endupdate %}
-
 {% update date="2026-10-14" tags="new-feature" %}
 
 ## Coupon, Cart, and Order Services - vendor-restricted coupons
