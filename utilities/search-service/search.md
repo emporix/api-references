@@ -5,23 +5,42 @@ layout:
   width: wide
 ---
 
-# How to Set Up and Use Search
+# Search Service Tutorials
 
-Use the Search Service to index custom instances, search them with text and filters, and save reusable search definitions. This tutorial follows one `vehicle` custom schema type from index creation to direct and saved searches. It also explains index jobs and how to copy index configuration between tenants.
+Use the Search Service to index custom instances, search them with text and filters, and save reusable search definitions. This tutorial follows one custom schema type from index creation to direct and saved searches. It also explains index jobs and how to copy index configuration between tenants.
 
 {% hint style="danger" %}
 This functionality is in preview mode - some of the features may not be fully operational yet.
 {% endhint %}
 
-## How to prepare sample vehicle data
+## Prerequisites
 
-The tutorial uses a `vehicle` custom schema type. Its custom attributes belong to the `vehicleSearchAttributes` mixin:
+Make sure you have the following:
+
+* A tenant where you can create a custom schema type and custom instances. The next section prepares sample data for the examples.
+* A service OAuth2 token with the `schema.schema_manage` and `schema.custominstance_manage` scopes to prepare that data, and with the `search.search_manage` and `search.search_read` scopes for the Search Service steps. For more information, see [Tokens and Scopes](../../quickstart/authentication-and-authorization/tokens-and-scopes.md).
+* A scope that permits reading the custom instances. Use `schema.custominstance_read` for broad custom-instance access, or a type-specific scope such as `custom.vehicle_read` or `custom.vehicle_read_own` for the sample `VEHICLE` type in the examples. Replace `vehicle` with the lowercase form of your own type id when you use a different type.
+* For cross-tenant import, a destination tenant with the same custom schema types and fields, and a token with `search.search_manage` access to that tenant.
+
+## How to prepare sample data
+
+{% hint style="info" %}
+The examples use a sample `VEHICLE` custom schema type and three custom instances. Schema Service custom type IDs use uppercase letters, digits, and underscores. You can replace this type and its fields with your own; update the paths in later examples to match.
+{% endhint %}
+
+Prepare a custom entity package, encode it, import it, and create sample instances before you build a search index.
+
+{% stepper %}
+{% step %}
+#### Build the custom entity JSON
+
+Create a package that defines the custom schema type and its mixin. The sample type id is `VEHICLE`. Its custom attributes belong to the `vehicleSearchAttributes` mixin:
 
 ```json
 {
   "customSchemaTypes": [
     {
-      "id": "vehicle",
+      "id": "VEHICLE",
       "name": {
         "en": "Vehicle"
       },
@@ -73,7 +92,7 @@ The tutorial uses a `vehicle` custom schema type. Its custom attributes belong t
             }
           ],
           "types": [
-            "vehicle"
+            "VEHICLE"
           ]
         }
       ]
@@ -81,12 +100,38 @@ The tutorial uses a `vehicle` custom schema type. Its custom attributes belong t
   ]
 }
 ```
+{% endstep %}
 
-{% stepper %}
 {% step %}
-#### Import the vehicle schema
+#### Encode the package as base64
 
-The import endpoint accepts this package as a base64-encoded `data` value. Use a service OAuth2 token with the `schema.schema_manage` scope and call [Importing Custom Entities](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/export-import#post-schema-tenant-custom-entities-import):
+Encode the JSON package as a single-line base64 `data` value:
+
+{% tabs %}
+{% tab title="macOS / Linux" %}
+```bash
+base64 -i vehicle-schema.json | tr -d '\n'
+```
+{% endtab %}
+
+{% tab title="Windows PowerShell" %}
+```powershell
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("vehicle-schema.json"))
+```
+{% endtab %}
+{% endtabs %}
+
+The encoded value for the sample package above is:
+
+```text
+eyJjdXN0b21TY2hlbWFUeXBlcyI6W3siaWQiOiJWRUhJQ0xFIiwibmFtZSI6eyJlbiI6IlZlaGljbGUifSwic2NoZW1hcyI6W3siaWQiOiJ2ZWhpY2xlU2VhcmNoQXR0cmlidXRlcyIsIm5hbWUiOnsiZW4iOiJWZWhpY2xlIHNlYXJjaCBhdHRyaWJ1dGVzIn0sImF0dHJpYnV0ZXMiOlt7ImtleSI6ImNvZGUiLCJuYW1lIjp7ImVuIjoiQ29kZSJ9LCJ0eXBlIjoiVEVYVCIsIm1ldGFkYXRhIjp7InJlYWRPbmx5IjpmYWxzZSwibG9jYWxpemVkIjpmYWxzZSwicmVxdWlyZWQiOmZhbHNlLCJudWxsYWJsZSI6ZmFsc2V9fSx7ImtleSI6InN0YXR1cyIsIm5hbWUiOnsiZW4iOiJTdGF0dXMifSwidHlwZSI6IlRFWFQiLCJtZXRhZGF0YSI6eyJyZWFkT25seSI6ZmFsc2UsImxvY2FsaXplZCI6ZmFsc2UsInJlcXVpcmVkIjpmYWxzZSwibnVsbGFibGUiOmZhbHNlfX0seyJrZXkiOiJob3JzZXBvd2VyIiwibmFtZSI6eyJlbiI6IkhvcnNlcG93ZXIifSwidHlwZSI6Ik5VTUJFUiIsIm1ldGFkYXRhIjp7InJlYWRPbmx5IjpmYWxzZSwibG9jYWxpemVkIjpmYWxzZSwicmVxdWlyZWQiOmZhbHNlLCJudWxsYWJsZSI6ZmFsc2V9fV0sInR5cGVzIjpbIlZFSElDTEUiXX1dfV19
+```
+{% endstep %}
+
+{% step %}
+#### Import the custom entity package
+
+Use a service OAuth2 token with the `schema.schema_manage` scope and call [Importing Custom Entities](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/export-import#post-schema-tenant-custom-entities-import):
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -96,19 +141,19 @@ curl -i -X POST \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
-    "data": "eyJjdXN0b21TY2hlbWFUeXBlcyI6W3siaWQiOiJ2ZWhpY2xlIiwibmFtZSI6eyJlbiI6IlZlaGljbGUifSwic2NoZW1hcyI6W3siaWQiOiJ2ZWhpY2xlU2VhcmNoQXR0cmlidXRlcyIsIm5hbWUiOnsiZW4iOiJWZWhpY2xlIHNlYXJjaCBhdHRyaWJ1dGVzIn0sImF0dHJpYnV0ZXMiOlt7ImtleSI6ImNvZGUiLCJuYW1lIjp7ImVuIjoiQ29kZSJ9LCJ0eXBlIjoiVEVYVCIsIm1ldGFkYXRhIjp7InJlYWRPbmx5IjpmYWxzZSwibG9jYWxpemVkIjpmYWxzZSwicmVxdWlyZWQiOmZhbHNlLCJudWxsYWJsZSI6ZmFsc2V9fSx7ImtleSI6InN0YXR1cyIsIm5hbWUiOnsiZW4iOiJTdGF0dXMifSwidHlwZSI6IlRFWFQiLCJtZXRhZGF0YSI6eyJyZWFkT25seSI6ZmFsc2UsImxvY2FsaXplZCI6ZmFsc2UsInJlcXVpcmVkIjpmYWxzZSwibnVsbGFibGUiOmZhbHNlfX0seyJrZXkiOiJob3JzZXBvd2VyIiwibmFtZSI6eyJlbiI6IkhvcnNlcG93ZXIifSwidHlwZSI6Ik5VTUJFUiIsIm1ldGFkYXRhIjp7InJlYWRPbmx5IjpmYWxzZSwibG9jYWxpemVkIjpmYWxzZSwicmVxdWlyZWQiOmZhbHNlLCJudWxsYWJsZSI6ZmFsc2V9fV0sInR5cGVzIjpbInZlaGljbGUiXX1dfV19"
+    "data": "eyJjdXN0b21TY2hlbWFUeXBlcyI6W3siaWQiOiJWRUhJQ0xFIiwibmFtZSI6eyJlbiI6IlZlaGljbGUifSwic2NoZW1hcyI6W3siaWQiOiJ2ZWhpY2xlU2VhcmNoQXR0cmlidXRlcyIsIm5hbWUiOnsiZW4iOiJWZWhpY2xlIHNlYXJjaCBhdHRyaWJ1dGVzIn0sImF0dHJpYnV0ZXMiOlt7ImtleSI6ImNvZGUiLCJuYW1lIjp7ImVuIjoiQ29kZSJ9LCJ0eXBlIjoiVEVYVCIsIm1ldGFkYXRhIjp7InJlYWRPbmx5IjpmYWxzZSwibG9jYWxpemVkIjpmYWxzZSwicmVxdWlyZWQiOmZhbHNlLCJudWxsYWJsZSI6ZmFsc2V9fSx7ImtleSI6InN0YXR1cyIsIm5hbWUiOnsiZW4iOiJTdGF0dXMifSwidHlwZSI6IlRFWFQiLCJtZXRhZGF0YSI6eyJyZWFkT25seSI6ZmFsc2UsImxvY2FsaXplZCI6ZmFsc2UsInJlcXVpcmVkIjpmYWxzZSwibnVsbGFibGUiOmZhbHNlfX0seyJrZXkiOiJob3JzZXBvd2VyIiwibmFtZSI6eyJlbiI6IkhvcnNlcG93ZXIifSwidHlwZSI6Ik5VTUJFUiIsIm1ldGFkYXRhIjp7InJlYWRPbmx5IjpmYWxzZSwibG9jYWxpemVkIjpmYWxzZSwicmVxdWlyZWQiOmZhbHNlLCJudWxsYWJsZSI6ZmFsc2V9fV0sInR5cGVzIjpbIlZFSElDTEUiXX1dfV19"
   }'
 ```
 
 A successful import returns `204 No Content`. The import creates the custom type and schema, but it does not create custom instances.
 
 {% hint style="warning" %}
-If the `vehicle` type or `vehicleSearchAttributes` schema already exists, the Schema Service imports a copy with an `_COPY` suffix. Use a tenant where these identifiers do not exist, or verify that the existing schema defines the fields shown above before continuing. The remaining examples use the original identifiers.
+If the `VEHICLE` type or `vehicleSearchAttributes` schema already exists, the Schema Service imports a copy with an `_COPY` suffix. Use a tenant where these identifiers do not exist, or verify that the existing schema defines the fields shown above before continuing. The remaining examples use the original identifiers.
 {% endhint %}
 {% endstep %}
 
 {% step %}
-#### Create sample vehicle instances
+#### Create sample custom instances
 
 Use a service OAuth2 token with the `schema.custominstance_manage` scope and call [Creating custom instances in bulk](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-bulk):
 
@@ -116,7 +161,7 @@ Use a service OAuth2 token with the `schema.custominstance_manage` scope and cal
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/schema/{tenant}/custom-entities/vehicle/instances/bulk' \
+  'https://api.emporix.io/schema/{tenant}/custom-entities/VEHICLE/instances/bulk' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '[
@@ -166,18 +211,6 @@ The bulk endpoint returns `207 Multi-Status`. Inspect every response item. A cre
 {% endstep %}
 {% endstepper %}
 
-## Prerequisites
-
-Make sure you have the following:
-
-* A tenant with a custom schema type whose URL type identifier is `vehicle`.
-* The sample custom instances created above, or equivalent instances with the built-in `name.en` field and the `mixins.vehicleSearchAttributes.code`, `mixins.vehicleSearchAttributes.status`, and `mixins.vehicleSearchAttributes.horsepower` fields. If your schema uses different fields, replace these paths throughout the examples.
-* A service OAuth2 token with the `search.search_manage` and `search.search_read` scopes. For more information, see [Tokens and Scopes](../../quickstart/authentication-and-authorization/tokens-and-scopes.md).
-* A scope that permits reading the custom instances. Use `schema.custominstance_read` for broad custom-instance access, `custom.vehicle_read` for this type, or `custom.vehicle_read_own` to restrict results to instances owned by the caller.
-* For cross-tenant import, a destination tenant with the same custom schema types and fields, and a token with `search.search_manage` access to that tenant.
-
-The examples use `vehicles` as the index ID. Replace `{tenant}` with your tenant name.
-
 ## How to create an index and run a search
 
 An index defines which custom-instance fields support text matching, autocomplete, filters, and sorting. Creating an index starts an asynchronous job. Wait for the job to succeed before you search the index.
@@ -188,11 +221,22 @@ An index defines which custom-instance fields support text matching, autocomplet
 
 Send a request to [Upserting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#put-search-tenant-search-type-indexes-id).
 
+Choose the field options according to how you want to search:
+
+| Option | Use |
+| --- | --- |
+| `text: true` | Match a string with `TEXT`, `PHRASE`, `WILDCARD`, or `CONTAINS`. |
+| `autocomplete: PREFIX` | Match the beginning of a word with `AUTOCOMPLETE`. |
+| `autocomplete: NGRAM` | Match a character sequence inside a word with `AUTOCOMPLETE`. |
+| `exact: true` | Sort, or filter with equality, range, list, or existence operators. Number, Boolean, and date fields support only this option. |
+
+Use full stored paths such as `name.en` and `mixins.vehicleSearchAttributes.code`. A path must exist on the custom schema type.
+
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
 curl -i -X PUT \
-  'https://api.emporix.io/search/{tenant}/search/vehicle/indexes/vehicles' \
+  'https://api.emporix.io/search/{tenant}/search/VEHICLE/indexes/vehicles' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Language: en' \
   -H 'Content-Type: application/json' \
@@ -233,29 +277,18 @@ A new index returns `202 Accepted` with the ID of the job that builds it:
   "id": "66f1a2b3c4d5e6f708192a3b"
 }
 ```
-
-Choose the field options according to how you want to search:
-
-| Option | Use |
-| --- | --- |
-| `text: true` | Match a string with `TEXT`, `PHRASE`, `WILDCARD`, or `CONTAINS`. |
-| `autocomplete: PREFIX` | Match the beginning of a word with `AUTOCOMPLETE`. |
-| `autocomplete: NGRAM` | Match a character sequence inside a word with `AUTOCOMPLETE`. |
-| `exact: true` | Sort, or filter with equality, range, list, or existence operators. Number, Boolean, and date fields support only this option. |
-
-Use full stored paths such as `name.en` and `mixins.vehicleSearchAttributes.code`. A path must exist on the custom schema type.
 {% endstep %}
 
 {% step %}
 #### Monitor the index job
 
-Use the job ID from the `202 Accepted` response with [Retrieving an index job](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/index-jobs#get-search-tenant-jobs-id).
+Use the job ID from the `202 Accepted` response with [Retrieving an index job](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/index-jobs#get-search-tenant-jobs-id). For job types and statuses, see [How to manage indexes and jobs](#how-to-manage-indexes-and-jobs).
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ```bash
 curl -i -X GET \
-  'https://api.emporix.io/search/{tenant}/jobs/66f1a2b3c4d5e6f708192a3b' \
+  'https://api.emporix.io/search/{tenant}/jobs/{jobId}' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
@@ -267,7 +300,7 @@ Poll the job until `status` is `success` or `failure`. A successful create job l
   "status": "success",
   "type": "create_index",
   "indexId": "vehicles",
-  "message": "Creating index vehicles--vehicle for type vehicle",
+  "message": "Creating index vehicles--VEHICLE for type VEHICLE",
   "response": "Index created.",
   "metadata": {
     "version": 1,
@@ -283,7 +316,7 @@ If the job fails, inspect `response` and use [Retrieving a search index](https:/
 {% step %}
 #### Search the indexed custom instances
 
-Send a request to [Searching documents](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type).
+Send a request to [Searching documents](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type). For query types, filter operators, and further examples, see [Available search criteria](#available-search-criteria).
 
 This example matches `diesel engine` in `name.en` or a code that starts with `VH-`. It then keeps active vehicles with at least 150 horsepower. The response is sorted by horsepower.
 
@@ -291,7 +324,7 @@ This example matches `diesel engine` in `name.en` or a code that starts with `VH
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/search/{tenant}/search/vehicle?pageNumber=1&pageSize=20&sort=mixins.vehicleSearchAttributes.horsepower:DESC' \
+  'https://api.emporix.io/search/{tenant}/search/VEHICLE?pageNumber=1&pageSize=20&sort=mixins.vehicleSearchAttributes.horsepower:DESC' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Accept-Language: en' \
   -H 'Content-Type: application/json' \
@@ -332,7 +365,7 @@ The response body is an array of matching custom instances. When the `X-Total-Co
 {% endstep %}
 {% endstepper %}
 
-## How to choose search criteria
+## Available search criteria
 
 A direct search must provide `index` and at least one of `queries` or `filters`. `queries` can contain one query object, a list of query objects, or an `and` or `or` group. A top-level list matches when any item matches.
 
@@ -436,7 +469,7 @@ Send a request to [Upserting a saved search](https://developer.emporix.io/api-do
 
 ```bash
 curl -i -X PUT \
-  'https://api.emporix.io/search/{tenant}/search/vehicle/queries/active-vehicles' \
+  'https://api.emporix.io/search/{tenant}/search/VEHICLE/queries/active-vehicles' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Language: en' \
   -H 'Content-Type: application/json' \
@@ -473,7 +506,7 @@ Call [Searching documents](https://developer.emporix.io/api-documentation/api-gu
 
 ```bash
 curl -i -X POST \
-  'https://api.emporix.io/search/{tenant}/search/vehicle?pageNumber=1&pageSize=20' \
+  'https://api.emporix.io/search/{tenant}/search/VEHICLE?pageNumber=1&pageSize=20' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Accept-Language: en' \
   -H 'Content-Type: application/json' \
@@ -487,7 +520,7 @@ The saved search supplies the index, filters, and query shape. The request `quer
 {% endstep %}
 {% endstepper %}
 
-## How to monitor index jobs
+## How to manage indexes and jobs
 
 Jobs track asynchronous index creation, mapping changes, and deletion. They do not track saved-search changes.
 
@@ -513,9 +546,7 @@ The job list supports `pageNumber`, `pageSize`, `sort`, `q`, and `fields`. Set `
 
 Creating an index, changing its field definition, or sending the index `PUT` request again for an index in the `building` or `failed` status returns `202 Accepted` and starts a job. Updating only `name` or `description` on a `ready` index with unchanged fields returns `204 No Content` and does not start a job. A job already in progress for the index returns `409 Conflict`.
 
-## How to update or delete an index
-
-Use [Upserting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#put-search-tenant-search-type-indexes-id) to replace its definition. `metadata.version` is optional. When you send it, it acts as an optimistic lock. A stale value returns `409 Conflict`.
+Use [Upserting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#put-search-tenant-search-type-indexes-id) to replace an index definition. `metadata.version` is optional. When you send it, it acts as an optimistic lock. A stale value returns `409 Conflict`.
 
 Use [Deleting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#delete-search-tenant-search-type-indexes-id) to start an asynchronous deletion job:
 
@@ -523,7 +554,7 @@ Use [Deleting a search index](https://developer.emporix.io/api-documentation/api
 
 ```bash
 curl -i -X DELETE \
-  'https://api.emporix.io/search/{tenant}/search/vehicle/indexes/vehicles' \
+  'https://api.emporix.io/search/{tenant}/search/VEHICLE/indexes/vehicles' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
@@ -548,7 +579,7 @@ curl -i -X POST \
   -H 'Content-Type: application/json' \
   -d '[
     {
-      "type": "vehicle",
+      "type": "VEHICLE",
       "id": "vehicles"
     }
   ]'
@@ -574,7 +605,7 @@ curl -i -X POST \
   -H 'Content-Type: application/json' \
   -d '{
     "exportedAt": "2026-03-12T10:00:00.000Z",
-    "data": "W3siaWQiOiJ2ZWhpY2xlcyIsInR5cGUiOiJ2ZWhpY2xlIiwibmFtZSI6eyJlbiI6IlZlaGljbGVzIn0sImRlc2NyaXB0aW9uIjp7ImVuIjoiU2VhcmNoIHZlaGljbGVzIGJ5IG5hbWUsIGNvZGUsIHN0YXR1cywgYW5kIGhvcnNlcG93ZXIifSwiZmllbGRzIjpbeyJwYXRoIjoibmFtZS5lbiIsInRleHQiOnRydWUsImF1dG9jb21wbGV0ZSI6IlBSRUZJWCJ9LHsicGF0aCI6Im1peGlucy52ZWhpY2xlU2VhcmNoQXR0cmlidXRlcy5jb2RlIiwidGV4dCI6dHJ1ZSwiZXhhY3QiOnRydWV9LHsicGF0aCI6Im1peGlucy52ZWhpY2xlU2VhcmNoQXR0cmlidXRlcy5zdGF0dXMiLCJleGFjdCI6dHJ1ZX0seyJwYXRoIjoibWl4aW5zLnZlaGljbGVTZWFyY2hBdHRyaWJ1dGVzLmhvcnNlcG93ZXIiLCJleGFjdCI6dHJ1ZX1dfV0="
+    "data": "W3siaWQiOiJ2ZWhpY2xlcyIsInR5cGUiOiJWRUhJQ0xFIiwibmFtZSI6eyJlbiI6IlZlaGljbGVzIn0sImRlc2NyaXB0aW9uIjp7ImVuIjoiU2VhcmNoIHZlaGljbGVzIGJ5IG5hbWUsIGNvZGUsIHN0YXR1cywgYW5kIGhvcnNlcG93ZXIifSwiZmllbGRzIjpbeyJwYXRoIjoibmFtZS5lbiIsInRleHQiOnRydWUsImF1dG9jb21wbGV0ZSI6IlBSRUZJWCJ9LHsicGF0aCI6Im1peGlucy52ZWhpY2xlU2VhcmNoQXR0cmlidXRlcy5jb2RlIiwidGV4dCI6dHJ1ZSwiZXhhY3QiOnRydWV9LHsicGF0aCI6Im1peGlucy52ZWhpY2xlU2VhcmNoQXR0cmlidXRlcy5zdGF0dXMiLCJleGFjdCI6dHJ1ZX0seyJwYXRoIjoibWl4aW5zLnZlaGljbGVTZWFyY2hBdHRyaWJ1dGVzLmhvcnNlcG93ZXIiLCJleGFjdCI6dHJ1ZX1dfV0="
   }'
 ```
 

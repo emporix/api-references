@@ -12,7 +12,7 @@ Searches custom instances for a tenant, stores saved searches, and manages the i
 This service is in preview mode - some of the features may not be fully operational yet.
 {% endhint %}
 
-Follow [How to Set Up and Use Search](search.md) to create an index, monitor its job, search custom instances, reuse saved searches, and copy index definitions.
+Follow [Search Service Tutorials](search.md) to create an index, monitor its job, search custom instances, reuse saved searches, and copy index definitions.
 
 ### Key features and benefits
 

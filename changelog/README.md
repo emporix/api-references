@@ -25,6 +25,31 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6766 -->
+
+## Search Service - `CONTAINS` filter documentation
+
+#### Overview
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+The Search Service API reference now documents the `CONTAINS` filter operator on search requests, including its constraints, matching behavior, and a request example. The operator was already supported; this update makes it easier to discover and use.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Searching documents](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type) | Documents the `CONTAINS` filter operator, including its constraints, matching behavior, and a request example. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-14" tags="new-feature" %}
 
 ## Coupon, Cart, and Order Services - vendor-restricted coupons

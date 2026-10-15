@@ -635,7 +635,7 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/utilities/schema/api-reference/api.yml)
   * [Search Service](utilities/search-service/README.md)
-    * [How to Set Up and Use Search](utilities/search-service/search.md)
+    * [Search Service Tutorials](utilities/search-service/search.md)
     * [API Reference](utilities/search-service/api-reference/README.md)
       * ```yaml
         props:
